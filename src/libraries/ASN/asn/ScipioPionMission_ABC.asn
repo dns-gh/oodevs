@@ -1,0 +1,122 @@
+--
+-- file name : ScipioPionMission_Blinde.asn
+--
+-- Messages des différentes missions pion blindé
+--
+
+ScipioPionMission_ABC DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS KnowledgeAgent, ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
+
+
+------------------------------------------
+-- Missions ABC
+------------------------------------------
+
+Mission-Pion-ABC-ArmerPointDeControle ::= SEQUENCE 
+{
+    point-de-controle Point
+}
+
+Mission-Pion-ABC-OrganiserAccueilColonneRefugies ::= SEQUENCE 
+{
+    position-installation Point
+}
+
+Mission-Pion-ABC-ReconnaitreAxe ::= SEQUENCE 
+{
+    itineraire      Itineraire
+}
+Mission-Pion-ABC-Soutenir ::= SEQUENCE
+{
+    unite-a-soutenir   Agent
+}
+Mission-Pion-ABC-Couvrir ::= SEQUENCE
+{
+	position          Point,
+    unites-a-couvrir  ListAgent   
+}
+
+Mission-Pion-ABC-FlancGarder ::= SEQUENCE
+{
+    itineraire        Itineraire,
+    unites-a-couvrir  ListAgent  
+}
+Mission-Pion-ABC-Reduire ::= SEQUENCE
+{
+    unite-a-reduire KnowledgeAgent
+}
+Mission-Pion-ABC-Appuyer ::= SEQUENCE
+{
+    unite-a-appuyer  Agent
+}
+Mission-Pion-ABC-Fixer ::= SEQUENCE
+{
+    unite-a-fixer	KnowledgeAgent
+}
+Mission-Pion-ABC-RenseignerSur ::= SEQUENCE
+{
+    point-a-renseigner  Point
+}
+Mission-Pion-ABC-ControlerZone ::= SEQUENCE 
+{
+    zone      Polygon
+}
+Mission-Pion-ABC-Surveiller ::= SEQUENCE
+{
+    position  Point
+}
+Mission-Pion-ABC-Barrer ::= SEQUENCE
+{
+    position-installation	Point
+}
+Mission-Pion-ABC-Attaquer ::= SEQUENCE
+{
+    itineraire-assaut      Itineraire  -- LD obligatoire
+}
+Mission-Pion-ABC-ReconnaitrePoint ::= SEQUENCE
+{
+    point-a-reconnaitre       Point
+}
+Mission-Pion-ABC-Eclairer ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+Mission-Pion-ABC-Jalonner ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+Mission-Pion-ABC-ContreAttaquer ::= SEQUENCE
+{
+    itineraire-assaut	Itineraire
+}
+Mission-Pion-ABC-SemparerZone ::= SEQUENCE
+{
+    zone-a-prendre Polygon
+}
+Mission-Pion-ABC-ReleverUnite ::= SEQUENCE
+{
+    unite-a-relever Agent
+}
+Mission-Pion-ABC-ArmerPIA ::= SEQUENCE
+{
+    pia	Point
+}
+Mission-Pion-ABC-OuvrirItineraire ::= SEQUENCE
+{
+    itineraire       Itineraire
+}
+
+-- Missions internes
+Mission-Pion-ABC-Freiner ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+
+Mission-Pion-ABC-EscorterUnConvoi ::= SEQUENCE
+{
+    convoi-a-escorter Agent
+}
+
+END -- ScipioPionMission_ABC

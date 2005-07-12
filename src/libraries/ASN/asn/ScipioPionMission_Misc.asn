@@ -1,0 +1,234 @@
+--
+-- file name : ScipioPionMission_Misc.asn
+--
+-- Messages des différentes missions pion génériques et tests
+--
+
+ScipioPionMission_Misc DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
+IMPORTS EnumObjectType FROM ScipioObject;
+
+
+------------------------------------------
+-- Missions Test
+------------------------------------------
+Mission-Pion-Test-Heliporter ::= SEQUENCE
+{
+    agents             ListAgent,
+    point-embarquement Point,
+    point-debarquement Point
+}
+
+Mission-Pion-Test-MoveTo ::= SEQUENCE
+{
+    itineraire         Itineraire,
+    type-itineraire    ENUMERATED
+    {
+        movement,
+        recon,
+        infiltration,
+        assault,
+        retreat,
+        backup
+    },
+    debarque           BOOLEAN,
+
+    verrouillage-vision ENUMERATED
+    {
+        rien,
+        point,
+        direction
+    },
+    vision-point       Point,
+    vision-direction   Direction  
+}
+Mission-Pion-Test-CreateObject ::= SEQUENCE
+{
+    forme      Localisation,
+    type       EnumObjectType,
+    param      INTEGER
+}
+Mission-Pion-Test-DestroyObject ::= SEQUENCE
+{
+    objet   KnowledgeObject
+}
+
+Mission-Pion-Test-CreateBypass ::= SEQUENCE
+{
+    objet   KnowledgeObject
+}
+Mission-Pion-Test-Fire ::= SEQUENCE
+{
+    point           Point,
+    tir-indirect    BOOLEAN,
+    munitions   ENUMERATED
+    {
+        mun-obus-explosif  (0),
+        mun-obus-grenade   (1),
+        mun-obus-aced      (2),
+        mun-obus-fumigene  (3),
+        mun-obus-eclairant (4),
+        mun-obus-mine      (5)
+    },
+    nb_obus         INTEGER,
+    targets         ListKnowledgeAgent
+
+}
+Mission-Pion-Test-ChangePosture ::= SEQUENCE
+{
+    posture ENUMERATED
+    {
+        mouvement           (0),
+        arret               (1),
+        poste-reflexe       (2),
+        poste               (3),
+        poste-amenage       (4),
+        poste-prepare-genie (5),
+        automatique         (6)
+    }
+}
+Mission-Pion-Test-PathFind ::= SEQUENCE
+{
+    nb-pathfind INTEGER
+}
+Mission-Pion-Test-FindPosition ::= SEQUENCE
+{
+    point       Point,
+    retreat     Point,
+    unite       ListAgent,
+    
+    type-objectif   ENUMERATED
+    {
+        agent     (0),
+        point     (1),
+        rep_point (2),
+        objet     (3),
+        zone      (4)
+    },
+    type-operation  ENUMERATED
+    {
+        see     (0),
+        shoot   (1),
+        add     (2),
+        rem     (3),
+        safety  (4),
+        border  (5),
+        appui   (6),
+        support (7),
+        ambush  (8),
+        random  (9)
+    },
+    avoid                   BOOLEAN,
+    reco                    BOOLEAN,
+    no-obstacle-avoid       BOOLEAN,
+    debordement             BOOLEAN,
+    dec-points              BOOLEAN,
+    niveau-identification   EnumUnitIdentificationLevel,
+    dgo                     Direction
+}
+
+Mission-Pion-Test-Reinforce ::= SEQUENCE
+{
+    unite       Agent,
+    renforce    BOOLEAN
+}
+
+Mission-Pion-PlastronEnnemi ::= SEQUENCE
+{
+    itineraire      Itineraire,
+    point-mission   Point,
+    type            ENUMERATED
+    {
+        defense_statique,
+        defense_dynamique,
+        esquive,
+        reco_offensive
+    }
+}
+
+
+Mission-Pion-FaireMouvement ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+
+Mission-Pion-Suivre ::= SEQUENCE
+{
+    unite-a-suivre Agent
+}
+
+Mission-Pion-SeFaireDecontaminer ::= SEQUENCE
+{
+	point-arrivee			Point,
+	site-decontamination 	KnowledgeObject
+}
+
+Mission-Pion-Franchir ::= SEQUENCE
+{
+	pont-flottant	KnowledgeObject,
+	point-arrivee   Point
+}
+
+Mission-Pion-Decrocher ::= SEQUENCE
+{
+	point-regroupement Point
+}
+
+Mission-Pion-Stationner ::= SEQUENCE
+{
+	point-attente Point
+}
+
+Mission-Pion-SeFaireTransporter ::= SEQUENCE
+{
+	point-embarquement Point
+}
+
+-- MILICE
+Mission-Pion-MILICE-Provoquer ::= SEQUENCE
+{   
+    unite-a-provoquer       KnowledgeAgent
+}
+
+Mission-Pion-MILICE-PrendreEtTenir ::= SEQUENCE
+{   
+    point-a-prendre         Point
+}
+
+Mission-Pion-MILICE-DetruireEmbuscade ::= SEQUENCE
+{
+    position-embuscade    Point,
+    position-regroupement Point,
+    nature-obstacle       EnumObjectType  -- ( bouchon-mines | abattis ) le code généré quand la contrainte est mise ne compile pas ...
+}
+
+-- 
+Mission-Pion-JOINT-MARINE-Transporter ::= SEQUENCE
+{
+    unites-a-transporter    ListAgent, 
+    point-debarquement      Point,
+    point-embarquement      Point,
+    avec-materiel           BOOLEAN DEFAULT FALSE
+}
+
+Mission-Pion-JOINT-AIR-EffectuerRaid ::= SEQUENCE
+{
+    itineraire Itineraire,
+    zone       Polygon
+}
+
+-- Missions génériques
+Mission-Pion-Generique ::= SEQUENCE
+{
+    zones                ListPolygon,
+    points               ListPoint,
+    itineraires          ListItineraire,
+    unites               ListAgent,
+    automates            ListAutomate,
+    connaissances-agents ListKnowledgeAgent,
+    connaissances-objets ListKnowledgeObject
+}
+
+END -- ScipioPionMission_Misc

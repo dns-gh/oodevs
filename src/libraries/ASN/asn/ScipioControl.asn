@@ -1,0 +1,141 @@
+--
+-- file name : ScipioControl.asn
+--
+-- Messages de controle de la sim
+--
+
+ScipioControl DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8 FROM ScipioBase;
+
+-- Definition de tous les messages de controle (MOS->SIM et SIM->MOS)
+EnumCtrlErrorCode ::= ENUMERATED
+{
+   no-error                     (0),
+   error-already-started        (1),
+   error-not-started            (2),
+   error-not-paused             (3),
+   error-already-paused         (4),
+   error-invalid-time-factor    (5)
+}
+
+MsgCtrlStop     ::= NULL 
+MsgCtrlStopAck  ::= EnumCtrlErrorCode
+
+MsgCtrlPause    ::= NULL
+MsgCtrlPauseAck ::= EnumCtrlErrorCode
+
+MsgCtrlResume    ::= NULL
+MsgCtrlResumeAck ::= EnumCtrlErrorCode
+
+MsgCtrlChangeTimeFactor    ::= INTEGER(1..max-uint8)
+MsgCtrlChangeTimeFactorAck ::= SEQUENCE
+{
+    time-factor INTEGER (1..max-uint8),
+    error-code  EnumCtrlErrorCode
+}
+
+MsgCtrlBeginTick ::= INTEGER (0..max-uint32)  -- Current tick
+MsgCtrlEndTick   ::= SEQUENCE
+{
+    current-tick        INTEGER (0..max-uint32),
+    tick-duration       INTEGER,    -- En millisecondes
+    nb-pathfinds-longs  INTEGER,
+    nb-pathfinds-courts INTEGER
+}
+
+MsgCtrlClientAnnouncement ::= ENUMERATED
+{
+    mos       (0),
+    mos-light (1)
+}
+
+EnumEtatSim ::= ENUMERATED
+{
+    running (0),
+    paused  (1),
+    stopped (2)
+}
+
+MsgCtrlInfo ::= SEQUENCE
+{
+    current-tick            INTEGER (0..max-uint32),     
+    tick-duration           INTEGER (0..max-uint16),  -- En secondes
+    time-factor             INTEGER (0..max-uint8),
+    id-exercice             INTEGER (0..8),
+    checkpoint-frequence    INTEGER, -- En minutes
+    etat                    EnumEtatSim
+}
+
+----------------
+-- SAUVEGARDES
+----------------
+
+-- SIM -> MOS
+MsgCtrlCheckPointSaveBegin ::= NULL
+MsgCtrlCheckPointSaveEnd   ::= NULL
+MsgCtrlCheckPointLoadBegin ::= NULL
+MsgCtrlCheckPointLoadEnd   ::= NULL
+
+-- MOS -> SIM
+MsgCtrlCheckPointSetFrequency    ::= INTEGER -- En minutes
+MsgCtrlCheckPointSetFrequencyAck ::= NULL
+MsgCtrlCheckPointSaveNow         ::= SEQUENCE
+{
+    nom VisibleString OPTIONAL    
+}
+MsgCtrlCheckPointSaveNowAck      ::= NULL
+
+-- SIM -> MOS
+MsgCtrlSendCurrentStateBegin    ::= NULL
+MsgCtrlSendCurrentStateEnd      ::= NULL
+                                         
+
+----------------
+-- METEO
+----------------
+
+EnumPrecipitationType ::= ENUMERATED
+{
+    pas-de-precipitation(0),
+    tempete-sable       (1),
+    brouillard          (2),
+    crachin             (3),
+    pluie               (4),
+    neige               (5)
+}
+
+MeteoAttributs ::= SEQUENCE
+{
+    temperature                         INTEGER,
+    vitesse-vent                        Vitesse, -- en km/h
+    direction-vent                      Direction,
+    plancher-couverture-nuageuse        Altitude,
+    plafond-couverture-nuageuse         Altitude,
+    densite-moyenne-couverture-nuageuse Pourcentage,
+    precipitation                       EnumPrecipitationType
+}
+
+
+MsgCtrlMeteoGlobale ::= SEQUENCE
+{
+    attributs MeteoAttributs
+}
+
+
+MsgCtrlMeteoLocale ::= SEQUENCE
+{
+    rect-point-haut-gauche CoordUTM,
+    rect-point-bas-droite  CoordUTM,
+    meteo CHOICE
+    {
+        attributs MeteoAttributs,
+        globale   NULL
+    }
+}
+
+MsgCtrlMeteoGlobaleAck ::= NULL
+MsgCtrlMeteoLocaleAck  ::= NULL
+
+
+END -- ScipioControl

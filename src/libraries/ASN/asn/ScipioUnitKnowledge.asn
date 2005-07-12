@@ -1,0 +1,59 @@
+--
+-- file name : ScipioUnitKnowledge.asn
+--
+-- Messages de gestion de la connaissance d'une unité
+--
+
+ScipioUnitKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS OID, CoordUTM,  max-uint64, max-uint32, max-uint16, max-uint8, EnumUnitIdentificationLevel,
+        EnumNatureLevel, EnumUnitNatureWeapon, EnumUnitNatureSpecialization, EnumUnitNatureQualifier,
+        EnumUnitNatureCategory, EnumUnitNatureMobility FROM ScipioBase;
+
+MsgUnitKnowledgeCreation ::= SEQUENCE
+{
+    oid-connaissance        OID,   -- id de la connaissance
+    oid-groupe-possesseur   OID,   -- id du groupe de connaissance qui possède cette connaissance
+    oid-unite-reelle        Agent  -- id de l'unité réélle pointée par la connaissance
+}
+
+AutomatePerception ::= SEQUENCE
+{
+    oid-compagnie           OID,
+    identification-level    EnumUnitIdentificationLevel
+}
+
+MsgUnitKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance            OID,
+    oid-groupe-possesseur       OID,
+
+    pertinence                  Pourcentage                    OPTIONAL,
+    identification-level        EnumUnitIdentificationLevel    OPTIONAL,
+    max-identification-level    EnumUnitIdentificationLevel    OPTIONAL,
+    etat-op                     PourcentageLibre               OPTIONAL,
+    position                    CoordUTM                       OPTIONAL,
+    direction                   Direction                      OPTIONAL,
+    speed                       Vitesse                        OPTIONAL,
+    camp                        OID                            OPTIONAL,
+    nature-arme                 EnumUnitNatureWeapon           OPTIONAL,
+    nature-niveau               EnumNatureLevel                OPTIONAL,
+    nature-pc                   BOOLEAN                        OPTIONAL,
+    nature-specialisation       EnumUnitNatureSpecialization   OPTIONAL,
+    nature-qualification        EnumUnitNatureQualifier        OPTIONAL,
+    nature-categorie            EnumUnitNatureCategory         OPTIONAL,
+    nature-mobilite             EnumUnitNatureMobility         OPTIONAL,
+    capacite-mission            EnumUnitCapaciteMission        OPTIONAL,
+    perception-par-compagnie    SEQUENCE OF AutomatePerception OPTIONAL,
+    rendu                       BOOLEAN                        OPTIONAL,
+    prisonnier                  BOOLEAN                        OPTIONAL,
+    refugie-pris-en-compte      BOOLEAN                        OPTIONAL
+}
+
+MsgUnitKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance        OID,
+    oid-groupe-possesseur   OID
+}
+
+END -- ScipioUnitKnowledge

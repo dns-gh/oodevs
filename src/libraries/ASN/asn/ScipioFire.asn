@@ -1,0 +1,89 @@
+--
+-- file name : ScipioFire.asn
+--
+-- Messages de gestion des tirs
+--
+
+ScipioFire DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, OID FROM ScipioBase;
+
+FireResultHuman ::= SEQUENCE
+{
+    rang                        EnumHumanRank,
+    nb-non-blesses              INTEGER, -- NB : toutes les valeurs peuvent être négatives
+    nb-morts                    INTEGER,
+    nb-blesses-urgence-1        INTEGER,
+    nb-blesses-urgence-2        INTEGER,
+    nb-blesses-urgence-3        INTEGER,
+    nb-blesses-urgence-extreme  INTEGER
+}
+
+FireResultEquipement ::= SEQUENCE
+{
+    type-equipement  TypeEquipement,
+    nb-disponibles   INTEGER,
+    nb-indisponibles INTEGER,
+    nb-reparables    INTEGER
+}
+
+FireResult ::= SEQUENCE
+{
+    oid-cible               Agent,
+    resultats-humains       SEQUENCE OF FireResultHuman,
+    resultats-equipements   SEQUENCE OF FireResultEquipement
+}
+
+-- Direct
+MsgStartDirectFire ::= SEQUENCE
+{
+    oid-tir     OID,
+    oid-src     Agent,
+    oid-dst     Agent
+}
+
+MsgStopDirectFire ::= SEQUENCE
+{
+    oid-tir     OID,
+    resultat    FireResult
+}
+
+-- Indirect
+MsgStartIndirectFire ::= SEQUENCE
+{
+    oid-tir     OID,
+    oid-src     Agent,
+    position    CoordUTM
+}
+
+                  
+MsgStopIndirectFire ::= SEQUENCE
+{
+    oid-tir     OID,
+    resultats   SEQUENCE OF FireResult
+}
+
+-- Explosion mine
+MsgExplosion ::= SEQUENCE
+{
+    oid-objet   OID,
+    resultats   SEQUENCE OF FireResult 
+}
+
+EnumFireEffectType ::= ENUMERATED
+{
+    fumigene    (0),
+    eclairant   (1)
+}
+
+MsgStartFireEffect ::= SEQUENCE
+{
+    oid-effet       OID,
+    localisation    Localisation,
+    type            EnumFireEffectType
+}
+
+MsgStopFireEffect ::= OID
+
+
+END -- ScipioFire

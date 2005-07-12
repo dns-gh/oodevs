@@ -1,0 +1,238 @@
+--
+-- file name : ScipioOrderConduite.asn
+--
+--
+
+ScipioOrderConduite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH, Agent, KnowledgeObject FROM ScipioBase
+IMPORTS Itineraire, Point, Direction, Segment, TypeEquipement, ListAgent, EnumTempsBordee FROM ScipioBase
+IMPORTS EnumOrderErrorCode FROM ScipioOrder
+IMPORTS MissionGenObject FROM ScipioAutomateMission_GEN
+IMPORTS MaintenancePriorites FROM ScipioLogMaintenance
+IMPORTS SantePriorites FROM ScipioLogSante
+IMPORTS EnumReglesEngagement FROM ScipioUnitAttr;
+
+----------------------------------------------------------------------------
+-- Ordres de conduite pions/automates
+----------------------------------------------------------------------------
+OrderConduite-MettreTenueNBC          ::= NULL                 -- Dispo même sans mission
+OrderConduite-EnleverTenueNBC         ::= NULL                 -- Dispo même sans mission
+OrderConduite-PasserEnSilenceRadio    ::= NULL                 -- Dispo même sans mission
+OrderConduite-ArreterSilenceRadio     ::= NULL                 -- Dispo même sans mission
+OrderConduite-ChangerReglesEngagement ::= EnumReglesEngagement -- Dispo même sans mission
+OrderConduite-PasserEnSilenceRadar    ::= NULL                 -- Dispo même sans mission
+OrderConduite-ArreterSilenceRadar     ::= NULL                 -- Dispo même sans mission
+
+OrderConduite-AttendreSePoster             ::= NULL -- Dispo pour toutes les missions
+OrderConduite-Poursuivre                   ::= NULL -- Dispo pour toutes les missions
+OrderConduite-Interrompre                  ::= NULL -- Dispo pour toutes les missions
+
+OrderConduite-Deboucher                             ::= NULL 
+OrderConduite-Decrocher                             ::= NULL
+OrderConduite-AssignerPositionEmbarquement          ::= Point    -- Infanterie : récupération des VABs
+OrderConduite-ModifierTempsBordeeMaintenance        ::= EnumTempsBordee
+OrderConduite-ModifierTempsBordeeSante              ::= EnumTempsBordee
+OrderConduite-ModifierPrioritesReparations          ::= MaintenancePriorites
+OrderConduite-ModifierPrioritesBlesses              ::= SantePriorites
+OrderConduite-ModifierPrioritesTactiquesReparations ::= ListAutomate
+OrderConduite-ModifierPrioritesTactiquesBlesses     ::= ListAutomate
+OrderConduite-AcquerirObjectif                      ::= Localisation
+OrderConduite-Brouiller                             ::= NULL
+
+---------------------------------------
+-- Ordres de conduite pion                                         
+---------------------------------------
+OrderConduite-Pion-Contourner                   ::= NULL
+OrderConduite-Pion-ActiverObstacle              ::= NULL
+OrderConduite-Pion-ExecuterTir                  ::= NULL
+OrderConduite-Pion-Emettre                      ::= NULL
+OrderConduite-Pion-StopperEmission			    ::= NULL
+OrderConduite-Pion-EnvoyerVehicule              ::= NULL
+OrderConduite-Pion-ChangerDePosition            ::= Point
+
+EnumTypeMunitionTirIndirect ::= ENUMERATED
+{
+    explosif  (0),
+    grenade   (1),
+    aced      (2),
+    fumigene  (3),
+    eclairant (4),
+    mine      (5)
+}
+  
+OrderConduite-Pion-AppliquerFeux ::= SEQUENCE
+{
+    munitions   EnumTypeMunitionTirIndirect,
+    nb_IT		INTEGER,
+    cible       Point 
+}
+
+OrderConduite-Pion-RenforcerEnVSRAM ::= SEQUENCE
+{
+    pion-a-renforcer Agent,   -- TC2
+    nbr-ambulances   INTEGER 
+}
+OrderConduite-Pion-TransfererVSRAM ::= SEQUENCE
+{
+    pion-renforce    Agent,  -- TC2 dont on veut extraire les moyens
+    pion-a-renforcer Agent,  -- TC2
+    nbr-ambulances   INTEGER 
+}
+OrderConduite-Pion-ReprendreAuxOrdresVSRAM ::= SEQUENCE
+{
+    pion-renforce  Agent,  -- TC2 dont on veut extraire les moyens
+    nbr-ambulances INTEGER -- Le nombre d'ambulances que l'on reprend aux ordres
+}
+
+---------------------------------------
+-- Ordres de conduite automate
+---------------------------------------
+
+EnumTC2GererMaterielAvantDeplacement ::= ENUMERATED
+{
+    deborder-materiels-vers-bld      (0),
+    detruire-materiels-en-reparation (1),
+    reparer-materiels-sur-place      (2)
+} 
+
+OrderConduite-Automate-TC2-GererMaterielAvantDeplacement ::= EnumTC2GererMaterielAvantDeplacement
+
+OrderConduite-Automate-ReconnaitreZoneImplantation ::= Point 
+
+OrderConduite-Automate-RealiserVariantement ::= SEQUENCE
+{
+    site-franchissement-original    KnowledgeObject,
+    site-franchissement-variante    KnowledgeObject
+}
+OrderConduite-Automate-DesequiperSiteFranchissement ::= SEQUENCE
+{
+    site-franchissement KnowledgeObject
+}
+
+OrderConduite-Automate-ActiverObstacle ::= KnowledgeObject
+
+EnumActionReagirFaceAEni ::= ENUMERATED
+{
+    detruire-moyens,
+    defendre,
+    demonter
+}
+
+OrderConduite-Automate-ReagirFaceAEni ::= SEQUENCE
+{
+    site-franchissement KnowledgeObject,
+    action              EnumActionReagirFaceAEni
+}
+
+OrderConduite-Automate-AffecterPionAObstacle ::= SEQUENCE
+{
+    pion     Agent,
+    obstacle MissionGenObject
+}
+
+OrderConduite-Automate-TransfererRenforts ::= SEQUENCE
+{
+    pion-a-transferer    Agent,
+    automate-a-renforcer Automate   
+}
+
+----------------------------------------------------------------------------
+-- Demandes pions/automates
+----------------------------------------------------------------------------
+DemandeOrderConduite-AttendreSePoster ::= NULL
+DemandeOrderConduite-Poursuivre       ::= NULL
+DemandeOrderConduite-Decrocher        ::= NULL
+DemandeOrderConduite-Deboucher        ::= NULL
+
+---------------------------------------                                                                    
+-- Demandes pions                      
+---------------------------------------                             
+DemandeOrderConduite-Pion-Contourner                ::= NULL
+DemandeOrderConduite-Pion-ActiverObstacle           ::= NULL
+DemandeOrderConduite-Pion-ExecuterTir               ::= NULL
+DemandeOrderConduite-Pion-AppliquerFeux             ::= NULL
+                   
+----------------------------------------------------------------------------
+-- Msg MOS -> SIM
+----------------------------------------------------------------------------
+MsgOrderConduite ::= SEQUENCE
+{
+    unit-id         OID,
+    order-id        OID,
+    order-conduite  CHOICE
+    {
+        order-conduite-mettre-tenue-nbc                                 OrderConduite-MettreTenueNBC,
+        order-conduite-enlever-tenue-nbc                                OrderConduite-EnleverTenueNBC,
+        order-conduite-passer-en-silence-radio                          OrderConduite-PasserEnSilenceRadio,
+        order-conduite-arreter-silence-radio                            OrderConduite-ArreterSilenceRadio,
+        order-conduite-passer-en-silence-radar                          OrderConduite-PasserEnSilenceRadar,
+        order-conduite-arreter-silence-radar                            OrderConduite-ArreterSilenceRadar,
+        order-conduite-attendre-se-poster                               OrderConduite-AttendreSePoster,
+        order-conduite-poursuivre                                       OrderConduite-Poursuivre,
+        order-conduite-interrompre                                      OrderConduite-Interrompre,        
+        order-conduite-changer-regles-engagement                        OrderConduite-ChangerReglesEngagement,
+        order-conduite-deboucher                                        OrderConduite-Deboucher,
+        order-conduite-decrocher                                        OrderConduite-Decrocher,                                                               
+        order-conduite-assigner-position-embarquement                   OrderConduite-AssignerPositionEmbarquement,
+        order-conduite-acquerir-objectif                                OrderConduite-AcquerirObjectif,
+        order-conduite-brouiller                                        OrderConduite-Brouiller,        
+        order-conduite-pion-changer-de-position                         OrderConduite-Pion-ChangerDePosition,
+        order-conduite-pion-contourner                                  OrderConduite-Pion-Contourner,
+		order-conduite-pion-envoyer-vehicule				            OrderConduite-Pion-EnvoyerVehicule, 
+        order-conduite-pion-activer-obstacle                            OrderConduite-Pion-ActiverObstacle,
+        order-conduite-pion-appliquer-feux                              OrderConduite-Pion-AppliquerFeux,
+        order-conduite-pion-executer-tir					            OrderConduite-Pion-ExecuterTir,
+        order-conduite-pion-emettre                                     OrderConduite-Pion-Emettre,         
+        order-conduite-pion-stopper-emission                            OrderConduite-Pion-StopperEmission, 
+        order-conduite-pion-renforcer-en-vs-ram                         OrderConduite-Pion-RenforcerEnVSRAM,
+        order-conduite-pion-transferer-vs-ram                           OrderConduite-Pion-TransfererVSRAM,
+        order-conduite-pion-reprendre-aux-ordres-vs-ram                 OrderConduite-Pion-ReprendreAuxOrdresVSRAM,        
+        order-conduite-modifier-temps-bordee-maintenance                OrderConduite-ModifierTempsBordeeMaintenance,
+        order-conduite-modifier-temps-bordee-sante                      OrderConduite-ModifierTempsBordeeSante,               
+        order-conduite-modifier-priorites-reparations                   OrderConduite-ModifierPrioritesReparations,
+        order-conduite-modifier-priorites-blesses                       OrderConduite-ModifierPrioritesBlesses,
+        order-conduite-modifier-priorites-tactiques-reparations         OrderConduite-ModifierPrioritesTactiquesReparations,
+        order-conduite-modifier-priorites-tactiques-blesses             OrderConduite-ModifierPrioritesTactiquesBlesses,
+        order-conduite-automate-realiser-variantement                   OrderConduite-Automate-RealiserVariantement,
+        order-conduite-automate-desequiper-site-franchissement          OrderConduite-Automate-DesequiperSiteFranchissement,
+        order-conduite-automate-reagir-face-a-eni                       OrderConduite-Automate-ReagirFaceAEni,
+        order-conduite-automate-affecter-pion-a-obstacle                OrderConduite-Automate-AffecterPionAObstacle,
+        order-conduite-automate-reconnaitre-zone-implantation           OrderConduite-Automate-ReconnaitreZoneImplantation,
+        order-conduite-automate-tc2-gerer-materiel-avant-deplacement    OrderConduite-Automate-TC2-GererMaterielAvantDeplacement,
+        order-conduite-automate-activer-obstacle                        OrderConduite-Automate-ActiverObstacle,
+        order-conduite-automate-transferer-renforts                     OrderConduite-Automate-TransfererRenforts
+    }
+}
+
+MsgOrderConduiteAck ::= SEQUENCE
+{
+    unit-id         OID,
+    order-id        OID,
+    error-code      EnumOrderErrorCode
+}
+
+MsgAttenteOrdreConduite ::= SEQUENCE
+{
+    unit-id  OID,
+    order-id OID, -- Ordre courant
+
+    ordres-conduite SEQUENCE OF CHOICE
+    {
+        demande-order-conduite-attendre-se-poster     DemandeOrderConduite-AttendreSePoster,
+        demande-order-conduite-poursuivre             DemandeOrderConduite-Poursuivre,
+        demande-order-conduite-decrocher              DemandeOrderConduite-Decrocher,
+        demande-order-conduite-deboucher              DemandeOrderConduite-Deboucher,                                                               
+        demande-order-conduite-pion-executer-tir	  DemandeOrderConduite-Pion-ExecuterTir,
+        demande-order-conduite-pion-contourner        DemandeOrderConduite-Pion-Contourner,
+        demande-order-conduite-pion-activer-obstacle  DemandeOrderConduite-Pion-ActiverObstacle
+    }
+}
+
+MsgAnnuleAttenteOrdreConduite ::= SEQUENCE
+{
+    unit-id  OID,
+    order-id OID -- Ordre courant
+}
+
+END -- ScipioOrderConduite

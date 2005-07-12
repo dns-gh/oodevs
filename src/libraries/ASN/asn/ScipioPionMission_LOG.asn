@@ -1,0 +1,137 @@
+--
+-- file name : ScipioPionMission_Logistique.asn
+--
+-- Messages des différentes missions pion logistique
+--
+
+ScipioPionMission_LOG DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, 
+        Point, ListPoint, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
+
+Mission-Pion-LOG-SeDeployer ::= SEQUENCE
+{
+    position-deploiement    Point
+}
+
+Mission-Pion-LOG-DistribuerMoyens ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-TrierBlesses ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-TraiterBlesses ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-TrierEtTraiterBlesses ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-SoignerBlesses ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-PrendreEnCompteReactionsMentales ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-DecontaminerBlesses ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-Reparer ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-Evacuer ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-Convoyer ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-DistribuerRessources ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-ConstituerConvoi ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-Livrer ::= SEQUENCE
+{
+}
+
+Mission-Pion-LOG-PreparerBascule ::= SEQUENCE
+{
+    automate-pour-bascule Automate
+}
+
+
+Mission-Pion-LOG-AppuyerMouvement ::= SEQUENCE
+{
+    unite-a-appuyer Agent
+}
+
+Mission-Pion-LOG-ReconnaitreItineraire ::= SEQUENCE
+{
+    itineraire-log Itineraire
+}
+
+Mission-Pion-LOG-Surveiller ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-LOG-TransporterUniteChars ::= SEQUENCE
+{
+    unites-a-transporter  ListAgent,
+    point-rendez-vous     Point,
+    point-destination     Point,
+    itineraire            Itineraire
+}
+
+Mission-Pion-LOG-ReconnaitreZoneContaminee ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-LOG-AppuyerMouvementDansZone ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-LOG-MettreEnOeuvreZoneStationnement ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-LOG-AppuyerFranchissementSurUnPoint ::= SEQUENCE
+{
+    pont-flottant KnowledgeObject
+}
+
+Mission-Pion-LOG-BloquerZone ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-LOG-ReconnaitreZoneDeDeploiement ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-LOG-ArmerPIA ::= SEQUENCE
+{
+    point Point
+}
+
+
+
+
+
+END -- ScipioPionMission_LOG

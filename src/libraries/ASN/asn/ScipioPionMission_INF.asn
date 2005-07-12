@@ -1,0 +1,166 @@
+--
+-- file name : ScipioPionMission_Infanterie.asn
+--
+-- Messages des différentes missions pion infanterie
+--
+
+ScipioPionMission_INF DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS KnowledgeAgent, ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
+IMPORTS EnumObjectType FROM ScipioObject;
+
+------------------------------------------
+-- Missions INF
+------------------------------------------
+Mission-Pion-INF-ReconnaitreAxe ::= SEQUENCE 
+{
+    itineraire      Itineraire
+}
+Mission-Pion-INF-Couvrir ::= SEQUENCE
+{
+    point-couverture    Point,
+    cible               Agent
+}
+Mission-Pion-INF-Reduire ::= SEQUENCE
+{
+    unite-a-reduire KnowledgeAgent
+}
+Mission-Pion-INF-Appuyer ::= SEQUENCE
+{
+    unite-a-appuyer  Agent
+}
+Mission-Pion-INF-Fixer ::= SEQUENCE
+{
+    ennemi          KnowledgeAgent
+}
+Mission-Pion-INF-ControlerSecteur ::= SEQUENCE
+{
+    secteur               Polygon,  
+    preparer-terrain      BOOLEAN
+}
+Mission-Pion-INF-SurveillerSecteur ::= SEQUENCE
+{
+    position-installation   Point     
+}
+Mission-Pion-INF-Barrer ::= SEQUENCE
+{
+    position-a-barrer    Point
+}
+Mission-Pion-INF-ReconnaitrePoint ::= SEQUENCE
+{
+    itineraire                Itineraire,
+    point-a-reconnaitre       Point
+}
+Mission-Pion-INF-Eclairer ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+Mission-Pion-INF-Interdire ::= SEQUENCE
+{
+    point-a-interdire   Point,
+    preparer-terrain    BOOLEAN DEFAULT FALSE
+}
+Mission-Pion-INF-Semparer ::= SEQUENCE
+{
+    objectif    Point
+}
+Mission-Pion-INF-PrendrePreciserContact ::= SEQUENCE
+{
+   ennemi      KnowledgeAgent
+}
+Mission-Pion-INF-Defendre ::= SEQUENCE
+{
+    point-a-defendre    Point,
+    preparer-terrain    BOOLEAN DEFAULT FALSE
+}
+    
+Mission-Pion-INF-DetruireEmbuscade ::= SEQUENCE
+{
+    position-embuscade    Point,
+    position-regroupement Point,
+    ennemi                KnowledgeAgent, -- A mettre en optionnel + tard
+    nature-obstacle       EnumObjectType  -- ( bouchon-mines | abattis ) le code généré quand la contrainte est mise ne compile pas ...
+}
+Mission-Pion-INF-ContreAttaquer ::= SEQUENCE
+{
+    ennemi      KnowledgeAgent
+}
+Mission-Pion-INF-Freiner ::= SEQUENCE 
+{
+    itineraire      Itineraire
+}
+
+
+
+-------------------------------
+-- Nouvelles Missions INF Pion
+-------------------------------
+
+Mission-Pion-INF-FlancGarder ::= SEQUENCE
+{
+    itineraire           Itineraire,
+    unite-a-flancgarder  Agent
+}
+
+Mission-Pion-INF-OrganiserUnCheckPoint ::= SEQUENCE
+{
+    point-installation  Point
+}
+
+EnumMissionInfNatureObjectif ::= ENUMERATED
+{
+    elements-terrain (0),  -- voies de communication
+    objets           (1),  -- ( plots / position amenagees )
+    elements-mobiles (2)   -- Enis
+}
+
+Mission-Pion-INF-Harceler ::= SEQUENCE
+{
+    secteur             Polygon,
+    point-regroupement  Point,
+    nature-objectif     EnumMissionInfNatureObjectif
+}
+
+Mission-Pion-INF-DetruireParCoupDeMain ::= SEQUENCE
+{
+    objectif            Point,
+    point-regroupement  Point,
+    heure-destruction   GDH, -- ou heure de debut de mission    
+    nature-destruction  EnumMissionInfNatureObjectif
+}
+
+Mission-Pion-INF-EscorterUnConvoi ::= SEQUENCE
+{
+    convoi-a-escorter   Agent 
+}
+
+Mission-Pion-INF-RenseignerSur ::= SEQUENCE
+{   
+    itineraire      Itineraire
+}
+
+Mission-Pion-INF-Soutenir ::= SEQUENCE
+{   
+    unite-a-soutenir        Agent
+}
+
+Mission-Pion-INF-Recueillir ::= SEQUENCE
+{
+    position-installation Point,
+    pia                   Point
+}
+
+Mission-Pion-INF-Securiser ::= SEQUENCE
+{   
+    zone Polygon
+}
+
+Mission-Pion-INF-RepondreAAggression ::= SEQUENCE
+{
+    aggresseur KnowledgeAgent
+}
+
+
+END -- ScipioPionMission_INF
+

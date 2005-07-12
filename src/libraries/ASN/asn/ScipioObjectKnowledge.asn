@@ -1,0 +1,48 @@
+--
+-- file name : ScipioObject.asn
+--
+-- Messages de gestion des objets
+--
+
+ScipioObjectKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, Localisation, OID FROM ScipioBase
+IMPORTS EnumObjectType, AttrObjectSpecific FROM ScipioObject;
+
+
+---------------------------
+-- Connaissance objet
+---------------------------
+
+-- SIM -> MOS
+MsgObjectKnowledgeCreation ::= SEQUENCE
+{
+    oid-connaissance           OID, 
+    oid-camp-possesseur        OID, 
+    oid-objet-reel             OID, -- id de l'objet réel pointé par la connaissance
+    type                       EnumObjectType
+}
+
+MsgObjectKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance           OID,
+    oid-camp-possesseur        OID,
+    oid-objet-reel             OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
+    pertinence                 INTEGER( 0..100 )  OPTIONAL,
+    localisation               Localisation       OPTIONAL,
+    pourcentage-construction   INTEGER( 0..100 )  OPTIONAL, 
+    pourcentage-valorisation   INTEGER( 0..100 )  OPTIONAL,
+    pourcentage-contournement  INTEGER( 0..100 )  OPTIONAL,
+    en-preparation             BOOLEAN            OPTIONAL,
+    est-percu                  BOOLEAN            OPTIONAL,
+    attributs-specifiques      AttrObjectSpecific OPTIONAL,
+    perception-par-compagnie   SEQUENCE OF OID    OPTIONAL  -- Liste des compagnies percevant l'objet
+}
+
+MsgObjectKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance    OID,    
+    oid-camp-possesseur OID     
+}
+
+END -- ScipioObjectKnowledge

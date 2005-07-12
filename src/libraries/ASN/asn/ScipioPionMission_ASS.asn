@@ -1,0 +1,64 @@
+--
+-- file name : ScipioPionMission_3D.asn
+--
+-- Messages des différentes missions pion artillerie
+--
+
+ScipioPionMission_ASS DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS NatureAtlas, ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
+IMPORTS EnumModeTir FROM ScipioOrder;
+
+------------------------------------------
+-- ASS (Artillerie Sol Sol)
+------------------------------------------
+
+Mission-Pion-ASS-AssurerMiseEnOeuvre ::= SEQUENCE
+{
+    zone-implantation        KnowledgeObject,
+    presence-contre-batterie BOOLEAN
+}
+
+Mission-Pion-ASS-AssurerMiseEnOeuvreSurPosition ::= SEQUENCE
+{
+    position-implantation    Point,
+    presence-contre-batterie BOOLEAN
+}
+
+Mission-Pion-ASS-ReconnaitreZoneDeploiement ::= SEQUENCE
+{
+    position-deploiement Point
+}
+
+Mission-Pion-ASS-AcquerirLanceursEni ::= SEQUENCE -- Cobra
+{
+    zones-a-observer  ListPolygon,
+    zone-implantation KnowledgeObject,
+    menance-roem      BOOLEAN
+}
+
+Mission-Pion-ASS-EO-AcquerirObjectifs ::= SEQUENCE
+{
+    zone-a-observer   	Polygon,
+    unite-a-appuyer		Automate,
+    categories          NatureAtlas
+}
+
+Mission-Pion-ASS-EOP-AcquerirObjectifs ::= SEQUENCE
+{
+    zone-a-observer   	    Polygon,
+    position-installation   Point,
+    position-debarquement   Point
+}
+
+Mission-Pion-ASS-RATAC-AcquerirObjectifs ::= SEQUENCE
+{
+    zone-a-observer   	 Polygon,
+    categories           NatureAtlas,
+    position-deploiement Point
+}
+
+
+END -- ScipioPionMission_ASS
+

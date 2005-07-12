@@ -1,0 +1,212 @@
+// *****************************************************************************
+//
+// $Created: NLD 2004-03-11 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.cpp $
+// $Author: Jvt $
+// $Modtime: 23/03/05 18:57 $
+// $Revision: 3 $
+// $Workfile: DEC_KS_ObjectKnowledgeSynthetizer.cpp $
+//
+// *****************************************************************************
+
+#include "MIL_pch.h"
+#include "DEC_KS_ObjectKnowledgeSynthetizer.h"
+
+#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_Knowledge_ObjectPerception.h"
+#include "DEC_Knowledge_ObjectCollision.h"
+#include "DEC_Knowledge_Object.h"
+
+#include "Entities/MIL_Army.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/MIL_RealObject_ABC.h"
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer constructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Army& army )
+    : DEC_KnowledgeSource_ABC( blackBoard )
+    , pArmy_                 ( &army )
+{
+    assert( pBlackBoard_ );
+    
+    pBlackBoard_->AddToScheduler( *this );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer destructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
+{
+    assert( pBlackBoard_ );
+    pBlackBoard_->RemoveFromScheduler( *this );
+}
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::PrepareKnowledgeObject
+// Created: NLD 2004-03-17
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::PrepareKnowledgeObject( DEC_Knowledge_Object& knowledge )
+{
+    knowledge.Prepare();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::Prepare
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
+{
+    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object> method( DEC_KS_ObjectKnowledgeSynthetizer::PrepareKnowledgeObject, *this );
+    
+    assert( pBlackBoard_ );
+    pBlackBoard_->ApplyOnKnowledgesObject( method );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate
+// Created: NLD 2004-03-19
+// -----------------------------------------------------------------------------
+inline
+DEC_Knowledge_Object& DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_RealObject_ABC& objectKnown ) const
+{
+    T_KnowledgeObjectVector objectKnowledges;
+    
+    assert( pBlackBoard_ );    
+    pBlackBoard_->GetKnowledgesObject( objectKnown, objectKnowledges );
+
+    assert( objectKnowledges.size() < 2 );
+    if ( objectKnowledges.empty() )
+    {
+        assert( pArmy_ );
+        return pBlackBoard_->CreateKnowledgeObject( *pArmy_, objectKnown );
+    }
+    else
+        return *objectKnowledges.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+inline
+void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
+{
+    GetKnowledgeToUpdate( perception.GetObjectPerceived() ).Update( perception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+inline
+void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
+{
+    assert( collision.IsValid() );
+    GetKnowledgeToUpdate( collision.GetObject() ).Update( collision );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception
+// Created: NLD 2004-06-04
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
+{
+    class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectPerception> methodUpdateKnowledgesFromObjectPerception( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception, *this );
+    class_mem_fun_void_const_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_ObjectCollision > methodUpdateKnowledgesFromObjectCollision ( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision , *this );
+
+    assert( pArmy_ );
+    
+    const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pArmy_->GetKnowledgeGroups();
+    for( MIL_Army::CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
+    {
+        const MIL_KnowledgeGroup::T_AutomateVector& automates = itKnowledgeGroup->second->GetAutomates();
+        for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
+        {
+            const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
+            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            {
+                MIL_AgentPion& pion = **itPion;
+                pion.GetKnowledge().ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
+                pion.GetKnowledge().ApplyOnKnowledgesObjectCollision ( methodUpdateKnowledgesFromObjectCollision  );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::ProcessEphemeralKnowledges
+// Created: NLD 2004-06-04
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::ProcessEphemeralKnowledges()
+{
+    for( CIT_ObjectVector itObject = ephemeralKnowledges_.begin(); itObject != ephemeralKnowledges_.end(); ++itObject )
+    {
+        MIL_RealObject_ABC& object = **itObject;
+        if( object.IsMarkedForDestruction() )
+            continue;
+        GetKnowledgeToUpdate( object ).Update( PHY_PerceptionLevel::identified_ );
+    }
+    ephemeralKnowledges_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget
+// Created: NLD 2004-06-04
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
+{
+    assert( pBlackBoard_ );
+
+    for ( CIT_ObjectVector itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
+    {
+        T_KnowledgeObjectVector objectKnowledges;
+        
+        pBlackBoard_->GetKnowledgesObject( **itObject, objectKnowledges );
+        
+        for ( CIT_KnowledgeObjectVector itKnowledge = objectKnowledges.begin(); itKnowledge != objectKnowledges.end(); ++itKnowledge )
+            pBlackBoard_->DestroyKnowledgeObject( **itKnowledge );
+    }
+    objectsToForget_.clear();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget
+// Created: NLD 2004-06-08
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
+{
+    assert( pBlackBoard_ );
+    
+    for( CIT_KnowledgeObjectVector itKnowledge = knowledgesObjectToForget_.begin(); itKnowledge != knowledgesObjectToForget_.end(); ++itKnowledge )
+        pBlackBoard_->DestroyKnowledgeObject( **itKnowledge );
+    knowledgesObjectToForget_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::Talk
+// Created: NLD 2004-03-12
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
+{
+    // Step 1 - Synthesis of the perceptions of the subordinates 
+    SynthetizeSubordinatesPerception();
+
+    // Step 2 - Ephemeral knowledges
+    ProcessEphemeralKnowledges();
+    
+    // Step 3 - Objects to forget
+    ProcessObjectsToForget();
+
+    // Step 4 - Knowledges object to forget (i.e. after an interaction on a knowledge dissociated from its real object)
+    ProcessKnowledgesObjectToForget();
+}
+

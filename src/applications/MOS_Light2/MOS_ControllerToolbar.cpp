@@ -1,0 +1,118 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+//
+// $Created: APE 2004-09-21 $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_ControllerToolbar.cpp $
+// $Author: Age $
+// $Modtime: 14/04/05 12:53 $
+// $Revision: 2 $
+// $Workfile: MOS_ControllerToolbar.cpp $
+//
+// *****************************************************************************
+
+#ifdef __GNUG__
+#   pragma implementation
+#endif
+
+#include "MOS_Light2_Pch.h"
+#include "MOS_ControllerToolbar.h"
+#include "moc_MOS_ControllerToolbar.cpp"
+
+#include "MOS_App.h"
+#include "MOS_AgentManager.h"
+#include "MOS_Team.h"
+#include "MOS_MainWindow.h"
+#include "MOS_Options.h"
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar constructor
+/** @param  pParent 
+*/
+// Created: APE 2004-09-21
+// -----------------------------------------------------------------------------
+MOS_ControllerToolbar::MOS_ControllerToolbar( QMainWindow* pParent )
+    : QToolBar( pParent, "controller toolbar" )
+{
+    this->setLabel( tr( "Outils controlleur" ) );
+
+    // Team selection combo box
+    new QLabel( tr( "Camp:" ), this );
+    pTeamCombo_ = new QComboBox( this );
+
+    // Populate the combo box.
+    pTeamCombo_->insertItem( tr( "Tous" ), 0 );
+    const MOS_AgentManager::T_TeamMap& teamMap = MOS_App::GetApp().GetAgentManager().GetTeams();
+    for( MOS_AgentManager::CIT_TeamMap it = teamMap.begin(); it != teamMap.end(); ++it )
+        pTeamCombo_->insertItem( it->second->GetName().c_str(), it->second->GetIdx() + 1 );
+    pTeamCombo_->setCurrentItem( 0 );
+
+    // Sim launch buttons
+    new QToolButton( MAKE_ICON( sim ),    tr( "Lancer Scipio" ),       "", this, SLOT( LaunchScipio() ),    this );
+    new QToolButton( MAKE_ICON( simdbg ), tr( "Lancer Scipio debug" ), "", this, SLOT( LaunchScipioDbg() ), this);
+
+    // Connexions
+    connect( pTeamCombo_, SIGNAL( activated( int ) ), this,                             SLOT( OnTeamChanged( int ) ) );
+    connect( this,       SIGNAL( TeamChanged() ),    &MOS_MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ) );
+    connect( &MOS_App::GetApp(), SIGNAL( TeamCreated( MOS_Team& ) ), this,   SLOT( OnTeamCreated( MOS_Team& ) ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar destructor
+// Created: APE 2004-09-21
+// -----------------------------------------------------------------------------
+MOS_ControllerToolbar::~MOS_ControllerToolbar()
+{
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar::OnTeamChanged
+/** @param  nValue 
+*/
+// Created: APE 2004-05-26
+// -----------------------------------------------------------------------------
+void MOS_ControllerToolbar::OnTeamChanged( int nValue )
+{
+    MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ = nValue - 1;
+    // The "- 1" above is to take into account that index 0 is
+    // occupied by the 'all teams' (ie. controller view) option.
+
+    emit TeamChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar::OnTeamCreated
+// Created: AGE 2005-04-14
+// -----------------------------------------------------------------------------
+void MOS_ControllerToolbar::OnTeamCreated( MOS_Team& team )
+{
+    pTeamCombo_->insertItem( team.GetName().c_str(), team.GetIdx() + 1 );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar::LaunchScipio
+// Created: APE 2004-06-18
+// -----------------------------------------------------------------------------
+void MOS_ControllerToolbar::LaunchScipio()
+{
+    ShellExecute( 0, "open", "sim.exe", "-nodisplay -forceodbcomposition", NULL, SW_SHOW );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar::LaunchScipioDbg
+// Created: APE 2004-06-18
+// -----------------------------------------------------------------------------
+void MOS_ControllerToolbar::LaunchScipioDbg()
+{
+    ShellExecute( 0, "open", "sim_dbg.exe", "-nodisplay -forceodbcomposition", NULL, SW_SHOW );
+}

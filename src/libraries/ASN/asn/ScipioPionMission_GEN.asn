@@ -1,0 +1,277 @@
+--
+-- file name : ScipioPionMission_Genie.asn
+--
+-- Messages des différentes missions pion génie
+--
+
+ScipioPionMission_GEN DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, ListPoint, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, Point, 
+        Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
+
+------------------------------------------
+-- Missions GEN
+------------------------------------------
+EnumTypeFosseAC ::= ENUMERATED
+{
+    simple  (0),
+    compose (1)
+}
+
+Mission-Pion-GEN-RealiserFosseAC ::= SEQUENCE
+{
+    pos-obstacle            Line,
+    oid-obstacle-planifie   OID,
+    type                    EnumTypeFosseAC -- Juste un paramètre influencant les délais de construction/destruction - n'influe pas sur la géométrie de l'obstacle
+}
+Mission-Pion-GEN-RealiserAbattisMine ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    urgence                 EnumMissionGenUrgence,
+    preliminaire            EnumMissionGenSousTypeObstacle
+}
+Mission-Pion-GEN-RealiserPointMine ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID
+}
+Mission-Pion-GEN-RealiserBarricade ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    urgence                 EnumMissionGenUrgence
+}
+Mission-Pion-GEN-RealiserEboulement ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    preliminaire            EnumMissionGenSousTypeObstacle
+}
+Mission-Pion-GEN-RealiserBouchonMine ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    urgence                 EnumMissionGenUrgence
+}
+Mission-Pion-GEN-DetruireRoute ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    preliminaire            EnumMissionGenSousTypeObstacle
+}
+Mission-Pion-GEN-DetruirePont ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    preliminaire            EnumMissionGenSousTypeObstacle
+}
+Mission-Pion-GEN-SecuriserItineraire ::= SEQUENCE
+{
+    itineraire          Itineraire
+}
+Mission-Pion-GEN-DegagerAbattisMine ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-DegagerEboulement ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-DegagerRues ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-ComblerEntonnoir ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-ComblerFosseAC ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-CreerContournement ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-RealiserZoneMineeLineaire ::= SEQUENCE
+{    
+    pos-obstacle            Polygon,  
+    oid-obstacle-planifie   OID,
+    densite                 REAL(0..5)    -- Nombre de mines par mètre de front
+}
+Mission-Pion-GEN-OuvrirTrouee ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+Mission-Pion-GEN-Renforcer ::= SEQUENCE
+{
+    lieu-renforcement   Point,
+    unite               Agent
+}
+
+Mission-Pion-GEN-FranchirEntonnoir ::= SEQUENCE
+{
+    obstacle KnowledgeObject
+}
+Mission-Pion-GEN-FranchirFosseAC ::= SEQUENCE
+{
+    obstacle KnowledgeObject
+} 
+Mission-Pion-GEN-RealiserZoneMineeParDispersion ::= SEQUENCE
+{
+    pos-obstacle            Polygon,
+    oid-obstacle-planifie   OID,
+    densite                 REAL(0..5)    -- Nombre de mines par mètre de front
+}
+Mission-Pion-GEN-RealiserPostesTir ::= SEQUENCE
+{
+    pos-objet            Point,
+    oid-objet-planifie   OID
+}
+Mission-Pion-GEN-RealiserTravauxProtection ::= SEQUENCE
+{
+    pos-objet            Point,
+    oid-objet-planifie   OID
+}
+Mission-Pion-GEN-RetablirItineraire ::= SEQUENCE
+{
+    itineraire          Itineraire
+}    
+
+EnumGenTypePontage ::= ENUMERATED
+{
+    continu     (0),
+    discontinu  (1)
+}
+
+Mission-Pion-GEN-EquiperExploiter ::= SEQUENCE
+{                               
+    site-franchissement  KnowledgeObject,
+    oid-objet-planifie   OID,
+    point-regroupement   Point,
+    type-pontage         EnumGenTypePontage
+}
+
+Mission-Pion-GEN-ExecuterVariantement ::= SEQUENCE
+{                               
+    site-franchissement  KnowledgeObject,
+    oid-objet-planifie   OID,
+    point-regroupement   Point,
+    type-pontage         EnumGenTypePontage
+}
+
+Mission-Pion-GEN-ReconnaitreSiteFranchissement ::= SEQUENCE
+{                               
+    site-franchissement  KnowledgeObject
+}
+
+Mission-Pion-GEN-ReconnaitreItineraire ::= SEQUENCE
+{                               
+    itineraire Itineraire
+}
+
+Mission-Pion-GEN-DeminerSiteFranchissement ::= SEQUENCE
+{
+    site-franchissement KnowledgeObject
+}
+
+Mission-Pion-GEN-ReconnaitreZone ::= SEQUENCE
+{
+    zone    Localisation
+}
+
+--
+-- Nouvelles missions pour la V1
+--
+Mission-Pion-GEN-CreerPlateForme ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID
+}
+
+Mission-Pion-GEN-CreerPiste ::= SEQUENCE
+{
+    pos-obstacle            Line,
+    oid-obstacle-planifie   OID
+}
+
+Mission-Pion-GEN-CreerAirePoser ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID
+}
+
+Mission-Pion-GEN-NeutraliserEnginsExplosifs ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+
+Mission-Pion-GEN-ActiverObstacle ::= SEQUENCE
+{
+    obstacle            KnowledgeObject
+}
+
+Mission-Pion-GEN-AmeliorerMobilite ::= SEQUENCE
+{
+    zone    Polygon
+}
+
+Mission-Pion-GEN-RealiserAireLogistique ::= SEQUENCE
+{
+    position-obstacle       Point,
+    oid-obstacle-planifie   OID
+}
+
+Mission-Pion-GEN-DepolluerZone ::= SEQUENCE
+{
+    zone    Localisation
+}
+
+Mission-Pion-GEN-AmenagerTerrainPoser ::= SEQUENCE
+{
+    pos-obstacle            Point,
+    oid-obstacle-planifie   OID,
+    type-objet              ENUMERATED    
+    {
+        aire-poser,
+        terrain-largage
+    }
+    
+}
+
+Mission-Pion-GEN-RealiserPlateFormeDeploiement ::= SEQUENCE
+{
+    position-obstacle       Point,
+    oid-obstacle-planifie   OID
+}
+
+Mission-Pion-GEN-ReprendreMissionConstruction ::= SEQUENCE
+{
+    travaux KnowledgeObject
+}
+
+Mission-Pion-GEN-RealiserZonePoserHelicoptere ::= SEQUENCE
+{
+    zone-poser              Point,
+    oid-obstacle-planifie   OID
+}
+
+Mission-Pion-GEN-AppuyerDebarquementTroupesGU ::= SEQUENCE
+{
+    zone-appui Polygon -- Rectangle 
+}
+
+Mission-Pion-GEN-RealiserCampPrisonniers ::= SEQUENCE
+{
+    camp    Polygon,
+    tc2     Automate
+}
+
+Mission-Pion-GEN-RealiserCampRefugies ::= SEQUENCE
+{
+    camp    Polygon,
+    tc2     Automate
+}
+
+END -- ScipioPionMission_GEN

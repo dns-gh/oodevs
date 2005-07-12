@@ -1,0 +1,352 @@
+--
+-- file name : ScipioMessages.asn
+--
+-- Liste des messages
+--
+
+ScipioMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS MsgCtrlInfo,
+        MsgCtrlBeginTick,
+        MsgCtrlEndTick,
+        MsgCtrlStopAck,
+        MsgCtrlPauseAck,
+        MsgCtrlResumeAck,
+        MsgCtrlChangeTimeFactorAck,
+        MsgCtrlStop,
+        MsgCtrlPause,
+        MsgCtrlResume,
+        MsgCtrlChangeTimeFactor,
+        MsgCtrlMeteoGlobale,
+        MsgCtrlMeteoGlobaleAck,
+        MsgCtrlMeteoLocale,
+        MsgCtrlMeteoLocaleAck,
+        MsgCtrlCheckPointSaveBegin,
+        MsgCtrlCheckPointSaveEnd,
+        MsgCtrlCheckPointLoadBegin,
+        MsgCtrlCheckPointLoadEnd,
+        MsgCtrlCheckPointSetFrequency,
+        MsgCtrlCheckPointSetFrequencyAck,
+        MsgCtrlCheckPointSaveNow,
+        MsgCtrlCheckPointSaveNowAck,
+        MsgCtrlSendCurrentStateBegin, 
+        MsgCtrlSendCurrentStateEnd,
+        MsgCtrlClientAnnouncement  FROM ScipioControl
+
+IMPORTS MsgLimitCreation,
+        MsgLimitDestruction,
+        MsgLimaCreation,
+        MsgLimaDestruction,
+        MsgLimitCreationAck,
+        MsgLimitDestructionAck,
+        MsgLimaCreationAck,
+        MsgLimitUpdateAck,
+        MsgLimitUpdate,
+        MsgLimaUpdateAck,
+        MsgLimaUpdate,
+        MsgLimaDestructionAck FROM ScipioLimaLimite
+        
+IMPORTS MsgUnitKnowledgeCreation,
+        MsgUnitKnowledgeUpdate,
+        MsgUnitKnowledgeDestruction FROM ScipioUnitKnowledge
+        
+IMPORTS MsgStartDirectFire,
+        MsgStopDirectFire,
+        MsgStartIndirectFire,
+        MsgStopIndirectFire,
+        MsgExplosion,
+        MsgStartFireEffect,
+        MsgStopFireEffect FROM ScipioFire
+        
+IMPORTS MsgUnitAttributes,
+        MsgUnitDotations,
+        MsgUnitDotationPersonnel,
+        MsgUnitDotationEquipement,
+        MsgUnitDotationRessource,
+        MsgUnitDotationRequest,
+        MsgUnitMagicAction,
+        MsgUnitMagicActionAck,
+        MsgUnitPathFind, 
+        MsgSetAutomateMode,
+        MsgSetAutomateModeAck FROM ScipioUnitAttr
+    
+IMPORTS MsgPionOrder,
+        MsgPionOrderAck FROM ScipioPionOrder
+
+IMPORTS MsgAutomateOrder,
+        MsgAutomateOrderAck,
+        MsgAutomateMRT FROM ScipioAutomateOrder
+
+IMPORTS MsgOrderManagement FROM ScipioOrder
+
+IMPORTS MsgAttenteOrdreConduite,
+        MsgAnnuleAttenteOrdreConduite,
+        MsgOrderConduite,
+        MsgOrderConduiteAck FROM ScipioOrderConduite
+
+IMPORTS MsgMosLau-RequestListMission,
+        MsgLauMos-ListMission,
+        MsgMosLau-LaunchSim,
+        MsgSimLau-SimLaunched,
+        MsgLauMos-SimLaunched,
+        MsgLauSim-Ping,
+        MsgSimLau-Pong,
+        MsgLauMos-SimFailure,
+        MsgMosLau-RequestListCheckpoint,
+        MsgLauMos-ListCheckpoint,
+        MsgMosLau-LaunchSimFromCheckpoint,
+        MsgMosLau-StopSim,
+        MsgLauSim-StopSim,
+        MsgSimLau-ExecSuccess,
+        MsgLauMos-ExecSuccess FROM ScipioLauncher
+     
+IMPORTS MsgCR FROM ScipioCR
+
+IMPORTS MsgObjectKnowledgeConstruction,
+        MsgObjectKnowledgeUpdate,
+        MsgObjectKnowledgeDestruction FROM ScipioObjectKnowledge
+
+IMPORTS MsgObjectCreation, 
+        MsgObjectDestruction,
+        MsgObjectUpdate,
+        MsgObjectMagicAction, 
+        MsgObjectMagicActionAck FROM ScipioObject
+        
+IMPORTS MsgChangeDiplomatie,
+        MsgChangeDiplomatieAck,
+        MsgChangeGroupeConnaissance,
+        MsgChangeGroupeConnaissanceAck,
+        MsgChangeLiensLogistiques,
+        MsgChangeLiensLogistiquesAck,
+        MsgChangeAutomate, 
+        MsgChangeAutomateAck,
+        MsgAutomateCreation,
+        MsgPionCreation FROM ScipioHierarchie
+        
+IMPORTS MsgLogSanteTraitementHumainCreation,
+        MsgLogSanteTraitementHumainUpdate,
+        MsgLogSanteTraitementHumainDestruction,
+        MsgLogSanteEtat FROM ScipioLogSante
+
+IMPORTS MsgLogMaintenanceTraitementEquipementCreation,
+        MsgLogMaintenanceTraitementEquipemenUpdate,
+        MsgLogMaintenanceTraitementEquipemenDestruction,
+        MsgLogMaintenanceEtat FROM ScipioLogMaintenance
+        
+IMPORTS MsgLogRavitaillementTraitementCreation,
+        MsgLogRavitaillementTraitementUpdate,
+        MsgLogRavitaillementTraitementDestruction,
+        MsgLogRavitaillementEtat,
+        MsgLogRavitaillementQuotas,
+        MsgLogRavitaillementPousserFlux,
+        MsgLogRavitaillementPousserFluxAck,
+        MsgLogRavitaillementChangeQuotas,
+        MsgLogRavitaillementChangeQuotasAck FROM ScipioLogRavitaillement;
+
+--
+-- Messages globaux
+--  
+MsgsSimMos ::= CHOICE
+{
+    msg-ctrl-info                                           MsgCtrlInfo,
+    msg-ctrl-begin-tick                                     MsgCtrlBeginTick,
+    msg-ctrl-end-tick                                       MsgCtrlEndTick,
+    msg-ctrl-stop-ack                                       MsgCtrlStopAck,
+    msg-ctrl-pause-ack                                      MsgCtrlPauseAck,
+    msg-ctrl-resume-ack                                     MsgCtrlResumeAck,
+    msg-ctrl-change-time-factor-ack                         MsgCtrlChangeTimeFactorAck,
+    msg-ctrl-meteo-globale-ack                              MsgCtrlMeteoGlobaleAck,
+    msg-ctrl-meteo-locale-ack                               MsgCtrlMeteoLocaleAck,
+    msg-ctrl-checkpoint-save-begin                          MsgCtrlCheckPointSaveBegin,
+    msg-ctrl-checkpoint-save-end                            MsgCtrlCheckPointSaveEnd,
+    msg-ctrl-checkpoint-load-begin                          MsgCtrlCheckPointLoadBegin,
+    msg-ctrl-checkpoint-load-end                            MsgCtrlCheckPointLoadEnd,
+    msg-ctrl-checkpoint-set-frequency-ack                   MsgCtrlCheckPointSetFrequencyAck,
+    msg-ctrl-checkpoint-save-now-ack                        MsgCtrlCheckPointSaveNowAck,
+    msg-ctrl-send-current-state-begin                       MsgCtrlSendCurrentStateBegin,
+    msg-ctrl-send-current-state-end                         MsgCtrlSendCurrentStateEnd,
+
+    msg-limit-creation                                      MsgLimitCreation,
+    msg-limit-destruction                                   MsgLimitDestruction,
+    msg-lima-creation                                       MsgLimaCreation,
+    msg-lima-destruction                                    MsgLimaDestruction, 
+    
+    msg-automate-creation                                   MsgAutomateCreation,
+    msg-pion-creation                                       MsgPionCreation,
+    msg-change-diplomatie                                   MsgChangeDiplomatie,
+
+    msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
+    msg-unit-knowledge-update                               MsgUnitKnowledgeUpdate,
+    msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,
+
+    msg-unit-attributes                                     MsgUnitAttributes,
+    msg-unit-dotations                                      MsgUnitDotations,
+    msg-unit-pathfind                                       MsgUnitPathFind,
+
+    msg-start-direct-fire                                   MsgStartDirectFire,
+    msg-stop-direct-fire                                    MsgStopDirectFire,
+    msg-start-indirect-fire                                 MsgStartIndirectFire,
+    msg-stop-indirect-fire                                  MsgStopIndirectFire,
+    msg-explosion                                           MsgExplosion,
+    msg-start-fire-effect                                   MsgStartFireEffect,
+    msg-stop-fire-effect                                    MsgStopFireEffect,
+    
+    msg-cr                                                  MsgCR,
+
+    msg-order-management                                    MsgOrderManagement,
+    msg-attente-ordre-conduite                              MsgAttenteOrdreConduite,
+    msg-annule-attente-ordre-conduite                       MsgAnnuleAttenteOrdreConduite,
+    msg-automate-mrt                                        MsgAutomateMRT,
+    msg-pion-order                                          MsgPionOrder,
+    msg-automate-order                                      MsgAutomateOrder,
+
+    msg-object-creation                                     MsgObjectCreation,
+    msg-object-destruction                                  MsgObjectDestruction,
+    msg-object-update                                       MsgObjectUpdate,
+    msg-object-knowledge-creation                           MsgObjectKnowledgeCreation,
+    msg-object-knowledge-update                             MsgObjectKnowledgeUpdate,
+    msg-object-knowledge-destruction                        MsgObjectKnowledgeDestruction,
+    
+    msg-change-automate                                     MsgChangeAutomate,
+       
+    msg-log-sante-traitement-humain-creation                MsgLogSanteTraitementHumainCreation,
+    msg-log-sante-traitement-humain-update                  MsgLogSanteTraitementHumainUpdate,
+    msg-log-sante-traitement-humain-destruction             MsgLogSanteTraitementHumainDestruction,
+    msg-log-sante-etat                                      MsgLogSanteEtat,
+    
+    msg-log-maintenance-traitement-equipement-creation      MsgLogMaintenanceTraitementEquipementCreation,
+    msg-log-maintenance-traitement-equipement-update        MsgLogMaintenanceTraitementEquipementUpdate,
+    msg-log-maintenance-traitement-equipement-destruction   MsgLogMaintenanceTraitementEquipementDestruction,
+    msg-log-maintenance-etat                                MsgLogMaintenanceEtat,
+    
+    msg-log-ravitaillement-traitement-creation              MsgLogRavitaillementTraitementCreation,
+    msg-log-ravitaillement-traitement-update                MsgLogRavitaillementTraitementUpdate,
+    msg-log-ravitaillement-traitement-destruction           MsgLogRavitaillementTraitementDestruction,
+    msg-log-ravitaillement-etat                             MsgLogRavitaillementEtat,
+    msg-log-ravitaillement-quotas                           MsgLogRavitaillementQuotas,   
+
+    nb-choice 	NbChoice
+    
+}
+
+MsgsSimMosWithContext ::= CHOICE
+{
+    msg-limit-creation-ack                      MsgLimitCreationAck,
+    msg-limit-destruction-ack                   MsgLimitDestructionAck,
+    msg-limit-update-ack                        MsgLimitUpdateAck,
+    msg-lima-creation-ack                       MsgLimaCreationAck,
+    msg-lima-destruction-ack                    MsgLimaDestructionAck,
+    msg-lima-update-ack                         MsgLimaUpdateAck,
+                                                            
+    msg-pion-order-ack                          MsgPionOrderAck,
+    msg-order-conduite-ack                      MsgOrderConduiteAck,
+    msg-automate-order-ack                      MsgAutomateOrderAck,
+                                                
+    msg-set-automate-mode-ack                   MsgSetAutomateModeAck,
+                                                
+    msg-unit-magic-action-ack                   MsgUnitMagicActionAck,
+    msg-object-magic-action-ack                 MsgObjectMagicActionAck,
+   
+    msg-change-diplomatie-ack                   MsgChangeDiplomatieAck,
+    msg-change-groupe-connaissance-ack          MsgChangeGroupeConnaissanceAck,
+    msg-change-liens-logistiques-ack            MsgChangeLiensLogistiquesAck,
+    msg-change-automate-ack                     MsgChangeAutomateAck,   
+    
+    msg-log-ravitaillement-pousser-flux-ack     MsgLogRavitaillementPousserFluxAck,
+    msg-log-ravitaillement-change-quotas-ack    MsgLogRavitaillementChangeQuotasAck,   
+  
+    nb-choice                                   NbChoice
+}
+
+MsgsMosSim ::= CHOICE
+{
+    msg-ctrl-client-announcement        MsgCtrlClientAnnouncement,
+    msg-ctrl-stop                       MsgCtrlStop,
+    msg-ctrl-pause                      MsgCtrlPause,
+    msg-ctrl-resume                     MsgCtrlResume,
+    msg-ctrl-change-time-factor         MsgCtrlChangeTimeFactor,      
+    msg-ctrl-meteo-globale              MsgCtrlMeteoGlobale,
+    msg-ctrl-meteo-locale               MsgCtrlMeteoLocale,
+    msg-ctrl-checkpoint-save-now        MsgCtrlCheckPointSaveNow,
+    msg-ctrl-checkpoint-set-frequency   MsgCtrlCheckPointSetFrequency, 
+    nb-choice                           NbChoice
+}
+
+MsgsMosSimWithContext ::= CHOICE
+{
+    msg-limit-creation                      MsgLimitCreation,
+    msg-limit-destruction                   MsgLimitDestruction,
+    msg-limit-update                        MsgLimitUpdate,
+    msg-lima-creation                       MsgLimaCreation,
+    msg-lima-destruction                    MsgLimaDestruction, 
+    msg-lima-update                         MsgLimaUpdate,
+                                                    
+    msg-pion-order                          MsgPionOrder,
+    msg-order-conduite                      MsgOrderConduite,
+    msg-automate-order                      MsgAutomateOrder,
+                                            
+    msg-set-automate-mode                   MsgSetAutomateMode,
+                                            
+    msg-unit-magic-action                   MsgUnitMagicAction,
+    msg-object-magic-action                 MsgObjectMagicAction,
+
+    msg-change-diplomatie                   MsgChangeDiplomatie,
+    msg-change-groupe-connaissance          MsgChangeGroupeConnaissance,
+    msg-change-liens-logistiques            MsgChangeLiensLogistiques,
+    msg-change-automate                     MsgChangeAutomate,
+    
+    msg-log-ravitaillement-pousser-flux     MsgLogRavitaillementPousserFlux,
+    msg-log-ravitaillement-change-quotas    MsgLogRavitaillementChangeQuotas,
+
+    nb-choice                               NbChoice
+}
+                                    
+
+--
+-- Messages liés au launcher
+--  
+
+MsgsMosLauncher ::= CHOICE
+{
+    msg-request-list-mission        MsgMosLau-RequestListMission,
+    msg-launch-sim                  MsgMosLau-LaunchSim,
+    msg-request-list-sim            MsgMosLau-RequestListSim,
+    msg-request-list-checkpoint     MsgMosLau-RequestListCheckpoint,
+    msg-launch-sim-from-checkpoint  MsgMosLau-LaunchSimFromCheckpoint,
+    msg-stop-sim                    MsgMosLau-StopSim,
+
+    nb-choice                       NbChoice
+}
+
+MsgsLauncherMos ::= CHOICE
+{
+    msg-list-mission                MsgLauMos-ListMission,
+    msg-sim-launched                MsgLauMos-SimLaunched,
+    msg-list-sim                    MsgLauMos-ListSim,
+    msg-sim-failure                 MsgLauMos-SimFailure,
+    msg-list-checkpoint             MsgLauMos-ListCheckpoint,
+    msg-exec-success                MsgLauMos-ExecSuccess,
+
+    nb-choice                       NbChoice
+}
+
+MsgsLauncherSim ::= CHOICE
+{
+    msg-ping                        MsgLauSim-Ping,
+    msg-stop-sim                    MsgLauSim-StopSim,
+
+    nb-choice                       NbChoice
+}
+
+MsgsSimLauncher ::= CHOICE
+{
+    msg-sim-launched                MsgSimLau-SimLaunched,
+    msg-pong                        MsgSimLau-Pong,
+    msg-exec-success                MsgSimLau-ExecSuccess,
+
+    nb-choice                       NbChoice
+}
+
+NbChoice ::= NULL
+
+END

@@ -1,0 +1,40 @@
+--
+-- file name : ScipioOrder.asn
+--
+-- Fichier contenant les types et messages communs à tous les types d'ordres
+--
+
+ScipioOrder DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS OID, Point, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH FROM ScipioBase;
+
+EnumOrderErrorCode ::= ENUMERATED
+{
+    no-error                                (0),
+    error-invalid-unit                      (1),
+    error-invalid-limit                     (2),
+    error-invalid-lima                      (3),
+    error-invalid-mission                   (4),
+    error-invalid-mission-parameters        (5),
+    error-unit-cannot-receive-order         (6),
+    error-invalid-order-conduite            (7),
+    error-invalid-order-mission             (8),
+    error-invalid-order-initial             (9),
+    error-invalid-order-conduite-parameters (10),
+    error-unit-surrendered                  (11)
+}
+
+EnumOrderState ::= ENUMERATED
+{
+    started   (0),
+    cancelled (1),
+    stopped   (2)
+}
+
+MsgOrderManagement ::= SEQUENCE
+{
+    order-id OID,
+    etat     EnumOrderState
+}
+
+END -- ScipioOrder

@@ -1,0 +1,80 @@
+// *****************************************************************************
+//
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Logistic/Supply/PHY_StockConvoy.h $
+// $Author: Nld $
+// $Modtime: 14/04/05 10:10 $
+// $Revision: 5 $
+// $Workfile: PHY_StockConvoy.h $
+//
+// *****************************************************************************
+
+#ifndef __PHY_StockConvoy_h_
+#define __PHY_StockConvoy_h_
+
+#include "MIL.h"
+
+#include "PHY_Convoy_ABC.h"
+
+class PHY_SupplyStockConsign;
+class MIL_AgentPion;
+
+// =============================================================================
+// @class  PHY_StockConvoy
+// Created: JVT 2004-08-03
+// =============================================================================
+class PHY_StockConvoy : public PHY_Convoy_ABC
+{
+    MT_COPYNOTALLOWED( PHY_StockConvoy )
+
+public:
+    //! @name 
+    //@{
+    static void Initialize( MIL_InputArchive& archive );
+    static void Terminate ();
+    //@}
+
+public:
+     PHY_StockConvoy( PHY_SupplyStockConsign& consign );
+     PHY_StockConvoy();
+    ~PHY_StockConvoy();
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+    
+    //! @name Operations
+    //@{
+    virtual bool Form            ();
+            uint GetLoadingTime  () const;
+            uint GetUnloadingTime() const;
+    //@}
+
+    //! @name Real convoy operations
+    //@{
+    const MIL_AgentPion* GetPionConvoy           () const;
+          void           ActivateConvoyMission   ();
+          void           DesactivateConvoyMission();
+          bool           Supply                  ();
+          void           EndMission              ();
+          bool           IsSupplyDone            () const;
+    //@}
+
+    //! @name Events
+    //@{
+    void NotifyComposanteChanged( PHY_ComposantePion& composante );
+    //@}
+    
+private:
+    PHY_SupplyStockConsign* pConsign_;
+    MIL_AgentPion*          pPionConvoy_;
+    bool                    bMissionActivated_;
+};
+
+#include "PHY_StockConvoy.inl"
+
+#endif // __PHY_StockConvoy_h_

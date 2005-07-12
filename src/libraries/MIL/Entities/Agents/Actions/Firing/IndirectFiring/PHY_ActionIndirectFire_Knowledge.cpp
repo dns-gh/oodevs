@@ -1,0 +1,70 @@
+// *****************************************************************************
+//
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Knowledge.cpp $
+// $Author: Nld $
+// $Modtime: 17/03/05 15:01 $
+// $Revision: 4 $
+// $Workfile: PHY_ActionIndirectFire_Knowledge.cpp $
+//
+// *****************************************************************************
+
+#include "MIL_Pch.h"
+
+#include "PHY_ActionIndirectFire_Knowledge.h"
+#include "PHY_RoleAction_IndirectFiring.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Decision/DEC_Tools.h"
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Knowledge constructor
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
+    : PHY_ActionIndirectFire_ABC( pion, diaCall )
+{
+    assert( DEC_Tools::CheckTypeConnaissanceAgent( diaCall.GetParameter( 3 ) ) );
+
+    uint nTargetKnowledgeID_ = (uint)diaCall.GetParameter( 3 ).ToPtr();
+    pEffect_ = new MIL_Effect_IndirectFire( pion_, nTargetKnowledgeID_, *pIndirectWeaponClass_, rNbInterventionType_ );
+    pEffect_->IncRef();
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Knowledge destructor
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
+{
+    assert( pEffect_ );
+    pEffect_->ForceFlying();
+    pEffect_->DecRef();
+}
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Knowledge::Execute
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+void PHY_ActionIndirectFire_Knowledge::Execute()
+{
+    assert( pEffect_ );
+    const int nResult = role_.Fire( *pEffect_ );
+    diaReturnCode_.SetValue( nResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Knowledge::ExecuteSuspended
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+void PHY_ActionIndirectFire_Knowledge::ExecuteSuspended()
+{
+    role_.FireSuspended();
+}

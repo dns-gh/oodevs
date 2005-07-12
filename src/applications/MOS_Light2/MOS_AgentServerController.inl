@@ -1,0 +1,54 @@
+//*****************************************************************************
+//
+// $Created: NLD 2002-06-28 $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_AgentServerController.inl $
+// $Author: Ape $
+// $Modtime: 3/02/04 11:09 $
+// $Revision: 1 $
+// $Workfile: MOS_AgentServerController.inl $
+//
+//*****************************************************************************
+
+#include "MOS_MOSServer.h"
+
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentServerController::GetDINEngine
+// Created: NLD 2002-07-12
+//-----------------------------------------------------------------------------
+MOS_INLINE
+DIN::DIN_Engine& MOS_AgentServerController::GetDINEngine()
+{
+    return mosServer_.GetDINEngine();
+}
+
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentServerController::GetMOSServer
+// Created: NLD 2002-07-08
+//-----------------------------------------------------------------------------
+MOS_INLINE
+MOS_MOSServer& MOS_AgentServerController::GetMOSServer() const
+{
+    return mosServer_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentServerController::GetConnectionMgr
+// Created: NLD 2002-07-08
+//-----------------------------------------------------------------------------
+MOS_INLINE
+MOS_AgentServerConnectionMgr& MOS_AgentServerController::GetConnectionMgr() const
+{
+    assert( pConnectionMgr_ );
+    return *pConnectionMgr_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentServerController::GetMessageMgr
+// Created: NLD 2002-07-08
+//-----------------------------------------------------------------------------
+MOS_INLINE
+MOS_AgentServerMsgMgr& MOS_AgentServerController::GetMessageMgr() const
+{
+    assert( pMsgMgr_ );
+    return *pMsgMgr_;
+}

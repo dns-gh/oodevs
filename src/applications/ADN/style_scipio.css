@@ -1,0 +1,102 @@
+table
+{
+	border-collapse: collapse;
+}
+
+.donneinvalide
+{
+	padding:3px;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:arial;
+	text-align:center;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	background:silver;
+	white-space:nowrap;
+}
+
+.legendecolonne0
+{
+	padding:3px;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	font-weight:bold;	
+	text-decoration:none;
+	font-family:arial;
+	text-align:center;
+	vertical-align:middle;
+	border-top:1.0pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:1.0pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	white-space:nowrap;
+}
+
+.legendecolonne1
+{
+	padding:3px;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:arial;
+	text-align:center;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	white-space:normal;
+}
+
+.legendeligne0
+{
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	font-weight:bold;	
+	text-decoration:none;
+	font-family:arial;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	white-space:nowrap;
+	padding-left:12px;
+	padding-right:3px;
+}
+
+.legendeligne1
+{
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:arial;
+	text-align:left;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	white-space:nowrap;
+	padding-left:12px;
+	padding:3px;
+}
+
+.valeur
+{
+	padding:3px;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:arial;
+	text-align:center;
+	vertical-align:middle;
+	border:.5pt solid windowtext;
+	white-space:nowrap;
+}

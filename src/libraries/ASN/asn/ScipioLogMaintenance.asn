@@ -1,0 +1,72 @@
+--
+-- file name : ScipioLogMaintenance.asn
+--
+-- Messages de gestion de la chaine logistique maintenance
+--
+
+ScipioLogMaintenance DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory, EnumTempsBordee FROM ScipioBase;
+
+
+MsgLogMaintenanceTraitementEquipementCreation ::= SEQUENCE
+{
+    oid-consigne    OID,
+    oid-pion        Agent,          -- pion possèdant l'equipement
+    type-equipement TypeEquipement,
+    type-panne      TypePanne       -- Cf. data/pannes.xml
+}
+
+EnumLogMaintenanceTraitementEtat ::= ENUMERATED
+{ 
+    deplacement-vers-chaine                     (0),         
+    attente-disponibilite-remorqueur            (1),
+    remorqueur-deplacement-aller                (2),
+    remorqueur-chargement                       (3),
+    remorqueur-deplacement-retour               (4),
+    remorqueur-dechargement                     (5),
+    diagnostique                                (6),
+    attente-prise-en-charge-par-niveau-superieur(7),
+    attente-disponibilite-pieces                (8),
+    attente-disponibilite-reparateur            (9),
+    reparation                                  (10),
+    attente-retour-pion                         (11),
+    retour-pion                                 (12),
+    termine                                     (13)
+}
+
+MsgLogMaintenanceTraitementEquipementUpdate ::= SEQUENCE
+{
+    oid-consigne          OID,
+    oid-pion              Agent,                            -- pion possèdant l'equipement
+    oid-pion-log-traitant Agent,                            -- pion LOG gérant la maintenance de l'equipement, 0 si aucun pion (demande passée à la BLIAT par exemple)
+    etat                  EnumLogMaintenanceTraitementEtat
+}
+
+MsgLogMaintenanceTraitementEquipementDestruction ::= SEQUENCE
+{
+    oid-consigne    OID,
+    oid-pion        Agent          -- pion possèdant l'equipement    
+}
+
+-- Etat des pions logistiques de la maintenance
+MaintenanceDisponibiliteMoyens ::= SEQUENCE
+{
+    type-equipement           TypeEquipement,
+    pourcentage-disponibilite Pourcentage
+}
+
+MaintenancePriorites ::= SEQUENCE OF TypeEquipement
+
+MsgLogMaintenanceEtat ::= SEQUENCE
+{
+    oid-pion                   Agent,
+    chaine-activee             BOOLEAN                                    OPTIONAL,
+    temps-de-bordee            EnumTempsBordee                            OPTIONAL,
+    priorites                  MaintenancePriorites                       OPTIONAL, 
+    priorites-tactiques        ListAutomate                               OPTIONAL,
+    disponibilites-remorqueurs SEQUENCE OF MaintenanceDisponibiliteMoyens OPTIONAL,
+    disponibilites-reparateurs SEQUENCE OF MaintenanceDisponibiliteMoyens OPTIONAL
+}
+
+END -- ScipioLogMaintenance

@@ -1,0 +1,164 @@
+--
+-- file name : ScipioAutomateMission.asn
+--
+-- Messages des différentes missions automate blindé
+--
+
+ScipioAutomateMission_ABC DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16,
+        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation, ListLocalisation FROM ScipioBase;
+
+------------------------------------------
+-- Mission ABC
+------------------------------------------
+
+Mission-Automate-ABC-ArmerPointDeControle ::= SEQUENCE 
+{
+    zone-de-controle Polygon
+}
+
+Mission-Automate-ABC-OrganiserAccueilColonneRefugies ::= SEQUENCE 
+{
+    zone-installation Polygon
+}
+
+Mission-Automate-ABC-ProtegerPC ::= SEQUENCE
+{
+    pc Automate
+}
+
+Mission-Automate-ABC-Appuyer ::= SEQUENCE
+{
+    compagnie   Automate
+}
+
+Mission-Automate-ABC-Attaquer ::= SEQUENCE
+{
+	 -- LD obligatoire
+}
+
+Mission-Automate-ABC-ContreAttaquer ::= SEQUENCE
+{
+	 -- LD obligatoire
+}
+
+Mission-Automate-ABC-Controler ::= SEQUENCE
+{
+    zone-a-controler  Polygon
+}
+
+Mission-Automate-ABC-Couvrir ::= SEQUENCE
+{
+    position-installation    Polygon,
+    compagnie   Automate
+}
+
+Mission-Automate-ABC-DonnerCoupArret ::= SEQUENCE
+{
+    -- LCAR obligatoire
+    zone-regroupement  Polygon    
+}
+
+Mission-Automate-ABC-Eclairer ::= SEQUENCE
+{
+}
+
+Mission-Automate-ABC-EffectuerRaid ::= SEQUENCE 
+{
+	-- LD obligatoire
+}
+
+Mission-Automate-ABC-Interdire ::= SEQUENCE
+{   
+	-- LI obligatoire
+}
+
+Mission-Automate-ABC-Jalonner ::= SEQUENCE
+{
+}
+
+Mission-Automate-ABC-PrendrePreciserContact ::= SEQUENCE
+{   
+}
+
+Mission-Automate-ABC-Reconnaitre ::= SEQUENCE
+{
+}
+
+Mission-Automate-ABC-ReconnaitrePoint ::= SEQUENCE
+{
+    point-a-reconnaitre   Polygon
+}
+
+Mission-Automate-ABC-Reduire ::= SEQUENCE
+{
+    zone-resistance   Polygon
+}
+
+Mission-Automate-ABC-ReleverEnDepassant ::= SEQUENCE
+{
+    compagnie   Automate
+}
+
+Mission-Automate-ABC-Semparer ::= SEQUENCE
+{
+    objectif    Polygon
+}
+
+Mission-Automate-ABC-Tenir ::= SEQUENCE
+{
+    position-installation    Polygon
+}
+
+Mission-Automate-ABC-Soutenir ::= SEQUENCE
+{
+    compagnie   Automate -- ID du pion PC de la compagnie à appuyer
+}
+
+Mission-Automate-ABC-Surveiller ::= SEQUENCE
+{
+    zone-installation Polygon
+}
+
+Mission-Automate-ABC-FlancGarder ::= SEQUENCE
+{
+    compagnie   Automate -- ID du pion PC de la compagnie à couvrir
+}
+
+Mission-Automate-ABC-RenseignerSur ::= SEQUENCE
+{
+    zone-a-renseigner 		Polygon
+}
+
+Mission-Automate-ABC-Fixer ::= SEQUENCE
+{
+    ennemis     ListKnowledgeAgent
+}
+
+Mission-Automate-ABC-Freiner ::= SEQUENCE 
+{
+	-- LCAR obligatoire
+}
+
+Mission-Automate-ABC-SurveillerItineraire ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+
+Mission-Automate-ABC-RenseignerSurUnAxe ::= SEQUENCE
+{
+}
+
+Mission-Automate-ABC-RecueillirUnite ::= SEQUENCE 
+{
+    -- LR et LIA obligatoire
+    zone-regroupement Polygon
+}
+
+Mission-Automate-ABC-EscorterUnConvoi ::= SEQUENCE 
+{
+    convoi-a-escorter	Agent 
+}
+
+END -- ScipioAutomateMission_ABC

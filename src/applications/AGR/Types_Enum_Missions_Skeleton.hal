@@ -1,0 +1,23 @@
+// *******************************************************************************************
+// Mission enumeration for DirectIA
+// Created : $TIME$
+// *******************************************************************************************
+
+typedef enum E_TypeMissionAutomate
+{
+$MissionAutomateEnumeration$
+    eNbrMissionAutomate
+};
+
+
+typedef enum E_TypeMissionPion
+{
+$MissionPionEnumeration$
+    eNbrMissionPion
+};
+
+typedef enum E_TypeOrdreConduite
+{
+$OrderConduiteEnumeration$
+    eNbrOrdreConduite
+};

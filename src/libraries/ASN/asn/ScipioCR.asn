@@ -1,0 +1,454 @@
+--
+-- file name : ScipioCR.asn
+--
+-- Messages de gestion des comptes rendus
+--
+
+ScipioCR DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS EnumUnitIdentificationLevel, KnowledgeAgent, KnowledgeObject, Agent, OID, CoordUTM, Line, max-uint64, 
+        max-uint32, max-uint16, max-uint8 FROM ScipioBase
+IMPORTS EnumTypeLima FROM ScipioLimaLimite;
+
+
+--- $$$ Doit être complété
+EnumTypeTerrain ::= ENUMERATED
+{
+    vide    (0),
+    route   (1),
+    foret   (2),
+    urbain  (3),
+    pont    (4)
+}
+
+EnumTypeDotation ::= ENUMERATED
+{
+    munition,
+    carburant,
+    explosif,
+    mine,
+    barbele,
+    piece,
+    ration
+}
+
+CR-RAS                                      ::= NULL
+                                            
+-- Obstacle                                 
+CR-EnPosteFaceAObstacle                     ::= KnowledgeObject
+CR-EnContournementObstacle                  ::= NULL
+                                            
+-- Phases de mission                        
+CR-MissionImpossible                        ::= NULL
+CR-PretPourNouvelleMission                  ::= NULL
+CR-RejointFuseau                            ::= NULL
+CR-FuseauRejoint                            ::= NULL
+CR-ProgressionSurAxe                        ::= NULL
+CR-ProgressionVersLocalisation              ::= NULL
+CR-ArriveSurLocalisation                    ::= NULL
+CR-ReconnaissanceLocalisation               ::= NULL
+CR-EnPosteFaceADirectionDangereuse          ::= NULL
+CR-EnPosteSurBond                           ::= NULL
+CR-EnJalonnement                            ::= NULL
+CR-PreparationMission                       ::= SEQUENCE
+{
+    delai INTEGER OPTIONAL
+}
+CR-DebutMission                             ::= NULL
+CR-FinMission                               ::= NULL
+CR-DispositifInstalle                       ::= NULL
+CR-EnPosition                               ::= NULL
+CR-ObjectifAtteint                          ::= NULL
+CR-Debouche                                 ::= NULL
+CR-SurPIA                                   ::= Agent
+CR-PassageSurPIA                            ::= NULL
+CR-UniteRecueillie                          ::= Agent
+CR-EnCoursDeFranchissement                  ::= NULL
+CR-AttenteOrdrePoursuivre                   ::= NULL
+CR-AttenteOrdreDeboucher                    ::= NULL
+
+-- RENS
+-- ROHUM
+CR-EnControleZone                           ::= NULL
+CR-EnSurveillance                           ::= NULL
+CR-EnInfiltration                           ::= NULL
+CR-EnExfiltration                           ::= NULL
+CR-AttenteConditionFavorablePourInfiltration::= NULL
+-- ROIM
+CR-DroneLance                               ::= NULL
+CR-DroneEnExploitation                      ::= NULL
+CR-DroneExploite                            ::= NULL
+CR-DebutMiseEnOeuvreDrone                   ::= NULL
+CR-FinMiseEnOeuvreDrone                     ::= NULL
+-- ROEM
+CR-Brouille                                 ::= NULL
+CR-EnEcoute                                 ::= NULL
+CR-EnEcouteRadar                            ::= NULL
+                                           
+-- Ennemi                                   
+CR-Automate-PriseContact                    ::= NULL
+CR-Automate-RuptureContact                  ::= NULL
+CR-Pion-PriseContact                        ::= KnowledgeAgent
+CR-Pion-RuptureContact                      ::= KnowledgeAgent
+CR-PrecisionContact                         ::= KnowledgeAgent
+CR-EnnemiDetruit                            ::= KnowledgeAgent
+CR-PerteDeContactVisuel                     ::= KnowledgeAgent
+CR-PosteFaceEni                             ::= KnowledgeAgent
+CR-PriseAPartie                             ::= KnowledgeAgent
+CR-PointTenuParEni                          ::= KnowledgeAgent
+CR-ProgressionVersEni                       ::= KnowledgeAgent
+CR-PresenceEniProbable                      ::= NULL
+CR-Decroche                                 ::= NULL
+CR-EniSurObjectif                           ::= KnowledgeAgent
+CR-Riposte                                  ::= NULL
+                                            
+-- Ami          
+CR-Releve                                   ::= Agent                            
+CR-SuitUnite                                ::= NULL
+CR-PasseEnAppui                             ::= NULL
+CR-EnAppui                                  ::= NULL
+                                                                                                                                
+-- Etat du pion                             
+CR-DetruitTactiquement                      ::= NULL
+                                                                                     
+-- Deplacement                              
+CR-AmbianceVitesse                          ::= NULL
+CR-AmbianceSurete                           ::= NULL
+CR-SurLima                                  ::= EnumTypeLima
+CR-SurTypeTerrainParticulier                ::= EnumTypeTerrain
+                                            
+-- Genie                                    
+CR-ObstacleEnAttenteActivation              ::= KnowledgeObject
+CR-TravauxRealises                          ::= NULL
+CR-ObstacleDegage                           ::= NULL
+CR-OrganisationChantier                     ::= NULL
+CR-DesorganisationChantier                  ::= NULL
+CR-ReconnaissancePositionObstacle           ::= NULL
+CR-ContournementRealise                     ::= NULL
+CR-AttenteRenforcement                      ::= NULL
+CR-DebutTravaux                             ::= NULL
+CR-DebutFranchissement                      ::= NULL
+CR-FinFranchissement                        ::= NULL
+CR-ReussiteRenforcement                     ::= SEQUENCE
+{
+    pion-renforcant     Agent,
+    automate-renforce   Agent
+}
+CR-EchecRenforcement                        ::= SEQUENCE
+{
+    pion-renforcant     Agent,
+    automate-renforce   Agent
+}
+CR-ItineraireRetabli                        ::= NULL
+CR-RenforcementBientotFini                  ::= Agent
+
+-- Logistique du pion                       
+CR-SituationLogFavorable                    ::= NULL
+CR-SituationLogDefavorable                  ::= EnumTypeDotation
+                                            
+-- Log                                      
+CR-SectionDeployee                          ::= NULL
+
+CR-MaterielRetourDeMaintenance              ::= NULL
+CR-DemandeRavitaillement                    ::= NULL
+CR-DemandeEvacuationSanitaire               ::= NULL
+CR-DemandeEvacuationMateriel                ::= NULL
+CR-AllocationConsentieBientotEpuisee        ::= TypeDotation
+
+-- ALAT / Transport / Embarquement
+CR-EnCoursRavitaillement                    ::= NULL
+CR-RavitaillementTermine                    ::= NULL
+CR-HelicoptereEnObservation                 ::= NULL
+CR-PerteInfoGuidage                         ::= NULL
+CR-TransportUnitePasPrete                   ::= Agent
+CR-TransportEnCours                         ::= NULL
+CR-TransportEmbarquement                    ::= NULL
+CR-TransportDebarquement                    ::= NULL
+CR-VehiculeLaisseSurPosition                ::= NULL
+CR-RejointPositionEmbarquement              ::= NULL
+CR-EnAttenteTransporteurs                   ::= NULL
+
+-- NBC
+CR-ContamineNBC                             ::= NULL
+CR-DecontamineNBC                           ::= NULL
+CR-TenueProtectionNBCMise                   ::= NULL
+CR-TenueProtectionNBCEnlevee                ::= NULL
+CR-AlerteNBC                                ::= NULL
+CR-SiteDecontaminationAnime                 ::= NULL
+CR-SiteDecontaminationDesactive             ::= NULL 
+CR-DemandeDecontamination                   ::= NULL
+CR-ZoneReconnue                             ::= NULL
+CR-ZoneDecontaminee                         ::= NULL
+CR-SiteROTAReconnu                          ::= NULL
+CR-IncidentNBCTermine                       ::= NULL  -- réparation site ROTA 
+CR-PionDecontamine                          ::= Agent -- pion ami CR explicte de decontamination
+                                          
+-- Artillerie                               
+CR-ReconnaissanceTerminee                   ::= NULL 
+CR-ReconnaissanceInitialeTerminee           ::= NULL 
+CR-RejointPlotRavitaillement                ::= NULL
+CR-PremierCoupParti                         ::= NULL
+CR-TirExecute                               ::= NULL
+CR-TirHorsDePortee                          ::= NULL
+CR-TirAnnule                                ::= NULL
+CR-ChangementDePosition                     ::= NULL
+CR-DebutSurveillance                        ::= NULL
+CR-DebutInstallation                        ::= NULL
+CR-PretPourConduiteTir                      ::= NULL
+CR-ReceptionOrdreDeFeu                      ::= NULL
+CR-PretAuTir                                ::= NULL
+CR-ObservationTirIndirect                   ::= OID -- OID du tir observé
+CR-ZoneImplantationOccupee                  ::= NULL
+CR-InstallationSurZoneImplantation          ::= NULL
+
+-- Population
+CR-PresencePopulation                        ::= NULL
+CR-OrientationPopulationVersCampRefugies     ::= NULL
+CR-PasDeCampRefugiesDisponible               ::= NULL
+CR-PresenceEnnemiRendu                       ::= NULL
+CR-OrientationEnnemiRenduVersCampPrisonniers ::= NULL
+CR-PasDeCampPrisonniersDisponible            ::= NULL
+
+
+-- Adaptation
+CR-Trace    ::= VisibleString
+CR-TraceID  ::= INTEGER
+
+-- Evenements exceptionnels
+CR-TirDansZoneInterdite              ::= NULL
+CR-TirSurCampAmi                     ::= Agent -- Agent = Tiré
+CR-TireParCampAmi                    ::= Agent -- Agent = Tireur
+CR-TirSurCampNeutre                  ::= Agent -- Agent = Tiré
+CR-TireParCampNeutre                 ::= Agent -- Agent = Tireur
+CR-TirSurCivil                       ::= Agent -- Agent = Tiré
+CR-TireParCivil                      ::= Agent -- Agent = Tireur
+CR-DestructionPC                     ::= NULL
+CR-DecesBlesse                       ::= NULL
+CR-DecesBlessePendantTransport       ::= NULL
+CR-DecesBlessePendantHospitalisation ::= NULL
+
+-- New
+CR-MissionImpossiblePionsSubordonnesNonOperationnels    ::= NULL
+CR-MissionImpossibleLimaInvalide                        ::= NULL
+CR-MissionImpossibleZoneHorsFuseau                      ::= NULL
+CR-RapportDeForceDefavorable                            ::= NULL
+CR-TerrainDifficile                                     ::= NULL -- Moteur
+CR-PlusDeCarburant                                      ::= NULL -- Moteur
+CR-DispositifDisperse                                   ::= NULL
+CR-PionNeutralise                                       ::= NULL -- Un ou plusieurs pions de l'automate a subi un tir indirect et est (sont) neutralisé(s)
+CR-SilenceRadio                                         ::= NULL
+CR-TirRestreint                                         ::= NULL
+CR-TirInterdit                                          ::= NULL
+CR-TirLibre                                             ::= NULL
+
+EnumTypeCR ::= ENUMERATED
+{
+    message                 (0),
+    operationel             (1),
+    evenement-exceptionnel  (2),
+    warning                 (3)
+}
+
+MsgCR ::= SEQUENCE
+{
+    unit-id   OID, 
+    order-id  OID,
+    type-cr   EnumTypeCR,
+    cr        CHOICE
+    {
+        cr-ras                                                      CR-RAS,                                      
+                                                                                                    
+        -- obstacle                                     
+        cr-en-poste-face-a-obstacle                                 CR-EnPosteFaceAObstacle,                     
+        cr-en-contournement-obstacle                                CR-EnContournementObstacle,                  
+                                                                                                    
+        -- phases de mission                            
+        cr-mission-impossible                                       CR-MissionImpossible,                        
+        cr-pret-pour-nouvelle-mission                               CR-PretPourNouvelleMission,                  
+        cr-rejoint-fuseau                                           CR-RejointFuseau,                            
+        cr-fuseau-rejoint                                           CR-FuseauRejoint,                            
+        cr-progression-sur-axe                                      CR-ProgressionSurAxe,                        
+        cr-progression-vers-localisation                            CR-ProgressionVersLocalisation,              
+        cr-arrive-sur-localisation                                  CR-ArriveSurLocalisation,                    
+        cr-reconnaissance-localisation                              CR-ReconnaissanceLocalisation,               
+        cr-en-poste-face-a-direction-dangereuse                     CR-EnPosteFaceADirectionDangereuse,         
+        cr-en-poste-sur-bond                                        CR-EnPosteSurBond,                           
+        cr-en-jalonnement                                           CR-EnJalonnement,                            
+        cr-preparation-mission                                      CR-PreparationMission,
+        cr-debut-mission                                            CR-DebutMission,                             
+        cr-fin-mission                                              CR-FinMission,                               
+        cr-dispositif-installe                                      CR-DispositifInstalle,                       
+        cr-en-position                                              CR-EnPosition,                               
+        cr-objectif-atteint                                         CR-ObjectifAtteint,                          
+        cr-debouche                                                 CR-Debouche,                                 
+        cr-sur-pia                                                  CR-SurPIA,                                   
+        cr-passage-sur-pia                                          CR-PassageSurPIA,
+        cr-unite-recueillie                                         CR-UniteRecueillie,                          
+        cr-en-cours-de-franchissement                               CR-EnCoursDeFranchissement,    
+        cr-attente-ordre-poursuivre                                 CR-AttenteOrdrePoursuivre,
+        cr-attente-ordre-deboucher                                  CR-AttenteOrdreDeboucher,
+                                                                                            
+        -- rens                                          
+        cr-en-controle-zone                                         CR-EnControleZone,                           
+        cr-en-surveillance                                          CR-EnSurveillance,                           
+        cr-en-infiltration                                          CR-EnInfiltration,                           
+        cr-en-exfiltration                                          CR-EnExfiltration,                           
+        cr-attente-condition-favorable-pour-infiltration            CR-AttenteConditionFavorablePourInfiltration,
+        cr-drone-lance                                              CR-DroneLance,
+        cr-drone-en-exploitation                                    CR-DroneEnExploitation,
+        cr-drone-exploite                                           CR-DroneExploite,
+        cr-debut-mise-en-oeuvre-drone                               CR-DebutMiseEnOeuvreDrone,
+        cr-fin-mise-en-oeuvre-drone                                 CR-FinMiseEnOeuvreDrone,        
+        cr-brouille                                                 CR-Brouille,
+        cr-en-ecoute                                                CR-EnEcoute,
+        cr-en-ecoute-radar                                          CR-EnEcouteRadar,
+
+        -- ennemi                                        
+        cr-automate-prise-contact                                   CR-Automate-PriseContact,                    
+        cr-automate-rupture-contact                                 CR-Automate-RuptureContact,                  
+        cr-pion-prise-contact                                       CR-Pion-PriseContact,                        
+        cr-pion-rupture-contact                                     CR-Pion-RuptureContact,                      
+        cr-precision-contact                                        CR-PrecisionContact,                         
+        cr-ennemi-detruit                                           CR-EnnemiDetruit,                            
+        cr-perte-de-contact-visuel                                  CR-PerteDeContactVisuel,                     
+        cr-poste-face-eni                                           CR-PosteFaceEni,                             
+        cr-prise-a-partie                                           CR-PriseAPartie,                             
+        cr-point-tenu-par-eni                                       CR-PointTenuParEni,                          
+        cr-progression-vers-eni                                     CR-ProgressionVersEni,                       
+        cr-presence-eni-probable                                    CR-PresenceEniProbable,                      
+        cr-decroche                                                 CR-Decroche,                                 
+        cr-eni-sur-objectif                                         CR-EniSurObjectif,                           
+        cr-riposte                                                  CR-Riposte,                                  
+                                                                                                    
+        -- ami                                           
+        cr-releve                                                   CR-Releve,                                   
+        cr-suit-unite                                               CR-SuitUnite,                               
+        cr-passe-en-appui                                           CR-PasseEnAppui,                             
+        cr-en-appui                                                 CR-EnAppui,                                  
+                                                                                                                                                                                                       
+        -- etat du pion        
+        cr-detruit-tactiquement                                     CR-DetruitTactiquement,                      
+                                                                                                    
+        -- deplacement         
+        cr-ambiance-vitesse                                         CR-AmbianceVitesse,                          
+        cr-ambiance-surete                                          CR-AmbianceSurete,                           
+        cr-sur-lima                                                 CR-SurLima,                                  
+        cr-sur-type-terrain-particulier                             CR-SurTypeTerrainParticulier,                
+                                                                                                    
+        -- genie                                    
+        cr-obstacle-en-attente-activation                           CR-ObstacleEnAttenteActivation,
+        cr-travaux-realises                                         CR-TravauxRealises,                          
+        cr-obstacle-degage                                          CR-ObstacleDegage,                           
+        cr-organisation-chantier                                    CR-OrganisationChantier,                     
+        cr-desorganisation-chantier                                 CR-DesorganisationChantier,                  
+        cr-reconnaissance-position-obstacle                         CR-ReconnaissancePositionObstacle,           
+        cr-contournement-realise                                    CR-ContournementRealise,                     
+        cr-attente-renforcement                                     CR-AttenteRenforcement,                      
+        cr-debut-travaux                                            CR-DebutTravaux,                             
+        cr-debut-franchissement                                     CR-DebutFranchissement,                      
+        cr-fin-franchissement                                       CR-FinFranchissement,                        
+        cr-reussite-renforcement                                    CR-ReussiteRenforcement,                     
+        cr-echec-renforcement                                       CR-EchecRenforcement,
+        cr-itineraire-retabli                                       CR-ItineraireRetabli,
+        cr-renforcement-bientot-fini                                CR-RenforcementBientotFini,
+                                                                                                    
+        -- logistique du pion                          
+        cr-situation-log-favorable                                  CR-SituationLogFavorable,                    
+        cr-situation-log-defavorable                                CR-SituationLogDefavorable,                  
+                                                                                                    
+        -- log                                         
+        cr-section-deployee                                         CR-SectionDeployee,                                                        
+        cr-materiel-retour-de-maintenance                           CR-MaterielRetourDeMaintenance,
+        cr-demande-ravitaillement                                   CR-DemandeRavitaillement,
+        cr-demande-evacuation-sanitaire                             CR-DemandeEvacuationSanitaire,
+        cr-demande-evacuation-materiel                              CR-DemandeEvacuationMateriel,
+        cr-allocation-consentie-bientot-epuisee                     CR-AllocationConsentieBientotEpuisee,
+        
+        -- LOG ALAT / ALAT
+        cr-en-cours-ravitaillement                                  CR-EnCoursRavitaillement,
+        cr-ravitaillement-termine                                   CR-RavitaillementTermine,
+        cr-helicoptere-en-observation                               CR-HelicoptereEnObservation,
+        cr-perte-info-guidage                                       CR-PerteInfoGuidage,
+        cr-transport-unite-pas-prete                                CR-TransportUnitePasPrete,
+        cr-transport-en-cours                                       CR-TransportEnCours,
+        cr-transport-embarquement                                   CR-TransportEmbarquement,
+        cr-transport-debarquement                                   CR-TransportDebarquement,        
+        cr-vehicule-laisse-sur-position                             CR-VehiculeLaisseSurPosition,
+        cr-rejoint-position-embarquement                            CR-RejointPositionEmbarquement,
+        cr-en-attente-transporteurs                                 CR-EnAttenteTransporteurs,  
+                                                                                            
+        -- nbc                                         
+        cr-contamine-nbc                                            CR-ContamineNBC,                             
+        cr-decontamine-nbc                                          CR-DecontamineNBC,                           
+        cr-tenue-protection-nbc-mise                                CR-TenueProtectionNBCMise,                   
+        cr-tenue-protection-nbc-enlevee                             CR-TenueProtectionNBCEnlevee,                
+        cr-alerte-nbc                                               CR-AlerteNBC,                                
+        cr-site-decontamination-anime                               CR-SiteDecontaminationAnime,                 
+        cr-site-decontamination-desactive                           CR-SiteDecontaminationDesactive,             
+        cr-demande-decontamination                                  CR-DemandeDecontamination,                   
+        cr-zone-reconnue                                            CR-ZoneReconnue,
+        cr-zone-decontaminee                                        CR-ZoneDecontaminee,
+        cr-site-rota-reconnu                                        CR-SiteROTAReconnu,
+        cr-incident-nbc-termine                                     CR-IncidentNBCTermine,
+        cr-pion-decontamine                                         CR-PionDecontamine,
+                                                                                                    
+        -- artillerie                                  
+        cr-reconnaissance-terminee                                  CR-ReconnaissanceTerminee,                   
+        cr-reconnaissance-initiale-terminee                         CR-ReconnaissanceInitialeTerminee,           
+        cr-rejoint-plot-ravitaillement                              CR-RejointPlotRavitaillement,                
+        cr-premier-coup-parti                                       CR-PremierCoupParti,                         
+        cr-tir-execute                                              CR-TirExecute,                               
+        cr-tir-hors-de-portee                                       CR-TirHorsDePortee,
+        cr-tir-annule                                               CR-TirAnnule,        
+        cr-changement-de-position                                   CR-ChangementDePosition,                     
+        cr-debut-surveillance                                       CR-DebutSurveillance,                        
+        cr-debut-installation                                       CR-DebutInstallation,                        
+        cr-pret-pour-conduite-tir                                   CR-PretPourConduiteTir,                      
+        cr-observation-tir-indirect                                 CR-ObservationTirIndirect,                   
+        cr-zone-implantation-occupee                                CR-ZoneImplantationOccupee,
+        cr-installation-sur-zone-implantation                       CR-InstallationSurZoneImplantation,
+        cr-reception-ordre-de-feu                                   CR-ReceptionOrdreDeFeu, 
+        cr-pret-au-tir                                              CR-PretAuTir,  
+        
+        -- population
+        cr-presence-population                                      CR-PresencePopulation,
+        cr-orientation-population-vers-camp-refugies                CR-OrientationPopulationVersCampRefugies,
+        cr-pas-de-camp-refugies-disponible                          CR-PasDeCampRefugiesDisponible,
+        cr-presence-ennemi-rendu                                    CR-PresenceEnnemiRendu,
+        cr-orientation-ennemi-rendu-vers-camp-prisonniers           CR-OrientationEnnemiRenduVersCampPrisonniers,
+        cr-pas-de-camp-prisonniers-disponible                       CR-PasDeCampPrisonniersDisponible,
+                
+        -- evt exceptionnels
+        cr-tir-dans-zone-interdite                                  CR-TirDansZoneInterdite,
+        cr-tir-sur-camp-ami                                         CR-TirSurCampAmi,
+        cr-tire-par-camp-ami                                        CR-TireParCampAmi,
+        cr-tir-sur-camp-neutre                                      CR-TirSurCampNeutre,
+        cr-tire-par-camp-neutre                                     CR-TireParCampNeutre,
+        cr-tir-sur-civil                                            CR-TirSurCivil,
+        cr-tire-par-civil                                           CR-TireParCivil,
+        cr-destruction-pc                                           CR-DestructionPC,
+        cr-deces-blesse                                             CR-DecesBlesse,
+        cr-deces-blesse-pendant-transport                           CR-DecesBlessePendantTransport,
+        cr-deces-blesse-pendant-hospitalisation                     CR-DecesBlessePendantHospitalisation,        
+        
+        -- New
+        cr-mission-impossible-pions-subordonnes-non-operationnels   CR-MissionImpossiblePionsSubordonnesNonOperationnels,
+        cr-mission-impossible-lima-invalide                         CR-MissionImpossibleLimaInvalide,
+        cr-mission-impossible-zone-hors-fuseau                      CR-MissionImpossibleZoneHorsFuseau,
+        cr-rapport-de-force-defavorable                             CR-RapportDeForceDefavorable,
+        cr-terrain-difficile                                        CR-TerrainDifficile,
+        cr-plus-de-carburant                                        CR-PlusDeCarburant,
+        cr-dispositif-disperse                                      CR-DispositifDisperse,
+        cr-pion-neutralise                                          CR-PionNeutralise,
+        cr-silence-radio                                            CR-SilenceRadio,
+        cr-tir-restreint                                            CR-TirRestreint,
+        cr-tir-interdit                                             CR-TirInterdit,
+        cr-tir-libre                                                CR-TirLibre,
+        
+        -- adaptation
+        cr-trace                                                    CR-Trace,
+        cr-trace-id                                                 CR-TraceID
+    }
+}
+
+END -- ScipioCR

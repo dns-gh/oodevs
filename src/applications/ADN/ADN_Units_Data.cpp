@@ -1,0 +1,872 @@
+//*****************************************************************************
+//
+// $Created: JDY 03-07-24 $
+// $input: /MVW_v10/Build/SDK/ADN/Src/ADN_Units_Data.cpp $
+// $Author: Ape $
+// $Modtime: 7/06/05 10:04 $
+// $Revision: 20 $
+// $Workfile: ADN_Units_Data.cpp $
+//
+//*****************************************************************************
+#include "ADN_Pch.h"
+#include "ADN_Units_Data.h"
+
+#include "ADN_App.h"
+#include "ADN_Workspace.h"
+#include "ADN_Project_Data.h"
+#include "ADN_DataException.h"
+#include "ADN_OpenFile_Exception.h"
+#include "ADN_SaveFile_Exception.h"
+
+#include "ADN_XmlInput_Helper.h"
+#include "ADN_Xml_Exception.h"
+
+#include "ADN_Tr.h"
+#include "ENT/ENT_Tr.h"
+
+#include <sstream>
+
+// =============================================================================
+// 
+// =============================================================================
+
+//-----------------------------------------------------------------------------
+// Name: ComposanteInfos::ComposanteInfos
+// Created: JDY 03-07-25
+//-----------------------------------------------------------------------------
+ADN_Units_Data::ComposanteInfos::ComposanteInfos()
+: ADN_Ref_ABC   ()
+, ptrComposante_( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes(),0)
+, bLoadable_    ( false )
+, bMajor_       ( false )
+, nNb_          ( 1 )
+{
+    BindExistenceTo( &ptrComposante_ );
+
+    bLoadable_.SetDataName( "la propriété" );
+    bLoadable_.SetParentNode( *this );
+    bMajor_.SetDataName( "la primauté" );
+    bMajor_.SetParentNode( *this );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ComposanteInfos::GetNodeName
+// Created: AGN 2004-05-14
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::ComposanteInfos::GetNodeName()
+{
+    std::string strResult( "d'une composante de type " );
+    return strResult + GetItemName();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ComposanteInfos::GetItemName
+// Created: AGN 2004-05-18
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::ComposanteInfos::GetItemName()
+{
+    return ptrComposante_.GetData()->strName_.GetData();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ComposanteInfos::CreateCopy
+// Created: APE 2005-02-14
+// -----------------------------------------------------------------------------
+ADN_Units_Data::ComposanteInfos* ADN_Units_Data::ComposanteInfos::CreateCopy()
+{
+    ComposanteInfos* pCopy = new ComposanteInfos();
+
+    pCopy->ptrComposante_ = ptrComposante_.GetData();
+    pCopy->bMajor_ = bMajor_.GetData();
+    pCopy->bLoadable_ = bLoadable_.GetData();
+    pCopy->nNb_ = nNb_.GetData();
+
+    return pCopy;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ComposanteInfos::ReadArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "Equipement" );
+
+    std::string strName;
+    std::string strMain;
+    std::string strProperty;
+
+    input.ReadAttribute( "nom", strName );
+    ADN_Composantes_Data::ComposanteInfos* pComposante = ADN_Workspace::GetWorkspace().GetComposantes().GetData().FindComposante( strName );
+    if( pComposante == 0 )
+        input.ThrowError( tr( "Composante %1 does not exist." ).ascii() );
+    ptrComposante_ = pComposante;
+
+    input.ReadAttribute( "majeur", bMajor_, ADN_XmlInput_Helper::eNothing );
+    input.ReadAttribute( "embarquable", bLoadable_, ADN_XmlInput_Helper::eNothing );
+
+    int nNbr;
+    input.Read( nNbr );
+    nNb_ = nNbr;
+
+    input.EndSection(); // Equipement
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ComposanteInfos::WriteArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "Equipement" );
+    output.WriteAttribute( "nom", ptrComposante_.GetData()->strName_.GetData() );
+
+    if( bMajor_.GetData() )
+        output.WriteAttribute( "majeur", "true" );
+    if( bLoadable_.GetData() )
+        output.WriteAttribute( "embarquable", "true" );
+
+    output << nNb_.GetData();
+
+    output.EndSection(); // Equipement
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PointInfos::PointInfos
+// Created: AGN 2003-12-01
+// -----------------------------------------------------------------------------
+ADN_Units_Data::PointInfos::PointInfos()
+: nTypeTerrain_( (E_KeyPoint)-1 )
+, nDistance_( 100 )
+{
+    nDistance_.SetDataName( "la distance avant un point" );
+    nDistance_.SetParentNode( *this );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PointInfos::GetNodeName
+// Created: AGN 2004-05-14
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::PointInfos::GetNodeName()
+{
+    std::string strResult( "sur un terrain " );
+    return strResult + ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_, ENT_Tr_ABC::eToTr );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PointInfos::GetItemName
+// Created: AGN 2004-05-18
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::PointInfos::GetItemName()
+{
+    return std::string();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PointInfos::CreateCopy
+// Created: APE 2005-02-14
+// -----------------------------------------------------------------------------
+ADN_Units_Data::PointInfos* ADN_Units_Data::PointInfos::CreateCopy()
+{
+    PointInfos* pCopy = new PointInfos();
+    pCopy->nTypeTerrain_ = nTypeTerrain_;
+    pCopy->nDistance_ = nDistance_.GetData();
+    return pCopy;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PointInfos::ReadArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::PointInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "Point" );
+
+    std::string strType;
+    input.ReadAttribute( "type", strType );
+
+    nTypeTerrain_ = ADN_Tr::ConvertToKeyPoint( strType );
+
+    int nDistance;
+    input.Read( nDistance );
+    nDistance_ = nDistance;
+
+    input.EndSection(); // Point
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PointInfos::WriteArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::PointInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "Point" );
+    output.WriteAttribute( "type", ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_ ) );
+    output << nDistance_.GetData();
+    output.EndSection(); // Point
+}
+
+// =============================================================================
+// 
+// =============================================================================
+
+//-----------------------------------------------------------------------------
+// Name: PostureInfos::PostureInfos
+// Created: JDY 03-07-25
+//-----------------------------------------------------------------------------
+ADN_Units_Data::PostureInfos::PostureInfos(const E_UnitPosture& nPosture)
+:   nPosture_(nPosture)
+,   rTimeToActivate_(0)
+{
+    rTimeToActivate_.SetParentNode( *this );
+    rTimeToActivate_.SetDataName( "le délai de mise en posture" );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PostureInfos::GetNodeName
+
+// Created: AGN 2004-05-14
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::PostureInfos::GetNodeName()
+{
+    return ENT_Tr::ConvertFromUnitPosture( nPosture_, ENT_Tr_ABC::eToTr );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PostureInfos::GetItemName
+// Created: AGN 2004-05-18
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::PostureInfos::GetItemName()
+{
+    return std::string();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PostureInfos::ReadArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::PostureInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( ADN_Tools::ComputePostureScriptName( nPosture_ ) );
+
+    input.ReadTime( rTimeToActivate_ );
+
+    input.EndSection();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PostureInfos::WriteArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::PostureInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( ADN_Tools::ComputePostureScriptName( nPosture_ ) );
+    output << ADN_Tools::SecondToString( rTimeToActivate_.GetData() );
+    output.EndSection();
+}
+
+
+// =============================================================================
+// 
+// =============================================================================
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos
+// Created: JDY 03-07-25
+//-----------------------------------------------------------------------------
+ADN_Units_Data::UnitInfos::UnitInfos()
+: ADN_Ref_ABC()
+, eTypeId_((E_AgentTypePion)0)
+, strName_()
+, nMosId_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
+, ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
+, eNatureLevel_((E_NatureLevel)0)
+, eNatureWeapon_((E_UnitNatureWeapon)0)
+, eNatureSpec_((E_UnitNatureSpecialization)0)
+, eNatureQualifier_((E_UnitNatureQualifier)0)
+, eNatureCategory_((E_UnitNatureCategory)0)
+, eNatureMobility_((E_UnitNatureMobility)0)
+, nNbOfficer_(0)
+, nNbNCOfficer_(0)
+, rDecontaminationDelay_(0)
+, vComposantes_()
+, vPostures_( false )
+, vPointInfos_( false )
+, bProbe_(false)
+, bStock_( false )
+, bStrengthRatioFeedbackTime_( false )
+, rStrengthRatioFeedbackTime_( 0 )
+, rProbeWidth_(0)
+, rProbeLength_(0)
+, bCanFly_( false )
+, rWeaponsReach_( 0.0 )
+, rSensorsReach_( 0.0 )
+{
+    BindExistenceTo(&ptrModel_);
+
+    vPostures_.SetParentNode( *this );
+    vPointInfos_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>::SetConverter( &ADN_Tr::ConvertFromAgentTypePion );
+    eTypeId_.SetDataName( "le type" );
+    eTypeId_.SetParentNode( *this );
+
+    strName_.SetDataName( "le nom" );
+    strName_.SetParentNode( *this );
+
+    nNbOfficer_.SetDataName( "le nombre d'officiers" );
+    nNbOfficer_.SetParentNode( *this );
+
+    nNbNCOfficer_.SetDataName( "le nombre de sous-officiers" );
+    nNbNCOfficer_.SetParentNode( *this );
+
+    ptrModel_.SetNodeName( "le modèle décisionnel" );
+    ptrModel_.SetParentNode( *this );
+
+    vComposantes_.SetItemTypeName( "une composante" );
+    vComposantes_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>::SetConverter( &ENT_Tr::ConvertFromNatureLevel );
+    eNatureLevel_.SetDataName( "la taille" );
+    eNatureLevel_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_UnitNatureWeapon,eNbrUnitNatureWeapon>::SetConverter( &ENT_Tr::ConvertFromUnitNatureWeapon );
+    eNatureWeapon_.SetDataName( "l'arme" );
+    eNatureWeapon_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_UnitNatureSpecialization,eNbrUnitNatureSpecialization>::SetConverter( &ENT_Tr::ConvertFromUnitNatureSpecialization );
+    eNatureSpec_.SetDataName( "la spécialisation" );
+    eNatureSpec_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_UnitNatureQualifier,eNbrUnitNatureQualifier>::SetConverter( &ENT_Tr::ConvertFromUnitNatureQualifier );
+    eNatureQualifier_.SetDataName( "le qualifieur" );
+    eNatureQualifier_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_UnitNatureCategory,eNbrUnitNatureCategory>::SetConverter( &ENT_Tr::ConvertFromUnitNatureCategory );
+    eNatureCategory_.SetDataName( "la catégorie" );
+    eNatureCategory_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_UnitNatureMobility,eNbrUnitNatureMobility>::SetConverter( &ENT_Tr::ConvertFromUnitNatureMobility );
+    eNatureMobility_.SetDataName( "la mobilité" );
+    eNatureMobility_.SetParentNode( *this );
+
+    ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>::SetConverter( &ADN_Tr::ConvertFromNatureAtlasType );
+    eNatureAtlas_.SetDataName( "la nature ATLAS" );
+    eNatureAtlas_.SetParentNode( *this );
+
+    // postures initialization
+    for( int i = ePostureNeedTimeStart; i < eNbrUnitPosture; ++i )
+        vPostures_.AddItem( new PostureInfos((E_UnitPosture)i) );
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data::UnitInfos
+// Created: JDY 03-07-28
+//-----------------------------------------------------------------------------
+ADN_Units_Data::UnitInfos::~UnitInfos()
+{
+    vComposantes_.Reset();
+    vPostures_.Reset();
+    vPointInfos_.Reset();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::GetNodeName
+// Created: AGN 2004-05-14
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::UnitInfos::GetNodeName()
+{
+    std::string strResult( "du pion " );
+    return strResult + strName_.GetData();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::GetItemName
+// Created: AGN 2004-05-18
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::UnitInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::CreateCopy
+// Created: AGN 2003-11-03
+// -----------------------------------------------------------------------------
+ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
+{
+    UnitInfos* pCopy = new UnitInfos();
+
+    pCopy->eTypeId_ = eTypeId_.GetData();
+    pCopy->ptrModel_ = ptrModel_.GetData();
+    pCopy->eNatureLevel_ = eNatureLevel_.GetData();
+    pCopy->eNatureWeapon_ = eNatureWeapon_.GetData();
+    pCopy->eNatureSpec_ = eNatureSpec_.GetData();
+    pCopy->eNatureQualifier_ = eNatureQualifier_.GetData();
+    pCopy->eNatureCategory_ = eNatureCategory_.GetData();
+    pCopy->eNatureMobility_ = eNatureMobility_.GetData();
+    pCopy->eNatureAtlas_ = eNatureAtlas_.GetData();
+    pCopy->eMissionCapacity_ = eMissionCapacity_.GetData();
+    pCopy->nNbOfficer_ = nNbOfficer_.GetData();
+    pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
+    pCopy->rDecontaminationDelay_ = rDecontaminationDelay_.GetData();
+    pCopy->bCanFly_ = bCanFly_.GetData();
+    pCopy->rWeaponsReach_ = rWeaponsReach_.GetData();
+    pCopy->rSensorsReach_ = rSensorsReach_.GetData();
+
+    for( T_ComposanteInfos_Vector::iterator itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
+        pCopy->vComposantes_.AddItem( (*itComposante)->CreateCopy() );
+
+    for( uint i = 0; i < vPostures_.size(); ++i )
+        pCopy->vPostures_[ i ]->rTimeToActivate_ = vPostures_[ i ]->rTimeToActivate_.GetData();
+
+    for( T_PointInfos_Vector::iterator itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
+        pCopy->vPointInfos_.AddItem( (*itPoint)->CreateCopy() );
+
+    pCopy->bTC1_ = bTC1_.GetData();
+    pCopy->contenancesTC1_.CopyFrom( contenancesTC1_ );
+    pCopy->bStock_ = bStock_.GetData();
+    pCopy->stock_.CopyFrom( stock_ );
+
+    pCopy->bProbe_ = bProbe_.GetData();
+    pCopy->rProbeLength_ = rProbeLength_.GetData();
+    pCopy->rProbeWidth_ = rProbeWidth_.GetData();
+
+    pCopy->bStrengthRatioFeedbackTime_ = bStrengthRatioFeedbackTime_.GetData();
+    pCopy->rStrengthRatioFeedbackTime_ = rStrengthRatioFeedbackTime_.GetData();
+
+    return pCopy;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UnitInfos::ReadArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "Unite" );
+
+    input.ReadAttribute( "nom", strName_ );
+
+    std::string strType;
+    input.ReadAttribute( "type", strType );
+    eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
+    if( eTypeId_ == (E_AgentTypePion)-1 )
+        input.ThrowError( MT_FormatString( "Le type d'unité '%s' est invalide", strType.c_str() ) );
+
+    std::string strModel;
+    input.ReadField( "ModeleDecisionnel", strModel );
+    ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
+    assert( pModel != 0 );
+    ptrModel_ = pModel;
+
+    input.Section( "Nature" );
+    std::string strTmp;
+
+    // Niveau
+    input.Section( "Niveau" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( strTmp );
+    if( eNatureLevelType == (E_NatureLevel)-1 )
+        input.ThrowError( MT_FormatString( "Le niveau hiéarchique '%s' est invalide.", strTmp.c_str() ) );
+    eNatureLevel_=eNatureLevelType;
+
+    input.EndSection(); // Niveau
+
+    // Arme
+    input.Section( "Arme" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_UnitNatureWeapon eNatureWeaponType = ENT_Tr::ConvertToUnitNatureWeapon( strTmp );
+    if( eNatureWeaponType == (E_UnitNatureWeapon)-1 )
+        input.ThrowError( MT_FormatString( "L'arme d'unité '%s' est invalide.", strTmp.c_str() ) );
+    eNatureWeapon_=eNatureWeaponType;
+
+    input.EndSection(); // Arme
+
+    // Spécialisation
+    input.Section( "Specialisation" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_UnitNatureSpecialization eNatureSpecType = ENT_Tr::ConvertToUnitNatureSpecialization( strTmp );
+    if( eNatureSpecType == (E_UnitNatureSpecialization)-1 )
+        input.ThrowError( MT_FormatString( "La spécialisation d'unité '%s' est invalide", strTmp.c_str() ) );
+    eNatureSpec_=eNatureSpecType;
+
+    input.EndSection(); // Specialisation
+
+    // Qualificatif
+    input.Section( "Qualificatif" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_UnitNatureQualifier eNatureQualifType = ENT_Tr::ConvertToUnitNatureQualifier( strTmp );
+    if( eNatureQualifType == (E_UnitNatureQualifier)-1 )
+        input.ThrowError( MT_FormatString( "La qualification d'unité '%s' est invalide", strTmp.c_str() ) );
+    eNatureQualifier_= eNatureQualifType;
+
+    input.EndSection(); // Qualificatif
+
+    // Catégorie
+    input.Section( "Categorie" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_UnitNatureCategory eNatureCategoryType = ENT_Tr::ConvertToUnitNatureCategory( strTmp );
+    if( eNatureCategoryType == (E_UnitNatureCategory)-1 )
+        input.ThrowError( MT_FormatString( "La catégorie d'unité '%s' est invalide", strTmp.c_str() ) );
+    eNatureCategory_=eNatureCategoryType;
+
+    input.EndSection(); // Categorie
+
+    // Type mobilité
+    input.Section( "TypeMobilite" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_UnitNatureMobility eNatureMobilityType = ENT_Tr::ConvertToUnitNatureMobility( strTmp );
+    if( eNatureMobilityType == (E_UnitNatureMobility)-1 )
+        input.ThrowError( MT_FormatString( "La mobilité d'unité '%s' est invalide", strTmp.c_str() ) );
+    eNatureMobility_=eNatureMobilityType;
+
+    input.EndSection(); // TypeMobilite
+
+    input.Section( "QualificatifAtlas" );
+    input.ReadAttribute( "type", strTmp );
+
+    E_NatureAtlasType eNatureAtlasType = ADN_Tr::ConvertToNatureAtlasType( strTmp );
+    if( eNatureAtlasType == (E_NatureAtlasType)-1 )
+        input.ThrowError( MT_FormatString( "Le qualificatif ATLAS '%s' est invalide", strTmp.c_str() ) );
+    eNatureAtlas_=eNatureAtlasType;
+    input.EndSection(); // QualificatifAtlas
+
+    // Capacite mission
+    input.Section( "CapaciteMission" );
+    input.ReadAttribute( "type", eMissionCapacity_, ADN_Tr::ConvertToCapacityMission, ADN_XmlInput_Helper::eThrow );
+    input.EndSection(); // CapaciteMission
+
+    input.EndSection(); // Nature
+
+    input.BeginList( "Equipements" );
+    while( input.NextListElement() )
+    {
+        std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
+        spNew->ReadArchive( input );
+        vComposantes_.AddItem( spNew.release() );
+    }
+    input.EndList(); // Equipements
+
+    if( input.Section( "RepartitionDuCommandement", ADN_XmlInput_Helper::eNothing ) )
+    {
+        input.ReadField( "Officier", nNbOfficer_, ADN_XmlInput_Helper::eNothing );
+        input.ReadField( "SousOfficier", nNbNCOfficer_, ADN_XmlInput_Helper::eNothing );
+        input.EndSection(); // RepartitionDuCommandement
+    }
+
+    bTC1_ = contenancesTC1_.ReadArchive( "ContenanceTC1", input, true );
+    bStock_ = stock_.ReadArchive( "Stocks", input, true );
+
+    input.Section( "TempsMiseEnPosture" );
+    for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
+    {
+        (*itPosture)->ReadArchive( input );
+    }
+    input.EndSection(); // TempsMiseEnPosture
+
+    input.ReadTimeField( "DelaiDecontaminationNBC", rDecontaminationDelay_ );
+
+
+    if( input.BeginList( "DistancesAvantPoints", ADN_XmlInput_Helper::eNothing ) )
+    {
+        while( input.NextListElement() )
+        {
+            std::auto_ptr<PointInfos> spNew( new PointInfos() );
+            spNew->ReadArchive( input );
+            vPointInfos_.AddItem( spNew.release() );
+        }
+        input.EndList(); // DistancesAvantPoints
+    }
+
+    if( input.Section( "CoupDeSonde", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bProbe_ = true;
+        input.ReadField( "Largeur", rProbeWidth_ );
+        input.ReadField( "Longueur", rProbeLength_ );
+        input.EndSection();
+    }
+
+    if( input.Section( "RapportDeForce", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bStrengthRatioFeedbackTime_ = true;
+        input.ReadTimeField( "TempsDeRemontee", rStrengthRatioFeedbackTime_ );
+        input.EndSection(); // RapportDeForce
+    }
+
+    if( input.Section( "PeutVoler", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bCanFly_ = true;
+        input.EndSection();
+    }
+
+    input.ReadField( "PorteeArmes", rWeaponsReach_, ADN_XmlInput_Helper::eNothing );
+    input.ReadField( "PorteeCapteurs", rSensorsReach_, ADN_XmlInput_Helper::eNothing );
+
+    input.EndSection(); // Unite
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UnitInfos::WriteArchive
+// Created: APE 2004-11-30
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "Unite" );
+
+    output.WriteAttribute( "nom", strName_.GetData() );
+    output.WriteAttribute( "type", ADN_Tr::ConvertFromAgentTypePion( eTypeId_.GetData() ) );
+    output.WriteField( "MosID", nMosId_.GetData() );
+    output.WriteField( "ModeleDecisionnel", ptrModel_.GetData()->strName_.GetData() );
+
+    // nature
+    output.Section("Nature");
+
+    // Niveau
+    output.Section( "Niveau" );
+    output.WriteAttribute( "type", ENT_Tr::ConvertFromNatureLevel(eNatureLevel_.GetData()) );
+    output.EndSection(); // Niveau
+
+    // Arme
+    output.Section( "Arme" );
+    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureWeapon(eNatureWeapon_.GetData()) );
+    output.EndSection(); // Arme
+
+    // Spécialisation
+    output.Section( "Specialisation" );
+    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureSpecialization(eNatureSpec_.GetData()) );
+    output.EndSection(); // Specialisation
+
+    // Qualificatif
+    output.Section( "Qualificatif" );
+    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureQualifier(eNatureQualifier_.GetData()) );
+    output.EndSection(); // Qualificatif
+
+    // Catégorie
+    output.Section( "Categorie" );
+    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureCategory(eNatureCategory_.GetData()) );
+    output.EndSection(); // Categorie
+
+    // Type mobilité
+    output.Section( "TypeMobilite" );
+    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureMobility(eNatureMobility_.GetData()) );
+    output.EndSection(); // TypeMobilite
+
+    // atlas
+    output.Section( "QualificatifAtlas" );
+    output.WriteAttribute( "type", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) );
+    output.EndSection(); // QualificatifAtlas
+
+    // Capacite mission
+    output.Section( "CapaciteMission" );
+    output.WriteAttribute( "type", ADN_Tr::ConvertFromCapacityMission( eMissionCapacity_.GetData() ) );
+    output.EndSection(); // CapaciteMission
+
+    output.EndSection(); //Nature
+
+
+    output.BeginList( "Equipements", vComposantes_.size() );
+    for( IT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
+    {
+        (*itComposante)->WriteArchive( output );
+    }
+    output.EndList(); // Equipements
+
+    output.Section( "RepartitionDuCommandement" );
+    output.WriteField( "Officier", nNbOfficer_.GetData() );
+    output.WriteField( "SousOfficier", nNbNCOfficer_.GetData() );
+    output.EndSection(); // RepartitionDuCommandement
+
+    if( bTC1_.GetData() )
+        contenancesTC1_.WriteArchive( "ContenanceTC1", output );
+    if( bStock_.GetData() )
+        stock_.WriteArchive( "Stocks", output );
+
+    output.Section( "TempsMiseEnPosture" );
+    for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
+    {
+        (*itPosture)->WriteArchive( output );
+    }
+    output.EndSection(); // TempsMiseEnPosture
+
+    output.WriteField( "DelaiDecontaminationNBC", ADN_Tools::SecondToString( rDecontaminationDelay_.GetData() ) );
+
+    if( ! vPointInfos_.empty() )
+    {
+        output.BeginList( "DistancesAvantPoints", vPointInfos_.size() );
+        for( IT_PointInfos_Vector itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
+            (*itPoint)->WriteArchive( output );
+        output.EndList(); // DistancesAvantPoints
+    }
+
+    if( bProbe_.GetData() )
+    {
+        output.Section( "CoupDeSonde" );
+        output.WriteField( "Largeur", rProbeWidth_.GetData() );
+        output.WriteField( "Longueur", rProbeLength_.GetData() );
+        output.EndSection(); // CoupDeSonde
+    }
+
+    if( bStrengthRatioFeedbackTime_.GetData() )
+    {
+        output.Section( "RapportDeForce" );
+        output.WriteField( "TempsDeRemontee", ADN_Tools::SecondToString( rStrengthRatioFeedbackTime_.GetData() ) );
+        output.EndSection(); // RapportDeForce
+    }
+
+    if( bCanFly_.GetData() )
+    {
+        output.Section( "PeutVoler" );
+        output.EndSection();
+    }
+
+    output.WriteField( "PorteeArmes", rWeaponsReach_.GetData() );
+    output.WriteField( "PorteeCapteurs", rSensorsReach_.GetData() );
+
+    output.EndSection(); // Unite
+}
+
+
+// =============================================================================
+//
+// =============================================================================
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data constructor
+// Created: JDY 03-07-24
+//-----------------------------------------------------------------------------
+ADN_Units_Data::ADN_Units_Data()
+: ADN_Data_ABC()
+, nNextId_    ( 1 )
+{
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data destructor
+// Created: JDY 03-07-24
+//-----------------------------------------------------------------------------
+ADN_Units_Data::~ADN_Units_Data()
+{
+    Reset();
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Units_Data::Reset
+// Created: JDY 03-06-26
+//-----------------------------------------------------------------------------
+void ADN_Units_Data::Reset()
+{
+    nNextId_ = 1;
+    vUnits_.Reset();
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Munitions_Data::FilesNeeded
+// Created: JDY 03-09-08
+//-----------------------------------------------------------------------------
+void ADN_Units_Data::FilesNeeded(T_StringList& files) const
+{
+    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szUnits_.GetData());
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::GetNextId
+// Created: APE 2005-03-18
+// -----------------------------------------------------------------------------
+int ADN_Units_Data::GetNextId()
+{
+    return nNextId_++;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::ReadArchive
+// Created: APE 2004-12-01
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.BeginList( "Pions" );
+
+    while( input.NextListElement() )
+    {
+        std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
+        spNew->ReadArchive( input );
+        vUnits_.AddItem( spNew.release() );
+    }
+    vUnits_.AddItem( 0 );  // Signals the end of the vector, allows certain parts of the gui to update.
+
+    input.EndList(); // Pions
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::WriteArchive
+// Created: APE 2004-12-01
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.BeginList( "Pions", vUnits_.size() );
+
+    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    {
+        (*it)->WriteArchive( output );
+    }
+
+    output.EndList(); // Pions
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::GetUnitsThatUse
+// Created: APE 2005-04-25
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante )
+{
+    std::string strResult;
+    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    {
+        UnitInfos* pUnit = *it;
+        for( IT_ComposanteInfos_Vector it2 = pUnit->vComposantes_.begin(); it2 != pUnit->vComposantes_.end(); ++it2 )
+        {
+            if( (*it2)->ptrComposante_.GetData() == &composante )
+            {
+                if( strResult != "" )
+                    strResult += "<br>";
+                strResult += pUnit->strName_.GetData();
+                break;
+            }
+        }
+    }
+    return strResult;
+}

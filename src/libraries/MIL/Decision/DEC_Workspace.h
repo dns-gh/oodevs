@@ -1,0 +1,78 @@
+//*****************************************************************************
+// Created: JVT 02-06-28
+//*****************************************************************************
+
+#ifndef __DEC_Workspace_h_
+#define __DEC_Workspace_h_
+
+#include "MIL.h"
+
+#include "DEC_Debug.h"
+
+class DEC_ModelPion;
+class DEC_ModelAutomate;
+
+//*****************************************************************************
+// Created: JVT 02-06-28
+// Last modified: AGN 02-11-05
+//*****************************************************************************
+class DEC_Workspace
+{
+    MT_COPYNOTALLOWED( DEC_Workspace )
+     
+public:
+	 DEC_Workspace( MIL_InputArchive& archive );
+	~DEC_Workspace();
+
+    //! @name Fonction dia
+    //@{
+	virtual float GetTime() const;
+    //@}
+
+    //! @name Models management
+    //@{
+          DIA_Model*         FindDIAModelFromScript( const std::string& strScriptName ) const;
+    const DEC_ModelPion*     FindModelPion         ( const std::string& strModelName ) const;
+    const DEC_ModelAutomate* FindModelAutomate     ( const std::string& strModelName ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    DEC_Debug& GetDebug();
+    //@}  
+    
+private:
+    //! @name Init
+    //@{
+    static void RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* pTable );
+    static bool CheckFilesDepencies  ( const std::string& strArchiveFile );
+
+    void InitializeConfig      ( MIL_InputArchive& archive );
+    void InitializeDIA         ( MIL_InputArchive& archive );
+    void InitializeDIATypes    ( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
+    void InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
+    void InitializeModels      ( MIL_InputArchive& initArchive, bool  bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );   
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const DEC_ModelPion*, sCaseInsensitiveLess > T_ModelPionMap;
+    typedef T_ModelPionMap::const_iterator                                      CIT_ModelPionMap;
+
+    typedef std::map< std::string, const DEC_ModelAutomate*, sCaseInsensitiveLess > T_ModelAutomateMap;
+    typedef T_ModelAutomateMap::const_iterator                                      CIT_ModelAutomateMap;
+    //@}
+
+private:
+    DEC_Debug                           debug_;
+    DIA_FunctionTable< DEC_Workspace >* pFuncTable_;
+    DIA_FunctionCaller_ABC*             pFunctionCaller_;
+
+    T_ModelPionMap                      pionModels_;
+    T_ModelAutomateMap                  automateModels_;
+};
+
+#include "DEC_Workspace.inl"
+
+#endif // __DEC_Workspace_h_

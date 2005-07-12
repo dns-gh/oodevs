@@ -1,0 +1,204 @@
+--
+-- file name : ScipioPionMissionAlat.asn
+--
+-- Messages des différentes missions automate Alat
+--
+
+ScipioPionMission_ALAT DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, ListKnowledgeObject, NatureAtlas, ListPoint, ListPolygon, Point, 
+        ListKnowledgeAgent, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
+        
+        
+EnumMissionALAT_PorteeAction ::= ENUMERATED
+{
+    courte-portee   (0),
+    moyenne-portee  (1),
+    longue-portee   (2),
+    sans-munitions  (3)
+}
+
+EnumMissionALAT_AmbianceMission ::= ENUMERATED
+{
+    aa         (0),        
+    as         (1),
+    polyvalent (2)
+}    
+       
+Mission-Pion-ALAT-ReconnaitreDansLaProfondeur ::= SEQUENCE
+{
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission,
+    point-dislocation       Point,
+    zone                    Localisation
+}
+
+Mission-Pion-ALAT-ReconnaitreContourEnnemi ::= SEQUENCE
+{
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+    
+}
+
+
+Mission-Pion-ALAT-DetruireNeutraliserDansZone ::= SEQUENCE
+{
+    zone                    Polygon,
+    point-dislocation       Point,
+    cibles-prioritaires     NatureAtlas,                                
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission,
+    neutraliser             BOOLEAN
+}
+
+Mission-Pion-ALAT-DetruireAeromobile ::= SEQUENCE
+{
+    unite-a-detruire        ListKnowledgeAgent,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-Freiner ::= SEQUENCE
+{
+    cibles-prioritaires     NatureAtlas,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-Attaquer ::= SEQUENCE
+{
+    cibles-prioritaires     NatureAtlas,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-Jalonner ::= SEQUENCE
+{
+    point-regroupement      Point,
+    cibles-prioritaires     NatureAtlas,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+
+Mission-Pion-ALAT-Escorter ::= SEQUENCE
+{
+    unites-a-escorter       ListAgent,
+    point-regroupement      Point,
+    cibles-prioritaires     NatureAtlas,                                
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-Heliporter ::= SEQUENCE
+{
+    unites-a-heliporter     ListAgent,
+    point-debarquement      Point,
+    point-embarquement      Point,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    attendre-unite          BOOLEAN,
+    avec-materiel           BOOLEAN DEFAULT FALSE
+}
+
+Mission-Pion-ALAT-HeliporterHelitransporterPlotRavitaillement ::= SEQUENCE
+{
+    point-debarquement      Point,
+    position-regroupement   Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction
+}
+
+Mission-Pion-ALAT-Helitransporter ::= SEQUENCE
+{
+    unites-a-helitransporter    ListAgent, 
+    point-debarquement          Point,
+    point-embarquement          Point,
+    point-regroupement          Point,  
+    plots-ravitaillement        ListKnowledgeObject,
+    portee-action               EnumMissionALAT_PorteeAction,
+    avec-materiel               BOOLEAN DEFAULT FALSE
+}
+
+Mission-Pion-ALAT-EffectuerRechercheEtSauvetage ::= SEQUENCE
+{
+    unites-a-secourir       ListAgent,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction
+}
+
+Mission-Pion-ALAT-IMEX ::= SEQUENCE
+{
+    unites-a-appuyer        ListAgent,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction
+}
+
+
+Mission-Pion-ALAT-Eclairer ::= SEQUENCE
+{
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-Surveiller ::= SEQUENCE
+{
+    zone                    Polygon,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+
+Mission-Pion-ALAT-AppuyerDirectAuContact ::= SEQUENCE
+{
+    cibles-prioritaires     NatureAtlas,
+    unites-a-appuyer        ListAgent,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-Couvrir ::= SEQUENCE
+{
+    cibles-prioritaires     NatureAtlas,
+    unites-a-couvrir        ListAgent,
+    point-regroupement      Point,
+    plots-ravitaillement    ListKnowledgeObject,
+    portee-action           EnumMissionALAT_PorteeAction,
+    ambiance-mission        EnumMissionALAT_AmbianceMission
+}
+
+Mission-Pion-ALAT-EvacuationSanitaire ::= SEQUENCE
+{
+	point-debarquement          Point,
+	zone-extraction             Polygon,
+	point-regroupement          Point,
+	plots-ravitaillement        ListKnowledgeObject,
+	portee-action               EnumMissionALAT_PorteeAction
+}
+
+END -- ScipioPionMission_ALAT
+

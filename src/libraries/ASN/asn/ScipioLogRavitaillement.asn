@@ -1,0 +1,114 @@
+--
+-- file name : ScipioLogRavitaillement.asn
+--
+-- Messages de gestion de la chaine logistique ravitaillement
+--
+
+ScipioLogRavitaillement DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory, EnumTempsBordee FROM ScipioBase;
+
+DemandeDotation ::= SEQUENCE
+{
+    ressource-id        TypeDotation,
+    quantite-demandee   INTEGER(0..max-uint32),
+    quantite-accordee   INTEGER(0..max-uint32),
+    quantite-en-transit INTEGER(0..max-uint32)
+}
+
+MsgLogRavitaillementTraitementCreation ::= SEQUENCE
+{
+    oid-consigne    OID,
+    oid-automate    Automate,  
+    dotations       SEQUENCE OF DemandeDotation
+}
+
+EnumLogRavitaillementTraitementEtat ::= ENUMERATED
+{ 
+    convoi-consitution       (0),
+    convoi-chargement        (1),
+    convoi-deplacement-aller (2),
+    convoi-dechargement      (3),
+    convoi-deplacement-retour(4),
+    termine                  (5)
+}
+
+MsgLogRavitaillementTraitementUpdate ::= SEQUENCE
+{
+    oid-consigne          OID,
+    oid-automate          Automate,
+    oid-pion-log-traitant Agent                               OPTIONAL, -- pion LOG gérant le ravitaillement, 0 si aucun pion (demande passée à la BLIAT par exemple)
+    oid-pion-convoi       Agent                               OPTIONAL,
+    etat                  EnumLogRavitaillementTraitementEtat OPTIONAL,
+    dotations             SEQUENCE OF DemandeDotation         OPTIONAL
+}
+
+MsgLogRavitaillementTraitementDestruction ::= SEQUENCE
+{
+    oid-consigne    OID,
+    oid-automate    Automate
+}
+
+-- Etat des pions logistiques du ravitaillement
+RavitaillementDisponibiliteMoyens ::= SEQUENCE
+{
+    type-equipement           TypeEquipement,
+    pourcentage-disponibilite Pourcentage
+}
+
+DotationStock ::= SEQUENCE 
+{
+    ressource-id        TypeDotation,
+    quantite-disponible INTEGER (0..max-uint32)
+}
+
+MsgLogRavitaillementEtat ::= SEQUENCE
+{
+    oid-pion                             Agent,    
+    chaine-activee                       BOOLEAN                                       OPTIONAL,
+    stocks                               SEQUENCE OF DotationStock                     OPTIONAL, -- Seules les dotations qui ont changées sont envoyées
+    disponibilites-chefs-convois         SEQUENCE OF RavitaillementDisponibiliteMoyens OPTIONAL,
+    disponibilites-transporteurs-convois SEQUENCE OF RavitaillementDisponibiliteMoyens OPTIONAL
+}
+
+
+DotationQuota ::= SEQUENCE
+{
+    ressource-id        TypeDotation,
+    quota-disponible    INTEGER (0..max-uint32)
+}
+
+MsgLogRavitaillementChangeQuotas ::= SEQUENCE
+{
+    oid-donneur  Automate,
+    oid-receveur Automate,
+    quotas       SEQUENCE OF DotationQuota -- Seuls les quotas envoyés sont changés, les valeurs des quotas non surchargés ne bougent pas
+}
+MsgLogRavitaillementChangeQuotasAck ::= ENUMERATED
+{
+    no-error              (0),
+    error-invalid-donneur (1),
+    error-invalid-receveur(2)
+}
+
+MsgLogRavitaillementPousserFlux ::= SEQUENCE
+{
+    oid-donneur  Automate,
+    oid-receveur Automate,
+    stocks       SEQUENCE OF DotationStock
+}
+MsgLogRavitaillementPousserFluxAck ::= ENUMERATED
+{
+    no-error                     (0),
+    error-invalid-donneur        (1),
+    error-invalid-receveur       (2),
+    error_ravitaillement_en_cours(3)
+}
+   
+MsgLogRavitaillementQuotas ::= SEQUENCE
+{
+    oid-automate  Automate,
+    quotas        SEQUENCE OF DotationQuota -- Tous est envoyé
+}
+
+END -- ScipioLogRavitaillement

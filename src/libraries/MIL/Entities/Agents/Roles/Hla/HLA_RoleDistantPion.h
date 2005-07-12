@@ -1,0 +1,62 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+//
+// $Created: AGE 2004-11-10 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Hla/HLA_RoleDistantPion.h $
+// $Author: Age $
+// $Modtime: 24/11/04 16:03 $
+// $Revision: 4 $
+// $Workfile: HLA_RoleDistantPion.h $
+//
+// *****************************************************************************
+
+#ifndef __HLA_RoleDistantPion_h_
+#define __HLA_RoleDistantPion_h_
+
+#include "HLA_RoleInterface.h"
+#include "Hla/ObjectIdentifier.h"
+
+class MIL_AgentHLA;
+
+// =============================================================================
+/** @class  HLA_RoleDistantPion
+    @brief  HLA role distant pion
+*/
+// Created: AGE 2004-11-10
+// =============================================================================
+class HLA_RoleDistantPion : public HLA_RoleInterface
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             HLA_RoleDistantPion( MT_RoleContainer& roleContainer, MIL_AgentHLA& pion, const ObjectIdentifier& objectId );
+    virtual ~HLA_RoleDistantPion();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Serialize  ( UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    virtual void Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer );
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual ObjectIdentifier GetId() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    MIL_AgentHLA& pion_;
+    ObjectIdentifier objectId_;
+    //@}
+};
+
+#endif // __HLA_RoleDistantPion_h_

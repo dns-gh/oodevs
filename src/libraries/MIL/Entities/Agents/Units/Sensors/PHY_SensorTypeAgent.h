@@ -1,0 +1,113 @@
+// *****************************************************************************
+//
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h $
+// $Author: Nld $
+// $Modtime: 29/11/04 17:57 $
+// $Revision: 5 $
+// $Workfile: PHY_SensorTypeAgent.h $
+//
+// *****************************************************************************
+
+#ifndef __PHY_SensorTypeAgent_h_
+#define __PHY_SensorTypeAgent_h_
+
+#include "MIL.h"
+
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
+
+class PHY_PerceptionLevel;
+class PHY_RoleInterface_Posture;
+class PHY_RolePion_Posture;
+class MIL_AgentPion;
+class MIL_Agent_ABC;
+class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
+class PHY_SensorType;
+
+// =============================================================================
+// @class  PHY_SensorTypeAgent
+// Created: JVT 2004-08-03
+// Modified: JVT 2004-09-28
+// =============================================================================
+class PHY_SensorTypeAgent
+{
+    MT_COPYNOTALLOWED( PHY_SensorTypeAgent )
+
+public:
+     PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputArchive& archive );
+    ~PHY_SensorTypeAgent();
+
+    //! @name Accessors
+    //@{
+          MT_Float        GetSquareProximityDistance() const;
+          MT_Float        GetMaxDistance            () const;
+          MT_Float        GetAngle                  () const;
+          MT_Float        GetFactor                 ( const PHY_Volume& volume ) const;
+          bool            CanScan                   () const;
+    const PHY_SensorType& GetType                   () const;
+    //@}
+
+    //! @name Operations
+    //@{
+    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MT_Vector2D&         target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_Agent_ABC&      target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Agent& target, MT_Float rSensorHeight ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< MT_Float > T_FactorVector;
+    //@}
+
+private:
+    //! @name Init
+    //@{
+    void InitializeAngle             ( MIL_InputArchive& archive );
+    void InitializeDistances         ( MIL_InputArchive& archive );
+    void InitializeEnvironmentFactors( MIL_InputArchive& archive );
+
+    template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive );
+    //@}
+
+    //! @name Tools
+    //@{
+    PHY_RawVisionData::E_VisionObject ConvertObjectIdxToEnvironnement( uint val );
+    uint                              ConvertEnvironementToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
+
+    const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, MT_Float rSourceAltitude, const MT_Vector2D& vTarget, MT_Float rTargetAltitude, MT_Float rDistanceMaxModificator ) const;
+    MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
+    MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef ) const;
+    const PHY_PerceptionLevel& InterpreteExtinction     ( MT_Float rExtinction ) const;
+
+    MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
+    MT_Float GetTargetFactor( const MIL_Agent_ABC&       target ) const;
+    MT_Float GetTargetFactor( const DEC_Knowledge_Agent& target ) const;
+    //@}
+
+private:
+    const PHY_SensorType& type_;
+    
+    MT_Float rAngle_;
+    bool     bScanningAllowed_;
+
+    // Distances
+    MT_Float rSquareProximityDist_;
+    MT_Float rIdentificationDist_;
+    MT_Float rRecognitionDist_;
+    MT_Float rDetectionDist_;
+
+    // Modificateurs
+    T_FactorVector volumeFactors_;
+    T_FactorVector precipitationFactors_;
+    T_FactorVector lightingFactors_;
+    T_FactorVector postureSourceFactors_;
+    T_FactorVector postureTargetFactors_;
+    T_FactorVector environmentFactors_;   
+};
+
+#include "PHY_SensorTypeAgent.inl"
+
+#endif // __PHY_SensorTypeAgent_h_

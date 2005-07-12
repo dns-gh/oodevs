@@ -1,0 +1,89 @@
+--
+-- file name : ScipioAutomateMissionASA.asn
+--
+-- Messages des différentes missions automate Asa
+--
+
+ScipioAutomateMission_ASA DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, ListPolygon, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
+        
+EnumModeDeploiement ::= ENUMERATED
+{        
+    en-carre              (0),
+    en-triangle           (1),
+    nasse-trois-sections  (2),
+    nasse-quatre-sections (3),
+    double-rideau         (4),
+    simple-rideau         (5)
+}
+        
+Mission-Automate-ASA-DefendreZone ::= SEQUENCE 
+{
+    zone  Polygon,
+    angle Angle
+}
+     
+Mission-Automate-ASA-DefendreSite ::= SEQUENCE 
+{
+    zone  Polygon,
+    angle Angle
+}
+
+Mission-Automate-ASA-Surveiller ::= SEQUENCE 
+{
+    zone  Polygon,
+    angle Angle
+}
+
+Mission-Automate-ASA-DefendreItineraire ::= SEQUENCE
+{
+    itineraire Itineraire
+}
+
+Mission-Automate-ASA-MISTRAL-DefendreZone ::= SEQUENCE 
+{
+    zone             Polygon,
+    mode-deploiement EnumModeDeploiement,
+    angle            Angle
+}
+     
+Mission-Automate-ASA-MISTRAL-DefendreSite ::= SEQUENCE 
+{
+    zone             Polygon,
+    mode-deploiement EnumModeDeploiement,
+    angle            Angle
+}
+
+Mission-Automate-ASA-MISTRAL-Surveiller ::= SEQUENCE 
+{
+    zone             Polygon,
+    mode-deploiement EnumModeDeploiement,
+    angle            Angle
+}
+
+Mission-Automate-ASA-HAWK-DefendreZone ::= SEQUENCE 
+{
+    zone                Polygon,
+    positions-sections  ListPoint
+}
+     
+Mission-Automate-ASA-HAWK-DefendreSite ::= SEQUENCE 
+{
+    zone                Polygon,
+    positions-sections  ListPoint
+}
+
+Mission-Automate-ASA-HAWK-Surveiller ::= SEQUENCE 
+{
+    zone                Polygon,
+    positions-sections  ListPoint
+}
+
+Mission-Automate-ASA-DefendreUnites ::= SEQUENCE 
+{
+    unites ListAgent
+}
+
+END -- ScipioAutomateMission_ASA

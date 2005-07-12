@@ -1,0 +1,74 @@
+--
+-- file name : ScipioPionMission_Rens.asn
+--
+
+ScipioPionMission_RENS DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
+
+-- ROHUM (RBRR + URH)
+Mission-Pion-RENS-ROHUM-RenseignerSur ::= SEQUENCE
+{
+    zone-a-observer Polygon
+}
+
+Mission-Pion-RENS-ROHUM-SExfiltrer ::= SEQUENCE
+{
+    point-de-regroupement Point
+}
+
+Mission-Pion-RENS-ROHUM-OrienterGuider ::= SEQUENCE
+{
+	ami Agent
+}
+
+-- ROIM (Drones + CL289 + SDTI)
+
+Mission-Pion-RENS-ROIM-SDTI-RenseignerSur ::= SEQUENCE
+{
+    ficelle-de-vole    Itineraire
+}
+
+Mission-Pion-RENS-ROIM-CL289-RenseignerSur ::= SEQUENCE
+{
+    ficelle-de-vole    Itineraire,
+    zones-de-recherche ListPolygon    
+}
+
+Mission-Pion-RENS-ROIM-MettreEnOeuvre ::= SEQUENCE
+{
+	position-deploiement Point
+}
+
+-- ROEM
+
+Mission-Pion-RENS-ROEM-Appuyer ::= SEQUENCE
+{
+    position-deploiement Point,
+    point-regroupement   Point
+}
+
+Mission-Pion-RENS-ROEM-RenseignerSur ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-RENS-ROEM-MettreEnOeuvre ::= SEQUENCE
+{
+    position-deploiement Point
+}
+
+-- RADINT (VIVIANE + HORIZON)      
+
+Mission-Pion-RENS-RADINT-RenseignerSur ::= SEQUENCE
+{
+    zones-de-recherche ListPolygon
+}
+
+Mission-Pion-RENS-RADINT-MettreEnOeuvre ::= SEQUENCE
+{
+    position-deploiement Point    
+}
+
+END -- ScipioPionMission_RENS

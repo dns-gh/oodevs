@@ -1,0 +1,218 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+//
+// $Created: APE 2004-9-8 - 11:16:14 $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_MissionManager_Gen.cpp $
+// $Author: Ape $
+// $Modtime: 8/09/04 11:16 $
+// $Revision: 7 $
+// $Workfile: MOS_MissionManager_Gen.cpp $
+//
+// *****************************************************************************
+
+
+missions_.push_back( new MOS_Mission( "Pion Test MoveTo", eMission_Pion_Test_MoveTo, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test CreateObject", eMission_Pion_Test_CreateObject, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test DestroyObject", eMission_Pion_Test_DestroyObject, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test CreateBypass", eMission_Pion_Test_CreateBypass, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test Fire", eMission_Pion_Test_Fire, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test ChangePosture", eMission_Pion_Test_ChangePosture, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test FindPosition", eMission_Pion_Test_FindPosition, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test PathFind", eMission_Pion_Test_PathFind, false ) );
+missions_.push_back( new MOS_Mission( "Pion Test Reinforce", eMission_Pion_Test_Reinforce, false ) );
+missions_.push_back( new MOS_Mission( "Pion PlastronEnnemi", eMission_Pion_PlastronEnnemi, false ) );
+missions_.push_back( new MOS_Mission( "Pion SeDeplacer", eMission_Pion_SeDeplacer, false ) );
+missions_.push_back( new MOS_Mission( "Pion Suivre", eMission_Pion_Suivre, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC ReconnaitreAxe", eMission_Pion_ABC_ReconnaitreAxe, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Soutenir", eMission_Pion_ABC_Soutenir, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Couvrir", eMission_Pion_ABC_Couvrir, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Reduire", eMission_Pion_ABC_Reduire, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Appuyer", eMission_Pion_ABC_Appuyer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Fixer", eMission_Pion_ABC_Fixer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC ControlerSecteur", eMission_Pion_ABC_ControlerSecteur, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC SurveillerSecteur", eMission_Pion_ABC_SurveillerSecteur, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Barrer", eMission_Pion_ABC_Barrer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Attaquer", eMission_Pion_ABC_Attaquer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC ReconnaitrePoint", eMission_Pion_ABC_ReconnaitrePoint, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Eclairer", eMission_Pion_ABC_Eclairer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Jalonner", eMission_Pion_ABC_Jalonner, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC ContreAttaquer", eMission_Pion_ABC_ContreAttaquer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC SemparerZone", eMission_Pion_ABC_SemparerZone, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC ReleverUnite", eMission_Pion_ABC_ReleverUnite, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC ArmerPIA", eMission_Pion_ABC_ArmerPIA, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC OuvrirItineraire", eMission_Pion_ABC_OuvrirItineraire, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC RenseignerSur", eMission_Pion_ABC_RenseignerSur, false ) );
+missions_.push_back( new MOS_Mission( "Pion ABC Freiner", eMission_Pion_ABC_Freiner, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF ReconnaitreAxe", eMission_Pion_INF_ReconnaitreAxe, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Couvrir", eMission_Pion_INF_Couvrir, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Reduire", eMission_Pion_INF_Reduire, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Appuyer", eMission_Pion_INF_Appuyer, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Fixer", eMission_Pion_INF_Fixer, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF ControlerSecteur", eMission_Pion_INF_ControlerSecteur, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF SurveillerSecteur", eMission_Pion_INF_SurveillerSecteur, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Barrer", eMission_Pion_INF_Barrer, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF ReconnaitrePoint", eMission_Pion_INF_ReconnaitrePoint, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Eclairer", eMission_Pion_INF_Eclairer, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Interdire", eMission_Pion_INF_Interdire, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Semparer", eMission_Pion_INF_Semparer, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF PrendrePreciserContact", eMission_Pion_INF_PrendrePreciserContact, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Defendre", eMission_Pion_INF_Defendre, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF DetruireEmbuscade", eMission_Pion_INF_DetruireEmbuscade, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF ContreAttaquer", eMission_Pion_INF_ContreAttaquer, false ) );
+missions_.push_back( new MOS_Mission( "Pion INF Freiner", eMission_Pion_INF_Freiner, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserFosseAC", eMission_Pion_GEN_RealiserFosseAC, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserAbattisMine", eMission_Pion_GEN_RealiserAbattisMine, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserPointMine", eMission_Pion_GEN_RealiserPointMine, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserBarricade", eMission_Pion_GEN_RealiserBarricade, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserEboulement", eMission_Pion_GEN_RealiserEboulement, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserBouchonMine", eMission_Pion_GEN_RealiserBouchonMine, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN DetruireRoute", eMission_Pion_GEN_DetruireRoute, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN DetruirePont", eMission_Pion_GEN_DetruirePont, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN SecuriserItineraire", eMission_Pion_GEN_SecuriserItineraire, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN DegagerAbattisMine", eMission_Pion_GEN_DegagerAbattisMine, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN DegagerEboulement", eMission_Pion_GEN_DegagerEboulement, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN DegagerRues", eMission_Pion_GEN_DegagerRues, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ComblerEntonnoir", eMission_Pion_GEN_ComblerEntonnoir, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ComblerFosseAC", eMission_Pion_GEN_ComblerFosseAC, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN CreerContournement", eMission_Pion_GEN_CreerContournement, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserZoneMineeLineaire", eMission_Pion_GEN_RealiserZoneMineeLineaire, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN OuvrirTrouee", eMission_Pion_GEN_OuvrirTrouee, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN Renforcer", eMission_Pion_GEN_Renforcer, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN FranchirEntonnoir", eMission_Pion_GEN_FranchirEntonnoir, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN FranchirFosseAC", eMission_Pion_GEN_FranchirFosseAC, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserZoneMineeParDispersion", eMission_Pion_GEN_RealiserZoneMineeParDispersion, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserPostesTir", eMission_Pion_GEN_RealiserPostesTir, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RealiserTravauxProtection", eMission_Pion_GEN_RealiserTravauxProtection, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN RetablirItineraire", eMission_Pion_GEN_RetablirItineraire, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN EquiperExploiterContinu", eMission_Pion_GEN_EquiperExploiterContinu, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN EquiperExploiterDiscontinu", eMission_Pion_GEN_EquiperExploiterDiscontinu, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ExecuterVariantementContinu", eMission_Pion_GEN_ExecuterVariantementContinu, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ExecuterVariantementDiscontinu", eMission_Pion_GEN_ExecuterVariantementDiscontinu, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ReconnaitreSiteFranchissement", eMission_Pion_GEN_ReconnaitreSiteFranchissement, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ReconnaitreItineraire", eMission_Pion_GEN_ReconnaitreItineraire, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ElargirTrouee", eMission_Pion_GEN_ElargirTrouee, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN DeminerSiteFranchissement", eMission_Pion_GEN_DeminerSiteFranchissement, false ) );
+missions_.push_back( new MOS_Mission( "Pion GEN ReconnaitreZone", eMission_Pion_GEN_ReconnaitreZone, false ) );
+missions_.push_back( new MOS_Mission( "Automate ASS AssurerMiseEnOeuvre", eMission_Automate_ASS_AssurerMiseEnOeuvre, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASS AssurerMiseEnOeuvreLRM", eMission_Automate_ASS_AssurerMiseEnOeuvreLRM, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASS AcquerirObjectifs", eMission_Automate_ASS_AcquerirObjectifs, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASS SurveillerRATAC", eMission_Automate_ASS_SurveillerRATAC, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASS AcquerirLanceursEniCOBRA", eMission_Automate_ASS_AcquerirLanceursEniCOBRA, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASS SuivreDesObjectifsRATAC", eMission_Automate_ASS_SuivreDesObjectifsRATAC, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASA Surveiller", eMission_Automate_ASA_Surveiller, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASA DefendreSite", eMission_Automate_ASA_DefendreSite, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASA DefendreZone", eMission_Automate_ASA_DefendreZone, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASA DefendreUnite", eMission_Automate_ASA_DefendreUnite, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASA DefendreSiteMISTRAL", eMission_Automate_ASA_DefendreSiteMISTRAL, true ) );
+missions_.push_back( new MOS_Mission( "Automate ASA DefendreZoneMISTRAL", eMission_Automate_ASA_DefendreZoneMISTRAL, true ) );
+missions_.push_back( new MOS_Mission( "Automate ALAT Heliporter", eMission_Automate_ALAT_Heliporter, true ) );
+missions_.push_back( new MOS_Mission( "Pion ASS ReconnaitreZoneDeploiement", eMission_Pion_ASS_ReconnaitreZoneDeploiement, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS AssurerMiseEnOeuvre", eMission_Pion_ASS_AssurerMiseEnOeuvre, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS ReconnaitreZoneDeploiementLRM", eMission_Pion_ASS_ReconnaitreZoneDeploiementLRM, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS AssurerMiseEnOeuvreLRM", eMission_Pion_ASS_AssurerMiseEnOeuvreLRM, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS AppliquerFeux", eMission_Pion_ASS_AppliquerFeux, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS AcquerirObjectifs", eMission_Pion_ASS_AcquerirObjectifs, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS SurveillerRATAC", eMission_Pion_ASS_SurveillerRATAC, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS ReconnaitreZoneDeploiementCOBRA", eMission_Pion_ASS_ReconnaitreZoneDeploiementCOBRA, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASS AcquerirLanceursEniCOBRA", eMission_Pion_ASS_AcquerirLanceursEniCOBRA, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASA DefendreSite", eMission_Pion_ASA_DefendreSite, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASA DefendreZone", eMission_Pion_ASA_DefendreZone, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASA DefendreUnite", eMission_Pion_ASA_DefendreUnite, false ) );
+missions_.push_back( new MOS_Mission( "Pion ASA Surveiller", eMission_Pion_ASA_Surveiller, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT ReconnaitreDansProfondeur", eMission_Pion_ALAT_ReconnaitreDansProfondeur, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT ReconnaitreSurContourEnnemi", eMission_Pion_ALAT_ReconnaitreSurContourEnnemi, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT DetruireDansZone", eMission_Pion_ALAT_DetruireDansZone, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT DetruireUnite", eMission_Pion_ALAT_DetruireUnite, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Freiner", eMission_Pion_ALAT_Freiner, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Jalonner", eMission_Pion_ALAT_Jalonner, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Escorter", eMission_Pion_ALAT_Escorter, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Heliporter", eMission_Pion_ALAT_Heliporter, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Helitransporter", eMission_Pion_ALAT_Helitransporter, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Eclairer", eMission_Pion_ALAT_Eclairer, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT ReconnaitrePoint", eMission_Pion_ALAT_ReconnaitrePoint, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Surveiller", eMission_Pion_ALAT_Surveiller, false ) );
+missions_.push_back( new MOS_Mission( "Pion ALAT Relever", eMission_Pion_ALAT_Relever, false ) );
+missions_.push_back( new MOS_Mission( "Pion RENS RenseignerSur", eMission_Pion_RENS_RenseignerSur, false ) );
+missions_.push_back( new MOS_Mission( "Pion RENS SExfiltrer", eMission_Pion_RENS_SExfiltrer, false ) );
+missions_.push_back( new MOS_Mission( "Pion NBC Decontaminer", eMission_Pion_NBC_Decontaminer, false ) );
+missions_.push_back( new MOS_Mission( "Pion NBC ReconnaitreItineraire", eMission_Pion_NBC_ReconnaitreItineraire, false ) );
+missions_.push_back( new MOS_Mission( "Pion NBC ReconnaitrePoint", eMission_Pion_NBC_ReconnaitrePoint, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD DistribuerMoyens", eMission_Pion_BSD_DistribuerMoyens, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD SeDeployer", eMission_Pion_BSD_SeDeployer, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD TrierBlesses", eMission_Pion_BSD_TrierBlesses, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD TrierEtTraiterUE", eMission_Pion_BSD_TrierEtTraiterUE, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD TraiterUE", eMission_Pion_BSD_TraiterUE, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD DistribuerRessources", eMission_Pion_BSD_DistribuerRessources, false ) );
+missions_.push_back( new MOS_Mission( "Pion BSD Reparer", eMission_Pion_BSD_Reparer, false ) );
+missions_.push_back( new MOS_Mission( "Automate Test MoveTo", eMission_Automate_Test_MoveTo, true ) );
+missions_.push_back( new MOS_Mission( "Automate SeDeplacer", eMission_Automate_SeDeplacer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Appuyer", eMission_Automate_ABC_Appuyer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Attaquer", eMission_Automate_ABC_Attaquer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC ContreAttaquer", eMission_Automate_ABC_ContreAttaquer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Controler", eMission_Automate_ABC_Controler, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Couvrir", eMission_Automate_ABC_Couvrir, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC DonnerCoupArret", eMission_Automate_ABC_DonnerCoupArret, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Eclairer", eMission_Automate_ABC_Eclairer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC EffectuerRaid", eMission_Automate_ABC_EffectuerRaid, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Fixer", eMission_Automate_ABC_Fixer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Freiner", eMission_Automate_ABC_Freiner, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Interdire", eMission_Automate_ABC_Interdire, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Jalonner", eMission_Automate_ABC_Jalonner, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC PrendrePreciserContact", eMission_Automate_ABC_PrendrePreciserContact, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Reconnaitre", eMission_Automate_ABC_Reconnaitre, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC ReconnaitrePoint", eMission_Automate_ABC_ReconnaitrePoint, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Reduire", eMission_Automate_ABC_Reduire, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC ReleverEnDepassant", eMission_Automate_ABC_ReleverEnDepassant, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Semparer", eMission_Automate_ABC_Semparer, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC SurveillerItineraire", eMission_Automate_ABC_SurveillerItineraire, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Tenir", eMission_Automate_ABC_Tenir, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC Soutenir", eMission_Automate_ABC_Soutenir, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC SurveillerZone", eMission_Automate_ABC_SurveillerZone, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC FlancGarder", eMission_Automate_ABC_FlancGarder, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC RenseignerSurUnAxe", eMission_Automate_ABC_RenseignerSurUnAxe, true ) );
+missions_.push_back( new MOS_Mission( "Automate ABC RenseignerSur", eMission_Automate_ABC_RenseignerSur, true ) );
+missions_.push_back( new MOS_Mission( "Automate GEN Renforcer", eMission_Automate_GEN_Renforcer, true ) );
+missions_.push_back( new MOS_Mission( "Automate GEN FaireFranchir", eMission_Automate_GEN_FaireFranchir, true ) );
+missions_.push_back( new MOS_Mission( "Automate GEN RealiserSystemeObstacles", eMission_Automate_GEN_RealiserSystemeObstacles, true ) );
+missions_.push_back( new MOS_Mission( "Automate GEN FranchirDeViveForce", eMission_Automate_GEN_FranchirDeViveForce, true ) );
+missions_.push_back( new MOS_Mission( "Automate GEN RetablirItineraires", eMission_Automate_GEN_RetablirItineraires, true ) );
+missions_.push_back( new MOS_Mission( "Automate GEN AmenagerAireStationnement", eMission_Automate_GEN_AmenagerAireStationnement, true ) );
+missions_.push_back( new MOS_Mission( "Automate TC2 SeDeployer", eMission_Automate_TC2_SeDeployer, true ) );
+missions_.push_back( new MOS_Mission( "Automate BSD SeDeployer", eMission_Automate_BSD_SeDeployer, true ) );
+missions_.push_back( new MOS_Mission( "Automate BSD MettreEnOeuvreZone", eMission_Automate_BSD_MettreEnOeuvreZone, true ) );
+missions_.push_back( new MOS_Mission( "Automate RENS RenseignerSur", eMission_Automate_RENS_RenseignerSur, true ) );
+missions_.push_back( new MOS_Mission( "Automate RENS SExfiltrer", eMission_Automate_RENS_SExfiltrer, true ) );
+missions_.push_back( new MOS_Mission( "Automate NBC ReconnaitreSurDeuxAxes", eMission_Automate_NBC_ReconnaitreSurDeuxAxes, true ) );
+missions_.push_back( new MOS_Mission( "Automate NBC ReconnaitreSurDeuxZones", eMission_Automate_NBC_ReconnaitreSurDeuxZones, true ) );
+missions_.push_back( new MOS_Mission( "Automate NBC Decontaminer", eMission_Automate_NBC_Decontaminer, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF AttaquerSouplesse", eMission_Automate_INF_AttaquerSouplesse, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Appuyer", eMission_Automate_INF_Appuyer, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Controler", eMission_Automate_INF_Controler, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Couvrir", eMission_Automate_INF_Couvrir, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF DonnerCoupArret", eMission_Automate_INF_DonnerCoupArret, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Eclairer", eMission_Automate_INF_Eclairer, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF FlancGarder", eMission_Automate_INF_FlancGarder, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Freiner", eMission_Automate_INF_Freiner, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Harceler", eMission_Automate_INF_Harceler, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Interdire", eMission_Automate_INF_Interdire, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF MenerDefenseUsure", eMission_Automate_INF_MenerDefenseUsure, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF PrendrePreciserMaintenirContact", eMission_Automate_INF_PrendrePreciserMaintenirContact, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF ReconnaissanceOffensive", eMission_Automate_INF_ReconnaissanceOffensive, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF RecueillirUnite", eMission_Automate_INF_RecueillirUnite, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Reduire", eMission_Automate_INF_Reduire, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Relever", eMission_Automate_INF_Relever, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF RompreContact", eMission_Automate_INF_RompreContact, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Surveiller", eMission_Automate_INF_Surveiller, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Semparer", eMission_Automate_INF_Semparer, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Fixer", eMission_Automate_INF_Fixer, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF AttaquerEnTerrainDifficile", eMission_Automate_INF_AttaquerEnTerrainDifficile, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF BarrerDirection", eMission_Automate_INF_BarrerDirection, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF DefendreFerme", eMission_Automate_INF_DefendreFerme, true ) );
+missions_.push_back( new MOS_Mission( "Automate INF Tenir", eMission_Automate_INF_Tenir, true ) );
+

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyphElement>
+<head>
+<title>LATIN_SMALL_LETTER_F</title>
+<unicode>66</unicode>
+<advanceWidth>1000.0</advanceWidth>
+<author>Nobody</author>
+<copyright>2004</copyright>
+<fontFamily>temp</fontFamily>
+<fontSubFamily>Regular</fontSubFamily>
+<license>All rights reserved.</license>
+<global/>
+<local/>
+</head>
+<body>
+<contour type="cubic">
+<contourPoint type="on" rounded="false">
+<point2d x="298.0" y="142.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="298.10865651962825" y="162.82754597291876"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="297.8955091212906" y="121.97093421070116"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="348.0" y="102.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="316.992482988282" y="101.26932307548925"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="373.97400571698495" y="102.6120647005479"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="388.0" y="142.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="386.724189548682" y="119.03541187627553"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="389.0" y="159.99999999999983"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="368.0" y="142.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="368.15675621500634" y="161.02565182823065"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="367.8437056712992" y="123.0304077546848"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="338.0" y="122.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="355.0" y="122.0"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="317.9999999999999" y="122.0"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="318.0" y="142.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="319.0" y="125.00000000000003"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="316.8842815829221" y="160.96721309032492"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="338.0" y="162.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="328.0153964679459" y="161.4452998037748"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="356.0" y="163.0"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="369.0" y="141.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="369.74322283706914" y="159.26531416102597"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="368.32119982405743" y="124.3179258658906"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="388.0" y="141.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="387.9553034801022" y="119.64904605082961"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="388.036034711317" y="158.21331915010697"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+<contourPoint type="on" rounded="false">
+<point2d x="340.0" y="183.0"/>
+<controlPoint first="true" smooth="true">
+<contourPoint type="off">
+<point2d x="380.0" y="183.0"/>
+</contourPoint>
+</controlPoint>
+<controlPoint first="false" smooth="true">
+<contourPoint type="off">
+<point2d x="316.0" y="183.0"/>
+</contourPoint>
+</controlPoint>
+</contourPoint>
+</contour>
+</body>
+</glyphElement>

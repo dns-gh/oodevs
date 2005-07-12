@@ -1,0 +1,93 @@
+--
+-- file name : ScipioLimaLimite.asn
+--
+-- Messages de gestion des infos de contexte (lima, limite ...)
+--
+
+ScipioLimaLimite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, Localisation, GDH, OID FROM ScipioBase;
+
+-- Limit
+MsgLimitCreation ::= SEQUENCE 
+{
+    oid          OID,
+    level        EnumNatureLevel DEFAULT ooo,
+    geometrie    Line
+}
+
+MsgLimitDestruction    ::= OID
+MsgLimitUpdate         ::= MsgLimitCreation
+
+MsgLimitCreationAck    ::= SEQUENCE
+{
+    oid             OID,
+    error-code      EnumInfoContextErrorCode
+}
+
+MsgLimitDestructionAck ::= SEQUENCE
+{
+    oid             OID,
+    error-code      EnumInfoContextErrorCode
+}
+
+MsgLimitUpdateAck ::= SEQUENCE
+{
+    oid             OID,
+    error-code      EnumInfoContextErrorCode
+}
+
+-- Lima
+MsgLimaCreation ::= SEQUENCE 
+{
+    oid             OID,
+    fonction        EnumTypeLima,
+    geometrie       Line
+}
+
+MsgLimaDestruction    ::= OID
+MsgLimaUpdate         ::= MsgLimaCreation
+
+MsgLimaCreationAck    ::= SEQUENCE
+{
+    oid             OID,
+    error-code      EnumInfoContextErrorCode
+}
+
+MsgLimaDestructionAck ::= SEQUENCE
+{
+    oid             OID,
+    error-code      EnumInfoContextErrorCode
+}
+
+MsgLimaUpdateAck ::= SEQUENCE
+{
+    oid             OID,
+    error-code      EnumInfoContextErrorCode
+}
+
+-- Enum 
+EnumInfoContextErrorCode ::= ENUMERATED
+{
+   no-error                        (0),
+   error-invalid-id                (1),
+   error-invalid-geometry          (2),
+   error_invalid-lima-function     (3),
+   error_invalid-limit-or-lima-used(4)
+}
+
+EnumTypeLima ::= ENUMERATED
+{ 
+    ligne-debouche              (0),
+    ligne-changement-attitude   (1),
+    ligne-coordination          (2),
+    ligne-interdire             (3),
+    ligne-objectif              (4),
+    ligne-coup-arret            (5),
+    ligne-recueil               (6),
+    ligne-debut-mission         (7),
+    ligne-fin-mission           (8),
+    ligne-identification-accueil(9) 
+}
+
+END -- ScipioLimaLimite

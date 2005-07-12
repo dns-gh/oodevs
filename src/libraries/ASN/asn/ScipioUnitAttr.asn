@@ -1,0 +1,258 @@
+--
+-- file name : ScipioUnitAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+
+ScipioUnitAttr DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory FROM ScipioBase;
+
+-- Etat des pions logistiques de la maintenance
+PretEquipement ::= SEQUENCE
+{
+    oid-pion-emprunteur Agent,
+    type-equipement     TypeEquipement,
+    nombre              INTEGER
+}
+
+MsgUnitDotations ::= SEQUENCE 
+{
+    oid-pion               Agent,
+    dotation-eff-personnel SEQUENCE OF DotationPersonnel  OPTIONAL, -- Dotations effectives du pion
+    dotation-eff-materiel  SEQUENCE OF DotationEquipement OPTIONAL,
+    dotation-eff-ressource SEQUENCE OF DotationRessource  OPTIONAL,    
+    prets-equipement       SEQUENCE OF PretEquipement     OPTIONAL
+}
+
+
+-- Personnel
+DotationPersonnel ::= SEQUENCE 
+{
+    rang                         EnumHumanRank,
+    nb-total                     INTEGER (0..max-uint32), 
+    nb-morts                     INTEGER (0..max-uint32), 
+    nb-blesses                   INTEGER (0..max-uint32), 
+    nb-blesses-mentaux           INTEGER (0..max-uint32), 
+    nb-contamines-nbc            INTEGER (0..max-uint32),
+    nb-dans-chaine-sante         INTEGER (0..max-uint32),
+    nb-utilises-pour-maintenance INTEGER (0..max-uint32)
+}
+
+-- Equipement
+DotationEquipement ::= SEQUENCE
+{
+    type-equipement            TypeEquipement,
+    nb-disponibles             INTEGER (0..max-uint32),
+    nb-indisponibles           INTEGER (0..max-uint32),
+    nb-reparables              INTEGER (0..max-uint32),
+    nb-dans-chaine-maintenance INTEGER (0..max-uint32), -- En réparation
+    nb-prisonniers             INTEGER (0..max-uint32),
+    majeur                     BOOLEAN DEFAULT FALSE
+}
+
+-- Ressources
+DotationRessource ::= SEQUENCE 
+{
+    ressource-id        TypeDotation,
+    quantite-disponible INTEGER (0..max-uint32),
+    majeur              BOOLEAN DEFAULT FALSE
+}
+
+EnumUnitFatigue ::= ENUMERATED
+{
+    normal  (0),
+    fatigue (1),
+    epuise  (2)  
+}
+
+EnumUnitMoral ::= ENUMERATED
+{
+    fanatique(0),
+    bon      (1),
+    moyen    (2),
+    mauvais  (3)
+}
+
+EnumUnitExperience ::= ENUMERATED
+{
+    veteran    (0),
+    experimente(1),
+    conscrit   (2)
+}
+
+EnumUnitPosture ::= ENUMERATED
+{
+    posture-mouvement           (0),
+    posture-mouvement-discret   (1),
+    posture-arret               (2),
+    posture-poste-reflexe       (3),
+    posture-poste               (4),
+    posture-poste-amenage       (5),
+    posture-poste-prepare-genie (6)
+}
+
+EnumAutomateState ::= ENUMERATED
+{
+    embraye,
+    debraye
+}
+
+EnumUnitState ::= ENUMERATED
+{
+    normal      (0),        
+    neutralise  (1),        
+    mort        (2) 
+}
+
+EnumEtatRapFor ::= ENUMERATED
+{
+    none        (0),
+    neutre      (1),
+    favorable   (2),
+    defavorable (3)
+}
+
+EnumReglesEngagement ::= ENUMERATED
+{
+    none           (0),       
+    tir-libre      (1),
+    tir-sur-riposte(2),
+    tir-interdit   (3)
+}
+
+EnumEtatCombatRencontre ::= ENUMERATED
+{
+    none                  (0),
+    etat-esquive          (1),
+    etat-fixe             (2),
+    etat-poursuite-mission(3)               
+}
+
+
+-- Msg envoyé
+MsgUnitAttributes ::= SEQUENCE
+{
+    oid-pion                    Agent,
+    position				    CoordUTM                OPTIONAL,
+    direction                   Direction               OPTIONAL, -- en degrés
+    hauteur                     Hauteur                 OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
+    vitesse                     Vitesse                 OPTIONAL, -- en km/h
+    etat-op                     PourcentageLibre        OPTIONAL,
+    capa-op-personnel           Pourcentage             OPTIONAL,
+    capa-op-materiel            Pourcentage             OPTIONAL,
+    pions-renforcant            ListAgent               OPTIONAL,
+    pion-renforce               Agent                   OPTIONAL, -- '0' quand pas en renfort                                                    
+    etat-automate               EnumAutomateState       OPTIONAL,   
+    etat                        EnumUnitState           OPTIONAL,   
+    mode-furtif-actif           BOOLEAN                 OPTIONAL,
+    embarque                    BOOLEAN                 OPTIONAL,
+    posture-old                 EnumUnitPosture         OPTIONAL,
+    posture-new                 EnumUnitPosture         OPTIONAL,
+    posture-pourcentage         Pourcentage             OPTIONAL,
+                                                        
+    en-tenue-de-protection-nbc  BOOLEAN                 OPTIONAL,
+    contamine-par-agents-nbc    ListOID                 OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
+    etat-contamination          Pourcentage             OPTIONAL,
+    
+    communications-brouillees   BOOLEAN                 OPTIONAL,
+    silence-radio               BOOLEAN                 OPTIONAL,
+    radar-actif                 BOOLEAN                 OPTIONAL,
+    
+    pions-transportes           ListAgent               OPTIONAL, 
+    pion-transporteur           Agent                   OPTIONAL, -- '0' quand aucun transporteur
+    
+    rapport-de-force            EnumEtatRapFor          OPTIONAL,
+    regles-d-engagement         EnumReglesEngagement    OPTIONAL,
+    combat-de-rencontre         EnumEtatCombatRencontre OPTIONAL,
+    
+    fatigue                     EnumUnitFatigue         OPTIONAL,
+    moral                       EnumUnitMoral           OPTIONAL,
+    experience                  EnumUnitExperience      OPTIONAL,
+    
+    rendu                       BOOLEAN                 OPTIONAL,
+    prisonnier                  BOOLEAN                 OPTIONAL,
+    refugie-pris-en-compte      BOOLEAN                 OPTIONAL
+}
+
+-- Actions magiques
+
+MagicActionSeRendre                 ::= OID         -- OID du camp de prisonnier (OID de l'objet reel)
+MagicActionMoveTo                   ::= CoordUTM    -- Position
+MagicActionDestructionTotale        ::= NULL
+MagicActionRecompletementTotal      ::= NULL
+MagicActionRecompletementPersonnel  ::= NULL
+MagicActionRecompletementEquipement ::= NULL
+MagicActionRecompletementRessources ::= NULL
+MagicActionChangeFacteursHumains    ::= SEQUENCE
+{
+    fatigue    EnumUnitFatigue         OPTIONAL,
+    moral      EnumUnitMoral           OPTIONAL,
+    experience EnumUnitExperience      OPTIONAL
+}
+
+MsgUnitMagicAction ::= SEQUENCE
+{
+    oid         OID,  -- oid de l'unité
+    action  CHOICE
+    {
+        move-to                     MagicActionMoveTo,
+        recompletement-total        MagicActionRecompletementTotal,
+        recompletement-personnel    MagicActionRecompletementPersonnel,
+        recompletement-equipement   MagicActionRecompletementEquipement,
+        recompletement-ressources   MagicActionRecompletementRessources,
+        change-facteurs-humains     MagicActionChangeFacteursHumains,
+        destruction-totale          MagicActionDestructionTotale,
+        se-rendre                   MagicActionSeRendre
+    }       
+}
+
+EnumUnitAttrErrorCode ::= ENUMERATED
+{
+    no-error                (0),
+    error-invalid-unit      (1),
+    error-automate-embraye  (2),
+    error-invalid-attribute (3),
+    error-unit-surrendered  (4)
+}
+
+MsgUnitMagicActionAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumUnitAttrErrorCode
+}
+
+
+-- Misc
+MsgSetAutomateMode ::= SEQUENCE
+{
+    unit-id Agent,
+    mode    EnumAutomateState
+}
+
+EnumSetAutomateModeErrorCode ::= ENUMERATED
+{
+    no-error                  (0),
+    error-invalid-unit        (1),
+    error-unit-not-automate   (2),
+    error-already-embraye     (3),
+    error-already-debraye     (4),
+    error-unit-surrendered    (5)
+}
+
+MsgSetAutomateModeAck ::= SEQUENCE
+{
+    unit-id     Agent,
+    error-code  EnumSetAutomateModeErrorCode
+}
+
+-- Path finder
+MsgUnitPathFind ::= SEQUENCE
+{
+    oid-pion    OID,
+    order-id    OID,
+    itineraire  Itineraire
+}
+
+END -- ScipioUnitAttr

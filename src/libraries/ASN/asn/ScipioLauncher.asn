@@ -1,0 +1,174 @@
+--
+-- file name : ScipioLauncher.asn
+--
+-- Messages de controle de la sim par le launcher MOS<->LAU et LAU<->SIM
+--
+
+ScipioLauncher DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS  max-uint64, max-uint32, max-uint16, max-uint8, OID FROM ScipioBase;
+
+
+------------------------------------------------------------------------
+--
+-- Definition des types de bases
+--
+------------------------------------------------------------------------
+
+StringLibelle   ::= VisibleString( SIZE( 0..64 ) )
+ID_EX           ::= OID
+NumPort         ::= INTEGER (0..max-uint16)
+DinMagicNumber  ::= INTEGER (0..max-uint32)
+
+IdAndLibelle  ::= SEQUENCE 
+{
+    nID                 OID,
+    libelle             StringLibelle,
+    uuid-odb            VisibleString ( SIZE( 36 ) )
+}
+ListIdAndLibelle ::= SET OF IdAndLibelle;
+
+
+CheckPointInfo ::= SEQUENCE 
+{
+    nID                 OID,
+    libelle-scenario    StringLibelle,
+    libelle-checkpoint  StringLibelle,
+    nom-checkpoint      VisibleString OPTIONAL -- Le nom de la sauvegarde (non renseigné lors d'une sauvegarde automatique)
+}
+ListCheckPointInfo  ::= SET OF CheckPointInfo;
+
+
+
+LaunchInformation ::= SEQUENCE
+{
+    error-code          EnumCtrlErrorCodeLauncher,
+    num-port            NumPort,
+    din-magic-number    DinMagicNumber
+
+    -- ainsi que des stats diverses (a voir)
+}
+
+IdExAndLaunchInformation ::= SEQUENCE 
+{
+    id-exercice         ID_EX,
+    launch-information  LaunchInformation OPTIONAL
+}
+ListIdExAndLaunchInformation ::= SET OF IdExAndLaunchInformation;
+
+
+EnumCtrlErrorCodeLauncher ::= ENUMERATED
+{
+    no-error                                    (0),
+
+    -- erreur interne a la sim
+    error-already-started                       (1), -- <==> id-exercice already used
+    error-not-started                           (2),
+    error-not-paused                            (3),
+    error-already-paused                        (4),
+    error-invalid-time-factor                   (5),
+
+    -- erreur plus globales
+    error-invalid-scenario-identifier           (6),
+    error-error-scenario-init                   (7), -- <==> en cas d'erreur ou de gel de la sim
+    error-invalid-data-path                     (8),
+    error-invalid-data                          (9),
+
+    error-invalid-checkpoint-identifier         (10),
+    error-error-checkpoint-init                 (11),
+
+    -- erreur retourné en cas de kill de la sim par le launcher, suite a une demande de MOS
+    error-sim-killed-by-remote                  (12)
+}
+
+------------------------------------------------------------------------
+--
+-- Definition de tous les messages de controle MOS<->LAU et LAU<->SIM
+--
+------------------------------------------------------------------------
+
+--
+-- Initialisation Stage
+--
+
+MsgMosLau-RequestListMission ::= NULL 
+MsgLauMos-ListMission        ::= ListIdAndLibelle
+MsgMosLau-LaunchSim          ::= SEQUENCE
+{
+    id-exercice         ID_EX,
+    id-scenario         OID,
+    sim-commandline     VisibleString
+}
+
+
+MsgSimLau-SimLaunched ::= SEQUENCE
+{
+    id-exercice          ID_EX,
+    launch-information   LaunchInformation
+}     
+
+MsgLauMos-SimLaunched ::= SEQUENCE
+{
+    id-exercice         ID_EX,
+    launch-information  LaunchInformation
+}
+
+
+--
+-- Execution Stage
+--
+
+MsgLauSim-Ping ::= NULL
+MsgSimLau-Pong ::= ID_EX
+
+
+-- si le MOS plante, il est relancé
+-- et peut redemander la liste des SIM en cours
+
+MsgMosLau-RequestListSim ::= NULL
+MsgLauMos-ListSim        ::= ListIdExAndLaunchInformation
+
+
+
+--
+-- Failure Stage
+--
+
+MsgLauMos-SimFailure            ::= ID_EX
+
+MsgMosLau-RequestListCheckpoint ::= ID_EX
+MsgLauMos-ListCheckpoint        ::= SEQUENCE
+{
+
+    id-exercice         ID_EX, 
+    list-checkpoint     ListCheckPointInfo
+}
+
+MsgMosLau-LaunchSimFromCheckpoint ::= SEQUENCE
+{
+    id-exercice         ID_EX,
+    id-checkpoint       OID,
+    sim-commandline     VisibleString
+}
+
+
+--
+-- Exit Stage
+--
+
+MsgMosLau-StopSim     ::= ID_EX
+MsgLauSim-StopSim     ::= ID_EX
+
+MsgSimLau-ExecSuccess ::= SEQUENCE
+{
+    id-exercice         ID_EX,
+    finished-state      BOOLEAN DEFAULT TRUE
+}
+
+MsgLauMos-ExecSuccess ::= SEQUENCE
+{
+    id-exercice         ID_EX,
+    finished-state      BOOLEAN DEFAULT TRUE
+}
+
+END -- ScipioLauncher

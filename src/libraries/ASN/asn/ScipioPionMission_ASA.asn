@@ -1,0 +1,82 @@
+-- file name : ScipioPionMissionASA.asn
+--
+-- Messages des différentes missions automate Asa
+--
+
+ScipioPionMission_ASA DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+        max-uint8, ListPolygon, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
+         
+Mission-Pion-ASA-DefendreSite ::= SEQUENCE
+{
+    site Polygon
+}
+
+Mission-Pion-ASA-DefendreSiteAPartirPosition ::= SEQUENCE
+{
+    site                 Polygon,
+    point-de-deploiement Point
+}
+
+Mission-Pion-ASA-DefendreZone ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-ASA-DefendreZoneAPartirPosition ::= SEQUENCE
+{
+    zone                 Polygon,
+    point-de-deploiement Point
+}
+
+Mission-Pion-ASA-Surveiller ::= SEQUENCE
+{
+    point-de-deploiement Point
+}
+
+EnumModeDeploiementSectionMistral ::= ENUMERATED
+{
+    omnidirectionnel  (0),
+    directionnel      (1)
+} 
+
+Mission-Pion-ASA-MISTRAL-DefendreSite ::= SEQUENCE
+{
+    site             Polygon,
+    mode-deploiement EnumModeDeploiementSectionMistral
+}
+
+Mission-Pion-ASA-MISTRAL-DefendreSiteAPartirPosition ::= SEQUENCE
+{
+    site                 Polygon,
+    point-de-deploiement Point,
+    mode-deploiement     EnumModeDeploiementSectionMistral
+}
+
+Mission-Pion-ASA-MISTRAL-DefendreZone ::= SEQUENCE
+{
+    zone             Polygon,
+    mode-deploiement EnumModeDeploiementSectionMistral
+}
+
+Mission-Pion-ASA-MISTRAL-DefendreZoneAPartirPosition ::= SEQUENCE
+{
+    zone                 Polygon,
+    point-de-deploiement Point,
+    mode-deploiement     EnumModeDeploiementSectionMistral
+}
+
+Mission-Pion-ASA-MISTRAL-Surveiller ::= SEQUENCE
+{
+    point-de-deploiement Point,
+    mode-deploiement     EnumModeDeploiementSectionMistral
+}
+
+Mission-Pion-ASA-DefendreUnites ::= SEQUENCE
+{
+    unites ListAgent
+}
+
+
+END -- ScipioPionMission_ASA
