@@ -58,6 +58,7 @@ public:
     //@{
     void AddEnemyKnowledge ( const DEC_Path_KnowledgeAgent & enemy );
     void AddObjectKnowledge( const DEC_Path_KnowledgeObject& object, MT_Float rCostIn, MT_Float rCostOut );
+    void ChangeDangerDirectionCost( MT_Float rNewCost );
 
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
     virtual float GetCost     ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
@@ -93,7 +94,9 @@ private:
 
     const PHY_Speeds& speeds_;
     const MIL_Fuseau* pFuseau_;
+    const MIL_Fuseau* pAutomateFuseau_;
     MT_Vector2D dangerDirection_;
+    MT_Float    rDangerDirectionCost_;
     MT_Vector2D dangerPoint_;
     float    rMaxSpeed_;
     bool     bShort_;

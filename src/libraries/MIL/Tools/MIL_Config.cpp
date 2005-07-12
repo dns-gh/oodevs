@@ -28,6 +28,7 @@ MIL_Config::MIL_Config()
     , bUseDiaDebugServer_          ( false )
     , bProfilingEnabled_           ( false )
     , bUseCheckPointCRC_           ( true )
+    , bUsePathDebug_               ( false )
     , strConfFile_                 ( "scipio.xml" )
     , strRootDirectory_            ( MT_GetCurrentDir() )    
 {

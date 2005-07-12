@@ -72,6 +72,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
     , bPrisoner_                         ( false )
     , pPrisonerCamp_                     ( 0 )
     , pRefugeeCamp_                      ( false )
+    , bRcSupplyQuerySent_                ( false )
 {
     // Name
     if( !archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing ) )
@@ -129,6 +130,7 @@ MIL_Automate::MIL_Automate()
     , bPrisoner_                         ( false )
     , pPrisonerCamp_                     ( 0 )
     , pRefugeeCamp_                      ( 0 )
+    , bRcSupplyQuerySent_                ( false )
 {
 }
 
@@ -364,6 +366,7 @@ void MIL_Automate::Clean()
 {
     bDotationSupplyExplicitlyRequested_ = false;
     bAutomateModeChanged_               = false;
+    bRcSupplyQuerySent_                 = false;
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->Clean();
     pDecision_->Clean();
@@ -388,7 +391,12 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
             return;
     }
     bDotationSupplyNeeded_ = true;
-    MIL_RC::pRcDemandeRavitaillement_->Send( *this, MIL_RC::eRcTypeOperational );
+
+    if( GetTC2() && !bRcSupplyQuerySent_ )
+    {
+        MIL_RC::pRcDemandeRavitaillement_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
+        bRcSupplyQuerySent_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------

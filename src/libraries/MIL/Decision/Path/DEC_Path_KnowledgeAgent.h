@@ -22,7 +22,7 @@
 #include "MIL.h"
 
 class DEC_Knowledge_Agent;
-class DEC_Path;
+class MIL_AgentPion;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -33,7 +33,7 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const DEC_Path& path );
+     DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
     ~DEC_Path_KnowledgeAgent();
     //@}
 
@@ -45,7 +45,10 @@ public:
 private:
     //! @name Member data
     //@{
-    MT_Vector2D vPosition_;
+    MT_Vector2D vEnemyPosition_;
+    MT_Float    rSecurityDistance_;
+    MT_Float    rFactor_;
+    MT_Float    rOffset_;
     //@}
 };
 

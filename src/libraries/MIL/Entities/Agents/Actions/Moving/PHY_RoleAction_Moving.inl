@@ -30,6 +30,7 @@ void PHY_RoleAction_Moving::Clean()
         bForcePathCheck_ = true;;
     bHasChanged_ = false;
     bHasMoved_   = false;
+    bEnvironmentHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,3 +62,4 @@ void PHY_RoleAction_Moving::SetMaxSpeedModificator( MT_Float rFactor )
 {
     rMaxSpeedModificator_ = rFactor;
 }
+

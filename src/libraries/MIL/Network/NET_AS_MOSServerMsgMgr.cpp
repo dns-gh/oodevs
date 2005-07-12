@@ -47,6 +47,7 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
     pMessageService_->RegisterReceivedMessage( eMsgEnableProfiling       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling        );
     pMessageService_->RegisterReceivedMessage( eMsgDisableProfiling      , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling       );
     pMessageService_->RegisterReceivedMessage( eMsgUnitMagicAction       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction        );
+    pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints        );
 
     pMessageService_->SetCbkOnError( NET_AS_MOSServerMsgMgr::OnError );
 }
@@ -140,6 +141,37 @@ void NET_AS_MOSServerMsgMgr::SendMsgProfilingValues( DIN_BufferedMessage& msg )
 //=============================================================================
 
 //-----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::SendMsgProfilingValues
+// Created: SBO 2005-07-05
+//-----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN_Link& /*linkFrom*/, DIN_Input& input )
+{
+    //$$$ A Améliorer copie de buffer 
+    uint32 nId;
+    uint32 nSize;
+    double rTmpX;
+    double rTmpY;
+
+    input >> nId;
+    input >> nSize;
+
+    DIN_BufferedMessage dinMsg = BuildMessage();
+
+    dinMsg << (uint32)nId;
+    dinMsg << (uint32)nSize;
+    for( uint i = 0; i < nSize; i++ )
+    {
+        input  >> rTmpX;
+        input  >> rTmpY;
+
+        dinMsg << rTmpX;
+        dinMsg << rTmpY;
+
+    }
+    SendMsgDebugDrawPoints( dinMsg );
+}
+
+//-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::SendMsgInit
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
@@ -210,6 +242,15 @@ void NET_AS_MOSServerMsgMgr::SendMsgObjectInterVisibility( DIN::DIN_BufferedMess
 void NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg )
 {
     SendMsgToAllMosLight( eMsgDebugDrawPoints, msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType
+// Created: SBO 2005-06-15
+// -----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType( DIN::DIN_BufferedMessage& msg )
+{
+    SendMsgToAllMosLight( eMsgEnvironmentType, msg );
 }
 
 //=============================================================================

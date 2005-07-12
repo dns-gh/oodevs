@@ -44,6 +44,20 @@ DEC_Path_ABC::~DEC_Path_ABC()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::GetPathPoints
+// Created: NLD 2005-06-30
+// -----------------------------------------------------------------------------
+void DEC_Path_ABC::GetPathPoints( T_PointVector& points ) const
+{
+    points.clear();
+    if( pathSections_.empty() )
+        return;
+    points.push_back( pathSections_.front()->GetPosStart() );
+    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
+        points.push_back( (**itPathSection).GetPosEnd() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::Cancel
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
@@ -102,6 +116,9 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
     nState_ = eValid;
 }
 
+// =============================================================================
+// DEBUG
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::GetStateAsString
@@ -133,3 +150,4 @@ std::string DEC_Path_ABC::GetPathAsString() const
         strTmp << " -> " << (**itSection).GetPosEnd();
     return strTmp.str();
 }
+

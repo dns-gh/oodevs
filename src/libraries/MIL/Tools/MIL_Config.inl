@@ -219,3 +219,23 @@ bool MIL_Config::UseCheckPointCRC() const
 {
     return bUseCheckPointCRC_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::UsePathDebug
+// Created: AGE 2005-07-04
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::UsePathDebug() const
+{
+    return bUsePathDebug_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::SetUsePathDebug
+// Created: AGE 2005-07-04
+// -----------------------------------------------------------------------------
+inline
+void MIL_Config::SetUsePathDebug( bool bUse )
+{
+    bUsePathDebug_ = bUse;
+}

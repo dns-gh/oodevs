@@ -251,6 +251,14 @@ public:
     void AddLogSupplyQuota( MIL_AgentID nType, uint nQty );
     //@}
     
+    //! @name Logistic links
+    //@{
+    void SetTC2                   ( uint nTC2ID );
+    void SetLogMaintenanceSuperior( uint nLogMaintenanceSuperior );
+    void SetLogMedicalSuperior    ( uint nLogMedicalSuperior );
+    void SetLogSupplySuperior     ( uint nLogSupplySuperior );
+    //@}
+    
 protected slots:
     //-------------------------------------------------------------------------
     /** @name Slots */
@@ -397,6 +405,13 @@ private:
     QListViewItem*      pMoraleItem_;
     QListViewItem*      pExperienceItem_;    
     QListViewItem*      pTirednessItem_;
+
+    QListView*     pLogLinks_;   
+    QListViewItem* pTC2Item_;
+    QListViewItem* pLogMaintenanceSuperior_;
+    QListViewItem* pLogMedicalSuperior_;
+    QListViewItem* pLogSupplySuperior_;
+
 
     QListView*      pLends_;
 };

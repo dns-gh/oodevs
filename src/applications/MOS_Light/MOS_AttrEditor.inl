@@ -475,3 +475,54 @@ void MOS_AttrEditor::SetTiredness( const MOS_Tiredness& tiredness )
     pTirednessItem_->setText( 1, tiredness.GetName().c_str() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetTC2
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetTC2( uint nTC2ID )
+{
+    if( nTC2ID == 0 )
+        pTC2Item_->setText( 1, "-" );
+    else
+        pTC2Item_->setText( 1, MT_FormatString( "%d", nTC2ID ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetLogMaintenanceSuperior
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetLogMaintenanceSuperior( uint nLogMaintenanceSuperior )
+{
+    if( nLogMaintenanceSuperior == 0 )
+        pLogMaintenanceSuperior_->setText( 1, "-" );
+    else
+        pLogMaintenanceSuperior_->setText( 1, MT_FormatString( "%d", nLogMaintenanceSuperior ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetLogMedicalSuperior
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetLogMedicalSuperior( uint nLogMedicalSuperior )
+{
+    if( nLogMedicalSuperior == 0 )
+        pLogMedicalSuperior_->setText( 1, "-" );
+    else
+        pLogMedicalSuperior_->setText( 1, MT_FormatString( "%d", nLogMedicalSuperior ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetLogSupplySuperior
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetLogSupplySuperior( uint nLogSupplySuperior )
+{
+    if( nLogSupplySuperior == 0 )
+        pLogSupplySuperior_->setText( 1, "-" );
+    else
+        pLogSupplySuperior_->setText( 1, MT_FormatString( "%d", nLogSupplySuperior ).c_str() );
+}

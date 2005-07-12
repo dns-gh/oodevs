@@ -39,8 +39,6 @@ class MIL_AgentPion;
 //*****************************************************************************
 class DEC_Path : public DEC_Path_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Path )
-    
     friend class DEC_PathFind_ComputationThread;
 
 public:
@@ -66,6 +64,7 @@ public:
 public:
      DEC_Path( MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
      DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
+     DEC_Path( const DEC_Path& rhs ); // Copy only query parameters, not the result !
     ~DEC_Path();
 
     //! @name Path calculation
@@ -136,6 +135,12 @@ private:
     void InsertLima       ( const MIL_Lima& );
 
     MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const;
+    IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
+    //@}
+
+    //! @name Operators
+    //@{
+    DEC_Path& operator=( const DEC_Path& rhs );
     //@}
     
 private:   

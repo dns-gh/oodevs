@@ -25,9 +25,8 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Knowledge_Object& 
     , nObjectType_( knowledge.GetType().GetID() )
     , rCostIn_( 0 )
     , rCostOut_( 0 )
-//    , avoidanceLocalisation_( knowledge.GetAvoidanceLocalisation() )
 { 
-//    InitializeAgentStatus();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,11 +47,6 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObje
     , nObjectType_            ( copy.nObjectType_ )
     , rCostOut_               ( copy.rCostOut_ )
     , rCostIn_                ( copy.rCostIn_ )
-//    , avoidanceLocalisation_  ( copy.avoidanceLocalisation_ )
-//    , vAgentPos_              ( copy.vAgentPos_ )
-//    , bAgentStartsInObject_   ( copy.bAgentStartsInObject_ )
-//    , bAgentStartsOnBorder_   ( copy.bAgentStartsOnBorder_ )
-//    , bAgentStartsInAvoidance_( copy.bAgentStartsInAvoidance_ )
 {
     // NOTHING
 }
@@ -63,16 +57,10 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObje
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_KnowledgeObject& copy )
 {
-//    vAgentPos_               = copy.vAgentPos_;
-//    bAgentStartsInObject_    = copy.bAgentStartsInObject_;
-//    bAgentStartsOnBorder_    = copy.bAgentStartsOnBorder_;
-//    bAgentStartsInAvoidance_ = copy.bAgentStartsInAvoidance_;
-
     localisation_.Reset( copy.localisation_ );
     nObjectType_ = copy.nObjectType_;
     rCostIn_     = copy.rCostIn_;
     rCostOut_    = copy.rCostOut_;
-//    avoidanceLocalisation_.Reset( copy.avoidanceLocalisation_ );
     return *this;
 }
 
@@ -103,9 +91,10 @@ void DEC_Path_KnowledgeObject::SetCosts( MT_Float rCostIn, MT_Float rCostOut )
 // Name: DEC_Path_KnowledgeObject::ComputeCost
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
+MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
 {
-    if( localisation_.IsInside( to ) )
+    const MT_Line line( from, to );
+    if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
         return rCostIn_;
     return rCostOut_;
 }

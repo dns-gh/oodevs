@@ -103,6 +103,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_
     , pMajorComposante_            ( 0 )
     , nNeutralizationEndTimeStep_  ( 0 )
     , bLendsChanged_               ( false )
+    , bRcMaintenanceQuerySent_         ( false )
 {
     assert( pPion_ );
     pPion_->GetType().GetUnitType().InstanciateComposantes( *this );
@@ -131,6 +132,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , pMajorComposante_            ( 0 )
     , nNeutralizationEndTimeStep_  ( 0 )
     , maintenanceComposanteStates_ ()
+    , bRcMaintenanceQuerySent_         ( false )
 {
 }
 
@@ -538,6 +540,7 @@ void PHY_RolePion_Composantes::Clean()
 
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         (**it).Clean();
+    bRcMaintenanceQuerySent_ = false;
 }
 
 // =============================================================================
@@ -1360,6 +1363,13 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     MIL_AutomateLOG* pTC2 = pPion_->GetAutomate().GetTC2();
     if( !pTC2 )
         return 0;
+
+    // Rcs uniquement quand la log est branchée
+    if( !bRcMaintenanceQuerySent_ )
+    {
+        MIL_RC::pRcDemandeEvacuationMateriel_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        bRcMaintenanceQuerySent_ = true;
+    }
 
     PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( *pPion_, composante );
     if( !pMaintenanceComposanteState )

@@ -64,8 +64,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_MainWindow.h"
 
-#include "MT_Tools/MT_ScipioException.h"
-
+#include "MT_ScipioException.h"
 
 #include "qtundo.h"
 

@@ -61,7 +61,8 @@ public:
         eMsgObjectInterVisibility   = 1010,
         eMsgKnowledgeGroup          = 1013,
         eMsgArmy                    = 1014,
-        eMsgDebugDrawPoints         = 1015
+        eMsgDebugDrawPoints         = 1015,
+        eMsgEnvironmentType         = 1016
     };
     //@}
 
@@ -69,24 +70,18 @@ public:
     NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
     virtual ~NET_AS_MOSServerMsgMgr();
 
-    //-------------------------------------------------------------------------
-    /** @name Service activation */
-    //-------------------------------------------------------------------------
+    //! @name Service activation 
     //@{
     void Enable ( DIN::DIN_Link& link );
     void Disable( DIN::DIN_Link& link );
     //@}
     
-    //-------------------------------------------------------------------------
-    /** @name Messages tools */
-    //-------------------------------------------------------------------------
+    //! @name Messages tools 
     //@{
     DIN::DIN_BufferedMessage BuildMessage();
     //@}
     
-    //-------------------------------------------------------------------------
-    /** @name Message sending */
-    //-------------------------------------------------------------------------
+    //! @name Message sending
     //@{
     // $$$ Tests
     void SendMsgProfilingValues( DIN::DIN_BufferedMessage& msg );
@@ -101,6 +96,7 @@ public:
     void SendMsgUnitInterVisibility  ( DIN::DIN_BufferedMessage& msg );
     void SendMsgObjectInterVisibility( DIN::DIN_BufferedMessage& msg );
     void SendMsgDebugDrawPoints      ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgEnvironmentType      ( DIN::DIN_BufferedMessage& msg ); 
     
     // ASN
     void SendMsgSimMos           ( ASN1T_MsgsSimMos& asnMsg, NET_AS_MOSServer* pMOS = 0 );
@@ -112,27 +108,22 @@ public:
     void DoUpdate();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Service callback */
-    //-------------------------------------------------------------------------
+    //! @name Service callback 
     //@{
     bool OnError( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription &info );
     //@}
 
 private:
-    //-------------------------------------------------------------------------
-    /** @name Tools */
-    //-------------------------------------------------------------------------
+    //! @name Tools
     //@{
     void SendMsgToAll        ( uint nMsgID, DIN::DIN_BufferedMessage& msg );
     void SendMsgToAllMos     ( uint nMsgID, DIN::DIN_BufferedMessage& msg );
     void SendMsgToAllMosLight( uint nMsgID, DIN::DIN_BufferedMessage& msg );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Msg callbacks */
-    //-------------------------------------------------------------------------
+    //! @name Msg callbacks
     //@{     
+    void OnReceiveMsgDebugDrawPoints       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgEnableProfiling       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDisableProfiling      ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

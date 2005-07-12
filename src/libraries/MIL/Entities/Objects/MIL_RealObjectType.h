@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
-
 #include "Network/NET_ASN_Types.h"
 
 class PHY_DotationCategory;
@@ -24,6 +23,7 @@ class MIL_Army;
 class PHY_ConsumptionType;
 class PHY_Protection;
 class MIL_MOSIDManager;
+class MIL_RealObjectTypeFilter;
 
 // =============================================================================
 // @class  MIL_RealObjectType
@@ -34,11 +34,23 @@ class MIL_RealObjectType
     MT_COPYNOTALLOWED( MIL_RealObjectType )
 
 public:
-    //! @name 
+    //! @name Types
     //@{
     typedef std::map< uint, const MIL_RealObjectType* > T_ObjectTypeMap;
     typedef T_ObjectTypeMap::const_iterator             CIT_ObjectTypeMap;
 
+    enum E_Behavior
+    {
+        eHate,
+        eAvoid,
+        eIgnore,
+        eEnjoy,
+        ePrefer
+    };
+    //@}
+
+    //! @name Statics
+    //@{
     static const MIL_RealObjectType& fosseAntiChar_;          
     static const MIL_RealObjectType& abattis_;                 
     static const MIL_RealObjectType& barricade_;              
@@ -77,6 +89,7 @@ public:
     static const MIL_RealObjectType& zoneForbiddenMove_;
     static const MIL_RealObjectType& zoneImplantationMortier_;
     //@}
+
 public:
     //! @name Manager
     //@{
@@ -88,6 +101,8 @@ public:
     static const MIL_RealObjectType* FindObjectType( const std::string& strName );
     static const MIL_RealObjectType* FindObjectType( uint nDiaID );
     static const MIL_RealObjectType* FindObjectType( ASN1T_EnumObjectType nAsnID );
+
+    static const MIL_RealObjectTypeFilter& GetObjectTypesToAvoid();
     //@}
 
     //! @name Accessors
@@ -108,6 +123,7 @@ public:
     const PHY_ConsumptionType&  GetDefaultConsumptionMode         () const;
     const PHY_AttritionData&    GetAttritionData                  ( const PHY_Protection& protection ) const;
           uint                  GetNbrMaxAnimators                () const;
+          E_Behavior            GetBehavior                       () const;
     //@}
 
     //! @name Operations
@@ -174,7 +190,7 @@ protected:
     //@}
 
 protected:
-    MIL_RealObjectType( const std::string& strName, E_ObjectType nType, ASN1T_EnumObjectType nAsnID, T_ObjectInstanciator objectInstanciator );
+    MIL_RealObjectType( const std::string& strName, E_ObjectType nType, ASN1T_EnumObjectType nAsnID, T_ObjectInstanciator objectInstanciator, E_Behavior nBehavior );
     virtual ~MIL_RealObjectType();
 
     //! @name Init
@@ -231,11 +247,13 @@ private:
     const PHY_ConsumptionType*  pDefaultConsumptionMode_;
     uint                        nNbrMaxAnimators_;
     MIL_MOSIDManager*           pIDManager_;
+    E_Behavior                  nBehavior_; //$$$ a renommer 
 
 private:
     static T_ObjectIDManager objectIDManagers_;
     static T_IDManagerMap    idManagers_;
     static T_ObjectTypeMap   objectTypes_;
+    static MIL_RealObjectTypeFilter* pObjectTypesToAvoid_;
 };
 
 #include "MIL_RealObjectType.inl"

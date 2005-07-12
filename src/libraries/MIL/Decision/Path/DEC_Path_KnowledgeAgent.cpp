@@ -27,10 +27,16 @@
 // Name: DEC_Path_KnowledgeAgent constructor
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const DEC_Path& )
-    : vPosition_( knowledge.GetPosition() )
+DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
+    : vEnemyPosition_         ( knowledge.GetPosition() )
+    , rSecurityDistance_      ( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
 { 
-    
+    if( rSecurityDistance_ < 1000. )
+        rSecurityDistance_ = 1000.;
+    const MT_Float rCostOnEnemy            = 100.;
+    const MT_Float rCostAtSecurityDistance = 10.;
+    rFactor_ = ( rCostAtSecurityDistance - rCostOnEnemy ) / rSecurityDistance_;
+    rOffset_ = rCostOnEnemy;
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +45,7 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& kno
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 {
-    
+    // NOTHING
 }
 
 // =============================================================================
@@ -52,19 +58,11 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 // -----------------------------------------------------------------------------
 MT_Float DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
 {
-    static MT_Float rSecurityDistance       = MIL_Tools::ConvertMeterToSim( 1000. );
-    static MT_Float rCostAtSecurityDistance = 100.;
-    static MT_Float rCostOnEnemy            = 1000.;
-
-    static MT_Float rB = rCostOnEnemy;
-    static MT_Float rA = ( rCostAtSecurityDistance - rB ) / rSecurityDistance;
-
     const MT_Line lineLink( from, to );
-    const MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vPosition_ );
-    const MT_Float rDistBtwUnitAndEnemy = vPositionProjection.Distance( vPosition_  );
+    const MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
+    const MT_Float rDistBtwUnitAndEnemy = vPositionProjection.Distance( vEnemyPosition_  );
 
-    // Plus la connaissance est l'ennemi est loin, moins le cout est important
-    if( rDistBtwUnitAndEnemy > rSecurityDistance )
+    if( rDistBtwUnitAndEnemy > rSecurityDistance_ )
         return 0.;
-    return rA * rDistBtwUnitAndEnemy + rB;    
+    return rFactor_ * rDistBtwUnitAndEnemy + rOffset_;    
 }

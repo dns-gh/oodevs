@@ -393,6 +393,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     // RCS
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Automate >, "DEC_RC"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_Automate >, "DEC_Message" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Automate >, "DEC_Warning" );
 
     // Geometry       
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_Automate >, "DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau"   );

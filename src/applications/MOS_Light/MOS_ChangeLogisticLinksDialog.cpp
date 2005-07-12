@@ -151,6 +151,33 @@ void MOS_ChangeLogisticLinksDialog::SetAgent( const MOS_Agent& agent )
         pMedicalComboBox_->setEnabled( true );
     if( pAgent_->IsSupplyPionLog() )
         pSupplyComboBox_->setEnabled( true );
+
+
+    ///$$$ TMP DEGUEU
+    CIT_AgentIDMap it;
+    for( it = tc2ComboBoxIDs_.begin(); it != tc2ComboBoxIDs_.end(); ++it )
+    {    
+        if( agent.nTC2ID_ && agent.nTC2ID_ == it->second->nAgentID_ )
+            pTC2ComboBox_->setCurrentItem( it->first );
+    }
+
+    for( it = maintenanceComboBoxIDs_.begin(); it != maintenanceComboBoxIDs_.end(); ++it )
+    {    
+        if( agent.nLogMaintenanceSuperior_ && agent.nLogMaintenanceSuperior_ == it->second->nAgentID_ )
+            pMaintenanceComboBox_->setCurrentItem( it->first );
+    }
+
+    for( it = medicalComboBoxIDs_.begin(); it != medicalComboBoxIDs_.end(); ++it )
+    {    
+        if( agent.nLogMedicalSuperior_ && agent.nLogMedicalSuperior_ == it->second->nAgentID_ )
+            pMedicalComboBox_->setCurrentItem( it->first );
+    }
+
+    for( it = supplyComboBoxIDs_.begin(); it != supplyComboBoxIDs_.end(); ++it )
+    {    
+        if( agent.nLogSupplySuperior_ && agent.nLogSupplySuperior_ == it->second->nAgentID_ )
+            pSupplyComboBox_->setCurrentItem( it->first );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -300,6 +300,7 @@ private:
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
+    bool                            bRcMaintenanceQuerySent_;
 
 public:
     static MT_Float rEtatOpsWeightNonMajorComposante_;

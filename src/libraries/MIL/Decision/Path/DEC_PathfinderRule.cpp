@@ -35,7 +35,9 @@ DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const TerrainData&
     , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , speeds_( path.GetUnitSpeeds() )
     , pFuseau_( 0 ) 
+    , pAutomateFuseau_( 0 )
     , dangerDirection_( path.GetDirDanger() )
+    , rDangerDirectionCost_( 0.01 ) // $$$$ AGE 2005-06-24: Whatever
     , rMaxSpeed_( float( speeds_.GetMaxSpeed() ) * 1.1f )
     , avoid_( avoid )
     , prefer_( prefer )
@@ -50,6 +52,10 @@ DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const TerrainData&
 {
     if( ! path.GetFuseau().IsNull() )
         pFuseau_ = & path.GetFuseau();
+    if( ! path.GetAutomataFuseau().IsNull() 
+       && path.GetAutomataFuseau().IsInside( from )
+       && path.GetAutomataFuseau().IsInside( to ) )
+        pAutomateFuseau_ = & path.GetAutomataFuseau();
     dangerPoint_ = DotProduct( dangerDirection_, from ) > DotProduct( dangerDirection_, to ) ? from : to;
     agents_.reserve( 10 );
     objects_.reserve( 10 );
@@ -147,6 +153,14 @@ MT_Float DEC_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
     if( rFuseauCost < 0 )
         return -1;
 
+    if( rFuseauCost > 0 )
+    {
+         // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
+        const MT_Float rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, 10 ) : 0;
+        if( rAutomateFuseauCost < 0 )
+            return rAutomateFuseauCost;
+        rFuseauCost += rAutomateFuseauCost;
+    }
     rDynamicCost += rFuseauCost;
 
     // types de terrain
@@ -157,7 +171,7 @@ MT_Float DEC_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
     {
         const MT_Float dp = DotProduct( to - dangerPoint_, dangerDirection_ );
         if( dp > 0 ) // we are beyond our danger point
-            rDynamicCost += 1 + dp * 0.002; // $$$$ AGE 2005-03-23: whatever
+            rDynamicCost += 1 + dp * rDangerDirectionCost_;
     }
 
     {
@@ -181,7 +195,9 @@ MT_Float DEC_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
                 return rCurrentCost;
             rEnemyCost += rCurrentCost;
         }
-        rDynamicCost += std::min( rEnemyCost, 5. );
+        if( rEnemyCost > 50 )
+            rEnemyCost = 50;
+        rDynamicCost += rEnemyCost;
     }
 
     const MT_Float rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
@@ -196,9 +212,18 @@ MT_Float DEC_PathfinderRule::TerrainCost( const TerrainData& data ) const
 {
     MT_Float rDynamicCost = 0;
     if( bAvoid_ && avoid_.ContainsOne( data ) )
-        rDynamicCost += 10; // $$$$ AGE 2005-03-25: Tune
+        rDynamicCost += 7; // $$$$ AGE 2005-03-25: Tune
 
     if( bPrefer_ && ! prefer_.ContainsOne( data ) )
-        rDynamicCost += 5;
+        rDynamicCost += 2;
     return rDynamicCost;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathfinderRule::ChangeDangerDirectionCost
+// Created: AGE 2005-06-24
+// -----------------------------------------------------------------------------
+void DEC_PathfinderRule::ChangeDangerDirectionCost( MT_Float rNewCost )
+{
+    rDangerDirectionCost_ = rNewCost;
 }

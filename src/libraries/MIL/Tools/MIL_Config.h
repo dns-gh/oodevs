@@ -35,6 +35,7 @@ public:
           uint         GetNbrPathFindThreads      () const;
           bool         ForceODBAutomateComposition() const;
           bool         UseDecDebug                () const;
+          bool         UsePathDebug               () const;
           bool         IsProfilingEnabled         () const;
     const std::string& GetCheckPointFileName      () const;
     const std::string& GetConfigFileName          () const;
@@ -60,6 +61,7 @@ public:
     void SetCheckPointFileName         ( const std::string& strName );
     void SetConfigFileName             ( const std::string& strName );
     void SetUseDecDebug                ( bool bUse );
+    void SetUsePathDebug               ( bool bUse );
     void SetUseDiaDebugServer          ( bool bUse );
     void SetProfilingEnabled           ( bool bEnabled );
     void SetUseCheckPointCRC           ( bool bUse );
@@ -84,6 +86,7 @@ private:
     bool                bUseDecDebug_;
     bool                bUseDiaDebugServer_;
     bool                bProfilingEnabled_;
+    bool                bUsePathDebug_;
     T_CRCMap            CRCMap_;
 };
 

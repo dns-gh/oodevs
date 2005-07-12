@@ -27,6 +27,8 @@
 DEC_FrontAndBackLinesComputer::DEC_FrontAndBackLinesComputer( const MIL_Automate& caller, DIA_Call_ABC& call )
     : automate_         ( caller )
     , nLastTimeComputed_( 0 )
+    , backLineDroite_    ( )
+    , frontLineDroite_   ( )
 {
     assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
     T_ObjectVector selPions = call.GetParameter( 0 ).ToSelection();
@@ -94,4 +96,46 @@ void DEC_FrontAndBackLinesComputer::Compute()
         backLineDroite_  = MT_Droite( vBackLinePoint_ , vBackLinePoint_  + vDirPerpendicularFuseau );
         frontLineDroite_ = MT_Droite( vFrontLinePoint_, vFrontLinePoint_ + vDirPerpendicularFuseau );
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FrontAndBackLinesComputer::GetDistanceFromFrontLine
+// Created: NLD 2003-09-29
+// -----------------------------------------------------------------------------
+MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint )
+{
+    Compute();
+
+    const MT_Float rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
+    const MT_Float rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
+
+    if( MT_IsPointBetweenTwoLines( frontLineDroite_, backLineDroite_, vPoint ) )
+        return rDistFromFrontLine;
+
+    if( rDistFromBackLine > rDistFromFrontLine )
+        return -rDistFromFrontLine;
+    else
+        return rDistFromFrontLine;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FrontAndBackLinesComputer::GetDistanceFromBackLine
+// Created: NLD 2003-09-29
+// -----------------------------------------------------------------------------
+MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Vector2D& vPoint )
+{
+    Compute();
+
+    const MT_Float rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
+    const MT_Float rDistFromBackLine  = backLineDroite_ .GetDistanceToPoint( vPoint );
+
+    if( MT_IsPointBetweenTwoLines( frontLineDroite_, backLineDroite_, vPoint ) )
+        return -rDistFromBackLine;
+
+    if( rDistFromBackLine > rDistFromFrontLine )
+        return -rDistFromBackLine;
+    else
+        return rDistFromBackLine;
 }

@@ -72,6 +72,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion&
     , nNbrFullyAliveHumans_   ( 0 ) // Not wounded nor contaminated nor mental diseased
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
+    , bRcMedicalQuerySent_    ( false )
 {
 }
 
@@ -90,6 +91,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans()
     , nNbrFullyAliveHumans_   ( 0 ) // Not wounded nor contaminated nor mental diseased
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
+    , bRcMedicalQuerySent_    ( false )
 {
 }
 
@@ -163,6 +165,7 @@ void PHY_RolePion_Humans::Clean()
 
     for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
         (**it).Clean();
+    bRcMedicalQuerySent_ = false;
 }
 
 // =============================================================================
@@ -322,6 +325,13 @@ PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Hu
     MIL_AutomateLOG* pTC2 = pPion_->GetAutomate().GetTC2();
     if ( !pTC2 )
         return 0;
+
+    // Rcs uniquement quand la log est branchée
+    if( !bRcMedicalQuerySent_ )
+    {
+        bRcMedicalQuerySent_ = true;
+        MIL_RC::pRcDemandeEvacuationSanitaire_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+    }
 
     PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *pPion_, human );
     if( !pMedicalHumanState )

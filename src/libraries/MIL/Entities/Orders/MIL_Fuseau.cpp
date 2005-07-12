@@ -876,7 +876,7 @@ MT_Float MIL_Fuseau::Distance( const MT_Vector2D& p, bool bLimitsOnly ) const
 // Name: MIL_Fuseau::GetCost
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-MT_Float MIL_Fuseau::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, MT_Float rMaxDistance ) const
+MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Float rMaxDistance ) const
 {
     if( ! pLeftLimit_ )
         return 0;
@@ -888,7 +888,7 @@ MT_Float MIL_Fuseau::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, MT
     {
         if( rMinDistance > 1000 )
             return 0;
-        return ( 1000 - rMinDistance ) / 1000.;
+        return ( 1000 - rMinDistance ) / 200.;
     }
 
     if( rMinDistance > rMaxDistance )
@@ -925,6 +925,36 @@ TER_DynamicData* MIL_Fuseau::CreateDynamicData() const
         vLastMiddlePoint = vMiddlePoint;
     }
     return pPathfindData;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::operator==
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::operator==( const MIL_Fuseau& rhs ) const
+{
+    if( leftPointVector_ != rhs.leftPointVector_ )
+        return false;
+
+    if( rightPointVector_ != rhs.rightPointVector_ )
+        return false;
+
+    if( pLeftLimit_ != rhs.pLeftLimit_ )
+        return false;
+
+    if( pRightLimit_ != rhs.pRightLimit_ )
+        return false;
+
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::operator!=
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+bool MIL_Fuseau::operator!=( const MIL_Fuseau& rhs ) const
+{
+    return !this->operator==( rhs );
 }
 
 // -----------------------------------------------------------------------------

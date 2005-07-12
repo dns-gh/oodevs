@@ -152,6 +152,11 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
     , pLogisticSupplyChangeQuotasDialog_( 0 )
     , pLogisticSupplyPushFlowDialog_( 0 )
     , pSurrenderDialog_( 0 )
+    , pTC2Item_ ( 0 )
+    , pLogMaintenanceSuperior_( 0 )
+    , pLogMedicalSuperior_( 0 )
+    , pLogSupplySuperior_( 0 )
+    , pLogLinks_( 0 )
 {
     setMargin( 50 );
     setLineWidth( 2 );
@@ -213,6 +218,21 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
         pFightRateStateItem_                = 0;
         pRulesOfEngagementStateItem_        = 0;
         pCloseCombatStateItem_              = 0;
+
+        pLogLinks_ = new QListView( pStateWidget, "State" );
+        pLogLinks_->header()->hide();
+        pLogLinks_->addColumn( "Name" );
+        pLogLinks_->addColumn( "Value" );
+        pLogLinks_->setMargin( 5 );
+        pLogLinks_->setLineWidth( 2 );
+        pLogLinks_->setFrameStyle( QFrame::Sunken | QFrame::Box );
+        pLogLinks_->setSorting( -1, FALSE );
+        pLayoutState->addWidget( pLogLinks_ );
+
+        pTC2Item_                = new QListViewItem( pLogLinks_,                           "TC2"            , "-" );
+        pLogMaintenanceSuperior_ = new QListViewItem( pLogLinks_, pTC2Item_               , "Maintenance"    , "-" );
+        pLogMedicalSuperior_     = new QListViewItem( pLogLinks_, pLogMaintenanceSuperior_, "Sante"          , "-" );
+        pLogSupplySuperior_      = new QListViewItem( pLogLinks_, pLogMedicalSuperior_    , "Ravitaillement" , "-" );       
 
 //        pStateListView_->setMaximumHeight( 120 );
 
@@ -770,7 +790,10 @@ void MOS_AttrEditor::SetAgent( MOS_Agent* pAgent )
                 pButtonLogisticSupplyChangeQuotas_->show();
                 pButtonLogisticSupplyPushFlow_    ->show();
             }
+            pLogLinks_->show();
         }
+        else 
+            pLogLinks_->hide();
     }
     else
     {

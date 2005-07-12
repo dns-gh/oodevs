@@ -351,7 +351,7 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     IT_ObjectVector itPion = pions.begin();
     for( ++itPion; itPion != pions.end(); ++itPion )
     {
-        if( & static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion().GetFuseau() != &fuseau )
+        if( !( static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion().GetFuseau() == fuseau ) ) //$$$ beark
         {
             diaReturnCode.SetValue( eError_PionsPasDansMemeFuseau );
             return;
@@ -1352,7 +1352,7 @@ void DEC_GeometryFunctions::GetInterceptionPosition( DIA_Call_ABC& call, const M
     }
 
     MT_Vector2D* pInterceptingPosition = call.GetParameter( 1 ).ToUserPtr( pInterceptingPosition );
-    MT_Float     rInterceptingSpeed    = call.GetParameter( 2 ).ToFloat();
+    const MT_Float     rInterceptingSpeed    = MIL_Tools::ConvertSpeedMosToSim( 3.6 /*m.s-1 => km.h-1*/ * call.GetParameter( 2 ).ToFloat() );
     
     assert( pInterceptingPosition );
     

@@ -227,6 +227,7 @@ public:
 
     void OnAttributeUpdated         ( const ASN1T_MsgUnitAttributes& asnMsg );
     void OnAttributeUpdated         ( const ASN1T_MsgUnitDotations& asnMsg );
+    void OnLogisticLinksChanged( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg );
 
     void OnAutomateChanged      ( MOS_Agent& newAutomate );
     void OnKnowledgeGroupChanged( MOS_Gtia& newGtia );
@@ -332,7 +333,7 @@ protected:
     void OnAttributeUpdated_Equipement         ( const ASN1T_MsgUnitDotations& asnMsg );
     void OnAttributeUpdated_Ressources         ( const ASN1T_MsgUnitDotations& asnMsg );   
 
-private:
+public:
     MIL_AgentID             nAgentID_;
     bool                    bEmbraye_;
     std::string             sName_;
@@ -497,6 +498,12 @@ private:
 
     MT_Float rElongationFactor_;
     T_SurfaceVector surfaces_;
+
+    // Logistic links
+    uint nTC2ID_;
+    uint nLogMaintenanceSuperior_;
+    uint nLogMedicalSuperior_;
+    uint nLogSupplySuperior_;
 };
 
 #ifdef MOS_USE_INLINE

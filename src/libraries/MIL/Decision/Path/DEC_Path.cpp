@@ -44,14 +44,18 @@ const uint DEC_Path::nInvalidID_ = 0;
 DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( queryMaker )
-    , fuseau_            ( )
+    , fuseau_            () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
 {
-    T_PointVector pointsTmp = points;
+    fuseau_ = queryMaker.GetFuseau();
+
+    T_PointVector pointsTmp;
+    pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    std::copy( points.begin(), points.end(), std::back_inserter( pointsTmp ) );
     Initialize( pointsTmp );
 }
 
@@ -62,15 +66,39 @@ DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points, cons
 DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( queryMaker )
-    , fuseau_            ( )
+    , fuseau_            () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
 {
+    fuseau_ = queryMaker.GetFuseau();
     T_PointVector pointsTmp;
+    pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
     pointsTmp.push_back( vPosEnd );
+    Initialize( pointsTmp );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Path constructor
+// Created: NLD 2005-06-30
+// -----------------------------------------------------------------------------
+DEC_Path::DEC_Path( const DEC_Path& rhs )
+    : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
+    , queryMaker_        ( rhs.queryMaker_ )
+    , fuseau_            () //$$$ Debile
+    , vDirDanger_        ( rhs.vDirDanger_ )
+ //   , unitSpeeds_        ( rhs.unitSpeeds_ ) $$$ TODO
+    , unitSpeeds_        ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
+    , rMaxSlope_         ( rhs.rMaxSlope_ )
+    , pathType_          ( rhs.pathType_ )
+    , bDecPointsInserted_( false )
+{
+    fuseau_ = rhs.fuseau_;
+
+    T_PointVector pointsTmp;
+    rhs.GetPathPoints( pointsTmp );
     Initialize( pointsTmp );
 }
 
@@ -101,10 +129,7 @@ DEC_Path::~DEC_Path()
 // -----------------------------------------------------------------------------
 void DEC_Path::Initialize( T_PointVector& points )
 {
-    fuseau_ = queryMaker_.GetFuseau();
     InitializePathKnowledges();
-
-    const MT_Vector2D& vStartPoint = queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition();
 
 //    if( ! fuseau_.IsNull() && !fuseau_.IsInside( vStartPoint ) )
 //    {
@@ -114,11 +139,14 @@ void DEC_Path::Initialize( T_PointVector& points )
 //    }
 
     assert( !points.empty() );
-    const MT_Vector2D* pLastPoint = &vStartPoint;
+    const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
+        if( pLastPoint )
+        {
         DEC_PathSection* pSection = new DEC_PathSection( *this, pathType_, *pLastPoint, *itPoint );
         RegisterPathSection( *pSection );
+        }
         pLastPoint = &*itPoint;
     }
 }
@@ -136,7 +164,7 @@ void DEC_Path::InitializePathKnowledges()
     {
         const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
         if( fuseau_.IsInside( knowledge.GetPosition() ) )
-            pathKnowledgeAgentVector_.push_back( DEC_Path_KnowledgeAgent( knowledge, *this ) );
+            pathKnowledgeAgentVector_.push_back( DEC_Path_KnowledgeAgent( knowledge, queryMaker_ ) );
     }
 
     // Objects
@@ -187,53 +215,83 @@ bool DEC_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const Terrai
 }
 
 //-----------------------------------------------------------------------------
+// Name: DEC_Path::GetPreviousPathPointOnDifferentLocation
+// Created: JVT 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+DEC_Path::IT_PathPointList DEC_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
+{
+    assert( itCurrent != resultList_.end() );
+
+    const MT_Vector2D& vPosition = (*itCurrent)->GetPos();
+    
+    while ( itCurrent != resultList_.begin() && (*itCurrent)->GetPos() == vPosition )
+        --itCurrent;
+        
+    return itCurrent;
+}
+
+//-----------------------------------------------------------------------------
 // Name: DEC_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
 void DEC_Path::InsertPointAvant( IT_PathPointList itCurrent, DEC_Rep_PathPoint& spottedPathPoint )
 {
-    MT_Float nDistanceLeft = spottedPathPoint.GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
+    MT_Float rDistanceLeft = spottedPathPoint.GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
                              queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint.GetTypeTerrain() );
 
-    resultList_.insert( itCurrent, &spottedPathPoint );
+    itCurrent = resultList_.insert( itCurrent, &spottedPathPoint );
 
-    while( 1 )
+    while( true )
     {
-        DEC_PathPoint& currentPoint = **itCurrent;
+        const MT_Vector2D& vCurrentPos = (*itCurrent)->GetPos();
 
         if( itCurrent == resultList_.begin() )
         {
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, currentPoint.GetPos(), spottedPathPoint );
+            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, vCurrentPos, spottedPathPoint );
             spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( ++itCurrent, pNewPoint );
             break;
         }
 
-        IT_PathPointList itPrev = itCurrent;
-        DEC_PathPoint& prevPoint = **--itPrev;
+        // remise en position des itérateurs
+        IT_PathPointList itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
 
-        MT_Vector2D vTmp = prevPoint.GetPos() - currentPoint.GetPos();
-        MT_Float vTmpMag = vTmp.Magnitude();
-        nDistanceLeft -= vTmpMag;
-        if( nDistanceLeft == 0 )
+        itCurrent = itPrev; 
+        ++itCurrent; 
+        assert( (*itCurrent)->GetPos() == vCurrentPos );
+        
+        // calcul de la distance "mangée" par le parcours de ce segment
+        const MT_Vector2D& vPreviousPos = (*itPrev)->GetPos();
+              MT_Vector2D  vTmp         = vPreviousPos - vCurrentPos;
+        const MT_Float     vTmpMag      = vTmp.Magnitude();
+        
+        rDistanceLeft -= vTmpMag;
+        if( rDistanceLeft == 0. )
         {
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, prevPoint.GetPos(), spottedPathPoint );
+            // Positionnement du point avant au même endroit qu'un autre point
+            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, vPreviousPos, spottedPathPoint );
+
             spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( itPrev, pNewPoint );
             break;
         }
-        else if( nDistanceLeft < 0 )
+        else if( rDistanceLeft < 0. )
         {
+            // Positionnement du point avant 
             vTmp /= vTmpMag;
-            vTmp *= nDistanceLeft;
-            vTmp += prevPoint.GetPos();
+            vTmp *= rDistanceLeft;
+            vTmp += vPreviousPos;
+
             DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, vTmp, spottedPathPoint );
+
             spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( itCurrent, pNewPoint );
             break;
         }
 
+        // tant pis, ça sera peut-être pour le prochain segment
         itCurrent = itPrev;
     }
 }
@@ -575,14 +633,15 @@ void DEC_Path::Serialize( ASN1T_Itineraire& asn ) const
 // -----------------------------------------------------------------------------
 void DEC_Path::Execute( TerrainPathfinder& pathfind )
 {    
-#ifdef _DEBUG
+    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
+    {
     MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << " : computation begin" );
     MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
     MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
     MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.ConvertPathTypeToString() );
     MT_LOG_MESSAGE_MSG( GetPathAsString() );
     profiler_.Start();
-#endif
+    }
 
     assert( resultList_.empty() );
     try
@@ -597,7 +656,8 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
         throw;
     }
 
-#ifdef _DEBUG
+    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
+    {
     double rComputationTime = profiler_.Stop();
 
     std::stringstream stream;
@@ -608,7 +668,7 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
                         ", Time : " << rComputationTime << 
                         ", State : " << GetStateAsString() <<
                         ", Result : " << stream.str() );
-#endif
+    }
     DecRef(); // We are no longer in the pathfind queue
 }
 

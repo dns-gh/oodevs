@@ -59,7 +59,8 @@ public:
 
     //! @name Accessors
     //@{
-    E_State GetState() const;
+    E_State GetState     () const;
+    void    GetPathPoints( T_PointVector& points ) const;
     //@}
 
 protected:

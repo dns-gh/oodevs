@@ -126,6 +126,7 @@ private:
 
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;
+    bool                   bRcMedicalQuerySent_;
 };
 
 #include "PHY_RolePion_Humans.inl"

@@ -1152,6 +1152,10 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_M
         case EnumChangeLiensLogistiquesErrorCode::no_error                             : strOutputMsg << "no_error"; break;
     }
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.oid_automate );
+    if( pAgent )
+        pAgent->OnLogisticLinksChanged( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

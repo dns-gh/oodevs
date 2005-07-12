@@ -293,14 +293,8 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     const PHY_ComposanteState* pOldState = pState_;
     pState_                              = pNewState;
 
-    if ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ )
-    {
-        if ( !pBreakdown_ )
-        {
+    if ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
             pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
-            MIL_RC::pRcDemandeEvacuationMateriel_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
-        }
-    }
     else if( *pState_ == PHY_ComposanteState::dead_ )
         humans_.KillAllHumans();    
     ManageEndMaintenance();
@@ -448,14 +442,8 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
         const PHY_ComposanteState* pOldState = pState_;
         pState_                              = pNewState;
 
-        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ )
-        {
-            if ( !pBreakdown_ )
-            {
+        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
                 pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
-                MIL_RC::pRcDemandeEvacuationMateriel_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
-            }
-        }
         else if( *pState_ == PHY_ComposanteState::dead_ )
             humans_.KillAllHumans( fireResult );        
         ManageEndMaintenance();

@@ -10,6 +10,17 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetObjectTypesToAvoid
+// Created: NLD 2005-07-01
+// -----------------------------------------------------------------------------
+inline
+const MIL_RealObjectTypeFilter& MIL_RealObjectType::GetObjectTypesToAvoid()
+{
+    assert( pObjectTypesToAvoid_ );
+    return *pObjectTypesToAvoid_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::GetObjectTypes
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
@@ -56,6 +67,16 @@ const MIL_RealObjectType* MIL_RealObjectType::FindObjectType( uint nDiaID )
     if( it == objectTypes_.end() )
         return 0;
     return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetBehavior
+// Created: NLD 2005-07-01
+// -----------------------------------------------------------------------------
+inline
+MIL_RealObjectType::E_Behavior MIL_RealObjectType::GetBehavior() const
+{
+    return nBehavior_;
 }
 
 // -----------------------------------------------------------------------------

@@ -299,6 +299,8 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
             startupConfig.SetUseDiaDebugServer( true );
         else if( stricmp( ppArgv[nArgNbr], "-decdebug") == 0 )
             startupConfig.SetUseDecDebug( true );
+        else if( stricmp( ppArgv[nArgNbr], "-pathdebug") == 0 )
+            startupConfig.SetUsePathDebug( true );
         else if( stricmp( ppArgv[nArgNbr], "-coredump") == 0 )
             bCrashWithCoreDump_ = true;
         else if( stricmp( ppArgv[nArgNbr], "-profiling") == 0 )

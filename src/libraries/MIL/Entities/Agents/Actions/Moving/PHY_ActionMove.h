@@ -42,6 +42,13 @@ private:
     //@{
     void CreateJoiningPath ();
     void DestroyJoiningPath();
+    void AvoidObstacles    ();
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::set< uint > T_ObjectKnowledgeSet; // Dia ids
     //@}
 
 private:
@@ -49,6 +56,7 @@ private:
     DIA_Variable_ABC&      diaReturnCode_;
     DEC_Path*              pMainPath_;
     DEC_Path*              pJoiningPath_;
+    T_ObjectKnowledgeSet   objectAvoidAttempts_;
 };
 
 #include "PHY_ActionMove.inl"

@@ -147,11 +147,24 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     , bSurrendered_( false )
     , bPrisoner_( false )
     , bRefugeesManaged_( false )
+    , nTC2ID_( 0 ) 
+    , nLogMaintenanceSuperior_( 0 ) 
+    , nLogMedicalSuperior_( 0 ) 
+    , nLogSupplySuperior_( 0 ) 
 {
     MOS_App::GetApp().GetAgentManager().RegisterListViewsForAgent( *this );
     MOS_App::GetApp().GetAgentManager().RegisterAgent( *this );
 
     sName_ = asnMsg.nom;
+
+    if( asnMsg.m.oid_tc2Present )
+        nTC2ID_ = asnMsg.oid_tc2;
+    if( asnMsg.m.oid_maintenancePresent )
+        nLogMaintenanceSuperior_ = asnMsg.oid_maintenance;
+    if( asnMsg.m.oid_santePresent )
+        nLogMedicalSuperior_ = asnMsg.oid_sante;
+    if( asnMsg.m.oid_ravitaillementPresent )
+        nLogSupplySuperior_ = asnMsg.oid_ravitaillement;
 
     pTypeAutomate_ = MOS_App::GetApp().GetAgentManager().FindTypeAutomate( asnMsg.type_automate );
     assert( pTypeAutomate_ );
@@ -247,6 +260,10 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
     , supplyDispoTransporters_()
     , supplyDispoCommanders_()  
     , stocks_()
+    , nTC2ID_( 0 ) 
+    , nLogMaintenanceSuperior_( 0 ) 
+    , nLogMedicalSuperior_( 0 ) 
+    , nLogSupplySuperior_( 0 ) 
 {
     MOS_App::GetApp().GetAgentManager().RegisterListViewsForAgent( *this );
     MOS_App::GetApp().GetAgentManager().RegisterAgent( *this );
@@ -1590,6 +1607,30 @@ void MOS_Agent::OnReceiveMsgVisionCones( DIN_Input& msg )
     bNeedRedrawVision_ = true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnLogisticLinksChanged
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnLogisticLinksChanged( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg )
+{
+    if( asnMsg.m.oid_tc2Present )
+        nTC2ID_ = asnMsg.oid_tc2;
+    if( asnMsg.m.oid_maintenancePresent )
+        nLogMaintenanceSuperior_ = asnMsg.oid_maintenance;
+    if( asnMsg.m.oid_santePresent )
+        nLogMedicalSuperior_ = asnMsg.oid_sante;
+    if( asnMsg.m.oid_ravitaillementPresent )
+        nLogSupplySuperior_ = asnMsg.oid_ravitaillement;
+
+    if( pAttrEditor_ )
+    {
+        pAttrEditor_->SetTC2( nTC2ID_ );
+        pAttrEditor_->SetLogMaintenanceSuperior( nLogMaintenanceSuperior_ );
+        pAttrEditor_->SetLogMedicalSuperior    ( nLogMedicalSuperior_ );
+        pAttrEditor_->SetLogSupplySuperior     ( nLogSupplySuperior_ );
+    }
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: MOS_Agent::SetAttributeEditor
@@ -1658,7 +1699,13 @@ void MOS_Agent::SetAttributeEditor( MOS_AttrEditor* pAttrEditor )
         pAttrEditor_->SetTiredness          ( *pTiredness_ );
 
         if( IsAutomate() )
+        {
             pAttrEditor_->SetAutomateMode( bEmbraye_ );
+            pAttrEditor_->SetTC2( nTC2ID_ );
+            pAttrEditor_->SetLogMaintenanceSuperior( nLogMaintenanceSuperior_ );
+            pAttrEditor_->SetLogMedicalSuperior    ( nLogMedicalSuperior_ );
+            pAttrEditor_->SetLogSupplySuperior     ( nLogSupplySuperior_ );
+        }
 
         if( nFightRateState_ != (E_ForceRatioState)-1 )
             pAttrEditor_->SetFightRateState( nFightRateState_ );

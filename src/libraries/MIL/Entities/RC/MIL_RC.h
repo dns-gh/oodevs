@@ -46,7 +46,8 @@ public:
     {
         eRcTypeMessage     = 0,
         eRcTypeOperational = 1,
-        eRcTypeEvent       = 2
+        eRcTypeEvent       = 2,
+        eRcTypeWarning     = 3
     };
     //@}
     
@@ -72,6 +73,8 @@ public:
     static const MIL_RC_AllocationConsentieBientotEpuisee*  pRcAllocationConsentieBientotEpuisee_;
     static const MIL_RC*                                    pRcMissionImpossible_;
     static const MIL_RC_PionDecontamine*                    pRcPionDecontamine_;
+    static const MIL_RC*                                    pRcPlusDeCarburant_;
+    static const MIL_RC*                                    pRcTerrainDifficile_;
     //@}
    
 public:
@@ -279,6 +282,19 @@ protected:
         eRC_DecesBlesse,
         eRC_DecesBlessePendantTransport,
         eRC_DecesBlessePendantHospitalisation,
+
+        eRC_MissionImpossiblePionsSubordonnesNonOperationnels,
+        eRC_MissionImpossibleLimaInvalide,
+        eRC_MissionImpossibleZoneHorsFuseau,
+        eRC_RapportDeForceDefavorable,
+        eRC_TerrainDifficile,
+        eRC_PlusDeCarburant,
+        eRC_DispositifDisperse,
+        eRC_PionNeutralise,
+        eRC_SilenceRadio,
+        eRC_TirRestreint,
+        eRC_TirInterdit,
+        eRC_TirLibre,        
 
         /* Adaptation */
         eRC_Trace, // Paramètre : ID en float

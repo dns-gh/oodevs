@@ -80,6 +80,8 @@ public:
     //! @name Operators */
     //@{
     MIL_Fuseau& operator=( const MIL_Fuseau& );
+    bool        operator==( const MIL_Fuseau& rhs ) const;
+    bool        operator!=( const MIL_Fuseau& rhs ) const;
     //@}
 
 private:

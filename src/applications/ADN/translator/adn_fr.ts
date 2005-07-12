@@ -892,7 +892,7 @@
     </message>
     <message>
         <source>Max speed</source>
-        <translation type="unfinished">Vitesse max.</translation>
+        <translation>Vitesse max</translation>
     </message>
 </context>
 <context>
@@ -2452,7 +2452,7 @@
     </message>
     <message>
         <source>Flare ammo parameters</source>
-        <translation>Paramètres fusée éclairante</translation>
+        <translation type="obsolete">Paramètres fusée éclairante</translation>
     </message>
     <message>
         <source>Deploy time</source>
@@ -2504,7 +2504,11 @@
     </message>
     <message>
         <source>Attritions</source>
-        <translation type="unfinished">Attritions</translation>
+        <translation>Attritions</translation>
+    </message>
+    <message>
+        <source>Flare/Smoke ammo parameters</source>
+        <translation>Paramètres Obus fumigène / Fusée éclairante</translation>
     </message>
 </context>
 <context>
@@ -3569,7 +3573,7 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>When &apos;Detection times&apos; is unchecked, units are recognized instantly.
 When &apos;HQ detection times&apos; is unchecked, the detection times for HQs are the same as the others.</source>
-        <translation type="unfinished">Quand la groupBox &apos;Durées acquisition&apos; est décochée, les unités sont reconnues instantanément. 
+        <translation>Quand la groupBox &apos;Durées acquisition&apos; est décochée, les unités sont reconnues instantanément. 
 Quand la sous groupBox &apos;Durées spécifiques pour PCs&quot; est décochée, les temps d&apos;acqusitions des PCs sont les mêmes que ceux des autres pions.</translation>
     </message>
 </context>

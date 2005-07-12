@@ -509,6 +509,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     // RC
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_AgentPion >, "DEC_RC"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_AgentPion >, "DEC_Message" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_AgentPion >, "DEC_Warning" );
 
     // Hiérarchie
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPionsWithPC             , "DEC_Pion_PionsAvecPC"           );

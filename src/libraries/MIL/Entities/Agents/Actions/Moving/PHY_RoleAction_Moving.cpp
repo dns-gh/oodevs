@@ -57,6 +57,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MT_RoleContainer& role, MIL_AgentP
     , bForcePathCheck_     ( true )
     , bHasChanged_         ( true )
     , bHasMoved_           ( false )  
+    , bEnvironmentHasChanged_( true )
     , pCurrentPath_        ( 0 )
     , rCurrentMaxSpeed_    ( 0. ) // Cached data
     , rCurrentEnvSpeed_    ( 0. ) // Cached data
@@ -82,6 +83,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving()
     , bForcePathCheck_     ( true )
     , bHasChanged_         ( true )
     , bHasMoved_           ( false )  
+    , bEnvironmentHasChanged_( true )
     , pCurrentPath_        ( 0 )
     , rCurrentMaxSpeed_    ( 0. ) // Cached data
     , rCurrentEnvSpeed_    ( 0. ) // Cached data
@@ -100,6 +102,7 @@ PHY_RoleAction_Moving::~PHY_RoleAction_Moving()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::serialize
 // Created: JVT 2005-03-30
@@ -140,7 +143,13 @@ void PHY_RoleAction_Moving::InitializeEnvironment( const DEC_Path& path )
     while( itPathPointTmp != path.GetResult().end() && (*itPathPointTmp)->GetType() != DEC_PathPoint::eTypePointPath )
         ++itPathPointTmp;
     assert( itPathPointTmp != path.GetResult().end() );
-    nEnvironment_ = (*itPathPointTmp)->GetObjectTypesToNextPoint();
+
+    TerrainData tmpEnvironment = (*itPathPointTmp)->GetObjectTypesToNextPoint();
+    if( !( environment_ == tmpEnvironment ) ) //$$$
+    {
+        bEnvironmentHasChanged_ = true;
+        environment_            = tmpEnvironment;
+    }    
 }
 
 // -----------------------------------------------------------------------------
@@ -412,10 +421,17 @@ void PHY_RoleAction_Moving::ComputeCurrentSpeed()
 {
     const DEC_PathPoint& curPathPoint = **itCurrentPathPoint_;
     if( curPathPoint.GetType() == DEC_PathPoint::eTypePointPath )
-        nEnvironment_ = curPathPoint.GetObjectTypesToNextPoint();       
+    {
+        TerrainData tmpEnvironment = curPathPoint.GetObjectTypesToNextPoint();       
+        if( !( environment_ == tmpEnvironment ) ) //$$$
+        {
+            bEnvironmentHasChanged_ = true;
+            environment_            = tmpEnvironment;
+        }    
+    }
 
     rCurrentMaxSpeed_ = GetMaxSpeedWithReinforcement();
-    rCurrentEnvSpeed_ = GetSpeedWithReinforcement( nEnvironment_ );    
+    rCurrentEnvSpeed_ = GetSpeedWithReinforcement( environment_ );    
     rCurrentSpeed_    = rCurrentEnvSpeed_;
 }
 
@@ -452,7 +468,7 @@ bool PHY_RoleAction_Moving::GoToNextNavPoint( const DEC_Path& path )
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::SetCurrentPath( DEC_Path& path )
 {
-    if( pCurrentPath_ && path == *pCurrentPath_ && !bForcePathCheck_ )
+    if( pCurrentPath_ && path == *pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
         return true;
 
     if( pCurrentPath_ )
@@ -468,6 +484,9 @@ bool PHY_RoleAction_Moving::SetCurrentPath( DEC_Path& path )
     itCurrentPathPoint_ = path.GetCurrentKeyOnPath( GetRole< PHY_RolePion_Location >().GetPosition() );
     if( itCurrentPathPoint_ == path.GetResult().end() )
         return false;
+
+    if( pCurrentPath_->GetState() == DEC_Path::ePartial )
+        MIL_RC::pRcTerrainDifficile_->Send( *pPion_, MIL_RC::eRcTypeWarning );
 
     itNextPathPoint_ = itCurrentPathPoint_;   
     ++itNextPathPoint_;
@@ -708,6 +727,7 @@ int PHY_RoleAction_Moving::Move( DEC_Path& path )
     if( !ReserveConsumptionWithReinforcement() && !GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
     {
         rCurrentSpeed_ = 0.;
+        MIL_RC::pRcPlusDeCarburant_->Send( *pPion_, MIL_RC::eRcTypeWarning );
         return eNotEnoughFuel;
     }
 
@@ -799,7 +819,7 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( MT_Float rTime, bool bBo
 // Name: PHY_RoleAction_Moving::ComputeFutureObjectCollisions
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsFilter, DEC_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const
+void PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsToAvoid_, DEC_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const
 {
     objectsOnPath.clear();
     if( !pCurrentPath_ )
@@ -809,7 +829,7 @@ void PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectT
     assert( pRoleLocation_ );
 
     T_KnowledgeObjectVector knowledges;
-    pPion_->GetKSQuerier().GetObjects( knowledges, objectsFilter );
+    pPion_->GetKSQuerier().GetObjects( knowledges, objectsToAvoid_ );
     pCurrentPath_->ComputeFutureObjectCollisions( pRoleLocation_->GetPosition(), knowledges, objectsOnPath );
 }   
 
@@ -827,13 +847,25 @@ bool PHY_RoleAction_Moving::IsMovingOn( const DEC_Path& path ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::SendChangedState
-// Created: NLD 2004-09-22
+// Name: PHY_RoleAction_Moving::SendEnvironmentType
+// Created: SBO 2005-06-15
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendChangedState()
+void PHY_RoleAction_Moving::SendEnvironmentType() const
 {
-    if( HasChanged() )
-        SendFullState();
+    if( !bEnvironmentHasChanged_ )
+        return;
+
+    assert( pPion_ );
+
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << ( uint32 )pPion_->GetID();
+    dinMsg << environment_.Area();
+    dinMsg << environment_.Left();
+    dinMsg << environment_.Right();
+    dinMsg << environment_.Linear();
+    msgMgr.SendMsgEnvironmentType( dinMsg );    
 }
 
 // -----------------------------------------------------------------------------
@@ -855,3 +887,14 @@ void PHY_RoleAction_Moving::SendFullState()
     delete [] asnMsg.GetAsnMsg().itineraire.vecteur_point.elem;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::SendChangedState
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::SendChangedState()
+{
+    if( HasChanged() )
+        SendFullState();
+
+    SendEnvironmentType();
+}

@@ -70,6 +70,7 @@ void TER_PathFinderThread::Process( TER_PathFindRequest_ABC* const& pRequest )
     {
         if( pRequest )
             pRequest->Execute( *pPathfinder_ );
+//        Dump();
     }
     catch( std::exception& e )
     {

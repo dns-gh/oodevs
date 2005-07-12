@@ -180,7 +180,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
 
     // Flare parameters
-    pFlareParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Flare ammo parameters" ), pIndirectGroup );
+    pFlareParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
     pFlareParametersGroup_->hide();
 
     builder.AddField<ADN_EditLine_Double>( pFlareParametersGroup_, tr( "Deploy time" ), vConnectors[eDeployTime], tr( "s" ), eGreaterEqualZero );
@@ -215,7 +215,8 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
         || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Aced 
         || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Grenade )
         pExplosiveParametersGroup_->show();
-    else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Eclairant )
+    else if(  (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Eclairant
+            ||(E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Fumigene )
         pFlareParametersGroup_->show();
     else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Mine )
         pMineParametersGroup_->show();

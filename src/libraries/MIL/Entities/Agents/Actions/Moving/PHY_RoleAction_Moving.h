@@ -91,10 +91,6 @@ public:
     //@{
         MT_Vector2D ExtrapolatePosition          ( MT_Float rTime, bool bBoundOnPath ) const;
         void        ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsFilter, DEC_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const;
-    //@}
-    
-    //! @name Accessors
-    //@{
     bool IsMovingOn( const DEC_Path& path ) const;
     //@}
                 
@@ -165,12 +161,17 @@ private:
     MT_Float GetSpeedWithReinforcement( const MIL_Object_ABC& object ) const;
     //@}
 
+    //! @name Network
+    //@{
+    void SendEnvironmentType() const;
+    //@}
+
 private:
     MIL_AgentPion*              pPion_;
     PHY_RolePion_Location*      pRoleLocation_;
     MT_Float                    rSpeedModificator_;
     MT_Float                    rMaxSpeedModificator_;
-    TerrainData                 nEnvironment_;
+    TerrainData                 environment_;
     DEC_Path::CIT_PathPointList itNextPathPoint_;
     DEC_Path::CIT_PathPointList itCurrentPathPoint_;
 
@@ -186,6 +187,7 @@ private:
     bool            bForcePathCheck_;
     bool            bHasChanged_;
     bool            bHasMoved_; 
+    bool            bEnvironmentHasChanged_;
 
     DEC_Path*       pCurrentPath_; // Toujours valide : le role fait un IncRef() / DecRef() tant qu'il veut garder une reference dessus
 };

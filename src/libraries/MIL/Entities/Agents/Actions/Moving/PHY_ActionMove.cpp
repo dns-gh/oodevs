@@ -30,6 +30,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
     , pMainPath_         ( diaCall.GetParameter( 1 ).ToUserPtr( pMainPath_ ) )
     , pJoiningPath_      ( 0 )
+    , objectAvoidAttempts_()
 {    
     assert( DEC_Tools::CheckTypeItineraire( diaCall.GetParameter( 1 ) ) );
 
@@ -49,6 +50,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 PHY_ActionMove::~PHY_ActionMove()
 {
     diaReturnCode_.SetValue( PHY_RoleAction_Moving::eFinished );
+    
     DestroyJoiningPath();
     if( pMainPath_ )
     {
@@ -69,7 +71,8 @@ inline
 void PHY_ActionMove::CreateJoiningPath()
 {
     assert( pMainPath_ );
-    DestroyJoiningPath();
+    assert( pMainPath_->GetState() != DEC_Path::eComputing );
+    assert( !pJoiningPath_ );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
     pJoiningPath_ = new DEC_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() );
     pJoiningPath_->IncRef();
@@ -91,6 +94,42 @@ void PHY_ActionMove::DestroyJoiningPath()
     pJoiningPath_ = 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::AvoidObstacles
+// Created: NLD 2005-06-30
+// -----------------------------------------------------------------------------
+void PHY_ActionMove::AvoidObstacles()
+{
+    DEC_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
+    role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetObjectTypesToAvoid(), objectsOnPathMap );
+    if( objectsOnPathMap.empty() )
+        return;
+
+    const uint nObjectToAvoidDiaID = objectsOnPathMap.begin()->second->GetDiaID();
+    // Le pion à déjà tenté d'éviter l'obstacle
+    if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
+        return; 
+    objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
+
+    if( pJoiningPath_ )
+    {
+        DestroyJoiningPath();
+        CreateJoiningPath ();
+    }
+    else
+    {
+        DEC_Path* pNewMainPath = new DEC_Path( *pMainPath_ );
+        pNewMainPath->IncRef();
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pNewMainPath ); // $$$ à déplacer dans DEC_Path::Initialize()
+
+        role_.MoveCanceled( *pMainPath_ );
+        pMainPath_->Cancel();
+        pMainPath_->DecRef();
+        
+        pMainPath_ = pNewMainPath;
+    }
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -109,22 +148,25 @@ void PHY_ActionMove::Execute()
 
     DEC_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
     int nReturn = role_.Move( *pCurrentPath );
-    diaReturnCode_.SetValue( nReturn );
 
     if( nReturn == PHY_RoleAction_Moving::eItineraireMustBeJoined )
     {
-        if( pCurrentPath->GetState() != DEC_Path::eComputing )
-            CreateJoiningPath();
         role_.MoveSuspended( *pCurrentPath );
-        int nReturn = role_.Move( *pJoiningPath_ );
-        diaReturnCode_.SetValue( nReturn );
+        DestroyJoiningPath();
+            CreateJoiningPath();
+        pCurrentPath = pJoiningPath_;
+        nReturn      = role_.Move( *pCurrentPath );
     }
 
     if( pCurrentPath == pJoiningPath_ && nReturn == PHY_RoleAction_Moving::eFinished )
     {
         DestroyJoiningPath();
-        diaReturnCode_.SetValue( PHY_RoleAction_Moving::eRunning );
+        pCurrentPath = pMainPath_;
+        nReturn      = PHY_RoleAction_Moving::eRunning;
     }
+
+    AvoidObstacles();
+    diaReturnCode_.SetValue( nReturn );
 }
 
 // -----------------------------------------------------------------------------

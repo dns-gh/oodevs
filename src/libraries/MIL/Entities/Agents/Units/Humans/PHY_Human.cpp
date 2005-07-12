@@ -133,9 +133,6 @@ void PHY_Human::NotifyHumanChanged( const PHY_Human& oldHumanState )
     assert( pComposante_ );
     pComposante_->NotifyHumanChanged( *this, oldHumanState );
     
-    if( !oldHumanState.NeedMedical() && NeedMedical() )
-        MIL_RC::pRcDemandeEvacuationSanitaire_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeOperational );
-
     if( pMedicalState_ )
         pMedicalState_->NotifyHumanChanged();
 }

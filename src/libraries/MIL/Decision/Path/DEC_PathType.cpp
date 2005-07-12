@@ -58,12 +58,18 @@ TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector
     if( ! path.GetFuseau().IsInside( from ) )
         rMaxFuseauDistance += path.GetFuseau().Distance( from ) * 1.3; // $$$$ AGE 2005-06-08: Hard coded margin
 
+    if( ! path.GetAutomataFuseau().IsNull() ) // I have a higher fuseau
+        rMaxFuseauDistance = std::max( rMaxFuseauDistance, 10000. );
+
     if( ! path.GetFuseau().IsInside( to ) // our destination is outside
      ||   bCanFly                         // I'm an alat cowboy
      ||   pathType_ == eInfoRetreat )     // I'm fleeing away
         rMaxFuseauDistance = std::numeric_limits< MT_Float >::max();
     
     DEC_PathfinderRule& rule = *new DEC_PathfinderRule( path, avoid, prefer, from, to, bShort, altPreference, rMaxFuseauDistance );
+
+    if( pathType_ == eInfoRetreat )
+        rule.ChangeDangerDirectionCost( 0.1f ); // $$$$ AGE 2005-06-24: Whatever
 
     const bool bAvoidEnis = pathType_ == eInfoRetreat || pathType_ == eInfoBackup || pathType_ == eInfoInfiltration;
     if( bAvoidEnis )
@@ -180,53 +186,34 @@ void DEC_PathType::GetObjectCosts( uint nObjectTypeId, MT_Float& rCostIn, MT_Flo
 // -----------------------------------------------------------------------------
 std::vector< std::pair< MT_Float, MT_Float > > DEC_PathType::InitializeObjectCosts()
 {
+    //$$$ BOF
     typedef std::pair< MT_Float, MT_Float > T_CostPair;
     std::vector< std::pair< MT_Float, MT_Float > > costs;
-    costs.resize( MIL_RealObjectType::GetObjectTypes().size() );
+
+    const MIL_RealObjectType::T_ObjectTypeMap& objectTypes = MIL_RealObjectType::GetObjectTypes();
+    costs.resize( objectTypes.size() );
 
     const T_CostPair ignore( 0    , 0  );
     const T_CostPair avoid ( 10   , 0  );
-    const T_CostPair loathe( 10000, 0  );
+    const T_CostPair hate  ( 10000, 0  );
     const T_CostPair enjoy ( 0    , 1  );
     const T_CostPair prefer( 0    , 5  );
 
-    costs[ MIL_RealObjectType::fosseAntiChar_          .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::abattis_                .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::barricade_              .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::bouchonMines_           .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::zoneMineeLineaire_      .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::zoneMineeParDispersion_ .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::eboulement_             .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::destructionRoute_       .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::destructionPont_        .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::pontFlottant_           .GetID() ] = ignore;
-    costs[ MIL_RealObjectType::posteTir_               .GetID() ] = ignore;
-    costs[ MIL_RealObjectType::zoneProtegee_           .GetID() ] = ignore;
-    costs[ MIL_RealObjectType::zoneImplantationCanon_  .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::zoneImplantationCOBRA_  .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::zoneImplantationLRM_    .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::siteFranchissement_     .GetID() ] = ignore;
-    costs[ MIL_RealObjectType::nuageNBC_               .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::siteDecontamination_    .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::plotRavitaillement_     .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::zoneBrouillageBrod_     .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::zoneBrouillageBromure_  .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::rota_                   .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::zoneNBC_                .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::airePoser_              .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::piste_                  .GetID() ] = prefer;
-    costs[ MIL_RealObjectType::plateForme_             .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::zoneMobiliteAmelioree_  .GetID() ] = prefer;
-    costs[ MIL_RealObjectType::zonePoserHelicoptere_   .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::aireLogistique_         .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::campPrisonniers_        .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::campRefugies_           .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::itineraireLogistique_   .GetID() ] = enjoy;
-    costs[ MIL_RealObjectType::posteControle_          .GetID() ] = prefer;
-    costs[ MIL_RealObjectType::terrainLargage_         .GetID() ] = avoid;
-    costs[ MIL_RealObjectType::zoneForbiddenFire_      .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::zoneForbiddenMove_      .GetID() ] = loathe;
-    costs[ MIL_RealObjectType::zoneImplantationMortier_.GetID() ] = avoid;
+    for( MIL_RealObjectType::CIT_ObjectTypeMap it = objectTypes.begin(); it != objectTypes.end(); ++it )
+    {
+        const MIL_RealObjectType& objectType = *it->second;
+
+        switch( objectType.GetBehavior() )
+        {
+            case MIL_RealObjectType::eHate   : costs[ objectType.GetID() ] = hate;   break;
+            case MIL_RealObjectType::eAvoid  : costs[ objectType.GetID() ] = avoid;  break;
+            case MIL_RealObjectType::eIgnore : costs[ objectType.GetID() ] = ignore; break;
+            case MIL_RealObjectType::eEnjoy  : costs[ objectType.GetID() ] = enjoy;  break;
+            case MIL_RealObjectType::ePrefer : costs[ objectType.GetID() ] = prefer; break;
+            default:
+                assert( false );
+        }       
+    }
 
     return costs;
 }

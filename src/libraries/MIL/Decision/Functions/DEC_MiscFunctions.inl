@@ -35,3 +35,15 @@ void DEC_MiscFunctions::RC_Message( DIA_Call_ABC& call, T& caller )
     assert( pRC );
     pRC->Send( caller, MIL_RC::eRcTypeMessage, call.GetParameters() );
 }
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Agent_ABC::RC_Warning
+// Created: NLD 2003-01-07
+//-----------------------------------------------------------------------------
+template< typename T > 
+void DEC_MiscFunctions::RC_Warning( DIA_Call_ABC& call, T& caller )
+{
+    const MIL_RC* pRC = MIL_RC::Find( call.GetParameter( 0 ).ToId() );
+    assert( pRC );
+    pRC->Send( caller, MIL_RC::eRcTypeWarning, call.GetParameters() );
+}
