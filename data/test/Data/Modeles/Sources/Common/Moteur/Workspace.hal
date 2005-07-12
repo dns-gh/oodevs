@@ -1,0 +1,77 @@
+signatures
+{
+    // Geometrie
+    U /*T_ListePoints*/  DEC_Geometrie_DecouperListePoints          ( U /*T_ListePions*/, R /*nb parts*/ ); // Effacer résultat
+    U /*T_ListePoints*/  DEC_Geometrie_DecouperItineraire           ( U /*T_Itineraire*/, R /*nb parts*/ ); // Effacer résultat
+    U /*T_Point*/        DEC_Geometrie_CalculerPositionCouverture   ( S /*T_ListePions*/, U /*T_Direction*/, R /*distance en m*/ );
+    U /*T_Point*/        DEC_Geometrie_CalculerBarycentreAgents     ( S /*T_ListePions*/ );
+    U /*T_Point*/        DEC_Geometrie_PositionTranslate            ( U /*T_Point src*/, U /*T_Point dst*/, R /*distance*/ );
+    U /*T_Point*/        DEC_Geometrie_PositionTranslateDir         ( U /*T_Point src*/, U /*T_Direction*/, R /*distance*/ );
+    B                    DEC_Geometrie_PositionsEgales              ( U /*T_Point*/, U /*T_Point*/ );
+    B                    DEC_Geometrie_DirectionEgales              ( U /*T_Direction*/, U /*T_Direction*/ );
+    R                    DEC_Geometrie_Distance                     ( U /*T_Point*/, U /*T_Point*/ );
+    U /*T_Localisation*/ DEC_Geometrie_ConvertirPointEnLocalisation ( U /*T_Point*/ );
+    B                    DEC_Geometrie_EstPointDansLocalisation     ( U /*T_Point*/, U /*T_Localisation*/ );
+    B                    DEC_Geometrie_LocalisationsEgales          ( U /*T_Localisation*/, U /*T_Localisation*/ );
+    U /*T_Localition*/   DEC_Geometrie_CreerLocalisation            ();
+    V                    DEC_Geometrie_DetruireLocalisation         ( U /*T_Localisation*/ );
+    V                    DEC_Geometrie_DetruireListeLocalisations   ( S /*T_ListeLocalisation*/ );
+    U /*T_ListePoints*/  DEC_Geometrie_CreerListePoints             ();
+    V                    DEC_Geometrie_DetruireListePoints          ( U /*T_ListePoints*/        );
+    U /*T_Point*/        DEC_Geometrie_CreerPoint                   (); 
+    V                    DEC_Geometrie_DetruirePoint                ( U /*T_Point*/ ); 
+    U /*T_Direction*/    DEC_Geometrie_CreerDirection               ( U /*T_Point src*/, U /*T_Point dest*/);
+    U /*T_Direction*/    DEC_Geometrie_CreerDirectionPerpendiculaire( U /*T_Direction*/, * /* B = sens trigo ?*/ );
+    V                    DEC_Geometrie_DetruireDirection            ( U /*T_Direction*/ );
+    V                    DEC_Geometrie_InverseDirection             ( U /*T_Direction*/ );
+    V                    DEC_Geometrie_RotateDirection              ( U /*T_Direction*/, R /*angle en degré : dans sens trigo*/ );
+    U /*T_Direction*/    DEC_Geometrie_CopieEtInverseDirection      ( U /*T_Direction*/ );
+    U /*T_Direction*/    DEC_Geometrie_CopieEtRotateDirection       ( U /*T_Direction*/, R /*angle en degré : dans sens trigo*/ );
+    R                    DEC_Geometrie_CalculeDistanceLigneMoyenne  ( S /*T_ListePions*/, A /*T_Pion reference*/ );
+    U /*T_Point*/        DEC_Geometrie_CalculeBarycentreLocalisation( U /*T_Localisation*/ );
+    U /*T_Direction*/    DEC_Geometrie_DirectionMoyenne             ( S /*T_ListeDirections*/ );
+    U /*T_Point*/        DEC_Geometrie_PositionAleatoireSurCercle   ( U /*T_Point centre*/, R /*rayon*/ );    
+    U /*T_Point*/        DEC_Geometrie_PositionAleatoireDansCercle  ( U /*T_Point centre*/, R /*rayon*/ );     
+    U /*T_Localisation*/ DEC_Geometrie_CreerLocalisationCercle      ( U /*T_Point centre*/, R /*rayon*/ );
+    S /*T_ListePions*/   DEC_Geometrie_PionEstCoordonne             ( A /*T_Pion*/, S /*T_ListePions*/, R /*dist min*/ ); // Retourne les pions de la liste avec lesquels le pion n'est pas coordonné
+    R                    DEC_Geometrie_AireLocalisation             ( U /*T_Localisation*/ );
+
+    // Temps
+    R                    DEC_TempsSim       ();
+    R                    DEC_TempsReel      ();
+    R                    DEC_DureePasDeTemps();
+    B                    DEC_Nuit           ();
+
+    V                    DEC_Copie_Direction            ( U /*T_Direction src*/         , U /*T_Direction dest*/         );
+    V                    DEC_Copie_Point                ( U /*T_Point src*/             , U /*T_Point dest*/             );
+    V                    DEC_Copie_ListePoints          ( U /*T_ListePoints src*/       , U /*T_ListePoints dest*/       ); 
+    V                    DEC_Copie_PointDansListePoints ( U /*T_Point src*/             , U /*T_ListePoints dest*/       ); 
+    V                    DEC_Copie_Localisation         ( U /*T_Localisation src*/      , U /*T_Localisation dest*/      ); 
+    V                    DEC_Copie_PointDansLocalisation( U /*T_Point src*/             , U /*T_Localisation dest*/      ); 
+    V                    DEC_Copie_ListeLocalisations   ( S /*T_ListeLocalisations src*/, S /*T_ListeLocalisations dst*/ );
+
+    // Manipulation de listes
+    U                    DEC_UserTypeList_GetAt    ( S /*liste*/, R /*elt idx*/ ); // Pour toutes les listes de UserTypes
+    R                    DEC_UserTypeList_Size     ( S /*liste*/ );                // Pour toutes les listes de UserTypes
+    B                    DEC_UserTypeList_Contient ( S /*list*/ , U /*elt*/     ); // Pour toutes les listes de UserTypes
+    V                    DEC_UserTypeList_PushBack ( S /*liste*/, U /*elt*/ ); 
+    V                    DEC_UserTypeList_Remove   ( S /*liste*/, U /*elt*/ );
+    V                    DEC_UserTypeList_DeleteAll( S /*liste*/ );
+    V                    DEC_UserTypeList_Clear    ( S /*liste*/ );
+                      
+    U /*T_Point*/        DEC_ListePoints_GetAt    ( U /*T_ListePoints*/, R /*nIdx*/ ); // Le point retourné doit être détruit par l'utilisateur quand il n'est plus utile
+    R                    DEC_ListePoints_Size     ( U /*T_ListePoints*/ );
+    V                    DEC_ListePoints_PushBack ( U /*T_ListePoints*/, U /*T_Point a ajouter*/ ); 
+    V                    DEC_ListePoints_Remove   ( U /*T_ListePoints*/, R /*T_Point a enlever*/ );
+    V                    DEC_ListePoints_Clear    ( U /*T_ListePoints*/ );
+                        
+    // Debug
+    X                    DEC_PointToString     ( U /*T_Point*/      );      
+    X                    DEC_DirectionToString ( U /*T_Direction*/  );      
+    X                    DEC_ItineraireToString( U /*T_Itineraire*/ );  
+    
+    // Manipulation DIA Thing 
+    A                    DEC_CreerDIAThing( I /*Type*/ );
+    V                    DEC_DetruireDIAThing( A /*Thing*/ );
+}
+

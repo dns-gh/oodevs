@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Protections>
+
+  <Protection nom="CharLourd" type="materiel">
+    <Neutralisation tempsMoyen="300s" variance="60s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+  <Protection nom="CharMoyen" type="materiel">
+    <Neutralisation tempsMoyen="600s" variance="180s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+  <Protection nom="BlindeLeger" type="materiel">
+    <Neutralisation tempsMoyen="900s" variance="180s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+  <Protection nom="TransportBlinde" type="materiel">
+    <Neutralisation tempsMoyen="1200s" variance="600s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+  <Protection nom="Aeronef" type="materiel">
+    <Neutralisation tempsMoyen="900s" variance="180s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+  <Protection nom="VehiculeNonProtege" type="materiel">
+    <Neutralisation tempsMoyen="1200s" variance="600s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+  <Protection nom="Combattant" type="humain">
+    <Neutralisation tempsMoyen="300s" variance="420s"/>
+    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <BlessureHumainsDansMateriel>
+      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+    </BlessureHumainsDansMateriel>
+  </Protection>
+
+</Protections>

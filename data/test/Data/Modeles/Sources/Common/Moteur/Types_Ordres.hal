@@ -1,0 +1,98 @@
+// *****************************************************************************
+//
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Ordres.hal $
+// $Author: Nld $
+// $Modtime: 12/04/05 11:47 $
+// $Revision: 6 $
+// $Workfile: Types_Ordres.hal $
+//
+// *****************************************************************************
+
+typedef struct T_OrdreConduiteDemande : Thing
+{
+    E_TypeOrdreConduite nType_;
+};
+typedef list<T_OrdreConduiteDemande> T_ListeOrdresConduite;
+
+typedef struct Rep_Ordre : Representation
+{
+	string szHint_;
+};
+
+typedef struct Rep_OrdreConduite : Rep_Ordre
+{
+    E_TypeOrdreConduite eOrdre_;
+}; 
+
+// =============================================================================
+// MISSION PION
+// =============================================================================
+typedef struct T_Mission_Pion : Thing
+{
+    E_TypeMissionAutomate   missionType_;
+    T_Direction             dirDangereuse_;
+};
+
+// =============================================================================
+// MISSION AUTOMATE
+// =============================================================================
+typedef enum E_AutomateFormation
+{
+    eAutomateFormation_UnEchelon,
+    eAutomateFormation_DeuxEchelons
+};
+
+typedef enum E_AutomateTypeDeplacement
+{
+    eTypeDeplacement_En2emeEchelon,
+    eTypeDeplacement_EnZoneSecurisee,
+    eTypeDeplacement_SurItineraireEquipe
+};
+
+typedef struct T_Mission_Automate : Thing
+{
+    E_TypeMissionAutomate   missionType_;
+    T_Direction             directionEnnemi_;
+    E_AutomateFormation     formation_;
+};
+
+
+// =============================================================================
+// PARAMETRES DE MISSIONS SPECIFIQUES
+// =============================================================================
+typedef enum E_MissionGenUrgenceType
+{
+    eUrgenceType_SerieMinimum,
+    eUrgenceType_SerieComplementaire
+};
+
+typedef enum E_MissionGenSousTypeObstacle
+{
+    eSousType_Preliminaire,
+    eSousType_DeManoeuvre
+};
+
+typedef enum E_GenObjetPriorite
+{   
+    prioritaire,
+    normal,
+    peuPrioritaire
+};
+
+typedef struct T_GenObjet : Thing
+{
+    E_TypeObject                 typeObject_;
+    T_Localisation               posObject_;
+    E_MissionGenUrgenceType      urgence_;
+    E_MissionGenSousTypeObstacle preliminaire_;
+    T_ID                         nObstacleMosID_;
+    E_GenObjetPriorite           priorite_;
+};
+
+typedef list< T_GenObjet > T_ListeGenObjets;
+ 
+
+include "Common/Moteur/Types_Missions_Automate.hal";
+include "Common/Moteur/Types_Missions_Pion.hal";
+include "Common/Moteur/Types_OrdresConduite.hal";

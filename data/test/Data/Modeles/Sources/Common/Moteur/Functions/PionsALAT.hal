@@ -1,0 +1,17 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+signatures
+{
+    // ALAT
+    V                              A::DEC_ALAT_ActiverReconnaissance      ( U /*T_Localisation*/ );
+    V                              A::DEC_ALAT_DesactiverReconnaissance   ();
+    B                              A::DEC_ALAT_ReconnaissanceNonVuTerminee();
+          
+    U /*T_PerceptionSurveillance*/ A::DEC_Perception_ActiverSurveillance             ( U /*T_Localisation*/ );
+    V                              A::DEC_Perception_DesactiverSurveillance          ( U /*T_PerceptionSurveillance*/ );
+}
+
+
+
+    

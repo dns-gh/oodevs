@@ -1,0 +1,119 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+
+include "Common/Moteur/Functions/Pions.hal";
+include "Common/Moteur/Functions/PionsNBC.hal";
+
+signatures
+{
+}
+
+functions
+{
+    //-------------------------------------------------------------------------
+    // Fonction appellée lorsque un ordre de conduite a été séléctionné
+    // param @strMission     Mission courante
+    // param @nOrdreConduite Ordre de conduite
+    // param @strHint
+    //-------------------------------------------------------------------------
+    none EVT_DEC_OrdreConduite( Rep_OrdreConduite ordreConduite )
+    {
+        DEC_Debug( "EVT_DEC_OrdreConduite : " + EnumToString( ordreConduite.eOrdre_, E_TypeOrdreConduite ) + " Hint : " + ordreConduite.szHint_ );
+    
+        // ajout a la liste des ordres recus
+        //DIA_AddToCategory( "ordres_recus", ordreConduite );
+    }
+
+    // *****************************************************************************
+    // Ev terrain.
+    // *****************************************************************************
+    none EVT_DEC_Point( Rep_PointABC rep )
+    {
+        assert( rep != 0, "EvenementTerrain: rep = 0" );
+       // DIA_AddToCategory("points_particuliers",rep);
+            
+        if( rep.cls_ == ePoint )
+        {
+            Rep_Point   pt=rep;
+            if( pt.eType_ == eTypePointParticulier )
+            {
+                Rep_PointParticulier ptPart = pt;
+			    DEC_Debug( "Rencontre d'un point particulier de type " + EnumToString( ptPart.eTypePart_, E_TypePointParticulier ) );
+            }
+            else
+            {
+                DEC_Debug( "Rencontre d'un point de type " + EnumToString( pt.eType_, E_TypePoint ) );
+            }
+        }
+        else if ( rep.cls_ == eAvantPoint )
+        {
+            Rep_AvantPoint pt = rep;
+            Rep_Point      ppt = pt.dest_;
+            if( ppt.eType_ == eTypePointParticulier )
+            {
+                Rep_PointParticulier ptPart = ppt;
+                DEC_Debug( "Rencontre d'un avant point pointant sur un point particulier de type " + EnumToString( ptPart.eTypePart_, E_TypePointParticulier ) );
+            }
+            else
+            {
+                DEC_Debug( "Rencontre d'un avant point pointant sur un point de type " + EnumToString( ppt.eType_, E_TypePoint ) );
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------
+// 
+//-----------------------------------------------------------------------------
+/*
+define M_DumpAvantPoints()
+{
+    selection listePoints = DIA_GetCategory( "points_interressants" );    
+    with ( x in listePoints )
+    {
+        Rep_PointABC ptABC        = x;
+
+        if( ptABC.cls_ == ePoint )
+        {
+            Rep_Point   pt = ptABC;
+            if( pt.eType_ == eTypePointParticulier )
+            {
+                Rep_PointParticulier ptPart = pt;
+			    DEC_Trace( "", "Rencontre d'un point particulier de type " + EnumToString( ptPart.eTypePart_, E_TypePointParticulier ) );
+            }
+            else if( pt.eType_ == eTypePointLima )
+            {
+                Rep_PointLima ptLima = pt;
+                DEC_Trace( "", "Rencontre d'un point sur lima de type " + EnumToString( ptLima.nTypeLima_, E_TypeLima ) );
+
+                bool bFlag = DEC_GetMissionLimaFlag( ptLima.lima_ );
+                DEC_Debug( "Valeur flag lima : " + BoolToString( bFlag ) );
+                DEC_SetMissionLimaFlag( ptLima.lima_, true );
+                bFlag = DEC_GetMissionLimaFlag( ptLima.lima_ );
+                DEC_Debug( "Valeur flag lima : " + BoolToString( bFlag ) );
+            }
+            else
+            {
+                DEC_Trace( "", "Rencontre d'un point de type " + EnumToString( pt.eType_, E_TypePoint ) );
+            }
+        }
+        else if ( ptABC.cls_ == eAvantPoint )
+        {
+            Rep_AvantPoint pt  = ptABC;
+            Rep_Point      ppt = pt.dest_;
+            if( ppt.eType_ == eTypePointParticulier )
+            {
+                Rep_PointParticulier ptPart = ppt;
+                DEC_Trace( "", "Rencontre d'un avant point pointant sur un point particulier de type " + EnumToString( ptPart.eTypePart_, E_TypePointParticulier ) );
+            }
+            else
+            {
+                DEC_Trace( "", "Rencontre d'un avant point pointant sur un point de type " + EnumToString( ppt.eType_, E_TypePoint ) );
+            }
+        }
+        DIA_RemoveFromCategory( "points_interressants", ptABC );
+    }
+}
+end_define
+*/

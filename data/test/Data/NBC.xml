@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<NBC>
+
+  <ImpactTenueNBC>
+    <CoefModificationVitesseMax>0.4</CoefModificationVitesseMax>
+    <CoefModificationTempsRechargement>1.5</CoefModificationTempsRechargement>
+  </ImpactTenueNBC>
+
+  <VitesseVentLimiteAvantPropagationDirectionnelle>5</VitesseVentLimiteAvantPropagationDirectionnelle>
+
+  <AgentsNBC>
+    <AgentNBC nom="VX">
+      <MosID>1</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.5</Humains_NonBlesse>
+        <Humains_U1>0.05</Humains_U1>
+        <Humains_U2>0.15</Humains_U2>
+        <Humains_U3>0.15</Humains_U3>
+        <Humains_UE>0.05</Humains_UE>
+        <Humains_Mort>0.1</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>30s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+    <AgentNBC nom="Gaz moutarde">
+      <MosID>2</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.3</Humains_NonBlesse>
+        <Humains_U1>0.1</Humains_U1>
+        <Humains_U2>0.1</Humains_U2>
+        <Humains_U3>0.2</Humains_U3>
+        <Humains_UE>0.1</Humains_UE>
+        <Humains_Mort>0.2</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>300s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+    <AgentNBC nom="Gaz sarin">
+      <MosID>3</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.2</Humains_NonBlesse>
+        <Humains_U1>0.05</Humains_U1>
+        <Humains_U2>0.15</Humains_U2>
+        <Humains_U3>0.15</Humains_U3>
+        <Humains_UE>0.15</Humains_UE>
+        <Humains_Mort>0.3</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>30s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+    <AgentNBC nom="HCN">
+      <MosID>4</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.5</Humains_NonBlesse>
+        <Humains_U1>0.05</Humains_U1>
+        <Humains_U2>0.15</Humains_U2>
+        <Humains_U3>0.15</Humains_U3>
+        <Humains_UE>0.05</Humains_UE>
+        <Humains_Mort>0.1</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>30s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+    <AgentNBC nom="Rayon gamma">
+      <MosID>5</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.3</Humains_NonBlesse>
+        <Humains_U1>0.1</Humains_U1>
+        <Humains_U2>0.1</Humains_U2>
+        <Humains_U3>0.2</Humains_U3>
+        <Humains_UE>0.1</Humains_UE>
+        <Humains_Mort>0.2</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>30s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+    <AgentNBC nom="Soman">
+      <MosID>6</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.5</Humains_NonBlesse>
+        <Humains_U1>0.05</Humains_U1>
+        <Humains_U2>0.15</Humains_U2>
+        <Humains_U3>0.15</Humains_U3>
+        <Humains_UE>0.05</Humains_UE>
+        <Humains_Mort>0.1</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>300s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+    <AgentNBC nom="Virus ebola">
+      <MosID>7</MosID>
+      <Attritions>
+        <Humains_NonBlesse>0.3</Humains_NonBlesse>
+        <Humains_U1>0.1</Humains_U1>
+        <Humains_U2>0.1</Humains_U2>
+        <Humains_U3>0.2</Humains_U3>
+        <Humains_UE>0.1</Humains_UE>
+        <Humains_Mort>0.2</Humains_Mort>
+      </Attritions>
+      <DureeDeVie>30s</DureeDeVie>
+      <AngleDePropagation unite="degre">20</AngleDePropagation>
+    </AgentNBC>
+  </AgentsNBC>
+
+</NBC>

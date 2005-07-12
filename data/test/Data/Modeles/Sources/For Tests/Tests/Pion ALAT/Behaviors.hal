@@ -1,0 +1,467 @@
+use_priority        =   no;
+max_instances       =   10;
+max_activations     =   10;
+
+actuators = deplacement, ordre;
+
+default Default()
+{
+    DEC_Agent_HauteurDeVol( 300 );
+
+    /*DEC_Debug( FloatToString( DIA_Size( DEC_Renforts() ) ) + " Renforts" );
+    DEC_Debug( "Non vus termine : " + BoolToString( DEC_ALAT_ReconnaissanceNonVuTerminee() ) );
+    
+    DEC_Debug( "Temps de vol restant : " + FloatToString( DEC_ALAT_TempsVolRestant() ) );
+    DEC_Debug( "Temps nécessaire pour parcourir 1000 m : " + FloatToString( DEC_ALAT_TempsVolPourParcourirDistance( 5000 ) ) );
+    */
+ 
+    persistent float i = 0;
+    
+    if( i < 50 )
+        DEC_Perception_DesactiverRadar( eRadarType_Radar );
+       
+    else
+        DEC_Perception_ActiverRadar( eRadarType_Radar ); 
+      
+    i++;
+    if( i > 100 )
+        i = 0;
+}
+
+behavior BEH_Defaut( id nDummy )
+{         
+    when updated:
+    {
+    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+    	with ( x in ordres_recus)
+    	{
+    		Rep_OrdreConduite ordre = x;
+			switch ( ordre.eOrdre_ )
+			{
+                case eOrdreConduite_MettreTenueNBC:
+                {
+                    DEC_Agent_MettreTenueProtectionNBC();
+                    break;
+                }
+                case eOrdreConduite_EnleverTenueNBC:
+                {
+                    DEC_Agent_EnleverTenueProtectionNBC();
+                    break;
+                }
+			}
+        }
+    }
+    on spontaneous end:
+    {
+    }  
+}
+
+behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
+{
+    when updated:
+    {
+        persistent T_Itineraire           itineraire = 0;
+        persistent T_Action                actionMove;
+        persistent E_EtatActionDeplacement nEtatDeplacement;
+        
+        if( itineraire == 0 )
+            itineraire = DEC_CreerItineraireListe( mission.itineraire_, mission.typeItineraire_ );      
+        
+        E_EtatCalculItineraire nEtatChemin = DEC_Itineraire_Etat( itineraire );
+        switch( nEtatChemin )
+        {
+            case eItineraire_Impossible:
+            case eItineraire_Annule:
+            {       
+                DEC_Debug( "Fin calcul chemin : " + EnumToString( nEtatChemin, E_EtatCalculItineraire ) );
+                halt;
+            }       
+            case eItineraire_CalculEnCours:
+            {       
+                DEC_Debug( "Calcul chemin en cours" );
+                break;
+            }       
+            case eItineraire_Invalide:
+            {       
+                DEC_Debug( "Calcul chemin invalide XXXXXXXXXX NE DEVRAIT PAS ARRIVER" );
+                break;
+            }        
+            
+            case eItineraire_Valide:
+            case eItineraire_Partiel:
+            {
+                if( actionMove == 0 )
+                    actionMove = DEC_StartDeplacement( nEtatDeplacement, itineraire );
+                DEC_Debug( "Deplacement etat : " + EnumToString( nEtatDeplacement, E_EtatActionDeplacement ) );                   
+                break;
+            }
+        }
+        
+        /*persistent float rBMS = 0;
+        rBMS = rBMS + 1;
+        if( rBMS == 50 )
+        {
+            if( actionMove != 0 )
+                DEC_PauseAction( actionMove );
+        }
+        else if( rBMS == 100 )
+        {
+            if( actionMove != 0 )
+                DEC_ReprendAction( actionMove );
+            rBMS = 0;
+        } */      
+    }
+
+    on spontaneous end:
+    {
+        if( actionMove != 0 )
+            DEC_StopAction( actionMove );    
+        DEC_DetruireItineraire( itineraire );
+    }    
+}
+/*
+behavior BEH_MoveTo2( T_Mission_Pion_Test_MoveTo mission )
+{
+    when updated:
+    {
+        persistent T_Itineraire         itineraire = DEC_CreerItineraire( mission.lockPoint_, mission.nPathType_, mission.nPathIgnoreType_ , mission.nPathInfoType_ );
+        persistent T_Action             actionMove;
+        persistent E_EtatDeplacement    nEtatDeplacement;
+       
+        
+        E_EtatChemin nEtatChemin = DEC_EtatItineraire( itineraire );
+        switch( nEtatChemin )
+        {
+            case eItineraire_Impossible:
+            case eItineraire_Annule:
+            {       
+                DEC_Debug( "Fin calcul chemin : " + EnumToString( nEtatChemin, E_EtatChemin ) );
+                halt;
+            }       
+            case eItineraire_CalculEnCours:
+            {       
+                DEC_Debug( "Calcul chemin en cours" );
+                break;
+            }       
+            case eItineraire_Invalide:
+            {       
+                DEC_Debug( "Calcul chemin invalide XXXXXXXXXX NE DEVRAIT PAS ARRIVER" );
+                break;
+            }        
+            
+            case eItineraire_Valide:
+            case eItineraire_Partiel:
+            {
+                if( actionMove == 0 )
+                    actionMove = DEC_StartDeplacement( nEtatDeplacement, itineraire );
+                DEC_Debug( "Deplacement etat : " + EnumToString( nEtatDeplacement, E_EtatDeplacement ) );                   
+                break;
+            }
+        }
+        persistent float rBMS = 49;
+        rBMS = rBMS + 1;
+        if( rBMS == 50 )
+        {
+            if( actionMove != 0 )
+                DEC_PauseAction( actionMove );
+        }
+        else if( rBMS == 100 )
+        {
+            if( actionMove != 0 )
+                DEC_ReprendAction( actionMove );
+            rBMS = 0;
+        }   
+        
+    }
+
+    on spontaneous end:
+    {
+        if( actionMove != 0 )
+            DEC_StopAction( actionMove );    
+        DEC_DetruireItineraire( itineraire );
+    }    
+}*/
+
+
+behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
+{
+    when updated:
+    {
+        persistent float rTimer = 0;
+        
+        behavior BEH_MoveTo( mission );
+
+        /*rTimer = rTimer + 1;
+        if ( rTimer >= 40 )
+            DEC_Agent_HauteurDeVol( 0 );
+        else
+            DEC_Agent_HauteurDeVol( 30 );*/
+           
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Agent_HauteurDeVol( 30 );
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Agent_HauteurDeVol( 0 );
+        DEC_Debug( "MIS_Pion_Test_MoveTo : on spontaneous end" );
+        DEC_ALAT_DesactiverReconnaissance();
+    }
+}
+
+behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_PerceptionTirIndirect currentPerception;
+
+        if( DIA_ModuleBegins() )
+            currentPerception = DEC_Perception_ActiverPerceptionTirsIndirect( mission.forme_ );
+    }
+    on spontaneous end:
+    {
+        DEC_Perception_DesactiverPerceptionTirsIndirect( currentPerception );
+    }
+}
+
+behavior MIS_Pion_Test_DestroyObject( T_Mission_Pion_Test_DestroyObject mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_Action                       currentAction;
+        persistent E_EtatActionObjet              nState;
+
+        if( DIA_ModuleBegins() )
+        {
+            currentAction = DEC_StartDetruireObjet( nState, mission.objet_ );
+        }
+        
+        DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_DestroyObject : on spontaneous end" );
+        DEC_StopAction( currentAction );
+    }    
+}
+
+
+behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_Action                       currentAction;
+        persistent E_EtatActionObjet              nState;
+
+        if( DIA_ModuleBegins() )
+        {
+            //currentAction = DEC_StartCreerContournementObjet( nState, mission.objet_ );
+            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
+            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
+            nState = DEC_ActiverObjet( mission.objet_ );
+        }
+        
+        DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_CreateBypass : on spontaneous end" );
+        //DEC_StopAction( currentAction );
+    }    
+}
+ 
+//-----------------------------------------------------------------------------
+// CHANGE POSTURE 
+//-----------------------------------------------------------------------------
+behavior MIS_Pion_Test_ChangePosture( T_Mission_Pion_Test_ChangePosture mission, id nDummy )
+{
+    persistent bool eActionFinished = true;
+    
+    if( DIA_ModuleBegins() )
+    {
+	    DEC_PostureForTest( mission.posture_ );
+    }
+
+    if( eActionFinished )
+    {
+        DEC_Debug( "Fin Changement posture" );
+	    halt;
+    }
+}
+
+//-----------------------------------------------------------------------------
+// REINFORCEMENT
+//-----------------------------------------------------------------------------
+
+behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDummy )
+{
+    DEC_Debug( "MIS_Pion_Test_Reinforcement" );
+    if( mission.renforce_ )
+    {
+        if( DEC_Renforce( mission.unite_ ) )
+            DEC_Debug( "Renforcement réussi" );
+        else
+            DEC_Debug( "Renforcement KO" );
+    }
+    else
+        DEC_AnnuleRenforcement();
+    halt;
+}
+
+
+behavior BEH_MoveToTmp( T_Point point )
+{
+    when updated:
+    {
+        persistent T_Itineraire           itineraire = 0;
+        persistent T_Action                actionMove;
+        persistent E_EtatActionDeplacement nEtatDeplacement;
+        
+        DEC_Agent_HauteurDeVol( 40 );
+        
+        if( itineraire == 0 )
+            itineraire = DEC_CreerItineraire( point, eTypeItiAttaque );     
+        
+        E_EtatCalculItineraire nEtatChemin = DEC_Itineraire_Etat( itineraire );
+        switch( nEtatChemin )
+        {
+            case eItineraire_Impossible:
+            case eItineraire_Annule:
+            {       
+                DEC_Debug( "Fin calcul chemin : " + EnumToString( nEtatChemin, E_EtatCalculItineraire ) );
+                halt;
+            }       
+            case eItineraire_CalculEnCours:
+            {       
+                DEC_Debug( "Calcul chemin en cours" );
+                break;
+            }       
+            case eItineraire_Invalide:
+            {       
+                DEC_Debug( "Calcul chemin invalide XXXXXXXXXX NE DEVRAIT PAS ARRIVER" );
+                break;
+            }        
+            
+            case eItineraire_Valide:
+            case eItineraire_Partiel:
+            {
+                if( actionMove == 0 )
+                    actionMove = DEC_StartDeplacement( nEtatDeplacement, itineraire );
+                DEC_Debug( "Deplacement etat : " + EnumToString( nEtatDeplacement, E_EtatActionDeplacement ) );                   
+                break;
+            }
+        }
+        
+        /*persistent float rBMS = 0;
+        rBMS = rBMS + 1;
+        if( rBMS == 50 )
+        {
+            if( actionMove != 0 )
+                DEC_PauseAction( actionMove );
+        }
+        else if( rBMS == 100 )
+        {
+            if( actionMove != 0 )
+                DEC_ReprendAction( actionMove );
+            rBMS = 0;
+        } */      
+    }
+
+    on spontaneous end:
+    {
+        if( actionMove != 0 )
+            DEC_StopAction( actionMove );    
+        DEC_DetruireItineraire( itineraire );
+    }    
+}
+
+behavior MIS_Pion_Test_Heliporter( T_Mission_Pion_Test_Heliporter mission, id nDummy )
+{
+    when updated:
+    {
+        persistent E_EtatActionTransport nLoadReturnCode;
+        persistent E_EtatActionTransport nUnloadReturnCode;
+        persistent T_Action              loadAction   = 0;
+        persistent T_Action              unloadAction = 0;
+        persistent E_TestTransportStep   nStep = eTestTransport_DeplacementPointEmbarquement;      
+        
+        if( DIA_ModuleBegins() )
+        {
+            /*
+            T_Pion avant   = DEC_Geometrie_PionDevant  ( mission.agents_, mission.dirDangereuse_ );
+            T_Pion arriere = DEC_Geometrie_PionDerriere( mission.agents_, mission.dirDangereuse_ );
+            */
+            DEC_Transport_AjouterPions( mission.agents_, true );
+            
+            /*
+            DEC_Transport_EmbarquerPionsSansDelais( mission.agents_, false );            
+            T_Pion ducon = DIA_GetAt( mission.agents_, 0 );
+            DEC_Transport_DebarquerPionSansDelais( ducon );
+            */
+        }
+        
+        
+        if( DEC_Transport_EstTermine() )
+        {
+            DEC_Debug( "MIS_Pion_Test_Heliporter - Trasnport termine" );
+            DEC_Transport_Annuler();
+            if( unloadAction != 0 )
+                DEC_StopAction( unloadAction );
+            
+            if( loadAction != 0 )
+                DEC_StopAction( loadAction );
+            halt;
+        }
+        
+        DEC_Debug( "MIS_Pion_Test_Heliporter - Step : " + EnumToString( nStep, E_TestTransportStep ) );
+        
+        if( nStep == eTestTransport_Chargement )
+        {
+            if( loadAction == 0 )
+                loadAction = DEC_Transport_StartEmbarquer( nLoadReturnCode );
+            if( nLoadReturnCode == eActionTransport_Finished )
+            {
+                DEC_StopAction( loadAction );
+                loadAction = 0;
+                nStep = eTestTransport_DeplacementPointDebarquement;
+            }                
+        }
+        else if( nStep == eTestTransport_Dechargement )
+        {
+            if( unloadAction == 0 )
+                unloadAction = DEC_Transport_StartDebarquer( nUnloadReturnCode );
+            
+            if( nUnloadReturnCode == eActionTransport_Finished )
+            {
+                DEC_StopAction( unloadAction );
+                unloadAction = 0;
+                nStep = eTestTransport_DeplacementPointEmbarquement;
+            }
+        }
+        else if( nStep == eTestTransport_DeplacementPointEmbarquement )
+        {
+            behavior BEH_MoveToTmp( mission.pointEmbarquement_ );
+            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), mission.pointEmbarquement_) )
+                nStep = eTestTransport_Chargement; 
+        }
+        
+        else if( nStep == eTestTransport_DeplacementPointDebarquement )
+        {
+            behavior BEH_MoveToTmp( mission.pointDebarquement_ );
+            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), mission.pointDebarquement_) )
+                nStep = eTestTransport_Dechargement; 
+        }        
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_Heliporter - on spontaneous end" );        
+        DEC_Transport_Annuler();
+        if( unloadAction != 0 )
+            DEC_StopAction( unloadAction );
+            
+        if( loadAction != 0 )
+            DEC_StopAction( loadAction );
+    }
+}
+

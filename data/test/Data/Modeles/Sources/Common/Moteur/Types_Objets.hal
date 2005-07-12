@@ -1,0 +1,51 @@
+// *****************************************************************************
+//
+// $Created: NLD 2002-12-23 $
+// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Objets.hal $
+// $Author: Nld $
+// $Modtime: 5/04/05 12:11 $
+// $Revision: 10 $
+// $Workfile: Types_Objets.hal $
+//
+// *****************************************************************************
+
+typedef enum E_TypeObject
+{
+    eTypeObjectBouchonMines             = 0,
+    eTypeObjectZoneMineeLineaire        = 1,
+    eTypeObjectZoneMineeParDispersion   = 2,
+    eTypeObjectFosseAntiChar            = 3,
+    eTypeObjectAbatti                   = 4,
+    eTypeObjectBarricade                = 5,
+    eTypeObjectEboulement               = 6,
+    eTypeObjectDestructionRoute         = 7,
+    eTypeObjectDestructionPont          = 8,
+    eTypeObjectPontFlottant             = 9,
+    eTypeObjectPosteTir                 = 10,
+    eTypeObjectZoneProtegee             = 11,
+    eTypeObjectZoneImplantationCanon    = 12,
+    eTypeObjectZoneImplantationCOBRA    = 13,
+    eTypeObjectZoneImplantationLRM      = 14,
+    eTypeObjectSiteFranchissement       = 15,
+    eTypeObjectNuageNBC                 = 16,    
+    eTypeObjectPlotRavitaillement       = 17,
+    eTypeObjectSiteDecontamination      = 18,
+    eTypeObjectZoneBrouillageBrod       = 19,
+    eTypeObjectRota                     = 20,
+    eTypeObjectZoneNBC                  = 21,
+    eTypeObjectZoneBrouillageBromure    = 22,
+    eTypeObjectAirePoser                = 23,
+    eTypeObjectPiste                    = 24,
+    eTypeObjectPlateForme               = 25,
+    eTypeObjectZoneMobiliteAmelioree    = 26,
+    eTypeObjectZonePoserHelicoptere     = 27,
+    eTypeObjectAireLogistique           = 28,
+    eTypeObjectItineraireLogistique     = 29,
+    eTypeObjectCampPrisonniers          = 30,
+    eTypeObjectCampRefugies             = 31,
+    eTypeObjectPosteControle            = 32,
+    eTypeObjectTerrainLargage           = 33,
+    eTypeObjectZoneInterditeDeplacement = 34,
+    eTypeObjectZoneInterditeTir         = 35,    
+    eTypeObjectZoneImplantationMortier  = 36    
+};

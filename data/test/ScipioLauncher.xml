@@ -1,0 +1,32 @@
+<ScipioLauncher>
+
+    <App>
+
+        <SleepTime>400</SleepTime>
+        <KillStuckedSim>0</KillStuckedSim>
+
+    </App>
+
+    <Path>
+
+        <ScipioBaseExercises>..\</ScipioBaseExercises>
+		<ScipioBaseCheckpoints>Checkpoints\</ScipioBaseCheckpoints>
+
+    </Path>
+
+    <Timing>
+
+        <TimeBetweenTwoPings>60</TimeBetweenTwoPings>
+        <TimeMaxWaitPong>60</TimeMaxWaitPong>
+        <TimeMaxWaitInit>300</TimeMaxWaitInit>
+
+    </Timing>
+
+    <Net>
+        <PortMos>4321</PortMos>
+        <PortSim>4322</PortSim>
+        <Magic>3232</Magic>
+    </Net>
+
+
+</ScipioLauncher>

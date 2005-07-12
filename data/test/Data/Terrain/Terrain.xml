@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Terrain>
+    <Geoid>geoid.dat</Geoid>
+    <World>World.xml</World>
+    <Pathfind>Pathfind</Pathfind>
+    <RawVision>Detection</RawVision>
+    <Graphics>Graphics</Graphics>
+</Terrain>

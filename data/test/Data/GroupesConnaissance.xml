@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<GroupesConnaissance>
+
+  <GroupeConnaissance nom="Standard">
+    <Connaissance>
+      <DureeDeVieMax>1800s</DureeDeVieMax>
+      <DistanceMaxEntreUniteReelleEtUniteConnue>60000</DistanceMaxEntreUniteReelleEtUniteConnue>
+    </Connaissance>
+  </GroupeConnaissance>
+
+  <GroupeConnaissance nom="Rens">
+    <Connaissance>
+      <DureeDeVieMax>43200s</DureeDeVieMax>
+      <DistanceMaxEntreUniteReelleEtUniteConnue>-1</DistanceMaxEntreUniteReelleEtUniteConnue>
+      <TempsInterpolation>120s</TempsInterpolation>
+    </Connaissance>
+  </GroupeConnaissance>
+
+  <GroupeConnaissance nom="Alat">
+    <Connaissance>
+      <DureeDeVieMax>1800s</DureeDeVieMax>
+      <DistanceMaxEntreUniteReelleEtUniteConnue>60000</DistanceMaxEntreUniteReelleEtUniteConnue>
+      <TempsInterpolation>60s</TempsInterpolation>
+    </Connaissance>
+  </GroupeConnaissance>
+
+</GroupesConnaissance>

@@ -1,0 +1,4 @@
+globals     = "For Tests\Tests\Pion LOG\Globals.hal";
+knowledge   = "For Tests\Tests\Pion LOG\Perception.hal";
+motivations = "For Tests\Tests\Pion LOG\Motivations.hal";
+behaviors   = "For Tests\Tests\Pion LOG\Behaviors.hal";

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Sante>
+
+  <TempsDiagnostique>600s</TempsDiagnostique>
+
+  <TempsTri>600s</TempsTri>
+
+  <CategoriesBlesse>
+    <U1 esperanceVie="28800s" pourcentage="25" tempsSoin="1800s"/>
+    <U2 esperanceVie="14400s" pourcentage="30" tempsSoin="3600s"/>
+    <U3 esperanceVie="7200s" pourcentage="40" tempsSoin="18000s"/>
+    <UE esperanceVie="3600s" pourcentage="5" tempsSoin="18000s"/>
+  </CategoriesBlesse>
+
+  <ReacMental pourcentage="0.5" tempsSoin="1080s"/>
+
+  <Contamines tempsSoin="720s"/>
+
+</Sante>

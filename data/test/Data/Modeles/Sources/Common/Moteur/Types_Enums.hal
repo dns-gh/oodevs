@@ -1,0 +1,289 @@
+// *****************************************************************************
+//
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Enums.hal $
+// $Author: Nld $
+// $Modtime: 4/05/05 18:36 $
+// $Revision: 14 $
+// $Workfile: Types_Enums.hal $
+//
+// *****************************************************************************
+
+typedef enum E_ValiditeRequete
+{
+	eRequeteValide,
+	eRequeteInvalide // Connaissance inexistante
+};	 
+
+typedef enum E_Tristate
+{
+    eTristate_True = 0,
+    eTristate_False,
+    eTristate_DontKnow,
+};
+
+typedef enum E_TypeLima
+{
+    eTypeLima_LD,    // Ligne de débouché
+    eTypeLima_LCA,   // Ligne de changement d'attitude
+    eTypeLima_LC,    // Ligne de coordination
+    eTypeLima_LI,    // Ligne à interdire
+    eTypeLima_LO,    // Ligne d'objectif
+    eTypeLima_LCAR,  // Ligne de coup d'arrêt
+    eTypeLima_LR,    // Ligne de recueil
+    eTypeLima_LDM,   // Ligne de début de mission
+    eTypeLima_LFM,   // Ligne de fin de mission
+    eTypeLima_LIA    // Ligne d'identification et de recueil
+};
+
+
+// -----------------------------------------------------------------------------
+// Retours de fonctions
+// -----------------------------------------------------------------------------
+typedef enum E_LocalisationFunctionsReturnCode
+{
+    eError_PionsPasDansMemeFuseau,
+    eError_LocalisationPasDansFuseau,
+    eWarning_DecoupageIncomplet,
+    eNoError
+};
+
+// -----------------------------------------------------------------------------
+// Etat entité
+// -----------------------------------------------------------------------------
+typedef enum E_EtatRapportDeForce
+{
+    eEtatRapportDeForce_None,
+    eEtatRapportDeForce_Neutre,
+    eEtatRapportDeForce_Favorable,
+    eEtatRapportDeForce_Defavorable
+};
+
+typedef enum E_EtatROE
+{
+    eEtatROE_None,
+    eEtatROE_TirLibre,
+    eEtatROE_TirSurRiposte,
+    eEtatROE_TirInterdit
+};
+
+typedef enum E_EtatCombatDeRencontre
+{
+    eEtatCombatDeRencontre_None,
+    eEtatCombatDeRencontre_Esquive,
+    eEtatCombatDeRencontre_Fixe,
+    eEtatCombatDeRencontre_PoursuiteMission
+};
+
+typedef enum E_NiveauPerception
+{
+    eSignale    = 0,
+    eDetecte    = 1,
+    eReconnu    = 2,
+    eIdentifie  = 3    
+};
+
+
+typedef enum E_NatureWeaponType
+{
+    eNatureWeapon_AntiChar,
+    eNatureWeapon_Administration,
+    eNatureWeapon_DefenseAerienne,
+    eNatureWeapon_CentreSoutienOperationsAeriennes,
+    eNatureWeapon_Blinde,
+    eNatureWeapon_Aviation,
+    eNatureWeapon_Cavalerie,
+    eNatureWeapon_Genie,
+    eNatureWeapon_Deminage,
+    eNatureWeapon_SoutienArtillerie,
+    eNatureWeapon_Artillerie,
+    eNatureWeapon_Infanterie,
+    eNatureWeapon_GuerreInformation,
+    eNatureWeapon_ForcesSecuriteInterne,
+    eNatureWeapon_ExecutionLoi,
+    eNatureWeapon_SoutienAtterrissage,
+    eNatureWeapon_Logistique,
+    eNatureWeapon_Reparation,
+    eNatureWeapon_Manoeuvre,
+    eNatureWeapon_Medical,
+    eNatureWeapon_RenseignementMilitaire,
+    eNatureWeapon_Missile,
+    eNatureWeapon_NBC,
+    eNatureWeapon_Inconnue,
+    eNatureWeapon_specifiee,
+    eNatureWeapon_Reconnaissance,
+    eNatureWeapon_Transmissions,
+    eNatureWeapon_Ravitaillement,
+    eNatureWeapon_TacticalAirControlParty,
+    eNatureWeapon_Transport,
+    eNatureWeapon_None
+};
+
+typedef enum E_NatureSpecializationType
+{
+    eNatureSpec_Jag,
+    eNatureSpec_Riverine,
+    eNatureSpec_SecurityPolice,
+    eNatureSpec_Aerien, 
+    eNatureSpec_Aeroporte,
+    eNatureSpec_AttaqueAerienne,
+    eNatureSpec_Blinde,
+    eNatureSpec_CheminDeFer,
+    eNatureSpec_Chirurgie,
+    eNatureSpec_Compose,
+    eNatureSpec_Construction,
+    eNatureSpec_Courrier,
+    eNatureSpec_DecollageAtterissageVerticalCourt,
+    eNatureSpec_Dentiste,
+    eNatureSpec_Finance,
+    eNatureSpec_GuerreElectronique,
+    eNatureSpec_Helicoptere,
+    eNatureSpec_Mecanise,
+    eNatureSpec_Motorise,
+    eNatureSpec_Naval,
+    eNatureSpec_PatrouilleCotiere,
+    eNatureSpec_PoliceMilitaire,
+    eNatureSpec_Psychologique,
+    eNatureSpec_Religieux,
+    eNatureSpec_ServiceDuPersonnel,
+    eNatureSpec_Terrestre,
+    eNatureSpec_Veterinaire,
+    eNatureSpec_VoilureFixe,
+    eNatureSpec_None
+};
+
+typedef enum E_NatureQualifierType
+{
+    eNatureQualifier_Lourd = 0,
+    eNatureQualifier_Leger,
+    eNatureQualifier_Moyen,
+    eNatureQualifier_None
+};
+
+typedef enum E_NatureCategoryType
+{
+    eNatureCategory_Combat = 0,
+    eNatureCategory_SoutienLogistique,
+    eNatureCategory_CombatSupport,
+    eNatureCategory_Inconnu,
+    eNatureCategory_None
+};
+
+typedef enum E_NatureMobilityType
+{
+    eNatureMobility_Aeroporte,
+    eNatureMobility_AerienCompose,
+    eNatureMobility_AerienVoilureFixe,
+    eNatureMobility_AerienPlusLegerQueAir,
+    eNatureMobility_AerienAilesRotatives,
+    eNatureMobility_Amphibie,
+    eNatureMobility_AnimalMonte,
+    eNatureMobility_Demonte,
+    eNatureMobility_TerrestreCheminDeFer,
+    eNatureMobility_TerrestreAutoPropulse,
+    eNatureMobility_TerrestreChenille,
+    eNatureMobility_TerrestreRemorque,
+    eNatureMobility_TerrestreRoues,
+    eNatureMobility_MaritimeSousMarin,
+    eNatureMobility_MaritimeSurface,
+    eNatureMobility_Inconnu,
+    eNatureMobility_None
+};
+
+typedef enum E_NatureAtlasType
+{
+    eNatureAtlas_Blinde         = 32768, // NB : valeurs imposées par l'ASN
+    eNatureAtlas_ASS            = 16384,
+    eNatureAtlas_PC             = 8192,
+    eNatureAtlas_Log            = 4096,
+    eNatureAtlas_Mortier        = 2048,
+    eNatureAtlas_LanceRoquette  = 1024,
+    eNatureAtlas_Vehicule       = 512,
+    eNatureAtlas_PersonnelAPied = 256,
+    eNatureAtlas_Helicoptere    = 128,
+    eNatureAtlas_Indefini       = 64,
+    eNatureAtlas_ASA            = 32,
+    eNatureAtlas_None           = 16,
+
+};
+
+typedef enum E_EtatNiveauInstallation
+{
+    eNiveauInstallation_Mouvement        ,
+    eNiveauInstallation_MouvementDiscret ,
+    eNiveauInstallation_Arret            ,
+    eNiveauInstallation_PosteReflexe     ,
+    eNiveauInstallation_Poste            ,
+    eNiveauInstallation_PosteAmenage     ,
+    eNiveauInstallation_PostePrepareGenie,
+    eNiveauInstallation_Transporte 
+};
+
+// -----------------------------------------------------------------------------
+// Facteurs humains
+// -----------------------------------------------------------------------------
+typedef enum E_FacteurHumain_Fatigue
+{
+    eFatigue_Normal,
+    eFatigue_Fatigue,
+    eFatigue_Epuise
+};
+
+typedef enum E_FacteurHumain_Moral
+{
+    eMoral_Fanatique,
+    eMoral_Bon,
+    eMoral_Moyen,
+    eMoral_Mauvais
+};
+
+typedef enum E_FacteurHumain_Experience
+{
+   eExperience_Veteran,
+   eExperience_Experimente,
+   eExperience_Conscrit
+};
+
+// -----------------------------------------------------------------------------
+// Logistique
+// -----------------------------------------------------------------------------
+
+typedef enum E_TempsBordee
+{
+    eTempsBordee_8heures,
+    eTempsBordee_12heures,
+    eTempsBordee_16heures,
+    eTempsBordee_20heures,
+    eTempsBordee_24heures
+};
+
+// -----------------------------------------------------------------------------
+// Radars
+// -----------------------------------------------------------------------------
+typedef enum E_RadarType
+{
+    eRadarType_Radar,
+    eRadarType_Ecoute,
+    eRadarType_EcouteRadar
+};
+
+// -----------------------------------------------------------------------------
+// TIR INDIRECT
+// -----------------------------------------------------------------------------
+typedef enum E_TypeObus
+{
+    eObusExplosif,
+    eObusGrenade,
+    eObusACED,
+    eObusFumigenes,
+    eObusEclairant,
+    eObusMine
+};
+
+typedef enum E_DotationMunitionClasse
+{
+    eMunitionClasse_Obus,
+    eMunitionClasse_MissileSol,
+    eMunitionClasse_MissileAir,
+    eMunitionClasse_Mitraille
+};

@@ -1,0 +1,807 @@
+use_priority        =   no;
+max_instances       =   10;
+max_activations     =   10;
+
+actuators = deplacement, ordre;
+
+default Default()
+{    
+
+               
+
+    selection carreux;
+    for( float i = 0 ; i < 1000; ++i )
+    	DIA_PushBack( carreux, myself );
+                   
+
+               
+                  
+//    T_ListeConnaissancesAgent perceivedAgents = DEC_Connaissances_AgentsPercus();
+//    DEC_Debug( FloatToString( DIA_Size( perceivedAgents ) ) );
+
+    /*
+    persistent T_ListePoints points = DEC_Geometrie_CreerListePoints();
+    DEC_ListePoints_PushBack( points, DEC_Geometrie_PositionAleatoireDansCercle( DEC_Agent_Position(), 800 ) );
+    DEC_DebugAffichePoints( points );
+    */
+
+//    DEC_RC( eRC_Trace, "cock" );
+
+    // DEC_Debug( FloatToString( DIA_Size( DEC_Renforts() ) ) + " Renforts" );
+//    DEC_Agent_ChangeEtatRapportDeForce   ( eEtatRapportDeForce_Neutre );
+    //DEC_Agent_ChangeEtatROE              ( eEtatROE_TirSurRiposte );
+    //DEC_Agent_ChangeEtatCombatDeRencontre( eEtatCombatDeRencontre_Esquive );
+    
+//  DEC_Copie_Point( DEC_Agent_Position(), DEC_Agent_Direction() );
+//  DEC_Copie_Point( DEC_Agent_Direction(), DEC_Agent_Direction() );
+
+//    T_ListeConnaissancesObjet test = DEC_Connaissances_Objets( eTypeObjectBouchonMines );
+//    DEC_Debug( FloatToString( DIA_Size( test ) ) );
+
+    //DEC_Debug( BoolToString( DEC_Agent_EstMilice() ) );
+
+    
+    //DEC_Geometrie_PositionAleatoireSurCercle   ( DEC_Agent_Position(), 800 );
+    //DEC_Geometrie_PositionAleatoireDansCercle  ( DEC_Agent_Position(), 800 );
+    
+    //DEC_DemandeDeRavitaillement();
+    
+    /*T_ListeConnaissancesAgent fusse = DEC_Connaissances_AgentsPotentiellementDangereux();
+    with( x in fusse )
+    {
+        E_ValiditeRequete   nValidite;
+        E_NiveauPerception nPerceptionLevel = DEC_ConnaissanceAgent_NiveauPerceptionMax( x, nValidite );
+        DEC_Debug( "Pot dangereux : " + EnumToString( nPerceptionLevel, E_NiveauPerception ) );
+    }    */
+
+/*    T_ListeConnaissancesObjet fusse2 = DEC_Connaissances_CollisionsObjets();
+    DEC_Debug( "Collisions avec " + FloatToString( DIA_Size( fusse2 ) ) + " objets" );    
+    */    
+    // DEC_Debug( BoolToString( DEC_Agent_PeutConstruireObjet( eTypeObjectBouchonMines ) ) );
+    
+    if( DEC_Agent_EtatOps() == 0 )
+        DEC_Debug( "Shit, I'm dead" );
+
+//    DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_PorteeMaximaleTirIndirect( eObusExplosif ) ) );
+//    DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_PorteeMinimaleTirIndirect( eObusExplosif ) ) );
+//    DEC_Debug( "Tir indirect max fumigene : " + FloatToString( DEC_PorteeMaximaleTirIndirect( eObusFumigenes ) ) );
+//    DEC_Debug( "Tir indirect min fumigene : " + FloatToString( DEC_PorteeMinimaleTirIndirect( eObusFumigenes ) ) );   
+}
+
+behavior BEH_Defaut( id nDummy )
+{         
+    when updated:
+    {
+    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+    	with ( x in ordres_recus)
+    	{
+    		Rep_OrdreConduite ordre = x;
+			switch ( ordre.eOrdre_ )
+			{
+                case eOrdreConduite_MettreTenueNBC:
+                {
+                    DEC_Agent_MettreTenueProtectionNBC();
+                    break;
+                }
+                case eOrdreConduite_EnleverTenueNBC:
+                {
+                    DEC_Agent_EnleverTenueProtectionNBC();
+                    break;
+                }
+                case eOrdreConduite_PasserEnSilenceRadio:
+                {
+                    DEC_Agent_PasserEnSilenceRadio();
+                    break;
+                }
+                case eOrdreConduite_ArreterSilenceRadio:
+                {
+                    DEC_Agent_ArreterSilenceRadio();
+                    break;
+                }                
+            }
+        }
+    }
+    on spontaneous end:
+    {
+    }  
+}
+
+behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
+{
+    when updated:
+    {/*
+        persistent T_PerceptionPoint perception  = 0;
+        persistent T_PerceptionPoint perception2 = 0;
+        persistent bool         bPerceptionFinished  = false;
+        persistent bool         bPerception2Finished = false;
+    
+        if ( DIA_ModuleBegins() )
+        {
+            perception2 = DEC_Perception_ActiverReconnaissancePoint( DEC_ListePoints_GetAt( mission.itineraire_, 0 ), 1000, bPerception2Finished, 0.68 );
+            perception  = DEC_Perception_ActiverReconnaissancePoint( mission.pointDirLocked_, 1000, bPerceptionFinished );
+            DEC_Debug( "Debut perception sur " + DEC_PointToString( mission.pointDirLocked_ ) );
+            DEC_Debug( "Debut perception sur " + DEC_PointToString( DEC_ListePoints_GetAt( mission.itineraire_, 0 ) ) );
+        }
+        
+        if ( bPerceptionFinished == true && perception != 0 )
+        {
+            DEC_Perception_DesactiverReconnaissancePoint( perception );
+            DEC_Debug( "Fin perception sur " + DEC_PointToString( mission.pointDirLocked_ ) );
+            perception = 0;
+        }
+        
+        if ( bPerception2Finished == true && perception2 != 0 )
+        {
+            DEC_Perception_DesactiverReconnaissancePoint( perception2 );
+            DEC_Debug( "Fin perception sur " + DEC_PointToString( DEC_ListePoints_GetAt( mission.itineraire_, 0 ) ) );
+            perception2 = 0;
+        }
+   */
+        persistent T_Itineraire            itineraire = 0;
+        persistent T_Action                actionMove;
+        persistent E_EtatActionDeplacement nEtatDeplacement;
+               
+        if( itineraire == 0 )
+        {
+            DEC_Debug( "itineraire == 0" );
+        
+            itineraire = DEC_CreerItineraireListe( mission.itineraire_, mission.typeItineraire_ );
+            //itineraire = DEC_CreerItineraireListe( mission.itineraire_, ePathSurete, ePathIgnoreAll, ePathInfoEvitement );
+            //itineraire = DEC_CreerItineraire( DEC_Agent_Position(), nTypePath, nTypePathIgnore, nTypePathInfo );
+        }
+                       
+        E_EtatCalculItineraire nEtatChemin = DEC_Itineraire_Etat( itineraire );
+        switch( nEtatChemin )
+        {
+            case eItineraire_Impossible:
+            case eItineraire_Annule:
+            {       
+                DEC_Debug( "Fin calcul chemin : " + EnumToString( nEtatChemin, E_EtatCalculItineraire ) );
+                halt;
+            }       
+            case eItineraire_CalculEnCours:
+            {       
+                DEC_Debug( "Calcul chemin en cours" );
+                break;
+            }       
+            case eItineraire_Invalide:
+            {       
+                DEC_Debug( "Calcul chemin invalide XXXXXXXXXX NE DEVRAIT PAS ARRIVER" );
+                break;
+            }        
+            
+            case eItineraire_Valide:
+            case eItineraire_Partiel:
+            {
+                if( actionMove == 0 )
+                {
+                    if ( mission.verrouillageVision_ == E_Verrouillage_Direction )
+                    {
+                        DEC_Debug( "Vision verrouillee sur direction" );
+                        DEC_Perception_VisionVerrouilleeSurDirection( mission.visionDirection_ );
+                    }
+                    else if ( mission.verrouillageVision_ == E_Verrouillage_Point )
+                    {
+                        DEC_Debug( "Vision verrouillee sur position" );
+                        DEC_Perception_VisionVerrouilleeSurPoint( mission.visionPoint_ );
+                    }
+                    else
+                    {
+                        DEC_Debug( "Vision non verrouillee" );
+                        DEC_Perception_VisionNormale();
+                    }
+                    
+                    /*T_ListePoints echantillon = DEC_Geometrie_DecouperItineraire( itineraire, 7 );
+                    if( echantillon != 0 )
+                        DEC_DebugAffichePoints( echantillon );*/                           
+
+                    actionMove = DEC_StartDeplacement( nEtatDeplacement, itineraire );
+                } 
+                DEC_Debug( "Deplacement etat : " + EnumToString( nEtatDeplacement, E_EtatActionDeplacement ) );                   
+
+                T_Point vExtr1 = DEC_Itineraire_ExtrapolerPosition( 10, true );
+                T_Point vExtr2 = DEC_Itineraire_ExtrapolerPosition( 10, false );
+
+                DEC_Debug( "Points extrapolation : " + DEC_PointToString( vExtr1 ) + " " + DEC_PointToString( vExtr2 ) );
+                
+                DEC_Geometrie_DetruirePoint( vExtr1 );
+                DEC_Geometrie_DetruirePoint( vExtr2 );
+                    
+                T_ConnaissanceObjet objet;
+                float               rDist;
+                E_ValiditeRequete   nValidite;
+                if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectPontFlottant, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
+                    DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + EnumToString( DEC_ConnaissanceObjet_Type( objet, nValidite ), E_TypeObject ) );
+                else
+                    DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                
+                
+                
+                T_ListeConnaissancesObjet listeObjets = DEC_Itineraire_ProchainsObjets( eTypeObjectPontFlottant, eTypeObjectNuageNBC, eTypeObjectBouchonMines );
+                DEC_Debug( FloatToString( DIA_Size( listeObjets ) ) + " objets sur l'iti" );
+
+                break;
+            }
+        }
+              /*     
+        persistent float rBMS = 0;
+        rBMS = rBMS + 1;
+        if( rBMS == 50 )
+        {
+            //T_Itineraire chiotte;
+            //DEC_Itineraire_Etat( chiotte );   
+        
+            if( actionMove != 0 )
+                DEC_PauseAction( actionMove );
+        }
+        else if( rBMS == 100 )
+        {
+            if( actionMove != 0 )
+                DEC_ReprendAction( actionMove );
+            rBMS = 0;
+        } 
+            */
+    }
+
+    on spontaneous end:
+    {
+        DEC_Debug( "BEH_MoveTo on spontaneous end" );
+        if( actionMove != 0 )
+            DEC_StopAction( actionMove );    
+        DEC_DetruireItineraire( itineraire );
+    }    
+}
+
+behavior BEH_MoveTo2( T_Mission_Pion_Test_MoveTo mission )
+{
+    when updated:
+    {
+        persistent T_Itineraire         itineraire = DEC_CreerItineraire( mission.visionPoint_, eTypeItiAttaque );
+        persistent T_Action             actionMove;
+        persistent E_EtatActionDeplacement    nEtatDeplacement;
+       
+        
+        E_EtatCalculItineraire nEtatChemin = DEC_Itineraire_Etat( itineraire );
+        switch( nEtatChemin )
+        {
+            case eItineraire_Impossible:
+            case eItineraire_Annule:
+            {       
+                DEC_Debug( "Fin calcul chemin : " + EnumToString( nEtatChemin, E_EtatCalculItineraire ) );
+                halt;
+            }       
+            case eItineraire_CalculEnCours:
+            {       
+                DEC_Debug( "Calcul chemin en cours" );
+                break;
+            }       
+            case eItineraire_Invalide:
+            {       
+                DEC_Debug( "Calcul chemin invalide XXXXXXXXXX NE DEVRAIT PAS ARRIVER" );
+                break;
+            }        
+            
+            case eItineraire_Valide:
+            case eItineraire_Partiel:
+            {
+                if( actionMove == 0 )
+                    actionMove = DEC_StartDeplacement( nEtatDeplacement, itineraire );
+                DEC_Debug( "Deplacement etat : " + EnumToString( nEtatDeplacement, E_EtatActionDeplacement ) );                   
+                break;
+            }
+        }
+        
+        persistent float rBMS = 49;
+        rBMS = rBMS + 1;
+        if( rBMS == 50 )
+        {
+            if( actionMove != 0 )
+                DEC_PauseAction( actionMove );
+        }
+        else if( rBMS == 100 )
+        {
+            if( actionMove != 0 )
+                DEC_ReprendAction( actionMove );
+            rBMS = 0;
+        }   
+        
+    }
+
+    on spontaneous end:
+    {
+        if( actionMove != 0 )
+            DEC_StopAction( actionMove );    
+        DEC_DetruireItineraire( itineraire );
+    }    
+}
+
+
+behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
+{
+    when updated:
+    {
+        //DEC_Perception_Furtivite( 0 );
+        persistent T_Action                       currentAction;
+        persistent E_EtatActionEmbarquerDebarquer nDebarquementReturn;
+        
+        behavior BEH_MoveTo( mission );
+        //behavior BEH_MoveTo2( mission );
+        
+        //DEC_ModulationVitesse( 0.1 );
+
+        if( DIA_ModuleBegins() )
+        {
+            T_ListePoints echantillon = DEC_Geometrie_DecouperListePoints( mission.itineraire_, 7 );
+            if( echantillon != 0 )
+                DEC_DebugAffichePoints( echantillon );            
+        
+            T_Point point = DEC_Geometrie_CalculeEntreeFuseauLaPlusProche();            
+            //DEC_DebugAffichePoint( point );
+            DEC_RC( eRC_RAS );
+                       
+            if ( mission.debarque_ )
+            {
+                DEC_Debug( "DEC_StartDebarquement" );
+                currentAction = DEC_StartDebarquement( nDebarquementReturn );
+            }
+            else
+            {
+                DEC_Debug( "DEC_StartEmbarquement" );
+                //currentAction = DEC_StartAttenteTransporteurs( nDebarquementReturn );
+                currentAction = DEC_StartEmbarquement( nDebarquementReturn );
+            }
+            DEC_Geometrie_DetruirePoint( point );
+        }
+                
+        if( mission.debarque_ )
+            DEC_Debug( "Etat Debarquement : " + EnumToString( nDebarquementReturn, E_EtatActionEmbarquerDebarquer ) );
+        else
+            DEC_Debug( "Etat Embarquement : " + EnumToString( nDebarquementReturn, E_EtatActionEmbarquerDebarquer ) );                
+    }
+    on spontaneous end:
+    {
+        //DEC_Perception_Furtivite( 1 );
+        DEC_Debug( "MIS_Pion_Test_MoveTo : on spontaneous end" );
+        DEC_StopAction( currentAction );
+    }
+}
+
+behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, id nDummy )
+{
+    when updated:
+    {
+        persistent bool                           bState;
+
+        //persistent T_PerceptionLocalisationObjet perception = 0; 
+        if ( DIA_ModuleBegins() )
+        {
+            //perception = DEC_Perception_ActiverDetectionObjetLocalisation( mission.forme_, DEC_Agent_Position(), bState, 20 );
+            
+            DEC_Debug( "Aire forme: " + FloatToString( DEC_Geometrie_AireLocalisation( mission.forme_ ) ) );
+            
+            //DEC_ChangeValeurDotations( eDotation_Munition, mission.param_ / 100, eMunition_Obus );
+        }
+
+        persistent T_Action                       currentAction;
+        persistent E_EtatActionObjet              nState;
+		persistent T_ConnaissanceObjet            repObjet = 0;
+
+        if( DIA_ModuleBegins() )
+        {
+            //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
+            currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, gNullID, mission.forme_, mission.param_, false );
+            
+            //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
+            
+            //DEC_CreerObjetSansDelais( mission.type_, gNullID, mission.forme_, mission.param_, false );
+        }
+        
+        DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
+        if( repObjet != 0 )
+        {
+            DEC_StopAction( currentAction );
+            currentAction = DEC_StartReprendreTravauxObjet( nState, repObjet );
+            DEC_Debug( "MIS_Pion_Test_CreateObject : connaissance retournée" );
+        }
+        else
+            DEC_Debug( "MIS_Pion_Test_CreateObject : pas de connaissance retournée" );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_CreateObject : on spontaneous end" );
+        DEC_StopAction( currentAction );
+        //DEC_Perception_DesactiverDetectionObjetLocalisation( perception );
+        //perception = 0;
+
+    }
+}
+
+behavior MIS_Pion_Test_DestroyObject( T_Mission_Pion_Test_DestroyObject mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_Action                       currentAction;
+        persistent E_EtatActionObjet              nState;
+
+        if( DIA_ModuleBegins() )
+        {
+            currentAction = DEC_StartDetruireObjet( nState, mission.objet_ );
+            //DEC_DetruireObjetSansDelais( mission.objet_ );
+        }
+        
+        DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_DestroyObject : on spontaneous end" );
+        DEC_StopAction( currentAction );
+    }    
+}
+
+
+behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, id nDummy )
+{
+    when updated:
+    {
+        persistent T_Action                       currentAction;
+        persistent E_EtatActionObjet              nState;
+
+        if( DIA_ModuleBegins() )
+        {
+            //currentAction = DEC_StartCreerContournementObjet( nState, mission.objet_ );
+            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
+            //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
+            //nState = DEC_ActiverObjet( mission.objet_ );
+            //DEC_Debug( "MIS_Pion_Test_CreateBypass PeutOccuperObjet : " + BoolToString( DEC_ConnaissanceObjet_PeutOccuperObjet( mission.objet_ ) ) );
+            //currentAction = DEC_StartOccuperObjet( mission.objet_ );
+            
+            E_ValiditeRequete nFusse;
+            DEC_ConnaissanceObjet_Reconnaitre( mission.objet_, nFusse );
+            
+            if( DEC_ConnaissanceObjet_EstPrepare( mission.objet_, nFusse ) )
+                DEC_Debug( "Objet prepare" );
+            else
+                DEC_Debug( "Objet non prepare" );
+        }
+        
+        //DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_CreateBypass : on spontaneous end" );
+        if( currentAction != 0 )
+            DEC_StopAction( currentAction );
+    }    
+}
+ 
+//-----------------------------------------------------------------------------
+// CHANGE POSTURE 
+//-----------------------------------------------------------------------------
+behavior MIS_Pion_Test_ChangePosture( T_Mission_Pion_Test_ChangePosture mission, id nDummy )
+{
+    persistent bool eActionFinished = true;
+    
+    if( DIA_ModuleBegins() )
+    {
+	    DEC_PostureForTest( mission.posture_ );
+    }
+
+    if( eActionFinished )
+    {
+        DEC_Debug( "Fin Changement posture" );
+	    halt;
+    }
+}
+
+//-----------------------------------------------------------------------------
+// REINFORCEMENT
+//-----------------------------------------------------------------------------
+
+behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDummy )
+{
+    DEC_Debug( "MIS_Pion_Test_Reinforcement" );
+    if( mission.renforce_ )
+    {
+        if( DEC_Renforce( mission.unite_ ) )
+            DEC_Debug( "Renforcement réussi" );
+        else
+            DEC_Debug( "Renforcement KO" );
+    }
+    else
+        DEC_AnnuleRenforcement();
+}
+
+action ACT_TirDirect( T_ConnaissanceAgent target, bool bOnlyTransporteurs )
+{
+    when selected:
+    {
+        persistent E_EtatActionTirDirect    nTirDirectState;
+        persistent T_Action                 currentAction;
+        
+        if( DIA_ModuleBegins() )
+        { 
+            if( bOnlyTransporteurs ) 
+                currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal );
+            else
+                currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal ); 
+            return;
+        }
+/*        if( currentAction != 0 )
+        {
+            DEC_StopAction( currentAction );
+            currentAction = 0;
+        }*/
+            
+        
+        E_ValiditeRequete nValidite;
+        float rDanger = DEC_ConnaissanceAgent_Dangerosite( target, nValidite );
+        if( nValidite == eRequeteValide )
+        {
+            DEC_Trace( "Dangerosité : " + FloatToString( rDanger ) );
+            DEC_Debug( "Dangerosité : " + FloatToString( rDanger ) );
+        }
+        else
+        {
+            DEC_Trace( "Connaissance non valide " );
+            DEC_Debug( "Connaissance non valide " );
+        }
+        
+        DEC_Debug( "Etat tir direct : " + EnumToString( nTirDirectState, E_EtatActionTirDirect ) );
+        float rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite );
+        DEC_Debug( "Portee max myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite );
+        DEC_Debug( "Portee min myself=>eni : " + FloatToString( rPorteeMoiSurLui ) );
+        float rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite );
+        DEC_Debug( "Portee max myself=>eni debarque: " + FloatToString( rPorteeMoiSurLuiDebarque ) );
+        float rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite );
+        DEC_Debug( "Portee max eni=>myself: " + FloatToString( rPorteeLuiSurMoi ) );
+
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite, 0.5 );
+        DEC_Debug( "Portee max myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite );
+        DEC_Debug( "Portee min myself=>eni (PH 0.5): " + FloatToString( rPorteeMoiSurLui ) );                
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite, 0.5 );
+        DEC_Debug( "Portee max myself=>eni debarque (PH 0.5): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0.5 );
+        DEC_Debug( "Portee max eni=>myself (PH 0.5): " + FloatToString( rPorteeLuiSurMoi ) );
+
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite, 0.1 );
+        DEC_Debug( "Portee max myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );        
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite, 0.1 );
+        DEC_Debug( "Portee min myself=>eni (PH 0.1): " + FloatToString( rPorteeMoiSurLui ) );                
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite, 0.1 );
+        DEC_Debug( "Portee max myself=>eni debarque (PH 0.1): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0.1 );
+        DEC_Debug( "Portee max eni=>myself (PH 0.1): " + FloatToString( rPorteeLuiSurMoi ) );
+        
+        rPorteeMoiSurLui = DEC_Tir_PorteeMaxPourTirerSurAgent( target, nValidite, 0 );
+        DEC_Debug( "Portee max myself=>eni (PH 0): " + FloatToString( rPorteeMoiSurLui ) );        
+        rPorteeMoiSurLui = DEC_Tir_PorteeMinPourTirerSurAgent( target, nValidite, 0 );
+        DEC_Debug( "Portee min myself=>eni (PH 0): " + FloatToString( rPorteeMoiSurLui ) );                
+        rPorteeMoiSurLuiDebarque = DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( target, nValidite, 0 );
+        DEC_Debug( "Portee max myself=>eni debarque (PH 0): " + FloatToString( rPorteeMoiSurLuiDebarque ) );
+        rPorteeLuiSurMoi = DEC_Tir_PorteeMaxPourEtreTireParAgent( target, nValidite, 0 );
+        DEC_Debug( "Portee max eni=>myself (PH 0): " + FloatToString( rPorteeLuiSurMoi ) );        
+
+         float rEtatOpsMoi= DEC_Agent_EtatOps();
+        DEC_Debug( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
+        DEC_Trace( "Etat OPS: " + FloatToString( rEtatOpsMoi ) );
+    
+        float rEtatOpsEni = DEC_ConnaissanceAgent_EtatOps( target, nValidite );
+        DEC_Debug( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
+        DEC_Trace( "Etat OPS ENI: " + FloatToString( rEtatOpsEni ) );
+    
+        float rRapForLocal = DEC_RapportDeForceLocal();
+        DEC_Debug( "Rapfor Local: " + FloatToString( rRapForLocal ) );
+        DEC_Trace( "Rapfor Local: " + FloatToString( rRapForLocal ) );        
+        
+        T_Point position = DEC_ConnaissanceAgent_Position( target, nValidite );
+        if( nValidite == eRequeteValide )
+        {
+            bool bEstVisible = DEC_Perception_PointEstVisible(  position );
+            if( nValidite == eRequeteValide && bEstVisible )
+                DEC_Debug( "Point visible" );
+            else
+                DEC_Debug( "Point non visible" );
+        }
+
+        if( DEC_ConnaissanceAgent_PercoitUnite( target, nValidite ) )
+            DEC_Debug( "Percu par target" );
+        else
+            DEC_Debug( "Non Percu par target" );        
+    }
+    on focus loss:
+    {
+        DEC_Debug( "ACT_TirDirect on focus loss" );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "ACT_TirDirect on spontaneous end" );
+        if( currentAction != 0 )
+            DEC_StopAction( currentAction );
+    }       
+}
+
+action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
+{
+    when selected:
+    {
+        persistent E_EtatActionTirIndirect nEtatTirIndirect;
+        persistent T_Action                currentAction;
+        
+        if( DIA_ModuleBegins() )
+        {
+            if( DIA_Size( mission.targets_ ) > 0 )
+                currentAction = DEC_StartTirIndirectSurConnaissance( nEtatTirIndirect, mission.munitions_, mission.nbObus_, DEC_UserTypeList_GetAt( mission.targets_, 0 ) );
+            else
+                currentAction = DEC_StartTirIndirectSurPosition( nEtatTirIndirect, mission.munitions_, mission.nbObus_, mission.point_ );
+        }
+        DEC_Debug( "Etat tir indirect : " + EnumToString( nEtatTirIndirect, E_EtatActionTirIndirect ) );
+    }
+    
+    on focus loss:
+    {
+        DEC_Debug( "ACT_TirIndirect on focus loss" );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "ACT_TirIndirect on spontaneous end" );
+        DEC_StopAction( currentAction );
+    }     
+    
+}
+
+behavior BEH_MoveToTmp( T_Point point )
+{
+    when updated:
+    {
+        persistent T_Itineraire           itineraire = 0;
+        persistent T_Action                actionMove;
+        persistent E_EtatActionDeplacement nEtatDeplacement;
+        
+        if( itineraire == 0 )
+            itineraire = DEC_CreerItineraire( point, eTypeItiAttaque );     
+        
+        E_EtatCalculItineraire nEtatChemin = DEC_Itineraire_Etat( itineraire );
+        switch( nEtatChemin )
+        {
+            case eItineraire_Impossible:
+            case eItineraire_Annule:
+            {       
+                DEC_Debug( "Fin calcul chemin : " + EnumToString( nEtatChemin, E_EtatCalculItineraire ) );
+                halt;
+            }       
+            case eItineraire_CalculEnCours:
+            {       
+                DEC_Debug( "Calcul chemin en cours" );
+                break;
+            }       
+            case eItineraire_Invalide:
+            {       
+                DEC_Debug( "Calcul chemin invalide XXXXXXXXXX NE DEVRAIT PAS ARRIVER" );
+                break;
+            }        
+            
+            case eItineraire_Valide:
+            case eItineraire_Partiel:
+            {
+                if( actionMove == 0 )
+                    actionMove = DEC_StartDeplacement( nEtatDeplacement, itineraire );
+                DEC_Debug( "Deplacement etat : " + EnumToString( nEtatDeplacement, E_EtatActionDeplacement ) );                   
+                break;
+            }
+        }  
+    }
+
+    on spontaneous end:
+    {
+        if( actionMove != 0 )
+            DEC_StopAction( actionMove );    
+        DEC_DetruireItineraire( itineraire );
+    }    
+}
+
+behavior BEH_Esquive( T_ConnaissanceAgent ennemi )
+{
+    when updated:
+    {
+        persistent T_Point ptSurete = 0;
+        E_ValiditeRequete nValidite;    
+        
+        if( DIA_ModuleBegins() )
+        {
+            float rDistanceEsquive = DEC_Tir_PorteeMaxPourEtreTireParAgent( ennemi, nValidite, 0 );
+            DEC_Debug( "Portee eni=>myself (PH 0): " + FloatToString( rDistanceEsquive ) );        
+            
+            ptSurete = DEC_Geometrie_CalculerPositionSurete( ennemi, rDistanceEsquive, nValidite );
+        }
+        
+        behavior BEH_MoveToTmp( ptSurete );
+        
+        DEC_Debug( "Dangerosité ENI: " + FloatToString( DEC_ConnaissanceAgent_Dangerosite( ennemi, nValidite  ) ) );
+        DEC_Debug( "Rapfor Local: " + FloatToString( DEC_RapportDeForceLocal() ) );
+        DEC_Debug( "Distance sureté : " + FloatToString( DEC_Tir_PorteeMaxPourEtreTireParAgent( ennemi, nValidite, 0 ) ) );
+    }
+    
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_Fire : on spontaneous end" );
+        if( ptSurete != 0 )
+            DEC_Geometrie_DetruirePoint( ptSurete );
+    }          
+}
+
+
+behavior BEH_DirectFire( T_ListeConnaissancesAgent targets )
+{
+    when updated:
+    {
+        action ACT_TirDirect( DEC_UserTypeList_GetAt( targets, 0 ), false );
+           
+/*            if( DIA_Size( targets ) == 2 )
+            {
+                T_ConnaissanceAgent target = DEC_UserTypeList_GetAt( targets, 0 );
+                action ACT_TirDirect( target, mission, false );
+                
+                target = DEC_UserTypeList_GetAt( targets, 1 );
+                action ACT_TirDirect( target, mission, true );
+            }
+            else
+            {
+                with( target in targets )
+                {
+                    // T_ConnaissanceAgent targetTest = target;
+                    action ACT_TirDirect( target, mission, false );
+                }
+     //       }
+     */    
+    }
+    
+    on spontaneous end:
+    {
+    }
+    
+}
+
+
+behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )        
+            DEC_Debug( "MIS_Pion_Test_Fire" );
+            
+        if( mission.tirIndirect_ )
+        {
+            action ACT_TirIndirect( mission );
+        }
+        else
+        {
+//            behavior BEH_Esquive( DEC_UserTypeList_GetAt( mission.targets, 0 ) );
+            behavior BEH_DirectFire( mission.targets_ );
+            
+            with( target in mission.targets_ )
+            {
+                T_ConnaissanceAgent tmp = target;
+                E_ValiditeRequete nValidite;
+                
+                if( DEC_ConnaissanceAgent_SEstRendu( tmp, nValidite ) && nValidite == eRequeteValide )
+                    DEC_FairePrisonnier( tmp, nValidite );
+
+                if( DEC_ConnaissanceAgent_EstRefugie( tmp, nValidite ) && nValidite == eRequeteValide )
+                {
+                    T_ConnaissanceObjet campRefugies = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampRefugies );
+                    DEC_OrienterRefugies( tmp, campRefugies, nValidite );               
+                }
+            }
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_Fire : on spontaneous end" );
+    }       
+}
+
+behavior MIS_Pion_ALAT_Freiner( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
+{
+    
+}

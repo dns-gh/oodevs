@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Objets>
+
+  <ObjetsReels>
+    <Objet type="bouchon mines">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>true</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>500</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <PlacementScores>
+        <Terrain type="departementale">3</Terrain>
+        <Terrain type="carrefour">10</Terrain>
+        <Terrain type="autoroute">2</Terrain>
+        <Terrain type="nationale">5</Terrain>
+        <Terrain type="pont">8</Terrain>
+        <Terrain type="pont">8</Terrain>
+        <Terrain type="banlieue">7</Terrain>
+      </PlacementScores>
+      <Dotations>
+        <Construction categorie="mine classique" type="mine"/>
+        <Valorisation categorie="mine classique" type="mine"/>
+      </Dotations>
+      <Attritions>
+        <ProtectionTypeCharLourd>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeCharLourd>
+        <ProtectionTypeCharMoyen>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeCharMoyen>
+        <ProtectionTypeBlindeLeger>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeBlindeLeger>
+        <ProtectionTypeTransportBlinde>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeTransportBlinde>
+        <ProtectionTypeAeronef>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeAeronef>
+        <ProtectionTypeVehiculeNonProtege>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeVehiculeNonProtege>
+        <ProtectionTypeCombattant>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
+        </ProtectionTypeCombattant>
+      </Attritions>
+    </Objet>
+    <Objet type="zone minee lineaire">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>500</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="mine classique" type="mine"/>
+      </Dotations>
+    </Objet>
+    <Objet type="zone minee par dispersion">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>500</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="mine classique" type="mine"/>
+      </Dotations>
+      <Attritions>
+        <ProtectionTypeCharLourd>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeCharLourd>
+        <ProtectionTypeCharMoyen>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeCharMoyen>
+        <ProtectionTypeBlindeLeger>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
+        </ProtectionTypeBlindeLeger>
+        <ProtectionTypeTransportBlinde>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeTransportBlinde>
+        <ProtectionTypeAeronef>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeAeronef>
+        <ProtectionTypeVehiculeNonProtege>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.2</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.15</ReparableSansEvacuation>
+        </ProtectionTypeVehiculeNonProtege>
+        <ProtectionTypeCombattant>
+          <Destruction>0.3</Destruction>
+          <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+          <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
+        </ProtectionTypeCombattant>
+      </Attritions>
+    </Objet>
+    <Objet type="fosse anti char">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>500</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="abattis">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>true</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>1000</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <PlacementScores>
+        <Terrain type="lisiere">5</Terrain>
+        <Terrain type="foret">1</Terrain>
+        <Terrain type="chemin">3</Terrain>
+      </PlacementScores>
+      <Dotations>
+        <Construction categorie="explosif classique" type="explosif"/>
+        <Valorisation categorie="mine classique" type="mine"/>
+      </Dotations>
+    </Objet>
+    <Objet type="barricade">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <DistanceEvitement>1000</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="barbele classique" type="barbele"/>
+        <Valorisation categorie="mine classique" type="mine"/>
+      </Dotations>
+    </Objet>
+    <Objet type="eboulement">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>true</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <DistanceEvitement>1000</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="destruction route">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>true</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>500</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="explosif classique" type="explosif"/>
+        <Valorisation categorie="mine classique" type="mine"/>
+      </Dotations>
+    </Objet>
+    <Objet type="destruction pont">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>true</PeutEtrePrepare>
+      <PeutEtreValorise>true</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <DistanceEvitement>100</DistanceEvitement>
+      <VitesseParDefaut>0</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="explosif classique" type="explosif"/>
+        <Valorisation categorie="mine classique" type="mine"/>
+      </Dotations>
+    </Objet>
+    <Objet type="pont flottant">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>10</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="pont flottant de la mort" type="mine"/>
+      </Dotations>
+    </Objet>
+    <Objet type="poste tir">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone protegee">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone implantation canon">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone implantation cobra">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone implantation lrm">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="site franchissement">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>10</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>10</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="nuage nbc">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>true</PeutEtreContourne>
+      <DistanceEvitement>100</DistanceEvitement>
+      <VitesseParDefaut>5</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>100</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="plot ravitaillement">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="site decontamination">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>3</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone brouillage brod">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="rota">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone nbc">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>100</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone brouillage bromure">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="aire poser">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="piste">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="plateforme">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone mobilite amelioree">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="zone poser helicoptere">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="aire logistique">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="itineraire logistique">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>200</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion pourcentageVitesseMaxAgent="10" type="VitesseMaxAgent"/>
+    </Objet>
+    <Objet type="camp prisonniers">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>2</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="camp refugies">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>
+    <Objet type="poste controle">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>666</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>1</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+    </Objet>
+    <Objet type="terrain largage">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>666</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+    </Objet>
+    <Objet type="zone interdite mouvement">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>666</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+    </Objet>
+    <Objet type="zone interdite tir">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+    </Objet>
+    <Objet type="zone implantation mortier">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+    </Objet>
+  </ObjetsReels>
+
+  <ObjetsVirtuels>
+    <Objet type="controle de zone">
+      <PourcentagesTirParHumainParHectare>
+        <Pourcentage volume="Moyen">100</Pourcentage>
+        <Pourcentage volume="Petit">10</Pourcentage>
+        <Pourcentage volume="Personnel">20</Pourcentage>
+      </PourcentagesTirParHumainParHectare>
+    </Objet>
+  </ObjetsVirtuels>
+
+</Objets>

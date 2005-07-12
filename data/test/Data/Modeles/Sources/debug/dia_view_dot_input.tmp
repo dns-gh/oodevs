@@ -1,0 +1,32 @@
+digraph g {
+nslimit1 = 100000;
+node [fontsize = 10];
+{
+rank=sink;
+}
+{
+rank=min;
+}
+{
+rank=same;
+}
+{
+rank=same;
+}
+{
+rank=same;
+}
+BEH_MoveTo[shape=box]
+BEH_MoveToTmp[shape=box]
+Default[shape=box]
+MIS_Pion_Test_ChangePosture[shape=box]
+MIS_Pion_Test_CreateBypass[shape=box]
+MIS_Pion_Test_CreateObject[shape=box]
+BEH_Defaut[shape=box]
+MIS_Pion_Test_DestroyObject[shape=box]
+MIS_Pion_Test_Heliporter[shape=box]
+MIS_Pion_Test_MoveTo[shape=box]
+MIS_Pion_Test_Reinforce[shape=box]
+MIS_Pion_Test_MoveTo->BEH_MoveTo[arrowhead=normal,arrowtail=none]
+MIS_Pion_Test_Heliporter->BEH_MoveToTmp[arrowhead=normal,arrowtail=none]
+}

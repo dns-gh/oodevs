@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Pannes>
+
+  <TempsDiagnostique>180s</TempsDiagnostique>
+
+  <Types>
+    <NTI1>
+      <Panne nom="Panne 1" type="M">
+        <MosID>1</MosID>
+        <Reparation tempsMoyen="600s" variance="180s"/>
+        <Pieces>
+          <Piece categorie="Truc pour reparer la mobilite 2">2</Piece>
+          <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>
+        </Pieces>
+      </Panne>
+      <Panne nom="Panne 2" type="M">
+        <MosID>2</MosID>
+        <Reparation tempsMoyen="180s" variance="60s"/>
+        <Pieces>
+          <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>
+          <Piece categorie="Truc pour reparer l'electronique 1">1</Piece>
+        </Pieces>
+      </Panne>
+      <Panne nom="Panne 3" type="EA">
+        <MosID>3</MosID>
+        <Reparation tempsMoyen="210s" variance="66s"/>
+        <Pieces>
+          <Piece categorie="Truc pour reparer l'electronique 1">1</Piece>
+        </Pieces>
+      </Panne>
+    </NTI1>
+    <NTI2>
+      <Panne nom="Panne 4" type="EA">
+        <MosID>4</MosID>
+        <Reparation tempsMoyen="360s" variance="120s"/>
+        <Pieces/>
+      </Panne>
+    </NTI2>
+    <NTI3>
+      <Panne nom="Panne 5" type="M">
+        <MosID>5</MosID>
+        <Reparation tempsMoyen="480s" variance="120s"/>
+        <Pieces>
+          <Piece categorie="Truc pour reparer la mobilite 1">1</Piece>
+          <Piece categorie="Truc pour reparer la mobilite 3">1</Piece>
+        </Pieces>
+      </Panne>
+    </NTI3>
+  </Types>
+
+</Pannes>

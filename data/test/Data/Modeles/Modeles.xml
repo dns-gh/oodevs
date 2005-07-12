@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Modeles>
+
+  <Pions>
+    <Modele nom="Pion Test ALAT">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion ALAT\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo">
+          <OrdresConduite>
+            <OrdreConduite nom="AttendreSePoster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion Test ChangePosture"/>
+        <Mission nom="Pion Test CreateObject"/>
+        <Mission nom="Pion Test DestroyObject"/>
+        <Mission nom="Pion Test CreateBypass"/>
+        <Mission nom="Pion Test Reinforce"/>
+        <Mission nom="Pion Test Heliporter"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Pion Test LOG">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion LOG\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo"/>
+        <Mission nom="Pion Test CreateBypass"/>
+        <Mission nom="Pion LOG Convoyer"/>
+        <Mission nom="Pion LOG SeDeployer">
+          <OrdresConduite>
+            <OrdreConduite nom="ModifierPrioritesReparations"/>
+            <OrdreConduite nom="ModifierPrioritesBlesses"/>
+            <OrdreConduite nom="ModifierPrioritesTactiquesReparations"/>
+            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            <OrdreConduite nom="ModifierTempsBordeeMaintenance"/>
+            <OrdreConduite nom="ModifierTempsBordeeSante"/>
+            <OrdreConduite nom="Pion RenforcerEnVSRAM"/>
+            <OrdreConduite nom="Pion ReprendreAuxOrdresVSRAM"/>
+          </OrdresConduite>
+        </Mission>
+      </Missions>
+    </Modele>
+    <Modele nom="Pion Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo">
+          <OrdresConduite>
+            <OrdreConduite nom="AttendreSePoster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion Test ChangePosture"/>
+        <Mission nom="Pion Test CreateObject"/>
+        <Mission nom="Pion Test DestroyObject"/>
+        <Mission nom="Pion Test CreateBypass"/>
+        <Mission nom="Pion Test Reinforce"/>
+        <Mission nom="Pion Test Fire"/>
+        <Mission nom="Pion ALAT Freiner"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Pion Test 2">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo">
+          <OrdresConduite>
+            <OrdreConduite nom="AttendreSePoster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion Test ChangePosture"/>
+        <Mission nom="Pion Test CreateObject"/>
+        <Mission nom="Pion Test DestroyObject"/>
+        <Mission nom="Pion Test CreateBypass"/>
+        <Mission nom="Pion Test Reinforce"/>
+        <Mission nom="Pion Test Fire"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Pion NBC Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion NBC\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo">
+          <OrdresConduite>
+            <OrdreConduite nom="AttendreSePoster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion Test ChangePosture"/>
+        <Mission nom="Pion Test CreateObject"/>
+        <Mission nom="Pion Test DestroyObject"/>
+        <Mission nom="Pion Test CreateBypass"/>
+        <Mission nom="Pion Test Reinforce"/>
+        <Mission nom="Pion Test Fire"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Pion RENS Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion RENS\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo">
+          <OrdresConduite>
+            <OrdreConduite nom="AttendreSePoster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Pion Test ChangePosture"/>
+        <Mission nom="Pion Test CreateObject"/>
+        <Mission nom="Pion Test DestroyObject"/>
+        <Mission nom="Pion Test CreateBypass"/>
+        <Mission nom="Pion Test Reinforce"/>
+        <Mission nom="Pion Test Fire"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Pion REFUGIE Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion REFUGIE\Files.hal</File>
+      <Missions>
+        <Mission nom="Pion Test MoveTo"/>
+      </Missions>
+    </Modele>
+  </Pions>
+
+  <Automates>
+    <Modele nom="Automate Test">
+      <DIAType>T_Automate</DIAType>
+      <File>For Tests\Tests\Automate\Files.hal</File>
+      <Missions>
+        <Mission nom="Automate Test MoveTo"/>
+        <Mission nom="Automate FaireMouvementVersCampRefugies"/>
+      </Missions>
+    </Modele>
+  </Automates>
+
+</Modeles>

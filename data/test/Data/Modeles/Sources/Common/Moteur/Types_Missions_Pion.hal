@@ -1,0 +1,1187 @@
+// *******************************************************************************************
+// Pion mission types for DirectIA
+// Created : 2005-5-11 - 10:0:21
+// *******************************************************************************************
+
+typedef struct T_Mission_Pion_ALAT_EvacuationSanitaire : T_Mission_Pion
+{
+T_Point pointDebarquement_;
+T_Localisation zoneExtraction_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+};
+
+typedef struct T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur : T_Mission_Pion
+{
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+T_Point pointDislocation_;
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_ALAT_ReconnaitreContourEnnemi : T_Mission_Pion
+{
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_DetruireNeutraliserDansZone : T_Mission_Pion
+{
+T_Localisation zone_;
+T_Point pointDislocation_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+bool neutraliser_;
+};
+
+typedef struct T_Mission_Pion_ALAT_DetruireAeromobile : T_Mission_Pion
+{
+T_ListeConnaissancesAgent uniteADetruire_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Freiner : T_Mission_Pion
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Jalonner : T_Mission_Pion
+{
+T_Point pointRegroupement_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Escorter : T_Mission_Pion
+{
+T_ListePions unitesAEscorter_;
+T_Point pointRegroupement_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Heliporter : T_Mission_Pion
+{
+T_ListePions unitesAHeliporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+bool attendreUnite_;
+bool avecMateriel_;
+};
+
+typedef struct T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement : T_Mission_Pion
+{
+T_Point pointDebarquement_;
+T_Point positionRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Helitransporter : T_Mission_Pion
+{
+T_ListePions unitesAHelitransporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+bool avecMateriel_;
+};
+
+typedef struct T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage : T_Mission_Pion
+{
+T_ListePions unitesASecourir_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+};
+
+typedef struct T_Mission_Pion_ALAT_IMEX : T_Mission_Pion
+{
+T_ListePions unitesAAppuyer_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Eclairer : T_Mission_Pion
+{
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Surveiller : T_Mission_Pion
+{
+T_Localisation zone_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_AppuyerDirectAuContact : T_Mission_Pion
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_ListePions unitesAAppuyer_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Couvrir : T_Mission_Pion
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_ListePions unitesACouvrir_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ALAT_Attaquer : T_Mission_Pion
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Pion_ASA_DefendreSite : T_Mission_Pion
+{
+T_Localisation site_;
+};
+
+typedef struct T_Mission_Pion_ASA_DefendreSiteAPartirPosition : T_Mission_Pion
+{
+T_Localisation site_;
+T_Point pointDeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_DefendreZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_ASA_DefendreZoneAPartirPosition : T_Mission_Pion
+{
+T_Localisation zone_;
+T_Point pointDeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_Surveiller : T_Mission_Pion
+{
+T_Point pointDeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_DefendreUnites : T_Mission_Pion
+{
+T_ListePions unites_;
+};
+
+typedef struct T_Mission_Pion_ASA_MISTRAL_DefendreSite : T_Mission_Pion
+{
+T_Localisation site_;
+id modeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition : T_Mission_Pion
+{
+T_Localisation site_;
+T_Point pointDeDeploiement_;
+id modeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_MISTRAL_DefendreZone : T_Mission_Pion
+{
+T_Localisation zone_;
+id modeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition : T_Mission_Pion
+{
+T_Localisation zone_;
+T_Point pointDeDeploiement_;
+id modeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASA_MISTRAL_Surveiller : T_Mission_Pion
+{
+T_Point pointDeDeploiement_;
+id modeDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASS_AssurerMiseEnOeuvre : T_Mission_Pion
+{
+T_ConnaissanceObjet zoneImplantation_;
+bool presenceContreBatterie_;
+};
+
+typedef struct T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition : T_Mission_Pion
+{
+T_Point positionImplantation_;
+bool presenceContreBatterie_;
+};
+
+typedef struct T_Mission_Pion_ASS_ReconnaitreZoneDeploiement : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASS_AcquerirLanceursEni : T_Mission_Pion
+{
+T_ListeLocalisations zonesAObserver_;
+T_ConnaissanceObjet zoneImplantation_;
+bool menanceRoem_;
+};
+
+typedef struct T_Mission_Pion_ASS_EO_AcquerirObjectifs : T_Mission_Pion
+{
+T_Localisation zoneAObserver_;
+T_Automate uniteAAppuyer_;
+E_NatureAtlasType categories_;
+};
+
+typedef struct T_Mission_Pion_ASS_EOP_AcquerirObjectifs : T_Mission_Pion
+{
+T_Localisation zoneAObserver_;
+T_Point positionInstallation_;
+T_Point positionDebarquement_;
+};
+
+typedef struct T_Mission_Pion_ASS_RATAC_AcquerirObjectifs : T_Mission_Pion
+{
+T_Localisation zoneAObserver_;
+E_NatureAtlasType categories_;
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ABC_ReconnaitreAxe : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_ABC_Soutenir : T_Mission_Pion
+{
+T_Pion uniteASoutenir_;
+};
+
+typedef struct T_Mission_Pion_ABC_Couvrir : T_Mission_Pion
+{
+T_Point position_;
+T_ListePions unitesACouvrir_;
+};
+
+typedef struct T_Mission_Pion_ABC_FlancGarder : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_ListePions unitesACouvrir_;
+};
+
+typedef struct T_Mission_Pion_ABC_Reduire : T_Mission_Pion
+{
+T_ConnaissanceAgent uniteAReduire_;
+};
+
+typedef struct T_Mission_Pion_ABC_Appuyer : T_Mission_Pion
+{
+T_Pion uniteAAppuyer_;
+};
+
+typedef struct T_Mission_Pion_ABC_Fixer : T_Mission_Pion
+{
+T_ConnaissanceAgent uniteAFixer_;
+};
+
+typedef struct T_Mission_Pion_ABC_RenseignerSur : T_Mission_Pion
+{
+T_Point pointARenseigner_;
+};
+
+typedef struct T_Mission_Pion_ABC_ControlerZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_ABC_Surveiller : T_Mission_Pion
+{
+T_Point position_;
+};
+
+typedef struct T_Mission_Pion_ABC_Barrer : T_Mission_Pion
+{
+T_Point positionInstallation_;
+};
+
+typedef struct T_Mission_Pion_ABC_Attaquer : T_Mission_Pion
+{
+T_ListePoints itineraireAssaut_;
+};
+
+typedef struct T_Mission_Pion_ABC_ReconnaitrePoint : T_Mission_Pion
+{
+T_Point pointAReconnaitre_;
+};
+
+typedef struct T_Mission_Pion_ABC_Eclairer : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_ABC_Jalonner : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_ABC_ContreAttaquer : T_Mission_Pion
+{
+T_ListePoints itineraireAssaut_;
+};
+
+typedef struct T_Mission_Pion_ABC_SemparerZone : T_Mission_Pion
+{
+T_Localisation zoneAPrendre_;
+};
+
+typedef struct T_Mission_Pion_ABC_ReleverUnite : T_Mission_Pion
+{
+T_Pion uniteARelever_;
+};
+
+typedef struct T_Mission_Pion_ABC_ArmerPIA : T_Mission_Pion
+{
+T_Point pia_;
+};
+
+typedef struct T_Mission_Pion_ABC_OuvrirItineraire : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_ABC_Freiner : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_ABC_EscorterUnConvoi : T_Mission_Pion
+{
+T_Pion convoiAEscorter_;
+};
+
+typedef struct T_Mission_Pion_ABC_ArmerPointDeControle : T_Mission_Pion
+{
+T_Point pointDeControle_;
+};
+
+typedef struct T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies : T_Mission_Pion
+{
+T_Point positionInstallation_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserFosseAC : T_Mission_Pion
+{
+T_Localisation posObstacle_;
+T_ID oidObstaclePlanifie_;
+id type_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserAbattisMine : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id urgence_;
+id preliminaire_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserPointMine : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserBarricade : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id urgence_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserEboulement : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id preliminaire_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserBouchonMine : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id urgence_;
+};
+
+typedef struct T_Mission_Pion_GEN_DetruireRoute : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id preliminaire_;
+};
+
+typedef struct T_Mission_Pion_GEN_DetruirePont : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id preliminaire_;
+};
+
+typedef struct T_Mission_Pion_GEN_SecuriserItineraire : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_GEN_DegagerAbattisMine : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_DegagerEboulement : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_DegagerRues : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_ComblerEntonnoir : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_ComblerFosseAC : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_CreerContournement : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserZoneMineeLineaire : T_Mission_Pion
+{
+T_Localisation posObstacle_;
+T_ID oidObstaclePlanifie_;
+float densite_;
+};
+
+typedef struct T_Mission_Pion_GEN_OuvrirTrouee : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_Renforcer : T_Mission_Pion
+{
+T_Point lieuRenforcement_;
+T_Pion unite_;
+};
+
+typedef struct T_Mission_Pion_GEN_FranchirEntonnoir : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_FranchirFosseAC : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserZoneMineeParDispersion : T_Mission_Pion
+{
+T_Localisation posObstacle_;
+T_ID oidObstaclePlanifie_;
+float densite_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserPostesTir : T_Mission_Pion
+{
+T_Point posObjet_;
+T_ID oidObjetPlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserTravauxProtection : T_Mission_Pion
+{
+T_Point posObjet_;
+T_ID oidObjetPlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_RetablirItineraire : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_GEN_EquiperExploiter : T_Mission_Pion
+{
+T_ConnaissanceObjet siteFranchissement_;
+T_ID oidObjetPlanifie_;
+T_Point pointRegroupement_;
+id typePontage_;
+};
+
+typedef struct T_Mission_Pion_GEN_ExecuterVariantement : T_Mission_Pion
+{
+T_ConnaissanceObjet siteFranchissement_;
+T_ID oidObjetPlanifie_;
+T_Point pointRegroupement_;
+id typePontage_;
+};
+
+typedef struct T_Mission_Pion_GEN_ReconnaitreSiteFranchissement : T_Mission_Pion
+{
+T_ConnaissanceObjet siteFranchissement_;
+};
+
+typedef struct T_Mission_Pion_GEN_ReconnaitreItineraire : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_GEN_DeminerSiteFranchissement : T_Mission_Pion
+{
+T_ConnaissanceObjet siteFranchissement_;
+};
+
+typedef struct T_Mission_Pion_GEN_ReconnaitreZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_GEN_CreerPlateForme : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_CreerPiste : T_Mission_Pion
+{
+T_Localisation posObstacle_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_CreerAirePoser : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_NeutraliserEnginsExplosifs : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_ActiverObstacle : T_Mission_Pion
+{
+T_ConnaissanceObjet obstacle_;
+};
+
+typedef struct T_Mission_Pion_GEN_AmeliorerMobilite : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserAireLogistique : T_Mission_Pion
+{
+T_Point positionObstacle_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_DepolluerZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_GEN_AmenagerTerrainPoser : T_Mission_Pion
+{
+T_Point posObstacle_;
+T_ID oidObstaclePlanifie_;
+id typeObjet_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserPlateFormeDeploiement : T_Mission_Pion
+{
+T_Point positionObstacle_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_ReprendreMissionConstruction : T_Mission_Pion
+{
+T_ConnaissanceObjet travaux_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserZonePoserHelicoptere : T_Mission_Pion
+{
+T_Point zonePoser_;
+T_ID oidObstaclePlanifie_;
+};
+
+typedef struct T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU : T_Mission_Pion
+{
+T_Localisation zoneAppui_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserCampPrisonniers : T_Mission_Pion
+{
+T_Localisation camp_;
+T_Automate tc2_;
+};
+
+typedef struct T_Mission_Pion_GEN_RealiserCampRefugies : T_Mission_Pion
+{
+T_Localisation camp_;
+T_Automate tc2_;
+};
+
+typedef struct T_Mission_Pion_INF_ReconnaitreAxe : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_INF_Couvrir : T_Mission_Pion
+{
+T_Point pointCouverture_;
+T_Pion cible_;
+};
+
+typedef struct T_Mission_Pion_INF_Reduire : T_Mission_Pion
+{
+T_ConnaissanceAgent uniteAReduire_;
+};
+
+typedef struct T_Mission_Pion_INF_Appuyer : T_Mission_Pion
+{
+T_Pion uniteAAppuyer_;
+};
+
+typedef struct T_Mission_Pion_INF_Fixer : T_Mission_Pion
+{
+T_ConnaissanceAgent ennemi_;
+};
+
+typedef struct T_Mission_Pion_INF_ControlerSecteur : T_Mission_Pion
+{
+T_Localisation secteur_;
+bool preparerTerrain_;
+};
+
+typedef struct T_Mission_Pion_INF_SurveillerSecteur : T_Mission_Pion
+{
+T_Point positionInstallation_;
+};
+
+typedef struct T_Mission_Pion_INF_Barrer : T_Mission_Pion
+{
+T_Point positionABarrer_;
+};
+
+typedef struct T_Mission_Pion_INF_ReconnaitrePoint : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Point pointAReconnaitre_;
+};
+
+typedef struct T_Mission_Pion_INF_Eclairer : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_INF_Interdire : T_Mission_Pion
+{
+T_Point pointAInterdire_;
+bool preparerTerrain_;
+};
+
+typedef struct T_Mission_Pion_INF_Semparer : T_Mission_Pion
+{
+T_Point objectif_;
+};
+
+typedef struct T_Mission_Pion_INF_PrendrePreciserContact : T_Mission_Pion
+{
+T_ConnaissanceAgent ennemi_;
+};
+
+typedef struct T_Mission_Pion_INF_Defendre : T_Mission_Pion
+{
+T_Point pointADefendre_;
+bool preparerTerrain_;
+};
+
+typedef struct T_Mission_Pion_INF_DetruireEmbuscade : T_Mission_Pion
+{
+T_Point positionEmbuscade_;
+T_Point positionRegroupement_;
+T_ConnaissanceAgent ennemi_;
+id natureObstacle_;
+};
+
+typedef struct T_Mission_Pion_INF_ContreAttaquer : T_Mission_Pion
+{
+T_ConnaissanceAgent ennemi_;
+};
+
+typedef struct T_Mission_Pion_INF_Freiner : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_INF_FlancGarder : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Pion uniteAFlancgarder_;
+};
+
+typedef struct T_Mission_Pion_INF_OrganiserUnCheckPoint : T_Mission_Pion
+{
+T_Point pointInstallation_;
+};
+
+typedef struct T_Mission_Pion_INF_Harceler : T_Mission_Pion
+{
+T_Localisation secteur_;
+T_Point pointRegroupement_;
+id natureObjectif_;
+};
+
+typedef struct T_Mission_Pion_INF_DetruireParCoupDeMain : T_Mission_Pion
+{
+T_Point objectif_;
+T_Point pointRegroupement_;
+float heureDestruction_;
+id natureDestruction_;
+};
+
+typedef struct T_Mission_Pion_INF_EscorterUnConvoi : T_Mission_Pion
+{
+T_Pion convoiAEscorter_;
+};
+
+typedef struct T_Mission_Pion_INF_RenseignerSur : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_INF_Soutenir : T_Mission_Pion
+{
+T_Pion uniteASoutenir_;
+};
+
+typedef struct T_Mission_Pion_INF_Securiser : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_INF_Recueillir : T_Mission_Pion
+{
+T_Point positionInstallation_;
+T_Point pia_;
+};
+
+typedef struct T_Mission_Pion_INF_RepondreAAggression : T_Mission_Pion
+{
+T_ConnaissanceAgent aggresseur_;
+};
+
+typedef struct T_Mission_Pion_LOG_SeDeployer : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_LOG_DistribuerMoyens : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_TrierBlesses : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_TraiterBlesses : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_TrierEtTraiterBlesses : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_SoignerBlesses : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_DecontaminerBlesses : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_Reparer : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_Evacuer : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_Convoyer : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_DistribuerRessources : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_ConstituerConvoi : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_Livrer : T_Mission_Pion
+{
+};
+
+typedef struct T_Mission_Pion_LOG_PreparerBascule : T_Mission_Pion
+{
+T_Automate automatePourBascule_;
+};
+
+typedef struct T_Mission_Pion_LOG_AppuyerMouvement : T_Mission_Pion
+{
+T_Pion uniteAAppuyer_;
+};
+
+typedef struct T_Mission_Pion_LOG_ReconnaitreItineraire : T_Mission_Pion
+{
+T_ListePoints itineraireLog_;
+};
+
+typedef struct T_Mission_Pion_LOG_TransporterUniteChars : T_Mission_Pion
+{
+T_ListePions unitesATransporter_;
+T_Point pointRendezVous_;
+T_Point pointDestination_;
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_LOG_ReconnaitreZoneContaminee : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_LOG_AppuyerMouvementDansZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint : T_Mission_Pion
+{
+T_ConnaissanceObjet pontFlottant_;
+};
+
+typedef struct T_Mission_Pion_LOG_BloquerZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_LOG_ArmerPIA : T_Mission_Pion
+{
+T_Point point_;
+};
+
+typedef struct T_Mission_Pion_LOG_Surveiller : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_Test_Heliporter : T_Mission_Pion
+{
+T_ListePions agents_;
+T_Point pointEmbarquement_;
+T_Point pointDebarquement_;
+};
+
+typedef struct T_Mission_Pion_Test_MoveTo : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+id typeItineraire_;
+bool debarque_;
+id verrouillageVision_;
+T_Point visionPoint_;
+T_Direction visionDirection_;
+};
+
+typedef struct T_Mission_Pion_Test_CreateObject : T_Mission_Pion
+{
+T_Localisation forme_;
+id type_;
+float param_;
+};
+
+typedef struct T_Mission_Pion_Test_DestroyObject : T_Mission_Pion
+{
+T_ConnaissanceObjet objet_;
+};
+
+typedef struct T_Mission_Pion_Test_CreateBypass : T_Mission_Pion
+{
+T_ConnaissanceObjet objet_;
+};
+
+typedef struct T_Mission_Pion_Test_Fire : T_Mission_Pion
+{
+T_Point point_;
+bool tirIndirect_;
+id munitions_;
+float nbObus_;
+T_ListeConnaissancesAgent targets_;
+};
+
+typedef struct T_Mission_Pion_Test_ChangePosture : T_Mission_Pion
+{
+id posture_;
+};
+
+typedef struct T_Mission_Pion_Test_PathFind : T_Mission_Pion
+{
+float nbPathfind_;
+};
+
+typedef struct T_Mission_Pion_Test_FindPosition : T_Mission_Pion
+{
+T_Point point_;
+T_Point retreat_;
+T_ListePions unite_;
+id typeObjectif_;
+id typeOperation_;
+bool avoid_;
+bool reco_;
+bool noObstacleAvoid_;
+bool debordement_;
+bool decPoints_;
+id niveauIdentification_;
+T_Direction dgo_;
+};
+
+typedef struct T_Mission_Pion_Test_Reinforce : T_Mission_Pion
+{
+T_Pion unite_;
+bool renforce_;
+};
+
+typedef struct T_Mission_Pion_PlastronEnnemi : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Point pointMission_;
+id type_;
+};
+
+typedef struct T_Mission_Pion_FaireMouvement : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_Suivre : T_Mission_Pion
+{
+T_Pion uniteASuivre_;
+};
+
+typedef struct T_Mission_Pion_SeFaireDecontaminer : T_Mission_Pion
+{
+T_Point pointArrivee_;
+T_ConnaissanceObjet siteDecontamination_;
+};
+
+typedef struct T_Mission_Pion_Franchir : T_Mission_Pion
+{
+T_ConnaissanceObjet pontFlottant_;
+T_Point pointArrivee_;
+};
+
+typedef struct T_Mission_Pion_Decrocher : T_Mission_Pion
+{
+T_Point pointRegroupement_;
+};
+
+typedef struct T_Mission_Pion_Stationner : T_Mission_Pion
+{
+T_Point pointAttente_;
+};
+
+typedef struct T_Mission_Pion_SeFaireTransporter : T_Mission_Pion
+{
+T_Point pointEmbarquement_;
+};
+
+typedef struct T_Mission_Pion_Generique : T_Mission_Pion
+{
+T_ListeLocalisations zones_;
+T_ListePoints points_;
+T_ListeListesPoints itineraires_;
+T_ListePions unites_;
+T_ListeAutomates automates_;
+T_ListeConnaissancesAgent connaissancesAgents_;
+T_ListeConnaissancesObjet connaissancesObjets_;
+};
+
+typedef struct T_Mission_Pion_MILICE_Provoquer : T_Mission_Pion
+{
+T_ConnaissanceAgent uniteAProvoquer_;
+};
+
+typedef struct T_Mission_Pion_MILICE_PrendreEtTenir : T_Mission_Pion
+{
+T_Point pointAPrendre_;
+};
+
+typedef struct T_Mission_Pion_MILICE_DetruireEmbuscade : T_Mission_Pion
+{
+T_Point positionEmbuscade_;
+T_Point positionRegroupement_;
+id natureObstacle_;
+};
+
+typedef struct T_Mission_Pion_JOINT_MARINE_Transporter : T_Mission_Pion
+{
+T_ListePions unitesATransporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+bool avecMateriel_;
+};
+
+typedef struct T_Mission_Pion_JOINT_AIR_EffectuerRaid : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination : T_Mission_Pion
+{
+T_Point positionSiteDecontamination_;
+};
+
+typedef struct T_Mission_Pion_NBC_ReconnaitreItineraire : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_NBC_ReconnaitreZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_NBC_DecontaminerZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_NBC_ReconnaitreUnSiteROTA : T_Mission_Pion
+{
+T_ConnaissanceObjet siteROTA_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROHUM_RenseignerSur : T_Mission_Pion
+{
+T_Localisation zoneAObserver_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROHUM_SExfiltrer : T_Mission_Pion
+{
+T_Point pointDeRegroupement_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROHUM_OrienterGuider : T_Mission_Pion
+{
+T_Pion ami_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROEM_Appuyer : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+T_Point pointRegroupement_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROEM_RenseignerSur : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROEM_MettreEnOeuvre : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_RENS_RADINT_RenseignerSur : T_Mission_Pion
+{
+T_ListeLocalisations zonesDeRecherche_;
+};
+
+typedef struct T_Mission_Pion_RENS_RADINT_MettreEnOeuvre : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROIM_MettreEnOeuvre : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur : T_Mission_Pion
+{
+T_ListePoints ficelleDeVole_;
+};
+
+typedef struct T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur : T_Mission_Pion
+{
+T_ListePoints ficelleDeVole_;
+T_ListeLocalisations zonesDeRecherche_;
+};
+
+typedef struct T_Mission_Pion_TRANS_EtablirGererLiaison : T_Mission_Pion
+{
+T_Point positionDeploiement_;
+};
+

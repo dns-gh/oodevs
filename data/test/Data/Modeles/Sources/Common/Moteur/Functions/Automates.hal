@@ -1,0 +1,149 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+signatures
+{
+    // RC
+    V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+                                      
+    // Accesseurs                     
+    S /*T_ListePions*/               A::DEC_Automate_PionsAvecPC  ();
+    S /*T_ListePions*/               A::DEC_Automate_PionsSansPC  ();
+    A /*T_Pion*/                     A::DEC_Automate_PionPC       ();
+    B                                A::DEC_Automate_SEstRendu    ();
+    B                                A::DEC_Automate_EstPrisonnier();        
+    
+    S /*T_ListePions*/               A::DEC_Automate_PionsDeAutomateAvecPC( A /*T_Automate*/ );
+    S /*T_ListePions*/               A::DEC_Automate_PionsDeAutomateSansPC( A /*T_Automate*/ );
+    A /*T_Pion*/                     A::DEC_Automate_PionPCDeAutomate     ( A /*T_Automate*/ );    
+                                      
+    // Ordres                         
+    V                                A::DEC_AttenteOrdre      ( * /* Paramètres de type E_TypeOrdreConduite + 1 paramètre optionnel de type string (= hint)*/ );
+    V                                A::DEC_AnnuleAttenteOrdre();
+                                      
+    // MRT                            
+    A                                A::DEC_MRT_CreerMissionPion( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
+    V                                A::DEC_MRT_Valide          ();
+    V                                A::DEC_MRT_AffecteFuseaux  ( S /*T_ListePions*/ );
+                                     
+    // Conduite                              
+    V                                A::DEC_CDT_DonneOrdreConduiteAPion      ( A /*T_Pion*/, I /*E_TypeOrdreConduite*/, * /*parametres*/ );
+    A /*T_Mission_Pion*/             A::DEC_CDT_CreerMissionPion             ( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
+    V                                A::DEC_CDT_DonnerMissionPion            ( A /*T_Mission_Pion*/ );
+    B                                A::DEC_CDT_PionEnAttenteOC              ();
+    S /*T_ListePions*/               A::DEC_CDT_ObtenirListePionsEnAttenteOC ();
+    V                                A::DEC_CDT_ObtenirListeOCAttendusParPion( A /*T_Pion*/, S /*&T_OrdreConduiteDemandeCont*/, X /*&strHint*/ );    
+                                     
+    // Limas                         
+    B                                A::DEC_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
+    B                                A::DEC_GetMissionLimaFlag( U /*T_Lima*/ );
+    U /*T_Lima*/                     A::DEC_GetLima           ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé    
+                                     
+    // Etats décisionnel             
+    V                                A::DEC_Automate_ChangeEtatRapportDeForce   ( I /*E_EtatRapportDeForce*/ );
+    V                                A::DEC_Automate_ChangeEtatROE              ( I /*E_EtatROE*/ );
+    V                                A::DEC_Automate_ChangeEtatCombatDeRencontre( I /*E_EtatCombatDeRencontre*/ );            
+    
+    B                                A::DEC_Automate_Debrayer ();
+
+    // Connaissance                  
+    R                                A::DEC_RapportDeForceGlobal                               ();   // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
+    V                                A::DEC_Connaissances_PartageConnaissancesAvec             ( A /*T_Automate*/, R /*delai en minutes*/ );    
+    V                                A::DEC_Connaissances_PartageConnaissancesDansZoneAvec     ( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
+    S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_Objets                               ( * /*E_TypeObjects*/ );
+    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AmisDansZone                         ( U /*T_Localisation*/ );
+    R                                A::DEC_ConnaissanceAgent_Vitesse                          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
+    U /*T_Point*/                    A::DEC_ConnaissanceAgent_Position                         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceAgent_SEstRendu                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
+    B                                A::DEC_ConnaissanceAgent_EstPrisonnier                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );    
+    B                                A::DEC_ConnaissanceAgent_EstMilice                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );    
+    B                                A::DEC_ConnaissanceAgent_EstRefugie                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );    
+    B                                A::DEC_ConnaissanteAgent_EstRefugiePrisEnCompte           ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );        
+    B                                A::DEC_ConnaissanceAgent_EstValide                        ( U /*T_ConnaissanceAgent*/  );        
+    V                                A::DEC_ConnaissanceAgent_Verrouiller                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    V                                A::DEC_ConnaissanceAgent_Deverrouiller                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );        
+    R                                A::DEC_ConnaissanceAgent_DangerositeSurPion               ( U /*T_ConnaissanceAgent*/ , A /*T_Pion*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
+    R                                A::DEC_ConnaissanceAgent_DangerositeSurConnaissance       ( U /*T_ConnaissanceAgent*/ , U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2        
+    B                                A::DEC_ConnaissanceObjet_EstValide                        ( U /*T_ConnaissanceObjet*/  );
+    U /*T_Localisation*/             A::DEC_ConnaissanceObjet_Localisation                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );    
+    B                                A::DEC_ConnaissanceObjet_EstReconnu                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );        
+    B                                A::DEC_ConnaissanceObjet_EstContourne                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceObjet_EstPrepare                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    I /*E_TypeObject*/               A::DEC_ConnaissanceObjet_Type                             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    R                                A::DEC_ConnaissanceObjet_LargeurSiteFranchissement        ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    V                                A::DEC_ConnaissanceObjet_ItineraireLogEstEquipe           ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+                                     
+    // Geometrie                     
+    S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeFuseauEnTroncons                 ( R /*profondeur des segments en m*/ );
+    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionObstacle                ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/, B /*return code*/ );    
+    S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeLocalisation                     ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    U /*T_Point*/                    A::DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    B                                A::DEC_Geometrie_EstPointDansFuseau                      ( U /*T_Point*/ );
+    U /*T_Point*/                    A::DEC_Geometrie_CalculePointArrivee                     ();
+    U /*T_Point*/                    A::DEC_Geometrie_CalculePointArriveePourPion             ( A /*T_Pion*/ );
+    U /*T_Point*/                    A::DEC_Geometrie_CalculePointDepart                      ();           
+    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionParRapportALima         ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/ );
+    U /*T_ListePoints*/              A::DEC_Geometrie_CalculerPositionsParRapportALima        ( U /*T_Lima*/, R /*dist avant lima*/, R /*nb points*/, B /*retour*/ );
+    U /*T_ListePoints*/              A::DEC_Geometrie_PositionsParRapportALocalisation        ( S /*T_ListePions*/, U /*T_Localisation*/, U /*dirdanger*/, R /*Dist max*/, I /*E_LocalisationFunctionsReturnCode*/ ); // Retourne T_ListePoints à EFFACER !!!
+    U /*T_CalculLignesAvantArriere*/ A::DEC_Geometrie_StartCalculLignesAvantEtArriere         ( S /*T_ListePions*/ );
+    V                                A::DEC_Geometrie_StopCalculLignesAvantEtArriere          ( U /*T_CalculLignesAvantArriere*/ );  
+    R                                A::DEC_Geometrie_CalculeDistanceLigneAvant               ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );       
+    R                                A::DEC_Geometrie_CalculeDistanceLigneArriere             ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );       
+    B                                A::DEC_Geometrie_CalculePointProcheLocalisationDansFuseau( U /*T_Localisation localisation*/, U /*T_Point result*/ );
+    A                                A::DEC_Geometrie_PionDevant                              ( S /*T_ListePions*/, U /*T_Direction*/ );
+    A                                A::DEC_Geometrie_PionDerriere                            ( S /*T_ListePions*/, U /*T_Direction*/ );
+   
+
+    // Gestion des pions
+    B                                A::DEC_Pion_ChangeAutomate( A /*T_Pion*/, A /*T_Automate*/ );
+
+    B                                A::DEC_Automate_EstEmbraye                                      ();
+    B                                A::DEC_Automate_PionEstContamine                                ( A /*T_Pion*/ );
+    B                                A::DEC_Automate_PionEstTransporte                               ( A /*T_Pion*/ );
+    B                                A::DEC_Automate_PionEstEnTenueProtectionNBC                     ( A /*T_Pion*/ );
+    B                                A::DEC_Automate_PionEstEnMouvement                              ( A /*T_Pion*/ );
+    B                                A::DEC_Automate_PionEstNeutralise                               ( A /*T_Pion*/ );
+    R                                A::DEC_Automate_PionEtatOps                                     ( A /*T_Pion*/ );
+    U /*T_Point*/                    A::DEC_Automate_PionPosition                                    ( A /*T_Pion*/ );
+    U /*T_Direction*/                A::DEC_Automate_PionDirection                                   ( A /*T_Pion*/ );
+    B                                A::DEC_Automate_PionRelevePion                                  ( A /*T_Pion*/, A /*T_Pion*/ );
+    B                                A::DEC_Automate_PionPeutReleverPion                             ( A /*T_Pion*/, A /*T_Pion*/ );
+    B                                A::DEC_Automate_EstPointDansFuseauPion                          ( U /*T_Position*/, A /*T_Pion*/ );
+    U /*T_Point*/                    A::DEC_Automate_CalculerPositionParRapportALimaPourPion         ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/, A /*T_Pion*/);
+    B                                A::DEC_Automate_CalculePointProcheLocalisationDansFuseauPourPion( U /*T_Localisation localisation*/, U /*T_Point result*/, A /*T_Pion*/ );    
+    B                                A::DEC_Automate_PionPeutTransporterPion                         ( A /*T_Pion transporteur*/, A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
+    R /* temps en minutes */         A::DEC_Automate_PionAutonomieEnDeplacement                      ( A /*T_Pion*/ );    
+    R /* temps en minutes */         A::DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite     ( A /*T_Pion*/, R /*distance en m*/ );    
+    
+    // Objets
+    B                                A::DEC_Automate_ProchainObjetSurItinerairePion      ( A /*T_Pion*/, U /*OUT T_ConnaissanceObjet*/, R /*OUT Distance*/, * /*Liste de E_TypeObject à prendre en compte*/ );    
+    B                                A::DEC_Automate_PionPeutConstruireObjet             ( A /*T_Pion*/, I /*E_TypeObject*/ );         
+    B                                A::DEC_Automate_PionPeutConstruireContournementObjet( A /*T_Pion*/, I /*E_TypeObject*/ );
+    B                                A::DEC_Automate_PionPeutDetruireObjet               ( A /*T_Pion*/, I /*E_TypeObject*/ );   
+    
+    V                                A::DEC_CreerObjetSansDelais   ( I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
+    V                                A::DEC_DetruireObjetSansDelais( U /*T_ConnaissanceObjet*/ );
+
+    // Logistique
+    A /*T_Automate*/                 A::DEC_Automate_TC2           (); // ATTENTION : La valeur de retour peut être nulle     
+    V                                A::DEC_DemandeDeRavitaillement();
+    
+    // Prisonniers
+    U /*T_Point*/                    A::DEC_PositionCampPrisonniers();
+    
+    // Refugiés
+    U /*T_Point*/                    A::DEC_PositionCampRefugies                    ();
+    V                                A::DEC_Automate_ChangeEtatPriseEnCompteRefugies( B /*pris en compte*/ );
+
+    // Debug
+    V                                A::DEC_DebugAffichePoint ( U /*T_Point*/ );
+    V                                A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );
+    V                                A::DEC_Debug( X );
+    V                                A::DEC_Trace( X );    
+}
+
+T_ID gNullID = 0;
+

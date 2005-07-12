@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Decisionnel>
+
+  <DirectIA>
+    <RepertoireBinaires>Modeles/Binaires</RepertoireBinaires>
+    <RepertoireSources>Modeles/Sources</RepertoireSources>
+    <DIATypes>Common/Moteur/Types.hal</DIATypes>
+    <DIAWorkspace>Common/Moteur/Workspace.hal</DIAWorkspace>
+    <Modeles>Modeles/Modeles.xml</Modeles>
+    <PortDebogueur>15000</PortDebogueur>
+  </DirectIA>
+
+  <Dangerosite>
+    <DegradationMaxParPertinence>20</DegradationMaxParPertinence>
+    <DegradationMaxParEtatOps>20</DegradationMaxParEtatOps>
+    <DegradationMaxParEtatNeutralise>80</DegradationMaxParEtatNeutralise>
+  </Dangerosite>
+
+  <EtatOps>
+    <PoidsComposantesNonMajeures>0.1</PoidsComposantesNonMajeures>
+    <PoidsComposantesMajeures>0.4</PoidsComposantesMajeures>
+    <PoidsPersonnel>0.5</PoidsPersonnel>
+  </EtatOps>
+
+  <RapportDeForce>
+    <TempsDeRemonteeParDefaut>600s</TempsDeRemonteeParDefaut>
+  </RapportDeForce>
+
+</Decisionnel>

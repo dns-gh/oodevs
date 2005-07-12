@@ -1,0 +1,27 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+signatures
+{
+    V A::DEC_Maintenance_ActiverChaine            ();
+    V A::DEC_Maintenance_DesactiverChaine         ();
+    V A::DEC_Maintenance_ChangerPriorites         ( U /*T_MaintenancePriorites*/ );
+    V A::DEC_Maintenance_ChangerPrioritesTactiques( S /*T_ListeAutomates*/ );
+    V A::DEC_Maintenance_ChangerTempsBordee       ( I /*E_TempsBordee*/ );
+    
+    V              A::DEC_Sante_ActiverChaine            ();
+    V              A::DEC_Sante_DesactiverChaine         ();
+    V              A::DEC_Sante_ChangerPriorites         ( U /*T_SantePriorites*/ );
+    V              A::DEC_Sante_ChangerPrioritesTactiques( S /*T_ListeAutomates*/ );
+    V              A::DEC_Sante_ChangerTempsBordee       ( I /*E_TempsBordee*/ );
+    U /*T_Action*/ A::DEC_Sante_StartPreterVSRAM         ( A /*T_Pion*/, R /*nombre*/, B /*action terminee ?*/ );
+    V              A::DEC_Sante_RecupererVSRAM           ( A /*T_Pion*/, R /*nombre*/ );
+    
+    V                A::DEC_Ravitaillement_ActiverChaine                ();
+    V                A::DEC_Ravitaillement_DesactiverChaine             ();       
+    B                A::DEC_Ravitaillement_Convoi_RavitaillementEffectue();
+    A /*T_Automate*/ A::DEC_Ravitaillement_Convoi_AutomateARavitailler  ();
+    U /*T_Action*/   A::DEC_Ravitaillement_Convoi_StartRavitailler      ( B /*action terminee ?*/ );
+    V                A::DEC_Ravitaillement_Convoi_FinMission            ();
+}
+
