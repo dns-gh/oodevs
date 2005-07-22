@@ -104,13 +104,8 @@
 /** @name Inline mode*/
 //-------------------------------------------------------------------------
 //@{
-#if defined( MOS_USE_INLINE ) || defined( _RELEASE )
-#   define MOS_USE_INLINE
-#   define MOS_INLINE inline
-#else
-#   undef MOS_USE_INLINE
-#   define MOS_INLINE // Nothing
-#endif
+#define MOS_USE_INLINE
+#define MOS_INLINE inline
 //@}
 
 

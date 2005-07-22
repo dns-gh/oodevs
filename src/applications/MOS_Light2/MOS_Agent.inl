@@ -227,20 +227,6 @@ const MOS_AgentComposition& MOS_Agent::GetComposition() const
     return composition_;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetTeam
-/** @return 
-*/
-// Created: APE 2004-04-29
-// -----------------------------------------------------------------------------
-MOS_INLINE
-MOS_Team& MOS_Agent::GetTeam() const
-{
-    return GetGtia().GetTeam();
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetGtia
 /** @return 

@@ -13,6 +13,7 @@
 
 #include "PHY_DotationConvoy.h"
 #include "PHY_SupplyDotationConsign.h"
+#include "PHY_Conveyor.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 

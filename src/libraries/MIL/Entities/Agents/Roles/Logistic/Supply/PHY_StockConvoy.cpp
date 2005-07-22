@@ -13,6 +13,7 @@
 
 #include "PHY_StockConvoy.h"
 #include "PHY_SupplyStockConsign.h"
+#include "PHY_Conveyor.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"

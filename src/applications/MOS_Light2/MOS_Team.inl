@@ -93,20 +93,6 @@ MOS_DynaObjectKnowledge* MOS_Team::FindObjectKnowledge( int nId )
 }
 
 
-// -----------------------------------------------------------------------------
-// Name: MOS_Team::FindKnowledgeOnObject
-// Created: APE 2004-08-05
-// -----------------------------------------------------------------------------
-MOS_INLINE
-MOS_DynaObjectKnowledge* MOS_Team::FindKnowledgeOnObject( const MOS_DynaObject& object )
-{
-    for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
-        if( it->second->GetRealObject() == &object )
-            return it->second;
-
-    return 0;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Team::GetAgentKnowledges

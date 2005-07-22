@@ -1,14 +1,12 @@
 /****************************************************************************
 ** MT_GLDShapeDialog meta object code from reading C++ file 'MT_GLDShapeDialog.h'
 **
-** Created: jeu. 21. juil. 15:28:03 2005
+** Created: ven. 22. juil. 13:35:02 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#undef QT_NO_COMPAT
-#include "MT_GLDShapeDialog.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

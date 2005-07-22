@@ -1,14 +1,12 @@
 /****************************************************************************
 ** MOS_App meta object code from reading C++ file 'MOS_App.h'
 **
-** Created: jeu. 21. juil. 15:28:03 2005
+** Created: ven. 22. juil. 13:35:03 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#undef QT_NO_COMPAT
-#include "MOS_App.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

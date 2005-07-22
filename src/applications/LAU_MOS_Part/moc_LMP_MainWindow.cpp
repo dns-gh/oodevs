@@ -1,7 +1,7 @@
 /****************************************************************************
 ** LMP_MainWindow meta object code from reading C++ file 'LMP_MainWindow.h'
 **
-** Created: mar. 12. juil. 13:30:42 2005
+** Created: ven. 22. juil. 13:09:02 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!

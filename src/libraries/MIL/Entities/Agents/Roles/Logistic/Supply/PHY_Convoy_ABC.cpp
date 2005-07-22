@@ -12,6 +12,7 @@
 #include "MIL_Pch.h"
 
 #include "PHY_Convoy_ABC.h"
+#include "PHY_Conveyor.h"
 #include "PHY_SupplyConsign_ABC.h"
 #include "PHY_RolePionLOG_Supply.h"
 #include "PHY_SupplyDotationState.h"
