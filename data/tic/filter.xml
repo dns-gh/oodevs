@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<filtre xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="filter.xsd">
+	<NatureEquipements>
+		<NatureEquipement type="None">
+			<Categories>
+				<Categorie type="NONE">
+				  <SousCategories>
+				    <SousCategorie>NONE</SousCategorie>
+				  </SousCategories>
+				</Categorie>
+			</Categories>
+		</NatureEquipement>
+	</NatureEquipements>
+	
+	<TypePlateformes>
+		<TypePlateforme>VAB 12,7</TypePlateforme>
+	</TypePlateformes>
+</filtre>

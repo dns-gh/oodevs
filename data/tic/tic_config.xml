@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<TicConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="tic_config.xsd">
+	<ConnexionScipio>
+		<Serveur>127.0.0.1</Serveur>
+		<Port>10000</Port>
+		<FichierConfiguration>D:/Dev/Scipio/MVW_v10/Build/Data Test/scipio.xml</FichierConfiguration>
+		<NaturePlateformes>plateformesTIC.xml</NaturePlateformes>
+	</ConnexionScipio>
+	<Export>
+		<Fichier>export/tic.xml</Fichier>
+		<Incremental>true</Incremental>
+		<ExportCommunications>true</ExportCommunications>
+		<FichierFiltre>filter.xml</FichierFiltre>
+		<ZonesDesagregees>
+			<ZoneDesagregee>
+				<Points>
+					<Point>
+					  <Latitude>+47.560</Latitude>
+					  <Longitude>-0.672</Longitude>
+				  </Point>
+				  <Point>
+					  <Latitude>+47.525</Latitude>
+					  <Longitude>-0.747</Longitude>
+				  </Point>
+				  <Point>
+					  <Latitude>+47.470</Latitude>
+					  <Longitude>-0.624</Longitude>
+				  </Point>
+				</Points>
+			</ZoneDesagregee>
+		</ZonesDesagregees>
+		
+		<!--AutomatesDesagreges>
+			<AutomateDesagrege id="5000031"/>
+		</AutomatesDesagreges>
+		<GroupesDeConnaissanceDesagreges>
+			<GroupeDeConnaissanceDesagrege id="1"/>
+		</GroupesDeConnaissanceDesagreges-->
+		<PionsDesagreges>
+			<PionDesagrege id="5000032"/>
+		</PionsDesagreges>
+	</Export>
+</TicConfig>

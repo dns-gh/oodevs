@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 sp2 U (http://www.altova.com) by  () -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- Type d'Equipement -->
+	<xs:simpleType name="TEquipement">
+		<xs:annotation>
+			<xs:documentation>Enumération représentant les types d'équipements.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value="WEAPON"/>
+			<xs:enumeration value="EQNBC"/>
+			<xs:enumeration value="AIR"/>
+			<xs:enumeration value="EQINGE"/>
+			<xs:enumeration value="VEHICU"/>
+			<xs:enumeration value="EQELECT"/>
+			<xs:enumeration value="BUILD"/>
+			<xs:enumeration value="OTHEREQ"/>
+			<!--xs:enumeration value="None"/>
+			<xs:enumeration value="Arme"/>
+			<xs:enumeration value="Equipement NBC"/>
+			<xs:enumeration value="Aeronef"/>
+			<xs:enumeration value="Equipement du genie"/>
+			<xs:enumeration value="Vehicule"/>
+			<xs:enumeration value="Equipement electronique"/>
+			<xs:enumeration value="Batiment"/>
+			<xs:enumeration value="Autre type d’equipement"/-->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Categories Equipements -->
+	<xs:simpleType name="TEquipementCategorie">
+		<xs:annotation>
+			<xs:documentation>Enumération représentant les catégories d'équipements.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value="FXD"/>
+			<xs:enumeration value="RTRY"/>
+			<xs:enumeration value="AMBUL"/>
+			<xs:enumeration value="APC"/>
+			<xs:enumeration value="APCREC"/>
+			<xs:enumeration value="ARMRCC"/>
+			<xs:enumeration value="ARVELT"/>
+			<xs:enumeration value="ASSV"/>
+			<xs:enumeration value="AUTOMO"/>
+			<xs:enumeration value="BICYCL"/>
+			<xs:enumeration value="BTHVRE"/>
+			<xs:enumeration value="BTMDRE"/>
+			<xs:enumeration value="BUS"/>
+			<xs:enumeration value="CCTRCK"/>
+			<xs:enumeration value="FFVEH"/>
+			<xs:enumeration value="HETVEH"/>
+			<xs:enumeration value="MAIVEH"/>
+			<xs:enumeration value="MHVEH"/>
+			<xs:enumeration value="MILUV"/>
+			<xs:enumeration value="MOTCYC"/>
+			<xs:enumeration value="NKN"/>
+			<xs:enumeration value="NOS"/>
+			<xs:enumeration value="SEMI"/>
+			<xs:enumeration value="TRACTR"/>
+			<xs:enumeration value="TRAILR"/>
+			<xs:enumeration value="TRLBUS"/>
+			<xs:enumeration value="TRUCK"/>
+			<!-- aeronef -->
+			<!-- vehicule -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Sous-Categories Equipements -->
+	<xs:simpleType name="TEquipementSousCategorie">
+		<xs:annotation>
+			<xs:documentation>Enumération représentant les sous-catégories d'équipements.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value="AEWCON"/>
+			<xs:enumeration value="AIRTRI"/>
+			<xs:enumeration value="AIRTRL"/>
+			<xs:enumeration value="AIRTRS"/>
+			<xs:enumeration value="ANTARM"/>
+			<xs:enumeration value="ASWAIR"/>
+			<xs:enumeration value="ATTAIR"/>
+			<xs:enumeration value="ATTHEL"/>
+			<xs:enumeration value="AUTOGY"/>
+			<xs:enumeration value="BOMBIR"/>
+			<xs:enumeration value="BOMBLR"/>
+			<xs:enumeration value="BOMBSR"/>
+			<xs:enumeration value="CMDCTR"/>
+			<xs:enumeration value="DRONE"/>
+			<xs:enumeration value="ELCCNM"/>
+			<xs:enumeration value="EWAIR"/>
+			<xs:enumeration value="FIGBOM"/>
+			<xs:enumeration value="FIGHTR"/>
+			<xs:enumeration value="HELHVL"/>
+			<xs:enumeration value="HELLGL"/>
+			<xs:enumeration value="HELMDL"/>
+			<xs:enumeration value="HELREC"/>
+			<xs:enumeration value="IMINGT"/>
+			<xs:enumeration value="MEDEVC"/>
+			<xs:enumeration value="MINWAR"/>
+			<xs:enumeration value="NKN"/>
+			<xs:enumeration value="NOS"/>
+			<xs:enumeration value="RECAIR"/>
+			<xs:enumeration value="SAR"/>
+			<xs:enumeration value="SIINGA"/>
+			<xs:enumeration value="TANAIR"/>
+			<xs:enumeration value="TRAAIR"/>
+			<xs:enumeration value="UAV"/>
+			<xs:enumeration value="UTIAIR"/>
+			<!-- aeronef -->
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
