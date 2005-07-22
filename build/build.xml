@@ -142,7 +142,8 @@
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,MT_Thread,MT_Time,
                          ASN,
-                         asn1per,qtmain,qt-mt333">
+                         asn1per,qtmain,qt-mt333"
+                   moc="LMP_App,LMP_MainWindow">
             <syslibset libs="user32,wsock32,winmm"/>
             <includepath path="${include.dir}/ASN"/>
         </build-app>                                
