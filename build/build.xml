@@ -94,7 +94,7 @@
             <defineset define="MOS_USE_INLINE"/> 
         </build-app>        
         
-        <!-- A corriger excludes (_GEN_)-->
+        <!-- A corriger excludes="**/MOS_**_Gen.*" -->
         <build-app name="MOS_Light2" 
                    subsystem="gui"
                    excludes="**/font/*,**/MOS_**_Gen.*" 
@@ -113,7 +113,8 @@
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
                          HLA,libfedtime,
                          MIL,
-                         qtmain,qt-mt333,xerces-c_2">
+                         qtmain,qt-mt333,xerces-c_2"
+                    moc="HLA_MainWindow,HLA_CreateFederationBox">
             <syslibset libs="wsock32"/>
         </build-app>   
 
