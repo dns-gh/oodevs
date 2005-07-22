@@ -32,6 +32,7 @@ DotationPersonnel ::= SEQUENCE
 {
     rang                         EnumHumanRank,
     nb-total                     INTEGER (0..max-uint32), 
+    nb-operationnels             INTEGER (0..max-uint32), 
     nb-morts                     INTEGER (0..max-uint32), 
     nb-blesses                   INTEGER (0..max-uint32), 
     nb-blesses-mentaux           INTEGER (0..max-uint32), 

@@ -138,7 +138,8 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , bCanSortHumans_                            ( false )
     , bCanDiagnoseHumans_                        ( false )
     , bCanHealWounds_                            ( false )
-    , rConvoyTransporterUCapacity_               ( 0. )
+    , rConvoyTransporterWeightCapacity_          ( 0. )
+    , rConvoyTransporterVolumeCapacity_          ( 0. )
     , nConvoyTransporterLoadingTime_             ( 0 )
     , nConvoyTransporterUnloadingTime_           ( 0 )
     , bConvoyCommander_                          ( false )
@@ -618,9 +619,14 @@ void PHY_ComposanteTypePion::InitializeLogisticSupply( MIL_InputArchive& archive
 
     if( archive.Section( "Transporteur", MIL_InputArchive::eNothing ) )
     {
+        archive.Section( "Capacite" );
+        archive.ReadField( "Masse" , rConvoyTransporterWeightCapacity_, CheckValueGreater( 0. ) );
+        archive.ReadField( "Volume", rConvoyTransporterVolumeCapacity_, CheckValueGreater( 0. ) );
+        archive.EndSection(); // Capacite
+
         MT_Float rLoadingTimeTmp;
         MT_Float rUnloadingTimeTmp;
-        archive.ReadField    ( "Capacite"              , rConvoyTransporterUCapacity_, CheckValueGreater( 0. ) );
+       
         archive.ReadTimeField( "TempsChargementMoyen"  , rLoadingTimeTmp             , CheckValueGreater( 0. ) );
         archive.ReadTimeField( "TempsDechargementMoyen", rUnloadingTimeTmp           , CheckValueGreater( 0. ) );
 

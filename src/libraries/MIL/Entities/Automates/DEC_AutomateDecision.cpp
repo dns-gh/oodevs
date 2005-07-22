@@ -209,7 +209,6 @@ void DEC_AutomateDecision::CleanStateAfterCrash()
     Reset();
     while( GetContext().GetLocation() != 0 )
         GetContext().ExitContext();
-    MT_LOG_ERROR_MSG( MT_FormatString( "Automate '%s' : mission impossible", pAutomate_->GetName().c_str() ) );
 }
 
 // =============================================================================
@@ -236,6 +235,7 @@ void DEC_AutomateDecision::UpdateDecision()
 #endif    
     {
         assert( pAutomate_ );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Automate %d ('%s') : Mission '%s' impossible", pAutomate_->GetID(), pAutomate_->GetName().c_str(), pAutomate_->GetOrderManager().GetMission() ? pAutomate_->GetOrderManager().GetMission()->GetName() : "Default" ) );
         MIL_RC::pRcMissionImpossible_->Send( *pAutomate_, MIL_RC::eRcTypeMessage );
         pAutomate_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();

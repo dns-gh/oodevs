@@ -540,11 +540,10 @@ void LAU_Workspace::ComputeListMission()
 
     // Search all sub directories in the Exercises Directory (not recursively)
     MT_DirectoryBrowser browserDir;
-    browserDir.FindFiles( strScipioBaseExercises_, "*", MT_DirectoryBrowser::eChildDirs, false );
-
-    const MT_DirEntryList& entryList = browserDir.GetEntryList();    
-
-    for( MT_DirEntryList::const_iterator entryIt = entryList.begin(); entryIt != entryList.end(); ++entryIt )
+    browserDir.FindFiles( strScipioBaseExercises_, "*", MT::eChildDirs, false );
+    
+    const MT::T_DirEntryList& entryList = browserDir.GetEntryList();    
+    for( MT::T_DirEntryList::const_iterator entryIt = entryList.begin(); entryIt != entryList.end(); ++entryIt )
     {
         const MT_DirEntry& entry = *entryIt;
         
@@ -603,27 +602,27 @@ void LAU_Workspace::ComputeListCheckpoint( const int nExerciceID_ToList )
     // Search all sub directories in the Exercises Directory (not recursively)
     // le browserDir ne doit pas etre effacé avant l'envoi du message!
     MT_DirectoryBrowser browserDirExecercices;
-    browserDirExecercices.FindFiles( strScipioBaseExercises_, "*", MT_DirectoryBrowser::eChildDirs, false );
+    browserDirExecercices.FindFiles( strScipioBaseExercises_, "*", MT::eChildDirs, false );
 
     int nNumScenario = 1;
-    const MT_DirEntryList& entryList = browserDirExecercices.GetEntryList();
+    const MT::T_DirEntryList& entryList = browserDirExecercices.GetEntryList();
 
-    for( MT_DirEntryList::const_iterator entryIt = entryList.begin(); entryIt != entryList.end(); ++entryIt )
+    for( MT::T_DirEntryList::const_iterator entryIt = entryList.begin(); entryIt != entryList.end(); ++entryIt )
     {
         // pour chaque scenario, on cherche les checkpoints
 
         const MT_DirEntry& entry = *entryIt;
 
         MT_DirectoryBrowser browserDirCheckpoint;
-        browserDirCheckpoint.FindFiles( entry.fullName_ + "\\" + strScipioBaseCheckpoints_, "*", MT_DirectoryBrowser::eChildDirs, false );
+        browserDirCheckpoint.FindFiles( entry.fullName_ + "\\" + strScipioBaseCheckpoints_, "*", MT::eChildDirs, false );
 
         // trie par nom de fichier, ainsi tout les checkpoint d'un meme exercice sont a la suite
         browserDirCheckpoint.SetSortType( MT_DirectoryBrowser::eSortByName );
-        const MT_DirEntryList& entryCheckpointList = browserDirCheckpoint.GetEntryList();
+        const MT::T_DirEntryList& entryCheckpointList = browserDirCheckpoint.GetEntryList();
 
         int nNumExercicePred = -1000; // un numero impossible, (pour initialisé les var dans la boucle)
         int nNumCheckpoint   = -1000; // valeur impossible, juste pour que le compilo ne rale pas
-        for( MT_DirEntryList::const_iterator entryItCheckpoint = entryCheckpointList.begin(); entryItCheckpoint != entryCheckpointList.end(); ++entryItCheckpoint )
+        for( MT::T_DirEntryList::const_iterator entryItCheckpoint = entryCheckpointList.begin(); entryItCheckpoint != entryCheckpointList.end(); ++entryItCheckpoint )
         {
             const MT_DirEntry& entryCheckpoint = *entryItCheckpoint;
 

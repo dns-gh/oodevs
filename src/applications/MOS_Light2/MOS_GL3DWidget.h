@@ -19,7 +19,7 @@
 #ifndef __MOS_GL3DWidget_h_
 #define __MOS_GL3DWidget_h_
 
-#include "graphics/Widget3D.h"
+#include "graphics/MapWidget3D.h"
 #include "MOS_Types.h"
 #include "MOS_MapEventFilter_ABC.h"
 
@@ -32,7 +32,7 @@ class QTimer;
 */
 // Created: AGE 2005-05-09
 // =============================================================================
-class MOS_GL3DWidget : public Widget3D
+class MOS_GL3DWidget : public MapWidget3D
 {
     Q_OBJECT;
     friend class MOS_GLTool;

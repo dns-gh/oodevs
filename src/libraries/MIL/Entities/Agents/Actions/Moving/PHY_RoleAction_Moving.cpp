@@ -29,12 +29,13 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
-#include "TER/TER_DynaObject_ABC.h"
-#include "TER/TER_World.h"
 #include "Network/NET_ASN_Messages.h"
 #include "MIL_AgentServer.h"
+#include "TER/TER_DynaObject_ABC.h"
+#include "TER/TER_World.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
 

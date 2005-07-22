@@ -19,7 +19,6 @@
 #include "MOS_World.h"
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServerMsgMgr.h"
-#include "MOS_GraphWindow.h"
 #include "MOS_WorldWidget.h"
 
 #include "MOS_MagicPos.h"
@@ -47,9 +46,6 @@
 #include <qwidgetstack.h>
 
 #include <sstream>
-
-#include "aistrip.h"
-#include "aibar.h"
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MainWindow constructor
@@ -125,7 +121,7 @@ MOS_MainWindow::MOS_MainWindow()
     statusBar()->addWidget( pNetBytesOutLabel_  , 0, TRUE );   
     statusBar()->addWidget( pSIMTimeLabel_      , 0, TRUE );   
     
-    pGraphWindow_ = new MOS_GraphWindow( *this );
+//    pGraphWindow_ = new MOS_GraphWindow( *this );
     
     setMinimumWidth( 950 );
     setMinimumHeight( 500 );
@@ -150,7 +146,7 @@ MOS_MainWindow::~MOS_MainWindow()
 //-----------------------------------------------------------------------------
 void MOS_MainWindow::Initialize()
 {
-    pGraphWindow_->hide();
+//    pGraphWindow_->hide();
 
     pAgentEditor_->Initialize();
     pAgentSelector_->Initialize();
@@ -287,7 +283,7 @@ void MOS_MainWindow::NotifyMousePositionHasChanged( const std::string& strMGRSMo
 //-----------------------------------------------------------------------------
 void MOS_MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    pGraphWindow_->close();
+//    pGraphWindow_->close();
     pEvent->accept();
 }
 

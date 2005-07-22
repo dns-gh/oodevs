@@ -45,8 +45,6 @@ public:
 
     //! @name Operations
     //@{
-    uint GetLoadingTime  () const;
-    uint GetUnloadingTime() const;
     uint GetTravelTime   () const;
     //@}
 };

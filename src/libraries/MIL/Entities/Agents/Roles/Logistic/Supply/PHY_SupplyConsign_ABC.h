@@ -47,9 +47,9 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_AutomateLOG& GetSupplyingAutomate() const;
-    virtual const MIL_Automate*    GetSuppliedAutomate () const = 0;
-    virtual       MT_Float         GetUVolumeRequested () const = 0;
+                  MIL_AutomateLOG& GetSupplyingAutomate  () const;
+    virtual const MIL_Automate*    GetSuppliedAutomate   () const = 0;
+    virtual       void             GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const = 0;
     //@}
 
     //! @name Network

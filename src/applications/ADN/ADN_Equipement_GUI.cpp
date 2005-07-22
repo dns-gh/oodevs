@@ -9,9 +9,9 @@
 //
 // $Created: APE 2004-12-06 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 22/06/05 15:07 $
-// $Revision: 23 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:29 $
+// $Revision: 25 $
 // $Workfile: ADN_Equipement_GUI.cpp $
 //
 // *****************************************************************************
@@ -105,14 +105,19 @@ void ADN_Equipement_GUI::BuildGeneric( E_TypeDotation nType, QTabWidget* pParent
     pListView->GetConnector().Connect( & data_.GetDotation( nType ).categories_ );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroupBox = new QGroupBox( 3, Qt::Horizontal, ENT_Tr::ConvertFromTypeDotation( nType, ENT_Tr_ABC::eToTr ).c_str(), pPage );
+    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromTypeDotation( nType, ENT_Tr_ABC::eToTr ).c_str(), pPage );
 
-    builder.AddField<ADN_EditLine_String>( pGroupBox, tr( "Name" ), vConnectors[eName] );
-    builder.AddField<ADN_EditLine_String>( pGroupBox, tr( "CodeEMAT6" ), vConnectors[eGenEMAT6Code] );
-    builder.AddField<ADN_EditLine_String>( pGroupBox, tr( "CodeEMAT8" ), vConnectors[eGenEMAT8Code] );
-    builder.AddField<ADN_EditLine_String>( pGroupBox, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode] );
-    builder.AddField<ADN_EditLine_String>( pGroupBox, tr( "CodeNNO" ), vConnectors[eGenNNOCode] );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Nbr in unit volume" ), vConnectors[eNbrInUnitVolume], 0, eGreaterZero );
+    QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vConnectors[eName] );
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeEMAT6" ), vConnectors[eGenEMAT6Code] );
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeEMAT8" ), vConnectors[eGenEMAT8Code] );
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode] );
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeNNO" ), vConnectors[eGenNNOCode] );
+
+    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
+    builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ePackageNbr], 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package weight" ), vConnectors[ePackageWeight], tr( "T" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package volume" ), vConnectors[ePackageVolume], tr( "m3" ), eGreaterZero );
 
     pListView->SetItemConnectors(vConnectors);
 
@@ -148,7 +153,13 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeLFRIL" ), vConnectors[eLFRILCode] );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "CodeNNO" ), vConnectors[eNNOCode] );
     builder.AddEnumField<E_MunitionType>( pHolder, tr( "Type" ), vConnectors[eType], ADN_Tr::ConvertFromMunitionType );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Nbr in unit volume" ), vConnectors[eAmmoNbrInUnitVolume], 0, eGreaterZero );
+
+    
+    QGroupBox* pPackagingGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox ); 
+    builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Nbr per package" ), vConnectors[eAmmoPackageNbr], 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package weight" ), vConnectors[eAmmoPackageWeight], tr( "T" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPackagingGroup, tr( "Package volume" ), vConnectors[eAmmoPackageVolume], tr( "m3" ), eGreaterZero );
+
     builder.AddField<ADN_CheckBox>( pHolder, tr( "Tranche D" ), vConnectors[eTrancheD] );
 
 

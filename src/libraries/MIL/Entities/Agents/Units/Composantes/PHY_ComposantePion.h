@@ -103,7 +103,7 @@ public:
     //@{
     bool     CanConvoyCommand                 () const;
     bool     CanConvoyTransport               () const;
-    MT_Float GetConvoyTransporterUCapacity    () const;
+    void     GetConvoyTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
     uint     GetConvoyTransporterLoadingTime  () const;
     uint     GetConvoyTransporterUnloadingTime() const;
     //@}

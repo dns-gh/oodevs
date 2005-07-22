@@ -9,9 +9,9 @@
 //
 // $Created: APE 2004-11-15 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_Data.h $
-// $Author: Ape $
-// $Modtime: 21/04/05 11:03 $
-// $Revision: 12 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:11 $
+// $Revision: 13 $
 // $Workfile: ADN_Equipement_Data.h $
 //
 // *****************************************************************************
@@ -70,7 +70,9 @@ public:
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
-        ADN_Type_Double rNbrInUnitVolume_;
+        ADN_Type_Double rNbrInPackage_;
+        ADN_Type_Double rPackageVolume_;
+        ADN_Type_Double rPackageWeight_;
     };
 
     typedef ADN_Type_Vector_ABC<CategoryInfo> T_CategoryInfos_Vector;

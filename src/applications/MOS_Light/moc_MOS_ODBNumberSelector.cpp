@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MOS_ODBNumberSelector meta object code from reading C++ file 'MOS_ODBNumberSelector.h'
 **
-** Created: lun. 11. juil. 18:50:11 2005
+** Created: jeu. 21. juil. 13:57:56 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MOS_ODBNumberSelector.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

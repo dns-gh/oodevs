@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MOS_MainWindow meta object code from reading C++ file 'MOS_MainWindow.h'
 **
-** Created: lun. 11. juil. 18:50:12 2005
+** Created: jeu. 21. juil. 14:16:29 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MOS_MainWindow.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

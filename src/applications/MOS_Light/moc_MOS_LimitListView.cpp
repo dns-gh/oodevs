@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MOS_LimitListView meta object code from reading C++ file 'MOS_LimitListView.h'
 **
-** Created: lun. 11. juil. 18:50:11 2005
+** Created: jeu. 21. juil. 13:57:41 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MOS_LimitListView.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

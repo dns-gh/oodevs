@@ -129,15 +129,14 @@ void PHY_SupplyDotationState::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationState::GetUVolumeRequested
-// Created: NLD 2005-01-27
+// Name: PHY_SupplyDotationState::GetMerchandiseToConvoy
+// Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_SupplyDotationState::GetUVolumeRequested() const
+void PHY_SupplyDotationState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const
 {
-    MT_Float rUVolume = 0.;
+    container.clear();
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
-        rUVolume += it->second.GetUVolumeRequested();
-    return rUVolume;
+        container[ it->first ] += it->second.GetTotalReservedValue();
 }
 
 // -----------------------------------------------------------------------------

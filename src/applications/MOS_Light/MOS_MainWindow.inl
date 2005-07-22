@@ -70,12 +70,12 @@ QStatusBar& MOS_MainWindow::GetStatusBar() const
 // Name: MOS_MainWindow::GetGraphWindow
 // Created: NLD 2002-10-14
 //-----------------------------------------------------------------------------
-inline
-MOS_GraphWindow& MOS_MainWindow::GetGraphWindow() const
-{
-    assert( pGraphWindow_ );
-    return *pGraphWindow_;
-}
+//inline
+//MOS_GraphWindow& MOS_MainWindow::GetGraphWindow() const
+//{
+//    assert( pGraphWindow_ );
+//    return *pGraphWindow_;
+//}
 
 
 //-----------------------------------------------------------------------------

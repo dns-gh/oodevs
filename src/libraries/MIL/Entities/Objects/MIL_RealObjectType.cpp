@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "MIL_RealObjectTypeFilter.h"
 
 #include "MIL_FosseAntiChar.h"
 #include "MIL_Abattis.h"

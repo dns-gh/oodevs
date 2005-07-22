@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
           void          AddRequest         ( const PHY_SupplyDotationRequest& request );
-          MT_Float      GetUVolumeRequested() const;
+          void          GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
     const MIL_Automate& GetSuppliedAutomate() const;
           bool          IsSupplying        ( const PHY_DotationCategory& dotationCategory ) const;
 

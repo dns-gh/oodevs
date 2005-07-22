@@ -32,10 +32,12 @@ public:
         eInfoAssault,
         eInfoRetreat,
         eInfoBackup,
+        eInfoMineClearance,
+        eNbrPathType
     };
 
 public:
-     DEC_PathType();
+     DEC_PathType( E_PathType nType );
     ~DEC_PathType();
 
     //! @name Operations
@@ -54,7 +56,8 @@ public:
     static std::vector< std::pair< MT_Float, MT_Float > > InitializeObjectCosts();
     //@}
 
-    E_PathType pathType_;
+private:
+    E_PathType nPathType_;
 };
 
 #   include "DEC_PathType.inl"

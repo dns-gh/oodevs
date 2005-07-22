@@ -115,25 +115,25 @@ bool PHY_DotationCategory::operator!=( const PHY_DotationCategory& rhs ) const
 }
 
 // =============================================================================
-// TOOLS
+// PACKAGING
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::ConvertDotationToUVolume
-// Created: NLD 2005-01-27
+// Name: PHY_DotationCategory::GetWeight
+// Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_DotationCategory::ConvertDotationToUVolume( MT_Float rValue ) const
+MT_Float PHY_DotationCategory::GetWeight() const
 {
-    return rValue * rUVolume_;
+    return rWeight_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::ConvertUVolumeToDotation
-// Created: NLD 2005-02-10
+// Name: PHY_DotationCategory::GetVolume
+// Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_DotationCategory::ConvertUVolumeToDotation( MT_Float rValue ) const
+MT_Float PHY_DotationCategory::GetVolume() const
 {
-    return rValue / rUVolume_;
+    return rVolume_;
 }

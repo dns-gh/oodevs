@@ -92,6 +92,7 @@ private:
         template< typename Archive > void serialize( Archive&, const uint );
         
         uint nNbrTotal_;
+        uint nNbrOperational_;
         uint nNbrDead_;
         uint nNbrWounded_;
         uint nNbrMentalDiseased_;

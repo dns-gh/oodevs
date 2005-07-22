@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-07-17 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_GUI.h $
-// $Author: Ape $
-// $Modtime: 22/06/05 15:03 $
-// $Revision: 17 $
+// $Author: Nld $
+// $Modtime: 20/07/05 13:50 $
+// $Revision: 18 $
 // $Workfile: ADN_Composantes_GUI.h $
 //
 //*****************************************************************************
@@ -97,9 +97,10 @@ public:
         eTreatsShock,
         eIsLogSupply,
         eIsLogCarrier,
-        eLogCarryCapacity,
-        eLogLoadTimePerTon,
-        eLogUnloadTimePerTon,
+        eLogCarryWeightCapacity,
+        eLogCarryVolumeCapacity,
+        eLogLoadTime,
+        eLogUnloadTime,
         eIsConvoyLeader,
         eIsMaintenance,
         eIsTower,

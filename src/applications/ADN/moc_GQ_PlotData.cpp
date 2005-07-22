@@ -1,12 +1,14 @@
 /****************************************************************************
 ** GQ_PlotData meta object code from reading C++ file 'GQ_PlotData.h'
 **
-** Created: jeu. 7. juil. 13:46:09 2005
+** Created: jeu. 21. juil. 11:15:55 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "GQ_PlotData.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

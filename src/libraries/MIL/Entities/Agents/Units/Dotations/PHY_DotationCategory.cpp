@@ -28,12 +28,12 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , nMosID_            ( 0 )
     , pIndirectFireData_ ( 0 )
     , attritions_        ()
-    , rUVolume_          ( 0. )
+    , rWeight_           ( 0. )
+    , rVolume_           ( 0. ) 
 {
     archive.ReadField( "MosID"                   , nMosID_   );
-    archive.ReadField( "NombreDansVolumeUnitaire", rUVolume_, CheckValueGreater( 0. ) );
-    rUVolume_ = 1. / rUVolume_;
 
+    InitializePackagingData   ( archive );
     InitializeAttritions      ( archive );
     InitializeIndirectFireData( archive );
 
@@ -58,6 +58,22 @@ PHY_DotationCategory::~PHY_DotationCategory()
 
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::InitializePackagingData
+// Created: NLD 2005-07-13
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::InitializePackagingData( MIL_InputArchive& archive )
+{
+    MT_Float rNbrInPackage;
+    archive.Section( "Conditionnement" );
+    archive.ReadField( "Nombre", rNbrInPackage, CheckValueGreater( 0. ) );
+    archive.ReadField( "Masse" , rWeight_, CheckValueGreater( 0. ) );
+    archive.ReadField( "Volume", rVolume_, CheckValueGreater( 0. ) );
+    archive.EndSection(); // Conditionnement
+
+    rWeight_ /= rNbrInPackage;
+    rVolume_ /= rNbrInPackage;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::InitializeAttritions

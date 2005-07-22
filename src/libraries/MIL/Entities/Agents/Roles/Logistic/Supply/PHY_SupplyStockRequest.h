@@ -49,13 +49,12 @@ public:
     MT_Float Supply                   () const;
     void     Cancel                   ();
 
-    MT_Float RemoveConvoyedStock      ( MT_Float rUVolumeToRemove );
+    void     RemoveConvoyedStock      ( MT_Float rNbrToRemove );
     //@}
 
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetDotationCategory   () const;
-          MT_Float              GetUVolumeRequested   () const;
           MIL_AutomateLOG*      GetSupplyingAutomate  () const;
           MT_Float              GetTotalRequestedValue() const;
           MT_Float              GetTotalReservedValue () const;

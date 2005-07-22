@@ -47,9 +47,9 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_DotationCategory& GetDotationCategory () const;
-          MT_Float              GetUVolumeRequested () const;
-          MIL_AutomateLOG*      GetSupplyingAutomate() const;
+    const PHY_DotationCategory& GetDotationCategory  () const;
+          MIL_AutomateLOG*      GetSupplyingAutomate () const;
+          MT_Float              GetTotalReservedValue() const;          
     //@}
 
     //! @name Network

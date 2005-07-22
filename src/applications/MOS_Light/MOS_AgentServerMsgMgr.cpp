@@ -47,7 +47,6 @@
 #include "MOS_LogMedicalConsign.h"
 
 //$$$ TMP
-#include "MOS_GraphWindow.h"
 #include "MOS_MainWindow.h"
 
 #include <sstream>
@@ -312,7 +311,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/,
     input >> rActionTime;
     input >> rMainLoopTime;
 
-    MOS_App::GetApp().GetMainWindow().GetGraphWindow().AddValues( rMainLoopTime, rPerceptionTime, rDecisionTime, rActionTime  );
+    //MOS_App::GetApp().GetMainWindow().GetGraphWindow().AddValues( rMainLoopTime, rPerceptionTime, rDecisionTime, rActionTime  );
 }
 
 //-----------------------------------------------------------------------------

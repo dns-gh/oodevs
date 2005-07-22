@@ -167,15 +167,6 @@ void PHY_SupplyDotationRequest::ReserveStocks()
     assert( rTotalReservedValue_ > 0. );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationRequest::GetUVolumeRequested
-// Created: NLD 2005-02-02
-// -----------------------------------------------------------------------------
-MT_Float PHY_SupplyDotationRequest::GetUVolumeRequested() const
-{
-    return GetDotationCategory().ConvertDotationToUVolume( rTotalReservedValue_ );
-}
-
 // =============================================================================
 // NETWORK
 // =============================================================================

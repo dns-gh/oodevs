@@ -46,7 +46,7 @@ class MOS_WorldWidget;
 class MOS_AgentEditor;
 class MOS_AgentListView;
 class MOS_LogWindow;
-class MOS_GraphWindow;
+//class MOS_GraphWindow;
 class MOS_LimaListView;
 class MOS_LimitListView;
 class MOS_AttrEditor;
@@ -88,7 +88,7 @@ public:
     QPopupMenu&         GetMainMenu       () const;
     QMenuBar&           GetMenuBar        () const;
     QStatusBar&         GetStatusBar      () const;
-    MOS_GraphWindow&    GetGraphWindow    () const;
+//    MOS_GraphWindow&    GetGraphWindow    () const;
     MOS_WorldWidget&    GetWorldWidget    () const;
     MOS_LimaListView&   GetLimaSelector   () const;
     MOS_LimaListView&   GetLimaEditor     () const;
@@ -164,7 +164,7 @@ private:
     
 
 private:
-    MOS_GraphWindow*         pGraphWindow_;
+//    MOS_GraphWindow*         pGraphWindow_;
 
     // Connection
     MOS_SIMControl*          pSimControl_;

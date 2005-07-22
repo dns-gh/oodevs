@@ -42,10 +42,10 @@ public:
     //! @name Operations
     //@{
           void             AddRequest         ( const PHY_SupplyStockRequest& request );
-          MT_Float         GetUVolumeRequested() const;
+          void             GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
     const MIL_AutomateLOG& GetSuppliedAutomate() const;
           bool             IsSupplying        ( const PHY_DotationCategory& dotationCategory ) const;
-          void             RemoveConvoyedStock( MT_Float rUVolumeRemoved );
+          void             RemoveConvoyedStock   ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
 
           void             Supply      () const;
           void             CancelSupply();

@@ -894,6 +894,26 @@
         <source>Max speed</source>
         <translation>Vitesse max</translation>
     </message>
+    <message>
+        <source>m3</source>
+        <translation>m3</translation>
+    </message>
+    <message>
+        <source>Average load time</source>
+        <translation>Temps moyen de chargement</translation>
+    </message>
+    <message>
+        <source>Average unload time</source>
+        <translation>Temps moyen de déchargement</translation>
+    </message>
+    <message>
+        <source>Max weight carried</source>
+        <translation>Masse max transportable</translation>
+    </message>
+    <message>
+        <source>Max volume carried</source>
+        <translation>Volume max transportable</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>
@@ -2396,7 +2416,7 @@
     </message>
     <message>
         <source>Nbr in unit volume</source>
-        <translation>Nbr dans volume unitaire</translation>
+        <translation type="obsolete">Nbr dans volume unitaire</translation>
     </message>
     <message>
         <source>CodeEMAT6</source>
@@ -2509,6 +2529,30 @@
     <message>
         <source>Flare/Smoke ammo parameters</source>
         <translation>Paramètres Obus fumigène / Fusée éclairante</translation>
+    </message>
+    <message>
+        <source>Packaging</source>
+        <translation>Condtionnement</translation>
+    </message>
+    <message>
+        <source>Nbr per package</source>
+        <translation>Nombre par paquetage</translation>
+    </message>
+    <message>
+        <source>Package weight</source>
+        <translation>Masse du paquetage</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <translation>T</translation>
+    </message>
+    <message>
+        <source>Package volume</source>
+        <translation>Volume du paquetage</translation>
+    </message>
+    <message>
+        <source>m3</source>
+        <translation>m3</translation>
     </message>
 </context>
 <context>

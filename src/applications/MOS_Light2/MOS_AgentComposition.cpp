@@ -111,6 +111,7 @@ void MOS_AgentComposition::SetTroops( const ASN1T_MsgUnitDotations& asnMsg )
             pTable = sousOfficiers_;
 
         pTable[ eTroopHealthStateTotal ] = dot.nb_total;
+        pTable[ eTroopHealthStateOperational ] = dot.nb_operationnels;
         pTable[ eTroopHealthStateDead ] = dot.nb_morts;
         pTable[ eTroopHealthStateWounded ] = dot.nb_blesses;
         pTable[ eTroopHealthStateMentalWounds ] = dot.nb_blesses_mentaux;

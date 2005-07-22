@@ -335,7 +335,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
     }
     
-    DIA_Workspace::Instance().WriteDebugFile(); //$$$$$$$ NLD ??
+    DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
 
     // Debugger
     uint nDebuggerPort;

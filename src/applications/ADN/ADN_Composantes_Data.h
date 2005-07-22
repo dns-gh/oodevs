@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-07-17 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_Data.h $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:09 $
-// $Revision: 19 $
+// $Author: Nld $
+// $Modtime: 20/07/05 13:46 $
+// $Revision: 20 $
 // $Workfile: ADN_Composantes_Data.h $
 //
 //*****************************************************************************
@@ -168,9 +168,10 @@ public:
 
     public:
         ADN_Type_Bool bIsCarrier_;
-        ADN_Type_Double rCapacity_;
-        ADN_Type_Double rLoadTimePerTon_;
-        ADN_Type_Double rUnloadTimePerTon_;
+        ADN_Type_Double rWeight_;
+        ADN_Type_Double rVolume_;
+        ADN_Type_Double rLoadTime_;
+        ADN_Type_Double rUnloadTime_;
 
         ADN_Type_Bool bIsConvoyLeader_;
     };

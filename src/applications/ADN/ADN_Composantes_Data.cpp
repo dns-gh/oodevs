@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-07-17 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_Data.cpp $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:10 $
-// $Revision: 25 $
+// $Author: Nld $
+// $Modtime: 20/07/05 13:48 $
+// $Revision: 26 $
 // $Workfile: ADN_Composantes_Data.cpp $
 //
 //*****************************************************************************
@@ -474,9 +474,10 @@ void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( MT_OutputArchive_A
 ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 : ADN_DataTreeNode_ABC()
 , bIsCarrier_         ( false )
-, rCapacity_          ( 0 )
-, rLoadTimePerTon_    ( 0 )
-, rUnloadTimePerTon_  ( 0 )
+, rWeight_            ( 0 )
+, rVolume_            ( 0 )
+, rLoadTime_          ( 0 )
+, rUnloadTime_        ( 0 )
 , bIsConvoyLeader_    ( false )
 {
 }
@@ -507,13 +508,13 @@ std::string ADN_Composantes_Data::LogSupplyInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
 {
-    bIsCarrier_ = src.bIsCarrier_.GetData();
-    rCapacity_ = src.rCapacity_.GetData();
-    rLoadTimePerTon_ = src.rLoadTimePerTon_.GetData();
-    rUnloadTimePerTon_ = src.rUnloadTimePerTon_.GetData();
+    bIsCarrier_  = src.bIsCarrier_.GetData();
+    rWeight_     = src.rWeight_.GetData();
+    rVolume_     = src.rVolume_.GetData();
+    rLoadTime_   = src.rLoadTime_.GetData();
+    rUnloadTime_ = src.rUnloadTime_.GetData();
     bIsConvoyLeader_ = src.bIsConvoyLeader_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyInfos::ReadArchive
@@ -524,9 +525,13 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& inp
     if( input.Section( "Transporteur", ADN_XmlInput_Helper::eNothing ) )
     {
         bIsCarrier_ = true;
-        input.ReadField( "Capacite", rCapacity_ );
-        input.ReadTimeField( "TempsChargementMoyen", rLoadTimePerTon_ );
-        input.ReadTimeField( "TempsDechargementMoyen", rUnloadTimePerTon_ );
+
+        input.Section( "Capacite" );
+        input.ReadField( "Masse", rWeight_ );
+        input.ReadField( "Volume", rVolume_ );
+        input.EndSection(); // Capacite
+        input.ReadTimeField( "TempsChargementMoyen", rLoadTime_ );
+        input.ReadTimeField( "TempsDechargementMoyen", rUnloadTime_ );
         input.EndSection(); // Transporteur
     }
 
@@ -547,9 +552,12 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& o
     if( bIsCarrier_.GetData() )
     {
         output.Section( "Transporteur" );
-        output.WriteField( "Capacite", rCapacity_.GetData() );
-        output.WriteField( "TempsChargementMoyen", ADN_Tools::SecondToString( rLoadTimePerTon_.GetData() ) );
-        output.WriteField( "TempsDechargementMoyen", ADN_Tools::SecondToString( rUnloadTimePerTon_.GetData() ) );
+        output.Section( "Capacite" );
+        output.WriteField( "Masse" , rWeight_.GetData() );
+        output.WriteField( "Volume", rVolume_.GetData() );
+        output.EndSection();
+        output.WriteField( "TempsChargementMoyen", ADN_Tools::SecondToString( rLoadTime_.GetData() ) );
+        output.WriteField( "TempsDechargementMoyen", ADN_Tools::SecondToString( rUnloadTime_.GetData() ) );
         output.EndSection(); // Transporteur
     }
 

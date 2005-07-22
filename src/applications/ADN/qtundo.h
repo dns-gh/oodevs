@@ -25,6 +25,7 @@
 #include <qptrlist.h>
 #include <qlistbox.h>
 #include <qstringlist.h>
+#include <qaction.h>
 
 class QWidget;
 class QAction;
@@ -197,6 +198,18 @@ class QtUndoListBox : public QListBox
     private:
 	int m_undo_idx;
 	bool m_dont_update;
+};
+
+class UndoRedoAction : public QAction
+{
+    Q_OBJECT
+
+    public:
+    	UndoRedoAction(QWidget *parent) : QAction(parent) {}
+    
+    public slots:
+    	// It's a pity QAction::setText() is not a slot...
+    	void setTextSlot(const QString &text) { setText(text); }
 };
 
 #endif

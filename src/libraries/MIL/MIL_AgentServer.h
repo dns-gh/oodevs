@@ -164,7 +164,7 @@ private:
     NET_AgentServer*             pAgentServer_;
     HLA_Federate*                pFederate_;
 
-    clock_t lastStep_;
+    long lastStep_;
     
 private:
 	static MIL_AgentServer*      pTheAgentServer_;

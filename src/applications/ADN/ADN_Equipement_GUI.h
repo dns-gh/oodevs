@@ -9,9 +9,9 @@
 //
 // $Created: APE 2004-12-06 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_GUI.h $
-// $Author: Ape $
-// $Modtime: 21/04/05 16:17 $
-// $Revision: 10 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:10 $
+// $Revision: 11 $
 // $Workfile: ADN_Equipement_GUI.h $
 //
 // *****************************************************************************
@@ -51,7 +51,9 @@ public:
     enum E_AmmoGuiElements
     {
         eAmmoName,
-        eAmmoNbrInUnitVolume,
+        eAmmoPackageNbr,
+        eAmmoPackageWeight,
+        eAmmoPackageVolume,        
         eType,
         eTrancheD,
         eEMAT6Code,
@@ -75,6 +77,9 @@ public:
     enum E_GenericGuiElements
     {
         eName,
+        ePackageNbr,
+        ePackageWeight,
+        ePackageVolume,
         eNbrInUnitVolume,
         eGenEMAT6Code,
         eGenEMAT8Code,

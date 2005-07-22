@@ -227,9 +227,10 @@ void MOS_World::DrawNameObjects( const MT_Rect& viewport, QGLWidget& widget ) co
 void MOS_World::ReadGraphics( const std::string& strArchive )
 {
     MT_DirectoryBrowser browser;
-    browser.FindFiles( strArchive, "*.bin", MT_DirectoryBrowser::eFilesOnly, false );
-    const MT_DirEntryList& entryList = browser.GetEntryList();
-    for( MT_DirEntryList::const_iterator entryIt = entryList.begin(); entryIt != entryList.end(); ++entryIt )
+    browser.FindFiles( strArchive, "*.bin", MT::eFilesOnly, false );
+    const MT::T_DirEntryList& entryList = browser.GetEntryList();
+
+    for( MT::T_DirEntryList::const_iterator entryIt = entryList.begin(); entryIt != entryList.end(); ++entryIt )
     {
         const MT_DirEntry& entry = *entryIt;
         const std::string& strName = entry.fullName_;

@@ -43,7 +43,7 @@ namespace
 // Created: AGE 2005-05-09
 // -----------------------------------------------------------------------------
 MOS_GL3DWidget::MOS_GL3DWidget( QWidget* pParent )
-    : Widget3D( pParent, MOS_App::GetApp().GetWorld().GetTerrainDirectory() ) // $$$$ AGE 2005-05-13: 
+    : MapWidget3D( pParent, MOS_App::GetApp().GetWorld().GetTerrainDirectory() ) // $$$$ AGE 2005-05-13: 
     , pGLDrawer_( 0 )
     , rZFactor_( 10 )
     , rMetersPerPixel_( 100 )  // $$$$ AGE 2005-05-19: 

@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-06-24 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Tools.cpp $
-// $Author: Ape $
-// $Modtime: 5/04/05 14:36 $
-// $Revision: 10 $
+// $Author: Nld $
+// $Modtime: 21/07/05 11:41 $
+// $Revision: 11 $
 // $Workfile: ADN_Tools.cpp $
 //
 //*****************************************************************************
@@ -71,24 +71,6 @@ bool ADN_Tools::CopyFileToFile( const std::string& strSrc, const std::string& st
     return (bool)::CopyFile( strSrc.c_str(), strDest.c_str(), false );
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Tools::DeleteDirectory
-// Created: JDY 03-09-09
-//-----------------------------------------------------------------------------
-void ADN_Tools::DeleteDirectory( const std::string& strDir )
-{
-    SHFILEOPSTRUCT op;
-    op.hwnd   = 0;
-    op.wFunc  = FO_DELETE;
-    op.pFrom  = strDir.c_str();
-    op.pTo    = 0;
-    op.fFlags = FOF_SILENT;
-    op.fAnyOperationsAborted=false;
-    op.hNameMappings=0;
-    op.lpszProgressTitle=0;
-    SHFileOperation(&op);
-}
 
 
 // -----------------------------------------------------------------------------

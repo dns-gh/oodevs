@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MOS_ChangeDiplomacyDialog meta object code from reading C++ file 'MOS_ChangeDiplomacyDialog.h'
 **
-** Created: mar. 12. juil. 12:42:02 2005
+** Created: jeu. 21. juil. 15:28:03 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MOS_ChangeDiplomacyDialog.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

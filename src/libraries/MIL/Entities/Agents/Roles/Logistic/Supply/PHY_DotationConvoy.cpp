@@ -62,34 +62,6 @@ void PHY_DotationConvoy::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationConvoy::GetLoadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-uint PHY_DotationConvoy::GetLoadingTime() const
-{
-    uint nLoadingTime = 0;
-
-    for ( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-        nLoadingTime = std::max( nLoadingTime, it->pTransporter_->GetConvoyTransporterLoadingTime() );
-
-    return nLoadingTime;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationConvoy::GetUnloadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-uint PHY_DotationConvoy::GetUnloadingTime() const
-{
-    uint nUnloadingTime = 0;
-    
-    for ( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-        nUnloadingTime = std::max( nUnloadingTime, it->pTransporter_->GetConvoyTransporterUnloadingTime() );
-
-    return nUnloadingTime;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationConvoy::GetTravelTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
@@ -101,8 +73,8 @@ uint PHY_DotationConvoy::GetTravelTime() const
     const MT_Vector2D vStartPos = pConsign_->GetSupplyingAutomate() .GetAlivePionsBarycenter();
     const MT_Vector2D vEndPos   = pConsign_->GetSuppliedAutomate ()->GetAlivePionsBarycenter();
 
-    for ( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-        nTravelTime = std::max( nTravelTime, it->pTransporter_->ApproximateTravelTime( vStartPos, vEndPos) );
+    for ( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        nTravelTime = std::max( nTravelTime, it->second->ApproximateTravelTime( vStartPos, vEndPos ) );
 
     return nTravelTime;
 }

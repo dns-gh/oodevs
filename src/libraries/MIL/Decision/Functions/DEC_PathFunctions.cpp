@@ -35,9 +35,9 @@ void DEC_PathFunctions::CreatePathToPoint( DIA_Call_ABC& call, MIL_AgentPion& ca
 {
     assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
 
-    DEC_PathType pathType;
     MT_Vector2D* pEnd        = call.GetParameter( 0 ).ToUserPtr( pEnd   );
-    pathType.pathType_       = (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId();
+
+    DEC_PathType pathType( (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId() );
 
     assert( pEnd );
     assert( !_isnan( pEnd->rX_ ) );
@@ -57,9 +57,9 @@ void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion
 {
     assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
 
-    DEC_PathType pathType;
     T_PointVector* pListPt   = call.GetParameter( 0 ).ToUserPtr( pListPt );
-    pathType.pathType_       = (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId();
+
+    DEC_PathType pathType( (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId() );
 
     assert( pListPt );
     assert( !pListPt->empty() );

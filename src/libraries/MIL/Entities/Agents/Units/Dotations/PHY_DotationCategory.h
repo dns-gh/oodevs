@@ -57,10 +57,10 @@ public:
     void IndirectFire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired ) const;
     //@}
 
-    //! @name Tools
+    //! @name Packaging
     //@{
-    MT_Float ConvertUVolumeToDotation( MT_Float rValue ) const;
-    MT_Float ConvertDotationToUVolume( MT_Float rValue ) const;
+    MT_Float GetWeight() const;
+    MT_Float GetVolume() const;
     //@}
 
     //! @name Operators
@@ -81,6 +81,7 @@ private:
     //@{
     void InitializeAttritions      ( MIL_InputArchive& archive );
     void InitializeIndirectFireData( MIL_InputArchive& archive );
+    void InitializePackagingData   ( MIL_InputArchive& archive );
     //@}
 
 private:
@@ -89,7 +90,10 @@ private:
 
     std::string strName_;
     uint        nMosID_;
-    MT_Float    rUVolume_;
+    
+    // Packaging
+    MT_Float rWeight_;
+    MT_Float rVolume_;
 
     T_AttritionVector                      attritions_;
     PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;     

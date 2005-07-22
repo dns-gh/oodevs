@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-07-16 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Tools.h $
-// $Author: Ape $
-// $Modtime: 5/04/05 11:25 $
-// $Revision: 9 $
+// $Author: Nld $
+// $Modtime: 21/07/05 11:40 $
+// $Revision: 10 $
 // $Workfile: ADN_Tools.h $
 //
 //*****************************************************************************
@@ -62,7 +62,6 @@ public:
 
     static void CreatePathToFile( const std::string& strFilePath );
     static bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
-    static void DeleteDirectory( const std::string& strDir);
 
     static std::string Scriptify( const std::string& strFieldName );
     static std::string ComputePostureScriptName( E_UnitPosture nPosture );

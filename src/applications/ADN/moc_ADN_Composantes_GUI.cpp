@@ -1,12 +1,14 @@
 /****************************************************************************
 ** ADN_Composantes_GUI meta object code from reading C++ file 'ADN_Composantes_GUI.h'
 **
-** Created: jeu. 7. juil. 13:46:09 2005
+** Created: jeu. 21. juil. 11:50:44 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "ADN_Composantes_GUI.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

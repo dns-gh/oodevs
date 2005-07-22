@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MT_Slider meta object code from reading C++ file 'MT_Slider.h'
 **
-** Created: mar. 12. juil. 12:42:02 2005
+** Created: jeu. 21. juil. 15:28:03 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MT_Slider.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

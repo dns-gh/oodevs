@@ -144,7 +144,7 @@ void MOS_AgentResourcesPanel::OnAgentUpdated( MOS_Agent& agent )
         pItem->setText( 3, QString::number( composition.mdr_[n3] ) );
     }
 
-    for( uint n4 = 0; n4 < lends_.size(); ++n4 )
+    for( uint n4 = 0; n4 < composition.lends_.size(); ++n4 )
     {
         QListViewItem* pItem = lends_[ n4 ];
         const MOS_AgentComposition::T_Lend& lend = composition.lends_[ n4 ];

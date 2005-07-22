@@ -18,3 +18,13 @@ MIL_AutomateLOG* PHY_SupplyDotationRequest::GetSupplyingAutomate() const
 {
     return pSupplyingAutomate_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationRequest::GetTotalReservedValue
+// Created: NLD 2005-07-18
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_SupplyDotationRequest::GetTotalReservedValue() const
+{
+    return rTotalReservedValue_;
+}

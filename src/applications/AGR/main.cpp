@@ -50,9 +50,9 @@ int main( int /*argc*/, char** /*argv*/ )
 
         std::cout << "Parsing XSD files" << std::endl;
 
-        MT_DirectoryBrowser browser( "./agr_tmp", "*.xsd", MT_DirectoryBrowser::eFilesOnly );
-        const MT_DirectoryBrowser::T_EntryList& files = browser.GetEntryList();
-        for( MT_DirectoryBrowser::CIT_EntryList itFiles = files.begin(); itFiles != files.end(); ++itFiles )
+        MT_DirectoryBrowser browser( "./agr_tmp", "*.xsd", MT::eFilesOnly );
+        const MT::T_DirEntryList& files = browser.GetEntryList();
+        for( MT::T_DirEntryList::const_iterator itFiles = files.begin(); itFiles != files.end(); ++itFiles )
             workspace.Read( itFiles->fileName_ );
 
         std::vector< AGR_Generator_ABC* > generators;
@@ -97,10 +97,10 @@ int main( int /*argc*/, char** /*argv*/ )
 // -----------------------------------------------------------------------------
 uint64 MostRecentModification( const std::string& strDir, const std::string& strExt )
 {
-    MT_DirectoryBrowser browser( strDir, strExt, MT_DirectoryBrowser::eFilesOnly );
-    const MT_DirectoryBrowser::T_EntryList& files = browser.GetEntryList();
+    MT_DirectoryBrowser browser( strDir, strExt, MT::eFilesOnly );
+    const MT::T_DirEntryList& files = browser.GetEntryList();
     uint64 nMostRecentModificationTime = 0;
-    for( MT_DirectoryBrowser::CIT_EntryList itFiles = files.begin(); itFiles != files.end(); ++itFiles )
+    for( MT::T_DirEntryList::const_iterator itFiles = files.begin(); itFiles != files.end(); ++itFiles )
         if( nMostRecentModificationTime < itFiles->nLastWriteTime_ )
             nMostRecentModificationTime = itFiles->nLastWriteTime_;
     return nMostRecentModificationTime;

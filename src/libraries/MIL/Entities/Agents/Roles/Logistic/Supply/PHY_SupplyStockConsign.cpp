@@ -87,13 +87,13 @@ void PHY_SupplyStockConsign::DoSupply()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockConsign::GetUVolumeRequested
-// Created: NLD 2005-02-01
+// Name: PHY_SupplyStockConsign::GetMerchandiseToConvoy
+// Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_SupplyStockConsign::GetUVolumeRequested() const
+void PHY_SupplyStockConsign::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const
 {
     assert( pSupplyState_ );
-    return pSupplyState_->GetUVolumeRequested();
+    pSupplyState_->GetMerchandiseToConvoy( container );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,12 +223,12 @@ void PHY_SupplyStockConsign::ConvoyEndMission()
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockConsign::RemoveConvoyedStock
-// Created: NLD 2005-02-10
+// Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockConsign::RemoveConvoyedStock( MT_Float rUVolumeRemoved )
+void PHY_SupplyStockConsign::RemoveConvoyedStock( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
 {
     if( pSupplyState_ )
-        pSupplyState_->RemoveConvoyedStock( rUVolumeRemoved );
+        pSupplyState_->RemoveConvoyedStock( dotationCategory, rNbrDotations );
 }
 
 // -----------------------------------------------------------------------------

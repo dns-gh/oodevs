@@ -15,9 +15,25 @@
 MT_Vector2D MT_ComputeBarycenter( const T_PointVector& points )
 {
     MT_Vector2D vBarycenter;
-    for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
+
+    if( points.empty() )
+        return vBarycenter;
+    if( points.size() == 1 )
+        return points.front();
+
+    CIT_PointVector itEnd      = points.end();
+    uint            nNbrPoints = points.size();
+    if( points.front() == points.back() )
+    {
+        itEnd --; 
+        nNbrPoints--;
+    }
+
+    assert( nNbrPoints > 0 );
+
+    for( CIT_PointVector itPoint = points.begin(); itPoint != itEnd; ++itPoint )
         vBarycenter += *itPoint;
-    vBarycenter /= points.size();
+    vBarycenter /= nNbrPoints;
     return vBarycenter;
 
 }

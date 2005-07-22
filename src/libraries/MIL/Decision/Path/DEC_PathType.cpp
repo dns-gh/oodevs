@@ -3,11 +3,12 @@
 // $Created: JDY 03-04-10 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathType.cpp $
 // $Author: Age $
-// $Modtime: 16/06/05 15:42 $
-// $Revision: 6 $
+// $Modtime: 4/07/05 15:48 $
+// $Revision: 10 $
 // $Workfile: DEC_PathType.cpp $
 //
 //*****************************************************************************
+
 #include "MIL_pch.h"
 #include "DEC_PathType.h"
 #include "DEC_PathfinderRule.h"
@@ -20,8 +21,8 @@
 // Name: DEC_PathType constructor
 // Created: JDY 03-04-14
 //-----------------------------------------------------------------------------
-DEC_PathType::DEC_PathType()
-    : pathType_(eInfoMovement)
+DEC_PathType::DEC_PathType( E_PathType nType )
+    : nPathType_( nType )
 {
 }
 
@@ -43,15 +44,15 @@ TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector
     // The terrain types depends on the type of path
     // And on whether the unit can fly
     const bool bCanFly = path.CanQueryMakerFly();
-    TerrainData avoid  = AvoidedTerrain ( pathType_, bCanFly )
-              , prefer = PreferedTerrain( pathType_, bCanFly );
+    TerrainData avoid  = AvoidedTerrain ( nPathType_, bCanFly )
+              , prefer = PreferedTerrain( nPathType_, bCanFly );
 
-    const bool bShort = pathType_ == eInfoRetreat || pathType_ == eInfoBackup;
+    const bool bShort = nPathType_ == eInfoRetreat || nPathType_ == eInfoBackup;
 
     DEC_PathfinderRule::E_AltitudePreference altPreference = DEC_PathfinderRule::eDontCare;
-    if( pathType_ == eInfoInfiltration )
+    if( nPathType_ == eInfoInfiltration )
         altPreference = DEC_PathfinderRule::ePreferLow;
-    else if( ! bCanFly && pathType_ == eInfoRecon )
+    else if( ! bCanFly && nPathType_ == eInfoRecon )
         altPreference = DEC_PathfinderRule::ePreferHigh;
 
     MT_Float rMaxFuseauDistance = 1000.;
@@ -63,25 +64,30 @@ TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector
 
     if( ! path.GetFuseau().IsInside( to ) // our destination is outside
      ||   bCanFly                         // I'm an alat cowboy
-     ||   pathType_ == eInfoRetreat )     // I'm fleeing away
+     ||   nPathType_ == eInfoRetreat )     // I'm fleeing away
         rMaxFuseauDistance = std::numeric_limits< MT_Float >::max();
     
     DEC_PathfinderRule& rule = *new DEC_PathfinderRule( path, avoid, prefer, from, to, bShort, altPreference, rMaxFuseauDistance );
 
-    if( pathType_ == eInfoRetreat )
+    if( nPathType_ == eInfoRetreat )
         rule.ChangeDangerDirectionCost( 0.1f ); // $$$$ AGE 2005-06-24: Whatever
 
-    const bool bAvoidEnis = pathType_ == eInfoRetreat || pathType_ == eInfoBackup || pathType_ == eInfoInfiltration;
+    const bool bAvoidEnis = nPathType_ == eInfoRetreat || nPathType_ == eInfoBackup || nPathType_ == eInfoInfiltration;
     if( bAvoidEnis )
+    {
         for( DEC_Path::CIT_PathKnowledgeAgentVector itAgent = path.GetPathKnowledgeAgents().begin(); itAgent != path.GetPathKnowledgeAgents().end(); ++itAgent )
             rule.AddEnemyKnowledge( *itAgent );
+    }
 
-    // Always
-    for( DEC_Path::CIT_PathKnowledgeObjectVector itObject = path.GetPathKnowledgeObjects().begin(); itObject != path.GetPathKnowledgeObjects().end(); ++itObject )
+    const bool bAvoidObjects = nPathType_ != eInfoMineClearance;
+    if( bAvoidObjects )
     {
-        MT_Float rCostIn, rCostOut;
-        GetObjectCosts( itObject->GetTypeID(), rCostIn, rCostOut );
-        rule.AddObjectKnowledge( *itObject, rCostIn, rCostOut );
+        for( DEC_Path::CIT_PathKnowledgeObjectVector itObject = path.GetPathKnowledgeObjects().begin(); itObject != path.GetPathKnowledgeObjects().end(); ++itObject )
+        {
+            MT_Float rCostIn, rCostOut;
+            GetObjectCosts( itObject->GetTypeID(), rCostIn, rCostOut );
+            rule.AddObjectKnowledge( *itObject, rCostIn, rCostOut );
+        }
     }
     return rule;
 }
@@ -96,31 +102,33 @@ TerrainData DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
                        .Merge( TerrainData::MediumRoad() )
                        .Merge( TerrainData::LargeRoad() )
                        .Merge( TerrainData::Motorway() );
-    static TerrainData groundTerrains[6] =
+    static TerrainData groundTerrains[ eNbrPathType ] =
     {
         roads,
         TerrainData::ForestBorder().Merge( roads ),
         TerrainData::Forest(),
         TerrainData(),
         TerrainData(),
-        TerrainData()
+        TerrainData(),
+        roads
     };
     static TerrainData rivers = TerrainData::SmallRiver()
                         .Merge( TerrainData::MediumRiver() )
                         .Merge( TerrainData::LargeRiver() );
 
-    static TerrainData airTerrains[6] =
+    static TerrainData airTerrains[ eNbrPathType ] =
     {
         TerrainData(),
         TerrainData(),
         TerrainData(),
         TerrainData(),
         TerrainData(),
-        TerrainData()
+        TerrainData(),
+        TerrainData(),
     };
-    if( bFly && type < 6 )
+    if( bFly && type < eNbrPathType)
         return airTerrains[ type ];
-    if( ! bFly && type < 6 )
+    if( ! bFly && type < eNbrPathType )
         return groundTerrains[ type ];
     return TerrainData();
 }
@@ -132,11 +140,12 @@ TerrainData DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
 TerrainData DEC_PathType::AvoidedTerrain( E_PathType type, bool bFly )
 {
     static TerrainData urban = TerrainData::Urban().Merge( TerrainData::UrbanBorder() );
-    static TerrainData groundTerrains[6] =
+    static TerrainData groundTerrains[ eNbrPathType ] =
     {
         TerrainData(),
         TerrainData(),
         urban,
+        TerrainData(),
         TerrainData(),
         TerrainData(),
         TerrainData()
@@ -148,18 +157,19 @@ TerrainData DEC_PathType::AvoidedTerrain( E_PathType type, bool bFly )
     static TerrainData airAvoid = TerrainData::ForestBorder()
                           .Merge( urban )
                           .Merge( roads );
-    static TerrainData airTerrains[6] =
+    static TerrainData airTerrains[ eNbrPathType ] =
     {
         airAvoid,
         urban,
         airAvoid,
         TerrainData(),
         TerrainData(),
+        TerrainData(),
         TerrainData()
     };
-    if( bFly && type < 6 )
+    if( bFly && type < eNbrPathType )
         return airTerrains[ type ];
-    if( ! bFly && type < 6 )
+    if( ! bFly && type < eNbrPathType )
         return groundTerrains[ type ];
     return TerrainData();
 }
@@ -224,15 +234,16 @@ std::vector< std::pair< MT_Float, MT_Float > > DEC_PathType::InitializeObjectCos
 // -----------------------------------------------------------------------------
 std::string DEC_PathType::ConvertPathTypeToString() const
 {
-    static std::string names[6] = {
+    static std::string names[ eNbrPathType ] = {
         "eInfoMovement",
         "eInfoRecon",
         "eInfoInfiltration",
         "eInfoAssault",
         "eInfoRetreat",
         "eInfoBackup"
+        "eInfoMineClearance"
     };
-    if( pathType_ < 6 )
-        return names[ pathType_ ];
+    if( nPathType_ < eNbrPathType )
+        return names[ nPathType_ ];
     return "bad type";
 }

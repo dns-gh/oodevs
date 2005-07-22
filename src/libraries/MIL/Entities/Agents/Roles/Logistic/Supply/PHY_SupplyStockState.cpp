@@ -132,15 +132,14 @@ void PHY_SupplyStockState::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::GetUVolumeRequested
-// Created: NLD 2005-01-27
+// Name: PHY_SupplyStockState::GetMerchandiseToConvoy
+// Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_SupplyStockState::GetUVolumeRequested() const
+void PHY_SupplyStockState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const
 {
-    MT_Float rUVolume = 0.;
+    container.clear();
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
-        rUVolume += it->second.GetUVolumeRequested();
-    return rUVolume;
+        container[ it->first ] += it->second.GetTotalReservedValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -171,26 +170,14 @@ void PHY_SupplyStockState::CancelSupply()
 // Name: PHY_SupplyStockState::RemoveConvoyedStock
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockState::RemoveConvoyedStock( MT_Float rUVolumeToRemove )
+void PHY_SupplyStockState::RemoveConvoyedStock( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
 {
-    static MT_Random random;
-
-    IT_RequestMap itRndRequest = requests_.begin();
-    std::advance( itRndRequest, random.rand_io( 0, requests_.size() ) );
-
-    IT_RequestMap itCurRequest = itRndRequest;
+    IT_RequestMap it = requests_.find( &dotationCategory );
+    if( it == requests_.end() )
+        return;
     
-    while( rUVolumeToRemove > 0. )
-    {
-        rUVolumeToRemove -= itCurRequest->second.RemoveConvoyedStock( rUVolumeToRemove );
+    it->second.RemoveConvoyedStock( rNbrDotations );
         bRequestsChanged_ = true;
-        
-        ++ itCurRequest;
-        if( itCurRequest == requests_.end() )
-            itCurRequest = requests_.begin();
-        if( itCurRequest == itRndRequest )
-            break;
-    }        
 }
 
 // =============================================================================

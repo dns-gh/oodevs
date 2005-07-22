@@ -17,26 +17,18 @@
 ** not clear to you.
 **
 */
+#include "qtundo.h"
+
+#include "moc_qtundo.cpp"
+
 #include <qapplication.h>
 #include <qiconset.h>
 #include <qdragobject.h>
 #include <qpixmap.h>
 #include <qwidget.h>
-#include <qaction.h>
 
-#include "qtundo.h"
 
-class UndoRedoAction : public QAction
-{
-    Q_OBJECT
 
-    public:
-    	UndoRedoAction(QWidget *parent) : QAction(parent) {}
-    
-    public slots:
-    	// It's a pity QAction::setText() is not a slot...
-    	void setTextSlot(const QString &text) { setText(text); }
-};
 
 /*!
     \class QtCommand
@@ -1579,5 +1571,5 @@ void QtUndoListBox::undoOrRedo()
     updateContents();
 }
 
-#include "qtundo.moc"
+
 

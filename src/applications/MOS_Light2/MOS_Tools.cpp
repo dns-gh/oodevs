@@ -56,6 +56,7 @@ QString MOS_Tools::ToString( E_TroopHealthState nState )
     switch( nState )
     {
         case eTroopHealthStateTotal:              return a.tr( "Total" );
+        case eTroopHealthStateOperational:        return a.tr( "Opérationnels" );
         case eTroopHealthStateDead:               return a.tr( "Morts" );
         case eTroopHealthStateWounded:            return a.tr( "Blessés" );
         case eTroopHealthStateMentalWounds:       return a.tr( "Blessés mentalement" );

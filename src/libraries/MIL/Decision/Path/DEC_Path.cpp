@@ -127,9 +127,9 @@ DEC_Path::~DEC_Path()
 // Name: DEC_Path::Initialize
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_Path::Initialize( T_PointVector& points )
+void DEC_Path::Initialize( const T_PointVector& points )
 {
-    InitializePathKnowledges();
+    InitializePathKnowledges( points );
 
 //    if( ! fuseau_.IsNull() && !fuseau_.IsInside( vStartPoint ) )
 //    {
@@ -152,10 +152,26 @@ void DEC_Path::Initialize( T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: IsObjectInsidePathPoint
+// Created: NLD 2005-07-21
+// -----------------------------------------------------------------------------
+static
+bool IsObjectInsidePathPoint( const DEC_Knowledge_Object& knowledge, const T_PointVector& pathPoints )
+{
+    const TER_Localisation& loc = knowledge.GetLocalisation();
+    for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
+    {
+        if( loc.IsInside( *it ) )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Path::InitializePathKnowledges
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_Path::InitializePathKnowledges()
+void DEC_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     // Agents
     T_KnowledgeAgentVector knowledgesAgent;
@@ -174,9 +190,11 @@ void DEC_Path::InitializePathKnowledges()
     {
         const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
         //$$$ POURRI : Faire un DEC_Knowledge_Object::CanCollideWithXXX
-        if( !knowledge.IsPrepared() && !knowledge.IsBypassed() && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() ) //$$$ BOF
+        if(        !knowledge.IsPrepared() 
+                && !knowledge.IsBypassed() 
+                && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() 
+                && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
             pathKnowledgeObjectVector_.push_back( DEC_Path_KnowledgeObject( knowledge ) );
-//$$$$ TODO       if( fuseau_.IsInside( knowledge.GetLocalisation() ) )
     }       
 }
 

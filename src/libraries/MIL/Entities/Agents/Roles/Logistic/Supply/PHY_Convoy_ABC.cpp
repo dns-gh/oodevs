@@ -135,50 +135,15 @@ void PHY_Convoy_ABC::Terminate()
     // NOTHING
 }
 
-// =============================================================================
-// 
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::sTransporter
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-PHY_Convoy_ABC::sTransporter::sTransporter()
-    : pTransporter_    ( 0 )
-    , pTransporterPion_( 0 )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::sTransporter
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-PHY_Convoy_ABC::sTransporter::sTransporter( PHY_ComposantePion* pTransporter, MIL_AgentPion* pTransporterPion )
-    : pTransporter_    ( pTransporter )
-    , pTransporterPion_( pTransporterPion )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::serialize
-// Created: JVT 2005-04-01
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_Convoy_ABC::sTransporter::serialize( Archive& file, const uint )
-{
-    file & pTransporter_
-         & pTransporterPion_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC constructor
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
     : pConsign_         ( &consign )
-    , pCommander_       ( 0 )
+    , pCommanderComp_( 0 )
     , pCommanderPion_   ( 0 ) 
-    , transporters_     ()
+    , conveyors_     ()
     , nFormingTime_     ( 0 )
 {
 }
@@ -189,9 +154,9 @@ PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC()
     : pConsign_         ( 0 )
-    , pCommander_       ( 0 )
+    , pCommanderComp_( 0 )
     , pCommanderPion_   ( 0 ) 
-    , transporters_     ()
+    , conveyors_     ()
     , nFormingTime_     ( 0 )
 {
 }
@@ -209,6 +174,44 @@ PHY_Convoy_ABC::~PHY_Convoy_ABC()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+namespace boost
+{
+    namespace serialization
+    {
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, PHY_Convoy_ABC::T_ConveyorMap& map, const uint nVersion )
+        {
+            split_free( file, map, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const PHY_Convoy_ABC::T_ConveyorMap& map, const uint )
+        {
+            file << map.size();
+            for ( PHY_Convoy_ABC::CIT_ConveyorMap it = map.begin(); it != map.end(); ++it )
+            {
+                file << it->first;
+                file << it->second;
+            }   
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, PHY_Convoy_ABC::T_ConveyorMap& map, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                PHY_ComposantePion* pComp;
+                
+                file >> pComp;
+                file >> map[ pComp ];
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::serialize
 // Created: JVT 2005-03-31
@@ -217,9 +220,9 @@ template< typename Archive >
 void PHY_Convoy_ABC::serialize( Archive& file, const uint )
 {
     file & const_cast< PHY_SupplyConsign_ABC*& >( pConsign_ )
-         & pCommander_
+         & pCommanderComp_
          & pCommanderPion_
-         & transporters_
+         & conveyors_
          & nFormingTime_;
 }
 
@@ -236,6 +239,35 @@ const MIL_Automate* PHY_Convoy_ABC::GetSuppliedAutomate() const
     return pConsign_->GetSuppliedAutomate();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetLoadingTime
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+uint PHY_Convoy_ABC::GetLoadingTime() const
+{
+    uint nLoadingTime = 0;
+
+    for ( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        nLoadingTime = std::max( nLoadingTime, it->second->GetLoadingTime() );
+
+    return nLoadingTime;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetUnloadingTime
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+uint PHY_Convoy_ABC::GetUnloadingTime() const
+{
+    uint nUnloadingTime = 0;
+    
+    for ( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        nUnloadingTime = std::max( nUnloadingTime, it->second->GetUnloadingTime() );
+
+    return nUnloadingTime;
+}
+
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -246,12 +278,12 @@ const MIL_Automate* PHY_Convoy_ABC::GetSuppliedAutomate() const
 // -----------------------------------------------------------------------------
 void PHY_Convoy_ABC::UnlockConvoy()
 {
-    for( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-        it->pTransporterPion_->GetRole< PHY_RolePion_Supply >().StopUsingForLogistic( *it->pTransporter_ );
-    transporters_.clear();
-    if( pCommander_ )
-        pCommanderPion_->GetRole< PHY_RolePion_Supply >().StopUsingForLogistic( *pCommander_ );
-    pCommander_     = 0;
+    for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        delete it->second; // Will do the 'StopUsingForLogistic()'
+    conveyors_.clear();
+    if( pCommanderComp_ )
+        pCommanderPion_->GetRole< PHY_RolePion_Supply >().StopUsingForLogistic( *pCommanderComp_ );
+    pCommanderComp_ = 0;
     pCommanderPion_ = 0;
 }
 
@@ -263,37 +295,55 @@ bool PHY_Convoy_ABC::Form()
 {
     ++nFormingTime_;
 
-    if( pCommander_ )
-        return nFormingTime_ >= formingTime_( transporters_.size() );
+    if( pCommanderComp_ )
+        return nFormingTime_ >= formingTime_( conveyors_.size() );
 
-    assert( transporters_.empty() );
+    assert( conveyors_.empty() );
     assert( pConsign_ );
     
     const MIL_AutomateLOG& supplyAutomate = pConsign_->GetSupplyingAutomate();
     
-    MT_Float rUVolumeNeeded = pConsign_->GetUVolumeRequested();
-    while( rUVolumeNeeded > 0. )
+    T_MerchandiseToConvoyMap merchandise;
+    pConsign_->GetMerchandiseToConvoy( merchandise );
+
+    while( !merchandise.empty() )
     {
-        PHY_ComposantePion* pConvoyTransporter     = 0;
-        MIL_AgentPion*      pConvoyTransporterPion = 0;
-        if( !supplyAutomate.SupplyGetAvailableConvoyTransporter( pConvoyTransporter, pConvoyTransporterPion ) )
+        PHY_ComposantePion* pConveyorComp = 0;
+        MIL_AgentPion*      pConveyorPion = 0;
+        if( !supplyAutomate.SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion ) )
         {
             UnlockConvoy();
             return false;
         }
 
-        rUVolumeNeeded -= pConvoyTransporter->GetConvoyTransporterUCapacity();
-        pConvoyTransporterPion->GetRole< PHY_RolePion_Supply >().StartUsingForLogistic( *pConvoyTransporter );
-        transporters_.push_back( sTransporter( pConvoyTransporter, pConvoyTransporterPion ) );
+        PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
+        bool bOut = conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second;
+        assert( bOut );
+
+        while( !pConveyor->IsFull() && !merchandise.empty() )
+        {
+            IT_MerchandiseToConvoyMap it = merchandise.begin();
+
+            const PHY_DotationCategory& dotationCategory = *it->first;
+
+            const MT_Float rNbrConvoyed = pConveyor->ConvoyDotations( dotationCategory, it->second );
+            // Cannot convoy 1 dotation
+            if( rNbrConvoyed <= 0. )
+                break;
+
+            it->second -= rNbrConvoyed;            
+            if( it->second <= 0. )
+                merchandise.erase( it );
+        }
     }
 
-    if( !supplyAutomate.SupplyGetAvailableConvoyCommander( pCommander_, pCommanderPion_ ) )
+    if( !supplyAutomate.SupplyGetAvailableConvoyCommander( pCommanderComp_, pCommanderPion_ ) )
     {
         UnlockConvoy();
         return false;
     }
-    pCommanderPion_->GetRole< PHY_RolePion_Supply >().StartUsingForLogistic( *pCommander_ );
+    pCommanderPion_->GetRole< PHY_RolePion_Supply >().StartUsingForLogistic( *pCommanderComp_ );
 
-    return nFormingTime_ >= formingTime_( transporters_.size() );
+    return nFormingTime_ >= formingTime_( conveyors_.size() );
 }
 

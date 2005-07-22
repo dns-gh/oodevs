@@ -179,14 +179,12 @@ bool PHY_RoleAction_Objects_DataComputer::HasDotations( uint nNbr, const PHY_Dot
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( uint nNbr, const PHY_DotationCategory& category )
 {
-    uint nNbrConsumed = 0;
     for( RIT_PionDataVector itData = pionsData_.rbegin(); itData != pionsData_.rend(); ++itData )
     {
         sPionData& data = *itData;
     
-        nNbrConsumed += (uint)data.pPion_->GetRole< PHY_RolePion_Dotations >().ConsumeDotation( category, nNbr );
-        assert( nNbrConsumed <= nNbr );
-        if( nNbrConsumed == nNbr )
+        nNbr -= (uint)data.pPion_->GetRole< PHY_RolePion_Dotations >().ConsumeDotation( category, nNbr );
+        if( nNbr == 0 )
             return;
 
     }
@@ -199,14 +197,12 @@ void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( uint nNbr, const PHY
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects_DataComputer::RecoverDotations( uint nNbr, const PHY_DotationCategory& category )
 {
-    MT_Float rNbrRecovered = 0.;
     for( RIT_PionDataVector itData = pionsData_.rbegin(); itData != pionsData_.rend(); ++itData )
     {
         sPionData& data = *itData;
     
-        rNbrRecovered += data.pPion_->GetRole< PHY_RolePion_Dotations >().SupplyDotation( category, nNbr );
-        assert( rNbrRecovered <= nNbr );
-        if( rNbrRecovered == nNbr )
+        nNbr -= data.pPion_->GetRole< PHY_RolePion_Dotations >().SupplyDotation( category, nNbr );
+        if( nNbr == 0 )
             return;
     }
 }

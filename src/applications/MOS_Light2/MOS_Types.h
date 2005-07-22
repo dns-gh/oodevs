@@ -26,6 +26,7 @@ enum SCP_ConnMagicCookie
 enum E_TroopHealthState
 {
     eTroopHealthStateTotal = 0,
+    eTroopHealthStateOperational,
     eTroopHealthStateDead,
     eTroopHealthStateWounded,
     eTroopHealthStateMentalWounds,

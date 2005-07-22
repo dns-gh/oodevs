@@ -49,9 +49,7 @@ public:
     
     //! @name Operations
     //@{
-    virtual bool Form            ();
-            uint GetLoadingTime  () const;
-            uint GetUnloadingTime() const;
+    virtual bool Form();
     //@}
 
     //! @name Real convoy operations

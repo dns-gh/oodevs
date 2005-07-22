@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-07-18 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ListView_Composantes.cpp $
-// $Author: Ape $
-// $Modtime: 22/06/05 15:03 $
-// $Revision: 20 $
+// $Author: Nld $
+// $Modtime: 20/07/05 13:54 $
+// $Revision: 21 $
 // $Workfile: ADN_ListView_Composantes.cpp $
 //
 //*****************************************************************************
@@ -111,9 +111,10 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eTreatsNBC]->Connect( &pInfos->logInfos_.healthInfos_.bCuresNBC_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eTreatsShock]->Connect( &pInfos->logInfos_.healthInfos_.bCuresShock_, bConnect );
 
-    vItemConnectors_[ADN_Composantes_GUI::eLogCarryCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rCapacity_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eLogLoadTimePerTon]->Connect( &pInfos->logInfos_.supplyInfos_.rLoadTimePerTon_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eLogUnloadTimePerTon]->Connect( &pInfos->logInfos_.supplyInfos_.rUnloadTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogCarryVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rVolume_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogLoadTime]->Connect( &pInfos->logInfos_.supplyInfos_.rLoadTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogUnloadTime]->Connect( &pInfos->logInfos_.supplyInfos_.rUnloadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsConvoyLeader]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConvoyLeader_, bConnect );
     

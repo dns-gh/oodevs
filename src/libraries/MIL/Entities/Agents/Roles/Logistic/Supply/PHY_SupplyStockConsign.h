@@ -43,12 +43,12 @@ public:
             bool ConvoySupply       (); // Ravitaillement déclenché par scripts
             void ConvoyEndMission   ();
             bool IsSupplyDone       () const;
-            void RemoveConvoyedStock( MT_Float rUVolumeRemoved );
+            void RemoveConvoyedStock( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
     //@}
 
     //! @name Accessors
     //@{
-    virtual       MT_Float      GetUVolumeRequested() const;
+    virtual       void          GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
     virtual const MIL_Automate* GetSuppliedAutomate() const;
     //@}
 

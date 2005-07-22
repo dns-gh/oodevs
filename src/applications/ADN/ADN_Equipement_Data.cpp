@@ -9,9 +9,9 @@
 //
 // $Created: APE 2004-11-15 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_Data.cpp $
-// $Author: Ape $
-// $Modtime: 22/04/05 15:49 $
-// $Revision: 16 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:16 $
+// $Revision: 17 $
 // $Workfile: ADN_Equipement_Data.cpp $
 //
 // *****************************************************************************
@@ -65,7 +65,9 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( DotationInfos& parentDotation )
 , parentDotation_       ( parentDotation )
 , strName_              ()
 , nMosId_               ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
-, rNbrInUnitVolume_     ( 0 )
+, rNbrInPackage_        ( 0. )
+, rPackageVolume_       ( 0. )
+, rPackageWeight_       ( 0. )
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
@@ -99,7 +101,11 @@ std::string ADN_Equipement_Data::CategoryInfo::GetItemName()
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy()
 {
     CategoryInfo* pCopy = new CategoryInfo( parentDotation_ );
-    pCopy->rNbrInUnitVolume_ = rNbrInUnitVolume_.GetData();
+
+    pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
+    pCopy->rPackageVolume_ = rPackageVolume_.GetData();
+    pCopy->rPackageWeight_ = rPackageWeight_.GetData();
+
     return pCopy;
 }
 
@@ -113,7 +119,12 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( ADN_XmlInput_Helper& input 
     input.Section( "Categorie" );
 
     input.ReadAttribute( "nom", strName_ );
-    input.ReadField( "NombreDansVolumeUnitaire", rNbrInUnitVolume_ );
+
+    input.Section( "Conditionnement" );
+    input.ReadField( "Nombre", rNbrInPackage_  );
+    input.ReadField( "Masse" , rPackageWeight_ );
+    input.ReadField( "Volume", rPackageVolume_ );
+    input.EndSection(); // Conditionnement
 
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
@@ -139,8 +150,13 @@ void ADN_Equipement_Data::CategoryInfo::WriteArchive( MT_OutputArchive_ABC& outp
 
     output.WriteAttribute( "nom", strName_.GetData() );
     output.WriteField( "MosID", nMosId_ );
-    output.WriteField( "NombreDansVolumeUnitaire", rNbrInUnitVolume_.GetData() );
 
+    output.Section( "Conditionnement" );
+    output.WriteField( "Nombre", rNbrInPackage_ .GetData() );
+    output.WriteField( "Masse" , rPackageWeight_.GetData() );
+    output.WriteField( "Volume", rPackageVolume_.GetData() );
+    output.EndSection(); // Conditionnement
+    
     output.WriteField( "CodeEMAT6", strCodeEMAT6_.GetData() );
     output.WriteField( "CodeEMAT8", strCodeEMAT8_.GetData() );
     output.WriteField( "CodeLFRIL", strCodeLFRIL_.GetData() );
@@ -366,7 +382,11 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->nType_ = nType_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
-    pCopy->rNbrInUnitVolume_ = rNbrInUnitVolume_.GetData();
+    
+    pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
+    pCopy->rPackageVolume_ = rPackageVolume_.GetData();
+    pCopy->rPackageWeight_ = rPackageWeight_.GetData();
+
     for( uint n = 0; n < attritions_.size(); ++n )
         pCopy->attritions_[n]->CopyFrom( * attritions_[n] );
     pCopy->indirectAmmoInfos_.CopyFrom( indirectAmmoInfos_ );
@@ -390,7 +410,12 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( ADN_XmlInput_Helper& in
     }
 
     input.ReadField( "Type", nType_, ADN_Tr::ConvertToMunitionType, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "NombreDansVolumeUnitaire", rNbrInUnitVolume_ );
+
+    input.Section( "Conditionnement" );
+    input.ReadField( "Nombre", rNbrInPackage_  );
+    input.ReadField( "Masse" , rPackageWeight_ );
+    input.ReadField( "Volume", rPackageVolume_ );
+    input.EndSection(); // Conditionnement
 
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
@@ -443,7 +468,12 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( MT_OutputArchive_ABC& 
     }
     output.WriteField( "MosID", nMosId_ );
     output.WriteField( "Type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
-    output.WriteField( "NombreDansVolumeUnitaire", rNbrInUnitVolume_.GetData() );
+
+    output.Section( "Conditionnement" );
+    output.WriteField( "Nombre", rNbrInPackage_ .GetData() );
+    output.WriteField( "Masse" , rPackageWeight_.GetData() );
+    output.WriteField( "Volume", rPackageVolume_.GetData() );
+    output.EndSection(); // Conditionnement
 
     output.WriteField( "CodeEMAT6", strCodeEMAT6_.GetData() );
     output.WriteField( "CodeEMAT8", strCodeEMAT8_.GetData() );

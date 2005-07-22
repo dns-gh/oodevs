@@ -9,9 +9,9 @@
 //
 // $Created: APE 2004-12-29 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_AmmoListView.cpp $
-// $Author: Ape $
-// $Modtime: 11/04/05 15:35 $
-// $Revision: 9 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:21 $
+// $Revision: 10 $
 // $Workfile: ADN_Equipement_AmmoListView.cpp $
 //
 // *****************************************************************************
@@ -74,7 +74,9 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eType]->Connect( &pInfos->nType_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eAmmoNbrInUnitVolume]->Connect( &pInfos->rNbrInUnitVolume_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageNbr    ]->Connect( &pInfos->rNbrInPackage_ , bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageWeight ]->Connect( &pInfos->rPackageWeight_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eTrancheD]->Connect( &pInfos->bTrancheD_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eAttritions]->Connect( &pInfos->attritions_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eIndirectType]->Connect( &pInfos->indirectAmmoInfos_.nIndirectType_, bConnect );

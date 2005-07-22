@@ -44,8 +44,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       MT_Float      GetUVolumeRequested() const;
-    virtual const MIL_Automate* GetSuppliedAutomate() const;
+    virtual       void          GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
+    virtual const MIL_Automate* GetSuppliedAutomate   () const;
     //@}
 
 private:

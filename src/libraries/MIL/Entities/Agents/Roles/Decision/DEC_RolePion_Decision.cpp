@@ -227,7 +227,6 @@ void DEC_RolePion_Decision::CleanStateAfterCrash()
         GetContext().ExitContext();
     pPion_->CancelAllActions();
     GetRole< PHY_RolePion_Perceiver >().DisableAllPerceptions();
-    MT_LOG_ERROR_MSG( MT_FormatString( "Pion '%s' : mission impossible", pPion_->GetName().c_str() ) );
 }
 
 
@@ -344,6 +343,9 @@ void DEC_RolePion_Decision::UpdateDecision()
 #endif    
     {
         assert( pPion_ );
+        
+        MT_LOG_ERROR_MSG( MT_FormatString( "Pion %d ('%s') : Mission '%s' impossible", pPion_->GetID(), pPion_->GetName().c_str(), pPion_->GetOrderManager().GetMission() ? pPion_->GetOrderManager().GetMission()->GetName() : "Default" ) );
+
         MIL_RC::pRcMissionImpossible_->Send( *pPion_, MIL_RC::eRcTypeMessage );
         pPion_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();

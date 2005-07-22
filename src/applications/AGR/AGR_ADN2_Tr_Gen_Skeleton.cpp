@@ -16,6 +16,9 @@
 //
 // *****************************************************************************
 
+#include "ADN_pch.h"
+#include "ADN_Tr.h"
+
 ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
 {
 $MissionConverterList$

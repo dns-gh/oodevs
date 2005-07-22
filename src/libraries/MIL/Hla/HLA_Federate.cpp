@@ -37,6 +37,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 
+#include <windows.h> // For ::Sleep()
+
 // -----------------------------------------------------------------------------
 // Name: HLA_Federate constructor
 // Created: AGE 2004-11-05

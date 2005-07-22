@@ -1,12 +1,14 @@
 /****************************************************************************
 ** ADN_Ref_ABC meta object code from reading C++ file 'ADN_Ref_ABC.h'
 **
-** Created: jeu. 7. juil. 13:46:09 2005
+** Created: jeu. 21. juil. 11:15:55 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "ADN_Ref_ABC.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

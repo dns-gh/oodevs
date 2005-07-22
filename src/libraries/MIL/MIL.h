@@ -13,7 +13,7 @@ enum E_Tristate
     eTristate_DontKnow,
 };
 
-/// $$$ NLD - Degueu à déplacer
+/// $$$ NLD - Degueu à déplacer - ? Si pas possibilité d'encapsuler => mettre dans un 'Log.h'
 class PHY_ComposanteTypePion;
 typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
 typedef T_MaintenancePriorityVector::iterator        IT_MaintenancePriorityVector;
@@ -28,6 +28,11 @@ class PHY_HumanWound;
 typedef std::vector< const PHY_HumanWound* >     T_MedicalPriorityVector;
 typedef T_MedicalPriorityVector::iterator        IT_MedicalPriorityVector;
 typedef T_MedicalPriorityVector::const_iterator  CIT_MedicalPriorityVector;
+
+class PHY_DotationCategory;
+typedef std::map< const PHY_DotationCategory*, MT_Float /*rNbrToConvoy*/ > T_MerchandiseToConvoyMap;
+typedef T_MerchandiseToConvoyMap::iterator                                 IT_MerchandiseToConvoyMap;
+typedef T_MerchandiseToConvoyMap::const_iterator                           CIT_MerchandiseToConvoyMap;
 
 /// $$$ NLD - Degueu à déplacer
 

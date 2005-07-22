@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<project>
+
+    <taskdef resource="cpptasks.tasks"/>
+    <typedef resource="cpptasks.types"/>
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+    <!--
+    ============================================================================
+      custom tasks
+    ============================================================================
+    -->
+
+    <macrodef name="update-all">
+        <attribute name="name"/>
+        <attribute name="dir"/>
+        <sequential>
+            <copy todir="${include.dir}" verbose="true" preservelastmodified="true">
+                <fileset dir="@{dir}">
+                    <include name="@{name}/include/**"/>
+                </fileset>
+                <globmapper from="@{name}/include/*" to="*" handledirsep="true"/>
+            </copy>
+            <copy todir="${lib.dir}" verbose="true" preservelastmodified="true">
+                <fileset dir="@{dir}">
+                    <include name="@{name}/lib/**/*.lib"/>
+                </fileset>
+                <globmapper from="@{name}/lib/*" to="*" handledirsep="true"/>
+            </copy>
+            <copy todir="${run.dir}" verbose="true" flatten="true" preservelastmodified="true">
+                <fileset dir="@{dir}">
+                    <include name="@{name}/dll/**/*.dll"/>
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="update-module">
+        <attribute name="name"/>
+        <attribute name="modules"/>
+        <attribute name="dir"/>
+        <sequential>
+            <for list="@{modules}" param="module">
+                <sequential>
+                    <copy todir="${include.dir}" verbose="true" preservelastmodified="true">
+                        <fileset dir="@{dir}">
+                            <include name="@{name}/include/**/@{module}/**"/>
+                        </fileset>
+                        <globmapper from="@{name}/include/*" to="*" handledirsep="true"/>
+                    </copy>
+                    <copy todir="${lib.dir}" verbose="true" preservelastmodified="true">
+                        <fileset dir="@{dir}">
+                            <include name="@{name}/lib/**/*@{module}*.lib"/>
+                        </fileset>
+                        <globmapper from="@{name}/lib/*" to="*" handledirsep="true"/>
+                    </copy>
+                    <copy todir="${run.dir}" verbose="true" flatten="true" preservelastmodified="true">
+                        <fileset dir="@{dir}">
+                            <include name="@{name}/dll/**/*@{module}*.dll"/>
+                        </fileset>
+                    </copy>
+                </sequential>
+            </for>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="update">
+        <attribute name="name"/>
+        <attribute name="modules" default=""/>
+        <sequential>
+            <for list="${repositories}" param="repository">
+                <sequential>
+                    <if>
+                        <equals arg1="@{modules}" arg2=""/>
+                        <then>
+                            <update-all name="@{name}/current" dir="@{repository}"/>
+                            <update-all name="@{name}" dir="@{repository}"/>
+                        </then>
+                        <else>
+                            <update-module name="@{name}/current" modules="@{modules}" dir="@{repository}"/>
+                            <update-module name="@{name}" modules="@{modules}" dir="@{repository}"/>
+                        </else>
+                    </if>
+                </sequential>
+            </for>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build">
+        <attribute name="name"/>
+        <attribute name="input"/>
+        <attribute name="debug"/>
+        <attribute name="optimize"/>
+        <attribute name="suffix" default=""/>
+        <attribute name="outtype"/>
+        <attribute name="configuration"/>
+        <attribute name="excludes" default=""/>
+        <element name="cc-elements" optional="true" implicit="true"/>
+        <sequential>
+            <mkdir dir="${bin.dir}/@{configuration}/libraries/@{name}"/>
+            <cc name="${compiler}" outfile="${bin.dir}/@{configuration}/libraries/@{name}/@{name}@{suffix}" objdir="${bin.dir}/@{configuration}/libraries/@{name}"
+                                   optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true" incremental="false" outtype="@{outtype}">
+                <fileset dir="${libraries.dir}/@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes}"/>
+                <defineset define="WIN32"/> <!-- for MT only -->
+                <includepath path="${libraries.dir}"/>
+                <includepath path="${include.dir}"/>
+                <compilerarg value='/Fd"${bin.dir}/@{configuration}/libraries/@{name}/@{name}@{suffix}.pdb"'/>
+                <compilerarg value="/W4"/>
+                <cc-elements/>
+            </cc>
+            <copy todir="${lib.dir}/vc71" verbose="true">
+                <fileset dir="${bin.dir}/@{configuration}/libraries/@{name}" includes="@{name}@{suffix}.lib"/>
+            </copy>
+            <copy todir="${run.dir}" verbose="true">
+                <fileset dir="${bin.dir}/@{configuration}/libraries/@{name}" includes="@{name}@{suffix}.dll"/>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <!--
+    ============================================================================
+      libraries
+    ============================================================================
+    -->
+    <macrodef name="build-lib">
+        <attribute name="name"/>
+        <attribute name="input" default="@{name}"/>
+        <attribute name="outtype" default="static"/>
+        <attribute name="suffix" default="_d"/>
+        <attribute name="excludes" default=""/>
+        <element name="options" optional="true" implicit="true"/>
+        <sequential>
+            <build name="@{name}" input="@{input}" configuration="release" debug="false" optimize="full" outtype="@{outtype}" excludes="@{excludes}">
+                <options/>
+            </build>
+            <build name="@{name}" input="@{input}" configuration="debug" debug="true" optimize="none" outtype="@{outtype}" suffix="@{suffix}" excludes="@{excludes}">
+                <options/>
+            </build>
+        </sequential>
+    </macrodef>
+
+    <!--
+    ============================================================================
+      tests
+    ============================================================================
+    -->
+    <macrodef name="build-test">
+        <attribute name="name"/>
+        <attribute name="libs" default=""/>
+        <element name="cc-elements" optional="true" implicit="true"/>
+        <sequential>
+            <mkdir dir="${bin.dir}/release/tests/@{name}_test"/>
+            <cc name="${compiler}" outfile="${bin.dir}/release/tests/@{name}_test/@{name}_test" objdir="${bin.dir}/release/tests/@{name}_test"
+                                   optimize="full" debug="false" exceptions="true" rtti="true" incremental="false" outtype="executable" subsystem="console">
+                <fileset dir="${tests.dir}/@{name}_test" includes="**/*.cpp"/>
+                <includepath path="${libraries.dir}"/>
+                <includepath path="${include.dir}"/>
+                <defineset define="WIN32"/> <!-- for MT only -->
+                <libset dir="${lib.dir}/vc71" libs="@{libs}"/>
+                <linkerarg value="/SUBSYSTEM:CONSOLE"/>
+                <compilerarg value="/W4"/>
+                <cc-elements/>
+            </cc>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="run-test">
+        <attribute name="name"/>
+        <sequential>
+            <mkdir dir="${reports.dir}"/>
+            <exec executable="${bin.dir}/release/tests/@{name}_test/@{name}_test" dir="${run.dir}" resolveExecutable="true" error="${reports.dir}/@{name}_test.xml" failonerror="true">
+                <arg value="--log_level=warnings"/>
+                <arg value="--report_format=XML"/>
+                <arg value="--report_level=detailed"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <!--
+    ============================================================================
+      applications
+    ============================================================================
+    -->
+    <macrodef name="moc">
+        <attribute name="files" default=""/>
+        <attribute name="dir"/>
+        <sequential>
+            <for list="@{files}" param="file">
+                <sequential>
+                    <outofdate>
+                        <sourcefiles path="@{dir}/@{file}.h"/>
+                        <targetfiles path="@{dir}/moc_@{file}.cpp"/>
+                        <sequential>
+                            <exec dir="@{dir}" executable="moc" failonerror="true">
+                                <arg line="@{file}.h -o moc_@{file}.cpp"/>
+                            </exec>
+                        </sequential>
+                    </outofdate>
+                </sequential>
+            </for>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build-app">
+        <attribute name="name"/>
+        <attribute name="libs" default=""/>
+        <attribute name="moc" default=""/>
+        <attribute name="subsystem" default="gui"/>
+        <attribute name="excludes" default=""/>
+        <element name="cc-elements" optional="true" implicit="true"/>
+        <sequential>
+            <moc dir="${applications.dir}/@{name}" files="@{moc}"/>
+            <mkdir dir="${bin.dir}/release/applications/@{name}"/>
+            <cc name="${compiler}" outfile="${bin.dir}/release/applications/@{name}/@{name}" objdir="${bin.dir}/release/applications/@{name}"
+                                   optimize="full" debug="false" exceptions="true" rtti="true" incremental="false" outtype="executable" subsystem="@{subsystem}">
+                <fileset dir="${applications.dir}/@{name}" includes="**/*.cpp" excludes="**/moc_*.cpp,@{excludes}"/>
+                <includepath path="${libraries.dir}"/>
+                <includepath path="${include.dir}"/>
+                <includepath path="${include.dir}/qt"/>
+                <defineset define="WIN32"/>
+                <libset dir="${lib.dir}/vc71" libs="@{libs}"/>
+                <compilerarg value="/W4"/>
+                <cc-elements/>
+            </cc>
+        </sequential>
+    </macrodef>
+
+    <!--
+    ============================================================================
+      clean
+    ============================================================================
+    -->
+    <macrodef name="clean">
+        <attribute name="name"/>
+        <sequential>
+            <delete includeEmptyDirs="true" failonerror="false" quiet="true">
+                <fileset dir="${bin.dir}" includes="**/@{name}/**"/>
+                <fileset dir="${applications.dir}/@{name}" includes="**/moc_*.cpp"/>
+            </delete>
+        </sequential>
+    </macrodef>
+
+</project>
+

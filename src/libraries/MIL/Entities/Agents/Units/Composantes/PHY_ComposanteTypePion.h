@@ -163,7 +163,7 @@ public:
     //! @name Logistic - supply
     //@{
     bool     CanConvoyTransport               () const;
-    MT_Float GetConvoyTransporterUCapacity    () const;
+    void     GetConvoyTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
     uint     GetConvoyTransporterLoadingTime  () const;
     uint     GetConvoyTransporterUnloadingTime() const;
     bool     CanConvoyCommand                 () const;
@@ -298,7 +298,8 @@ private:
     bool                            bCanDiagnoseHumans_;
 
     // Logistic : supply
-    MT_Float rConvoyTransporterUCapacity_;
+    MT_Float rConvoyTransporterWeightCapacity_;
+    MT_Float rConvoyTransporterVolumeCapacity_;
     uint     nConvoyTransporterLoadingTime_;
     uint     nConvoyTransporterUnloadingTime_;
     bool     bConvoyCommander_;

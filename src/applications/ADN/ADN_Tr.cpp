@@ -19,9 +19,6 @@
 #include "ADN_pch.h"
 #include "ADN_Tr.h"
 
-#include "ADN_Tr_Gen.cpp"
-
-
 ADN_Tr::T_ConverterLocation ADN_Tr::locationConverter_[] =
 {
     T_ConverterLocation( "inconnu",            QT_TRANSLATE_NOOP( "ADN_Tr", "inconnu" ),            eLocation_Unknown            ),

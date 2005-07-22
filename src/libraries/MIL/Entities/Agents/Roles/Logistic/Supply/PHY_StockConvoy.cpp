@@ -59,19 +59,15 @@ PHY_StockConvoy::~PHY_StockConvoy()
     {
         pPionConvoy_->GetOrderManager().CancelAllOrders();
 
-        for( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-            it->pTransporterPion_->GetRole< PHY_RolePion_Composantes >().UndoLendComposante( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *it->pTransporter_ );
+        for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+            it->second->UndoLend();
 
-        assert( pCommander_ );
+        assert( pCommanderComp_ );
         assert( pCommanderPion_ );
-        pCommanderPion_->GetRole< PHY_RolePion_Composantes >().UndoLendComposante( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommander_ );
+        pCommanderPion_->GetRole< PHY_RolePion_Composantes >().UndoLendComposante( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommanderComp_ );
 
         pPionConvoy_->GetRole< PHY_RolePion_Supply >().UnassignConvoy( *this );
         MIL_AgentServer::GetWorkspace().GetEntityManager().DestroyPion( *pPionConvoy_ );
-
-        transporters_.clear();
-        pCommander_     = 0;
-        pCommanderPion_ = 0;
     }
 }
 
@@ -112,34 +108,6 @@ void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const uint ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_StockConvoy::GetLoadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-uint PHY_StockConvoy::GetLoadingTime() const
-{
-    uint nLoadingTime = 0;
-
-    for ( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-        nLoadingTime = std::max( nLoadingTime, it->pTransporter_->GetConvoyTransporterLoadingTime() );
-
-    return nLoadingTime;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_StockConvoy::GetUnloadingTime
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-uint PHY_StockConvoy::GetUnloadingTime() const
-{
-    uint nUnloadingTime = 0;
-    
-    for ( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-        nUnloadingTime = std::max( nUnloadingTime, it->pTransporter_->GetConvoyTransporterUnloadingTime() );
-
-    return nUnloadingTime;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_StockConvoy::Form
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
@@ -154,14 +122,12 @@ bool PHY_StockConvoy::Form()
     
     pPionConvoy_ = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pConvoyAgentType_, pConsign_->GetSupplyingAutomate(), pConsign_->GetSupplyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() );
     pPionConvoy_->GetRole< PHY_RolePion_Supply >().AssignConvoy( *this );
-    for( CIT_TransporterVector it = transporters_.begin(); it != transporters_.end(); ++it )
-    {
-        it->pTransporterPion_->GetRole< PHY_RolePion_Supply      >().StopUsingForLogistic( *it->pTransporter_ );
-        it->pTransporterPion_->GetRole< PHY_RolePion_Composantes >().LendComposante      ( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *it->pTransporter_ );
-    }
-    assert( pCommander_ );
-    pCommanderPion_->GetRole< PHY_RolePion_Supply      >().StopUsingForLogistic( *pCommander_ );
-    pCommanderPion_->GetRole< PHY_RolePion_Composantes >().LendComposante      ( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommander_ );
+    for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        it->second->LendTo( *pPionConvoy_ );
+
+    assert( pCommanderComp_ );
+    pCommanderPion_->GetRole< PHY_RolePion_Supply      >().StopUsingForLogistic( *pCommanderComp_ );
+    pCommanderPion_->GetRole< PHY_RolePion_Composantes >().LendComposante      ( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommanderComp_ );
     return true;
 }
 
@@ -234,18 +200,11 @@ bool PHY_StockConvoy::IsSupplyDone() const
 // -----------------------------------------------------------------------------
 void PHY_StockConvoy::NotifyComposanteChanged( PHY_ComposantePion& composante )
 {
-    CIT_TransporterVector itTransporter;
-    for( itTransporter = transporters_.begin(); itTransporter != transporters_.end(); ++itTransporter )
-    {
-        if( itTransporter->pTransporter_ == &composante )
-            break;
-    }
-
-    if( itTransporter == transporters_.end() )
+    CIT_ConveyorMap itConveyor = conveyors_.find( &composante );
+    if( itConveyor == conveyors_.end() )
         return;
 
-    assert( itTransporter->pTransporter_ );
     assert( pConsign_ );
-    pConsign_->RemoveConvoyedStock( itTransporter->pTransporter_->GetConvoyTransporterUCapacity() );
+    itConveyor->second->NotifyComposanteChanged( *pConsign_ );
 }
  

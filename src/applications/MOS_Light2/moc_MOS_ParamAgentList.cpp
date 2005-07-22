@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MOS_ParamAgentList meta object code from reading C++ file 'MOS_ParamAgentList.h'
 **
-** Created: mar. 12. juil. 12:42:02 2005
+** Created: jeu. 21. juil. 15:28:03 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MOS_ParamAgentList.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 

@@ -384,10 +384,10 @@ void MIL_AgentServer::WaitForNextStep()
     if( ! pAgentServer_->IsThreaded() )
         return;
 
-    clock_t sleepTime = 100;
+    long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
-        const clock_t nextStep = lastStep_ + ( CLOCKS_PER_SEC * nTimeStepDuration_ ) / nTimeFactor_;
+        const long nextStep = lastStep_ + ( CLOCKS_PER_SEC * nTimeStepDuration_ ) / nTimeFactor_;
         sleepTime = nextStep - clock();
         if( ( lastStep_ + sleepTime ) > nextStep )
             sleepTime = 100;

@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-07-17 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 22/06/05 15:03 $
-// $Revision: 30 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:34 $
+// $Revision: 31 $
 // $Workfile: ADN_Composantes_GUI.cpp $
 //
 //*****************************************************************************
@@ -361,10 +361,10 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
     ADN_GroupBox* pCarrierGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Carrier" ), pSupplyGroup );
     vInfosConnectors[eIsLogCarrier] = & pCarrierGroup->GetConnector();
 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup, tr( "Capacity" ), vInfosConnectors[eLogCarryCapacity], tr( "T" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup, tr( "Load time per ton" ), vInfosConnectors[eLogLoadTimePerTon], tr( "s" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup, tr( "Unload time per ton" ), vInfosConnectors[eLogUnloadTimePerTon], tr( "s" ), eGreaterZero ); 
-
+    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[eLogCarryWeightCapacity], tr( "T" ), eGreaterZero ); 
+    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero ); 
+    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Average load time"   ), vInfosConnectors[eLogLoadTime], tr( "s" ), eGreaterZero ); 
+    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Average unload time" ), vInfosConnectors[eLogUnloadTime], tr( "s" ), eGreaterZero ); 
     return pSupplyGroup;
 }
 

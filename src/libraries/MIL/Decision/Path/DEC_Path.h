@@ -117,8 +117,8 @@ public:
 private:
     //! @name Init
     //@{
-    void Initialize              ( T_PointVector& points );
-    void InitializePathKnowledges();
+    void Initialize              ( const T_PointVector& pathPoints );
+    void InitializePathKnowledges( const T_PointVector& pathPoints );
     //@}
 
     //! @name Points insertion Tools

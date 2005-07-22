@@ -87,13 +87,13 @@ void PHY_SupplyDotationConsign::DoSupply()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationConsign::GetUVolumeRequested
-// Created: NLD 2005-02-01
+// Name: PHY_SupplyDotationConsign::GetMerchandiseToConvoy
+// Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_SupplyDotationConsign::GetUVolumeRequested() const
+void PHY_SupplyDotationConsign::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const
 {
     assert( pSupplyState_ );
-    return pSupplyState_->GetUVolumeRequested();
+    pSupplyState_->GetMerchandiseToConvoy( container );
 }
 
 // -----------------------------------------------------------------------------

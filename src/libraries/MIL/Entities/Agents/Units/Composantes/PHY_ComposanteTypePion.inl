@@ -410,16 +410,6 @@ bool PHY_ComposanteTypePion::CanConvoyCommand() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::CanConvoyTransport
-// Created: NLD 2005-01-27
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposanteTypePion::CanConvoyTransport() const
-{
-    return rConvoyTransporterUCapacity_ > 0.;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetConvoyTransporterLoadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
@@ -428,7 +418,7 @@ uint PHY_ComposanteTypePion::GetConvoyTransporterLoadingTime() const
 {
     return nConvoyTransporterLoadingTime_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetConvoyTransporterUnloadingTime
 // Created: NLD 2005-01-27
@@ -438,15 +428,26 @@ uint PHY_ComposanteTypePion::GetConvoyTransporterUnloadingTime() const
 {
     return nConvoyTransporterUnloadingTime_;
 }
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetConvoyTransporterCapacity
+// Created: NLD 2005-07-18
+// -----------------------------------------------------------------------------
+inline
+void PHY_ComposanteTypePion::GetConvoyTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
+{
+    rWeightMax = rConvoyTransporterWeightCapacity_;
+    rVolumeMax = rConvoyTransporterVolumeCapacity_;
+}
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::GetConvoyTransporterUCapacity
+// Name: PHY_ComposanteTypePion::CanConvoyTransport
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetConvoyTransporterUCapacity() const
+bool PHY_ComposanteTypePion::CanConvoyTransport() const
 {
-    return rConvoyTransporterUCapacity_;
+    return rConvoyTransporterWeightCapacity_ > 0. && rConvoyTransporterVolumeCapacity_ > 0.;
 }
 
 // -----------------------------------------------------------------------------

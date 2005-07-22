@@ -13,7 +13,9 @@
 #define __MIL_pch_h_
 
 #pragma warning( push )
-#pragma warning( disable : 4100 )
+
+#pragma warning( disable : 4702 )
+#pragma warning( disable : 4511 4512 4100 4244 )
 
 #include <boost/serialization/serialization.hpp>
 
@@ -23,12 +25,12 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
 
-#pragma warning( disable : 4511 4512 4100 4244 )
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
-#pragma warning( pop )
 
 #include <boost/serialization/export.hpp>
+
+#pragma warning( pop )
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_Thread/MT_Thread_lib.h"
@@ -68,18 +70,6 @@
 #include "TER/TER_Agent_ABC.h"
 #include "TER/TER_DynaObject_ABC.h"
 #include "TER/TER_Polygon.h"
-
-#include <windows.h>
-
-//$$$ TMP
-#undef min
-#undef max
-#undef GetObject
-#undef GetMessage
-#undef GetUser
-#undef GetCurrentTime 
-
-
 
 #endif // __MIL_pch_h_
 

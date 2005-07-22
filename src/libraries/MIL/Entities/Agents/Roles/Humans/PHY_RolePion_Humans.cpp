@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Humans, "PHY_RolePion_Humans" )
@@ -30,6 +31,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Humans, "PHY_RolePion_Humans" )
 // -----------------------------------------------------------------------------
 PHY_RolePion_Humans::T_HumanData::T_HumanData()
     : nNbrTotal_                ( 0 )
+    , nNbrOperational_          ( 0 )
     , nNbrDead_                 ( 0 )
     , nNbrWounded_              ( 0 )
     , nNbrMentalDiseased_       ( 0 )
@@ -49,6 +51,7 @@ void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
 {
     bHasChanged_ = false;    
     file & nNbrTotal_                
+         & nNbrOperational_
          & nNbrDead_                 
          & nNbrWounded_              
          & nNbrMentalDiseased_       
@@ -220,6 +223,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
     {
         assert( nNbrFullyAliveHumans_ > 0 );
         -- nNbrFullyAliveHumans_;
+        -- humanData.nNbrOperational_;
     }
 
     switch( human.GetLocation() )
@@ -259,7 +263,10 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const PHY_Human& human )
     if( human.IsMentalDiseased() )
         ++ humanData.nNbrMentalDiseased_;
     if( !human.IsWounded() && human.IsAlive() && !human.IsContaminated() && !human.IsMentalDiseased() )
+    {
         ++ nNbrFullyAliveHumans_;
+        ++ humanData.nNbrOperational_;
+    }
 
     switch( human.GetLocation() )
     {
@@ -384,6 +391,7 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitDotations& asn ) cons
 
         personnel.rang                         = rank.GetAsnID();
         personnel.nb_total                     = humanData.nNbrTotal_;
+        personnel.nb_operationnels             = humanData.nNbrOperational_;
         personnel.nb_morts                     = humanData.nNbrDead_;
         personnel.nb_blesses                   = humanData.nNbrWounded_;
         personnel.nb_blesses_mentaux           = humanData.nNbrMentalDiseased_;
@@ -415,6 +423,7 @@ void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitDotations& asn ) const
 
         personnel.rang                         = rank.GetAsnID();
         personnel.nb_total                     = humanData.nNbrTotal_;
+        personnel.nb_operationnels             = humanData.nNbrOperational_;
         personnel.nb_morts                     = humanData.nNbrDead_;
         personnel.nb_blesses                   = humanData.nNbrWounded_;
         personnel.nb_blesses_mentaux           = humanData.nNbrMentalDiseased_;

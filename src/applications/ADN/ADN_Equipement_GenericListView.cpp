@@ -9,9 +9,9 @@
 //
 // $Created: APE 2004-12-29 $
 // $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_GenericListView.cpp $
-// $Author: Ape $
-// $Modtime: 21/04/05 11:06 $
-// $Revision: 10 $
+// $Author: Nld $
+// $Modtime: 20/07/05 14:20 $
+// $Revision: 11 $
 // $Workfile: ADN_Equipement_GenericListView.cpp $
 //
 // *****************************************************************************
@@ -75,7 +75,9 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Equipement_GUI::eNbrGenericGuiElements );
 
     vItemConnectors_[ADN_Equipement_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eNbrInUnitVolume]->Connect( &pInfos->rNbrInUnitVolume_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::ePackageNbr    ]->Connect( &pInfos->rNbrInPackage_ , bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::ePackageWeight ]->Connect( &pInfos->rPackageWeight_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::ePackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenEMAT6Code]->Connect( &pInfos->strCodeEMAT6_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );

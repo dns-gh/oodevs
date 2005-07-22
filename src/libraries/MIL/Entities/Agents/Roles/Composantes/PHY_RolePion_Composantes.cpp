@@ -13,6 +13,7 @@
 
 #include "PHY_RolePion_Composantes.h"
 
+#include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"

@@ -22,6 +22,7 @@ class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_PionMissionType;
 class MIL_Automate;
+class PHY_Conveyor;
 
 // =============================================================================
 // @class  PHY_Convoy_ABC
@@ -56,28 +57,21 @@ public:
     //! @name Accessors
     //@{
     const MIL_Automate* GetSuppliedAutomate() const;
+    uint                GetLoadingTime     () const;
+    uint                GetUnloadingTime   () const;
     //@}
 
-protected:
-    //! @name 
+public:
+    //! @name Types
     //@{
-    struct sTransporter
-    {
-        sTransporter();
-        sTransporter( PHY_ComposantePion* pTransporter, MIL_AgentPion* pTransporterPion );
-        template< typename Archive > void serialize( Archive&, const uint );
-        
-        PHY_ComposantePion*  pTransporter_;
-        MIL_AgentPion*       pTransporterPion_;
-    };
-    typedef std::vector< sTransporter >         T_TransporterVector;
-    typedef T_TransporterVector::const_iterator CIT_TransporterVector;
+    typedef std::map< PHY_ComposantePion*, PHY_Conveyor* > T_ConveyorMap;
+    typedef T_ConveyorMap::const_iterator                  CIT_ConveyorMap;
     //@}
 
 protected:
     const PHY_SupplyConsign_ABC* pConsign_;
-          T_TransporterVector    transporters_;
-          PHY_ComposantePion*    pCommander_;
+          T_ConveyorMap          conveyors_;
+          PHY_ComposantePion*    pCommanderComp_;
           MIL_AgentPion*         pCommanderPion_;
 
 private:

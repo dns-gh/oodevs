@@ -340,7 +340,7 @@ void MOS_ObjectCreationPanel::OnOk()
 */
 // Created: APE 2004-10-05
 // -----------------------------------------------------------------------------
-bool MOS_ObjectCreationPanel::eventFilter( QObject* /*pSender*/, QEvent* pEvent )
+bool MOS_ObjectCreationPanel::eventFilter( QObject* pSender, QEvent* pEvent )
 {
     switch( pEvent->type() )
     {

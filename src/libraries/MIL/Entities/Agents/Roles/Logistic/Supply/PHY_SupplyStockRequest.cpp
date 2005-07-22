@@ -224,23 +224,13 @@ void PHY_SupplyStockRequest::ReserveStocks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequest::GetUVolumeRequested
-// Created: NLD 2005-02-02
-// -----------------------------------------------------------------------------
-MT_Float PHY_SupplyStockRequest::GetUVolumeRequested() const
-{
-    return GetDotationCategory().ConvertDotationToUVolume( rTotalReservedValue_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequest::RemoveConvoyedStock
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_SupplyStockRequest::RemoveConvoyedStock( MT_Float rUVolumeToRemove )
+void PHY_SupplyStockRequest::RemoveConvoyedStock( MT_Float rNbrToRemove )
 {
-    const MT_Float rTmp = std::min( rTotalConvoyedValue_, GetDotationCategory().ConvertUVolumeToDotation( rUVolumeToRemove ) );
+    const MT_Float rTmp = std::min( rTotalConvoyedValue_, rNbrToRemove );   
     rTotalConvoyedValue_ -= rTmp;
-    return GetDotationCategory().ConvertDotationToUVolume( rTmp );
 }
 
 // =============================================================================

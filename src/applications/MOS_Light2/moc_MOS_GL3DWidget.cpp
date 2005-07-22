@@ -1,12 +1,14 @@
 /****************************************************************************
 ** MOS_GL3DWidget meta object code from reading C++ file 'MOS_GL3DWidget.h'
 **
-** Created: mar. 12. juil. 12:42:03 2005
+** Created: jeu. 21. juil. 17:34:16 2005
 **      by: The Qt MOC ($Id: $)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#undef QT_NO_COMPAT
+#include "MOS_GL3DWidget.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 
@@ -49,7 +51,7 @@ QMetaObject* MOS_GL3DWidget::staticMetaObject()
 {
     if ( metaObj )
 	return metaObj;
-    QMetaObject* parentObject = Widget3D::staticMetaObject();
+    QMetaObject* parentObject = MapWidget3D::staticMetaObject();
     static const QUParameter param_slot_0[] = {
 	{ "vPoint", &static_QUType_ptr, "MT_Vector2D", QUParameter::In }
     };
@@ -82,7 +84,7 @@ void* MOS_GL3DWidget::qt_cast( const char* clname )
 {
     if ( !qstrcmp( clname, "MOS_GL3DWidget" ) )
 	return this;
-    return Widget3D::qt_cast( clname );
+    return MapWidget3D::qt_cast( clname );
 }
 
 #include <qobjectdefs.h>
@@ -107,7 +109,7 @@ bool MOS_GL3DWidget::qt_invoke( int _id, QUObject* _o )
     switch ( _id - staticMetaObject()->slotOffset() ) {
     case 0: OnCenterOnPoint((const MT_Vector2D&)*((const MT_Vector2D*)static_QUType_ptr.get(_o+1))); break;
     default:
-	return Widget3D::qt_invoke( _id, _o );
+	return MapWidget3D::qt_invoke( _id, _o );
     }
     return TRUE;
 }
@@ -117,7 +119,7 @@ bool MOS_GL3DWidget::qt_emit( int _id, QUObject* _o )
     switch ( _id - staticMetaObject()->signalOffset() ) {
     case 0: MouseMove((QMouseEvent*)static_QUType_ptr.get(_o+1),(const MT_Vector2D&)*((const MT_Vector2D*)static_QUType_ptr.get(_o+2))); break;
     default:
-	return Widget3D::qt_emit(_id,_o);
+	return MapWidget3D::qt_emit(_id,_o);
     }
     return TRUE;
 }
@@ -125,7 +127,7 @@ bool MOS_GL3DWidget::qt_emit( int _id, QUObject* _o )
 
 bool MOS_GL3DWidget::qt_property( int id, int f, QVariant* v)
 {
-    return Widget3D::qt_property( id, f, v);
+    return MapWidget3D::qt_property( id, f, v);
 }
 
 bool MOS_GL3DWidget::qt_static_property( QObject* , int , int , QVariant* ){ return FALSE; }
