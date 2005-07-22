@@ -221,6 +221,8 @@ behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDum
 */
     when updated:
     {
+        persistent T_Action actionPreterVSRAM = 0;
+    
         if( DIA_ModuleBegins() )
         {
             DEC_Maintenance_ActiverChaine();
@@ -295,6 +297,9 @@ behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDum
                     //DEC_Sante_PreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_ );
                     DIA_RemoveFromCategory( "ordres_recus", ordre );
 				    DIA_DeleteRepresentation( ordre );
+				    
+				    bool bDummy;
+				    actionPreterVSRAM = DEC_Sante_StartPreterVSRAM( tmp.pionARenforcer_, tmp.nbrAmbulances_, bDummy );
                     break;
                 }                
                 
@@ -311,6 +316,12 @@ behavior MIS_Pion_LOG_SeDeployer( T_Mission_Pion_LOG_SeDeployer mission, id nDum
     }
     on spontaneous end:
     {
+        if( actionPreterVSRAM != 0 )
+        {
+            DEC_StopAction( actionPreterVSRAM );
+            actionPreterVSRAM = 0;
+        }
+    
         DEC_Maintenance_DesactiverChaine();
         DEC_Sante_DesactiverChaine();
         DEC_Ravitaillement_DesactiverChaine();

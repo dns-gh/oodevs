@@ -537,7 +537,7 @@
     <FonctionsLogistiques>
       <Maintenance>
         <Remorqueur>
-          <Capacite>20</Capacite>
+          <Capacite>5</Capacite>
           <TempsChargementParTonne>15s</TempsChargementParTonne>
           <TempsDechargementParTonne>10s</TempsDechargementParTonne>
         </Remorqueur>
@@ -2023,7 +2023,10 @@
     <FonctionsLogistiques>
       <Ravitaillement>
         <Transporteur>
-          <Capacite>33</Capacite>
+          <Capacite>
+            <Masse>33</Masse>
+            <Volume>10</Volume>
+          </Capacite>
           <TempsChargementMoyen>60s</TempsChargementMoyen>
           <TempsDechargementMoyen>300s</TempsDechargementMoyen>
         </Transporteur>

@@ -111,7 +111,9 @@ behavior BEH_Defaut( id nDummy )
 behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
 {
     when updated:
-    {/*
+    {
+    
+    /*
         persistent T_PerceptionPoint perception  = 0;
         persistent T_PerceptionPoint perception2 = 0;
         persistent bool         bPerceptionFinished  = false;
@@ -148,6 +150,7 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
             DEC_Debug( "itineraire == 0" );
         
             itineraire = DEC_CreerItineraireListe( mission.itineraire_, mission.typeItineraire_ );
+            //itineraire = DEC_CreerItineraireListe( mission.itineraire_, eTypeItiDeminage );
             //itineraire = DEC_CreerItineraireListe( mission.itineraire_, ePathSurete, ePathIgnoreAll, ePathInfoEvitement );
             //itineraire = DEC_CreerItineraire( DEC_Agent_Position(), nTypePath, nTypePathIgnore, nTypePathInfo );
         }
@@ -224,7 +227,7 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
                 break;
             }
         }
-                 
+        /*         
         persistent float rBMS = 0;
         rBMS = rBMS + 1;
         if( rBMS == 50 )
@@ -240,7 +243,7 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
             if( actionMove != 0 )
                 DEC_ReprendAction( actionMove );
             rBMS = 0;
-        } 
+        } */
             
     }
 
@@ -327,7 +330,7 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
         persistent E_EtatActionEmbarquerDebarquer nDebarquementReturn;
         
         behavior BEH_MoveTo( mission );
-        behavior BEH_MoveTo2( mission );
+        //behavior BEH_MoveTo2( mission );
         
         //DEC_ModulationVitesse( 0.1 );
 
@@ -384,6 +387,8 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
             DEC_Debug( "Aire forme: " + FloatToString( DEC_Geometrie_AireLocalisation( mission.forme_ ) ) );
             
             //DEC_ChangeValeurDotations( eDotation_Munition, mission.param_ / 100, eMunition_Obus );
+            
+            DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
         }
 
         persistent T_Action                       currentAction;

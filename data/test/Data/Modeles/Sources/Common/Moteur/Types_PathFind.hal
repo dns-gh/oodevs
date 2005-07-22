@@ -19,7 +19,8 @@ typedef enum E_TypeItineraire
     eTypeItiInfiltration,
     eTypeItiAttaque,
     eTypeItiRepli,
-    eTypeItiAppui
+    eTypeItiAppui,
+    eTypeItiDeminage
 };
 
 //-----------------------------------------------------------------------------
