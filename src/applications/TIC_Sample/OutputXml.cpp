@@ -255,8 +255,8 @@ void OutputXml::OutputCommunication( const Communication& communication )
     archive_ << strIndent << "<Communication "
              << " type=\""     << communication.GetType   () << "\""
              << " soustype=\"" << communication.GetSubType() << "\""
-             << " nombre=\""   << communication.GetArity  () << "\""
-             << " sujet=\""    << communication.GetSubject() << "\"";
+             << " nombre=\""   << communication.GetArity  () << "\"";
+             //<< " sujet=\""    << communication.GetSubject() << "\"";
 
     if( communication.IsReport() )
         archive_ << " message=\"" << communication.GetMessage() << "\"";
