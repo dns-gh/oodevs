@@ -25,7 +25,7 @@ using namespace TIC;
 
 uint Platform::nNextId_ = 0;
 
-const double Platform::rMaxDistanceForSmoothMove_ = 10000.0;
+const double Platform::rMaxDistanceForSmoothMove_ = 3000.0;
 
 //-----------------------------------------------------------------------------
 // Name: Platform::Platform
