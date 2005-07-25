@@ -16,7 +16,7 @@
 using namespace TIC;
 
 Device::T_DeviceMap Device::devices_;
-const Device        Device::notDefined( "None", eNone, "None" );
+const Device        Device::notDefined( "None", eNone, "NONE" );
 
 // =============================================================================
 // MANAGER
