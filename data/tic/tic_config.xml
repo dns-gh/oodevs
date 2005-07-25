@@ -4,13 +4,13 @@
 		<Serveur>127.0.0.1</Serveur>
 		<Port>10000</Port>
 		<FichierConfiguration>D:/Dev/Scipio/MVW_v10/Build/Data Test/scipio.xml</FichierConfiguration>
-		<NaturePlateformes>plateformesTIC.xml</NaturePlateformes>
+		<NaturePlateformes>./data/plateformesTIC.xml</NaturePlateformes>
 	</ConnexionScipio>
 	<Export>
 		<Fichier>export/tic.xml</Fichier>
 		<Incremental>false</Incremental>
 		<ExportCommunications>true</ExportCommunications>
-		<!--<FichierFiltre>filter.xml</FichierFiltre>-->
+		<FichierFiltre>./data/filter.xml</FichierFiltre>
 	<!--	<ZonesDesagregees>
 			<ZoneDesagregee>
 				<Points>
