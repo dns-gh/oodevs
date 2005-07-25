@@ -63,11 +63,11 @@
 						<xs:documentation>Booléen permettant d'activer l'exportation des communications.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="FichierFiltre" type="xs:string">
+				<xs:element name="FichierFiltre" type="xs:string" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Le nom du fichier de filtrage des types de plateformes désagrégées.</xs:documentation>
 					</xs:annotation>
-				</xs:element>				
+				</xs:element>
 				<xs:element ref="ZonesDesagregees" minOccurs="0"/>
 				<xs:element ref="AutomatesDesagreges" minOccurs="0"/>
 				<xs:element ref="GroupesDeConnaissanceDesagreges" minOccurs="0"/>

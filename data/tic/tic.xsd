@@ -330,8 +330,8 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="PionVersAutomate" minOccurs="0"/>
-				<xs:element ref="AutomateVersPion" minOccurs="0"/>
+				<xs:element ref="PionVersAutomate" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="AutomateVersPion" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 			<xs:attribute name="automate" type="xs:positiveInteger" use="required">
 				<xs:annotation>
@@ -350,9 +350,9 @@
 			<xs:documentation>Les communications dans le sens pion vers automate.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:all>
-				<xs:element ref="Communication" minOccurs="0"/>
-			</xs:all>
+			<xs:sequence>
+				<xs:element ref="Communication" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="AutomateVersPion">
@@ -360,9 +360,9 @@
 			<xs:documentation>Les communications dans le sens automate vers pion.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:all>
-				<xs:element ref="Communication" minOccurs="0"/>
-			</xs:all>
+			<xs:sequence>
+				<xs:element ref="Communication" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="Communication">
@@ -388,15 +388,6 @@
 			<xs:attribute name="nombre" type="xs:positiveInteger" use="required">
 				<xs:annotation>
 					<xs:documentation>Le nombre de communications identitques reçues depuis le dernier export.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="sujet" type="xs:string" use="optional">
-				<xs:annotation>
-					<xs:documentation>Le sujet de la communication:
-						- pour un compte rendu (cr), l'identifiant référençant le type de compte rendu.
-						- pour un ordre, l'identiant représentant l'identifiant de l'ordre.
-						- pour une intervisibilité, la liste, séparée par des virgules, des identifiants des entités objets du message.
-					</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>

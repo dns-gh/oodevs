@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Plateformes>
-
-  <Plateforme nom="Bombardier">
-    <NatureEquipement type="Aeronef">
-	    <Categorie>FXD</Categorie>
-		<SousCategorie>BOMBLR</SousCategorie>
-    </NatureEquipement>
-  </Plateforme>
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Plateformes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="plateformesTIC.xsd">
+	<Plateforme nom="Bombardier">
+		<NatureEquipement type="AIR">
+			<Categorie>FXD</Categorie>
+			<SousCategorie>BOMBLR</SousCategorie>
+		</NatureEquipement>
+	</Plateforme>
 </Plateformes>

@@ -8,10 +8,10 @@
 	</ConnexionScipio>
 	<Export>
 		<Fichier>export/tic.xml</Fichier>
-		<Incremental>true</Incremental>
+		<Incremental>false</Incremental>
 		<ExportCommunications>true</ExportCommunications>
-		<FichierFiltre>filter.xml</FichierFiltre>
-		<ZonesDesagregees>
+		<!--<FichierFiltre>filter.xml</FichierFiltre>-->
+	<!--	<ZonesDesagregees>
 			<ZoneDesagregee>
 				<Points>
 					<Point>
@@ -30,14 +30,14 @@
 			</ZoneDesagregee>
 		</ZonesDesagregees>
 		
-		<!--AutomatesDesagreges>
+		<AutomatesDesagreges>
 			<AutomateDesagrege id="5000031"/>
-		</AutomatesDesagreges>
+		</AutomatesDesagreges>>-->
 		<GroupesDeConnaissanceDesagreges>
 			<GroupeDeConnaissanceDesagrege id="1"/>
-		</GroupesDeConnaissanceDesagreges-->
-		<PionsDesagreges>
+		</GroupesDeConnaissanceDesagreges>
+		<!--<PionsDesagreges>
 			<PionDesagrege id="5000032"/>
-		</PionsDesagreges>
+		</PionsDesagreges>-->
 	</Export>
 </TicConfig>
