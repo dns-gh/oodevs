@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "TIC_pch.h"
+#include "TIC_Pch.h"
 #include "Entities/KnowledgeGroup.h"
 
 using namespace TIC;

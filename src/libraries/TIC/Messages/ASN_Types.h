@@ -13,7 +13,7 @@
 #define __ASN_Types_h_
 
 
-//#pragma warning( push, 3 )
+#pragma warning( push, 3 )
 
 #include "ASN/asn/Generated/ScipioBase.h"
 #include "ASN/asn/Generated/ScipioControl.h"
@@ -28,7 +28,7 @@
 #include "ASN/asn/Generated/ScipioOrderConduite.h"
 #include "ASN/asn/Generated/ScipioAutomateOrder.h"
 
-//#pragma warning( pop ) 
+#pragma warning( pop ) 
 
 
 #endif // __ASN_Types_h_
