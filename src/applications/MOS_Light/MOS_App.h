@@ -156,15 +156,18 @@ private:
     typedef T_StringVector::iterator   IT_StringVector;
     T_StringVector          pointsToSave_;
 
-    T_MosId_String_Map equipementNameMap_;
-    T_MosId_String_Map ressourcesNameMap_;
-    T_MosId_String_Map breakDownsNameMap_;
-    T_MosId_String_Map nbcAgentsMap_;
+    T_MosId_String_Map     equipementNameMap_;
+    T_MosId_String_Map     ressourcesNameMap_;
+    T_MosId_String_Map     breakDownsNameMap_;
+    T_MosId_String_Map     nbcAgentsMap_;
 
-    T_SensorTypeMap sensorTypes_;
+    T_SensorTypeMap        sensorTypes_;
+
+    std::string            strRootConfigFile_;
+    std::string            strRootDirectory_;
     
 private:
-    static MOS_App*                     pTheApp_;
+    static MOS_App*        pTheApp_;
 };
 
 #ifdef MOS_USE_INLINE

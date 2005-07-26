@@ -59,7 +59,12 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     , pDynaObjectManager_( 0 )
     , pWeatherManager_( 0 )
 {
-    // NOTHING
+    // manage command line options
+    MT_CommandLine cmdLine( argc(), argv() );
+    const std::string strConfFile = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
+    MT_ExtractFilePath( strConfFile, strRootDirectory_  );
+    MT_ExtractFileName( strConfFile, strRootConfigFile_ ); 
+
 }
 
 //-----------------------------------------------------------------------------
@@ -413,8 +418,11 @@ void MOS_App::Initialize()
     pTestManager_       = new MOS_TestManager       ();
     pWeatherManager_    = new MOS_Meteo_Manager();
 
+    const std::string strInitialDir = MT_GetCurrentDir();
+    MT_ChangeDir( strRootDirectory_ );
+
     MT_XXmlInputArchive scipioArchive;
-    if ( !scipioArchive.Open( "./scipio.xml" ) )
+    if ( !scipioArchive.Open( strRootConfigFile_ ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
     if( !scipioArchive.Section( "Scipio" ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
@@ -448,7 +456,9 @@ void MOS_App::Initialize()
     pTimer->start( 25 );
     bRunning_ = true;
     setMainWidget( pMainWindow_ );
-    pMainWindow_->show();   
+    pMainWindow_->show();
+
+    MT_ChangeDir( strInitialDir );
 }
 
 //-----------------------------------------------------------------------------
