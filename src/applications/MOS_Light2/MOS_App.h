@@ -63,7 +63,7 @@ public:
     static MOS_App& GetApp();
     //@}
 
-    void InitializeData();
+    void InitializeData( const std::string& strFilename );
 
     bool Is3D();
     bool IsODBEdition();
@@ -219,18 +219,20 @@ private:
 
     uint                   nTimeSeconds_;
 
-    T_MosId_String_Map equipementNameMap_;
-    T_MosId_String_Map resourcesNameMap_;
-    T_MosId_String_Map breakDownsNameMap_;
-    T_MosId_String_Map nbcNamesMap_;
+    T_MosId_String_Map     equipementNameMap_;
+    T_MosId_String_Map     resourcesNameMap_;
+    T_MosId_String_Map     breakDownsNameMap_;
+    T_MosId_String_Map     nbcNamesMap_;
 
-    T_SensorTypeMap sensorTypes_;
+    T_SensorTypeMap        sensorTypes_;
 
-    bool bODBEditor_;
-    std::string strODBFilename_;
+    bool                   bODBEditor_;
+    std::string            strODBFilename_;
 
-    QTimer* pNetworkTimer_;
-    QTimer* pDisplayTimer_;
+    std::string            strRootDirectory_;  // $$$$ SBO 2005-07-26: to manage -conffile cmd line option
+
+    QTimer*                pNetworkTimer_;
+    QTimer*                pDisplayTimer_;
 
 private:
     static MOS_App*        pInstance_;

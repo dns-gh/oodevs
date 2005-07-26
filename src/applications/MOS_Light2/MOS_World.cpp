@@ -147,28 +147,36 @@ void MOS_World::Initialize()
 // -----------------------------------------------------------------------------
 // Name: MOS_World::Read
 // Created: AGE 2005-03-14
+// Modified: SBO 2005-07-26 (Added support for cmd line specified initial directory)
 // -----------------------------------------------------------------------------
 void MOS_World::Read( const std::string& strArchive, bool bWorldOnly )
 {
-    MT_ExtractFilePath( strArchive, strTerrainDirectory_ );
+    std::string strDir;
+    MT_ExtractFilePath( strArchive, strDir );
+    std::string strFile;
+    MT_ExtractFileName( strArchive, strFile );
 
+    const std::string strInitialDir = MT_GetCurrentDir();
+    if( strTerrainDirectory_.empty() )
+        strTerrainDirectory_ = strInitialDir + "\\" + strDir;
+    MT_ChangeDir( strTerrainDirectory_ );
+    
     MT_XXmlInputArchive archive;
     archive.EnableExceptions( true );
-    archive.Open( strArchive );
+    archive.Open( strFile );
 
     archive.Section( "Terrain" );
     std::string strGeoid;
     std::string strWorld;
     std::string strGraphics;
     std::string strDetection;
-    archive.ReadField( "Geoid", strGeoid );
-    archive.ReadField( "World", strWorld);
-    archive.ReadField( "Graphics", strGraphics);
+    archive.ReadField( "Geoid"    , strGeoid     );
+    archive.ReadField( "World"    , strWorld     );
+    archive.ReadField( "Graphics" , strGraphics  );
     archive.ReadField( "RawVision", strDetection );
 
-    const std::string strInitialDir = MT_GetCurrentDir();
-    MT_ChangeDir( strTerrainDirectory_ );
     geocoord::Geoid::Instance().Initialize( strGeoid );
+
     if( bWorldOnly )
         ReadWorld( strWorld );
     else

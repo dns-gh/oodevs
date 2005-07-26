@@ -45,6 +45,7 @@ MOS_App* MOS_App::pInstance_ = 0;
 //-----------------------------------------------------------------------------
 // Name: MOS_App constructor
 // Created: NLD 2002-07-15
+// Modified: SBO 2005-07-26 (Added support for cmd line specified initial directory)
 //-----------------------------------------------------------------------------
 MOS_App::MOS_App( int nArgc, char** ppArgv )
     : QApplication  ( nArgc, ppArgv )
@@ -69,16 +70,17 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     pWeatherManager_    = new MOS_Meteo_Manager     ();
 
     this->SetSplashText( tr("Chargement des données...") );
-    this->InitializeData();
 
-    if( MT_CommandLine( argc(), argv() ).IsOptionSet( "-odb" ) )
+    MT_CommandLine cmdLine( argc(), argv() );
+    const std::string strConfFile = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
+    MT_ExtractFilePath( strConfFile, strRootDirectory_ );
+    this->InitializeData( strConfFile );
+
+    if( cmdLine.IsOptionSet( "-odb" ) )
     {
         this->SetSplashText( tr("Lecture de l'ODB...") );
         bODBEditor_ = true;
-        if( nArgc > 2 )
-            this->ReadODB( ppArgv[2] );
-        else
-            this->ReadODB( strODBFilename_ );
+        this->ReadODB( cmdLine.GetOptionStrValue( "-odb", strODBFilename_ ) );
     }
 
     this->SetSplashText( tr("Initialisation de l'interface...") );
@@ -108,6 +110,7 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
 //-----------------------------------------------------------------------------
 // Name: MOS_App destructor
 // Created: NLD 2002-07-15
+// Modified: SBO 2005-07-26 (TacticalLines.xml is output in -conffile directory)
 //-----------------------------------------------------------------------------
 MOS_App::~MOS_App()
 {
@@ -119,6 +122,8 @@ MOS_App::~MOS_App()
     delete pDisplayTimer_;
 
     // Save the tactical lines to file.
+    const std::string strInitialDir = MT_GetCurrentDir();
+    MT_ChangeDir( strRootDirectory_ );
     MT_XXmlOutputArchive archive;
     pLineManager_->Write( archive );
     while( true )
@@ -137,6 +142,7 @@ MOS_App::~MOS_App()
                 break;
         }
     }
+    MT_ChangeDir( strInitialDir );
 
     delete pDynaObjectManager_;
     delete pAgentManager_;
@@ -151,14 +157,23 @@ MOS_App::~MOS_App()
 // Created: NLD 2002-11-28
 // Last modified: JVT 03-12-11
 //-----------------------------------------------------------------------------
-void MOS_App::InitializeData()
+void MOS_App::InitializeData( const std::string& strFilename )
 {
+    const std::string   strCurrentDir = MT_GetCurrentDir();
+
+    std::string         strDir;
+    std::string         strFile;
+    MT_ExtractFilePath( strFilename, strDir  );
+    MT_ExtractFileName( strFilename, strFile );
+
+    MT_ChangeDir      ( strDir );
+
     MT_XXmlInputArchive scipioArchive;
     scipioArchive.EnableExceptions( true );
 
     try
     {
-        scipioArchive.Open( "./scipio.xml" );
+        scipioArchive.Open( strFile );
         scipioArchive.Section( "Scipio" );
         scipioArchive.Section( "Donnees" );
 
@@ -208,6 +223,8 @@ void MOS_App::InitializeData()
             QMessageBox::warning( 0, "MOSLight 2", strMsg.str().c_str() );
         }
     }
+
+    MT_ChangeDir( strCurrentDir );
 }
 
 
