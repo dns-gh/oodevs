@@ -271,6 +271,8 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
 {
     if( asnMsg.m.prets_equipementPresent )
     {
+        T_LendMap previousLends = lends_;
+
         // return lends to pawns
         for( CIT_LendMap it = lends_.begin(); it != lends_.end(); ++it )
         {
@@ -299,9 +301,10 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
             assert( pLender );
             const PlatformType* pType = PlatformType::Find( lend.type_equipement );
             assert( pType );
-            if( !pPawn->LendPlatform( *pLender, *pType, lend.nombre ) )
+            if( !pPawn->LendPlatform( *pLender, *pType, lend.nombre, previousLends ) )
                 MT_LOG_ERROR_MSG( "Cannot lend all requested platform(s) to pawn" );
         }
+        previousLends.clear();
     }
 }
 
@@ -309,9 +312,27 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
 // Name: Pawn::LendPlatform
 // Created: SBO 2005-06-03
 //-----------------------------------------------------------------------------
-bool Pawn::LendPlatform( Pawn& receiver, const PlatformType& platformType, uint nNbr )
+bool Pawn::LendPlatform( Pawn& receiver, const PlatformType& platformType, uint nNbr, T_LendMap& previousLends )
 {
     uint nPlatformLent = 0;
+    // recycle from previously lent platform
+    for( IT_LendMap it = previousLends.begin(); it != previousLends.end(); )
+        if( it->second == &receiver && &it->first->pType_->GetType() == &platformType )
+        {
+            lends_.insert( std::make_pair( it->first, &receiver ) );
+            receiver.childPlatforms_.push_back( it->first );
+            it->first->pPawn_ = &receiver;
+            IT_PlatformVector itP = std::find( childPlatforms_.begin(), childPlatforms_.end(), it->first );
+            assert( itP != childPlatforms_.end() );
+            childPlatforms_.erase( itP );
+            it = previousLends.erase( it );
+            if( ++nPlatformLent == nNbr )
+                return true;
+        }
+        else
+            ++it;
+
+    // if more lends are needed, get them from pawn
     for( IT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); )
         if( &( *it )->pType_->GetType() == &platformType )
         {

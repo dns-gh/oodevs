@@ -114,6 +114,28 @@ public:
     //@}
 
 private:
+    //! @name types
+    //@{
+    typedef std::map< T_EntityId, Pawn* >	         T_PawnMap;
+	typedef T_PawnMap::const_iterator		         CIT_PawnMap;
+
+    typedef std::set< T_EntityId >                   T_EntityIdSet;
+    typedef T_EntityIdSet::const_iterator            CIT_EntityIdSet;
+
+    typedef std::vector< Platform* >                 T_PlatformVector;
+    typedef T_PlatformVector::iterator               IT_PlatformVector;
+    typedef T_PlatformVector::const_iterator         CIT_PlatformVector;
+    typedef T_PlatformVector::const_reverse_iterator CRIT_PlatformVector;
+
+    typedef std::map< Platform*, Pawn* >             T_LendMap;
+    typedef T_LendMap::iterator                      IT_LendMap;
+    typedef T_LendMap::const_iterator                CIT_LendMap;
+
+    typedef std::vector< Pawn* >                     T_PawnVector;
+    typedef T_PawnVector::const_iterator             CIT_PawnVector;
+    //@}
+
+private:
     //! @name Copy/Assignement
     //@{
     Pawn( const Pawn& );            //!< Copy constructor
@@ -135,34 +157,13 @@ private:
     //@{
     void UpdateDisaggregationStatus();
     void UpdatePlatformPosition    () const;
-    bool LendPlatform              ( Pawn& receiver, const PlatformType& platformType, uint nNbr );
+    bool LendPlatform              ( Pawn& receiver, const PlatformType& platformType, uint nNbr, T_LendMap& previousLends );
     void SetFormation              ( Formation_ABC& formation ) const;
 	//@}
 
     //! @name Debug
     //@{
     void SendPlatformPositionToMos( bool bClear ) const;
-    //@}
-
-private:
-    //! @name types
-    //@{
-    typedef std::map< T_EntityId, Pawn* >	         T_PawnMap;
-	typedef T_PawnMap::const_iterator		         CIT_PawnMap;
-
-    typedef std::set< T_EntityId >                   T_EntityIdSet;
-    typedef T_EntityIdSet::const_iterator            CIT_EntityIdSet;
-
-    typedef std::vector< Platform* >                 T_PlatformVector;
-    typedef T_PlatformVector::iterator               IT_PlatformVector;
-    typedef T_PlatformVector::const_iterator         CIT_PlatformVector;
-    typedef T_PlatformVector::const_reverse_iterator CRIT_PlatformVector;
-
-    typedef std::map< Platform*, Pawn* >             T_LendMap;
-    typedef T_LendMap::const_iterator                CIT_LendMap;
-
-    typedef std::vector< Pawn* >                     T_PawnVector;
-    typedef T_PawnVector::const_iterator             CIT_PawnVector;
     //@}
 
 private:
