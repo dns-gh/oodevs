@@ -411,7 +411,6 @@ SOURCES += GQ_PlotCaption.cpp
 SOURCES += GQ_PlotData.cpp
 SOURCES += GQ_PlotDataBBox.cpp
 SOURCES += GQ_PlotToolTip.cpp
-SOURCES += moc_qtundo.cpp
 SOURCES += qtundo.cpp
 
 TRANSLATIONS    = translator/adn_fr.ts
