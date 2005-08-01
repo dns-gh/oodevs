@@ -46,6 +46,7 @@ class MOS_LogMedicalConsign_ListView;
 class MOS_LogSupplyConsign_ListView;
 class MOS_LogisticSupplyChangeQuotasDialog;
 class MOS_LogisticSupplyPushFlowDialog;
+class MOS_LogisticSupplyRecompletionDialog;
 class MOS_SurrenderDialog;
 class QListBox;
 class QCheckBox;
@@ -262,6 +263,7 @@ protected slots:
     void SlotMagicActionRecompletementPersonnel ();
     void SlotMagicActionRecompletementEquipement();
     void SlotMagicActionRecompletementRessources();
+    void SlotMagicActionRecompletementPartiel   ();
     void SlotMagicActionDestroyComposante       ();
     void SlotMagicActionChangeHumanFactors      ();
     void SlotMagicActionChangeLogisticLinks     ();
@@ -282,6 +284,7 @@ private:
     MOS_ChangeLogisticLinksDialog*          pChangeLogisticLinksDialog_;
     MOS_LogisticSupplyChangeQuotasDialog*   pLogisticSupplyChangeQuotasDialog_;
     MOS_LogisticSupplyPushFlowDialog*       pLogisticSupplyPushFlowDialog_;
+    MOS_LogisticSupplyRecompletionDialog*   pLogisticSupplyRecompletionDialog_;
 
     QWidgetStack*       pWidgetStack_;
     QTabWidget*         pTabWidget_;
@@ -297,6 +300,7 @@ private:
     QPushButton*        pButtonMagicRecompletementPersonnel_;
     QPushButton*        pButtonMagicRecompletementEquipement_;
     QPushButton*        pButtonMagicRecompletementRessources_;
+    QPushButton*        pButtonMagicRecompletementPartiel_;
     QPushButton*        pButtonMagicDestroyComposante_;
     QPushButton*        pButtonMagicDestroyAllComposantes_;
     QPushButton*        pButtonMagicChangeHumanFactors_;

@@ -166,6 +166,10 @@ private:
     std::string            strRootConfigFile_;
     std::string            strRootDirectory_;
     
+
+    std::string            strRootConfigFile_;
+    std::string            strRootDirectory_;
+
 private:
     static MOS_App*        pTheApp_;
 };

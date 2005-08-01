@@ -64,7 +64,6 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     const std::string strConfFile = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
     MT_ExtractFilePath( strConfFile, strRootDirectory_  );
     MT_ExtractFileName( strConfFile, strRootConfigFile_ ); 
-
 }
 
 //-----------------------------------------------------------------------------
@@ -457,6 +456,8 @@ void MOS_App::Initialize()
     bRunning_ = true;
     setMainWidget( pMainWindow_ );
     pMainWindow_->show();
+
+    MT_ChangeDir( strInitialDir );
 
     MT_ChangeDir( strInitialDir );
 }

@@ -52,6 +52,7 @@
 #include "MOS_LogSupplyConsign_ListView.h"
 #include "MOS_LogMaintenanceConsign_ListView.h"
 #include "MOS_LogMedicalConsign_ListView.h"
+#include "MOS_LogisticSupplyRecompletionDialog.h"
 
 #include "MOS_ASN_Messages.h"
 
@@ -274,6 +275,12 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
         pLayoutState->addWidget( pButtonMagicRecompletementRessources_ );
         pButtonMagicRecompletementRessources_->hide();
         connect( pButtonMagicRecompletementRessources_, SIGNAL( clicked() ), this, SLOT( SlotMagicActionRecompletementRessources() ) );
+
+        // Recompletement Partiel
+        pButtonMagicRecompletementPartiel_ = new QPushButton( "Action magique - Recompletement Partiel", pStateWidget );
+        pLayoutState->addWidget( pButtonMagicRecompletementPartiel_ );
+        pButtonMagicRecompletementPartiel_->hide();
+        connect( pButtonMagicRecompletementPartiel_, SIGNAL( clicked() ), this, SLOT( SlotMagicActionRecompletementPartiel() ) );
 
         // Destruction composante
         pButtonMagicDestroyComposante_ = new QPushButton( "Action magique - Destruction composante", pStateWidget );
@@ -686,6 +693,9 @@ void MOS_AttrEditor::Initialize()
     pLogisticSupplyPushFlowDialog_ = new MOS_LogisticSupplyPushFlowDialog( &MOS_App::GetApp().GetMainWindow() );
     pLogisticSupplyPushFlowDialog_ ->hide();
 
+    pLogisticSupplyRecompletionDialog_ = new MOS_LogisticSupplyRecompletionDialog( &MOS_App::GetApp().GetMainWindow() );
+    pLogisticSupplyRecompletionDialog_->hide();
+
     if( pKnowledgeList_ != 0 )
         pKnowledgeList_->Initialize();
 }
@@ -774,6 +784,7 @@ void MOS_AttrEditor::SetAgent( MOS_Agent* pAgent )
         pButtonMagicRecompletementPersonnel_->show();
         pButtonMagicRecompletementEquipement_->show();
         pButtonMagicRecompletementRessources_->show();
+        pButtonMagicRecompletementPartiel_->show();
         pButtonMagicDestroyAllComposantes_->show();
         pAgent_->SetAttributeEditor( this );
         pDrawKnowledge_->show();
@@ -937,6 +948,18 @@ void MOS_AttrEditor::SlotMagicActionRecompletementRessources()
     asnMsg.GetAsnMsg().oid              = pAgent_->GetAgentID();
     asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_recompletement_ressources;
     asnMsg.Send( 56 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SlotMagicActionRecompletementPartiel
+// Created: NLD 2003-07-11
+//-----------------------------------------------------------------------------
+void MOS_AttrEditor::SlotMagicActionRecompletementPartiel()
+{
+    assert( pAgent_ );
+    assert( pLogisticSupplyRecompletionDialog_ );
+    pLogisticSupplyRecompletionDialog_->SetAgent( *pAgent_ );
+    pLogisticSupplyRecompletionDialog_->show();
 }
 
 // -----------------------------------------------------------------------------
