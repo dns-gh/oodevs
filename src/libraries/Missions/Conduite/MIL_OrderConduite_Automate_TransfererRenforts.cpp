@@ -24,7 +24,7 @@ int MIL_OrderConduite_Automate_TransfererRenforts::nDIAAutomateARenforcerIdx_ = 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TransfererRenforts::InitializeDIA
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:54
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Automate_TransfererRenforts::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -38,7 +38,7 @@ void MIL_OrderConduite_Automate_TransfererRenforts::InitializeDIA( const MIL_Ord
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TransfererRenforts constructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:54
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_TransfererRenforts::MIL_OrderConduite_Automate_TransfererRenforts( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -49,7 +49,7 @@ MIL_OrderConduite_Automate_TransfererRenforts::MIL_OrderConduite_Automate_Transf
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TransfererRenforts destructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:54
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_TransfererRenforts::~MIL_OrderConduite_Automate_TransfererRenforts()
 {
@@ -62,7 +62,7 @@ MIL_OrderConduite_Automate_TransfererRenforts::~MIL_OrderConduite_Automate_Trans
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TransfererRenforts::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:54
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_TransfererRenforts::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_TransfererRenforts::Initiali
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TransfererRenforts::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:54
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Automate_TransfererRenforts::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

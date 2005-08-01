@@ -20,6 +20,7 @@
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Transport, "PHY_RoleAction_Transport" )
+BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Transport::sTransportData, "PHY_RoleAction_Transport::sTransportData" )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::sTransportData::sTransportData
@@ -56,6 +57,21 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight,
     , rTransportedWeight_    ( 0. )
 {
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::sTransportData::serialize
+// Created: JVT 2005-03-30
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const uint )
+{
+    file & bTransportOnlyLoadable_
+         & rTotalWeight_
+         & rRemainingWeight_
+         & rTransportedWeight_;
+}
+
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport constructor
@@ -109,7 +125,9 @@ template< typename Archive >
 void PHY_RoleAction_Transport::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< MT_Role_ABC >( *this )
-         & const_cast< MIL_AgentPion*& >( pTransporter_ );
+         & const_cast< MIL_AgentPion*& >( pTransporter_ )
+         & rWeightTransported_
+         & transportedPions_;
 }
 
 

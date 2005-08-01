@@ -66,6 +66,7 @@ PHY_StockConvoy::~PHY_StockConvoy()
         assert( pCommanderComp_ );
         assert( pCommanderPion_ );
         pCommanderPion_->GetRole< PHY_RolePion_Composantes >().UndoLendComposante( pPionConvoy_->GetRole< PHY_RolePion_Composantes >(), *pCommanderComp_ );
+        pCommanderPion_->GetRole< PHY_RolePion_Supply      >().StartUsingForLogistic( *pCommanderComp_ );
 
         pPionConvoy_->GetRole< PHY_RolePion_Supply >().UnassignConvoy( *this );
         MIL_AgentServer::GetWorkspace().GetEntityManager().DestroyPion( *pPionConvoy_ );

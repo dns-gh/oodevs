@@ -93,10 +93,10 @@ bool PHY_RolePion_Surrender::Surrender()
 // Name: PHY_RolePion_Surrender::TakePrisoner
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner )
+bool PHY_RolePion_Surrender::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp )
 {
     assert( pPion_ );
-    return pPion_->GetAutomate().TakePrisoner( pionTakingPrisoner );
+    return pPion_->GetAutomate().TakePrisoner( pionTakingPrisoner, camp );
 }
 
 // -----------------------------------------------------------------------------

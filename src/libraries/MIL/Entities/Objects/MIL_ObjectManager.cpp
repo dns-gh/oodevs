@@ -18,6 +18,8 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
 
+BOOST_CLASS_EXPORT_GUID( MIL_ObjectManager, "MIL_ObjectManager" )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager constructor
 // Created: NLD 2004-09-07

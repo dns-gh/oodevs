@@ -33,6 +33,26 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleAction_Transport RoleInterface;
+
+    struct sTransportData
+    {
+        sTransportData();
+        sTransportData( const sTransportData& rhs );
+        sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable );
+
+        template< typename Archive > void serialize( Archive&, const uint );
+
+        const bool     bTransportOnlyLoadable_;
+        const MT_Float rTotalWeight_;
+              MT_Float rRemainingWeight_;       
+              MT_Float rTransportedWeight_;
+      private:
+        sTransportData& operator=( const sTransportData& rhs );
+    };
+
+    typedef std::map< MIL_AgentPion*, sTransportData > T_TransportedPionMap;
+    typedef T_TransportedPionMap::iterator             IT_TransportedPionMap;
+    typedef T_TransportedPionMap::const_iterator       CIT_TransportedPionMap;
     //@}
 
 public:
@@ -62,8 +82,10 @@ public:
 
     //! @name Action
     //@{   
+    bool IsFinished    () const;
+    bool IsTransporting() const;
+
     bool AddPion         ( MIL_AgentPion& pion, bool bTransportOnlyLoadable );
-    bool IsFinished      () const;
     void Cancel          ();
     bool MagicLoadPion   ( MIL_AgentPion& pion, bool bTransportOnlyLoadable );
     bool MagicUnloadPion ( MIL_AgentPion& pion );
@@ -104,25 +126,6 @@ private:
         eUnloading,
         eErrorNoCarriers,
     };
-
-    struct sTransportData
-    {
-        sTransportData();
-        sTransportData( const sTransportData& rhs );
-        sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable );
-
-        const bool     bTransportOnlyLoadable_;
-        const MT_Float rTotalWeight_;
-              MT_Float rRemainingWeight_;       
-              MT_Float rTransportedWeight_;
-      private:
-        sTransportData& operator=( const sTransportData& rhs );
-    };
-
-    typedef std::map< MIL_AgentPion*, sTransportData > T_TransportedPionMap;
-    typedef T_TransportedPionMap::iterator             IT_TransportedPionMap;
-    typedef T_TransportedPionMap::const_iterator       CIT_TransportedPionMap;
-    //@}
     //@}
 
 private:

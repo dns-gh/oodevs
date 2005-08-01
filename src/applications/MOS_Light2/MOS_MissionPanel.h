@@ -79,6 +79,8 @@ private slots:
     void MagicMoveDone();
     void MagicRestore( int nId );
     void MagicDestroyComponent();
+    void MagicDestroyAll();
+    void MagicRecompletion();
     void MagicSurrender();
     void MagicChangeDiplomatie();
     void MagicChangeLogisticLinks();

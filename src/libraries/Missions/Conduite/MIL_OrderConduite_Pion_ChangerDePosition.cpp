@@ -23,7 +23,7 @@ int MIL_OrderConduite_Pion_ChangerDePosition::nDIAOrderConduitePionChangerDePosi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_ChangerDePosition::InitializeDIA
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Pion_ChangerDePosition::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_Pion_ChangerDePosition::InitializeDIA( const MIL_OrderCon
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_ChangerDePosition constructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_ChangerDePosition::MIL_OrderConduite_Pion_ChangerDePosition( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_Pion_ChangerDePosition::MIL_OrderConduite_Pion_ChangerDePositi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_ChangerDePosition destructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_ChangerDePosition::~MIL_OrderConduite_Pion_ChangerDePosition()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_Pion_ChangerDePosition::~MIL_OrderConduite_Pion_ChangerDePosit
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_ChangerDePosition::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_ChangerDePosition::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_ChangerDePosition::Initialize( c
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_ChangerDePosition::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Pion_ChangerDePosition::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

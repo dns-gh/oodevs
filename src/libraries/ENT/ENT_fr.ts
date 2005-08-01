@@ -1195,7 +1195,7 @@
     </message>
     <message>
         <source>AssignerPositionEmbarquement</source>
-        <translation>AssignerPositionEmbarquement</translation>
+        <translation type="obsolete">AssignerPositionEmbarquement</translation>
     </message>
     <message>
         <source>Pion ChangerDePosition</source>
@@ -1647,6 +1647,14 @@
     </message>
     <message>
         <source>Pion Generique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RecupererTransporteurs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ChangerPositionDebarquement</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3146,7 +3154,7 @@
     </message>
     <message>
         <source>neutralise</source>
-        <translation>neutralise</translation>
+        <translation type="obsolete">neutralise</translation>
     </message>
     <message>
         <source>posture arret</source>
@@ -3458,6 +3466,38 @@
     </message>
     <message>
         <source>simple rideau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>obus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missile air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missile sol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mitraille</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>detruit totalement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>detruit tactiquement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>operationnel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

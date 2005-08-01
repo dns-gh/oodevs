@@ -14,6 +14,8 @@
 
 #include "DEC_KnowledgeSource_ABC.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard, "DEC_KnowledgeBlackBoard" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard constructor
 // Created: NLD 2004-03-11

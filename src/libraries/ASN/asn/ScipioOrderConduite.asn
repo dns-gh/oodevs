@@ -7,11 +7,11 @@ ScipioOrderConduite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH, Agent, KnowledgeObject FROM ScipioBase
 IMPORTS Itineraire, Point, Direction, Segment, TypeEquipement, ListAgent, EnumTempsBordee FROM ScipioBase
-IMPORTS EnumOrderErrorCode FROM ScipioOrder
-IMPORTS MissionGenObject FROM ScipioAutomateMission_GEN
-IMPORTS MaintenancePriorites FROM ScipioLogMaintenance
-IMPORTS SantePriorites FROM ScipioLogSante
-IMPORTS EnumReglesEngagement FROM ScipioUnitAttr;
+IMPORTS EnumOrderErrorCode      FROM ScipioOrder
+IMPORTS MissionGenObject        FROM ScipioAutomateMission_GEN
+IMPORTS MaintenancePriorites    FROM ScipioLogMaintenance
+IMPORTS SantePriorites          FROM ScipioLogSante
+IMPORTS EnumReglesEngagement    FROM ScipioUnitAttr;
 
 ----------------------------------------------------------------------------
 -- Ordres de conduite pions/automates
@@ -23,6 +23,7 @@ OrderConduite-ArreterSilenceRadio     ::= NULL                 -- Dispo même san
 OrderConduite-ChangerReglesEngagement ::= EnumReglesEngagement -- Dispo même sans mission
 OrderConduite-PasserEnSilenceRadar    ::= NULL                 -- Dispo même sans mission
 OrderConduite-ArreterSilenceRadar     ::= NULL                 -- Dispo même sans mission
+OrderConduite-RecupererTransporteurs  ::= NULL                 -- Dispo même sans mission, Infanterie : récupération des VABs
 
 OrderConduite-AttendreSePoster             ::= NULL -- Dispo pour toutes les missions
 OrderConduite-Poursuivre                   ::= NULL -- Dispo pour toutes les missions
@@ -30,7 +31,6 @@ OrderConduite-Interrompre                  ::= NULL -- Dispo pour toutes les mis
 
 OrderConduite-Deboucher                             ::= NULL 
 OrderConduite-Decrocher                             ::= NULL
-OrderConduite-AssignerPositionEmbarquement          ::= Point    -- Infanterie : récupération des VABs
 OrderConduite-ModifierTempsBordeeMaintenance        ::= EnumTempsBordee
 OrderConduite-ModifierTempsBordeeSante              ::= EnumTempsBordee
 OrderConduite-ModifierPrioritesReparations          ::= MaintenancePriorites
@@ -39,6 +39,7 @@ OrderConduite-ModifierPrioritesTactiquesReparations ::= ListAutomate
 OrderConduite-ModifierPrioritesTactiquesBlesses     ::= ListAutomate
 OrderConduite-AcquerirObjectif                      ::= Localisation
 OrderConduite-Brouiller                             ::= NULL
+OrderConduite-ChangerPositionDebarquement           ::= Point    
 
 ---------------------------------------
 -- Ordres de conduite pion                                         
@@ -167,16 +168,17 @@ MsgOrderConduite ::= SEQUENCE
         order-conduite-passer-en-silence-radio                          OrderConduite-PasserEnSilenceRadio,
         order-conduite-arreter-silence-radio                            OrderConduite-ArreterSilenceRadio,
         order-conduite-passer-en-silence-radar                          OrderConduite-PasserEnSilenceRadar,
-        order-conduite-arreter-silence-radar                            OrderConduite-ArreterSilenceRadar,
+        order-conduite-arreter-silence-radar                            OrderConduite-ArreterSilenceRadar,        
+        order-conduite-recuperer-transporteurs                          OrderConduite-RecupererTransporteurs,        
         order-conduite-attendre-se-poster                               OrderConduite-AttendreSePoster,
         order-conduite-poursuivre                                       OrderConduite-Poursuivre,
         order-conduite-interrompre                                      OrderConduite-Interrompre,        
         order-conduite-changer-regles-engagement                        OrderConduite-ChangerReglesEngagement,
         order-conduite-deboucher                                        OrderConduite-Deboucher,
         order-conduite-decrocher                                        OrderConduite-Decrocher,                                                               
-        order-conduite-assigner-position-embarquement                   OrderConduite-AssignerPositionEmbarquement,
         order-conduite-acquerir-objectif                                OrderConduite-AcquerirObjectif,
         order-conduite-brouiller                                        OrderConduite-Brouiller,        
+        order-conduite-changer-position-debarquement                    OrderConduite-ChangerPositionDebarquement,
         order-conduite-pion-changer-de-position                         OrderConduite-Pion-ChangerDePosition,
         order-conduite-pion-contourner                                  OrderConduite-Pion-Contourner,
 		order-conduite-pion-envoyer-vehicule				            OrderConduite-Pion-EnvoyerVehicule, 

@@ -340,6 +340,24 @@ QString MOS_Tools::ToString( E_RulesOfEngagementState nState )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Tools::ToString
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+QString MOS_Tools::ToString( E_OperationalState nState )
+{
+    QObject a;
+    switch( nState )
+    {
+        case eOpStateFullyDestroyed      : return a.tr( "Détruit totalement" );
+        case eOpStateTacticallyDestroyed : return a.tr( "Détruit tactiquement" );
+        case eOpStateOperational         : return a.tr( "Opérationnel" );
+        default:
+            assert( false );
+            return "Unknown";
+    }
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Tools::ToString

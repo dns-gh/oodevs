@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_ASS_AssurerMiseEnOeuvre::nDIAPresenceContreBatterieIdx_ = 0 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ASS_AssurerMiseEnOeuvre::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_ASS_AssurerMiseEnOeuvre::InitializeDIA( const MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASS_AssurerMiseEnOeuvre::MIL_PionMission_ASS_AssurerMiseEnOeuvre( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_ASS_AssurerMiseEnOeuvre::MIL_PionMission_ASS_AssurerMiseEnOeuvre
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASS_AssurerMiseEnOeuvre::~MIL_PionMission_ASS_AssurerMiseEnOeuvre()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_ASS_AssurerMiseEnOeuvre::~MIL_PionMission_ASS_AssurerMiseEnOeuvr
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( co
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( const MIL_AutomateMiss
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( MIL_PionMission_ABC& m
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Serialize( ASN1T_MsgPionOrder& asn
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_AssurerMiseEnOeuvre::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

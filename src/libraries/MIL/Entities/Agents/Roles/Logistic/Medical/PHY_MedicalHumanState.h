@@ -31,7 +31,7 @@ class PHY_MedicalHumanState
     MT_COPYNOTALLOWED( PHY_MedicalHumanState )
 
 public:
-     PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human );
+     PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& humann, bool bEvacuatedByThirdParty = false );
      PHY_MedicalHumanState();
     ~PHY_MedicalHumanState();
 
@@ -45,16 +45,17 @@ public:
     
     //! @name Accessors
     //@{
-    const MIL_Automate& GetAutomate       () const;
-    const PHY_Human&    GetHuman          () const;
-    const MT_Vector2D&  GetHumanPosition  () const;
-          void          SetHumanPosition  ( const MT_Vector2D& vPosition );
-    const MT_Vector2D&  GetPionPosition   () const;
-          bool          NeedDiagnosis     () const;
-          bool          IsAnEmergency     () const;
-          bool          ShouldGoBackToWar () const;
-          void          NotifyDiagnosed   ();
-          bool          IsInAmbulance     () const;
+    const MIL_Automate& GetAutomate          () const;
+    const PHY_Human&    GetHuman             () const;
+    const MT_Vector2D&  GetHumanPosition     () const;
+          void          SetHumanPosition     ( const MT_Vector2D& vPosition );
+    const MT_Vector2D&  GetPionPosition      () const;
+          bool          NeedDiagnosis        () const;
+          bool          IsAnEmergency        () const;
+          bool          IsInAmbulance        () const;
+          bool          EvacuatedByThirdParty() const;
+          bool          ShouldGoBackToWar    () const;
+          void          NotifyDiagnosed      ();     
     //@}
 
     //! @name Operations
@@ -96,6 +97,7 @@ private:
           bool                    bHumanStateHasChanged_;
           bool                    bDiagnosed_;
           bool                    bHandledByMedical_;
+          bool                    bEvacuatedByThirdParty_;
 
 public:
     static MIL_MOSIDManager idManager_;

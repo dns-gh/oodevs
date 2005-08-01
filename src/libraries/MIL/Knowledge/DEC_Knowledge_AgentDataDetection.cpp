@@ -22,6 +22,8 @@
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataDetection, "DEC_Knowledge_AgentDataDetection" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection constructor
 // Created: NLD 2004-11-09

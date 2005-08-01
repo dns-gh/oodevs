@@ -23,6 +23,8 @@
 
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataIdentification, "DEC_Knowledge_AgentDataIdentification" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataIdentification constructor
 // Created: NLD 2004-11-09

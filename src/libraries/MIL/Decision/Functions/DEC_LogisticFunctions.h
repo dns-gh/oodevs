@@ -53,6 +53,8 @@ public:
     static void AutomateMedicalChangeWorkTime          ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     
     static void UndoLendCollectionComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent ); 
+
+    static void TransferWoundedHumansToTC2( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     //@}
 
     //! @name Supply

@@ -11,11 +11,11 @@
 //****************************************************************************
 //
 // $Created:  NLD 2002-01-03 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light/src/MOS_SurrenderDialog.inl $
-// $Author: Nld $
-// $Modtime: 7/03/05 13:22 $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_LogisticSupplyRecompletionDialog.inl $
+// $Author: Sbo $
+// $Modtime: 16/05/05 10:24 $
 // $Revision: 1 $
-// $Workfile: MOS_SurrenderDialog.inl $
+// $Workfile: MOS_LogisticSupplyRecompletionDialog.inl $
 //
 //*****************************************************************************
 

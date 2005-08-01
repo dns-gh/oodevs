@@ -149,16 +149,13 @@ public:                                                                         
 //=============================================================================
 // GENERATE ASN MESSAGES
 //=============================================================================
-//=============================================================================
-// GENERATE ASN MESSAGES
-//=============================================================================
 
 MOS_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlClientAnnouncement, ctrl_client_announcement  )
 MOS_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlStop, ctrl_stop  )
 MOS_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlPause, ctrl_pause )
 MOS_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlResume, ctrl_resume )
 MOS_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlChangeTimeFactor, ctrl_change_time_factor )
-MOS_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointSaveNow, ctrl_checkpoint_save_now )
+MOS_GENERATE_SEND_ASN_MSG_PTR_NOCTX( CtrlCheckPointSaveNow, ctrl_checkpoint_save_now )
 MOS_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlCheckPointSetFrequency, ctrl_checkpoint_set_frequency )
 MOS_GENERATE_SEND_ASN_MSG_PTR_NOCTX( CtrlMeteoGlobale, ctrl_meteo_globale )
 MOS_GENERATE_SEND_ASN_MSG_PTR_NOCTX( CtrlMeteoLocale, ctrl_meteo_locale )

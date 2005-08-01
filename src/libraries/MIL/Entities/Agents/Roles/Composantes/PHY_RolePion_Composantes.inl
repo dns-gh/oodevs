@@ -83,33 +83,33 @@ const MIL_AgentPion& PHY_RolePion_Composantes::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ResupplyEquipements
+// Name: PHY_RolePion_Composantes::RepairAllComposantes
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Composantes::ResupplyEquipements()
+void PHY_RolePion_Composantes::RepairAllComposantes()
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).ResupplyEquipement();
+        (**it).Repair();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ResupplyHumans
+// Name: PHY_RolePion_Composantes::HealAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Composantes::ResupplyHumans()
+void PHY_RolePion_Composantes::HealAllHumans()
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).ResupplyHumans();
+        (**it).HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::KillRandomComposante
+// Name: PHY_RolePion_Composantes::DestroyRandomComposante
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Composantes::KillRandomComposante()
+void PHY_RolePion_Composantes::DestroyRandomComposante()
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
@@ -123,11 +123,11 @@ void PHY_RolePion_Composantes::KillRandomComposante()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::KillAllComposantes
+// Name: PHY_RolePion_Composantes::DestroyAllComposantes
 // Created: NLD 2004-12-07
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Composantes::KillAllComposantes()
+void PHY_RolePion_Composantes::DestroyAllComposantes()
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).ReinitializeState( PHY_ComposanteState::dead_ );

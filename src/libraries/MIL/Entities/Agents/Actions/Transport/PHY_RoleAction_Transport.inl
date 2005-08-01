@@ -95,3 +95,13 @@ bool PHY_RoleAction_Transport::IsFinished() const
 {
     return transportedPions_.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::IsTransporting
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RoleAction_Transport::IsTransporting() const
+{
+    return rWeightTransported_ > 0.;
+}

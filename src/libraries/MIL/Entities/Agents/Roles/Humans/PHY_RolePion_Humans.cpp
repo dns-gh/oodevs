@@ -131,12 +131,25 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::ResupplyHumans
+// Name: PHY_RolePion_Humans::ChangeHumansAvailability
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::ResupplyHumans()
+void PHY_RolePion_Humans::ChangeHumansAvailability( MT_Float rFactor /*= 1.*/ )
 {
-    GetRole< PHY_RolePion_Composantes >().ResupplyHumans();
+    const uint nNewNbrFullyAliveHumans_ = nNbrHumans_ * rFactor;
+    if( nNewNbrFullyAliveHumans_ > nNbrFullyAliveHumans_ )
+        GetRole< PHY_RolePion_Composantes >().HealHumans( nNewNbrFullyAliveHumans_ - nNbrFullyAliveHumans_ );
+    else if( nNewNbrFullyAliveHumans_ < nNbrFullyAliveHumans_ )
+        GetRole< PHY_RolePion_Composantes >().WoundHumans( nNbrFullyAliveHumans_ - nNewNbrFullyAliveHumans_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::CureAllHumans
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Humans::HealAllHumans()
+{
+    GetRole< PHY_RolePion_Composantes >().HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -320,6 +333,32 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 // =============================================================================
 // LOGISTIC
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::EvacuateWoundedHumans
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
+{
+    GetRole< PHY_RolePion_Composantes >().EvacuateWoundedHumans( destinationTC2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
+{
+    assert( pPion_ );
+    
+    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *pPion_, human );
+    if( !pMedicalHumanState )
+        return 0;
+    
+    bool bOut = medicalHumanStates_.insert( pMedicalHumanState ).second;
+    assert( bOut );
+    return pMedicalHumanState;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::NotifyHumanWaitingForMedical

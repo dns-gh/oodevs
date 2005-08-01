@@ -14,10 +14,9 @@
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
 inline
-const PHY_AmmoDotationClass& PHY_DotationCategory::GetAmmoDotationClass() const
+const PHY_AmmoDotationClass* PHY_DotationCategory::GetAmmoDotationClass() const
 {
-    assert( pAmmoDotationClass_ );
-    return *pAmmoDotationClass_;
+    return pAmmoDotationClass_;
 }
 
 // -----------------------------------------------------------------------------

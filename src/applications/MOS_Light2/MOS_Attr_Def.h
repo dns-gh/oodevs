@@ -78,6 +78,11 @@ enum E_CloseCombatState
     eCloseCombatStateFixed,
     eCloseCombatStateProceedMission
 };
-
+enum E_OperationalState
+{
+    eOpStateFullyDestroyed,
+    eOpStateTacticallyDestroyed,
+    eOpStateOperational,
+};
 
 #endif // __MOS_Attr_Def_h_

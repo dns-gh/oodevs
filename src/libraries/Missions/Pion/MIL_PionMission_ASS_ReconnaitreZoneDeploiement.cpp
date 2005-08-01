@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_ASS_ReconnaitreZoneDeploiement::nDIAPositionDeploiementIdx_ 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::InitializeDIA( const MIL_Pi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASS_ReconnaitreZoneDeploiement::MIL_PionMission_ASS_ReconnaitreZoneDeploiement( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_ASS_ReconnaitreZoneDeploiement::MIL_PionMission_ASS_ReconnaitreZ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASS_ReconnaitreZoneDeploiement::~MIL_PionMission_ASS_ReconnaitreZoneDeploiement()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_ASS_ReconnaitreZoneDeploiement::~MIL_PionMission_ASS_Reconnaitre
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initial
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize( const MIL_Autom
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize( MIL_PionMission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Serialize( ASN1T_MsgPionOrd
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

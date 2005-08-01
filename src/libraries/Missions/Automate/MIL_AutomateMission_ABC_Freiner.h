@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:35 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //=============================================================================
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //=============================================================================
 class MIL_AutomateMission_ABC_Freiner : public MIL_AutomateMission_ABC
 {

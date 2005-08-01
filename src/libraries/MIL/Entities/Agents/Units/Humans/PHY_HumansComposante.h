@@ -20,6 +20,7 @@ class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_AgentFireResult;
 class MIL_NbcAgentType;
+class MIL_AutomateLOG;
 class PHY_Human;
 class PHY_RolePion_Composantes;
 
@@ -44,15 +45,23 @@ public:
     //! @name 
     //@{
     bool ChangeHumanRank  ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
-    uint ChangeHumansWound( const PHY_HumanRank& rank, const PHY_HumanWound& oldWound, const PHY_HumanWound& newWound, uint nNbrToChange );
+
     void ApplyWounds      ( const MIL_NbcAgentType& nbcAgentType );
     void ApplyWounds      ( const PHY_ComposanteState& newCompState, PHY_AgentFireResult& fireResult );
     void KillAllHumans    ();
     void KillAllHumans    ( PHY_AgentFireResult& fireResult );
-    void Resupply         ();
+
+    uint WoundHumans      ( uint nNbrToChange, const PHY_HumanWound& newWound, const PHY_HumanRank* pHumanRank = 0 );
+    void HealAllHumans    ();
+    uint HealHumans       ( uint nNbrToChange );
     //@}
 
-    //! @name Composante maintenance
+    //! @name Medical
+    //@{
+    void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const;
+    //@}
+
+    //! @name Composante notifications
     //@{
     void NotifyComposanteHandledByMaintenance();
     void NotifyComposanteBackFromMaintenance ();

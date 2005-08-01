@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_ABC_Surveiller::nDIAPositionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ABC_Surveiller::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_ABC_Surveiller::InitializeDIA( const MIL_PionMissionType& t
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Surveiller::MIL_PionMission_ABC_Surveiller( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_ABC_Surveiller::MIL_PionMission_ABC_Surveiller( MIL_AgentPion& p
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Surveiller::~MIL_PionMission_ABC_Surveiller()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_ABC_Surveiller::~MIL_PionMission_ABC_Surveiller()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Surveiller::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Surveiller::Initialize( const ASN1T
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Surveiller::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_ABC_Surveiller::Initialize( const MIL_AutomateMission_ABC& 
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Surveiller::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_ABC_Surveiller::Initialize( MIL_PionMission_ABC& missionTmp
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Surveiller::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_ABC_Surveiller::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Surveiller::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_ABC_Surveiller::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Surveiller::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Surveiller::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

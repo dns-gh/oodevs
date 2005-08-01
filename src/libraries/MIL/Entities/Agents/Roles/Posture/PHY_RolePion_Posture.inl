@@ -141,4 +141,12 @@ MT_Float PHY_RolePion_Posture::GetElongationFactor() const
     return rElongationFactor_;
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsStealth
+// Created: AGE 2004-12-08
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RolePion_Posture::IsStealth() const
+{
+    return bIsStealth_;
+}

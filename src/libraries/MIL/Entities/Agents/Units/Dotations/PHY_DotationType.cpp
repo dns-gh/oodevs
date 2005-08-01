@@ -14,13 +14,13 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 
-PHY_DotationType PHY_DotationType::munition_ ( "munition" , eMunition  );
-PHY_DotationType PHY_DotationType::carburant_( "carburant", eCarburant );
-PHY_DotationType PHY_DotationType::mine_     ( "mine"     , eMine      );
-PHY_DotationType PHY_DotationType::explosif_ ( "explosif" , eExplosif  );
-PHY_DotationType PHY_DotationType::barbele_  ( "barbele"  , eBarbele   );
-PHY_DotationType PHY_DotationType::piece_    ( "piece"    , ePiece     );
-PHY_DotationType PHY_DotationType::ration_   ( "ration"   , eRation    );
+PHY_DotationType PHY_DotationType::munition_ ( "munition" , eMunition , EnumFamilleDotation::munition  );
+PHY_DotationType PHY_DotationType::carburant_( "carburant", eCarburant, EnumFamilleDotation::carburant );
+PHY_DotationType PHY_DotationType::mine_     ( "mine"     , eMine     , EnumFamilleDotation::mine      );
+PHY_DotationType PHY_DotationType::explosif_ ( "explosif" , eExplosif , EnumFamilleDotation::explosif  );
+PHY_DotationType PHY_DotationType::barbele_  ( "barbele"  , eBarbele  , EnumFamilleDotation::barbele   );
+PHY_DotationType PHY_DotationType::piece_    ( "piece"    , ePiece    , EnumFamilleDotation::piece     );
+PHY_DotationType PHY_DotationType::ration_   ( "ration"   , eRation   , EnumFamilleDotation::ration    );
 
 PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
 PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
@@ -92,9 +92,10 @@ void PHY_DotationType::Terminate()
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType )
+PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumFamilleDotation nAsnID )
     : strName_( strName )
     , nType_  ( nType )
+    , nAsnID_ ( nAsnID )
 {   
 }
 

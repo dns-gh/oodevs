@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:4 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -30,7 +30,7 @@ int MIL_PionMission_Test_MoveTo::nDIAVisionDirectionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::InitializeDIA
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_Test_MoveTo::InitializeDIA( const MIL_PionMissionType& type )
@@ -48,7 +48,7 @@ void MIL_PionMission_Test_MoveTo::InitializeDIA( const MIL_PionMissionType& type
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo constructor
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_Test_MoveTo::MIL_PionMission_Test_MoveTo( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -59,7 +59,7 @@ MIL_PionMission_Test_MoveTo::MIL_PionMission_Test_MoveTo( MIL_AgentPion& pion, c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo destructor
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_Test_MoveTo::~MIL_PionMission_Test_MoveTo()
 {
@@ -69,7 +69,7 @@ MIL_PionMission_Test_MoveTo::~MIL_PionMission_Test_MoveTo()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_Test_MoveTo::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -97,7 +97,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_MoveTo::Initialize( const ASN1T_Ms
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_Test_MoveTo::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -116,7 +116,7 @@ bool MIL_PionMission_Test_MoveTo::Initialize( const MIL_AutomateMission_ABC& par
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_Test_MoveTo::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -136,7 +136,7 @@ bool MIL_PionMission_Test_MoveTo::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::Terminate
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_MoveTo::Terminate()
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_Test_MoveTo::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::Serialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_MoveTo::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -172,7 +172,7 @@ void MIL_PionMission_Test_MoveTo::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_MoveTo::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_MoveTo::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

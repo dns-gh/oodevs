@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:4 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -36,7 +36,7 @@ int MIL_PionMission_Test_FindPosition::nDIADgoIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::InitializeDIA
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_Test_FindPosition::InitializeDIA( const MIL_PionMissionType& type )
@@ -60,7 +60,7 @@ void MIL_PionMission_Test_FindPosition::InitializeDIA( const MIL_PionMissionType
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition constructor
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_Test_FindPosition::MIL_PionMission_Test_FindPosition( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -71,7 +71,7 @@ MIL_PionMission_Test_FindPosition::MIL_PionMission_Test_FindPosition( MIL_AgentP
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition destructor
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_Test_FindPosition::~MIL_PionMission_Test_FindPosition()
 {
@@ -81,7 +81,7 @@ MIL_PionMission_Test_FindPosition::~MIL_PionMission_Test_FindPosition()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_Test_FindPosition::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -121,7 +121,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_FindPosition::Initialize( const AS
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_Test_FindPosition::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -146,7 +146,7 @@ bool MIL_PionMission_Test_FindPosition::Initialize( const MIL_AutomateMission_AB
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -172,7 +172,7 @@ bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& mission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::Terminate
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_FindPosition::Terminate()
 {
@@ -187,7 +187,7 @@ void MIL_PionMission_Test_FindPosition::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::Serialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_FindPosition::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -214,7 +214,7 @@ void MIL_PionMission_Test_FindPosition::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_FindPosition::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_FindPosition::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

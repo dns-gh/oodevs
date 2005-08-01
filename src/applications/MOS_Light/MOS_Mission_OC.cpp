@@ -70,8 +70,8 @@ void MOS_Mission_OC::Initialize()
         case eOrdreConduite_ChangerReglesEngagement              : InitializeChangeReglesEngagement(); break;
         case eOrdreConduite_Pion_AppliquerFeux                   : InitializePionAppliquerFeux    (); break;
         case eOrdreConduite_Pion_ChangerDePosition               : InitializePionChangerDePosition(); break;       
-        case eOrdreConduite_AssignerPositionEmbarquement        : InitializeAssignerPositionEmbarquement(); break;
         case eOrdreConduite_AcquerirObjectif                    : InitializeAcquerirObjectif(); break;
+        case eOrdreConduite_ChangerPositionDebarquement          : InitializeChangerPositionDebarquement(); break;
         case eOrdreConduite_Pion_RenforcerEnVSRAM               : InitializePionRenforcerEnVSRAM(); break;
         case eOrdreConduite_Pion_TransfererVSRAM                : InitializePionTransfererVSRAM(); break;
         case eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM        : InitializePionReprendreAuxOrdresVSRAM(); break;
@@ -144,19 +144,6 @@ void MOS_Mission_OC::InitializeChangeReglesEngagement()
 }
 
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Mission_OC::InitializeAssignerPositionEmbarquement
-// Created: NLD 2003-09-15
-// -----------------------------------------------------------------------------
-void MOS_Mission_OC::InitializeAssignerPositionEmbarquement()
-{
-    ASN1T_OrderConduite_AssignerPositionEmbarquement& asnMission = *new ASN1T_OrderConduite_AssignerPositionEmbarquement();
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_assigner_position_embarquement;
-    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_assigner_position_embarquement = &asnMission;
-    
-    CreatePoint( asnMission, "Position" );
-}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Mission_OC::InitializeAcquerirObjectif
@@ -442,6 +429,20 @@ void MOS_Mission_OC::InitializeAutomateActiverObstacle()
 }
 
 //-----------------------------------------------------------------------------
+// Name: MOS_Mission_OC::InitializeChangerPositionDebarquement
+// Created: NLD 2003-09-15
+// -----------------------------------------------------------------------------
+void MOS_Mission_OC::InitializeChangerPositionDebarquement()
+{
+    ASN1T_OrderConduite_ChangerPositionDebarquement& asnMission = *new ASN1T_OrderConduite_ChangerPositionDebarquement();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_position_debarquement = &asnMission;
+    
+    CreatePoint( asnMission, "Position" );
+}
+
+
+//-----------------------------------------------------------------------------
 // Name: MOS_Mission_OC::Terminate
 // Created: AGN 03-04-14
 //-----------------------------------------------------------------------------
@@ -454,6 +455,7 @@ void MOS_Mission_OC::Terminate()
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_vs_ram                  : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_vs_ram; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_vs_ram                    : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_vs_ram; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram          : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_vs_ram; break;
+        case T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement             : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_position_debarquement; break;
 //        case T_MsgOrderConduite_order_conduite_order_conduite_pion_modifier_temps_bordee                : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_modifier_temps_bordee; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations            : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_reparations; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses                : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_blesses; break;
@@ -461,7 +463,6 @@ void MOS_Mission_OC::Terminate()
         case T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_blesses      : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_tactiques_blesses; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux                       : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_appliquer_feux; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_changer_de_position                  : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_changer_de_position; break;
-        case T_MsgOrderConduite_order_conduite_order_conduite_assigner_position_embarquement            : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_assigner_position_embarquement; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement            : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_realiser_variantement; break;
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement   : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_desequiper_site_franchissement; break; 
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni                : delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni; break;

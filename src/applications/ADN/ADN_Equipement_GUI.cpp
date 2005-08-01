@@ -78,12 +78,12 @@ void ADN_Equipement_GUI::Build()
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
 
     this->BuildAmmunition( pTabWidget );
-    this->BuildGeneric( eTypeDotation_Carburant, pTabWidget );
-    this->BuildGeneric( eTypeDotation_Mine, pTabWidget );
-    this->BuildGeneric( eTypeDotation_Explosif, pTabWidget );
-    this->BuildGeneric( eTypeDotation_Barbele, pTabWidget );
-    this->BuildGeneric( eTypeDotation_Ration, pTabWidget );
-    this->BuildGeneric( eTypeDotation_Piece, pTabWidget );
+    this->BuildGeneric( eFamilleDotation_Carburant, pTabWidget );
+    this->BuildGeneric( eFamilleDotation_Mine, pTabWidget );
+    this->BuildGeneric( eFamilleDotation_Explosif, pTabWidget );
+    this->BuildGeneric( eFamilleDotation_Barbele, pTabWidget );
+    this->BuildGeneric( eFamilleDotation_Ration, pTabWidget );
+    this->BuildGeneric( eFamilleDotation_Piece, pTabWidget );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
@@ -95,17 +95,17 @@ void ADN_Equipement_GUI::Build()
 // Name: ADN_Equipement_GUI::BuildGeneric
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildGeneric( E_TypeDotation nType, QTabWidget* pParent )
+void ADN_Equipement_GUI::BuildGeneric( E_FamilleDotation nType, QTabWidget* pParent )
 {
     ADN_GuiBuilder builder;
     QWidget* pPage = new QWidget( pParent );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromTypeDotation( nType ).c_str() );
+    pParent->addTab( pPage, ENT_Tr::ConvertFromFamilleDotation( nType ).c_str() );
 
     ADN_Equipement_GenericListView* pListView = new ADN_Equipement_GenericListView( nType, pPage );
     pListView->GetConnector().Connect( & data_.GetDotation( nType ).categories_ );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromTypeDotation( nType, ENT_Tr_ABC::eToTr ).c_str(), pPage );
+    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromFamilleDotation( nType, ENT_Tr_ABC::eToTr ).c_str(), pPage );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vConnectors[eName] );
@@ -137,13 +137,13 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     ADN_GuiBuilder builder;
 
     QWidget* pPage = new QWidget( pParent );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromTypeDotation( eTypeDotation_Munition ).c_str() );
+    pParent->addTab( pPage, ENT_Tr::ConvertFromFamilleDotation( eFamilleDotation_Munition ).c_str() );
 
     pAmmoListView_ = new ADN_Equipement_AmmoListView( pPage );
-    pAmmoListView_->GetConnector().Connect( & data_.GetDotation( eTypeDotation_Munition ).categories_ );
+    pAmmoListView_->GetConnector().Connect( & data_.GetDotation( eFamilleDotation_Munition ).categories_ );
     T_ConnectorVector vConnectors( eNbrAmmoGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromTypeDotation( eTypeDotation_Munition, ENT_Tr_ABC::eToTr ).c_str(), pPage );
+    QGroupBox* pGroupBox = new QGroupBox( 1, Qt::Horizontal, ENT_Tr::ConvertFromFamilleDotation( eFamilleDotation_Munition, ENT_Tr_ABC::eToTr ).c_str(), pPage );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
 
@@ -260,7 +260,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
     builder.AddTableCell( pTable, 0, 4, tr( "Destroyed" ) );
 
     // Fill the table.
-    ADN_Equipement_Data::DotationInfos& ammo = data_.GetDotation( eTypeDotation_Munition );
+    ADN_Equipement_Data::DotationInfos& ammo = data_.GetDotation( eFamilleDotation_Munition );
 
     int nRowSize = (int)armorInfos.size();
     int nRow = 1;

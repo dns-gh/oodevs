@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_EnvoyerVehicule::InitializeDIA
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Pion_EnvoyerVehicule::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Pion_EnvoyerVehicule::InitializeDIA( const MIL_OrderCondu
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_EnvoyerVehicule constructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_EnvoyerVehicule::MIL_OrderConduite_Pion_EnvoyerVehicule( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Pion_EnvoyerVehicule::MIL_OrderConduite_Pion_EnvoyerVehicule( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_EnvoyerVehicule destructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_EnvoyerVehicule::~MIL_OrderConduite_Pion_EnvoyerVehicule()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Pion_EnvoyerVehicule::~MIL_OrderConduite_Pion_EnvoyerVehicule(
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_EnvoyerVehicule::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_EnvoyerVehicule::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_EnvoyerVehicule::Initialize( con
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_EnvoyerVehicule::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Pion_EnvoyerVehicule::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

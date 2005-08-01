@@ -23,21 +23,24 @@
 
 MIL_MOSIDManager PHY_MedicalHumanState::idManager_;
 
+BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalHumanState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human )
-    : nID_                  ( idManager_.GetFreeSimID() )
-    , pPion_                ( &pion )
-    , pHuman_               ( &human )
-    , pConsign_             ( 0 )
-    , vHumanPosition_       ( pion.GetRole< PHY_RolePion_Location >().GetPosition() )
-    , bHasChanged_          ( true )
-    , bHumanStateHasChanged_( false )
-    , bDiagnosed_           ( false )
-    , bHandledByMedical_    ( false )
-    , bShouldGoBackToWar_   ( false )
+PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human, bool bEvacuatedByThirdParty )
+    : nID_                   ( idManager_.GetFreeSimID() )
+    , pPion_                 ( &pion )
+    , pHuman_                ( &human )
+    , pConsign_              ( 0 )
+    , vHumanPosition_        ( pion.GetRole< PHY_RolePion_Location >().GetPosition() )
+    , bHasChanged_           ( true )
+    , bHumanStateHasChanged_ ( false )
+    , bDiagnosed_            ( false )
+    , bHandledByMedical_     ( false )
+    , bShouldGoBackToWar_    ( false )
+    , bEvacuatedByThirdParty_( bEvacuatedByThirdParty )
 {
     SendMsgCreation();
 }
@@ -47,16 +50,17 @@ PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& hu
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState()
-    : nID_                  ( idManager_.GetFreeSimID() )
-    , pPion_                ( 0 )
-    , pHuman_               ( 0 )
-    , pConsign_             ( 0 )
-    , vHumanPosition_       ()
-    , bHasChanged_          ( true )
-    , bHumanStateHasChanged_( false )
-    , bDiagnosed_           ( false )
-    , bHandledByMedical_    ( false )
-    , bShouldGoBackToWar_   ( false )
+    : nID_                   ( idManager_.GetFreeSimID() )
+    , pPion_                 ( 0 )
+    , pHuman_                ( 0 )
+    , pConsign_              ( 0 )
+    , vHumanPosition_        ()
+    , bHasChanged_           ( true )
+    , bHumanStateHasChanged_ ( false )
+    , bDiagnosed_            ( false )
+    , bHandledByMedical_     ( false )
+    , bShouldGoBackToWar_    ( false )
+    , bEvacuatedByThirdParty_( false )
 {
 }
 
@@ -87,7 +91,8 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
          >> vHumanPosition_
          >> bDiagnosed_
          >> bShouldGoBackToWar_
-         >> bHandledByMedical_;
+         >> bHandledByMedical_
+         >> bEvacuatedByThirdParty_;
          
     idManager_.LockSimID( nID_ );
 }
@@ -105,7 +110,8 @@ void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const uint ) c
          << vHumanPosition_
          << bDiagnosed_
          << bShouldGoBackToWar_
-         << bHandledByMedical_;
+         << bHandledByMedical_
+         << bEvacuatedByThirdParty_;
 }
 
 

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_GEN_CreerContournement::nDIAObstacleIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_CreerContournement::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_GEN_CreerContournement::InitializeDIA( const MIL_PionMissio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_CreerContournement::MIL_PionMission_GEN_CreerContournement( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_GEN_CreerContournement::MIL_PionMission_GEN_CreerContournement( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_CreerContournement::~MIL_PionMission_GEN_CreerContournement()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_GEN_CreerContournement::~MIL_PionMission_GEN_CreerContournement(
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_CreerContournement::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_CreerContournement::Initialize( con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_CreerContournement::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_GEN_CreerContournement::Initialize( const MIL_AutomateMissi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_CreerContournement::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_GEN_CreerContournement::Initialize( MIL_PionMission_ABC& mi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_CreerContournement::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_GEN_CreerContournement::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_CreerContournement::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_GEN_CreerContournement::Serialize( ASN1T_MsgPionOrder& asnM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_CreerContournement::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_CreerContournement::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

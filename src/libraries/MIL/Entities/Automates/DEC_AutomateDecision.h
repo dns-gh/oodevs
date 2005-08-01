@@ -73,6 +73,7 @@ public:
     void NotifyForceRatioStateChanged       ( E_ForceRatioState        nState );
     void NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState nState );
     void NotifyCloseCombatStateChanged      ( E_CloseCombatState       nState );
+    void NotifyOperationalStateChanged      ( E_OperationalState       nState );
     //@}
 
     //! @name Network
@@ -108,6 +109,7 @@ private:
     E_ForceRatioState        nForceRatioState_;
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
+    E_OperationalState       nOperationalState_;
     bool                     bStateHasChanged_;
 
 private:

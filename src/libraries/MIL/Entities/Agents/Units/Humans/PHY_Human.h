@@ -15,9 +15,10 @@
 #include "MIL.h"
 #include "PHY_HumanWound.h"
 
+class MIL_NbcAgentType;
+class MIL_AutomateLOG;
 class PHY_HumanRank;
 class PHY_ComposantePion;
-class MIL_NbcAgentType;
 class PHY_MedicalHumanState;
 
 // =============================================================================
@@ -54,7 +55,7 @@ public:
     
     //! @name Operations
     //@{
-    void Resupply             ();
+    void Heal                 (); // 'Magic' Heal
     bool ChangeRank           ( const PHY_HumanRank&  newRank  );
     bool ChangeWound          ( const PHY_HumanWound& newWound );
     bool ApplyWound           ();
@@ -83,6 +84,7 @@ public:
 
     //! @name Medical
     //@{
+    void Evacuate   ( MIL_AutomateLOG& destinationTC2 );
     bool NeedMedical() const;
     
     void NotifyHandledByMedical ();
@@ -91,6 +93,8 @@ public:
     void HealMentalDisease      ();
     void HealWound              ();
     void HealContamination      ();
+
+//    void TransferToTC2          ( MIL_AutomateLOG& tc2 );
     //@}
 
     //! @name Composante maintenance

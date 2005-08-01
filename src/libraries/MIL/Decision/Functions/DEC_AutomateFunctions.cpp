@@ -214,6 +214,15 @@ void DEC_AutomateFunctions::NotifyCloseCombatStateChanged( DIA_Call_ABC& call, M
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::NotifyOperationalStateChanged
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::NotifyOperationalStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
+{
+    callerAutomate.GetDecision().NotifyOperationalStateChanged( (E_OperationalState)call.GetParameter( 0 ).ToId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::PionChangeAutomate
 // Created: NLD 2003-10-09
 // -----------------------------------------------------------------------------

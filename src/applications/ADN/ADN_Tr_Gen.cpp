@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Tr_Gen.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 13 $
-// $Workfile: ADN_Tr_Gen.cpp $
+// $Created: 2005-08-01 - 11:23:54 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_Tr_Gen_Skeleton.cpp $
+// $Author: Ape $
+// $Modtime: 17/02/05 17:22 $
+// $Revision: 1 $
+// $Workfile: AGR_ADN2_Tr_Gen_Skeleton.cpp $
 //
 // *****************************************************************************
 

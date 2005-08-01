@@ -65,6 +65,8 @@ public:
     MT_Float Consume ( const PHY_DotationCategory& category, MT_Float rNbr );
     MT_Float Supply  ( const PHY_DotationCategory& category, MT_Float rNbr );
     void     Resupply();
+    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
+    void     Resupply( const PHY_DotationType&     type              , MT_Float rFactor );
     //@}
 
     //! @name 

@@ -1,6 +1,6 @@
 // *******************************************************************************************
 // Automate mission types for DirectIA
-// Created : 2005-5-11 - 10:0:21
+// Created : 2005-7-29 - 10:23:21
 // *******************************************************************************************
 
 typedef struct T_Mission_Automate_ABC_ArmerPointDeControle : T_Mission_Automate
@@ -151,6 +151,7 @@ T_Point pointDebarquement_;
 T_Point pointEmbarquement_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 bool attendreUnites_;
@@ -162,6 +163,7 @@ typedef struct T_Mission_Automate_ALAT_Jalonner : T_Mission_Automate
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -173,6 +175,7 @@ T_Point pointDebarquement_;
 T_Point pointEmbarquement_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 bool avecMateriel_;
@@ -185,6 +188,7 @@ T_Point pointDebarquement_;
 T_Point pointEmbarquement_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 bool avecMateriel_;
@@ -196,6 +200,7 @@ T_ListePions unitesAAppuyer_;
 T_Point pointRegroupement_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 T_Point pointDislocation_;
 T_Localisation zone_;
 id porteeAction_;
@@ -208,6 +213,7 @@ T_ListePions unitesAAppuyer_;
 T_Point pointRegroupement_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -217,6 +223,7 @@ typedef struct T_Mission_Automate_ALAT_Surveiller : T_Mission_Automate
 T_Localisation zone_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 T_Point pointLogistique_;
@@ -226,6 +233,7 @@ typedef struct T_Mission_Automate_ALAT_Reconnaitre : T_Mission_Automate
 {
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -235,6 +243,7 @@ typedef struct T_Mission_Automate_ALAT_Freiner : T_Mission_Automate
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -245,6 +254,7 @@ T_ListePions unitesAEscorter_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -254,6 +264,7 @@ typedef struct T_Mission_Automate_ALAT_Attaquer : T_Mission_Automate
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -264,6 +275,7 @@ T_Localisation zone_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -273,6 +285,7 @@ typedef struct T_Mission_Automate_ALAT_AttaquerFormationAeromobile : T_Mission_A
 T_ListeConnaissancesAgent unitesAAttaquer_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -283,6 +296,7 @@ T_Localisation zone_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 };
@@ -294,6 +308,7 @@ E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_Point pointDislocation_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 bool neutraliser_;
@@ -306,6 +321,7 @@ E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_Point pointDislocation_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 id ambianceMission_;
 bool neutraliser_;
@@ -316,6 +332,7 @@ typedef struct T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage : T_Mission
 T_ListePions unitesASecourir_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
+bool ravitaillementDebutMission_;
 id porteeAction_;
 };
 

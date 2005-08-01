@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::nDIAZonesDebarquementIdx
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_AppuyerDebarquementTroupes constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::MIL_AutomateMission_GEN_AppuyerDebarquementTroupes( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::MIL_AutomateMission_GEN_Appu
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_AppuyerDebarquementTroupes destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::~MIL_AutomateMission_GEN_AppuyerDebarquementTroupes()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::InitializeDIA( const MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Ini
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::Serialize( ASN1T_MsgAut
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_AppuyerDebarquementTroupes::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

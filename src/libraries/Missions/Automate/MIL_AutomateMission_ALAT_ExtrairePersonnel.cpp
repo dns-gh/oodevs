@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,6 +23,7 @@ int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAPointDebarquementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAPointEmbarquementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAPorteeActionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAAmbianceMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAAvecMaterielIdx_ = 0 ;
@@ -30,7 +31,7 @@ int MIL_AutomateMission_ALAT_ExtrairePersonnel::nDIAAvecMaterielIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_ExtrairePersonnel constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_ExtrairePersonnel::MIL_AutomateMission_ALAT_ExtrairePersonnel( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -41,7 +42,7 @@ MIL_AutomateMission_ALAT_ExtrairePersonnel::MIL_AutomateMission_ALAT_ExtrairePer
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_ExtrairePersonnel destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_ExtrairePersonnel::~MIL_AutomateMission_ALAT_ExtrairePersonnel()
 {
@@ -65,6 +66,7 @@ void MIL_AutomateMission_ALAT_ExtrairePersonnel::InitializeDIA( const MIL_Automa
     nDIAPointEmbarquementIdx_ = DEC_Tools::InitializeDIAField( "pointEmbarquement_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
     nDIAAvecMaterielIdx_ = DEC_Tools::InitializeDIAField( "avecMateriel_", diaType );
@@ -73,7 +75,7 @@ void MIL_AutomateMission_ALAT_ExtrairePersonnel::InitializeDIA( const MIL_Automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_ExtrairePersonnel::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_ExtrairePersonnel::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -92,6 +94,8 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_ExtrairePersonnel::Initialize(
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
@@ -104,7 +108,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_ExtrairePersonnel::Initialize(
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_ExtrairePersonnel::Terminate()
 {
@@ -119,7 +123,7 @@ void MIL_AutomateMission_ALAT_ExtrairePersonnel::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_ExtrairePersonnel::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_ExtrairePersonnel::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -134,6 +138,7 @@ void MIL_AutomateMission_ALAT_ExtrairePersonnel::Serialize( ASN1T_MsgAutomateOrd
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointEmbarquementIdx_ ), asnMission.point_embarquement );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
     NET_ASN_Tools::CopyBool( GetVariable( nDIAAvecMaterielIdx_ ), asnMission.avec_materiel );
@@ -142,7 +147,7 @@ void MIL_AutomateMission_ALAT_ExtrairePersonnel::Serialize( ASN1T_MsgAutomateOrd
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_ExtrairePersonnel::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_ExtrairePersonnel::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

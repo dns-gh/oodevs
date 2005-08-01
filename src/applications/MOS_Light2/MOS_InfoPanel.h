@@ -82,7 +82,6 @@ private:
     MOS_AgentStatePanel*          pStatePanel_;
     MOS_ReportPanel*              pReportPanel_;
     MOS_AgentResourcesPanel*      pResourcesPanel_;
-    MOS_AgentCargoPanel*          pCargoPanel_;
     MOS_AgentKnowledgePanel*      pAgentKnowledgePanel_;
     MOS_DynaObjectPanel*          pDynaObjectPanel_;
     MOS_DynaObjectKnowledgePanel* pDynaObjectKnowledgePanel_;

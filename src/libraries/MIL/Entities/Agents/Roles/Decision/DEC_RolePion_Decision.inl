@@ -109,3 +109,17 @@ void DEC_RolePion_Decision::NotifyCloseCombatStateChanged( E_CloseCombatState nS
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyOperationalStateChanged
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+inline
+void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nState )
+{
+    if( nOperationalState_ != nState )
+    {
+        nOperationalState_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+

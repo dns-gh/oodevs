@@ -436,7 +436,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if( ! agent.GetContaminatingNBCAgents().empty() )
             DrawIcon( eNbcIcon, agent.vPos_ );
 
-        if( agent.IsOutOfGas() && agent.GetState() != eUnitState_Mort )
+        if( agent.IsOutOfGas() && !agent.IsDead() )
             DrawIcon( eGasIcon, agent.vPos_ );
     }
 
@@ -453,7 +453,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     }
 
     //Death
-    if( agent.GetState() == eUnitState_Mort )
+    if( agent.IsDead() )
     {
         glColor4d( MOS_COLOR_WHITE );
         DrawIcon( eSkullIcon, agent.GetPos() );
@@ -1569,7 +1569,7 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
         glRotatef( rAngle+=0.05, 0, 1, 0 );
     }
 
-    GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nOpState_ );
+    GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nRawOpState_ );
     GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.levelSymbolName_, -1 );
 
     if( agent.IsAutomate() )

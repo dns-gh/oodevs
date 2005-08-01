@@ -382,6 +382,7 @@ public:
 
     bool                    bLoadingState_;
     bool                    bStealthModeEnabled_;
+    bool                    bHumanTransportersReady_;
 
 //    MOS_AgentKnowledge*  pWaitingKnowledge_;
 
@@ -393,6 +394,7 @@ public:
     uint nNbOfficiersInMedicalChain_;
     uint nNbOfficiersInMaintenanceChain_;
     uint nNbOfficiersNBC_;
+    uint nNbOfficiersOperational_;
 
     uint nNbSousOfficiers_;
     uint nNbSousOfficiersKilled_;
@@ -401,6 +403,7 @@ public:
     uint nNbSousOfficiersInMedicalChain_;
     uint nNbSousOfficiersInMaintenanceChain_;
     uint nNbSousOfficiersNBC_;
+    uint nNbSousOfficiersOperational_;
 
     uint nNbMdrs_;
     uint nNbMdrsKilled_;
@@ -409,6 +412,7 @@ public:
     uint nNbMdrsInMedicalChain_;
     uint nNbMdrsInMaintenanceChain_;
     uint nNbMdrsNBC_;
+    uint nNbMdrsOperational_;
 
 
     // Equipement
@@ -418,8 +422,10 @@ public:
     T_RessourceQty_Map    ressources_;
 
     // State
-    uint            nOpState_;
-    E_AgentState    nState_;
+    uint               nRawOpState_;
+    E_OperationalState nOpState_;
+    bool               bDead_;
+    bool               bNeutralized_;
 
     // Etat decisionnel
     E_ForceRatioState        nFightRateState_;

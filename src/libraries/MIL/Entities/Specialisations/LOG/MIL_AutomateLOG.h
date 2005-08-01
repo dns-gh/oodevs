@@ -85,11 +85,12 @@ public:
 
     //! @name Medical
     //@{
-    PHY_MedicalHumanState* MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, PHY_Human& human ); // Releve
-    bool                   MedicalHandleHumanForCollection( PHY_MedicalHumanState& humanState );     // Ramassage    
-    PHY_RolePion_Medical*  MedicalReserveForSorting       ( PHY_MedicalCollectionAmbulance& ambulance );
-    bool                   MedicalHandleHumanForHealing   ( PHY_MedicalHumanState& humanState );
-    bool                   MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollectionAmbulance& ambulance ) const;
+    PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human ); // Imex
+    PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
+    bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage    
+    PHY_RolePion_Medical*  MedicalReserveForSorting               ( PHY_MedicalCollectionAmbulance& ambulance );
+    bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
+    bool                   MedicalCanCollectionAmbulanceGo        ( const PHY_MedicalCollectionAmbulance& ambulance ) const;    
     //@}
 
     //! @name Supply

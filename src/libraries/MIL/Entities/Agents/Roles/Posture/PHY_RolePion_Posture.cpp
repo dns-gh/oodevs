@@ -31,21 +31,21 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Posture, "PHY_RolePion_Posture" )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_AgentPion& pion )
-    : PHY_RoleInterface_Posture    ( role )
-    , pPion_                       ( &pion )
-    , pCurrentPosture_             ( &PHY_Posture::arret_ )
-    , pLastPosture_                ( &PHY_Posture::arret_ )
-    , rPostureCompletionPercentage_( 1. )
-    , bDiscreteModeEnabled_        ( false )
-    , bPosturesHasChanged_         ( true )
-    , bPourcentageHasChanged_      ( true )
-    , bPercentageCrossed50_        ( false )
-    , bStealthFactorHasChanged_    ( true )
-    , nNextUpdateStep_             ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , bIsStealth_                  ( false )
-    , rTimingFactor_               ( 1. )
-    , rStealthFactor_              ( 1. ) // Non furtif
-    , rElongationFactor_           ( 1. )
+    : PHY_RoleInterface_Posture        ( role )
+    , pPion_                           ( &pion )
+    , pCurrentPosture_                 ( &PHY_Posture::arret_ )
+    , pLastPosture_                    ( &PHY_Posture::arret_ )
+    , rPostureCompletionPercentage_    ( 1. )
+    , bDiscreteModeEnabled_            ( false )
+    , bPosturesHasChanged_             ( true  )
+    , bPercentageCrossed50_            ( false )
+    , bStealthFactorHasChanged_        ( true  )
+    , bPourcentageHasChanged_          ( true  )
+    , rLastPostureCompletionPercentage_( 0. )
+    , bIsStealth_                      ( false )
+    , rTimingFactor_                   ( 1. )
+    , rStealthFactor_                  ( 1. ) // Non furtif
+    , rElongationFactor_               ( 1. )
 {
 }
 
@@ -54,21 +54,21 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MT_RoleContainer& role, const MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture()
-    : PHY_RoleInterface_Posture    (  )
-    , pPion_                       ( 0 )
-    , pCurrentPosture_             ( 0 )
-    , pLastPosture_                ( 0 )
-    , rPostureCompletionPercentage_( 1. )
-    , bDiscreteModeEnabled_        ( false )
-    , bPosturesHasChanged_         ( true )
-    , bPourcentageHasChanged_      ( true )
-    , bPercentageCrossed50_        ( false )
-    , bStealthFactorHasChanged_    ( true )
-    , nNextUpdateStep_             ( 0 )
-    , bIsStealth_                  ( false )
-    , rTimingFactor_               ( 1. )
-    , rStealthFactor_              ( 1. ) // Non furtif
-    , rElongationFactor_           ( 1. )
+    : PHY_RoleInterface_Posture        (  )
+    , pPion_                           ( 0 )
+    , pCurrentPosture_                 ( 0 )
+    , pLastPosture_                    ( 0 )
+    , rPostureCompletionPercentage_    ( 1. )
+    , bDiscreteModeEnabled_            ( false )
+    , bPosturesHasChanged_             ( true  )
+    , bPercentageCrossed50_            ( false )
+    , bStealthFactorHasChanged_        ( true  )
+    , bPourcentageHasChanged_          ( true  )
+    , rLastPostureCompletionPercentage_( 0. )
+    , bIsStealth_                      ( false )
+    , rTimingFactor_                   ( 1. )
+    , rStealthFactor_                  ( 1. ) // Non furtif
+    , rElongationFactor_               ( 1. )
 {
 
 }
@@ -104,11 +104,11 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
     file >> rPostureCompletionPercentage_
          >> rElongationFactor_
          >> bDiscreteModeEnabled_
-         >> nNextUpdateStep_
          >> rTimingFactor_
          >> rStealthFactor_
          >> bIsStealth_
-         >> bPercentageCrossed50_;
+         >> bPercentageCrossed50_
+         >> rLastPostureCompletionPercentage_;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,15 +124,15 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) co
          << rPostureCompletionPercentage_
          << rElongationFactor_
          << bDiscreteModeEnabled_
-         << nNextUpdateStep_
          << rTimingFactor_
          << rStealthFactor_
          << bIsStealth_
-         << bPercentageCrossed50_;
+         << bPercentageCrossed50_
+         << rLastPostureCompletionPercentage_;
 }
 
 // =============================================================================
-// OPERATIONS
+// TOOLS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -150,6 +150,49 @@ MT_Float PHY_RolePion_Posture::GetPostureTime() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::ChangePostureCompletionPercentage
+// Created: NLD 2005-07-27
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const MT_Float rNewPercentage )
+{
+    if( rPostureCompletionPercentage_ == rNewPercentage )
+        return;
+
+    // Network
+    bPercentageCrossed50_ = ( 0.5 - rPostureCompletionPercentage_ ) * ( 0.5 - rNewPercentage ) <= 0;
+
+    static const MT_Float rDeltaPercentageForNetwork = 0.05;
+    if( fabs( rLastPostureCompletionPercentage_ - rNewPercentage ) > rDeltaPercentageForNetwork || rNewPercentage == 0. || rNewPercentage == 1. )
+        bPourcentageHasChanged_ = true;
+
+    rPostureCompletionPercentage_ = rNewPercentage;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::ChangePosture
+// Created: NLD 2005-07-27
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
+{
+    if( pCurrentPosture_ == &newPosture )
+        return;
+    
+    pLastPosture_                 = pCurrentPosture_;
+    pCurrentPosture_              = &newPosture;
+
+    ChangePostureCompletionPercentage( 0. );
+
+    bPosturesHasChanged_          = true;
+    bPourcentageHasChanged_       = true;
+}
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Update
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -157,50 +200,38 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     if( bIsDead )
     {
-        pLastPosture_ = pCurrentPosture_ = &PHY_Posture::arret_;
-        rPostureCompletionPercentage_ = 0.;
+        ChangePosture                    ( PHY_Posture::arret_ );
+        ChangePostureCompletionPercentage( 1. );
         bIsStealth_      = false;
-        nNextUpdateStep_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + 1;
         return;
     }
 
     // Mode furtif
     bIsStealth_ = !( random_.rand_oi( 0., 1. ) <= rStealthFactor_ );
 
-    if( nNextUpdateStep_ > MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-        return;
-
-    assert( pCurrentPosture_ );
-    assert( pLastPosture_    );
-
     if( rPostureCompletionPercentage_ == 1. )
     {
+        assert( pCurrentPosture_ );
         const PHY_Posture* pNextAutoPosture = pCurrentPosture_->GetNextAutoPosture();
         if( !pNextAutoPosture )
             return;
-        rPostureCompletionPercentage_ = 0.;
-        pLastPosture_                 = pCurrentPosture_;
-        pCurrentPosture_              = pNextAutoPosture;
-        bPosturesHasChanged_          = true;
-        bPourcentageHasChanged_       = true;
+        ChangePosture( *pNextAutoPosture );
     }
     else
     {
         const MT_Float rPostureTime                = GetPostureTime();
-        const uint nPostureCompletionPercentageTmp = (uint)( rPostureCompletionPercentage_ * 100. );
+              MT_Float rNewPostureCompetionPercentage = rPostureCompletionPercentage_;
         if( rPostureTime )
         {
-            rPostureCompletionPercentage_ += ( 1. / rPostureTime );
-            if( rPostureCompletionPercentage_ > 1. )
-                rPostureCompletionPercentage_ = 1.;
+            rNewPostureCompetionPercentage += ( 1. / rPostureTime );
+            if( rNewPostureCompetionPercentage > 1. )
+                rNewPostureCompetionPercentage = 1.;
         }
         else
-            rPostureCompletionPercentage_ = 1.;
+            rNewPostureCompetionPercentage = 1.;
 
-        bPourcentageHasChanged_ = ( nPostureCompletionPercentageTmp != (uint)( 100. * rPostureCompletionPercentage_ ) );
-        bPercentageCrossed50_ = ( 50 - nPostureCompletionPercentageTmp ) * ( 0.5 - rPostureCompletionPercentage_ ) <= 0;
+        ChangePostureCompletionPercentage( rNewPostureCompetionPercentage );
     }
-    nNextUpdateStep_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,18 +240,10 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SetPostureMovement()
 {
-    if(    ( !bDiscreteModeEnabled_ && pCurrentPosture_ == &PHY_Posture::mouvement_        )
-        || ( bDiscreteModeEnabled_  && pCurrentPosture_ == &PHY_Posture::mouvementDiscret_ ) )
-        return;
-
-    pLastPosture_  = pCurrentPosture_;
     if( bDiscreteModeEnabled_ )
-        pCurrentPosture_ = &PHY_Posture::mouvementDiscret_;
+        ChangePosture( PHY_Posture::mouvementDiscret_ );
     else
-        pCurrentPosture_ = &PHY_Posture::mouvement_;
-    rPostureCompletionPercentage_ = 0.;
-    bPosturesHasChanged_          = true;
-    bPourcentageHasChanged_       = true;
+        ChangePosture( PHY_Posture::mouvement_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +254,7 @@ void PHY_RolePion_Posture::UnsetPostureMovement()
 {
     if ( pCurrentPosture_ == &PHY_Posture::mouvement_ 
       || pCurrentPosture_ == &PHY_Posture::mouvementDiscret_ )
-        ClearPosture();
+        ChangePosture( PHY_Posture::arret_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,13 +263,7 @@ void PHY_RolePion_Posture::UnsetPostureMovement()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SetPosturePostePrepareGenie()
 {
-    if( pCurrentPosture_ == &PHY_Posture::postePrepareGenie_ )
-        return;
-    pLastPosture_                 = pCurrentPosture_;
-    pCurrentPosture_              = &PHY_Posture::postePrepareGenie_;
-    rPostureCompletionPercentage_ = 0.;
-    bPosturesHasChanged_          = true;
-    bPourcentageHasChanged_       = true;
+    ChangePosture( PHY_Posture::postePrepareGenie_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,21 +273,7 @@ void PHY_RolePion_Posture::SetPosturePostePrepareGenie()
 void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 {
     if ( pCurrentPosture_ == &PHY_Posture::postePrepareGenie_ )
-        ClearPosture();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::ClearPosture
-// Created: NLD 2004-09-07
-// Modified: JVT 2004-09-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::ClearPosture()
-{
-    pLastPosture_                 = pCurrentPosture_;
-    pCurrentPosture_              = &PHY_Posture::arret_;
-    rPostureCompletionPercentage_ = 0.;  
-    bPosturesHasChanged_          = true;
-    bPourcentageHasChanged_       = true;
+        ChangePosture( PHY_Posture::arret_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,7 +295,7 @@ bool PHY_RolePion_Posture::CanBePerceived( const MIL_AgentPion& perceiver ) cons
 // Name: PHY_RolePion_Posture::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg )
 {
     if( bPosturesHasChanged_ )
     {
@@ -306,6 +309,7 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) co
     {
         msg.GetAsnMsg().m.posture_pourcentagePresent = 1;
         msg.GetAsnMsg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
+        rLastPostureCompletionPercentage_            = rPostureCompletionPercentage_;
     }
 
     if( bStealthFactorHasChanged_ )
@@ -319,7 +323,7 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) co
 // Name: PHY_RolePion_Posture::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg )
 {
     msg.GetAsnMsg().m.posture_oldPresent = 1;
     msg.GetAsnMsg().m.posture_newPresent = 1;
@@ -328,6 +332,7 @@ void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 
     msg.GetAsnMsg().m.posture_pourcentagePresent = 1;
     msg.GetAsnMsg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
+    rLastPostureCompletionPercentage_            = rPostureCompletionPercentage_;
 
     msg.GetAsnMsg().m.mode_furtif_actifPresent = 1;
     msg.GetAsnMsg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
@@ -343,11 +348,3 @@ void PHY_RolePion_Posture::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "posture", HLAStatusHasChanged(), pPosture->GetName() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::IsStealth
-// Created: AGE 2004-12-08
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Posture::IsStealth() const
-{
-    return bIsStealth_;
-}

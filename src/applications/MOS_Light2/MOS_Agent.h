@@ -118,8 +118,9 @@ public:
     E_UnitPosture           GetOldStance() const;
     E_UnitPosture           GetStance   () const;
     int                     GetStanceCompletion() const;
-    E_UnitState            GetState    () const;
-    uint                    GetOpState  () const;
+    bool                    IsDead      () const;
+    bool                    IsNeutralized() const;
+    uint                    GetRawOpState () const;
     E_ForceRatioState        GetRapFor   () const;
     E_RulesOfEngagementState GetROE             () const;
     E_CloseCombatState       GetCloseCombatState() const;
@@ -135,6 +136,7 @@ public:
     const MOS_Morale&       GetMorale() const;
 
     bool                    IsLoaded    () const;
+    bool                    AreHumanTransportersReady() const;
     bool                    IsNBSSuitOn () const;
     const T_NbcAgentVector& GetContaminatingNBCAgents() const;
 
@@ -304,13 +306,15 @@ public:
     MOS_AgentComposition composition_;
 
     // State
-    uint            nOpState_;
-    E_UnitState    nState_;
+    uint            nRawOpState_;
+    bool            bDead_;
+    bool            bNeutralized_;
 
     // Etat decisionnel
     E_ForceRatioState         nFightRateState_;
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
+    E_OperationalState       nOpState_;
     
     // NBC
     bool                bNbcProtectionSuitWorn_;
@@ -324,6 +328,7 @@ public:
     // Transport
     T_AgentIdVector pionTransportes_;
     uint           nTransporteur_;
+    bool            bHumanTransportersReady_;
 
     // Human Stuff
     const MOS_Experience* pExperience_;

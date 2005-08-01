@@ -165,7 +165,7 @@ void MOS_AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
         {
             MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.perception_par_compagnie.elem[i].oid_compagnie );
             assert( pAgent );
-            automatePerceptionMap_.insert( std::make_pair( pAgent, (E_PerceptionResult)asnMsg.perception_par_compagnie.elem[i].identification_level ) );
+            automatePerceptionMap_.insert( std::make_pair( pAgent, (E_PerceptionResult)( 3 - asnMsg.perception_par_compagnie.elem[i].identification_level ) ) ); //$$$ DEGUEULASSE
         }
     }
 

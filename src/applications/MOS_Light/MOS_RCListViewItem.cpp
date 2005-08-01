@@ -180,9 +180,9 @@ const std::string MOS_RCListViewItem::BuildNameOrderConduite( E_OrderConduiteID 
         case eOrdreConduite_Interrompre:                                    sName = "Conduite Interrompre"; break;
         case eOrdreConduite_Deboucher :                                     sName = "Conduite Deboucher"; break;
         case eOrdreConduite_Decrocher :                                     sName = "Conduite Decrocher"; break;
-        case eOrdreConduite_AssignerPositionEmbarquement :                  sName = "Conduite AssignerPositionEmbarquement"; break;
         case eOrdreConduite_AcquerirObjectif:                               sName = "Conduite AcquerirObjectif"; break;
         case eOrdreConduite_Brouiller:                                      sName = "Conduite Brouiller"; break;
+        case eOrdreConduite_ChangerPositionDebarquement:                    sName = "Conduite ChangerPositionDebarquement"; break;
 
         case eOrdreConduite_MettreTenueNBC:                                 sName = "Conduite MettreTenueNBC"; break;
         case eOrdreConduite_EnleverTenueNBC:                                sName = "Conduite EnleverTenueNBC"; break;        
@@ -190,6 +190,7 @@ const std::string MOS_RCListViewItem::BuildNameOrderConduite( E_OrderConduiteID 
         case eOrdreConduite_ArreterSilenceRadio:                            sName = "Conduite ArreterSilenceRadio"; break;
         case eOrdreConduite_PasserEnSilenceRadar:                           sName = "Conduite PasserEnSilenceRadar"; break;
         case eOrdreConduite_ArreterSilenceRadar:                            sName = "Conduite ArreterSilenceRadar"; break;
+        case eOrdreConduite_RecupererTransporteurs:                         sName = "Conduite RecupererTransporteurs"; break;
         case eOrdreConduite_Pion_Contourner:                                sName = "Conduite Pion Contourner"; break;
         case eOrdreConduite_Pion_ActiverObstacle:                           sName = "Conduite Pion ActiverObstacle"; break;
         case eOrdreConduite_Pion_ChangerDePosition:                         sName = "Conduite Pion ChangerDePosition"; break;

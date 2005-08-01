@@ -255,6 +255,28 @@ void PHY_DotationGroupContainer::Resupply()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::Resupply
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
+{
+    PHY_DotationGroup* pDotationGroup = GetDotationGroup( PHY_DotationType::munition_ );
+    if( pDotationGroup )
+        pDotationGroup->Resupply( ammoDotationClass, rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::Resupply
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::Resupply( const PHY_DotationType& type, MT_Float rFactor )
+{
+    PHY_DotationGroup* pDotationGroup = GetDotationGroup( type );
+    if( pDotationGroup )
+        pDotationGroup->Resupply( rFactor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------

@@ -41,7 +41,6 @@
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"
 
-#include "MOS_SurrenderDialog.h"
 #include "MOS_LogisticSupplyChangeQuotasDialog.h"
 #include "MOS_LogisticSupplyPushFlowDialog.h"
 #include "MOS_OrderConduiteMissionDialog.h"
@@ -86,10 +85,6 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
     , pRessourcesList_( 0 )
     , pEquipementList_( 0 )
     , pHumainsList_( 0 )
-//    , pTransportCapacityList_( 0 )
-//    , pTransportRessourcesList_( 0 )
-//    , pTransportEquipementList_( 0 )
-//    , pTransportHumainsList_( 0 )
     , pStateListView_( 0 )
     , pSpeedItem_( 0 )
     , pOldPostureItem_( 0 )
@@ -97,8 +92,10 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
     , pPostureCompletionPourcentageItem_( 0 )
     , pLoadingStateItem_( 0 )
     , pStealthModeItem_( 0 )
-    , pAgentStateItem_( 0 )
+    , pDeadItem_( 0 )
+    , pNeutralizedItem_( 0 )
     , pOpStateItem_( 0 )
+    , pRawOpStateItem_( 0 )
     , pAutomateModeItem_( 0 )
     , pFightRateStateItem_( 0 )
     , pRulesOfEngagementStateItem_( 0 )
@@ -113,6 +110,7 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
     , pPionRenforceItem_( 0 )
     , pTransporteurItem_( 0 )
     , pTransportsItem_( 0 )
+    , pHumanTransportersReadyItem_( 0 )
     , pMoraleItem_( 0 )
     , pExperienceItem_( 0 )
     , pTirednessItem_( 0 )
@@ -151,7 +149,6 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
     , pButtonLogisticSupplyPushFlow_( 0 )
     , pLogisticSupplyChangeQuotasDialog_( 0 )
     , pLogisticSupplyPushFlowDialog_( 0 )
-    , pSurrenderDialog_( 0 )
     , pTC2Item_ ( 0 )
     , pLogMaintenanceSuperior_( 0 )
     , pLogMedicalSuperior_( 0 )
@@ -187,9 +184,10 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
         pStateListView_->setSorting( -1, FALSE );
         pLayoutState->addWidget( pStateListView_ );
 
-        pAgentStateItem_                    = new QListViewItem( pStateListView_, "Etat du pion", "" );
-        pOpStateItem_                       = new QListViewItem( pStateListView_, pAgentStateItem_, "Etat opérationel", "" );
-        pMoraleItem_                        = new QListViewItem( pStateListView_, pOpStateItem_, "Moral", "" );
+        pRawOpStateItem_                    = new QListViewItem( pStateListView_, "Etat opérationel brut", "" );
+        pDeadItem_                          = new QListViewItem( pStateListView_, pRawOpStateItem_, "Mort", "" );
+        pNeutralizedItem_                   = new QListViewItem( pStateListView_, pDeadItem_, "Neutralisé", "" );
+        pMoraleItem_                        = new QListViewItem( pStateListView_, pNeutralizedItem_, "Moral", "" );
         pExperienceItem_                    = new QListViewItem( pStateListView_, pMoraleItem_, "Experience", "" );
         pTirednessItem_                     = new QListViewItem( pStateListView_, pExperienceItem_, "Fatigue", "" );
         pSpeedItem_                         = new QListViewItem( pStateListView_, pTirednessItem_, "Speed", "" );
@@ -199,7 +197,8 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
         pCurrentPostureItem_                = new QListViewItem( pStateListView_, pOldPostureItem_,"Nouvelle posture", "" );
         pPostureCompletionPourcentageItem_  = new QListViewItem( pStateListView_, pCurrentPostureItem_, "Posture completion", "" );
         pLoadingStateItem_                  = new QListViewItem( pStateListView_, pPostureCompletionPourcentageItem_, "Etat embarquement", "" );
-        pStealthModeItem_                   = new QListViewItem( pStateListView_, pLoadingStateItem_, "Mode furtif", "" );
+        pHumanTransportersReadyItem_        = new QListViewItem( pStateListView_, pLoadingStateItem_, "Transporteurs d'hommes disponibles", "" );
+        pStealthModeItem_                   = new QListViewItem( pStateListView_, pHumanTransportersReadyItem_, "Mode furtif", "" );
         pNbcProtectionSuitWornItem_         = new QListViewItem( pStateListView_, pStealthModeItem_, "Protection NBC mise", "" );
         pNbcAgentsContaminatingItem_        = new QListViewItem( pStateListView_, pNbcProtectionSuitWornItem_, "Contaminé par agents NBC", "" );
         pContaminationStateItem_            = new QListViewItem( pStateListView_, pNbcAgentsContaminatingItem_, "Etat contamination", "" );
@@ -215,9 +214,11 @@ MOS_AttrEditor::MOS_AttrEditor( QWidget* pParent )
         pRefugeesManagedStateItem_          = new QListViewItem( pStateListView_, pPrisonerStateItem_, "Réfugiés pris en compte", "" );
 
         pAutomateModeItem_                  = 0;
-        pFightRateStateItem_                = 0;
-        pRulesOfEngagementStateItem_        = 0;
-        pCloseCombatStateItem_              = 0;
+       
+        pRulesOfEngagementStateItem_ = new QListViewItem( pStateListView_, pRefugeesManagedStateItem_  , "Régles d'engagement", "None" );
+        pFightRateStateItem_         = new QListViewItem( pStateListView_, pRulesOfEngagementStateItem_, "Rapport de force", "None" );
+        pCloseCombatStateItem_       = new QListViewItem( pStateListView_, pFightRateStateItem_        , "Etat combat de rencontre", "None" );
+        pOpStateItem_                = new QListViewItem( pStateListView_, pCloseCombatStateItem_      , "Etat opérationnel", "None" );
 
         pLogLinks_ = new QListView( pStateWidget, "State" );
         pLogLinks_->header()->hide();
@@ -685,9 +686,6 @@ void MOS_AttrEditor::Initialize()
     pLogisticSupplyPushFlowDialog_ = new MOS_LogisticSupplyPushFlowDialog( &MOS_App::GetApp().GetMainWindow() );
     pLogisticSupplyPushFlowDialog_ ->hide();
 
-    pSurrenderDialog_ = new MOS_SurrenderDialog( &MOS_App::GetApp().GetMainWindow() );
-    pSurrenderDialog_->hide();
-
     if( pKnowledgeList_ != 0 )
         pKnowledgeList_->Initialize();
 }
@@ -948,9 +946,11 @@ void MOS_AttrEditor::SlotMagicActionRecompletementRessources()
 void MOS_AttrEditor::SlotMagicActionSurrender()
 {
     assert( pAgent_ );
-    assert( pSurrenderDialog_ );
-    pSurrenderDialog_->SetAgent( *pAgent_ );
-    pSurrenderDialog_->show();
+
+    MOS_ASN_MsgUnitMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid                = pAgent_->GetAgentID();
+    asnMsg.GetAsnMsg().action.t           = T_MsgUnitMagicAction_action_se_rendre;
+    asnMsg.Send( 547 );
 }
 
 //-----------------------------------------------------------------------------
@@ -1863,16 +1863,6 @@ void MOS_AttrEditor::SetLends( const MOS_Agent::T_LendVector& lends )
 // -----------------------------------------------------------------------------
 void MOS_AttrEditor::Reset()
 {
-    delete pAutomateModeItem_;
-    delete pFightRateStateItem_;
-    delete pRulesOfEngagementStateItem_;
-    delete pCloseCombatStateItem_;
-
-    pAutomateModeItem_                  = 0;
-    pFightRateStateItem_                = 0;
-    pRulesOfEngagementStateItem_        = 0;
-    pCloseCombatStateItem_              = 0;
-
     ResetRessources();
     ResetEquipments();
     ResetHumains();

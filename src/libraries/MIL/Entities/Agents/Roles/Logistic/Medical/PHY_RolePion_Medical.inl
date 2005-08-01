@@ -10,6 +10,16 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::HandleHumanEvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+inline
+PHY_MedicalHumanState* PHY_RolePion_Medical::HandleHumanEvacuatedByThirdParty( MIL_AgentPion& /*pion*/, PHY_Human& /*human*/ )
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Medical::HandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------

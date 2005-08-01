@@ -2,7 +2,7 @@
 // globals
 // *****************************************************************************
 signatures
-{
+{   
     // RC
     V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
@@ -45,8 +45,12 @@ signatures
     V                                A::DEC_Automate_ChangeEtatRapportDeForce   ( I /*E_EtatRapportDeForce*/ );
     V                                A::DEC_Automate_ChangeEtatROE              ( I /*E_EtatROE*/ );
     V                                A::DEC_Automate_ChangeEtatCombatDeRencontre( I /*E_EtatCombatDeRencontre*/ );            
+    V                                A::DEC_Automate_ChangeEtatOperationnel     ( I /*E_E_EtatOperationnel*/ );
     
     B                                A::DEC_Automate_Debrayer ();
+    
+    // Objets
+    B                                A::DEC_ActiverObjet( U /*connaissance objet*/ );    
 
     // Connaissance                  
     R                                A::DEC_RapportDeForceGlobal                               ();   // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)

@@ -28,7 +28,6 @@
 #include "MOS_AgentStatePanel.h"
 #include "MOS_ReportPanel.h"
 #include "MOS_AgentResourcesPanel.h"
-#include "MOS_AgentCargoPanel.h"
 #include "MOS_AgentKnowledgePanel.h"
 #include "MOS_DynaObjectPanel.h"
 #include "MOS_DynaObjectKnowledgePanel.h"
@@ -65,7 +64,6 @@ MOS_InfoPanel::MOS_InfoPanel( QWidget* pParent )
 
     pStatePanel_               = new MOS_AgentStatePanel( this );
     pResourcesPanel_           = new MOS_AgentResourcesPanel( this );
-    pCargoPanel_               = new MOS_AgentCargoPanel( this );
     pAgentKnowledgePanel_      = new MOS_AgentKnowledgePanel( this );
     pDynaObjectPanel_          = new MOS_DynaObjectPanel( this );
     pDynaObjectKnowledgePanel_ = new MOS_DynaObjectKnowledgePanel( this );
@@ -187,7 +185,6 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
     pStatePanel_              ->SetSelection( selectedElement );
     pReportPanel_             ->SetSelection( selectedElement );
     pResourcesPanel_          ->SetSelection( selectedElement );
-    pCargoPanel_              ->SetSelection( selectedElement );
     pAgentKnowledgePanel_     ->SetSelection( selectedElement );
     pDynaObjectPanel_         ->SetSelection( selectedElement );
     pDynaObjectKnowledgePanel_->SetSelection( selectedElement );
@@ -208,7 +205,6 @@ void MOS_InfoPanel::ClearAll()
     pStatePanel_              ->SetSelection( nullSelection );
     pReportPanel_             ->SetSelection( nullSelection );
     pResourcesPanel_          ->SetSelection( nullSelection );
-    pCargoPanel_              ->SetSelection( nullSelection );
     pAgentKnowledgePanel_     ->SetSelection( nullSelection );
     pDynaObjectPanel_         ->SetSelection( nullSelection );
     pDynaObjectKnowledgePanel_->SetSelection( nullSelection );
@@ -254,7 +250,6 @@ void MOS_InfoPanel::ShowAgentPanel( bool bShow )
         pTabWidget_->insertTab( pStatePanel_, tr( "Etat" ), 0 );
         pTabWidget_->insertTab( pReportPanel_, tr( "Rapports" ), 0 );
         pTabWidget_->insertTab( pResourcesPanel_, tr( "Res." ), 1 );
-        pTabWidget_->insertTab( pCargoPanel_, tr( "Cargo" ), 2 );
     }
 
     if( !bShow && bAgentVisible_ )
@@ -263,7 +258,6 @@ void MOS_InfoPanel::ShowAgentPanel( bool bShow )
         pTabWidget_->removePage( pStatePanel_ );
         pTabWidget_->removePage( pReportPanel_ );
         pTabWidget_->removePage( pResourcesPanel_ );
-        pTabWidget_->removePage( pCargoPanel_ );
     }
 }
 

@@ -440,26 +440,6 @@ int PHY_RoleAction_Objects::Bypass( uint nKnowledgeObjectID )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::Activate
-// Created: NLD 2004-09-21
-// -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Activate( uint nKnowledgeObjectID )
-{
-    MIL_RealObject_ABC* pObject = GetRealObject( nKnowledgeObjectID );
-    if( !pObject )
-        return eImpossible;
-
-    if( !pObject->CanBeActivated() )
-        return eImpossible;
-
-    assert( pPion_ );
-    pPion_->GetKSObjectInteraction().NotifyObjectInteraction( *pObject );
-    pObject->Activate();
-    return eFinished;
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::ResumeWork
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------

@@ -99,6 +99,28 @@ void PHY_RolePion_Dotations::ResupplyDotations()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ResupplyDotations
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Dotations::ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
+{
+    assert( pDotations_ );
+    pDotations_->Resupply( ammoDotationClass, rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::ResupplyDotations
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, MT_Float rFactor )
+{
+    assert( pDotations_ );
+    pDotations_->Resupply( type, rFactor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------

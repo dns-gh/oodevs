@@ -23,6 +23,7 @@
 #include "MT_Tools/MT_Random.h"
 
 class MIL_AgentPion;
+class MIL_AutomateLOG;
 class PHY_Sensor;
 class PHY_Radar;
 class PHY_Weapon;
@@ -32,13 +33,14 @@ class PHY_DirectFireData;
 class PHY_IndirectFireData;
 class PHY_IndirectFireDotationClass;
 class PHY_SmokeData;
-class DEC_Knowledge_AgentComposante;
 class PHY_AgentFireResult;
 class PHY_AttritionData;
 class PHY_Breakdown;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
 class PHY_Human;
+class DEC_Knowledge_AgentComposante;
+
 
 // =============================================================================
 // @class  PHY_ComposantePion
@@ -88,8 +90,10 @@ public:
 
     //! @name Logistic - Medical
     //@{
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical( PHY_Human& human );
-    void                   NotifyHumanBackFromMedical  ( PHY_MedicalHumanState& humanState );
+    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const;
+    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) const;
+    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) const;
     bool                   CanEvacuateCasualties() const;
     bool                   CanCollectCasualties () const;
     bool                   CanDiagnoseHumans    () const;
@@ -111,8 +115,10 @@ public:
     //! @name Humans
     //@{
     uint GetNbrUsableHumans() const;
+    void HealAllHumans     ();
+    uint HealHumans        ( uint nNbrToChange );
+    uint WoundHumans       ( uint nNbrToChange, const PHY_HumanWound& wound, const PHY_HumanRank* pHumanRank = 0 );
     bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
-    uint ChangeHumansWound ( const PHY_HumanRank& rank   , const PHY_HumanWound& oldState, const PHY_HumanWound& newState, uint nNbrToChange );
 
     void NotifyHumanAdded  ( PHY_Human& human );
     void NotifyHumanRemoved( PHY_Human& human );
@@ -191,9 +197,8 @@ public:
     template< typename T > void ApplyOnSensors( T& func ) const;
     template< typename T > void ApplyOnRadars ( T& func ) const;
 
-    void ReinitializeState ( const PHY_ComposanteState& state );
-    void ResupplyEquipement();
-    void ResupplyHumans    ();
+    void ReinitializeState( const PHY_ComposanteState& state );
+    void Repair           ();
     //@}
 
 private:

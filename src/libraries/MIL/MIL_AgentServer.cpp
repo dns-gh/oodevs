@@ -56,7 +56,7 @@ MIL_AgentServer::MIL_AgentServer( const MIL_Config& config )
     , nTimeFactor_             ( 1 )
     , nSimTime_                ( 0 )
     , nCurrentTimeStepRealTime_( 0 )
-    , nCurrentTimeStep_        ( 0 )
+    , nCurrentTimeStep_        ( 1 )
     , timerManager_            ()
     , pWorkspaceDIA_           ( 0 )
     , pLimaManager_            ( new MIL_LimaManager() )
@@ -409,6 +409,7 @@ void MIL_AgentServer::OnTimer()
     nCurrentTimeStepRealTime_ = MIL_Tools::GetRealTime();
     lastStep_ = clock();
     MainSimLoop();
+    ++ nCurrentTimeStep_;
 }
 
 
@@ -419,7 +420,6 @@ void MIL_AgentServer::OnTimer()
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::MainSimLoop()
 {
-    ++ nCurrentTimeStep_;
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
 

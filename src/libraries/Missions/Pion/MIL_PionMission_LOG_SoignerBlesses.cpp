@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,7 +24,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_SoignerBlesses::InitializeDIA( const MIL_PionMissionType& type )
@@ -36,7 +36,7 @@ void MIL_PionMission_LOG_SoignerBlesses::InitializeDIA( const MIL_PionMissionTyp
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_SoignerBlesses::MIL_PionMission_LOG_SoignerBlesses( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -47,7 +47,7 @@ MIL_PionMission_LOG_SoignerBlesses::MIL_PionMission_LOG_SoignerBlesses( MIL_Agen
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_SoignerBlesses::~MIL_PionMission_LOG_SoignerBlesses()
 {
@@ -57,7 +57,7 @@ MIL_PionMission_LOG_SoignerBlesses::~MIL_PionMission_LOG_SoignerBlesses()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_SoignerBlesses::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_SoignerBlesses::Initialize( const A
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_SoignerBlesses::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -85,7 +85,7 @@ bool MIL_PionMission_LOG_SoignerBlesses::Initialize( const MIL_AutomateMission_A
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_SoignerBlesses::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -99,7 +99,7 @@ bool MIL_PionMission_LOG_SoignerBlesses::Initialize( MIL_PionMission_ABC& missio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_SoignerBlesses::Terminate()
 {
@@ -113,7 +113,7 @@ void MIL_PionMission_LOG_SoignerBlesses::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_SoignerBlesses::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -128,7 +128,7 @@ void MIL_PionMission_LOG_SoignerBlesses::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_SoignerBlesses::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_SoignerBlesses::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

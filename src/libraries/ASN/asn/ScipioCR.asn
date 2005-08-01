@@ -21,17 +21,6 @@ EnumTypeTerrain ::= ENUMERATED
     pont    (4)
 }
 
-EnumTypeDotation ::= ENUMERATED
-{
-    munition,
-    carburant,
-    explosif,
-    mine,
-    barbele,
-    piece,
-    ration
-}
-
 CR-RAS                                      ::= NULL
                                             
 -- Obstacle                                 
@@ -144,7 +133,7 @@ CR-RenforcementBientotFini                  ::= Agent
 
 -- Logistique du pion                       
 CR-SituationLogFavorable                    ::= NULL
-CR-SituationLogDefavorable                  ::= EnumTypeDotation
+CR-SituationLogDefavorable                  ::= EnumFamilleDotation
                                             
 -- Log                                      
 CR-SectionDeployee                          ::= NULL

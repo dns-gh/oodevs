@@ -48,6 +48,8 @@
 
 #include "Tools/MIL_Tools.h"
 
+BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
@@ -569,13 +571,13 @@ void MIL_Automate::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& /*camp*/ )
 // Name: MIL_Automate::Surrender
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-void MIL_Automate::Surrender( const MIL_CampPrisonniers& prisonerCamp )
+void MIL_Automate::Surrender()
 {
     if( bSurrendered_ )
         return;
 
     orderManager_.CancelAllOrders();
-    pPrisonerCamp_ = &prisonerCamp;
+    pPrisonerCamp_ = 0;
     bSurrendered_  = true;
     pTC2_          = 0;
     pNominalTC2_   = 0;
@@ -585,17 +587,19 @@ void MIL_Automate::Surrender( const MIL_CampPrisonniers& prisonerCamp )
 // Name: MIL_Automate::TakePrisoner
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-bool MIL_Automate::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner )
+bool MIL_Automate::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp )
 {
     if( !bSurrendered_ )
         return false;
     if( bPrisoner_ )
         return true;
 
+    assert( !pPrisonerCamp_ );
     assert( !pTC2_ && !pNominalTC2_ );
 
+    pPrisonerCamp_ = &camp;
+    bPrisoner_     = true;
     pTC2_      = pionTakingPrisoner.GetAutomate().GetTC2();
-    bPrisoner_ = true;
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         (**itPion).GetRole< PHY_RolePion_Surrender >().NotifyTakenPrisoner();
 
@@ -785,19 +789,13 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )
     {
+        Surrender();
+        for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+            (**itPion).OnReceiveMagicSurrender(); 
+        
         NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
         asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid;
-
-        const MIL_RealObject_ABC* pPrisonerCamp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindRealObject( asnMsg.action.u.se_rendre );
-        if( !pPrisonerCamp || pPrisonerCamp->GetType() != MIL_RealObjectType::campPrisonniers_ )
-            asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::error_invalid_attribute;
-        else
-        {
-            Surrender( static_cast< const MIL_CampPrisonniers& >( *pPrisonerCamp ) );
-            for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-                (**itPion).OnReceiveMagicSurrender(); 
             asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::no_error;
-        }
         asnReplyMsg.Send( nCtx );
     }
     else

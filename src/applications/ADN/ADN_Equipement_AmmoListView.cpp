@@ -102,7 +102,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popupMenu( this );
-    DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eTypeDotation_Munition );
+    DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Munition );
     ADN_Equipement_Wizard wizard( dotation, this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

@@ -23,7 +23,7 @@ int MIL_OrderConduite_ModifierTempsBordeeMaintenance::nDIAOrderConduiteModifierT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierTempsBordeeMaintenance::InitializeDIA
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_ModifierTempsBordeeMaintenance::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_ModifierTempsBordeeMaintenance::InitializeDIA( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierTempsBordeeMaintenance constructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ModifierTempsBordeeMaintenance::MIL_OrderConduite_ModifierTempsBordeeMaintenance( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_ModifierTempsBordeeMaintenance::MIL_OrderConduite_ModifierTemp
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierTempsBordeeMaintenance destructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ModifierTempsBordeeMaintenance::~MIL_OrderConduite_ModifierTempsBordeeMaintenance()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_ModifierTempsBordeeMaintenance::~MIL_OrderConduite_ModifierTem
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierTempsBordeeMaintenance::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierTempsBordeeMaintenance::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierTempsBordeeMaintenance::Initi
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierTempsBordeeMaintenance::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_ModifierTempsBordeeMaintenance::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

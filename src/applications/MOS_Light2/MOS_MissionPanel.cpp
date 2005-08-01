@@ -39,11 +39,11 @@
 #include "MOS_World.h"
 #include "MOS_AgentServer.h"
 #include "MOS_AgentManager.h"
-#include "MOS_SurrenderDialog.h"
 #include "MOS_ChangeDiplomacyDialog.h"
 #include "MOS_ChangeLogisticLinksDialog.h"
 #include "MOS_LogisticSupplyPushFlowDialog.h"
 #include "MOS_LogisticSupplyChangeQuotasDialog.h"
+#include "MOS_LogisticSupplyRecompletionDialog.h"
 
 #ifndef MOS_USE_INLINE
 #   include "MOS_MissionPanel.inl"
@@ -160,7 +160,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     
     // Commun orders.
     //$$$$ Hard coded value!
-    for( uint i = 0; i <= eOrdreConduite_AssignerPositionEmbarquement; ++i )
+    for( uint i = 0; i <= eOrdreConduite_AcquerirObjectif; ++i )
     {
         int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( i ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         pFragOrdersMenu->setItemParameter( nId, i );
@@ -211,10 +211,13 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         nId = pMagicOrdersMenu->insertItem( tr( "Recompletement total" ),      this, SLOT( MagicRestore( int ) ) );
         pMagicOrdersMenu->setItemParameter( nId, T_MsgUnitMagicAction_action_recompletement_total );
         
+        pMagicOrdersMenu->insertItem( tr( "Recompletement partiel" ), this, SLOT( MagicRecompletion() ) );
+
         pMagicOrdersMenu->insertItem( tr( "Détruire composante" ),             this, SLOT( MagicDestroyComponent() ) );
+        pMagicOrdersMenu->insertItem( tr( "Destruction totale" ),              this, SLOT( MagicDestroyAll() ) );
 
         if( agent.IsAutomate() )
-            pMagicOrdersMenu->insertItem( tr( "Rendre" ),                      this, SLOT( MagicSurrender() ) );
+            pMagicOrdersMenu->insertItem( tr( "Se rendre" ),                      this, SLOT( MagicSurrender() ) );
 
         popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
     }
@@ -353,7 +356,7 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
     switch( (E_FragOrder)nOrderId )
     {
         case eOrdreConduite_ChangerReglesEngagement:
-        case eOrdreConduite_AssignerPositionEmbarquement:
+        case eOrdreConduite_ChangerPositionDebarquement:
         case eOrdreConduite_Pion_ChangerDePosition:
         case eOrdreConduite_Pion_AppliquerFeux:
         case eOrdreConduite_Pion_RenforcerEnVSRAM:
@@ -465,6 +468,23 @@ void MOS_MissionPanel::MagicRestore( int nId )
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::MagicDestroyAll
+// Created: NLD 2005-07-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::MagicDestroyAll()
+{
+    assert( pPopupAgent_ != 0 );
+
+    MOS_ASN_MsgUnitMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid      = pPopupAgent_->GetAgentID();
+    asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_destruction_totale;
+    asnMsg.Send( 561 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande destruction totale pour agent #" << pPopupAgent_->GetAgentID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::MagicDestroyComponent
@@ -474,6 +494,21 @@ void MOS_MissionPanel::MagicDestroyComponent()
 {
     assert( pPopupAgent_ != 0 );
     MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgUnitMagicActionDestroyComposante( *pPopupAgent_ );
+
+    std::stringstream strMsg;
+    strMsg << "Demande destruction composante pour agent #" << pPopupAgent_->GetAgentID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::MagicRecompletion
+// Created: SBO 2005-07-28
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::MagicRecompletion()
+{
+    static MOS_LogisticSupplyRecompletionDialog* pDialog = new MOS_LogisticSupplyRecompletionDialog( this );
+    pDialog->SetAgent( *pPopupAgent_ );
+    pDialog->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -482,9 +517,16 @@ void MOS_MissionPanel::MagicDestroyComponent()
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::MagicSurrender()
 {
-    static MOS_SurrenderDialog* pDialog = new MOS_SurrenderDialog( this );
-    pDialog->SetAgent( *pPopupAgent_ );
-    pDialog->show();
+    assert( pPopupAgent_  );
+
+    MOS_ASN_MsgUnitMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid                = pPopupAgent_ ->GetAgentID();
+    asnMsg.GetAsnMsg().action.t           = T_MsgUnitMagicAction_action_se_rendre;
+    asnMsg.Send( 547 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande reddition pour agent #" << pPopupAgent_->GetAgentID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
 // -----------------------------------------------------------------------------

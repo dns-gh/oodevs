@@ -22,8 +22,10 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Decision/DEC_Tools.h"
@@ -141,6 +143,27 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkTime( DIA_Call_ABC& cal
 // =============================================================================
 // MEDICAL
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::TransferWoundedHumansToTC2
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::TransferWoundedHumansToTC2( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
+{
+    assert( DEC_Tools::CheckTypePion    ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) );
+
+    DEC_RolePion_Decision* pPionWounded = call.GetParameter( 0 ).ToUserObject( pPionWounded );
+    assert( pPionWounded );   
+
+    DEC_AutomateDecision* pDecTC2 = call.GetParameter( 1 ).ToUserObject( pDecTC2 );
+    assert( pDecTC2 );
+    if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
+        return;
+
+    MIL_AutomateLOG& tc2 = static_cast< MIL_AutomateLOG& >( pDecTC2->GetAutomate() );
+    pPionWounded->GetPion().GetRole< PHY_RolePion_Humans >().EvacuateWoundedHumans( tc2 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMedicalEnableSystem

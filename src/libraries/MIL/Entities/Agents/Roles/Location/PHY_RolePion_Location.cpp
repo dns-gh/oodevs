@@ -214,7 +214,10 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
     if( rHeight == 0. )
         GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
     else
+    {
+        bHasMove_ = true;
         GetRole< PHY_RolePion_Posture >().SetPostureMovement();
+    }
 
     if( rHeight == rHeight_ )
         return;
@@ -229,6 +232,36 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
 
     for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyMovingInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::Move
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed )
+{
+    SetCurrentSpeed( rNewSpeed     );
+    SetPosition    ( vNewPosition  );
+    SetDirection   ( vNewDirection );
+
+    if( rCurrentSpeed_ == 0. )
+        GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
+    else
+    {
+        bHasMove_ = true;
+        GetRole< PHY_RolePion_Posture >().SetPostureMovement();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::Follow
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
+{
+    const PHY_RoleInterface_Location& roleLocation = agent.GetRole< PHY_RoleInterface_Location >();
+    Move     ( roleLocation.GetPosition(), roleLocation.GetDirection(), roleLocation.GetCurrentSpeed() );    
+    SetHeight( roleLocation.GetHeight() );
 }
 
 
@@ -259,36 +292,6 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
     for( TER_DynaObject_ABC::CIT_DynaObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
     bHasDoneMagicMove_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::Move
-// Created: NLD 2004-09-23
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed )
-{
-    SetCurrentSpeed( rNewSpeed     );
-    SetPosition    ( vNewPosition  );
-    SetDirection   ( vNewDirection );
-
-    if( rCurrentSpeed_ == 0. )
-        GetRole< PHY_RolePion_Posture >().UnsetPostureMovement();
-    else
-    {
-        bHasMove_ = true;
-        GetRole< PHY_RolePion_Posture >().SetPostureMovement();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::Follow
-// Created: NLD 2004-11-19
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
-{
-    const PHY_RoleInterface_Location& roleLocation = agent.GetRole< PHY_RoleInterface_Location >();
-    Move( roleLocation.GetPosition(), roleLocation.GetDirection(), roleLocation.GetCurrentSpeed() );    
-    SetHeight( roleLocation.GetHeight() );
 }
 
 // -----------------------------------------------------------------------------

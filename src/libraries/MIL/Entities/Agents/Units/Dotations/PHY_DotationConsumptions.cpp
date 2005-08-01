@@ -96,7 +96,8 @@ bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGrou
 {
     for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
     {
-        if( !container.AddConsumptionReservation( *it->first, it->second->GetConsumption() ) )
+        const MT_Float rConsumption = it->second->GetConsumption();
+        if( container.AddConsumptionReservation( *it->first, rConsumption ) < rConsumption )
             return false;
     }
     return true;

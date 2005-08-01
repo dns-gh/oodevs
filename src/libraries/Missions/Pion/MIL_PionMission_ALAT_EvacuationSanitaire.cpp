@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,12 +24,13 @@ int MIL_PionMission_ALAT_EvacuationSanitaire::nDIAPointDebarquementIdx_ = 0 ;
 int MIL_PionMission_ALAT_EvacuationSanitaire::nDIAZoneExtractionIdx_ = 0 ;
 int MIL_PionMission_ALAT_EvacuationSanitaire::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_PionMission_ALAT_EvacuationSanitaire::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_PionMission_ALAT_EvacuationSanitaire::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_PionMission_ALAT_EvacuationSanitaire::nDIAPorteeActionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::InitializeDIA
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_EvacuationSanitaire::InitializeDIA( const MIL_PionMissionType& type )
@@ -39,6 +40,7 @@ void MIL_PionMission_ALAT_EvacuationSanitaire::InitializeDIA( const MIL_PionMiss
     nDIAZoneExtractionIdx_ = DEC_Tools::InitializeDIAField( "zoneExtraction_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
 
 }
@@ -46,7 +48,7 @@ void MIL_PionMission_ALAT_EvacuationSanitaire::InitializeDIA( const MIL_PionMiss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_EvacuationSanitaire::MIL_PionMission_ALAT_EvacuationSanitaire( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -57,7 +59,7 @@ MIL_PionMission_ALAT_EvacuationSanitaire::MIL_PionMission_ALAT_EvacuationSanitai
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_EvacuationSanitaire::~MIL_PionMission_ALAT_EvacuationSanitaire()
 {
@@ -67,7 +69,7 @@ MIL_PionMission_ALAT_EvacuationSanitaire::~MIL_PionMission_ALAT_EvacuationSanita
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -84,6 +86,8 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( c
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
@@ -93,7 +97,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -104,6 +108,7 @@ bool MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( const MIL_AutomateMis
     NET_ASN_Tools::ResetPolygon( zoneExtraction_, GetVariable( nDIAZoneExtractionIdx_ ) );
     NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
+    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
 
     return true;    
@@ -111,7 +116,7 @@ bool MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( const MIL_AutomateMis
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -123,6 +128,7 @@ bool MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( MIL_PionMission_ABC& 
     NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneExtractionIdx_ ), zoneExtraction_, GetVariable( nDIAZoneExtractionIdx_ ) );
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
+    NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
 
     return true;
@@ -130,7 +136,7 @@ bool MIL_PionMission_ALAT_EvacuationSanitaire::Initialize( MIL_PionMission_ABC& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_EvacuationSanitaire::Terminate()
 {
@@ -145,7 +151,7 @@ void MIL_PionMission_ALAT_EvacuationSanitaire::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_EvacuationSanitaire::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -159,13 +165,14 @@ void MIL_PionMission_ALAT_EvacuationSanitaire::Serialize( ASN1T_MsgPionOrder& as
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneExtractionIdx_ ), asnMission.zone_extraction );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_EvacuationSanitaire::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_EvacuationSanitaire::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

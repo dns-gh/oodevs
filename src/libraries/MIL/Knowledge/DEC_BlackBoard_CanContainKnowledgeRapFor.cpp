@@ -12,6 +12,8 @@
 #include "MIL_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeRapFor.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeRapFor, "DEC_BlackBoard_CanContainKnowledgeRapFor" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeRapFor constructor
 // Created: NLD 2004-03-11

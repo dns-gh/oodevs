@@ -188,6 +188,7 @@ void MOS_AgentListView::Initialize()
 //        CreateArme( eTypeArmeLog );
         CreateArme( eTypeArmeUnknown );
   
+        RegisterConduiteOrder( eOrdreConduite_ChangerPositionDebarquement           );
         RegisterConduiteOrder( eOrdreConduite_ChangerReglesEngagement               );
         RegisterConduiteOrder( eOrdreConduite_Pion_AppliquerFeux                    );
         RegisterConduiteOrder( eOrdreConduite_Pion_RenforcerEnVSRAM                 );
@@ -201,7 +202,6 @@ void MOS_AgentListView::Initialize()
         RegisterConduiteOrder( eOrdreConduite_ModifierPrioritesTactiquesReparations );
         RegisterConduiteOrder( eOrdreConduite_Pion_ChangerDePosition                );
         RegisterConduiteOrder( eOrdreConduite_AcquerirObjectif                      );
-        RegisterConduiteOrder( eOrdreConduite_AssignerPositionEmbarquement          );
         RegisterConduiteOrder( eOrdreConduite_Automate_RealiserVariantement         );
         RegisterConduiteOrder( eOrdreConduite_Automate_DesequiperSiteFranchissement );
         RegisterConduiteOrder( eOrdreConduite_Automate_ReagirFaceAEni               );

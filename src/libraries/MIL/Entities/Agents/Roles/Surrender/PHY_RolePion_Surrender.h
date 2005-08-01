@@ -47,7 +47,7 @@ public:
     //! @name Main
     //@{
             bool Surrender                ();
-    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner );
+    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp );
             bool NotifyTakenPrisoner      ();
     virtual void NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp );
     virtual void NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp );

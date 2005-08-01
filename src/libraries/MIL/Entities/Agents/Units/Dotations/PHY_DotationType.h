@@ -45,6 +45,7 @@ public:
     static void Terminate ();
 
     static const PHY_DotationType*     FindDotationType    ( const std::string& strName );
+    static const PHY_DotationType*     FindDotationType    ( ASN1T_EnumFamilleDotation nAsnID );
     static const PHY_DotationType*     FindDotationType    ( uint nID );
     static const PHY_DotationCategory* FindDotationCategory( uint nID );
     //@}
@@ -53,6 +54,7 @@ public:
     //@{
     const PHY_DotationCategory* FindDotationCategory( const std::string& strName ) const;
     const std::string&          GetName             () const;
+          ASN1T_EnumFamilleDotation GetAsnID            () const;
           uint                  GetID               () const;
     //@}
 
@@ -68,8 +70,8 @@ private:
     {
         eMunition  = 0,
         eCarburant = 1,
-        eMine      = 2,
-        eExplosif  = 3,
+        eExplosif  = 2,
+        eMine      = 3,        
         eBarbele   = 4,
         ePiece     = 5,
         eRation    = 6
@@ -86,7 +88,7 @@ private:
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType );
+     PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumFamilleDotation nAsnID );
     ~PHY_DotationType();
 
     //! @name Initialisation
@@ -97,8 +99,9 @@ private:
     //@}
 
 private:
-    std::string             strName_;
-    E_DotationType          nType_;
+    const std::string               strName_;
+    const E_DotationType            nType_;
+    const ASN1T_EnumFamilleDotation nAsnID_;
     T_DotationCategoryMap   dotationCategories_;
 
 private:

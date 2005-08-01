@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Enums_Gen.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 13 $
-// $Workfile: ADN_Enums_Gen.h $
+// $Created: 2005-08-01 - 11:23:54 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_Enums_Gen_Skeleton.h $
+// $Author: Ape $
+// $Modtime: 18/02/05 16:06 $
+// $Revision: 1 $
+// $Workfile: AGR_ADN2_Enums_Gen_Skeleton.h $
 //
 // *****************************************************************************
 

@@ -21,9 +21,11 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
 #include "Entities/Objects/MIL_CampRefugies.h"
+#include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::StopAction
@@ -87,14 +89,17 @@ void DEC_ActionFunctions::ResumeAction( DIA_Call_ABC& call, MIL_AgentPion& calle
 void DEC_ActionFunctions::TakePrisoner( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
+    DEC_Knowledge_Object* pCampKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 1 ), callerAgent.GetArmy          () );
+    if( !pKnowledge || !pCampKnowledge || !pCampKnowledge->GetObjectKnown() || pCampKnowledge->GetObjectKnown()->GetType() != MIL_RealObjectType::campPrisonniers_ )
     {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetParameter( 2 ).SetValue( eQueryInvalid );
         return;
     }
     
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().TakePrisoner( callerAgent );
+    call.GetParameter( 2 ).SetValue( eQueryValid );
+
+    const MIL_CampPrisonniers& camp = static_cast< const MIL_CampPrisonniers& >( *pCampKnowledge->GetObjectKnown() );
+    bool bOut = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Surrender >().TakePrisoner( callerAgent, camp );
     call.GetResult().SetValue( bOut );
 }
 
@@ -211,7 +216,7 @@ void DEC_ActionFunctions::Transport_MagicUnloadPions( DIA_Call_ABC& call, MIL_Ag
 // Name: DEC_ActionFunctions::Transport_IsFinished
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_IsFinished( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::Transport_IsFinished( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsFinished() );
 }
@@ -229,7 +234,7 @@ void DEC_ActionFunctions::Transport_Cancel( DIA_Call_ABC& /*call*/, MIL_AgentPio
 // Name: DEC_ActionFunctions::CanTransportPion
 // Created: JVT 2005-01-18
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::CanTransportPion( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_ActionFunctions::CanTransportPion( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
     
@@ -240,4 +245,11 @@ void DEC_ActionFunctions::CanTransportPion( DIA_Call_ABC& call, MIL_AgentPion& c
     call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().CanTransportPion( pTransported->GetPion(), bTransportOnlyLoadable ) );
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Transport_IsTransporting
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Transport_IsTransporting( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsTransporting() );
+}

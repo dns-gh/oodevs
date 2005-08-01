@@ -58,11 +58,14 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
     pNameLabel_ = new QLabel( pInfoGroupBox );
     pNameLabel_->setFont( boldFont );
 
-    new QLabel( tr( "Etat:" ), pInfoGroupBox );
-    pStateLabel_ = new QLabel( pInfoGroupBox );
-
     new QLabel( tr( "Etat Opérationnel:" ), pInfoGroupBox );
-    pOpStateLabel_ = new QLabel( pInfoGroupBox );
+    pRawOpStateLabel_ = new QLabel( pInfoGroupBox );
+
+    new QLabel( tr( "Mort:" ), pInfoGroupBox );
+    pDeadLabel_ = new QLabel( pInfoGroupBox );
+
+    new QLabel( tr( "Neutralisé:" ), pInfoGroupBox );
+    pNeutralizedLabel_ = new QLabel( pInfoGroupBox );
 
     new QLabel( tr( "Vitesse:" ), pInfoGroupBox );
     pSpeedLabel_ = new QLabel( pInfoGroupBox );
@@ -75,6 +78,9 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
 
     new QLabel( tr( "Troupes:" ), pInfoGroupBox );
     pBoardingStateLabel_ = new QLabel( pInfoGroupBox );
+
+    new QLabel( tr( "Transporteurs d'hommes disponibles:" ), pInfoGroupBox );
+    pHumanTransportersReadyLabel_ = new QLabel( pInfoGroupBox );
 
     // NBC groupbox
     QGroupBox* pNbcGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "NBC" ), this );
@@ -117,6 +123,9 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
 
     // AI groupbox
     QGroupBox* pAIGroupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Etat décisionnel" ), this );
+
+    new QLabel( tr( "Etat opérationnel:" ), pAIGroupBox );
+    pOpStateLabel_ = new QLabel( pAIGroupBox );   
 
     new QLabel( tr( "RoE:" ), pAIGroupBox );
     pROELabel_ = new QLabel( pAIGroupBox );
@@ -195,7 +204,8 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     if( ! selectedItem_.pAgent_ )
     {
         pNameLabel_->setText( "" );
-        pStateLabel_->setText( "" );
+        pDeadLabel_->setText( "" );
+        pNeutralizedLabel_->setText( "" );
         pSpeedLabel_->setText( "" );
         pDirectionLabel_->setText( "" );
         pAltitudeLabel_->setText( "" );
@@ -210,6 +220,7 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
         pReinforcementsLabel_->setText( "" );
 
         pBoardingStateLabel_->setText( "" );
+        pHumanTransportersReadyLabel_->setText( "" );
         pNBCSuitLabel_->setText( "" );
         pNBCAgentsLabel_->setText( "" );
 
@@ -244,8 +255,12 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     }
 
     pNameLabel_->setText( (agent.GetName()).c_str() );
-    pStateLabel_->setText( ENT_Tr::ConvertFromUnitState( agent.GetState() ).c_str() );
-    pOpStateLabel_->setText( QString( "%1 %" ).arg( agent.GetOpState() ) );
+
+    pRawOpStateLabel_->setText( QString( "%1 %" ).arg( agent.GetRawOpState() ) );
+
+    pDeadLabel_       ->setText( agent.IsDead() ? tr( "Oui" ) : tr( "Non" ) );
+    pNeutralizedLabel_->setText( agent.IsNeutralized() ? tr( "Oui" ) : tr( "Non" ) );
+
     pSpeedLabel_->setText( QString::number( agent.GetSpeed() ) );
     pDirectionLabel_->setText( QString::number( agent.GetDirection() ) + "°" );
     pAltitudeLabel_->setText( QString::number( agent.GetAltitude() ) + "m" );
@@ -258,6 +273,7 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     pROELabel_->setText( MOS_Tools::ToString( agent.GetROE() ) );
     pCloseCombatLabel_->setText( MOS_Tools::ToString( agent.GetCloseCombatState() ) );
     pFightRateLabel_->setText( MOS_Tools::ToString( agent.GetRapFor() ) );
+    pOpStateLabel_->setText( MOS_Tools::ToString( agent.nOpState_ ) );
     
     uint nReinforced = agent.GetReinforced();
     if( nReinforced )
@@ -302,6 +318,8 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     pRefugeeLabel_->setText( agent.bRefugeesManaged_ ? tr( "Oui" ) : tr( "Non" ) );
 
     pBoardingStateLabel_->setText( agent.IsLoaded() ? tr( "Embarqué" ) : tr( "Débarqué" ) );
+    pHumanTransportersReadyLabel_->setText( agent.AreHumanTransportersReady() ? tr( "Oui" ) : tr( "Non" ) );
+
     pNBCSuitLabel_->setText( agent.IsNBSSuitOn() ? tr( "Mise" ) : tr( "Non mise" ) );
     pContaminationLabel_->setText( QString::number( agent.GetContamination() ) );
     

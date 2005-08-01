@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner ) = 0;
+    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp ) = 0;
     virtual void NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp ) = 0;
     virtual void NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp ) = 0;
     //@}

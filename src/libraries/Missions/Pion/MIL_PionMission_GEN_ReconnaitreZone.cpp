@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_GEN_ReconnaitreZone::nDIAZoneIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_ReconnaitreZone::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_GEN_ReconnaitreZone::InitializeDIA( const MIL_PionMissionTy
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_ReconnaitreZone::MIL_PionMission_GEN_ReconnaitreZone( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_GEN_ReconnaitreZone::MIL_PionMission_GEN_ReconnaitreZone( MIL_Ag
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_ReconnaitreZone::~MIL_PionMission_GEN_ReconnaitreZone()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_GEN_ReconnaitreZone::~MIL_PionMission_GEN_ReconnaitreZone()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_ReconnaitreZone::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_ReconnaitreZone::Initialize( const 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_ReconnaitreZone::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_GEN_ReconnaitreZone::Initialize( const MIL_AutomateMission_
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_ReconnaitreZone::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_GEN_ReconnaitreZone::Initialize( MIL_PionMission_ABC& missi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ReconnaitreZone::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_GEN_ReconnaitreZone::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ReconnaitreZone::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_GEN_ReconnaitreZone::Serialize( ASN1T_MsgPionOrder& asnMsg 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_ReconnaitreZone::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ReconnaitreZone::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

@@ -13,6 +13,8 @@
 
 #include "PHY_Breakdown.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_Breakdown, "PHY_Breakdown" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Breakdown constructor
 // Created: JVT 2005-02-03

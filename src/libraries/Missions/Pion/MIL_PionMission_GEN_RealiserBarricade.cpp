@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_GEN_RealiserBarricade::nDIAUrgenceIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RealiserBarricade::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_GEN_RealiserBarricade::InitializeDIA( const MIL_PionMission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserBarricade::MIL_PionMission_GEN_RealiserBarricade( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_GEN_RealiserBarricade::MIL_PionMission_GEN_RealiserBarricade( MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserBarricade::~MIL_PionMission_GEN_RealiserBarricade()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_GEN_RealiserBarricade::~MIL_PionMission_GEN_RealiserBarricade()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserBarricade::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserBarricade::Initialize( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserBarricade::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_GEN_RealiserBarricade::Initialize( const MIL_AutomateMissio
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserBarricade::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_GEN_RealiserBarricade::Initialize( MIL_PionMission_ABC& mis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserBarricade::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_GEN_RealiserBarricade::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserBarricade::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_GEN_RealiserBarricade::Serialize( ASN1T_MsgPionOrder& asnMs
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBarricade::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserBarricade::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

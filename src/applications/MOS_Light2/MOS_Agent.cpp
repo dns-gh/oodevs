@@ -130,10 +130,12 @@ void MOS_Agent::Initialize()
     nRulesOfEngagementState_      = (E_RulesOfEngagementState)-1;
     nCloseCombatState_            = (E_CloseCombatState)-1;
     bLoadingState_                = true;
+    bHumanTransportersReady_      = true;
     pGtia_                        = 0;
     bNbcProtectionSuitWorn_       = false;
     bVisionSurfacesNeedUpdating_  = true;
-    nOpState_                     = 100;
+    nRawOpState_                  = 100;
+    nOpState_                     = (E_OperationalState)-1;
     nContamination_               = 0;
     symbolName_                   = "?";
     levelSymbolName_              = "a";
@@ -290,8 +292,11 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
         }
     }
 
-    if( asnMsg.m.etat_opPresent )
-        nOpState_ = asnMsg.etat_op;
+    if( asnMsg.m.etat_operationnel_brutPresent )
+        nRawOpState_ = asnMsg.etat_operationnel_brut;
+
+    if( asnMsg.m.etat_operationnelPresent )
+        nOpState_ = (E_OperationalState)asnMsg.etat_operationnel;
 
     if( asnMsg.m.pions_renforcantPresent )
     {
@@ -325,8 +330,11 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.etat_automatePresent )
         bEmbraye_ = ( asnMsg.etat_automate == EnumAutomateState::embraye );
 
-    if( asnMsg.m.etatPresent )
-        nState_ = (E_UnitState)asnMsg.etat;
+    if( asnMsg.m.mortPresent ) 
+        bDead_ = asnMsg.mort;
+
+    if( asnMsg.m.neutralisePresent )
+        bNeutralized_ = asnMsg.neutralise;
 
     if( asnMsg.m.rapport_de_forcePresent )
         nFightRateState_ = (E_ForceRatioState)asnMsg.rapport_de_force;
@@ -339,6 +347,9 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.embarquePresent )
         bLoadingState_ = asnMsg.embarque;
+
+    if( asnMsg.m.transporteurs_disponiblesPresent )
+        bHumanTransportersReady_ = asnMsg.transporteurs_disponibles;
 
     if( asnMsg.m.en_tenue_de_protection_nbcPresent )
         bNbcProtectionSuitWorn_ = asnMsg.en_tenue_de_protection_nbc;
@@ -924,17 +935,6 @@ void MOS_Agent::WriteODB( MT_XXmlOutputArchive& archive )
     archive.EndSection();
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetTeam
-/** @return 
-*/
-// Created: APE 2004-04-29
-// -----------------------------------------------------------------------------
-MOS_Team& MOS_Agent::GetTeam() const
-{
-    return GetGtia().GetTeam();
-}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetModel

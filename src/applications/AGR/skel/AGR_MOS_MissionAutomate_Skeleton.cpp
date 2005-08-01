@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MOS_Pch.h"
+#include "MOS_Light_Pch.h"
 
 #include "MOS_MissionAutomate.h"
 

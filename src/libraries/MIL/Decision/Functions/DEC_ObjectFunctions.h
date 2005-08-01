@@ -27,8 +27,8 @@ public:
     //@{
     template< typename T > static void MagicCreateObject ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void MagicDestroyObject( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void ActivateObject     ( DIA_Call_ABC& call, const T& caller );
 
-    static void ActivateObject         ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void GetPrisonerCampPosition( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void GetRefugeeCampPosition ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     //@}

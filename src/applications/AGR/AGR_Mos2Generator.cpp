@@ -98,8 +98,8 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
     for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
     {
         const AGR_FragOrder& order = **it;
-        if( order.Name().find( "Test" ) != std::string::npos )
-            continue;
+//        if( order.Name().find( "Test" ) != std::string::npos )
+//            continue;
         strFragOrderDeclaration += "    void CreateOrder_"  + order.BaseName() + "();\n";
     }
 
@@ -128,8 +128,8 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
-        if( mission.Name().find( "Test" ) != std::string::npos )
-            continue;
+//        if( mission.Name().find( "Test" ) != std::string::npos )
+//            continue;
         std::string strAsnDeletion = "        case " + mission.ASNTypeName() + " : delete pASNMsgOrder_->GetAsnMsg().mission.u." + mission.LowName() + "; break;\n";
         std::string strCreation    = "        case " + mission.EnumName() + " : CreateMission_" + mission.BaseName() + "(); break;\n";
         std::string strFunctions   = mission.GenerateMos2Implementation() + "\n";
@@ -177,8 +177,8 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
     {
         const AGR_FragOrder& order = **it;
-        if( order.Name().find( "Test" ) != std::string::npos )
-            continue;
+//        if( order.Name().find( "Test" ) != std::string::npos )
+//            continue;
         strFOCreation  += order.MosLight2CreationCode();
         strFODeletion  += order.MosLight2DeletionCode();
         strFOFunctions += order.MosLight2ImplementationCode();

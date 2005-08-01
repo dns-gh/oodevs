@@ -71,7 +71,10 @@ inline
 void PHY_RolePion_Location::Update( bool bIsDead )
 {
     if( bIsDead || !bHasMove_ )
+    {
         Move( vPosition_, vDirection_, 0. );
+        Fly ( 0. );
+    }
 }
 
 // -----------------------------------------------------------------------------

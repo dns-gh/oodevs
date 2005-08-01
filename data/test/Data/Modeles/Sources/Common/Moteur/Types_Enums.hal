@@ -3,8 +3,8 @@
 // $Created: JVT 2004-08-03 $
 // $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_Enums.hal $
 // $Author: Nld $
-// $Modtime: 4/05/05 18:36 $
-// $Revision: 14 $
+// $Modtime: 29/07/05 12:19 $
+// $Revision: 17 $
 // $Workfile: Types_Enums.hal $
 //
 // *****************************************************************************
@@ -51,6 +51,13 @@ typedef enum E_LocalisationFunctionsReturnCode
 // -----------------------------------------------------------------------------
 // Etat entité
 // -----------------------------------------------------------------------------
+typedef enum E_EtatOperationnel
+{
+    eEtatOp_DetruitTotalement,
+    eEtatOp_DetruitTactiquement,
+    eEtatOp_Operationnel
+};
+
 typedef enum E_EtatRapportDeForce
 {
     eEtatRapportDeForce_None,
@@ -268,16 +275,16 @@ typedef enum E_RadarType
 };
 
 // -----------------------------------------------------------------------------
-// TIR INDIRECT
+// Dotations
 // -----------------------------------------------------------------------------
 typedef enum E_TypeObus
 {
-    eObusExplosif,
-    eObusGrenade,
-    eObusACED,
-    eObusFumigenes,
-    eObusEclairant,
-    eObusMine
+    eObus_Explosif,
+    eObus_Grenade,
+    eObus_ACED,
+    eObus_Fumigenes,
+    eObus_Eclairant,
+    eObus_Mine
 };
 
 typedef enum E_DotationMunitionClasse
@@ -287,3 +294,15 @@ typedef enum E_DotationMunitionClasse
     eMunitionClasse_MissileAir,
     eMunitionClasse_Mitraille
 };
+
+typedef enum E_TypeDotation
+{
+    eDotation_Munition,
+    eDotation_Carburant,
+    eDotation_Explosif,
+    eDotation_Mine,    
+    eDotation_Barbele,
+    eDotation_Piece,
+    eDotation_Ration
+};
+

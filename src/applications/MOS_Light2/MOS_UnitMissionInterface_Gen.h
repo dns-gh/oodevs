@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_UnitMissionInterface_Gen.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 20 $
-// $Workfile: MOS_UnitMissionInterface_Gen.h $
+// $Created: APE 2005-08-01 - 11:29:41 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_UnitMissionInterface_Gen_Skeleton.h $
+// $Author: Ape $
+// $Modtime: 28/04/04 15:11 $
+// $Revision: 2 $
+// $Workfile: AGR_MOS_UnitMissionInterface_Gen_Skeleton.h $
 //
 // *****************************************************************************
 

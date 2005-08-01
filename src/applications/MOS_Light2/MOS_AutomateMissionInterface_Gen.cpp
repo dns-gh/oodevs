@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_AutomateMissionInterface_Gen.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 18 $
-// $Workfile: MOS_AutomateMissionInterface_Gen.cpp $
+// $Created: APE 2005-08-01 - 11:29:41 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_AutomateMissionInterface_Gen_Skeleton.cpp $
+// $Author: Ape $
+// $Modtime: 25/10/04 10:45 $
+// $Revision: 3 $
+// $Workfile: AGR_MOS_AutomateMissionInterface_Gen_Skeleton.cpp $
 //
 // *****************************************************************************
 
@@ -140,6 +140,7 @@ MOS_AutomateMissionInterface::~MOS_AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_contaminee; break;
         case T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_de_deploiement; break;
         case T_Mission_Automate_mission_automate_log_armer_pias : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_armer_pias; break;
+        case T_Mission_Automate_mission_automate_test_move_to : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_test_move_to; break;
         case T_Mission_Automate_mission_automate_decrocher : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_decrocher; break;
         case T_Mission_Automate_mission_automate_relever_sur_place : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_relever_sur_place; break;
         case T_Mission_Automate_mission_automate_faire_mouvement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_faire_mouvement; break;
@@ -295,6 +296,7 @@ void MOS_AutomateMissionInterface::CreateInterface()
         case eMission_Automate_LOG_ReconnaitreZoneContaminee : CreateMission_LOG_ReconnaitreZoneContaminee(); break;
         case eMission_Automate_LOG_ReconnaitreZoneDeDeploiement : CreateMission_LOG_ReconnaitreZoneDeDeploiement(); break;
         case eMission_Automate_LOG_ArmerPIAs : CreateMission_LOG_ArmerPIAs(); break;
+        case eMission_Automate_Test_MoveTo : CreateMission_Test_MoveTo(); break;
         case eMission_Automate_Decrocher : CreateMission_Decrocher(); break;
         case eMission_Automate_ReleverSurPlace : CreateMission_ReleverSurPlace(); break;
         case eMission_Automate_FaireMouvement : CreateMission_FaireMouvement(); break;
@@ -695,6 +697,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Heliporter()
     CreatePoint( asnMission.point_embarquement, "Point embarquement" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -720,6 +723,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Jalonner()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -745,6 +749,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Helitransporter()
     CreatePoint( asnMission.point_embarquement, "Point embarquement" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -771,6 +776,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_ExtrairePersonnel()
     CreatePoint( asnMission.point_embarquement, "Point embarquement" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -796,6 +802,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Appuyer()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     CreatePoint( asnMission.point_dislocation, "Point dislocation" );
     CreateLocation( asnMission.zone, "Zone" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
@@ -822,6 +829,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Couvrir()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -845,6 +853,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Surveiller()
     CreateLocation( asnMission.zone, "Zone" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -868,6 +877,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Reconnaitre()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_reconnaitre = &asnMission;
     CreatePoint( asnMission.pointRegroupement, "PointRegroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -891,6 +901,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Freiner()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -915,6 +926,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Escorter()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -938,6 +950,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Attaquer()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -962,6 +975,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_RecueillirFormationAeromob
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -985,6 +999,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_AttaquerFormationAeromobil
     CreateAgentKnowledgeList( asnMission.unites_a_attaquer, "Unites a attaquer" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1009,6 +1024,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_DonnerCoupArret()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1034,6 +1050,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansPro
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreatePoint( asnMission.point_dislocation, "Point dislocation" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1060,6 +1077,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZon
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreatePoint( asnMission.point_dislocation, "Point dislocation" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1084,6 +1102,7 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvet
     CreateAgentList( asnMission.unites_a_secourir, "Unites a secourir" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
+    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
     pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1948,6 +1967,18 @@ void MOS_AutomateMissionInterface::CreateMission_LOG_ArmerPIAs()
     ASN1T_Mission_Automate_LOG_ArmerPIAs& asnMission = *new ASN1T_Mission_Automate_LOG_ArmerPIAs();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_armer_pias;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_armer_pias = &asnMission;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AutomateMissionInterface::CreateMission_Test_MoveTo
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_AutomateMissionInterface::CreateMission_Test_MoveTo()
+{
+    ASN1T_Mission_Automate_Test_MoveTo& asnMission = *new ASN1T_Mission_Automate_Test_MoveTo();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_test_move_to;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_test_move_to = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire" );
 }
 
 // -----------------------------------------------------------------------------

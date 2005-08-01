@@ -14,6 +14,8 @@ default Default()
     DEC_Debug( "Temps de vol restant : " + FloatToString( DEC_ALAT_TempsVolRestant() ) );
     DEC_Debug( "Temps nécessaire pour parcourir 1000 m : " + FloatToString( DEC_ALAT_TempsVolPourParcourirDistance( 5000 ) ) );
     */
+    
+    DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTactiquement );
  
     persistent float i = 0;
     
@@ -259,7 +261,7 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
             //currentAction = DEC_StartCreerContournementObjet( nState, mission.objet_ );
             //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
             //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
-            nState = DEC_ActiverObjet( mission.objet_ );
+            DEC_ActiverObjet( mission.objet_ );
         }
         
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
@@ -295,17 +297,10 @@ behavior MIS_Pion_Test_ChangePosture( T_Mission_Pion_Test_ChangePosture mission,
 //-----------------------------------------------------------------------------
 
 behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDummy )
-{
-    DEC_Debug( "MIS_Pion_Test_Reinforcement" );
-    if( mission.renforce_ )
-    {
-        if( DEC_Renforce( mission.unite_ ) )
-            DEC_Debug( "Renforcement réussi" );
-        else
-            DEC_Debug( "Renforcement KO" );
-    }
-    else
-        DEC_AnnuleRenforcement();
+{    
+    DEC_Debug( "MIS_Pion_Test_Reinforcement => transfer de blesses vers TC2" );   
+    
+    DEC_TransfererBlessesVersTC2( mission.unite_, DEC_Pion_TC2() );
     halt;
 }
 
@@ -399,12 +394,15 @@ behavior MIS_Pion_Test_Heliporter( T_Mission_Pion_Test_Heliporter mission, id nD
             T_Pion ducon = DIA_GetAt( mission.agents_, 0 );
             DEC_Transport_DebarquerPionSansDelais( ducon );
             */
+            
+            if( DEC_Transport_EnCoursDeTransport() )
+                nStep = eTestTransport_DeplacementPointDebarquement;
         }
         
         
         if( DEC_Transport_EstTermine() )
         {
-            DEC_Debug( "MIS_Pion_Test_Heliporter - Trasnport termine" );
+            DEC_Debug( "MIS_Pion_Test_Heliporter - Transport termine" );
             DEC_Transport_Annuler();
             if( unloadAction != 0 )
                 DEC_StopAction( unloadAction );

@@ -127,6 +127,9 @@ void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
 inline
 bool PHY_RoleAction_Moving::CanMove() const
 {
+    if( GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
+        return true;
+
     return      GetRole< PHY_RoleAction_InterfaceFlying >().CanMove() 
             && !GetRole< PHY_RolePion_Transported       >().IsTransported()
             && !GetRole< PHY_RolePion_Reinforcement     >().IsReinforcing()

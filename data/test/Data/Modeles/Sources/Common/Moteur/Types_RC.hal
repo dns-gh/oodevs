@@ -3,23 +3,11 @@
 // $Created: JVT 2004-08-03 $
 // $Archive: /MVW_v10/Build/Data Test/Data/Modeles/Sources/Common/Moteur/Types_RC.hal $
 // $Author: Nld $
-// $Modtime: 4/07/05 13:11 $
-// $Revision: 12 $
+// $Modtime: 29/07/05 12:06 $
+// $Revision: 14 $
 // $Workfile: Types_RC.hal $
 //
 // *****************************************************************************
-
-
-typedef enum E_RC_TypeDotation
-{
-    eRCType_DotationMunition,
-    eRCType_DotationCarburant,
-    eRCType_DotationExplosif,
-    eRCType_DotationMine,
-    eRCType_DotationBarbele,
-    eRCType_DotationPiece,
-    eRCType_DotationRation
-};
 
 typedef enum E_RC_TypeTerrain
 {
@@ -137,7 +125,7 @@ typedef enum E_TypeRC
 
     /* Logistique du pion */
     eRC_SituationLogFavorable,      
-    eRC_SituationLogDefavorable,    // Paramètre : enum (plus munition / plus essence)
+    eRC_SituationLogDefavorable,    // Paramètre : enum E_FamilleDotation
 
     /* Log */
     eRC_MaterielRetourDeMaintenance,

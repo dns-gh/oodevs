@@ -323,7 +323,7 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
     CIT_ComposantePionVector itEndComp = itCurrentComp;
     while( nNbr )
     {
-        nNbr -= (*itCurrentComp)->ChangeHumansWound( rank, PHY_HumanWound::notWounded_, newWound, nNbr );
+        nNbr -= (*itCurrentComp)->WoundHumans( nNbr, newWound, &rank );
         if(  ++itCurrentComp == composantes_.end() )
             itCurrentComp = composantes_.begin();
         if( itCurrentComp == itEndComp && nNbr > 0 )
@@ -438,6 +438,91 @@ void PHY_RolePion_Composantes::ReadOverloading( MIL_InputArchive& archive )
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ChangeComposantesAvailability
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ChangeComposantesAvailability( MT_Float rRatio )
+{
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    const uint nNewNbrUndamagedComposantes = (uint)( composantes.size() * rRatio );
+          uint nNbrUndamagedComposantes    = nNbrUndamagedMajorComposantes_ + nNbrUndamagedNonMajorComposantes_;
+    if( nNewNbrUndamagedComposantes > nNbrUndamagedComposantes )
+    {
+        for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && nNbrUndamagedComposantes < nNewNbrUndamagedComposantes; ++it )
+        {
+            if( (**it).GetState() != PHY_ComposanteState::undamaged_ )
+            {
+                (**it).Repair();
+                ++ nNbrUndamagedComposantes;
+            }
+        }
+    }
+    else if( nNewNbrUndamagedComposantes < nNbrUndamagedComposantes )
+    {
+        for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && nNbrUndamagedComposantes > nNewNbrUndamagedComposantes; ++it )
+        {
+            if( (**it).GetState() == PHY_ComposanteState::undamaged_ )
+            {
+                (**it).ReinitializeState( PHY_ComposanteState::dead_ );
+                -- nNbrUndamagedComposantes;
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::WoundHumans
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::WoundHumans( uint nNbr )
+{
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    IT_ComposantePionVector itCurrentComp = composantes.begin();
+    while( nNbr && itCurrentComp != composantes.end() )
+    {
+        uint nNbrChanged = (*itCurrentComp)->WoundHumans( 1, PHY_HumanWound::killed_ );
+        if( nNbrChanged == 0 )
+            itCurrentComp = composantes.erase( itCurrentComp );
+        else
+        {
+            nNbr -= nNbrChanged;
+            ++ itCurrentComp;
+        }
+        if( itCurrentComp == composantes.end() )
+            itCurrentComp = composantes.begin();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::HealHumans
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::HealHumans( uint nNbr )
+{
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    IT_ComposantePionVector itCurrentComp = composantes.begin();
+    while( nNbr && itCurrentComp != composantes.end() )
+    {
+        uint nNbrChanged = (*itCurrentComp)->HealHumans( 1 );
+        if( nNbrChanged == 0 )
+            itCurrentComp = composantes.erase( itCurrentComp );
+        else
+        {
+            nNbr -= nNbrChanged;
+            ++ itCurrentComp;
+        }
+        if( itCurrentComp == composantes.end() )
+            itCurrentComp = composantes.begin();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::UpdateEtatOps
@@ -1177,6 +1262,16 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitDotations& asn ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::SendFullState
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+{
+    msg.GetAsnMsg().m.etat_operationnel_brutPresent = 1;
+    msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rEtatOps_ * 100. );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
@@ -1185,18 +1280,7 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
     if( !HasChanged() )
         return;
 
-    msg.GetAsnMsg().m.etat_opPresent = 1;
-    msg.GetAsnMsg().etat_op          = (uint)( rEtatOps_ * 100. );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendFullState
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
-{
-    msg.GetAsnMsg().m.etat_opPresent = 1;
-    msg.GetAsnMsg().etat_op          = (uint)( rEtatOps_ * 100. );
+    SendFullState( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1462,6 +1546,25 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableRepairer( const PHY_Br
 // =============================================================================
 // LOGISTIC - MEDICAL
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::EvacuateWoundedHumans
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        (**it).EvacuateWoundedHumans( destinationTC2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* PHY_RolePion_Composantes::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
+{
+    return GetRole< PHY_RolePion_Humans >().NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyHumanWaitingForMedical

@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light/src/MOS_MissionAutomate.cpp $
+// $Created: 2005-08-01 - 11:29:41 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
-// $Modtime: 11/05/05 10:24 $
-// $Revision: 78 $
-// $Workfile: MOS_MissionAutomate.cpp $
+// $Modtime: 7/03/05 11:46 $
+// $Revision: 6 $
+// $Workfile: AGR_MOS_MissionAutomate_Skeleton.cpp $
 //
 // *****************************************************************************
 
@@ -47,7 +47,7 @@ using namespace DIN;
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate constructor
-// Created:  2005-5-11 - 10:0:21 
+// Created:  2005-08-01 - 11:29:41 
 //-----------------------------------------------------------------------------
 MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
@@ -58,7 +58,7 @@ MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pPa
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate destructor
-// Created:  2005-5-11 - 10:0:21 
+// Created:  2005-08-01 - 11:29:41 
 //-----------------------------------------------------------------------------
 MOS_MissionAutomate::~MOS_MissionAutomate()
 {
@@ -71,7 +71,7 @@ MOS_MissionAutomate::~MOS_MissionAutomate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::Initialize
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::Initialize()
 {
@@ -114,7 +114,7 @@ void MOS_MissionAutomate::Initialize()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::Terminate
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::Terminate()
 {
@@ -270,7 +270,7 @@ void MOS_MissionAutomate::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::SetAgent
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::SetAgent( MOS_Agent* pAgent )
 {
@@ -284,7 +284,7 @@ void MOS_MissionAutomate::SetAgent( MOS_Agent* pAgent )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::CreateMissionTools
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::CreateMissionTools()
 {
@@ -439,7 +439,7 @@ void MOS_MissionAutomate::CreateMissionTools()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::SendMsg
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 // -----------------------------------------------------------------------------
 void MOS_MissionAutomate::SendMsg( std::string& sParam )
 {
@@ -452,7 +452,7 @@ void MOS_MissionAutomate::SendMsg( std::string& sParam )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::FillRandomParameters
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::FillRandomParameters()
 {
@@ -460,7 +460,7 @@ void MOS_MissionAutomate::FillRandomParameters()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::FillRandomParameters
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 {
@@ -469,7 +469,7 @@ void MOS_MissionAutomate::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::FillRandomParameters
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 {
@@ -480,7 +480,7 @@ void MOS_MissionAutomate::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 // Name: MOS_MissionPion::IsAutomateMission
 /** @return 
 */
-// Created: 2005-5-11 - 10:0:21
+// Created: 2005-08-01 - 11:29:41
 // -----------------------------------------------------------------------------
 bool MOS_MissionAutomate::IsAutomateMission() const
 {
@@ -732,6 +732,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Heliporter()
     CreatePoint( asnMission.point_embarquement, "point_embarquement" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -755,6 +757,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Jalonner()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -776,6 +780,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Helitransporter()
     CreatePoint( asnMission.point_embarquement, "point_embarquement" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -799,6 +805,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_ExtrairePersonnel()
     CreatePoint( asnMission.point_embarquement, "point_embarquement" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -821,6 +829,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Appuyer()
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     CreatePoint( asnMission.point_dislocation, "point_dislocation" );
     CreateLocation( asnMission.zone, "zone" );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
@@ -843,6 +853,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Couvrir()
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -862,6 +874,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Surveiller()
     CreateLocation( asnMission.zone, "zone" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -881,6 +895,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Reconnaitre()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_reconnaitre = &asnMission;
     CreatePoint( asnMission.pointRegroupement, "pointRegroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -900,6 +916,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Freiner()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -920,6 +938,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Escorter()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -939,6 +959,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_Attaquer()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -959,6 +981,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_RecueillirFormationAeromobile()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -978,6 +1002,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_AttaquerFormationAeromobile()
     CreateAgentKnowledgeList( asnMission.unites_a_attaquer, "unites_a_attaquer" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -998,6 +1024,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_DonnerCoupArret()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "cibles_prioritaires" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1019,6 +1047,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_DetruireNeutraliserDansProfondeur()
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreatePoint( asnMission.point_dislocation, "point_dislocation" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1042,6 +1072,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_DetruireNeutraliserDansZone()
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreatePoint( asnMission.point_dislocation, "point_dislocation" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1063,6 +1095,8 @@ void MOS_MissionAutomate::CreateMission_ALAT_EffectuerRechercheEtSauvetage()
     CreateAgentList( asnMission.unites_a_secourir, "unites_a_secourir" );
     CreatePoint( asnMission.point_regroupement, "point_regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "plots_ravitaillement" );
+    MOS_ValueList* pParameters_ravitaillement_debut_mission= &CreateValueList( "", 1, 2 );
+    pParameters_ravitaillement_debut_mission->CreateValue( asnMission.ravitaillement_debut_mission, "ravitaillement_debut_mission", MOSToolValueCheck | MOSToolValueModif );
     MOS_ValueButtonList< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"portee_action", 2, 3, false );
     pSelector_portee_action->CreateValue( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee, true );
     pSelector_portee_action->CreateValue( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -1767,7 +1801,7 @@ void MOS_MissionAutomate::CreateMission_Generique()
     CreatePointList( asnMission.points, "points" );
     CreatePathList( asnMission.itineraires, "itineraires" );
     CreateAgentList( asnMission.unites, "unites" );
-    CreateAutomateList( (ASN1T_ListAgent&)asnMission.automates, "automates" );
+    CreateAutomateList( asnMission.automates, "automates" );
     CreateAgentKnowledgeList( asnMission.connaissances_agents, "connaissances_agents" );
     CreateObjectKnowledgeList( asnMission.connaissances_objets, "connaissances_objets" );
 }

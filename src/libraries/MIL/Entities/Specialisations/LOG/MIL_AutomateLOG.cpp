@@ -352,6 +352,22 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceCompo
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human )
+{
+    const T_PionVector& pions  = GetPions();
+    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    {
+        PHY_MedicalHumanState* pState = (**itPion).GetRole< PHY_RolePion_Medical >().HandleHumanEvacuatedByThirdParty( pion, human );
+        if( pState )
+            return pState;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MedicalHandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------

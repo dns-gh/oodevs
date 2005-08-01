@@ -20,6 +20,8 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataRecognition, "DEC_Knowledge_AgentDataRecognition" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition constructor
 // Created: NLD 2004-11-09

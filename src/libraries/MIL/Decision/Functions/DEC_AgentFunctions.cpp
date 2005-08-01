@@ -477,7 +477,7 @@ void DEC_AgentFunctions::AreHumanTransportersReady( DIA_Call_ABC& call, const MI
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_AgentFunctions::NotifyForceRatioStateChanged
+// Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyForceRatioStateChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
@@ -486,12 +486,21 @@ void DEC_AgentFunctions::NotifyForceRatioStateChanged( DIA_Call_ABC& call, MIL_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_AgentFunctions::NotifyForceRatioStateChanged
+// Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetDecision().NotifyRulesOfEngagementStateChanged( (E_RulesOfEngagementState )call.GetParameter( 0 ).ToId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::NotifyOperationalStateChanged
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::NotifyOperationalStateChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetDecision().NotifyOperationalStateChanged( (E_OperationalState)call.GetParameter( 0 ).ToId() );
 }
 
 // -----------------------------------------------------------------------------

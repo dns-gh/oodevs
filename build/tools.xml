@@ -24,6 +24,7 @@
             <copy todir="${lib.dir}" verbose="true" preservelastmodified="true">
                 <fileset dir="@{dir}">
                     <include name="@{name}/lib/**/*.lib"/>
+                    <include name="@{name}/lib/**/*.pdb"/>
                 </fileset>
                 <globmapper from="@{name}/lib/*" to="*" handledirsep="true"/>
             </copy>
@@ -51,6 +52,7 @@
                     <copy todir="${lib.dir}" verbose="true" preservelastmodified="true">
                         <fileset dir="@{dir}">
                             <include name="@{name}/lib/**/*@{module}*.lib"/>
+                            <include name="@{name}/lib/**/*@{module}*.pdb"/>
                         </fileset>
                         <globmapper from="@{name}/lib/*" to="*" handledirsep="true"/>
                     </copy>

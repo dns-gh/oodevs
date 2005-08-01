@@ -110,7 +110,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const
     QPopupMenu menu( this );
     QPopupMenu subMenu( &menu );
 
-    ADN_Equipement_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eTypeDotation_Piece ).categories_;
+    ADN_Equipement_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Piece ).categories_;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = parts.begin(); it != parts.end(); ++it )
     {
         if( this->Contains( **it ) )

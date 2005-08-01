@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_FragmentaryOrderInterface_Gen.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 18 $
-// $Workfile: MOS_FragmentaryOrderInterface_Gen.h $
+// $Created: APE 2005-08-01 - 11:29:41 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.h $
+// $Author: Ape $
+// $Modtime: 13/05/04 18:03 $
+// $Revision: 2 $
+// $Workfile: AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.h $
 //
 // *****************************************************************************
 
@@ -23,15 +23,16 @@
     void CreateOrder_ArreterSilenceRadio();
     void CreateOrder_PasserEnSilenceRadar();
     void CreateOrder_ArreterSilenceRadar();
+    void CreateOrder_RecupererTransporteurs();
     void CreateOrder_AttendreSePoster();
     void CreateOrder_Poursuivre();
     void CreateOrder_Interrompre();
     void CreateOrder_ChangerReglesEngagement();
     void CreateOrder_Deboucher();
     void CreateOrder_Decrocher();
-    void CreateOrder_AssignerPositionEmbarquement();
     void CreateOrder_AcquerirObjectif();
     void CreateOrder_Brouiller();
+    void CreateOrder_ChangerPositionDebarquement();
     void CreateOrder_Pion_ChangerDePosition();
     void CreateOrder_Pion_Contourner();
     void CreateOrder_Pion_EnvoyerVehicule();

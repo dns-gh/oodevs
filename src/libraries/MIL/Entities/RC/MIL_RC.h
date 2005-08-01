@@ -206,7 +206,7 @@ protected:
     
         /* Logistique du pion */
         eRC_SituationLogFavorable,      
-        eRC_SituationLogDefavorable,    // Paramètre : enum (plus munition / plus essence)
+        eRC_SituationLogDefavorable,    // Paramètre : enum E_TypeDotation
     
         /* Log */
         eRC_MaterielRetourDeMaintenance,

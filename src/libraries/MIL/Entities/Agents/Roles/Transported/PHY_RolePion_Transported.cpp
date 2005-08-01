@@ -73,8 +73,8 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
          
-    if ( IsTransported() )
-        CancelTransport();
+//    if ( IsTransported() )
+//        CancelTransport();
 }
 
 // -----------------------------------------------------------------------------
@@ -299,6 +299,9 @@ void PHY_RolePion_Transported::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
 {
     msg.GetAsnMsg().m.pion_transporteurPresent = 1;
     msg.GetAsnMsg().pion_transporteur          = pTransporter_ ? pTransporter_->GetID() : 0;
+
+    msg.GetAsnMsg().m.transporteurs_disponiblesPresent  = 1;
+    msg.GetAsnMsg().transporteurs_disponibles           = !HasHumanTransportersToRecover();
 }
 
 // -----------------------------------------------------------------------------

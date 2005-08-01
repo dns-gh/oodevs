@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Interrompre::InitializeDIA
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Interrompre::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Interrompre::InitializeDIA( const MIL_OrderConduiteType& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Interrompre constructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Interrompre::MIL_OrderConduite_Interrompre( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Interrompre::MIL_OrderConduite_Interrompre( const MIL_Knowledg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Interrompre destructor
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Interrompre::~MIL_OrderConduite_Interrompre()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Interrompre::~MIL_OrderConduite_Interrompre()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Interrompre::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Interrompre::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Interrompre::Initialize( const ASN1T_
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Interrompre::Initialize
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Interrompre::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

@@ -206,6 +206,9 @@ private:
     typedef std::map< std::string, const MOS_SensorType* > T_SensorTypeMap;
     typedef T_SensorTypeMap::const_iterator                CIT_SensorTypeMap;
 
+private:
+    //! @name Member data
+    //@{
     MOS_MOSServer*         pMOSServer_;
     MOS_World*             pWorld_;
     MOS_AgentManager*      pAgentManager_;
@@ -229,10 +232,12 @@ private:
     bool                   bODBEditor_;
     std::string            strODBFilename_;
 
-    std::string            strRootDirectory_;  // $$$$ SBO 2005-07-26: to manage -conffile cmd line option
+    // $$$$ SBO 2005-07-26: to manage -conffile cmd line option
+    std::string            strRootDirectory_;
 
     QTimer*                pNetworkTimer_;
     QTimer*                pDisplayTimer_;
+    //@}
 
 private:
     static MOS_App*        pInstance_;

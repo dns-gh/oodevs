@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -24,7 +24,7 @@ int MIL_AutomateMission_ASA_HAWK_DefendreZone::nDIAPositionsSectionsIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_HAWK_DefendreZone constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_HAWK_DefendreZone::MIL_AutomateMission_ASA_HAWK_DefendreZone( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_ASA_HAWK_DefendreZone::MIL_AutomateMission_ASA_HAWK_Defendre
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_HAWK_DefendreZone destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_HAWK_DefendreZone::~MIL_AutomateMission_ASA_HAWK_DefendreZone()
 {
@@ -61,7 +61,7 @@ void MIL_AutomateMission_ASA_HAWK_DefendreZone::InitializeDIA( const MIL_Automat
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_HAWK_DefendreZone::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_HAWK_DefendreZone::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_HAWK_DefendreZone::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_HAWK_DefendreZone::Terminate()
 {
@@ -95,7 +95,7 @@ void MIL_AutomateMission_ASA_HAWK_DefendreZone::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_HAWK_DefendreZone::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_HAWK_DefendreZone::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -112,7 +112,7 @@ void MIL_AutomateMission_ASA_HAWK_DefendreZone::Serialize( ASN1T_MsgAutomateOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_HAWK_DefendreZone::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_HAWK_DefendreZone::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

@@ -16,6 +16,8 @@
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_PerceptionSurfaceAgent, "PHY_PerceptionSurfaceAgent" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent constructor
 // Created: NLD 2004-08-20

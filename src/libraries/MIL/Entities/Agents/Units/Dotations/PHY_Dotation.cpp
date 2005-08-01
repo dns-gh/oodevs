@@ -19,6 +19,8 @@
 #include "PHY_DotationCategory.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_Dotation, "PHY_Dotation" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor
 // Created: NLD 2004-08-04

@@ -46,7 +46,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid ammo dotation class", archive.GetContext() );
     }
     else
-        pAmmoDotationClass_ = &PHY_AmmoDotationClass::none_;
+        pAmmoDotationClass_ = 0;
 }
 
 //-----------------------------------------------------------------------------

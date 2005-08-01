@@ -18,6 +18,8 @@
 #include "DEC_Knowledge_ObjectNuageNBC.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeObject, "DEC_BlackBoard_CanContainKnowledgeObject" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject constructor
 // Created: NLD 2004-03-11

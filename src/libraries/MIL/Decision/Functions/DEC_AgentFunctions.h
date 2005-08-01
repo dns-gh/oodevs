@@ -61,6 +61,7 @@ public:
     static void NotifyForceRatioStateChanged       ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void NotifyRulesOfEngagementStateChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void NotifyCloseCombatStateChanged      ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyOperationalStateChanged      ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
 
     // Etat des facteurs humains
     static void GetHumanFactorTiredness ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

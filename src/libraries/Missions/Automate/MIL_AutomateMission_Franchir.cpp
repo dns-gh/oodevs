@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -24,7 +24,7 @@ int MIL_AutomateMission_Franchir::nDIAZoneArriveeIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Franchir constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_Franchir::MIL_AutomateMission_Franchir( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_Franchir::MIL_AutomateMission_Franchir( MIL_Automate& automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Franchir destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_Franchir::~MIL_AutomateMission_Franchir()
 {
@@ -61,7 +61,7 @@ void MIL_AutomateMission_Franchir::InitializeDIA( const MIL_AutomateMissionType&
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Franchir::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_Franchir::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Franchir::Initialize( const ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Franchir::Terminate()
 {
@@ -95,7 +95,7 @@ void MIL_AutomateMission_Franchir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Franchir::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Franchir::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -112,7 +112,7 @@ void MIL_AutomateMission_Franchir::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Franchir::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Franchir::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

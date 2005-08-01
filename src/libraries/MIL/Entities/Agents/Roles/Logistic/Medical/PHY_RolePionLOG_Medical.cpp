@@ -533,6 +533,21 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human )
+{
+    if( !bSystemEnabled_ )
+        return 0;
+
+    PHY_MedicalHumanState*        pHumanState = new PHY_MedicalHumanState       ( pion, human, true ); // true is for 'evacuated by third party'
+    PHY_MedicalEvacuationConsign* pConsign    = new PHY_MedicalEvacuationConsign( *this, *pHumanState );
+    InsertConsign( *pConsign );
+    return pHumanState;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::HandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------

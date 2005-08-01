@@ -47,7 +47,7 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( QWizard* pParent, const char* 
     for( ADN_Launchers_Data::IT_LauncherInfos_Vector itLauncher = vLaunchers.begin(); itLauncher != vLaunchers.end(); ++itLauncher )
         pComboLauncher_->insertItem( (*itLauncher)->strName_.GetData().c_str() );
 
-    ADN_Equipement_Data::DotationInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eTypeDotation_Munition );
+    ADN_Equipement_Data::DotationInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Munition );
     ADN_Equipement_Data::T_CategoryInfos_Vector& vAmmo = ammoDotation.GetCategories();
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
         pComboAmmo_->insertItem( (*itAmmo)->strName_.GetData().c_str() );
@@ -120,7 +120,7 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     assert( pLauncher != 0 );
 
-    ADN_Equipement_Data::DotationInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eTypeDotation_Munition );
+    ADN_Equipement_Data::DotationInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Munition );
     ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
     assert( pAmmo != 0 );
 

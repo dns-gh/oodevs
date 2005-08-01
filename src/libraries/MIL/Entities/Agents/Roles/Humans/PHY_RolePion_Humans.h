@@ -22,6 +22,7 @@ class PHY_Human;
 class PHY_MedicalHumanState;
 class NET_ASN_MsgUnitDotations;
 class MIL_AgentPion;
+class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  PHY_RolePion_Humans
@@ -53,7 +54,12 @@ public:
     void NotifyHumanAdded  ( PHY_Human& human );
     void NotifyHumanRemoved( PHY_Human& human );
     void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
+    //@}
 
+    //! @name Medical
+    //@{
+    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
     PHY_MedicalHumanState* NotifyHumanWaitingForMedical( PHY_Human& human );
     void                   NotifyHumanBackFromMedical  ( PHY_MedicalHumanState& humanState );
     //@}
@@ -63,7 +69,9 @@ public:
     void Update        ( bool bIsDead );
     void Clean         ();
     bool HasChanged    () const;
-    void ResupplyHumans();
+
+    void HealAllHumans           ();
+    void ChangeHumansAvailability( MT_Float rRatio );
     //@}
 
     //! @name Network

@@ -60,13 +60,12 @@ private:
     void SendMsgDotationsFullState   ();
     void SendMsgDotations            ( NET_ASN_MsgUnitDotations& msg );
     bool DataDotationsUpdated        () const;
-
-    ASN1T_EnumUnitState GetAgentState() const;
     //@}
 
 private:
     const MIL_AgentPion*      pPion_;
-          ASN1T_EnumUnitState nOldAgentState_;
+          bool                bLastStateDead_;
+          bool                bLastStateNeutralized_;
 };
 
 #include "NET_RolePion_Dotations.inl"

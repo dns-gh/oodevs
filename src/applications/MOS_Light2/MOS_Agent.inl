@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-
+#include "MOS_Gtia.h"
 
 
 // -----------------------------------------------------------------------------
@@ -166,27 +166,34 @@ int MOS_Agent::GetStanceCompletion() const
     return nPostureCompletionPourcentage_;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetState
-/** @return 
-*/
-// Created: APE 2004-03-10
+// Name: MOS_Agent::IsDead
+// Created: NLD 2005-07-25
 // -----------------------------------------------------------------------------
 MOS_INLINE
-E_UnitState MOS_Agent::GetState() const
+bool MOS_Agent::IsDead() const
 {
-    return nState_;
+    return bDead_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetOpState
+// Name: MOS_Agent::IsNeutralized
+// Created: NLD 2005-07-25
+// -----------------------------------------------------------------------------
+MOS_INLINE
+bool MOS_Agent::IsNeutralized() const
+{
+    return bNeutralized_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetRawOpState
 // Created: AGE 2005-03-22
 // -----------------------------------------------------------------------------
 MOS_INLINE
-uint MOS_Agent::GetOpState() const
+uint MOS_Agent::GetRawOpState() const
 {
-    return nOpState_;
+    return nRawOpState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,11 +221,18 @@ bool MOS_Agent::IsLoaded() const
     return bLoadingState_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::AreHumanTransportersReady
+// Created: NLD 2005-07-25
+// -----------------------------------------------------------------------------
+MOS_INLINE
+bool MOS_Agent::AreHumanTransportersReady() const
+{
+    return bHumanTransportersReady_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetComposition
-/** @return 
-*/
 // Created: APE 2004-03-11
 // -----------------------------------------------------------------------------
 MOS_INLINE
@@ -226,6 +240,20 @@ const MOS_AgentComposition& MOS_Agent::GetComposition() const
 {
     return composition_;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetTeam
+/** @return 
+*/
+// Created: APE 2004-04-29
+// -----------------------------------------------------------------------------
+MOS_INLINE
+MOS_Team& MOS_Agent::GetTeam() const
+{
+    return GetGtia().GetTeam();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetGtia

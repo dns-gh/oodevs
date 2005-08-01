@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:34 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //*****************************************************************************
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //*****************************************************************************
 class MIL_PionMission_ALAT_Eclairer: public MIL_PionMission_ABC
 {
@@ -45,6 +45,7 @@ public:
 private:
     static int nDIAPointRegroupementIdx_;
     static int nDIAPlotsRavitaillementIdx_;
+    static int nDIARavitaillementDebutMissionIdx_;
     static int nDIAPorteeActionIdx_;
     static int nDIAAmbianceMissionIdx_;
 

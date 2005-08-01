@@ -142,14 +142,14 @@ void MOS_AutomateMissionInterface::OnOk()
 // Name: MOS_AutomateMissionInterface::CreateMission_Test_MoveTo
 // Created: APE 2004-05-27
 // -----------------------------------------------------------------------------
-void MOS_AutomateMissionInterface::CreateMission_Test_MoveTo()
-{
-    ASN1T_Mission_Automate_Test_MoveTo& asnMission = *new ASN1T_Mission_Automate_Test_MoveTo();
-    pASNMsgOrder_->GetAsnMsg().mission.t                              = T_Mission_Automate_mission_automate_test_move_to;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_test_move_to = &asnMission;
-
-    //$$$$ ?
-}
+//void MOS_AutomateMissionInterface::CreateMission_Test_MoveTo()
+//{
+//    ASN1T_Mission_Automate_Test_MoveTo& asnMission = *new ASN1T_Mission_Automate_Test_MoveTo();
+//    pASNMsgOrder_->GetAsnMsg().mission.t                              = T_Mission_Automate_mission_automate_test_move_to;
+//    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_test_move_to = &asnMission;
+//
+//    //$$$$ ?
+//}
 
 
 #include "MOS_AutomateMissionInterface_Gen.cpp"

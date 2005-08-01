@@ -21,13 +21,6 @@
 #ifndef __MOS_Attr_Def_h_
 #define __MOS_Attr_Def_h_
 
-enum E_AgentState
-{
-    eAgentStateNormal,
-    eAgentStateNeutralized,
-    eAgentStateDead
-};
-
 enum E_PostureType
 {
     ePostureMouvement         = 0,

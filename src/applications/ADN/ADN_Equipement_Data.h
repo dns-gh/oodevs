@@ -191,7 +191,7 @@ public:
         MT_COPYNOTALLOWED( DotationInfos );
     
     public:
-         DotationInfos( E_TypeDotation nType );
+         DotationInfos( E_FamilleDotation nType );
         ~DotationInfos();
 
         void Reset();
@@ -206,7 +206,7 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& );
 
     public:
-        E_TypeDotation          nType_;
+        E_FamilleDotation          nType_;
         ADN_Type_String         strName_;
         T_CategoryInfos_Vector  categories_; 
     };
@@ -225,7 +225,7 @@ public:
     void Reset();
 
     T_DotationInfos_Vector& GetDotations();
-    DotationInfos&          GetDotation( E_TypeDotation nType );
+    DotationInfos&          GetDotation( E_FamilleDotation nType );
     CategoryInfo*           FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName );
 
     int                     GetNextCatId();

@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light/src/MOS_MissionAutomate.h $
+// $Created: 2005-08-01 - 11:29:41 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionAutomate_Skeleton.h $
 // $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 61 $
-// $Workfile: MOS_MissionAutomate.h $
+// $Modtime: 18/10/04 13:04 $
+// $Revision: 3 $
+// $Workfile: AGR_MOS_MissionAutomate_Skeleton.h $
 //
 // *****************************************************************************
 
@@ -26,7 +26,7 @@
 class MOS_ASN_MsgAutomateOrder;
 
 //=============================================================================
-// Created:  2005-5-11 - 10:0:21
+// Created:  2005-08-01 - 11:29:41
 //=============================================================================
 class MOS_MissionAutomate : public MOS_Mission_ABC
 {

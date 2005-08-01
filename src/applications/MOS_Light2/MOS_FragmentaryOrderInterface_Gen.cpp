@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-5-11 - 10:0:21 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_FragmentaryOrderInterface_Gen.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:26 $
-// $Revision: 20 $
-// $Workfile: MOS_FragmentaryOrderInterface_Gen.cpp $
+// $Created: APE 2005-08-01 - 11:29:41 $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.cpp $
+// $Author: Ape $
+// $Modtime: 25/10/04 10:45 $
+// $Revision: 4 $
+// $Workfile: AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.cpp $
 //
 // *****************************************************************************
 
@@ -83,6 +83,9 @@ void MOS_FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_ArreterSilenceRadar :
              CreateOrder_ArreterSilenceRadar();
              break;
+        case eOrdreConduite_RecupererTransporteurs :
+             CreateOrder_RecupererTransporteurs();
+             break;
         case eOrdreConduite_AttendreSePoster :
              CreateOrder_AttendreSePoster();
              break;
@@ -101,14 +104,14 @@ void MOS_FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_Decrocher :
              CreateOrder_Decrocher();
              break;
-        case eOrdreConduite_AssignerPositionEmbarquement :
-             CreateOrder_AssignerPositionEmbarquement();
-             break;
         case eOrdreConduite_AcquerirObjectif :
              CreateOrder_AcquerirObjectif();
              break;
         case eOrdreConduite_Brouiller :
              CreateOrder_Brouiller();
+             break;
+        case eOrdreConduite_ChangerPositionDebarquement :
+             CreateOrder_ChangerPositionDebarquement();
              break;
         case eOrdreConduite_Pion_ChangerDePosition :
              CreateOrder_Pion_ChangerDePosition();
@@ -243,6 +246,14 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ArreterSilenceRadar()
     // NOTHING
 }
 // -----------------------------------------------------------------------------
+// Name: MOS_FragmentaryOrderInterface::CreateOrder_RecupererTransporteurs
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_FragmentaryOrderInterface::CreateOrder_RecupererTransporteurs()
+{
+    // NOTHING
+}
+// -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface::CreateOrder_AttendreSePoster
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -299,18 +310,6 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Decrocher()
     // NOTHING
 }
 // -----------------------------------------------------------------------------
-// Name: MOS_FragmentaryOrderInterface::CreateOrder_AssignerPositionEmbarquement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void MOS_FragmentaryOrderInterface::CreateOrder_AssignerPositionEmbarquement()
-{
-    ASN1T_OrderConduite_AssignerPositionEmbarquement& asnMission = *new ASN1T_OrderConduite_AssignerPositionEmbarquement();
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_assigner_position_embarquement;
-    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_assigner_position_embarquement = &asnMission;
-    CreatePoint( asnMission, "Order conduite assigner position embarquement" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface::CreateOrder_AcquerirObjectif
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -330,6 +329,18 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Brouiller()
 {
     // NOTHING
 }
+// -----------------------------------------------------------------------------
+// Name: MOS_FragmentaryOrderInterface::CreateOrder_ChangerPositionDebarquement
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_FragmentaryOrderInterface::CreateOrder_ChangerPositionDebarquement()
+{
+    ASN1T_OrderConduite_ChangerPositionDebarquement& asnMission = *new ASN1T_OrderConduite_ChangerPositionDebarquement();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_position_debarquement = &asnMission;
+    CreatePoint( asnMission, "Order conduite changer position debarquement" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface::CreateOrder_Pion_ChangerDePosition
 // Created: AGR
@@ -493,7 +504,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesReparations()
     ASN1T_OrderConduite_ModifierPrioritesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_reparations = &asnMission;
-//    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
+    //CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
 }
 
 // -----------------------------------------------------------------------------
@@ -505,7 +516,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesBlesses()
     ASN1T_OrderConduite_ModifierPrioritesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_blesses = &asnMission;
-//    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
+    //CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
 }
 
 // -----------------------------------------------------------------------------

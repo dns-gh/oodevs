@@ -18,22 +18,23 @@
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
+class NET_ASN_MsgUnitDotations;
+class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
+class MIL_NbcAgentType;
+class MIL_AutomateLOG;
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_Human;
 class PHY_UnitType;
-class NET_ASN_MsgUnitDotations;
-class NET_ASN_MsgUnitAttributes;
 class PHY_ComposanteState;
 class PHY_DirectFireData;
 class PHY_IndirectFireData;
 class PHY_SmokeData;
-class MIL_NbcAgentType;
 class PHY_AgentFireResult;
-class HLA_UpdateFunctor;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
+class HLA_UpdateFunctor;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -77,11 +78,21 @@ public:
 
     void Update( bool bIsDead );
     void Clean ();
+    //@}
 
-    void ResupplyEquipements ();
-    void ResupplyHumans      ();
-    void KillRandomComposante();
-    void KillAllComposantes  ();
+    //! @name Humans management
+    //@{
+    void WoundHumans  ( uint nNbr );
+    void HealHumans   ( uint nNbr );    
+    void HealAllHumans();
+    //@}
+
+    //! @name Composantes management
+    //@{
+    void ChangeComposantesAvailability( MT_Float rRatio );
+    void RepairAllComposantes         ();
+    void DestroyRandomComposante      ();
+    void DestroyAllComposantes        ();
     //@}
 
     //! @name Move
@@ -116,24 +127,26 @@ public:
 
     //! @name Logistic - Medical
     //@{
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical         ( PHY_Human& human );
-    void                   NotifyHumanBackFromMedical           ( PHY_MedicalHumanState& humanState );
+    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 );
+    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
+    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
 
-    bool                   HasUsableEvacuationAmbulance         () const;
-    PHY_ComposantePion*    GetAvailableEvacuationAmbulance      () const;
-    void                   GetEvacuationAmbulancesUse           ( T_ComposanteUseMap& composanteUse ) const;
-    bool                   HasUsableCollectionAmbulance         () const;
-    PHY_ComposantePion*    GetAvailableCollectionAmbulance      () const;
-    void                   GetCollectionAmbulancesUse           ( T_ComposanteUseMap& composanteUse ) const;
+    bool                   HasUsableEvacuationAmbulance    () const;
+    PHY_ComposantePion*    GetAvailableEvacuationAmbulance () const;
+    void                   GetEvacuationAmbulancesUse      ( T_ComposanteUseMap& composanteUse ) const;
+    bool                   HasUsableCollectionAmbulance    () const;
+    PHY_ComposantePion*    GetAvailableCollectionAmbulance () const;
+    void                   GetCollectionAmbulancesUse      ( T_ComposanteUseMap& composanteUse ) const;
 
-    void                   GetDoctorsUse                        ( T_ComposanteUseMap& composanteUse ) const;
-    PHY_ComposantePion*    GetAvailableDoctorForDiagnosing      () const; 
-    bool                   HasUsableDoctorForSorting            () const;
-    PHY_ComposantePion*    GetAvailableDoctorForSorting         () const;
-    void                   GetDoctorsUseForSorting              ( T_ComposanteUseMap& composanteUse ) const;
-    bool                   HasUsableDoctorForHealing            () const;
-    bool                   HasUsableDoctorForHealing            ( const PHY_Human& human ) const;    
-    PHY_ComposantePion*    GetAvailableDoctorForHealing         ( const PHY_Human& human ) const;
+    void                   GetDoctorsUse                   ( T_ComposanteUseMap& composanteUse ) const;
+    PHY_ComposantePion*    GetAvailableDoctorForDiagnosing () const; 
+    bool                   HasUsableDoctorForSorting       () const;
+    PHY_ComposantePion*    GetAvailableDoctorForSorting    () const;
+    void                   GetDoctorsUseForSorting         ( T_ComposanteUseMap& composanteUse ) const;
+    bool                   HasUsableDoctorForHealing       () const;
+    bool                   HasUsableDoctorForHealing       ( const PHY_Human& human ) const;    
+    PHY_ComposantePion*    GetAvailableDoctorForHealing    ( const PHY_Human& human ) const;
     //@}
 
     //! @name Logistic - Supply

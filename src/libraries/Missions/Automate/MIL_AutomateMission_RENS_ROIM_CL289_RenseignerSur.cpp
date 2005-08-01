@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -24,7 +24,7 @@ int MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::nDIAZonesDeRechercheIdx_ 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::MIL_AutomateMission_RENS_ROIM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::~MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur()
 {
@@ -61,7 +61,7 @@ void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::InitializeDIA( const MIL
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Init
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 {
@@ -95,7 +95,7 @@ void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -112,7 +112,7 @@ void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Serialize( ASN1T_MsgAuto
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

@@ -24,11 +24,12 @@ signatures
     V                                A::DEC_Transport_DebarquerPionsSansDelais( S /*T_ListePions*/ ); 
     V                                A::DEC_Transport_DebarquerPionSansDelais ( A /*T_Pion*/ );        
     B                                A::DEC_Transport_EstTermine              ();   
+    B                                A::DEC_Transport_EnCoursDeTransport      (); 
     V                                A::DEC_Transport_Annuler                 ();
     B                                A::DEC_Agent_PeutTransporterPion         ( A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
             
     // Prisonniers
-    B                                A::DEC_FairePrisonnier( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_FairePrisonnier( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de prisonniers*/, I /*E_ValiditeRequete&*/ );
     
     // Refugies
     B                                A::DEC_OrienterRefugies( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de refugiés*/, I /*E_ValiditeRequete&*/ );
@@ -70,7 +71,7 @@ signatures
     U /*T_Action*/                   A::DEC_StartCreerContournementObjet   ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
     U /*T_Action*/                   A::DEC_StartValoriserObjet            ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
     U /*T_Action*/                   A::DEC_StartAnimerObjet               ( U /*connaissance objet*/ );
-    I /*E_EtatActionObjet*/          A::DEC_ActiverObjet                   ( U /*connaissance objet*/ );
+    B                                A::DEC_ActiverObjet                   ( U /*connaissance objet*/ );
     V                                A::DEC_CreerObjetSansDelais           ( I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
     V                                A::DEC_DetruireObjetSansDelais        ( U /*T_ConnaissanceObjet*/ ); 
     
@@ -164,7 +165,8 @@ signatures
     V                                A::DEC_Agent_ChangeEtatRapportDeForce   ( I /*E_EtatRapportDeForce*/ );
     V                                A::DEC_Agent_ChangeEtatROE              ( I /*E_EtatROE*/ );
     V                                A::DEC_Agent_ChangeEtatCombatDeRencontre( I /*E_EtatCombatDeRencontre*/ );
-    
+    V                                A::DEC_Agent_ChangeEtatOperationnel     ( I /*E_E_EtatOperationnel*/ );
+        
     // Connaissance agent
     R                                A::DEC_ConnaissanceAgent_Vitesse                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
     R                                A::DEC_ConnaissanceAgent_EtatOps                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
@@ -273,9 +275,10 @@ signatures
     B                                A::DEC_Pion_ChangeAutomate       ( A /*T_Automate*/ );
 
     // Logistique
-    A /*T_Automate*/                 A::DEC_Pion_TC2               (); // ATTENTION : La valeur de retour peut être nulle
-    V                                A::DEC_DemandeDeRavitaillement();
-    V                                A::DEC_ChangeValeurDotations  ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
+    A /*T_Automate*/                 A::DEC_Pion_TC2                (); // ATTENTION : La valeur de retour peut être nulle
+    V                                A::DEC_DemandeDeRavitaillement ();
+    V                                A::DEC_ChangeValeurDotations   ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
+    V                                A::DEC_TransfererBlessesVersTC2( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ );
 
     // Test / debug 
     V                               A::DEC_PostureForTest    ( I );

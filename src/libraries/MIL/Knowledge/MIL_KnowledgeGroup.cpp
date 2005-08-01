@@ -32,6 +32,8 @@
 
 std::set< uint > MIL_KnowledgeGroup::ids_;
 
+BOOST_CLASS_EXPORT_GUID( MIL_KnowledgeGroup, "MIL_KnowledgeGroup" )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup constructor
 // Created: NLD 2004-08-11

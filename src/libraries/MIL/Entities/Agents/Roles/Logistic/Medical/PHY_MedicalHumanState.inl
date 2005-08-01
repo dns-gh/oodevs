@@ -93,3 +93,13 @@ bool PHY_MedicalHumanState::ShouldGoBackToWar() const
 {
     return bShouldGoBackToWar_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalHumanState::EvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+inline
+bool PHY_MedicalHumanState::EvacuatedByThirdParty() const
+{
+    return bEvacuatedByThirdParty_;
+}

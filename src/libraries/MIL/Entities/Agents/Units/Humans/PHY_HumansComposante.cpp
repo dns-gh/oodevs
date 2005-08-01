@@ -18,6 +18,8 @@
 #include "Entities/Agents/Actions/Firing/PHY_AgentFireResult.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante constructor
 // Created: NLD 2004-08-16
@@ -74,29 +76,6 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ChangeHumansWound
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-uint PHY_HumansComposante::ChangeHumansWound( const PHY_HumanRank& rank, const PHY_HumanWound& oldWound, const PHY_HumanWound& newWound, uint nNbrToChange )
-{
-    if( oldWound == newWound )
-        return 0;
-
-    uint nNbrChanged = 0;
-    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
-    {
-        PHY_Human& human = **it;
-        if( human.GetWound() == oldWound && human.GetRank() == rank )
-        {
-            human.ChangeWound( newWound );
-            --nNbrToChange;
-            ++nNbrChanged; 
-        }
-    }
-    return nNbrChanged;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::KillAllHumans
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
@@ -122,13 +101,63 @@ void PHY_HumansComposante::KillAllHumans( PHY_AgentFireResult& fireResult )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::Resupply
-// Created: NLD 2004-09-21
+// Name: PHY_HumansComposante::HealAllHumans
+// Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::Resupply()
+void PHY_HumansComposante::HealAllHumans()
 {
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).Resupply();
+        (**it).Heal();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::HealHumans
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+uint PHY_HumansComposante::HealHumans( uint nNbrToChange )
+{
+    std::random_shuffle( humans_.begin(), humans_.end() );
+
+    uint nNbrChanged = 0;
+
+    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange; ++it )
+    {
+        PHY_Human& human = **it;
+
+        if( human.NeedMedical() || !human.IsAlive() )
+        {
+            human.Heal();
+            -- nNbrToChange;
+            ++ nNbrChanged;
+        }
+    }
+    return nNbrChanged;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::WoundHumans
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+uint PHY_HumansComposante::WoundHumans( uint nNbrToChange, const PHY_HumanWound& newWound, const PHY_HumanRank* pRank )
+{
+    if( newWound == PHY_HumanWound::notWounded_ )
+        return 0;
+
+    uint nNbrChanged = 0;
+    for( CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
+    {
+        PHY_Human& human = **it;
+        if( pRank && human.GetRank() != *pRank )
+            continue;
+
+        if( human.NeedMedical() || !human.IsAlive() )
+            continue;
+
+        human.ChangeWound( newWound );
+        -- nNbrToChange;
+        ++ nNbrChanged; 
+    }
+    return nNbrChanged;
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +203,7 @@ void PHY_HumansComposante::ApplyWounds( const MIL_NbcAgentType& nbcAgentType )
 }
 
 // =============================================================================
-// COMPOSANTE MAINTENANCE
+// COMPOSANTE NOTIFICATIONS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -209,4 +238,18 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RolePion_Composantes&
         src.NotifyHumanRemoved( **it );
         dest.NotifyHumanAdded( **it );
     }
+}
+
+// =============================================================================
+// MEDICAL
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::EvacuateWoundedHumans
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
+{
+    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+        (**it).Evacuate( destinationTC2 );
 }

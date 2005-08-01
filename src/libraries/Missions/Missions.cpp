@@ -362,15 +362,16 @@
 #include "Conduite\MIL_OrderConduite_ArreterSilenceRadio.cpp"
 #include "Conduite\MIL_OrderConduite_PasserEnSilenceRadar.cpp"
 #include "Conduite\MIL_OrderConduite_ArreterSilenceRadar.cpp"
+#include "Conduite\MIL_OrderConduite_RecupererTransporteurs.cpp"
 #include "Conduite\MIL_OrderConduite_AttendreSePoster.cpp"
 #include "Conduite\MIL_OrderConduite_Poursuivre.cpp"
 #include "Conduite\MIL_OrderConduite_Interrompre.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerReglesEngagement.cpp"
 #include "Conduite\MIL_OrderConduite_Deboucher.cpp"
 #include "Conduite\MIL_OrderConduite_Decrocher.cpp"
-#include "Conduite\MIL_OrderConduite_AssignerPositionEmbarquement.cpp"
 #include "Conduite\MIL_OrderConduite_AcquerirObjectif.cpp"
 #include "Conduite\MIL_OrderConduite_Brouiller.cpp"
+#include "Conduite\MIL_OrderConduite_ChangerPositionDebarquement.cpp"
 #include "Conduite\MIL_OrderConduite_Pion_ChangerDePosition.cpp"
 #include "Conduite\MIL_OrderConduite_Pion_Contourner.cpp"
 #include "Conduite\MIL_OrderConduite_Pion_EnvoyerVehicule.cpp"
@@ -770,15 +771,16 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ArreterSilenceRadio>( "ArreterSilenceRadio", eOrdreConduite_ArreterSilenceRadio, T_MsgOrderConduite_order_conduite_order_conduite_arreter_silence_radio, "Rep_OrderConduite_ArreterSilenceRadio", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_PasserEnSilenceRadar>( "PasserEnSilenceRadar", eOrdreConduite_PasserEnSilenceRadar, T_MsgOrderConduite_order_conduite_order_conduite_passer_en_silence_radar, "Rep_OrderConduite_PasserEnSilenceRadar", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ArreterSilenceRadar>( "ArreterSilenceRadar", eOrdreConduite_ArreterSilenceRadar, T_MsgOrderConduite_order_conduite_order_conduite_arreter_silence_radar, "Rep_OrderConduite_ArreterSilenceRadar", true, true );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_RecupererTransporteurs>( "RecupererTransporteurs", eOrdreConduite_RecupererTransporteurs, T_MsgOrderConduite_order_conduite_order_conduite_recuperer_transporteurs, "Rep_OrderConduite_RecupererTransporteurs", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_AttendreSePoster>( "AttendreSePoster", eOrdreConduite_AttendreSePoster, T_MsgOrderConduite_order_conduite_order_conduite_attendre_se_poster, "Rep_OrderConduite_AttendreSePoster", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_attendre_se_poster );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Poursuivre>( "Poursuivre", eOrdreConduite_Poursuivre, T_MsgOrderConduite_order_conduite_order_conduite_poursuivre, "Rep_OrderConduite_Poursuivre", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_poursuivre );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Interrompre>( "Interrompre", eOrdreConduite_Interrompre, T_MsgOrderConduite_order_conduite_order_conduite_interrompre, "Rep_OrderConduite_Interrompre", true, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagement>( "ChangerReglesEngagement", eOrdreConduite_ChangerReglesEngagement, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement, "Rep_OrderConduite_ChangerReglesEngagement", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Deboucher>( "Deboucher", eOrdreConduite_Deboucher, T_MsgOrderConduite_order_conduite_order_conduite_deboucher, "Rep_OrderConduite_Deboucher", false, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_deboucher );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Decrocher>( "Decrocher", eOrdreConduite_Decrocher, T_MsgOrderConduite_order_conduite_order_conduite_decrocher, "Rep_OrderConduite_Decrocher", false, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_decrocher );
-    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_AssignerPositionEmbarquement>( "AssignerPositionEmbarquement", eOrdreConduite_AssignerPositionEmbarquement, T_MsgOrderConduite_order_conduite_order_conduite_assigner_position_embarquement, "Rep_OrderConduite_AssignerPositionEmbarquement", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_AcquerirObjectif>( "AcquerirObjectif", eOrdreConduite_AcquerirObjectif, T_MsgOrderConduite_order_conduite_order_conduite_acquerir_objectif, "Rep_OrderConduite_AcquerirObjectif", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Brouiller>( "Brouiller", eOrdreConduite_Brouiller, T_MsgOrderConduite_order_conduite_order_conduite_brouiller, "Rep_OrderConduite_Brouiller", false, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerPositionDebarquement>( "ChangerPositionDebarquement", eOrdreConduite_ChangerPositionDebarquement, T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement, "Rep_OrderConduite_ChangerPositionDebarquement", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_ChangerDePosition>( "Pion ChangerDePosition", eOrdreConduite_Pion_ChangerDePosition, T_MsgOrderConduite_order_conduite_order_conduite_pion_changer_de_position, "Rep_OrderConduite_Pion_ChangerDePosition", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_Contourner>( "Pion Contourner", eOrdreConduite_Pion_Contourner, T_MsgOrderConduite_order_conduite_order_conduite_pion_contourner, "Rep_OrderConduite_Pion_Contourner", false, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_contourner );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Pion_EnvoyerVehicule>( "Pion EnvoyerVehicule", eOrdreConduite_Pion_EnvoyerVehicule, T_MsgOrderConduite_order_conduite_order_conduite_pion_envoyer_vehicule, "Rep_OrderConduite_Pion_EnvoyerVehicule", false, false );

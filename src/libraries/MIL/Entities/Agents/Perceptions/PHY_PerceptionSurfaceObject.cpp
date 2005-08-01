@@ -13,6 +13,8 @@
 
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_PerceptionSurfaceObject, "PHY_PerceptionSurfaceObject" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceObject constructor
 // Created: NLD 2004-08-20

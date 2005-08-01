@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:4 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_MILICE_DetruireEmbuscade::nDIANatureObstacleIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::InitializeDIA
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_MILICE_DetruireEmbuscade::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_MILICE_DetruireEmbuscade::InitializeDIA( const MIL_PionMiss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade constructor
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_MILICE_DetruireEmbuscade::MIL_PionMission_MILICE_DetruireEmbuscade( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_MILICE_DetruireEmbuscade::MIL_PionMission_MILICE_DetruireEmbusca
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade destructor
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_MILICE_DetruireEmbuscade::~MIL_PionMission_MILICE_DetruireEmbuscade()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_MILICE_DetruireEmbuscade::~MIL_PionMission_MILICE_DetruireEmbusc
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_MILICE_DetruireEmbuscade::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_MILICE_DetruireEmbuscade::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_MILICE_DetruireEmbuscade::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_MILICE_DetruireEmbuscade::Initialize( const MIL_AutomateMis
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::Initialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_MILICE_DetruireEmbuscade::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_MILICE_DetruireEmbuscade::Initialize( MIL_PionMission_ABC& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::Terminate
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_DetruireEmbuscade::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_MILICE_DetruireEmbuscade::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::Serialize
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_DetruireEmbuscade::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_MILICE_DetruireEmbuscade::Serialize( ASN1T_MsgPionOrder& as
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_DetruireEmbuscade::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:4
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_DetruireEmbuscade::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

@@ -42,6 +42,8 @@
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
 
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/RC/MIL_RC.h"
@@ -423,12 +425,12 @@ void MIL_AgentPion::UpdateActions()
 void MIL_AgentPion::UpdatePhysicalState()
 {
     const bool bIsDead = IsDead();
-    GetRole< PHY_RolePion_Location          >().Update( bIsDead );
     GetRole< PHY_RolePion_Dotations         >().Update( bIsDead );
     GetRole< PHY_RolePion_Humans            >().Update( bIsDead );
     GetRole< PHY_RolePion_Composantes       >().Update( bIsDead );
     GetRole< PHY_RolePion_Posture           >().Update( bIsDead );
     GetRole< PHY_RolePion_Reinforcement     >().Update( bIsDead );
+    GetRole< PHY_RolePion_Location          >().Update( bIsDead );
     GetRole< PHY_RolePion_NBC               >().Update( bIsDead );
     GetRole< PHY_RolePion_Communications    >().Update( bIsDead );
     GetRole< PHY_RolePion_HumanFactors      >().Update( bIsDead );
@@ -634,7 +636,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
     uint8 nMagicAction;
     msg >> nMagicAction;
     if( nMagicAction == 0 /*eUnitMagicActionDestroyComposante*/ )
-        GetRole< PHY_RolePion_Composantes >().KillRandomComposante();
+        GetRole< PHY_RolePion_Composantes >().DestroyRandomComposante();
 }
 
 // -----------------------------------------------------------------------------
@@ -697,7 +699,7 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgChangeHumanFactors( ASN1T
 // -----------------------------------------------------------------------------
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyHumans()
 {
-    GetRole< PHY_RolePion_Humans >().ResupplyHumans();
+    GetRole< PHY_RolePion_Humans >().HealAllHumans();
     return EnumUnitAttrErrorCode::no_error;
 }
 
@@ -718,7 +720,7 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyResources()
 // -----------------------------------------------------------------------------
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyEquipement()
 {
-    GetRole< PHY_RolePion_Composantes >().ResupplyEquipements();
+    GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
     return EnumUnitAttrErrorCode::no_error;
 }
 
@@ -728,11 +730,52 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyEquipement()
 // -----------------------------------------------------------------------------
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyAll()
 {
-    GetRole< PHY_RolePion_Composantes >().ResupplyEquipements();
+    GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
     GetRole< PHY_RolePion_Dotations   >().ResupplyDotations  ();
     GetRole< PHY_RolePion_Supply      >().ResupplyStocks     ();
-    GetRole< PHY_RolePion_Humans      >().ResupplyHumans     ();
+    GetRole< PHY_RolePion_Humans      >().HealAllHumans       ();
     GetRole< PHY_RolePion_NBC         >().Decontaminate      ();
+    return EnumUnitAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgResupply
+// Created: NLD 2005-07-27
+// -----------------------------------------------------------------------------
+ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActionRecompletementPartiel& asn )
+{
+    if( asn.m.equipementsPresent )
+        GetRole< PHY_RolePion_Composantes >().ChangeComposantesAvailability( asn.equipements / 100. );
+
+    if( asn.m.personnelsPresent )
+        GetRole< PHY_RolePion_Humans >().ChangeHumansAvailability( asn.personnels / 100. );
+    
+    if( asn.m.dotationsPresent )
+    {
+        PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
+        for( uint i = 0; i < asn.dotations.n; ++i )
+        {
+            const ASN1T_RecompletementDotation& asnDotation = asn.dotations.elem[ i ];
+
+            const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( asnDotation.famille_dotation ); 
+            if( pDotationType )
+                roleDotations.ResupplyDotations( *pDotationType, asnDotation.pourcentage / 100. );
+        }
+    }
+
+    if( asn.m.munitionsPresent )
+    {
+        PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
+        for( uint i = 0; i < asn.munitions.n; ++i )
+        {
+            const ASN1T_RecompletementDotationMunition& asnMunition = asn.munitions.elem[ i ];
+
+            const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( asnMunition.famille_munition ); 
+            if( pAmmoClass )
+                roleDotations.ResupplyDotations( *pAmmoClass, asnMunition.pourcentage / 100. );
+        }
+    }
+
     return EnumUnitAttrErrorCode::no_error;
 }
 
@@ -742,7 +785,7 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyAll()
 // -----------------------------------------------------------------------------
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgDestroyAll()
 {
-    GetRole< PHY_RolePion_Composantes >().KillAllComposantes();
+    GetRole< PHY_RolePion_Composantes >().DestroyAllComposantes();
     return EnumUnitAttrErrorCode::no_error;
 }
 
@@ -762,6 +805,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
         case T_MsgUnitMagicAction_action_recompletement_ressources  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyResources (); break;
         case T_MsgUnitMagicAction_action_recompletement_equipement  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyEquipement(); break;
         case T_MsgUnitMagicAction_action_recompletement_total       : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyAll       (); break;
+        case T_MsgUnitMagicAction_action_recompletement_partiel     : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupply          ( *asnMsg.action.u.recompletement_partiel ); break;
         case T_MsgUnitMagicAction_action_change_facteurs_humains    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeHumanFactors( *asnMsg.action.u.change_facteurs_humains ); break;
         case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll        (); break;
         case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;

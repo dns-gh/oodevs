@@ -17,8 +17,9 @@
 #include "Network/NET_AgentServer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
-
 using namespace DIN;
+
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerception, "DEC_Knowledge_AgentPerception" )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerception constructor
@@ -163,13 +164,17 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
     if( perceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = &perceptionLevel;
 
-    if( perceptionLevel > *pMaxPerceptionLevel_ )
-        pMaxPerceptionLevel_ = &perceptionLevel;
+    // $$$ bDummy demandé par DSRO : quand un pion voit une unité détruite, il la reconnait afin de ne pas en avoir peur ...
+    if( *pCurrentPerceptionLevel_ < PHY_PerceptionLevel::recognized_ && pAgentPerceived_->IsDead() )
+        pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::recognized_;
+
+    if( *pCurrentPerceptionLevel_ > *pMaxPerceptionLevel_ )
+        pMaxPerceptionLevel_ = pCurrentPerceptionLevel_;
 
     assert( pAgentPerceived_ );
-    dataDetection_     .Update( *pAgentPerceived_, perceptionLevel );
-    dataRecognition_   .Update( *pAgentPerceived_, perceptionLevel );
-    dataIdentification_.Update( *pAgentPerceived_, perceptionLevel );
+    dataDetection_     .Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
+    dataRecognition_   .Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
+    dataIdentification_.Update( *pAgentPerceived_, *pCurrentPerceptionLevel_ );
 }
 
 // -----------------------------------------------------------------------------

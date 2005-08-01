@@ -26,7 +26,6 @@ MsgUnitDotations ::= SEQUENCE
     prets-equipement       SEQUENCE OF PretEquipement     OPTIONAL
 }
 
-
 -- Personnel
 DotationPersonnel ::= SEQUENCE 
 {
@@ -100,13 +99,6 @@ EnumAutomateState ::= ENUMERATED
     debraye
 }
 
-EnumUnitState ::= ENUMERATED
-{
-    normal      (0),        
-    neutralise  (1),        
-    mort        (2) 
-}
-
 EnumEtatRapFor ::= ENUMERATED
 {
     none        (0),
@@ -131,6 +123,12 @@ EnumEtatCombatRencontre ::= ENUMERATED
     etat-poursuite-mission(3)               
 }
 
+EnumEtatOperationnel ::= ENUMERATED
+{
+    detruit-totalement      (0),
+    detruit-tactiquement    (1),
+    operationnel            (2)
+}
 
 -- Msg envoyé
 MsgUnitAttributes ::= SEQUENCE
@@ -140,15 +138,16 @@ MsgUnitAttributes ::= SEQUENCE
     direction                   Direction               OPTIONAL, -- en degrés
     hauteur                     Hauteur                 OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
     vitesse                     Vitesse                 OPTIONAL, -- en km/h
-    etat-op                     PourcentageLibre        OPTIONAL,
-    capa-op-personnel           Pourcentage             OPTIONAL,
-    capa-op-materiel            Pourcentage             OPTIONAL,
+    etat-operationnel-brut      PourcentageLibre        OPTIONAL,
     pions-renforcant            ListAgent               OPTIONAL,
     pion-renforce               Agent                   OPTIONAL, -- '0' quand pas en renfort                                                    
     etat-automate               EnumAutomateState       OPTIONAL,   
-    etat                        EnumUnitState           OPTIONAL,   
+    mort                        BOOLEAN                 OPTIONAL,   
+    neutralise                  BOOLEAN                 OPTIONAL,   
     mode-furtif-actif           BOOLEAN                 OPTIONAL,
     embarque                    BOOLEAN                 OPTIONAL,
+    transporteurs-disponibles   BOOLEAN                 OPTIONAL,
+    
     posture-old                 EnumUnitPosture         OPTIONAL,
     posture-new                 EnumUnitPosture         OPTIONAL,
     posture-pourcentage         Pourcentage             OPTIONAL,
@@ -167,6 +166,7 @@ MsgUnitAttributes ::= SEQUENCE
     rapport-de-force            EnumEtatRapFor          OPTIONAL,
     regles-d-engagement         EnumReglesEngagement    OPTIONAL,
     combat-de-rencontre         EnumEtatCombatRencontre OPTIONAL,
+    etat-operationnel           EnumEtatOperationnel    OPTIONAL,
     
     fatigue                     EnumUnitFatigue         OPTIONAL,
     moral                       EnumUnitMoral           OPTIONAL,
@@ -179,7 +179,7 @@ MsgUnitAttributes ::= SEQUENCE
 
 -- Actions magiques
 
-MagicActionSeRendre                 ::= OID         -- OID du camp de prisonnier (OID de l'objet reel)
+MagicActionSeRendre                 ::= NULL        
 MagicActionMoveTo                   ::= CoordUTM    -- Position
 MagicActionDestructionTotale        ::= NULL
 MagicActionRecompletementTotal      ::= NULL
@@ -188,9 +188,29 @@ MagicActionRecompletementEquipement ::= NULL
 MagicActionRecompletementRessources ::= NULL
 MagicActionChangeFacteursHumains    ::= SEQUENCE
 {
-    fatigue    EnumUnitFatigue         OPTIONAL,
-    moral      EnumUnitMoral           OPTIONAL,
-    experience EnumUnitExperience      OPTIONAL
+    fatigue    EnumUnitFatigue    OPTIONAL,
+    moral      EnumUnitMoral      OPTIONAL,
+    experience EnumUnitExperience OPTIONAL
+}
+
+RecompletementDotation ::= SEQUENCE
+{
+    famille-dotation    EnumFamilleDotation,
+    pourcentage         Pourcentage
+}
+
+RecompletementDotationMunition ::= SEQUENCE
+{
+    famille-munition EnumFamilleMunition,
+    pourcentage      Pourcentage
+}
+
+MagicActionRecompletementPartiel ::= SEQUENCE
+{
+    equipements Pourcentage                                 OPTIONAL,
+    personnels  Pourcentage                                 OPTIONAL,    
+    dotations   SEQUENCE OF RecompletementDotation          OPTIONAL,
+    munitions   SEQUENCE OF RecompletementDotationMunition  OPTIONAL
 }
 
 MsgUnitMagicAction ::= SEQUENCE
@@ -200,6 +220,7 @@ MsgUnitMagicAction ::= SEQUENCE
     {
         move-to                     MagicActionMoveTo,
         recompletement-total        MagicActionRecompletementTotal,
+        recompletement-partiel      MagicActionRecompletementPartiel,
         recompletement-personnel    MagicActionRecompletementPersonnel,
         recompletement-equipement   MagicActionRecompletementEquipement,
         recompletement-ressources   MagicActionRecompletementRessources,

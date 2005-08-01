@@ -1,6 +1,6 @@
 // *******************************************************************************************
 // Conduite Orders types for DirectIA
-// Created : 2005-5-9 - 11:58:47
+// Created : 2005-7-29 - 10:23:21
 // *******************************************************************************************
 
 typedef struct Rep_OrderConduite_MettreTenueNBC : Rep_OrdreConduite
@@ -24,6 +24,10 @@ typedef struct Rep_OrderConduite_PasserEnSilenceRadar : Rep_OrdreConduite
 };
 
 typedef struct Rep_OrderConduite_ArreterSilenceRadar : Rep_OrdreConduite
+{
+};
+
+typedef struct Rep_OrderConduite_RecupererTransporteurs : Rep_OrdreConduite
 {
 };
 
@@ -52,11 +56,6 @@ typedef struct Rep_OrderConduite_Decrocher : Rep_OrdreConduite
 {
 };
 
-typedef struct Rep_OrderConduite_AssignerPositionEmbarquement : Rep_OrdreConduite
-{
-T_Point orderConduiteAssignerPositionEmbarquement_;
-};
-
 typedef struct Rep_OrderConduite_AcquerirObjectif : Rep_OrdreConduite
 {
 T_Localisation orderConduiteAcquerirObjectif_;
@@ -64,6 +63,11 @@ T_Localisation orderConduiteAcquerirObjectif_;
 
 typedef struct Rep_OrderConduite_Brouiller : Rep_OrdreConduite
 {
+};
+
+typedef struct Rep_OrderConduite_ChangerPositionDebarquement : Rep_OrdreConduite
+{
+T_Point orderConduiteChangerPositionDebarquement_;
 };
 
 typedef struct Rep_OrderConduite_Pion_ChangerDePosition : Rep_OrdreConduite

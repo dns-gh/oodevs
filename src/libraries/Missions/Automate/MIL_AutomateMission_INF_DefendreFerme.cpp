@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -24,7 +24,7 @@ int MIL_AutomateMission_INF_DefendreFerme::nDIAPreparerTerrainIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_DefendreFerme constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_DefendreFerme::MIL_AutomateMission_INF_DefendreFerme( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_INF_DefendreFerme::MIL_AutomateMission_INF_DefendreFerme( MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_DefendreFerme destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_DefendreFerme::~MIL_AutomateMission_INF_DefendreFerme()
 {
@@ -61,7 +61,7 @@ void MIL_AutomateMission_INF_DefendreFerme::InitializeDIA( const MIL_AutomateMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_DefendreFerme::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_DefendreFerme::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_DefendreFerme::Initialize( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_DefendreFerme::Terminate()
 {
@@ -95,7 +95,7 @@ void MIL_AutomateMission_INF_DefendreFerme::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_DefendreFerme::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_DefendreFerme::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -112,7 +112,7 @@ void MIL_AutomateMission_INF_DefendreFerme::Serialize( ASN1T_MsgAutomateOrder& a
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_DefendreFerme::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_DefendreFerme::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

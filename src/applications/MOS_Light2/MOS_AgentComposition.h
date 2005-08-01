@@ -58,15 +58,6 @@ typedef std::map< MIL_AgentID, uint >       T_ResourceQty_Map;
 typedef T_ResourceQty_Map::iterator         IT_ResourceQty_Map;
 typedef T_ResourceQty_Map::const_iterator   CIT_ResourceQty_Map;
 
-typedef std::map< uint, std::pair< uint, uint > > T_ResourceQtyQty_Map;
-typedef T_ResourceQtyQty_Map::iterator            IT_ResourceQtyQty_Map;
-typedef T_ResourceQtyQty_Map::const_iterator      CIT_ResourceQtyQty_Map;
-
-typedef std::map< T_TransportedEquipmentState, uint > T_TransportedEquipment_Map;
-typedef T_TransportedEquipment_Map::iterator          IT_TransportedEquipment_Map;
-typedef T_TransportedEquipment_Map::const_iterator    CIT_TransportedEquipment_Map;
-
-
 // =============================================================================
 /** @class  MOS_AgentComposition
     @brief  Resource, equipement and transport data for an agent.
@@ -104,18 +95,6 @@ public:
 
     // Resources
     T_ResourceQty_Map resources_;
-
-    // Transport capacities
-    T_ResourceQty_Map transportCapacities_;
-
-    // Transported troops (undergoing medical treatment)
-    uint transportedTroops_[3][(int)eTroopHealthStateNbrStates];
-
-    // Transported equipment (undergoing repairs)
-    T_TransportedEquipment_Map transportedEquipment_;
-
-    // Transported resources
-    T_ResourceQtyQty_Map transportedResources_;
 
     // Carried troops
     uint nNbrHeliportedTroops_;

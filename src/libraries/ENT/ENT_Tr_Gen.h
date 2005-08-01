@@ -8,11 +8,11 @@
 // *****************************************************************************
 //
 // $Created: APE 2005-02-09 $
-// $Archive: /MVW_v10/Build/SDK/ENT/src/ENT_Tr_Gen.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 11 $
-// $Workfile: ENT_Tr_Gen.h $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ENT_Tr_Skeleton.h $
+// $Author: Ape $
+// $Modtime: 3/03/05 16:59 $
+// $Revision: 3 $
+// $Workfile: AGR_ENT_Tr_Skeleton.h $
 //
 // *****************************************************************************
 
@@ -39,6 +39,8 @@ public:
     static const std::string& ConvertFromTypeLocalisation( E_TypeLocalisation, E_Conversion = eToSim );
     static const std::string& ConvertFromGDH_Qualificatif( E_GDH_Qualificatif, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel, E_Conversion = eToSim );
+    static const std::string& ConvertFromFamilleDotation( E_FamilleDotation, E_Conversion = eToSim );
+    static const std::string& ConvertFromFamilleMunition( E_FamilleMunition, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitNatureWeapon( E_UnitNatureWeapon, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitNatureSpecialization( E_UnitNatureSpecialization, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitNatureQualifier( E_UnitNatureQualifier, E_Conversion = eToSim );
@@ -71,7 +73,6 @@ public:
     static const std::string& ConvertFromTypeLima( E_TypeLima, E_Conversion = eToSim );
     static const std::string& ConvertFromInfoContextErrorCode( E_InfoContextErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeTerrain( E_TypeTerrain, E_Conversion = eToSim );
-    static const std::string& ConvertFromTypeDotation( E_TypeDotation, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeCR( E_TypeCR, E_Conversion = eToSim );
     static const std::string& ConvertFromFireEffectType( E_FireEffectType, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
@@ -86,11 +87,11 @@ public:
     static const std::string& ConvertFromMsgLogRavitaillementPousserFluxAck( E_MsgLogRavitaillementPousserFluxAck, E_Conversion = eToSim );
     static const std::string& ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromAutomateState( E_AutomateState, E_Conversion = eToSim );
-    static const std::string& ConvertFromUnitState( E_UnitState, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitPosture( E_UnitPosture, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatRapFor( E_EtatRapFor, E_Conversion = eToSim );
     static const std::string& ConvertFromReglesEngagement( E_ReglesEngagement, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatCombatRencontre( E_EtatCombatRencontre, E_Conversion = eToSim );
+    static const std::string& ConvertFromEtatOperationnel( E_EtatOperationnel, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitFatigue( E_UnitFatigue, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitMoral( E_UnitMoral, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
@@ -108,6 +109,8 @@ public:
     static E_TypeLocalisation ConvertToTypeLocalisation( const std::string& );
     static E_GDH_Qualificatif ConvertToGDH_Qualificatif( const std::string& );
     static E_UnitIdentificationLevel ConvertToUnitIdentificationLevel( const std::string& );
+    static E_FamilleDotation ConvertToFamilleDotation( const std::string& );
+    static E_FamilleMunition ConvertToFamilleMunition( const std::string& );
     static E_UnitNatureWeapon ConvertToUnitNatureWeapon( const std::string& );
     static E_UnitNatureSpecialization ConvertToUnitNatureSpecialization( const std::string& );
     static E_UnitNatureQualifier ConvertToUnitNatureQualifier( const std::string& );
@@ -140,7 +143,6 @@ public:
     static E_TypeLima ConvertToTypeLima( const std::string& );
     static E_InfoContextErrorCode ConvertToInfoContextErrorCode( const std::string& );
     static E_TypeTerrain ConvertToTypeTerrain( const std::string& );
-    static E_TypeDotation ConvertToTypeDotation( const std::string& );
     static E_TypeCR ConvertToTypeCR( const std::string& );
     static E_FireEffectType ConvertToFireEffectType( const std::string& );
     static E_Diplomatie ConvertToDiplomatie( const std::string& );
@@ -155,11 +157,11 @@ public:
     static E_MsgLogRavitaillementPousserFluxAck ConvertToMsgLogRavitaillementPousserFluxAck( const std::string& );
     static E_LogSanteTraitementEtat ConvertToLogSanteTraitementEtat( const std::string& );
     static E_AutomateState ConvertToAutomateState( const std::string& );
-    static E_UnitState ConvertToUnitState( const std::string& );
     static E_UnitPosture ConvertToUnitPosture( const std::string& );
     static E_EtatRapFor ConvertToEtatRapFor( const std::string& );
     static E_ReglesEngagement ConvertToReglesEngagement( const std::string& );
     static E_EtatCombatRencontre ConvertToEtatCombatRencontre( const std::string& );
+    static E_EtatOperationnel ConvertToEtatOperationnel( const std::string& );
     static E_UnitFatigue ConvertToUnitFatigue( const std::string& );
     static E_UnitMoral ConvertToUnitMoral( const std::string& );
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
@@ -178,6 +180,8 @@ private:
     typedef ENT_Tr::converter<E_TypeLocalisation> T_ConverterTypeLocalisation;
     typedef ENT_Tr::converter<E_GDH_Qualificatif> T_ConverterGDH_Qualificatif;
     typedef ENT_Tr::converter<E_UnitIdentificationLevel> T_ConverterUnitIdentificationLevel;
+    typedef ENT_Tr::converter<E_FamilleDotation> T_ConverterFamilleDotation;
+    typedef ENT_Tr::converter<E_FamilleMunition> T_ConverterFamilleMunition;
     typedef ENT_Tr::converter<E_UnitNatureWeapon> T_ConverterUnitNatureWeapon;
     typedef ENT_Tr::converter<E_UnitNatureSpecialization> T_ConverterUnitNatureSpecialization;
     typedef ENT_Tr::converter<E_UnitNatureQualifier> T_ConverterUnitNatureQualifier;
@@ -210,7 +214,6 @@ private:
     typedef ENT_Tr::converter<E_TypeLima> T_ConverterTypeLima;
     typedef ENT_Tr::converter<E_InfoContextErrorCode> T_ConverterInfoContextErrorCode;
     typedef ENT_Tr::converter<E_TypeTerrain> T_ConverterTypeTerrain;
-    typedef ENT_Tr::converter<E_TypeDotation> T_ConverterTypeDotation;
     typedef ENT_Tr::converter<E_TypeCR> T_ConverterTypeCR;
     typedef ENT_Tr::converter<E_FireEffectType> T_ConverterFireEffectType;
     typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
@@ -225,11 +228,11 @@ private:
     typedef ENT_Tr::converter<E_MsgLogRavitaillementPousserFluxAck> T_ConverterMsgLogRavitaillementPousserFluxAck;
     typedef ENT_Tr::converter<E_LogSanteTraitementEtat> T_ConverterLogSanteTraitementEtat;
     typedef ENT_Tr::converter<E_AutomateState> T_ConverterAutomateState;
-    typedef ENT_Tr::converter<E_UnitState> T_ConverterUnitState;
     typedef ENT_Tr::converter<E_UnitPosture> T_ConverterUnitPosture;
     typedef ENT_Tr::converter<E_EtatRapFor> T_ConverterEtatRapFor;
     typedef ENT_Tr::converter<E_ReglesEngagement> T_ConverterReglesEngagement;
     typedef ENT_Tr::converter<E_EtatCombatRencontre> T_ConverterEtatCombatRencontre;
+    typedef ENT_Tr::converter<E_EtatOperationnel> T_ConverterEtatOperationnel;
     typedef ENT_Tr::converter<E_UnitFatigue> T_ConverterUnitFatigue;
     typedef ENT_Tr::converter<E_UnitMoral> T_ConverterUnitMoral;
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
@@ -247,6 +250,8 @@ private:
     static T_ConverterTypeLocalisation TypeLocalisationConverter_ [];
     static T_ConverterGDH_Qualificatif GDH_QualificatifConverter_ [];
     static T_ConverterUnitIdentificationLevel UnitIdentificationLevelConverter_ [];
+    static T_ConverterFamilleDotation FamilleDotationConverter_ [];
+    static T_ConverterFamilleMunition FamilleMunitionConverter_ [];
     static T_ConverterUnitNatureWeapon UnitNatureWeaponConverter_ [];
     static T_ConverterUnitNatureSpecialization UnitNatureSpecializationConverter_ [];
     static T_ConverterUnitNatureQualifier UnitNatureQualifierConverter_ [];
@@ -279,7 +284,6 @@ private:
     static T_ConverterTypeLima TypeLimaConverter_ [];
     static T_ConverterInfoContextErrorCode InfoContextErrorCodeConverter_ [];
     static T_ConverterTypeTerrain TypeTerrainConverter_ [];
-    static T_ConverterTypeDotation TypeDotationConverter_ [];
     static T_ConverterTypeCR TypeCRConverter_ [];
     static T_ConverterFireEffectType FireEffectTypeConverter_ [];
     static T_ConverterDiplomatie DiplomatieConverter_ [];
@@ -294,11 +298,11 @@ private:
     static T_ConverterMsgLogRavitaillementPousserFluxAck MsgLogRavitaillementPousserFluxAckConverter_ [];
     static T_ConverterLogSanteTraitementEtat LogSanteTraitementEtatConverter_ [];
     static T_ConverterAutomateState AutomateStateConverter_ [];
-    static T_ConverterUnitState UnitStateConverter_ [];
     static T_ConverterUnitPosture UnitPostureConverter_ [];
     static T_ConverterEtatRapFor EtatRapForConverter_ [];
     static T_ConverterReglesEngagement ReglesEngagementConverter_ [];
     static T_ConverterEtatCombatRencontre EtatCombatRencontreConverter_ [];
+    static T_ConverterEtatOperationnel EtatOperationnelConverter_ [];
     static T_ConverterUnitFatigue UnitFatigueConverter_ [];
     static T_ConverterUnitMoral UnitMoralConverter_ [];
     static T_ConverterUnitExperience UnitExperienceConverter_ [];

@@ -30,7 +30,7 @@ public:
 
     //! @name Main
     //@{
-    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner );
+    virtual bool TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp );
     virtual void NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp );
     virtual void NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp );
     //@}

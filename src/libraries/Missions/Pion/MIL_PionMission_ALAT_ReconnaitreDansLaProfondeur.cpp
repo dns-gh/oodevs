@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -22,6 +22,7 @@
 
 int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAPorteeActionIdx_ = 0 ;
 int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAAmbianceMissionIdx_ = 0 ;
 int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAPointDislocationIdx_ = 0 ;
@@ -30,7 +31,7 @@ int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAZoneIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,6 +39,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA( const MIL_
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
     nDIAPointDislocationIdx_ = DEC_Tools::InitializeDIAField( "pointDislocation_", diaType );
@@ -48,7 +50,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -59,7 +61,7 @@ MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::MIL_PionMission_ALAT_Reconnait
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::~MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur()
 {
@@ -69,7 +71,7 @@ MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::~MIL_PionMission_ALAT_Reconnai
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,6 +83,8 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initi
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -97,7 +101,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -106,6 +110,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_Aut
 
     NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
+    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
     NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
     NET_ASN_Tools::ResetPoint( pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) );
@@ -116,7 +121,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_Aut
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -126,6 +131,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
 
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
+    NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAAmbianceMissionIdx_ ), GetVariable( nDIAAmbianceMissionIdx_ ) );
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDislocationIdx_ ), pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) );
@@ -136,7 +142,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
 {
@@ -151,7 +157,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -163,6 +169,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize( ASN1T_MsgPionO
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointDislocationIdx_ ), asnMission.point_dislocation );
@@ -172,7 +179,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize( ASN1T_MsgPionO
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

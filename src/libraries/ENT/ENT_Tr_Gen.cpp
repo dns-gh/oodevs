@@ -8,11 +8,11 @@
 // *****************************************************************************
 //
 // $Created: APE 2005-02-11 $
-// $Archive: /MVW_v10/Build/SDK/ENT/src/ENT_Tr_Gen.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 11 $
-// $Workfile: ENT_Tr_Gen.cpp $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ENT_Tr_Skeleton.cpp $
+// $Author: Ape $
+// $Modtime: 3/03/05 16:59 $
+// $Revision: 3 $
+// $Workfile: AGR_ENT_Tr_Skeleton.cpp $
 //
 // *****************************************************************************
 
@@ -55,6 +55,27 @@ ENT_Tr::T_ConverterUnitIdentificationLevel ENT_Tr::UnitIdentificationLevelConver
     T_ConverterUnitIdentificationLevel( "detectee", QT_TRANSLATE_NOOP( "ENT_Tr", "detectee" ), eUnitIdentificationLevel_Detectee ),
     T_ConverterUnitIdentificationLevel( "signale", QT_TRANSLATE_NOOP( "ENT_Tr", "signale" ), eUnitIdentificationLevel_Signale ),
     T_ConverterUnitIdentificationLevel( "", "", (E_UnitIdentificationLevel)-1 )
+};
+
+ENT_Tr::T_ConverterFamilleDotation ENT_Tr::FamilleDotationConverter_[] =
+{
+    T_ConverterFamilleDotation( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "munition" ), eFamilleDotation_Munition ),
+    T_ConverterFamilleDotation( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "carburant" ), eFamilleDotation_Carburant ),
+    T_ConverterFamilleDotation( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosif" ), eFamilleDotation_Explosif ),
+    T_ConverterFamilleDotation( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "mine" ), eFamilleDotation_Mine ),
+    T_ConverterFamilleDotation( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "barbele" ), eFamilleDotation_Barbele ),
+    T_ConverterFamilleDotation( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "piece" ), eFamilleDotation_Piece ),
+    T_ConverterFamilleDotation( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "ration" ), eFamilleDotation_Ration ),
+    T_ConverterFamilleDotation( "", "", (E_FamilleDotation)-1 )
+};
+
+ENT_Tr::T_ConverterFamilleMunition ENT_Tr::FamilleMunitionConverter_[] =
+{
+    T_ConverterFamilleMunition( "obus", QT_TRANSLATE_NOOP( "ENT_Tr", "obus" ), eFamilleMunition_Obus ),
+    T_ConverterFamilleMunition( "missile air", QT_TRANSLATE_NOOP( "ENT_Tr", "missile air" ), eFamilleMunition_MissileAir ),
+    T_ConverterFamilleMunition( "missile sol", QT_TRANSLATE_NOOP( "ENT_Tr", "missile sol" ), eFamilleMunition_MissileSol ),
+    T_ConverterFamilleMunition( "mitraille", QT_TRANSLATE_NOOP( "ENT_Tr", "mitraille" ), eFamilleMunition_Mitraille ),
+    T_ConverterFamilleMunition( "", "", (E_FamilleMunition)-1 )
 };
 
 ENT_Tr::T_ConverterUnitNatureWeapon ENT_Tr::UnitNatureWeaponConverter_[] =
@@ -549,23 +570,12 @@ ENT_Tr::T_ConverterTypeTerrain ENT_Tr::TypeTerrainConverter_[] =
     T_ConverterTypeTerrain( "", "", (E_TypeTerrain)-1 )
 };
 
-ENT_Tr::T_ConverterTypeDotation ENT_Tr::TypeDotationConverter_[] =
-{
-    T_ConverterTypeDotation( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "munition" ), eTypeDotation_Munition ),
-    T_ConverterTypeDotation( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "carburant" ), eTypeDotation_Carburant ),
-    T_ConverterTypeDotation( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosif" ), eTypeDotation_Explosif ),
-    T_ConverterTypeDotation( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "mine" ), eTypeDotation_Mine ),
-    T_ConverterTypeDotation( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "barbele" ), eTypeDotation_Barbele ),
-    T_ConverterTypeDotation( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "piece" ), eTypeDotation_Piece ),
-    T_ConverterTypeDotation( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "ration" ), eTypeDotation_Ration ),
-    T_ConverterTypeDotation( "", "", (E_TypeDotation)-1 )
-};
-
 ENT_Tr::T_ConverterTypeCR ENT_Tr::TypeCRConverter_[] =
 {
     T_ConverterTypeCR( "message", QT_TRANSLATE_NOOP( "ENT_Tr", "message" ), eTypeCR_Message ),
     T_ConverterTypeCR( "operationel", QT_TRANSLATE_NOOP( "ENT_Tr", "operationel" ), eTypeCR_Operationel ),
     T_ConverterTypeCR( "evenement exceptionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "evenement exceptionnel" ), eTypeCR_EvenementExceptionnel ),
+    T_ConverterTypeCR( "warning", QT_TRANSLATE_NOOP( "ENT_Tr", "warning" ), eTypeCR_Warning ),
     T_ConverterTypeCR( "", "", (E_TypeCR)-1 )
 };
 
@@ -719,14 +729,6 @@ ENT_Tr::T_ConverterAutomateState ENT_Tr::AutomateStateConverter_[] =
     T_ConverterAutomateState( "", "", (E_AutomateState)-1 )
 };
 
-ENT_Tr::T_ConverterUnitState ENT_Tr::UnitStateConverter_[] =
-{
-    T_ConverterUnitState( "normal", QT_TRANSLATE_NOOP( "ENT_Tr", "normal" ), eUnitState_Normal ),
-    T_ConverterUnitState( "neutralise", QT_TRANSLATE_NOOP( "ENT_Tr", "neutralise" ), eUnitState_Neutralise ),
-    T_ConverterUnitState( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "mort" ), eUnitState_Mort ),
-    T_ConverterUnitState( "", "", (E_UnitState)-1 )
-};
-
 ENT_Tr::T_ConverterUnitPosture ENT_Tr::UnitPostureConverter_[] =
 {
     T_ConverterUnitPosture( "posture mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "posture mouvement" ), eUnitPosture_PostureMouvement ),
@@ -764,6 +766,14 @@ ENT_Tr::T_ConverterEtatCombatRencontre ENT_Tr::EtatCombatRencontreConverter_[] =
     T_ConverterEtatCombatRencontre( "etat fixe", QT_TRANSLATE_NOOP( "ENT_Tr", "etat fixe" ), eEtatCombatRencontre_EtatFixe ),
     T_ConverterEtatCombatRencontre( "etat poursuite mission", QT_TRANSLATE_NOOP( "ENT_Tr", "etat poursuite mission" ), eEtatCombatRencontre_EtatPoursuiteMission ),
     T_ConverterEtatCombatRencontre( "", "", (E_EtatCombatRencontre)-1 )
+};
+
+ENT_Tr::T_ConverterEtatOperationnel ENT_Tr::EtatOperationnelConverter_[] =
+{
+    T_ConverterEtatOperationnel( "detruit totalement", QT_TRANSLATE_NOOP( "ENT_Tr", "detruit totalement" ), eEtatOperationnel_DetruitTotalement ),
+    T_ConverterEtatOperationnel( "detruit tactiquement", QT_TRANSLATE_NOOP( "ENT_Tr", "detruit tactiquement" ), eEtatOperationnel_DetruitTactiquement ),
+    T_ConverterEtatOperationnel( "operationnel", QT_TRANSLATE_NOOP( "ENT_Tr", "operationnel" ), eEtatOperationnel_Operationnel ),
+    T_ConverterEtatOperationnel( "", "", (E_EtatOperationnel)-1 )
 };
 
 ENT_Tr::T_ConverterUnitFatigue ENT_Tr::UnitFatigueConverter_[] =
@@ -1204,15 +1214,16 @@ ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
     T_ConverterFragOrder( "ArreterSilenceRadio", QT_TRANSLATE_NOOP( "ENT", "ArreterSilenceRadio" ), eOrdreConduite_ArreterSilenceRadio ),
     T_ConverterFragOrder( "PasserEnSilenceRadar", QT_TRANSLATE_NOOP( "ENT", "PasserEnSilenceRadar" ), eOrdreConduite_PasserEnSilenceRadar ),
     T_ConverterFragOrder( "ArreterSilenceRadar", QT_TRANSLATE_NOOP( "ENT", "ArreterSilenceRadar" ), eOrdreConduite_ArreterSilenceRadar ),
+    T_ConverterFragOrder( "RecupererTransporteurs", QT_TRANSLATE_NOOP( "ENT", "RecupererTransporteurs" ), eOrdreConduite_RecupererTransporteurs ),
     T_ConverterFragOrder( "AttendreSePoster", QT_TRANSLATE_NOOP( "ENT", "AttendreSePoster" ), eOrdreConduite_AttendreSePoster ),
     T_ConverterFragOrder( "Poursuivre", QT_TRANSLATE_NOOP( "ENT", "Poursuivre" ), eOrdreConduite_Poursuivre ),
     T_ConverterFragOrder( "Interrompre", QT_TRANSLATE_NOOP( "ENT", "Interrompre" ), eOrdreConduite_Interrompre ),
     T_ConverterFragOrder( "ChangerReglesEngagement", QT_TRANSLATE_NOOP( "ENT", "ChangerReglesEngagement" ), eOrdreConduite_ChangerReglesEngagement ),
     T_ConverterFragOrder( "Deboucher", QT_TRANSLATE_NOOP( "ENT", "Deboucher" ), eOrdreConduite_Deboucher ),
     T_ConverterFragOrder( "Decrocher", QT_TRANSLATE_NOOP( "ENT", "Decrocher" ), eOrdreConduite_Decrocher ),
-    T_ConverterFragOrder( "AssignerPositionEmbarquement", QT_TRANSLATE_NOOP( "ENT", "AssignerPositionEmbarquement" ), eOrdreConduite_AssignerPositionEmbarquement ),
     T_ConverterFragOrder( "AcquerirObjectif", QT_TRANSLATE_NOOP( "ENT", "AcquerirObjectif" ), eOrdreConduite_AcquerirObjectif ),
     T_ConverterFragOrder( "Brouiller", QT_TRANSLATE_NOOP( "ENT", "Brouiller" ), eOrdreConduite_Brouiller ),
+    T_ConverterFragOrder( "ChangerPositionDebarquement", QT_TRANSLATE_NOOP( "ENT", "ChangerPositionDebarquement" ), eOrdreConduite_ChangerPositionDebarquement ),
     T_ConverterFragOrder( "Pion ChangerDePosition", QT_TRANSLATE_NOOP( "ENT", "Pion ChangerDePosition" ), eOrdreConduite_Pion_ChangerDePosition ),
     T_ConverterFragOrder( "Pion Contourner", QT_TRANSLATE_NOOP( "ENT", "Pion Contourner" ), eOrdreConduite_Pion_Contourner ),
     T_ConverterFragOrder( "Pion EnvoyerVehicule", QT_TRANSLATE_NOOP( "ENT", "Pion EnvoyerVehicule" ), eOrdreConduite_Pion_EnvoyerVehicule ),
@@ -1252,6 +1263,8 @@ void ENT_Tr::InitTranslations()
         InitTr( TypeLocalisationConverter_ );
     InitTr( GDH_QualificatifConverter_ );
     InitTr( UnitIdentificationLevelConverter_ );
+    InitTr( FamilleDotationConverter_ );
+    InitTr( FamilleMunitionConverter_ );
     InitTr( UnitNatureWeaponConverter_ );
     InitTr( UnitNatureSpecializationConverter_ );
     InitTr( UnitNatureQualifierConverter_ );
@@ -1284,7 +1297,6 @@ void ENT_Tr::InitTranslations()
     InitTr( TypeLimaConverter_ );
     InitTr( InfoContextErrorCodeConverter_ );
     InitTr( TypeTerrainConverter_ );
-    InitTr( TypeDotationConverter_ );
     InitTr( TypeCRConverter_ );
     InitTr( FireEffectTypeConverter_ );
     InitTr( DiplomatieConverter_ );
@@ -1299,11 +1311,11 @@ void ENT_Tr::InitTranslations()
     InitTr( MsgLogRavitaillementPousserFluxAckConverter_ );
     InitTr( LogSanteTraitementEtatConverter_ );
     InitTr( AutomateStateConverter_ );
-    InitTr( UnitStateConverter_ );
     InitTr( UnitPostureConverter_ );
     InitTr( EtatRapForConverter_ );
     InitTr( ReglesEngagementConverter_ );
     InitTr( EtatCombatRencontreConverter_ );
+    InitTr( EtatOperationnelConverter_ );
     InitTr( UnitFatigueConverter_ );
     InitTr( UnitMoralConverter_ );
     InitTr( UnitExperienceConverter_ );
@@ -1344,6 +1356,24 @@ const std::string& ENT_Tr::ConvertFromGDH_Qualificatif( E_GDH_Qualificatif nValu
 const std::string& ENT_Tr::ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( UnitIdentificationLevelConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromFamilleDotation
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromFamilleDotation( E_FamilleDotation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( FamilleDotationConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromFamilleMunition
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromFamilleMunition( E_FamilleMunition nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( FamilleMunitionConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1635,15 +1665,6 @@ const std::string& ENT_Tr::ConvertFromTypeTerrain( E_TypeTerrain nValue, ENT_Tr_
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTypeDotation
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTypeDotation( E_TypeDotation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TypeDotationConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromTypeCR
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1770,15 +1791,6 @@ const std::string& ENT_Tr::ConvertFromAutomateState( E_AutomateState nValue, ENT
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitState
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitState( E_UnitState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( UnitStateConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromUnitPosture
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1812,6 +1824,15 @@ const std::string& ENT_Tr::ConvertFromReglesEngagement( E_ReglesEngagement nValu
 const std::string& ENT_Tr::ConvertFromEtatCombatRencontre( E_EtatCombatRencontre nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( EtatCombatRencontreConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromEtatOperationnel
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromEtatOperationnel( E_EtatOperationnel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( EtatOperationnelConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1944,6 +1965,24 @@ E_GDH_Qualificatif ENT_Tr::ConvertToGDH_Qualificatif( const std::string& strName
 E_UnitIdentificationLevel ENT_Tr::ConvertToUnitIdentificationLevel( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( UnitIdentificationLevelConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToFamilleDotation
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_FamilleDotation ENT_Tr::ConvertToFamilleDotation( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( FamilleDotationConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToFamilleMunition
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_FamilleMunition ENT_Tr::ConvertToFamilleMunition( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( FamilleMunitionConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2235,15 +2274,6 @@ E_TypeTerrain ENT_Tr::ConvertToTypeTerrain( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTypeDotation
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TypeDotation ENT_Tr::ConvertToTypeDotation( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TypeDotationConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToTypeCR
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2370,15 +2400,6 @@ E_AutomateState ENT_Tr::ConvertToAutomateState( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitState
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitState ENT_Tr::ConvertToUnitState( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( UnitStateConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToUnitPosture
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2412,6 +2433,15 @@ E_ReglesEngagement ENT_Tr::ConvertToReglesEngagement( const std::string& strName
 E_EtatCombatRencontre ENT_Tr::ConvertToEtatCombatRencontre( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( EtatCombatRencontreConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToEtatOperationnel
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_EtatOperationnel ENT_Tr::ConvertToEtatOperationnel( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( EtatOperationnelConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

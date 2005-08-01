@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,13 +22,14 @@ int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIAZoneIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIACiblesPrioritairesIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIAPorteeActionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIAAmbianceMissionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::MIL_AutomateMission_ALAT_RecueillirFormationAeromobile( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -39,7 +40,7 @@ MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::MIL_AutomateMission_ALAT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::~MIL_AutomateMission_ALAT_RecueillirFormationAeromobile()
 {
@@ -62,6 +63,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::InitializeDIA( cons
     nDIACiblesPrioritairesIdx_ = DEC_Tools::InitializeDIAField( "ciblesPrioritaires_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
@@ -69,7 +71,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::InitializeDIA( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -86,6 +88,8 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_RecueillirFormationAeromobile:
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
@@ -96,7 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_RecueillirFormationAeromobile:
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Terminate()
 {
@@ -111,7 +115,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -125,6 +129,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize( ASN1T_Ms
     NET_ASN_Tools::CopyNatureAtlas( GetVariable( nDIACiblesPrioritairesIdx_ ), asnMission.cibles_prioritaires );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 
@@ -132,7 +137,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize( ASN1T_Ms
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

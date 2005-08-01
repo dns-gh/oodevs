@@ -40,7 +40,7 @@ public:
           uint                   GetMosID            () const;
     const PHY_DotationType&      GetType             () const;
     const std::string&           GetName             () const;
-    const PHY_AmmoDotationClass& GetAmmoDotationClass() const;
+    const PHY_AmmoDotationClass* GetAmmoDotationClass() const;
     //@}
 
     //! @name Fire

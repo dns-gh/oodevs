@@ -350,6 +350,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyForceRatioStateChanged       , "DEC_Automate_ChangeEtatRapportDeForce"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, "DEC_Automate_ChangeEtatROE"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyCloseCombatStateChanged      , "DEC_Automate_ChangeEtatCombatDeRencontre" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyOperationalStateChanged      , "DEC_Automate_ChangeEtatOperationnel"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsEmbraye                          , "DEC_Automate_EstEmbraye"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsSurrendered                      , "DEC_Automate_SEstRendu"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPrisoner                         , "DEC_Automate_EstPrisonnier"               );
@@ -361,6 +362,9 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::Debug          , "DEC_Debug"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DebugDrawPoint , "DEC_DebugAffichePoint"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::DebugDrawPoints, "DEC_DebugAffichePoints" );
+
+    // Objets
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::ActivateObject< MIL_Automate >, "DEC_ActiverObjet" );
 
     // Connaissance
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Lock                             < MIL_Automate >, "DEC_ConnaissanceAgent_Verrouiller"                       );

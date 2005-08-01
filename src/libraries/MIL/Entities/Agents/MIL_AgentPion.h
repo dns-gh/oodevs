@@ -161,6 +161,7 @@ private:
     ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyResources ();
     ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyEquipement();
     ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyAll       ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupply          ( ASN1T_MagicActionRecompletementPartiel& asn );
     ASN1T_EnumUnitAttrErrorCode OnReceiveMsgDestroyAll        ();
     //@}
 

@@ -14,6 +14,8 @@
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentComposante, "DEC_Knowledge_AgentComposante" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentComposante constructor
 // Created: NLD 2004-04-01

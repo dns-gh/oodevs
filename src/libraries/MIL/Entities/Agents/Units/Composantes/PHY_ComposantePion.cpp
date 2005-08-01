@@ -548,10 +548,29 @@ MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_IndirectFireDo
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::EvacuateWoundedHumans
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
+{
+    humans_.EvacuateWoundedHumans( destinationTC2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::NotifyHumanEvacuatedByThirdParty
+// Created: NLD 2005-08-01
+// -----------------------------------------------------------------------------
+PHY_MedicalHumanState* PHY_ComposantePion::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const
+{
+    assert( pRole_ );
+    return pRole_->NotifyHumanEvacuatedByThirdParty( human, destinationTC2 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::NotifyHumanWaitingForMedical
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_ComposantePion::NotifyHumanWaitingForMedical( PHY_Human& human )
+PHY_MedicalHumanState* PHY_ComposantePion::NotifyHumanWaitingForMedical( PHY_Human& human ) const
 {
     assert( pRole_ );
     return pRole_->NotifyHumanWaitingForMedical( human );
@@ -561,7 +580,7 @@ PHY_MedicalHumanState* PHY_ComposantePion::NotifyHumanWaitingForMedical( PHY_Hum
 // Name: PHY_ComposantePion::NotifyHumanBackFromMedical
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
+void PHY_ComposantePion::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState ) const
 {
     assert( pRole_ );
     pRole_->NotifyHumanBackFromMedical( humanState );
@@ -715,16 +734,16 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ResupplyEquipement
+// Name: PHY_ComposantePion::Repair
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ResupplyEquipement()
+void PHY_ComposantePion::Repair()
 {
     if( pRole_->GetPion().GetRole< PHY_RolePion_Surrender >().IsPrisoner() )
         ReinitializeState( PHY_ComposanteState::prisoner_ );
     else
         ReinitializeState( PHY_ComposanteState::undamaged_ );
-    ResupplyHumans   ();
+    HealAllHumans();
 }
 
 // =============================================================================

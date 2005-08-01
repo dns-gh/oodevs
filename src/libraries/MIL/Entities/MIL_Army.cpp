@@ -26,6 +26,8 @@
 
 MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::relationConverter_( eUnknown );
 
+BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::Initialize
 // Created: NLD 2004-08-11

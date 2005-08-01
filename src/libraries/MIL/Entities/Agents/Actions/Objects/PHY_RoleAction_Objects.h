@@ -68,7 +68,6 @@ public:
     int  Mine                ( uint nKnowledgeObjectID ); 
     int  Demine              ( uint nKnowledgeObjectID ); 
     int  Bypass              ( uint nKnowledgeObjectID ); 
-    int  Activate            ( uint nKnowledgeObjectID );
     void StartAnimateObject  ( uint nKnowledgeObjectID );
     void StopAnimateObject   ( uint nKnowledgeObjectID );
     void StartOccupyingObject( uint nKnowledgeObjectID );

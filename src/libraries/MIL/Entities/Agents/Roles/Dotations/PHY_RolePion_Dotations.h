@@ -73,6 +73,8 @@ public:
             MT_Float ConsumeDotation    ( const PHY_DotationCategory& category, MT_Float rNbr );
             MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr );
             void     ResupplyDotations  ();
+            void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
+            void     ResupplyDotations  ( const PHY_DotationType&      type             , MT_Float rFactor );
     //@}
 
     //! @name Consumption management

@@ -19,18 +19,6 @@
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::ActivateObject
-// Created: NLD 2004-09-21
-// -----------------------------------------------------------------------------
-void DEC_ObjectFunctions::ActivateObject( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeConnaissanceObjet( call.GetParameter( 0 ) ) );
-
-    int nReturnCode = callerAgent.GetRole< PHY_RoleAction_Objects >().Activate( (uint)call.GetParameter( 0 ).ToPtr() );
-    call.GetResult().SetValue( nReturnCode );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetPrisonerCampPosition
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------

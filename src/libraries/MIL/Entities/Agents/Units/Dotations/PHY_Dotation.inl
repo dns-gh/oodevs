@@ -57,9 +57,9 @@ const PHY_DotationCategory& PHY_Dotation::GetCategory() const
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 inline
-void PHY_Dotation::Resupply()
+void PHY_Dotation::Resupply( MT_Float rFactor /* = 1. */ )
 {
-    SetValue( rCapacity_ );
+    SetValue( rCapacity_ * rFactor );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
 }

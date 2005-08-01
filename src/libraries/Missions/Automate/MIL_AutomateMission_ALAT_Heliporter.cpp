@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,6 +23,7 @@ int MIL_AutomateMission_ALAT_Heliporter::nDIAPointDebarquementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Heliporter::nDIAPointEmbarquementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Heliporter::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Heliporter::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_AutomateMission_ALAT_Heliporter::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Heliporter::nDIAPorteeActionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Heliporter::nDIAAmbianceMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Heliporter::nDIAAttendreUnitesIdx_ = 0 ;
@@ -31,7 +32,7 @@ int MIL_AutomateMission_ALAT_Heliporter::nDIAAvecMaterielIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Heliporter constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Heliporter::MIL_AutomateMission_ALAT_Heliporter( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -42,7 +43,7 @@ MIL_AutomateMission_ALAT_Heliporter::MIL_AutomateMission_ALAT_Heliporter( MIL_Au
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Heliporter destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Heliporter::~MIL_AutomateMission_ALAT_Heliporter()
 {
@@ -66,6 +67,7 @@ void MIL_AutomateMission_ALAT_Heliporter::InitializeDIA( const MIL_AutomateMissi
     nDIAPointEmbarquementIdx_ = DEC_Tools::InitializeDIAField( "pointEmbarquement_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
     nDIAAttendreUnitesIdx_ = DEC_Tools::InitializeDIAField( "attendreUnites_", diaType );
@@ -75,7 +77,7 @@ void MIL_AutomateMission_ALAT_Heliporter::InitializeDIA( const MIL_AutomateMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Heliporter::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Heliporter::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -94,6 +96,8 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Heliporter::Initialize( const 
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
@@ -108,7 +112,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Heliporter::Initialize( const 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Heliporter::Terminate()
 {
@@ -123,7 +127,7 @@ void MIL_AutomateMission_ALAT_Heliporter::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Heliporter::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Heliporter::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -138,6 +142,7 @@ void MIL_AutomateMission_ALAT_Heliporter::Serialize( ASN1T_MsgAutomateOrder& asn
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointEmbarquementIdx_ ), asnMission.point_embarquement );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
     NET_ASN_Tools::CopyBool( GetVariable( nDIAAttendreUnitesIdx_ ), asnMission.attendre_unites );
@@ -147,7 +152,7 @@ void MIL_AutomateMission_ALAT_Heliporter::Serialize( ASN1T_MsgAutomateOrder& asn
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Heliporter::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Heliporter::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

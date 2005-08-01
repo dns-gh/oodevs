@@ -66,6 +66,7 @@
 
 MIL_MOSIDManager MIL_EntityManager::unitsIDManager_;
 
+BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Initialize

@@ -140,15 +140,16 @@ void MOS_OrderConduiteMissionDialog::FillComboBoxes()
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_ArreterSilenceRadio" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_PasserEnSilenceRadar" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_ArreterSilenceRadar" );
+    pOrderConduiteComboBox_->insertItem( "eOrdreConduite_RecupererTransporteurs" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_AttendreSePoster" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Poursuivre" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Interrompre" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_ChangerReglesEngagement" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Deboucher" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Decrocher" );
-    pOrderConduiteComboBox_->insertItem( "eOrdreConduite_AssignerPositionEmbarquement" );    
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_AcquerirObjectif" );    
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Brouiller" );    
+    pOrderConduiteComboBox_->insertItem( "eOrdreConduite_ChangerPositionDebarquement" );    
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Pion_ChangerDePosition" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Pion_Contourner" );
     pOrderConduiteComboBox_->insertItem( "eOrdreConduite_Pion_EnvoyerVehicule" );
@@ -188,9 +189,9 @@ void MOS_OrderConduiteMissionDialog::SlotValidate()
     E_OrderConduiteID ocId = (E_OrderConduiteID)pOrderConduiteComboBox_->currentItem();
     switch( ocId )
     {
+        case eOrdreConduite_ChangerPositionDebarquement:
         case eOrdreConduite_ChangerReglesEngagement:
         case eOrdreConduite_Pion_ChangerDePosition:
-        case eOrdreConduite_AssignerPositionEmbarquement:
         case eOrdreConduite_AcquerirObjectif:
         case eOrdreConduite_Pion_AppliquerFeux:       
         case eOrdreConduite_Pion_RenforcerEnVSRAM:                   

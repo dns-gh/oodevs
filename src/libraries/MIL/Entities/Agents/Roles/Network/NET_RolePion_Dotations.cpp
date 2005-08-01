@@ -48,7 +48,8 @@ BOOST_CLASS_EXPORT_GUID( NET_RolePion_Dotations, "NET_RolePion_Dotations" )
 NET_RolePion_Dotations::NET_RolePion_Dotations( MT_RoleContainer& role, const MIL_AgentPion& pion )
     : NET_RoleInterface_Dotations( role )
     , pPion_                     ( &pion )
-    , nOldAgentState_            ( EnumUnitState::normal )
+    , bLastStateDead_            ( false )
+    , bLastStateNeutralized_     ( false )
 {
 }
 
@@ -59,6 +60,8 @@ NET_RolePion_Dotations::NET_RolePion_Dotations( MT_RoleContainer& role, const MI
 NET_RolePion_Dotations::NET_RolePion_Dotations()
     : NET_RoleInterface_Dotations()
     , pPion_                     ( 0 )
+    , bLastStateDead_            ( false )
+    , bLastStateNeutralized_     ( false )
 {
 }
 
@@ -82,7 +85,8 @@ void NET_RolePion_Dotations::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< NET_RoleInterface_Dotations >( *this )
          & const_cast< MIL_AgentPion*& >( pPion_ )
-         & nOldAgentState_;
+         & bLastStateDead_
+         & bLastStateNeutralized_;
 }
 
 
@@ -205,6 +209,7 @@ void NET_RolePion_Dotations::SendMsgDotationsFullState()
 // -----------------------------------------------------------------------------
 bool NET_RolePion_Dotations::DataAttributesUpdated() const
 {
+    assert( pPion_ );
     if( GetRole< PHY_RolePion_Posture          >().HasChanged()
         || GetRole< PHY_RolePion_Composantes      >().HasChanged()
         || GetRole< PHY_RolePion_Location         >().HasLocationChanged()
@@ -221,7 +226,10 @@ bool NET_RolePion_Dotations::DataAttributesUpdated() const
         || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged() )
         return true;
 
-    assert( pPion_ );
+    if(    pPion_->IsDead() != bLastStateDead_ 
+        || pPion_->IsNeutralized() != bLastStateNeutralized_ )
+        return true;
+    
     if ( pPion_->IsPC() )
     {
         if( pPion_->GetAutomate().HasAutomateModeChanged() )
@@ -242,8 +250,7 @@ bool NET_RolePion_Dotations::DataAttributesUpdated() const
         if( GetRole< DEC_RolePion_Decision >().HasStateChanged() )
             return true;
     }
-
-    return GetAgentState() != nOldAgentState_;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,22 +270,6 @@ void NET_RolePion_Dotations::SendMsgAttributes( NET_ASN_MsgUnitAttributes& asnMs
 
     if( asnMsg.GetAsnMsg().m.pions_transportesPresent && asnMsg.GetAsnMsg().pions_transportes.n > 0 )
         delete [] asnMsg.GetAsnMsg().pions_transportes.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::GetAgentState
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-inline
-ASN1T_EnumUnitState NET_RolePion_Dotations::GetAgentState() const
-{
-    assert( pPion_ );
-    
-    if ( pPion_->IsDead() )
-        return EnumUnitState::mort;
-    if ( pPion_->IsNeutralized() )
-        return EnumUnitState::neutralise;
-    return EnumUnitState::normal;
 }
 
 // -----------------------------------------------------------------------------
@@ -321,6 +312,23 @@ void NET_RolePion_Dotations::SendMsgAttributesChangedState()
     GetRole< PHY_RolePion_Surrender      >().SendChangedState( msg );
     GetRole< PHY_RolePion_Refugee        >().SendChangedState( msg );
 
+
+    bool bIsDead = pPion_->IsDead();
+    if( bLastStateDead_ != bIsDead )
+    {
+        msg.GetAsnMsg().m.mortPresent = 1;
+        msg.GetAsnMsg().mort          = bIsDead;
+        bLastStateDead_               = bIsDead;        
+    }
+
+    bool bIsNeutralized = pPion_->IsNeutralized();
+    if( bLastStateNeutralized_ != bIsNeutralized )
+    {
+        msg.GetAsnMsg().m.neutralisePresent = 1;
+        msg.GetAsnMsg().neutralise          = bIsNeutralized;
+        bLastStateNeutralized_              = bIsNeutralized;        
+    }
+    
     if ( pPion_->IsPC() )
     {
         const MIL_Automate& automate = pPion_->GetAutomate();
@@ -349,14 +357,6 @@ void NET_RolePion_Dotations::SendMsgAttributesChangedState()
     else
         GetRole< DEC_RolePion_Decision >().SendChangedState( msg ); // Dec states
 
-
-    ASN1T_EnumUnitState nCurrentState = GetAgentState();
-    if( nOldAgentState_ != nCurrentState )
-    {
-        msg.GetAsnMsg().m.etatPresent = 1;
-        msg.GetAsnMsg().etat          = nCurrentState;
-        nOldAgentState_               = nCurrentState;
-    }
     SendMsgAttributes( msg );
 }
 
@@ -399,7 +399,9 @@ void NET_RolePion_Dotations::SendMsgAttributesFullState()
     else
         GetRole< DEC_RolePion_Decision >().SendFullState( msg ); // Dec states
 
-    msg.GetAsnMsg().m.etatPresent = 1;
-    msg.GetAsnMsg().etat          = nOldAgentState_ = GetAgentState();
+    msg.GetAsnMsg().m.mortPresent       = 1;
+    msg.GetAsnMsg().mort                = bLastStateDead_ = pPion_->IsDead();
+    msg.GetAsnMsg().m.neutralisePresent = 1;
+    msg.GetAsnMsg().neutralise          = bLastStateNeutralized_ = pPion_->IsNeutralized();
     SendMsgAttributes( msg );
 }

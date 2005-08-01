@@ -281,26 +281,6 @@ const PHY_ComposanteState& PHY_ComposantePion::GetState() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ChangeHumanRank
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-inline
-bool PHY_ComposantePion::ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound )
-{
-    return humans_.ChangeHumanRank( oldRank, newRank, wound );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ChangeHumansWound
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-inline
-uint PHY_ComposantePion::ChangeHumansWound( const PHY_HumanRank& rank, const PHY_HumanWound& oldWound, const PHY_HumanWound& newWound, uint nNbrToChange )
-{
-    return humans_.ChangeHumansWound( rank, oldWound, newWound, nNbrToChange );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyOnSensors
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
@@ -564,14 +544,48 @@ MT_Float PHY_ComposantePion::GetBypassTime( const MIL_RealObjectType& objectType
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ResupplyHumans
+// Name: PHY_ComposantePion::HealAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
 inline
-void PHY_ComposantePion::ResupplyHumans()
+void PHY_ComposantePion::HealAllHumans()
 {
     if( *pState_ != PHY_ComposanteState::dead_ ) 
-        humans_.Resupply();
+        humans_.HealAllHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::HealHumans
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+inline
+uint PHY_ComposantePion::HealHumans( uint nNbrToChange )
+{
+    if( *pState_ != PHY_ComposanteState::dead_ )
+        return humans_.HealHumans( nNbrToChange );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::WoundHumans
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+inline
+uint PHY_ComposantePion::WoundHumans( uint nNbrToChange, const PHY_HumanWound& wound, const PHY_HumanRank* pHumanRank )
+{
+    if( *pState_ != PHY_ComposanteState::dead_ )
+        return humans_.WoundHumans( nNbrToChange, wound, pHumanRank );
+    return 0;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ChangeHumanRank
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposantePion::ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound )
+{
+    return humans_.ChangeHumanRank( oldRank, newRank, wound );
 }
 
 // -----------------------------------------------------------------------------

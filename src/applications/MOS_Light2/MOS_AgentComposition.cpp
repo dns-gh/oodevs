@@ -44,10 +44,6 @@ MOS_AgentComposition::MOS_AgentComposition()
         sousOfficiers_[n] = 0;
         mdr_[n] = 0;
     }
-
-    for( int i = 0; i < 3; ++i )
-        for( int j = 0; j < (int)eTroopHealthStateNbrStates; ++j )
-            transportedTroops_[i][j] = 0;
 }
 
 

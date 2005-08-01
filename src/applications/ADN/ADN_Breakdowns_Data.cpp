@@ -39,7 +39,7 @@ ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nNbr_               ( 0 )
-, ptrPart_            ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eTypeDotation_Piece ).categories_, 0 )
+, ptrPart_            ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Piece ).categories_, 0 )
 {
     this->BindExistenceTo( &ptrPart_ );
 }
@@ -89,7 +89,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( ADN_XmlInput_Helper& inpu
     std::string strCategoryName;
     input.ReadAttribute( "categorie", strCategoryName );
 
-    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eTypeDotation_Piece ).FindCategory( strCategoryName );
+    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
         input.ThrowError( tr( "Repair part '%1' does not exist." ).arg( strCategoryName.c_str() ).ascii() );
 

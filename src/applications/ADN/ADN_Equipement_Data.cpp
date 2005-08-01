@@ -506,11 +506,11 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( MT_OutputArchive_ABC& 
 // Name: DotationInfos::DotationInfos
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::DotationInfos::DotationInfos( E_TypeDotation nType )
+ADN_Equipement_Data::DotationInfos::DotationInfos( E_FamilleDotation nType )
 : ADN_Ref_ABC            ()
 , ADN_DataTreeNode_ABC   ()
 , nType_                 ( nType )
-, strName_               ( ENT_Tr::ConvertFromTypeDotation( nType ) )
+, strName_               ( ENT_Tr::ConvertFromFamilleDotation( nType ) )
 , categories_            ( true, "ADN_Equipement_Data::DotationInfos::categories_" )
 {
 }
@@ -637,8 +637,8 @@ ADN_Equipement_Data::ADN_Equipement_Data()
 , nNextCatId_ ( 1 )
 , dotations_  ()
 {
-    for( int n = 0; n < eNbrTypeDotation; ++n )
-        dotations_.AddItem( new DotationInfos( (E_TypeDotation)n ) );
+    for( int n = 0; n < eNbrFamilleDotation; ++n )
+        dotations_.AddItem( new DotationInfos( (E_FamilleDotation)n ) );
 }
 
 
@@ -688,7 +688,7 @@ void ADN_Equipement_Data::ReadArchive( ADN_XmlInput_Helper& input )
         std::string strName;
         input.ReadAttribute( "nom", strName );
 
-        E_TypeDotation nTypeDotation = ENT_Tr::ConvertToTypeDotation( strName );
+        E_FamilleDotation nTypeDotation = ENT_Tr::ConvertToFamilleDotation( strName );
         if( nTypeDotation == -1 )
         {
             assert( 0 );
@@ -745,7 +745,7 @@ int ADN_Equipement_Data::GetNextCatId()
 // Name: ADN_Equipement_Data::GetDotation
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::DotationInfos& ADN_Equipement_Data::GetDotation( E_TypeDotation nType )
+ADN_Equipement_Data::DotationInfos& ADN_Equipement_Data::GetDotation( E_FamilleDotation nType )
 {
     return * dotations_[ nType ];
 }

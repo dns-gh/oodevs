@@ -20,6 +20,8 @@
 #include "PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyDotationRequestContainer.h"
 
+BOOST_CLASS_EXPORT_GUID( PHY_DotationGroup, "PHY_DotationGroup" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup constructor
 // Created: NLD 2004-08-04
@@ -232,10 +234,25 @@ MT_Float PHY_DotationGroup::Supply( const PHY_DotationCategory& category, MT_Flo
 // Name: PHY_DotationGroup::Resupply
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::Resupply()
+void PHY_DotationGroup::Resupply( MT_Float rFactor /* = 1.*/ )
 {
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
-        it->second->Resupply();
+        it->second->Resupply( rFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::Resupply
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
+{
+    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    {
+        PHY_Dotation& dotation = *it->second;
+        if( !dotation.GetCategory().GetAmmoDotationClass() || *dotation.GetCategory().GetAmmoDotationClass() != ammoDotationClass )
+            continue;
+        dotation.Resupply( rFactor );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -311,8 +328,11 @@ void PHY_DotationGroup::ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClas
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         PHY_Dotation& dotation = *it->second;
-        if( pAmmoDotationClass && dotation.GetCategory().GetAmmoDotationClass() != *pAmmoDotationClass )
+        if( pAmmoDotationClass )
+        {
+            if( !dotation.GetCategory().GetAmmoDotationClass() || *dotation.GetCategory().GetAmmoDotationClass() != *pAmmoDotationClass )
             continue;
+        }
         dotation.ChangeValueUsingTC2( rCapacityFactor, tc2 );
     }
 }

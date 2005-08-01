@@ -8,11 +8,11 @@
 // *****************************************************************************
 //
 // $Created: APE 2005-02-09 $
-// $Archive: /MVW_v10/Build/SDK/ENT/src/ENT_Enums_Gen.h $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:00 $
-// $Revision: 11 $
-// $Workfile: ENT_Enums_Gen.h $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ENT_Enums_Skeleton.h $
+// $Author: Ape $
+// $Modtime: 21/02/05 11:27 $
+// $Revision: 2 $
+// $Workfile: AGR_ENT_Enums_Skeleton.h $
 //
 // *****************************************************************************
 
@@ -58,6 +58,29 @@ enum E_UnitIdentificationLevel
     eUnitIdentificationLevel_Detectee,
     eUnitIdentificationLevel_Signale,
     eNbrUnitIdentificationLevel
+};
+
+
+enum E_FamilleDotation
+{
+    eFamilleDotation_Munition,
+    eFamilleDotation_Carburant,
+    eFamilleDotation_Explosif,
+    eFamilleDotation_Mine,
+    eFamilleDotation_Barbele,
+    eFamilleDotation_Piece,
+    eFamilleDotation_Ration,
+    eNbrFamilleDotation
+};
+
+
+enum E_FamilleMunition
+{
+    eFamilleMunition_Obus,
+    eFamilleMunition_MissileAir,
+    eFamilleMunition_MissileSol,
+    eFamilleMunition_Mitraille,
+    eNbrFamilleMunition
 };
 
 
@@ -585,24 +608,12 @@ enum E_TypeTerrain
 };
 
 
-enum E_TypeDotation
-{
-    eTypeDotation_Munition,
-    eTypeDotation_Carburant,
-    eTypeDotation_Explosif,
-    eTypeDotation_Mine,
-    eTypeDotation_Barbele,
-    eTypeDotation_Piece,
-    eTypeDotation_Ration,
-    eNbrTypeDotation
-};
-
-
 enum E_TypeCR
 {
     eTypeCR_Message,
     eTypeCR_Operationel,
     eTypeCR_EvenementExceptionnel,
+    eTypeCR_Warning,
     eNbrTypeCR
 };
 
@@ -770,15 +781,6 @@ enum E_AutomateState
 };
 
 
-enum E_UnitState
-{
-    eUnitState_Normal,
-    eUnitState_Neutralise,
-    eUnitState_Mort,
-    eNbrUnitState
-};
-
-
 enum E_UnitPosture
 {
     eUnitPosture_PostureMouvement,
@@ -819,6 +821,15 @@ enum E_EtatCombatRencontre
     eEtatCombatRencontre_EtatFixe,
     eEtatCombatRencontre_EtatPoursuiteMission,
     eNbrEtatCombatRencontre
+};
+
+
+enum E_EtatOperationnel
+{
+    eEtatOperationnel_DetruitTotalement,
+    eEtatOperationnel_DetruitTactiquement,
+    eEtatOperationnel_Operationnel,
+    eNbrEtatOperationnel
 };
 
 
@@ -1268,15 +1279,16 @@ enum E_FragOrder
     eOrdreConduite_ArreterSilenceRadio,
     eOrdreConduite_PasserEnSilenceRadar,
     eOrdreConduite_ArreterSilenceRadar,
+    eOrdreConduite_RecupererTransporteurs,
     eOrdreConduite_AttendreSePoster,
     eOrdreConduite_Poursuivre,
     eOrdreConduite_Interrompre,
     eOrdreConduite_ChangerReglesEngagement,
     eOrdreConduite_Deboucher,
     eOrdreConduite_Decrocher,
-    eOrdreConduite_AssignerPositionEmbarquement,
     eOrdreConduite_AcquerirObjectif,
     eOrdreConduite_Brouiller,
+    eOrdreConduite_ChangerPositionDebarquement,
     eOrdreConduite_Pion_ChangerDePosition,
     eOrdreConduite_Pion_Contourner,
     eOrdreConduite_Pion_EnvoyerVehicule,

@@ -33,6 +33,8 @@ uint DEC_AutomateDecision::nMissionMrtBehaviorDummyId_      = 0;
 uint DEC_AutomateDecision::nMissionConduiteBehaviorDummyId_ = 0;
 uint DEC_AutomateDecision::nDefaultBehaviorDummyId_         = 0;
 
+BOOST_CLASS_EXPORT_GUID( DEC_AutomateDecision, "DEC_AutomateDecision" )
+
 //-----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::InitializeDIA
 // Created: AGN 03-03-28
@@ -55,6 +57,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate )
     , nForceRatioState_        ( eForceRatioStateNone  )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
+    , nOperationalState_       ( eOpStateOperational   )
     , bStateHasChanged_        ( true                  )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
@@ -96,6 +99,7 @@ DEC_AutomateDecision::DEC_AutomateDecision()
     , nForceRatioState_        ( eForceRatioStateNone  )
     , nRulesOfEngagementState_ ( eRoeStateNone         )
     , nCloseCombatState_       ( eCloseCombatStateNone )
+    , nOperationalState_       ( eOpStateOperational   )
     , bStateHasChanged_        ( true                  )
 {
 }
@@ -129,7 +133,8 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
     file >> pAutomate_
          >> nForceRatioState_
          >> nRulesOfEngagementState_
-         >> nCloseCombatState_;
+         >> nCloseCombatState_
+         >> nOperationalState_;
     
     assert( pAutomate_ );
     
@@ -185,6 +190,7 @@ void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) co
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
+         << nOperationalState_
          << pAutomate_->GetType().GetID();
 
     DIA_Serializer diaSerializer( static_cast< DIA_Motivation_Part& >( *pMotivationTool_ ) );
@@ -369,10 +375,12 @@ void DEC_AutomateDecision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
     msg.GetAsnMsg().m.rapport_de_forcePresent    = 1;
     msg.GetAsnMsg().m.regles_d_engagementPresent = 1;
     msg.GetAsnMsg().m.combat_de_rencontrePresent = 1;
+    msg.GetAsnMsg().m.etat_operationnelPresent   = 1;
 
     msg.GetAsnMsg().rapport_de_force     = (ASN1T_EnumEtatRapFor)nForceRatioState_;
     msg.GetAsnMsg().regles_d_engagement  = (ASN1T_EnumReglesEngagement)nRulesOfEngagementState_;
     msg.GetAsnMsg().combat_de_rencontre  = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
+    msg.GetAsnMsg().etat_operationnel    = (ASN1T_EnumEtatOperationnel)nOperationalState_;
 }
 
 // -----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: AGR 2005-6-28 - 14:3:4
+// $Created: AGR 2005-08-01 - 11:23:54
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderConduite_Automate_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 19/10/04 14:30 $
@@ -19,7 +19,7 @@
 /** @class  MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement
     @brief  MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement
 */
-// Created: AGR 2005-6-28 - 14:3:4
+// Created: AGR 2005-08-01 - 11:23:54
 // =============================================================================
 class MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement : public MIL_OrderConduite_ABC
 {

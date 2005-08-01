@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_LOG_AppuyerMouvementDansZone::nDIAZoneIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_AppuyerMouvementDansZone constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_AppuyerMouvementDansZone::MIL_AutomateMission_LOG_AppuyerMouvementDansZone( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_LOG_AppuyerMouvementDansZone::MIL_AutomateMission_LOG_Appuye
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_AppuyerMouvementDansZone destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_AppuyerMouvementDansZone::~MIL_AutomateMission_LOG_AppuyerMouvementDansZone()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::InitializeDIA( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Initi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Serialize( ASN1T_MsgAutom
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_AppuyerMouvementDansZone::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

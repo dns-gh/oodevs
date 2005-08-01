@@ -55,8 +55,9 @@ private:
 
 private:
     QLabel* pNameLabel_;
-    QLabel* pStateLabel_;
-    QLabel* pOpStateLabel_;
+    QLabel* pRawOpStateLabel_;
+    QLabel* pDeadLabel_;
+    QLabel* pNeutralizedLabel_;
     QLabel* pSpeedLabel_;
     QLabel* pDirectionLabel_;
     QLabel* pAltitudeLabel_;
@@ -67,12 +68,14 @@ private:
     QLabel* pROELabel_;
     QLabel* pCloseCombatLabel_;
     QLabel* pFightRateLabel_;
+    QLabel* pOpStateLabel_;
 
     QGroupBox* pReinforcementsGroupBox_;
     QLabel*    pReinforcementsLabel_;
     QLabel*    pReinforcedLabel_;
 
     QLabel* pBoardingStateLabel_;
+    QLabel* pHumanTransportersReadyLabel_;
     QLabel* pNBCSuitLabel_;
     QLabel* pNBCAgentsLabel_;
     QLabel* pContaminationLabel_;

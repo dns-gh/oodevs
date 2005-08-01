@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -29,7 +29,7 @@ int MIL_AutomateMission_Generique::nDIAConnaissancesObjetsIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Generique constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_Generique::MIL_AutomateMission_Generique( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -40,7 +40,7 @@ MIL_AutomateMission_Generique::MIL_AutomateMission_Generique( MIL_Automate& auto
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Generique destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_Generique::~MIL_AutomateMission_Generique()
 {
@@ -71,7 +71,7 @@ void MIL_AutomateMission_Generique::InitializeDIA( const MIL_AutomateMissionType
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Generique::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_Generique::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Generique::Initialize( const ASN1T_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Generique::Terminate()
 {
@@ -115,7 +115,7 @@ void MIL_AutomateMission_Generique::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Generique::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Generique::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_AutomateMission_Generique::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_Generique::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Generique::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

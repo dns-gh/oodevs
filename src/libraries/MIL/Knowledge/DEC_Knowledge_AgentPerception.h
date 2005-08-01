@@ -20,8 +20,6 @@
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
 
-BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerception, "DEC_Knowledge_AgentPerception" )
-
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;

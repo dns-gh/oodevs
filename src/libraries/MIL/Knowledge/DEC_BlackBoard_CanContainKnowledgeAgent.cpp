@@ -16,6 +16,8 @@
 #include "DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeAgent, "DEC_BlackBoard_CanContainKnowledgeAgent" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent constructor
 // Created: NLD 2004-03-11

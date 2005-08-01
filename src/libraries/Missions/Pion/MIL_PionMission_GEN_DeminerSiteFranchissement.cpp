@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:3 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_GEN_DeminerSiteFranchissement::nDIASiteFranchissementIdx_ = 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::InitializeDIA
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_DeminerSiteFranchissement::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_GEN_DeminerSiteFranchissement::InitializeDIA( const MIL_Pio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement constructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_DeminerSiteFranchissement::MIL_PionMission_GEN_DeminerSiteFranchissement( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_GEN_DeminerSiteFranchissement::MIL_PionMission_GEN_DeminerSiteFr
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement destructor
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_DeminerSiteFranchissement::~MIL_PionMission_GEN_DeminerSiteFranchissement()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_GEN_DeminerSiteFranchissement::~MIL_PionMission_GEN_DeminerSiteF
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DeminerSiteFranchissement::Initiali
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( const MIL_Automa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( MIL_PionMission_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::Terminate
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DeminerSiteFranchissement::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_GEN_DeminerSiteFranchissement::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::Serialize
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DeminerSiteFranchissement::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_GEN_DeminerSiteFranchissement::Serialize( ASN1T_MsgPionOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DeminerSiteFranchissement::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:3
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DeminerSiteFranchissement::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

@@ -21,10 +21,37 @@
 #include "DEC_FunctionsTools.h"
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_ObjectFunctions::ActivateObject
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_ObjectFunctions::ActivateObject( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), caller.GetArmy() );
+    if( !pKnowledge )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+
+    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
+    if( !pObject || !pObject->CanBeActivated() )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+
+    pObject->Activate();
+    call.GetResult().SetValue( true );
+    return;
+}
+
+// -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_ObjectFunctions::MagicCreateObject
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-template< typename T > static void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller )
+template< typename T > 
+void DEC_ObjectFunctions::MagicCreateObject( DIA_Call_ABC& call, const T& caller )
 {
     //$$$ A réencapsuler
     MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), call.GetParameters(), 0 );
@@ -40,7 +67,8 @@ template< typename T > static void DEC_ObjectFunctions::MagicCreateObject( DIA_C
 // Name: template< typename T > static void DEC_ObjectFunctions::MagicDestroyObject
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-template< typename T > static void DEC_ObjectFunctions::MagicDestroyObject( DIA_Call_ABC& call, const T& caller )
+template< typename T > 
+void DEC_ObjectFunctions::MagicDestroyObject( DIA_Call_ABC& call, const T& caller )
 {
     DEC_Tools::CheckTypeConnaissanceObjet( call.GetParameter( 0 ) );
 

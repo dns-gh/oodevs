@@ -642,6 +642,13 @@ enum E_CloseCombatState
     eCloseCombatStateProceedMission
 };
 
+enum E_OperationalState
+{
+    eOpStateFullyDestroyed,
+    eOpStateTacticallyDestroyed,
+    eOpStateOperational,
+};
+
 
 /*enum E_ObjectTypeID
 {

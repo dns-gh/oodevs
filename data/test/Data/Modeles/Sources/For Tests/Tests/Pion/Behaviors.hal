@@ -6,9 +6,6 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
-
-               
-
     /*
     selection carreux;
     for( float i = 0 ; i < 1000; ++i )
@@ -110,6 +107,8 @@ behavior BEH_Defaut( id nDummy )
 
 behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
 {
+    
+    
     when updated:
     {
     
@@ -386,7 +385,8 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
             
             DEC_Debug( "Aire forme: " + FloatToString( DEC_Geometrie_AireLocalisation( mission.forme_ ) ) );
             
-            //DEC_ChangeValeurDotations( eDotation_Munition, mission.param_ / 100, eMunition_Obus );
+            DEC_ChangeValeurDotations( eDotation_Munition, mission.param_ / 100, eMunitionClasse_Obus );
+            DEC_ChangeValeurDotations( eDotation_Ration, mission.param_ / 100 );
             
             DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
         }
@@ -462,7 +462,7 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
             //currentAction = DEC_StartValoriserObjet( nState, mission.objet_ );
             //nState = DEC_ActiverObjet( mission.objet_ );
             //DEC_Debug( "MIS_Pion_Test_CreateBypass PeutOccuperObjet : " + BoolToString( DEC_ConnaissanceObjet_PeutOccuperObjet( mission.objet_ ) ) );
-            //currentAction = DEC_StartOccuperObjet( mission.objet_ );
+            currentAction = DEC_StartOccuperObjet( mission.objet_ );
             
             E_ValiditeRequete nFusse;
             DEC_ConnaissanceObjet_Reconnaitre( mission.objet_, nFusse );
@@ -795,12 +795,15 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
                 E_ValiditeRequete nValidite;
                 
                 if( DEC_ConnaissanceAgent_SEstRendu( tmp, nValidite ) && nValidite == eRequeteValide )
-                    DEC_FairePrisonnier( tmp, nValidite );
+                {
+                    T_ConnaissanceObjet camp = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampPrisonniers );
+                    DEC_FairePrisonnier( tmp, camp, nValidite );               
+                }
 
                 if( DEC_ConnaissanceAgent_EstRefugie( tmp, nValidite ) && nValidite == eRequeteValide )
                 {
-                    T_ConnaissanceObjet campRefugies = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampRefugies );
-                    DEC_OrienterRefugies( tmp, campRefugies, nValidite );               
+                    T_ConnaissanceObjet camp = DEC_Connaissances_ObjetLePlusProche( eTypeObjectCampRefugies );
+                    DEC_OrienterRefugies( tmp, camp, nValidite );               
                 }
             }
         }

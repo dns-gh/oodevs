@@ -91,30 +91,13 @@ void MOS_AttrEditor::SetPosture( E_PostureType nOldPosture, E_PostureType nCurre
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_AttrEditor::SetAgentState
-// Created: NLD 2003-12-01
-// -----------------------------------------------------------------------------
-inline
-void MOS_AttrEditor::SetAgentState( E_AgentState nState )
-{
-    switch( nState) 
-    {
-        case eAgentStateNormal:      pAgentStateItem_->setText( 1, "Normal" ); break;
-        case eAgentStateNeutralized: pAgentStateItem_->setText( 1, "Neutralisé" ); break;
-        case eAgentStateDead:        pAgentStateItem_->setText( 1, "Mort" ); break;
-        default:
-            assert( false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_AttrEditor::SetOpState
+// Name: MOS_AttrEditor::SetRawOpState
 // Created: NLD 2004-02-16
 // -----------------------------------------------------------------------------
 inline
-void MOS_AttrEditor::SetOpState( uint nValue )
+void MOS_AttrEditor::SetRawOpState( uint nValue )
 {
-    pOpStateItem_->setText( 1, MT_FormatString( "%d%%", nValue ).c_str() );
+    pRawOpStateItem_->setText( 1, MT_FormatString( "%d%%", nValue ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,8 +142,6 @@ void MOS_AttrEditor::SetAutomateMode( bool bEmbraye )
 inline
 void MOS_AttrEditor::SetFightRateState( E_ForceRatioState nState )
 {
-    if( !pFightRateStateItem_ )
-        pFightRateStateItem_ = new QListViewItem( pStateListView_, pPostureCompletionPourcentageItem_, "Rapport de force", "" );
     switch( nState )
     {
         case eForceRatioStateNone:       pFightRateStateItem_->setText( 1, "None" ); break;
@@ -179,8 +160,6 @@ void MOS_AttrEditor::SetFightRateState( E_ForceRatioState nState )
 inline
 void MOS_AttrEditor::SetRulesOfEngagementState( E_RulesOfEngagementState nState )
 {
-    if( !pRulesOfEngagementStateItem_ )
-        pRulesOfEngagementStateItem_ = new QListViewItem( pStateListView_, pPostureCompletionPourcentageItem_, "Régles d'engagement", "" );
     switch( nState )
     {
         case eRoeStateNone:         pRulesOfEngagementStateItem_->setText( 1, "None" ); break;
@@ -193,14 +172,29 @@ void MOS_AttrEditor::SetRulesOfEngagementState( E_RulesOfEngagementState nState 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetOpState
+// Created: NLD 2003-12-02
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetOpState( E_OperationalState nState )
+{
+    switch( nState )
+    {
+        case eOpStateFullyDestroyed:        pOpStateItem_->setText( 1, "Détruit totalement" ); break;
+        case eOpStateTacticallyDestroyed:   pOpStateItem_->setText( 1, "Détruit tactiquement" ); break;
+        case eOpStateOperational:           pOpStateItem_->setText( 1, "Opérationnel" ); break;
+        default:
+            assert( false );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_AttrEditor::SetCloseCombatState
 // Created: NLD 2003-12-02
 // -----------------------------------------------------------------------------
 inline
 void MOS_AttrEditor::SetCloseCombatState( E_CloseCombatState nState )
 {
-    if( !pCloseCombatStateItem_ )
-        pCloseCombatStateItem_ = new QListViewItem( pStateListView_, pPostureCompletionPourcentageItem_, "Etat combat de rencontre", "" );
     switch( nState )
     {
         case eCloseCombatStateNone:          pCloseCombatStateItem_->setText( 1, "None" ); break;
@@ -525,4 +519,35 @@ void MOS_AttrEditor::SetLogSupplySuperior( uint nLogSupplySuperior )
         pLogSupplySuperior_->setText( 1, "-" );
     else
         pLogSupplySuperior_->setText( 1, MT_FormatString( "%d", nLogSupplySuperior ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetHumanTransportersReady
+// Created: NLD 2005-07-25
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetHumanTransportersReady( bool bReady )
+{
+    pHumanTransportersReadyItem_->setText( 1, bReady ? "Ready" : "Not ready" );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetDead
+// Created: NLD 2005-07-25
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetDead( bool bDead )
+{
+    pDeadItem_->setText( 1, bDead ? "Oui" : "Non" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AttrEditor::SetNeutralized
+// Created: NLD 2005-07-25
+// -----------------------------------------------------------------------------
+inline
+void MOS_AttrEditor::SetNeutralized( bool bNeutralized )
+{
+    pNeutralizedItem_->setText( 1, bNeutralized ? "Oui" : "Non" );
 }

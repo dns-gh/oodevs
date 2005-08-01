@@ -1326,7 +1326,7 @@ bool ADN_Composantes_Data::DotationInfos::ReadArchive( const std::string& strLis
         // Read the dotation name and find the corresponding equipement dotation.
         std::string strDotation;
         input.ReadAttribute( "nom", strDotation );
-        E_TypeDotation nTypeDotation = ENT_Tr::ConvertToTypeDotation( strDotation );
+        E_FamilleDotation nTypeDotation = ENT_Tr::ConvertToFamilleDotation( strDotation );
         assert( nTypeDotation != -1 );
 
         ADN_Equipement_Data::DotationInfos* pDotation = & ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( nTypeDotation );
@@ -1357,11 +1357,11 @@ void ADN_Composantes_Data::DotationInfos::WriteArchive( const std::string& strLi
     if( categories_.empty() )
         return;
 
-    output.BeginList( strListName, eNbrTypeDotation );
-    for( uint n = 0; n < eNbrTypeDotation; ++n )
+    output.BeginList( strListName, eNbrFamilleDotation );
+    for( uint n = 0; n < eNbrFamilleDotation; ++n )
     {
         output.Section( "Dotation" );
-        ADN_Equipement_Data::DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( (E_TypeDotation)n );
+        ADN_Equipement_Data::DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( (E_FamilleDotation)n );
         output.WriteAttribute( "nom", dotation.strName_.GetData() );
         output.BeginList( "Categories", categories_.size() );
         for( IT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
@@ -1707,7 +1707,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( MT_OutputArchive_ABC
 
         output.Section( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nType ) );
 
-        for( int nDotationType = 0; nDotationType < eNbrTypeDotation; ++nDotationType )
+        for( int nDotationType = 0; nDotationType < eNbrFamilleDotation; ++nDotationType )
         {
             std::vector<ConsumptionItem*> vDotationItems;
             for( std::vector<ConsumptionItem*>::iterator it2 = vConsumptionTypeItems.begin(); it2 != vConsumptionTypeItems.end(); ++it2 )
@@ -1720,7 +1720,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( MT_OutputArchive_ABC
                 continue;
 
             output.Section( "Dotation" );
-            output.WriteAttribute( "nom", ENT_Tr::ConvertFromTypeDotation( (E_TypeDotation)nDotationType ) );
+            output.WriteAttribute( "nom", ENT_Tr::ConvertFromFamilleDotation( (E_FamilleDotation)nDotationType ) );
             output.BeginList( "Categories", vDotationItems.size() );
             for( std::vector<ConsumptionItem*>::iterator it3 = vDotationItems.begin(); it3 != vDotationItems.end(); ++it3 )
             {

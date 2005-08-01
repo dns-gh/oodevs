@@ -62,10 +62,11 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
     , pPion_                   ( &pion )
     , DIA_Engine               ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_       ( pion, pion.GetType().GetFunctionTable() )
-    , nForceRatioState_        ( eForceRatioStateNone         )
-    , nRulesOfEngagementState_ ( eRoeStateNone                )
-    , nCloseCombatState_       ( eCloseCombatStateNone        )
-    , bStateHasChanged_        ( true                         )
+    , nForceRatioState_        ( eForceRatioStateNone  )
+    , nRulesOfEngagementState_ ( eRoeStateNone         )
+    , nCloseCombatState_       ( eCloseCombatStateNone )
+    , nOperationalState_       ( eOpStateOperational   )
+    , bStateHasChanged_        ( true                  )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
     
@@ -106,6 +107,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
     , nForceRatioState_        ( eForceRatioStateNone   )
     , nRulesOfEngagementState_ ( eRoeStateNone          )
     , nCloseCombatState_       ( eCloseCombatStateNone  )
+    , nOperationalState_       ( eOpStateOperational    )
     , bStateHasChanged_        ( true                   )
     , paths_                   ()
 {
@@ -136,7 +138,8 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
          >> pPion_
          >> nForceRatioState_
          >> nRulesOfEngagementState_
-         >> nCloseCombatState_;
+         >> nCloseCombatState_
+         >> nOperationalState_;
     
     assert( pPion_ );
     
@@ -200,6 +203,7 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
          << nForceRatioState_
          << nRulesOfEngagementState_
          << nCloseCombatState_
+         << nOperationalState_
          << pPion_->GetType().GetID()
          << const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIANameIdx_     ).ToString()  // $$$$ JVT : Beark
          << static_cast< DEC_AutomateDecision* >( const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIAAutomateIdx_ ).ToObject() ) // $$$$ JVT : Beark Arrrg
@@ -361,10 +365,12 @@ void DEC_RolePion_Decision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) cons
     msg.GetAsnMsg().m.rapport_de_forcePresent    = 1;
     msg.GetAsnMsg().m.regles_d_engagementPresent = 1;
     msg.GetAsnMsg().m.combat_de_rencontrePresent = 1;
+    msg.GetAsnMsg().m.etat_operationnelPresent   = 1;
 
     msg.GetAsnMsg().rapport_de_force     = (ASN1T_EnumEtatRapFor)nForceRatioState_;
     msg.GetAsnMsg().regles_d_engagement  = (ASN1T_EnumReglesEngagement)nRulesOfEngagementState_;
     msg.GetAsnMsg().combat_de_rencontre  = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
+    msg.GetAsnMsg().etat_operationnel    = (ASN1T_EnumEtatOperationnel)nOperationalState_;
 }
 
 // -----------------------------------------------------------------------------

@@ -69,7 +69,7 @@ private:
     void InitializeModifierPrioritesTactiquesBlesses    ();
     void InitializeModifierPrioritesTactiquesReparations();
     void InitializePionChangerDePosition                ();
-    void InitializeAssignerPositionEmbarquement         ();
+    void InitializeChangerPositionDebarquement          ();
     void InitializeAcquerirObjectif                     ();
     void InitializeAutomateRealiserVariantement         (); 
     void InitializeAutomateDesesquiperSiteFranchissement(); 

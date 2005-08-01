@@ -17,6 +17,8 @@
 
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
+BOOST_CLASS_EXPORT_GUID( DEC_BlackBoard_CanContainKnowledgeAgentPerception, "DEC_BlackBoard_CanContainKnowledgeAgentPerception" )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception constructor
 // Created: NLD 2004-03-11

@@ -223,16 +223,3 @@ void MOS_Team::ChangeDiplomaty( MOS_Team& team, ASN1T_EnumDiplomatie nRelationsh
     diplomaty.second = nRelationship;
     diplomaty_.push_back( diplomaty );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Team::FindKnowledgeOnObject
-// Created: APE 2004-08-05
-// -----------------------------------------------------------------------------
-MOS_DynaObjectKnowledge* MOS_Team::FindKnowledgeOnObject( const MOS_DynaObject& object )
-{
-    for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
-        if( it->second->GetRealObject() == &object )
-            return it->second;
-
-    return 0;
-}

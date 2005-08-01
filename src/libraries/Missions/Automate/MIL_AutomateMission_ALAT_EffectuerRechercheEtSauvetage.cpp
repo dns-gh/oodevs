@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -21,12 +21,13 @@
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAUnitesASecourirIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAPorteeActionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -37,7 +38,7 @@ MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::MIL_AutomateMission_ALAT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::~MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage()
 {
@@ -59,13 +60,14 @@ void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::InitializeDIA( cons
     nDIAUnitesASecourirIdx_ = DEC_Tools::InitializeDIAField( "unitesASecourir_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,6 +82,8 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage:
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
@@ -88,7 +92,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage:
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Terminate()
 {
@@ -103,7 +107,7 @@ void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -116,13 +120,14 @@ void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Serialize( ASN1T_Ms
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesASecourirIdx_ ), asnMission.unites_a_secourir );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

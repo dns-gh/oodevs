@@ -87,6 +87,21 @@ void DEC_AutomateDecision::NotifyCloseCombatStateChanged( E_CloseCombatState nSt
         bStateHasChanged_  = true;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::NotifyOperationalStateChanged
+// Created: NLD 2005-07-26
+// -----------------------------------------------------------------------------
+inline
+void DEC_AutomateDecision::NotifyOperationalStateChanged( E_OperationalState nState )
+{
+    if( nOperationalState_ != nState )
+    {
+        nOperationalState_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetAutomate
 // Created: NLD 2004-10-26

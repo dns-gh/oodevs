@@ -85,6 +85,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     , nNbOfficiersInMedicalChain_( 0 )
     , nNbOfficiersInMaintenanceChain_( 0 )
     , nNbOfficiersNBC_( 0 )
+    , nNbOfficiersOperational_( 0 )
     , nNbSousOfficiers_( 0 )
     , nNbSousOfficiersKilled_( 0 )
     , nNbSousOfficiersInjured_( 0 )
@@ -92,6 +93,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     , nNbSousOfficiersInMedicalChain_( 0 )
     , nNbSousOfficiersInMaintenanceChain_( 0 )
     , nNbSousOfficiersNBC_( 0 )
+    , nNbSousOfficiersOperational_( 0 )
     , nNbMdrs_( 0 )
     , nNbMdrsKilled_( 0 )
     , nNbMdrsInjured_( 0 )
@@ -99,6 +101,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     , nNbMdrsInMedicalChain_( 0 )
     , nNbMdrsInMaintenanceChain_( 0 )
     , nNbMdrsNBC_( 0 )
+    , nNbMdrsOperational_( 0 )
     , nFightRateState_                       ( (E_ForceRatioState)-1         )
     , nRulesOfEngagementState_               ( (E_RulesOfEngagementState)-1 )
     , nCloseCombatState_                     ( (E_CloseCombatState)-1       )
@@ -116,6 +119,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     , nPionRenforce_                         ( 0 )
     , pionTransportes_                       ()
     , nTransporteur_                         ( 0 )
+    , bHumanTransportersReady_               ( true )
     , pExperience_                           ( &MOS_Experience::veteran_ )
     , pTiredness_                            ( &MOS_Tiredness::normal_   )
     , pMorale_                               ( &MOS_Morale::bon_         )
@@ -235,6 +239,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
     , nPionRenforce_                         ( 0 )
     , pionTransportes_                       ()
     , nTransporteur_                         ( 0 )
+    , bHumanTransportersReady_               ( true )
     , pExperience_                           ( &MOS_Experience::veteran_ )
     , pTiredness_                            ( &MOS_Tiredness::normal_   )
     , pMorale_                               ( &MOS_Morale::bon_         )
@@ -449,9 +454,16 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
         }
     }
 
-    if( asnMsg.m.etat_opPresent )
+    if( asnMsg.m.etat_operationnel_brutPresent )
     {
-        nOpState_ = asnMsg.etat_op;
+        nRawOpState_ = asnMsg.etat_operationnel_brut;
+        if( pAttrEditor_ )
+            pAttrEditor_->SetRawOpState( nRawOpState_ );
+    }
+
+    if( asnMsg.m.etat_operationnelPresent )
+    {
+        nOpState_ = (E_OperationalState)asnMsg.etat_operationnel;
         if( pAttrEditor_ )
             pAttrEditor_->SetOpState( nOpState_ );
     }
@@ -479,6 +491,13 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
             pionTransportes_.push_back( asnMsg.pions_transportes.elem[i] );
         if( pAttrEditor_ )
             pAttrEditor_->SetPionTransportes( pionTransportes_ );
+    }
+
+    if( asnMsg.m.transporteurs_disponiblesPresent )
+    {
+        bHumanTransportersReady_ = asnMsg.transporteurs_disponibles;
+        if( pAttrEditor_ )
+            pAttrEditor_->SetHumanTransportersReady( bHumanTransportersReady_ );
     }
 
     if( asnMsg.m.moralPresent )
@@ -540,11 +559,18 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
             pAttrEditor_->SetAutomateMode( bEmbraye_ );
     }
 
-    if( asnMsg.m.etatPresent )
+    if( asnMsg.m.mortPresent )
     {
-        nState_ = (E_AgentState)asnMsg.etat;
+        bDead_ = asnMsg.mort;
         if( pAttrEditor_ )
-            pAttrEditor_->SetAgentState( nState_ );
+            pAttrEditor_->SetDead( bDead_ );
+    }
+
+    if( asnMsg.m.neutralisePresent )
+    {
+        bNeutralized_ = asnMsg.neutralise;
+        if( pAttrEditor_ )
+            pAttrEditor_->SetNeutralized( bNeutralized_ );
     }
     
     if( asnMsg.m.rapport_de_forcePresent )
@@ -724,6 +750,7 @@ void MOS_Agent::OnAttributeUpdated_Personnel( const ASN1T_MsgUnitDotations& asnM
                 nNbOfficiersInMedicalChain_      = dot.nb_dans_chaine_sante;
                 nNbOfficiersInMaintenanceChain_ = dot.nb_utilises_pour_maintenance;
                 nNbOfficiersNBC_                = dot.nb_contamines_nbc;
+                nNbOfficiersOperational_        = dot.nb_operationnels;
                 break;
             }
 
@@ -736,6 +763,7 @@ void MOS_Agent::OnAttributeUpdated_Personnel( const ASN1T_MsgUnitDotations& asnM
                 nNbSousOfficiersInMedicalChain_      = dot.nb_dans_chaine_sante;
                 nNbSousOfficiersInMaintenanceChain_ = dot.nb_utilises_pour_maintenance;
                 nNbSousOfficiersNBC_                = dot.nb_contamines_nbc;
+                nNbSousOfficiersOperational_        = dot.nb_operationnels;
                 break;
             }
 
@@ -748,6 +776,7 @@ void MOS_Agent::OnAttributeUpdated_Personnel( const ASN1T_MsgUnitDotations& asnM
                 nNbMdrsInMedicalChain_      = dot.nb_dans_chaine_sante;
                 nNbMdrsInMaintenanceChain_ = dot.nb_utilises_pour_maintenance;
                 nNbMdrsNBC_                = dot.nb_contamines_nbc;
+                nNbMdrsOperational_        = dot.nb_operationnels;
                 break;
             }
             default:
@@ -759,6 +788,7 @@ void MOS_Agent::OnAttributeUpdated_Personnel( const ASN1T_MsgUnitDotations& asnM
     {
         pAttrEditor_->ResetHumains();
         pAttrEditor_->AddHumains( "Total"             , nNbOfficiers_                  , nNbSousOfficiers_                  , nNbMdrs_ );
+        pAttrEditor_->AddHumains( "Operationnels"     , nNbOfficiersOperational_       , nNbSousOfficiersOperational_       , nNbMdrsOperational_ );
         pAttrEditor_->AddHumains( "Morts"             , nNbOfficiersKilled_            , nNbSousOfficiersKilled_            , nNbMdrsKilled_ );
         pAttrEditor_->AddHumains( "Blessés"           , nNbOfficiersInjured_           , nNbSousOfficiersInjured_           , nNbMdrsInjured_ );
         pAttrEditor_->AddHumains( "Cas psychiatriques", nNbOfficiersMentalInjured_     , nNbSousOfficiersMentalInjured_     , nNbMdrsMentalInjured_ );
@@ -876,7 +906,7 @@ void MOS_Agent::Draw()
     if( pParent_ != 0 && listView.GetSelectedAgent() == pParent_ )
         color.AddRGB( 60, 130, 60 );  // Gives a brighter color to the selected unit
 
-    GFX_Tools::CreateGLAgentShadow( vPos_, rSize, 4., 8., color , true, symbolName_, nOpState_ );
+    GFX_Tools::CreateGLAgentShadow( vPos_, rSize, 4., 8., color , true, symbolName_, nRawOpState_ );
     
     GFX_Tools::CreateGLCross( vPos_, rCrossSize, 4.0, color );
 
@@ -1673,6 +1703,7 @@ void MOS_Agent::SetAttributeEditor( MOS_AttrEditor* pAttrEditor )
         pAttrEditor_->SetLends( lends_ );
 
         pAttrEditor_->AddHumains( "Total"             , nNbOfficiers_                  , nNbSousOfficiers_                  , nNbMdrs_ );
+        pAttrEditor_->AddHumains( "Operationnels"     , nNbOfficiersOperational_       , nNbSousOfficiersOperational_       , nNbMdrsOperational_ );
         pAttrEditor_->AddHumains( "Morts"             , nNbOfficiersKilled_            , nNbSousOfficiersKilled_            , nNbMdrsKilled_ );
         pAttrEditor_->AddHumains( "Blessés"           , nNbOfficiersInjured_           , nNbSousOfficiersInjured_           , nNbMdrsInjured_ );
         pAttrEditor_->AddHumains( "Cas psychiatriques", nNbOfficiersMentalInjured_     , nNbSousOfficiersMentalInjured_     , nNbMdrsMentalInjured_ );
@@ -1686,13 +1717,16 @@ void MOS_Agent::SetAttributeEditor( MOS_AttrEditor* pAttrEditor )
             pAttrEditor_->AddRessource( itRessource->first, itRessource->second );
 
         pAttrEditor_->SetPosture            ( nOldPosture_, nCurrentPosture_, nPostureCompletionPourcentage_ );
-        pAttrEditor_->SetAgentState         ( nState_ );
+        pAttrEditor_->SetDead                  ( bDead_ );
+        pAttrEditor_->SetNeutralized           ( bNeutralized_ );
         pAttrEditor_->SetLoadingState       ( bLoadingState_ );
         pAttrEditor_->SetStealthModeEnabled ( bStealthModeEnabled_ );
+        pAttrEditor_->SetRawOpState            ( nRawOpState_ );
         pAttrEditor_->SetOpState            ( nOpState_ );
         pAttrEditor_->SetRenforts           ( renforts_ );
         pAttrEditor_->SetPionRenforce       ( nPionRenforce_ );
         pAttrEditor_->SetPionTransportes    ( pionTransportes_ );
+        pAttrEditor_->SetHumanTransportersReady( bHumanTransportersReady_ );
         pAttrEditor_->SetTransporteur       ( nTransporteur_ );
         pAttrEditor_->SetMorale             ( *pMorale_ );
         pAttrEditor_->SetExperience         ( *pExperience_ );

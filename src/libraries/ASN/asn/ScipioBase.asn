@@ -80,6 +80,25 @@ GDH ::= SEQUENCE
     qualificatif    EnumGDH_Qualificatif 
 }
 
+EnumFamilleDotation ::= ENUMERATED
+{
+    munition (0),
+    carburant(1),
+    explosif (2),
+    mine     (3),
+    barbele  (4),
+    piece    (5),
+    ration   (6)
+}
+
+EnumFamilleMunition ::= ENUMERATED
+{
+    obus        (0),
+    missile-air (1),
+    missile-sol (2),
+    mitraille   (3)
+}
+
 EnumGDH_Qualificatif ::= ENUMERATED
 {
     at          (0),

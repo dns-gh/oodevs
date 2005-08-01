@@ -22,6 +22,8 @@
 
 MIL_MOSIDManager PHY_MaintenanceComposanteState::idManager_;
 
+BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposanteState" )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState constructor
 // Created: NLD 2004-12-23

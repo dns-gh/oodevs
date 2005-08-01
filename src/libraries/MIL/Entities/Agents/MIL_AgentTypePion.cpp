@@ -305,7 +305,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableHumanTransportersNow        , "DEC_RecupererTransporteursSansDelai"                );
 
     // Objects
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::ActivateObject                                 , "DEC_ActiverObjet"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::ActivateObject    < MIL_AgentPion >, "DEC_ActiverObjet"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >            , "DEC_CreerObjetSansDelais"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicDestroyObject< MIL_AgentPion >            , "DEC_DetruireObjetSansDelais"         );
 
@@ -467,6 +467,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged       , "DEC_Agent_ChangeEtatRapportDeForce"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged, "DEC_Agent_ChangeEtatROE"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyCloseCombatStateChanged      , "DEC_Agent_ChangeEtatCombatDeRencontre" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyOperationalStateChanged      , "DEC_Agent_ChangeEtatOperationnel"      );
 
     // Facteurs humains
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorTiredness , "DEC_FacteurHumain_Fatigue"    );  
@@ -523,6 +524,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                 , "DEC_Pion_TC2"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionRequestSupply          , "DEC_DemandeDeRavitaillement" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationValueUsingTC2, "DEC_ChangeValeurDotations"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::TransferWoundedHumansToTC2 , "DEC_TransfererBlessesVersTC2" );
     
     // Transport / Héliportage
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPion                       , "DEC_Transport_AjouterPion"              );
@@ -535,6 +537,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_MagicUnloadPions              , "DEC_Transport_DebarquerPionsSansDelais" );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_IsFinished                    , "DEC_Transport_EstTermine"               );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_Cancel                        , "DEC_Transport_Annuler"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_IsTransporting                , "DEC_Transport_EnCoursDeTransport"       );
+
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::CanTransportPion                        , "DEC_Agent_PeutTransporterPion"          );        
 
     // Prisonniers

@@ -18,11 +18,10 @@
 #include "PHY_DotationCategory_IndirectMineFire.h"
 
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus       );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille  );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::none_      ( "None"      , eNone       );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , EnumFamilleMunition::obus        );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, EnumFamilleMunition::missile_air );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, EnumFamilleMunition::missile_sol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , EnumFamilleMunition::mitraille   );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -38,7 +37,6 @@ void PHY_AmmoDotationClass::Initialize()
     types_[ missileAir_.GetID() ] = &missileAir_;
     types_[ missileSol_.GetID() ] = &missileSol_;
     types_[ mitraille_ .GetID() ] = &mitraille_;
-    types_[ none_      .GetID() ] = &none_;
 }
 
 // -----------------------------------------------------------------------------
@@ -54,9 +52,10 @@ void PHY_AmmoDotationClass::Terminate()
 // Name: PHY_AmmoDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType )
+PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumFamilleMunition nAsnID )
     : strName_( strName )
     , nType_  ( nType   )
+    , nAsnID_ ( nAsnID  )
 {
 }
 

@@ -57,7 +57,7 @@ public:
     MT_Float Consume ( MT_Float rValue );
 
     void     ReadValue( MIL_InputArchive& archive );
-    void     Resupply ();
+    void     Resupply ( MT_Float rFactor = 1. );
 
     bool     HasReachedSupplyThreshold() const;
     bool     NeedSupply               () const;

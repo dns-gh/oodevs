@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,13 +24,14 @@ int MIL_PionMission_ALAT_Couvrir::nDIACiblesPrioritairesIdx_ = 0 ;
 int MIL_PionMission_ALAT_Couvrir::nDIAUnitesACouvrirIdx_ = 0 ;
 int MIL_PionMission_ALAT_Couvrir::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_PionMission_ALAT_Couvrir::nDIAPlotsRavitaillementIdx_ = 0 ;
+int MIL_PionMission_ALAT_Couvrir::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_PionMission_ALAT_Couvrir::nDIAPorteeActionIdx_ = 0 ;
 int MIL_PionMission_ALAT_Couvrir::nDIAAmbianceMissionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::InitializeDIA
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_Couvrir::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,6 +41,7 @@ void MIL_PionMission_ALAT_Couvrir::InitializeDIA( const MIL_PionMissionType& typ
     nDIAUnitesACouvrirIdx_ = DEC_Tools::InitializeDIAField( "unitesACouvrir_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
+    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
@@ -48,7 +50,7 @@ void MIL_PionMission_ALAT_Couvrir::InitializeDIA( const MIL_PionMissionType& typ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Couvrir::MIL_PionMission_ALAT_Couvrir( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -59,7 +61,7 @@ MIL_PionMission_ALAT_Couvrir::MIL_PionMission_ALAT_Couvrir( MIL_AgentPion& pion,
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Couvrir::~MIL_PionMission_ALAT_Couvrir()
 {
@@ -69,7 +71,7 @@ MIL_PionMission_ALAT_Couvrir::~MIL_PionMission_ALAT_Couvrir()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Couvrir::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -86,6 +88,8 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Couvrir::Initialize( const ASN1T_M
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
@@ -97,7 +101,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Couvrir::Initialize( const ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Couvrir::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -108,6 +112,7 @@ bool MIL_PionMission_ALAT_Couvrir::Initialize( const MIL_AutomateMission_ABC& pa
     NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesACouvrirIdx_ ) );
     NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
+    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
     NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
 
@@ -116,7 +121,7 @@ bool MIL_PionMission_ALAT_Couvrir::Initialize( const MIL_AutomateMission_ABC& pa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -128,6 +133,7 @@ bool MIL_PionMission_ALAT_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesACouvrirIdx_ ), GetVariable( nDIAUnitesACouvrirIdx_ ) );
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
+    NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAAmbianceMissionIdx_ ), GetVariable( nDIAAmbianceMissionIdx_ ) );
 
@@ -136,7 +142,7 @@ bool MIL_PionMission_ALAT_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Couvrir::Terminate()
 {
@@ -151,7 +157,7 @@ void MIL_PionMission_ALAT_Couvrir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -165,6 +171,7 @@ void MIL_PionMission_ALAT_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesACouvrirIdx_ ), asnMission.unites_a_couvrir );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, pion_.GetKnowledgeGroup().GetKSQuerier() );
+    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 
@@ -172,7 +179,7 @@ void MIL_PionMission_ALAT_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Couvrir::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

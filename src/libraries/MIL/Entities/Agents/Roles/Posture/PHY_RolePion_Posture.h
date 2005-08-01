@@ -83,8 +83,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg );
+    void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg );
     //@}
 
     //! @name HLA
@@ -96,8 +96,9 @@ public:
 private:
     //! @name Tools
     //@{
-    void     ClearPosture  ();
     MT_Float GetPostureTime() const;
+    void     ChangePosture                    ( const PHY_Posture& newPosture );
+    void     ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
     //@}
 
 private:
@@ -108,13 +109,15 @@ private:
           MT_Float       rElongationFactor_;
           MT_Float       rTimingFactor_;
           bool           bDiscreteModeEnabled_;
-          uint           nNextUpdateStep_;
           MT_Float       rStealthFactor_;
           bool           bIsStealth_;
+
+          // Network
           bool           bPosturesHasChanged_;
-          bool           bPourcentageHasChanged_;
           bool           bPercentageCrossed50_;
           bool           bStealthFactorHasChanged_;
+          bool           bPourcentageHasChanged_;
+          MT_Float       rLastPostureCompletionPercentage_;
 
 private:
     static MT_Random  random_;

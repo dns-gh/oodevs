@@ -138,12 +138,11 @@ void MOS_OptionsPanel::OnCheckpoint()
 {
     MOS_ASN_MsgCtrlCheckPointSaveNow asnMsg;
 
-//$$$$
-//    if( !pCheckpointNameEdit_->text().isEmpty() )
-//    {
-//        asnMsg.GetAsnMsg().m.nomPresent = 1;
-//        asnMsg.GetAsnMsg().nom = pCheckpointNameEdit_->text();
-//    }
+    if( !pCheckpointNameEdit_->text().isEmpty() )
+    {
+        asnMsg.GetAsnMsg().m.nomPresent = 1;
+        asnMsg.GetAsnMsg().nom = pCheckpointNameEdit_->text();
+    }
     asnMsg.Send();
 }
 

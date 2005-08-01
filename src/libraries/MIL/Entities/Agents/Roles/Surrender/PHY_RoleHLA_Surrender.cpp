@@ -44,7 +44,7 @@ PHY_RoleHLA_Surrender::~PHY_RoleHLA_Surrender()
 // Name: PHY_RoleHLA_Surrender::TakePrisoner
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-bool PHY_RoleHLA_Surrender::TakePrisoner( const MIL_AgentPion& /*pionTakingPrisoner*/ )
+bool PHY_RoleHLA_Surrender::TakePrisoner( const MIL_AgentPion& /*pionTakingPrisoner*/, const MIL_CampPrisonniers& /*camp*/ )
 {
     // $$$$ _RC_ NLD 2005-03-10: 
     return false;

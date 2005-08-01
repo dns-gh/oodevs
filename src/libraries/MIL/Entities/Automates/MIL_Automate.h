@@ -114,7 +114,7 @@ public:
           bool                 IsSurrendered            () const;
           bool                 IsPrisoner               () const;
     const MIL_CampPrisonniers* GetPrisonerCamp          () const;
-          bool                 TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner );
+          bool                 TakePrisoner             ( const MIL_AgentPion& pionTakingPrisoner, const MIL_CampPrisonniers& camp );
           void                 NotifyInsidePrisonerCamp ( const MIL_CampPrisonniers& camp );
           void                 NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp );
     //@}
@@ -172,7 +172,7 @@ protected:
     //! @name Tools
     //@{
     virtual void WriteCreationMsg( NET_ASN_MsgAutomateCreation& asnMsg ) const;
-    virtual void Surrender       ( const MIL_CampPrisonniers& prisonerCamp );
+            void Surrender       ();
     //@}
 
 protected:

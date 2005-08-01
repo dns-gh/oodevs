@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-6-28 - 14:3:2 $
+// $Created: 2005-08-01 - 11:23:53 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -24,7 +24,7 @@ int MIL_AutomateMission_GEN_RealiserCampPrisonniers::nDIATc2Idx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampPrisonniers constructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserCampPrisonniers::MIL_AutomateMission_GEN_RealiserCampPrisonniers( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_GEN_RealiserCampPrisonniers::MIL_AutomateMission_GEN_Realise
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampPrisonniers destructor
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserCampPrisonniers::~MIL_AutomateMission_GEN_RealiserCampPrisonniers()
 {
@@ -61,7 +61,7 @@ void MIL_AutomateMission_GEN_RealiserCampPrisonniers::InitializeDIA( const MIL_A
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampPrisonniers::Initialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserCampPrisonniers::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserCampPrisonniers::Initia
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampPrisonniers::Terminate()
 {
@@ -95,7 +95,7 @@ void MIL_AutomateMission_GEN_RealiserCampPrisonniers::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampPrisonniers::Serialize
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampPrisonniers::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -112,7 +112,7 @@ void MIL_AutomateMission_GEN_RealiserCampPrisonniers::Serialize( ASN1T_MsgAutoma
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampPrisonniers::CleanAfterSerialization
-// Created: 2005-6-28 - 14:3:2
+// Created: 2005-08-01 - 11:23:53
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampPrisonniers::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

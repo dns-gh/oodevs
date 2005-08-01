@@ -119,10 +119,12 @@ public:
     void SetCloseCombatState      ( E_CloseCombatState       nState );
 
     void SetAutomateMode( bool bEmbraye );
-    void SetAgentState  ( E_AgentState nState );
+    void SetDead                  ( bool bDead );
+    void SetNeutralized           ( bool bNeutralized );
     void SetLoadingState( bool bLoadingState );
     void SetStealthModeEnabled( bool bStealthMode );
-    void SetOpState     ( uint nValue );
+    void SetOpState( E_OperationalState nState );
+    void SetRawOpState  ( uint nValue );
 
     void SetSpeed    ( uint nSpeed );
     void SetAltitude( int nAltitude );
@@ -139,21 +141,6 @@ public:
 
     void SetHeliportedHumans( uint );
 
-//    void ResetTransportEquipments();
-//    void ResetTransportRessources();
-//    void ResetTransportHumains();
-//    void ResetTransportCapacities();
-//    void AddTransportEquipment( MIL_AgentID nType, MOS_Agent::T_EquipementState nState );
-//    void AddTransportRessource( MIL_AgentID nType, uint nQty );
-//    void AddTransportRessource( MIL_AgentID nType, uint nQtyAvailable, uint nQtyTransit );
-//    void AddTransportRessource( const char*, uint nQty );
-//    void AddTransportHumains( uint** );
-//    void UpdateTransportRessource( const char*, uint nQty );
-//    void UpdateTransportRessource( MIL_AgentID nType, uint nQty );
-//    void UpdateTransportRessource( MIL_AgentID nType, uint nQtyAvailable, uint nQtyTransit );
-//    void AddTransportCapacity   ( MIL_AgentID nType, uint nQty );
-//    void UpdateTransportCapacity( MIL_AgentID nType, uint nQty );
-//    void AddTransportEquipements( uint nMOSID, uint nBreakDown, uint nNTI, uint nNbr );
     void SetNbcProtectionSuitWorn( bool bNbcProtectionSuitWorn );
     void SetNbcAgentsContaminating( const MOS_Agent::T_NbcAgentVector& nbcAgentContaminating );
     void SetContaminationState    ( uint nContaminationState );
@@ -161,6 +148,7 @@ public:
     void SetPionRenforce( uint nID );
     void SetPionTransportes( const MOS_Agent::T_TransportVector& transports );
     void SetTransporteur   ( uint nID );
+    void SetHumanTransportersReady( bool bReady );
     void SetJammedState( bool bJammed );
     void SetBlackOutState( bool bBlackOut );
     void SetRadarEnabled ( bool bRadarEnabled );
@@ -294,7 +282,6 @@ private:
     MOS_ChangeLogisticLinksDialog*          pChangeLogisticLinksDialog_;
     MOS_LogisticSupplyChangeQuotasDialog*   pLogisticSupplyChangeQuotasDialog_;
     MOS_LogisticSupplyPushFlowDialog*       pLogisticSupplyPushFlowDialog_;
-    MOS_SurrenderDialog*                    pSurrenderDialog_;
 
     QWidgetStack*       pWidgetStack_;
     QTabWidget*         pTabWidget_;
@@ -332,11 +319,6 @@ private:
     QListView*          pRessourcesList_;
     QListView*          pEquipementList_;
     QListView*          pHumainsList_;
-
-//    QListView*          pTransportCapacityList_;
-//    QListView*          pTransportRessourcesList_;
-//    QListView*          pTransportEquipementList_;
-//    QListView*          pTransportHumainsList_;
 
     // Maintenance
     MOS_LogMaintenanceConsign_ListView* pLogMaintenanceConsignListView_;
@@ -382,8 +364,10 @@ private:
     
     QListViewItem*      pLoadingStateItem_;
     QListViewItem*      pStealthModeItem_;
-    QListViewItem*      pAgentStateItem_;
+    QListViewItem*      pDeadItem_;
+    QListViewItem*      pNeutralizedItem_;
     QListViewItem*      pOpStateItem_;
+    QListViewItem*      pRawOpStateItem_;
     QListViewItem*      pAutomateModeItem_;
     QListViewItem*      pFightRateStateItem_;
     QListViewItem*      pRulesOfEngagementStateItem_;
@@ -395,6 +379,7 @@ private:
     QListViewItem*      pPionRenforceItem_;
     QListViewItem*      pTransporteurItem_;
     QListViewItem*      pTransportsItem_;
+    QListViewItem*      pHumanTransportersReadyItem_;
     QListViewItem*      pJammedStateItem_;
     QListViewItem*      pBlackOutStateItem_;
     QListViewItem*      pRadarStateItem_;

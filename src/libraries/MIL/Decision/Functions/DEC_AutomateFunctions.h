@@ -43,6 +43,7 @@ public:
     static void NotifyForceRatioStateChanged       ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void NotifyRulesOfEngagementStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void NotifyCloseCombatStateChanged      ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
+    static void NotifyOperationalStateChanged      ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 
     // Etat refugies
     static void NotifyRefugeeManagedStateChanged( DIA_Call_ABC& call, MIL_Automate& callerAgent );
