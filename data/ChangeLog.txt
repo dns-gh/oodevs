@@ -11,15 +11,55 @@ TODO
     - Virer les types de terrain 'bord de' dans ADN
     - Bugs : suppression des consignes maintenance/santé quand un des automates de la chaine n'a pas de supérieur (Cf. Suppression des liens logistiques d'un TC2 ...)
     
+    - GGR : PENSER A METTRE LES FICHERS MISSIONS ALAT A JOUR
+    
 TODO de merde
     - Délais de construction des camps / piste
-    - Mode de rejoignure d'itinéraire dépendant du type d'itinéraire (recon/infiltration ...)
-    
+    - Mode de rejoignure d'itinéraire dépendant du type d'itinéraire (recon/infiltration ...)    
     - Dangerosité / dotations
     - Leviers de performance
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Logistique - santé : nouvelle fonction DEC_TransfererBlessesVersTC2() qui, subtilement combinée à l'action magique de changement
+            de liens logisitiques (permettant ainsi à un automate de ne plus avoir de TC2) permet à guigui de faire un IMEX simplifié.
+                    V A::DEC_TransfererBlessesVersTC2( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ )
+    - NLD/SBO - Nouvelle action magique : recomplétement partiel
+    - NLD - ASN / Scripts : Fusion des énums E_RC_TypeDotation et E_TypeDotation en E_TypeDotation, et déplacement de cette énum de Common/Types.hal dans Common/Moteur/Types_Enums.hal
+    - NLD - Bug fix : le temps 'SIM' renvoyé par la fonction DEC_SimTime() était en retard d'un pas de temps
+    - NLD - Gestion de la sauvegarde du 'transport' 
+                * Les infos transportés / transporteur sont sauvegardées
+                * Nouvelle fonction DEC "B A::DEC_Transport_EnCoursDeTransport()" permettant de savoir, après une reprise, si l'hélico a des pions à débarquer
+    - NLD - Ajout d'un bool 'ravitaillement-debut-mission' en paramètre de toutes les missions ALAT (pions/automates)
+    - NLD - Gestion des prisonniers : le paramètre 'camp' a été enlevé de l'action magique 'Se Rendre' 
+                => même fonctionnement que les réfugiés
+                => DEC_FairePrisonnier() prends un camp de prisonniers en paramètre
+    - NLD - Bug fix : Update réseau des dotations des pions inutiles (quand donnée pour un mode de consommation vaut 0)
+    - NLD - Afin de ne plus 'flooder' Thales, les pourcentages de postures ne sont plus envoyés que tous les 5 % (valeur configurable dans fichier de conf .cpp)
+    - NLD - Bug fix : mise à jour des pourcentages / postures / hauteur quand un pion meurt / quand un pion renforce un autre
+    - NLD - Gestion des morts (bDummy demandé par DSRO) : quand un pion détecte une unité détruite, le niveau de perception
+                passe automatiquement à 'reconnu'. Le but étant de ne pas avoir 'peur' des unités détruites que l'on ne fait
+                que détecter ..
+    - NLD - MOS_Light2 :
+                * Suppression de l'onglet 'Cargo'
+                * Ajout de l'action magique 'Destruction totale'
+                * L'enum des niveaux de perception par automate dans les connaissances agents était invalide
+    - NLD - Gestion de l'état opérationnel :
+                - Nouvelles fonctions DEC (pions/automates)
+                    V A::DEC_Agent/Automate_ChangeEtatOperationnel( I /*E_E_EtatOperationnel*/ );
+                - 2 infos sont maintenant envoyées à Thales 
+                        * la valeur brute de l'état opérationnel (le pourcentage déjà envoyé actuellement)
+                        * l'enum issue des scripts (=> comme ça plus de pb d'interprétation foireuse de la part de Thales)
+    - NLD - Bug fix : les pions prisonniers ne pouvaient plus se déplacer
+    - NLD - ASN : 
+              * Remplacement de l'attribut d'unité 'etat' (enum débile) par un booléen 'mort' et 'neutralise'
+              * Suppression des attributs d'unité 'capa op materiel' et 'capa op personnel'
+              * Remontée de l'info concernant la disponibilité des transporteurs d'hommes (les vabs dans les sacs à dos ...)
+    - NLD - La fonction DEC_ActiverObjet() est maintenant disponible pour les automates. Attention, elle retourne un bool, maintenant, à la place de E_EtatActionObjet
+    - NLD - Suppression de l'ordre de conduite 'AssignerPositionEmbarquement'
+    - NLD - Nouveaux ordres de conduite :
+                - 'RecupererTransporteurs' dispo même sans missions
+                - 'ChangerPositionDebarquement'
     - NLD - Changement du fonctionnement de remplissage des camions constituant les convois : passage des unités 'U' génériques à des données + opérationnelles
                    - Composantes.xml                                                 
                         <Transporteur>                                                          <Transporteur>
@@ -40,6 +80,8 @@ Next Version - Codename ''
                             </Conditionnement>                                                                    
                 Les camions sont remplis selon un algorithme subtil bourrin de type 'dès que c'est plein en volume ou en masse, on prend un autre camion'
     - NLD - Modif ASN : le nombre d'humains 'totalement operationnels' est envoyé
+    - SBO - Ajout d'une option -conffile permettant de spécifier le chemin des données dans MOS_Light et MOS_Light2
+				Syntaxe: MOS_Light2 -conffile path/to/scipio.xml
     
 Version 0.113.1 [21/07/2005] - Codename 'bDummy && pbt || bFired && bAssHole'
     - NLD - Bug fix : le barycentre d'une localisation était 'un peu' décalé ... (poids double sur le premier point)                
