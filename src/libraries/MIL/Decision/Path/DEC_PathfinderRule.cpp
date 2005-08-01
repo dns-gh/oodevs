@@ -9,9 +9,9 @@
 //
 // $Created: AGE 2005-03-08 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathfinderRule.cpp $
-// $Author: Age $
-// $Modtime: 13/05/05 18:34 $
-// $Revision: 5 $
+// $Author: Nld $
+// $Modtime: 20/07/05 18:46 $
+// $Revision: 10 $
 // $Workfile: DEC_PathfinderRule.cpp $
 //
 // *****************************************************************************
@@ -30,25 +30,25 @@
 // Name: DEC_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const TerrainData& avoid, const TerrainData& prefer, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort, E_AltitudePreference alt, MT_Float rMaxFuseauDistance )
-    : world_( TER_World::GetWorld() )
-    , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , speeds_( path.GetUnitSpeeds() )
-    , pFuseau_( 0 ) 
-    , pAutomateFuseau_( 0 )
-    , dangerDirection_( path.GetDirDanger() )
-    , rDangerDirectionCost_( 0.01 ) // $$$$ AGE 2005-06-24: Whatever
-    , rMaxSpeed_( float( speeds_.GetMaxSpeed() ) * 1.1f )
-    , avoid_( avoid )
-    , prefer_( prefer )
-    , bAvoid_(  !(avoid_  == TerrainData()) )
-    , bPrefer_( !(prefer_ == TerrainData()) )
-    , bShort_( bShort )
-    , rFuseauDistance_( rMaxFuseauDistance )
-    , rMinAltitude_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMinAltitude() )
-    , rMaxAltitude_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
-    , altitudePreference_( alt )
-    , rMaxSlope_( path.GetUnitMaxSlope() )
+DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const T_TerrainCost& avoid, const T_TerrainCost& prefer, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort, E_AltitudePreference alt, MT_Float rMaxFuseauDistance )
+    : world_                ( TER_World::GetWorld() )
+    , altitudeData_         ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
+    , speeds_               ( path.GetUnitSpeeds() )
+    , pFuseau_              ( 0 ) 
+    , pAutomateFuseau_      ( 0 )
+    , dangerDirection_      ( path.GetDirDanger() )
+    , rDangerDirectionCost_ ( 0.01 ) // $$$$ AGE 2005-06-24: Whatever
+    , rMaxSpeed_            ( float( speeds_.GetMaxSpeed() ) * 1.1f )
+    , avoid_                ( avoid )
+    , prefer_               ( prefer )
+    , bAvoid_               ( !(avoid_.first  == TerrainData()) )
+    , bPrefer_              ( !(prefer_.first == TerrainData()) )
+    , bShort_               ( bShort )
+    , rFuseauDistance_      ( rMaxFuseauDistance )
+    , rMinAltitude_         ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMinAltitude() )
+    , rMaxAltitude_         ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
+    , altitudePreference_   ( alt )
+    , rMaxSlope_            ( path.GetUnitMaxSlope() )
 {
     if( ! path.GetFuseau().IsNull() )
         pFuseau_ = & path.GetFuseau();
@@ -211,11 +211,11 @@ MT_Float DEC_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
 MT_Float DEC_PathfinderRule::TerrainCost( const TerrainData& data ) const
 {
     MT_Float rDynamicCost = 0;
-    if( bAvoid_ && avoid_.ContainsOne( data ) )
-        rDynamicCost += 7; // $$$$ AGE 2005-03-25: Tune
+    if( bAvoid_ && avoid_.first.ContainsOne( data ) )
+        rDynamicCost += avoid_.second;
 
-    if( bPrefer_ && ! prefer_.ContainsOne( data ) )
-        rDynamicCost += 2;
+    if( bPrefer_ && ! prefer_.first.ContainsOne( data ) )
+        rDynamicCost += prefer_.second;
     return rDynamicCost;
 }
 

@@ -10,8 +10,8 @@
 // $Created: AGE 2005-03-08 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathfinderRule.h $
 // $Author: Age $
-// $Modtime: 13/05/05 18:29 $
-// $Revision: 4 $
+// $Modtime: 24/06/05 11:42 $
+// $Revision: 5 $
 // $Workfile: DEC_PathfinderRule.h $
 //
 // *****************************************************************************
@@ -45,12 +45,13 @@ public:
         ePreferHigh,
         ePreferLow
     };
+    typedef std::pair< TerrainData, MT_Float > T_TerrainCost;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathfinderRule( const DEC_Path& path, const TerrainData& avoid, const TerrainData& prefer, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort, E_AltitudePreference alt, MT_Float rMaxFuseauDistance );
+             DEC_PathfinderRule( const DEC_Path& path, const T_TerrainCost& avoid, const T_TerrainCost& prefer, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort, E_AltitudePreference alt, MT_Float rMaxFuseauDistance );
     virtual ~DEC_PathfinderRule();
     //@}
 
@@ -105,8 +106,8 @@ private:
     T_PathKnowledgeAgentVector  agents_;
     T_PathKnowledgeObjectVector objects_;
 
-    TerrainData avoid_;
-    TerrainData prefer_;
+    T_TerrainCost avoid_;
+    T_TerrainCost prefer_;
     bool bAvoid_;
     bool bPrefer_;
 

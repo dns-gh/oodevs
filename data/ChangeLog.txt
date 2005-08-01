@@ -21,6 +21,7 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - AGE - Refactors dans la règle du pathfind, modifications des poids pour le type d'itinéraire 'Assault'
     - NLD - Logistique - santé : nouvelle fonction DEC_TransfererBlessesVersTC2() qui, subtilement combinée à l'action magique de changement
             de liens logisitiques (permettant ainsi à un automate de ne plus avoir de TC2) permet à guigui de faire un IMEX simplifié.
                     V A::DEC_TransfererBlessesVersTC2( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ )

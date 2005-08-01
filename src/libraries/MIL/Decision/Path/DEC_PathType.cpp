@@ -2,9 +2,9 @@
 //
 // $Created: JDY 03-04-10 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathType.cpp $
-// $Author: Age $
-// $Modtime: 4/07/05 15:48 $
-// $Revision: 10 $
+// $Author: Nld $
+// $Modtime: 21/07/05 15:54 $
+// $Revision: 11 $
 // $Workfile: DEC_PathType.cpp $
 //
 //*****************************************************************************
@@ -44,8 +44,8 @@ TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector
     // The terrain types depends on the type of path
     // And on whether the unit can fly
     const bool bCanFly = path.CanQueryMakerFly();
-    TerrainData avoid  = AvoidedTerrain ( nPathType_, bCanFly )
-              , prefer = PreferedTerrain( nPathType_, bCanFly );
+    T_TerrainCost avoid  = AvoidedTerrain ( nPathType_, bCanFly )
+                , prefer = PreferedTerrain( nPathType_, bCanFly );
 
     const bool bShort = nPathType_ == eInfoRetreat || nPathType_ == eInfoBackup;
 
@@ -96,7 +96,7 @@ TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector
 // Name: DEC_PathType::PreferedTerrain
 // Created: AGE 2005-03-25
 // -----------------------------------------------------------------------------
-TerrainData DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
+DEC_PathType::T_TerrainCost DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
 {
     static TerrainData roads = TerrainData::SmallRoad()
                        .Merge( TerrainData::MediumRoad() )
@@ -104,13 +104,13 @@ TerrainData DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
                        .Merge( TerrainData::Motorway() );
     static TerrainData groundTerrains[ eNbrPathType ] =
     {
-        roads,
-        TerrainData::ForestBorder().Merge( roads ),
-        TerrainData::Forest(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        roads
+        roads,                                              // eInfoMovement 
+        TerrainData::ForestBorder().Merge( roads ),         // eInfoRecon
+        TerrainData::Forest(),                              // eInfoInfiltration
+        TerrainData(),                                      // eInfoAssault
+        TerrainData(),                                      // eInfoRetreat
+        TerrainData(),                                      // eInfoBackup
+        roads                                               // eInfoMineClearance
     };
     static TerrainData rivers = TerrainData::SmallRiver()
                         .Merge( TerrainData::MediumRiver() )
@@ -118,60 +118,79 @@ TerrainData DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
 
     static TerrainData airTerrains[ eNbrPathType ] =
     {
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
+        TerrainData(),  // eInfoMovement
+        TerrainData(),  // eInfoRecon
+        TerrainData(),  // eInfoInfiltration
+        TerrainData(),  // eInfoAssault
+        TerrainData(),  // eInfoRetreat
+        TerrainData(),  // eInfoBackup
+        TerrainData(),  // eInfoMineClearance
     };
+    static MT_Float groundCosts[ eNbrPathType ] = 
+    {
+        2, 2, 2, 2, 2, 2, 2
+    };
+    static MT_Float airCosts[ eNbrPathType ] = 
+    {
+        2, 2, 2, 2, 2, 2, 2
+    };
+
     if( bFly && type < eNbrPathType)
-        return airTerrains[ type ];
+        return T_TerrainCost( airTerrains[ type ], airCosts[ type ] );
     if( ! bFly && type < eNbrPathType )
-        return groundTerrains[ type ];
-    return TerrainData();
+        return T_TerrainCost( groundTerrains[ type ], groundCosts[ type ] );
+    return T_TerrainCost();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathType::AvoidedTerrain
 // Created: AGE 2005-03-25
 // -----------------------------------------------------------------------------
-TerrainData DEC_PathType::AvoidedTerrain( E_PathType type, bool bFly )
+DEC_PathType::T_TerrainCost DEC_PathType::AvoidedTerrain( E_PathType type, bool bFly )
 {
     static TerrainData urban = TerrainData::Urban().Merge( TerrainData::UrbanBorder() );
-    static TerrainData groundTerrains[ eNbrPathType ] =
-    {
-        TerrainData(),
-        TerrainData(),
-        urban,
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData()
-    };
     static TerrainData roads = TerrainData::SmallRoad()
                        .Merge( TerrainData::MediumRoad() )
                        .Merge( TerrainData::LargeRoad() )
                        .Merge( TerrainData::Motorway() );
+    static TerrainData groundTerrains[ eNbrPathType ] =
+    {
+        TerrainData(),          // eInfoMovement
+        TerrainData(),          // eInfoRecon
+        urban,                  // eInfoInfiltration
+        roads,                  // eInfoAssault
+        TerrainData(),          // eInfoRetreat
+        TerrainData(),          // eInfoBackup
+        TerrainData()           // eInfoMineClearance
+    };
+
     static TerrainData airAvoid = TerrainData::ForestBorder()
                           .Merge( urban )
                           .Merge( roads );
     static TerrainData airTerrains[ eNbrPathType ] =
     {
-        airAvoid,
-        urban,
-        airAvoid,
-        TerrainData(),
-        TerrainData(),
-        TerrainData(),
-        TerrainData()
+        airAvoid,           // eInfoMovement
+        urban,              // eInfoRecon
+        airAvoid,           // eInfoInfiltration
+        TerrainData(),      // eInfoAssault
+        TerrainData(),      // eInfoRetreat
+        TerrainData(),      // eInfoBackup
+        TerrainData()       // eInfoMineClearance
     };
+    static MT_Float groundCosts[ eNbrPathType ] = 
+    {
+        7, 7, 7, 7, 7, 7, 7
+    };
+    static MT_Float airCosts[ eNbrPathType ] = 
+    {
+        7, 7, 7, 7, 7, 7, 7
+    };
+
     if( bFly && type < eNbrPathType )
-        return airTerrains[ type ];
+        return T_TerrainCost( airTerrains[ type ], airCosts[ type ] );
     if( ! bFly && type < eNbrPathType )
-        return groundTerrains[ type ];
-    return TerrainData();
+        return T_TerrainCost( groundTerrains[ type ], groundCosts[ type ] );
+    return T_TerrainCost();
 }
 
 // -----------------------------------------------------------------------------

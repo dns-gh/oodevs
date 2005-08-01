@@ -3,8 +3,8 @@
 // $Created: JDY 03-04-10 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathType.h $
 // $Author: Nld $
-// $Modtime: 9/05/05 10:51 $
-// $Revision: 4 $
+// $Modtime: 21/07/05 16:33 $
+// $Revision: 5 $
 // $Workfile: DEC_PathType.h $
 //
 //*****************************************************************************
@@ -43,15 +43,21 @@ public:
     //! @name Operations
     //@{
     TerrainRule_ABC& CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to );
+
+    std::string ConvertPathTypeToString() const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::pair< TerrainData, MT_Float > T_TerrainCost;
     //@}
 
     //! @name Tools
     //@{
-    std::string ConvertPathTypeToString() const;
-
-    static TerrainData PreferedTerrain( E_PathType type, bool bFly );
-    static TerrainData AvoidedTerrain( E_PathType type, bool bFly );
-    static void        GetObjectCosts( uint nObjectTypeId, MT_Float& rCostIn, MT_Float& rCostOut );
+    static T_TerrainCost PreferedTerrain( E_PathType type, bool bFly );
+    static T_TerrainCost AvoidedTerrain( E_PathType type, bool bFly );
+    static void          GetObjectCosts( uint nObjectTypeId, MT_Float& rCostIn, MT_Float& rCostOut );
 
     static std::vector< std::pair< MT_Float, MT_Float > > InitializeObjectCosts();
     //@}
