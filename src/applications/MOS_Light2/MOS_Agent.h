@@ -141,6 +141,7 @@ public:
     const T_NbcAgentVector& GetContaminatingNBCAgents() const;
 
     const MOS_AgentComposition&   GetComposition() const;
+    const MOS_TypePion*           GetTypePion   () const;
 
 
     void AddChild( MOS_Agent& agent );

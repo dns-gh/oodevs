@@ -43,6 +43,10 @@ public:
     const MOS_AgentModel& GetModel() const;
     char                  GetSymbol() const;
     char                  GetLevelSymbol() const;
+          bool            IsLogistic    () const;
+          bool            HasMaintenance() const;
+          bool            HasMedical    () const;
+          bool            HasSupply     () const;
     //@}
 
 private:
@@ -50,6 +54,9 @@ private:
     uint                  nID_;
     const MOS_AgentModel* pModel_;
     MOS_Nature*           pNature_;
+    bool                  bHasMaintenance_;
+    bool                  bHasMedical_;
+    bool                  bHasSupply_;
 };
 
 #include "MOS_TypePion.inl"

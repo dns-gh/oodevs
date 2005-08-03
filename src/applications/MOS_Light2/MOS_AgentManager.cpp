@@ -86,9 +86,10 @@ void MOS_AgentManager::Initialize()
     if( ! scipioArchive.Section( "Donnees" ) )
         throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Section SCIPIO does not exist", scipioArchive.RetrieveLastError()->GetWholeMessage() );
 
-    InitializeModels       ( scipioArchive );
-    InitializeTypesPion    ( scipioArchive );
-    InitializeTypesAutomate( scipioArchive );
+    InitializeModels         ( scipioArchive );
+    InitializeTypesComposante( scipioArchive );
+    InitializeTypesPion      ( scipioArchive );
+    InitializeTypesAutomate  ( scipioArchive );
 
     scipioArchive.EndSection(); // Donnees
     scipioArchive.EndSection(); // Scipio
@@ -268,6 +269,47 @@ void MOS_AgentManager::InitializeModels( MT_InputArchive_ABC& scipioArchive )
 }
 
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::InitializeTypesComposantes
+// Created: SBO 2005-08-03
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::InitializeTypesComposante( MT_InputArchive_ABC& scipioArchive )
+{
+    std::string strTypesComposantesFile;
+    if( !scipioArchive.ReadField( "Composantes", strTypesComposantesFile ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+
+    MT_XXmlInputArchive archive;
+    if( !archive.Open( strTypesComposantesFile ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+
+    if( !archive.BeginList( "Composantes" ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    while( archive.NextListElement() )
+    {
+        if( !archive.Section( "Composante" ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+
+        std::string strName;
+        if( !archive.ReadAttribute( "nom", strName ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+
+        MOS_TypeComposante* pTypeComposante = new MOS_TypeComposante( strName, archive );
+        bool bOut = typesComposante_.insert( std::make_pair( pTypeComposante->GetID(), pTypeComposante ) ).second;
+        if( !bOut )
+        {
+            std::stringstream strOutputMsg;
+            strOutputMsg << "Cet id de type de composante est utilisé plusieurs fois: " << pTypeComposante->GetID();
+            MT_LOG_INFO( strOutputMsg.str().c_str(), eDefault, 0 );
+            delete pTypeComposante;
+        }
+
+        archive.EndSection(); // Composante
+    }
+    archive.EndList(); // Composantes
+
+    archive.Close();
+}
 
 //=============================================================================
 // TEAMS
@@ -399,6 +441,21 @@ const MOS_TypeAutomate* MOS_AgentManager::FindTypeAutomate( const std::string& s
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindTypeComposante
+// Created: SBO 2005-08-03
+// -----------------------------------------------------------------------------
+const MOS_TypeComposante* MOS_AgentManager::FindTypeComposante( const std::string& strName ) const
+{
+    for( CIT_TypeComposanteMap it = typesComposante_.begin(); it != typesComposante_.end(); ++it )
+    {
+        const MOS_TypeComposante& typeComposante = *it->second;
+        if( typeComposante.GetName() == strName )
+            return &typeComposante;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindTypePion
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
@@ -423,6 +480,17 @@ const MOS_TypeAutomate* MOS_AgentManager::FindTypeAutomate( uint nID ) const
     return it->second;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindTypeComposante
+// Created: SBO 2005-08-03
+// -----------------------------------------------------------------------------
+const MOS_TypeComposante* MOS_AgentManager::FindTypeComposante( uint nID ) const
+{
+    CIT_TypeComposanteMap it = typesComposante_.find( nID );
+    if( it == typesComposante_.end() )
+        return 0;
+    return it->second;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::ReadODB

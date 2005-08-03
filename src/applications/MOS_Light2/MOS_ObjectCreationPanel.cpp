@@ -398,9 +398,16 @@ bool MOS_ObjectCreationPanel::OnKeyPress( const QKeyEvent& keyEvent )
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectCreationPanel::OnTeamCreated
 // Created: APE 2005-02-24
+// Modified: SBO 2005-08-03
 // -----------------------------------------------------------------------------
 void MOS_ObjectCreationPanel::OnTeamCreated( MOS_Team& team )
 {
+    pTeamCombo_->Clear();
+
+    const MOS_AgentManager::T_TeamMap& teamMap = MOS_App::GetApp().GetAgentManager().GetTeams();
+    for( MOS_AgentManager::CIT_TeamMap itTeam = teamMap.begin(); itTeam != teamMap.end(); ++itTeam )
+        pTeamCombo_->AddItem( (*itTeam).second->GetName().c_str(), (*itTeam).first );
+
     pTeamCombo_->AddItem( team.GetName().c_str(), team.GetID() );
 }
 

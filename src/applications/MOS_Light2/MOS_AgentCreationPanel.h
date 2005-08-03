@@ -91,6 +91,7 @@ private slots:
     void FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
     void CreateGtia();
     void ToggleAutomate();
+    void LogisticLinksDialog();
 
 signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );

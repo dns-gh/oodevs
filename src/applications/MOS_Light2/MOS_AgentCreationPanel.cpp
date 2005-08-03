@@ -171,6 +171,7 @@ void MOS_AgentCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const M
 
     selectedElement_ = context.selectedElement_;
     popupMenu.insertItem( selectedElement_.pAgent_->IsEmbraye() ? tr( "Débrayer automate" ) : tr( "Embrayer automate" ), this, SLOT( ToggleAutomate() ) );
+    popupMenu.insertItem( "Liens Logistiques" , this , SLOT( LogisticLinksDialog() ) );
 }
 
 
@@ -205,6 +206,17 @@ void MOS_AgentCreationPanel::ToggleAutomate()
     MOS_App::GetApp().NotifyAgentUpdated( *selectedElement_.pAgent_ );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentCreationPanel::LogisticLinksDialog
+// Created: HME 2005-08-2
+// -----------------------------------------------------------------------------
+void MOS_AgentCreationPanel::LogisticLinksDialog()
+{
+    static MOS_ChangeLogisticLinksDialog* pDialog = new MOS_ChangeLogisticLinksDialog( this );
+    pDialog->SetAgent( *(selectedElement_.pAgent_) );
+    pDialog->show();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentCreationPanel::Initialize

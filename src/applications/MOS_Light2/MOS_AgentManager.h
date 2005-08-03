@@ -24,6 +24,7 @@ class MOS_Gtia;
 class MOS_Team;
 class MOS_TypePion;
 class MOS_TypeAutomate;
+class MOS_TypeComposante;
 class MOS_LogMaintenanceConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogSupplyConsign;
@@ -76,6 +77,9 @@ public:
 
     typedef std::map< uint, MOS_TypeAutomate* > T_TypeAutomateMap;
     typedef T_TypeAutomateMap::const_iterator   CIT_TypeAutomateMap;
+
+    typedef std::map< uint, MOS_TypeComposante* > T_TypeComposanteMap;
+    typedef T_TypeComposanteMap::const_iterator   CIT_TypeComposanteMap;
 
     typedef std::map< uint, MOS_LogMaintenanceConsign* > T_MaintenanceConsigns;
     typedef T_MaintenanceConsigns::iterator             IT_MaintenanceConsigns;
@@ -159,16 +163,19 @@ public:
     void ReadODB( MT_XXmlInputArchive& archive );
     void WriteODB( MT_XXmlOutputArchive& archive );
 
-          MOS_AgentModel*   FindModel       ( const std::string& strModelName ) const;
-    const MOS_TypePion*     FindTypePion    ( const std::string& strName ) const;
-    const MOS_TypeAutomate* FindTypeAutomate( const std::string& strName ) const;
-    const MOS_TypePion*     FindTypePion    ( uint nID ) const;
-    const MOS_TypeAutomate* FindTypeAutomate( uint nID ) const;
+          MOS_AgentModel*     FindModel         ( const std::string& strModelName ) const;
+    const MOS_TypePion*       FindTypePion      ( const std::string& strName ) const;
+    const MOS_TypeAutomate*   FindTypeAutomate  ( const std::string& strName ) const;
+    const MOS_TypeComposante* FindTypeComposante( const std::string& strName ) const;
+    const MOS_TypePion*       FindTypePion      ( uint nID ) const;
+    const MOS_TypeAutomate*   FindTypeAutomate  ( uint nID ) const;
+    const MOS_TypeComposante* FindTypeComposante( uint nID ) const;
 
 private:
-    void InitializeModels       ( MT_InputArchive_ABC& input );
-    void InitializeTypesPion    ( MT_InputArchive_ABC& input );
-    void InitializeTypesAutomate( MT_InputArchive_ABC& input );
+    void InitializeModels         ( MT_InputArchive_ABC& input );
+    void InitializeTypesComposante( MT_InputArchive_ABC& input );
+    void InitializeTypesPion      ( MT_InputArchive_ABC& input );
+    void InitializeTypesAutomate  ( MT_InputArchive_ABC& input );
 
     template< typename T >
     void AddConsign( std::map< ASN1T_OID, T* >& cont, T& consign );
@@ -184,8 +191,9 @@ private:
 
     T_ModelVector vAvailableModels_;
 
-    T_TypePionMap     typesPion_;
-    T_TypeAutomateMap typesAutomate_;
+    T_TypePionMap         typesPion_;
+    T_TypeAutomateMap     typesAutomate_;
+    T_TypeComposanteMap   typesComposante_;
 
     T_MaintenanceConsigns maintenanceConsigns_;
     T_SupplyConsigns      supplyConsigns_;

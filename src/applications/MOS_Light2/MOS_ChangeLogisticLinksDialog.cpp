@@ -82,24 +82,28 @@ MOS_ChangeLogisticLinksDialog::MOS_ChangeLogisticLinksDialog( QWidget* pParent  
         if( !agent.IsAutomate() )
             continue;
 
+        //if( agent.GetTypePion()->IsLogistic() )
         if( agent.pMaintenanceData_ || agent.pMedicalData_ || agent.pSupplyData_ )
         {
             tc2ComboBoxIDs_.insert( std::make_pair( pTC2ComboBox_->count(), &agent ) );
             pTC2ComboBox_->insertItem( agent.GetName().c_str() );
         }
 
+        //if( agent.GetTypePion()->HasMaintenance() )
         if( agent.pMaintenanceData_ )
         {
             maintenanceComboBoxIDs_.insert( std::make_pair( pMaintenanceComboBox_->count(), &agent ) );
             pMaintenanceComboBox_->insertItem( agent.GetName().c_str() );
         }
 
+        //if( agent.GetTypePion()->HasMedical() )
         if( agent.pMedicalData_ )
         {
             medicalComboBoxIDs_.insert( std::make_pair( pMedicalComboBox_->count(), &agent ) );
             pMedicalComboBox_->insertItem( agent.GetName().c_str() );
         }
 
+        //if( agent.GetTypePion()->HasSupply() )
         if( agent.pSupplyData_ )
         {
             supplyComboBoxIDs_.insert( std::make_pair( pSupplyComboBox_->count(), &agent ) );

@@ -34,6 +34,29 @@ MOS_TypePion::MOS_TypePion( const std::string& strName, MT_InputArchive_ABC& arc
 
     pNature_ = new MOS_Nature( archive );
 
+    if( !archive.BeginList( "Equipements" ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    while( archive.NextListElement() )
+    {
+        if( !archive.Section( "Equipement" ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+
+        std::string strName;
+        if( !archive.ReadAttribute( "nom", strName ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+
+        const MOS_TypeComposante* pTypeComposante = MOS_App::GetApp().GetAgentManager().FindTypeComposante( strName );
+        if( pTypeComposante )
+        {
+            bHasMaintenance_ |= pTypeComposante->HasMaintenance();
+            bHasMedical_     |= pTypeComposante->HasMedical();
+            bHasSupply_      |= pTypeComposante->HasSupply();
+        }
+
+        archive.EndSection(); // Equipement
+    }
+    archive.EndList(); // Equipements
+
     pModel_ = MOS_App::GetApp().GetAgentManager().FindModel( strModel );
     if( !pModel_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );

@@ -54,7 +54,7 @@ MOS_AgentCreationMapFilter::MOS_AgentCreationMapFilter( MOS_AgentCreationPanel& 
 // -----------------------------------------------------------------------------
 MOS_AgentCreationMapFilter::~MOS_AgentCreationMapFilter()
 {
-    Pop();
+//    Pop();
 }
 
 

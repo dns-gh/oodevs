@@ -107,6 +107,8 @@ void MOS_Team::ReadODB( MT_InputArchive_ABC& archive, bool bReadGtias )
     archive.EndList();
 
     archive.EndSection();
+
+    MOS_App::GetApp().NotifyTeamCreated( *this );
 }
 
 

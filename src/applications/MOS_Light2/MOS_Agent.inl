@@ -601,3 +601,13 @@ MOS_Agent::T_AgentVector& MOS_Agent::GetChildren()
 {
     return children_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: mos_agent::GetTypePion
+// Created: SBO 2005-08-03
+// -----------------------------------------------------------------------------
+MOS_INLINE
+const MOS_TypePion* MOS_Agent::GetTypePion() const
+{
+    return pTypePion_;
+}
