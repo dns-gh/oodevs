@@ -66,6 +66,7 @@ public:
         eDispersionX,
         eDispersionY,
         eNeutralizationRatio,
+        eModifStances,
         eDeployTime,
         eLifetime,
         eMineNumber,

@@ -92,6 +92,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     // are correctly enabled / disabled according to those values.
     vItemConnectors_[ADN_Equipement_GUI::eDirect]->Connect( &pInfos->bDirect_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eIndirect]->Connect( &pInfos->bIndirect_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
 }
 
 

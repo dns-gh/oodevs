@@ -39,6 +39,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_Equipement_AmmoListView.h"
+#include "ADN_Equipement_Postures_GUI.h"
 #include "ADN_GroupBox.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_Tr.h"
@@ -184,10 +185,14 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Y Dispersion" ), vConnectors[eDispersionY], tr( "m" ), eGreaterZero );
 
     // Explosive parameters
-    pExplosiveParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Explosive ammo parameters" ), pIndirectGroup );
+    pExplosiveParametersGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pIndirectGroup );
     pExplosiveParametersGroup_->hide();
 
-    builder.AddField<ADN_EditLine_Double>( pExplosiveParametersGroup_, tr( "Neutralization ratio" ), vConnectors[eNeutralizationRatio] );
+    ADN_Equipement_Postures_GUI* pStance = new ADN_Equipement_Postures_GUI( tr( "Stance" ), pExplosiveParametersGroup_ );
+    vConnectors[eModifStances] = &pStance->GetConnector();
+
+    pHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Neutralization ratio" ), vConnectors[eNeutralizationRatio] );
     builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
 
     // Flare parameters

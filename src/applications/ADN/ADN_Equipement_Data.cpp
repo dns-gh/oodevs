@@ -244,6 +244,60 @@ void ADN_Equipement_Data::AttritionInfos::WriteArchive( MT_OutputArchive_ABC& ou
     output.EndSection();
 }
 
+//-----------------------------------------------------------------------------
+// Name: ModificatorPostureInfos::ModificatorPostureInfos
+// Created: JDY 03-09-29
+//-----------------------------------------------------------------------------
+ADN_Equipement_Data::ModificatorPostureInfos::ModificatorPostureInfos(const E_UnitPosture& e )
+: ADN_Ref_ABC()
+, ADN_DataTreeNode_ABC()
+, eType_(e)
+, rCoeff_(1.0)
+{
+    rCoeff_.SetDataName( "le modificateur de dégats selon la posture " );
+    rCoeff_.SetParentNode( *this );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorPostureInfos::GetNodeName
+// Created: AGN 2004-05-14
+// -----------------------------------------------------------------------------
+std::string ADN_Equipement_Data::ModificatorPostureInfos::GetNodeName()
+{
+    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorPostureInfos::GetItemName
+// Created: AGN 2004-05-18
+// -----------------------------------------------------------------------------
+std::string ADN_Equipement_Data::ModificatorPostureInfos::GetItemName()
+{
+    return std::string();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorPostureInfos::ReadArchive
+// Created: APE 2004-11-23
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::ModificatorPostureInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.ReadField( ADN_Tools::ComputePostureScriptName( eType_ ), rCoeff_ );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorPostureInfos::WriteArchive
+// Created: APE 2004-11-23
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.WriteField( ADN_Tools::ComputePostureScriptName( eType_ ), rCoeff_.GetData() );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: IndirectAmmoInfos::IndirectAmmoInfos
@@ -255,6 +309,7 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
 , rDispersionX_     ( 0.0 )
 , rDispersionY_     ( 0.0 )
 , rNeutralizationRatio_ ( 0 )
+, vModifStance_     ()
 , rDeployTime_      ( 0.0 )
 , rLifeTime_        ( 0.0 )
 , nMineNumber_      ( 0 )
@@ -273,6 +328,10 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
+
+    for( uint i=0 ; i< eNbrUnitPosture ; ++i)
+        vModifStance_[i]->rCoeff_ = ammoInfos.vModifStance_[ i ]->rCoeff_.GetData();
+
     rDeployTime_ = ammoInfos.rDeployTime_.GetData();
     rLifeTime_ = ammoInfos.rLifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
@@ -303,6 +362,17 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( ADN_XmlInput_Helper& i
         case eTypeMunitionTirIndirect_Aced:
         case eTypeMunitionTirIndirect_Grenade:
             input.ReadField( "CoefficientNeutralisation", rNeutralizationRatio_ );
+            input.Section( "PHs" );
+            input.Section( "PostureCible" );
+            for( int i = 0; i < eNbrUnitPosture; ++i )
+            {
+                ModificatorPostureInfos* pNew = new ModificatorPostureInfos( ( E_UnitPosture )i );
+                std::auto_ptr< ModificatorPostureInfos > spNew( pNew );
+                spNew->ReadArchive( input );
+                vModifStance_.AddItem( spNew.release() );
+            }
+            input.EndSection(); // PostureCible
+            input.EndSection(); // PHs
             break;
 
         case eTypeMunitionTirIndirect_Fumigene:
@@ -339,6 +409,12 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( MT_OutputArchive_ABC&
     case eTypeMunitionTirIndirect_Aced:
     case eTypeMunitionTirIndirect_Grenade:
         output.WriteField( "CoefficientNeutralisation", rNeutralizationRatio_.GetData() );
+        output.Section( "PHs" );
+        output.Section( "PostureCible" );
+        for( CIT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
+            ( *it )->WriteArchive( output );
+        output.EndSection(); // PostureCible
+        output.EndSection(); // PHs
         break;
 
     case eTypeMunitionTirIndirect_Fumigene:

@@ -123,6 +123,45 @@ public:
     typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfos_Vector;
     typedef T_AttritionInfos_Vector::iterator        IT_AttritionInfos_Vector;
 
+//*****************************************************************************
+    class ModificatorPostureInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( ModificatorPostureInfos )
+
+    public:
+        ModificatorPostureInfos(const E_UnitPosture& e );
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        E_UnitPosture       eType_;
+        ADN_Type_Double     rCoeff_;
+
+    public:
+        class Cmp : public std::unary_function< ModificatorPostureInfos* , bool >
+        {
+        public:
+            Cmp(const E_UnitPosture& val) : val_(val) {}
+            ~Cmp() {}
+
+            bool operator()( ModificatorPostureInfos* tgtnfos ) const 
+            { return tgtnfos->eType_==val_; }
+
+        private:
+            E_UnitPosture val_;
+        };
+    };
+
+    typedef ADN_Type_Vector_ABC<ModificatorPostureInfos>     T_ModificatorPostureInfos_Vector;
+    typedef T_ModificatorPostureInfos_Vector::iterator       IT_ModificatorPostureInfos_Vector;
+    typedef T_ModificatorPostureInfos_Vector::const_iterator CIT_ModificatorPostureInfos_Vector;
+
 
 // *****************************************************************************
     class IndirectAmmoInfos
@@ -139,21 +178,21 @@ public:
 
     public:
         ADN_Type_Enum<E_TypeMunitionTirIndirect,eNbrTypeMunitionTirIndirect>  nIndirectType_;
-        ADN_Type_Int                                                    nIntervention_;
-        ADN_Type_Double                                                 rDispersionX_;
-        ADN_Type_Double                                                 rDispersionY_;
+        ADN_Type_Int                                                          nIntervention_;
+        ADN_Type_Double                                                       rDispersionX_;
+        ADN_Type_Double                                                       rDispersionY_;
 
         // For explosive ammo
-        ADN_Type_Double                                                 rNeutralizationRatio_;
+        ADN_Type_Double                                                       rNeutralizationRatio_;
+        T_ModificatorPostureInfos_Vector                                      vModifStance_;
 
         // For flares
-        ADN_Type_Double                                                 rDeployTime_;
-        ADN_Type_Double                                                 rLifeTime_;
+        ADN_Type_Double                                                       rDeployTime_;
+        ADN_Type_Double                                                       rLifeTime_;
 
         // For smoke
-        ADN_Type_Int                                                    nMineNumber_;
+        ADN_Type_Int                                                          nMineNumber_;
     };
-
 
 // *****************************************************************************
     class AmmoCategoryInfo

@@ -2554,6 +2554,17 @@
         <source>m3</source>
         <translation>m3</translation>
     </message>
+    <message>
+        <source>Stance</source>
+        <translation>Posture</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipement_Postures_GUI</name>
+    <message>
+        <source>PH factor</source>
+        <translation>Facteur de PH</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Wizard</name>
