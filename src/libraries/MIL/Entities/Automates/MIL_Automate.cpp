@@ -599,7 +599,7 @@ bool MIL_Automate::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const 
 
     pPrisonerCamp_ = &camp;
     bPrisoner_     = true;
-    pTC2_      = pionTakingPrisoner.GetAutomate().GetTC2();
+    pTC2_          = pionTakingPrisoner.GetAutomate().GetTC2();
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         (**itPion).GetRole< PHY_RolePion_Surrender >().NotifyTakenPrisoner();
 
@@ -732,12 +732,12 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg
     asnReplyMsg.GetAsnMsg().unit_id    = asnMsg.unit_id;
     asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::no_error;
 
-    if( IsSurrendered() )
-    {
-        asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::error_unit_surrendered;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
+//    if( IsSurrendered() )
+//    {
+//        asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::error_unit_surrendered;
+//        asnReplyMsg.Send( nCtx );
+//        return;
+//    }
 
     if( asnMsg.mode == EnumAutomateState::debraye )
     {
@@ -772,9 +772,9 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
 
         NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
         asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid;
-        if( IsSurrendered() )
-            asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::error_unit_surrendered;
-        else
+//        if( IsSurrendered() )
+//            asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::error_unit_surrendered;
+//        else
         {
             const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
             for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )

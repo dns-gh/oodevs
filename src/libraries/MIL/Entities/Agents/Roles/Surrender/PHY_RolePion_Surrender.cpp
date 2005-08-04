@@ -121,7 +121,7 @@ bool PHY_RolePion_Surrender::NotifyTakenPrisoner()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::NotifyInsidePrisonerCamp( const MIL_CampPrisonniers& camp )
 {
-    if ( bPrisoner_ )
+    if( bPrisoner_ )
     {
         assert( pPion_ );
         pPion_->GetAutomate().NotifyInsidePrisonerCamp( camp );
@@ -134,7 +134,7 @@ void PHY_RolePion_Surrender::NotifyInsidePrisonerCamp( const MIL_CampPrisonniers
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::NotifyOutsidePrisonerCamp( const MIL_CampPrisonniers& camp )
 {
-    if ( bPrisoner_ )
+    if( bPrisoner_ )
     {
         assert( pPion_ );
         pPion_->GetAutomate().NotifyOutsidePrisonerCamp( camp );

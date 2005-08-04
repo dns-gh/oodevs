@@ -11,7 +11,7 @@
     <property name="dist.dir"         location="../dist"/>
     <property name="bin.dir"          location="../bin"/>
     <property name="data.dir"         location="../data"/>
-    <property name="repositories"     value="\\install\Masa\common\dev\delivery/external,\\install\Masa\common\dev\delivery/internal,\\install\masa\simulation\projects\common"/>
+    <property name="repositories"     value="\\install\Masa\common\dev\delivery\external,\\install\Masa\common\dev\delivery\internal,\\install\masa\simulation\projects\common"/>
 
     <property name="compiler" value="msvc"/>
 
@@ -211,6 +211,9 @@
         <update name="hla"/>
         <update name="tools"/>
         <update name="xerces-c"/>
+
+        <update-app library="terrain" name="generation_app"/>
+        <update-app library="DIA" name="DIA_Tool_DebugGUI"/>        
     </target>
 
     <target name="build" depends="libraries,applications"/>

@@ -22,7 +22,7 @@
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFire_ABC::PHY_ActionDirectFire_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType )
-    : PHY_Action_ABC             ( pion )
+    : PHY_Action_ABC              ( pion )
     , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , diaReturnCode_              (       diaCall.GetParameter( 0 )         )
     , nTargetKnowledgeID_         ( (uint)diaCall.GetParameter( 1 ).ToPtr  () )

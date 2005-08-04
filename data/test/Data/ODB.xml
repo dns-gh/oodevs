@@ -656,7 +656,7 @@
             <VitesseCourant>15</VitesseCourant>
             <BergesAAmenager>false</BergesAAmenager>
         </Objet>
- <!--
+ 
         <Objet id="5" type="zone nbc">
             <Armee>bleu</Armee>
             <Forme>
@@ -669,7 +669,7 @@
             </Forme>
             <AgentNBC type="Gaz sarin"/>
         </Objet>
- -->   
+ 
         <Objet id="9" type="rota">
             <Armee>bleu</Armee>
             <Forme>

@@ -645,9 +645,8 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
 // -----------------------------------------------------------------------------
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
 {
-    if( GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
-        return EnumUnitAttrErrorCode::error_unit_surrendered;
-
+//    if( GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
+//        return EnumUnitAttrErrorCode::error_unit_surrendered;
     if( pAutomate_->IsEmbraye() )
         return EnumUnitAttrErrorCode::error_automate_embraye;
 

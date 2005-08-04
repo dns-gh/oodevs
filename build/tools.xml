@@ -87,6 +87,23 @@
             </for>
         </sequential>
     </macrodef>
+    
+    <macrodef name="update-app">
+        <attribute name="library"/>
+        <attribute name="name"/>
+        <sequential>
+            <for list="${repositories}" param="repository">
+                <sequential>
+                    <unzip dest="${bin.dir}">
+                        <fileset dir="@{repository}">
+                            <include name="@{library}/@{name}.zip"/>
+                            <include name="@{library}/current/@{name}.zip"/>
+                        </fileset>               
+                    </unzip>
+                 </sequential>
+            </for>
+        </sequential>
+    </macrodef>    
 
     <macrodef name="build">
         <attribute name="name"/>
