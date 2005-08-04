@@ -18,6 +18,7 @@ class PHY_DotationCategory;
 class PHY_IndirectFireDotationClass;
 class PHY_FireResults_ABC;
 class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  PHY_DotationCategory_IndirectFire_ABC
@@ -42,6 +43,7 @@ public:
             uint     ConvertToNbrAmmo         ( MT_Float rNbrIT ) const;
     virtual void     Fire                     ( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual void     Fire                     ( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired ) const;
+    virtual bool     HasHit                   ( const MIL_Agent_ABC& target ) const;
     //@}
 
 protected:

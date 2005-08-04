@@ -17,12 +17,12 @@
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "PHY_DotationCategory_IndirectMineFire.h"
 
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_ ( "Explosif" , eExplosif , &PHY_DotationCategory_IndirectFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::grenade_  ( "Grenade"  , eGrenade  , &PHY_DotationCategory_IndirectFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::aced_     ( "ACED"     , eACED     , &PHY_DotationCategory_IndirectFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_ ( "Fumigene" , eFumigene , &PHY_DotationCategory_IndirectWeatherFire::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_( "Eclairant", eEclairant, &PHY_DotationCategory_IndirectWeatherFire::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_     ( "Mine"     , eMine     , &PHY_DotationCategory_IndirectMineFire   ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_ ( "Explosif" , eExplosif , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire       ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::grenade_  ( "Grenade"  , eGrenade  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire       ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::aced_     ( "ACED"     , eACED     , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire       ::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_ ( "Fumigene" , eFumigene , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_( "Eclairant", eEclairant, /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_     ( "Mine"     , eMine     , /*NeedPH*/false, &PHY_DotationCategory_IndirectMineFire   ::Create );
 
 PHY_IndirectFireDotationClass::T_TypeMap PHY_IndirectFireDotationClass::types_;
 
@@ -54,10 +54,11 @@ void PHY_IndirectFireDotationClass::Terminate()
 // Name: PHY_IndirectFireDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_IndirectFireDotationClass::PHY_IndirectFireDotationClass( const std::string& strName, E_Type nType, T_TypeInstancier typeInstancier )
+PHY_IndirectFireDotationClass::PHY_IndirectFireDotationClass( const std::string& strName, E_Type nType, bool bNeedPH, T_TypeInstancier typeInstancier )
     : strName_       ( strName )
     , nType_         ( nType   )
     , typeInstancier_( typeInstancier )
+    , bNeedPH_       ( bNeedPH )
 {
 }
 

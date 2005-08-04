@@ -883,24 +883,24 @@ void PHY_RolePion_Composantes::DamageTransported( MT_Float rWeightToDamage, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyFire
+// Name: PHY_RolePion_Composantes::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyFire( const MIL_NbcAgentType& nbcAgentType )
+void PHY_RolePion_Composantes::ApplyContamination( const MIL_NbcAgentType& nbcAgentType )
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
-            composante.ApplyFire( nbcAgentType );
+            composante.ApplyContamination( nbcAgentType );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyFire
+// Name: PHY_RolePion_Composantes::ApplyExplosion
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyFire( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& fireResult )
+void PHY_RolePion_Composantes::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& fireResult )
 {
     assert( pPion_ );
     PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
@@ -910,17 +910,17 @@ void PHY_RolePion_Composantes::ApplyFire( const MIL_RealObjectType& objectType, 
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
         {
-            composante.ApplyFire( objectType, agentFireResult );
+            composante.ApplyExplosion( objectType, agentFireResult );
             return;
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyFire
+// Name: PHY_RolePion_Composantes::ApplyIndirectFire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
+void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
     assert( pPion_ );
     
@@ -929,15 +929,15 @@ void PHY_RolePion_Composantes::ApplyFire( const PHY_DotationCategory& dotationCa
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
-            composante.ApplyFire( dotationCategory, agentFireResult );
+            composante.ApplyIndirectFire( dotationCategory, agentFireResult );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyFire
+// Name: PHY_RolePion_Composantes::ApplyDirectFire
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
+void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
     assert( pPion_ );
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
@@ -946,7 +946,7 @@ void PHY_RolePion_Composantes::ApplyFire( PHY_Composante_ABC& compTarget, const 
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
 
     if( compTargetPion.CanBeFired() )
-        compTargetPion.ApplyFire( dotationCategory, agentFireResult );
+        compTargetPion.ApplyDirectFire( dotationCategory, agentFireResult );
 }
 
 // -----------------------------------------------------------------------------

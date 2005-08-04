@@ -33,8 +33,8 @@ public:
     //! @name Accessors
     //@{
     MT_Float GetAverageSpeed() const;
-    MT_Float GetMinRange()  const;
-    MT_Float GetMaxRange()  const;
+    MT_Float GetMinRange    () const;
+    MT_Float GetMaxRange    () const;
     //@}
 
     //! @name Operations

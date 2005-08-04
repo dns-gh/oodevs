@@ -261,28 +261,28 @@ void PHY_RoleHLA_Composantes::Neutralize()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Composantes::ApplyFire
+// Name: PHY_RoleHLA_Composantes::ApplyDirectFire
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::ApplyFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
+void PHY_RoleHLA_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
 {
     interactionManager_.Send( HLA_DirectFire( GetRole< HLA_RoleInterface >(), compTarget, dotationCategory ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Composantes::ApplyFire
+// Name: PHY_RoleHLA_Composantes::ApplyIndirectFire
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::ApplyFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
+void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
 {
     interactionManager_.Send( HLA_IndirectFire( GetRole< HLA_RoleInterface >(), dotationCategory ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Composantes::ApplyFire
+// Name: PHY_RoleHLA_Composantes::ApplyExplosion
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::ApplyFire( const MIL_RealObjectType& /*objectType*/, PHY_FireResults_ABC& /*result*/ )
+void PHY_RoleHLA_Composantes::ApplyExplosion( const MIL_RealObjectType& /*objectType*/, PHY_FireResults_ABC& /*result*/ )
 {
     // NOTHING
 }

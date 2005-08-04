@@ -30,7 +30,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_Posture*, sCaseInsensitiveLess > T_PostureMap;
-    typedef T_PostureMap::const_iterator                                       CIT_PostureMap;
+    typedef T_PostureMap::const_iterator                                      CIT_PostureMap;
     //@}
 
 public:

@@ -50,6 +50,7 @@ public:
     //@{
           int          GetID  () const;
     const std::string& GetName() const;
+          bool         NeedPH () const;
     //@}
 
     //! @name Operations
@@ -63,7 +64,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< int, const PHY_IndirectFireDotationClass* > T_TypeMap;
-    typedef T_TypeMap::const_iterator                                 CIT_TypeMap;
+    typedef T_TypeMap::const_iterator                             CIT_TypeMap;
 
     typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& );
 
@@ -79,13 +80,14 @@ private:
     //@}
 
 private:
-     PHY_IndirectFireDotationClass( const std::string& strName, E_Type nType, T_TypeInstancier typeInstancier );
+     PHY_IndirectFireDotationClass( const std::string& strName, E_Type nType, bool bNeedPH, T_TypeInstancier typeInstancier );
     ~PHY_IndirectFireDotationClass();
 
 private:
     const std::string       strName_;
     const E_Type            nType_;
     const T_TypeInstancier  typeInstancier_;
+    const bool              bNeedPH_;
 
 private:
     static T_TypeMap types_;

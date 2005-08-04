@@ -58,9 +58,9 @@ public:
     virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets ) const;
     virtual void GetComposantesAbleToBeFired( T_ComposanteVector& targets, uint nNbrFirer ) const;
     virtual void Neutralize                 ();
-    virtual void ApplyFire                  ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void ApplyFire                  ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void ApplyFire                  ( const MIL_RealObjectType& objectType        , PHY_FireResults_ABC& result );
+    virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual void ApplyExplosion             ( const MIL_RealObjectType& objectType        , PHY_FireResults_ABC& result );
     //@}
 
     //! @name Accessors

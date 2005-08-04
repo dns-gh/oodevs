@@ -130,9 +130,10 @@ public:
     void     FillDirectFireData             ( PHY_DirectFireData& data   );
     void     FillIndirectFireData           ( PHY_IndirectFireData& data );
     void     FillIndirectFireData           ( PHY_SmokeData& data );
-    void     ApplyFire                      ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
-    void     ApplyFire                      ( const MIL_RealObjectType& objectType, PHY_AgentFireResult& result );
-    void     ApplyFire                      ( const MIL_NbcAgentType& nbcAgentType );
+    void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
+    void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
+    void     ApplyExplosion                 ( const MIL_RealObjectType& objectType, PHY_AgentFireResult& result );
+    void     ApplyContamination             ( const MIL_NbcAgentType& nbcAgentType );
     uint     GetNeutralizationTime          () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_AgentFireResult& fireResult );
     MT_Float GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwFirerAndTarget ) const;

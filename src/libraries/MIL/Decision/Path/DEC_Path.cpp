@@ -653,12 +653,12 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
 {    
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
-    MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << " : computation begin" );
-    MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
-    MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
-    MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.ConvertPathTypeToString() );
-    MT_LOG_MESSAGE_MSG( GetPathAsString() );
-    profiler_.Start();
+        MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << " : computation begin" );
+        MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
+        MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
+        MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.ConvertPathTypeToString() );
+        MT_LOG_MESSAGE_MSG( GetPathAsString() );
+        profiler_.Start();
     }
 
     assert( resultList_.empty() );
@@ -676,16 +676,16 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
 
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
-    double rComputationTime = profiler_.Stop();
+        double rComputationTime = profiler_.Stop();
 
-    std::stringstream stream;
-    if ( ! resultList_.empty() )
-        stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
-    MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << 
-                        ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
-                        ", Time : " << rComputationTime << 
-                        ", State : " << GetStateAsString() <<
-                        ", Result : " << stream.str() );
+        std::stringstream stream;
+        if ( ! resultList_.empty() )
+            stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
+        MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << 
+                            ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
+                            ", Time : " << rComputationTime << 
+                            ", State : " << GetStateAsString() <<
+                            ", Result : " << stream.str() );
     }
     DecRef(); // We are no longer in the pathfind queue
 }

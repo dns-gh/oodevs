@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
+#include "MT_Tools/MT_Random.h"
 
 // =============================================================================
 // @class  PHY_DotationCategory_IndirectFire
@@ -35,11 +36,23 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Fire( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual void Fire  ( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual bool HasHit( const MIL_Agent_ABC& target ) const;
     //@}
 
 private:
-    MT_Float rNeutralizationCoef_;
+    //! @name Types
+    //@{
+    typedef std::vector< MT_Float >     T_PhVector;
+    typedef T_PhVector::const_iterator  CIT_PhVector;
+    //@}
+
+private:
+    MT_Float   rNeutralizationCoef_;
+    T_PhVector phs_;
+
+private:
+    static MT_Random random_;
 };
 
 #include "PHY_DotationCategory_IndirectFire.inl"

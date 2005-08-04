@@ -57,7 +57,7 @@ DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const T_TerrainCos
        && path.GetAutomataFuseau().IsInside( to ) )
         pAutomateFuseau_ = & path.GetAutomataFuseau();
     dangerPoint_ = DotProduct( dangerDirection_, from ) > DotProduct( dangerDirection_, to ) ? from : to;
-    agents_.reserve( 10 );
+    agents_ .reserve( 10 );
     objects_.reserve( 10 );
 }
 

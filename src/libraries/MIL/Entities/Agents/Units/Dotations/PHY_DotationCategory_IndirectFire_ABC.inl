@@ -38,3 +38,13 @@ uint PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrIT ) 
 {
     return (uint)( nInterventionType_ * rNbrIT );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::HasHit
+// Created: NLD 2005-08-04
+// -----------------------------------------------------------------------------
+inline
+bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*target*/ ) const
+{
+    return true;
+}

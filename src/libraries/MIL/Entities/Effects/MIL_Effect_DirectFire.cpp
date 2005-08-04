@@ -44,7 +44,7 @@ MIL_Effect_DirectFire::~MIL_Effect_DirectFire()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_DirectFire::Execute()
 {
-    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyFire( compTarget_, dotationCategory_, fireResult_ );
+    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyDirectFire( compTarget_, dotationCategory_, fireResult_ );
     delete this;
     return false; // Effect must be stopped
 }

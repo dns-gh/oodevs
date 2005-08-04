@@ -692,7 +692,7 @@ void MIL_RealObject_ABC::ApplyAttrition( MIL_Agent_ABC& target )
     assert( pType_ );
     
     PHY_ObjectExplosionFireResult fireResult( *this );
-    target.GetRole< PHY_RoleInterface_Composantes >().ApplyFire( *pType_, fireResult );
+    target.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *pType_, fireResult );
 
     // Modifie l'état de construction de l'objet
     if( nFullNbrDotationForConstruction_ && nCurrentNbrDotationForConstruction_ > 0 )

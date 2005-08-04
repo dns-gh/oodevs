@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -453,30 +454,43 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyFire
+// Name: PHY_ComposantePion::ApplyExplosion
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFire( const MIL_RealObjectType& objectType, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_AgentFireResult& fireResult )
 {
     assert( pType_ );
     ApplyFire( objectType.GetAttritionData( pType_->GetProtection() ), fireResult );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyFire
-// Created: NLD 2004-10-06
+// Name: PHY_ComposantePion::ApplyDirectFire
+// Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFire( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult )
 {
     assert( pType_ );
     ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireResult );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyFire
+// Name: PHY_ComposantePion::ApplyIndirectFire
+// Created: NLD 2005-08-04
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult )
+{
+    assert( pType_ );
+
+    assert( dotationCategory.GetIndirectFireData() );
+    if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion() ) )
+        ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFire( const MIL_NbcAgentType& nbcAgentType )
+void PHY_ComposantePion::ApplyContamination( const MIL_NbcAgentType& nbcAgentType )
 {
     humans_.ApplyWounds( nbcAgentType );
 }

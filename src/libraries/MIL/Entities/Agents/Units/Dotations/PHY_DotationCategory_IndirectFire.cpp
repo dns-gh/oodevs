@@ -16,9 +16,13 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "TER/TER_Agent_ABC.h"
 #include "TER/TER_World.h"
+
+MT_Random PHY_DotationCategory_IndirectFire::random_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Create
@@ -35,11 +39,24 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, MIL_InputArchive& archive )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, archive )
+    , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
 {
     archive.ReadField( "CoefficientNeutralisation", rNeutralizationCoef_, CheckValueGreaterOrEqual( 1. ) );
 
     if( !dotationCategory.HasAttritions() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation has no attritions defined", archive.GetContext() );
+
+    archive.Section( "PHs" );
+    archive.Section( "PostureCible" );
+    const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
+    for( PHY_Posture::CIT_PostureMap it = postures.begin(); it != postures.end(); ++it )
+    {
+        const PHY_Posture& posture = *it->second;    
+        assert( phs_.size() > posture.GetID() );
+        archive.ReadField( posture.GetName(), phs_[ posture.GetID() ] );
+    }
+    archive.EndSection(); // PostureCible
+    archive.EndSection(); // PHs
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +71,7 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 // =============================================================================
 // OPERATIONS
 // =============================================================================
-
+   
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::Fire
 // Created: NLD 2004-10-12
@@ -83,6 +100,20 @@ void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& /*firer*/, co
         PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
         targetRoleComposantes.Neutralize();
         if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
-            targetRoleComposantes.ApplyFire( dotationCategory_, fireResult );
+            targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire::HasHit
+// Created: NLD 2005-08-04
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target ) const
+{
+    const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
+    
+    const MT_Float rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
+                         + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
+
+    return random_.rand_oi() <= rPH ;
 }

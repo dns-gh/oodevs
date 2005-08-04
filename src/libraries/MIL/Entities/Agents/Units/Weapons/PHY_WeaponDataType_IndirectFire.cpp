@@ -15,8 +15,9 @@
 
 #include "PHY_WeaponType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -24,8 +25,10 @@
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, MIL_InputArchive& archive )
-    : weaponType_   ( weaponType )
+    : weaponType_( weaponType )
 {
+    assert( weaponType_.GetDotationCategory().GetIndirectFireData() != 0 );
+
     archive.ReadField( "VitesseMoyenne", rAverageSpeed_, CheckValueGreaterOrEqual( 0. ) );
     rAverageSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rAverageSpeed_ * 3.6 /* m/s -> km/h */ ); //$$$$
     
@@ -44,10 +47,10 @@ PHY_WeaponDataType_IndirectFire::~PHY_WeaponDataType_IndirectFire()
 {
 }
 
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_IndirectFire::Fire
 // Created: NLD 2004-10-11

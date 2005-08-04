@@ -86,3 +86,13 @@ bool PHY_IndirectFireDotationClass::operator!=( const PHY_IndirectFireDotationCl
 {
     return nType_ != rhs.nType_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_IndirectFireDotationClass::NeedPH
+// Created: NLD 2005-08-03
+// -----------------------------------------------------------------------------
+inline
+bool PHY_IndirectFireDotationClass::NeedPH() const
+{
+    return bNeedPH_;
+}

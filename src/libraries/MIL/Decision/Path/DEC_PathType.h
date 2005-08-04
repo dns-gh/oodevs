@@ -58,7 +58,7 @@ private:
     static T_TerrainCost PreferedTerrain( E_PathType type, bool bFly );
     static T_TerrainCost AvoidedTerrain( E_PathType type, bool bFly );
     static void          GetObjectCosts( uint nObjectTypeId, MT_Float& rCostIn, MT_Float& rCostOut );
-
+    
     static std::vector< std::pair< MT_Float, MT_Float > > InitializeObjectCosts();
     //@}
 

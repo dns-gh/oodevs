@@ -123,7 +123,7 @@ void PHY_RolePion_NBC::Contaminate( const MIL_NbcAgentType& nbcAgentType )
     if( bNbcProtectionSuitWorn_ )
         return;
    
-    GetRole< PHY_RolePion_Composantes >().ApplyFire( nbcAgentType );
+    GetRole< PHY_RolePion_Composantes >().ApplyContamination( nbcAgentType );
 }
 
 // -----------------------------------------------------------------------------

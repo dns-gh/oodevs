@@ -22,6 +22,26 @@ TODO de merde
 
 Next Version - Codename ''
     - AGE - Refactors dans la règle du pathfind, modifications des poids pour le type d'itinéraire 'Assault'
+    - NLD - Gestion des 'PHs' dans les tirs indirects, dépendant de la posture de la cible
+                - Données au niveau des dotations munitions
+                            <TirIndirect type="explosif">
+                                <InterventionType>6</InterventionType>
+                                <DispersionX>300</DispersionX>
+                                <DispersionY>200</DispersionY>
+                                <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
+                                <PHs>
+                                    <PostureCible>
+                                        <Mouvement>1</Mouvement>
+                                        <MouvementDiscret>1</MouvementDiscret>
+                                        <Arret>1</Arret>
+                                        <PosteReflexe>1</PosteReflexe>
+                                        <Poste>1</Poste>
+                                        <PosteAmenage>0.2</PosteAmenage>
+                                        <PostePrepareGenie>0.2</PostePrepareGenie>
+                                    </PostureCible>     
+                                </PHs>                    
+                            </TirIndirect>
+                - Un PH est tiré pour chaque composante suspectible d'être touchée par le tir, lors de l'application des effets
     
 Version 0.114 [01/08/2005] - Codename 'svn'
     - NLD - Logistique - santé : nouvelle fonction DEC_TransfererBlessesVersTC2() qui, subtilement combinée à l'action magique de changement

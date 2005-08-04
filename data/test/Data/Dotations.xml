@@ -108,6 +108,17 @@
           <DispersionX>1000</DispersionX>
           <DispersionY>1500</DispersionY>
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
+          <PHs>
+            <PostureCible>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>1</MouvementDiscret>
+                <Arret>1</Arret>
+                <PosteReflexe>1</PosteReflexe>
+                <Poste>1</Poste>
+                <PosteAmenage>0.2</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>     
+           </PHs>                    
         </TirIndirect>
       </Categorie>
       <Categorie nom="Fusse a jupette 53mm">
@@ -164,6 +175,17 @@
           <DispersionX>1000</DispersionX>
           <DispersionY>1500</DispersionY>
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
+          <PHs>
+            <PostureCible>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>1</MouvementDiscret>
+                <Arret>1</Arret>
+                <PosteReflexe>1</PosteReflexe>
+                <Poste>1</Poste>
+                <PosteAmenage>0.2</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>     
+           </PHs>                    
         </TirIndirect>
       </Categorie>
       <Categorie nom="Fusse a ailettes 50mm">
@@ -220,6 +242,17 @@
           <DispersionX>300</DispersionX>
           <DispersionY>200</DispersionY>
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
+          <PHs>
+            <PostureCible>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>1</MouvementDiscret>
+                <Arret>1</Arret>
+                <PosteReflexe>1</PosteReflexe>
+                <Poste>1</Poste>
+                <PosteAmenage>0.2</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>     
+           </PHs>          
         </TirIndirect>
       </Categorie>
       <Categorie nom="Missile Hot">
@@ -276,6 +309,17 @@
           <DispersionX>300</DispersionX>
           <DispersionY>200</DispersionY>
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
+          <PHs>
+            <PostureCible>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>1</MouvementDiscret>
+                <Arret>1</Arret>
+                <PosteReflexe>1</PosteReflexe>
+                <Poste>1</Poste>
+                <PosteAmenage>0.2</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>     
+           </PHs>                    
         </TirIndirect>
       </Categorie>
       <Categorie nom="Obus eclairant">
