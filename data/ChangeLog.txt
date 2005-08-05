@@ -21,6 +21,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - AGE - Externalisation des poids de la règle de pathfind -> Fichier PathfindRules.xml
+    - AGE - Ajout d'un helper pour gerer les changements de répertoires pour la lecture des archives
     - NLD - Les zones de tirs ne devraient plus être evitées par le pathfind - A TESTER
     
     - NLD - Nettoyage dans les objets + envoi des infos sur les dotations de construction/valorisation des objets reels ) à MOS
