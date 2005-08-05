@@ -19,6 +19,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_CampPrisonniers, "MIL_CampPrisonniers" )
 
@@ -45,6 +46,7 @@ MIL_CampPrisonniers::~MIL_CampPrisonniers()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CampPrisonniers::serialize
 // Created: JVT 2005-04-14
@@ -148,4 +150,24 @@ void MIL_CampPrisonniers::ProcessAgentExiting( MIL_Agent_ABC& agent )
     MIL_RealObject_ABC::ProcessAgentExiting( agent );
     if( pTC2_ )
         agent.GetRole< PHY_RoleInterface_Surrender >().NotifyOutsidePrisonerCamp( *this );
+}
+
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CampPrisonniers::WriteSpecificAttributes
+// Created: NLD 2003-11-25
+// -----------------------------------------------------------------------------
+void MIL_CampPrisonniers::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
+{
+    assert( pTC2_ );
+
+    asnAttributes_.tc2 = pTC2_->GetID();
+
+    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent           = 1;
+    asnMsg.GetAsnMsg().attributs_specifiques.t                  = T_AttrObjectSpecific_camp_prisonniers;
+    asnMsg.GetAsnMsg().attributs_specifiques.u.camp_prisonniers = &asnAttributes_;
 }

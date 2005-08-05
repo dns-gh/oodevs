@@ -50,6 +50,11 @@ public:
     //@}
 
 private:
+    //! @name Network
+    //@{
+    virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
+    //@}
+
     //! @name Events
     //@{
     virtual void ProcessAgentInside  ( MIL_Agent_ABC& agent );
@@ -58,7 +63,8 @@ private:
     //@}
 
 private:
-    MIL_AutomateLOG* pTC2_;
+    MIL_AutomateLOG*             pTC2_;
+    ASN1T_AttrObjectCampRefugies asnAttributes_;
 };
 
 #include "MIL_CampRefugies.inl"
