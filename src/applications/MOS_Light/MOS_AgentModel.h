@@ -51,14 +51,14 @@ public:
     };
 
 
-    typedef std::vector< E_MissionID >         T_Mission_Vector;
+    typedef std::vector< uint >              T_Mission_Vector;
     typedef T_Mission_Vector::iterator       IT_Mission_Vector;
     typedef T_Mission_Vector::const_iterator CIT_Mission_Vector;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_AgentModel( const std::string& strName );
+    MOS_AgentModel( bool bAutomataModel, const std::string& strName );
     ~MOS_AgentModel();
     //@}
 
@@ -91,6 +91,7 @@ private:
     //! @name Member data
     //@{
     std::string strName_;
+    bool bAutomataModel_;
     T_Mission_Vector vAvailableMissions_;
     //@}
 };

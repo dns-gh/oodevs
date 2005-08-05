@@ -124,7 +124,7 @@ void MOS_LogisticSupplyRecompletionDialog::SetAgent( const MOS_Agent& agent )
 {
     assert( !pAgent_ );
     pAgent_ = &agent;
-
+/*
     // initialize dotation table
     pDotationsTable_->setNumRows( 0 );
     uint nPos = pDotationsTable_->numRows();
@@ -173,6 +173,30 @@ void MOS_LogisticSupplyRecompletionDialog::SetAgent( const MOS_Agent& agent )
     pMunitionsFamilyTable_->setItem( nPos, 0, new QCheckTableItem( pMunitionsFamilyTable_, 0 ) );
     pMunitionsFamilyTable_->setText( nPos, 1, "mitraille" );
     pMunitionsFamilyTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pMunitionsFamilyTable_, 0, 100, 1 ) );
+*/
+    // initialize dotation table
+    pDotationsTable_->setNumRows( 0 );
+    for( uint eType = 0; eType < ( uint )eNbrFamilleDotation; ++eType )
+    {
+        if( ( E_FamilleDotation )eType == eFamilleDotation_Munition )
+            continue;
+        uint nPos = pDotationsTable_->numRows();
+        pDotationsTable_->insertRows( nPos, 1 );
+        pDotationsTable_->setItem( nPos, 0, new QCheckTableItem( pDotationsTable_, 0 ) );
+        pDotationsTable_->setText( nPos, 1, ENT_Tr::ConvertFromFamilleDotation( ( E_FamilleDotation )eType ).c_str() );
+        pDotationsTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pDotationsTable_, 0, 100, 1 ) );
+    }
+
+    // initialize munitions family table
+    pMunitionsFamilyTable_->setNumRows( 0 );
+    for( uint eType = 0; eType < ( uint )eNbrFamilleMunition; ++eType )
+    {
+        uint nPos = pMunitionsFamilyTable_->numRows();
+        pMunitionsFamilyTable_->insertRows( nPos, 1 );
+        pMunitionsFamilyTable_->setItem( nPos, 0, new QCheckTableItem( pMunitionsFamilyTable_, 0 ) );
+        pMunitionsFamilyTable_->setText( nPos, 1, ENT_Tr::ConvertFromFamilleMunition( ( E_FamilleMunition )eType ).c_str() );
+        pMunitionsFamilyTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pMunitionsFamilyTable_, 0, 100, 1 ) );
+    }
 
     /*
     // intialize munition table
@@ -224,7 +248,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
     // Dotations
     {
     uint nNbrDotations = 0;
-    uint nRow;
+    int nRow;
     for( nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pDotationsTable_->item( nRow, 0 ) );
@@ -240,7 +264,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         ASN1T_RecompletementDotation* pAsnDotations = new ASN1T_RecompletementDotation[ nNbrDotations ];
         asnMagicAction.dotations.elem = pAsnDotations;
         uint nAsnIdx = 0;
-        for( uint nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
+        for( int nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pDotationItemCheckBox = static_cast< QCheckTableItem* >( pDotationsTable_->item( nRow, 0 ) );
             QTableItem*      pDotationItem         = pDotationsTable_->item( nRow, 1 );
@@ -263,7 +287,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
     // Munitions
     {
     uint nNbrMunitions = 0;
-    uint nRow;
+    int nRow;
     for( nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pMunitionsFamilyTable_->item( nRow, 0 ) );
@@ -279,7 +303,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         ASN1T_RecompletementDotationMunition* pAsnMunitions = new ASN1T_RecompletementDotationMunition[ nNbrMunitions ];
         asnMagicAction.munitions.elem = pAsnMunitions;
         uint nAsnIdx = 0;
-        for( uint nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
+        for( int nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pMunitionItemCheckBox = static_cast< QCheckTableItem* >( pMunitionsFamilyTable_->item( nRow, 0 ) );
             QTableItem*      pMunitionItem         = pMunitionsFamilyTable_->item( nRow, 1 );

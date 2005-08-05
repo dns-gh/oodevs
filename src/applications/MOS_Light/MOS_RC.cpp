@@ -317,7 +317,7 @@ void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
 
     for( uint i = 0; i < asnMsg.ordres_conduite.n; ++i )
     {
-        E_OrderConduiteID nOrderConduiteID;
+        E_FragOrder nOrderConduiteID;
         switch( asnMsg.ordres_conduite.elem[i].t  )
         {
             case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_attendre_se_poster                              : nOrderConduiteID = eOrdreConduite_AttendreSePoster                            ; break;

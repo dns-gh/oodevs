@@ -745,7 +745,7 @@ MOS_MTH_NatureAtlas& MOS_Mission_ABC::CreateNatureAtlas( ASN1T_NatureAtlas& asnN
 // Name: MOS_Mission_ABC::CreateGDH
 // Created: NLD 2003-03-26
 //-----------------------------------------------------------------------------
-MOS_MTH_GDH& MOS_Mission_ABC::CreateGDH( ASN1T_GDH& asnGDH, QWidget* pParentWidget, QBoxLayout* pParentLayout, const std::string& sName, int nTools )
+MOS_MTH_GDH& MOS_Mission_ABC::CreateGDH( ASN1T_GDH& asnGDH, QWidget* pParentWidget, QBoxLayout* pParentLayout, const std::string& sName, int /*nTools*/ )
 {
     MOS_MTH_GDH* pMissionTool = new MOS_MTH_GDH( asnGDH, pParentWidget, sName );
     pMissionTool->SetWidgetTab( pParentWidget );

@@ -458,8 +458,6 @@ void MOS_App::Initialize()
     pMainWindow_->show();
 
     MT_ChangeDir( strInitialDir );
-
-    MT_ChangeDir( strInitialDir );
 }
 
 //-----------------------------------------------------------------------------

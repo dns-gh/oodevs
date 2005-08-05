@@ -32,8 +32,9 @@
 */
 // Created: AGN 2003-12-22
 // -----------------------------------------------------------------------------
-MOS_AgentModel::MOS_AgentModel( const std::string& strName )
-: strName_( strName )
+MOS_AgentModel::MOS_AgentModel( bool bAutomataModel, const std::string& strName )
+: bAutomataModel_ ( bAutomataModel )
+, strName_( strName )
 {
     
 }
@@ -83,8 +84,12 @@ void MOS_AgentModel::InitializeMission( MT_InputArchive_ABC& input )
         if( !input.ReadAttribute( "nom", strMission ) )
             throw MT_ScipioException( "DEC_Model::InitializeMissions", __FILE__, __LINE__, "" );
 
-        E_MissionID nMissionID = MOS_Tools::ConvertMissionType( strMission );
-        if( nMissionID == (E_MissionID)-1 )
+        uint nMissionID;
+        if( bAutomataModel_ )
+            nMissionID = ENT_Tr::ConvertToAutomataMission( strMission );
+        else
+            nMissionID = ENT_Tr::ConvertToUnitMission( strMission );
+        if( nMissionID == (uint)-1 )
             throw MT_ScipioException( "DEC_Model::InitializeMissions", __FILE__, __LINE__, "" );
 
         vAvailableMissions_.push_back( nMissionID );

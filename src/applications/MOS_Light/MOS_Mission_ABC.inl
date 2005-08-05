@@ -37,5 +37,5 @@ E_MissionID MOS_Mission_ABC::GetTypeMission() const
 inline
 std::string MOS_Mission_ABC::GetName() const
 {
-    return MOS_Tools::GetMissionDisplay( nTypeMission_ );
+    return std::string();
 }

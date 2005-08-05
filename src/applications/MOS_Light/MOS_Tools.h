@@ -31,23 +31,14 @@ class MOS_Tools
     MT_COPYNOTALLOWED( MOS_Tools );
 
 public:
-    static E_MissionID ConvertMissionType( const std::string& strMissionName );
-    static std::string GetMissionDisplay( E_MissionID nMission );
+    //$$$$ QString -> const char*
+    static QString ToString( E_UnitPosture nPosture );
 
 
-    static std::string ConvertPostureType ( E_PostureType nPostureType );
     static std::string ConvertWeatherType ( E_WeatherType nWeatherType );
     static std::string ConvertLightingType( E_LightingType nLightingType );
-    static std::string GetOrderDisplay    ( E_OrderConduiteID nOrder );
 
-    static std::string ConvertNatureLevel          ( E_NatureLevelType );
-    static std::string ConvertNatureWeapon         ( E_NatureWeaponType );
-    static std::string ConvertNatureSpecialization ( E_NatureSpecializationType );
-    static std::string ConvertNatureQualifier      ( E_NatureQualifierType );
-    static std::string ConvertNatureCategory       ( E_NatureCategoryType );
-    static std::string ConvertNatureMobility       ( E_NatureMobilityType );
     static std::string ConvertNatureAtlas          ( E_NatureAtlasType );
-    static std::string ConvertMissionCapacity      ( E_NatureCapaciteMissionType );
     static std::string ConvertPerceptionLevel      ( E_PerceptionResult );
     static std::string ConvertEnvironementType     ( MOS_RawVisionData::E_VisionObject );
 
@@ -129,22 +120,8 @@ private:
         return badString;
     }    
 private:
-    typedef MOS_Tools::converter< E_MissionID > T_MissionConverter;
-    typedef MOS_Tools::converter< E_OrderConduiteID > T_OrderConverter;
-
-    static T_MissionConverter missionConverter_[];
-    static T_OrderConverter orderConverter_[];
-
-    static converter< E_NatureLevelType >                 natureLevelConverter_[];
-    static converter< E_NatureWeaponType >                natureWeaponConverter_[];
-    static converter< E_NatureSpecializationType >        natureSpecializationConverter_[];
-    static converter< E_NatureQualifierType >             natureQualifierConverter_[];
-    static converter< E_NatureCategoryType >              natureCategoryConverter_[];
-    static converter< E_NatureMobilityType >              natureMobilityConverter_[];
     static converter< E_NatureAtlasType >                 natureAtlasConverter_[];
-    static converter< E_NatureCapaciteMissionType >       natureCapaciteMissionConverter_[];
     static converter< E_PerceptionResult >                perceptionLevelConverter_[];
-    static converter< E_PostureType     >                 postureConverter_[];
     static converter< E_WeatherType >                     weatherConverter_[];
     static converter< E_LightingType >                    lightingConverter_[];
     static converter< MOS_RawVisionData::E_VisionObject > environnementConverter_[];

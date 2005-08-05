@@ -17,8 +17,8 @@ EnumMissionGenUrgence ::= ENUMERATED
 
 EnumMissionGenSousTypeObstacle ::= ENUMERATED
 {
-    preliminaire   (0),
-    de-manoeuvre   (1)
+    preliminaire(0),
+    de-manoeuvre(1)
 }
 
 EnumObjectType ::= ENUMERATED
@@ -32,7 +32,7 @@ EnumObjectType ::= ENUMERATED
     eboulement                  (6),
     destruction-route           (7),
     destruction-pont            (8),
-    pont-flottant               (9),
+    pont-flottant(9), ---continu       
     poste-tir                   (10),
     zone-protegee               (11),
     zone-implantation-canon     (12),
@@ -59,7 +59,8 @@ EnumObjectType ::= ENUMERATED
     terrain-largage             (33),
     zone-interdite-mouvement    (34),
     zone-interdite-tir          (35),
-    zone-implantation-mortier   (36)
+    zone-implantation-mortier   (36),
+    pont-flottant-discontinu    (37)
 }
 
 EnumObjectErrorCode ::= ENUMERATED
@@ -137,12 +138,14 @@ AttrObjectSpecific ::= CHOICE
 
 MsgObjectCreation ::= SEQUENCE
 {
-    oid                     OID,
-    type                    EnumObjectType,
-    localisation            Localisation,
-    camp                    OID,
-    oid-objet-planifie      OID OPTIONAL,
-    attributs-specifiques   AttrObjectSpecific OPTIONAL
+    oid                         OID,
+    type                        EnumObjectType,
+    localisation                Localisation,
+    camp                        OID,
+    oid-objet-planifie          OID                OPTIONAL,
+    attributs-specifiques       AttrObjectSpecific OPTIONAL,
+    type-dotation-construction  TypeDotation       OPTIONAL,
+    type-dotation-valorisation  TypeDotation       OPTIONAL
 }
 
 MsgObjectUpdate ::= SEQUENCE
@@ -152,6 +155,8 @@ MsgObjectUpdate ::= SEQUENCE
     pourcentage-valorisation            INTEGER( 0..100 )  OPTIONAL,
     pourcentage-creation-contournement  INTEGER( 0..100 )  OPTIONAL,
     en-preparation                      BOOLEAN            DEFAULT FALSE,
+    nb-dotation-construction            INTEGER            OPTIONAL,
+    nb-dotation-valorisation            INTEGER            OPTIONAL,   
     localisation                        Localisation       OPTIONAL,
     attributs-specifiques               AttrObjectSpecific OPTIONAL
 }

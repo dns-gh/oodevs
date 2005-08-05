@@ -186,7 +186,7 @@ void MOS_OrderConduiteMissionDialog::SlotValidate()
 {
     assert( pAgent_ );
 
-    E_OrderConduiteID ocId = (E_OrderConduiteID)pOrderConduiteComboBox_->currentItem();
+    E_FragOrder ocId = (E_FragOrder)pOrderConduiteComboBox_->currentItem();
     switch( ocId )
     {
         case eOrdreConduite_ChangerPositionDebarquement:

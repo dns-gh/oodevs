@@ -277,3 +277,44 @@ uint MOS_DynaObject::GetItineraireLogistiqueMaxWeight() const
 {
     return nItineraireLogistiqueMaxWeight_;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetTypeDotationConstruction
+// Created: NLD 2005-08-05
+// -----------------------------------------------------------------------------
+inline
+const std::string& MOS_DynaObject::GetTypeDotationConstruction() const
+{
+    return strTypeDotationConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetTypeDotationValorization
+// Created: NLD 2005-08-05
+// -----------------------------------------------------------------------------
+inline
+const std::string& MOS_DynaObject::GetTypeDotationValorization() const
+{
+    return strTypeDotationValorization_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetNbrDotationConstruction
+// Created: NLD 2005-08-05
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetNbrDotationConstruction() const
+{
+    return nNbrDotationConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetNbrDotationValorization
+// Created: NLD 2005-08-05
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetNbrDotationValorization() const
+{
+    return nNbrDotationValorization_;
+}

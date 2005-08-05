@@ -223,25 +223,25 @@ void MOS_AgentKnowledge_Editor::Update()
         pTeamLabel_->setText(  MOS_App::GetApp().GetAgentManager().FindTeam( pEditedInfo_->nTeam_)->GetName().c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_Level ) )
-        pLevelLabel_->setText(  MOS_Tools::ConvertNatureLevel( pEditedInfo_->nLevel_ ).c_str() );
+        pLevelLabel_->setText( ENT_Tr::ConvertFromNatureLevel( pEditedInfo_->nLevel_ ).c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_Weapon ) )
-        pWeaponLabel_->setText(  MOS_Tools::ConvertNatureWeapon( pEditedInfo_->nWeapon_ ).c_str() );
+        pWeaponLabel_->setText( ENT_Tr::ConvertFromUnitNatureWeapon( pEditedInfo_->nWeapon_ ).c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_Category ) )
-        pCategoryLabel_->setText(  MOS_Tools::ConvertNatureCategory( pEditedInfo_->nCategory_ ).c_str() );
+        pCategoryLabel_->setText( ENT_Tr::ConvertFromUnitNatureCategory( pEditedInfo_->nCategory_ ).c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_Qualifier ) )
-        pQualifierLabel_->setText(  MOS_Tools::ConvertNatureQualifier( pEditedInfo_->nQualifier_ ).c_str() );
+        pQualifierLabel_->setText( ENT_Tr::ConvertFromUnitNatureQualifier( pEditedInfo_->nQualifier_ ).c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_Specialization ) )
-        pSpecializationLabel_->setText(  MOS_Tools::ConvertNatureSpecialization( pEditedInfo_->nSpecialization_ ).c_str() );
+        pSpecializationLabel_->setText( ENT_Tr::ConvertFromUnitNatureSpecialization( pEditedInfo_->nSpecialization_ ).c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_Mobility ) )
-        pMobilityLabel_->setText(  MOS_Tools::ConvertNatureMobility( pEditedInfo_->nMobility_ ).c_str() );
+        pMobilityLabel_->setText( ENT_Tr::ConvertFromUnitNatureMobility( pEditedInfo_->nMobility_ ).c_str() );
 
     if ( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_MissionCapacity ) )
-        pMissionCapacityLabel_->setText(  MOS_Tools::ConvertMissionCapacity( pEditedInfo_->nMissionCapacity_ ).c_str() );
+        pMissionCapacityLabel_->setText( ENT_Tr::ConvertFromUnitCapaciteMission( pEditedInfo_->nMissionCapacity_ ).c_str() );
 
     if( pEditedInfo_->IsValid( MOS_AgentKnowledge::eUpdated_IsPC ) )
         pIsHQLabel_->setText(  pEditedInfo_->bIsPC_ ? "True" : "False" );

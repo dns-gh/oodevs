@@ -122,7 +122,7 @@ ASN1T_EnumHumanWound GetWoundID( const std::string& strWound )
 // Name: MOS_MTH_MedicalPriorities::WriteMsg
 // Created: NLD 2003-03-04
 //-----------------------------------------------------------------------------
-void MOS_MTH_MedicalPriorities::WriteMsg(  std::string& sParam )
+void MOS_MTH_MedicalPriorities::WriteMsg(  std::string& /*sParam*/ )
 {
     assert( pAsnMedicalPriorities_ );
 
@@ -157,7 +157,7 @@ void MOS_MTH_MedicalPriorities::FillRandomParameters()
 // Name: MOS_MTH_MedicalPriorities::ResaveParameters
 // Created: FBD 03-09-08
 //-----------------------------------------------------------------------------
-void MOS_MTH_MedicalPriorities::ResaveParameters( MT_OutputArchive_ABC& archive )
+void MOS_MTH_MedicalPriorities::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 {
 }
 
@@ -165,7 +165,7 @@ void MOS_MTH_MedicalPriorities::ResaveParameters( MT_OutputArchive_ABC& archive 
 // Name: MOS_MTH_MedicalPriorities::ReloadParameters
 // Created: FBD 03-08-01
 //-----------------------------------------------------------------------------
-void MOS_MTH_MedicalPriorities::ReloadParameters( MT_InputArchive_ABC& archive )
+void MOS_MTH_MedicalPriorities::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 {
 }
 

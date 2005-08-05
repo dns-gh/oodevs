@@ -206,6 +206,11 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( uint nID, const ASN1T
         delete &object;
         return nErrorCode;
     }
+
+    // Default state : full constructed, valorized if it can be, not prepared
+    object.Construct();
+    object.Mine     ();
+
     RegisterObject( object );
     return EnumObjectErrorCode::no_error;
 }
@@ -228,6 +233,11 @@ void MIL_ObjectManager::CreateObject( MIL_InputArchive& archive )
 
     MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
     object.Initialize( nID, archive );
+
+    // Default state : full constructed, valorized if it can be, not prepared
+    object.Construct();
+    object.Mine     ();
+
     RegisterObject( object );
 }
 

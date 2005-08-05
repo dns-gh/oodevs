@@ -1479,6 +1479,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartIndirectFire( const ASN1T_MsgStartI
     strOutputMsg << "MSG Received : StartIndirectFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src;
     std::string strTmp( (const char*)asnMsg.position.data, asnMsg.position.numocts );
     strOutputMsg << " - Pos dest " << strTmp;                    
+    strOutputMsg << " - Munition : " << MOS_App::GetApp().GetRessourceName( asnMsg.munition );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 
     MOS_AgentManager& agentManager = MOS_App::GetApp().GetAgentManager();
@@ -1787,7 +1788,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
 // Name: MOS_AgentServerMsgMgr::OnError
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-bool MOS_AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& info )
+bool MOS_AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& /*info*/ )
 {
     //MT_LOG_INFO_MSG( MT_FormatString( "MOS -> AS - Message service error : %s", info.GetInfo().c_str() ).c_str() );
     return false;

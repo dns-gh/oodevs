@@ -1599,7 +1599,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartIndirectFire( const ASN1T_MsgStartI
     
     strOutputMsg << "StartIndirectFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src;
     std::string strTmp( (const char*)asnMsg.position.data, asnMsg.position.numocts );
-    strOutputMsg << " - Pos dest " << strTmp;                
+    strOutputMsg << " - Pos dest " << strTmp;            
+    strOutputMsg << " - Munition : " << MOS_App::GetApp().GetResourceName( asnMsg.munition );
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 
     MOS_AgentManager& agentManager = MOS_App::GetApp().GetAgentManager();

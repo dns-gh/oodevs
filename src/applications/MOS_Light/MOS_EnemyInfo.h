@@ -79,11 +79,11 @@ private:
     int                    nSpeed_;
     MT_Vector2D            startDir_;
     MT_Vector2D            endDir_;
-    E_NatureWeaponType         nWeapon_;
-    E_NatureSpecializationType nSpecialization_;
-    E_NatureQualifierType      nQualifier_;
-    E_NatureCategoryType       nCategory_;
-    E_NatureMobilityType       nMobility_;
+    E_UnitNatureWeapon         nWeapon_;
+    E_UnitNatureSpecialization nSpecialization_;
+    E_UnitNatureQualifier      nQualifier_;
+    E_UnitNatureCategory       nCategory_;
+    E_UnitNatureMobility       nMobility_;
 
     MOS_Agent::T_AgentConstPtrSet referencingAutomataSet_;
 };

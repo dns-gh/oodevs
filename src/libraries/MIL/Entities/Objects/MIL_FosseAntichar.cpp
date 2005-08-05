@@ -25,7 +25,6 @@ MIL_FosseAntiChar::MIL_FosseAntiChar( )
     : MIL_Obstacle( MIL_RealObjectType::fosseAntiChar_ )
 {
     nFullNbrDotationForConstruction_    = 10; // Nbr mines
-    nCurrentNbrDotationForConstruction_ = 0;
 }
 
 //-----------------------------------------------------------------------------

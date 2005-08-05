@@ -540,7 +540,7 @@ void MOS_GLWidget::DrawMeasure()
         GFX_Tools::CreateGLArrow( vPosStartMeasure_, vPosEndMeasure_, color, 2.0, rSizearrow );
         GFX_Tools::CreateGLArrow( vPosEndMeasure_, vPosStartMeasure_, color, 2.0, rSizearrow );
 
-        MOS_World& world = MOS_App::GetApp().GetWorld();
+        //MOS_World& world = MOS_App::GetApp().GetWorld();
         MT_Float rMeters = vPosStartMeasure_.Distance( vPosEndMeasure_ );
 
         char cMeters[256];

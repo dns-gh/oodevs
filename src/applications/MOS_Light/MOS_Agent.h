@@ -194,8 +194,8 @@ public:
     const MOS_AgentModel*   GetModelAutomate() const;
     MT_Float                GetElongationFactor() const;
 
-    E_PostureType           GetOldPosture                  () const;
-    E_PostureType           GetCurrentPosture              () const;
+    E_UnitPosture           GetOldPosture                  () const;
+    E_UnitPosture           GetCurrentPosture              () const;
     uint                    GetPostureCompletionPourcentage() const;
 
     const MOS_Experience& GetExperience() const;
@@ -376,8 +376,8 @@ public:
 
     uint                    nSpeed_;
 
-    E_PostureType           nOldPosture_;
-    E_PostureType           nCurrentPosture_;
+    E_UnitPosture           nOldPosture_;
+    E_UnitPosture           nCurrentPosture_;
     uint                    nPostureCompletionPourcentage_;
 
     bool                    bLoadingState_;

@@ -116,6 +116,7 @@ void MIL_ZoneNBC::Initialize( uint nID, MIL_InputArchive& archive )
 
     MIL_NuageNBC& nuage = *new MIL_NuageNBC();
     nuage.Initialize( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
+    nuage.Construct();
     MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( nuage );
 }
 
@@ -141,6 +142,7 @@ ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( uint nID, const ASN1T_MagicAc
 
     MIL_NuageNBC& nuage = *new MIL_NuageNBC();
     nuage.Initialize( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
+    nuage.Construct();
     MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( nuage );
 
     return EnumObjectErrorCode::no_error;

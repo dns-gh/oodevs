@@ -20,7 +20,7 @@
 
 class MOS_Agent;
 class MOS_RCListViewItem;
-enum E_OrderConduiteID;
+enum E_FragOrder;
 
 //=============================================================================
 // Created: NLD 2002-07-15
@@ -34,7 +34,7 @@ public:
     /** @name Types */
     //-------------------------------------------------------------------------
     //@{
-    typedef std::vector< E_OrderConduiteID >            T_OrderConduiteVector;
+    typedef std::vector< E_FragOrder >            T_OrderConduiteVector;
     typedef const T_OrderConduiteVector                  CT_OrderConduiteVector;
     typedef T_OrderConduiteVector::iterator              IT_OrderConduiteVector;
     typedef T_OrderConduiteVector::const_iterator        CIT_OrderConduiteVector;

@@ -59,18 +59,17 @@ void MOS_AttrEditor::SetSpeed( uint nSpeed )
 // -----------------------------------------------------------------------------
 // static
 inline
-std::string MOS_AttrEditor::ConvertPostureToString( E_PostureType nPosture )
+std::string MOS_AttrEditor::ConvertPostureToString( E_UnitPosture nPosture )
 {
     switch( nPosture )
     {
-        case ePostureMouvement        : return "Mouvement";
-        case ePostureMouvementDiscret : return "Mouvement discret";
-        case ePostureArret            : return "Arret";
-        case ePosturePosteReflexe     : return "Poste reflexe";
-        case ePosturePoste            : return "Poste";
-        case ePosturePosteAmenage     : return "Poste aménagé";
-        case ePosturePostePrepareGenie: return "Poste preparé génie";
-        case ePostureTransporte       : return "Transporté";
+        case eUnitPosture_PostureMouvement        : return "Mouvement";
+        case eUnitPosture_PostureMouvementDiscret : return "Mouvement discret";
+        case eUnitPosture_PostureArret            : return "Arret";
+        case eUnitPosture_PosturePosteReflexe     : return "Poste reflexe";
+        case eUnitPosture_PosturePoste            : return "Poste";
+        case eUnitPosture_PosturePosteAmenage     : return "Poste aménagé";
+        case eUnitPosture_PosturePostePrepareGenie: return "Poste preparé génie";
         default:
             assert( false );
             return "Unknown";
@@ -83,7 +82,7 @@ std::string MOS_AttrEditor::ConvertPostureToString( E_PostureType nPosture )
 // Created: NLD 2003-10-24
 // -----------------------------------------------------------------------------
 inline
-void MOS_AttrEditor::SetPosture( E_PostureType nOldPosture, E_PostureType nCurrentPosture, uint nPostureCompletionPourcentage )
+void MOS_AttrEditor::SetPosture( E_UnitPosture nOldPosture, E_UnitPosture nCurrentPosture, uint nPostureCompletionPourcentage )
 {
     pOldPostureItem_                  ->setText( 1, ConvertPostureToString( nOldPosture     ).c_str() );
     pCurrentPostureItem_              ->setText( 1, ConvertPostureToString( nCurrentPosture ).c_str() );

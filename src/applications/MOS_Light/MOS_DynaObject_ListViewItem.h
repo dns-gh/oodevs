@@ -46,6 +46,8 @@ private:
     QListViewItem* pValorizationPercentageItem_;
     QListViewItem* pBypassConstructionPercentageItem_;
     QListViewItem* pPreparationItem_;
+    QListViewItem* pDotationConstructionItem_;
+    QListViewItem* pDotationValorizationItem_;
 
     // Attributs spécifiques sites de franchissement
     QListViewItem* pSiteFranchissementLargeurItem_;

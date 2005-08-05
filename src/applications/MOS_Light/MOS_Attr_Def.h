@@ -21,20 +21,6 @@
 #ifndef __MOS_Attr_Def_h_
 #define __MOS_Attr_Def_h_
 
-enum E_PostureType
-{
-    ePostureMouvement         = 0,
-    ePostureMouvementDiscret  = 1,
-    ePostureArret             = 2,
-    ePosturePosteReflexe      = 3,
-    ePosturePoste             = 4,
-    ePosturePosteAmenage      = 5,
-    ePosturePostePrepareGenie = 6,
-    eNbrPosturesModifyingDetection = 7,
-    ePostureTransporte        = 7,
-    eNbrPostureType           = 8
-};
-
 enum E_UnitVisType
 {
     eVisTypeInvisible  = 0,

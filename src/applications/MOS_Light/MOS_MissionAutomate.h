@@ -26,7 +26,7 @@
 class MOS_ASN_MsgAutomateOrder;
 
 //=============================================================================
-// Created:  2005-08-01 - 11:29:41
+// Created:  2005-7-28 - 9:57:17
 //=============================================================================
 class MOS_MissionAutomate : public MOS_Mission_ABC
 {
@@ -45,6 +45,7 @@ public:
 
     virtual void SetAgent( MOS_Agent* pAgent );
     virtual bool IsAutomateMission() const;
+    virtual std::string GetName          () const;
     //@}
 
     //-------------------------------------------------------------------------

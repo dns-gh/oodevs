@@ -130,7 +130,7 @@ public:
     void SetSpeed    ( uint nSpeed );
     void SetAltitude( int nAltitude );
     void SetDirection( uint nDirection );
-    void SetPosture  ( E_PostureType nOldPosture, E_PostureType nCurrentPosture, uint nPostureCompletionPourcentage );
+    void SetPosture  ( E_UnitPosture nOldPosture, E_UnitPosture nCurrentPosture, uint nPostureCompletionPourcentage );
     void ResetPosture();
 
     void ResetEquipments();
@@ -276,7 +276,7 @@ protected slots:
 private:
     //! @name Tools
     //@{
-    static std::string ConvertPostureToString( E_PostureType nPosture );
+    static std::string ConvertPostureToString( E_UnitPosture nPosture );
     //@}
 
 private:

@@ -23,7 +23,8 @@ BOOST_CLASS_EXPORT_GUID( MIL_Barricade, "MIL_Barricade" )
 MIL_Barricade::MIL_Barricade()
     : MIL_Obstacle( MIL_RealObjectType::barricade_ )
 {
-    nFullNbrDotationForMining_ = 10;
+    nFullNbrDotationForMining_       = 10;
+    nFullNbrDotationForConstruction_ = 1;
 }
 
 //-----------------------------------------------------------------------------
@@ -76,8 +77,6 @@ void MIL_Barricade::Initialize( uint nID, MIL_InputArchive& archive )
 {
     MIL_RealObject_ABC::Initialize( nID, archive );
     nFullNbrDotationForConstruction_    = (uint)( rSizeCoef_ / 5. );  // Barbelés
-    nCurrentNbrDotationForConstruction_ = nFullNbrDotationForConstruction_;
-    nCurrentNbrDotationForMining_       = nFullNbrDotationForMining_;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +90,6 @@ ASN1T_EnumObjectErrorCode MIL_Barricade::Initialize( uint nID, const ASN1T_Magic
         return nErrorCode;
 
     nFullNbrDotationForConstruction_    = (uint)( rSizeCoef_ / 5. );  // Barbelés
-    nCurrentNbrDotationForConstruction_ = nFullNbrDotationForConstruction_;
-    nCurrentNbrDotationForMining_       = nFullNbrDotationForMining_;
     return EnumObjectErrorCode::no_error;
 }
 

@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 MOS_SensorType::MOS_SensorType( const std::string& strName, MT_InputArchive_ABC& archive )
     : strName_             ( strName )
-    , postureSourceFactors_( eNbrPostureType, 0. )
+    , postureSourceFactors_( eNbrUnitPosture, 0. )
     , weatherFactors_      ( eNbrWeatherType, 0. )
     , lightingFactors_     ( eNbrLightingType, 0. )
     , environementFactors_ ( MOS_RawVisionData::eNbrVisionObjects, 0. )
@@ -182,12 +182,14 @@ void MOS_SensorType::InitializePostureSourceFactors( MT_InputArchive_ABC& archiv
     if( !archive.Section( "PosturesSource" ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
 
-    for( uint i = 0; i < eNbrPosturesModifyingDetection; ++i )
+    for( uint i = 0; i < eNbrUnitPosture; ++i )
     {
         assert( postureSourceFactors_.size() > i );
         MT_Float& rFactor = postureSourceFactors_[ i ];
+        const std::string strPosture = MOS_Tools::ToString( (E_UnitPosture)i ).ascii();
 
-        if ( !archive.ReadField( MOS_Tools::ConvertPostureType( (E_PostureType)i ), rFactor ) )
+        //if ( !archive.ReadField( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)i ), rFactor ) )
+        if( !archive.ReadField( strPosture, rFactor ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
 
         if ( rFactor < 0. || rFactor > 1. )
@@ -203,8 +205,8 @@ void MOS_SensorType::InitializePostureSourceFactors( MT_InputArchive_ABC& archiv
 // -----------------------------------------------------------------------------
 MT_Float MOS_SensorType::GetPostureSourceFactor( const MOS_Agent& agent ) const
 {
-    E_PostureType nOldPosture     = agent.GetOldPosture    ();
-    E_PostureType nCurrentPosture = agent.GetCurrentPosture();
+    E_UnitPosture nOldPosture     = agent.GetOldPosture    ();
+    E_UnitPosture nCurrentPosture = agent.GetCurrentPosture();
     MT_Float      rPourcentage    = agent.GetPostureCompletionPourcentage() / 100.;
 
     assert( postureSourceFactors_.size() > (uint)nOldPosture );

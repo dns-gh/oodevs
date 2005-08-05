@@ -23,8 +23,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_BouchonMines, "MIL_BouchonMines" )
 MIL_BouchonMines::MIL_BouchonMines()
     : MIL_Obstacle( MIL_RealObjectType::bouchonMines_ )
 {
-    nFullNbrDotationForConstruction_    = 10; // Nbr mines
-    nCurrentNbrDotationForConstruction_ = 0;
+    nFullNbrDotationForConstruction_ = 10; // Nbr mines
 }
 
 //-----------------------------------------------------------------------------

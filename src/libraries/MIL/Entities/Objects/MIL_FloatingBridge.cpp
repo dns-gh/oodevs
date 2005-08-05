@@ -29,7 +29,6 @@ MIL_FloatingBridge::MIL_FloatingBridge()
     , pPathfindData_( 0 )
 {
     nFullNbrDotationForConstruction_    = 10; // Nbr mines
-    nCurrentNbrDotationForConstruction_ = 0;
 }
 
 //-----------------------------------------------------------------------------

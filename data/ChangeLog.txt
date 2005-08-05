@@ -21,6 +21,13 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Les zones de tirs ne devraient plus être evitées par le pathfind - A TESTER
+    
+    - NLD - Nettoyage dans les objets + envoi des infos sur les dotations de construction/valorisation des objets reels ) à MOS
+    - NLD - Bug fix : pb corruption fichier workspace.ddi (DIA + debugger)        
+    - SBO - MOS_Light 1 utilise la lib ENT
+    - NLD - Le message 'StartIndirectFire' indique maintenant quelle est la munition utilisée par le tir indirect
+    - NLD - Le magic move est à nouveau actif sur les pions prisonniers/rendus (attention, il n'est plus possible de leur donner de mission par la suite)
     - AGE - Refactors dans la règle du pathfind, modifications des poids pour le type d'itinéraire 'Assault'
     - NLD - Gestion des 'PHs' dans les tirs indirects, dépendant de la posture de la cible
                 - Données au niveau des dotations munitions

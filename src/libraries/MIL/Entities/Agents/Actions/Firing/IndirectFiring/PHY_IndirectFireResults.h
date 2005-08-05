@@ -19,6 +19,7 @@
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
+class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_IndirectFireResults
@@ -32,7 +33,7 @@ public:
     static MIL_MOSIDManager idManager_;
 
 public:
-    PHY_IndirectFireResults( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition );
+    PHY_IndirectFireResults( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_IndirectFireResults();
 
     //! @name Accessors

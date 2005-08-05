@@ -127,9 +127,9 @@ public:
     //@{
     HLA_Object_ABC* GetHLAView() const;
     void            SetHLAView( HLA_Object_ABC& view );
-    virtual bool Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
+    virtual bool Initialize ( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     virtual void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
+    virtual void Serialize  ( HLA_UpdateFunctor& functor ) const;
     //@}
 
     //! @name Accessors
@@ -219,8 +219,6 @@ protected:
     // Dotations
     uint nFullNbrDotationForConstruction_;
     uint nFullNbrDotationForMining_;
-    uint nCurrentNbrDotationForConstruction_;
-    uint nCurrentNbrDotationForMining_;    
 
     // Network
             uint8 xAttrToUpdate_;
@@ -239,8 +237,11 @@ private:
     uint  nLastValueConstructionPercentage_;
     uint  nLastValueMiningPercentage_;
     uint  nLastValueBypassPercentage_;
-    
+
     bool bPrepared_;
+
+    uint nCurrentNbrDotationForConstruction_;
+    uint nCurrentNbrDotationForMining_;            
 
     // Geometry
     TER_Localisation avoidanceLocalisation_;

@@ -146,6 +146,9 @@ void MOS_EnemyInfo_Editor::Initialize()
     pNatureLayout->addWidget( pLabel, nNatureRow++, 0 );
     pWeaponBox_ = new QComboBox( FALSE, pNatureGroupBox );
     pNatureLayout->addWidget( pWeaponBox_, nNatureRow++, 0 );
+    for( uint eNature = 0; eNature < ( uint )eNbrUnitNatureWeapon; ++eNature )
+        pWeaponBox_->insertItem( ENT_Tr::ConvertFromUnitNatureWeapon( ( E_UnitNatureWeapon )eNature ).c_str(), eNature );
+    /*
     pWeaponBox_->insertItem( "Anti-char"                                   , eNatureWeapon_Antichar                         );                            
     pWeaponBox_->insertItem( "Administration"                              , eNatureWeapon_Administration                   );                      
     pWeaponBox_->insertItem( "Defense aerienne"                            , eNatureWeapon_DefenseAerienne                  );                     
@@ -177,6 +180,7 @@ void MOS_EnemyInfo_Editor::Initialize()
     pWeaponBox_->insertItem( "Tactical air control party"                  , eNatureWeapon_TacticalAirControlParty          );             
     pWeaponBox_->insertItem( "Transport"                                   , eNatureWeapon_Transport                        );
     pWeaponBox_->insertItem( "None"                                        , eNatureWeapon_None                             );
+    */
 
     // Nature spécialité
     pLabel = new QLabel( tr( "Specialité" ), pNatureGroupBox );
@@ -184,6 +188,9 @@ void MOS_EnemyInfo_Editor::Initialize()
     pNatureLayout->addWidget( pLabel, nNatureRow++, 0 );
     pSpecializationBox_ = new QComboBox( FALSE, pNatureGroupBox, "Specialité" );
     pNatureLayout->addWidget( pSpecializationBox_, nNatureRow++, 0 );
+    for( uint eNature = 0; eNature < ( uint )eNbrUnitNatureSpecialization; ++eNature )
+        pSpecializationBox_->insertItem( ENT_Tr::ConvertFromUnitNatureSpecialization( ( E_UnitNatureSpecialization )eNature ).c_str(), eNature );
+    /*
     pSpecializationBox_->insertItem(  "Jag"                                      , eNatureSpec_Jag                              );
     pSpecializationBox_->insertItem(  "Riverine"                                 , eNatureSpec_Riverine                         );
     pSpecializationBox_->insertItem(  "Security police"                          , eNatureSpec_SecurityPolice                   );
@@ -213,6 +220,7 @@ void MOS_EnemyInfo_Editor::Initialize()
     pSpecializationBox_->insertItem(  "Veterinaire"                              , eNatureSpec_Veterinaire                      );
     pSpecializationBox_->insertItem(  "Voilure fixe"                             , eNatureSpec_VoilureFixe                      );
     pSpecializationBox_->insertItem(  "None"                                     , eNatureSpec_None                             );
+    */
 
     // Nature Qualification
     pLabel = new QLabel( tr( "Qualification" ), pNatureGroupBox );
@@ -220,10 +228,14 @@ void MOS_EnemyInfo_Editor::Initialize()
     pNatureLayout->addWidget( pLabel, nNatureRow++, 0 );
     pQualifierBox_ = new QComboBox( FALSE, pNatureGroupBox, "Qualification" );
     pNatureLayout->addWidget( pQualifierBox_, nNatureRow++, 0 );
+    for( uint eNature = 0; eNature < ( uint )eNbrUnitNatureQualifier; ++eNature )
+        pQualifierBox_->insertItem( ENT_Tr::ConvertFromUnitNatureQualifier( ( E_UnitNatureQualifier )eNature ).c_str(), eNature );
+    /*
     pQualifierBox_->insertItem( "Lourd" , eNatureQualifier_Lourd    );
     pQualifierBox_->insertItem( "Leger" , eNatureQualifier_Leger    );
     pQualifierBox_->insertItem( "Medium", eNatureQualifier_Moyen    );
     pQualifierBox_->insertItem( "None"  , eNatureQualifier_None     );
+    */
 
     // Nature Catégorie
     pLabel = new QLabel( tr( "Catégorie" ), pNatureGroupBox );
@@ -231,11 +243,15 @@ void MOS_EnemyInfo_Editor::Initialize()
     pNatureLayout->addWidget( pLabel, nNatureRow++, 0 );
     pCategoryBox_ = new QComboBox( FALSE, pNatureGroupBox, "Catégorie" );
     pNatureLayout->addWidget( pCategoryBox_, nNatureRow++, 0 );
+    for( uint eNature = 0; eNature < ( uint )eNbrUnitNatureCategory; ++eNature )
+        pCategoryBox_->insertItem( ENT_Tr::ConvertFromUnitNatureCategory( ( E_UnitNatureCategory )eNature ).c_str(), eNature );
+    /*
     pCategoryBox_->insertItem( "Combat"            , eNatureCategory_Combat             );
     pCategoryBox_->insertItem( "Soutien logistique", eNatureCategory_SoutienLogistique  ); 
     pCategoryBox_->insertItem( "Combat support"    , eNatureCategory_CombatSupport      );     
     pCategoryBox_->insertItem( "Inconnu"           , eNatureCategory_Inconnu            );           
     pCategoryBox_->insertItem( "None"              , eNatureCategory_None               );              
+    */
     
     // Nature Mobilité
     pLabel = new QLabel( tr( "Mobilité" ), pNatureGroupBox );
@@ -243,6 +259,9 @@ void MOS_EnemyInfo_Editor::Initialize()
     pNatureLayout->addWidget( pLabel, nNatureRow++, 0 );
     pMobilityBox_ = new QComboBox( FALSE, pNatureGroupBox, "Mobilité" );
     pNatureLayout->addWidget( pMobilityBox_, nNatureRow++, 0 );
+    for( uint eNature = 0; eNature < ( uint )eNbrUnitNatureMobility; ++eNature )
+        pMobilityBox_->insertItem( ENT_Tr::ConvertFromUnitNatureMobility( ( E_UnitNatureMobility )eNature ).c_str(), eNature );
+    /*
     pMobilityBox_->insertItem( "Aeroporte"                  , eNatureMobility_Aeroporte             );
     pMobilityBox_->insertItem( "Aerien compose"             , eNatureMobility_AerienCompose         );
     pMobilityBox_->insertItem( "Aerien voilure fixe"        , eNatureMobility_AerienVoilureFixe     );
@@ -260,6 +279,7 @@ void MOS_EnemyInfo_Editor::Initialize()
     pMobilityBox_->insertItem( "Maritime surface"           , eNatureMobility_MaritimeSurface       );       
     pMobilityBox_->insertItem( "Inconnu"                    , eNatureMobility_Inconnu               );       
     pMobilityBox_->insertItem( "None"                       , eNatureMobility_None                  );       
+    */
 
     // Localisation
     pLocationEditor_ = new MOS_EnemyInfo_Localisation( this, "Localisation" );
@@ -322,11 +342,11 @@ void MOS_EnemyInfo_Editor::SlotValidate()
 
     pEditedInfo_->nHierarchicalLevel_ = (MOS_EnemyInfo::E_HierarchicalLevel)pHierarchyBox_->currentItem();
     pEditedInfo_->nAttitude_ = (MOS_EnemyInfo::E_Attitude)pAttitudeBox_->currentItem();
-    pEditedInfo_->nWeapon_ = (E_NatureWeaponType)pWeaponBox_->currentItem();
-    pEditedInfo_->nCategory_ = (E_NatureCategoryType)pCategoryBox_->currentItem();
-    pEditedInfo_->nQualifier_ = (E_NatureQualifierType)pQualifierBox_->currentItem();
-    pEditedInfo_->nSpecialization_ = (E_NatureSpecializationType)pSpecializationBox_->currentItem();
-    pEditedInfo_->nMobility_ = (E_NatureMobilityType)pMobilityBox_->currentItem();
+    pEditedInfo_->nWeapon_ = (E_UnitNatureWeapon)pWeaponBox_->currentItem();
+    pEditedInfo_->nCategory_ = (E_UnitNatureCategory)pCategoryBox_->currentItem();
+    pEditedInfo_->nQualifier_ = (E_UnitNatureQualifier)pQualifierBox_->currentItem();
+    pEditedInfo_->nSpecialization_ = (E_UnitNatureSpecialization)pSpecializationBox_->currentItem();
+    pEditedInfo_->nMobility_ = (E_UnitNatureMobility)pMobilityBox_->currentItem();
 
     MOS_PointListViewItem* pStartDir = pDirectionEditor_->GetFirstPoint();
     assert( pStartDir != 0 );

@@ -54,7 +54,7 @@ public:
     void UpdateStates ();
 
     MIL_RealObject_ABC* CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
-    MIL_RealObject_ABC* CreateObject( MIL_Army& army, const MIL_RealObjectType& objectType, const TER_Localisation& localisation, MT_Float rParameter );
+//    MIL_RealObject_ABC* CreateObject( MIL_Army& army, const MIL_RealObjectType& objectType, const TER_Localisation& localisation, MT_Float rParameter );
 
     void                RegisterObject( MIL_VirtualObject_ABC& object );
     void                RegisterObject( MIL_RealObject_ABC& object    );

@@ -45,6 +45,7 @@ public:
 
     virtual void SetAgent( MOS_Agent* pAgent );
     virtual bool IsAutomateMission() const;
+    virtual std::string  GetName          () const;
     //@}
 
     //-------------------------------------------------------------------------

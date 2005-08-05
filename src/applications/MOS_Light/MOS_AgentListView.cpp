@@ -144,7 +144,7 @@ void MOS_AgentListView::RegisterMission( E_MissionID nTypeMission, E_TypeAgent n
 // Name: MOS_AgentListView::RegisterConduiteOrder
 // Created: AGN 03-04-14
 //-----------------------------------------------------------------------------
-void MOS_AgentListView::RegisterConduiteOrder( E_OrderConduiteID nTypeMission )
+void MOS_AgentListView::RegisterConduiteOrder( E_FragOrder nTypeMission )
 {
     QWidgetStack* pStack = MOS_App::GetApp().GetMainWindow().GetWidgetStackLeft();
 
@@ -160,7 +160,7 @@ void MOS_AgentListView::RegisterConduiteOrder( E_OrderConduiteID nTypeMission )
 // Name: MOS_AgentListView::GetConduiteOrder
 // Created: AGN 03-04-14
 //-----------------------------------------------------------------------------
-MOS_Mission_ABC* MOS_AgentListView::GetConduiteOrder( E_OrderConduiteID nTypeMission )
+MOS_Mission_ABC* MOS_AgentListView::GetConduiteOrder( E_FragOrder nTypeMission )
 {
     IT_OCDialogAgentTypePtrMap foundMap2 = orderConduiteDialogPtrMap_.find( nTypeMission );
     if( foundMap2 == orderConduiteDialogPtrMap_.end() )

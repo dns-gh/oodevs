@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:29:41 $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionAutomate_Skeleton.cpp $
+// $Created: 2005-7-28 - 9:57:17 $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light/src/MOS_MissionAutomate.cpp $
 // $Author: Nld $
 // $Modtime: 7/03/05 11:46 $
 // $Revision: 6 $
@@ -47,7 +47,7 @@ using namespace DIN;
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate constructor
-// Created:  2005-08-01 - 11:29:41 
+// Created:  2005-7-28 - 9:57:17 
 //-----------------------------------------------------------------------------
 MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
@@ -58,7 +58,7 @@ MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pPa
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate destructor
-// Created:  2005-08-01 - 11:29:41 
+// Created:  2005-7-28 - 9:57:17 
 //-----------------------------------------------------------------------------
 MOS_MissionAutomate::~MOS_MissionAutomate()
 {
@@ -71,7 +71,7 @@ MOS_MissionAutomate::~MOS_MissionAutomate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::Initialize
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-7-28 - 9:57:17
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::Initialize()
 {
@@ -1919,4 +1919,11 @@ void MOS_MissionAutomate::CreateMission_TRANS_Commander()
     CreateLocation( asnMission.zone_deploiement, "zone_deploiement" );
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionAutomate::GetName()
+// Created: SBO 2005-08-01
+// -----------------------------------------------------------------------------
+std::string MOS_MissionAutomate::GetName() const
+{
+    return ENT_Tr::ConvertFromAutomataMission( ( E_AutomataMission )nTypeMission_ );
+}

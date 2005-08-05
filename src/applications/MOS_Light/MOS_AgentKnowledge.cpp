@@ -50,11 +50,11 @@ MOS_AgentKnowledge::MOS_AgentKnowledge( const ASN1T_MsgUnitKnowledgeCreation& as
     , nMaxPerceptionLevel_    ( eNotSeen )
     , nTeam_                  ( uint( -1 ) )
     , nLevel_                 ( eNatureLevel_None )
-    , nWeapon_                ( eNatureWeapon_None )
-    , nSpecialization_        ( eNatureSpec_None )
-    , nQualifier_             ( eNatureQualifier_None )
-    , nCategory_              ( eNatureCategory_None )
-    , nMobility_              ( eNatureMobility_None )
+    , nWeapon_                ( eUnitNatureWeapon_None )
+    , nSpecialization_        ( eUnitNatureSpecialization_None )
+    , nQualifier_             ( eUnitNatureQualifier_None )
+    , nCategory_              ( eUnitNatureCategory_None )
+    , nMobility_              ( eUnitNatureMobility_None )
     , bIsPC_                  ( false )
     , nAttrUpdated_           ( 0 )
     , pEditor_                ( 0 )
@@ -147,43 +147,43 @@ void MOS_AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 
     if( asnMsg.m.nature_niveauPresent )
     {
-        nLevel_ = (E_NatureLevelType)asnMsg.nature_niveau;
+        nLevel_ = (E_NatureLevel)asnMsg.nature_niveau;
         nAttrUpdated_ |= eUpdated_Level;
     }
 
     if( asnMsg.m.nature_armePresent )
     {
-        nWeapon_ = (E_NatureWeaponType)asnMsg.nature_arme;
+        nWeapon_ = (E_UnitNatureWeapon)asnMsg.nature_arme;
         nAttrUpdated_ |= eUpdated_Weapon;
     }
 
     if( asnMsg.m.nature_specialisationPresent )
     {
-        nSpecialization_ = (E_NatureSpecializationType)asnMsg.nature_specialisation;
+        nSpecialization_ = (E_UnitNatureSpecialization)asnMsg.nature_specialisation;
         nAttrUpdated_ |= eUpdated_Specialization;
     }
 
     if( asnMsg.m.nature_qualificationPresent )
     {
-        nQualifier_ = (E_NatureQualifierType)asnMsg.nature_qualification;
+        nQualifier_ = (E_UnitNatureQualifier)asnMsg.nature_qualification;
         nAttrUpdated_ |= eUpdated_Qualifier;
     }
 
     if( asnMsg.m.nature_categoriePresent )
     {
-        nCategory_ = (E_NatureCategoryType)asnMsg.nature_categorie;
+        nCategory_ = (E_UnitNatureCategory)asnMsg.nature_categorie;
         nAttrUpdated_ |= eUpdated_Category;
     }
 
     if( asnMsg.m.nature_mobilitePresent )
     {
-        nMobility_ = (E_NatureMobilityType)asnMsg.nature_mobilite;
+        nMobility_ = (E_UnitNatureMobility)asnMsg.nature_mobilite;
         nAttrUpdated_ |= eUpdated_Mobility;
     }
 
     if ( asnMsg.m.capacite_missionPresent )
     {
-        nMissionCapacity_ = (E_NatureCapaciteMissionType)asnMsg.capacite_mission;
+        nMissionCapacity_ = (E_UnitCapaciteMission)asnMsg.capacite_mission;
         nAttrUpdated_ |= eUpdated_MissionCapacity;
     }
 

@@ -126,8 +126,10 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 // -----------------------------------------------------------------------------
 void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, uint nNbrAmmoReserved )
 {
+    assert( pWeaponDotationCategory_ && pWeaponDotationCategory_->GetIndirectFireData() );
+
     if( !pFireResult_ )
-        pFireResult_ = new PHY_IndirectFireResults( firer_, vTargetPosition_ );
+        pFireResult_ = new PHY_IndirectFireResults( firer_, vTargetPosition_, *pWeaponDotationCategory_ );
 
     assert( !bIsFlying_ );
 
@@ -135,8 +137,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
 
     const MT_Float rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
     rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
-
-    assert( pWeaponDotationCategory_ && pWeaponDotationCategory_->GetIndirectFireData() );
+    
     nNbrAmmoFired_ += nNbrAmmoReserved;
     if( pWeaponDotationCategory_->GetIndirectFireData()->ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
         bIsFlying_ = true;        

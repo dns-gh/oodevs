@@ -91,7 +91,7 @@ public:
     virtual void         SetAgent      ( MOS_Agent* pAgent );
             MOS_Agent*   GetAgent      () const;
             E_MissionID  GetTypeMission() const;
-    virtual std::string  GetName       () const;
+    virtual std::string  GetName       () const = 0;
     virtual bool         IsAutomateMission() const = 0;
 
     MOS_MissionAction* GetOrCreateAction( MOS_AgentListView& listView );

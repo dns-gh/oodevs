@@ -13,6 +13,7 @@
 
 #include "PHY_IndirectFireResults.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -22,15 +23,16 @@ MIL_MOSIDManager PHY_IndirectFireResults::idManager_;
 // Name: PHY_IndirectFireResults constructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-PHY_IndirectFireResults::PHY_IndirectFireResults( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition )
+PHY_IndirectFireResults::PHY_IndirectFireResults( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
     , nID_               ( idManager_.GetFreeSimID() )
     , firer_             ( firer )
     , vTargetPosition_   ( vTargetPosition )    
 {
     NET_ASN_MsgStartIndirectFire asnMsg;
-    asnMsg.GetAsnMsg().oid_tir = nID_;
-    asnMsg.GetAsnMsg().oid_src = firer_.GetID();
+    asnMsg.GetAsnMsg().oid_tir  = nID_;
+    asnMsg.GetAsnMsg().oid_src  = firer_.GetID();
+    asnMsg.GetAsnMsg().munition = dotationCategory.GetMosID();
     NET_ASN_Tools::WritePoint( vTargetPosition_, asnMsg.GetAsnMsg().position );
     asnMsg.Send();
 }

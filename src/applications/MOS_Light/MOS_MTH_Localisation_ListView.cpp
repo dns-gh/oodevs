@@ -625,7 +625,6 @@ void MOS_MTH_Localisation_ListView::ReloadParameters( MT_InputArchive_ABC& archi
 // -----------------------------------------------------------------------------
 void MOS_MTH_Localisation_ListView::Clear()
 {
-    int i = 0;
     for( CIT_PointPtrVector itPoint = pointVector_.begin(); itPoint != pointVector_.end() ; ++itPoint )
     {
         MOS_PointListViewItem* pPointItem = (MOS_PointListViewItem*)(*itPoint);

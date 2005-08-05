@@ -153,6 +153,7 @@ MIL_RealObject_ABC* HLA_DistantObject::InstanciateObject()
     if( localisation_.GetType() == TER_Localisation::eNone )
         return 0;
 
+    //$$$ DEGUEULASSSE
     MIL_RealObject_ABC& object = pType->InstanciateObject();
     object.Initialize( *pArmy, localisation_ );
     if( object.Initialize( strOption_, strExtra_, rConstructionPercentage_, rMiningPercentage_, rBypassPercentage_ ) )

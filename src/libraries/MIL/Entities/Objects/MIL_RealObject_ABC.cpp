@@ -18,6 +18,7 @@
 
 #include "MIL_RealObjectType.h"
 #include "PHY_ObjectExplosionFireResult.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -32,10 +33,10 @@
 #include "TER/TER_PathFindManager.h"
 #include "TER/TER_DynamicData.h"
 
-#include "Hla/HLA_Object_ABC.h"
-#include "Hla/HLA_UpdateFunctor.h"
-#include "hla/Deserializer.h"
-#include "hla/AttributeIdentifier.h"
+#include "HLA/HLA_Object_ABC.h"
+#include "HLA/HLA_UpdateFunctor.h"
+#include "HLA/Deserializer.h"
+#include "HLA/AttributeIdentifier.h"
 
 
 MT_Random MIL_RealObject_ABC::random_;
@@ -228,8 +229,10 @@ void MIL_RealObject_ABC::InitializeCommon( MIL_Army& army, const TER_Localisatio
 {
     MIL_Object_ABC::Initialize( army, localisation );
 
-    nMosPlannedID_ = nMosPlannedID;
-    nID_           = nID;
+    nCurrentNbrDotationForConstruction_ = 0;
+    nCurrentNbrDotationForMining_       = 0;
+    nMosPlannedID_                      = nMosPlannedID;
+    nID_                                = nID;
     InitializeAvoidanceLocalisation();
 }
 
@@ -251,11 +254,6 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_
     TER_Localisation localisation; 
     if( !NET_ASN_Tools::ReadLocation( asnCreateObject.localisation, localisation ) )
         return EnumObjectErrorCode::error_invalid_localisation;
-
-    // Default state : full constructed, valorized if it can be, not prepared
-    ChangeConstructionPercentage( 1. );
-    if ( pType_->CanBeMined() )
-        ChangeMiningPercentage( 1. );
 
     InitializeCommon( *pArmy, localisation, nID );
     GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
@@ -279,18 +277,6 @@ bool MIL_RealObject_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaParamete
     assert( pType_ );
     InitializeCommon( army, *pLocalisation, pType_->GetIDManager().GetFreeSimID(), nMosPlannedID );
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::Initialize
-// Created: NLD 2004-10-13
-// -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::Initialize( MIL_Army& army, const TER_Localisation& localisation )
-{
-    assert( pType_ );
-    ChangeConstructionPercentage( 1. );
-    InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID() );
-    GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -317,12 +303,18 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
     localisation.Read( archive );
     archive.EndSection(); // Forme
 
-    // Default state : full constructed, valorized if it can be, not prepared
-    ChangeConstructionPercentage( 1. );
-    if ( pType_->CanBeMined() )
-        ChangeMiningPercentage( 1. );
-
     InitializeCommon( *pArmy, localisation, nID );
+    GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::Initialize
+// Created: NLD 2004-10-13
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::Initialize( MIL_Army& army, const TER_Localisation& localisation )
+{
+    assert( pType_ );
+    InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID() );
     GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
@@ -348,6 +340,18 @@ void MIL_RealObject_ABC::SendMsgConstruction()
     asnMsg.GetAsnMsg().camp = GetArmy().GetID();
     
     NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg.GetAsnMsg().localisation );
+
+    if( pType_->GetDotationCategoryForConstruction() )
+    {
+        asnMsg.GetAsnMsg().m.type_dotation_constructionPresent = 1;
+        asnMsg.GetAsnMsg().type_dotation_construction          = pType_->GetDotationCategoryForConstruction()->GetMosID();
+    }
+
+    if( pType_->GetDotationCategoryForMining() )
+    {
+        asnMsg.GetAsnMsg().m.type_dotation_valorisationPresent = 1;
+        asnMsg.GetAsnMsg().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
+    }
 
     if( nMosPlannedID_ != (uint)-1 )
     {
@@ -416,9 +420,14 @@ void MIL_RealObject_ABC::SendMsgUpdate()
     if( IsAttributeUpdated( eAttrUpdate_ConstructionPercentage, rConstructionPercentage_, nLastValueConstructionPercentage_ ) )
     {
         bFlag = true;
-        nLastValueConstructionPercentage_ = (uint)( rConstructionPercentage_ * 100. );
+        nLastValueConstructionPercentage_     = (uint)( rConstructionPercentage_ * 100. );
         asn.m.pourcentage_constructionPresent = 1;
         asn.pourcentage_construction          = nLastValueConstructionPercentage_;
+        if( pType_->GetDotationCategoryForConstruction() )
+        {
+            asn.m.nb_dotation_constructionPresent = 1;
+            asn.nb_dotation_construction          = nCurrentNbrDotationForConstruction_;
+        }
     }
 
     if( IsAttributeUpdated( eAttrUpdate_MiningPercentage, rMiningPercentage_, nLastValueMiningPercentage_ ) )
@@ -427,6 +436,11 @@ void MIL_RealObject_ABC::SendMsgUpdate()
         nLastValueMiningPercentage_ = (uint)( rMiningPercentage_ * 100. );
         asn.m.pourcentage_valorisationPresent = 1;
         asn.pourcentage_valorisation          = nLastValueMiningPercentage_;
+        if( pType_->GetDotationCategoryForMining() )
+        {
+            asn.m.nb_dotation_valorisationPresent = 1;
+            asn.nb_dotation_valorisation          = nCurrentNbrDotationForMining_;
+        }
     }
 
     if( IsAttributeUpdated( eAttrUpdate_BypassPercentage, rBypassPercentage_, nLastValueBypassPercentage_ ) )
@@ -483,13 +497,13 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::OnReceiveMagicActionUpdate( const 
 {
     if( asnMsg.m.pourcentage_constructionPresent )
     {
-        rConstructionPercentage_ = asnMsg.pourcentage_construction / 100.;        
+        ChangeConstructionPercentage( asnMsg.pourcentage_construction / 100. );
         NotifyAttributeUpdated( eAttrUpdate_ConstructionPercentage );
     }
 
     if( asnMsg.m.pourcentage_valorisationPresent )
     {
-        rMiningPercentage_ = asnMsg.pourcentage_valorisation / 100.;
+        ChangeMiningPercentage( asnMsg.pourcentage_valorisation / 100. );
         NotifyAttributeUpdated( eAttrUpdate_MiningPercentage );
     }
         
@@ -537,8 +551,9 @@ bool MIL_RealObject_ABC::Initialize( const std::string&, const std::string&, dou
     if( bPrepared_ )
         rCompletion -= 100;
     ChangeConstructionPercentage( rCompletion );
-    ChangeMiningPercentage( rMining );
-    rBypassPercentage_ = rBypass;
+    ChangeMiningPercentage      ( rMining );
+    rBypassPercentage_ = rBypass; //$$$ POURRI
+    NotifyAttributeUpdated( eAttrUpdate_BypassPercentage );
     return true;
 }
 

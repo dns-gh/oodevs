@@ -74,7 +74,7 @@ private:
     typedef T_MissionDialogPtrMap::const_iterator     CIT_MissionDialogPtrMap;
     typedef T_MissionDialogPtrMap::reverse_iterator   RIT_MissionDialogPtrMap;
     
-    typedef std::map< E_OrderConduiteID, MOS_Mission_ABC* >  T_OCDialogAgentTypePtrMap;
+    typedef std::map< E_FragOrder, MOS_Mission_ABC* >  T_OCDialogAgentTypePtrMap;
     typedef const T_OCDialogAgentTypePtrMap             CT_OCDialogAgentTypePtrMap;
     typedef T_OCDialogAgentTypePtrMap::iterator         IT_OCDialogAgentTypePtrMap;
     typedef T_OCDialogAgentTypePtrMap::const_iterator   CIT_OCDialogAgentTypePtrMap;
@@ -168,8 +168,8 @@ public:
     void        OpenPopupMission       ( QListViewItem* pItem );
     std::string BuildNameArme          ( E_TypeArme nTypeArme );
     QPopupMenu* GetPopupMenu           ( const MOS_Agent& agent );
-    void        RegisterConduiteOrder  ( E_OrderConduiteID nTypeMission );
-    MOS_Mission_ABC* GetConduiteOrder  ( E_OrderConduiteID nTypeMission );
+    void        RegisterConduiteOrder  ( E_FragOrder nTypeMission );
+    MOS_Mission_ABC* GetConduiteOrder  ( E_FragOrder nTypeMission );
     void        NotifyDeleteAgent      ( MOS_Agent& agent );
     void        NotifyAgentHasMoved    ( MOS_Agent& agent, const MT_Vector2D& vPos );
     void        NotifyAgentMissionAck  ( ASN1T_EnumOrderErrorCode nErrorCode );

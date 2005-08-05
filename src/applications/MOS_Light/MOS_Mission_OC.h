@@ -27,7 +27,7 @@ class MOS_Mission_OC
     MT_COPYNOTALLOWED( MOS_Mission_OC )
 
 public:
-     MOS_Mission_OC( E_OrderConduiteID nTypeMission, QWidget* pParent = 0 );
+     MOS_Mission_OC( E_FragOrder nTypeMission, QWidget* pParent = 0 );
     ~MOS_Mission_OC();
 
     //-------------------------------------------------------------------------
@@ -83,7 +83,7 @@ private:
 
 private:
     MOS_ASN_MsgOrderConduite*   pASNMsgOrder_;
-    E_OrderConduiteID nTypeOC_;
+    E_FragOrder nTypeOC_;
 };
 
 #ifdef MOS_USE_INLINE

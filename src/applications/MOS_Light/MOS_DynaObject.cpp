@@ -49,7 +49,10 @@ MOS_DynaObject::MOS_DynaObject()
     , nItineraireLogistiqueWidth_        ( 0 )
     , nItineraireLogistiqueLength_       ( 0 )
     , nItineraireLogistiqueMaxWeight_    ( 0 )
-
+    , strTypeDotationConstruction_       ()
+    , strTypeDotationValorization_       ()
+    , nNbrDotationConstruction_          ( 0 )
+    , nNbrDotationValorization_          ( 0 )
 {
     
 }
@@ -94,6 +97,18 @@ void MOS_DynaObject::Initialize( const ASN1T_MsgObjectCreation& asnMsg )
     }
     if( pointVector_.size() > 1 )
         center_ /= pointVector_.size();
+
+    if( asnMsg.m.type_dotation_constructionPresent  )
+    {
+        strTypeDotationConstruction_ = MOS_App::GetApp().GetRessourceName( asnMsg.type_dotation_construction );
+        nNbrDotationConstruction_    = 0;
+    }
+    
+    if( asnMsg.m.type_dotation_valorisationPresent )
+    {
+        strTypeDotationValorization_ = MOS_App::GetApp().GetRessourceName( asnMsg.type_dotation_valorisation );
+        nNbrDotationValorization_    = 0;
+    }
 
     if( asnMsg.m.attributs_specifiquesPresent )
     {
@@ -176,6 +191,12 @@ void MOS_DynaObject::Draw()
 void MOS_DynaObject::Update( const ASN1T_MsgObjectUpdate& asnMsg )
 {
     bPrepared_ = asnMsg.en_preparation;
+
+    if( asnMsg.m.nb_dotation_constructionPresent )
+        nNbrDotationConstruction_ = asnMsg.nb_dotation_construction;
+
+    if( asnMsg.m.nb_dotation_valorisationPresent )
+        nNbrDotationValorization_ = asnMsg.nb_dotation_valorisation;
 
     if( asnMsg.m.pourcentage_constructionPresent )
         rConstructionPercentage_ = asnMsg.pourcentage_construction;

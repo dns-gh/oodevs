@@ -191,6 +191,10 @@
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="explosif classique" type="explosif"/>
+        <Valorisation categorie="mine classique" type="mine"/>
+      </Dotations>      
     </Objet>
     <Objet type="destruction route">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>

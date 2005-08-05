@@ -109,7 +109,7 @@ void MOS_MTH_MaintenancePriorities::Terminate()
 // Name: MOS_MTH_MaintenancePriorities::WriteMsg
 // Created: NLD 2003-03-04
 //-----------------------------------------------------------------------------
-void MOS_MTH_MaintenancePriorities::WriteMsg(  std::string& sParam )
+void MOS_MTH_MaintenancePriorities::WriteMsg(  std::string& /*sParam*/ )
 {
     assert( pAsnMaintenancePriorities_ );
 
@@ -145,7 +145,7 @@ void MOS_MTH_MaintenancePriorities::FillRandomParameters()
 // Name: MOS_MTH_MaintenancePriorities::ResaveParameters
 // Created: FBD 03-09-08
 //-----------------------------------------------------------------------------
-void MOS_MTH_MaintenancePriorities::ResaveParameters( MT_OutputArchive_ABC& archive )
+void MOS_MTH_MaintenancePriorities::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 {
 }
 
@@ -153,7 +153,7 @@ void MOS_MTH_MaintenancePriorities::ResaveParameters( MT_OutputArchive_ABC& arch
 // Name: MOS_MTH_MaintenancePriorities::ReloadParameters
 // Created: FBD 03-08-01
 //-----------------------------------------------------------------------------
-void MOS_MTH_MaintenancePriorities::ReloadParameters( MT_InputArchive_ABC& archive )
+void MOS_MTH_MaintenancePriorities::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 {
 }
 

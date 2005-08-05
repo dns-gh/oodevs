@@ -142,7 +142,7 @@ bool MOS_RCListViewItem::IsInside( const MT_Vector2D& vPos ) const
 // Name: MOS_RCListViewItem::AddOrderConduite
 // Created: FBD 03-01-28
 //-----------------------------------------------------------------------------
-MOS_RCSubItem& MOS_RCListViewItem::AddOrderConduite( E_OrderConduiteID nOrdreConduite )
+MOS_RCSubItem& MOS_RCListViewItem::AddOrderConduite( E_FragOrder nOrdreConduite )
 {
     MOS_RCSubItem& item = CreateItem( eItemTypeEltOrderConduite, nOrdreConduite );
     item.SetName( BuildNameOrderConduite( nOrdreConduite ) );
@@ -166,7 +166,7 @@ MOS_RCSubItem& MOS_RCListViewItem::AddText( const std::string& strText )
 // Name: std::string 
 // Created: FBD 03-01-28
 //-----------------------------------------------------------------------------
-const std::string MOS_RCListViewItem::BuildNameOrderConduite( E_OrderConduiteID nOrderConduite ) const
+const std::string MOS_RCListViewItem::BuildNameOrderConduite( E_FragOrder nOrderConduite ) const
 {
     std::string sName;
 

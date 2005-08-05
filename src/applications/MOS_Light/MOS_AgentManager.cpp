@@ -210,7 +210,7 @@ void MOS_AgentManager::InitializeModels( MT_InputArchive_ABC& scipioArchive )
         if( found != vAvailableModels_.end() )
             throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, MT_FormatString( "Le modèle %s existe déjà.", strModelName.c_str() ).c_str() );
 
-        MOS_AgentModel* pModel = new MOS_AgentModel( strModelName );
+        MOS_AgentModel* pModel = new MOS_AgentModel( false, strModelName );
         vAvailableModels_.push_back( pModel );
         pModel->Initialize( modelArchive );
         modelArchive.EndSection(); // Model
@@ -233,7 +233,7 @@ void MOS_AgentManager::InitializeModels( MT_InputArchive_ABC& scipioArchive )
         if( found != vAvailableModels_.end() )
             throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, MT_FormatString( "Le modèle %s existe déjà.", strModelName.c_str() ).c_str() );
 
-        MOS_AgentModel* pModel = new MOS_AgentModel( strModelName );
+        MOS_AgentModel* pModel = new MOS_AgentModel( true, strModelName );
         vAvailableModels_.push_back( pModel );
         pModel->Initialize( modelArchive );
         modelArchive.EndSection(); // Model

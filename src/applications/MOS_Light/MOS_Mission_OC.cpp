@@ -38,7 +38,7 @@
 // Name: MOS_Mission_OC constructor
 // Created: AGN 03-04-14
 //-----------------------------------------------------------------------------
-MOS_Mission_OC::MOS_Mission_OC( E_OrderConduiteID nTypeMission, QWidget* pParent )
+MOS_Mission_OC::MOS_Mission_OC( E_FragOrder nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( (E_MissionID)(-1), pParent )
     , nTypeOC_( nTypeMission )
 {
@@ -528,4 +528,24 @@ void MOS_Mission_OC::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 //-----------------------------------------------------------------------------
 void MOS_Mission_OC::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Mission_OC::GetName
+// Created: AGN 2003-12-22
+// -----------------------------------------------------------------------------
+std::string MOS_Mission_OC::GetName() const
+{
+//    return MOS_Tools::GetOrderDisplay( nTypeOC_ );
+    return ENT_Tr::ConvertFromFragOrder( nTypeOC_ );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Mission_OC::IsAutomateMission
+// Created: APE 2004-03-11
+// -----------------------------------------------------------------------------
+bool MOS_Mission_OC::IsAutomateMission() const
+{
+    return false;
 }

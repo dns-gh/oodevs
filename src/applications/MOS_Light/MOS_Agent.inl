@@ -191,7 +191,7 @@ bool MOS_Agent::IsEmbraye() const
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
 inline
-E_PostureType MOS_Agent::GetOldPosture() const
+E_UnitPosture MOS_Agent::GetOldPosture() const
 {
     return nOldPosture_;
 }
@@ -201,7 +201,7 @@ E_PostureType MOS_Agent::GetOldPosture() const
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
 inline
-E_PostureType MOS_Agent::GetCurrentPosture() const
+E_UnitPosture MOS_Agent::GetCurrentPosture() const
 {
     return nCurrentPosture_;
 }

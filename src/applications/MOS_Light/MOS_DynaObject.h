@@ -71,6 +71,11 @@ public:
     const MT_Vector2D& GetCenter() const;
     uint  GetIDPlanfie() const;
 
+    const std::string& GetTypeDotationConstruction() const;
+    const std::string& GetTypeDotationValorization() const;
+    uint               GetNbrDotationConstruction () const;
+    uint               GetNbrDotationValorization () const;
+
     bool AreAttrSiteFranchissementPresent    () const;
     uint GetSiteFranchissementLargeur        () const;
     uint GetSiteFranchissementProfondeur     () const;
@@ -106,6 +111,12 @@ private:
     uint     nIDPlanifie_;
 
     bool bPrepared_;
+
+    // Dotations
+    std::string strTypeDotationConstruction_;
+    std::string strTypeDotationValorization_;
+    uint        nNbrDotationConstruction_;
+    uint        nNbrDotationValorization_;
 
     MOS_DynaObject_ListViewItem* pItem_;
 

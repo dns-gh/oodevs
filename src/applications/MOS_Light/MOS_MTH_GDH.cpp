@@ -153,7 +153,7 @@ void MOS_MTH_GDH::FillRandomParameters()
 // Name: MOS_MTH_GDH::ReloadParameters
 // Created: FBD 03-08-01
 //-----------------------------------------------------------------------------
-void MOS_MTH_GDH::ReloadParameters( MT_InputArchive_ABC& archive )
+void MOS_MTH_GDH::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 {
 //    nValueWidget_ = 0; //rand() % nValueMaxWidget_;
 // -------------------------------------------------
@@ -169,7 +169,7 @@ void MOS_MTH_GDH::ReloadParameters( MT_InputArchive_ABC& archive )
 // Name: MOS_MTH_GDH::ResaveParameters
 // Created: FBD 03-08-01
 //-----------------------------------------------------------------------------
-void MOS_MTH_GDH::ResaveParameters( MT_OutputArchive_ABC& archive )
+void MOS_MTH_GDH::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 {
 //    archive.WriteField( "sName", std::string( "MOS_MTH_GDH|nValueWidget" ) );
 //    archive.WriteField( "nValueWidget", nValueWidget_ );

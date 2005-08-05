@@ -53,7 +53,8 @@ MsgStartIndirectFire ::= SEQUENCE
 {
     oid-tir     OID,
     oid-src     Agent,
-    position    CoordUTM
+    position    CoordUTM,
+    munition    TypeDotation
 }
 
                   

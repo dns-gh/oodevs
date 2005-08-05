@@ -63,7 +63,6 @@ bool MIL_ZoneMineeLineaire::Initialize( MIL_Army& army, DIA_Parameters& diaParam
 
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_    = (uint)( diaParameters[ nCurrentParamIdx ].ToFloat() * rSizeCoef_ );                     // Param DIA : densité de mines au m
-    nCurrentNbrDotationForConstruction_ = 0;
     return true;
 }
 
@@ -74,9 +73,8 @@ bool MIL_ZoneMineeLineaire::Initialize( MIL_Army& army, DIA_Parameters& diaParam
 void MIL_ZoneMineeLineaire::Initialize( uint nID, MIL_InputArchive& archive )
 {
     MIL_RealObject_ABC::Initialize( nID, archive );
-    rSizeCoef_                           =MIL_Tools::ConvertSimToMeter(  GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
-    nFullNbrDotationForConstruction_     = (uint)rSizeCoef_;                                                              
-    nCurrentNbrDotationForConstruction_  = 0;
+    rSizeCoef_                       = MIL_Tools::ConvertSimToMeter(  GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
+    nFullNbrDotationForConstruction_ = (uint)rSizeCoef_;                                                              
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +89,6 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeLineaire::Initialize( uint nID, const ASN
 
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_    = (uint)rSizeCoef_;                                                              
-    nCurrentNbrDotationForConstruction_ = 0;
     return EnumObjectErrorCode::no_error;
 }
 

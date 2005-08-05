@@ -535,12 +535,12 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.posture_newPresent )
     {
-        nCurrentPosture_ = (E_PostureType)asnMsg.posture_new;
+        nCurrentPosture_ = (E_UnitPosture)asnMsg.posture_new;
         bNeedRedrawVision_ = true;
     }
     if( asnMsg.m.posture_oldPresent )
     {
-        nOldPosture_ = (E_PostureType)asnMsg.posture_old;
+        nOldPosture_ = (E_UnitPosture)asnMsg.posture_old;
         bNeedRedrawVision_ = true;
     }
     if( asnMsg.m.posture_pourcentagePresent )

@@ -51,6 +51,8 @@
 #include "GFX/GFX_Text.h"
 #include "GFX/GFX_Color.h"
 
+#include "ENT/ENT_Tr.h"
+
 #undef min
 #undef max
 

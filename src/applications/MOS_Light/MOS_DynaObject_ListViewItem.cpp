@@ -48,10 +48,12 @@ MOS_DynaObject_ListViewItem::MOS_DynaObject_ListViewItem( QListViewItem* pParent
     strLabel += " [" + itostring( refObject.GetIDPlanfie() ) + "]";
     setText( 0, strLabel.c_str() );
 
-    pConstructionPercentageItem_ = new QListViewItem( this, "Construit à " );
-    pValorizationPercentageItem_ = new QListViewItem( this, "Valorisé à " );
-    pBypassConstructionPercentageItem_ = new QListViewItem( this, "Contourné à " );
-    pPreparationItem_ = new QListViewItem( this, "Préparé" );
+    pConstructionPercentageItem_       = new QListViewItem( this, "Construit à " );
+    pValorizationPercentageItem_       = new QListViewItem( this, pConstructionPercentageItem_, "Valorisé à "  );
+    pBypassConstructionPercentageItem_ = new QListViewItem( this, pValorizationPercentageItem_, "Contourné à " );    
+    pDotationConstructionItem_         = new QListViewItem( this, pBypassConstructionPercentageItem_, "Dotations construction" );
+    pDotationValorizationItem_         = new QListViewItem( this, pDotationConstructionItem_        , "Dotations valorisation" );    
+    pPreparationItem_                  = new QListViewItem( this, pDotationValorizationItem_        , "Préparé"      );
 
     refObject.SetViewItem( this );
     Update();
@@ -86,6 +88,28 @@ void MOS_DynaObject_ListViewItem::Update()
     strLabel2 += itostring( refObject_.GetBypassConstructionPercentage() ) + "%";
     pBypassConstructionPercentageItem_->setText( 0, strLabel2.c_str() );
 
+    if( refObject_.GetTypeDotationConstruction().empty() )
+        pDotationConstructionItem_->setText( 0, "Pas de dotations pour construction" );
+    else
+    {
+        std::stringstream strTmp;
+
+        strTmp << "Construction : " << refObject_.GetNbrDotationConstruction() << " " << refObject_.GetTypeDotationConstruction();
+        pDotationConstructionItem_->setText( 0, strTmp.str().c_str() );
+    }
+
+
+    if( refObject_.GetTypeDotationValorization().empty() )
+        pDotationValorizationItem_->setText( 0, "Pas de dotations pour valorisation" );
+    else
+    {
+        std::stringstream strTmp;
+
+        strTmp << "Valorisation : " << refObject_.GetNbrDotationValorization() << " " << refObject_.GetTypeDotationValorization();
+        pDotationValorizationItem_->setText( 0, strTmp.str().c_str() );
+    }
+        
+
     if( refObject_.IsPrepared() )
         pPreparationItem_->setText( 0, "Préparé" );
     else
@@ -94,13 +118,13 @@ void MOS_DynaObject_ListViewItem::Update()
     if( refObject_.AreAttrSiteFranchissementPresent() )
     {
         if( !pSiteFranchissementLargeurItem_ )
-            pSiteFranchissementLargeurItem_ = new QListViewItem( this, "Largeur " );
+            pSiteFranchissementLargeurItem_ = new QListViewItem( this, pPreparationItem_, "Largeur " );
         if( !pSiteFranchissementProfondeurItem_ )
-            pSiteFranchissementProfondeurItem_ = new QListViewItem( this, "Profondeur " );
+            pSiteFranchissementProfondeurItem_ = new QListViewItem( this, pSiteFranchissementLargeurItem_, "Profondeur " );
         if( !pSiteFranchissementVitesseCourantItem_ )
-            pSiteFranchissementVitesseCourantItem_ = new QListViewItem( this, "Vitesse du courant " );
+            pSiteFranchissementVitesseCourantItem_ = new QListViewItem( this, pSiteFranchissementProfondeurItem_, "Vitesse du courant " );
         if( !pSiteFranchissementBergesAAmenagerItem_ )
-            pSiteFranchissementBergesAAmenagerItem_ = new QListViewItem( this, "Berges à aménager " );
+            pSiteFranchissementBergesAAmenagerItem_ = new QListViewItem( this, pSiteFranchissementVitesseCourantItem_, "Berges à aménager " );
 
         std::string strTmp = "Largeur ";
         strTmp += itostring( refObject_.GetSiteFranchissementLargeur() ) + " m";
@@ -125,7 +149,7 @@ void MOS_DynaObject_ListViewItem::Update()
     if( refObject_.AreAttrNuageNBCPresent() )
     {   
         if( !pNuageNBCAgentNBCItem_ )
-            pNuageNBCAgentNBCItem_ = new QListViewItem( this, "Agent NBC" );
+            pNuageNBCAgentNBCItem_ = new QListViewItem( this, pPreparationItem_, "Agent NBC" );
 
         std::string strTmp = "Agent NBC ";
     
@@ -138,15 +162,15 @@ void MOS_DynaObject_ListViewItem::Update()
     if( refObject_.AreAttrItineraireLogistiquePresent() )
     {
         if( !pItineraireLogistiqueEquippedItem_ )
-            pItineraireLogistiqueEquippedItem_ = new QListViewItem( this, "Itineraire log equipé" );
+            pItineraireLogistiqueEquippedItem_ = new QListViewItem( this, pPreparationItem_, "Itineraire log equipé" );
         if( !pItineraireLogistiqueFlowItem_ )
-            pItineraireLogistiqueFlowItem_     = new QListViewItem( this, "Débit max" );
+            pItineraireLogistiqueFlowItem_     = new QListViewItem( this, pItineraireLogistiqueEquippedItem_, "Débit max" );
         if( !pItineraireLogistiqueWidthItem_ )
-            pItineraireLogistiqueWidthItem_    = new QListViewItem( this, "Largeur" );
+            pItineraireLogistiqueWidthItem_    = new QListViewItem( this, pItineraireLogistiqueFlowItem_, "Largeur" );
         if( !pItineraireLogistiqueLengthItem_ )
-            pItineraireLogistiqueLengthItem_   = new QListViewItem( this, "Longueur" );
+            pItineraireLogistiqueLengthItem_   = new QListViewItem( this, pItineraireLogistiqueWidthItem_, "Longueur" );
         if( !pItineraireLogistiqueMaxWeightItem_ )
-            pItineraireLogistiqueMaxWeightItem_ = new QListViewItem( this, "Poids max supporté" );
+            pItineraireLogistiqueMaxWeightItem_ = new QListViewItem( this, pItineraireLogistiqueMaxWeightItem_, "Poids max supporté" );
     
         if( refObject_.IsItineraireLogistiqueEquipped() )
             pItineraireLogistiqueEquippedItem_->setText( 0, "Iti log equipé" );
@@ -173,9 +197,9 @@ void MOS_DynaObject_ListViewItem::Update()
     if( refObject_.AreAttrRotaPresent() )
     {
         if( !pRotaNbcAgentsItem_ )
-            pRotaNbcAgentsItem_ = new QListViewItem( this, "Agents NBC" );
+            pRotaNbcAgentsItem_ = new QListViewItem( this, pPreparationItem_, "Agents NBC" );
         if( !pRotaDangerItem_ )
-            pRotaDangerItem_ = new QListViewItem( this, "Danger" );
+            pRotaDangerItem_ = new QListViewItem( this, pRotaNbcAgentsItem_, "Danger" );
 
         std::string strTmp = "Danger ";
         strTmp += itostring( refObject_.GetRotaDanger() );

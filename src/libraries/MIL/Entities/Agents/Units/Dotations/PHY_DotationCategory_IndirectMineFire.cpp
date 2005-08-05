@@ -76,5 +76,6 @@ void PHY_DotationCategory_IndirectMineFire::Fire( const MIL_AgentPion& firer, co
 
     MIL_ZoneMineeParDispersion& zoneMinee = *new MIL_ZoneMineeParDispersion();
     zoneMinee.Initialize( firer.GetArmy(), localisation, nNbrMines );
+    zoneMinee.Construct();
     MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( zoneMinee );
 }

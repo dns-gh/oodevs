@@ -75,8 +75,8 @@ private:
     void            DeleteAllItems();    
 
     MOS_RCSubItem&      AddText                ( const std::string& strText );
-    MOS_RCSubItem&      AddOrderConduite       ( E_OrderConduiteID nOrdreConduite );
-    const std::string   BuildNameOrderConduite ( E_OrderConduiteID nOrderConduite ) const;
+    MOS_RCSubItem&      AddOrderConduite       ( E_FragOrder nOrdreConduite );
+    const std::string   BuildNameOrderConduite ( E_FragOrder nOrderConduite ) const;
     //@}
 
 private:

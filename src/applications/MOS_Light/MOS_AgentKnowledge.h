@@ -105,13 +105,13 @@ private:
 
     uint              nTeam_;
 
-    E_NatureLevelType           nLevel_;
-    E_NatureWeaponType          nWeapon_;
-    E_NatureSpecializationType  nSpecialization_;
-    E_NatureQualifierType       nQualifier_;
-    E_NatureCategoryType        nCategory_;
-    E_NatureMobilityType        nMobility_;
-    E_NatureCapaciteMissionType nMissionCapacity_;
+    E_NatureLevel               nLevel_;
+    E_UnitNatureWeapon          nWeapon_;
+    E_UnitNatureSpecialization  nSpecialization_;
+    E_UnitNatureQualifier       nQualifier_;
+    E_UnitNatureCategory        nCategory_;
+    E_UnitNatureMobility        nMobility_;
+    E_UnitCapaciteMission       nMissionCapacity_;
     bool                        bIsPC_;
     bool                        bSurrendered_;
     bool                        bPrisoner_;
