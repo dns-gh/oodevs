@@ -58,8 +58,9 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& );
 
     public:
-        ADN_Type_Int nPathfinderNbr_;
-        ADN_Type_Int nDistanceThreshold_;
+        ADN_Type_Int    nPathfinderNbr_;
+        ADN_Type_Int    nDistanceThreshold_;
+        ADN_Type_String szRulesFile_;
     };
     
 //*****************************************************************************

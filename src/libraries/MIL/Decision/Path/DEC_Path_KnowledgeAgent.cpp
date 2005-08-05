@@ -33,10 +33,7 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& kno
 { 
     if( rSecurityDistance_ < 1000. )
         rSecurityDistance_ = 1000.;
-    const MT_Float rCostOnEnemy            = 100.;
-    const MT_Float rCostAtSecurityDistance = 10.;
-    rFactor_ = ( rCostAtSecurityDistance - rCostOnEnemy ) / rSecurityDistance_;
-    rOffset_ = rCostOnEnemy;
+    SetCosts( 100., 10. );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +43,16 @@ DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& kno
 DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeAgent::SetCosts
+// Created: AGE 2005-08-04
+// -----------------------------------------------------------------------------
+void DEC_Path_KnowledgeAgent::SetCosts( MT_Float rCostOnEnemy, MT_Float rCostAtSecurityRange )
+{
+    rFactor_ = ( rCostAtSecurityRange - rCostOnEnemy ) / rSecurityDistance_;
+    rOffset_ = rCostOnEnemy;
 }
 
 // =============================================================================

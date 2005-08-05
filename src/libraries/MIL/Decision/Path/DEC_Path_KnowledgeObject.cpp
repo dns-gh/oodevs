@@ -74,13 +74,15 @@ uint DEC_Path_KnowledgeObject::GetTypeID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::SetCosts
-// Created: AGE 2005-03-30
+// Name: DEC_Path_KnowledgeObject::SetCost
+// Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_Path_KnowledgeObject::SetCosts( MT_Float rCostIn, MT_Float rCostOut )
+void DEC_Path_KnowledgeObject::SetCost( MT_Float rCost )
 {
-    rCostIn_  = rCostIn;
-    rCostOut_ = rCostOut;
+    if( rCost > 0 )
+        rCostIn_  = rCost;
+    else
+        rCostOut_ = -rCost;
 }
 
 // =============================================================================

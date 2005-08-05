@@ -11,11 +11,10 @@
 
 #include "MIL_pch.h"
 #include "DEC_PathType.h"
-#include "DEC_PathfinderRule.h"
 #include "DEC_Path.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/MIL_AgentTypePion.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
+#include "DEC_PathClass.h"
+
+DEC_PathType::T_Rules DEC_PathType::rules_;
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathType constructor
@@ -41,210 +40,59 @@ DEC_PathType::~DEC_PathType()
 // -----------------------------------------------------------------------------
 TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to )
 {
-    // The terrain types depends on the type of path
-    // And on whether the unit can fly
     const bool bCanFly = path.CanQueryMakerFly();
-    T_TerrainCost avoid  = AvoidedTerrain ( nPathType_, bCanFly )
-                , prefer = PreferedTerrain( nPathType_, bCanFly );
+    const DEC_PathClass* pClass = rules_[ T_RuleType( ConvertPathTypeToString(), bCanFly ) ];
+    assert( pClass );
+    return pClass->CreateRule( path, from, to );
+}
 
-    const bool bShort = nPathType_ == eInfoRetreat || nPathType_ == eInfoBackup;
-
-    DEC_PathfinderRule::E_AltitudePreference altPreference = DEC_PathfinderRule::eDontCare;
-    if( nPathType_ == eInfoInfiltration )
-        altPreference = DEC_PathfinderRule::ePreferLow;
-    else if( ! bCanFly && nPathType_ == eInfoRecon )
-        altPreference = DEC_PathfinderRule::ePreferHigh;
-
-    MT_Float rMaxFuseauDistance = 1000.;
-    if( ! path.GetFuseau().IsInside( from ) )
-        rMaxFuseauDistance += path.GetFuseau().Distance( from ) * 1.3; // $$$$ AGE 2005-06-08: Hard coded margin
-
-    if( ! path.GetAutomataFuseau().IsNull() ) // I have a higher fuseau
-        rMaxFuseauDistance = std::max( rMaxFuseauDistance, 10000. );
-
-    if( ! path.GetFuseau().IsInside( to ) // our destination is outside
-     ||   bCanFly                         // I'm an alat cowboy
-     ||   nPathType_ == eInfoRetreat )     // I'm fleeing away
-        rMaxFuseauDistance = std::numeric_limits< MT_Float >::max();
-    
-    DEC_PathfinderRule& rule = *new DEC_PathfinderRule( path, avoid, prefer, from, to, bShort, altPreference, rMaxFuseauDistance );
-
-    if( nPathType_ == eInfoRetreat )
-        rule.ChangeDangerDirectionCost( 0.1f ); // $$$$ AGE 2005-06-24: Whatever
-
-    const bool bAvoidEnis = nPathType_ == eInfoRetreat || nPathType_ == eInfoBackup || nPathType_ == eInfoInfiltration;
-    if( bAvoidEnis )
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::InitializeRules
+// Created: AGE 2005-08-04
+// -----------------------------------------------------------------------------
+void DEC_PathType::InitializeRules( MIL_InputArchive& archive )
+{
+    archive.BeginList( "Rules" );
+    while( archive.NextListElement() )
     {
-        for( DEC_Path::CIT_PathKnowledgeAgentVector itAgent = path.GetPathKnowledgeAgents().begin(); itAgent != path.GetPathKnowledgeAgents().end(); ++itAgent )
-            rule.AddEnemyKnowledge( *itAgent );
-    }
-
-    const bool bAvoidObjects = nPathType_ != eInfoMineClearance;
-    if( bAvoidObjects )
-    {
-        for( DEC_Path::CIT_PathKnowledgeObjectVector itObject = path.GetPathKnowledgeObjects().begin(); itObject != path.GetPathKnowledgeObjects().end(); ++itObject )
+        archive.Section( "Rule" );
+        std::string strType;
+        archive.ReadAttribute( "type", strType );
+        bool bFlying;
+        archive.ReadAttribute( "flying", bFlying);
+        std::string strBase;
+        const DEC_PathClass* pBase = 0;
+        if( archive.ReadAttribute( "inherits", strBase, MIL_InputArchive::eNothing ) )
         {
-            MT_Float rCostIn, rCostOut;
-            GetObjectCosts( itObject->GetTypeID(), rCostIn, rCostOut );
-            rule.AddObjectKnowledge( *itObject, rCostIn, rCostOut );
+            pBase  = rules_[ T_RuleType( strBase, bFlying ) ];
+            if( ! pBase )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined", archive.GetContext() );
         }
+        DEC_PathClass*& pRule = rules_[ T_RuleType( strType, bFlying ) ];
+        if( pRule )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined", archive.GetContext() );
+        pRule = new DEC_PathClass( archive, pBase );
+        archive.EndSection(); // Rule
+    };
+    archive.EndList(); // Rules
+
+    CheckRulesExistence();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathType::CheckRulesExistence
+// Created: AGE 2005-08-04
+// -----------------------------------------------------------------------------
+void DEC_PathType::CheckRulesExistence()
+{
+    for( int type = 0; type < eNbrPathType; ++type )
+    {
+        const std::string typeName = DEC_PathType( E_PathType( type ) ).ConvertPathTypeToString();
+        if( ! rules_[ T_RuleType( typeName, false ) ] )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for non flying units"  );
+        if( ! rules_[ T_RuleType( typeName, true ) ] )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for flying units" );
     }
-    return rule;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathType::PreferedTerrain
-// Created: AGE 2005-03-25
-// -----------------------------------------------------------------------------
-DEC_PathType::T_TerrainCost DEC_PathType::PreferedTerrain( E_PathType type, bool bFly )
-{
-    static TerrainData roads = TerrainData::SmallRoad()
-                       .Merge( TerrainData::MediumRoad() )
-                       .Merge( TerrainData::LargeRoad() )
-                       .Merge( TerrainData::Motorway() );
-    static TerrainData groundTerrains[ eNbrPathType ] =
-    {
-        roads,                                              // eInfoMovement 
-        TerrainData::ForestBorder().Merge( roads ),         // eInfoRecon
-        TerrainData::Forest(),                              // eInfoInfiltration
-        TerrainData(),                                      // eInfoAssault
-        TerrainData(),                                      // eInfoRetreat
-        TerrainData(),                                      // eInfoBackup
-        roads                                               // eInfoMineClearance
-    };
-    static TerrainData rivers = TerrainData::SmallRiver()
-                        .Merge( TerrainData::MediumRiver() )
-                        .Merge( TerrainData::LargeRiver() );
-
-    static TerrainData airTerrains[ eNbrPathType ] =
-    {
-        TerrainData(),  // eInfoMovement
-        TerrainData(),  // eInfoRecon
-        TerrainData(),  // eInfoInfiltration
-        TerrainData(),  // eInfoAssault
-        TerrainData(),  // eInfoRetreat
-        TerrainData(),  // eInfoBackup
-        TerrainData(),  // eInfoMineClearance
-    };
-    static MT_Float groundCosts[ eNbrPathType ] = 
-    {
-        2, 2, 2, 2, 2, 2, 2
-    };
-    static MT_Float airCosts[ eNbrPathType ] = 
-    {
-        2, 2, 2, 2, 2, 2, 2
-    };
-
-    if( bFly && type < eNbrPathType)
-        return T_TerrainCost( airTerrains[ type ], airCosts[ type ] );
-    if( ! bFly && type < eNbrPathType )
-        return T_TerrainCost( groundTerrains[ type ], groundCosts[ type ] );
-    return T_TerrainCost();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathType::AvoidedTerrain
-// Created: AGE 2005-03-25
-// -----------------------------------------------------------------------------
-DEC_PathType::T_TerrainCost DEC_PathType::AvoidedTerrain( E_PathType type, bool bFly )
-{
-    static TerrainData urban = TerrainData::Urban().Merge( TerrainData::UrbanBorder() );
-    static TerrainData roads = TerrainData::SmallRoad()
-                       .Merge( TerrainData::MediumRoad() )
-                       .Merge( TerrainData::LargeRoad() )
-                       .Merge( TerrainData::Motorway() );
-    static TerrainData groundTerrains[ eNbrPathType ] =
-    {
-        TerrainData(),          // eInfoMovement
-        TerrainData(),          // eInfoRecon
-        urban,                  // eInfoInfiltration
-        roads,                  // eInfoAssault
-        TerrainData(),          // eInfoRetreat
-        TerrainData(),          // eInfoBackup
-        TerrainData()           // eInfoMineClearance
-    };
-
-    static TerrainData airAvoid = TerrainData::ForestBorder()
-                          .Merge( urban )
-                          .Merge( roads );
-    static TerrainData airTerrains[ eNbrPathType ] =
-    {
-        airAvoid,           // eInfoMovement
-        urban,              // eInfoRecon
-        airAvoid,           // eInfoInfiltration
-        TerrainData(),      // eInfoAssault
-        TerrainData(),      // eInfoRetreat
-        TerrainData(),      // eInfoBackup
-        TerrainData()       // eInfoMineClearance
-    };
-    static MT_Float groundCosts[ eNbrPathType ] = 
-    {
-        7, 7, 7, 7, 7, 7, 7
-    };
-    static MT_Float airCosts[ eNbrPathType ] = 
-    {
-        7, 7, 7, 7, 7, 7, 7
-    };
-
-    if( bFly && type < eNbrPathType )
-        return T_TerrainCost( airTerrains[ type ], airCosts[ type ] );
-    if( ! bFly && type < eNbrPathType )
-        return T_TerrainCost( groundTerrains[ type ], groundCosts[ type ] );
-    return T_TerrainCost();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathType::GetObjectCosts
-// Created: AGE 2005-03-30
-// -----------------------------------------------------------------------------
-void DEC_PathType::GetObjectCosts( uint nObjectTypeId, MT_Float& rCostIn, MT_Float& rCostOut )
-{
-    static std::vector< std::pair< MT_Float, MT_Float > > costs = InitializeObjectCosts();
-    if( nObjectTypeId < costs.size() )
-    {
-        rCostIn  = costs[ nObjectTypeId ].first;
-        rCostOut = costs[ nObjectTypeId ].second;
-    }
-    else
-        rCostIn = rCostOut = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: std::pair< MT_Float, MT_Float > > DEC_PathType::InitializeObjectCosts
-// Created: AGE 2005-03-30
-// -----------------------------------------------------------------------------
-std::vector< std::pair< MT_Float, MT_Float > > DEC_PathType::InitializeObjectCosts()
-{
-    //$$$ BOF
-    typedef std::pair< MT_Float, MT_Float > T_CostPair;
-    std::vector< std::pair< MT_Float, MT_Float > > costs;
-
-    const MIL_RealObjectType::T_ObjectTypeMap& objectTypes = MIL_RealObjectType::GetObjectTypes();
-    costs.resize( objectTypes.size() );
-
-    const T_CostPair ignore( 0    , 0  );
-    const T_CostPair avoid ( 10   , 0  );
-    const T_CostPair hate  ( 10000, 0  );
-    const T_CostPair enjoy ( 0    , 1  );
-    const T_CostPair prefer( 0    , 5  );
-
-    for( MIL_RealObjectType::CIT_ObjectTypeMap it = objectTypes.begin(); it != objectTypes.end(); ++it )
-    {
-        const MIL_RealObjectType& objectType = *it->second;
-
-        switch( objectType.GetBehavior() )
-        {
-            case MIL_RealObjectType::eHate   : costs[ objectType.GetID() ] = hate;   break;
-            case MIL_RealObjectType::eAvoid  : costs[ objectType.GetID() ] = avoid;  break;
-            case MIL_RealObjectType::eIgnore : costs[ objectType.GetID() ] = ignore; break;
-            case MIL_RealObjectType::eEnjoy  : costs[ objectType.GetID() ] = enjoy;  break;
-            case MIL_RealObjectType::ePrefer : costs[ objectType.GetID() ] = prefer; break;
-            default:
-                assert( false );
-        }       
-    }
-
-    return costs;
 }
 
 // -----------------------------------------------------------------------------
@@ -254,13 +102,13 @@ std::vector< std::pair< MT_Float, MT_Float > > DEC_PathType::InitializeObjectCos
 std::string DEC_PathType::ConvertPathTypeToString() const
 {
     static std::string names[ eNbrPathType ] = {
-        "eInfoMovement",
-        "eInfoRecon",
-        "eInfoInfiltration",
-        "eInfoAssault",
-        "eInfoRetreat",
-        "eInfoBackup"
-        "eInfoMineClearance"
+        "movement",
+        "recon",
+        "infiltration",
+        "assault",
+        "retreat",
+        "backup",
+        "minesweep"
     };
     if( nPathType_ < eNbrPathType )
         return names[ nPathType_ ];

@@ -876,25 +876,24 @@ MT_Float MIL_Fuseau::Distance( const MT_Vector2D& p, bool bLimitsOnly ) const
 // Name: MIL_Fuseau::GetCost
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Float rMaxDistance ) const
+MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn ) const
 {
     if( ! pLeftLimit_ )
         return 0;
 
-    const bool     bInside    = IsInsidish( to );
+    const bool     bInside      = IsInsidish( to );
     const MT_Float rMinDistance = Distance( to, true );
 
     if( bInside )
     {
-        if( rMinDistance > 1000 )
+        if( rMinDistance > rComfortDistanceIn )
             return 0;
-        return ( 1000 - rMinDistance ) / 200.;
+        return ( rComfortDistanceIn - rMinDistance ) * rCostPerMeterIn;
+    } else {
+        if( rMinDistance > rMaxDistanceOut )
+            return -1;
+        return rMinDistance * rCostPerMeterOut;
     }
-
-    if( rMinDistance > rMaxDistance )
-        return -1;
-
-    return rMinDistance;
 }
 
 // =============================================================================

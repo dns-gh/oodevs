@@ -3562,6 +3562,10 @@ Assurez vous que le fichier existe.</translation>
         <source>Max nbr</source>
         <translation>Nbr max.</translation>
     </message>
+    <message>
+        <source>Rules file</source>
+        <translation type="obsolete">Fichier de règles</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Radars_GUI</name>

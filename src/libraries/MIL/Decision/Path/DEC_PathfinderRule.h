@@ -36,33 +36,31 @@ class PHY_RawVisionData;
 // =============================================================================
 class DEC_PathfinderRule : public TerrainRule_ABC
 {
-public:
-    //! @name Types
-    //@{
-    enum E_AltitudePreference
-    {
-        eDontCare,
-        ePreferHigh,
-        ePreferLow
-    };
-    typedef std::pair< TerrainData, MT_Float > T_TerrainCost;
-    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathfinderRule( const DEC_Path& path, const T_TerrainCost& avoid, const T_TerrainCost& prefer, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort, E_AltitudePreference alt, MT_Float rMaxFuseauDistance );
+             DEC_PathfinderRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort );
     virtual ~DEC_PathfinderRule();
     //@}
 
     //! @name Operations
     //@{
-    void AddEnemyKnowledge ( const DEC_Path_KnowledgeAgent & enemy );
-    void AddObjectKnowledge( const DEC_Path_KnowledgeObject& object, MT_Float rCostIn, MT_Float rCostOut );
-    void ChangeDangerDirectionCost( MT_Float rNewCost );
-
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
     virtual float GetCost     ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
+    //@}
+
+    //! @name Costs Configuration
+    //@{
+    void AddEnemyKnowledge ( const DEC_Path_KnowledgeAgent & enemy, MT_Float rCostOnTarget, MT_Float rCostAtSecurityRange );
+    void AddObjectKnowledge( const DEC_Path_KnowledgeObject& object, MT_Float rCost );
+
+    void SetMaximumEnemyCost     ( MT_Float rNewCost );
+    void SetDangerDirectionCosts ( MT_Float rBaseCost, MT_Float rLinearCost );
+    void SetPreferedTerrain      ( const TerrainData& data, MT_Float rCostOut );
+    void SetAvoidedTerrain       ( const TerrainData& data, MT_Float rCostIn );
+    void SetAltitudePreference   ( MT_Float rCostPerMeter ); 
+    void SetFuseauCosts          ( MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn );
     //@}
 
 private:
@@ -97,23 +95,28 @@ private:
     const MIL_Fuseau* pFuseau_;
     const MIL_Fuseau* pAutomateFuseau_;
     MT_Vector2D dangerDirection_;
-    MT_Float    rDangerDirectionCost_;
+    MT_Float    rDangerDirectionBaseCost_;
+    MT_Float    rDangerDirectionLinearCost_;
     MT_Vector2D dangerPoint_;
     float    rMaxSpeed_;
     bool     bShort_;
-    MT_Float rFuseauDistance_;
+    MT_Float rMaximumFuseauDistance_;
+    MT_Float rComfortFuseauDistance_;
+    MT_Float rFuseauCostPerMeterOut_;
+    MT_Float rFuseauCostPerMeterIn_;
 
     T_PathKnowledgeAgentVector  agents_;
+    MT_Float rMaxEnemyCost_;
     T_PathKnowledgeObjectVector objects_;
 
-    T_TerrainCost avoid_;
-    T_TerrainCost prefer_;
-    bool bAvoid_;
-    bool bPrefer_;
+    TerrainData avoid_;
+    MT_Float    rAvoidCost_;
+    TerrainData prefer_;
+    MT_Float    rPreferCost_;
 
     MT_Float rMinAltitude_;
     MT_Float rMaxAltitude_;
-    E_AltitudePreference altitudePreference_;
+    MT_Float rAltitudeCostPerMeter_;
     MT_Float rMaxSlope_;
     //@}
 };

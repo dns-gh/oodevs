@@ -15,6 +15,7 @@
 #include "DEC_Path_ABC.h"
 
 #include "Entities/Objects/MIL_RealObjectType.h"
+#include "Decision/Path/DEC_PathType.h"
 
 #undef Yield  // $$$$ AGE 2005-02-25: N'importe quoi
 #include "TER/TER_PathfinderThread.h"
@@ -24,13 +25,21 @@
 // Name: DEC_PathFind_Manager constructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::DEC_PathFind_Manager(  MIL_InputArchive& archive  )
+DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
 {
     archive.Section( "Pathfind" );
     int nPathfindThreads = 1;
     archive.ReadField( "PathfindNumber", nPathfindThreads, CheckValueGreaterOrEqual( 1 ) );
     archive.ReadField( "DistanceThreshold", rDistanceThreshold_ );
+    std::string strRulesArchive;
+    archive.ReadField( "Rules", strRulesArchive );
     archive.EndSection();
+
+    MIL_InputArchive rulesArchive;
+    rulesArchive.AddWarningStream( std::cout );
+    rulesArchive.Open( strRulesArchive );
+
+    DEC_PathType::InitializeRules( rulesArchive );
 
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", nPathfindThreads ) );
 

@@ -26,6 +26,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
 #include "DIA/DIA_SDK_Manager.h"
+#include "MT_Tools/MT_ArchiveDirectoryHelper.h"
 
 #include <sys/stat.h>
 
@@ -44,17 +45,13 @@ DEC_Workspace::DEC_Workspace( MIL_InputArchive& archive )
     std::string strFile;
     archive.ReadField( "Decisionnel", strFile );
 
-    std::string strModelsDir;
-    MT_ExtractFilePath( strFile, strModelsDir );
-       
     MIL_InputArchive decArchive;
     decArchive.AddWarningStream( std::cout );
     decArchive.Open( strFile );
-    
+
     MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
     
-    std::string strInitialDir =  MT_GetCurrentDir();
-    MT_ChangeDir( strModelsDir );
+    MT_ArchiveDirectoryHelper directoryChanger( strFile );
 
     decArchive.Section( "Decisionnel" );
 
@@ -63,7 +60,6 @@ DEC_Workspace::DEC_Workspace( MIL_InputArchive& archive )
 
     decArchive.EndSection(); // Decisionnel
 
-    MT_ChangeDir( strInitialDir );
     decArchive.Close();
 }
 

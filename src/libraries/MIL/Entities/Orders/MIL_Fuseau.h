@@ -59,7 +59,7 @@ public:
     void ComputeNearestEntryPoint     ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
     void ComputeEntryPoint            ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
 
-    MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, MT_Float rMaxDistance ) const;
+    MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn ) const;
     MT_Float Distance( const MT_Vector2D& p, bool bLimitsOnly = false ) const;
     //@}
 

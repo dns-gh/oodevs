@@ -89,6 +89,7 @@ void ADN_Project_Data::SimInfos::WriteArchive( MT_OutputArchive_ABC& output )
 ADN_Project_Data::PathfinderInfo::PathfinderInfo()
 : nPathfinderNbr_( 2 )
 , nDistanceThreshold_( 15000 )
+, szRulesFile_( "PathfindRules.xml" )
 {
 }
 
@@ -102,6 +103,7 @@ void ADN_Project_Data::PathfinderInfo::ReadArchive( ADN_XmlInput_Helper& input )
     input.Section( "Pathfind" );
     input.ReadField( "PathfindNumber", nPathfinderNbr_ );
     input.ReadField( "DistanceThreshold", nDistanceThreshold_ );
+    input.ReadField( "Rules", szRulesFile_ );
     input.EndSection(); // Pathfind
 }
 
@@ -115,6 +117,7 @@ void ADN_Project_Data::PathfinderInfo::WriteArchive( MT_OutputArchive_ABC& outpu
     output.Section( "Pathfind" );
     output.WriteField( "PathfindNumber", nPathfinderNbr_.GetData() );
     output.WriteField( "DistanceThreshold", nDistanceThreshold_.GetData() );
+    output.WriteField( "Rules", szRulesFile_.GetData() );
     output.EndSection(); // Pathfind
 }
 

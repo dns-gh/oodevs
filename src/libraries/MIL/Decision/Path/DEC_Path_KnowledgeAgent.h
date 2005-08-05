@@ -39,6 +39,7 @@ public:
 
     //! @name Operations
     //@{
+    void SetCosts( MT_Float rCostOnTarget, MT_Float rCostAtSecurityRange );
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 

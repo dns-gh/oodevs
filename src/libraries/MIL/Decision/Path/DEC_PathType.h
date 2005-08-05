@@ -16,6 +16,7 @@
 
 class TerrainRule_ABC;
 class DEC_Path;
+class DEC_PathClass;
 
 //*****************************************************************************
 // Created: JDY 03-04-10
@@ -45,24 +46,24 @@ public:
     TerrainRule_ABC& CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to );
 
     std::string ConvertPathTypeToString() const;
+
+    static void InitializeRules( MIL_InputArchive& archive );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< TerrainData, MT_Float > T_TerrainCost;
+    typedef std::pair< std::string, bool >         T_RuleType;
+    typedef std::map< T_RuleType, DEC_PathClass* > T_Rules;
     //@}
 
-    //! @name Tools
+    //! @name Helpers
     //@{
-    static T_TerrainCost PreferedTerrain( E_PathType type, bool bFly );
-    static T_TerrainCost AvoidedTerrain( E_PathType type, bool bFly );
-    static void          GetObjectCosts( uint nObjectTypeId, MT_Float& rCostIn, MT_Float& rCostOut );
-    
-    static std::vector< std::pair< MT_Float, MT_Float > > InitializeObjectCosts();
+    static void CheckRulesExistence();
     //@}
 
 private:
+    static T_Rules rules_;
     E_PathType nPathType_;
 };
 

@@ -37,6 +37,7 @@
 #include "TER/TER_World.h"
 
 #include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_ArchiveDirectoryHelper.h"
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
 
 #include "tools/thread/Thread.h"
@@ -210,8 +211,9 @@ void MIL_AgentServer::ReadPathFindData( MIL_InputArchive& archive )
     MIL_InputArchive pathfindArchive;
     pathfindArchive.AddWarningStream( std::cout );
     pathfindArchive.Open( strPathfindFile );
-
     config_.AddFileToCRC( strPathfindFile );
+
+    MT_ArchiveDirectoryHelper directoryChanger( strPathfindFile );
     pPathFindManager_  = new DEC_PathFind_Manager( pathfindArchive );
 }
 
@@ -247,25 +249,21 @@ void MIL_AgentServer::ReadTerData( MIL_InputArchive& archive )
     std::string strTerFile;
     archive.ReadField( "Terrain", strTerFile );
 
-    std::string strTerDataPath;
-    MT_ExtractFilePath( strTerFile, strTerDataPath );
-
     MIL_InputArchive terArchive;
     terArchive.AddWarningStream( std::cout );
     terArchive.Open( strTerFile );
     
     config_.AddFileToCRC( strTerFile );
-    
-    std::string strInitialDir = MT_GetCurrentDir();
-    MT_ChangeDir( strTerDataPath );
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain data directory : %s", MT_GetCurrentDir().c_str() ) );
 
-    TER_World::Initialize( terArchive );
+    {
+        MT_ArchiveDirectoryHelper directoryChanger( strTerFile );
+        MT_LOG_INFO_MSG( MT_FormatString( "Terrain data directory : %s", MT_GetCurrentDir().c_str() ) );
+        TER_World::Initialize( terArchive );
+        MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
+    }
 
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
-
-    MT_ChangeDir( strInitialDir );
-
+    std::string strTerDataPath;
+    MT_ExtractFilePath( strTerFile, strTerDataPath );
     config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetGraphFileName() );
     config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetNodeFileName() );
     config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetLinkFileName() );

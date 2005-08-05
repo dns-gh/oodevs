@@ -32,7 +32,7 @@ public:
              ~DEC_Path_KnowledgeObject();
     //@}
 
-  //! @name Copy/Assignement
+    //! @name Copy/Assignement
     //@{
     DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& );            //!< Copy constructor
     DEC_Path_KnowledgeObject& operator=( const DEC_Path_KnowledgeObject& ); //!< Assignement operator
@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    void SetCosts( MT_Float rCostIn, MT_Float rCostOut ); // $$$$ AGE 2005-03-30:...
+    void SetCost( MT_Float rCost );
     //@}
 
     //! @name Accessors
