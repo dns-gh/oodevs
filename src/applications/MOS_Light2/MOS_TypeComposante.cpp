@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MOS_pch.h"
+#include "MOS_Light2_pch.h"
 
 #include "MOS_TypeComposante.h"
 #include "MOS_App.h"

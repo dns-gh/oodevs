@@ -35,6 +35,7 @@
 #include "MOS_Tools.h"
 #include "MOS_ActionContext.h"
 #include "MOS_Nature.h"
+#include "MOS_ChangeLogisticLinksDialog.h"
 
 
 // -----------------------------------------------------------------------------

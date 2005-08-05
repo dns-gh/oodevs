@@ -15,6 +15,7 @@
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
 #include "MOS_Nature.h"
+#include "MOS_TypeComposante.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_TypePion constructor

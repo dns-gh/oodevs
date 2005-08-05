@@ -37,6 +37,7 @@
 #include "MOS_LogMaintenanceConsign.h"
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogSupplyConsign.h"
+#include "MOS_TypeComposante.h"
 
 #include "MT_Tools/MT_ScipioException.h"
 
