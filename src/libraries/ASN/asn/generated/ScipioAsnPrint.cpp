@@ -10350,7 +10350,7 @@ void asn1Print_EnumObjectType (ASN1ConstCharPtr name, ASN1T_EnumObjectType* pval
       case 6: printf ("eboulement\n"); break;
       case 7: printf ("destruction_route\n"); break;
       case 8: printf ("destruction_pont\n"); break;
-      case 9: printf ("pont_flottant\n"); break;
+      case 9: printf ("pont_flottant_continu\n"); break;
       case 10: printf ("poste_tir\n"); break;
       case 11: printf ("zone_protegee\n"); break;
       case 12: printf ("zone_implantation_canon\n"); break;

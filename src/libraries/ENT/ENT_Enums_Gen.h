@@ -418,7 +418,7 @@ enum E_ObjectType
     eObjectType_Eboulement,
     eObjectType_DestructionRoute,
     eObjectType_DestructionPont,
-    eObjectType_PontFlottant,
+    eObjectType_PontFlottantContinu,
     eObjectType_PosteTir,
     eObjectType_ZoneProtegee,
     eObjectType_ZoneImplantationCanon,
@@ -446,6 +446,7 @@ enum E_ObjectType
     eObjectType_ZoneInterditeMouvement,
     eObjectType_ZoneInterditeTir,
     eObjectType_ZoneImplantationMortier,
+    eObjectType_PontFlottantDiscontinu,
     eNbrObjectType
 };
 

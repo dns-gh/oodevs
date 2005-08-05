@@ -214,13 +214,13 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
                 T_ConnaissanceObjet objet;
                 float               rDist;
                 E_ValiditeRequete   nValidite;
-                if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectPontFlottant, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
+                if( DEC_Itineraire_ProchainObjet( objet, rDist, eTypeObjectPontFlottantContinu, eTypeObjectNuageNBC, eTypeObjectBouchonMines ) )
                     DEC_Debug( "PROCHAIN OBJET SUR L'ITINERAIRE : " + FloatToString( rDist ) + " mètres"  + " Type : " + EnumToString( DEC_ConnaissanceObjet_Type( objet, nValidite ), E_TypeObject ) );
                 else
                     DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                
                 
                 
-                T_ListeConnaissancesObjet listeObjets = DEC_Itineraire_ProchainsObjets( eTypeObjectPontFlottant, eTypeObjectNuageNBC, eTypeObjectBouchonMines );
+                T_ListeConnaissancesObjet listeObjets = DEC_Itineraire_ProchainsObjets( eTypeObjectPontFlottantContinu, eTypeObjectNuageNBC, eTypeObjectBouchonMines );
                 DEC_Debug( FloatToString( DIA_Size( listeObjets ) ) + " objets sur l'iti" );
 
                 break;

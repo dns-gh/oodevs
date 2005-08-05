@@ -194,7 +194,7 @@
       <Dotations>
         <Construction categorie="explosif classique" type="explosif"/>
         <Valorisation categorie="mine classique" type="mine"/>
-      </Dotations>      
+      </Dotations>
     </Objet>
     <Objet type="destruction route">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -228,7 +228,7 @@
         <Valorisation categorie="mine classique" type="mine"/>
       </Dotations>
     </Objet>
-    <Objet type="pont flottant">
+    <Objet type="pont flottant continu">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
@@ -539,6 +539,20 @@
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="VitesseMaxObjet"/>
+    </Objet>
+    <Objet type="pont flottant discontinu">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <Dotations>
+        <Construction categorie="pont flottant de la mort" type="mine"/>
+      </Dotations>
     </Objet>
   </ObjetsReels>
 

@@ -32,7 +32,7 @@ EnumObjectType ::= ENUMERATED
     eboulement                  (6),
     destruction-route           (7),
     destruction-pont            (8),
-    pont-flottant(9), ---continu       
+    pont-flottant-continu       (9), 
     poste-tir                   (10),
     zone-protegee               (11),
     zone-implantation-canon     (12),

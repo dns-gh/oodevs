@@ -68,9 +68,6 @@ private:
     QListViewItem* pListViewItemItiLogWidth_;
     QListViewItem* pListViewItemItiLogLength_;
     QListViewItem* pListViewItemItiLogMaxWeight_;
-
-private:
-    static std::string ConvertObjectTypeToString( ASN1T_EnumObjectType );
 };
 
 

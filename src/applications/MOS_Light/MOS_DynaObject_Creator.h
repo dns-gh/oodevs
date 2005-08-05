@@ -63,7 +63,8 @@ public:
     static MOS_IDManager* idManagerEboulement_;             
     static MOS_IDManager* idManagerDestructionRoute_;       
     static MOS_IDManager* idManagerDestructionPont_;        
-    static MOS_IDManager* idManagerPontFlottant_;           
+    static MOS_IDManager* idManagerPontFlottantContinu_;           
+    static MOS_IDManager* idManagerPontFlottantDiscontinu_;           
     static MOS_IDManager* idManagerPosteTir_;               
     static MOS_IDManager* idManagerZoneProtegee_;           
     static MOS_IDManager* idManagerZoneImplantationCanon_;  

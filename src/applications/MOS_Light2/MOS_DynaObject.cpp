@@ -144,7 +144,8 @@ void MOS_DynaObject::ReadODB( MT_XXmlInputArchive& archive )
 
     std::string strType;
     archive.ReadAttribute( "type", strType );
-    MOS_Tools::FromString( strType.c_str(), nType_ );
+
+    nType_ = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strType );
 
     archive.ReadAttribute( "id", nID_ );
 
@@ -223,7 +224,7 @@ void MOS_DynaObject::WriteODB( MT_XXmlOutputArchive& archive )
 {
     archive.Section( "Objet" );
 
-    archive.WriteAttribute( "type", (MOS_Tools::ToString( (ASN1T_EnumObjectType)nType_)).ascii() );
+    archive.WriteAttribute( "type", ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType_ ) );
     archive.WriteAttribute( "id", nID_ );
     archive.WriteField( "Armee", pTeam_->GetName() );
 
@@ -298,8 +299,7 @@ void MOS_DynaObject::InitializeObjectIds( MT_XXmlInputArchive& archive )
         archive.ReadAttribute( "nom", strObjectName );
         unsigned int nId;
         archive.ReadAttribute( "id", nId );
-        ASN1T_EnumObjectType nType;
-        MOS_Tools::FromString( strObjectName.c_str(), nType );
+        ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)ENT_Tr::ConvertToObjectType( strObjectName );
         if( nType != -1 )
         {
             objectIds_[ nType ] = nId;

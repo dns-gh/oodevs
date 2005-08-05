@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-08-01 - 11:29:41 $
+// $Created: APE 2005-08-05 - 14:24:58 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_UnitMissionInterface_Gen_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 25/10/04 10:45 $
@@ -2200,7 +2200,7 @@ void MOS_UnitMissionInterface::CreateMission_INF_DetruireEmbuscade()
     pSelector_nature_obstacle->AddItem( "eboulement", EnumObjectType::eboulement );
     pSelector_nature_obstacle->AddItem( "destruction_route", EnumObjectType::destruction_route );
     pSelector_nature_obstacle->AddItem( "destruction_pont", EnumObjectType::destruction_pont );
-    pSelector_nature_obstacle->AddItem( "pont_flottant", EnumObjectType::pont_flottant );
+    pSelector_nature_obstacle->AddItem( "pont_flottant_continu", EnumObjectType::pont_flottant_continu );
     pSelector_nature_obstacle->AddItem( "poste_tir", EnumObjectType::poste_tir );
     pSelector_nature_obstacle->AddItem( "zone_protegee", EnumObjectType::zone_protegee );
     pSelector_nature_obstacle->AddItem( "zone_implantation_canon", EnumObjectType::zone_implantation_canon );
@@ -2228,6 +2228,7 @@ void MOS_UnitMissionInterface::CreateMission_INF_DetruireEmbuscade()
     pSelector_nature_obstacle->AddItem( "zone_interdite_mouvement", EnumObjectType::zone_interdite_mouvement );
     pSelector_nature_obstacle->AddItem( "zone_interdite_tir", EnumObjectType::zone_interdite_tir );
     pSelector_nature_obstacle->AddItem( "zone_implantation_mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_nature_obstacle->AddItem( "pont_flottant_discontinu", EnumObjectType::pont_flottant_discontinu );
 }
 
 // -----------------------------------------------------------------------------
@@ -2750,7 +2751,7 @@ void MOS_UnitMissionInterface::CreateMission_Test_CreateObject()
     pSelector_type->AddItem( "eboulement", EnumObjectType::eboulement );
     pSelector_type->AddItem( "destruction_route", EnumObjectType::destruction_route );
     pSelector_type->AddItem( "destruction_pont", EnumObjectType::destruction_pont );
-    pSelector_type->AddItem( "pont_flottant", EnumObjectType::pont_flottant );
+    pSelector_type->AddItem( "pont_flottant_continu", EnumObjectType::pont_flottant_continu );
     pSelector_type->AddItem( "poste_tir", EnumObjectType::poste_tir );
     pSelector_type->AddItem( "zone_protegee", EnumObjectType::zone_protegee );
     pSelector_type->AddItem( "zone_implantation_canon", EnumObjectType::zone_implantation_canon );
@@ -2778,6 +2779,7 @@ void MOS_UnitMissionInterface::CreateMission_Test_CreateObject()
     pSelector_type->AddItem( "zone_interdite_mouvement", EnumObjectType::zone_interdite_mouvement );
     pSelector_type->AddItem( "zone_interdite_tir", EnumObjectType::zone_interdite_tir );
     pSelector_type->AddItem( "zone_implantation_mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_type->AddItem( "pont_flottant_discontinu", EnumObjectType::pont_flottant_discontinu );
     CreateNumeric( asnMission.param, "Param" );
 }
 
@@ -3080,7 +3082,7 @@ void MOS_UnitMissionInterface::CreateMission_MILICE_DetruireEmbuscade()
     pSelector_nature_obstacle->AddItem( "eboulement", EnumObjectType::eboulement );
     pSelector_nature_obstacle->AddItem( "destruction_route", EnumObjectType::destruction_route );
     pSelector_nature_obstacle->AddItem( "destruction_pont", EnumObjectType::destruction_pont );
-    pSelector_nature_obstacle->AddItem( "pont_flottant", EnumObjectType::pont_flottant );
+    pSelector_nature_obstacle->AddItem( "pont_flottant_continu", EnumObjectType::pont_flottant_continu );
     pSelector_nature_obstacle->AddItem( "poste_tir", EnumObjectType::poste_tir );
     pSelector_nature_obstacle->AddItem( "zone_protegee", EnumObjectType::zone_protegee );
     pSelector_nature_obstacle->AddItem( "zone_implantation_canon", EnumObjectType::zone_implantation_canon );
@@ -3108,6 +3110,7 @@ void MOS_UnitMissionInterface::CreateMission_MILICE_DetruireEmbuscade()
     pSelector_nature_obstacle->AddItem( "zone_interdite_mouvement", EnumObjectType::zone_interdite_mouvement );
     pSelector_nature_obstacle->AddItem( "zone_interdite_tir", EnumObjectType::zone_interdite_tir );
     pSelector_nature_obstacle->AddItem( "zone_implantation_mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_nature_obstacle->AddItem( "pont_flottant_discontinu", EnumObjectType::pont_flottant_discontinu );
 }
 
 // -----------------------------------------------------------------------------

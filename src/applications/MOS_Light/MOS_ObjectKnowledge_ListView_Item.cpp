@@ -50,7 +50,7 @@ MOS_ObjectKnowledge_ListView_Item::MOS_ObjectKnowledge_ListView_Item( QListView*
 
     // Type de l'objet
     std::string strTmp( "Type ");
-    strTmp += ConvertObjectTypeToString( represented_.nObjectTypeID_ );
+    strTmp += ENT_Tr::ConvertFromObjectType( (E_ObjectType)represented_.nObjectTypeID_ );
     QListViewItem* pType = new QListViewItem( this, strTmp.c_str() );
 
     pListViewItemRealObject_                = new QListViewItem( this, pType, "ID objet réel : -" );
@@ -196,54 +196,3 @@ void MOS_ObjectKnowledge_ListView_Item::Update()
 
 
 
-
-
-//-----------------------------------------------------------------------------
-// Name: std::string 
-// Created: AGN 03-07-21
-//-----------------------------------------------------------------------------
-// static
-std::string MOS_ObjectKnowledge_ListView_Item::ConvertObjectTypeToString( ASN1T_EnumObjectType typeId )
-{
-    switch( typeId )
-    {
-        case EnumObjectType::abattis: return "Abbatis";
-        case EnumObjectType::barricade: return "Barricade";
-        case EnumObjectType::bouchon_mines: return "Bouchon de mines";
-        case EnumObjectType::destruction_route: return "Route détruite";
-        case EnumObjectType::destruction_pont: return "Pont détruit";
-        case EnumObjectType::eboulement: return "Eboulement";
-        case EnumObjectType::fosse_anti_char: return "Fossé antichar";
-        case EnumObjectType::pont_flottant: return "Pont flottant";
-        case EnumObjectType::poste_tir: return "Poste de tir";
-        case EnumObjectType::zone_minee_lineaire: return "Zone minée linéaire";
-        case EnumObjectType::zone_minee_par_dispersion: return "Zone minée par dispersion";
-        case EnumObjectType::zone_protegee: return "Zone protégée";
-        case EnumObjectType::zone_implantation_canon: return "Zone implantation canon";
-        case EnumObjectType::zone_implantation_cobra: return "Zone implantation COBRA";
-        case EnumObjectType::zone_implantation_lrm:   return "Zone implantation LRM";
-        case EnumObjectType::site_franchissement:   return "Site de franchissement";
-        case EnumObjectType::nuage_nbc:               return "Nuage NBC";       
-        case EnumObjectType::site_decontamination:    return "Site décontamination";
-        case EnumObjectType::plot_ravitaillement   :  return "Plot ravitaillement";
-        case EnumObjectType::zone_brouillage_brod:     return "Zone de brouillage Brod";
-        case EnumObjectType::rota    :               return "Rota";
-        case EnumObjectType::zone_nbc:                return "Zone NBC";
-        case EnumObjectType::zone_brouillage_bromure:  return "Zone de brouillage Bromure";
-		case EnumObjectType::aire_poser:				return "Aire de poser";
-		case EnumObjectType::piste:					return "Piste";
-	    case EnumObjectType::plateforme:				return "PlateForme";
-        case EnumObjectType::zone_mobilite_amelioree:	return "Zone à mobilité améliorée";
-		case EnumObjectType::zone_poser_helicoptere:	return "Zone de poser hélicoptere";
-        case EnumObjectType::aire_logistique:	        return "Aire logistique";
-        case EnumObjectType::itineraire_logistique  : return "Itineraire Logistique";
-        case EnumObjectType::camp_prisonniers       : return "Camp Prisonniers";
-        case EnumObjectType::camp_refugies          : return "Camp Refugies";
-        case EnumObjectType::poste_controle         : return "Poste Controle";
-        case EnumObjectType::terrain_largage        : return "Terrain largage";
-        case EnumObjectType::zone_interdite_mouvement : return "Zone interdite au mouvement";
-        case EnumObjectType::zone_interdite_tir : return "Zone interdite au tir";
-        case EnumObjectType::zone_implantation_mortier: return "Zone implantation mortier";
-    }
-    return "Inconnu";
-}

@@ -47,7 +47,7 @@
         <Mission nom="Pion Test MoveTo">
           <OrdresConduite>
             <OrdreConduite nom="AttendreSePoster"/>
-            <OrdreConduite nom="ChangerPositionDebarquement"/>            
+            <OrdreConduite nom="ChangerPositionDebarquement"/>
           </OrdresConduite>
         </Mission>
         <Mission nom="Pion Test ChangePosture"/>
@@ -57,7 +57,6 @@
         <Mission nom="Pion Test Reinforce"/>
         <Mission nom="Pion Test Fire"/>
         <Mission nom="Pion ALAT Freiner"/>
-       
       </Missions>
     </Modele>
     <Modele nom="Pion Test 2">

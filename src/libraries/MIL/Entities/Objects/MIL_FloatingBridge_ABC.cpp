@@ -1,79 +1,53 @@
 //*****************************************************************************
 //
 // $Created: NLD 2002-12-12 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Objects/MIL_FloatingBridge.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Objects/MIL_FloatingBridge_ABC.cpp $
 // $Author: Nld $
 // $Modtime: 12/05/05 15:25 $
 // $Revision: 11 $
-// $Workfile: MIL_FloatingBridge.cpp $
+// $Workfile: MIL_FloatingBridge_ABC.cpp $
 //
 //*****************************************************************************
 
 #include "MIL_Pch.h"
 
-#include "MIL_FloatingBridge.h"
+#include "MIL_FloatingBridge_ABC.h"
 #include "MIL_RealObjectType.h"
 #include "Entities/RC/MIL_RC.h"
 #include "TER/TER_PathFindManager.h"
 #include "TER/TER_DynamicData.h"
-#include "hla/Deserializer.h"
-
-BOOST_CLASS_EXPORT_GUID( MIL_FloatingBridge, "MIL_FloatingBridge" )
+#include "HLA/Deserializer.h"
 
 //-----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge constructor
+// Name: MIL_FloatingBridge_ABC constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_FloatingBridge::MIL_FloatingBridge()
-    : MIL_RealObject_ABC( MIL_RealObjectType::pontFlottant_ )
-    , pPathfindData_( 0 )
+MIL_FloatingBridge_ABC::MIL_FloatingBridge_ABC( const MIL_RealObjectType& type )
+    : MIL_RealObject_ABC( type )
+    , pPathfindData_    ( 0 )
 {
     nFullNbrDotationForConstruction_    = 10; // Nbr mines
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge destructor
+// Name: MIL_FloatingBridge_ABC destructor
 // Created: DFT 02-03-04
 // Last modified: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_FloatingBridge::~MIL_FloatingBridge()
+MIL_FloatingBridge_ABC::~MIL_FloatingBridge_ABC()
 {
     UnlinkFromPathFinder();	
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::load
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void MIL_FloatingBridge::load( MIL_CheckPointInArchive& file, const uint )
-{
-    file >> boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-    LinkToPathFinder();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void MIL_FloatingBridge::save( MIL_CheckPointOutArchive& file, const uint ) const
-{
-    file << boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-}
-
 
 //=============================================================================
 // INIT
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::Initialize
+// Name: MIL_FloatingBridge_ABC::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_FloatingBridge::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_FloatingBridge_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;
@@ -87,20 +61,20 @@ bool MIL_FloatingBridge::Initialize( MIL_Army& army, DIA_Parameters& diaParamete
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::Initialize
+// Name: MIL_FloatingBridge_ABC::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_FloatingBridge::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_FloatingBridge_ABC::Initialize( uint nID, MIL_InputArchive& archive )
 {
     MIL_RealObject_ABC::Initialize( nID, archive );
     LinkToPathFinder();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::Initialize
+// Name: MIL_FloatingBridge_ABC::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_FloatingBridge::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_FloatingBridge_ABC::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
     ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
@@ -114,10 +88,10 @@ ASN1T_EnumObjectErrorCode MIL_FloatingBridge::Initialize( uint nID, const ASN1T_
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::LinkToPathFinder
+// Name: MIL_FloatingBridge_ABC::LinkToPathFinder
 // Created: NLD 2003-01-17
 //-----------------------------------------------------------------------------
-void MIL_FloatingBridge::LinkToPathFinder()
+void MIL_FloatingBridge_ABC::LinkToPathFinder()
 {
     const T_PointVector points = GetLocalisation().GetPoints();
     assert( !points.empty() );
@@ -142,10 +116,10 @@ void MIL_FloatingBridge::LinkToPathFinder()
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::UnlinkFromPathFinder
+// Name: MIL_FloatingBridge_ABC::UnlinkFromPathFinder
 // Created: NLD 2003-01-17
 //-----------------------------------------------------------------------------
-void MIL_FloatingBridge::UnlinkFromPathFinder()
+void MIL_FloatingBridge_ABC::UnlinkFromPathFinder()
 {
     delete pPathfindData_;
     pPathfindData_ = 0;
@@ -156,10 +130,10 @@ void MIL_FloatingBridge::UnlinkFromPathFinder()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::ProcessAgentEntering
+// Name: MIL_FloatingBridge_ABC::ProcessAgentEntering
 // Created: NLD 2004-06-24
 // -----------------------------------------------------------------------------
-void MIL_FloatingBridge::ProcessAgentEntering( MIL_Agent_ABC& agent )
+void MIL_FloatingBridge_ABC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
     // assert( false );
@@ -167,10 +141,10 @@ void MIL_FloatingBridge::ProcessAgentEntering( MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge::Initialize
+// Name: MIL_FloatingBridge_ABC::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_FloatingBridge::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_FloatingBridge_ABC::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
     if( MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass ) )
     {

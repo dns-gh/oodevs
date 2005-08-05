@@ -13,7 +13,6 @@
 
   <Donnees>
     <Terrain>Data/Terrain/Terrain.xml</Terrain>
-    <!--    <Terrain>\\nld\terrain\vabfsud\Terrain.xml</Terrain>-->
     <Decisionnel>Data/Decisionnel.xml</Decisionnel>
     <Reseau>Data/Reseau.xml</Reseau>
     <Volumes>Data/Volumes.xml</Volumes>

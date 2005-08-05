@@ -41,7 +41,7 @@
           <PH dist="2100">0</PH>
         </VolumeCiblePersonnel>
       </PHs>
-    </Direct>    
+    </Direct>
   </Armement>
 
   <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7">

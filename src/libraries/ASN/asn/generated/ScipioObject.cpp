@@ -160,7 +160,7 @@ EXTERN int asn1PE_EnumObjectType (ASN1CTXT* ctxt_p, ASN1T_EnumObjectType value)
       case EnumObjectType::eboulement: ui = 6; break;
       case EnumObjectType::destruction_route: ui = 7; break;
       case EnumObjectType::destruction_pont: ui = 8; break;
-      case EnumObjectType::pont_flottant: ui = 9; break;
+      case EnumObjectType::pont_flottant_continu: ui = 9; break;
       case EnumObjectType::poste_tir: ui = 10; break;
       case EnumObjectType::zone_protegee: ui = 11; break;
       case EnumObjectType::zone_implantation_canon: ui = 12; break;
@@ -226,7 +226,7 @@ EXTERN int asn1PD_EnumObjectType (ASN1CTXT* ctxt_p, ASN1T_EnumObjectType* pvalue
       case 6: *pvalue = EnumObjectType::eboulement; break;
       case 7: *pvalue = EnumObjectType::destruction_route; break;
       case 8: *pvalue = EnumObjectType::destruction_pont; break;
-      case 9: *pvalue = EnumObjectType::pont_flottant; break;
+      case 9: *pvalue = EnumObjectType::pont_flottant_continu; break;
       case 10: *pvalue = EnumObjectType::poste_tir; break;
       case 11: *pvalue = EnumObjectType::zone_protegee; break;
       case 12: *pvalue = EnumObjectType::zone_implantation_canon; break;

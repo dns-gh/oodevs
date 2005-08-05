@@ -20,7 +20,8 @@
     <Classe nom="eboulement"                    id="147" />
     <Classe nom="destruction route"             id="147" />
     <Classe nom="destruction pont"              id="147" />
-    <Classe nom="pont flottant"                 id="168" />
+    <Classe nom="pont flottant continu"         id="168" />
+    <Classe nom="pont flottant discontinu"      id="168" />
     <Classe nom="poste tir"                     id="166" />
     <Classe nom="zone protegee"                 id="166" />
     <Classe nom="zone implantation canon"       id="167" />

@@ -33,7 +33,6 @@
 #include "MOS_Tools.h"
 #include "MOS_ASN_Messages.h"
 #include "MOS_DynaObject.h"
-#include "MOS_Object_Def.h"
 #include "MOS_Agent.h"
 
 #ifndef MOS_USE_INLINE
@@ -120,8 +119,9 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     for( MOS_AgentManager::CIT_TeamMap itTeam = teamMap.begin(); itTeam != teamMap.end(); ++itTeam )
         pTeamCombo_->AddItem( (*itTeam).second->GetName().c_str(), (*itTeam).first );
 
-    for( int n = 0; n < eNbrObjectTypes; ++n )
-        pObjectTypeCombo_->AddItem( MOS_Tools::ToString( (ASN1T_EnumObjectType)n ), (ASN1T_EnumObjectType)n );
+    for( int n = 0; n < eNbrObjectType; ++n )
+        pObjectTypeCombo_->AddItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n ).c_str(), (ASN1T_EnumObjectType)n );
+
 
     MOS_App::GetApp().processEvents();
     pTeamCombo_->setMinimumWidth( pObjectTypeCombo_->width() );
@@ -246,7 +246,7 @@ void MOS_ObjectCreationPanel::OnOk()
     asnAction.camp  = pTeamCombo_->GetValue();
 
     std::stringstream strMsg;
-    strMsg << "Demande creation objet " << MOS_Tools::ToString( (ASN1T_EnumObjectType)asnAction.type ) << ". ";
+    strMsg << "Demande creation objet " << ENT_Tr::ConvertFromObjectType( (E_ObjectType)asnAction.type ).c_str() << ". ";
 
     pLocation_->WriteMsg( strMsg );
     asnAction.localisation = asnLocation_;

@@ -46,8 +46,9 @@ MOS_IDManager* MOS_DynaObject_Creator::idManagerZoneImplantationCanon_   = new M
 MOS_IDManager* MOS_DynaObject_Creator::idManagerZoneImplantationCOBRA_   = idManagerZoneImplantationCanon_;// new MIL_MOSIDManager( 167 );
 MOS_IDManager* MOS_DynaObject_Creator::idManagerZoneImplantationLRM_     = idManagerZoneImplantationCanon_;// new MIL_MOSIDManager( 167 );
 MOS_IDManager* MOS_DynaObject_Creator::idManagerZoneImplantationMortier_ = idManagerZoneImplantationCanon_;// new MIL_MOSIDManager( 167 );
-MOS_IDManager* MOS_DynaObject_Creator::idManagerPontFlottant_            = new MOS_IDManager( 168 );
-MOS_IDManager* MOS_DynaObject_Creator::idManagerSiteFranchissement_      = idManagerPontFlottant_;// new MIL_MOSIDManager( 168 );
+MOS_IDManager* MOS_DynaObject_Creator::idManagerPontFlottantContinu_     = new MOS_IDManager( 168 );
+MOS_IDManager* MOS_DynaObject_Creator::idManagerPontFlottantDiscontinu_  = idManagerPontFlottantContinu_;// new MIL_MOSIDManager( 168 );
+MOS_IDManager* MOS_DynaObject_Creator::idManagerSiteFranchissement_      = idManagerPontFlottantContinu_;// new MIL_MOSIDManager( 168 );
 MOS_IDManager* MOS_DynaObject_Creator::idManagerPlotRavitaillement_      = new MOS_IDManager( 189 );
 MOS_IDManager* MOS_DynaObject_Creator::idManagerNuageNBC_                = new MOS_IDManager( 190 );
 MOS_IDManager* MOS_DynaObject_Creator::idManagerRota_                    = new MOS_IDManager( 197 );
@@ -100,43 +101,8 @@ MOS_DynaObject_Creator::MOS_DynaObject_Creator( QWidget* pParent )
     // Type
     pFirstLayout->addWidget( new QLabel( "Type", this ) , nCurRow, 0 );
     pTypeComboBox_ = new QComboBox( FALSE, this );
-    pTypeComboBox_->insertItem( "eObjectTypeBouchonMines"           , 0 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneMineeLineaire"      , 1 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneMineeParDispersion" , 2 );
-    pTypeComboBox_->insertItem( "eObjectTypeFosseAntiChar"          , 3 );
-    pTypeComboBox_->insertItem( "eObjectTypeAbatti"                 , 4 );
-    pTypeComboBox_->insertItem( "eObjectTypeBarricade"              , 5 );
-    pTypeComboBox_->insertItem( "eObjectTypeEboulement"             , 6 );
-    pTypeComboBox_->insertItem( "eObjectTypeDestructionRoute"       , 7 );
-    pTypeComboBox_->insertItem( "eObjectTypeDestructionPont"        , 8 );
-    pTypeComboBox_->insertItem( "eObjectTypePontFlottant"           , 9 );
-    pTypeComboBox_->insertItem( "eObjectTypePosteTir"               , 10 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneProtegee"           , 11 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneImplantationCanon"  , 12 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneImplantationCOBRA"  , 13 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneImplantationLRM"    , 14 );
-    pTypeComboBox_->insertItem( "eObjectTypeSiteFranchissement"     , 15 );
-    pTypeComboBox_->insertItem( "eObjectTypeNuageNBC"               , 16 );
-    pTypeComboBox_->insertItem( "eObjectTypePlotRavitaillement"     , 17 );
-    pTypeComboBox_->insertItem( "eObjectTypeSiteDecontamination"    , 18 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneBrouillageBrod"     , 19 );
-    pTypeComboBox_->insertItem( "eObjectTypeRota"                   , 20 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneNBC"                , 21 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneBrouillageBromure"  , 22 );
-	pTypeComboBox_->insertItem( "eObjectTypeAirePoser"				, 23 );
-	pTypeComboBox_->insertItem( "eObjectTypePiste"					, 24 );
-	pTypeComboBox_->insertItem( "eObjectTypePlateForme"				, 25 );
-	pTypeComboBox_->insertItem( "eObjectTypeZoneMobiliteAmelioree"	, 26 );
-	pTypeComboBox_->insertItem( "eObjectTypeZonePoserHelicoptere"	, 27 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneLogistique"	        , 28 );
-    pTypeComboBox_->insertItem( "eObjectTypeItineraireLogistique"   , 29 );
-    pTypeComboBox_->insertItem( "eObjectTypeCampPrisonniers"        , 30 );
-    pTypeComboBox_->insertItem( "eObjectTypeCampRefugies"           , 31 );
-    pTypeComboBox_->insertItem( "eObjectTypePosteControle"          , 32 );
-    pTypeComboBox_->insertItem( "eObjectTypeTerrainLargage"         , 33 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneForbiddenMove"      , 34 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneForbiddenFire"      , 35 );
-    pTypeComboBox_->insertItem( "eObjectTypeZoneImplantationMortier", 36 );
+    for( uint i = 0; i < eNbrObjectType; ++i )
+        pTypeComboBox_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)i ).c_str(), i );
 
     pFirstLayout->addWidget( pTypeComboBox_, nCurRow++, 1 );
 
@@ -192,7 +158,8 @@ void MOS_DynaObject_Creator::SlotValidate()
         case EnumObjectType::eboulement                     : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerEboulement_              ->GetFreeIdentifier(); break;
         case EnumObjectType::destruction_route              : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerDestructionRoute_        ->GetFreeIdentifier(); break;
         case EnumObjectType::destruction_pont               : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerDestructionPont_         ->GetFreeIdentifier(); break;
-        case EnumObjectType::pont_flottant                  : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerPontFlottant_            ->GetFreeIdentifier(); break;
+        case EnumObjectType::pont_flottant_continu          : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerPontFlottantContinu_     ->GetFreeIdentifier(); break;
+        case EnumObjectType::pont_flottant_discontinu       : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerPontFlottantDiscontinu_  ->GetFreeIdentifier(); break;
         case EnumObjectType::poste_tir                      : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerPosteTir_                ->GetFreeIdentifier(); break;
         case EnumObjectType::zone_protegee                  : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerZoneProtegee_            ->GetFreeIdentifier(); break;
         case EnumObjectType::zone_implantation_canon        : asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_Creator::idManagerZoneImplantationCanon_   ->GetFreeIdentifier(); break;

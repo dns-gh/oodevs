@@ -279,3 +279,12 @@ void MOS_MissionPion::CreateMission_Test_MoveTo()
 // Missions
 // =============================================================================
 $MissionCreatorImplementations$
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPion::GetName()
+// Created: SBO 2005-08-01
+// -----------------------------------------------------------------------------
+std::string MOS_MissionPion::GetName() const
+{
+    return ENT_Tr::ConvertFromUnitMission( ( E_UnitMission )nTypeMission_ );
+}

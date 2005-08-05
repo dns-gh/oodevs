@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:29:41 $
+// $Created: 2005-08-05 - 14:24:58 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionAutomate_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 18/10/04 13:04 $
@@ -26,7 +26,7 @@
 class MOS_ASN_MsgAutomateOrder;
 
 //=============================================================================
-// Created:  2005-7-28 - 9:57:17
+// Created:  2005-08-05 - 14:24:58
 //=============================================================================
 class MOS_MissionAutomate : public MOS_Mission_ABC
 {
@@ -45,7 +45,7 @@ public:
 
     virtual void SetAgent( MOS_Agent* pAgent );
     virtual bool IsAutomateMission() const;
-    virtual std::string GetName          () const;
+    virtual std::string  GetName          () const;
     //@}
 
     //-------------------------------------------------------------------------

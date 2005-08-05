@@ -55,44 +55,9 @@ MOS_MTH_Obstacle::MOS_MTH_Obstacle( ASN1T_MissionGenObject& asnObjet, QWidget* p
 
     QLabel* pLabel = new QLabel( "Type obstacle", pGrid );
     pTypeObstacleGUI_ = new QComboBox( pGrid );
-    pTypeObstacleGUI_->insertItem( "Bouchon de mines", EnumObjectType::bouchon_mines );
-    pTypeObstacleGUI_->insertItem( "Zone minée linéaire", EnumObjectType::zone_minee_lineaire );
-    pTypeObstacleGUI_->insertItem( "Zone minée par dispersion", EnumObjectType::zone_minee_par_dispersion );
-    pTypeObstacleGUI_->insertItem( "Fossé antichar", EnumObjectType::fosse_anti_char );
-    pTypeObstacleGUI_->insertItem( "Abattis", EnumObjectType::abattis );
-    pTypeObstacleGUI_->insertItem( "Barricade", EnumObjectType::barricade );
-    pTypeObstacleGUI_->insertItem( "Eboulement", EnumObjectType::eboulement );
-    pTypeObstacleGUI_->insertItem( "Destruction de route", EnumObjectType::destruction_route );
-    pTypeObstacleGUI_->insertItem( "Destruction de pont", EnumObjectType::destruction_pont );
-    pTypeObstacleGUI_->insertItem( "Ponts flottants", EnumObjectType::pont_flottant );
-    pTypeObstacleGUI_->insertItem( "Postes de tir", EnumObjectType::poste_tir );
-    pTypeObstacleGUI_->insertItem( "Zones protégées", EnumObjectType::zone_protegee );
-    pTypeObstacleGUI_->insertItem( "Zones implantation canon", EnumObjectType::zone_implantation_canon );
-    pTypeObstacleGUI_->insertItem( "Zones implantation COBRA", EnumObjectType::zone_implantation_cobra );
-    pTypeObstacleGUI_->insertItem( "Zones implantation LRM", EnumObjectType::zone_implantation_lrm );
-    pTypeObstacleGUI_->insertItem( "Sites de franchissement", EnumObjectType::site_franchissement );
-    pTypeObstacleGUI_->insertItem( "Nuage NBC", EnumObjectType::nuage_nbc );
-    pTypeObstacleGUI_->insertItem( "Site de décontamination", EnumObjectType::site_decontamination );
-    pTypeObstacleGUI_->insertItem( "Plot de ravitaillement", EnumObjectType::plot_ravitaillement );
-    pTypeObstacleGUI_->insertItem( "Zone de brouillage_brod", EnumObjectType::zone_brouillage_brod );
-    pTypeObstacleGUI_->insertItem( "Rota", EnumObjectType::rota );
-    pTypeObstacleGUI_->insertItem( "Zone NBC", EnumObjectType::zone_nbc );
-	pTypeObstacleGUI_->insertItem( "Zone de brouillage_bromure", EnumObjectType::zone_brouillage_bromure );
-	pTypeObstacleGUI_->insertItem( "Aire de Poser", EnumObjectType::aire_poser );
-	pTypeObstacleGUI_->insertItem( "Piste", EnumObjectType::piste );
-    pTypeObstacleGUI_->insertItem( "PlateForme", EnumObjectType::plateforme );
-    pTypeObstacleGUI_->insertItem( "Zone à mobilité améliorée", EnumObjectType::zone_mobilite_amelioree );
-	pTypeObstacleGUI_->insertItem( "Zone de poser hélicoptere", EnumObjectType::zone_poser_helicoptere );
-    pTypeObstacleGUI_->insertItem( "Aire logistique", EnumObjectType::aire_logistique );
-    pTypeObstacleGUI_->insertItem( "Itineraire Logistique", EnumObjectType::itineraire_logistique );
-    pTypeObstacleGUI_->insertItem( "Camp Prisonniers", EnumObjectType::camp_prisonniers );
-    pTypeObstacleGUI_->insertItem( "Camp Refugies", EnumObjectType::camp_refugies );
-    pTypeObstacleGUI_->insertItem( "Poste Controle", EnumObjectType::poste_controle );
-    pTypeObstacleGUI_->insertItem( "Terrain largage", EnumObjectType::terrain_largage );
-    pTypeObstacleGUI_->insertItem( "Zone interdite au mouvement", EnumObjectType::zone_interdite_mouvement );
-    pTypeObstacleGUI_->insertItem( "Zone interdite au tir", EnumObjectType::zone_interdite_tir );
-    pTypeObstacleGUI_->insertItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
-    pTypeObstacleGUI_->setCurrentItem( EnumObjectType::abattis );
+
+    for( uint i = 0; i < eNbrObjectType; ++i )
+        pTypeObstacleGUI_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)i ).c_str(), i );
 
     pLabel = new QLabel( "Urgence", pGrid );
     pUrgenceGUI_ = new QComboBox( pGrid );

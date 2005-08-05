@@ -110,15 +110,15 @@
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
           <PHs>
             <PostureCible>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>1</MouvementDiscret>
-                <Arret>1</Arret>
-                <PosteReflexe>1</PosteReflexe>
-                <Poste>1</Poste>
-                <PosteAmenage>0.2</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>     
-           </PHs>                    
+              <Mouvement>1</Mouvement>
+              <MouvementDiscret>1</MouvementDiscret>
+              <Arret>1</Arret>
+              <PosteReflexe>1</PosteReflexe>
+              <Poste>1</Poste>
+              <PosteAmenage>0.2</PosteAmenage>
+              <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>
+          </PHs>
         </TirIndirect>
       </Categorie>
       <Categorie nom="Fusse a jupette 53mm">
@@ -177,15 +177,15 @@
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
           <PHs>
             <PostureCible>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>1</MouvementDiscret>
-                <Arret>1</Arret>
-                <PosteReflexe>1</PosteReflexe>
-                <Poste>1</Poste>
-                <PosteAmenage>0.2</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>     
-           </PHs>                    
+              <Mouvement>1</Mouvement>
+              <MouvementDiscret>1</MouvementDiscret>
+              <Arret>1</Arret>
+              <PosteReflexe>1</PosteReflexe>
+              <Poste>1</Poste>
+              <PosteAmenage>0.2</PosteAmenage>
+              <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>
+          </PHs>
         </TirIndirect>
       </Categorie>
       <Categorie nom="Fusse a ailettes 50mm">
@@ -244,15 +244,15 @@
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
           <PHs>
             <PostureCible>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>1</MouvementDiscret>
-                <Arret>1</Arret>
-                <PosteReflexe>1</PosteReflexe>
-                <Poste>1</Poste>
-                <PosteAmenage>0.2</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>     
-           </PHs>          
+              <Mouvement>1</Mouvement>
+              <MouvementDiscret>1</MouvementDiscret>
+              <Arret>1</Arret>
+              <PosteReflexe>1</PosteReflexe>
+              <Poste>1</Poste>
+              <PosteAmenage>0.2</PosteAmenage>
+              <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>
+          </PHs>
         </TirIndirect>
       </Categorie>
       <Categorie nom="Missile Hot">
@@ -311,15 +311,15 @@
           <CoefficientNeutralisation>1.5</CoefficientNeutralisation>
           <PHs>
             <PostureCible>
-                <Mouvement>1</Mouvement>
-                <MouvementDiscret>1</MouvementDiscret>
-                <Arret>1</Arret>
-                <PosteReflexe>1</PosteReflexe>
-                <Poste>1</Poste>
-                <PosteAmenage>0.2</PosteAmenage>
-                <PostePrepareGenie>0.2</PostePrepareGenie>
-            </PostureCible>     
-           </PHs>                    
+              <Mouvement>1</Mouvement>
+              <MouvementDiscret>1</MouvementDiscret>
+              <Arret>1</Arret>
+              <PosteReflexe>1</PosteReflexe>
+              <Poste>1</Poste>
+              <PosteAmenage>0.2</PosteAmenage>
+              <PostePrepareGenie>0.2</PostePrepareGenie>
+            </PostureCible>
+          </PHs>
         </TirIndirect>
       </Categorie>
       <Categorie nom="Obus eclairant">

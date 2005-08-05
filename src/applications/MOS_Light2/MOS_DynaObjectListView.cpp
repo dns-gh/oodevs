@@ -139,7 +139,7 @@ void MOS_DynaObjectListView::AddObject( MOS_DynaObject& object )
     }
 
     if( pTypeItem == 0 )
-        pTypeItem = new MT_ValuedListViewItem< ASN1T_EnumObjectType, eObjectType >( nType, pTeamItem, MOS_Tools::ToString( nType ) );
+        pTypeItem = new MT_ValuedListViewItem< ASN1T_EnumObjectType, eObjectType >( nType, pTeamItem, ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType ).c_str() );
 
     new MT_ValuedListViewItem< MOS_DynaObject*, eObject >( &object, pTypeItem, QString::number( object.GetID() ) );
 }

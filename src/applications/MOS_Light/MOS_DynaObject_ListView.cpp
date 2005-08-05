@@ -50,43 +50,8 @@ MOS_DynaObject_ListView::MOS_DynaObject_ListView( QWidget* pParentWidget )
     connect( this, SIGNAL( clicked( QListViewItem* ) ), this, SLOT( SlotOnClick( QListViewItem* ) ) );
 
     // Creates items for each type of objects
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::bouchon_mines, new QListViewItem( this, "Bouchons de mines" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_minee_lineaire, new QListViewItem( this, "Zones minées linéaires" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_minee_par_dispersion, new QListViewItem( this, "Zones minées par dispersion" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::fosse_anti_char, new QListViewItem( this, "Fossés antichar" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::abattis, new QListViewItem( this, "Abattis" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::barricade, new QListViewItem( this, "Barricades" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::eboulement, new QListViewItem( this, "Eboulements" ) ) );;
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::destruction_route, new QListViewItem( this, "Destructions de route" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::destruction_pont, new QListViewItem( this, "Destructions de pont" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::pont_flottant, new QListViewItem( this, "Ponts flottants" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::poste_tir, new QListViewItem( this, "Postes de tir" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_protegee, new QListViewItem( this, "Zones protégées" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_implantation_canon, new QListViewItem( this, "Zones implantation canon" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_implantation_cobra, new QListViewItem( this, "Zones implantation COBRA" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_implantation_lrm, new QListViewItem( this, "Zones implantation LRM" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::site_franchissement, new QListViewItem( this, "Sites de franchissement" ) ) );    
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::nuage_nbc, new QListViewItem( this, "Nuage NBC" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::site_decontamination, new QListViewItem( this, "Site de décontamination" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::plot_ravitaillement, new QListViewItem( this, "Plot de ravitaillement" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_brouillage_brod, new QListViewItem( this, "Zone de brouillage Brod" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::rota , new QListViewItem( this, "ROTA" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_nbc, new QListViewItem( this, "Zone NBC" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_brouillage_bromure, new QListViewItem( this, "Zone de brouillage Bromure" ) ) );
-	itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::aire_poser, new QListViewItem( this, "Aire de poser" ) ) );
-	itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::piste, new QListViewItem( this, "Piste" ) ) );
-	itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::plateforme, new QListViewItem( this, "PlateForme" ) ) );
-	itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_mobilite_amelioree, new QListViewItem( this, "Zone à mobilité améliorée" ) ) );
-	itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_poser_helicoptere, new QListViewItem( this, "Zone de poser hélicoptere" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::aire_logistique, new QListViewItem( this, "Aire logistique" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::itineraire_logistique, new QListViewItem( this, "Itineraire Logistique" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::camp_prisonniers, new QListViewItem( this, "Camp Prisonniers" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::camp_refugies, new QListViewItem( this, "Camp Refugies" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::poste_controle, new QListViewItem( this, "Poste Controle" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::terrain_largage, new QListViewItem( this, "Terrain largage" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_interdite_tir, new QListViewItem( this, "Zone interdite au tir" ) ) );
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_interdite_mouvement, new QListViewItem( this, "Zone interdite au mouvement" ) ) );   
-    itemObjectTypeMap_.insert( std::make_pair( EnumObjectType::zone_implantation_mortier, new QListViewItem( this, "Zone implantation mortier" ) ) );
+    for( uint i = 0; i < eNbrObjectType; ++i )
+        itemObjectTypeMap_.insert( std::make_pair( (ASN1T_EnumObjectType)i, new QListViewItem( this, ENT_Tr::ConvertFromObjectType( (E_ObjectType)i ).c_str() ) ) );
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem *, const QPoint &, int ) ), this, SLOT( SlotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
 }

@@ -57,7 +57,7 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
     new QLabel( tr( "Type:" ), this );
     pTypeCombo_ = new QComboBox( this );
     for( int n1 = 0; n1 < nNbrObjType_; ++n1 )
-        pTypeCombo_->insertItem( MOS_Tools::ToString( (ASN1T_EnumObjectType)n1 ), n1 );
+        pTypeCombo_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n1 ).c_str(), n1 );
 
     new QLabel( tr( "Urgence:" ), this );
     pUrgencyCombo_ = new QComboBox( this );

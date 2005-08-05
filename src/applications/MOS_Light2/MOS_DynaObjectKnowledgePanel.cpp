@@ -253,7 +253,7 @@ void MOS_DynaObjectKnowledgePanel::UpdateSelected()
         return;
 
     pIdLabel_->setText( QString::number( pSelectedKnowledge_->GetID() ) );
-    pObjectTypeLabel_->setText( MOS_Tools::ToString( (ASN1T_EnumObjectType)pSelectedKnowledge_->nObjectTypeID_ ) );
+    pObjectTypeLabel_->setText( ENT_Tr::ConvertFromObjectType( (E_ObjectType)pSelectedKnowledge_->nObjectTypeID_ ).c_str() );
     
     if( pSelectedKnowledge_->IsValid( MOS_DynaObjectKnowledge::eUpdated_RealObject ) && pSelectedKnowledge_->GetRealObject() != 0 )
         pAssociatedObjectLabel_->setText( QString::number( pSelectedKnowledge_->GetRealObject()->GetID() ) );

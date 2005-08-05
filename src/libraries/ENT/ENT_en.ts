@@ -2537,10 +2537,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pont flottant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>poste controle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3322,6 +3318,14 @@
     </message>
     <message>
         <source>operationnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pont flottant continu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pont flottant discontinu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

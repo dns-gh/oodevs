@@ -210,3 +210,12 @@ bool MOS_MissionAutomate::IsAutomateMission() const
 // Missions
 // =============================================================================
 $MissionCreatorImplementations$
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionAutomate::GetName()
+// Created: SBO 2005-08-01
+// -----------------------------------------------------------------------------
+std::string MOS_MissionAutomate::GetName() const
+{
+    return ENT_Tr::ConvertFromAutomataMission( ( E_AutomataMission )nTypeMission_ );
+}

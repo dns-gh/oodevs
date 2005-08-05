@@ -60,7 +60,8 @@ public:
     static const MIL_RealObjectType& eboulement_;             
     static const MIL_RealObjectType& destructionRoute_;       
     static const MIL_RealObjectType& destructionPont_;        
-    static const MIL_RealObjectType& pontFlottant_;           
+    static const MIL_RealObjectType& pontFlottantContinu_;
+    static const MIL_RealObjectType& pontFlottantDiscontinu_;
     static const MIL_RealObjectType& posteTir_;               
     static const MIL_RealObjectType& zoneProtegee_;           
     static const MIL_RealObjectType& zoneImplantationCanon_;  
@@ -138,7 +139,7 @@ public:
 protected:
     //! @name Types
     //@{
-  enum E_ObjectType
+    enum E_ObjectType
     {
         eObjectTypeBouchonMines             = 0,
         eObjectTypeZoneMineeLineaire        = 1,
@@ -149,7 +150,7 @@ protected:
         eObjectTypeEboulement               = 6,
         eObjectTypeDestructionRoute         = 7,
         eObjectTypeDestructionPont          = 8,
-        eObjectTypePontFlottant             = 9,
+        eObjectTypePontFlottantContinu      = 9,
         eObjectTypePosteTir                 = 10,
         eObjectTypeZoneProtegee             = 11,
         eObjectTypeZoneImplantationCanon    = 12,
@@ -176,7 +177,8 @@ protected:
         eObjectTypeTerrainLargage           = 33,
         eObjectTypeZoneForbiddenMove        = 34,
         eObjectTypeZoneForbiddenFire        = 35,
-        eObjectTypeZoneImplantationMortier  = 36
+        eObjectTypeZoneImplantationMortier  = 36,
+        eObjectTypePontFlottantDiscontinu   = 37,
     };
 
     enum E_SpeedPolicy

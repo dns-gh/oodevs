@@ -2678,7 +2678,7 @@
     </message>
     <message>
         <source>pont flottant</source>
-        <translation>pont flottant</translation>
+        <translation type="obsolete">pont flottant</translation>
     </message>
     <message>
         <source>poste controle</source>
@@ -3498,6 +3498,14 @@
     </message>
     <message>
         <source>operationnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pont flottant continu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pont flottant discontinu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

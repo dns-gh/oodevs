@@ -42,7 +42,6 @@ public:
 
 
     static QString ToString( ASN1T_EnumTypeLocalisation nType );
-    static QString ToString( ASN1T_EnumObjectType nType );
     static QString ToString( ASN1T_EnumMissionGenUrgence nUrgency );
     static QString ToString( ASN1T_EnumMissionGenSousTypeObstacle nType );
     static QString ToString( ASN1T_EnumMissionGenPriorite nObject );
@@ -61,9 +60,8 @@ public:
     static const char* ToString( const ASN1T_EnumObjectErrorCode& nCode );
 
 
-    //$$$$$ bof bof
+    //$$$$$ bof bof - N'IMPORTE QUOI !
     static const char* ToSymbol( const std::string& strUnitType );
-    static void FromString( const char* szString, ASN1T_EnumObjectType& nId );
     static void FromString( const char* szString, ASN1T_EnumTypeLocalisation& nId );
 
     static bool PointNearLine( const MT_Vector2D& point, const T_PointVector& line, MT_Float rMinDist, bool bLineLoop = false );

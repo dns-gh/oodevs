@@ -20,7 +20,7 @@ typedef enum E_TypeObject
     eTypeObjectEboulement               = 6,
     eTypeObjectDestructionRoute         = 7,
     eTypeObjectDestructionPont          = 8,
-    eTypeObjectPontFlottant             = 9,
+    eTypeObjectPontFlottantContinu      = 9,
     eTypeObjectPosteTir                 = 10,
     eTypeObjectZoneProtegee             = 11,
     eTypeObjectZoneImplantationCanon    = 12,
@@ -47,5 +47,6 @@ typedef enum E_TypeObject
     eTypeObjectTerrainLargage           = 33,
     eTypeObjectZoneInterditeDeplacement = 34,
     eTypeObjectZoneInterditeTir         = 35,    
-    eTypeObjectZoneImplantationMortier  = 36    
+    eTypeObjectZoneImplantationMortier  = 36,
+    eTypeObjectPontFlottantDiscontinu   = 37, 
 };

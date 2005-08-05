@@ -175,62 +175,6 @@ QString MOS_Tools::ToString( ASN1T_EnumTypeLocalisation nType )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MOS_Tools::ToString
-/** @param  nType 
-    @return 
-*/
-// Created: APE 2004-05-18
-// -----------------------------------------------------------------------------
-QString MOS_Tools::ToString( ASN1T_EnumObjectType nType )
-{
-    QObject a;
-    switch( nType )
-    {
-        case EnumObjectType::bouchon_mines:             return a.tr( "bouchon mines" );
-        case EnumObjectType::zone_minee_lineaire:       return a.tr( "zone minee lineaire" );
-        case EnumObjectType::zone_minee_par_dispersion: return a.tr( "zone minee par dispersion" );
-        case EnumObjectType::fosse_anti_char:           return a.tr( "fosse anti char" );
-        case EnumObjectType::abattis:                   return a.tr( "abattis" );
-        case EnumObjectType::barricade:                 return a.tr( "baricade" );
-        case EnumObjectType::eboulement:                return a.tr( "eboulement" );
-        case EnumObjectType::destruction_route:         return a.tr( "destruction route" );
-        case EnumObjectType::destruction_pont:          return a.tr( "destruction pont" );
-        case EnumObjectType::pont_flottant:             return a.tr( "pont flottant" );
-        case EnumObjectType::poste_tir:                 return a.tr( "poste tir" );
-        case EnumObjectType::zone_protegee:             return a.tr( "zone protegee" );
-        case EnumObjectType::zone_implantation_canon:   return a.tr( "zone implantation canon" );
-        case EnumObjectType::zone_implantation_cobra:   return a.tr( "zone implantation cobra" );
-        case EnumObjectType::zone_implantation_lrm:     return a.tr( "zone implantation lrm" );
-        case EnumObjectType::site_franchissement:       return a.tr( "site franchissement" );
-        case EnumObjectType::nuage_nbc:                 return a.tr( "nuage nbc" );
-        case EnumObjectType::plot_ravitaillement:       return a.tr( "plot ravitaillement" );
-        case EnumObjectType::zone_brouillage_brod:      return a.tr( "zone de brouillage brod" );
-        case EnumObjectType::site_decontamination:      return a.tr( "site decontamination" );
-        case EnumObjectType::rota:                      return a.tr( "rota" );
-        case EnumObjectType::zone_nbc:                  return a.tr( "zone nbc" );
-        case EnumObjectType::zone_brouillage_bromure:   return a.tr( "zone de brouillage bromure" );
-        case EnumObjectType::aire_poser:                return a.tr( "aire poser" );
-        case EnumObjectType::piste:                     return a.tr( "piste" );
-        case EnumObjectType::plateforme:                return a.tr( "plateforme" );
-        case EnumObjectType::zone_mobilite_amelioree:   return a.tr( "zone mobilite amelioree" );
-        case EnumObjectType::zone_poser_helicoptere:    return a.tr( "zone poser helicoptere" );
-        case EnumObjectType::aire_logistique:           return a.tr( "aire logistique" );
-        case EnumObjectType::itineraire_logistique:     return a.tr( "itineraire logistique" );
-        case EnumObjectType::camp_prisonniers:          return a.tr( "camp prisonniers" );
-        case EnumObjectType::camp_refugies:             return a.tr( "camp refugies" );
-        case EnumObjectType::poste_controle:            return a.tr( "poste controle" );
-        case EnumObjectType::terrain_largage:           return a.tr( "terrain largage" );
-        case EnumObjectType::zone_interdite_mouvement:  return a.tr( "zone interdite mouvement" );
-        case EnumObjectType::zone_interdite_tir:        return a.tr( "zone interdite tir" );
-        case EnumObjectType::zone_implantation_mortier: return a.tr( "zone implantation mortier" );
-
-        default:
-            assert( false );
-            return "Unknown";
-    }
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Tools::ToString
@@ -554,58 +498,6 @@ const char* MOS_Tools::ToSymbol( const std::string& strUnitType )
     if( strUnitType == "GroupeRecoALAT"                      ) return "3S"; 
     if( strUnitType == ""                                    ) return "?";
     return "?";
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Tools::FromString
-/** @param  szString 
-    @param  nId 
-    */
-// Created: APE 2004-08-31
-// -----------------------------------------------------------------------------
-void MOS_Tools::FromString( const char* szString, ASN1T_EnumObjectType& nId )
-{
-    std::string strObjectType( szString );
-    nId = (ASN1T_EnumObjectType)-1;
-
-    if( sCaseInsensitiveEqual()( strObjectType, "fosse anti char"          ) ) nId = EnumObjectType::fosse_anti_char;
-    if( sCaseInsensitiveEqual()( strObjectType, "abattis"                  ) ) nId = EnumObjectType::abattis;
-    if( sCaseInsensitiveEqual()( strObjectType, "barricade"                ) ) nId = EnumObjectType::barricade;
-    if( sCaseInsensitiveEqual()( strObjectType, "bouchon mines"            ) ) nId = EnumObjectType::bouchon_mines;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone minee lineaire"      ) ) nId = EnumObjectType::zone_minee_lineaire;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone minee par dispersion") ) nId = EnumObjectType::zone_minee_par_dispersion;
-    if( sCaseInsensitiveEqual()( strObjectType, "eboulement"               ) ) nId = EnumObjectType::eboulement;
-    if( sCaseInsensitiveEqual()( strObjectType, "destruction route"        ) ) nId = EnumObjectType::destruction_route;
-    if( sCaseInsensitiveEqual()( strObjectType, "destruction pont"         ) ) nId = EnumObjectType::destruction_pont;
-    if( sCaseInsensitiveEqual()( strObjectType, "pont flottant"            ) ) nId = EnumObjectType::pont_flottant;
-    if( sCaseInsensitiveEqual()( strObjectType, "poste tir"                ) ) nId = EnumObjectType::poste_tir;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone protegee"            ) ) nId = EnumObjectType::zone_protegee;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone implantation canon"  ) ) nId = EnumObjectType::zone_implantation_canon;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone implantation cobra"  ) ) nId = EnumObjectType::zone_implantation_cobra;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone implantation lrm"    ) ) nId = EnumObjectType::zone_implantation_lrm;
-    if( sCaseInsensitiveEqual()( strObjectType, "site franchissement"      ) ) nId = EnumObjectType::site_franchissement;
-    if( sCaseInsensitiveEqual()( strObjectType, "plot ravitaillement"      ) ) nId = EnumObjectType::plot_ravitaillement;
-    if( sCaseInsensitiveEqual()( strObjectType, "nuage nbc"                ) ) nId = EnumObjectType::nuage_nbc;
-    if( sCaseInsensitiveEqual()( strObjectType, "site decontamination"     ) ) nId = EnumObjectType::site_decontamination;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone brouillage brod"     ) ) nId = EnumObjectType::zone_brouillage_brod;
-    if( sCaseInsensitiveEqual()( strObjectType, "rota"                     ) ) nId = EnumObjectType::rota;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone nbc"                 ) ) nId = EnumObjectType::zone_nbc;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone brouillage bromure"  ) ) nId = EnumObjectType::zone_brouillage_bromure;
-    if( sCaseInsensitiveEqual()( strObjectType, "aire poser"               ) ) nId = EnumObjectType::aire_poser;
-    if( sCaseInsensitiveEqual()( strObjectType, "piste"                    ) ) nId = EnumObjectType::piste;
-    if( sCaseInsensitiveEqual()( strObjectType, "plateforme"              ) ) nId = EnumObjectType::plateforme;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone mobilite amelioree"  ) ) nId = EnumObjectType::zone_mobilite_amelioree;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone poser helicoptere"   ) ) nId = EnumObjectType::zone_poser_helicoptere;
-    if( sCaseInsensitiveEqual()( strObjectType, "aire logistique"          ) ) nId = EnumObjectType::aire_logistique;
-    if( sCaseInsensitiveEqual()( strObjectType, "itineraire logistique"    ) ) nId = EnumObjectType::itineraire_logistique;
-    if( sCaseInsensitiveEqual()( strObjectType, "camp prisonniers"         ) ) nId = EnumObjectType::camp_prisonniers;
-    if( sCaseInsensitiveEqual()( strObjectType, "camp refugies"            ) ) nId = EnumObjectType::camp_refugies;
-    if( sCaseInsensitiveEqual()( strObjectType, "poste controle"           ) ) nId = EnumObjectType::poste_controle;
-    if( sCaseInsensitiveEqual()( strObjectType, "terrain largage"           ) ) nId = EnumObjectType::terrain_largage;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone interdite mouvement" ) ) nId = EnumObjectType::zone_interdite_mouvement;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone interdite tir"        ) ) nId = EnumObjectType::zone_interdite_tir;
-    if( sCaseInsensitiveEqual()( strObjectType, "zone implantation mortier" ) ) nId = EnumObjectType::zone_implantation_mortier;
 }
 
 

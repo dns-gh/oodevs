@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:29:41 $
+// $Created: 2005-08-05 - 14:24:58 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/05/05 10:24 $
@@ -45,7 +45,7 @@ using namespace DIN;
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion constructor
-// Created:  2005-08-01 - 11:29:41
+// Created:  2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 MOS_MissionPion::MOS_MissionPion( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
@@ -56,7 +56,7 @@ MOS_MissionPion::MOS_MissionPion( E_MissionID nTypeMission, QWidget* pParent )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion destructor
-// Created:  2005-08-01 - 11:29:41
+// Created:  2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 MOS_MissionPion::~MOS_MissionPion()
 {
@@ -69,7 +69,7 @@ MOS_MissionPion::~MOS_MissionPion()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::Initialize
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::Initialize()
 {
@@ -103,7 +103,7 @@ void MOS_MissionPion::Initialize()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::Terminate
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::Terminate()
 {                                
@@ -318,7 +318,7 @@ void MOS_MissionPion::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::SetAgent
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::SetAgent( MOS_Agent* pAgent )
 {
@@ -333,7 +333,7 @@ void MOS_MissionPion::SetAgent( MOS_Agent* pAgent )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::CreateMissionTools
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::CreateMissionTools()
 {
@@ -553,7 +553,7 @@ void MOS_MissionPion::CreateMissionTools()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::WriteOrder
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::SendMsg( std::string& sParam )
 {
@@ -580,7 +580,7 @@ void MOS_MissionPion::SendMsg( std::string& sParam )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::FillRandomParameters
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::FillRandomParameters()
 {
@@ -590,7 +590,7 @@ void MOS_MissionPion::FillRandomParameters()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::FillRandomParameters
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::ReloadParameters( MT_InputArchive_ABC& archive )
 {
@@ -605,7 +605,7 @@ void MOS_MissionPion::ReloadParameters( MT_InputArchive_ABC& archive )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::ResaveParameters
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::ResaveParameters( MT_OutputArchive_ABC& archive )
 {
@@ -622,7 +622,7 @@ void MOS_MissionPion::ResaveParameters( MT_OutputArchive_ABC& archive )
 // Name: MOS_MissionPion::IsAutomateMission
 /** @return 
 */
-// Created: 2005-08-01 - 11:29:41
+// Created: 2005-08-05 - 14:24:58
 // -----------------------------------------------------------------------------
 bool MOS_MissionPion::IsAutomateMission() const
 {
@@ -1978,7 +1978,7 @@ void MOS_MissionPion::CreateMission_INF_DetruireEmbuscade()
     pSelector_nature_obstacle->CreateValue( "eboulement", EnumObjectType::eboulement );
     pSelector_nature_obstacle->CreateValue( "destruction_route", EnumObjectType::destruction_route );
     pSelector_nature_obstacle->CreateValue( "destruction_pont", EnumObjectType::destruction_pont );
-    pSelector_nature_obstacle->CreateValue( "pont_flottant", EnumObjectType::pont_flottant );
+    pSelector_nature_obstacle->CreateValue( "pont_flottant_continu", EnumObjectType::pont_flottant_continu );
     pSelector_nature_obstacle->CreateValue( "poste_tir", EnumObjectType::poste_tir );
     pSelector_nature_obstacle->CreateValue( "zone_protegee", EnumObjectType::zone_protegee );
     pSelector_nature_obstacle->CreateValue( "zone_implantation_canon", EnumObjectType::zone_implantation_canon );
@@ -2006,6 +2006,7 @@ void MOS_MissionPion::CreateMission_INF_DetruireEmbuscade()
     pSelector_nature_obstacle->CreateValue( "zone_interdite_mouvement", EnumObjectType::zone_interdite_mouvement );
     pSelector_nature_obstacle->CreateValue( "zone_interdite_tir", EnumObjectType::zone_interdite_tir );
     pSelector_nature_obstacle->CreateValue( "zone_implantation_mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_nature_obstacle->CreateValue( "pont_flottant_discontinu", EnumObjectType::pont_flottant_discontinu );
 }
 
 void MOS_MissionPion::CreateMission_INF_ContreAttaquer()
@@ -2365,7 +2366,7 @@ void MOS_MissionPion::CreateMission_Test_CreateObject()
     pSelector_type->CreateValue( "eboulement", EnumObjectType::eboulement );
     pSelector_type->CreateValue( "destruction_route", EnumObjectType::destruction_route );
     pSelector_type->CreateValue( "destruction_pont", EnumObjectType::destruction_pont );
-    pSelector_type->CreateValue( "pont_flottant", EnumObjectType::pont_flottant );
+    pSelector_type->CreateValue( "pont_flottant_continu", EnumObjectType::pont_flottant_continu );
     pSelector_type->CreateValue( "poste_tir", EnumObjectType::poste_tir );
     pSelector_type->CreateValue( "zone_protegee", EnumObjectType::zone_protegee );
     pSelector_type->CreateValue( "zone_implantation_canon", EnumObjectType::zone_implantation_canon );
@@ -2393,6 +2394,7 @@ void MOS_MissionPion::CreateMission_Test_CreateObject()
     pSelector_type->CreateValue( "zone_interdite_mouvement", EnumObjectType::zone_interdite_mouvement );
     pSelector_type->CreateValue( "zone_interdite_tir", EnumObjectType::zone_interdite_tir );
     pSelector_type->CreateValue( "zone_implantation_mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_type->CreateValue( "pont_flottant_discontinu", EnumObjectType::pont_flottant_discontinu );
     MOS_ValueList* pParameters_param= &CreateValueList( "", 1, 2 );
     pParameters_param->CreateValue( asnMission.param, "param", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );
 }
@@ -2629,7 +2631,7 @@ void MOS_MissionPion::CreateMission_MILICE_DetruireEmbuscade()
     pSelector_nature_obstacle->CreateValue( "eboulement", EnumObjectType::eboulement );
     pSelector_nature_obstacle->CreateValue( "destruction_route", EnumObjectType::destruction_route );
     pSelector_nature_obstacle->CreateValue( "destruction_pont", EnumObjectType::destruction_pont );
-    pSelector_nature_obstacle->CreateValue( "pont_flottant", EnumObjectType::pont_flottant );
+    pSelector_nature_obstacle->CreateValue( "pont_flottant_continu", EnumObjectType::pont_flottant_continu );
     pSelector_nature_obstacle->CreateValue( "poste_tir", EnumObjectType::poste_tir );
     pSelector_nature_obstacle->CreateValue( "zone_protegee", EnumObjectType::zone_protegee );
     pSelector_nature_obstacle->CreateValue( "zone_implantation_canon", EnumObjectType::zone_implantation_canon );
@@ -2657,6 +2659,7 @@ void MOS_MissionPion::CreateMission_MILICE_DetruireEmbuscade()
     pSelector_nature_obstacle->CreateValue( "zone_interdite_mouvement", EnumObjectType::zone_interdite_mouvement );
     pSelector_nature_obstacle->CreateValue( "zone_interdite_tir", EnumObjectType::zone_interdite_tir );
     pSelector_nature_obstacle->CreateValue( "zone_implantation_mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_nature_obstacle->CreateValue( "pont_flottant_discontinu", EnumObjectType::pont_flottant_discontinu );
 }
 
 void MOS_MissionPion::CreateMission_JOINT_MARINE_Transporter()
@@ -2817,6 +2820,7 @@ void MOS_MissionPion::CreateMission_TRANS_EtablirGererLiaison()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_trans_etablir_gerer_liaison = &asnMission;
     CreatePoint( asnMission.position_deploiement, "position_deploiement" );
 }
+
 
 
 // -----------------------------------------------------------------------------

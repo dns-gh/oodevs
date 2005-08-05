@@ -397,7 +397,7 @@ ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
     T_ConverterObjectType( "eboulement", QT_TRANSLATE_NOOP( "ENT_Tr", "eboulement" ), eObjectType_Eboulement ),
     T_ConverterObjectType( "destruction route", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction route" ), eObjectType_DestructionRoute ),
     T_ConverterObjectType( "destruction pont", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction pont" ), eObjectType_DestructionPont ),
-    T_ConverterObjectType( "pont flottant", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant" ), eObjectType_PontFlottant ),
+    T_ConverterObjectType( "pont flottant continu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant continu" ), eObjectType_PontFlottantContinu ),
     T_ConverterObjectType( "poste tir", QT_TRANSLATE_NOOP( "ENT_Tr", "poste tir" ), eObjectType_PosteTir ),
     T_ConverterObjectType( "zone protegee", QT_TRANSLATE_NOOP( "ENT_Tr", "zone protegee" ), eObjectType_ZoneProtegee ),
     T_ConverterObjectType( "zone implantation canon", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation canon" ), eObjectType_ZoneImplantationCanon ),
@@ -425,6 +425,7 @@ ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
     T_ConverterObjectType( "zone interdite mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite mouvement" ), eObjectType_ZoneInterditeMouvement ),
     T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite tir" ), eObjectType_ZoneInterditeTir ),
     T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation mortier" ), eObjectType_ZoneImplantationMortier ),
+    T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant discontinu" ), eObjectType_PontFlottantDiscontinu ),
     T_ConverterObjectType( "", "", (E_ObjectType)-1 )
 };
 

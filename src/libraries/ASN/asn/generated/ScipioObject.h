@@ -88,7 +88,7 @@ struct EXTERN EnumObjectType {
       eboulement = 6,
       destruction_route = 7,
       destruction_pont = 8,
-      pont_flottant = 9,
+      pont_flottant_continu = 9,
       poste_tir = 10,
       zone_protegee = 11,
       zone_implantation_canon = 12,

@@ -165,7 +165,8 @@ void MOS_DynaObjectPanel::OnDynaObjectUpdated( MOS_DynaObject& object )
     MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( pObject->GetCenter(), strPos );
     pPositionLabel_->setText( strPos.c_str() );
 
-    pObjectTypeLabel_->setText( MOS_Tools::ToString( (ASN1T_EnumObjectType)pObject->GetType() ) );
+    pObjectTypeLabel_->setText( ENT_Tr::ConvertFromObjectType( (E_ObjectType)pObject->GetType() ).c_str() );
+
     pPercentBuiltEdit_->setValue( pObject->GetConstructionPercentage() );
     pPercentValueEdit_->setValue( pObject->GetValorizationPercentage() );
     pPercentAroundEdit_->setValue( pObject->GetBypassConstructionPercentage() );
