@@ -134,6 +134,9 @@ typedef enum E_TypeRC
     eRC_DemandeEvacuationSanitaire,
     eRC_DemandeEvacuationMateriel,
     eRC_AllocationConsentieBientotEpuisee, // Paramètre dotation (envoyé par moteur)
+    eRC_RavitaillementDotationsEffectue,
+    eRC_RavitaillementStockEffectue,
+    eRC_HumainRetourDeSante,       
 
     /* LOG / Transport / Embarquement */
     eRC_EnCoursRavitaillement,

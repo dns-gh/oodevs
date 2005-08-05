@@ -80,6 +80,9 @@ const MIL_RC_PionDecontamine*                   MIL_RC::pRcPionDecontamine_     
 const MIL_RC_AllocationConsentieBientotEpuisee* MIL_RC::pRcAllocationConsentieBientotEpuisee_ = 0;
 const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_                   = 0;
 const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                  = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_   = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_       = 0;
+const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_               = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -246,7 +249,13 @@ void MIL_RC::Initialize()
     rcs_[ eRC_TirRestreint                                      ] = new MIL_RC                                     ( eRC_TirRestreint                                       , T_MsgCR_cr_cr_tir_restreint                                           );
     rcs_[ eRC_TirInterdit                                       ] = new MIL_RC                                     ( eRC_TirInterdit                                        , T_MsgCR_cr_cr_tir_interdit                                            );
     rcs_[ eRC_TirLibre                                          ] = new MIL_RC                                     ( eRC_TirLibre                                           , T_MsgCR_cr_cr_tir_libre                                               );                                                                                                                     
+    rcs_[ eRC_RavitaillementDotationsEffectue                   ] = new MIL_RC                                     ( eRC_RavitaillementDotationsEffectue                    , T_MsgCR_cr_cr_ravitaillement_dotations_effectue                       );
+    rcs_[ eRC_RavitaillementStockEffectue                       ] = new MIL_RC                                     ( eRC_RavitaillementStockEffectue                        , T_MsgCR_cr_cr_ravitaillement_stock_effectue                           );
+    rcs_[ eRC_HumainRetourDeSante                               ] = new MIL_RC                                     ( eRC_HumainRetourDeSante                                , T_MsgCR_cr_cr_humain_retour_de_sante                                  );
 
+    pRcRavitaillementDotationsEffectue_   =                                            rcs_[ eRC_RavitaillementDotationsEffectue   ];
+    pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
+    pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
     pRcMaterielRetourDeMaintenance_       =                                            rcs_[ eRC_MaterielRetourDeMaintenance       ];
     pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
     pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];

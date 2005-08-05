@@ -5370,6 +5370,36 @@ void ASN1C_CR_AllocationConsentieBientotEpuisee::Print (ASN1ConstCharPtr name)
    asn1Print_CR_AllocationConsentieBientotEpuisee (name, &msgData);
 }
 
+void asn1Print_CR_RavitaillementDotationsEffectue (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_RavitaillementDotationsEffectue::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_RavitaillementDotationsEffectue (name);
+}
+
+void asn1Print_CR_RavitaillementStockEffectue (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_RavitaillementStockEffectue::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_RavitaillementStockEffectue (name);
+}
+
+void asn1Print_CR_HumainRetourDeSante (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_HumainRetourDeSante::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_HumainRetourDeSante (name);
+}
+
 void asn1Print_CR_EnCoursRavitaillement (ASN1ConstCharPtr name)
 {
 }
@@ -6487,296 +6517,308 @@ void asn1Print_MsgCR_cr (ASN1ConstCharPtr name, ASN1T_MsgCR_cr* pvalue)
          break;
 
       case 88:
-         sprintf (namebuf, "%s.u.cr_en_cours_ravitaillement", name);
+         sprintf (namebuf, "%s.u.cr_ravitaillement_dotations_effectue", name);
          break;
 
       case 89:
-         sprintf (namebuf, "%s.u.cr_ravitaillement_termine", name);
+         sprintf (namebuf, "%s.u.cr_ravitaillement_stock_effectue", name);
          break;
 
       case 90:
-         sprintf (namebuf, "%s.u.cr_helicoptere_en_observation", name);
+         sprintf (namebuf, "%s.u.cr_humain_retour_de_sante", name);
          break;
 
       case 91:
-         sprintf (namebuf, "%s.u.cr_perte_info_guidage", name);
+         sprintf (namebuf, "%s.u.cr_en_cours_ravitaillement", name);
          break;
 
       case 92:
+         sprintf (namebuf, "%s.u.cr_ravitaillement_termine", name);
+         break;
+
+      case 93:
+         sprintf (namebuf, "%s.u.cr_helicoptere_en_observation", name);
+         break;
+
+      case 94:
+         sprintf (namebuf, "%s.u.cr_perte_info_guidage", name);
+         break;
+
+      case 95:
          sprintf (namebuf, "%s.u.cr_transport_unite_pas_prete", name);
          asn1Print_CR_TransportUnitePasPrete (namebuf, &pvalue->u.cr_transport_unite_pas_prete);
          break;
 
-      case 93:
+      case 96:
          sprintf (namebuf, "%s.u.cr_transport_en_cours", name);
          break;
 
-      case 94:
+      case 97:
          sprintf (namebuf, "%s.u.cr_transport_embarquement", name);
          break;
 
-      case 95:
+      case 98:
          sprintf (namebuf, "%s.u.cr_transport_debarquement", name);
          break;
 
-      case 96:
+      case 99:
          sprintf (namebuf, "%s.u.cr_vehicule_laisse_sur_position", name);
          break;
 
-      case 97:
+      case 100:
          sprintf (namebuf, "%s.u.cr_rejoint_position_embarquement", name);
          break;
 
-      case 98:
+      case 101:
          sprintf (namebuf, "%s.u.cr_en_attente_transporteurs", name);
          break;
 
-      case 99:
+      case 102:
          sprintf (namebuf, "%s.u.cr_contamine_nbc", name);
          break;
 
-      case 100:
+      case 103:
          sprintf (namebuf, "%s.u.cr_decontamine_nbc", name);
          break;
 
-      case 101:
+      case 104:
          sprintf (namebuf, "%s.u.cr_tenue_protection_nbc_mise", name);
          break;
 
-      case 102:
+      case 105:
          sprintf (namebuf, "%s.u.cr_tenue_protection_nbc_enlevee", name);
          break;
 
-      case 103:
+      case 106:
          sprintf (namebuf, "%s.u.cr_alerte_nbc", name);
          break;
 
-      case 104:
+      case 107:
          sprintf (namebuf, "%s.u.cr_site_decontamination_anime", name);
          break;
 
-      case 105:
+      case 108:
          sprintf (namebuf, "%s.u.cr_site_decontamination_desactive", name);
          break;
 
-      case 106:
+      case 109:
          sprintf (namebuf, "%s.u.cr_demande_decontamination", name);
          break;
 
-      case 107:
+      case 110:
          sprintf (namebuf, "%s.u.cr_zone_reconnue", name);
          break;
 
-      case 108:
+      case 111:
          sprintf (namebuf, "%s.u.cr_zone_decontaminee", name);
          break;
 
-      case 109:
+      case 112:
          sprintf (namebuf, "%s.u.cr_site_rota_reconnu", name);
          break;
 
-      case 110:
+      case 113:
          sprintf (namebuf, "%s.u.cr_incident_nbc_termine", name);
          break;
 
-      case 111:
+      case 114:
          sprintf (namebuf, "%s.u.cr_pion_decontamine", name);
          asn1Print_CR_PionDecontamine (namebuf, &pvalue->u.cr_pion_decontamine);
          break;
 
-      case 112:
+      case 115:
          sprintf (namebuf, "%s.u.cr_reconnaissance_terminee", name);
          break;
 
-      case 113:
+      case 116:
          sprintf (namebuf, "%s.u.cr_reconnaissance_initiale_terminee", name);
          break;
 
-      case 114:
+      case 117:
          sprintf (namebuf, "%s.u.cr_rejoint_plot_ravitaillement", name);
          break;
 
-      case 115:
+      case 118:
          sprintf (namebuf, "%s.u.cr_premier_coup_parti", name);
          break;
 
-      case 116:
+      case 119:
          sprintf (namebuf, "%s.u.cr_tir_execute", name);
          break;
 
-      case 117:
+      case 120:
          sprintf (namebuf, "%s.u.cr_tir_hors_de_portee", name);
          break;
 
-      case 118:
+      case 121:
          sprintf (namebuf, "%s.u.cr_tir_annule", name);
          break;
 
-      case 119:
+      case 122:
          sprintf (namebuf, "%s.u.cr_changement_de_position", name);
          break;
 
-      case 120:
+      case 123:
          sprintf (namebuf, "%s.u.cr_debut_surveillance", name);
          break;
 
-      case 121:
+      case 124:
          sprintf (namebuf, "%s.u.cr_debut_installation", name);
          break;
 
-      case 122:
+      case 125:
          sprintf (namebuf, "%s.u.cr_pret_pour_conduite_tir", name);
          break;
 
-      case 123:
+      case 126:
          sprintf (namebuf, "%s.u.cr_observation_tir_indirect", name);
          asn1Print_CR_ObservationTirIndirect (namebuf, &pvalue->u.cr_observation_tir_indirect);
          break;
 
-      case 124:
+      case 127:
          sprintf (namebuf, "%s.u.cr_zone_implantation_occupee", name);
          break;
 
-      case 125:
+      case 128:
          sprintf (namebuf, "%s.u.cr_installation_sur_zone_implantation", name);
          break;
 
-      case 126:
+      case 129:
          sprintf (namebuf, "%s.u.cr_reception_ordre_de_feu", name);
          break;
 
-      case 127:
+      case 130:
          sprintf (namebuf, "%s.u.cr_pret_au_tir", name);
          break;
 
-      case 128:
+      case 131:
          sprintf (namebuf, "%s.u.cr_presence_population", name);
          break;
 
-      case 129:
+      case 132:
          sprintf (namebuf, "%s.u.cr_orientation_population_vers_camp_refugies", name);
          break;
 
-      case 130:
+      case 133:
          sprintf (namebuf, "%s.u.cr_pas_de_camp_refugies_disponible", name);
          break;
 
-      case 131:
+      case 134:
          sprintf (namebuf, "%s.u.cr_presence_ennemi_rendu", name);
          break;
 
-      case 132:
+      case 135:
          sprintf (namebuf, "%s.u.cr_orientation_ennemi_rendu_vers_camp_prisonniers", name);
          break;
 
-      case 133:
+      case 136:
          sprintf (namebuf, "%s.u.cr_pas_de_camp_prisonniers_disponible", name);
          break;
 
-      case 134:
+      case 137:
          sprintf (namebuf, "%s.u.cr_tir_dans_zone_interdite", name);
          break;
 
-      case 135:
+      case 138:
          sprintf (namebuf, "%s.u.cr_tir_sur_camp_ami", name);
          asn1Print_CR_TirSurCampAmi (namebuf, &pvalue->u.cr_tir_sur_camp_ami);
          break;
 
-      case 136:
+      case 139:
          sprintf (namebuf, "%s.u.cr_tire_par_camp_ami", name);
          asn1Print_CR_TireParCampAmi (namebuf, &pvalue->u.cr_tire_par_camp_ami);
          break;
 
-      case 137:
+      case 140:
          sprintf (namebuf, "%s.u.cr_tir_sur_camp_neutre", name);
          asn1Print_CR_TirSurCampNeutre (namebuf, &pvalue->u.cr_tir_sur_camp_neutre);
          break;
 
-      case 138:
+      case 141:
          sprintf (namebuf, "%s.u.cr_tire_par_camp_neutre", name);
          asn1Print_CR_TireParCampNeutre (namebuf, &pvalue->u.cr_tire_par_camp_neutre);
          break;
 
-      case 139:
+      case 142:
          sprintf (namebuf, "%s.u.cr_tir_sur_civil", name);
          asn1Print_CR_TirSurCivil (namebuf, &pvalue->u.cr_tir_sur_civil);
          break;
 
-      case 140:
+      case 143:
          sprintf (namebuf, "%s.u.cr_tire_par_civil", name);
          asn1Print_CR_TireParCivil (namebuf, &pvalue->u.cr_tire_par_civil);
          break;
 
-      case 141:
+      case 144:
          sprintf (namebuf, "%s.u.cr_destruction_pc", name);
          break;
 
-      case 142:
+      case 145:
          sprintf (namebuf, "%s.u.cr_deces_blesse", name);
          break;
 
-      case 143:
+      case 146:
          sprintf (namebuf, "%s.u.cr_deces_blesse_pendant_transport", name);
          break;
 
-      case 144:
+      case 147:
          sprintf (namebuf, "%s.u.cr_deces_blesse_pendant_hospitalisation", name);
          break;
 
-      case 145:
+      case 148:
          sprintf (namebuf, "%s.u.cr_mission_impossible_pions_subordonnes_non_operationnels", name);
          break;
 
-      case 146:
+      case 149:
          sprintf (namebuf, "%s.u.cr_mission_impossible_lima_invalide", name);
          break;
 
-      case 147:
+      case 150:
          sprintf (namebuf, "%s.u.cr_mission_impossible_zone_hors_fuseau", name);
          break;
 
-      case 148:
+      case 151:
          sprintf (namebuf, "%s.u.cr_rapport_de_force_defavorable", name);
          break;
 
-      case 149:
+      case 152:
          sprintf (namebuf, "%s.u.cr_terrain_difficile", name);
          break;
 
-      case 150:
+      case 153:
          sprintf (namebuf, "%s.u.cr_plus_de_carburant", name);
          break;
 
-      case 151:
+      case 154:
          sprintf (namebuf, "%s.u.cr_dispositif_disperse", name);
          break;
 
-      case 152:
+      case 155:
          sprintf (namebuf, "%s.u.cr_pion_neutralise", name);
          break;
 
-      case 153:
+      case 156:
          sprintf (namebuf, "%s.u.cr_silence_radio", name);
          break;
 
-      case 154:
+      case 157:
          sprintf (namebuf, "%s.u.cr_tir_restreint", name);
          break;
 
-      case 155:
+      case 158:
          sprintf (namebuf, "%s.u.cr_tir_interdit", name);
          break;
 
-      case 156:
+      case 159:
          sprintf (namebuf, "%s.u.cr_tir_libre", name);
          break;
 
-      case 157:
+      case 160:
          sprintf (namebuf, "%s.u.cr_trace", name);
          asn1Print_CR_Trace (namebuf, &pvalue->u.cr_trace);
          break;
 
-      case 158:
+      case 161:
          sprintf (namebuf, "%s.u.cr_trace_id", name);
          asn1Print_CR_TraceID (namebuf, &pvalue->u.cr_trace_id);
          break;

@@ -417,6 +417,7 @@ void MIL_Automate::RequestDotationSupply()
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supplyState )
 {
+    MIL_RC::pRcRavitaillementDotationsEffectue_->Send( *this, MIL_RC::eRcTypeOperational );
     for( IT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
     {
         if( it->second == &supplyState )

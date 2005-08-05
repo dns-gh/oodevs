@@ -143,6 +143,9 @@ CR-DemandeRavitaillement                    ::= NULL
 CR-DemandeEvacuationSanitaire               ::= NULL
 CR-DemandeEvacuationMateriel                ::= NULL
 CR-AllocationConsentieBientotEpuisee        ::= TypeDotation
+CR-RavitaillementDotationsEffectue          ::= NULL
+CR-RavitaillementStockEffectue              ::= NULL
+CR-HumainRetourDeSante                      ::= NULL
 
 -- ALAT / Transport / Embarquement
 CR-EnCoursRavitaillement                    ::= NULL
@@ -352,6 +355,9 @@ MsgCR ::= SEQUENCE
         cr-demande-evacuation-sanitaire                             CR-DemandeEvacuationSanitaire,
         cr-demande-evacuation-materiel                              CR-DemandeEvacuationMateriel,
         cr-allocation-consentie-bientot-epuisee                     CR-AllocationConsentieBientotEpuisee,
+        cr-ravitaillement-dotations-effectue                        CR-RavitaillementDotationsEffectue,
+        cr-ravitaillement-stock-effectue                            CR-RavitaillementStockEffectue,
+        cr-humain-retour-de-sante                                   CR-HumainRetourDeSante,
         
         -- LOG ALAT / ALAT
         cr-en-cours-ravitaillement                                  CR-EnCoursRavitaillement,

@@ -675,8 +675,9 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
 {
+    MIL_RC::pRcRavitaillementStockEffectue_->Send( *this, MIL_RC::eRcTypeOperational );
     assert( &supplyState == pStockSupplyState_ );
-    pStockSupplyState_   = 0;
+    pStockSupplyState_   = 0;    
 }
 
 // -----------------------------------------------------------------------------

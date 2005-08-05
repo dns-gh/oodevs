@@ -212,6 +212,9 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     case T_MsgCR_cr_cr_tir_restreint                                           : strMsg << "Tir restreint"; break;
     case T_MsgCR_cr_cr_tir_interdit                                            : strMsg << "Tir interdit"; break;
     case T_MsgCR_cr_cr_tir_libre                                               : strMsg << "Tir libre"; break;                                                                       
+    case T_MsgCR_cr_cr_humain_retour_de_sante                                  : strMsg << "Humain retour de santé"; break;
+    case T_MsgCR_cr_cr_ravitaillement_dotations_effectue                       : strMsg << "Ravitaillement des dotations effectué"; break;
+    case T_MsgCR_cr_cr_ravitaillement_stock_effectue                           : strMsg << "Ravitaillement du stock effectué"; break;
 
     case T_MsgCR_cr_cr_preparation_mission                           : 
         {

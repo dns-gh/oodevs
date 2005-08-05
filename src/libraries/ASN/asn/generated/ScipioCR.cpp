@@ -4395,6 +4395,150 @@ int ASN1C_CR_AllocationConsentieBientotEpuisee::Decode ()
 
 /**************************************************************/
 /*                                                            */
+/*  CR_RavitaillementDotationsEffectue                        */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_CR_RavitaillementDotationsEffectue::ASN1C_CR_RavitaillementDotationsEffectue (
+   ASN1MessageBuffer& msgBuf) :
+   ASN1CType(msgBuf)
+{}
+
+EXTERN int asn1PE_CR_RavitaillementDotationsEffectue (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_CR_RavitaillementDotationsEffectue: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PE_CR_RavitaillementDotationsEffectue: end\n");
+   return (stat);
+}
+
+int ASN1C_CR_RavitaillementDotationsEffectue::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_CR_RavitaillementDotationsEffectue (mpContext->GetPtr());
+   return stat;
+}
+
+EXTERN int asn1PD_CR_RavitaillementDotationsEffectue (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_CR_RavitaillementDotationsEffectue: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PD_CR_RavitaillementDotationsEffectue: end\n");
+
+   return (stat);
+}
+
+int ASN1C_CR_RavitaillementDotationsEffectue::Decode ()
+{
+   return asn1PD_CR_RavitaillementDotationsEffectue (mpContext->GetPtr());
+}
+
+/**************************************************************/
+/*                                                            */
+/*  CR_RavitaillementStockEffectue                            */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_CR_RavitaillementStockEffectue::ASN1C_CR_RavitaillementStockEffectue (
+   ASN1MessageBuffer& msgBuf) :
+   ASN1CType(msgBuf)
+{}
+
+EXTERN int asn1PE_CR_RavitaillementStockEffectue (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_CR_RavitaillementStockEffectue: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PE_CR_RavitaillementStockEffectue: end\n");
+   return (stat);
+}
+
+int ASN1C_CR_RavitaillementStockEffectue::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_CR_RavitaillementStockEffectue (mpContext->GetPtr());
+   return stat;
+}
+
+EXTERN int asn1PD_CR_RavitaillementStockEffectue (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_CR_RavitaillementStockEffectue: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PD_CR_RavitaillementStockEffectue: end\n");
+
+   return (stat);
+}
+
+int ASN1C_CR_RavitaillementStockEffectue::Decode ()
+{
+   return asn1PD_CR_RavitaillementStockEffectue (mpContext->GetPtr());
+}
+
+/**************************************************************/
+/*                                                            */
+/*  CR_HumainRetourDeSante                                    */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_CR_HumainRetourDeSante::ASN1C_CR_HumainRetourDeSante (
+   ASN1MessageBuffer& msgBuf) :
+   ASN1CType(msgBuf)
+{}
+
+EXTERN int asn1PE_CR_HumainRetourDeSante (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_CR_HumainRetourDeSante: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PE_CR_HumainRetourDeSante: end\n");
+   return (stat);
+}
+
+int ASN1C_CR_HumainRetourDeSante::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_CR_HumainRetourDeSante (mpContext->GetPtr());
+   return stat;
+}
+
+EXTERN int asn1PD_CR_HumainRetourDeSante (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_CR_HumainRetourDeSante: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PD_CR_HumainRetourDeSante: end\n");
+
+   return (stat);
+}
+
+int ASN1C_CR_HumainRetourDeSante::Decode ()
+{
+   return asn1PD_CR_HumainRetourDeSante (mpContext->GetPtr());
+}
+
+/**************************************************************/
+/*                                                            */
 /*  CR_EnCoursRavitaillement                                  */
 /*                                                            */
 /**************************************************************/
@@ -7912,7 +8056,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 157);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 160);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -8791,8 +8935,38 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
 
          break;
 
-      /* cr_en_cours_ravitaillement */
+      /* cr_ravitaillement_dotations_effectue */
       case 88:
+         PU_PUSHNAME (ctxt_p, "u.cr_ravitaillement_dotations_effectue");
+
+         stat = asn1PE_CR_RavitaillementDotationsEffectue (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* cr_ravitaillement_stock_effectue */
+      case 89:
+         PU_PUSHNAME (ctxt_p, "u.cr_ravitaillement_stock_effectue");
+
+         stat = asn1PE_CR_RavitaillementStockEffectue (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* cr_humain_retour_de_sante */
+      case 90:
+         PU_PUSHNAME (ctxt_p, "u.cr_humain_retour_de_sante");
+
+         stat = asn1PE_CR_HumainRetourDeSante (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* cr_en_cours_ravitaillement */
+      case 91:
          PU_PUSHNAME (ctxt_p, "u.cr_en_cours_ravitaillement");
 
          stat = asn1PE_CR_EnCoursRavitaillement (ctxt_p);
@@ -8802,7 +8976,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_ravitaillement_termine */
-      case 89:
+      case 92:
          PU_PUSHNAME (ctxt_p, "u.cr_ravitaillement_termine");
 
          stat = asn1PE_CR_RavitaillementTermine (ctxt_p);
@@ -8812,7 +8986,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_helicoptere_en_observation */
-      case 90:
+      case 93:
          PU_PUSHNAME (ctxt_p, "u.cr_helicoptere_en_observation");
 
          stat = asn1PE_CR_HelicoptereEnObservation (ctxt_p);
@@ -8822,7 +8996,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_perte_info_guidage */
-      case 91:
+      case 94:
          PU_PUSHNAME (ctxt_p, "u.cr_perte_info_guidage");
 
          stat = asn1PE_CR_PerteInfoGuidage (ctxt_p);
@@ -8832,7 +9006,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_unite_pas_prete */
-      case 92:
+      case 95:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_unite_pas_prete");
 
          stat = asn1PE_CR_TransportUnitePasPrete (ctxt_p, pvalue->u.cr_transport_unite_pas_prete);
@@ -8842,7 +9016,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_en_cours */
-      case 93:
+      case 96:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_en_cours");
 
          stat = asn1PE_CR_TransportEnCours (ctxt_p);
@@ -8852,7 +9026,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_embarquement */
-      case 94:
+      case 97:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_embarquement");
 
          stat = asn1PE_CR_TransportEmbarquement (ctxt_p);
@@ -8862,7 +9036,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_debarquement */
-      case 95:
+      case 98:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_debarquement");
 
          stat = asn1PE_CR_TransportDebarquement (ctxt_p);
@@ -8872,7 +9046,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_vehicule_laisse_sur_position */
-      case 96:
+      case 99:
          PU_PUSHNAME (ctxt_p, "u.cr_vehicule_laisse_sur_position");
 
          stat = asn1PE_CR_VehiculeLaisseSurPosition (ctxt_p);
@@ -8882,7 +9056,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_rejoint_position_embarquement */
-      case 97:
+      case 100:
          PU_PUSHNAME (ctxt_p, "u.cr_rejoint_position_embarquement");
 
          stat = asn1PE_CR_RejointPositionEmbarquement (ctxt_p);
@@ -8892,7 +9066,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_en_attente_transporteurs */
-      case 98:
+      case 101:
          PU_PUSHNAME (ctxt_p, "u.cr_en_attente_transporteurs");
 
          stat = asn1PE_CR_EnAttenteTransporteurs (ctxt_p);
@@ -8902,7 +9076,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_contamine_nbc */
-      case 99:
+      case 102:
          PU_PUSHNAME (ctxt_p, "u.cr_contamine_nbc");
 
          stat = asn1PE_CR_ContamineNBC (ctxt_p);
@@ -8912,7 +9086,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_decontamine_nbc */
-      case 100:
+      case 103:
          PU_PUSHNAME (ctxt_p, "u.cr_decontamine_nbc");
 
          stat = asn1PE_CR_DecontamineNBC (ctxt_p);
@@ -8922,7 +9096,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tenue_protection_nbc_mise */
-      case 101:
+      case 104:
          PU_PUSHNAME (ctxt_p, "u.cr_tenue_protection_nbc_mise");
 
          stat = asn1PE_CR_TenueProtectionNBCMise (ctxt_p);
@@ -8932,7 +9106,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tenue_protection_nbc_enlevee */
-      case 102:
+      case 105:
          PU_PUSHNAME (ctxt_p, "u.cr_tenue_protection_nbc_enlevee");
 
          stat = asn1PE_CR_TenueProtectionNBCEnlevee (ctxt_p);
@@ -8942,7 +9116,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_alerte_nbc */
-      case 103:
+      case 106:
          PU_PUSHNAME (ctxt_p, "u.cr_alerte_nbc");
 
          stat = asn1PE_CR_AlerteNBC (ctxt_p);
@@ -8952,7 +9126,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_site_decontamination_anime */
-      case 104:
+      case 107:
          PU_PUSHNAME (ctxt_p, "u.cr_site_decontamination_anime");
 
          stat = asn1PE_CR_SiteDecontaminationAnime (ctxt_p);
@@ -8962,7 +9136,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_site_decontamination_desactive */
-      case 105:
+      case 108:
          PU_PUSHNAME (ctxt_p, "u.cr_site_decontamination_desactive");
 
          stat = asn1PE_CR_SiteDecontaminationDesactive (ctxt_p);
@@ -8972,7 +9146,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_demande_decontamination */
-      case 106:
+      case 109:
          PU_PUSHNAME (ctxt_p, "u.cr_demande_decontamination");
 
          stat = asn1PE_CR_DemandeDecontamination (ctxt_p);
@@ -8982,7 +9156,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_zone_reconnue */
-      case 107:
+      case 110:
          PU_PUSHNAME (ctxt_p, "u.cr_zone_reconnue");
 
          stat = asn1PE_CR_ZoneReconnue (ctxt_p);
@@ -8992,7 +9166,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_zone_decontaminee */
-      case 108:
+      case 111:
          PU_PUSHNAME (ctxt_p, "u.cr_zone_decontaminee");
 
          stat = asn1PE_CR_ZoneDecontaminee (ctxt_p);
@@ -9002,7 +9176,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_site_rota_reconnu */
-      case 109:
+      case 112:
          PU_PUSHNAME (ctxt_p, "u.cr_site_rota_reconnu");
 
          stat = asn1PE_CR_SiteROTAReconnu (ctxt_p);
@@ -9012,7 +9186,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_incident_nbc_termine */
-      case 110:
+      case 113:
          PU_PUSHNAME (ctxt_p, "u.cr_incident_nbc_termine");
 
          stat = asn1PE_CR_IncidentNBCTermine (ctxt_p);
@@ -9022,7 +9196,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pion_decontamine */
-      case 111:
+      case 114:
          PU_PUSHNAME (ctxt_p, "u.cr_pion_decontamine");
 
          stat = asn1PE_CR_PionDecontamine (ctxt_p, pvalue->u.cr_pion_decontamine);
@@ -9032,7 +9206,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_reconnaissance_terminee */
-      case 112:
+      case 115:
          PU_PUSHNAME (ctxt_p, "u.cr_reconnaissance_terminee");
 
          stat = asn1PE_CR_ReconnaissanceTerminee (ctxt_p);
@@ -9042,7 +9216,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_reconnaissance_initiale_terminee */
-      case 113:
+      case 116:
          PU_PUSHNAME (ctxt_p, "u.cr_reconnaissance_initiale_terminee");
 
          stat = asn1PE_CR_ReconnaissanceInitialeTerminee (ctxt_p);
@@ -9052,7 +9226,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_rejoint_plot_ravitaillement */
-      case 114:
+      case 117:
          PU_PUSHNAME (ctxt_p, "u.cr_rejoint_plot_ravitaillement");
 
          stat = asn1PE_CR_RejointPlotRavitaillement (ctxt_p);
@@ -9062,7 +9236,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_premier_coup_parti */
-      case 115:
+      case 118:
          PU_PUSHNAME (ctxt_p, "u.cr_premier_coup_parti");
 
          stat = asn1PE_CR_PremierCoupParti (ctxt_p);
@@ -9072,7 +9246,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_execute */
-      case 116:
+      case 119:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_execute");
 
          stat = asn1PE_CR_TirExecute (ctxt_p);
@@ -9082,7 +9256,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_hors_de_portee */
-      case 117:
+      case 120:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_hors_de_portee");
 
          stat = asn1PE_CR_TirHorsDePortee (ctxt_p);
@@ -9092,7 +9266,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_annule */
-      case 118:
+      case 121:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_annule");
 
          stat = asn1PE_CR_TirAnnule (ctxt_p);
@@ -9102,7 +9276,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_changement_de_position */
-      case 119:
+      case 122:
          PU_PUSHNAME (ctxt_p, "u.cr_changement_de_position");
 
          stat = asn1PE_CR_ChangementDePosition (ctxt_p);
@@ -9112,7 +9286,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_debut_surveillance */
-      case 120:
+      case 123:
          PU_PUSHNAME (ctxt_p, "u.cr_debut_surveillance");
 
          stat = asn1PE_CR_DebutSurveillance (ctxt_p);
@@ -9122,7 +9296,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_debut_installation */
-      case 121:
+      case 124:
          PU_PUSHNAME (ctxt_p, "u.cr_debut_installation");
 
          stat = asn1PE_CR_DebutInstallation (ctxt_p);
@@ -9132,7 +9306,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pret_pour_conduite_tir */
-      case 122:
+      case 125:
          PU_PUSHNAME (ctxt_p, "u.cr_pret_pour_conduite_tir");
 
          stat = asn1PE_CR_PretPourConduiteTir (ctxt_p);
@@ -9142,7 +9316,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_observation_tir_indirect */
-      case 123:
+      case 126:
          PU_PUSHNAME (ctxt_p, "u.cr_observation_tir_indirect");
 
          stat = asn1PE_CR_ObservationTirIndirect (ctxt_p, pvalue->u.cr_observation_tir_indirect);
@@ -9152,7 +9326,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_zone_implantation_occupee */
-      case 124:
+      case 127:
          PU_PUSHNAME (ctxt_p, "u.cr_zone_implantation_occupee");
 
          stat = asn1PE_CR_ZoneImplantationOccupee (ctxt_p);
@@ -9162,7 +9336,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_installation_sur_zone_implantation */
-      case 125:
+      case 128:
          PU_PUSHNAME (ctxt_p, "u.cr_installation_sur_zone_implantation");
 
          stat = asn1PE_CR_InstallationSurZoneImplantation (ctxt_p);
@@ -9172,7 +9346,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_reception_ordre_de_feu */
-      case 126:
+      case 129:
          PU_PUSHNAME (ctxt_p, "u.cr_reception_ordre_de_feu");
 
          stat = asn1PE_CR_ReceptionOrdreDeFeu (ctxt_p);
@@ -9182,7 +9356,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pret_au_tir */
-      case 127:
+      case 130:
          PU_PUSHNAME (ctxt_p, "u.cr_pret_au_tir");
 
          stat = asn1PE_CR_PretAuTir (ctxt_p);
@@ -9192,7 +9366,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_presence_population */
-      case 128:
+      case 131:
          PU_PUSHNAME (ctxt_p, "u.cr_presence_population");
 
          stat = asn1PE_CR_PresencePopulation (ctxt_p);
@@ -9202,7 +9376,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_orientation_population_vers_camp_refugies */
-      case 129:
+      case 132:
          PU_PUSHNAME (ctxt_p, "u.cr_orientation_population_vers_camp_refugies");
 
          stat = asn1PE_CR_OrientationPopulationVersCampRefugies (ctxt_p);
@@ -9212,7 +9386,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pas_de_camp_refugies_disponible */
-      case 130:
+      case 133:
          PU_PUSHNAME (ctxt_p, "u.cr_pas_de_camp_refugies_disponible");
 
          stat = asn1PE_CR_PasDeCampRefugiesDisponible (ctxt_p);
@@ -9222,7 +9396,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_presence_ennemi_rendu */
-      case 131:
+      case 134:
          PU_PUSHNAME (ctxt_p, "u.cr_presence_ennemi_rendu");
 
          stat = asn1PE_CR_PresenceEnnemiRendu (ctxt_p);
@@ -9232,7 +9406,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_orientation_ennemi_rendu_vers_camp_prisonniers */
-      case 132:
+      case 135:
          PU_PUSHNAME (ctxt_p, "u.cr_orientation_ennemi_rendu_vers_camp_prisonniers");
 
          stat = asn1PE_CR_OrientationEnnemiRenduVersCampPrisonniers (ctxt_p);
@@ -9242,7 +9416,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pas_de_camp_prisonniers_disponible */
-      case 133:
+      case 136:
          PU_PUSHNAME (ctxt_p, "u.cr_pas_de_camp_prisonniers_disponible");
 
          stat = asn1PE_CR_PasDeCampPrisonniersDisponible (ctxt_p);
@@ -9252,7 +9426,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_dans_zone_interdite */
-      case 134:
+      case 137:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_dans_zone_interdite");
 
          stat = asn1PE_CR_TirDansZoneInterdite (ctxt_p);
@@ -9262,7 +9436,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_sur_camp_ami */
-      case 135:
+      case 138:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_sur_camp_ami");
 
          stat = asn1PE_CR_TirSurCampAmi (ctxt_p, pvalue->u.cr_tir_sur_camp_ami);
@@ -9272,7 +9446,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tire_par_camp_ami */
-      case 136:
+      case 139:
          PU_PUSHNAME (ctxt_p, "u.cr_tire_par_camp_ami");
 
          stat = asn1PE_CR_TireParCampAmi (ctxt_p, pvalue->u.cr_tire_par_camp_ami);
@@ -9282,7 +9456,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_sur_camp_neutre */
-      case 137:
+      case 140:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_sur_camp_neutre");
 
          stat = asn1PE_CR_TirSurCampNeutre (ctxt_p, pvalue->u.cr_tir_sur_camp_neutre);
@@ -9292,7 +9466,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tire_par_camp_neutre */
-      case 138:
+      case 141:
          PU_PUSHNAME (ctxt_p, "u.cr_tire_par_camp_neutre");
 
          stat = asn1PE_CR_TireParCampNeutre (ctxt_p, pvalue->u.cr_tire_par_camp_neutre);
@@ -9302,7 +9476,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_sur_civil */
-      case 139:
+      case 142:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_sur_civil");
 
          stat = asn1PE_CR_TirSurCivil (ctxt_p, pvalue->u.cr_tir_sur_civil);
@@ -9312,7 +9486,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tire_par_civil */
-      case 140:
+      case 143:
          PU_PUSHNAME (ctxt_p, "u.cr_tire_par_civil");
 
          stat = asn1PE_CR_TireParCivil (ctxt_p, pvalue->u.cr_tire_par_civil);
@@ -9322,7 +9496,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_destruction_pc */
-      case 141:
+      case 144:
          PU_PUSHNAME (ctxt_p, "u.cr_destruction_pc");
 
          stat = asn1PE_CR_DestructionPC (ctxt_p);
@@ -9332,7 +9506,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_deces_blesse */
-      case 142:
+      case 145:
          PU_PUSHNAME (ctxt_p, "u.cr_deces_blesse");
 
          stat = asn1PE_CR_DecesBlesse (ctxt_p);
@@ -9342,7 +9516,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_deces_blesse_pendant_transport */
-      case 143:
+      case 146:
          PU_PUSHNAME (ctxt_p, "u.cr_deces_blesse_pendant_transport");
 
          stat = asn1PE_CR_DecesBlessePendantTransport (ctxt_p);
@@ -9352,7 +9526,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_deces_blesse_pendant_hospitalisation */
-      case 144:
+      case 147:
          PU_PUSHNAME (ctxt_p, "u.cr_deces_blesse_pendant_hospitalisation");
 
          stat = asn1PE_CR_DecesBlessePendantHospitalisation (ctxt_p);
@@ -9362,7 +9536,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_mission_impossible_pions_subordonnes_non_operationnels */
-      case 145:
+      case 148:
          PU_PUSHNAME (ctxt_p, "u.cr_mission_impossible_pions_subordonnes_non_operationnels");
 
          stat = asn1PE_CR_MissionImpossiblePionsSubordonnesNonOperationnels (ctxt_p);
@@ -9372,7 +9546,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_mission_impossible_lima_invalide */
-      case 146:
+      case 149:
          PU_PUSHNAME (ctxt_p, "u.cr_mission_impossible_lima_invalide");
 
          stat = asn1PE_CR_MissionImpossibleLimaInvalide (ctxt_p);
@@ -9382,7 +9556,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_mission_impossible_zone_hors_fuseau */
-      case 147:
+      case 150:
          PU_PUSHNAME (ctxt_p, "u.cr_mission_impossible_zone_hors_fuseau");
 
          stat = asn1PE_CR_MissionImpossibleZoneHorsFuseau (ctxt_p);
@@ -9392,7 +9566,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_rapport_de_force_defavorable */
-      case 148:
+      case 151:
          PU_PUSHNAME (ctxt_p, "u.cr_rapport_de_force_defavorable");
 
          stat = asn1PE_CR_RapportDeForceDefavorable (ctxt_p);
@@ -9402,7 +9576,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_terrain_difficile */
-      case 149:
+      case 152:
          PU_PUSHNAME (ctxt_p, "u.cr_terrain_difficile");
 
          stat = asn1PE_CR_TerrainDifficile (ctxt_p);
@@ -9412,7 +9586,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_plus_de_carburant */
-      case 150:
+      case 153:
          PU_PUSHNAME (ctxt_p, "u.cr_plus_de_carburant");
 
          stat = asn1PE_CR_PlusDeCarburant (ctxt_p);
@@ -9422,7 +9596,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_dispositif_disperse */
-      case 151:
+      case 154:
          PU_PUSHNAME (ctxt_p, "u.cr_dispositif_disperse");
 
          stat = asn1PE_CR_DispositifDisperse (ctxt_p);
@@ -9432,7 +9606,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pion_neutralise */
-      case 152:
+      case 155:
          PU_PUSHNAME (ctxt_p, "u.cr_pion_neutralise");
 
          stat = asn1PE_CR_PionNeutralise (ctxt_p);
@@ -9442,7 +9616,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_silence_radio */
-      case 153:
+      case 156:
          PU_PUSHNAME (ctxt_p, "u.cr_silence_radio");
 
          stat = asn1PE_CR_SilenceRadio (ctxt_p);
@@ -9452,7 +9626,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_restreint */
-      case 154:
+      case 157:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_restreint");
 
          stat = asn1PE_CR_TirRestreint (ctxt_p);
@@ -9462,7 +9636,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_interdit */
-      case 155:
+      case 158:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_interdit");
 
          stat = asn1PE_CR_TirInterdit (ctxt_p);
@@ -9472,7 +9646,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_libre */
-      case 156:
+      case 159:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_libre");
 
          stat = asn1PE_CR_TirLibre (ctxt_p);
@@ -9482,7 +9656,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_trace */
-      case 157:
+      case 160:
          PU_PUSHNAME (ctxt_p, "u.cr_trace");
 
          stat = asn1PE_CR_Trace (ctxt_p, pvalue->u.cr_trace);
@@ -9492,7 +9666,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_trace_id */
-      case 158:
+      case 161:
          PU_PUSHNAME (ctxt_p, "u.cr_trace_id");
 
          stat = asn1PE_CR_TraceID (ctxt_p, pvalue->u.cr_trace_id);
@@ -9525,7 +9699,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 157);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 160);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    else pvalue->t = ui + 1;
 
@@ -10501,8 +10675,41 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
 
          break;
 
-      /* cr_en_cours_ravitaillement */
+      /* cr_ravitaillement_dotations_effectue */
       case 87:
+         PU_PUSHNAME (ctxt_p, "u.cr_ravitaillement_dotations_effectue");
+
+         stat = asn1PD_CR_RavitaillementDotationsEffectue (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* cr_ravitaillement_stock_effectue */
+      case 88:
+         PU_PUSHNAME (ctxt_p, "u.cr_ravitaillement_stock_effectue");
+
+         stat = asn1PD_CR_RavitaillementStockEffectue (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* cr_humain_retour_de_sante */
+      case 89:
+         PU_PUSHNAME (ctxt_p, "u.cr_humain_retour_de_sante");
+
+         stat = asn1PD_CR_HumainRetourDeSante (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* cr_en_cours_ravitaillement */
+      case 90:
          PU_PUSHNAME (ctxt_p, "u.cr_en_cours_ravitaillement");
 
          stat = asn1PD_CR_EnCoursRavitaillement (ctxt_p);
@@ -10513,7 +10720,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_ravitaillement_termine */
-      case 88:
+      case 91:
          PU_PUSHNAME (ctxt_p, "u.cr_ravitaillement_termine");
 
          stat = asn1PD_CR_RavitaillementTermine (ctxt_p);
@@ -10524,7 +10731,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_helicoptere_en_observation */
-      case 89:
+      case 92:
          PU_PUSHNAME (ctxt_p, "u.cr_helicoptere_en_observation");
 
          stat = asn1PD_CR_HelicoptereEnObservation (ctxt_p);
@@ -10535,7 +10742,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_perte_info_guidage */
-      case 90:
+      case 93:
          PU_PUSHNAME (ctxt_p, "u.cr_perte_info_guidage");
 
          stat = asn1PD_CR_PerteInfoGuidage (ctxt_p);
@@ -10546,7 +10753,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_unite_pas_prete */
-      case 91:
+      case 94:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_unite_pas_prete");
 
          stat = asn1PD_CR_TransportUnitePasPrete (ctxt_p, &pvalue->u.cr_transport_unite_pas_prete);
@@ -10557,7 +10764,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_en_cours */
-      case 92:
+      case 95:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_en_cours");
 
          stat = asn1PD_CR_TransportEnCours (ctxt_p);
@@ -10568,7 +10775,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_embarquement */
-      case 93:
+      case 96:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_embarquement");
 
          stat = asn1PD_CR_TransportEmbarquement (ctxt_p);
@@ -10579,7 +10786,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_transport_debarquement */
-      case 94:
+      case 97:
          PU_PUSHNAME (ctxt_p, "u.cr_transport_debarquement");
 
          stat = asn1PD_CR_TransportDebarquement (ctxt_p);
@@ -10590,7 +10797,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_vehicule_laisse_sur_position */
-      case 95:
+      case 98:
          PU_PUSHNAME (ctxt_p, "u.cr_vehicule_laisse_sur_position");
 
          stat = asn1PD_CR_VehiculeLaisseSurPosition (ctxt_p);
@@ -10601,7 +10808,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_rejoint_position_embarquement */
-      case 96:
+      case 99:
          PU_PUSHNAME (ctxt_p, "u.cr_rejoint_position_embarquement");
 
          stat = asn1PD_CR_RejointPositionEmbarquement (ctxt_p);
@@ -10612,7 +10819,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_en_attente_transporteurs */
-      case 97:
+      case 100:
          PU_PUSHNAME (ctxt_p, "u.cr_en_attente_transporteurs");
 
          stat = asn1PD_CR_EnAttenteTransporteurs (ctxt_p);
@@ -10623,7 +10830,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_contamine_nbc */
-      case 98:
+      case 101:
          PU_PUSHNAME (ctxt_p, "u.cr_contamine_nbc");
 
          stat = asn1PD_CR_ContamineNBC (ctxt_p);
@@ -10634,7 +10841,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_decontamine_nbc */
-      case 99:
+      case 102:
          PU_PUSHNAME (ctxt_p, "u.cr_decontamine_nbc");
 
          stat = asn1PD_CR_DecontamineNBC (ctxt_p);
@@ -10645,7 +10852,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tenue_protection_nbc_mise */
-      case 100:
+      case 103:
          PU_PUSHNAME (ctxt_p, "u.cr_tenue_protection_nbc_mise");
 
          stat = asn1PD_CR_TenueProtectionNBCMise (ctxt_p);
@@ -10656,7 +10863,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tenue_protection_nbc_enlevee */
-      case 101:
+      case 104:
          PU_PUSHNAME (ctxt_p, "u.cr_tenue_protection_nbc_enlevee");
 
          stat = asn1PD_CR_TenueProtectionNBCEnlevee (ctxt_p);
@@ -10667,7 +10874,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_alerte_nbc */
-      case 102:
+      case 105:
          PU_PUSHNAME (ctxt_p, "u.cr_alerte_nbc");
 
          stat = asn1PD_CR_AlerteNBC (ctxt_p);
@@ -10678,7 +10885,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_site_decontamination_anime */
-      case 103:
+      case 106:
          PU_PUSHNAME (ctxt_p, "u.cr_site_decontamination_anime");
 
          stat = asn1PD_CR_SiteDecontaminationAnime (ctxt_p);
@@ -10689,7 +10896,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_site_decontamination_desactive */
-      case 104:
+      case 107:
          PU_PUSHNAME (ctxt_p, "u.cr_site_decontamination_desactive");
 
          stat = asn1PD_CR_SiteDecontaminationDesactive (ctxt_p);
@@ -10700,7 +10907,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_demande_decontamination */
-      case 105:
+      case 108:
          PU_PUSHNAME (ctxt_p, "u.cr_demande_decontamination");
 
          stat = asn1PD_CR_DemandeDecontamination (ctxt_p);
@@ -10711,7 +10918,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_zone_reconnue */
-      case 106:
+      case 109:
          PU_PUSHNAME (ctxt_p, "u.cr_zone_reconnue");
 
          stat = asn1PD_CR_ZoneReconnue (ctxt_p);
@@ -10722,7 +10929,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_zone_decontaminee */
-      case 107:
+      case 110:
          PU_PUSHNAME (ctxt_p, "u.cr_zone_decontaminee");
 
          stat = asn1PD_CR_ZoneDecontaminee (ctxt_p);
@@ -10733,7 +10940,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_site_rota_reconnu */
-      case 108:
+      case 111:
          PU_PUSHNAME (ctxt_p, "u.cr_site_rota_reconnu");
 
          stat = asn1PD_CR_SiteROTAReconnu (ctxt_p);
@@ -10744,7 +10951,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_incident_nbc_termine */
-      case 109:
+      case 112:
          PU_PUSHNAME (ctxt_p, "u.cr_incident_nbc_termine");
 
          stat = asn1PD_CR_IncidentNBCTermine (ctxt_p);
@@ -10755,7 +10962,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pion_decontamine */
-      case 110:
+      case 113:
          PU_PUSHNAME (ctxt_p, "u.cr_pion_decontamine");
 
          stat = asn1PD_CR_PionDecontamine (ctxt_p, &pvalue->u.cr_pion_decontamine);
@@ -10766,7 +10973,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_reconnaissance_terminee */
-      case 111:
+      case 114:
          PU_PUSHNAME (ctxt_p, "u.cr_reconnaissance_terminee");
 
          stat = asn1PD_CR_ReconnaissanceTerminee (ctxt_p);
@@ -10777,7 +10984,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_reconnaissance_initiale_terminee */
-      case 112:
+      case 115:
          PU_PUSHNAME (ctxt_p, "u.cr_reconnaissance_initiale_terminee");
 
          stat = asn1PD_CR_ReconnaissanceInitialeTerminee (ctxt_p);
@@ -10788,7 +10995,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_rejoint_plot_ravitaillement */
-      case 113:
+      case 116:
          PU_PUSHNAME (ctxt_p, "u.cr_rejoint_plot_ravitaillement");
 
          stat = asn1PD_CR_RejointPlotRavitaillement (ctxt_p);
@@ -10799,7 +11006,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_premier_coup_parti */
-      case 114:
+      case 117:
          PU_PUSHNAME (ctxt_p, "u.cr_premier_coup_parti");
 
          stat = asn1PD_CR_PremierCoupParti (ctxt_p);
@@ -10810,7 +11017,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_execute */
-      case 115:
+      case 118:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_execute");
 
          stat = asn1PD_CR_TirExecute (ctxt_p);
@@ -10821,7 +11028,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_hors_de_portee */
-      case 116:
+      case 119:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_hors_de_portee");
 
          stat = asn1PD_CR_TirHorsDePortee (ctxt_p);
@@ -10832,7 +11039,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_annule */
-      case 117:
+      case 120:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_annule");
 
          stat = asn1PD_CR_TirAnnule (ctxt_p);
@@ -10843,7 +11050,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_changement_de_position */
-      case 118:
+      case 121:
          PU_PUSHNAME (ctxt_p, "u.cr_changement_de_position");
 
          stat = asn1PD_CR_ChangementDePosition (ctxt_p);
@@ -10854,7 +11061,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_debut_surveillance */
-      case 119:
+      case 122:
          PU_PUSHNAME (ctxt_p, "u.cr_debut_surveillance");
 
          stat = asn1PD_CR_DebutSurveillance (ctxt_p);
@@ -10865,7 +11072,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_debut_installation */
-      case 120:
+      case 123:
          PU_PUSHNAME (ctxt_p, "u.cr_debut_installation");
 
          stat = asn1PD_CR_DebutInstallation (ctxt_p);
@@ -10876,7 +11083,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pret_pour_conduite_tir */
-      case 121:
+      case 124:
          PU_PUSHNAME (ctxt_p, "u.cr_pret_pour_conduite_tir");
 
          stat = asn1PD_CR_PretPourConduiteTir (ctxt_p);
@@ -10887,7 +11094,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_observation_tir_indirect */
-      case 122:
+      case 125:
          PU_PUSHNAME (ctxt_p, "u.cr_observation_tir_indirect");
 
          stat = asn1PD_CR_ObservationTirIndirect (ctxt_p, &pvalue->u.cr_observation_tir_indirect);
@@ -10898,7 +11105,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_zone_implantation_occupee */
-      case 123:
+      case 126:
          PU_PUSHNAME (ctxt_p, "u.cr_zone_implantation_occupee");
 
          stat = asn1PD_CR_ZoneImplantationOccupee (ctxt_p);
@@ -10909,7 +11116,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_installation_sur_zone_implantation */
-      case 124:
+      case 127:
          PU_PUSHNAME (ctxt_p, "u.cr_installation_sur_zone_implantation");
 
          stat = asn1PD_CR_InstallationSurZoneImplantation (ctxt_p);
@@ -10920,7 +11127,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_reception_ordre_de_feu */
-      case 125:
+      case 128:
          PU_PUSHNAME (ctxt_p, "u.cr_reception_ordre_de_feu");
 
          stat = asn1PD_CR_ReceptionOrdreDeFeu (ctxt_p);
@@ -10931,7 +11138,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pret_au_tir */
-      case 126:
+      case 129:
          PU_PUSHNAME (ctxt_p, "u.cr_pret_au_tir");
 
          stat = asn1PD_CR_PretAuTir (ctxt_p);
@@ -10942,7 +11149,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_presence_population */
-      case 127:
+      case 130:
          PU_PUSHNAME (ctxt_p, "u.cr_presence_population");
 
          stat = asn1PD_CR_PresencePopulation (ctxt_p);
@@ -10953,7 +11160,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_orientation_population_vers_camp_refugies */
-      case 128:
+      case 131:
          PU_PUSHNAME (ctxt_p, "u.cr_orientation_population_vers_camp_refugies");
 
          stat = asn1PD_CR_OrientationPopulationVersCampRefugies (ctxt_p);
@@ -10964,7 +11171,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pas_de_camp_refugies_disponible */
-      case 129:
+      case 132:
          PU_PUSHNAME (ctxt_p, "u.cr_pas_de_camp_refugies_disponible");
 
          stat = asn1PD_CR_PasDeCampRefugiesDisponible (ctxt_p);
@@ -10975,7 +11182,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_presence_ennemi_rendu */
-      case 130:
+      case 133:
          PU_PUSHNAME (ctxt_p, "u.cr_presence_ennemi_rendu");
 
          stat = asn1PD_CR_PresenceEnnemiRendu (ctxt_p);
@@ -10986,7 +11193,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_orientation_ennemi_rendu_vers_camp_prisonniers */
-      case 131:
+      case 134:
          PU_PUSHNAME (ctxt_p, "u.cr_orientation_ennemi_rendu_vers_camp_prisonniers");
 
          stat = asn1PD_CR_OrientationEnnemiRenduVersCampPrisonniers (ctxt_p);
@@ -10997,7 +11204,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pas_de_camp_prisonniers_disponible */
-      case 132:
+      case 135:
          PU_PUSHNAME (ctxt_p, "u.cr_pas_de_camp_prisonniers_disponible");
 
          stat = asn1PD_CR_PasDeCampPrisonniersDisponible (ctxt_p);
@@ -11008,7 +11215,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_dans_zone_interdite */
-      case 133:
+      case 136:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_dans_zone_interdite");
 
          stat = asn1PD_CR_TirDansZoneInterdite (ctxt_p);
@@ -11019,7 +11226,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_sur_camp_ami */
-      case 134:
+      case 137:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_sur_camp_ami");
 
          stat = asn1PD_CR_TirSurCampAmi (ctxt_p, &pvalue->u.cr_tir_sur_camp_ami);
@@ -11030,7 +11237,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tire_par_camp_ami */
-      case 135:
+      case 138:
          PU_PUSHNAME (ctxt_p, "u.cr_tire_par_camp_ami");
 
          stat = asn1PD_CR_TireParCampAmi (ctxt_p, &pvalue->u.cr_tire_par_camp_ami);
@@ -11041,7 +11248,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_sur_camp_neutre */
-      case 136:
+      case 139:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_sur_camp_neutre");
 
          stat = asn1PD_CR_TirSurCampNeutre (ctxt_p, &pvalue->u.cr_tir_sur_camp_neutre);
@@ -11052,7 +11259,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tire_par_camp_neutre */
-      case 137:
+      case 140:
          PU_PUSHNAME (ctxt_p, "u.cr_tire_par_camp_neutre");
 
          stat = asn1PD_CR_TireParCampNeutre (ctxt_p, &pvalue->u.cr_tire_par_camp_neutre);
@@ -11063,7 +11270,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_sur_civil */
-      case 138:
+      case 141:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_sur_civil");
 
          stat = asn1PD_CR_TirSurCivil (ctxt_p, &pvalue->u.cr_tir_sur_civil);
@@ -11074,7 +11281,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tire_par_civil */
-      case 139:
+      case 142:
          PU_PUSHNAME (ctxt_p, "u.cr_tire_par_civil");
 
          stat = asn1PD_CR_TireParCivil (ctxt_p, &pvalue->u.cr_tire_par_civil);
@@ -11085,7 +11292,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_destruction_pc */
-      case 140:
+      case 143:
          PU_PUSHNAME (ctxt_p, "u.cr_destruction_pc");
 
          stat = asn1PD_CR_DestructionPC (ctxt_p);
@@ -11096,7 +11303,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_deces_blesse */
-      case 141:
+      case 144:
          PU_PUSHNAME (ctxt_p, "u.cr_deces_blesse");
 
          stat = asn1PD_CR_DecesBlesse (ctxt_p);
@@ -11107,7 +11314,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_deces_blesse_pendant_transport */
-      case 142:
+      case 145:
          PU_PUSHNAME (ctxt_p, "u.cr_deces_blesse_pendant_transport");
 
          stat = asn1PD_CR_DecesBlessePendantTransport (ctxt_p);
@@ -11118,7 +11325,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_deces_blesse_pendant_hospitalisation */
-      case 143:
+      case 146:
          PU_PUSHNAME (ctxt_p, "u.cr_deces_blesse_pendant_hospitalisation");
 
          stat = asn1PD_CR_DecesBlessePendantHospitalisation (ctxt_p);
@@ -11129,7 +11336,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_mission_impossible_pions_subordonnes_non_operationnels */
-      case 144:
+      case 147:
          PU_PUSHNAME (ctxt_p, "u.cr_mission_impossible_pions_subordonnes_non_operationnels");
 
          stat = asn1PD_CR_MissionImpossiblePionsSubordonnesNonOperationnels (ctxt_p);
@@ -11140,7 +11347,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_mission_impossible_lima_invalide */
-      case 145:
+      case 148:
          PU_PUSHNAME (ctxt_p, "u.cr_mission_impossible_lima_invalide");
 
          stat = asn1PD_CR_MissionImpossibleLimaInvalide (ctxt_p);
@@ -11151,7 +11358,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_mission_impossible_zone_hors_fuseau */
-      case 146:
+      case 149:
          PU_PUSHNAME (ctxt_p, "u.cr_mission_impossible_zone_hors_fuseau");
 
          stat = asn1PD_CR_MissionImpossibleZoneHorsFuseau (ctxt_p);
@@ -11162,7 +11369,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_rapport_de_force_defavorable */
-      case 147:
+      case 150:
          PU_PUSHNAME (ctxt_p, "u.cr_rapport_de_force_defavorable");
 
          stat = asn1PD_CR_RapportDeForceDefavorable (ctxt_p);
@@ -11173,7 +11380,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_terrain_difficile */
-      case 148:
+      case 151:
          PU_PUSHNAME (ctxt_p, "u.cr_terrain_difficile");
 
          stat = asn1PD_CR_TerrainDifficile (ctxt_p);
@@ -11184,7 +11391,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_plus_de_carburant */
-      case 149:
+      case 152:
          PU_PUSHNAME (ctxt_p, "u.cr_plus_de_carburant");
 
          stat = asn1PD_CR_PlusDeCarburant (ctxt_p);
@@ -11195,7 +11402,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_dispositif_disperse */
-      case 150:
+      case 153:
          PU_PUSHNAME (ctxt_p, "u.cr_dispositif_disperse");
 
          stat = asn1PD_CR_DispositifDisperse (ctxt_p);
@@ -11206,7 +11413,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_pion_neutralise */
-      case 151:
+      case 154:
          PU_PUSHNAME (ctxt_p, "u.cr_pion_neutralise");
 
          stat = asn1PD_CR_PionNeutralise (ctxt_p);
@@ -11217,7 +11424,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_silence_radio */
-      case 152:
+      case 155:
          PU_PUSHNAME (ctxt_p, "u.cr_silence_radio");
 
          stat = asn1PD_CR_SilenceRadio (ctxt_p);
@@ -11228,7 +11435,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_restreint */
-      case 153:
+      case 156:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_restreint");
 
          stat = asn1PD_CR_TirRestreint (ctxt_p);
@@ -11239,7 +11446,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_interdit */
-      case 154:
+      case 157:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_interdit");
 
          stat = asn1PD_CR_TirInterdit (ctxt_p);
@@ -11250,7 +11457,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_tir_libre */
-      case 155:
+      case 158:
          PU_PUSHNAME (ctxt_p, "u.cr_tir_libre");
 
          stat = asn1PD_CR_TirLibre (ctxt_p);
@@ -11261,7 +11468,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_trace */
-      case 156:
+      case 159:
          PU_PUSHNAME (ctxt_p, "u.cr_trace");
 
          stat = asn1PD_CR_Trace (ctxt_p, &pvalue->u.cr_trace);
@@ -11272,7 +11479,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
          break;
 
       /* cr_trace_id */
-      case 157:
+      case 160:
          PU_PUSHNAME (ctxt_p, "u.cr_trace_id");
 
          stat = asn1PD_CR_TraceID (ctxt_p, &pvalue->u.cr_trace_id);

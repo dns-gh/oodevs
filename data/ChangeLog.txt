@@ -21,6 +21,10 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Nouveaux RCS gérés par le moteur : 
+                - CR-RavitaillementDotationsEffectue
+                - CR-RavitaillementStockEffectue
+                - CR-HumainRetourDeSante
     - NLD - Les zones de tirs ne devraient plus être evitées par le pathfind    
     - AGE - Externalisation des poids de la règle de pathfind -> Fichier PathfindRules.xml
     - AGE - Ajout d'un helper pour gerer les changements de répertoires pour la lecture des archives

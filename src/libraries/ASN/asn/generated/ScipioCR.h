@@ -1871,6 +1871,66 @@ EXTERN void asn1Print_CR_AllocationConsentieBientotEpuisee (ASN1ConstCharPtr nam
 
 /**************************************************************/
 /*                                                            */
+/*  CR_RavitaillementDotationsEffectue                        */
+/*                                                            */
+/**************************************************************/
+
+class EXTERN ASN1C_CR_RavitaillementDotationsEffectue : public ASN1CType {
+public:
+   ASN1C_CR_RavitaillementDotationsEffectue (
+      ASN1MessageBuffer& msgBuf);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_CR_RavitaillementDotationsEffectue (ASN1CTXT* ctxt_p);
+EXTERN int asn1PD_CR_RavitaillementDotationsEffectue (ASN1CTXT* ctxt_p);
+
+EXTERN void asn1Print_CR_RavitaillementDotationsEffectue (ASN1ConstCharPtr name);
+
+/**************************************************************/
+/*                                                            */
+/*  CR_RavitaillementStockEffectue                            */
+/*                                                            */
+/**************************************************************/
+
+class EXTERN ASN1C_CR_RavitaillementStockEffectue : public ASN1CType {
+public:
+   ASN1C_CR_RavitaillementStockEffectue (
+      ASN1MessageBuffer& msgBuf);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_CR_RavitaillementStockEffectue (ASN1CTXT* ctxt_p);
+EXTERN int asn1PD_CR_RavitaillementStockEffectue (ASN1CTXT* ctxt_p);
+
+EXTERN void asn1Print_CR_RavitaillementStockEffectue (ASN1ConstCharPtr name);
+
+/**************************************************************/
+/*                                                            */
+/*  CR_HumainRetourDeSante                                    */
+/*                                                            */
+/**************************************************************/
+
+class EXTERN ASN1C_CR_HumainRetourDeSante : public ASN1CType {
+public:
+   ASN1C_CR_HumainRetourDeSante (
+      ASN1MessageBuffer& msgBuf);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_CR_HumainRetourDeSante (ASN1CTXT* ctxt_p);
+EXTERN int asn1PD_CR_HumainRetourDeSante (ASN1CTXT* ctxt_p);
+
+EXTERN void asn1Print_CR_HumainRetourDeSante (ASN1ConstCharPtr name);
+
+/**************************************************************/
+/*                                                            */
 /*  CR_EnCoursRavitaillement                                  */
 /*                                                            */
 /**************************************************************/
@@ -3449,77 +3509,80 @@ EXTERN void asn1Print_EnumTypeCR (ASN1ConstCharPtr name, ASN1T_EnumTypeCR* pvalu
 #define T_MsgCR_cr_cr_demande_evacuation_sanitaire 85
 #define T_MsgCR_cr_cr_demande_evacuation_materiel 86
 #define T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee 87
-#define T_MsgCR_cr_cr_en_cours_ravitaillement 88
-#define T_MsgCR_cr_cr_ravitaillement_termine 89
-#define T_MsgCR_cr_cr_helicoptere_en_observation 90
-#define T_MsgCR_cr_cr_perte_info_guidage 91
-#define T_MsgCR_cr_cr_transport_unite_pas_prete 92
-#define T_MsgCR_cr_cr_transport_en_cours 93
-#define T_MsgCR_cr_cr_transport_embarquement 94
-#define T_MsgCR_cr_cr_transport_debarquement 95
-#define T_MsgCR_cr_cr_vehicule_laisse_sur_position 96
-#define T_MsgCR_cr_cr_rejoint_position_embarquement 97
-#define T_MsgCR_cr_cr_en_attente_transporteurs 98
-#define T_MsgCR_cr_cr_contamine_nbc     99
-#define T_MsgCR_cr_cr_decontamine_nbc   100
-#define T_MsgCR_cr_cr_tenue_protection_nbc_mise 101
-#define T_MsgCR_cr_cr_tenue_protection_nbc_enlevee 102
-#define T_MsgCR_cr_cr_alerte_nbc        103
-#define T_MsgCR_cr_cr_site_decontamination_anime 104
-#define T_MsgCR_cr_cr_site_decontamination_desactive 105
-#define T_MsgCR_cr_cr_demande_decontamination 106
-#define T_MsgCR_cr_cr_zone_reconnue     107
-#define T_MsgCR_cr_cr_zone_decontaminee 108
-#define T_MsgCR_cr_cr_site_rota_reconnu 109
-#define T_MsgCR_cr_cr_incident_nbc_termine 110
-#define T_MsgCR_cr_cr_pion_decontamine  111
-#define T_MsgCR_cr_cr_reconnaissance_terminee 112
-#define T_MsgCR_cr_cr_reconnaissance_initiale_terminee 113
-#define T_MsgCR_cr_cr_rejoint_plot_ravitaillement 114
-#define T_MsgCR_cr_cr_premier_coup_parti 115
-#define T_MsgCR_cr_cr_tir_execute       116
-#define T_MsgCR_cr_cr_tir_hors_de_portee 117
-#define T_MsgCR_cr_cr_tir_annule        118
-#define T_MsgCR_cr_cr_changement_de_position 119
-#define T_MsgCR_cr_cr_debut_surveillance 120
-#define T_MsgCR_cr_cr_debut_installation 121
-#define T_MsgCR_cr_cr_pret_pour_conduite_tir 122
-#define T_MsgCR_cr_cr_observation_tir_indirect 123
-#define T_MsgCR_cr_cr_zone_implantation_occupee 124
-#define T_MsgCR_cr_cr_installation_sur_zone_implantation 125
-#define T_MsgCR_cr_cr_reception_ordre_de_feu 126
-#define T_MsgCR_cr_cr_pret_au_tir       127
-#define T_MsgCR_cr_cr_presence_population 128
-#define T_MsgCR_cr_cr_orientation_population_vers_camp_refugies 129
-#define T_MsgCR_cr_cr_pas_de_camp_refugies_disponible 130
-#define T_MsgCR_cr_cr_presence_ennemi_rendu 131
-#define T_MsgCR_cr_cr_orientation_ennemi_rendu_vers_camp_prisonniers 132
-#define T_MsgCR_cr_cr_pas_de_camp_prisonniers_disponible 133
-#define T_MsgCR_cr_cr_tir_dans_zone_interdite 134
-#define T_MsgCR_cr_cr_tir_sur_camp_ami  135
-#define T_MsgCR_cr_cr_tire_par_camp_ami 136
-#define T_MsgCR_cr_cr_tir_sur_camp_neutre 137
-#define T_MsgCR_cr_cr_tire_par_camp_neutre 138
-#define T_MsgCR_cr_cr_tir_sur_civil     139
-#define T_MsgCR_cr_cr_tire_par_civil    140
-#define T_MsgCR_cr_cr_destruction_pc    141
-#define T_MsgCR_cr_cr_deces_blesse      142
-#define T_MsgCR_cr_cr_deces_blesse_pendant_transport 143
-#define T_MsgCR_cr_cr_deces_blesse_pendant_hospitalisation 144
-#define T_MsgCR_cr_cr_mission_impossible_pions_subordonnes_non_operationnels 145
-#define T_MsgCR_cr_cr_mission_impossible_lima_invalide 146
-#define T_MsgCR_cr_cr_mission_impossible_zone_hors_fuseau 147
-#define T_MsgCR_cr_cr_rapport_de_force_defavorable 148
-#define T_MsgCR_cr_cr_terrain_difficile 149
-#define T_MsgCR_cr_cr_plus_de_carburant 150
-#define T_MsgCR_cr_cr_dispositif_disperse 151
-#define T_MsgCR_cr_cr_pion_neutralise   152
-#define T_MsgCR_cr_cr_silence_radio     153
-#define T_MsgCR_cr_cr_tir_restreint     154
-#define T_MsgCR_cr_cr_tir_interdit      155
-#define T_MsgCR_cr_cr_tir_libre         156
-#define T_MsgCR_cr_cr_trace             157
-#define T_MsgCR_cr_cr_trace_id          158
+#define T_MsgCR_cr_cr_ravitaillement_dotations_effectue 88
+#define T_MsgCR_cr_cr_ravitaillement_stock_effectue 89
+#define T_MsgCR_cr_cr_humain_retour_de_sante 90
+#define T_MsgCR_cr_cr_en_cours_ravitaillement 91
+#define T_MsgCR_cr_cr_ravitaillement_termine 92
+#define T_MsgCR_cr_cr_helicoptere_en_observation 93
+#define T_MsgCR_cr_cr_perte_info_guidage 94
+#define T_MsgCR_cr_cr_transport_unite_pas_prete 95
+#define T_MsgCR_cr_cr_transport_en_cours 96
+#define T_MsgCR_cr_cr_transport_embarquement 97
+#define T_MsgCR_cr_cr_transport_debarquement 98
+#define T_MsgCR_cr_cr_vehicule_laisse_sur_position 99
+#define T_MsgCR_cr_cr_rejoint_position_embarquement 100
+#define T_MsgCR_cr_cr_en_attente_transporteurs 101
+#define T_MsgCR_cr_cr_contamine_nbc     102
+#define T_MsgCR_cr_cr_decontamine_nbc   103
+#define T_MsgCR_cr_cr_tenue_protection_nbc_mise 104
+#define T_MsgCR_cr_cr_tenue_protection_nbc_enlevee 105
+#define T_MsgCR_cr_cr_alerte_nbc        106
+#define T_MsgCR_cr_cr_site_decontamination_anime 107
+#define T_MsgCR_cr_cr_site_decontamination_desactive 108
+#define T_MsgCR_cr_cr_demande_decontamination 109
+#define T_MsgCR_cr_cr_zone_reconnue     110
+#define T_MsgCR_cr_cr_zone_decontaminee 111
+#define T_MsgCR_cr_cr_site_rota_reconnu 112
+#define T_MsgCR_cr_cr_incident_nbc_termine 113
+#define T_MsgCR_cr_cr_pion_decontamine  114
+#define T_MsgCR_cr_cr_reconnaissance_terminee 115
+#define T_MsgCR_cr_cr_reconnaissance_initiale_terminee 116
+#define T_MsgCR_cr_cr_rejoint_plot_ravitaillement 117
+#define T_MsgCR_cr_cr_premier_coup_parti 118
+#define T_MsgCR_cr_cr_tir_execute       119
+#define T_MsgCR_cr_cr_tir_hors_de_portee 120
+#define T_MsgCR_cr_cr_tir_annule        121
+#define T_MsgCR_cr_cr_changement_de_position 122
+#define T_MsgCR_cr_cr_debut_surveillance 123
+#define T_MsgCR_cr_cr_debut_installation 124
+#define T_MsgCR_cr_cr_pret_pour_conduite_tir 125
+#define T_MsgCR_cr_cr_observation_tir_indirect 126
+#define T_MsgCR_cr_cr_zone_implantation_occupee 127
+#define T_MsgCR_cr_cr_installation_sur_zone_implantation 128
+#define T_MsgCR_cr_cr_reception_ordre_de_feu 129
+#define T_MsgCR_cr_cr_pret_au_tir       130
+#define T_MsgCR_cr_cr_presence_population 131
+#define T_MsgCR_cr_cr_orientation_population_vers_camp_refugies 132
+#define T_MsgCR_cr_cr_pas_de_camp_refugies_disponible 133
+#define T_MsgCR_cr_cr_presence_ennemi_rendu 134
+#define T_MsgCR_cr_cr_orientation_ennemi_rendu_vers_camp_prisonniers 135
+#define T_MsgCR_cr_cr_pas_de_camp_prisonniers_disponible 136
+#define T_MsgCR_cr_cr_tir_dans_zone_interdite 137
+#define T_MsgCR_cr_cr_tir_sur_camp_ami  138
+#define T_MsgCR_cr_cr_tire_par_camp_ami 139
+#define T_MsgCR_cr_cr_tir_sur_camp_neutre 140
+#define T_MsgCR_cr_cr_tire_par_camp_neutre 141
+#define T_MsgCR_cr_cr_tir_sur_civil     142
+#define T_MsgCR_cr_cr_tire_par_civil    143
+#define T_MsgCR_cr_cr_destruction_pc    144
+#define T_MsgCR_cr_cr_deces_blesse      145
+#define T_MsgCR_cr_cr_deces_blesse_pendant_transport 146
+#define T_MsgCR_cr_cr_deces_blesse_pendant_hospitalisation 147
+#define T_MsgCR_cr_cr_mission_impossible_pions_subordonnes_non_operationnels 148
+#define T_MsgCR_cr_cr_mission_impossible_lima_invalide 149
+#define T_MsgCR_cr_cr_mission_impossible_zone_hors_fuseau 150
+#define T_MsgCR_cr_cr_rapport_de_force_defavorable 151
+#define T_MsgCR_cr_cr_terrain_difficile 152
+#define T_MsgCR_cr_cr_plus_de_carburant 153
+#define T_MsgCR_cr_cr_dispositif_disperse 154
+#define T_MsgCR_cr_cr_pion_neutralise   155
+#define T_MsgCR_cr_cr_silence_radio     156
+#define T_MsgCR_cr_cr_tir_restreint     157
+#define T_MsgCR_cr_cr_tir_interdit      158
+#define T_MsgCR_cr_cr_tir_libre         159
+#define T_MsgCR_cr_cr_trace             160
+#define T_MsgCR_cr_cr_trace_id          161
 
 typedef struct EXTERN ASN1T_MsgCR_cr {
    int t;
@@ -3639,10 +3702,10 @@ typedef struct EXTERN ASN1T_MsgCR_cr {
       /* t = 90 */
       /* t = 91 */
       /* t = 92 */
-      ASN1T_CR_TransportUnitePasPrete  cr_transport_unite_pas_prete;
       /* t = 93 */
       /* t = 94 */
       /* t = 95 */
+      ASN1T_CR_TransportUnitePasPrete  cr_transport_unite_pas_prete;
       /* t = 96 */
       /* t = 97 */
       /* t = 98 */
@@ -3659,10 +3722,10 @@ typedef struct EXTERN ASN1T_MsgCR_cr {
       /* t = 109 */
       /* t = 110 */
       /* t = 111 */
-      ASN1T_CR_PionDecontamine  cr_pion_decontamine;
       /* t = 112 */
       /* t = 113 */
       /* t = 114 */
+      ASN1T_CR_PionDecontamine  cr_pion_decontamine;
       /* t = 115 */
       /* t = 116 */
       /* t = 117 */
@@ -3672,10 +3735,10 @@ typedef struct EXTERN ASN1T_MsgCR_cr {
       /* t = 121 */
       /* t = 122 */
       /* t = 123 */
-      ASN1T_CR_ObservationTirIndirect  cr_observation_tir_indirect;
       /* t = 124 */
       /* t = 125 */
       /* t = 126 */
+      ASN1T_CR_ObservationTirIndirect  cr_observation_tir_indirect;
       /* t = 127 */
       /* t = 128 */
       /* t = 129 */
@@ -3685,20 +3748,20 @@ typedef struct EXTERN ASN1T_MsgCR_cr {
       /* t = 133 */
       /* t = 134 */
       /* t = 135 */
-      ASN1T_CR_TirSurCampAmi  cr_tir_sur_camp_ami;
       /* t = 136 */
-      ASN1T_CR_TireParCampAmi  cr_tire_par_camp_ami;
       /* t = 137 */
-      ASN1T_CR_TirSurCampNeutre  cr_tir_sur_camp_neutre;
       /* t = 138 */
-      ASN1T_CR_TireParCampNeutre  cr_tire_par_camp_neutre;
+      ASN1T_CR_TirSurCampAmi  cr_tir_sur_camp_ami;
       /* t = 139 */
-      ASN1T_CR_TirSurCivil  cr_tir_sur_civil;
+      ASN1T_CR_TireParCampAmi  cr_tire_par_camp_ami;
       /* t = 140 */
-      ASN1T_CR_TireParCivil  cr_tire_par_civil;
+      ASN1T_CR_TirSurCampNeutre  cr_tir_sur_camp_neutre;
       /* t = 141 */
+      ASN1T_CR_TireParCampNeutre  cr_tire_par_camp_neutre;
       /* t = 142 */
+      ASN1T_CR_TirSurCivil  cr_tir_sur_civil;
       /* t = 143 */
+      ASN1T_CR_TireParCivil  cr_tire_par_civil;
       /* t = 144 */
       /* t = 145 */
       /* t = 146 */
@@ -3713,8 +3776,11 @@ typedef struct EXTERN ASN1T_MsgCR_cr {
       /* t = 155 */
       /* t = 156 */
       /* t = 157 */
-      ASN1T_CR_Trace  cr_trace;
       /* t = 158 */
+      /* t = 159 */
+      /* t = 160 */
+      ASN1T_CR_Trace  cr_trace;
+      /* t = 161 */
       ASN1T_CR_TraceID  cr_trace_id;
    } u;
 } ASN1T_MsgCR_cr;

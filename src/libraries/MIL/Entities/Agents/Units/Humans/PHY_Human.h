@@ -93,8 +93,6 @@ public:
     void HealMentalDisease      ();
     void HealWound              ();
     void HealContamination      ();
-
-//    void TransferToTC2          ( MIL_AutomateLOG& tc2 );
     //@}
 
     //! @name Composante maintenance

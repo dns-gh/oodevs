@@ -24,7 +24,8 @@ class DEC_PathClass;
 class DEC_PathType
 {
 public:
-
+    //! @name Types
+    //@{
     enum E_PathType
     {
         eInfoMovement = 0,
@@ -36,6 +37,7 @@ public:
         eInfoMineClearance,
         eNbrPathType
     };
+    //@}    
 
 public:
      DEC_PathType( E_PathType nType );

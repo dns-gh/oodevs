@@ -185,7 +185,7 @@ void PHY_Human::NotifyBackToWar()
     PHY_Human oldHumanState( *this );
 
     pComposante_->NotifyHumanBackFromMedical( *pMedicalState_ );
-    if ( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
+    if( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
         nLocation_ = eMaintenance;
     else
         nLocation_ = eBattleField;
@@ -194,8 +194,9 @@ void PHY_Human::NotifyBackToWar()
     pMedicalState_->Cancel();
     delete pMedicalState_;
     pMedicalState_ = 0;
-}
 
+    MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeOperational );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::ChangeRank

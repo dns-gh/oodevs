@@ -59,6 +59,9 @@ public:
     static const MIL_RC*                                    pRcDemandeRavitaillement_;
     static const MIL_RC*                                    pRcDemandeEvacuationSanitaire_;
     static const MIL_RC*                                    pRcDemandeEvacuationMateriel_;
+    static const MIL_RC*                                    pRcRavitaillementDotationsEffectue_;
+    static const MIL_RC*                                    pRcRavitaillementStockEffectue_;
+    static const MIL_RC*                                    pRcHumainRetourDeSante_;
     static const MIL_RC*                                    pRcDecesBlesse_;
     static const MIL_RC*                                    pRcDecesBlessePendantTransport_;
     static const MIL_RC*                                    pRcDecesBlessePendantHospitalisation_;
@@ -215,6 +218,9 @@ protected:
         eRC_DemandeEvacuationSanitaire,
         eRC_DemandeEvacuationMateriel,
         eRC_AllocationConsentieBientotEpuisee, // Paramètre dotation (envoyé par moteur)
+        eRC_RavitaillementDotationsEffectue,
+        eRC_RavitaillementStockEffectue,
+        eRC_HumainRetourDeSante,   
 
         /* LOG / Transport / Embarquement */
         eRC_EnCoursRavitaillement,
