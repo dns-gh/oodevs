@@ -298,9 +298,9 @@ behavior MIS_Pion_Test_ChangePosture( T_Mission_Pion_Test_ChangePosture mission,
 
 behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDummy )
 {    
-    DEC_Debug( "MIS_Pion_Test_Reinforcement => transfer de blesses vers TC2" );   
+    DEC_Debug( "MIS_Pion_Test_Reinforcement => evacuation de blesses vers TC2" );   
     
-    DEC_TransfererBlessesVersTC2( mission.unite_, DEC_Pion_TC2() );
+    DEC_EvacuerBlessesVersTC2( mission.unite_, DEC_Pion_TC2() );
     halt;
 }
 

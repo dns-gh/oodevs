@@ -127,6 +127,7 @@ public:
 
     //! @name Logistic - Medical
     //@{
+    bool                   HasWoundedHumansToEvacuate      () const;
     void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
     PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 );
     PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );

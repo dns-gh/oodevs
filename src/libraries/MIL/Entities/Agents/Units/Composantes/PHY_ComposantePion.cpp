@@ -562,6 +562,15 @@ MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_IndirectFireDo
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::HasWoundedHumansToEvacuate
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::HasWoundedHumansToEvacuate() const
+{
+    return humans_.HasWoundedHumansToEvacuate();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::EvacuateWoundedHumans
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------

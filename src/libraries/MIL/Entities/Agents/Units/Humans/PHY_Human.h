@@ -84,8 +84,9 @@ public:
 
     //! @name Medical
     //@{
-    void Evacuate   ( MIL_AutomateLOG& destinationTC2 );
-    bool NeedMedical() const;
+    bool NeedEvacuation(); // NeedMedical() && pas encore pris en charge
+    void Evacuate      ( MIL_AutomateLOG& destinationTC2 );
+    bool NeedMedical   () const;
     
     void NotifyHandledByMedical ();
     void NotifyBackFromMedical  ();

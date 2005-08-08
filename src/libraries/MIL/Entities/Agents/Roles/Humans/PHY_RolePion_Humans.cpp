@@ -158,12 +158,8 @@ void PHY_RolePion_Humans::HealAllHumans()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
-    for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
-    {
-        PHY_Human& human = **it;
-        ++it;
-        human.Update();
-    }
+    for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); ++it )
+        (**it).Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -341,6 +337,15 @@ void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human&
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
     GetRole< PHY_RolePion_Composantes >().EvacuateWoundedHumans( destinationTC2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::HasWoundedHumansToEvacuate
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
+{
+    return GetRole< PHY_RolePion_Composantes >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------

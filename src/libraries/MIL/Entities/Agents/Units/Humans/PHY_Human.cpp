@@ -375,15 +375,23 @@ void PHY_Human::ApplyMentalDisease()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::NeedEvacuation
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_Human::NeedEvacuation()
+{
+    return NeedMedical() && !pMedicalState_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::Evacuate
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
 void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 {
-    if( NeedMedical() && !pMedicalState_ )
+    if( NeedEvacuation() )
         pMedicalState_ = pComposante_->NotifyHumanEvacuatedByThirdParty( *this, destinationTC2 );
 }
-
 
 // =============================================================================
 // UPDATE

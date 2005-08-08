@@ -6,6 +6,10 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+    if( DEC_NecessiteEvacuationBlesses( myself ) )
+        DEC_Debug( "-== Necessite Evacuation Blesses ==-" );
+
+
     /*
     selection carreux;
     for( float i = 0 ; i < 1000; ++i )

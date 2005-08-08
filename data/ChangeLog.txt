@@ -21,6 +21,9 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Fonctions DEC
+                * Renommage DEC_TransfererBlessesVersTC2() en DEC_EvacuerBlessesVersTC2()
+                * new  B DEC_NecessiteEvacuationBlesses( A /*T_Pion pion interrogé*/ )
     - NLD - Nouveaux RCS gérés par le moteur : 
                 - CR-RavitaillementDotationsEffectue
                 - CR-RavitaillementStockEffectue

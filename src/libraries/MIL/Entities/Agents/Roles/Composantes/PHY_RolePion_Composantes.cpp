@@ -1548,6 +1548,20 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableRepairer( const PHY_Br
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::HasWoundedHumansToEvacuate
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::HasWoundedHumansToEvacuate() const
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        if( (**it).HasWoundedHumansToEvacuate() )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::EvacuateWoundedHumans
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------

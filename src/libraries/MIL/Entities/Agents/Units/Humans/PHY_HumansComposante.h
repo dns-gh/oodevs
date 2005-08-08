@@ -58,7 +58,8 @@ public:
 
     //! @name Medical
     //@{
-    void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const;
+    bool HasWoundedHumansToEvacuate() const;
+    void EvacuateWoundedHumans     ( MIL_AutomateLOG& destinationTC2 ) const;
     //@}
 
     //! @name Composante notifications

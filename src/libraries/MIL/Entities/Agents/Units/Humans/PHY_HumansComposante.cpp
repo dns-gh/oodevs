@@ -253,3 +253,17 @@ void PHY_HumansComposante::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
         (**it).Evacuate( destinationTC2 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::HasWoundedHumansToEvacuate
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool PHY_HumansComposante::HasWoundedHumansToEvacuate() const
+{
+    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( (**it).NeedEvacuation() )
+            return true;
+    }
+    return false;
+}

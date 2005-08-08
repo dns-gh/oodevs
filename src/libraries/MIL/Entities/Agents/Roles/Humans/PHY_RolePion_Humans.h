@@ -59,9 +59,10 @@ public:
     //! @name Medical
     //@{
     void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    bool                   HasWoundedHumansToEvacuate      () const; 
     PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
-    PHY_MedicalHumanState* NotifyHumanWaitingForMedical( PHY_Human& human );
-    void                   NotifyHumanBackFromMedical  ( PHY_MedicalHumanState& humanState );
+    PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
+    void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
     //@}
 
     //! @name Operations
@@ -131,7 +132,7 @@ private:
     uint              nNbrFullyAliveHumans_; // Not wounded nor contaminated nor mental diseased
 
     uint              nNbrHumansDataChanged_;
-    T_HumanSet        humansToUpdate_;
+    T_HumanSet        humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
 
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;
