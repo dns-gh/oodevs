@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Run() const;
+    virtual bool Run();
     //@}
 
     //! @name Modifiers
@@ -66,7 +66,9 @@ public:
 protected:
     //! @name Action validation and commit
     //@{
-    virtual bool Serialize() const = 0;
+    virtual void Serialize() = 0;
+    virtual void Send     () = 0;
+    virtual void Clean    () = 0;
     //@}
 
 protected:

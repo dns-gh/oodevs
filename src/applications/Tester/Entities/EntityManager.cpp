@@ -25,6 +25,7 @@
 #include "Entities/Team.h"
 #include "Entities/Automat.h"
 #include "Entities/Pawn.h"
+#include "Entities/Object.h"
 
 #include "Entities/Types/AutomatType.h"
 #include "Entities/Types/PawnType.h"
@@ -44,7 +45,7 @@ EntityManager::EntityManager()
     Pawn          ::Initialize();
     Team          ::Initialize();
     KnowledgeGroup::Initialize();
-
+    Object        ::Initialize();
 }
 
 //-----------------------------------------------------------------------------
@@ -62,6 +63,7 @@ EntityManager::~EntityManager()
     Pawn          ::Terminate();
     Team          ::Terminate();
     KnowledgeGroup::Terminate();
+    Object        ::Terminate();
 }
 
 //-----------------------------------------------------------------------------

@@ -51,21 +51,31 @@ Action_Magic_Move::~Action_Magic_Move()
 // Name: Action_Magic_Move::Serialize
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-bool Action_Magic_Move::Serialize() const
+void Action_Magic_Move::Serialize()
 {
-    ASN1T_CoordUTM  coordUTM;
-    ASN_Tools::CopyPosition( pTarget_->GetTP_Position(), coordUTM );
+    ASN1T_CoordUTM* pCoordUTM = new ASN1T_CoordUTM();
+    ASN_Tools::CopyPosition( pTarget_->GetTP_Position(), *pCoordUTM );
 
     // build din/asn msg
-    MOS_ASN_MsgUnitMagicAction          asnMsg;
-    asnMsg.GetAsnMsg().oid              = pTarget_->GetId();
-    asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
-    asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
+    asnMsg_.GetAsnMsg().oid              = pTarget_->GetId();
+    asnMsg_.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
+    asnMsg_.GetAsnMsg().action.u.move_to = pCoordUTM;
+}
 
-    // send to SIM
-    asnMsg.Send( 56 );
+// -----------------------------------------------------------------------------
+// Name: Action_Magic_Move::Send
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void Action_Magic_Move::Send()
+{
+    asnMsg_.Send( 56 );
+}
 
-    // clean
+// -----------------------------------------------------------------------------
+// Name: Action_Magic_Move::Clean
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void Action_Magic_Move::Clean()
+{
     std::cout << "executing magic move" << std::endl;
-    return true;
 }

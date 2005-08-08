@@ -51,7 +51,7 @@ Mission_Pawn_Heliporter::~Mission_Pawn_Heliporter()
 // Name: Mission_Pawn_Heliporter::Serialize
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-bool Mission_Pawn_Heliporter::Serialize()
+void Mission_Pawn_Heliporter::Serialize()
 {
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
@@ -63,12 +63,14 @@ bool Mission_Pawn_Heliporter::Serialize()
     ASN_Tools::CopyAgentList( pTarget_->GetTP_PawnList(), asnMission.agents             );
     ASN_Tools::CopyPosition ( pTarget_->GetTP_Position(), asnMission.point_embarquement );
     ASN_Tools::CopyPosition ( pTarget_->GetTP_Position(), asnMission.point_debarquement );
-
-    // send to SIM
-    asnMsg_.Send( 56 );
-
-    // clean
-    std::cout << "mission pawn Heliporter" << std::endl;
-    return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Mission_Pawn_Heliporter::Clean
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void Mission_Pawn_Heliporter::Clean()
+{
+    //delete &asnMsg_.GetAsnMsg().mission.u.mission_pion_test_heliporter;
+    Mission_Pawn_ABC::Clean();
+}

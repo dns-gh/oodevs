@@ -54,6 +54,71 @@ void ASN_Tools::CopyIdList( const T_IdVector& ids, ASN1T_ListOID& asn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyAgentList
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyAgentList( const T_IdVector& ids, ASN1T_ListAgent&  asn )
+{
+    asn.n = ids.size();
+    if( !ids.empty() )
+    {
+        asn.elem = new ASN1T_Agent[ ids.size() ]; //$$$$ RAM
+        uint i = 0;
+        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+            CopyId( *it, asn.elem[ i++ ] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyAgentKnowledge
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyAgentKnowledge( uint nIdAgent, ASN1T_KnowledgeAgent& asn )
+{
+    asn = nIdAgent;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyAgentKnowledgeList
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyAgentKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowledgeAgent& asn )
+{
+    asn.n = ids.size();
+    if( !ids.empty() )
+    {
+        asn.elem = new ASN1T_KnowledgeAgent[ ids.size() ]; //$$$$ RAM
+        uint i = 0;
+        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+            CopyId( *it, asn.elem[ i++ ] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyObjectKnowledge
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyObjectKnowledge( uint nIdObject, ASN1T_KnowledgeObject& asn )
+{
+    asn = nIdObject;
+}
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyObjectKnowledgeList
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyObjectKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowledgeObject& asn )
+{
+    asn.n = ids.size();
+    if( !ids.empty() )
+    {
+        asn.elem = new ASN1T_KnowledgeObject[ ids.size() ]; //$$$$ RAM
+        uint i = 0;
+        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+            CopyId( *it, asn.elem[ i++ ] );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyEnumeration
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
@@ -69,6 +134,15 @@ void ASN_Tools::CopyEnumeration( uint nEnumValue, uint& asn )
 void ASN_Tools::CopyBool( bool bValue, ASN1BOOL& asn )
 {
     asn = bValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyInteger
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyInteger( int nValue, ASN1INT& asn )
+{
+    asn = nValue;
 }
 
 // -----------------------------------------------------------------------------

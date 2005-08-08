@@ -17,7 +17,8 @@
 // *****************************************************************************
 
 #include "Tester_Pch.h"
-#include "Entities/Team.h"
+#include "Team.h"
+#include "ObjectKnowledge.h"
 
 using namespace TEST;
 
@@ -28,7 +29,8 @@ Team::T_TeamMap Team::teams_;
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 Team::Team( T_EntityId nSimId, DIN::DIN_Input& input )
-    : nId_ ( nSimId )
+    : nId_          ( nSimId )
+    , knownObjects_ ()
 {
     input >> strName_;
 }
@@ -39,7 +41,8 @@ Team::Team( T_EntityId nSimId, DIN::DIN_Input& input )
 //-----------------------------------------------------------------------------
 Team::~Team()
 {
-    relations_.clear();
+    knownObjects_.clear();
+    relations_   .clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -141,4 +144,35 @@ void Team::SetRelation( Team& otherTeam, ASN1T_EnumDiplomatie diplomacy )
         default:
             break;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::OnReceiveMsgObjectKnowledgeCreation
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
+{
+    if( knownObjects_.find( asnMsg.oid_connaissance ) != knownObjects_.end() )
+        return;
+    ObjectKnowledge* pKnownObject = new ObjectKnowledge( asnMsg, *this );
+    bool bOut = knownObjects_.insert( std::make_pair( pKnownObject->GetId(), pKnownObject ) ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::OnReceiveMsgObjectKnowledgeUpdate
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void Team::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::OnReceiveMsgObjectKnowledgeDestruction
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
+{
+    knownObjects_.erase( asnMsg.oid_connaissance );
 }

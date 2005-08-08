@@ -20,9 +20,12 @@
 #define __KnowledgeGroup_h_
 
 #include "Types.h"
+#include "Messages/ASN_Messages.h"
 
 namespace TEST
 {
+    class Team;
+    class PawnKnowledge;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -55,9 +58,20 @@ public:
 
     //! @name Accessors
     //@{
-           T_EntityId       GetId              () const;
+    T_EntityId GetId() const;
     //@}
 
+    //! @name Message handlers
+    //@{
+    void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
+    //@}
+
+    //! @name Test Parameters
+    //@{
+    T_IdVector& GetTP_Targets() const;
+    //@}
 
 private:
     //! @name Copy/Assignement
@@ -70,12 +84,17 @@ private:
     //@{
     typedef std::map< T_EntityId, KnowledgeGroup* >	T_KnowledgeGroupMap;
 	typedef T_KnowledgeGroupMap::const_iterator		CIT_KnowledgeGroupMap;
+
+    typedef std::map< T_EntityId, PawnKnowledge* > T_PawnKnowledgeMap;
+    typedef T_PawnKnowledgeMap::const_iterator     CIT_PawnKnowledgeMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_EntityId                  nId_;
+    T_EntityId         nId_;
+    Team*              pTeam_;
+    T_PawnKnowledgeMap knownPawns_;
 
     // global KnowledgeGroup list
     static T_KnowledgeGroupMap  knowledgeGroups_;

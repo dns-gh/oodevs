@@ -49,17 +49,18 @@ public:
     virtual ~Mission_Pawn_Heliporter();
     //@}
 
+protected:
+    //! @name Action validation and commit
+    //@{
+    virtual void Serialize();
+    virtual void Clean    ();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     Mission_Pawn_Heliporter( const Mission_Pawn_Heliporter& );            //!< Copy constructor
     Mission_Pawn_Heliporter& operator=( const Mission_Pawn_Heliporter& ); //!< Assignment operator
-    //@}
-
-protected:
-    //! @name Action validation and commit
-    //@{
-    virtual bool Serialize();
     //@}
 };
 

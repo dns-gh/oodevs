@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-04 $
+// $Created: SBO 2005-08-08 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,78 +16,64 @@
 //
 // *****************************************************************************
 
-#ifndef __Action_ABC_h_
-#define __Action_ABC_h_
+#ifndef __PawnKnowledge_h_
+#define __PawnKnowledge_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
+#include "Types.h"
+#include "KnowledgeGroup.h"
+
 namespace TEST {
 
+    class Pawn;
 
 // =============================================================================
-/** @class  Action_ABC
-    @brief  Action_ABC
+/** @class  PawnKnowledge
+    @brief  PawnKnowledge
     @par    Using example
     @code
-    Action_ABC;
+    PawnKnowledge;
     @endcode
 */
-// Created: SBO 2005-08-04
+// Created: SBO 2005-08-08
 // =============================================================================
-class Action_ABC
+class PawnKnowledge
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Action_ABC();
-             Action_ABC( uint nExecutionTick );
-    virtual ~Action_ABC();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool Run             () = 0;
+             PawnKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, const KnowledgeGroup& knowledgeGroup );
+    virtual ~PawnKnowledge();
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool IsReady         () const;
-    virtual uint GetExecutionTick() const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    virtual void SetExecutionTick( uint nExecutionTick );
+    T_EntityId  GetId      () const;
+    const Pawn* GetRealPawn() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Action_ABC( const Action_ABC& );            //!< Copy constructor
-    Action_ABC& operator=( const Action_ABC& ); //!< Assignment operator
+    PawnKnowledge( const PawnKnowledge& );            //!< Copy constructor
+    PawnKnowledge& operator=( const PawnKnowledge& ); //!< Assignment operator
     //@}
 
-protected:
-    //! @name Action validation and commit
-    //@{
-    virtual bool CheckParameters() const;
-    virtual void Serialize      () = 0;
-    virtual void Send           () = 0;
-    virtual void Clean          () = 0;
-    //@}
-
-protected:
+private:
     //! @name Member data
     //@{
-    uint nExecutionTick_;
+    T_EntityId            nId_;
+    const KnowledgeGroup& owner_;
+    Pawn*                 pRealPawn_;
     //@}
 };
 
 } // end namespace TEST
 
-#include "Action_ABC.inl"
+#include "PawnKnowledge.inl"
 
-#endif // __Action_ABC_h_
+#endif // __PawnKnowledge_h_

@@ -36,7 +36,6 @@ namespace TEST
 // =============================================================================
 class EntityManager
 {
-
 	MT_COPYNOTALLOWED( EntityManager );
 
 public:
@@ -48,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void     Initialize               ( XmlInputArchive&   archive ) const;
+    void Initialize( XmlInputArchive& archive ) const;
     //@}
 };
 

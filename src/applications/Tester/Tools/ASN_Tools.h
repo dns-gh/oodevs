@@ -48,14 +48,20 @@ class ASN_Tools
 public:
     //! @name Operations
     //@{
-    static void CopyId         ( uint              nIdValue  , uint&             asn );
-    static void CopyIdList     ( const T_IdVector& ids       , ASN1T_ListOID&    asn );
-    static void CopyEnumeration( uint              nEnumValue, uint&             asn );
-    static void CopyBool       ( bool              bValue    , ASN1BOOL&         asn );
-    static void CopyPosition   ( const Position&   position  , ASN1T_CoordUTM&   asn );
-    static void CopyPosition   ( const Position&   position  , ASN1T_Point&      asn );
-    static void CopyPath       ( const Path&       path      , ASN1T_Itineraire& asn );
-    static void CopyDirection  ( uint              nDirection, ASN1T_Direction&  asn );
+    static void CopyId                ( uint               nIdValue  , uint&                         asn );
+    static void CopyIdList            ( const T_IdVector&  ids       , ASN1T_ListOID&                asn );
+    static void CopyAgentList         ( const T_IdVector&  ids       , ASN1T_ListAgent&              asn );
+    static void CopyAgentKnowledge    ( uint               nIdAgent  , ASN1T_KnowledgeAgent&         asn );
+    static void CopyAgentKnowledgeList( const T_IdVector&  ids       , ASN1T_ListKnowledgeAgent&     asn );
+    static void CopyObjectKnowledge    ( uint              nIdObject , ASN1T_KnowledgeObject&        asn );
+    static void CopyObjectKnowledgeList( const T_IdVector& ids       , ASN1T_ListKnowledgeObject&    asn );
+    static void CopyEnumeration       ( uint               nEnumValue, uint&                         asn );
+    static void CopyBool              ( bool               bValue    , ASN1BOOL&                     asn );
+    static void CopyInteger           ( int                nValue    , ASN1INT&                      asn );
+    static void CopyPosition          ( const Position&    position  , ASN1T_CoordUTM&               asn );
+    static void CopyPosition          ( const Position&    position  , ASN1T_Point&                  asn );
+    static void CopyPath              ( const Path&        path      , ASN1T_Itineraire&             asn );
+    static void CopyDirection         ( uint               nDirection, ASN1T_Direction&              asn );
     //@}
 
 private:

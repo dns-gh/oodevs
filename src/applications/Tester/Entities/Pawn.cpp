@@ -135,7 +135,7 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 // Name: Pawn::OnAttributeUpdated
 // Created: SBO 2005-05-16
 //-----------------------------------------------------------------------------
-void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
+void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& /*asnMsg*/ )
 {
     // NOTHING
 }
@@ -161,7 +161,7 @@ void Pawn::OnReceivePathfind( const ASN1T_MsgUnitPathFind& asnMsg )
 // Name: Pawn::OnReceiveTerrainType
 // Created: SBO 2005-06-15
 //-----------------------------------------------------------------------------
-void Pawn::OnReceiveTerrainType( DIN::DIN_Input& input )
+void Pawn::OnReceiveTerrainType( DIN::DIN_Input& /*input*/ )
 {
     // NOTHING
 }
@@ -253,7 +253,7 @@ uint Pawn::GetTP_PathType() const
 // Name: Pawn::GetTP_UnLoaded
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-bool Pawn::GetTP_UnLoaded() const
+bool Pawn::GetTP_IsUnLoaded() const
 {
     return !bIsLoaded_;
 }
@@ -287,4 +287,70 @@ Position& Pawn::GetTP_VisionPoint() const
 uint Pawn::GetTP_Direction() const
 {
     return nDirection_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTP_AgentList
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+T_IdVector& Pawn::GetTP_PawnList() const
+{
+    // return a vector of up to 5 pawn ids
+    T_IdVector* pPawns = new T_IdVector();
+    uint i = 0;
+    for( CIT_PawnMap it = pawns_.begin(); it != pawns_.end() && i < 5; ++it )
+        if( it->first != GetId() )
+        {
+            pPawns->push_back( it->first );
+            ++i;
+        }
+    return *pPawns;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTP_ObjectType
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+uint Pawn::GetTP_ObjectType() const
+{
+    // 37 different object types
+    return ( uint )( rand() * 36.0 / RAND_MAX );
+}
+
+// -----------------------------------------------------------------------------
+// Name: pawn::GetTP_IsIndirectFire
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+bool Pawn::GetTP_IsIndirectFire() const
+{
+    return rand() < RAND_MAX / 2;
+}
+
+// -----------------------------------------------------------------------------
+// Name: pawn::GetTP_MunitionType
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+uint Pawn::GetTP_MunitionType() const
+{
+    // 6 different munition types
+    return ( uint )( rand() * 5.0 / RAND_MAX );
+}
+
+// -----------------------------------------------------------------------------
+// Name: pawn::GetTP_NbObus
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+uint Pawn::GetTP_NbObus() const
+{
+    // 1 to 10
+    return ( uint )( rand() * 9.0 / RAND_MAX ) + 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: pawn::GetTP_Targets
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+T_IdVector& Pawn::GetTP_Targets() const
+{
+    return pAutomat_->GetKnowledgeGroup().GetTP_Targets();
 }

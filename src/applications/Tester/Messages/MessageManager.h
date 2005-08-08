@@ -137,7 +137,8 @@ private:
     void OnReceiveMsgCtrlSendCurrentStateBegin();
     void OnReceiveMsgCtrlSendCurrentStateEnd  ();
 
-    // entities management
+    //! @name Entities
+    //@{
     void OnReceiveMsgKnowledgeGroup           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgTeam                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgAutomatCreation          ( const ASN1T_MsgAutomateCreation& asnMsg );
@@ -145,18 +146,39 @@ private:
     void OnReceiveMsgUnitDotations            ( const ASN1T_MsgUnitDotations& asnMsg );
     void OnReceiveMsgUnitAttributes           ( const ASN1T_MsgUnitAttributes& asnMsg );
 
+    void OnReceiveMsgObjectCreation           ( const ASN1T_MsgObjectCreation& asnMsg );
+    void OnReceiveMsgObjectUpdate             ( const ASN1T_MsgObjectUpdate& asnMsg );
+    void OnReceiveMsgObjectDestruction        ( const ASN1T_MsgObjectDestruction& asnMsg );
+    //@}
+
+    //! @name Knowledge
+    //@{
+    // unit
+    void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
+
+    // object
+    void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
+    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
+    void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
+    //@}
+
+
     // Hierarchy changes
     void OnReceiveMsgChangeAutomat            ( const ASN1T_MsgChangeAutomate& asnMsg );
     void OnReceiveMsgChangeAutomateAck        ( const ASN1T_MsgChangeAutomateAck& asnMsg, T_NetContextId nCtx );
     void OnReceiveMsgChangeTeamRelation       ( const ASN1T_MsgChangeDiplomatie& asnMsg );
     void OnReceiveMsgChangeTeamRelationAck    ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, T_NetContextId nCtx );
-
     void OnReceiveMsgChangeKnowledgeGroupAck  ( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, T_NetContextId nCtx );
 
     // pathfind and terrain type
     void OnReceiveMsgPawnPathFind             ( const ASN1T_MsgUnitPathFind& asnMsg            );
     void OnReceiveMsgPawnTerrainType          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDebugDrawPoints          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+
+    // communication/orders
+    void OnReceiveMsgPionOrderAck             ( const ASN1T_MsgPionOrderAck& asnMsg, T_NetContextId nCtx );
     //@}
 
 private:

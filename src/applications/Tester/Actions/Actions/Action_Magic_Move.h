@@ -24,6 +24,7 @@
 #endif
 
 #include "Action.h"
+#include "Messages/ASN_Messages.h"
 
 namespace TEST {
 
@@ -52,14 +53,15 @@ public:
 protected:
     //! @name Action validation and commit
     //@{
-    virtual bool Serialize() const;
+    virtual void Serialize();
+    virtual void Send     ();
+    virtual void Clean    ();
     //@}
 
-private:
-    //! @name Copy/Assignment
+protected:
+    //! @name Member data
     //@{
-    Action_Magic_Move( const Action_Magic_Move& );            //!< Copy constructor
-    Action_Magic_Move& operator=( const Action_Magic_Move& ); //!< Assignment operator
+    MOS_ASN_MsgUnitMagicAction asnMsg_;
     //@}
 };
 

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-04 $
+// $Created: SBO 2005-08-08 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_MoveTo_h_
-#define __Mission_Pawn_MoveTo_h_
+#ifndef __Mission_Pawn_CreateObject_h_
+#define __Mission_Pawn_CreateObject_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,23 +30,23 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_MoveTo
-    @brief  Mission_Pawn_MoveTo
+/** @class  Mission_Pawn_CreateObject
+    @brief  Mission_Pawn_CreateObject
     @par    Using example
     @code
-    Mission_Pawn_MoveTo;
+    Mission_Pawn_CreateObject;
     @endcode
 */
-// Created: SBO 2005-08-04
+// Created: SBO 2005-08-08
 // =============================================================================
-class Mission_Pawn_MoveTo : public Mission_Pawn_ABC
+class Mission_Pawn_CreateObject : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_MoveTo( Pawn& target, uint nExecutionTick = 0 );
-    virtual ~Mission_Pawn_MoveTo();
+             Mission_Pawn_CreateObject( Pawn& target, uint nExecutionTick = 0 );
+    virtual ~Mission_Pawn_CreateObject();
     //@}
 
 protected:
@@ -59,11 +59,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_MoveTo( const Mission_Pawn_MoveTo& );            //!< Copy constructor
-    Mission_Pawn_MoveTo& operator=( const Mission_Pawn_MoveTo& ); //!< Assignment operator
+    Mission_Pawn_CreateObject( const Mission_Pawn_CreateObject& );            //!< Copy constructor
+    Mission_Pawn_CreateObject& operator=( const Mission_Pawn_CreateObject& ); //!< Assignment operator
     //@}
 };
 
-} // end namespace TEST
+} // end namespace Mission
 
-#endif // __Mission_Pawn_MoveTo_h_
+#endif // __Mission_Pawn_CreateObject_h_

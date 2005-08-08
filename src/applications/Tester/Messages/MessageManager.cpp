@@ -24,11 +24,12 @@
 #include "Network/NetworkManager.h"
 #include "Network/ConnectionHandler.h"
 
+#include "Entities/EntityManager.h"
+#include "Entities/KnowledgeGroup.h"
 #include "Entities/Team.h"
 #include "Entities/Automat.h"
 #include "Entities/Pawn.h"
-#include "Entities/KnowledgeGroup.h"
-#include "Entities/EntityManager.h"
+#include "Entities/Object.h"
 
 #include "Actions/Scheduler.h"
 #include "TestSets/TestSet_ABC.h"
@@ -127,7 +128,7 @@ DIN::DIN_BufferedMessage MessageManager::BuildMessage()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MessageManager::SendMsgTESTSim
+// Name: MessageManager::SendMsgMosSim
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
 void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
@@ -154,7 +155,7 @@ void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 
 
 //-----------------------------------------------------------------------------
-// Name: MessageManager::SendMsgTESTSimWithContext
+// Name: MessageManager::SendMsgMosSimWithContext
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
 void MessageManager::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, T_NetContextId nCtx )
@@ -289,21 +290,32 @@ void MessageManager::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& inpu
 
     switch( asnMsg.t )
     {
-		case T_MsgsSimMos_msg_ctrl_info:                     OnReceiveMsgCtrlInfo                 ( *asnMsg.u.msg_ctrl_info                   ); break;
-        case T_MsgsSimMos_msg_ctrl_begin_tick:               OnReceiveMsgCtrlBeginTick            (  asnMsg.u.msg_ctrl_begin_tick             ); break;
-        case T_MsgsSimMos_msg_ctrl_end_tick:                 OnReceiveMsgCtrlEndTick              ( *asnMsg.u.msg_ctrl_end_tick               ); break;
-        case T_MsgsSimMos_msg_ctrl_change_time_factor_ack:   OnReceiveMsgCtrlChangeTimeFactorAck  ( *asnMsg.u.msg_ctrl_change_time_factor_ack ); break;
-        case T_MsgsSimMos_msg_ctrl_send_current_state_begin: OnReceiveMsgCtrlSendCurrentStateBegin(); break;
-        case T_MsgsSimMos_msg_ctrl_send_current_state_end:   OnReceiveMsgCtrlSendCurrentStateEnd  (); break;
+		case T_MsgsSimMos_msg_ctrl_info:                     OnReceiveMsgCtrlInfo                  ( *asnMsg.u.msg_ctrl_info                    ); break;
+        case T_MsgsSimMos_msg_ctrl_begin_tick:               OnReceiveMsgCtrlBeginTick             (  asnMsg.u.msg_ctrl_begin_tick              ); break;
+        case T_MsgsSimMos_msg_ctrl_end_tick:                 OnReceiveMsgCtrlEndTick               ( *asnMsg.u.msg_ctrl_end_tick                ); break;
+        case T_MsgsSimMos_msg_ctrl_change_time_factor_ack:   OnReceiveMsgCtrlChangeTimeFactorAck   ( *asnMsg.u.msg_ctrl_change_time_factor_ack  ); break;
+        case T_MsgsSimMos_msg_ctrl_send_current_state_begin: OnReceiveMsgCtrlSendCurrentStateBegin (); break;
+        case T_MsgsSimMos_msg_ctrl_send_current_state_end:   OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsSimMos_msg_unit_attributes:               OnReceiveMsgUnitAttributes           ( *asnMsg.u.msg_unit_attributes             ); break;
-        case T_MsgsSimMos_msg_unit_dotations:                OnReceiveMsgUnitDotations            ( *asnMsg.u.msg_unit_dotations              ); break;
-        case T_MsgsSimMos_msg_unit_pathfind:                 OnReceiveMsgPawnPathFind             ( *asnMsg.u.msg_unit_pathfind               ); break;
+        case T_MsgsSimMos_msg_unit_attributes:               OnReceiveMsgUnitAttributes            ( *asnMsg.u.msg_unit_attributes              ); break;
+        case T_MsgsSimMos_msg_unit_dotations:                OnReceiveMsgUnitDotations             ( *asnMsg.u.msg_unit_dotations               ); break;
+        case T_MsgsSimMos_msg_unit_pathfind:                 OnReceiveMsgPawnPathFind              ( *asnMsg.u.msg_unit_pathfind                ); break;
 
-        case T_MsgsSimMos_msg_change_automate:               OnReceiveMsgChangeAutomat            ( *asnMsg.u.msg_change_automate             ); break;
-        case T_MsgsSimMos_msg_pion_creation:                 OnReceiveMsgPawnCreation             ( *asnMsg.u.msg_pion_creation               ); break;
-        case T_MsgsSimMos_msg_automate_creation:             OnReceiveMsgAutomatCreation          ( *asnMsg.u.msg_automate_creation           ); break;
-		case T_MsgsSimMos_msg_change_diplomatie:             OnReceiveMsgChangeTeamRelation       ( *asnMsg.u.msg_change_diplomatie           ); break;  
+        case T_MsgsSimMos_msg_change_automate:               OnReceiveMsgChangeAutomat             ( *asnMsg.u.msg_change_automate              ); break;
+        case T_MsgsSimMos_msg_pion_creation:                 OnReceiveMsgPawnCreation              ( *asnMsg.u.msg_pion_creation                ); break;
+        case T_MsgsSimMos_msg_automate_creation:             OnReceiveMsgAutomatCreation           ( *asnMsg.u.msg_automate_creation            ); break;
+		case T_MsgsSimMos_msg_change_diplomatie:             OnReceiveMsgChangeTeamRelation        ( *asnMsg.u.msg_change_diplomatie            ); break;  
+
+        case T_MsgsSimMos_msg_unit_knowledge_creation:       OnReceiveMsgUnitKnowledgeCreation     ( *asnMsg.u.msg_unit_knowledge_creation      ); break;
+        case T_MsgsSimMos_msg_unit_knowledge_update:         OnReceiveMsgUnitKnowledgeUpdate       ( *asnMsg.u.msg_unit_knowledge_update        ); break;
+        case T_MsgsSimMos_msg_unit_knowledge_destruction:    OnReceiveMsgUnitKnowledgeDestruction  ( *asnMsg.u.msg_unit_knowledge_destruction   ); break;
+
+        case T_MsgsSimMos_msg_object_creation:               OnReceiveMsgObjectCreation            ( *asnMsg.u.msg_object_creation              ); break;
+        case T_MsgsSimMos_msg_object_update:                 OnReceiveMsgObjectUpdate              ( *asnMsg.u.msg_object_update                ); break;
+        case T_MsgsSimMos_msg_object_destruction:            OnReceiveMsgObjectDestruction         ( asnMsg.u.msg_object_destruction            ); break;
+        case T_MsgsSimMos_msg_object_knowledge_creation:     OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.u.msg_object_knowledge_creation    ); break; 
+        case T_MsgsSimMos_msg_object_knowledge_update:       OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.u.msg_object_knowledge_update      ); break; 
+        case T_MsgsSimMos_msg_object_knowledge_destruction:  OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.u.msg_object_knowledge_destruction ); break; 
         default:
 			;
 	}
@@ -342,6 +354,7 @@ void MessageManager::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, DIN_
         case T_MsgsSimMosWithContext_msg_change_automate_ack:            OnReceiveMsgChangeAutomateAck      ( *asnMsg.u.msg_change_automate_ack           , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_change_diplomatie_ack:          OnReceiveMsgChangeTeamRelationAck  ( *asnMsg.u.msg_change_diplomatie_ack         , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack: OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.u.msg_change_groupe_connaissance_ack, nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_pion_order_ack:                 OnReceiveMsgPionOrderAck           ( *asnMsg.u.msg_pion_order_ack                , nCtx ); break;
         default:
             ;
     }
@@ -601,6 +614,126 @@ void MessageManager::OnReceiveMsgPawnTerrainType( DIN::DIN_Link& /*linkFrom*/, D
 void MessageManager::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& /*input*/ )
 {
     //std::cout << "DEBUG: draw points" << std::endl;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgObjectCreation
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
+{
+    if( !Object::Find( asnMsg.oid ) )
+    {
+        Object* pObject = new Object( asnMsg );
+        Object::Register( *pObject );
+    }
+    else
+        MT_LOG_ERROR_MSG( "TEST -> MM - Object with ID#" << asnMsg.oid << " already created" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgObjectUpdate
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& /*asnMsg*/ )
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgObjectDestruction
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruction& asnMsg )
+{
+    Object* pObject = Object::Find( asnMsg );
+    
+    if( pObject )
+    {
+        Object::Unregister( *pObject );
+        delete pObject;
+    }
+    else
+        MT_LOG_ERROR_MSG( "TEST -> MM - Deleting object with ID#" << asnMsg << " which does not exist" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgUnitKnowledgeCreation
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
+{
+    KnowledgeGroup* pKGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_possesseur );
+    assert( pKGroup );
+    pKGroup->OnReceiveMsgUnitKnowledgeCreation( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgUnitKnowledgeUpdate
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
+{
+    KnowledgeGroup* pKGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_possesseur );
+    assert( pKGroup );
+    pKGroup->OnReceiveMsgUnitKnowledgeUpdate( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgUnitKnowledgeDestruction
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
+{
+    KnowledgeGroup* pKGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_possesseur );
+    assert( pKGroup );
+    pKGroup->OnReceiveMsgUnitKnowledgeDestruction( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgObjectKnowledgeCreation
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
+{
+    Team* pTeam = Team::Find( asnMsg.oid_camp_possesseur );
+    assert( pTeam );
+    pTeam->OnReceiveMsgObjectKnowledgeCreation( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgObjectKnowledgeUpdate
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
+{
+    Team* pTeam = Team::Find( asnMsg.oid_camp_possesseur );
+    assert( pTeam );
+    pTeam->OnReceiveMsgObjectKnowledgeUpdate( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgObjectKnowledgeDestruction
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
+{
+    Team* pTeam = Team::Find( asnMsg.oid_camp_possesseur );
+    assert( pTeam );
+    pTeam->OnReceiveMsgObjectKnowledgeDestruction( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPionOrderAck
+// Created: SBO 2005-08-08
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, T_NetContextId /*nCtx*/ )
+{
+    std::stringstream strOutputMsg;
+    strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] "
+                 << "PionOrderAck - Code: " << asnMsg.error_code;
+    MT_LOG_ERROR_MSG( strOutputMsg.str().c_str() );
 }
 
 //-----------------------------------------------------------------------------

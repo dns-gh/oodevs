@@ -53,7 +53,9 @@ public:
 protected:
     //! @name Action validation and commit
     //@{
-    virtual bool Serialize();
+    virtual void Serialize();
+    virtual void Send     ();
+    virtual void Clean    ();
     //@}
 
 protected:

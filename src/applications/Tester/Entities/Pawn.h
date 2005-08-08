@@ -81,10 +81,16 @@ public:
     uint        GetTP_DangerDirection  () const;
     Path&       GetTP_Path             () const;
     uint        GetTP_PathType         () const;
-    bool        GetTP_UnLoaded         () const;
+    bool        GetTP_IsUnLoaded       () const;
     uint        GetTP_VerouillageVision() const;
     Position&   GetTP_VisionPoint      () const;
     uint        GetTP_Direction        () const;
+    T_IdVector& GetTP_PawnList         () const;
+    uint        GetTP_ObjectType       () const;
+    bool        GetTP_IsIndirectFire   () const;
+    uint        GetTP_MunitionType     () const;
+    uint        GetTP_NbObus           () const;
+    T_IdVector& GetTP_Targets          () const;
     //@}
 
     //! @name Other Accessors

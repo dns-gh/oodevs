@@ -24,6 +24,7 @@
 
 namespace TEST
 {
+    class ObjectKnowledge;
 
 // =============================================================================
 /** @class  Team
@@ -58,26 +59,33 @@ public:
 
     //! @name Operations
     //@{
-    static void   Initialize           ();
-    static void   Terminate            ();
-    static Team*  Find                 (       T_EntityId nId  );
-    static void   Register             (       Team&      team );
-    static void   Unregister           (       Team&      team );
+    static void  Initialize();
+    static void  Terminate ();
+    static Team* Find      ( T_EntityId nId  );
+    static void  Register  ( Team&      team );
+    static void  Unregister( Team&      team );
     //@}
 
     //! @name Accessors
     //@{
-          T_EntityId    GetId          ()                        const;
-	const std::string&  GetName        ()                        const;
-          E_Tristate    IsAFriend      ( const Team&      team ) const;
-          E_Tristate    IsAnEnemy      ( const Team&      team ) const;
-          E_Tristate    IsNeutral      ( const Team&      team ) const;
-          E_Diplomacy   GetRelationWith( const Team&      team ) const;
+          T_EntityId   GetId          ()                   const;
+	const std::string& GetName        ()                   const;
+          E_Tristate   IsAFriend      ( const Team& team ) const;
+          E_Tristate   IsAnEnemy      ( const Team& team ) const;
+          E_Tristate   IsNeutral      ( const Team& team ) const;
+          E_Diplomacy  GetRelationWith( const Team& team ) const;
     //@}
 
     //! @name Modifiers
     //@{
-          void          SetRelation    ( Team& otherTeam, ASN1T_EnumDiplomatie diplomacy );
+    void SetRelation( Team& otherTeam, ASN1T_EnumDiplomatie diplomacy );
+    //@}
+
+    //! @name Message handlers
+    //@{
+    void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
     //@}
 
 private:
@@ -95,17 +103,21 @@ private:
 
 	typedef std::map< T_EntityId, Team* >		 T_TeamMap;
 	typedef T_TeamMap::const_iterator			 CIT_TeamMap;
+
+    typedef std::map< T_EntityId, ObjectKnowledge* > T_ObjectKnowledgeMap;
+    typedef T_ObjectKnowledgeMap::const_iterator     CIT_ObjectKnowledgeMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_EntityId        nId_;
-	std::string       strName_;
-	T_TeamRelationMap relations_;
+    T_EntityId           nId_;
+	std::string          strName_;
+	T_TeamRelationMap    relations_;
+    T_ObjectKnowledgeMap knownObjects_;
 
     // global team list
-    static T_TeamMap  teams_;
+    static T_TeamMap     teams_;
     //@}
 };
 

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-04 $
+// $Created: SBO 2005-08-08 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,78 +16,63 @@
 //
 // *****************************************************************************
 
-#ifndef __Action_ABC_h_
-#define __Action_ABC_h_
+#ifndef __ObjectKnowledge_h_
+#define __ObjectKnowledge_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
+#include "Types.h"
+#include "Team.h"
+
 namespace TEST {
 
+    class Object;
 
 // =============================================================================
-/** @class  Action_ABC
-    @brief  Action_ABC
+/** @class  ObjectKnowledge
+    @brief  ObjectKnowledge
     @par    Using example
     @code
-    Action_ABC;
+    ObjectKnowledge;
     @endcode
 */
-// Created: SBO 2005-08-04
+// Created: SBO 2005-08-08
 // =============================================================================
-class Action_ABC
+class ObjectKnowledge
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Action_ABC();
-             Action_ABC( uint nExecutionTick );
-    virtual ~Action_ABC();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool Run             () = 0;
+             ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& asnMsg, const Team& team );
+    virtual ~ObjectKnowledge();
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool IsReady         () const;
-    virtual uint GetExecutionTick() const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    virtual void SetExecutionTick( uint nExecutionTick );
+    T_EntityId GetId() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Action_ABC( const Action_ABC& );            //!< Copy constructor
-    Action_ABC& operator=( const Action_ABC& ); //!< Assignment operator
+    ObjectKnowledge( const ObjectKnowledge& );            //!< Copy constructor
+    ObjectKnowledge& operator=( const ObjectKnowledge& ); //!< Assignment operator
     //@}
 
-protected:
-    //! @name Action validation and commit
-    //@{
-    virtual bool CheckParameters() const;
-    virtual void Serialize      () = 0;
-    virtual void Send           () = 0;
-    virtual void Clean          () = 0;
-    //@}
-
-protected:
+private:
     //! @name Member data
     //@{
-    uint nExecutionTick_;
+    T_EntityId  nId_;
+    const Team& owner_;
+    Object*     pRealObject_;
     //@}
 };
 
 } // end namespace TEST
 
-#include "Action_ABC.inl"
+#include "ObjectKnowledge.inl"
 
-#endif // __Action_ABC_h_
+#endif // __ObjectKnowledge_h_

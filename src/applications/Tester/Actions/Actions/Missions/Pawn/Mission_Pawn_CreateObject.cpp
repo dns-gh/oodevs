@@ -21,7 +21,7 @@
 #endif
 
 #include "Tester_pch.h"
-#include "Mission_Pawn_ABC.h"
+#include "Mission_Pawn_CreateObject.h"
 #include "Entities/Pawn.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/ASN_Tools.h"
@@ -29,52 +29,48 @@
 using namespace TEST;
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_ABC constructor
+// Name: Mission_Pawn_CreateObject constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC::Mission_Pawn_ABC( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Action< Pawn > ( pawn, nExecutionTick )
+Mission_Pawn_CreateObject::Mission_Pawn_CreateObject( Pawn& pawn, uint nExecutionTick /* = 0 */ )
+    : Mission_Pawn_ABC ( pawn, nExecutionTick )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_ABC destructor
+// Name: Mission_Pawn_CreateObject destructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC::~Mission_Pawn_ABC()
+Mission_Pawn_CreateObject::~Mission_Pawn_CreateObject()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_ABC::Serialize
+// Name: Mission_Pawn_CreateObject::Serialize
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Mission_Pawn_ABC::Serialize()
+void Mission_Pawn_CreateObject::Serialize()
 {
-    ASN_Tools::CopyId       ( pTarget_->GetId()                             , asnMsg_.GetAsnMsg().oid_unite_executante );
-    ASN_Tools::CopyId       ( IDManager::orderIDManager_.GetFreeIdentifier(), asnMsg_.GetAsnMsg().order_id             );
-    ASN_Tools::CopyId       ( pTarget_->GetTP_LeftLimit()                   , asnMsg_.GetAsnMsg().oid_limite_gauche    );
-    ASN_Tools::CopyId       ( pTarget_->GetTP_RightLimit()                  , asnMsg_.GetAsnMsg().oid_limite_droite    );
-    ASN_Tools::CopyIdList   ( pTarget_->GetTP_Limas()                       , asnMsg_.GetAsnMsg().oid_limas            );
-    ASN_Tools::CopyDirection( pTarget_->GetTP_DangerDirection()             , asnMsg_.GetAsnMsg().direction_dangereuse );
+    // build din/asn msg
+    Mission_Pawn_ABC::Serialize();
+
+    ASN1T_Mission_Pion_Test_CreateObject& asnMission              = *new ASN1T_Mission_Pion_Test_CreateObject();
+    asnMsg_.GetAsnMsg().mission.t                                 = T_Mission_Pion_mission_pion_test_create_object;
+    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_object = &asnMission;
+
+    ASN_Tools::CopyPosition   ( pTarget_->GetTP_Position()  , asnMission.forme         );
+    ASN_Tools::CopyEnumeration( pTarget_->GetTP_ObjectType(), ( uint& )asnMission.type );
+    ASN_Tools::CopyInteger    ( 0                           , asnMission.param         );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Mission_Pawn_ABC::Send
+// Name: Mission_Pawn_CreateObject::Clean
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Mission_Pawn_ABC::Send()
+void Mission_Pawn_CreateObject::Clean()
 {
-    asnMsg_.Send( 56 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Mission_Pawn_ABC::Clean
-// Created: SBO 2005-08-08
-// -----------------------------------------------------------------------------
-void Mission_Pawn_ABC::Clean()
-{
-    // TODO
+    //delete &asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_object;
+    Mission_Pawn_ABC::Clean();
 }

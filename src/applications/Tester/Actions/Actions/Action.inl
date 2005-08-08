@@ -58,10 +58,15 @@ Action< T >::~Action()
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-bool Action< T >::Run() const
+bool Action< T >::Run()
 {
     if( CheckParameters() )
-        return Serialize();
+    {
+        Serialize();
+        Send     ();
+        Clean    ();
+        return true;
+    }
     return false;
 }
 

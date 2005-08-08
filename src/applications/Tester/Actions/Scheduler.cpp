@@ -56,7 +56,7 @@ bool Scheduler::Run()
     if( itCurrentAction_ == actions_.end() )
         return false;
 
-    if( itCurrentAction_->second->IsReady() )
+    while( itCurrentAction_ != actions_.end() && itCurrentAction_->second->IsReady() )
     {
         itCurrentAction_->second->Run();
         ++itCurrentAction_;
