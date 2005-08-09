@@ -61,6 +61,4 @@ protected:
 
 } // end namespace TEST
 
-#include "TestSet_ABC.inl"
-
 #endif // __TestSet_ABC_h_

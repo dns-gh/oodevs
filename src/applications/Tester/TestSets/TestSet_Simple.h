@@ -55,6 +55,4 @@ public:
 
 } // end namespace TEST
 
-#include "TestSet_Simple.inl"
-
 #endif // __TestSet_Simple_h_
