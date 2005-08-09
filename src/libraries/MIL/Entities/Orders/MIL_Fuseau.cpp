@@ -817,33 +817,28 @@ bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_Lima& lima, MT_Float rDistBe
     lima.Intersect2D( leftPointVector_ , leftIntersectionSet  );
     lima.Intersect2D( rightPointVector_, rightIntersectionSet );
 
-    MT_Vector2D vTranslation;
+    if( rightIntersectionSet.empty() || leftIntersectionSet.empty() )
+        return false;
 
-    if ( leftIntersectionSet.empty() )
-    {
-        if ( rightIntersectionSet.empty() )
-            vTranslation = ( vStartGlobalDirection_ - vEndGlobalDirection_ ).Normalized() * rDistBefore;
-        else
-            vTranslation = GetPointOnLimitAfterIntersection( rightPointVector_, *rightIntersectionSet.begin(), rDistBefore ) - *rightIntersectionSet.begin();
-    }
-    else
-    {
-        vTranslation = GetPointOnLimitAfterIntersection( leftPointVector_, *leftIntersectionSet.begin(), rDistBefore ) - *leftIntersectionSet.begin();
-        if ( !rightIntersectionSet.empty() )
-        {
-            vTranslation += GetPointOnLimitAfterIntersection( rightPointVector_, *rightIntersectionSet.begin(), rDistBefore ) - *rightIntersectionSet.begin();
-            vTranslation *= 0.5;
-        }
-    }
+    const MT_Vector2D& vLeftIntersection  = *leftIntersectionSet .begin();
+    const MT_Vector2D& vRightIntersection = *rightIntersectionSet.begin();
+
+    MT_Vector2D vLeftPointBefore  = GetPointOnLimitAfterIntersection( leftPointVector_ , vLeftIntersection , rDistBefore );
+    MT_Vector2D vRightPointBefore = GetPointOnLimitAfterIntersection( rightPointVector_, vRightIntersection, rDistBefore );
+
+    MT_Vector2D vTranslation = ( ( vLeftPointBefore - vLeftIntersection ) + ( vRightPointBefore - vRightIntersection ) ) / 2.;
+
 
     // calcul du support
-    MT_Polyline supportLine( lima.GetPointVector() );
-    
+    MT_Polyline supportLine( lima.GetPointVector() );  
     supportLine.Translate( vTranslation );
+
     TER_Polygon::Intersection( supportLine, PRECISION );
     
     // positionnement des points
     const MT_Float rDist = supportLine.Magnitude() / nNbPoints;
+    if( rDist == 0. )
+        return false;
           
     for ( MT_Float rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
         results.push_back( supportLine.GetPointAt( rCurrentDist ) );

@@ -111,8 +111,6 @@ behavior BEH_Defaut( id nDummy )
 
 behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
 {
-    
-    
     when updated:
     {
     

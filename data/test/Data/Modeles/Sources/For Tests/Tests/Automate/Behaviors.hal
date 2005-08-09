@@ -21,6 +21,16 @@ behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
         {
             DEC_Debug( "MIS_Automate_CDT_Test_MoveTo" );
             tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsSansPC() );
+                                    
+            T_Lima lima = DEC_GetLima( eTypeLima_LC );
+            if( lima != 0 )
+            {
+                bool bOut;
+                T_ListePoints points = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 1000, 3, bOut );
+                if( bOut )
+                    DEC_DebugAffichePoints( points );
+            }            
+            
         }
         
         //$$ Test ligne avant/arrière

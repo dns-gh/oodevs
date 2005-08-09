@@ -158,6 +158,9 @@ bool MT_Polyline::Intersect2D( const MT_Droite& droite, T_PointSet& collisions )
 // -----------------------------------------------------------------------------
 MT_Float MT_Polyline::Magnitude() const
 {
+    if( points_.empty() )
+        return 0.;
+
     CIT_PointVector itFirstPoint = points_.begin();
     const MT_Vector2D* pPos1 = &*itFirstPoint;
     MT_Float rMagnitude = 0.;
