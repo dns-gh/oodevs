@@ -77,6 +77,4 @@ private:
 
 } // end namespace TEST
 
-#include "Scheduler.inl"
-
 #endif // __Scheduler_h_

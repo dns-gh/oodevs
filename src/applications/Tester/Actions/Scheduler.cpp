@@ -22,8 +22,7 @@
 
 #include "Tester_pch.h"
 #include "Scheduler.h"
-
-#include "Actions/Action_ABC.h"
+#include "Action_ABC.h"
 
 using namespace TEST;
 
