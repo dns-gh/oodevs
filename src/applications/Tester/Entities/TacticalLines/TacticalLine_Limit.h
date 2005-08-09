@@ -65,7 +65,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool UpdateToSim();
+    virtual void UpdateToSim();
     //@}
 
 private:

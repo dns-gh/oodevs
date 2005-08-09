@@ -24,7 +24,7 @@
 #endif
 
 #include "Types.h"
-#include "Team.h"
+#include "Entities/Team.h"
 
 namespace TEST {
 

@@ -22,8 +22,7 @@
 
 #include "Tester_pch.h"
 #include "PawnKnowledge.h"
-#include "Pawn.h"
-#include "KnowledgeGroup.h"
+#include "Entities/Pawn.h"
 
 using namespace TEST;
 

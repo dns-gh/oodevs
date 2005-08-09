@@ -22,7 +22,7 @@
 
 #include "Tester_pch.h"
 #include "ObjectKnowledge.h"
-#include "Object.h"
+#include "Entities/Object.h"
 
 using namespace TEST;
 

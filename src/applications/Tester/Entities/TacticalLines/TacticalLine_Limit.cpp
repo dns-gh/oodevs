@@ -35,7 +35,7 @@ TacticalLine_Limit::TacticalLine_Limit( T_PositionVector& points )
     : TacticalLine_ABC ( points )
 {
     nId_ = idManager_.GetFreeIdentifier();
-    UpdateToSim();
+    bIsSyncWithSim_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +54,7 @@ TacticalLine_Limit::TacticalLine_Limit( const ASN1T_MsgLimitCreation& asnMsg )
         Position* pPos = new Position( std::string( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, 15 ) );
         points_.push_back( pPos );
     }
+    bIsSyncWithSim_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,8 +70,11 @@ TacticalLine_Limit::~TacticalLine_Limit()
 // Name: TacticalLine_Limit::UpdateToSim
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-bool TacticalLine_Limit::UpdateToSim()
+void TacticalLine_Limit::UpdateToSim()
 {
+    if( bIsSyncWithSim_ )
+        return;
+
     assert( !points_.empty() );
 
     MOS_ASN_MsgLimitCreation asnMsg;
@@ -90,7 +94,7 @@ bool TacticalLine_Limit::UpdateToSim()
     }
 
     asnMsg.Send( (T_NetContextId)this );
+    bIsSyncWithSim_ = true;
 
     delete[] asnMsg.GetAsnMsg().geometrie.vecteur_point.elem;
-    return true;
 }

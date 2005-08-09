@@ -31,8 +31,9 @@ using namespace TEST;
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC()
-    : nId_    ( 0 )
-    , points_ ()
+    : nId_            ( 0 )
+    , points_         ()
+    , bIsSyncWithSim_ ( false )
 {
     // NOTHING
 }
@@ -42,8 +43,9 @@ TacticalLine_ABC::TacticalLine_ABC()
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( T_PositionVector& points )
-    : nId_    ( 0 )
-    , points_ ( points )
+    : nId_            ( 0 )
+    , points_         ( points )
+    , bIsSyncWithSim_ ( false )
 {
     // NOTHING
 }

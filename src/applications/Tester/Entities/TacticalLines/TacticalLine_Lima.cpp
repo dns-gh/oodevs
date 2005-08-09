@@ -35,6 +35,7 @@ TacticalLine_Lima::TacticalLine_Lima( T_PositionVector& points )
     : TacticalLine_ABC ( points )
 {
     nId_ = idManager_.GetFreeIdentifier();
+    bIsSyncWithSim_  = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +54,7 @@ TacticalLine_Lima::TacticalLine_Lima( const ASN1T_MsgLimaCreation& asnMsg )
         Position* pPos = new Position( std::string( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, 15 ) );
         points_.push_back( pPos );
     }
+    bIsSyncWithSim_  = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +71,7 @@ TacticalLine_Lima::~TacticalLine_Lima()
 // Name: TacticalLine_Lima::UpdateToSim
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-bool TacticalLine_Lima::UpdateToSim()
+void TacticalLine_Lima::UpdateToSim()
 {
-    return true;
+    // NOTHING
 }

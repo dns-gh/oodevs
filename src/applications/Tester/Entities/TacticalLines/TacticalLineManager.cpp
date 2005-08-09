@@ -128,3 +128,13 @@ T_EntityId TacticalLineManager::GetLimitIdExcluding( T_EntityId nId )
             return ( *it )->GetId();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLineManager::UpdateToSim
+// Created: SBO 2005-08-09
+// -----------------------------------------------------------------------------
+void TacticalLineManager::UpdateToSim()
+{
+    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
+        ( *it )->UpdateToSim();
+}

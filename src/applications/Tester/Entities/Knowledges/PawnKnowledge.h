@@ -24,7 +24,7 @@
 #endif
 
 #include "Types.h"
-#include "KnowledgeGroup.h"
+#include "Entities/KnowledgeGroup.h"
 
 namespace TEST {
 

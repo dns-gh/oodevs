@@ -24,6 +24,7 @@
 #include "Tools/Path.h"
 #include "Tools/Position.h"
 #include "TacticalLines/TacticalLineManager.h"
+#include "Actions/Missions/Mission_Pawn_Type.h"
 
 using namespace TEST;
 
@@ -41,13 +42,13 @@ Pawn::Pawn( const ASN1T_MsgPionCreation& asnMsg )
     , pAutomat_         ( Automat::Find( asnMsg.oid_automate ) )
     , bIsPc_            ( false )
     , bIsLoaded_        ( false )
-    , limits_           ()
+    , nLeftLimit_       ( 0 )
+    , nRightLimit_      ( 0 )
+
 {
     assert( pType_ );
     assert( pAutomat_ );
     pAutomat_->AttachPawn( *this );
-    limits_[ 0 ] = 0;
-    limits_[ 1 ] = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +63,8 @@ Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
     , pAutomat_         ( &automat )
     , bIsPc_            ( true )
     , bIsLoaded_        ( false )
-    , limits_           ()
+    , nLeftLimit_       ( 0 )
+    , nRightLimit_      ( 0 )
 {
     // retrieve PC type for the parent automat
     const AutomatType *pAutomatType = AutomatType::Find( asnMsg.type_automate );
@@ -72,8 +74,6 @@ Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
 
     assert( pAutomat_ );
     pAutomat_->AttachPawn( *this );
-    limits_[ 0 ] = 0;
-    limits_[ 1 ] = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -90,6 +90,7 @@ Pawn::~Pawn()
 //-----------------------------------------------------------------------------
 void Pawn::Initialize()
 {
+    Mission_Pawn_Type::Initialize();
 }
 
 //-----------------------------------------------------------------------------
@@ -101,6 +102,7 @@ void Pawn::Terminate()
     for( CIT_PawnMap it = pawns_.begin(); it != pawns_.end(); ++it )
         delete it->second;
     pawns_.clear();
+    Mission_Pawn_Type::Terminate();
 }
 
 //-----------------------------------------------------------------------------
@@ -135,7 +137,6 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.hauteurPresent )
         nHeight_ = asnMsg.hauteur;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -195,11 +196,11 @@ Position& Pawn::GetTP_Position() const
 uint Pawn::GetTP_LeftLimit()
 {
     // if left limit is not ser get an existing limit which is not the right limit
-    if( limits_[ 0 ] == 0 )
-        limits_[ 0 ] = TacticalLineManager::GetLimitIdExcluding( limits_[ 1 ] );
+    if( nLeftLimit_ == 0 )
+        nLeftLimit_ = TacticalLineManager::GetLimitIdExcluding( nRightLimit_ );
     // at least world border limits should exist
-    assert( limits_[ 0 ] );
-    return limits_[ 0 ];
+    assert( nLeftLimit_ );
+    return nLeftLimit_;
  }
 
 // -----------------------------------------------------------------------------
@@ -209,11 +210,11 @@ uint Pawn::GetTP_LeftLimit()
 uint Pawn::GetTP_RightLimit()
 {
     // if right limit is not ser get an existing limit which is not the left limit
-    if( limits_[ 1 ] == 0 )
-        limits_[ 1 ] = TacticalLineManager::GetLimitIdExcluding( limits_[ 0 ] );
+    if( nRightLimit_ == 0 )
+        nRightLimit_ = TacticalLineManager::GetLimitIdExcluding( nLeftLimit_ );
     // at least world border limits should exist
-    assert( limits_[ 1 ] );
-    return limits_[ 1 ];
+    assert( nRightLimit_ );
+    return nRightLimit_;
 }
 
 // -----------------------------------------------------------------------------

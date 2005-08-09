@@ -137,7 +137,8 @@ private:
     Path             path_;
 
     bool             bIsLoaded_;
-    T_IdVector       limits_; // [0] => left, [1] => right
+    T_EntityId       nLeftLimit_;
+    T_EntityId       nRightLimit_;
     //@}
 
 private:

@@ -51,6 +51,7 @@ public:
     static void              UnRegister         ( TacticalLine_ABC& line );
     static TacticalLine_ABC* Find               ( T_EntityId        nId  );
     static T_EntityId        GetLimitIdExcluding( T_EntityId        nId  );
+    static void              UpdateToSim        ();
     //@}
 
 private:

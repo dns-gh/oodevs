@@ -67,7 +67,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool UpdateToSim() = 0;
+    virtual void UpdateToSim() = 0;
     //@}
 
 private:
@@ -82,6 +82,7 @@ protected:
     //@{
     T_EntityId       nId_;
     T_PositionVector points_;
+    bool             bIsSyncWithSim_;
     //@}
 };
 
