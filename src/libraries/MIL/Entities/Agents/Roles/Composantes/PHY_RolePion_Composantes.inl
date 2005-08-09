@@ -32,23 +32,13 @@ bool PHY_RolePion_Composantes::HasChanged() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetNbrComposantes
-// Created: NLD 2004-10-05
+// Name: PHY_RolePion_Composantes::IsUsable
+// Created: NLD 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-uint PHY_RolePion_Composantes::GetNbrComposantes() const
+bool PHY_RolePion_Composantes::IsUsable() const
 {
-    return composantes_.size();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetNbrUsableComposantes
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-uint PHY_RolePion_Composantes::GetNbrUsableComposantes() const
-{
-    return nNbrUsableComposantes_;
+    return nNbrUsableComposantes_ > 0; 
 }
 
 // -----------------------------------------------------------------------------

@@ -78,3 +78,13 @@ bool PHY_UnitType::CanFly() const
 {
     return bCanFly_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::IsAutonomous
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+inline
+bool PHY_UnitType::IsAutonomous() const
+{
+    return bIsAutonomous_;
+}

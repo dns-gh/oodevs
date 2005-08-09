@@ -392,7 +392,11 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
             DEC_ChangeValeurDotations( eDotation_Munition, mission.param_ / 100, eMunitionClasse_Obus );
             DEC_ChangeValeurDotations( eDotation_Ration, mission.param_ / 100 );
             
-            DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
+            // DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
+            
+            T_Point fusse;
+            if( DEC_Geometrie_CalculePointProcheLocalisationDansFuseau( mission.forme_, fusse ) )
+                DEC_DebugAffichePoint( fusse );
         }
 
         persistent T_Action                       currentAction;

@@ -99,8 +99,6 @@ public:
     CIT_PathPointList GetCurrentKeyOnPath  ( const MT_Vector2D& vPos ) const;
     MT_Vector2D       GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const;
     void              InsertDecPoints      ();
-
-    bool              CanQueryMakerFly() const;
     //@}
 
     //! @name Operations

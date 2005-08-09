@@ -131,6 +131,15 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::IsUsable
+// Created: NLD 2005-08-09
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Humans::IsUsable() const
+{
+    return nNbrUsableHumans_ > 0 || pPion_->IsAutonomous();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::ChangeHumansAvailability
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
@@ -158,8 +167,12 @@ void PHY_RolePion_Humans::HealAllHumans()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
-    for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); ++it )
-        (**it).Update();
+    for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
+    {
+        PHY_Human& human = **it;
+        ++it; 
+        human.Update(); // !!! Can erase the human from humansToUpdate_
+    }
 }
 
 // -----------------------------------------------------------------------------

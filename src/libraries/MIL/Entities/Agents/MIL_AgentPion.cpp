@@ -302,8 +302,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RoleAction_IndirectFiring  >( *this );
     RegisterRole< DEC_RolePion_Decision          >( *this );
 
-    assert( pType_ );
-    if ( pType_->GetUnitType().CanFly() )
+    if( CanFly() )
         RegisterRole< PHY_RoleAction_Flying >( *this );
     else
         RegisterRole< PHY_RoleAction_InterfaceFlying >();
@@ -373,7 +372,8 @@ MIL_AgentPion::~MIL_AgentPion()
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsDead() const
 {
-    return GetRole< PHY_RolePion_Humans >().GetNbrUsableHumans() == 0 || GetRole< PHY_RolePion_Composantes >().GetNbrUsableComposantes() == 0;
+    return     !GetRole< PHY_RolePion_Humans      >().IsUsable()
+            || !GetRole< PHY_RolePion_Composantes >().IsUsable();
 }
 
 // -----------------------------------------------------------------------------
@@ -514,6 +514,26 @@ void MIL_AgentPion::Clean()
 // =============================================================================
 // ACCESSORS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanFly
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanFly() const
+{
+    assert( pType_ );
+    return pType_->GetUnitType().CanFly();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsAutonomous
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsAutonomous() const
+{
+    assert( pType_ );
+    return pType_->GetUnitType().IsAutonomous();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::GetDecision
@@ -730,10 +750,10 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyEquipement()
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyAll()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
-    GetRole< PHY_RolePion_Dotations   >().ResupplyDotations  ();
-    GetRole< PHY_RolePion_Supply      >().ResupplyStocks     ();
+    GetRole< PHY_RolePion_Dotations   >().ResupplyDotations   ();
+    GetRole< PHY_RolePion_Supply      >().ResupplyStocks      ();
     GetRole< PHY_RolePion_Humans      >().HealAllHumans       ();
-    GetRole< PHY_RolePion_NBC         >().Decontaminate      ();
+    GetRole< PHY_RolePion_NBC         >().Decontaminate       ();
     return EnumUnitAttrErrorCode::no_error;
 }
 

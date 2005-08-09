@@ -22,7 +22,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
 #include "Entities/Orders/Lima/MIL_Lima.h"
@@ -697,15 +696,6 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
 void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
 {
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path::CanQueryMakerFly
-// Created: AGE 2005-03-30
-// -----------------------------------------------------------------------------
-bool DEC_Path::CanQueryMakerFly() const
-{
-    return queryMaker_.GetType().GetUnitType().CanFly();
 }
 
 // -----------------------------------------------------------------------------

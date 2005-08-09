@@ -1047,8 +1047,78 @@
     <PorteeCapteurs>100</PorteeCapteurs>
   </Unite>
 
-  <Unite nom="PC BLD Sante" type="Pion LOG BLD Sante">
+  <Unite nom="Drone RENS" type="Pion RENS">
     <MosID>15</MosID>
+    <ModeleDecisionnel>Pion RENS Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Non renseigne"/>
+    </Nature>
+    <Equipements>
+      <Equipement nom="Drone">2</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>0</Officier>
+      <SousOfficier>0</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <PeutVoler/>
+    <EstAutonome/>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="PC BLD Sante" type="Pion LOG BLD Sante">
+    <MosID>16</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1117,7 +1187,7 @@
   </Unite>
 
   <Unite nom="Secteur tri BLD" type="Pion LOG BLD Sante">
-    <MosID>16</MosID>
+    <MosID>17</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1188,7 +1258,7 @@
   </Unite>
 
   <Unite nom="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
-    <MosID>17</MosID>
+    <MosID>18</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1259,7 +1329,7 @@
   </Unite>
 
   <Unite nom="Secteur soin mental BLD" type="Pion LOG BLD Sante">
-    <MosID>18</MosID>
+    <MosID>19</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1331,7 +1401,7 @@
   </Unite>
 
   <Unite nom="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
-    <MosID>19</MosID>
+    <MosID>20</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1402,7 +1472,7 @@
   </Unite>
 
   <Unite nom="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
-    <MosID>20</MosID>
+    <MosID>21</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1475,7 +1545,7 @@
   </Unite>
 
   <Unite nom="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
-    <MosID>21</MosID>
+    <MosID>22</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1546,7 +1616,7 @@
   </Unite>
 
   <Unite nom="PC BLT Sante" type="Pion LOG BLT Sante">
-    <MosID>22</MosID>
+    <MosID>23</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1615,7 +1685,7 @@
   </Unite>
 
   <Unite nom="Secteur tri BLT" type="Pion LOG BLT Sante">
-    <MosID>23</MosID>
+    <MosID>24</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1686,7 +1756,7 @@
   </Unite>
 
   <Unite nom="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
-    <MosID>24</MosID>
+    <MosID>25</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1758,7 +1828,7 @@
   </Unite>
 
   <Unite nom="Secteur soin mental BLT" type="Pion LOG BLT Sante">
-    <MosID>25</MosID>
+    <MosID>26</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1829,7 +1899,7 @@
   </Unite>
 
   <Unite nom="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
-    <MosID>26</MosID>
+    <MosID>27</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1900,7 +1970,7 @@
   </Unite>
 
   <Unite nom="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
-    <MosID>27</MosID>
+    <MosID>28</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -1973,7 +2043,7 @@
   </Unite>
 
   <Unite nom="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
-    <MosID>28</MosID>
+    <MosID>29</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -2044,7 +2114,7 @@
   </Unite>
 
   <Unite nom="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
-    <MosID>29</MosID>
+    <MosID>30</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -2113,7 +2183,7 @@
   </Unite>
 
   <Unite nom="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
-    <MosID>30</MosID>
+    <MosID>31</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -2217,7 +2287,7 @@
   </Unite>
 
   <Unite nom="Pion RAV commandement" type="Pion LOG BLD Ravitaillement">
-    <MosID>31</MosID>
+    <MosID>32</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -2321,7 +2391,7 @@
   </Unite>
 
   <Unite nom="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
-    <MosID>32</MosID>
+    <MosID>33</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -2425,7 +2495,7 @@
   </Unite>
 
   <Unite nom="Pion Convoi" type="Pion LOG Convoi">
-    <MosID>33</MosID>
+    <MosID>34</MosID>
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
@@ -2527,7 +2597,7 @@
   </Unite>
 
   <Unite nom="Pion Refugie" type="Pion REFUGIE">
-    <MosID>34</MosID>
+    <MosID>35</MosID>
     <ModeleDecisionnel>Pion REFUGIE Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>

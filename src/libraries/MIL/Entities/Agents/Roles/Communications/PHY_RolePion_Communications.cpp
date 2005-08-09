@@ -127,6 +127,9 @@ void PHY_RolePion_Communications::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Jam( const MIL_RealObject_ABC& jammer )
 {
+    // UAC ...
+    if( pPion_->IsAutonomous() ) 
+        return;
     bHasChanged_ = jammers_.insert( &jammer ).second;
 }
 

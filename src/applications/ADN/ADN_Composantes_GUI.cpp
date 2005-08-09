@@ -132,7 +132,7 @@ void ADN_Composantes_GUI::Build()
     QGroupBox* pTroopGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ), pDataPage );
 
     QWidget* pHolder = builder.AddFieldHolder( pTroopGroupBox );
-    builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Crew" ), vInfosConnectors[eTroopCapacity], 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Crew" ), vInfosConnectors[eTroopCapacity], 0 );
 
     ADN_GroupBox* pEmbarkTimesGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Troop transport" ), pTroopGroupBox );
     vInfosConnectors[eHasEmbarkTimes] = &pEmbarkTimesGroupBox->GetConnector();

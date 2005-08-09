@@ -796,6 +796,7 @@ void MIL_RealObject_ABC::Destroy( MT_Float rDeltaPercentage )
 void MIL_RealObject_ABC::Destroy()
 {
     ChangeConstructionPercentage( 0. );
+    MarkForDestruction();
 
     // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
     const MIL_EntityManager::T_ArmyMap& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();

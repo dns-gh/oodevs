@@ -44,7 +44,9 @@ public:
     
     //! @name Accessors
     //@{
-    uint GetNbrUsableHumans() const;
+
+    bool IsUsable              () const;
+    uint GetNbrUsableHumans    () const;
     uint GetNbrHumans          () const;
     uint GetNbrFullyAliveHumans() const;
     //@}

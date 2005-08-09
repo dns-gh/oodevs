@@ -43,6 +43,17 @@ MT_Random PHY_ComposantePion::random_;
 BOOST_CLASS_EXPORT_GUID( PHY_ComposantePion, "PHY_ComposantePion" )
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CheckViability
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::CheckViability()
+{
+    assert( pRole_ );
+    if( nNbrUsableHumans_ == 0 && !pRole_->GetPion().IsAutonomous() )
+        ReinitializeState( PHY_ComposanteState::dead_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion constructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
@@ -65,10 +76,8 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
 
-    if( nNbrUsableHumans_ == 0 )
-        pState_ = &PHY_ComposanteState::dead_;
-
     pRole_->NotifyComposanteAdded( *this );
+    CheckViability();
 }
 
 // -----------------------------------------------------------------------------
@@ -244,8 +253,7 @@ void PHY_ComposantePion::NotifyHumanRemoved( PHY_Human& human )
     assert( pRole_ );
     pRole_->NotifyHumanRemoved( human );
 
-    if( nNbrUsableHumans_ == 0 )
-        ReinitializeState( PHY_ComposanteState::dead_ );
+    CheckViability();
 }
     
 // -----------------------------------------------------------------------------
@@ -265,8 +273,7 @@ void PHY_ComposantePion::NotifyHumanChanged( PHY_Human& human, const PHY_Human& 
     assert( pRole_ );
     pRole_->NotifyHumanChanged( human, copyOfOldHumanState );
 
-    if( nNbrUsableHumans_ == 0 )
-        ReinitializeState( PHY_ComposanteState::dead_ );
+    CheckViability();
 }
 
 

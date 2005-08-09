@@ -5197,6 +5197,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>s</source>
         <translation>s</translation>
     </message>
+    <message>
+        <source>Is autonomous (UAV)</source>
+        <translation>Pion autonome (Drônes ...)</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Postures_GUI</name>

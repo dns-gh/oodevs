@@ -143,7 +143,7 @@ bool MT_Line::IsClipped( const MT_Line& Line ) const
 inline
 bool  _GEN_IsZero( MT_Float rF )
 { 
-    return rF < 1e-8 && rF > -1e-8;
+    return rF < 1e-4 && rF > -1e-4;
 }
 
 //-----------------------------------------------------------------------------
@@ -219,32 +219,6 @@ MT_Line& MT_Line::operator = ( const MT_Line& rhs )
 }
 
 
-//-----------------------------------------------------------------------------
-// Name: MT_Line::ComputeSecant
-// Created: AGN 03-01-09
-//-----------------------------------------------------------------------------
-bool MT_Line::ComputeSecant( const MT_Vector2D& center, MT_Float rRadius, MT_Vector2D& vStart, MT_Vector2D& vEnd ) const
-{
-    if( ! IsInside( center, rRadius ) )
-        return false;
-
-    MT_Float rDotProduct = DotProduct( (*pPosEnd_ - *pPosStart_).Normalize(), (center - *pPosStart_) );
-    MT_Vector2D vPosNear = (*pPosStart_) + (*pPosEnd_ - *pPosStart_).Normalize() * rDotProduct;
-    
-    MT_Float rLength = sqrt( rRadius * rRadius - vPosNear.SquareDistance( center) );
-
-    if( center.Distance( *pPosStart_ ) < rRadius )
-        vStart = (*pPosStart_);
-    else
-        vStart = vPosNear + (*pPosStart_ - vPosNear).Normalize() * rLength;
-    
-    if( center.Distance( *pPosEnd_ ) < rRadius )
-        vEnd = (*pPosEnd_);
-    else
-        vEnd = vPosNear + (*pPosEnd_ - vPosNear).Normalize() * rLength;
-
-    return true; 
-}
 
 //-----------------------------------------------------------------------------
 // Name: MT_Line::Intersect2D
@@ -303,7 +277,7 @@ bool MT_Line::Intersect2D( const T_PointVector& polyline, MT_Float rPrecision ) 
             return true;
         else if( lineTmp.IsInside( *pPosEnd_, rPrecision ) )
             return true;
-        else if( Intersect2D( lineTmp ) == eDoIntersect )
+        else if( Intersect2D( lineTmp ) == eDoIntersect ) // ?? != eDontIntersect
             return true;
         pPos1 = pPos2;
     }

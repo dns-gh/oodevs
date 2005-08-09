@@ -1,8 +1,180 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Composantes>
 
-  <Composante Commentaire="" nom="CompTest">
+  <Composante Commentaire="" nom="Drone">
     <MosID>1</MosID>
+    <CodeEMAT6>Drone</CodeEMAT6>
+    <CodeEMAT8>Drone</CodeEMAT8>
+    <CodeLFRIL>Drone</CodeLFRIL>
+    <CodeNNO>Drone</CodeNNO>
+    <Protection>Aeronef</Protection>
+    <Volume>Petit</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">10</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">5</Terrain>
+      <Terrain type="dune">5</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">0</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">35</Terrain>
+      <Terrain type="autoroute">50</Terrain>
+      <Terrain type="nationale">40</Terrain>
+      <Terrain type="departementale">40</Terrain>
+      <Terrain type="ruisseau">2</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="Balle Classique 12,7" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus fumigene" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus eclairant" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="20" nom="Obus 120 mm" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="50" nom="Obus mine" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
+          <Categorie consommationNormalisee="10" contenance="4" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="mine classique" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="40" nom="pont flottant de la mort" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="bouffe" seuilLogistique="80"/>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="flotte" seuilLogistique="80"/>
+        </Categories>
+      </Dotation>
+    </Contenance>
+    <Armements>
+      <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
+      <Armement lanceur="Canon 120" munition="Obus 120 mm"/>
+      <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7"/>
+    </Armements>
+    <Transport>
+      <Personnel>
+        <Equipage>0</Equipage>
+        <Temps>
+          <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
+          <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
+        </Temps>
+      </Personnel>
+      <Pion>
+        <Capacite>5</Capacite>
+        <Temps>
+          <TempsChargementParTonne>15s</TempsChargementParTonne>
+          <TempsDechargementParTonne>15s</TempsDechargementParTonne>
+        </Temps>
+      </Pion>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars>
+      <Radar>Radar doppler</Radar>
+      <Radar>Radar HAWK</Radar>
+      <Radar>Ecoute</Radar>
+    </Radars>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint>
+        <Dotation nom="ration">
+          <Categories>
+            <Categorie nom="bouffe">1000</Categorie>
+            <Categorie nom="flotte">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurEteint>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets>
+      <Objet type="bouchon mines">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>600s</TempsInitialDestruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+      <Objet type="pont flottant continu">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>600s</TempsInitialDestruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>10</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+      <Objet type="abattis">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>0s</TempsInitialDestruction>
+        <TempsConstructionCoef>72s</TempsConstructionCoef>
+        <TempsDestructionCoef>180s</TempsDestructionCoef>
+        <TempsValorisation>3600s</TempsValorisation>
+        <TempsDevalorisation>10800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+    </Objets>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="CompTest">
+    <MosID>2</MosID>
     <CodeEMAT6>CompTestEMAT6</CodeEMAT6>
     <CodeEMAT8>CompTestEMAT8</CodeEMAT8>
     <CodeLFRIL>CompTestLFRIL</CodeLFRIL>
@@ -174,7 +346,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="CompTest2">
-    <MosID>2</MosID>
+    <MosID>3</MosID>
     <CodeEMAT6>CompTest2</CodeEMAT6>
     <CodeEMAT8>CompTest2</CodeEMAT8>
     <CodeLFRIL>CompTest2</CodeLFRIL>
@@ -308,7 +480,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="CompNBC">
-    <MosID>3</MosID>
+    <MosID>4</MosID>
     <CodeEMAT6>CompNBC</CodeEMAT6>
     <CodeEMAT8>CompNBC</CodeEMAT8>
     <CodeLFRIL>CompNBC</CodeLFRIL>
@@ -448,7 +620,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Remorqueur">
-    <MosID>4</MosID>
+    <MosID>5</MosID>
     <CodeEMAT6>Remorqueur</CodeEMAT6>
     <CodeEMAT8>Remorqueur</CodeEMAT8>
     <CodeLFRIL>Remorqueur</CodeLFRIL>
@@ -556,7 +728,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI TC2">
-    <MosID>5</MosID>
+    <MosID>6</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -661,7 +833,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLD M">
-    <MosID>6</MosID>
+    <MosID>7</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -768,7 +940,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLD EA">
-    <MosID>7</MosID>
+    <MosID>8</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -875,7 +1047,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLT M">
-    <MosID>8</MosID>
+    <MosID>9</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -985,7 +1157,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="NTI BLT EA">
-    <MosID>9</MosID>
+    <MosID>10</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1095,7 +1267,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="VSB (releve)">
-    <MosID>10</MosID>
+    <MosID>11</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1201,7 +1373,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="VSR (ramassage)">
-    <MosID>11</MosID>
+    <MosID>12</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1308,7 +1480,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin TC2">
-    <MosID>12</MosID>
+    <MosID>13</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1410,7 +1582,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin tri">
-    <MosID>13</MosID>
+    <MosID>14</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1514,7 +1686,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin chirurgical">
-    <MosID>14</MosID>
+    <MosID>15</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1621,7 +1793,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin chirurgical U2/U3">
-    <MosID>15</MosID>
+    <MosID>16</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1728,7 +1900,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin mental">
-    <MosID>16</MosID>
+    <MosID>17</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1832,7 +2004,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Medecin soin NBC">
-    <MosID>17</MosID>
+    <MosID>18</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -1936,7 +2108,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Camion">
-    <MosID>18</MosID>
+    <MosID>19</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>
@@ -2045,7 +2217,7 @@
   </Composante>
 
   <Composante Commentaire="" nom="Chef de convoi">
-    <MosID>19</MosID>
+    <MosID>20</MosID>
     <CodeEMAT6>NTI</CodeEMAT6>
     <CodeEMAT8>NTI</CodeEMAT8>
     <CodeLFRIL>NTI</CodeLFRIL>

@@ -40,6 +40,7 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     , rCoupDeSondeLength_             ( 0. )
     , rCoefDecontaminationPerTimeStep_( 0. )
     , bCanFly_                        ( false )
+    , bIsAutonomous_                  ( false )
 {
     InitializeComposantes         ( archive );
     InitializeCommanderRepartition( archive );
@@ -51,6 +52,12 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     {
         bCanFly_ = true;
         archive.EndSection(); // PeutVoler
+    }
+
+    if( archive.Section( "EstAutonome", MIL_InputArchive::eNothing ) ) 
+    {
+        bIsAutonomous_ = true;
+        archive.EndSection(); // EstAutonome
     }
 }
 

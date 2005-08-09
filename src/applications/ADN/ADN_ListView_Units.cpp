@@ -89,6 +89,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Units_GUI::eHasStock]->Connect( &pInfos->bStock_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eHasStrengthRatioFeedbackTime]->Connect( &pInfos->bStrengthRatioFeedbackTime_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eCanFly]->Connect( &pInfos->bCanFly_, bConnect );
+    vItemConnectors_[ADN_Units_GUI::eIsAutonomous]->Connect( &pInfos->bIsAutonomous_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eSensorsReach]->Connect( &pInfos->rSensorsReach_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eWeaponsReach]->Connect( &pInfos->rWeaponsReach_, bConnect );
 }

@@ -390,7 +390,7 @@ void PHY_ComposanteTypePion::InitializeTransport( MIL_InputArchive& archive )
     archive.Section( "Transport" );
 
     archive.Section( "Personnel" );
-    archive.ReadField( "Equipage", nNbrHumanInCrew_, CheckValueGreater( 0 ) );
+    archive.ReadField( "Equipage", nNbrHumanInCrew_, CheckValueGreaterOrEqual( 0 ) );
 
     if( archive.Section( "Temps", MIL_InputArchive::eNothing ) )
     {

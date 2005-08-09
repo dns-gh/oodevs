@@ -30,7 +30,6 @@ public:
 	const MT_Vector2D&  GetPosStart() const;
 	const MT_Vector2D&  GetPosEnd  () const;
     MT_Vector2D         GetCenter  () const;
-    bool                IsWeldable ( MT_Float rPrec ) const;
     MT_Float            Magnitude  () const;
 
     bool                IsClipped  ( const MT_Line& ) const;
@@ -46,7 +45,6 @@ public:
     bool                IsInside( const MT_Vector2D&, MT_Float, MT_Vector2D&  ) const;
     MT_Line&            operator = ( const MT_Line& rhs );
 
-    bool                ComputeSecant( const MT_Vector2D& center, MT_Float rRadius, MT_Vector2D& vStart, MT_Vector2D& vEnd ) const;
 private:
 	const MT_Vector2D* pPosStart_;
 	const MT_Vector2D* pPosEnd_;

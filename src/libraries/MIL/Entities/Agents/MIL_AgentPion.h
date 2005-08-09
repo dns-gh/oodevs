@@ -84,6 +84,9 @@ public:
     const MT_Vector2D&        GetDirDanger() const;
     const MIL_Fuseau&         GetFuseau   () const;
     const T_LimaFlagedPtrMap& GetLimas    () const;
+
+    bool CanFly      () const;
+    bool IsAutonomous() const; // Drones
     //@}
 
     //! @name Operations

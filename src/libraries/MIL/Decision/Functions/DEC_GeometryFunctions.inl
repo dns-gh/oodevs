@@ -399,9 +399,16 @@ void DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( DIA_Call_AB
     TER_Localisation* pLocalisation = param[0].ToUserPtr( pLocalisation );
     assert( pLocalisation );
 
-    MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ TMP
-    bool bOut = pLocalisation->ComputeNearestPointInPolygon( GetPosition( caller ), caller.GetFuseau(), *pResult );
+    TER_Localisation clippedLocalisation;
+    if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
+    {
+        param.GetParameter( 1 ).SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
+        call.GetResult().SetValue( false );
+        return; 
+    }
 
+    MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ TMP
+    bool bOut = clippedLocalisation.ComputeNearestPoint( GetPosition( caller ), *pResult );
     param.GetParameter( 1 ).SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
     call.GetResult().SetValue( bOut );
 }

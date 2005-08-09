@@ -314,6 +314,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 , rProbeWidth_(0)
 , rProbeLength_(0)
 , bCanFly_( false )
+, bIsAutonomous_( false )
 , rWeaponsReach_( 0.0 )
 , rSensorsReach_( 0.0 )
 {
@@ -430,6 +431,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
     pCopy->rDecontaminationDelay_ = rDecontaminationDelay_.GetData();
     pCopy->bCanFly_ = bCanFly_.GetData();
+    pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
     pCopy->rWeaponsReach_ = rWeaponsReach_.GetData();
     pCopy->rSensorsReach_ = rSensorsReach_.GetData();
 
@@ -626,6 +628,12 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
         input.EndSection();
     }
 
+    if( input.Section( "EstAutonome", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bIsAutonomous_ = true;
+        input.EndSection();
+    }
+
     input.ReadField( "PorteeArmes", rWeaponsReach_, ADN_XmlInput_Helper::eNothing );
     input.ReadField( "PorteeCapteurs", rSensorsReach_, ADN_XmlInput_Helper::eNothing );
 
@@ -744,6 +752,12 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
     if( bCanFly_.GetData() )
     {
         output.Section( "PeutVoler" );
+        output.EndSection();
+    }
+
+    if( bIsAutonomous_.GetData() )
+    {
+        output.Section( "EstAutonome" );
         output.EndSection();
     }
 

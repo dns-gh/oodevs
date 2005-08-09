@@ -117,6 +117,9 @@ void ADN_Units_GUI::Build()
     // Can fly
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can fly" ), vInfosConnectors[eCanFly] );
 
+    // Is autonomous
+    builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Is autonomous (UAV)" ), vInfosConnectors[eIsAutonomous] );
+
     // Coup de sonde
     ADN_GroupBox* pReconGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scan" ), pGroup );
     vInfosConnectors[eCanProbe] = &pReconGroup->GetConnector();

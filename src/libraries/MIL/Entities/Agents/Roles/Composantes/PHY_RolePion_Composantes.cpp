@@ -558,7 +558,7 @@ void PHY_RolePion_Composantes::UpdateEtatOps()
         const MT_Float rRatioNonMajorComposantes = (MT_Float)nNbrUndamagedNonMajorComposantes_ / (MT_Float)nNbrNonMajorComposantes_;
 
         rNewEtatOps =   rRatioMajorComposantes    * rEtatOpsWeightMajorComposante_
-                    + rRatioNonMajorComposantes * rEtatOpsWeightNonMajorComposante_;
+                      + rRatioNonMajorComposantes * rEtatOpsWeightNonMajorComposante_;
     }    
 
     if( GetRole< PHY_RolePion_Humans >().GetNbrHumans() > 0 )
@@ -566,6 +566,9 @@ void PHY_RolePion_Composantes::UpdateEtatOps()
         const MT_Float rRatioHumans = (MT_Float)GetRole< PHY_RolePion_Humans >().GetNbrFullyAliveHumans() / (MT_Float)GetRole< PHY_RolePion_Humans >().GetNbrHumans();
         rNewEtatOps += rRatioHumans * rEtatOpsWeightHumans_;
     }
+    else
+        rNewEtatOps /= ( 1. - rEtatOpsWeightHumans_ ); // Le poids des 'humains' doit être nul
+
     assert( rNewEtatOps >= 0. && rNewEtatOps <= 1. );
     if( rNewEtatOps != rEtatOps_ )
     {

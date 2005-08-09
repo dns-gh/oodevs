@@ -191,6 +191,7 @@ public:
         ADN_Type_Double                                             rWeaponsReach_;
         ADN_Type_Double                                             rSensorsReach_;
         ADN_Type_Bool                                               bCanFly_;
+        ADN_Type_Bool                                               bIsAutonomous_;
 
         T_ComposanteInfos_Vector                                    vComposantes_;
         T_PostureInfos_Vector                                       vPostures_;

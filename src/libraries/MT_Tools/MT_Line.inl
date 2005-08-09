@@ -25,17 +25,6 @@ const MT_Vector2D& MT_Line::GetPosEnd() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_Line::IsWeldable
-// Created: FBD 02-11-14
-//-----------------------------------------------------------------------------
-INLINE
-bool MT_Line::IsWeldable( MT_Float rPrec ) const
-{
-    return( MT_flabs( pPosStart_->rX_ - pPosEnd_->rX_ ) < rPrec && MT_flabs( pPosStart_->rY_ - pPosEnd_->rY_ ) < rPrec );
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: MT_Line::GetCenter
 // Created: FBD 02-12-10
 //-----------------------------------------------------------------------------

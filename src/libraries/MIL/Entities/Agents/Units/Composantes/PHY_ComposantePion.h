@@ -222,7 +222,9 @@ private:
     void ApplyFire           ( const PHY_AttritionData& attritionData, PHY_AgentFireResult& fireResult );
     bool CanBeUsed           () const;
     bool CanBeUsedForMove    () const;
-    void ManageEndMaintenance(); 
+    void ManageEndMaintenance();
+
+    void CheckViability      ();
     //@}
 
 private:

@@ -10,9 +10,11 @@
 //*****************************************************************************
 
 #include "MIL_pch.h"
+
 #include "DEC_PathType.h"
 #include "DEC_Path.h"
 #include "DEC_PathClass.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 DEC_PathType::T_Rules DEC_PathType::rules_;
 
@@ -40,7 +42,7 @@ DEC_PathType::~DEC_PathType()
 // -----------------------------------------------------------------------------
 TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to )
 {
-    const bool bCanFly = path.CanQueryMakerFly();
+    const bool bCanFly = path.GetQueryMaker().CanFly();
     const DEC_PathClass* pClass = rules_[ T_RuleType( ConvertPathTypeToString(), bCanFly ) ];
     assert( pClass );
     return pClass->CreateRule( path, from, to );

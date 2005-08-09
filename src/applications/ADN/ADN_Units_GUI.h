@@ -64,6 +64,7 @@ public:
         eHasTC1,
         eHasStrengthRatioFeedbackTime,
         eCanFly,
+        eIsAutonomous,
         eWeaponsReach,
         eSensorsReach,
         eNbrGuiElements

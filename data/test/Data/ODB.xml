@@ -619,6 +619,13 @@
             <Position>31TBN7989872349</Position>
         </Pion>
         
+        <Pion id="6000047" type="Drone RENS" >
+            <LiensHierarchiques>
+                <Automate>5000007</Automate>
+            </LiensHierarchiques>
+            <Position>31TCN0070480048</Position>
+        </Pion>        
+        
     </Pions>
     
     <Objets>

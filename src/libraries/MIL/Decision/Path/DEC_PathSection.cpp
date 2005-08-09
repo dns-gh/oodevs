@@ -15,6 +15,7 @@
 #include "DEC_Path.h"
 #include "MIL_AgentServer.h"
 #include "DEC_Pathfind_Manager.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "pathfind/TerrainPathfinder.h"
 #include "pathfind/TerrainRule_ABC.h"
 
@@ -33,7 +34,7 @@ DEC_PathSection::DEC_PathSection( DEC_Path& path, DEC_PathType pathType, const M
     , nPendingRequests_( 0 )
 {
     pRule_   = &pathType.CreateRule( path, vStartPoint, vEndPoint );
-    bRefine_ = path.CanQueryMakerFly();
+    bRefine_ = path.GetQueryMaker().CanFly();
 }
 
 // -----------------------------------------------------------------------------

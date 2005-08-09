@@ -594,13 +594,12 @@ std::string TER_Localisation::ConvertLocalisationType( E_TypeLocalisation nType 
 //=============================================================================
             
 //-----------------------------------------------------------------------------
-// Name: TER_Localisation::ComputeNearestPointInPolygon
-// Calcule la position de la localisation la plus proche de vSrc, mais étant 
-// dans polygon_
+// Name: TER_Localisation::ComputeNearestPoint
+// Calcule la position de la localisation la plus proche de vSrc
 // Created: NLD 2003-07-24
 // Last modified: JVT 03-09-04
 //-----------------------------------------------------------------------------
-bool TER_Localisation::ComputeNearestPointInPolygon( const MT_Vector2D& vSrc, const TER_Polygon& polygon, MT_Vector2D& vResult ) const
+bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const
 {
     if( IsInside( vSrc ) )
     {
@@ -608,62 +607,32 @@ bool TER_Localisation::ComputeNearestPointInPolygon( const MT_Vector2D& vSrc, co
         return true;
     }
 
-    if( nType_ == ePoint )
+    if( pointVector_.size() == 1 )
     {
-        if( polygon.IsInside( pointVector_[0], rPrecision_ ) )
-        {
-            vResult = pointVector_[0];
-            return true;
-        }
-        return false;
+        vResult = pointVector_[ 0 ];
+        return true;
     }
 
-    // Detecte toutes les collisions entre le polygone et la localisation
+    MT_Float rShortestDist   = std::numeric_limits< MT_Float >::max();
     CIT_PointVector itPoint  = pointVector_.begin();
     const MT_Vector2D* pPos1 = &*itPoint;
-
-    MT_Float rShortestSquareDist = std::numeric_limits< MT_Float >::max();
     for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
     {
         const MT_Vector2D* pPos2 = &*itPoint;
-        MT_Line lineLocalisation( *pPos1, *pPos2 );
+        MT_Line lineTmp( *pPos1, *pPos2 );
 
-        TER_DistanceLess cmp( *pPos1 );
-        T_PointSet collisionSet( cmp );
-
-        polygon.Intersect2D( lineLocalisation, collisionSet, rPrecision_ );
-
-        collisionSet.insert( *pPos1 );
-        collisionSet.insert( *pPos2 );
-
-        // Collision set contient tous les points du segment découpé
-        //  => Determination du point le plus proche sur le segment découpé si celui ci 
-        //     est contenu dans le polygone
-        CIT_PointSet itStepPoint = collisionSet.begin();
-        const MT_Vector2D* pStepPos1 = &*itStepPoint;
-        for( ++itStepPoint ; itStepPoint != collisionSet.end(); ++itStepPoint )
+        MT_Vector2D vResultTmp = lineTmp.ClosestPointOnLine( vSrc );
+        MT_Float    rDistTmp   = vResultTmp.Distance( vSrc );
+        if( rDistTmp < rShortestDist )
         {
-            const MT_Vector2D* pStepPos2 = &*itStepPoint;
-            if( polygon.IsInside( *pStepPos1, rPrecision_ ) && polygon.IsInside( *pStepPos2, rPrecision_ ) )
-            {
-                MT_Line lineStepTmp( *pStepPos1, *pStepPos2 );
-
-                MT_Vector2D vResultTmp = lineStepTmp.ClosestPointOnLine( vSrc );
-                MT_Float    rDistTmp   = vResultTmp.SquareDistance( vSrc );
-                if( rDistTmp < rShortestSquareDist )
-                {
-                    rShortestSquareDist = rDistTmp;
-                    vResult = vResultTmp;
-                }
-            }
-            pStepPos1 = pStepPos2;
+            rShortestDist = rDistTmp;
+            vResult       = vResultTmp;
         }
         pPos1 = pPos2;
     }
-
-    return rShortestSquareDist != std::numeric_limits< MT_Float >::max();
+    assert( rShortestDist != std::numeric_limits< MT_Float >::max() );
+    return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::GetPointsClippedByPolygon

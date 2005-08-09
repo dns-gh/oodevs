@@ -209,12 +209,11 @@ public:
     //@}
 
     //! @name Accessors
-    //@{
-          uint           GetNbrComposantes      () const;
-          uint           GetNbrUsableComposantes() const;
-          bool           HasChanged             () const;
-          MT_Float       GetEtatOps             () const;
-    const MIL_AgentPion& GetPion                () const;
+    //@{          
+          bool           HasChanged() const;
+          bool           IsUsable  () const;  
+          MT_Float       GetEtatOps() const;
+    const MIL_AgentPion& GetPion   () const;
     //@}
 
     //! @name Network

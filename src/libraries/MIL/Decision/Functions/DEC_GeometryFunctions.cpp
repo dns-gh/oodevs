@@ -1107,7 +1107,7 @@ void DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisat
     vOrigin += vTranslation;
     MT_Droite frontBound ( vOrigin, vOrigin + vLineDirection );
 
-    while ( true )
+    while( true )
     {
         T_PointVector points;
         localisation.GetPointsClippedBetweenTwoLines( backBound, frontBound, points );

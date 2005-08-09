@@ -55,6 +55,7 @@ public:
           MT_Float                   GetCoupDeSondeWidth              () const;
           MT_Float                   GetCoefDecontaminationPerTimeStep() const;
           bool                       CanFly                           () const;
+          bool                       IsAutonomous                     () const;
     //@}
 
 private:
@@ -93,6 +94,7 @@ private:
           T_CommanderRepartitionMap commandersRepartition_;
           MT_Float                  rCoefDecontaminationPerTimeStep_;
           bool                      bCanFly_;
+          bool                      bIsAutonomous_; // Drones
 };
 
 #include "PHY_UnitType.inl"
