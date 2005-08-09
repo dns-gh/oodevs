@@ -31,9 +31,6 @@
 #include <signal.h>
 #include <windows.h>
 
-
-#include "Actions/Actions/Action_Magic_Move.h"
-#include "Actions/Scheduler.h"
 #include "TestSets/TestSet_Simple.h"
 
 using namespace TEST;
