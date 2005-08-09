@@ -21,12 +21,13 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Bug fix : la fonction DEC_Geometrie_CalculerPositionsParRapportALima() crashait quand la lima ne coupe pas le fuseau ...
     - NLD - Gestion des drônes :
                 * Dans les données, on peut maintenant spécifier '0' hommes constituant l'équipage
                 * Données : nouveau champ optionnel pion :
                         <EstAutonome/>
                 * Les drones ne sont plus brouillés       
-    - NLD/AGR - Bug fix : pb de précision dans DEC_Geometrie_CalculePointProcheLocalisationDansFuseau + nettoyage
+    - NLD/AGE - Bug fix : pb de précision dans DEC_Geometrie_CalculePointProcheLocalisationDansFuseau + nettoyage
     - NLD - Fonctions DEC
                 * Renommage DEC_TransfererBlessesVersTC2() en DEC_EvacuerBlessesVersTC2()
                 * new  B DEC_NecessiteEvacuationBlesses( A /*T_Pion pion interrogé*/ )
