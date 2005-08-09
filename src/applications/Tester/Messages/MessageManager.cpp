@@ -238,7 +238,7 @@ void MessageManager::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DI
     {
         KnowledgeGroup* pKnowledgeGroup = new KnowledgeGroup( nId, input );
         KnowledgeGroup::Register( *pKnowledgeGroup );
-        //MT_LOG_INFO_MSG( "TEST -> MM - Knowledge Group created ID#" << nId );
+        MT_LOG_INFO_MSG( "TEST -> MM - Knowledge Group created ID#" << nId );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Knowledge Group with ID#" << nId << " already created" );
@@ -256,7 +256,7 @@ void MessageManager::OnReceiveMsgTeam( DIN::DIN_Link& /*linkForm*/, DIN::DIN_Inp
     {
         Team* pTeam = new Team( nId, input );
         Team::Register( *pTeam );
-        //MT_LOG_INFO_MSG( "TEST -> MM - Team created ID#" << nId );
+        MT_LOG_INFO_MSG( "TEST -> MM - Team created ID#" << nId );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Team with ID#" << nId << " already created" );
@@ -438,6 +438,8 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateBegin()
 void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
     MT_LOG_INFO_MSG( "End current state..." );
+    // create default limits
+    TacticalLineManager::UpdateToSim();
     // load tests
     TestManager::GetTestManager().GetTestSet().Load( TestManager::GetTestManager().GetScheduler() );
     // run scheduler
@@ -737,7 +739,7 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
     std::stringstream strOutputMsg;
     strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] "
                  << "PionOrderAck - Code: " << asnMsg.error_code;
-    MT_LOG_ERROR_MSG( strOutputMsg.str().c_str() );
+    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
 //-----------------------------------------------------------------------------
