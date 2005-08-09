@@ -45,6 +45,17 @@ public:
     static void Terminate ();
     //@}
 
+    //! @name Accessors
+    //@{
+    static double GetWorldWidth ();
+    static double GetWorldHeight();
+    //@}
+
+    //! @name Modifiers
+    //@{
+    static void SetWorldBoundaries( double rWidth, double rHeight );
+    //@}
+
 private:
 	//! @name Constructors/Destructor
     //@{
@@ -52,9 +63,18 @@ private:
     virtual ~PositionManager();
     //@}
 
+private:
+    //! @name Member data
+    //@{
+    static double rWorldWidth_;
+    static double rWorldHeight_;
+    //@}
+
 };
 
 
 } // end namespace TIC
+
+#include "PositionManager.inl"
 
 #endif // __PositionManager_h_

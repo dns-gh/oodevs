@@ -7,35 +7,25 @@
 //
 // *****************************************************************************
 //
-// $Created: $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Tools/PositionManager.inl $
-// $Author: Sbo $
-// $Modtime: 23/05/05 16:56 $
-// $Revision: 1 $
-// $Workfile: PositionManager.inl $
+// $Created: SBO 2005-08-09 $
+// $Archive: $
+// $Author: $
+// $Modtime: $
+// $Revision: $
+// $Workfile: $
 //
 // *****************************************************************************
 
 namespace TEST {
 
 // -----------------------------------------------------------------------------
-// Name: PositionManager::GetWorldWidth
+// Name: TacticalLine_Lima::GetLineType
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-double PositionManager::GetWorldWidth()
+TacticalLine_ABC::E_LineType TacticalLine_Lima::GetLineType() const
 {
-    return rWorldWidth_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PositionManager::GetWorldHeight
-// Created: SBO 2005-08-09
-// -----------------------------------------------------------------------------
-inline
-double PositionManager::GetWorldHeight()
-{
-    return rWorldHeight_;
+    return TacticalLine_ABC::eLima;
 }
 
 } // end namespace TEST

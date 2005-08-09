@@ -25,8 +25,6 @@
 
 using namespace TEST;
 
-IDManager IDManager::orderIDManager_( 145 );
-
 //-----------------------------------------------------------------------------
 // Name: IDManager constructor
 // Created: NLD 2003-02-28

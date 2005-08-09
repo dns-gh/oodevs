@@ -26,6 +26,7 @@
 #include "Entities/Automat.h"
 #include "Entities/Pawn.h"
 #include "Entities/Object.h"
+#include "Entities/TacticalLines/TacticalLineManager.h"
 
 #include "Entities/Types/AutomatType.h"
 #include "Entities/Types/PawnType.h"
@@ -41,11 +42,11 @@ using namespace TEST;
 EntityManager::EntityManager()
 {
     // entities 
-    Automat       ::Initialize();
-    Pawn          ::Initialize();
-    Team          ::Initialize();
-    KnowledgeGroup::Initialize();
-    Object        ::Initialize();
+    Automat            ::Initialize();
+    Pawn               ::Initialize();
+    Team               ::Initialize();
+    KnowledgeGroup     ::Initialize();
+    Object             ::Initialize();
 }
 
 //-----------------------------------------------------------------------------
@@ -55,15 +56,15 @@ EntityManager::EntityManager()
 EntityManager::~EntityManager()
 {
     // entity types
-    AutomatType   ::Terminate();
-    PawnType      ::Terminate();
+    AutomatType        ::Terminate();
+    PawnType           ::Terminate();
 
     // entities
-    Automat       ::Terminate();
-    Pawn          ::Terminate();
-    Team          ::Terminate();
-    KnowledgeGroup::Terminate();
-    Object        ::Terminate();
+    Automat            ::Terminate();
+    Pawn               ::Terminate();
+    Team               ::Terminate();
+    KnowledgeGroup     ::Terminate();
+    Object             ::Terminate();
 }
 
 //-----------------------------------------------------------------------------

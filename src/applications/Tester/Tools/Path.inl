@@ -48,7 +48,7 @@ void Path::Clear()
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 inline
-const Path::T_PositionVector& Path::GetPath() const
+const T_PositionVector& Path::GetPath() const
 {
     return path_;
 }

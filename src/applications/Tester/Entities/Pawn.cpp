@@ -23,6 +23,7 @@
 #include "Entities/Types/PawnType.h"
 #include "Tools/Path.h"
 #include "Tools/Position.h"
+#include "TacticalLines/TacticalLineManager.h"
 
 using namespace TEST;
 
@@ -40,10 +41,13 @@ Pawn::Pawn( const ASN1T_MsgPionCreation& asnMsg )
     , pAutomat_         ( Automat::Find( asnMsg.oid_automate ) )
     , bIsPc_            ( false )
     , bIsLoaded_        ( false )
+    , limits_           ()
 {
     assert( pType_ );
     assert( pAutomat_ );
     pAutomat_->AttachPawn( *this );
+    limits_[ 0 ] = 0;
+    limits_[ 1 ] = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -58,6 +62,7 @@ Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
     , pAutomat_         ( &automat )
     , bIsPc_            ( true )
     , bIsLoaded_        ( false )
+    , limits_           ()
 {
     // retrieve PC type for the parent automat
     const AutomatType *pAutomatType = AutomatType::Find( asnMsg.type_automate );
@@ -67,6 +72,8 @@ Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
 
     assert( pAutomat_ );
     pAutomat_->AttachPawn( *this );
+    limits_[ 0 ] = 0;
+    limits_[ 1 ] = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -185,18 +192,28 @@ Position& Pawn::GetTP_Position() const
 // Name: Pawn::GetTP_LeftLimit
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_LeftLimit() const
+uint Pawn::GetTP_LeftLimit()
 {
-    return 0;
-}
+    // if left limit is not ser get an existing limit which is not the right limit
+    if( limits_[ 0 ] == 0 )
+        limits_[ 0 ] = TacticalLineManager::GetLimitIdExcluding( limits_[ 1 ] );
+    // at least world border limits should exist
+    assert( limits_[ 0 ] );
+    return limits_[ 0 ];
+ }
 
 // -----------------------------------------------------------------------------
 // Name: Pawn::GetTP_RightLimit
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_RightLimit() const
+uint Pawn::GetTP_RightLimit()
 {
-    return 0;
+    // if right limit is not ser get an existing limit which is not the left limit
+    if( limits_[ 1 ] == 0 )
+        limits_[ 1 ] = TacticalLineManager::GetLimitIdExcluding( limits_[ 0 ] );
+    // at least world border limits should exist
+    assert( limits_[ 1 ] );
+    return limits_[ 1 ];
 }
 
 // -----------------------------------------------------------------------------

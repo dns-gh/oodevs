@@ -39,14 +39,6 @@ namespace TEST
 class Path
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::vector< Position* >                 T_PositionVector;
-    typedef T_PositionVector::const_iterator         CIT_PositionVector;
-    typedef T_PositionVector::const_reverse_iterator CRIT_PositionVector;
-    //@}
-
-public:
 	//! @name Constructors/Destructor
     //@{
              Path();

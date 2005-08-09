@@ -75,8 +75,8 @@ public:
     //! @name Test Parameters
     //@{
     Position&   GetTP_Position         () const;
-    uint        GetTP_LeftLimit        () const;
-    uint        GetTP_RightLimit       () const;
+    uint        GetTP_LeftLimit        ();
+    uint        GetTP_RightLimit       ();
     T_IdVector& GetTP_Limas            () const;
     uint        GetTP_DangerDirection  () const;
     Path&       GetTP_Path             () const;
@@ -137,6 +137,7 @@ private:
     Path             path_;
 
     bool             bIsLoaded_;
+    T_IdVector       limits_; // [0] => left, [1] => right
     //@}
 
 private:

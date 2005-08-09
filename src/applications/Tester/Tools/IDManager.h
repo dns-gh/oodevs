@@ -42,12 +42,6 @@ class IDManager
     MT_COPYNOTALLOWED( IDManager )
 
 public:
-    //! @name ID Managers
-    //@{
-    static IDManager    orderIDManager_;
-    //@}
-
-public:
      IDManager( uint nMOSClassID, uint nStartInstanceID = 0 );
     ~IDManager();
 

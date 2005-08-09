@@ -7,35 +7,26 @@
 //
 // *****************************************************************************
 //
-// $Created: $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Tools/PositionManager.inl $
-// $Author: Sbo $
-// $Modtime: 23/05/05 16:56 $
-// $Revision: 1 $
-// $Workfile: PositionManager.inl $
+// $Created: SBO 2005-08-09 $
+// $Archive: $
+// $Author: $
+// $Modtime: $
+// $Revision: $
+// $Workfile: $
 //
 // *****************************************************************************
 
 namespace TEST {
 
 // -----------------------------------------------------------------------------
-// Name: PositionManager::GetWorldWidth
+// Name: TacticalLine_ABC::GetId
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-double PositionManager::GetWorldWidth()
+T_EntityId TacticalLine_ABC::GetId() const
 {
-    return rWorldWidth_;
+    return nId_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PositionManager::GetWorldHeight
-// Created: SBO 2005-08-09
-// -----------------------------------------------------------------------------
-inline
-double PositionManager::GetWorldHeight()
-{
-    return rWorldHeight_;
-}
 
 } // end namespace TEST

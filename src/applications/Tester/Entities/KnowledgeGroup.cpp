@@ -18,7 +18,7 @@
 
 #include "Tester_Pch.h"
 #include "KnowledgeGroup.h"
-#include "PawnKnowledge.h"
+#include "Knowledges/PawnKnowledge.h"
 #include "Team.h"
 #include "Pawn.h"
 

@@ -31,6 +31,10 @@
 #include "Entities/Pawn.h"
 #include "Entities/Object.h"
 
+#include "Entities/TacticalLines/TacticalLineManager.h"
+#include "Entities/TacticalLines/TacticalLine_Limit.h"
+#include "Entities/TacticalLines/TacticalLine_Lima.h"
+
 #include "Actions/Scheduler.h"
 #include "TestSets/TestSet_ABC.h"
 
@@ -734,6 +738,54 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
     strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] "
                  << "PionOrderAck - Code: " << asnMsg.error_code;
     MT_LOG_ERROR_MSG( strOutputMsg.str().c_str() );
+}
+
+//-----------------------------------------------------------------------------
+// LIMITS/LIMAS MANAGEMENT
+//=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgLimitCreation
+// Created: SBO 2005-08-09
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation& asnMsg )
+{
+    TacticalLine_Limit* pLimit = new TacticalLine_Limit( asnMsg );
+    assert( pLimit );
+    TacticalLineManager::Register( *pLimit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgLimitDestruction
+// Created: SBO 2005-08-09
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestruction& asnMsg )
+{
+    TacticalLine_ABC* pLimit = TacticalLineManager::Find( asnMsg );
+    if( pLimit )
+        TacticalLineManager::UnRegister( *pLimit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgLimaCreation
+// Created: SBO 2005-08-09
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& asnMsg )
+{
+    TacticalLine_Lima* pLima = new TacticalLine_Lima( asnMsg );
+    assert( pLima );
+    TacticalLineManager::Register( *pLima );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgLimaDestruction
+// Created: SBO 2005-08-09
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruction& asnMsg )
+{
+    TacticalLine_ABC* pLima = TacticalLineManager::Find( asnMsg );
+    if( pLima )
+        TacticalLineManager::UnRegister( *pLima );
 }
 
 //-----------------------------------------------------------------------------

@@ -164,6 +164,13 @@ private:
     void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
     //@}
 
+    //! @name Limits/Limas
+    //@{
+    void OnReceiveMsgLimitCreation            ( const ASN1T_MsgLimitCreation&    asnMsg );
+    void OnReceiveMsgLimitDestruction         ( const ASN1T_MsgLimitDestruction& asnMsg );
+    void OnReceiveMsgLimaCreation             ( const ASN1T_MsgLimaCreation&     asnMsg );
+    void OnReceiveMsgLimaDestruction          ( const ASN1T_MsgLimaDestruction&  asnMsg );
+    //@}
 
     // Hierarchy changes
     void OnReceiveMsgChangeAutomat            ( const ASN1T_MsgChangeAutomate& asnMsg );

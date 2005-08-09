@@ -19,6 +19,7 @@
 #include "Tester_Pch.h"
 #include "Types.h"
 #include "Position.h"
+#include "PositionManager.h"
 
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 #include "geometry/Point2.h"
@@ -121,24 +122,26 @@ void Position::Initialize( const std::string& strWorldConfigFile )
 
         float             rMiddleLatitude;
         float             rMiddleLongitude;
-        uint              nWorldWidth;
-        uint              nWorldHeight;
+        double            rWorldWidth;
+        double            rWorldHeight;
 
         archive.Open      ( strWorldConfigFile            );
         archive.ReadField ( "Latitude" , rMiddleLatitude  );
         archive.ReadField ( "Longitude", rMiddleLongitude );
-        archive.ReadField ( "Width"    , nWorldWidth      );
-        archive.ReadField ( "Height"   , nWorldHeight     );
+        archive.ReadField ( "Width"    , rWorldWidth      );
+        archive.ReadField ( "Height"   , rWorldHeight     );
         archive.Close     (                               );
 
         // mgrs conversion
         pParameters_  = new PlanarCartesian::Parameters( rMiddleLatitude  * std::acos( -1. ) / 180., 
                                                          rMiddleLongitude * std::acos( -1. ) / 180. );
         pPlanar_      = new PlanarCartesian            ( *pParameters_ );
-        pTranslation_ = new Point2< double >( nWorldWidth * 0.5, nWorldHeight * 0.5 );
+        pTranslation_ = new Point2< double >( rWorldWidth * 0.5, rWorldHeight * 0.5 );
         
         // wgs84 conversion
         pGeodetic_    = new Geodetic();
+
+        PositionManager::SetWorldBoundaries( rWorldWidth, rWorldHeight );
 
         MT_ChangeDir     ( strCurrentDir );
     }

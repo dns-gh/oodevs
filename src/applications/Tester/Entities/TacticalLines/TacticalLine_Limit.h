@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-08 $
+// $Created: SBO 2005-08-09 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,32 +16,32 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_ABC_h_
-#define __Mission_Pawn_ABC_h_
+#ifndef __TacticalLine_Limit_h_
+#define __TacticalLine_Limit_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
-#include "Actions/Actions/Action.h"
-#include "Messages/ASN_Messages.h"
+#include "Types.h"
+#include "TacticalLine_ABC.h"
+#include "Tools/Position.h"
 #include "Tools/IDManager.h"
+#include "Messages/ASN_Messages.h"
 
 namespace TEST {
 
-    class Pawn;
-
 // =============================================================================
-/** @class  Mission_Pawn_ABC
-    @brief  Mission_Pawn_ABC
+/** @class  TacticalLine_Limit
+    @brief  TacticalLine_Limit
     @par    Using example
     @code
-    Mission_Pawn_ABC;
+    TacticalLine_Limit;
     @endcode
 */
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-09
 // =============================================================================
-class Mission_Pawn_ABC : public Action< Pawn >
+class TacticalLine_Limit : public TacticalLine_ABC
 {
 
 public:
@@ -53,25 +53,31 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_ABC( Pawn& target, uint nExecutionTick = 0 );
-    virtual ~Mission_Pawn_ABC();
+             TacticalLine_Limit( T_PositionVector& points );
+             TacticalLine_Limit( const ASN1T_MsgLimitCreation& asnMsg );
+    virtual ~TacticalLine_Limit();
     //@}
 
-protected:
-    //! @name Action validation and commit
+    //! @name Accessors
     //@{
-    virtual void Serialize();
-    virtual void Send     ();
-    virtual void Clean    ();
+    virtual TacticalLine_ABC::E_LineType GetLineType() const;
     //@}
 
-protected:
-    //! @name Member data
+    //! @name Operations
     //@{
-    MOS_ASN_MsgPionOrder asnMsg_;
+    virtual bool UpdateToSim();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    TacticalLine_Limit( const TacticalLine_Limit& );            //!< Copy constructor
+    TacticalLine_Limit& operator=( const TacticalLine_Limit& ); //!< Assignment operator
     //@}
 };
 
-} // end namespace Mission
+} // end namespace TacticalLine
 
-#endif // __Mission_Pawn_ABC_h_
+#include "TacticalLine_Limit.inl"
+
+#endif // __TacticalLine_Limit_h_

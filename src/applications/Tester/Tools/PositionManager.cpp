@@ -25,6 +25,9 @@
 
 using namespace TEST;
 
+double PositionManager::rWorldWidth_;
+double PositionManager::rWorldHeight_;
+
 //-----------------------------------------------------------------------------
 // Name: PositionManager::PositionManager
 // Created: SBO 2005-05-23
@@ -80,4 +83,14 @@ void PositionManager::Initialize( const std::string& strWorldConfigFile )
 void PositionManager::Terminate()
 {
     Position::Terminate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PositionManager::SetWorldBoundaries
+// Created: SBO 2005-08-09
+// -----------------------------------------------------------------------------
+void PositionManager::SetWorldBoundaries( double rWidth, double rHeight )
+{
+    rWorldWidth_  = rWidth;
+    rWorldHeight_ = rHeight;
 }

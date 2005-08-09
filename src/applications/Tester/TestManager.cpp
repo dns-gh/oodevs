@@ -23,6 +23,7 @@
 #include "Network/NetworkManager.h"
 #include "Entities/EntityManager.h"
 #include "Tools/PositionManager.h"
+#include "Entities/TacticalLines/TacticalLineManager.h"
 #include "Actions/Scheduler.h"
 
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
@@ -58,7 +59,8 @@ void TestManager::Terminate()
     assert( pTestManager_ );
     delete pTestManager_;
 
-    PositionManager::Terminate();
+    TacticalLineManager::Terminate();
+    PositionManager    ::Terminate();
 }
 
 //-----------------------------------------------------------------------------
@@ -153,6 +155,8 @@ void TestManager::LoadScipioConfigFile( const std::string& strScipioConfigFile )
         // entity position manager
         archive.ReadField          ( "Terrain"    , strConfigFile );
         PositionManager::Initialize( strConfigFile );
+        // once world is initialized, initialize tactical line manager
+        TacticalLineManager::Initialize();
 
         pEntityManager_->Initialize( archive );
 

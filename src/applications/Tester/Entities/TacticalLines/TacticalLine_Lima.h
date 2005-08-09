@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-08 $
+// $Created: SBO 2005-08-09 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,32 +16,32 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_ABC_h_
-#define __Mission_Pawn_ABC_h_
+#ifndef __TacticalLine_Lima_h_
+#define __TacticalLine_Lima_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
-#include "Actions/Actions/Action.h"
-#include "Messages/ASN_Messages.h"
+#include "Types.h"
+#include "TacticalLine_ABC.h"
+#include "Tools/Position.h"
 #include "Tools/IDManager.h"
+#include "Messages/ASN_Messages.h"
 
 namespace TEST {
 
-    class Pawn;
-
 // =============================================================================
-/** @class  Mission_Pawn_ABC
-    @brief  Mission_Pawn_ABC
+/** @class  TacticalLine_Lima
+    @brief  TacticalLine_Lima
     @par    Using example
     @code
-    Mission_Pawn_ABC;
+    TacticalLine_Lima;
     @endcode
 */
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-09
 // =============================================================================
-class Mission_Pawn_ABC : public Action< Pawn >
+class TacticalLine_Lima : public TacticalLine_ABC
 {
 
 public:
@@ -53,25 +53,32 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_ABC( Pawn& target, uint nExecutionTick = 0 );
-    virtual ~Mission_Pawn_ABC();
+             TacticalLine_Lima( T_PositionVector& points );
+             TacticalLine_Lima( const ASN1T_MsgLimaCreation& asnMsg );
+    virtual ~TacticalLine_Lima();
     //@}
 
-protected:
-    //! @name Action validation and commit
+    //! @name Accessors
     //@{
-    virtual void Serialize();
-    virtual void Send     ();
-    virtual void Clean    ();
+    virtual TacticalLine_ABC::E_LineType GetLineType() const;
     //@}
 
-protected:
-    //! @name Member data
+    //! @name Operations
     //@{
-    MOS_ASN_MsgPionOrder asnMsg_;
+    virtual bool UpdateToSim();
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    TacticalLine_Lima( const TacticalLine_Lima& );            //!< Copy constructor
+    TacticalLine_Lima& operator=( const TacticalLine_Lima& ); //!< Assignment operator
+    //@}
+
 };
 
-} // end namespace Mission
+} // end namespace TEST
 
-#endif // __Mission_Pawn_ABC_h_
+#include "TacticalLine_Lima.inl"
+
+#endif // __TacticalLine_Lima_h_

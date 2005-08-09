@@ -18,7 +18,7 @@
 
 #include "Tester_Pch.h"
 #include "Team.h"
-#include "ObjectKnowledge.h"
+#include "Knowledges/ObjectKnowledge.h"
 
 using namespace TEST;
 

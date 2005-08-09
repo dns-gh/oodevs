@@ -158,5 +158,12 @@ MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( UnitMagicAction  , unit_magic_action   )
 
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( PionOrder, pion_order )
 
+MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( LimitCreation, limit_creation )
+MOS_GENERATE_SEND_ASN_MSG_NOPTR_CTX( LimitDestruction, limit_destruction )
+//MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( LimitUpdate, limit_update )
+
+MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( LimaCreation, lima_creation )
+MOS_GENERATE_SEND_ASN_MSG_NOPTR_CTX( LimaDestruction, lima_destruction )
+//MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( LimaUpdate, lima_update )
 
 #endif // __ASN_Messages_h_

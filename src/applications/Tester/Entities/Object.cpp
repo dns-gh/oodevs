@@ -53,7 +53,7 @@ Object::Object( const ASN1T_MsgObjectCreation& asnMsg )
 //-----------------------------------------------------------------------------
 Object::~Object()
 {
-    for( Path::CIT_PositionVector it = positionVector_.begin(); it != positionVector_.end(); ++it )
+    for( CIT_PositionVector it = positionVector_.begin(); it != positionVector_.end(); ++it )
         delete *it;
     positionVector_.clear();
 }

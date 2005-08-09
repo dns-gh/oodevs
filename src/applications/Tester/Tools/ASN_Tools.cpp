@@ -174,7 +174,7 @@ void ASN_Tools::CopyPosition( const Position& position, ASN1T_Point& asn )
 // -----------------------------------------------------------------------------
 void ASN_Tools::CopyPath( const Path& path, ASN1T_Itineraire& asn )
 {
-    const Path::T_PositionVector& posVector = path.GetPath();
+    const T_PositionVector& posVector = path.GetPath();
 
     asn.type            = EnumTypeLocalisation::line;
     asn.vecteur_point.n = posVector.size(); 
@@ -184,7 +184,7 @@ void ASN_Tools::CopyPath( const Path& path, ASN1T_Itineraire& asn )
     ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
     asn.vecteur_point.elem = pCoord;
     uint i = 0;
-    for( Path::CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
+    for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
         CopyPosition( **it, pCoord[ i++ ] );
 }
 

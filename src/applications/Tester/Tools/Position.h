@@ -111,6 +111,16 @@ private:
 };
 
 
+//! @name Types
+//@{
+typedef std::vector< Position* >                 T_PositionVector;
+typedef std::vector< const Position* >           CT_PositionVector;
+typedef T_PositionVector::iterator               IT_PositionVector;
+typedef T_PositionVector::const_iterator         CIT_PositionVector;
+typedef T_PositionVector::const_reverse_iterator CRIT_PositionVector;
+//@}
+
+
 } // end namespace TEST
 
 #include "Position.inl"

@@ -24,7 +24,7 @@
 #endif
 
 #include "Types.h"
-#include "Tools/Path.h"
+#include "Tools/Position.h"
 
 namespace TEST {
 
@@ -86,7 +86,7 @@ private:
     Team*                  pTeam_;
     uint                   nType_;
     uint                   nTypeLocalisation_;
-    Path::T_PositionVector positionVector_;
+    T_PositionVector positionVector_;
 
     // global automat list
     static T_ObjectMap  objects_;
