@@ -55,8 +55,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::string, bool >         T_RuleType;
-    typedef std::map< T_RuleType, DEC_PathClass* > T_Rules;
+    typedef std::pair< bool, bool >                 T_BooleanPair;
+    typedef std::pair< std::string, T_BooleanPair > T_RuleType;
+    typedef std::map< T_RuleType, DEC_PathClass* >  T_Rules;
     //@}
 
     //! @name Helpers

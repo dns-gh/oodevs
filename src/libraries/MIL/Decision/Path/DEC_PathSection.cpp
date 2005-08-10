@@ -34,7 +34,7 @@ DEC_PathSection::DEC_PathSection( DEC_Path& path, DEC_PathType pathType, const M
     , nPendingRequests_( 0 )
 {
     pRule_   = &pathType.CreateRule( path, vStartPoint, vEndPoint );
-    bRefine_ = path.GetQueryMaker().CanFly();
+    bRefine_ = path.GetQueryMaker().CanFly() && ! path.GetQueryMaker().IsAutonomous();
 }
 
 // -----------------------------------------------------------------------------

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Rules>
-    <!-- Base rule -->
-    <Rule type="base" flying="false">
+    <!-- =========== -->
+    <!-- Melee rules -->
+    <!-- =========== -->
+    <Rule type="base" flying="false" autonomous="false">
         <GoStraight>false</GoStraight>
         <PreferTerrain strength="2"/>
         <AvoidTerrain strength="7"/>
@@ -25,7 +27,84 @@
         </Enemies>
     </Rule>
     
-    <Rule type="base" flying="true">
+    <Rule type="movement" flying="false" autonomous="false" inherits="base">
+        <PreferTerrain>
+            <Terrain type="chemin"/>
+            <Terrain type="departementale"/>
+            <Terrain type="nationale"/>
+            <Terrain type="autoroute"/>
+        </PreferTerrain>
+    </Rule>
+    
+    <Rule type="recon" flying="false" autonomous="false" inherits="base">
+        <PreferTerrain>
+            <Terrain type="lisiere"/>
+            <Terrain type="chemin"/>
+            <Terrain type="departementale"/>
+            <Terrain type="nationale"/>
+            <Terrain type="autoroute"/>
+        </PreferTerrain>
+        <AltitudePreference>0.001</AltitudePreference>
+    </Rule>
+    
+    <Rule type="infiltration" flying="false" autonomous="false" inherits="base">
+        <PreferTerrain>
+            <Terrain type="foret"/>
+        </PreferTerrain>
+        <AvoidTerrain>
+            <Terrain type="urbain"/>
+        </AvoidTerrain>
+        <AltitudePreference>-0.001</AltitudePreference>
+        <Enemies>
+            <CostOnContact>100</CostOnContact>
+            <CostAtSecurityRange>10</CostAtSecurityRange>
+            <MaximumCost>100</MaximumCost>
+        </Enemies>
+    </Rule>
+    
+    <Rule type="assault" flying="false" autonomous="false" inherits="base">
+         <AvoidTerrain>
+            <Terrain type="chemin"/>
+            <Terrain type="departementale"/>
+            <Terrain type="nationale"/>
+            <Terrain type="autoroute"/>
+        </AvoidTerrain>
+    </Rule>
+    
+    <Rule type="retreat" flying="false" autonomous="false" inherits="base">
+        <GoStraight>true</GoStraight>
+        <Fuseau>
+            <ToleratedDistanceOutside>
+                <WithoutAutomata>100000000</WithoutAutomata>
+                <WithAutomata>1000000000</WithAutomata>
+            </ToleratedDistanceOutside>
+        </Fuseau>
+        <DangerDirection>
+            <BaseCostBeyond>5</BaseCostBeyond>
+            <CostPerMeterBeyond>0.01</CostPerMeterBeyond>
+        </DangerDirection>
+        <Enemies>
+            <CostOnContact>100</CostOnContact>
+            <CostAtSecurityRange>10</CostAtSecurityRange>
+        </Enemies>
+    </Rule>
+    
+    <Rule type="backup" flying="false" autonomous="false" inherits="base">
+        <GoStraight>true</GoStraight>
+        <Enemies>
+            <CostOnContact>100</CostOnContact>
+            <CostAtSecurityRange>10</CostAtSecurityRange>
+        </Enemies>
+    </Rule>
+    
+    <Rule type="minesweep" flying="false" autonomous="false" inherits="movement">
+        <AvoidObjects>false</AvoidObjects>
+    </Rule>
+    
+    <!-- ================== -->
+    <!-- Flying stuff rules -->
+    <!-- ================== -->
+    <Rule type="base" flying="true" autonomous="false">
         <GoStraight>false</GoStraight>
         <PreferTerrain strength="2"/>
         <AvoidTerrain strength="7"/>
@@ -49,16 +128,7 @@
         </Enemies>
     </Rule>
     
-    <!-- Movement rule -->
-    <Rule type="movement" flying="false" inherits="base">
-        <PreferTerrain>
-            <Terrain type="chemin"/>
-            <Terrain type="departementale"/>
-            <Terrain type="nationale"/>
-            <Terrain type="autoroute"/>
-        </PreferTerrain>
-    </Rule>
-    <Rule type="movement" flying="true" inherits="base">
+    <Rule type="movement" flying="true" autonomous="false" inherits="base">
         <AvoidTerrain>
             <Terrain type="lisiere"/>
             <Terrain type="urbain"/>
@@ -70,118 +140,121 @@
         </AvoidTerrain>
     </Rule>
     
-    <!-- Recon rule -->
-    <Rule type="recon" flying="false" inherits="base">
-        <PreferTerrain>
-            <Terrain type="lisiere"/>
-            <Terrain type="chemin"/>
-            <Terrain type="departementale"/>
-            <Terrain type="nationale"/>
-            <Terrain type="autoroute"/>
-        </PreferTerrain>
-        <AltitudePreference>0.001</AltitudePreference>
-    </Rule>
-    <Rule type="recon" flying="true" inherits="base">
+    <Rule type="recon" flying="true" autonomous="false" inherits="base">
         <AvoidTerrain>
             <Terrain type="urbain"/>
         </AvoidTerrain>
+    </Rule>
+    
+    <Rule type="infiltration" flying="true" autonomous="false" inherits="movement">
+        <AltitudePreference>-0.001</AltitudePreference>
+        <Enemies>
+            <CostOnContact>100</CostOnContact>
+            <CostAtSecurityRange>10</CostAtSecurityRange>
+        </Enemies>
+    </Rule>
+    
+    <Rule type="assault" flying="true" autonomous="false" inherits="base"/>
+    
+    <Rule type="retreat" flying="true" autonomous="false" inherits="base">
+        <GoStraight>true</GoStraight>
+        <AvoidTerrain/>
+        <Fuseau>
+            <ToleratedDistanceOutside>
+                <WithoutAutomata>100000000</WithoutAutomata>
+                <WithAutomata>1000000000</WithAutomata>
+            </ToleratedDistanceOutside>
+        </Fuseau>
+        <DangerDirection>
+            <BaseCostBeyond>5</BaseCostBeyond>
+            <CostPerMeterBeyond>0.01</CostPerMeterBeyond>
+        </DangerDirection>
+        <Enemies>
+            <CostOnContact>100</CostOnContact>
+            <CostAtSecurityRange>10</CostAtSecurityRange>
+        </Enemies>
+    </Rule>
+    
+    <Rule type="backup" flying="true" autonomous="false" inherits="base">
+        <GoStraight>true</GoStraight>
+        <AvoidTerrain/>
+        <Enemies>
+            <CostOnContact>100</CostOnContact>
+            <CostAtSecurityRange>10</CostAtSecurityRange>
+        </Enemies>
+    </Rule>
+    
+    <Rule type="minesweep" flying="true" autonomous="false" inherits="movement">
+        <AvoidObjects>false</AvoidObjects>
+    </Rule>
+    
+    <!-- =========== -->
+    <!-- Drone rules -->
+    <!-- =========== -->
+    <Rule type="base" flying="false" autonomous="true">
+        <GoStraight>true</GoStraight>
+        <PreferTerrain strength="2"/>
+        <AvoidTerrain strength="7"/>
+        <AvoidObjects>false</AvoidObjects>
+        <Fuseau>
+            <ToleratedDistanceOutside costPerMeter="0">
+                <WithoutAutomata>10000000</WithoutAutomata>
+                <WithAutomata>10000000</WithAutomata>
+            </ToleratedDistanceOutside>
+            <ComfortDistanceInside costPerMeter="0">0</ComfortDistanceInside>
+        </Fuseau>
+        <DangerDirection>
+            <BaseCostBeyond>0</BaseCostBeyond>
+            <CostPerMeterBeyond>0</CostPerMeterBeyond>
+        </DangerDirection>
+        <Enemies>
+            <CostOnContact>0</CostOnContact>
+            <CostAtSecurityRange>0</CostAtSecurityRange>
+            <MaximumCost>0</MaximumCost>
+        </Enemies>
+    </Rule>
+    <Rule type="base" flying="true" autonomous="true">
+        <GoStraight>true</GoStraight>
+        <PreferTerrain strength="2"/>
+        <AvoidTerrain strength="7"/>
+        <AvoidObjects>false</AvoidObjects>
+        <Fuseau>
+            <ToleratedDistanceOutside costPerMeter="0">
+                <WithoutAutomata>10000000</WithoutAutomata>
+                <WithAutomata>10000000</WithAutomata>
+            </ToleratedDistanceOutside>
+            <ComfortDistanceInside costPerMeter="0">0</ComfortDistanceInside>
+        </Fuseau>
+        <DangerDirection>
+            <BaseCostBeyond>0</BaseCostBeyond>
+            <CostPerMeterBeyond>0</CostPerMeterBeyond>
+        </DangerDirection>
+        <Enemies>
+            <CostOnContact>0</CostOnContact>
+            <CostAtSecurityRange>0</CostAtSecurityRange>
+            <MaximumCost>0</MaximumCost>
+        </Enemies>
     </Rule>
 
-    <!-- Inflitration rule -->
-    <Rule type="infiltration" flying="false" inherits="base">
-        <PreferTerrain>
-            <Terrain type="foret"/>
-        </PreferTerrain>
-        <AvoidTerrain>
-            <Terrain type="urbain"/>
-        </AvoidTerrain>
-        <AltitudePreference>-0.001</AltitudePreference>
-        <Enemies>
-            <CostOnContact>100</CostOnContact>
-            <CostAtSecurityRange>10</CostAtSecurityRange>
-            <MaximumCost>100</MaximumCost>
-        </Enemies>
-    </Rule>
-    <Rule type="infiltration" flying="true" inherits="movement">
-        <AltitudePreference>-0.001</AltitudePreference>
-        <Enemies>
-            <CostOnContact>100</CostOnContact>
-            <CostAtSecurityRange>10</CostAtSecurityRange>
-        </Enemies>
-    </Rule>
+    <Rule type="movement" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="movement" flying="true" autonomous="true" inherits="base"/>
     
-    <!-- Assault rule -->
-    <Rule type="assault" flying="false" inherits="base">
-         <AvoidTerrain>
-            <Terrain type="chemin"/>
-            <Terrain type="departementale"/>
-            <Terrain type="nationale"/>
-            <Terrain type="autoroute"/>
-        </AvoidTerrain>
-    </Rule>
-    <Rule type="assault" flying="true" inherits="base"/>
+    <Rule type="recon" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="recon" flying="true" autonomous="true" inherits="base"/>
+
+    <Rule type="infiltration" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="infiltration" flying="true" autonomous="true" inherits="base"/>
+    
+    <Rule type="assault" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="assault" flying="true" autonomous="true" inherits="base"/>
    
-    <!-- Retreat rule -->
-    <Rule type="retreat" flying="false" inherits="base">
-        <GoStraight>true</GoStraight>
-        <Fuseau>
-            <ToleratedDistanceOutside>
-                <WithoutAutomata>100000000</WithoutAutomata>
-                <WithAutomata>1000000000</WithAutomata>
-            </ToleratedDistanceOutside>
-        </Fuseau>
-        <DangerDirection>
-            <BaseCostBeyond>5</BaseCostBeyond>
-            <CostPerMeterBeyond>0.01</CostPerMeterBeyond>
-        </DangerDirection>
-        <Enemies>
-            <CostOnContact>100</CostOnContact>
-            <CostAtSecurityRange>10</CostAtSecurityRange>
-        </Enemies>
-    </Rule>
-    <Rule type="retreat" flying="true" inherits="base">
-        <GoStraight>true</GoStraight>
-        <AvoidTerrain/>
-        <Fuseau>
-            <ToleratedDistanceOutside>
-                <WithoutAutomata>100000000</WithoutAutomata>
-                <WithAutomata>1000000000</WithAutomata>
-            </ToleratedDistanceOutside>
-        </Fuseau>
-        <DangerDirection>
-            <BaseCostBeyond>5</BaseCostBeyond>
-            <CostPerMeterBeyond>0.01</CostPerMeterBeyond>
-        </DangerDirection>
-        <Enemies>
-            <CostOnContact>100</CostOnContact>
-            <CostAtSecurityRange>10</CostAtSecurityRange>
-        </Enemies>
-    </Rule>
+    <Rule type="retreat" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="retreat" flying="true" autonomous="true" inherits="base"/>
     
-     <!-- Backup rule -->
-    <Rule type="backup" flying="false" inherits="base">
-        <GoStraight>true</GoStraight>
-        <Enemies>
-            <CostOnContact>100</CostOnContact>
-            <CostAtSecurityRange>10</CostAtSecurityRange>
-        </Enemies>
-    </Rule>
-    
-    <Rule type="backup" flying="true" inherits="base">
-        <GoStraight>true</GoStraight>
-        <AvoidTerrain/>
-        <Enemies>
-            <CostOnContact>100</CostOnContact>
-            <CostAtSecurityRange>10</CostAtSecurityRange>
-        </Enemies>
-    </Rule>
-    
-     <!-- Minesweep rule -->
-    <Rule type="minesweep" flying="false" inherits="movement">
-        <AvoidObjects>false</AvoidObjects>
-    </Rule>
-    <Rule type="minesweep" flying="true" inherits="movement">
-        <AvoidObjects>false</AvoidObjects>
-    </Rule>
+    <Rule type="backup" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="backup" flying="true" autonomous="true" inherits="base"/>
+        
+    <Rule type="minesweep" flying="false" autonomous="true" inherits="base"/>
+    <Rule type="minesweep" flying="true" autonomous="true" inherits="base"/>
 
 </Rules>

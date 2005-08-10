@@ -42,8 +42,9 @@ DEC_PathType::~DEC_PathType()
 // -----------------------------------------------------------------------------
 TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to )
 {
-    const bool bCanFly = path.GetQueryMaker().CanFly();
-    const DEC_PathClass* pClass = rules_[ T_RuleType( ConvertPathTypeToString(), bCanFly ) ];
+    const bool bCanFly     = path.GetQueryMaker().CanFly();
+    const bool bAutonomous = path.GetQueryMaker().IsAutonomous();
+    const DEC_PathClass* pClass = rules_[ T_RuleType( ConvertPathTypeToString(), T_BooleanPair( bCanFly, bAutonomous ) ) ];
     assert( pClass );
     return pClass->CreateRule( path, from, to );
 }
@@ -61,16 +62,18 @@ void DEC_PathType::InitializeRules( MIL_InputArchive& archive )
         std::string strType;
         archive.ReadAttribute( "type", strType );
         bool bFlying;
-        archive.ReadAttribute( "flying", bFlying);
+        archive.ReadAttribute( "flying", bFlying );
+        bool bAutonomous;
+        archive.ReadAttribute( "autonomous", bAutonomous );
         std::string strBase;
         const DEC_PathClass* pBase = 0;
         if( archive.ReadAttribute( "inherits", strBase, MIL_InputArchive::eNothing ) )
         {
-            pBase  = rules_[ T_RuleType( strBase, bFlying ) ];
+            pBase  = rules_[ T_RuleType( strBase, T_BooleanPair( bFlying, bAutonomous ) ) ];
             if( ! pBase )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "base rule '" + strBase + "' is undefined", archive.GetContext() );
         }
-        DEC_PathClass*& pRule = rules_[ T_RuleType( strType, bFlying ) ];
+        DEC_PathClass*& pRule = rules_[ T_RuleType( strType, T_BooleanPair( bFlying, bAutonomous ) ) ];
         if( pRule )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined", archive.GetContext() );
         pRule = new DEC_PathClass( archive, pBase );
@@ -90,10 +93,14 @@ void DEC_PathType::CheckRulesExistence()
     for( int type = 0; type < eNbrPathType; ++type )
     {
         const std::string typeName = DEC_PathType( E_PathType( type ) ).ConvertPathTypeToString();
-        if( ! rules_[ T_RuleType( typeName, false ) ] )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for non flying units"  );
-        if( ! rules_[ T_RuleType( typeName, true ) ] )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for flying units" );
+        if( ! rules_[ T_RuleType( typeName, T_BooleanPair( false, false ) ) ] )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for non flying, inhabited units"  );
+        if( ! rules_[ T_RuleType( typeName, T_BooleanPair( true, false ) ) ] )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for flying, inhabited units" );
+        if( ! rules_[ T_RuleType( typeName, T_BooleanPair( false, true ) ) ] )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for non flying, autonomous units" );
+        if( ! rules_[ T_RuleType( typeName, T_BooleanPair( true, true ) ) ] )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + typeName + "' is not defined for flying, autonomous units" );
     }
 }
 
