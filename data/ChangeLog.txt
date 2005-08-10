@@ -21,6 +21,9 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Connaissances agents : envoi de la pertinence à MOS tous les n%
+
+Version 0.115 [10/08/2005] - Codename 'pathfind rulz'
     - AGE - Ajout de regles de pathfind pour les unités autonomes ( => les drones vont en ligne droite ). 
     - NLD - Bug fix : la fonction DEC_Geometrie_CalculerPositionsParRapportALima() crashait quand la lima ne coupe pas le fuseau ...
     - NLD - Gestion des drônes :

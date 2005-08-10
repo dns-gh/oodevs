@@ -91,7 +91,7 @@ public:
     //! @name Network operations
     //@{
     void UpdateOnNetwork     ();
-    void SendStateToNewClient() const;
+    void SendStateToNewClient();
     //@}
 
     //! @name Accessors
@@ -157,13 +157,14 @@ private:
 
     void SendMsgCreation   () const;
     void SendMsgDestruction() const;
-    void SendChangedState  () const;
-    void SendFullState     () const;
+    void SendChangedState  ();
+    void SendFullState     ();
     //@}
 
     //! @name Tools
     //@{
     void DegradeDangerosity( MT_Float& rDangerosity ) const;
+    void ChangeRelevance   ( MT_Float rNewRelevance );
     //@}
 
 private:
@@ -189,10 +190,11 @@ private:
           uint                  nTimeExtrapolationEnd_;
 
     // Network
-    bool bCreatedOnNetwork_;
-    bool bRelevanceUpdated_;
-    bool bCurrentPerceptionLevelUpdated_;
-    bool bMaxPerceptionLevelUpdated_;
+    bool     bCreatedOnNetwork_;
+    bool     bRelevanceUpdated_;
+    bool     bCurrentPerceptionLevelUpdated_;
+    bool     bMaxPerceptionLevelUpdated_;
+    MT_Float rLastRelevanceSent_;
 
 private:
     static uint nDiaIDIdx_;

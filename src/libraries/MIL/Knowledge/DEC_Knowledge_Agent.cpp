@@ -56,6 +56,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , bMaxPerceptionLevelUpdated_    ( false )
     , bLocked_                       ( false )
     , nTimeExtrapolationEnd_         ( 0 )
+    , rLastRelevanceSent_            ( 0. )
 {
     if ( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -87,6 +88,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , bMaxPerceptionLevelUpdated_           ( true )
     , bLocked_                              ( false )
     , nTimeExtrapolationEnd_                ( 0 )
+    , rLastRelevanceSent_                   ( 0. )
 {
 }
 
@@ -252,11 +254,7 @@ void DEC_Knowledge_Agent::Extrapolate()
     const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeExtrapolationEnd_ > nCurrentTimeStep || bLocked_ )
     {
-        if( rRelevance_ != 1. )
-        {
-            rRelevance_        = 1.;
-            bRelevanceUpdated_ = true;
-        }
+        ChangeRelevance( 1. );
         dataDetection_     .Extrapolate( *pAgentKnown_ );
         dataRecognition_   .Extrapolate( *pAgentKnown_ );
         dataIdentification_.Extrapolate( *pAgentKnown_ );
@@ -295,11 +293,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
 {
     nTimeLastUpdate_ = GetCurrentTimeStep();
     
-    if( rRelevance_ != 1. )
-    {
-        rRelevance_        = 1.;
-        bRelevanceUpdated_ = true;
-    }
+    ChangeRelevance( 1. );
 
     if( perception.GetCurrentPerceptionLevel() > *pCurrentPerceptionLevel_ )
     {
@@ -336,9 +330,9 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge )
     dataDetection_     .Update( knowledge.dataDetection_      );
     dataRecognition_   .Update( knowledge.dataRecognition_    );
     dataIdentification_.Update( knowledge.dataIdentification_ );
+    ChangeRelevance( std::max( rRelevance_, knowledge.GetRelevance() ) );
 
     pMaxPerceptionLevel_            = &std::max( *pMaxPerceptionLevel_, knowledge.GetMaxPerceptionLevel() );
-    rRelevance_                     =  std::max( rRelevance_          , knowledge.GetRelevance()          );
     bRelevanceUpdated_              = true;
     bMaxPerceptionLevelUpdated_     = true;
     bCurrentPerceptionLevelUpdated_ = true;
@@ -347,6 +341,22 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge )
 // =============================================================================
 // RELEVANCE
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::ChangeRelevance
+// Created: NLD 2005-08-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::ChangeRelevance( MT_Float rNewRelevance )
+{
+    if( rRelevance_ == rNewRelevance )
+        return;
+
+    static const MT_Float rDeltaForNetwork = 0.05;
+    if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
+        bRelevanceUpdated_ = true;
+
+    rRelevance_ = rNewRelevance;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::UpdateRelevance
@@ -370,8 +380,7 @@ void DEC_Knowledge_Agent::UpdateRelevance()
     
     if ( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove() || pKnowledgeGroup_->IsPerceived( *this ) ) 
     {
-        rRelevance_        = 0.;
-        bRelevanceUpdated_ = true;
+        ChangeRelevance( 0. );
         return;
     }
 
@@ -382,12 +391,9 @@ void DEC_Knowledge_Agent::UpdateRelevance()
     const MT_Float rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const MT_Float rDistRelevanceDegradation     = rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetKnowledgeMaxDistBtwKnowledgeAndRealUnit();
 
-    rRelevance_ -= rTimeRelevanceDegradation;
-    rRelevance_ -= rDistRelevanceDegradation;
-    rRelevance_ = std::max( 0., rRelevance_ );
+    ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
 
-    bRelevanceUpdated_ = true;
-    nTimeLastUpdate_   = GetCurrentTimeStep();
+    nTimeLastUpdate_ = GetCurrentTimeStep();
 }
 
 // =============================================================================
@@ -418,7 +424,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdat
 // Name: DEC_Knowledge_Agent::SendChangedState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::SendChangedState() const
+void DEC_Knowledge_Agent::SendChangedState()
 {
     const bool bPerceptionPerAutomateUpdated = ( previousPerceptionLevelPerAutomateMap_ != perceptionLevelPerAutomateMap_ );
 
@@ -436,6 +442,7 @@ void DEC_Knowledge_Agent::SendChangedState() const
     {
         asnMsg.GetAsnMsg().m.pertinencePresent = 1;
         asnMsg.GetAsnMsg().pertinence = (int)( rRelevance_ * 100. );
+        rLastRelevanceSent_ = rRelevance_;
     }
 
     if( bCurrentPerceptionLevelUpdated_ )
@@ -467,7 +474,7 @@ void DEC_Knowledge_Agent::SendChangedState() const
 // Name: DEC_Knowledge_Agent::SendFullState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::SendFullState() const
+void DEC_Knowledge_Agent::SendFullState()
 {
     assert( pKnowledgeGroup_ );
 
@@ -477,6 +484,7 @@ void DEC_Knowledge_Agent::SendFullState() const
     
     asnMsg.GetAsnMsg().m.pertinencePresent = 1;
     asnMsg.GetAsnMsg().pertinence = (int)( rRelevance_ * 100. );
+    rLastRelevanceSent_ = rRelevance_;
     
     asnMsg.GetAsnMsg().m.identification_levelPresent = 1;
     asnMsg.GetAsnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
@@ -529,7 +537,7 @@ void DEC_Knowledge_Agent::UpdateOnNetwork()
 // Name: DEC_Knowledge_Agent::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::SendStateToNewClient() const
+void DEC_Knowledge_Agent::SendStateToNewClient()
 {
     if( bCreatedOnNetwork_ )
     {
