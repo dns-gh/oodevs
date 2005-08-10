@@ -54,7 +54,7 @@ Action_Magic_Move::~Action_Magic_Move()
 void Action_Magic_Move::Serialize()
 {
     ASN1T_CoordUTM* pCoordUTM = new ASN1T_CoordUTM();
-    ASN_Tools::CopyPosition( pTarget_->GetTP_Position(), *pCoordUTM );
+    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), *pCoordUTM );
 
     // build din/asn msg
     asnMsg_.GetAsnMsg().oid              = pTarget_->GetId();

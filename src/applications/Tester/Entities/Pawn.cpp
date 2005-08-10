@@ -19,10 +19,13 @@
 #include "Tester_Pch.h"
 #include "Entities/Pawn.h"
 #include "Entities/Automat.h"
+#include "Entities/KnowledgeGroup.h"
+#include "Entities/Team.h"
 #include "Entities/Types/AutomatType.h"
 #include "Entities/Types/PawnType.h"
 #include "Tools/Path.h"
 #include "Tools/Position.h"
+#include "Tools/Location.h"
 #include "TacticalLines/TacticalLineManager.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
 
@@ -180,20 +183,26 @@ void Pawn::OnReceiveTerrainType( DIN::DIN_Input& /*input*/ )
 
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTestParameter_Position
+// Name: Pawn::GetTestParam_Position
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Position& Pawn::GetTP_Position() const
+Position& Pawn::GetTestParam_Point() const
 {
-    Position* pos = new Position( position_.GetLatitude(), position_.GetLongitude() );
-    return *pos;
+    double rX = position_.X();
+    double rY = position_.Y();
+
+    rX += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
+    rY += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
+    Position* pPos = new Position();
+    pPos->SetSimCoordinates( rX, rY );
+    return *pPos;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_LeftLimit
+// Name: Pawn::GetTestParam_LeftLimit
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_LeftLimit()
+T_EntityId Pawn::GetTestParam_LeftLimit()
 {
     // if left limit is not ser get an existing limit which is not the right limit
     if( nLeftLimit_ == 0 )
@@ -204,10 +213,10 @@ uint Pawn::GetTP_LeftLimit()
  }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_RightLimit
+// Name: Pawn::GetTestParam_RightLimit
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_RightLimit()
+T_EntityId Pawn::GetTestParam_RightLimit()
 {
     // if right limit is not ser get an existing limit which is not the left limit
     if( nRightLimit_ == 0 )
@@ -218,28 +227,28 @@ uint Pawn::GetTP_RightLimit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_Limas
+// Name: Pawn::GetTestParam_Limas
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-T_IdVector& Pawn::GetTP_Limas() const
+T_IdVector& Pawn::GetTestParam_Limas() const
 {
     return *new T_IdVector();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_DangerDirection
+// Name: Pawn::GetTestParam_Direction
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_DangerDirection() const
+uint Pawn::GetTestParam_Direction() const
 {
-    return ( uint )( rand() * 360.0 / RAND_MAX );
+    return GetTestParam_Numeric( 0, 359 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_Path
+// Name: Pawn::GetTestParam_Path
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-Path& Pawn::GetTP_Path() const
+Path& Pawn::GetTestParam_Path() const
 {
     Path* p = new Path();
 
@@ -258,60 +267,19 @@ Path& Pawn::GetTP_Path() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_PathType
+// Name: Pawn::GetTestParam_Bool
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_PathType() const
+bool Pawn::GetTestParam_Bool() const
 {
-    // 6 different types
-    return ( uint )( rand() * 5.0 / RAND_MAX );
+    return GetTestParam_Numeric( 0, 1 ) ? true : false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_UnLoaded
-// Created: SBO 2005-08-05
-// -----------------------------------------------------------------------------
-bool Pawn::GetTP_IsUnLoaded() const
-{
-    return !bIsLoaded_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_VerouillageVision
-/** @return 
-*/
-// Created: SBO 2005-08-05
-// -----------------------------------------------------------------------------
-uint Pawn::GetTP_VerouillageVision() const
-{
-    // 3 different types
-    return ( uint )( rand() * 2.0 / RAND_MAX );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_VisionPoint
-// Created: SBO 2005-08-05
-// -----------------------------------------------------------------------------
-Position& Pawn::GetTP_VisionPoint() const
-{
-    Position* pos = new Position( position_.GetLatitude(), position_.GetLongitude() );
-    return *pos;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_Direction
-// Created: SBO 2005-08-05
-// -----------------------------------------------------------------------------
-uint Pawn::GetTP_Direction() const
-{
-    return nDirection_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_AgentList
+// Name: Pawn::GetTestParam_AgentList
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-T_IdVector& Pawn::GetTP_PawnList() const
+T_IdVector& Pawn::GetTestParam_AgentList() const
 {
     // return a vector of up to 5 pawn ids
     T_IdVector* pPawns = new T_IdVector();
@@ -326,49 +294,48 @@ T_IdVector& Pawn::GetTP_PawnList() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Pawn::GetTP_ObjectType
+// Name: pawn::GetTestParam_Enumeration
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_ObjectType() const
+uint Pawn::GetTestParam_Enumeration( uint nMin, uint nMax ) const
 {
-    // 37 different object types
-    return ( uint )( rand() * 36.0 / RAND_MAX );
+    return GetTestParam_Numeric( nMin, nMax );
 }
 
 // -----------------------------------------------------------------------------
-// Name: pawn::GetTP_IsIndirectFire
+// Name: pawn::GetTestParam_Numeric
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-bool Pawn::GetTP_IsIndirectFire() const
+int Pawn::GetTestParam_Numeric( int nMin /* = 0 */, int nMax /* = RAND_MAX */ ) const
 {
-    return rand() < RAND_MAX / 2;
+    if( nMin > nMax )
+        return 0;
+    return ( uint )( rand() * ( double )( nMax - nMin ) / RAND_MAX ) + nMin;
 }
 
 // -----------------------------------------------------------------------------
-// Name: pawn::GetTP_MunitionType
-// Created: SBO 2005-08-08
+// Name: Pawn::GetTestParam_AgentKnowledgeList
+// Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_MunitionType() const
+T_IdVector& Pawn::GetTestParam_AgentKnowledgeList() const
 {
-    // 6 different munition types
-    return ( uint )( rand() * 5.0 / RAND_MAX );
+    return pAutomat_->GetKnowledgeGroup().GetTestParam_Targets();
 }
 
 // -----------------------------------------------------------------------------
-// Name: pawn::GetTP_NbObus
-// Created: SBO 2005-08-08
+// Name: Pawn::GetTestParam_ObjectKnowledgeList
+// Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-uint Pawn::GetTP_NbObus() const
+T_IdVector& Pawn::GetTestParam_ObjectKnowledgeList() const
 {
-    // 1 to 10
-    return ( uint )( rand() * 9.0 / RAND_MAX ) + 1;
+    return pAutomat_->GetTeam().GetTestParam_Objects();
 }
 
 // -----------------------------------------------------------------------------
-// Name: pawn::GetTP_Targets
-// Created: SBO 2005-08-08
+// Name: Pawn::GetTestParam_Location
+// Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-T_IdVector& Pawn::GetTP_Targets() const
+Location& Pawn::GetTestParam_Location() const
 {
-    return pAutomat_->GetKnowledgeGroup().GetTP_Targets();
+    return Location::GetTestParam_Location( position_ );
 }

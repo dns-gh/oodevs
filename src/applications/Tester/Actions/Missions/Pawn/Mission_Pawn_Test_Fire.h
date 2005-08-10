@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-04 $
+// $Created: SBO 2005-08-08 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,37 +16,37 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_MoveTo_h_
-#define __Mission_Pawn_MoveTo_h_
+#ifndef __Mission_Pawn_Test_Fire_h_
+#define __Mission_Pawn_Test_Fire_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
-#include "Mission_Pawn_ABC.h"
+#include "Actions/Missions/Mission_Pawn_ABC.h"
 
 namespace TEST {
 
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_MoveTo
-    @brief  Mission_Pawn_MoveTo
+/** @class  Mission_Pawn_Test_Fire
+    @brief  Mission_Pawn_Test_Fire
     @par    Using example
     @code
-    Mission_Pawn_MoveTo;
+    Mission_Pawn_Test_Fire;
     @endcode
 */
-// Created: SBO 2005-08-04
+// Created: SBO 2005-08-08
 // =============================================================================
-class Mission_Pawn_MoveTo : public Mission_Pawn_ABC
+class Mission_Pawn_Test_Fire : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_MoveTo( Pawn& target, uint nExecutionTick = 0 );
-    virtual ~Mission_Pawn_MoveTo();
+             Mission_Pawn_Test_Fire( Pawn& target, uint nExecutionTick = 0 );
+    virtual ~Mission_Pawn_Test_Fire();
     //@}
 
 protected:
@@ -59,11 +59,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_MoveTo( const Mission_Pawn_MoveTo& );            //!< Copy constructor
-    Mission_Pawn_MoveTo& operator=( const Mission_Pawn_MoveTo& ); //!< Assignment operator
+    Mission_Pawn_Test_Fire( const Mission_Pawn_Test_Fire& );            //!< Copy constructor
+    Mission_Pawn_Test_Fire& operator=( const Mission_Pawn_Test_Fire& ); //!< Assignment operator
     //@}
 };
 
-} // end namespace TEST
+} // end namespace Mission
 
-#endif // __Mission_Pawn_MoveTo_h_
+#endif // __Mission_Pawn_Test_Fire_h_

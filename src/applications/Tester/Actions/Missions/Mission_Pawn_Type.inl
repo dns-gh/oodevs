@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Pawn/Mission_Pawn_ABC.h"
+#include "Mission_Pawn_ABC.h"
 
 namespace TEST {
 

@@ -176,3 +176,12 @@ void Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledg
 {
     knownObjects_.erase( asnMsg.oid_connaissance );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Team::GetTestParam_Objects
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_IdVector& Team::GetTestParam_Objects() const
+{
+    return *new T_IdVector();
+}

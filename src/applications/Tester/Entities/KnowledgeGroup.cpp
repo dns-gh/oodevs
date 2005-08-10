@@ -108,10 +108,10 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKn
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetTP_Targets
+// Name: KnowledgeGroup::GetTestParam_Targets
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-T_IdVector& KnowledgeGroup::GetTP_Targets() const
+T_IdVector& KnowledgeGroup::GetTestParam_Targets() const
 {
     T_IdVector* pTargets = new T_IdVector();
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )

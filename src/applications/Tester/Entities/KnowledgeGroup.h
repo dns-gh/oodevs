@@ -70,7 +70,7 @@ public:
 
     //! @name Test Parameters
     //@{
-    T_IdVector& GetTP_Targets() const;
+    T_IdVector& GetTestParam_Targets() const;
     //@}
 
 private:

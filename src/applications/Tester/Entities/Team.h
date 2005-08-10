@@ -88,6 +88,11 @@ public:
     void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
     //@}
 
+    //! @name Test Parameters
+    //@{
+    T_IdVector& GetTestParam_Objects() const;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

@@ -23,10 +23,10 @@
 #include "Tester_pch.h"
 #include "Mission_Pawn_Type.h"
 
-#include "Pawn/Mission_Pawn_MoveTo.h"
-#include "Pawn/Mission_Pawn_CreateObject.h"
-#include "Pawn/Mission_Pawn_Fire.h"
-#include "Pawn/Mission_Pawn_Heliporter.h"
+#include "Pawn/Mission_Pawn_Test_MoveTo.h"
+#include "Pawn/Mission_Pawn_Test_CreateObject.h"
+#include "Pawn/Mission_Pawn_Test_Fire.h"
+#include "Pawn/Mission_Pawn_Test_Heliporter.h"
 
 using namespace TEST;
 
@@ -58,10 +58,10 @@ Mission_Pawn_Type::~Mission_Pawn_Type()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Type::Initialize()
 {
-    Register< Mission_Pawn_MoveTo >      ( "Pion Test MoveTo" );
-    Register< Mission_Pawn_CreateObject >( "Pion Test CreateObject" );
-    Register< Mission_Pawn_Fire >        ( "Pion Test Fire" );
-    Register< Mission_Pawn_Heliporter >  ( "Pion Test Heliporter" );
+    Register< Mission_Pawn_Test_MoveTo >      ( "Pion Test MoveTo" );
+    Register< Mission_Pawn_Test_CreateObject >( "Pion Test CreateObject" );
+    Register< Mission_Pawn_Test_Fire >        ( "Pion Test Fire" );
+    Register< Mission_Pawn_Test_Heliporter >  ( "Pion Test Heliporter" );
 }
     
 // -----------------------------------------------------------------------------

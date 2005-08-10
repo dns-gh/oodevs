@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-08 $
+// $Created: SBO 2005-08-04 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -16,37 +16,37 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_CreateObject_h_
-#define __Mission_Pawn_CreateObject_h_
+#ifndef __Mission_Pawn_Test_MoveTo_h_
+#define __Mission_Pawn_Test_MoveTo_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
-#include "Mission_Pawn_ABC.h"
+#include "Actions/Missions/Mission_Pawn_ABC.h"
 
 namespace TEST {
 
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_CreateObject
-    @brief  Mission_Pawn_CreateObject
+/** @class  Mission_Pawn_Test_MoveTo
+    @brief  Mission_Pawn_Test_MoveTo
     @par    Using example
     @code
-    Mission_Pawn_CreateObject;
+    Mission_Pawn_Test_MoveTo;
     @endcode
 */
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-04
 // =============================================================================
-class Mission_Pawn_CreateObject : public Mission_Pawn_ABC
+class Mission_Pawn_Test_MoveTo : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_CreateObject( Pawn& target, uint nExecutionTick = 0 );
-    virtual ~Mission_Pawn_CreateObject();
+             Mission_Pawn_Test_MoveTo( Pawn& target, uint nExecutionTick = 0 );
+    virtual ~Mission_Pawn_Test_MoveTo();
     //@}
 
 protected:
@@ -59,11 +59,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_CreateObject( const Mission_Pawn_CreateObject& );            //!< Copy constructor
-    Mission_Pawn_CreateObject& operator=( const Mission_Pawn_CreateObject& ); //!< Assignment operator
+    Mission_Pawn_Test_MoveTo( const Mission_Pawn_Test_MoveTo& );            //!< Copy constructor
+    Mission_Pawn_Test_MoveTo& operator=( const Mission_Pawn_Test_MoveTo& ); //!< Assignment operator
     //@}
 };
 
-} // end namespace Mission
+} // end namespace TEST
 
-#endif // __Mission_Pawn_CreateObject_h_
+#endif // __Mission_Pawn_Test_MoveTo_h_

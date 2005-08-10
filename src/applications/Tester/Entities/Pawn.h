@@ -33,6 +33,7 @@ namespace TEST
 {
     class Automat;
     class PawnType;
+    class Location;
 
 // =============================================================================
 /** @class  Pawn
@@ -74,23 +75,21 @@ public:
 
     //! @name Test Parameters
     //@{
-    Position&   GetTP_Position         () const;
-    uint        GetTP_LeftLimit        ();
-    uint        GetTP_RightLimit       ();
-    T_IdVector& GetTP_Limas            () const;
-    uint        GetTP_DangerDirection  () const;
-    Path&       GetTP_Path             () const;
-    uint        GetTP_PathType         () const;
-    bool        GetTP_IsUnLoaded       () const;
-    uint        GetTP_VerouillageVision() const;
-    Position&   GetTP_VisionPoint      () const;
-    uint        GetTP_Direction        () const;
-    T_IdVector& GetTP_PawnList         () const;
-    uint        GetTP_ObjectType       () const;
-    bool        GetTP_IsIndirectFire   () const;
-    uint        GetTP_MunitionType     () const;
-    uint        GetTP_NbObus           () const;
-    T_IdVector& GetTP_Targets          () const;
+    T_EntityId  GetTestParam_LeftLimit          ();
+    T_EntityId  GetTestParam_RightLimit         ();
+    T_IdVector& GetTestParam_Limas              () const;
+
+    uint        GetTestParam_Direction          () const;
+    bool        GetTestParam_Bool               () const;
+    int         GetTestParam_Numeric            ( int  nMin = 0, int  nMax = RAND_MAX ) const;
+    uint        GetTestParam_Enumeration        ( uint nMin    , uint nMax            ) const;
+    Position&   GetTestParam_Point              () const;
+    Path&       GetTestParam_Path               () const;
+    T_EntityId  GetTestParam_Agent              () const;
+    T_IdVector& GetTestParam_AgentList          () const;
+    T_IdVector& GetTestParam_AgentKnowledgeList () const;
+    T_IdVector& GetTestParam_ObjectKnowledgeList() const;
+    Location&   GetTestParam_Location           () const;
     //@}
 
     //! @name Other Accessors

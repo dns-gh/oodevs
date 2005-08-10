@@ -16,37 +16,37 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_Fire_h_
-#define __Mission_Pawn_Fire_h_
+#ifndef __Mission_Pawn_Test_CreateObject_h_
+#define __Mission_Pawn_Test_CreateObject_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
-#include "Mission_Pawn_ABC.h"
+#include "Actions/Missions/Mission_Pawn_ABC.h"
 
 namespace TEST {
 
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_Fire
-    @brief  Mission_Pawn_Fire
+/** @class  Mission_Pawn_Test_CreateObject
+    @brief  Mission_Pawn_Test_CreateObject
     @par    Using example
     @code
-    Mission_Pawn_Fire;
+    Mission_Pawn_Test_CreateObject;
     @endcode
 */
 // Created: SBO 2005-08-08
 // =============================================================================
-class Mission_Pawn_Fire : public Mission_Pawn_ABC
+class Mission_Pawn_Test_CreateObject : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_Fire( Pawn& target, uint nExecutionTick = 0 );
-    virtual ~Mission_Pawn_Fire();
+             Mission_Pawn_Test_CreateObject( Pawn& target, uint nExecutionTick = 0 );
+    virtual ~Mission_Pawn_Test_CreateObject();
     //@}
 
 protected:
@@ -59,11 +59,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_Fire( const Mission_Pawn_Fire& );            //!< Copy constructor
-    Mission_Pawn_Fire& operator=( const Mission_Pawn_Fire& ); //!< Assignment operator
+    Mission_Pawn_Test_CreateObject( const Mission_Pawn_Test_CreateObject& );            //!< Copy constructor
+    Mission_Pawn_Test_CreateObject& operator=( const Mission_Pawn_Test_CreateObject& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace Mission
 
-#endif // __Mission_Pawn_Fire_h_
+#endif // __Mission_Pawn_Test_CreateObject_h_
