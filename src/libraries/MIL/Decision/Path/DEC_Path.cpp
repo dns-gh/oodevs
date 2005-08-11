@@ -248,17 +248,15 @@ DEC_Path::IT_PathPointList DEC_Path::GetPreviousPathPointOnDifferentLocation( IT
     return itCurrent;
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: DEC_Path::InsertPointAvant
-// Created: JVT 02-12-04
-//----------------------------------------------------------------------------
-void DEC_Path::InsertPointAvant( IT_PathPointList itCurrent, DEC_Rep_PathPoint& spottedPathPoint )
+// Created: NLD 2005-08-11
+// -----------------------------------------------------------------------------
+void DEC_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent )
 {
     MT_Float rDistanceLeft = spottedPathPoint.GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
                              queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint.GetTypeTerrain() );
-
-    itCurrent = resultList_.insert( itCurrent, &spottedPathPoint );
 
     while( true )
     {
@@ -314,64 +312,133 @@ void DEC_Path::InsertPointAvant( IT_PathPointList itCurrent, DEC_Rep_PathPoint& 
 }
 
 //-----------------------------------------------------------------------------
+// Name: DEC_Path::InsertPointAvant
+// Created: JVT 02-12-04
+//----------------------------------------------------------------------------
+void DEC_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
+{
+    static MT_Float rDist = 2000.;
+    if( rDistSinceLastPointAvant > rDist )
+    {
+        InsertPointAvant( spottedPathPoint, itCurrent );
+        rDistSinceLastPointAvant = 0.;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::InsertPoint
+// Created: NLD 2005-08-10
+// -----------------------------------------------------------------------------
+void DEC_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
+{
+    static MT_Float rDist = 500.;
+    if( rDistSinceLastPoint > rDist )
+    {
+        resultList_.insert( itCurrent, &spottedPathPoint );
+        rDistSinceLastPoint = 0.;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::Shit
+// Created: NLD 2005-08-10
+// -----------------------------------------------------------------------------
+void DEC_Path::InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
+{
+    InsertPoint     ( spottedPathPoint, itCurrent, rDistSinceLastPoint      );
+    InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
+}
+
+//-----------------------------------------------------------------------------
 // Name: DEC_Path::InsertPointAvants
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
 void DEC_Path::InsertPointAvants()
 {
+    MT_Float rDistSinceLastPointAvant = std::numeric_limits< MT_Float >::max();
+    MT_Float rDistSinceLastPoint      = std::numeric_limits< MT_Float >::max();
+
     TerrainData nObjectTypesBefore;
 
-    // $$$$ AGE 2005-02-04: Verifier que c'est bien ca. Tester
+    DEC_PathPoint* pPrevPoint = 0;
+
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         DEC_PathPoint& current = **itPoint;
 
+        if( pPrevPoint )
+        {
+            if( rDistSinceLastPointAvant != std::numeric_limits< MT_Float >::max() )
+                rDistSinceLastPointAvant += pPrevPoint->GetPos().Distance( current.GetPos() );
+            if( rDistSinceLastPoint != std::numeric_limits< MT_Float >::max() )
+                rDistSinceLastPoint += pPrevPoint->GetPos().Distance( current.GetPos() );
+        }
+            
         // On ne teste les points avants que sur les points du path find original
         if( current.GetType() != DEC_PathPoint::eTypePointPath )
+        {
+            pPrevPoint = &current;
             continue;
+        }
 
         TerrainData nObjectTypesToNextPoint = current.GetObjectTypesToNextPoint();
 
         if( nObjectTypesBefore == TerrainData() )
         {
+            pPrevPoint         = &current;
             nObjectTypesBefore = nObjectTypesToNextPoint;
             continue;
         }
-        //$$$ NLD - Il y a surement moyen de factoriser ça ...
         
         // Village
-        DEC_Rep_PathPoint* pSpottedPathPoint = 0;
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() );
-        
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() );
+            InsertPoint( *new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ), itPoint, rDistSinceLastPoint );
 
         // Forest
         else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Forest() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() );
-
-        // Plantations
-        else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Plantation() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Plantation() );
-
-        // Marais
-        else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Swamp() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Swamp() );
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() );
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
-        else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() ) || current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) )
-            pSpottedPathPoint = new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() );
-
-        if( pSpottedPathPoint )
-            InsertPointAvant( itPoint, *pSpottedPathPoint );
+        else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() ) 
+                || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
+                )
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
+
+        pPrevPoint = &current;
     }
+
+    // TEST
+ /*   T_PointVector cock;
+    std::cout << "========== BEGIN PATH ============" << std::endl;
+    for( itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
+    {
+        DEC_PathPoint& current = **itPoint;
+
+        current.Dump();
+
+        if( current.GetType() == DEC_PathPoint::eTypePointSpecial )
+            cock.push_back( current.GetPos() );
+    }
+    std::cout << "========== END PATH ============" << std::endl;
+   
+
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << (uint32)GetQueryMaker().GetID();
+    dinMsg << (uint32)cock.size();
+    for( CIT_PointVector itPoint = cock.begin(); itPoint != cock.end(); ++itPoint )
+        dinMsg << *itPoint;
+    msgMgr.SendMsgDebugDrawPoints( dinMsg );*/
 }
 
 //-----------------------------------------------------------------------------
@@ -407,7 +474,7 @@ void DEC_Path::InsertLima( const MIL_Lima& lima )
             MT_Line segment( pLastPoint->GetPos(), pCurrentPoint->GetPos() );
             MT_Vector2D posIntersect;
             if ( lima.Intersect2D( segment, posIntersect ) )
-                InsertPointAvant( itPoint, *new DEC_Rep_PathPoint_Lima( *this, posIntersect, TerrainData(), lima ) );
+                InsertPointAvant( *new DEC_Rep_PathPoint_Lima( *this, posIntersect, TerrainData(), lima ), itPoint );
         }
         pLastPoint = pCurrentPoint;
     }

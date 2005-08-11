@@ -98,3 +98,14 @@ void DEC_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& /*agent*/ )
     
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathPoint::Dump
+// Created: NLD 2005-08-10
+// -----------------------------------------------------------------------------
+void DEC_PathPoint::Dump() const
+{
+    std::cout << "    PathPoint " << vPos_ 
+              << " - Type : " << nObjectTypes_.DumpToString() 
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+              << std::endl;
+}

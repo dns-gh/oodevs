@@ -69,6 +69,10 @@ public:
     void RemoveFromDIA( DEC_RolePion_Decision& agent );
     //@}
 
+    //! @name Debug
+    //@{
+    virtual void Dump() const;
+    //@}
    
 protected:
     DEC_Rep_PathPoint( const DEC_Rep_PathPoint& );

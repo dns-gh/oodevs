@@ -22,6 +22,12 @@ TODO de merde
 
 Next Version - Codename ''
     - NLD - Connaissances agents : envoi de la pertinence à MOS tous les n%
+    - NLD - Nettoyage dans la gestion des 'avants points' et autres 'points speciaux' 
+                => Plus de points ni d'avants points avant les plantations et les marais (no comment ...)
+                => Plus d'avants points sortie de forêt
+                => Plus de points spéciaux (ni d'avants points) au niveau des ponts sur les ruisseaux
+                => Pas plus de 1 avant point tous les 2000 mètres
+                => Pas plus de 1 point spécial tous les 500 mètres
 
 Version 0.115 [10/08/2005] - Codename 'pathfind rulz'
     - AGE - Ajout de regles de pathfind pour les unités autonomes ( => les drones vont en ligne droite ). 

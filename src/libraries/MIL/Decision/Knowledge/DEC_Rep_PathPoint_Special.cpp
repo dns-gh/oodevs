@@ -69,6 +69,19 @@ DEC_Rep_PathPoint_Special::~DEC_Rep_PathPoint_Special()
 {   
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint_Special::Dump
+// Created: NLD 2005-08-10
+// -----------------------------------------------------------------------------
+void DEC_Rep_PathPoint_Special::Dump() const
+{
+    std::cout << "    DEC_Rep_PathPoint_Special " << vPos_ 
+              << " - Type : " << nObjectTypes_.DumpToString() 
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+              << " - nTypePoint_ " << (uint)GetTypePoint()
+              << " - Type particulier " << (uint)nTypePointParticulier_
+              << std::endl;
+}
 
 
 

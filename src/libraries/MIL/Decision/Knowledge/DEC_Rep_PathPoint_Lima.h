@@ -29,11 +29,14 @@ public:
     DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrai, const MIL_Lima& lima );
     virtual ~DEC_Rep_PathPoint_Lima();
 
-    //-------------------------------------------------------------------------
-    /** @name Init */
-    //-------------------------------------------------------------------------
+    //! @name Init
     //@{
     static void InitializeDIA();
+    //@}
+
+    //! @name Debug
+    //@{
+    virtual void Dump() const;
     //@}
   
 private:

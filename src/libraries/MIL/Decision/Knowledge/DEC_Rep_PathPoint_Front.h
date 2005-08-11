@@ -32,25 +32,26 @@ public:
     explicit DEC_Rep_PathPoint_Front( DEC_Path& path, const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
     virtual ~DEC_Rep_PathPoint_Front();
 
-    //-------------------------------------------------------------------------
-    /** @name Init */
-    //-------------------------------------------------------------------------
+    //! @name Init
     //@{
     static void InitializeDIA();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name DIA */
-    //-------------------------------------------------------------------------
+    //! @name DIA
     //@{
     virtual void SendToDIA    ( DEC_RolePion_Decision& agent );
     virtual void RemoveFromDIA( DEC_RolePion_Decision& agent );
     //@}
 
+    //! @name Debug
+    //@{
+    virtual void Dump() const;
+    //@}
+
 private:
     DEC_Rep_PathPoint& destPoint_;
     DIA_Parameters     diaParameters_;
-    bool               bAlreadySended_;
+    bool               bAlreadySent_;
 
 private:
     static int nDIAPointIdx_;

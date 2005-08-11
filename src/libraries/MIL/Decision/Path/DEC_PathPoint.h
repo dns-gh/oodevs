@@ -35,6 +35,7 @@ public:
         ePoint
     };
 
+
     enum E_Type
     {
         eTypePointPath,
@@ -47,9 +48,7 @@ public:
     DEC_PathPoint( const DEC_PathPoint& pathPoint );
     virtual ~DEC_PathPoint();
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     const MT_Vector2D& GetPos                   () const;
     E_Type             GetType                  () const;
@@ -57,20 +56,21 @@ public:
     const TerrainData& GetObjectTypesToNextPoint() const;
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Main */
-    //-------------------------------------------------------------------------
+    //! @name Main
     //@{
     bool IsInObject    ( const TerrainData& data ) const;
     bool WillBeInObject( const TerrainData& data ) const;
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name DIA */
-    //-------------------------------------------------------------------------
+    //! @name DIA
     //@{
     virtual void SendToDIA    ( DEC_RolePion_Decision& agent );
     virtual void RemoveFromDIA( DEC_RolePion_Decision& agent );
+    //@}
+
+    //! @name Debug
+    //@{
+    virtual void Dump() const;
     //@}
 
 protected:

@@ -49,10 +49,10 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( DEC_Path& path, const MT_Vector2D& vPos, E
 {
     assert( nType_ != eTypePointPath );
 
-    SetValue( nDIAPointIdx_  , (void*)&vPos_ );  
-    SetValue( nDIAClsIdx_    , ePoint  );     
-    SetValue( nDIATypeIdx_   , nTypePoint );  
-    SetValue( nDIAItinerairedx_   , (void*)&path );  
+    SetValue( nDIAPointIdx_    , (void*)&vPos_ );  
+    SetValue( nDIAClsIdx_      , ePoint        );     
+    SetValue( nDIATypeIdx_     , nTypePoint    );  
+    SetValue( nDIAItinerairedx_, (void*)&path  );  
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );
@@ -72,9 +72,9 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const DEC_Rep_PathPoint& rhs )
 {
     assert( nType_ != eTypePointPath );
 
-    SetValue( nDIAPointIdx_  , (void*)&vPos_ );  
-    SetValue( nDIAClsIdx_    , ePoint  );     
-    SetValue( nDIATypeIdx_   , nTypePoint_ );     
+    SetValue( nDIAPointIdx_, (void*)&vPos_ );  
+    SetValue( nDIAClsIdx_  , ePoint        );     
+    SetValue( nDIATypeIdx_ , nTypePoint_   );     
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );
@@ -94,10 +94,10 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 {
     assert( nType_ != eTypePointPath );
 
-    SetValue( nDIAPointIdx_  , (void*)&vPos_ );
-    SetValue( nDIAClsIdx_    , ePoint  );
-    SetValue( nDIATypeIdx_   , nTypePoint );
-    SetValue( nDIAItinerairedx_   , (void*)0 );
+    SetValue( nDIAPointIdx_    , (void*)&vPos_ );
+    SetValue( nDIAClsIdx_      , ePoint        );
+    SetValue( nDIATypeIdx_     , nTypePoint    );
+    SetValue( nDIAItinerairedx_, (void*)0      );
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );
@@ -141,4 +141,17 @@ void DEC_Rep_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& agent )
     agent.GetBehaviorPart ().RemoveAllReferencesOf( *this, agent.GetContext() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint::Dump
+// Created: NLD 2005-08-10
+// -----------------------------------------------------------------------------
+void DEC_Rep_PathPoint::Dump() const
+{
+    std::cout << "    Rep_PathPoint " << vPos_ 
+              << " - Type : " << nObjectTypes_.DumpToString() 
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+              << " - Type terrain " << nTypeTerrain_.DumpToString() 
+              << " - nTypePoint_ " << (uint)nTypePoint_
+              << std::endl;
+}
 

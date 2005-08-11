@@ -129,7 +129,11 @@ private:
     void InsertPointAvants();
     void InsertLimas      ();
 
-    void InsertPointAvant ( IT_PathPointList itCurrent, DEC_Rep_PathPoint& spottedPathPoint );
+    void InsertPointAvant        ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent );
+    void InsertPointAvant        ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant );    
+    void InsertPoint             ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint );
+    void InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant );
+
     void InsertLima       ( const MIL_Lima& );
 
     MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const;

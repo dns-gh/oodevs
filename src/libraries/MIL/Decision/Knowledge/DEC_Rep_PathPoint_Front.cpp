@@ -29,7 +29,7 @@ int DEC_Rep_PathPoint_Front::nDIAItinerairedx_ = 0;
 DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( DEC_Path& path, const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
     : DEC_PathPoint     ( vPos )
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
-    , bAlreadySended_   ( false )
+    , bAlreadySent_     ( false )
     , destPoint_        ( dest )
 {
     SetValue      ( nDIAPointIdx_  , (void*)&vPos_ );  
@@ -90,14 +90,14 @@ void DEC_Rep_PathPoint_Front::InitializeDIA()
 //-----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Front::SendToDIA( DEC_RolePion_Decision& agent )
 {
-    if ( bAlreadySended_ )
+    if ( bAlreadySent_ )
         return;
 
     diaParameters_.GetParameter( 0 ).SetValue( *this );
     DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
     if( pResult ) 
         delete pResult;
-    bAlreadySended_ = true;
+    bAlreadySent_ = true;
 }
 
 
@@ -110,3 +110,18 @@ void DEC_Rep_PathPoint_Front::RemoveFromDIA( DEC_RolePion_Decision& agent )
     agent.GetKnowledgePart().RemoveFromCategory( "points_interressants", static_cast< DIA_Representation* >( this ) );
     agent.GetBehaviorPart ().RemoveAllReferencesOf( *this, agent.GetContext() );    
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint_Front::Dump
+// Created: NLD 2005-08-10
+// -----------------------------------------------------------------------------
+void DEC_Rep_PathPoint_Front::Dump() const
+{
+    std::cout << "    DEC_Rep_PathPoint_Front " << vPos_ 
+              << " - Type : " << nObjectTypes_.DumpToString() 
+              << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
+              << " - DestPoint : " << destPoint_.GetPos()
+              << " - Dest Type : " << destPoint_.GetTypeTerrain().DumpToString() 
+              << std::endl;
+}
+

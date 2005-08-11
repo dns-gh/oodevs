@@ -853,7 +853,7 @@
       <CapaciteMission type="Non renseigne"/>
     </Nature>
     <Equipements>
-      <Equipement nom="CompTest">1</Equipement>
+      <Equipement majeur="true" nom="Truc Volant">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
