@@ -29,28 +29,27 @@
 using namespace TEST;
 
 // -----------------------------------------------------------------------------
-// Name: ASN_Tools::CopyId
+// Name: ASN_Tools::CopyID
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-void ASN_Tools::CopyId( uint nIdValue, ASN1T_OID& asn )
+void ASN_Tools::CopyID( uint nIdValue, ASN1T_OID& asn )
 {
     asn = nIdValue;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ASN_Tools::CopyIdList
+// Name: ASN_Tools::CopyIDList
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-void ASN_Tools::CopyIdList( const T_IdVector& ids, ASN1T_ListOID& asn )
+void ASN_Tools::CopyIDList( const T_IdVector& ids, ASN1T_ListOID& asn )
 {
     asn.n    = ids.size();
-    if( !ids.empty() )
-    {
-        asn.elem = new ASN1T_OID[ ids.size() ]; //$$$$ RAM
-        uint i = 0;
-        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
-            CopyId( *it, asn.elem[ i++ ] );
-    }
+    if( ids.empty() )
+        return;
+    asn.elem = new ASN1T_OID[ ids.size() ]; //$$$$ RAM
+    uint i = 0;
+    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+        CopyID( *it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,13 +68,12 @@ void ASN_Tools::CopyAgent( uint nIdValue, ASN1T_Agent& asn )
 void ASN_Tools::CopyAgentList( const T_IdVector& ids, ASN1T_ListAgent&  asn )
 {
     asn.n = ids.size();
-    if( !ids.empty() )
-    {
-        asn.elem = new ASN1T_Agent[ ids.size() ]; //$$$$ RAM
-        uint i = 0;
-        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
-            CopyAgent( *it, asn.elem[ i++ ] );
-    }
+    if( ids.empty() )
+        return;
+    asn.elem = new ASN1T_Agent[ ids.size() ]; //$$$$ RAM
+    uint i = 0;
+    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+        CopyAgent( *it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,13 +92,36 @@ void ASN_Tools::CopyAgentKnowledge( uint nIdAgent, ASN1T_KnowledgeAgent& asn )
 void ASN_Tools::CopyAgentKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowledgeAgent& asn )
 {
     asn.n = ids.size();
-    if( !ids.empty() )
-    {
-        asn.elem = new ASN1T_KnowledgeAgent[ ids.size() ]; //$$$$ RAM
-        uint i = 0;
-        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
-            CopyAgentKnowledge( *it, asn.elem[ i++ ] );
-    }
+    if( ids.empty() )
+        return;
+    asn.elem = new ASN1T_KnowledgeAgent[ ids.size() ]; //$$$$ RAM
+    uint i = 0;
+    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+        CopyAgentKnowledge( *it, asn.elem[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyAutomate
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyAutomate( uint nIdValue, ASN1T_Automate& asn )
+{
+    asn = nIdValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyAutomateList
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyAutomateList( const T_IdVector& ids, ASN1T_ListAutomate& asn )
+{
+    asn.n = ids.size();
+    if( ids.empty() )
+        return;
+    asn.elem = new ASN1T_Automate[ ids.size() ]; //$$$$ RAM
+    uint i = 0;
+    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+        CopyAutomate( *it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,13 +139,12 @@ void ASN_Tools::CopyObjectKnowledge( uint nIdObject, ASN1T_KnowledgeObject& asn 
 void ASN_Tools::CopyObjectKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowledgeObject& asn )
 {
     asn.n = ids.size();
-    if( !ids.empty() )
-    {
-        asn.elem = new ASN1T_KnowledgeObject[ ids.size() ]; //$$$$ RAM
-        uint i = 0;
-        for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
-            CopyObjectKnowledge( *it, asn.elem[ i++ ] );
-    }
+    if( ids.empty() )
+        return;
+    asn.elem = new ASN1T_KnowledgeObject[ ids.size() ]; //$$$$ RAM
+    uint i = 0;
+    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+        CopyObjectKnowledge( *it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,6 +161,15 @@ void ASN_Tools::CopyBool( bool bValue, ASN1BOOL& asn )
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
 void ASN_Tools::CopyNumeric( int nValue, ASN1INT& asn )
+{
+    asn = nValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyNumeric
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyNumeric( int nValue, ASN1REAL& asn )
 {
     asn = nValue;
 }
@@ -169,6 +198,23 @@ void ASN_Tools::CopyPoint( const Position& position, ASN1T_Point& asn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPointList
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPointList( const T_PositionVector& positions, ASN1T_ListPoint& asn )
+{
+    asn.n = positions.size();
+    if( positions.empty() )
+        return;
+
+    ASN1T_Point* pPoint = new ASN1T_Point[ positions.size() ]; //$$$ RAM
+    asn.elem = pPoint;
+    uint i = 0;
+    for( CIT_PositionVector it = positions.begin(); it != positions.end(); ++it )
+        CopyPoint( **it, pPoint[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyPath
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
@@ -186,6 +232,26 @@ void ASN_Tools::CopyPath( const Path& path, ASN1T_Itineraire& asn )
     uint i = 0;
     for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
         CopyPoint( **it, pCoord[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPathList
+/** @param  path 
+    @param  asn 
+*/
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPathList( const T_PathVector& paths, ASN1T_ListItineraire& asn )
+{
+    asn.n = paths.size();
+    if( paths.empty() )
+        return;
+
+    ASN1T_Itineraire* pPath = new ASN1T_Itineraire[ paths.size() ]; //$$$ RAM
+    asn.elem = pPath;
+    uint i = 0;
+    for( CIT_PathVector it = paths.begin(); it != paths.end(); ++it )
+        CopyPath( **it, pPath[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,6 +281,64 @@ void ASN_Tools::CopyLocation( const Location& location, ASN1T_Localisation& asn 
     uint i = 0;
     for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
         CopyPoint( **it, pCoord[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPolygon
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPolygon( const Location& location, ASN1T_Polygon& asn )
+{
+    const T_PositionVector& posVector = location.GetPositionVector();
+
+    asn.type = EnumTypeLocalisation::polygon;
+    asn.vecteur_point.n = posVector.size(); 
+    if( posVector.empty() )
+        return;
+
+    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
+    asn.vecteur_point.elem = pCoord;
+    uint i = 0;
+    for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
+        CopyPoint( **it, pCoord[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPolygonList
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPolygonList( const T_LocationVector& locations, ASN1T_ListPolygon& asn )
+{
+    asn.n = locations.size();
+    if( locations.empty() )
+        return;
+
+    ASN1T_Polygon* pPoly = new ASN1T_Polygon[ locations.size() ]; //$$$ RAM
+    asn.elem = pPoly;
+    uint i = 0;
+    for( CIT_LocationVector it = locations.begin(); it != locations.end(); ++it )
+        CopyPolygon( **it, pPoly[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyNatureAtlas
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyNatureAtlas( uint nValue, ASN1T_NatureAtlas& asn )
+{
+    asn.numbits = 11; //$$$ n'importe quoi ...
+    asn.data[0] = (char)( nValue >> 8 );
+    asn.data[1] = (char)( nValue & 0x00FF );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyGDH
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyGDH( uint nTime, ASN1T_GDH& asn )
+{
+    asn.datation     = nTime;
+    asn.qualificatif = EnumGDH_Qualificatif::at;
 }
 
 // -----------------------------------------------------------------------------
@@ -262,4 +386,30 @@ void ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::ToString
+// Created: APE 2004-05-17
+// -----------------------------------------------------------------------------
+const char* ASN_Tools::ToString( const ASN1T_EnumOrderErrorCode& nCode )
+{
+    switch( nCode )
+    {
+        case EnumOrderErrorCode::no_error                        : return "No error";
+        case EnumOrderErrorCode::error_invalid_unit              : return "Invalid unit";
+        case EnumOrderErrorCode::error_invalid_limit             : return "Invalid limit";
+        case EnumOrderErrorCode::error_invalid_lima              : return "Invalid lima";
+        case EnumOrderErrorCode::error_invalid_mission           : return "Invalid mission";
+        case EnumOrderErrorCode::error_invalid_mission_parameters: return "Invalid mission parameters";
+        case EnumOrderErrorCode::error_unit_cannot_receive_order : return "Unit cannot receive this order";
+        case EnumOrderErrorCode::error_invalid_order_conduite    : return "Invalid ordre de conduite";
+        case EnumOrderErrorCode::error_invalid_order_mission     : return "Invalid ordre de mission";
+        case EnumOrderErrorCode::error_invalid_order_initial     : return "Invalid ordre initial";
+        case EnumOrderErrorCode::error_invalid_order_conduite_parameters: return "Invalid ordre de conduite parameters";
+        default:
+            assert( false );
+            return "Unknown";
+    }
 }

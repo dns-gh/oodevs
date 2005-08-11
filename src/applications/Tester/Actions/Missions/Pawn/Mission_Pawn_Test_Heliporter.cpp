@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-08 $
+// $Created: AGE 2004-09-21 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -30,17 +30,17 @@ using namespace TEST;
 
 // -----------------------------------------------------------------------------
 // Name: Mission_Pawn_Test_Heliporter constructor
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Pawn_Test_Heliporter::Mission_Pawn_Test_Heliporter( Pawn& pawn, uint nExecutionTick /* = 0 */ )
     : Mission_Pawn_ABC ( pawn, nExecutionTick )
 {
-    // NOTHING
+    strName_ = "Pawn_Test_Heliporter";
 }
 
 // -----------------------------------------------------------------------------
 // Name: Mission_Pawn_Test_Heliporter destructor
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Pawn_Test_Heliporter::~Mission_Pawn_Test_Heliporter()
 {
@@ -82,3 +82,5 @@ void Mission_Pawn_Test_Heliporter::Clean()
     delete &asnMission;
     Mission_Pawn_ABC::Clean();
 }
+
+

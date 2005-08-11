@@ -38,5 +38,14 @@ void Action_ABC::SetExecutionTick( uint nExecutionTick )
     nExecutionTick_ = nExecutionTick;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::GetName
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+const std::string& Action_ABC::GetName() const
+{
+    return strName_;
+}
 
 } // end namespace Action

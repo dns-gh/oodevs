@@ -63,4 +63,15 @@ uint PawnType::GetId() const
     return nId_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PawnType::GetModel
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+const PawnModel& PawnType::GetModel() const
+{
+    assert( pModel_ );
+    return *pModel_;
+}
+
 } // end namespace TEST

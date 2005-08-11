@@ -108,14 +108,28 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKn
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetTestParam_Targets
+// Name: KnowledgeGroup::GetTestParam_Knowledges
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-T_IdVector& KnowledgeGroup::GetTestParam_Targets() const
+T_IdVector& KnowledgeGroup::GetTestParam_Knowledges() const
 {
-    T_IdVector* pTargets = new T_IdVector();
+    // return the list of known enemies
+    T_IdVector& targets = *new T_IdVector();
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )
         if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat().GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
-            pTargets->push_back( it->second->GetId() );
-    return *pTargets;
+            targets.push_back( it->second->GetId() );
+    return targets;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::GetTestParam_Knowledge
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId KnowledgeGroup::GetTestParam_Knowledge() const
+{
+    // return the first enemy known
+    for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )
+        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat().GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
+            return it->second->GetId();
+    return 0;
 }

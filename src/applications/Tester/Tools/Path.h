@@ -26,6 +26,16 @@
 namespace TEST
 {
     
+    class Path;
+
+    //! @name Types
+    //@{
+    typedef std::vector< Path* >            T_PathVector;
+    typedef std::vector< const Path* >      CT_PathVector;
+    typedef T_PathVector::iterator          IT_PathVector;
+    typedef T_PathVector::const_iterator    CIT_PathVector;
+    //@}
+
 // =============================================================================
 /** @class  Path
     @brief  Path
@@ -59,6 +69,12 @@ public:
     //! @name Operators
     //@{
     Path& operator=( const Path& path );
+    //@}
+
+    //! @name Test Parameters
+    //@{
+    static Path&         GetTestParam_Path    ( const Position& startPoint );
+    static T_PathVector& GetTestParam_PathList( const Position& startPoint );
     //@}
 
 private:

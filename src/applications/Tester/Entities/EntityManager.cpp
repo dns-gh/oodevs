@@ -30,6 +30,8 @@
 
 #include "Entities/Types/AutomatType.h"
 #include "Entities/Types/PawnType.h"
+#include "Entities/Types/AutomatModel.h"
+#include "Entities/Types/PawnModel.h"
 
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
@@ -77,6 +79,9 @@ void EntityManager::Initialize( XmlInputArchive& archive ) const
     {
         std::string strFile;
 
+        archive.ReadField( "Decisionnel", strFile );
+        InitializeModels ( strFile );
+
         archive.ReadField( "Pions"      , strFile );
         PawnType    ::Initialize( strFile );
 
@@ -85,6 +90,44 @@ void EntityManager::Initialize( XmlInputArchive& archive ) const
     }
     catch( ... )
     {
+        throw;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityManager::EntityManager::InitializeModels
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void EntityManager::InitializeModels( const std::string& strConfigFile ) const
+{
+    try
+    {
+        std::string       strCurrentDir = MT_GetCurrentDir();
+        std::string       strDir;
+        std::string       strFile;
+        MT_ExtractFilePath( strConfigFile, strDir  );
+        MT_ExtractFileName( strConfigFile, strFile );
+        MT_ChangeDir      ( strDir );
+
+        XmlInputArchive   archive;
+        
+        archive.Open      ( strFile );
+
+        archive.Section   ( "DirectIA" );
+        std::string strFileName;
+        archive.ReadField ( "Modeles", strFileName );
+
+        PawnModel   ::Initialize( strFileName );
+        //AutomatModel::Initialize( strFileName );
+
+        archive.EndSection(); // DirectIA
+
+        archive.Close      ();
+        MT_ChangeDir        ( strCurrentDir );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_LOG_ERROR_MSG( exception.what() );
         throw;
     }
 }

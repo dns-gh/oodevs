@@ -20,6 +20,7 @@
 
 #include "AutomatType.h"
 #include "PawnType.h"
+#include "AutomatModel.h"
 
 
 using namespace TEST;

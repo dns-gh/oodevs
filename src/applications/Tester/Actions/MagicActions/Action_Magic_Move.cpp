@@ -35,7 +35,7 @@ using namespace TEST;
 Action_Magic_Move::Action_Magic_Move( Pawn& pawn, uint nExecutionTick /* = 0 */ )
     : Action< Pawn > ( pawn, nExecutionTick )
 {
-    // NOTHING
+    strName_ = "Magic Move";
 }
 
 // -----------------------------------------------------------------------------

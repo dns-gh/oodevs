@@ -181,6 +181,15 @@ void Pawn::OnReceiveTerrainType( DIN::DIN_Input& /*input*/ )
 // TEST PARAMETERS
 //-----------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_ID
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId Pawn::GetTestParam_ID() const
+{
+    // for oid_obstacle_planifie
+    return ( uint )rand();
+}
 
 // -----------------------------------------------------------------------------
 // Name: Pawn::GetTestParam_Position
@@ -193,9 +202,22 @@ Position& Pawn::GetTestParam_Point() const
 
     rX += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
     rY += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
-    Position* pPos = new Position();
-    pPos->SetSimCoordinates( rX, rY );
-    return *pPos;
+    Position& pos = *new Position();
+    pos.SetSimCoordinates( rX, rY );
+    return pos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_PointList
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+T_PositionVector& Pawn::GetTestParam_PointList() const
+{
+    T_PositionVector& points = *new T_PositionVector();
+    // generate 5 points
+    for( uint i = 0; i < 4; ++i )
+        points.push_back( &GetTestParam_Point() );
+    return points;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,20 +272,16 @@ uint Pawn::GetTestParam_Direction() const
 // -----------------------------------------------------------------------------
 Path& Pawn::GetTestParam_Path() const
 {
-    Path* p = new Path();
+    return Path::GetTestParam_Path( position_ );
+}
 
-    double rX = position_.X();
-    double rY = position_.Y();
-
-    for( uint i = 0; i < 5; ++i )
-    {
-        rX += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
-        rY += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
-        Position* pNode = new Position();
-        pNode->SetSimCoordinates( rX, rY );
-        p->AddNode( *pNode );
-    }
-    return *p;
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_PathList
+// Created: SBO 2005-08-05
+// -----------------------------------------------------------------------------
+T_PathVector& Pawn::GetTestParam_PathList() const
+{
+    return Path::GetTestParam_PathList( position_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,6 +291,16 @@ Path& Pawn::GetTestParam_Path() const
 bool Pawn::GetTestParam_Bool() const
 {
     return GetTestParam_Numeric( 0, 1 ) ? true : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_Agent
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId Pawn::GetTestParam_Agent() const
+{
+    // return pawn ID
+    return GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -294,6 +322,27 @@ T_IdVector& Pawn::GetTestParam_AgentList() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_Automat
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId Pawn::GetTestParam_Automate() const
+{
+    return pAutomat_->GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_AutomateList
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+T_IdVector& Pawn::GetTestParam_AutomateList() const
+{
+    // return a vector containing automat id
+    T_IdVector& automats = *new T_IdVector();
+    automats.push_back( pAutomat_->GetId() );
+    return automats;
+}
+
+// -----------------------------------------------------------------------------
 // Name: pawn::GetTestParam_Enumeration
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
@@ -306,11 +355,20 @@ uint Pawn::GetTestParam_Enumeration( uint nMin, uint nMax ) const
 // Name: pawn::GetTestParam_Numeric
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-int Pawn::GetTestParam_Numeric( int nMin /* = 0 */, int nMax /* = RAND_MAX */ ) const
+int Pawn::GetTestParam_Numeric( int nMin /* = 0 */, int nMax /* = std::numeric_limits< int >::max() */ ) const
 {
     if( nMin > nMax )
         return 0;
     return ( uint )( rand() * ( double )( nMax - nMin ) / RAND_MAX ) + nMin;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_AgentKnowledge
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId Pawn::GetTestParam_AgentKnowledge() const
+{
+    return pAutomat_->GetKnowledgeGroup().GetTestParam_Knowledge();
 }
 
 // -----------------------------------------------------------------------------
@@ -319,7 +377,16 @@ int Pawn::GetTestParam_Numeric( int nMin /* = 0 */, int nMax /* = RAND_MAX */ ) 
 // -----------------------------------------------------------------------------
 T_IdVector& Pawn::GetTestParam_AgentKnowledgeList() const
 {
-    return pAutomat_->GetKnowledgeGroup().GetTestParam_Targets();
+    return pAutomat_->GetKnowledgeGroup().GetTestParam_Knowledges();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_ObjectKnowledge
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId Pawn::GetTestParam_ObjectKnowledge() const
+{
+    return pAutomat_->GetTeam().GetTestParam_Object();
 }
 
 // -----------------------------------------------------------------------------
@@ -338,4 +405,45 @@ T_IdVector& Pawn::GetTestParam_ObjectKnowledgeList() const
 Location& Pawn::GetTestParam_Location() const
 {
     return Location::GetTestParam_Location( position_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_Polygon
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+Location& Pawn::GetTestParam_Polygon() const
+{
+    return Location::GetTestParam_Location( position_, EnumTypeLocalisation::polygon );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_PolygonList
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_LocationVector& Pawn::GetTestParam_PolygonList() const
+{
+    // retrieve 3 random polygons
+    return Location::GetTestParam_LocationList( position_, 3, EnumTypeLocalisation::polygon );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_NatureAtlas
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+uint Pawn::GetTestParam_NatureAtlas() const
+{
+    // 12 atlas natures
+    static int nAtlasNatures[ 12 ] = { 0x8000, 0x4000, 0x2000, 0x1000, 0x0800, 0x0400, 
+                                       0x0200, 0x0100, 0x0080, 0x0040, 0x0020, 0x0010 };
+    return nAtlasNatures[ GetTestParam_Numeric( 0, 11 ) ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetTestParam_GDH
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+uint Pawn::GetTestParam_GDH() const
+{
+    return 2;
 }

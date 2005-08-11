@@ -49,13 +49,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Run             () = 0;
+    virtual bool Run() = 0;
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool IsReady         () const;
-    virtual uint GetExecutionTick() const;
+    virtual       bool         IsReady         () const;
+    virtual       uint         GetExecutionTick() const;
+    virtual const std::string& GetName         () const;
     //@}
 
     //! @name Modifiers
@@ -82,7 +83,8 @@ protected:
 protected:
     //! @name Member data
     //@{
-    uint nExecutionTick_;
+    uint        nExecutionTick_;
+    std::string strName_;
     //@}
 };
 

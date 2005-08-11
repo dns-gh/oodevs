@@ -70,7 +70,8 @@ public:
 
     //! @name Test Parameters
     //@{
-    T_IdVector& GetTestParam_Targets() const;
+    T_EntityId  GetTestParam_Knowledge () const;
+    T_IdVector& GetTestParam_Knowledges() const;
     //@}
 
 private:

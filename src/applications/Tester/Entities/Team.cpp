@@ -178,10 +178,29 @@ void Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledg
 }
 
 // -----------------------------------------------------------------------------
+// TEST PARAMETERS
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
 // Name: Team::GetTestParam_Objects
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 T_IdVector& Team::GetTestParam_Objects() const
 {
-    return *new T_IdVector();
+    // return the list of known objects
+    T_IdVector& objects = *new T_IdVector();
+    for( CIT_ObjectKnowledgeMap it = knownObjects_.begin(); it != knownObjects_.end(); ++it )
+        objects.push_back( it->second->GetId() );
+    return objects;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::GetTestParam_Object
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+T_EntityId Team::GetTestParam_Object() const
+{
+    if( knownObjects_.size() > 0 )
+        return knownObjects_.begin()->second->GetId();
+    return 0;
 }

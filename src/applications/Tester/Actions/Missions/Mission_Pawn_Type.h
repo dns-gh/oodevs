@@ -29,6 +29,13 @@ namespace TEST {
 
     class Pawn;
     class Mission_Pawn_ABC;
+    class Mission_Pawn_Type;
+
+//! @name Types
+//@{
+typedef std::vector< const Mission_Pawn_Type* > T_MissionPawnTypeVector;
+typedef T_MissionPawnTypeVector::const_iterator CIT_MissionPawnTypeVector;
+//@}
 
 // =============================================================================
 /** @class  Mission_Pawn_Type
@@ -48,10 +55,12 @@ public:
     //@{
     static void Initialize();
     static void Terminate ();
+    static const Mission_Pawn_Type* Find( const std::string& strName );
 
     template< typename Mission >
     static void Register( const std::string& strName );
-    static Mission_Pawn_ABC& CreateMission( const std::string& strName, Pawn& target, uint nExecutionTick = 0 );
+    static Mission_Pawn_ABC& CreateMission( const std::string&       strName, Pawn& target, uint nExecutionTick = 0 );
+    static Mission_Pawn_ABC& CreateMission( const Mission_Pawn_Type& type   , Pawn& target, uint nExecutionTick = 0 );
     //@}
 
 private:

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-08 $
+// $Created: AGE 2004-09-21 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -30,17 +30,17 @@ using namespace TEST;
 
 // -----------------------------------------------------------------------------
 // Name: Mission_Pawn_Test_CreateObject constructor
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Pawn_Test_CreateObject::Mission_Pawn_Test_CreateObject( Pawn& pawn, uint nExecutionTick /* = 0 */ )
     : Mission_Pawn_ABC ( pawn, nExecutionTick )
 {
-    // NOTHING
+    strName_ = "Pawn_Test_CreateObject";
 }
 
 // -----------------------------------------------------------------------------
 // Name: Mission_Pawn_Test_CreateObject destructor
-// Created: SBO 2005-08-08
+// Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Mission_Pawn_Test_CreateObject::~Mission_Pawn_Test_CreateObject()
 {
@@ -81,3 +81,5 @@ void Mission_Pawn_Test_CreateObject::Clean()
     delete &asnMission;
     Mission_Pawn_ABC::Clean();
 }
+
+

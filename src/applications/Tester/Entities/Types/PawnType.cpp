@@ -19,6 +19,7 @@
 #include "Tester_Pch.h"
 
 #include "PawnType.h"
+#include "PawnModel.h"
 
 using namespace TEST;
 
@@ -30,12 +31,17 @@ PawnType::T_PawnTypeMap PawnType::pawnTypes_;
 // -----------------------------------------------------------------------------
 PawnType::PawnType( const std::string& strName, XmlInputArchive& archive )
     : strName_ ( strName )
+    , pModel_  ( 0 )
 {
     try   
     {
         std::string strValue;
 
-        archive.ReadField    ( "MosID", nId_ );
+        archive.ReadField( "MosID", nId_ );
+        std::string strModel;
+        archive.ReadField( "ModeleDecisionnel", strModel );
+        pModel_ = PawnModel::Find( strModel );
+        assert( pModel_ );
     }
     catch( MT_ArchiveLogger_Exception& exception )
     {

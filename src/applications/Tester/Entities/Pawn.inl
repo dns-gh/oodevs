@@ -19,6 +19,7 @@
 #include "Types/PawnType.h"
 
 #include "Entities/Automat.h"
+#include "Entities/Types/PawnType.h"
 
 namespace TEST
 {
@@ -96,10 +97,10 @@ const std::string& Pawn::GetName() const
 // Created: SBO 2005-05-17
 // -----------------------------------------------------------------------------
 inline
-const std::string& Pawn::GetType() const
+const PawnType& Pawn::GetType() const
 {
     assert( pType_ );
-    return pType_->GetName();
+    return *pType_;
 }
 
 // -----------------------------------------------------------------------------

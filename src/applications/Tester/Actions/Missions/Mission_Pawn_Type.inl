@@ -68,4 +68,27 @@ Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const std::string& strName, 
     return pType->Instanciate( target, nExecutionTick );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Mission_Pawn_Type::CreateMission
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const Mission_Pawn_Type& type, Pawn& target, uint nExecutionTick /*= 0*/ )
+{
+    return type.Instanciate( target, nExecutionTick );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Mission_Pawn_Type::Find
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+const Mission_Pawn_Type* Mission_Pawn_Type::Find( const std::string& strName )
+{
+    CIT_MissionPawnTypeMap it = missions_.find( strName );
+    if( it != missions_.end() )
+        return it->second;
+    return 0;
+}
+
 } // end namespace TEST

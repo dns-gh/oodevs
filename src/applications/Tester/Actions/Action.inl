@@ -60,6 +60,7 @@ template< typename T >
 inline
 bool Action< T >::Run()
 {
+    MT_LOG_INFO_MSG( "Starting action: " << GetName() );
     if( CheckParameters() )
     {
         Serialize();
@@ -67,6 +68,7 @@ bool Action< T >::Run()
         Clean    ();
         return true;
     }
+    MT_LOG_ERROR_MSG( "Invalid parameters" );
     return false;
 }
 

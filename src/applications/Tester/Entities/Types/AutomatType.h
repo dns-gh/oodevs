@@ -25,6 +25,7 @@
 namespace TEST
 {
     class PawnType;
+    class AutomatModel;
 
 // =============================================================================
 /** @class  AutomatType
@@ -43,18 +44,19 @@ class AutomatType
 public:
     //! @name Manager
     //@{
-    static void                 Initialize( const std::string& strScipioAutomatConfigFile );
-    static void                 Terminate ();
+    static void               Initialize( const std::string& strScipioAutomatConfigFile );
+    static void               Terminate ();
 
-    static const AutomatType*   Find      ( const std::string& strName );
-    static const AutomatType*   Find      ( ASN1T_TypeAutomate asnId );
+    static const AutomatType* Find      ( const std::string& strName );
+    static const AutomatType* Find      ( ASN1T_TypeAutomate asnId );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&          GetName   () const;
-          uint                  GetId     () const;
-    const PawnType&             GetPcType () const;
+    const std::string&  GetName  () const;
+          uint          GetId    () const;
+    const PawnType&     GetPcType() const;
+    const AutomatModel& GetModel () const;
     //@}
 
 private:
@@ -73,12 +75,13 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string                   strName_;
-	uint                          nId_;
-    const PawnType*               pPcPawnType_;
+    std::string             strName_;
+	uint                    nId_;
+    const PawnType*         pPcPawnType_;
+    const AutomatModel*     pModel_;
 
     // global type list
-    static T_AutomatTypeMap       automatTypes_;
+    static T_AutomatTypeMap automatTypes_;
     //@}
 };
 

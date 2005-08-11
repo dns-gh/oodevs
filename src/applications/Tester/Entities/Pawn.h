@@ -23,6 +23,7 @@
 #include "Entities/ConcreteEntity.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/Path.h"
+#include "Tools/Location.h"
 
 namespace DIN
 {
@@ -33,7 +34,6 @@ namespace TEST
 {
     class Automat;
     class PawnType;
-    class Location;
 
 // =============================================================================
 /** @class  Pawn
@@ -69,27 +69,38 @@ public:
     //@{
           T_EntityId   GetId     () const;
 	const std::string& GetName   () const;
-    const std::string& GetType   () const;
+    const PawnType&    GetType   () const;
 	      bool	       IsPc      () const;
     //@}
 
     //! @name Test Parameters
     //@{
-    T_EntityId  GetTestParam_LeftLimit          ();
-    T_EntityId  GetTestParam_RightLimit         ();
-    T_IdVector& GetTestParam_Limas              () const;
+    T_EntityId        GetTestParam_LeftLimit          ();
+    T_EntityId        GetTestParam_RightLimit         ();
+    T_IdVector&       GetTestParam_Limas              () const;
 
-    uint        GetTestParam_Direction          () const;
-    bool        GetTestParam_Bool               () const;
-    int         GetTestParam_Numeric            ( int  nMin = 0, int  nMax = RAND_MAX ) const;
-    uint        GetTestParam_Enumeration        ( uint nMin    , uint nMax            ) const;
-    Position&   GetTestParam_Point              () const;
-    Path&       GetTestParam_Path               () const;
-    T_EntityId  GetTestParam_Agent              () const;
-    T_IdVector& GetTestParam_AgentList          () const;
-    T_IdVector& GetTestParam_AgentKnowledgeList () const;
-    T_IdVector& GetTestParam_ObjectKnowledgeList() const;
-    Location&   GetTestParam_Location           () const;
+    T_EntityId        GetTestParam_ID                 () const;
+    uint              GetTestParam_Direction          () const;
+    bool              GetTestParam_Bool               () const;
+    int               GetTestParam_Numeric            ( int  nMin = 0, int  nMax = std::numeric_limits< int >::max() ) const;
+    uint              GetTestParam_Enumeration        ( uint nMin    , uint nMax            ) const;
+    Position&         GetTestParam_Point              () const;
+    T_PositionVector& GetTestParam_PointList          () const;
+    Path&             GetTestParam_Path               () const;
+    T_PathVector&     GetTestParam_PathList           () const;
+    T_EntityId        GetTestParam_Agent              () const;
+    T_IdVector&       GetTestParam_AgentList          () const;
+    T_EntityId        GetTestParam_AgentKnowledge     () const;
+    T_IdVector&       GetTestParam_AgentKnowledgeList () const;
+    T_EntityId        GetTestParam_Automate           () const;
+    T_IdVector&       GetTestParam_AutomateList       () const;
+    T_EntityId        GetTestParam_ObjectKnowledge    () const;
+    T_IdVector&       GetTestParam_ObjectKnowledgeList() const;
+    Location&         GetTestParam_Location           () const;
+    Location&         GetTestParam_Polygon            () const;
+    T_LocationVector& GetTestParam_PolygonList        () const;
+    uint              GetTestParam_NatureAtlas        () const;
+    uint              GetTestParam_GDH                () const;
     //@}
 
     //! @name Other Accessors

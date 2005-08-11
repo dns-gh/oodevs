@@ -49,6 +49,12 @@ public:
     //@{
     void Initialize( XmlInputArchive& archive ) const;
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void InitializeModels( const std::string& strConfigFile ) const;
+    //@}
 };
 
 

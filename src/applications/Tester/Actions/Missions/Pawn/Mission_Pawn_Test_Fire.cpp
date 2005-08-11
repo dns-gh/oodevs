@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-08 $
+// $Created: AGE 2004-09-21 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -35,7 +35,7 @@ using namespace TEST;
 Mission_Pawn_Test_Fire::Mission_Pawn_Test_Fire( Pawn& pawn, uint nExecutionTick /* = 0 */ )
     : Mission_Pawn_ABC ( pawn, nExecutionTick )
 {
-    // NOTHING
+    strName_ = "Pawn_Test_Fire";
 }
 
 // -----------------------------------------------------------------------------
@@ -84,3 +84,5 @@ void Mission_Pawn_Test_Fire::Clean()
     delete &asnMission;
     Mission_Pawn_ABC::Clean();
 }
+
+

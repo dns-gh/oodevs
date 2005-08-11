@@ -37,6 +37,7 @@
 
 #include "Actions/Scheduler.h"
 #include "TestSets/TestSet_ABC.h"
+#include "Tools/ASN_Tools.h"
 
 #include "ASN_Messages.h"
 
@@ -738,7 +739,7 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] "
-                 << "PionOrderAck - Code: " << asnMsg.error_code;
+                 << "PionOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 

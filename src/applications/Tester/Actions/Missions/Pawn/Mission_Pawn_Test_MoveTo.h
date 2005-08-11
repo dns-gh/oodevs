@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: SBO 2005-08-04 $
+// $Created: AGE 2004-09-21 $
 // $Archive: $
 // $Author: $
 // $Modtime: $
@@ -37,7 +37,8 @@ namespace TEST {
     Mission_Pawn_Test_MoveTo;
     @endcode
 */
-// Created: SBO 2005-08-04
+// Created: SBO 2005-08-08
+// Generated: 2005-08-11 - 11:53:20
 // =============================================================================
 class Mission_Pawn_Test_MoveTo : public Mission_Pawn_ABC
 {

@@ -72,6 +72,6 @@ protected:
     //@}
 };
 
-} // end namespace Mission
+} // end namespace TEST
 
 #endif // __Mission_Pawn_ABC_h_

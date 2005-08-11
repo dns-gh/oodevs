@@ -90,6 +90,7 @@ public:
 
     //! @name Test Parameters
     //@{
+    T_EntityId  GetTestParam_Object () const;
     T_IdVector& GetTestParam_Objects() const;
     //@}
 

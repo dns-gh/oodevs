@@ -32,6 +32,7 @@ using namespace TEST;
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC()
     : nExecutionTick_ ( 0 )
+    , strName_        ()
 {
     // NOTHING
 }
@@ -42,6 +43,7 @@ Action_ABC::Action_ABC()
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC( uint nExecutionTick )
     : nExecutionTick_ ( nExecutionTick )
+    , strName_        ()
 {
     // NOTHING
 }

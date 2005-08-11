@@ -32,6 +32,7 @@
 #include <windows.h>
 
 #include "TestSets/TestSet_Simple.h"
+#include "TestSets/Testset_PawnMissions.h"
 
 using namespace TEST;
 
@@ -58,7 +59,8 @@ void Run()
 {
     signal( SIGINT, ctrl_c_handler );
 
-    TestSet_Simple tests;
+    //TestSet_Simple tests;
+    TestSet_PawnMissions tests;
 
     TestManager::Initialize( &tests, "127.0.0.1", 10000, "D:/Dev/scipio-svn/data/test/scipio.xml" );
 

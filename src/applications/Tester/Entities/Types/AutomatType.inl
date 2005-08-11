@@ -74,4 +74,15 @@ const PawnType& AutomatType::GetPcType() const
     return *pPcPawnType_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: AutomatType::GetModel
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+const AutomatModel& AutomatType::GetModel() const
+{
+    assert( pModel_ );
+    return *pModel_;
+}
+
 } // end namespace TEST
