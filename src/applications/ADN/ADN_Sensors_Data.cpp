@@ -422,7 +422,9 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
     ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
     ADN_Objects_Data::IT_ObjectsInfos_Vector itObject = std::find_if( objects.begin(), objects.end(), ADN_Objects_Data::ObjectInfos::Cmp( nType ) );
-    assert( itObject != objects.end() );
+
+    if( itObject == objects.end() )
+        throw ADN_Xml_Exception( input.GetContext(), "Type d'objet invalide" );
     ptrObject_ = *itObject;
     strName_ = ptrObject_.GetData()->strName_.GetData();
 

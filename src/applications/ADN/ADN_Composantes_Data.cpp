@@ -1490,7 +1490,10 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input 
     std::string strName;
     input.ReadAttribute( "type", strName );
     ADN_Objects_Data::ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strName );
-    assert( pObject != 0 );
+
+    if( !pObject )
+        throw ADN_Xml_Exception( input.GetContext(), "Type d'objet invalide" );
+
     ptrObject_ = pObject;
 
     bInitialBuildTime_       = input.ReadTimeField( "TempsInitialConstruction", rInitialBuildTime_, ADN_XmlInput_Helper::eNothing );
@@ -1669,7 +1672,8 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadArchive( ADN_XmlInput_Helper& 
                 input.ReadAttribute( "nom", strCategoryName );
 
                 ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( strDotationName, strCategoryName );
-                assert( pCategory != 0 );
+                if( !pCategory )
+                    throw ADN_Xml_Exception( input.GetContext(), "Type de dotation invalide" );
 
                 std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( (E_ConsumptionType)nType, *pCategory ) );
                 spNew->ReadArchive( input );
