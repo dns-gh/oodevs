@@ -524,8 +524,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionGetTC2                 , "DEC_Pion_TC2"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionRequestSupply          , "DEC_DemandeDeRavitaillement"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationValueUsingTC2, "DEC_ChangeValeurDotations"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2 , "DEC_EvacuerBlessesVersTC2"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::HasWoundedHumansToEvacuate , "DEC_NecessiteEvacuationBlesses" );
     
     // Transport / Héliportage
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPion                       , "DEC_Transport_AjouterPion"              );

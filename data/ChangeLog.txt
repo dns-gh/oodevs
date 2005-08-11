@@ -28,7 +28,11 @@ Next Version - Codename ''
                 => Plus de points spéciaux (ni d'avants points) au niveau des ponts sur les ruisseaux
                 => Pas plus de 1 avant point tous les 2000 mètres
                 => Pas plus de 1 point spécial tous les 500 mètres
-
+    - NLD - Les fonctions suivantes
+                B DEC_NecessiteEvacuationBlesses( A /*T_Pion pion interrogé*/ );
+                V DEC_EvacuerBlessesVersTC2     ( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ );    
+              sont maintenant déclarées dans workspace.hal (=> dispo pour pions et automates)
+    
 Version 0.115 [10/08/2005] - Codename 'pathfind rulz'
     - AGE - Ajout de regles de pathfind pour les unités autonomes ( => les drones vont en ligne droite ). 
     - NLD - Bug fix : la fonction DEC_Geometrie_CalculerPositionsParRapportALima() crashait quand la lima ne coupe pas le fuseau ...

@@ -148,7 +148,7 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkTime( DIA_Call_ABC& cal
 // Name: DEC_LogisticFunctions::EvacuateWoundedHumansToTC2
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
+void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypePion    ( call.GetParameter( 0 ) ) );
     assert( DEC_Tools::CheckTypeAutomate( call.GetParameter( 1 ) ) );
@@ -169,12 +169,12 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DIA_Call_ABC& call, MIL_
 // Name: DEC_LogisticFunctions::HasWoundedHumansToEvacuate
 // Created: NLD 2005-08-08
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
+void DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
 
     DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    assert( pPion );   
+    assert( pPion );
     call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_Humans >().HasWoundedHumansToEvacuate() );
 }
 

@@ -132,8 +132,8 @@ signatures
     V                                A::DEC_DetruireObjetSansDelais( U /*T_ConnaissanceObjet*/ );
 
     // Logistique
-    A /*T_Automate*/                 A::DEC_Automate_TC2           (); // ATTENTION : La valeur de retour peut être nulle     
-    V                                A::DEC_DemandeDeRavitaillement();
+    A /*T_Automate*/                 A::DEC_Automate_TC2              (); // ATTENTION : La valeur de retour peut être nulle     
+    V                                A::DEC_DemandeDeRavitaillement   ();
     
     // Prisonniers
     U /*T_Point*/                    A::DEC_PositionCampPrisonniers();

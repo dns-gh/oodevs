@@ -70,6 +70,10 @@ signatures
     X                    DEC_DirectionToString ( U /*T_Direction*/  );      
     X                    DEC_ItineraireToString( U /*T_Itineraire*/ );  
     
+    // Logistique
+    B                    DEC_NecessiteEvacuationBlesses( A /*T_Pion pion interrogé*/ );
+    V                    DEC_EvacuerBlessesVersTC2     ( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ );    
+    
     // Manipulation DIA Thing 
     A                    DEC_CreerDIAThing( I /*Type*/ );
     V                    DEC_DetruireDIAThing( A /*Thing*/ );

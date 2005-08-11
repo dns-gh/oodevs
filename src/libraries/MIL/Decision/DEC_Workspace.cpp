@@ -22,6 +22,7 @@
 #include "Decision/Genie/DEC_Gen_Object.h"
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/Functions/DEC_DIAFunctions.h"
+#include "Decision/Functions/DEC_LogisticFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
@@ -154,6 +155,10 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 	// DIA Thing management
 	pFuncTable->RegisterFunction( DEC_DIAFunctions::CreateDIAThing		 , "DEC_CreerDIAThing"    );
 	pFuncTable->RegisterFunction( DEC_DIAFunctions::DestroyDIAThing		 , "DEC_DetruireDIAThing" );
+
+    // Logistic
+    pFuncTable->RegisterFunction( DEC_LogisticFunctions::HasWoundedHumansToEvacuate, "DEC_NecessiteEvacuationBlesses" );
+    pFuncTable->RegisterFunction( DEC_LogisticFunctions::EvacuateWoundedHumansToTC2, "DEC_EvacuerBlessesVersTC2"      );
 
     // Debug
     pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );

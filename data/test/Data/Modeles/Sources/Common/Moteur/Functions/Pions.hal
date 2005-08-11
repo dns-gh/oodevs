@@ -278,8 +278,6 @@ signatures
     A /*T_Automate*/                 A::DEC_Pion_TC2                  (); // ATTENTION : La valeur de retour peut être nulle
     V                                A::DEC_DemandeDeRavitaillement   ();
     V                                A::DEC_ChangeValeurDotations     ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
-    V                                A::DEC_EvacuerBlessesVersTC2     ( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ );
-    B                                A::DEC_NecessiteEvacuationBlesses( A /*T_Pion pion interrogé*/ );
 
     // Test / debug 
     V                               A::DEC_PostureForTest    ( I );
