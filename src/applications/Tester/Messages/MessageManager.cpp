@@ -736,8 +736,11 @@ void MessageManager::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObje
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, T_NetContextId /*nCtx*/ )
 {
+    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_unite_executante );
+    assert( pPawn );
+
     std::stringstream strOutputMsg;
-    strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] "
+    strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] (" << pPawn->GetType().GetName() << ")"
                  << "PionOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
