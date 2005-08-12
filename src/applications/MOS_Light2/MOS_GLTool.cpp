@@ -445,14 +445,14 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         DrawAutomataStatus( agent, nState );
     
 
-    // Draw specific NBC parameters
+    //// Draw specific NBC parameters
     if( agent.bNbcProtectionSuitWorn_ )
     {
         glColor4d( MOS_COLOR_NBCSUIT );
-        DrawCircle( agent.vPos_, MOS_GL_CROSSSIZE * 0.8f, true );
+        DrawCircle( agent.vPos_, MOS_GL_CROSSSIZE * 0.8f , true );
     }
 
-    //Death
+    //Death 
     if( agent.IsDead() )
     {
         glColor4d( MOS_COLOR_WHITE );
@@ -1715,9 +1715,11 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
     if( bFill )
     {
         glBegin( GL_TRIANGLE_FAN );
-        Vertex( center.rX_, center.rY_, 1 );
+        Vertex( center.rX_, center.rY_, -2 );
         for ( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-            Vertex( it->rX_, it->rY_, 0.01 );
+            Vertex( it->rX_, it->rY_, -2 );
+		glEnd();
+		DrawLine( points );
     }
     else
         DrawLine( points );
