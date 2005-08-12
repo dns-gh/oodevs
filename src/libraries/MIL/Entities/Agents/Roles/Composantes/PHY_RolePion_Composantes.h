@@ -95,11 +95,6 @@ public:
     void DestroyAllComposantes        ();
     //@}
 
-    //! @name Move
-    //@{
-    bool CanMove() const;
-    //@}
-
     //! @name Pret de composantes
     //@{
     uint LendCollectionComposantes       ( PHY_RolePion_Composantes& newRole, uint nNbr );

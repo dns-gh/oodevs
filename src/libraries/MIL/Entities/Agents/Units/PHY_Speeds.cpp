@@ -101,7 +101,7 @@ PHY_Speeds::~PHY_Speeds()
 void PHY_Speeds::ReadArchive( MIL_InputArchive& archive )
 {
     archive.BeginList( "Vitesses" );
-    archive.ReadAttribute( "maximum", rMaxSpeed_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "maximum", rMaxSpeed_, CheckValueGreater( 0. ) );
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
     while ( archive.NextListElement() )

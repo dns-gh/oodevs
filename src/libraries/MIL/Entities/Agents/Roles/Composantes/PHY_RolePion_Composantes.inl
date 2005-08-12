@@ -132,14 +132,3 @@ bool PHY_RolePion_Composantes::IsNeutralized() const
 {
     return nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::CanMove
-// Created: NLD 2005-06-28
-// -----------------------------------------------------------------------------
-inline
-bool PHY_RolePion_Composantes::CanMove() const
-{
-    return nNbrUndamagedMajorComposantes_ > 0 || nNbrUndamagedNonMajorComposantes_ > 0;
-}

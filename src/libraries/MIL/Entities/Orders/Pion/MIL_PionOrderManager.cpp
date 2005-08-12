@@ -497,9 +497,6 @@ const MIL_Fuseau& MIL_PionOrderManager::GetFuseau() const
         return pMission_->GetFuseau();
 
     return pion_.GetAutomate().GetFuseau();
-//
-//    static const MIL_Fuseau emptyFuseau; //$$$ CRADE
-//    return emptyFuseau;
 }
 
 //-----------------------------------------------------------------------------

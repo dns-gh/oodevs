@@ -132,8 +132,7 @@ bool PHY_RoleAction_Moving::CanMove() const
 
     return      GetRole< PHY_RoleAction_InterfaceFlying >().CanMove() 
             && !GetRole< PHY_RolePion_Transported       >().IsTransported()
-            && !GetRole< PHY_RolePion_Reinforcement     >().IsReinforcing()
-            &&  GetRole< PHY_RolePion_Composantes       >().CanMove();
+            && !GetRole< PHY_RolePion_Reinforcement     >().IsReinforcing();
 }
 
 // -----------------------------------------------------------------------------

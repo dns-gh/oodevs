@@ -108,7 +108,7 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
             else if( itPathSection == pathSections_.begin() && pathSection.IsImpossible() )
             {
                 nState_ = eImpossible;
-                assert( false );
+//                assert( false );
             }
             else
                 nState_ = ePartial;

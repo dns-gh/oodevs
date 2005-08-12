@@ -628,7 +628,7 @@ public:
 
     MT_Float GetAngle() const
     {
-    return rAngle_ == std::numeric_limits< MT_Float >::max() ? 0. : rAngle_;
+        return rAngle_ == std::numeric_limits< MT_Float >::max() ? 0. : rAngle_;
     }
 
 private:
