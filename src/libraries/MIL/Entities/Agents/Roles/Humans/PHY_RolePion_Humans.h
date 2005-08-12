@@ -33,6 +33,16 @@ class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
     MT_COPYNOTALLOWED( PHY_RolePion_Humans )
 
 public:
+    //! @name Types
+    //@{
+    enum E_EvacuationMode
+    {
+        eEvacuationMode_Auto,  // TC2 or IMEX
+        eEvacuationMode_Manual // IMEX
+    };
+    //@}
+
+public:
              PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion& pion );
              PHY_RolePion_Humans();
     virtual ~PHY_RolePion_Humans();
@@ -61,7 +71,8 @@ public:
     //! @name Medical
     //@{
     void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
-    bool                   HasWoundedHumansToEvacuate      () const; 
+    bool                   HasWoundedHumansToEvacuate      () const;   
+    void                   ChangeEvacuationMode            ( E_EvacuationMode nMode );
     PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
     PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human );
     void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
@@ -139,6 +150,7 @@ private:
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;
     bool                   bRcMedicalQuerySent_;
+    E_EvacuationMode       nEvacuationMode_;
 };
 
 #include "PHY_RolePion_Humans.inl"

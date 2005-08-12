@@ -48,3 +48,13 @@ bool PHY_RolePion_Humans::HasChanged() const
 {
     return nNbrHumansDataChanged_ > 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::ChangeEvacuationMode
+// Created: NLD 2005-08-12
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Humans::ChangeEvacuationMode( E_EvacuationMode nMode )
+{
+    nEvacuationMode_ = nMode;
+}

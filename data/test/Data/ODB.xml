@@ -629,6 +629,119 @@
     </Pions>
     
     <Objets>
+  
+  
+        <Objet id="3" type="itineraire logistique">
+            <Armee>bleu</Armee>
+            <Forme>
+                <Localisation type="ligne">
+                    <Points>
+                        <Point>30TYT1821621903</Point>
+                        <Point>30TYT2511919722</Point>
+                        <Point>31TBN7952322301</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+            <PoidsSupporte>9</PoidsSupporte>
+            <Largeur>123</Largeur>
+            <Longueur>1596</Longueur>
+            <Debit>5</Debit>
+        </Objet>
+        
+        <Objet id="4" type="site franchissement">
+            <Armee>bleu</Armee>
+            <Forme>
+                <Localisation type="ligne">
+                    <Points>
+                        <Point>31TBN8429869116</Point>
+                        <Point>31TBN8432169112</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+            <Largeur>45</Largeur>
+            <Profondeur>12</Profondeur>
+            <VitesseCourant>15</VitesseCourant>
+            <BergesAAmenager>false</BergesAAmenager>
+        </Objet>
+ 
+        <Objet id="5" type="zone nbc">
+            <Armee>bleu</Armee>
+            <Forme>
+                <Localisation type="cercle">
+                    <Points>
+                        <Point>31TBN8429869116</Point>
+                        <Point>31TBN8432175112</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+            <AgentNBC type="Gaz sarin"/>
+        </Objet>
+ 
+        <Objet id="9" type="rota">
+            <Armee>bleu</Armee>
+            <Forme>
+                <Localisation type="cercle">
+                    <Points>
+                        <Point>31TBN8429869116</Point>
+                        <Point>31TBN8430069312</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+            <ZoneDeSecurite>
+                <Localisation type="polygone">
+                    <Points>
+                        <Point>31TBN8394769779</Point>
+                        <Point>31TBN8477469737</Point>
+                        <Point>31TBN8469168612</Point>
+                        <Point>31TBN8387168748</Point>
+                    </Points>
+                </Localisation>            
+            </ZoneDeSecurite>
+            <Danger>3</Danger>
+            <AgentsNBC>
+                <AgentNBC type="Gaz sarin"/>
+                <AgentNBC type="Virus ebola"/>
+            </AgentsNBC>
+        </Objet>    
+        
+        <Objet id="10" type="camp prisonniers">
+            <Armee>bleu</Armee>
+                    <Forme>
+                <Localisation type="cercle">
+                    <Points>
+                        <Point>31TBN9374781012</Point>
+                        <Point>31TBN9488680984</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+            <TC2>5000001</TC2>
+        </Objet>        
+                  
+        <Objet id="20" type="camp refugies">
+            <Armee>bleu</Armee>
+                    <Forme>
+                <Localisation type="cercle">
+                    <Points>
+                        <Point>31TBN9374781012</Point>
+                        <Point>31TBN9488680984</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+            <TC2>5000001</TC2>
+        </Objet>
+    
+<!--    
+         <Objet type="bouchon mines">
+            <ID>2</ID>
+            <Camp>Ami</Camp>
+            <Forme>
+                <Localisation type="point">
+                    <Points>
+                        <Point>31TDM5590790079</Point>
+                    </Points>
+                </Localisation>
+            </Forme>
+        </Objet> -->
     </Objets>
 </ODB>
 

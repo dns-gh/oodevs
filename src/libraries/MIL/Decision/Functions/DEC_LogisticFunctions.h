@@ -54,8 +54,10 @@ public:
     
     static void UndoLendCollectionComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent ); 
 
-    static void EvacuateWoundedHumansToTC2( DIA_Call_ABC& call );
-    static void HasWoundedHumansToEvacuate( DIA_Call_ABC& call );
+    static void EvacuateWoundedHumansToTC2       ( DIA_Call_ABC& call );
+    static void HasWoundedHumansToEvacuate       ( DIA_Call_ABC& call );
+    static void ForbidWoundedHumansAutoEvacuation( DIA_Call_ABC& call );
+    static void AllowWoundedHumansAutoEvacuation ( DIA_Call_ABC& call ); 
     //@}
 
     //! @name Supply

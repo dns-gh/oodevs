@@ -74,6 +74,9 @@ signatures
     B                    DEC_NecessiteEvacuationBlesses( A /*T_Pion pion interrogé*/ );
     V                    DEC_EvacuerBlessesVersTC2     ( A /*T_Pion pion possèdant les blessés à transférer*/, A /*T_Automate tc2 destinataire*/ );    
     
+    V                    DEC_InterdireEvacuationAutomatiqueBlesses( A /*T_Pion*/ );
+    V                    DEC_AutoriserEvacuationAutomatiqueBlesses( A /*T_Pion*/ );   
+    
     // Manipulation DIA Thing 
     A                    DEC_CreerDIAThing( I /*Type*/ );
     V                    DEC_DetruireDIAThing( A /*Thing*/ );

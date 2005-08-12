@@ -21,6 +21,10 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Nouvelles fonctions pour l'IMEX 
+                V DEC_InterdireEvacuationAutomatiqueBlesses( A /*T_Pion*/ );
+                V DEC_AutoriserEvacuationAutomatiqueBlesses( A /*T_Pion*/ );   
+    - NLD - Un pion ne possédant QUE des composantes réparables peut à nouveau se déplacer
     - NLD - Connaissances agents : envoi de la pertinence à MOS tous les n%
     - NLD - Nettoyage dans la gestion des 'avants points' et autres 'points speciaux' 
                 => Plus de points ni d'avants points avant les plantations et les marais (no comment ...)

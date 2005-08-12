@@ -178,6 +178,33 @@ void DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DIA_Call_ABC& call )
     call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_Humans >().HasWoundedHumansToEvacuate() );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation
+// Created: NLD 2005-08-12
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+    
+    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    assert( pPion );
+    pPion->GetPion().GetRole< PHY_RolePion_Humans >().ChangeEvacuationMode( PHY_RolePion_Humans::eEvacuationMode_Manual );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation
+// Created: NLD 2005-08-12
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+    
+    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    assert( pPion );
+    pPion->GetPion().GetRole< PHY_RolePion_Humans >().ChangeEvacuationMode( PHY_RolePion_Humans::eEvacuationMode_Auto );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMedicalEnableSystem
 // Created: NLD 2005-01-05
@@ -432,4 +459,5 @@ void DEC_LogisticFunctions::ConvoyEndMission( DIA_Call_ABC& /*call*/, MIL_AgentP
 {
     callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyEndMission();
 }
+
 

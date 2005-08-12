@@ -76,6 +76,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion&
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
     , bRcMedicalQuerySent_    ( false )
+    , nEvacuationMode_        ( eEvacuationMode_Auto )
 {
 }
 
@@ -95,6 +96,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans()
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
     , bRcMedicalQuerySent_    ( false )
+    , nEvacuationMode_        ( eEvacuationMode_Auto )
 {
 }
 
@@ -109,6 +111,7 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::serialize
 // Created: JVT 2005-03-31
@@ -387,7 +390,7 @@ PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Hu
     assert( pPion_ );
     
     MIL_AutomateLOG* pTC2 = pPion_->GetAutomate().GetTC2();
-    if ( !pTC2 )
+    if ( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
         return 0;
 
     // Rcs uniquement quand la log est branchée
