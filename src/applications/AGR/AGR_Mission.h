@@ -44,8 +44,10 @@ public:
     //@{
     void Read( MT_XXmlInputArchive& input, const AGR_Workspace& workspace );
 
-    void GenerateMilClassHeader( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
-    void GenerateMilClassCpp   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateMilClassHeader   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateMilClassCpp      ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateTesterClassHeader( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateTesterClassCpp   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
 
     std::string GenerateDiaDefinition() const;
     std::string GenerateMosImplementation() const;

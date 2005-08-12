@@ -194,6 +194,30 @@ std::string AGR_Type_ABC::SerializationCleaningCode( const AGR_Member& member ) 
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::TesterSerializationCode
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::TesterSerializationCode( const AGR_Member& member ) const
+{
+    return "    ASN_Tools::Copy" + strFunctionSuffix_
+        + "( pTarget_->GetTestParam_" + strFunctionSuffix_ + "()"
+           + ", asnMission." + member.ASNName()
+           + " );\n";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::TesterSerializationCleaningCode
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::TesterSerializationCleaningCode( const AGR_Member& member ) const
+{
+    if( bRequiresCleaning_ )
+        return "    ASN_Tools::Delete( asnMission." + member.ASNName()+ " );\n";
+    else
+        return "";    
+}
+
+// -----------------------------------------------------------------------------
 // Name: agr_type_abc::DIAType
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------

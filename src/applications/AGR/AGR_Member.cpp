@@ -283,6 +283,24 @@ std::string AGR_Member::SerializationCleaningCode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_Member::TesterSerializationCode
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+std::string AGR_Member::TesterSerializationCode() const
+{
+    return pType_->TesterSerializationCode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Member::TesterSerializationCleaningCode
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+std::string AGR_Member::TesterSerializationCleaningCode() const
+{
+    return pType_->TesterSerializationCleaningCode( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AGR_Member::DIAType
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------

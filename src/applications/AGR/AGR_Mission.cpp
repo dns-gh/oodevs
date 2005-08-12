@@ -248,6 +248,116 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
 }
 
 
+// -----------------------------------------------------------------------------
+// TESTER
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Mission::GenerateTesterClassHeader
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void AGR_Mission::GenerateTesterClassHeader( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
+{
+    std::string strMissionBaseName( BaseName() );
+    std::string strBaseHeaderFile;
+    std::string strUnitName;
+
+    if( bMissionForAutomata_ )
+    {
+        strBaseHeaderFile = AGR_SKEL_DIR "AGR_TesterMissionAutomat_Skeleton.h";
+        strUnitName = "Automat";
+    }
+    else
+    {
+        strBaseHeaderFile = AGR_SKEL_DIR "AGR_TesterMissionPawn_Skeleton.h";
+        strUnitName = "Pawn";
+    }
+
+    // get the skeleton file
+    std::string strBaseContent;
+    workspace.ReadStringFile( strBaseHeaderFile, strBaseContent );
+
+    // replace the mission name
+    workspace.ReplaceInString( strBaseContent, "$MissionName$", strMissionBaseName );
+
+    std::string strResultFileName =  "./Missions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".h";
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Mission::GenerateTesterClassCpp
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
+{
+    std::string strMissionBaseName( BaseName() );
+    std::string strBaseCppFile;
+    std::string strUnitName;
+
+    if( bMissionForAutomata_ )
+    {
+        strBaseCppFile = AGR_SKEL_DIR "/AGR_TesterMissionAutomat_Skeleton.cpp";
+        strUnitName = "Automat";
+    }
+    else
+    {
+        strBaseCppFile = AGR_SKEL_DIR "/AGR_TesterMissionPawn_Skeleton.cpp";
+        strUnitName = "Pawn";
+    }
+
+    // get the skeleton file
+    std::string strBaseContent;
+    workspace.ReadStringFile( strBaseCppFile, strBaseContent );
+
+    // replace the mission name
+    workspace.ReplaceInString( strBaseContent, "$MissionName$", strMissionBaseName );
+    workspace.ReplaceInString( strBaseContent, "$LowerMissionName$", LowName() );
+
+    std::string strAsnMemberInit;
+    std::string strMemberInit;
+    std::string strMissionMemberInit;
+    std::string strMemberReset;
+    std::string strMemberSerialization;
+    std::string strMemberCleanSerialization;
+
+    if( ! MemberList().empty() )
+    {
+        if( ! bMissionForAutomata_ )
+            strAsnMemberInit += "    const ASN1T_Mission_Pion_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
+        else
+            strAsnMemberInit += "    const ASN1T_Mission_Automate_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
+    }
+
+    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
+    {
+        assert( *it );
+        const AGR_Member& member = **it;
+
+        strMemberReset = member.ResetCode();
+        strAsnMemberInit += member.ASNInitialisationCode();
+        strMemberSerialization      += member.TesterSerializationCode();
+        strMemberCleanSerialization += member.TesterSerializationCleaningCode();
+        if( ! bMissionForAutomata_ )
+        {
+            strMemberInit               += member.MemberInitialisationCode();
+            strMissionMemberInit        += member.MissionInitialisationCode();
+        }
+    }
+
+    workspace.ReplaceInString( strBaseContent, "$InitMembersFromAsn$", strAsnMemberInit );
+    workspace.ReplaceInString( strBaseContent, "$InitMembers$", strMemberInit );
+    workspace.ReplaceInString( strBaseContent, "$InitMemberFromMission$", strMissionMemberInit );
+    workspace.ReplaceInString( strBaseContent, "$ResetMembers$", strMemberReset );
+    workspace.ReplaceInString( strBaseContent, "$SerializeMembers$", strMemberSerialization );
+    workspace.ReplaceInString( strBaseContent, "$CleanSerializedMembers$", strMemberCleanSerialization );
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    std::string strResultFileName =  "./Missions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".cpp";
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );  
+}
 
 
 

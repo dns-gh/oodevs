@@ -91,3 +91,17 @@ std::string AGR_Enumeration::Mos2InitialisationCode( const AGR_Member& member ) 
         strResult += "    pSelector_" + member.ASNName() + "->AddItem( \"" + *itValues + "\", " + strName_ + "::" + *itValues + " );\n";
     return strResult;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Enumeration::TesterSerializationCode
+// Created: AGE 2004-09-21
+// -----------------------------------------------------------------------------
+std::string AGR_Enumeration::TesterSerializationCode( const AGR_Member& member ) const
+{
+    std::stringstream ss;
+    ss << "    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, "
+       << ( valueList_.size() - 1 ) 
+       << " ), asnMission." << member.ASNName() 
+       << " );\n";
+    return ss.str();
+}
