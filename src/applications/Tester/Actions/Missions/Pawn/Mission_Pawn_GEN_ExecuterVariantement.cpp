@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_ExecuterVariantement constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_ExecuterVariantement::Mission_Pawn_GEN_ExecuterVariantement( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_ExecuterVariantement::Mission_Pawn_GEN_ExecuterVariantement( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_ExecuterVariantement";
 }
@@ -77,7 +77,6 @@ void Mission_Pawn_GEN_ExecuterVariantement::Clean()
     ASN1T_Mission_Pion_GEN_ExecuterVariantement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_executer_variantement;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

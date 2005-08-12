@@ -21,27 +21,27 @@
 #include "Entities/Pawn.h"
 #include "Entities/Team.h"
 #include "Entities/KnowledgeGroup.h"
+#include "Entities/EntityManager.h"
 
 using namespace TEST;
-
-Automat::T_AutomatMap   Automat::automats_;
 
 //-----------------------------------------------------------------------------
 // Name: Automat::Automat
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Automat::Automat( const ASN1T_MsgAutomateCreation& asnMsg )
-    : nId_              ( asnMsg.oid_automate )
-    , pTeam_            ( Team::Find( asnMsg.oid_camp ) )
-    , pKnowledgeGroup_  ( KnowledgeGroup::Find( asnMsg.oid_groupe_connaissance ) )
+Automat::Automat( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg )
+    : nId_             ( asnMsg.oid_automate )
+    , pTeam_           ( workspace.GetEntityManager().FindTeam( asnMsg.oid_camp ) )
+    , pKnowledgeGroup_ ( workspace.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_connaissance ) )
+    , workspace_       ( workspace )
 {
     assert( pTeam_ );
     assert( pKnowledgeGroup_ );
 
     // create associated PC pawn
-    Pawn* pPawn = new Pawn( asnMsg, *this );
-    Pawn::Register( *pPawn );
-    pPc_ = pPawn;
+    Pawn& pawn = *new Pawn( workspace, asnMsg, *this );
+    workspace.GetEntityManager().Register( pawn );
+    pPc_ = &pawn;
 }
 
 //-----------------------------------------------------------------------------
@@ -51,25 +51,6 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& asnMsg )
 Automat::~Automat()
 {
     childPawns_.clear();
-}
-
-//-----------------------------------------------------------------------------
-// Name: Automat::Initialize
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void Automat::Initialize()
-{
-}
-
-//-----------------------------------------------------------------------------
-// Name: Automat::Terminate
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void Automat::Terminate()
-{
-    for( CIT_AutomatMap it = automats_.begin(); it != automats_.end(); ++it )
-        delete it->second;
-    automats_.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -97,4 +78,22 @@ void Automat::DetachPawn( Pawn& pawn )
 void Automat::OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup )
 {
     pKnowledgeGroup_ = &knowledgeGroup;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::ScheduleAllMissions
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+void Automat::ScheduleAllMissions( Scheduler& scheduler ) const
+{
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::ScheduleMission
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName ) const
+{
+
 }

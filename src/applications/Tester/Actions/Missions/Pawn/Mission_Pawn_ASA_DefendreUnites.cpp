@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ASA_DefendreUnites constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ASA_DefendreUnites::Mission_Pawn_ASA_DefendreUnites( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ASA_DefendreUnites::Mission_Pawn_ASA_DefendreUnites( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ASA_DefendreUnites";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_ASA_DefendreUnites::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asa_defendre_unites );
     ASN1T_Mission_Pion_ASA_DefendreUnites& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_defendre_unites;
-
 
 
     delete &asnMission;

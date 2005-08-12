@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_MILICE_Provoquer constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_MILICE_Provoquer::Mission_Pawn_MILICE_Provoquer( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_MILICE_Provoquer::Mission_Pawn_MILICE_Provoquer( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_MILICE_Provoquer";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_MILICE_Provoquer::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_milice_provoquer );
     ASN1T_Mission_Pion_MILICE_Provoquer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_provoquer;
-
 
 
     delete &asnMission;

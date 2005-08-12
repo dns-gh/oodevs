@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_JOINT_AIR_EffectuerRaid constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_JOINT_AIR_EffectuerRaid::Mission_Pawn_JOINT_AIR_EffectuerRaid( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_JOINT_AIR_EffectuerRaid::Mission_Pawn_JOINT_AIR_EffectuerRaid( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_JOINT_AIR_EffectuerRaid";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_JOINT_AIR_EffectuerRaid::Clean()
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.zone );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

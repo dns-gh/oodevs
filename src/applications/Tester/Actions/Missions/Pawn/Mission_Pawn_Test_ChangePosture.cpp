@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_Test_ChangePosture constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_Test_ChangePosture::Mission_Pawn_Test_ChangePosture( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_Test_ChangePosture::Mission_Pawn_Test_ChangePosture( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_Test_ChangePosture";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_Test_ChangePosture::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_change_posture );
     ASN1T_Mission_Pion_Test_ChangePosture& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_change_posture;
-
 
 
     delete &asnMission;

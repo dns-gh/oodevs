@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_LOG_DistribuerMoyens constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_DistribuerMoyens::Mission_Pawn_LOG_DistribuerMoyens( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_LOG_DistribuerMoyens::Mission_Pawn_LOG_DistribuerMoyens( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_LOG_DistribuerMoyens";
 }
@@ -71,7 +71,6 @@ void Mission_Pawn_LOG_DistribuerMoyens::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_distribuer_moyens );
     ASN1T_Mission_Pion_LOG_DistribuerMoyens& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_distribuer_moyens;
-
 
 
     delete &asnMission;

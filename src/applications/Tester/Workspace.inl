@@ -8,11 +8,11 @@
 // *****************************************************************************
 //
 // $Created: SBO 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/TestManager.inl $
+// $Archive: /MVW_v10/Build/SDK/TIC/src/Workspace.inl $
 // $Author: Sbo $
 // $Modtime: 16/06/05 11:46 $
 // $Revision: 11 $
-// $Workfile: TestManager.inl $
+// $Workfile: Workspace.inl $
 //
 // *****************************************************************************
 
@@ -22,72 +22,110 @@ namespace TEST
 {
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::GetTestManager
+// Name: Workspace::GetWorkspace
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 inline
-TestManager& TestManager::GetTestManager()
+Workspace& Workspace::GetWorkspace()
 {
-    assert( pTestManager_ );
-	return *pTestManager_;
+    assert( pWorkspace_ );
+	return *pWorkspace_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::GetNetworkManager
+// Name: Workspace::GetNetworkManager
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 inline
-NetworkManager& TestManager::GetNetworkManager() const
+NetworkManager& Workspace::GetNetworkManager() const
 {
+    assert( pNetworkManager_ );
 	return *pNetworkManager_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::GetEntityManager
+// Name: Workspace::GetEntityManager
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 inline
-EntityManager&	TestManager::GetEntityManager() const
+EntityManager&	Workspace::GetEntityManager() const
 {
+    assert( pEntityManager_ );
 	return *pEntityManager_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TestManager::GetScheduler
+// Name: Workspace::GetTypeManager
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+TypeManager& Workspace::GetTypeManager() const
+{
+    assert( pTypeManager_ );
+    return *pTypeManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workspace::GetPositionManager
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+PositionManager& Workspace::GetPositionManager() const
+{
+    assert( pPositionManager_ );
+    return *pPositionManager_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: workspace::GetTacticalLineManager
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+inline
+TacticalLineManager& Workspace::GetTacticalLineManager() const
+{
+    assert( pTacticalLineManager_ );
+    return *pTacticalLineManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workspace::GetScheduler
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 inline
-Scheduler& TestManager::GetScheduler() const
+Scheduler& Workspace::GetScheduler() const
 {
+    assert( pScheduler_ );
     return *pScheduler_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: TestManager::GetTestSet
+// Name: Workspace::GetTestSet
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 inline
-TestSet_ABC& TestManager::GetTestSet() const
+TestSet_ABC& Workspace::GetTestSet() const
 {
+    assert( pTestSet_ );
     return *pTestSet_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::GetTime
+// Name: Workspace::GetTime
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
 inline
-uint32	TestManager::GetTick() const
+uint32	Workspace::GetTick() const
 {
 	return nTick_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::SetTick
+// Name: Workspace::SetTick
 // Created: SBO 2005-05-30
 //-----------------------------------------------------------------------------
 inline
-void	TestManager::SetTick( uint32 nTick )
+void	Workspace::SetTick( uint32 nTick )
 {
     nTick_ = nTick;
 
@@ -98,31 +136,31 @@ void	TestManager::SetTick( uint32 nTick )
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::SetTickDuration
+// Name: Workspace::SetTickDuration
 // Created: SBO 2005-05-30
 //-----------------------------------------------------------------------------
 inline
-void	TestManager::SetTickDuration( uint32 nTickDuration )
+void	Workspace::SetTickDuration( uint32 nTickDuration )
 {
     nTickDuration_ = nTickDuration;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::SetTickDuration
+// Name: Workspace::SetTickDuration
 // Created: SBO 2005-06-16
 //-----------------------------------------------------------------------------
 inline
-uint32 TestManager::GetTickDuration() const
+uint32 Workspace::GetTickDuration() const
 {
     return nTickDuration_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::GetSimTime
+// Name: Workspace::GetSimTime
 // Created: SBO 2005-06-03
 //-----------------------------------------------------------------------------
 inline
-uint32	TestManager::GetSimTime() const
+uint32	Workspace::GetSimTime() const
 {
     return nCurrentSimTime_;
 }

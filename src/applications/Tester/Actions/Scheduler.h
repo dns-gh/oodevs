@@ -49,8 +49,8 @@ public:
 
     //! @name Operations
     //@{
-    bool     Run      ();
-    void     AddAction( Action_ABC& action );
+    bool     Run      ( uint nCurrentTick = 0 );
+    void     AddAction( Action_ABC& action, int nExecutionTick = -1 );
     //@}
 
 private:
@@ -58,6 +58,11 @@ private:
     //@{
     Scheduler( const Scheduler& );            //!< Copy constructor
     Scheduler& operator=( const Scheduler& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    uint GetNextExecutionTick();
     //@}
 
 private:
@@ -72,6 +77,7 @@ private:
     //@{
     T_ActionMap  actions_;
     IT_ActionMap itCurrentAction_;
+    uint         nNextExecutionTick_;
     //@}
 };
 

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ASS_EOP_AcquerirObjectifs constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ASS_EOP_AcquerirObjectifs::Mission_Pawn_ASS_EOP_AcquerirObjectifs( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ASS_EOP_AcquerirObjectifs::Mission_Pawn_ASS_EOP_AcquerirObjectifs( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ASS_EOP_AcquerirObjectifs";
 }
@@ -78,7 +78,6 @@ void Mission_Pawn_ASS_EOP_AcquerirObjectifs::Clean()
     ASN_Tools::Delete( asnMission.zone_a_observer );
     ASN_Tools::Delete( asnMission.position_installation );
     ASN_Tools::Delete( asnMission.position_debarquement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

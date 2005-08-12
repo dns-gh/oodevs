@@ -23,6 +23,12 @@
 
 namespace TEST
 {
+    class Automat;
+    class Pawn;
+    class Team;
+    class KnowledgeGroup;
+    class Object;
+    class Scheduler;
 
 // =============================================================================
 /** @class  EntityManager
@@ -47,13 +53,52 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( XmlInputArchive& archive ) const;
+    void            Register          ( Automat&        automat        );
+    void            Register          ( Pawn&           pawn           );
+    void            Register          ( Team&           team           );
+    void            Register          ( KnowledgeGroup& knowledgeGroup );
+    void            Register          ( Object&         object         );
+    void            Unregister        ( Object&         object         );
+    Automat*        FindAutomat       ( T_EntityId      nId            ) const;
+    Pawn*           FindPawn          ( T_EntityId      nId            ) const;
+    Team*           FindTeam          ( T_EntityId      nId            ) const;
+    KnowledgeGroup* FindKnowledgeGroup( T_EntityId      nId            ) const;
+    Object*         FindObject        ( T_EntityId      nId            ) const;
+    //@}
+
+    //! @name Scheduling
+    //@{
+    void ScheduleAllPawnMissions   ( Scheduler& scheduler ) const;
+    void ScheduleAllAutomatMissions( Scheduler& scheduler ) const;
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Types
     //@{
-    void InitializeModels( const std::string& strConfigFile ) const;
+    typedef std::map< T_EntityId, Automat* > T_AutomatMap;
+	typedef T_AutomatMap::const_iterator     CIT_AutomatMap;
+
+    typedef std::map< T_EntityId, Pawn* >    T_PawnMap;
+	typedef T_PawnMap::const_iterator        CIT_PawnMap;
+
+	typedef std::map< T_EntityId, Team* >    T_TeamMap;
+	typedef T_TeamMap::const_iterator        CIT_TeamMap;
+
+    typedef std::map< T_EntityId, KnowledgeGroup* >	T_KnowledgeGroupMap;
+	typedef T_KnowledgeGroupMap::const_iterator		CIT_KnowledgeGroupMap;
+
+    typedef std::map< T_EntityId, Object* >  T_ObjectMap;
+	typedef T_ObjectMap::const_iterator	     CIT_ObjectMap;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_AutomatMap         automats_;
+    T_PawnMap            pawns_;
+    T_TeamMap            teams_;
+    T_KnowledgeGroupMap  knowledgeGroups_;
+    T_ObjectMap          objects_;
     //@}
 };
 

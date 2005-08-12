@@ -16,67 +16,49 @@
 //
 // *****************************************************************************
 
+#include "PositionManager.h"
+
 namespace TEST
 {
+
+// -----------------------------------------------------------------------------
+// Name: Position::SetPositionManager
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+void Position::SetPositionManager( PositionManager& positionManager )
+{
+    pPositionManager_ = &positionManager;
+}
 
 //-----------------------------------------------------------------------------
 // Name: Position::GetMgrsCoordinate
 // Created: SBO 2005-05-24
 //-----------------------------------------------------------------------------
 inline
-const  std::string& Position::GetMgrsCoordinate() const
+std::string Position::GetMgrsCoordinate() const
 {
-    return strMgrs_;
+    return pPositionManager_->MgrsFromPosition( *this );
 }
 
-//-----------------------------------------------------------------------------
-// Name: Position::GetLatitude
-// Created: SBO 2005-06-06
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Name: Position::GetSimX
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
 inline
-double Position::GetLatitude() const
+double Position::GetSimX() const
 {
-    return DegreeFromRadian( rLatitude_ );
+    return rX_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: Position::GetLongitude
-// Created: SBO 2005-06-06
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Name: Position::GetSimY
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
 inline
-double Position::GetLongitude() const
+double Position::GetSimY() const
 {
-    return DegreeFromRadian( rLongitude_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::RadianFromDegree
-// Created: SBO 2005-05-31
-//-----------------------------------------------------------------------------
-inline
-double  Position::RadianFromDegree( double rDegree )
-{
-    return PI / 180.0 * rDegree;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::RadianFromDegree
-// Created: SBO 2005-05-31
-//-----------------------------------------------------------------------------
-inline
-double  Position::DegreeFromRadian( double rRadian )
-{
-    return rRadian * 180.0 / PI;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::RadianFromDegree
-// Created: SBO 2005-05-31
-//-----------------------------------------------------------------------------
-inline
-double Position::GetDistanceTo( const Position& position ) const
-{
-    return sqrt( ( position.X() - X() ) * ( position.X() - X() ) + ( position.Y() - Y() ) * ( position.Y() - Y() ) );
+    return rY_;
 }
 
 } // end namespace TEST

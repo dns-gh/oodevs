@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_Renforcer constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_Renforcer::Mission_Pawn_GEN_Renforcer( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_Renforcer::Mission_Pawn_GEN_Renforcer( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_Renforcer";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_GEN_Renforcer::Clean()
     ASN1T_Mission_Pion_GEN_Renforcer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_renforcer;
 
     ASN_Tools::Delete( asnMission.lieu_renforcement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

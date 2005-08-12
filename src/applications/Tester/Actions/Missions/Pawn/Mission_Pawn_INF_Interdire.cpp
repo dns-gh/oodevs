@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_Interdire constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_Interdire::Mission_Pawn_INF_Interdire( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_Interdire::Mission_Pawn_INF_Interdire( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_Interdire";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_INF_Interdire::Clean()
     ASN1T_Mission_Pion_INF_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_interdire;
 
     ASN_Tools::Delete( asnMission.point_a_interdire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_Test_CreateObject constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_Test_CreateObject::Mission_Pawn_Test_CreateObject( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_Test_CreateObject::Mission_Pawn_Test_CreateObject( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_Test_CreateObject";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_Test_CreateObject::Clean()
     ASN1T_Mission_Pion_Test_CreateObject& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_object;
 
     ASN_Tools::Delete( asnMission.forme );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

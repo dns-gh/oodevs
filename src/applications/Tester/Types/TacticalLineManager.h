@@ -28,6 +28,7 @@
 namespace TEST {
 
     class TacticalLine_ABC;
+    class PositionManager;
 
 // =============================================================================
 /** @class  TacticalLineManager
@@ -41,30 +42,28 @@ namespace TEST {
 // =============================================================================
 class TacticalLineManager
 {
+    MT_COPYNOTALLOWED( TacticalLineManager );
 
 public:
-    //! @name Static operations
-    //@{
-    static void              Initialize         ();
-    static void              Terminate          ();
-    static void              Register           ( TacticalLine_ABC& line );
-    static void              UnRegister         ( TacticalLine_ABC& line );
-    static TacticalLine_ABC* Find               ( T_EntityId        nId  );
-    static T_EntityId        GetLimitIdExcluding( T_EntityId        nId  );
-    static void              UpdateToSim        ();
-    //@}
-
-private:
     //! @name Constructors/Destructor
     //@{
-             TacticalLineManager();
+             TacticalLineManager( const PositionManager& posMgr );
     virtual ~TacticalLineManager();
     //@}
 
-    //! @name Copy/Assignment
+    //! @name Operations
     //@{
-    TacticalLineManager( const TacticalLineManager& );            //!< Copy constructor
-    TacticalLineManager& operator=( const TacticalLineManager& ); //!< Assignment operator
+    void              Register           ( TacticalLine_ABC& line );
+    void              UnRegister         ( TacticalLine_ABC& line );
+    TacticalLine_ABC* Find               ( T_EntityId        nId  );
+    T_EntityId        GetLimitIdExcluding( T_EntityId        nId  );
+    void              UpdateToSim        ();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CreateDefaultTacticalLines( const PositionManager& posMgr );
     //@}
 
 private:
@@ -78,7 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
-    static T_TacticalLineSet lines_;
+    T_TacticalLineSet lines_;
     //@}
 };
 

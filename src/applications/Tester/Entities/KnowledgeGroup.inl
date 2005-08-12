@@ -20,42 +20,6 @@ namespace TEST
 {
 
 //-----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Find
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-KnowledgeGroup* KnowledgeGroup::Find( T_EntityId nId )
-{
-	CIT_KnowledgeGroupMap it;
-	it = knowledgeGroups_.find( nId );
-	if ( it != knowledgeGroups_.end() )
-		return ( *it ).second;
-	return 0;
-}
-
-//-----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Register
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-void KnowledgeGroup::Register( KnowledgeGroup& knowledgeGroup )
-{
-    bool bOut = knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetId(), &knowledgeGroup ) ).second;
-    assert( bOut );
-}
-
-//-----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Unregister
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-void KnowledgeGroup::Unregister( KnowledgeGroup& knowledgeGroup )
-{
-    int nOut = knowledgeGroups_.erase( knowledgeGroup.GetId() );
-    assert( nOut == 1 );
-}
-
-//-----------------------------------------------------------------------------
 // Name: KnowledgeGroup::GetId
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------

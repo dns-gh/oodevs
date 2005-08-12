@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_Defendre constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_Defendre::Mission_Pawn_INF_Defendre( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_Defendre::Mission_Pawn_INF_Defendre( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_Defendre";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_INF_Defendre::Clean()
     ASN1T_Mission_Pion_INF_Defendre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_defendre;
 
     ASN_Tools::Delete( asnMission.point_a_defendre );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

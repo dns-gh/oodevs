@@ -8,11 +8,11 @@
 // *****************************************************************************
 //
 // $Created: SBO 2005-05-17 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Entities/Types/PawnType.inl $
+// $Archive: /MVW_v10/Build/SDK/TIC/src/Entities/Types/AutomatType.inl $
 // $Author: Sbo $
 // $Modtime: 13/07/05 15:06 $
-// $Revision: 3 $
-// $Workfile: PawnType.inl $
+// $Revision: 2 $
+// $Workfile: AutomatType.inl $
 //
 // *****************************************************************************
 
@@ -20,55 +20,42 @@ namespace TEST
 {
 
 // -----------------------------------------------------------------------------
-// Name: PawnType::Find
-// Created: SBO 2005-05-17
+// Name: AutomatType::GetName
+// Created: SBO 2005-06-01
 // -----------------------------------------------------------------------------
 inline
-const PawnType* PawnType::Find( const std::string& strName )
-{
-    CIT_PawnTypeMap it = pawnTypes_.find( strName );
-    return it == pawnTypes_.end() ? 0 : it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PawnType::Find
-// Created: SBO 2005-05-17
-// -----------------------------------------------------------------------------
-inline
-const PawnType* PawnType::Find( ASN1T_TypePion asnId )
-{
-    for( CIT_PawnTypeMap it = pawnTypes_.begin(); it != pawnTypes_.end(); ++it )
-        if( ( *it ).second->GetId() == asnId )
-            return ( *it ).second;
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PawnType::GetName
-// Created: SBO 2005-05-17
-// -----------------------------------------------------------------------------
-inline
-const std::string& PawnType::GetName() const
+const std::string& AutomatType::GetName() const
 {
     return strName_;
 }
           
 // -----------------------------------------------------------------------------
-// Name: PawnType::GetId
-// Created: SBO 2005-05-17
+// Name: AutomatType::GetId
+// Created: SBO 2005-06-01
 // -----------------------------------------------------------------------------
 inline
-uint PawnType::GetId() const
+uint AutomatType::GetId() const
 {
     return nId_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PawnType::GetModel
+// Name: AutomatType::GetPcType
+// Created: SBO 2005-06-01
+// -----------------------------------------------------------------------------
+inline
+const PawnType& AutomatType::GetPcType() const
+{
+    assert( pPcPawnType_ );
+    return *pPcPawnType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::GetModel
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
 inline
-const PawnModel& PawnType::GetModel() const
+const AutomatModel& AutomatType::GetModel() const
 {
     assert( pModel_ );
     return *pModel_;

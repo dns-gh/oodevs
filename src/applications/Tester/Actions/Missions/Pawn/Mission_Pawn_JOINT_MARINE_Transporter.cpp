@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_JOINT_MARINE_Transporter constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_JOINT_MARINE_Transporter::Mission_Pawn_JOINT_MARINE_Transporter( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_JOINT_MARINE_Transporter::Mission_Pawn_JOINT_MARINE_Transporter( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_JOINT_MARINE_Transporter";
 }
@@ -78,7 +78,6 @@ void Mission_Pawn_JOINT_MARINE_Transporter::Clean()
 
     ASN_Tools::Delete( asnMission.point_debarquement );
     ASN_Tools::Delete( asnMission.point_embarquement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

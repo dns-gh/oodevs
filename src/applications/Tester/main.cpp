@@ -17,7 +17,7 @@
 // *****************************************************************************
 #include "Types.h"
 
-#include "TestManager.h"
+#include "Workspace.h"
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"
@@ -33,6 +33,7 @@
 
 #include "TestSets/TestSet_Simple.h"
 #include "TestSets/Testset_PawnMissions.h"
+#include "TestSets/Testset_AllPawnMissions.h"
 
 using namespace TEST;
 
@@ -60,17 +61,16 @@ void Run()
     signal( SIGINT, ctrl_c_handler );
 
     //TestSet_Simple tests;
-    TestSet_PawnMissions tests;
+    TestSet_AllPawnMissions tests;
 
-    TestManager::Initialize( &tests, "127.0.0.1", 10000, "D:/Dev/scipio-svn/data/test/scipio.xml" );
+    Workspace ws( &tests, "127.0.0.1", 10000, "D:/Dev/scipio-svn/data/test/scipio.xml" );
 
     while( bRun )
     {
-        TestManager::GetTestManager().Update();
+        ws.Update();
         Sleep( 0 );
     }
 
-    TestManager::Terminate();
     MT_LOG_INFO_MSG( "Program terminated normally" );
 }
 

@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-11 - 11:53:20
+// Generated: 2005-08-12 - 15:12:57
 // =============================================================================
 class Mission_Pawn_LOG_PreparerBascule : public Mission_Pawn_ABC
 {
@@ -46,7 +46,7 @@ class Mission_Pawn_LOG_PreparerBascule : public Mission_Pawn_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_LOG_PreparerBascule( Pawn& target, uint nExecutionTick = 0 );
+             Mission_Pawn_LOG_PreparerBascule( Pawn& target );
     virtual ~Mission_Pawn_LOG_PreparerBascule();
     //@}
 

@@ -20,18 +20,20 @@
 #define __Position_h_
 
 #include "Types.h"
-#include "geometry/Point2.h"
-#include "geocoord/PlanarCartesian.h"
-
-#define PI 3.141592654
-
-namespace geocoord
-{
-    class MGRS;
-}
 
 namespace TEST
 {
+    class Position;
+    class PositionManager;
+
+//! @name Types
+//@{
+// TODO : create a line / polygon encapsulation class
+typedef std::vector< Position* >                 T_PositionVector;
+typedef T_PositionVector::iterator               IT_PositionVector;
+typedef T_PositionVector::const_iterator         CIT_PositionVector;
+//@}
+
 // =============================================================================
 /** @class  Position
     @brief  Position
@@ -42,7 +44,7 @@ namespace TEST
 */
 // Created: SBO 2005-05-18
 // =============================================================================
-class Position : public geometry::Point2< double >
+class Position
 {
 public:
 	//! @name Constructors/Destructor
@@ -50,75 +52,37 @@ public:
              Position();
              Position( const std::string& strMgrs );
              Position( double rLatitude, double rLongitude );
-             Position( const geometry::Point2< double >& pt );
     virtual ~Position();
     //@}
 
     //! @name Static Operations
     //@{
-    static void    Initialize( const std::string& strWorldConfigFile );
-    static void    Terminate ();
-
-    static geometry::Point2< double > Point2FromPolar( double rRadius, double rDegAngle );
+    static void SetPositionManager( PositionManager& positionManager );
     //@}
 
     //! @name Accessors
     //@{
-    const  std::string& GetMgrsCoordinate () const;
-           double       GetLatitude       () const;
-           double       GetLongitude      () const;
+    std::string GetMgrsCoordinate () const;
+    double      GetLatitude       () const;
+    double      GetLongitude      () const;
+    double      GetSimX           () const;
+    double      GetSimY           () const;
     //@}
 
     //! @name Operations
     //@{
-    double GetDistanceTo( const Position& position ) const;
-    bool   IsOnSegment  ( const Position& start, const Position& end ) const;
     void   SetSimCoordinates( double rX, double rY );
-    //@}
-
-    //! @name Operators
-    //@{
-    Position& operator=( const Position& position );
-    Position& operator=( const std::string& strMgrs );
-    Position& operator=( const geometry::Point2< double >& pt );
-    Position  operator+( const geometry::Point2< double >& pt ) const;
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    static geometry::Point2< double > Point2FromMgrs  ( const std::string& strMgrs );
-    static std::string                MgrsFromPoint2  ( const geometry::Point2< double >& pt );
-    static double                     RadianFromDegree( double rDegree );
-    static double                     DegreeFromRadian( double rRadian );
-
-           void                       UpdateWGS84     ();
     //@}
 
 private:
 	//! @name Member data
     //@{
-    std::string strMgrs_;
-    double      rLatitude_;
-    double      rLongitude_;
+    double      rX_;
+    double      rY_;
 
-    // reference values
-    static geocoord::PlanarCartesian*             pPlanar_;
-    static geocoord::PlanarCartesian::Parameters* pParameters_;
-    static geometry::Point2< double >*            pTranslation_;
-    static geocoord::Geodetic*                    pGeodetic_;
+    static PositionManager* pPositionManager_; // TODO: find a way to remove this static
 	//@}
 };
-
-
-//! @name Types
-//@{
-typedef std::vector< Position* >                 T_PositionVector;
-typedef std::vector< const Position* >           CT_PositionVector;
-typedef T_PositionVector::iterator               IT_PositionVector;
-typedef T_PositionVector::const_iterator         CIT_PositionVector;
-typedef T_PositionVector::const_reverse_iterator CRIT_PositionVector;
-//@}
 
 
 } // end namespace TEST

@@ -21,6 +21,7 @@
 
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
+#include "EntityManager.h"
 
 namespace TEST
 {
@@ -43,17 +44,8 @@ class KnowledgeGroup
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( T_EntityId nSimId, DIN::DIN_Input& input );
+             KnowledgeGroup( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Input& input );
     virtual ~KnowledgeGroup();
-    //@}
-
-    //! @name Operations
-    //@{
-    static void             Initialize();
-    static void             Terminate ();
-    static KnowledgeGroup*  Find      ( T_EntityId nId );
-    static void             Register  ( KnowledgeGroup& knowledgeGroup );
-    static void             Unregister( KnowledgeGroup& knowledgeGroup );
     //@}
 
     //! @name Accessors
@@ -83,9 +75,6 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< T_EntityId, KnowledgeGroup* >	T_KnowledgeGroupMap;
-	typedef T_KnowledgeGroupMap::const_iterator		CIT_KnowledgeGroupMap;
-
     typedef std::map< T_EntityId, PawnKnowledge* > T_PawnKnowledgeMap;
     typedef T_PawnKnowledgeMap::const_iterator     CIT_PawnKnowledgeMap;
     //@}
@@ -93,12 +82,11 @@ private:
 private:
     //! @name Member data
     //@{
-    T_EntityId         nId_;
-    Team*              pTeam_;
-    T_PawnKnowledgeMap knownPawns_;
+    T_EntityId           nId_;
+    Team*                pTeam_;
+    T_PawnKnowledgeMap   knownPawns_;
 
-    // global KnowledgeGroup list
-    static T_KnowledgeGroupMap  knowledgeGroups_;
+    const EntityManager& entityManager_;
     //@}
 };
 

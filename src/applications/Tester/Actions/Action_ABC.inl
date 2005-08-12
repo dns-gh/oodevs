@@ -19,26 +19,6 @@
 namespace TEST {
 
 // -----------------------------------------------------------------------------
-// Name: Action_ABC::GetExecutionTick
-// Created: SBO 2005-08-04
-// -----------------------------------------------------------------------------
-inline
-uint Action_ABC::GetExecutionTick() const
-{
-    return nExecutionTick_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Action_ABC::SetExecutionTick
-// Created: SBO 2005-08-04
-// -----------------------------------------------------------------------------
-inline
-void Action_ABC::SetExecutionTick( uint nExecutionTick )
-{
-    nExecutionTick_ = nExecutionTick;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Action_ABC::GetName
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------

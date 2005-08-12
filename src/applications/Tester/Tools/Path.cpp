@@ -64,8 +64,8 @@ Path& Path::GetTestParam_Path( const Position& startPoint )
 {
     Path& path = *new Path();
 
-    double rX = startPoint.X();
-    double rY = startPoint.Y();
+    double rX = startPoint.GetSimX();
+    double rY = startPoint.GetSimY();
 
     for( uint i = 0; i < 5; ++i )
     {

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_LOG_TransporterUniteChars constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_TransporterUniteChars::Mission_Pawn_LOG_TransporterUniteChars( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_LOG_TransporterUniteChars::Mission_Pawn_LOG_TransporterUniteChars( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_LOG_TransporterUniteChars";
 }
@@ -79,7 +79,6 @@ void Mission_Pawn_LOG_TransporterUniteChars::Clean()
     ASN_Tools::Delete( asnMission.point_rendez_vous );
     ASN_Tools::Delete( asnMission.point_destination );
     ASN_Tools::Delete( asnMission.itineraire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

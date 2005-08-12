@@ -20,10 +20,10 @@
 #define __Pawn_h_
 
 #include "Types.h"
-#include "Entities/ConcreteEntity.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/Path.h"
 #include "Tools/Location.h"
+#include "Workspace.h"
 
 namespace DIN
 {
@@ -45,32 +45,45 @@ namespace TEST
 */
 // Created: SBO 2005-05-11
 // =============================================================================
-class Pawn : public ConcreteEntity
+class Pawn
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Pawn( const ASN1T_MsgPionCreation& asnMsg );
-             Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat  );
+             Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg );
+             Pawn( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat  );
     virtual ~Pawn();
     //@}
 
-    //! @name Static Operations
+    //! @name Accessors
     //@{
-    static void  Initialize();
-    static void  Terminate ();
-    static Pawn* Find      ( T_EntityId nId  );
-    static void  Register  ( Pawn&      pawn );
-    static void  Unregister( Pawn&      pawn );
+          T_EntityId   GetId       () const;
+	const std::string& GetName     () const;
+    const PawnType&    GetType     () const;
+	      bool	       IsPc        () const;
+          T_Direction  GetDirection() const;
+          T_Speed      GetSpeed    () const;
+    const Position&    GetPosition () const;
+          int          GetState    () const;
+		  T_Height     GetHeight   () const;
+    const Automat&     GetAutomat  () const;
+    const Path&        GetPath     () const;
     //@}
 
-    //! @name Facade Accessors
+    //! @name Messages handlers
     //@{
-          T_EntityId   GetId     () const;
-	const std::string& GetName   () const;
-    const PawnType&    GetType   () const;
-	      bool	       IsPc      () const;
+    void OnAutomatChanged    (       Automat&                 automat );
+    void OnAttributeUpdated  ( const ASN1T_MsgUnitAttributes& asnMsg  );
+    void OnAttributeUpdated  ( const ASN1T_MsgUnitDotations&  asnMsg  );
+    void OnReceivePathfind   ( const ASN1T_MsgUnitPathFind&   asnMsg  );
+    void OnReceiveTerrainType(       DIN::DIN_Input&          input   );
+    //@}
+
+    //! @name Mission Scheduling
+    //@{
+    void ScheduleAllMissions ( Scheduler& scheduler );
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName );
     //@}
 
     //! @name Test Parameters
@@ -103,31 +116,6 @@ public:
     uint              GetTestParam_GDH                () const;
     //@}
 
-    //! @name Other Accessors
-    //@{
-    const Automat&     GetAutomat() const;
-    const Path&        GetPath   () const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    void OnAutomatChanged    (       Automat&                 automat );
-    void OnAttributeUpdated  ( const ASN1T_MsgUnitAttributes& asnMsg  );
-    void OnAttributeUpdated  ( const ASN1T_MsgUnitDotations&  asnMsg  );
-    void OnReceivePathfind   ( const ASN1T_MsgUnitPathFind&   asnMsg  );
-    void OnReceiveTerrainType(       DIN::DIN_Input&          input   );
-    //@}
-
-private:
-    //! @name types
-    //@{
-    typedef std::map< T_EntityId, Pawn* > T_PawnMap;
-	typedef T_PawnMap::const_iterator     CIT_PawnMap;
-
-    typedef std::set< Pawn* >             T_PawnSet;
-	typedef T_PawnSet::const_iterator     CIT_PawnSet;
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -143,19 +131,19 @@ private:
 	bool             bIsPc_;
     const PawnType*  pType_;
     Automat*         pAutomat_;
+    T_Direction      nDirection_;
+    T_Speed          rSpeed_;
+    Position         position_;
+    T_Height         nHeight_;
+    int              nOpState_;
 
     Path             path_;
 
     bool             bIsLoaded_;
     T_EntityId       nLeftLimit_;
     T_EntityId       nRightLimit_;
-    //@}
 
-private:
-    //! @name Static members
-    //@{
-    // pawn list
-    static T_PawnMap pawns_;
+    const Workspace& workspace_;
     //@}
 };
 

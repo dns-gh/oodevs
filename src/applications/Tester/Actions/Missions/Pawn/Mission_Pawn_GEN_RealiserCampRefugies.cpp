@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_RealiserCampRefugies constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_RealiserCampRefugies::Mission_Pawn_GEN_RealiserCampRefugies( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_RealiserCampRefugies::Mission_Pawn_GEN_RealiserCampRefugies( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_RealiserCampRefugies";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_GEN_RealiserCampRefugies::Clean()
     ASN1T_Mission_Pion_GEN_RealiserCampRefugies& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_camp_refugies;
 
     ASN_Tools::Delete( asnMission.camp );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

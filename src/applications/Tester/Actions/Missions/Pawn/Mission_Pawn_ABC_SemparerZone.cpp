@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ABC_SemparerZone constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC_SemparerZone::Mission_Pawn_ABC_SemparerZone( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ABC_SemparerZone::Mission_Pawn_ABC_SemparerZone( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ABC_SemparerZone";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_ABC_SemparerZone::Clean()
     ASN1T_Mission_Pion_ABC_SemparerZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_semparer_zone;
 
     ASN_Tools::Delete( asnMission.zone_a_prendre );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

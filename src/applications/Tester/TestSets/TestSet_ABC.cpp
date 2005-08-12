@@ -22,8 +22,6 @@
 
 #include "Tester_pch.h"
 #include "TestSet_ABC.h"
-#include "Actions/Scheduler.h"
-
 
 using namespace TEST;
 
@@ -32,7 +30,6 @@ using namespace TEST;
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 TestSet_ABC::TestSet_ABC()
-    : pScheduler_ ( 0 )
 {
     // NOTHING
 }

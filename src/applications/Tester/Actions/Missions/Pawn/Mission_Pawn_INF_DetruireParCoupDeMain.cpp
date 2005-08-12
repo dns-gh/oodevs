@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_DetruireParCoupDeMain constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_DetruireParCoupDeMain::Mission_Pawn_INF_DetruireParCoupDeMain( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_DetruireParCoupDeMain::Mission_Pawn_INF_DetruireParCoupDeMain( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_DetruireParCoupDeMain";
 }
@@ -78,7 +78,6 @@ void Mission_Pawn_INF_DetruireParCoupDeMain::Clean()
 
     ASN_Tools::Delete( asnMission.objectif );
     ASN_Tools::Delete( asnMission.point_regroupement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

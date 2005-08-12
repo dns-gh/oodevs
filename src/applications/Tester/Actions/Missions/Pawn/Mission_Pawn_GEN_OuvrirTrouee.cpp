@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_OuvrirTrouee constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_OuvrirTrouee::Mission_Pawn_GEN_OuvrirTrouee( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_OuvrirTrouee::Mission_Pawn_GEN_OuvrirTrouee( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_OuvrirTrouee";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_GEN_OuvrirTrouee::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_ouvrir_trouee );
     ASN1T_Mission_Pion_GEN_OuvrirTrouee& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_ouvrir_trouee;
-
 
 
     delete &asnMission;

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_Test_Heliporter constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_Test_Heliporter::Mission_Pawn_Test_Heliporter( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_Test_Heliporter::Mission_Pawn_Test_Heliporter( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_Test_Heliporter";
 }
@@ -77,7 +77,6 @@ void Mission_Pawn_Test_Heliporter::Clean()
 
     ASN_Tools::Delete( asnMission.point_embarquement );
     ASN_Tools::Delete( asnMission.point_debarquement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

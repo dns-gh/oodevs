@@ -46,7 +46,7 @@ class Action_Magic_Move : public Action< Pawn >
 public:
     //! @name Constructors/Destructor
     //@{
-             Action_Magic_Move( Pawn& target, uint nExecutionTick = 0 );
+             Action_Magic_Move( Pawn& target );
     virtual ~Action_Magic_Move();
     //@}
 

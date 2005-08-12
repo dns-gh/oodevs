@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_RENS_ROIM_CL289_RenseignerSur constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_RENS_ROIM_CL289_RenseignerSur::Mission_Pawn_RENS_ROIM_CL289_RenseignerSur( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_RENS_ROIM_CL289_RenseignerSur::Mission_Pawn_RENS_ROIM_CL289_RenseignerSur( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_RENS_ROIM_CL289_RenseignerSur";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_RENS_ROIM_CL289_RenseignerSur::Clean()
     ASN1T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_roim_cl289_renseigner_sur;
 
     ASN_Tools::Delete( asnMission.ficelle_de_vole );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

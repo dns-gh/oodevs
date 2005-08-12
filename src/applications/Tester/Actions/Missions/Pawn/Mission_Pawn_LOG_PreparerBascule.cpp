@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_LOG_PreparerBascule constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_PreparerBascule::Mission_Pawn_LOG_PreparerBascule( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_LOG_PreparerBascule::Mission_Pawn_LOG_PreparerBascule( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_LOG_PreparerBascule";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_LOG_PreparerBascule::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_preparer_bascule );
     ASN1T_Mission_Pion_LOG_PreparerBascule& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_preparer_bascule;
-
 
 
     delete &asnMission;

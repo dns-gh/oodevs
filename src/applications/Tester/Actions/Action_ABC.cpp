@@ -22,7 +22,7 @@
 
 #include "Tester_pch.h"
 #include "Action_ABC.h"
-#include "TestManager.h"
+#include "Workspace.h"
 
 using namespace TEST;
 
@@ -31,19 +31,7 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Action_ABC::Action_ABC()
-    : nExecutionTick_ ( 0 )
-    , strName_        ()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Action_ABC constructor
-// Created: SBO 2005-08-04
-// -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( uint nExecutionTick )
-    : nExecutionTick_ ( nExecutionTick )
-    , strName_        ()
+    : strName_        ()
 {
     // NOTHING
 }
@@ -63,7 +51,7 @@ Action_ABC::~Action_ABC()
 // -----------------------------------------------------------------------------
 bool Action_ABC::IsReady() const
 {
-    return nExecutionTick_ == TestManager::GetTestManager().GetTick();
+    return true;
 }
 
 // -----------------------------------------------------------------------------

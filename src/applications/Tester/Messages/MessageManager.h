@@ -21,6 +21,7 @@
 
 #include "Types.h"
 #include "Messages/ASN_Types.h"
+#include "Workspace.h"
 
 namespace DIN
 {
@@ -90,7 +91,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             MessageManager( NetworkManager& networkManager );
+             MessageManager( Workspace& workspace, NetworkManager& networkManager );
     virtual ~MessageManager();
     //@}
 
@@ -192,16 +193,11 @@ private:
     //! @name Member data
     //@{
     DIN::DIN_MessageServiceUserCbk< MessageManager >*  pMessageService_;
-    bool                                               bPaused_;
-    uint                                               nTickDuration_;
-
+    Workspace&                                         workspace_;
 	
     // ASN
-    ASN1OCTET           aASNEncodeBuffer_[100000];
-    ASN1OCTET           aASNDecodeBuffer_[100000];
-
-    bool                bReceivingState_;
-
+    ASN1OCTET        aASNEncodeBuffer_[100000];
+    ASN1OCTET        aASNDecodeBuffer_[100000];
     //@}
 };
 

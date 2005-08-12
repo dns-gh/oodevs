@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition::Mission_Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition::Mission_Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition";
 }
@@ -77,7 +77,6 @@ void Mission_Pawn_ASA_MISTRAL_DefendreSiteAPartirPosition::Clean()
 
     ASN_Tools::Delete( asnMission.site );
     ASN_Tools::Delete( asnMission.point_de_deploiement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

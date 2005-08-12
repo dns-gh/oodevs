@@ -22,7 +22,7 @@
 
 #include "Tester_pch.h"
 #include "TestSet_Simple.h"
-#include "TestManager.h"
+#include "Workspace.h"
 #include "Actions/Scheduler.h"
 #include "Actions/MagicActions/Action_Magic_Move.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
@@ -54,26 +54,25 @@ TestSet_Simple::~TestSet_Simple()
 // Name: TestSet_Simple::Load
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-void TestSet_Simple::Load( Scheduler& scheduler )
+void TestSet_Simple::Load( Workspace& workspace )
 {
-    assert( !pScheduler_ );
-    pScheduler_ = &scheduler;
+    Scheduler& scheduler = workspace.GetScheduler();
 
-    Pawn* pPawn = Pawn::Find( 6000044 );
+    Pawn* pPawn = workspace.GetEntityManager().FindPawn( 6000044 );
     if( pPawn )
     {
-        Action_Magic_Move* pMagicMove = new Action_Magic_Move( *pPawn, 25 );
-        pScheduler_->AddAction( *pMagicMove );
-        pScheduler_->AddAction( Mission_Pawn_Type::CreateMission( "Pion Test Heliporter", *pPawn, 75 ) );
+        Action_Magic_Move* pMagicMove = new Action_Magic_Move( *pPawn );
+        scheduler.AddAction( *pMagicMove );
+        pPawn->ScheduleMission( scheduler, "Pion Test Heliporter" );
     }
     else
         MT_LOG_ERROR_MSG( "TEST 1 : Pawn does not exist" );
 
-    pPawn = Pawn::Find( 6000042 );
+    pPawn = workspace.GetEntityManager().FindPawn( 6000042 );
     if( pPawn )
     {
-        pScheduler_->AddAction( Mission_Pawn_Type::CreateMission( "Pion Test MoveTo", *pPawn, 50 ) );
-        pScheduler_->AddAction( Mission_Pawn_Type::CreateMission( "Pion Test Fire", *pPawn, 20 ) );
+        pPawn->ScheduleMission( scheduler, "Pion Test MoveTo" );
+        pPawn->ScheduleMission( scheduler, "Pion Test Fire"   );
     }
     else
         MT_LOG_ERROR_MSG( "TEST 2 : Pawn does not exist" );

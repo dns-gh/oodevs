@@ -25,7 +25,7 @@
 
 namespace TEST {
 
-    class Scheduler;
+    class Workspace;
 
 // =============================================================================
 /** @class  TestSet_ABC
@@ -49,13 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( Scheduler& scheduler ) = 0;
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    Scheduler* pScheduler_;
+    virtual void Load( Workspace& workspace ) = 0;
     //@}
 };
 

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_Couvrir constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_Couvrir::Mission_Pawn_INF_Couvrir( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_Couvrir::Mission_Pawn_INF_Couvrir( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_Couvrir";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_INF_Couvrir::Clean()
     ASN1T_Mission_Pion_INF_Couvrir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_couvrir;
 
     ASN_Tools::Delete( asnMission.point_couverture );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

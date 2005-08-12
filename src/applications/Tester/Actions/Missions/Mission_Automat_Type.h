@@ -52,7 +52,7 @@ public:
 
     template< typename Mission >
     static void Register( const std::string& strName );
-    static Mission_Automat_ABC& CreateMission( const std::string& strName, Automat& target, uint nExecutionTick = 0 );
+    static Mission_Automat_ABC& CreateMission( const std::string& strName, Automat& target );
     //@}
 
 private:
@@ -61,7 +61,7 @@ private:
     typedef std::map< std::string, Mission_Automat_Type* > T_MissionAutomatTypeMap;
     typedef T_MissionAutomatTypeMap::const_iterator        CIT_MissionAutomatTypeMap;
 
-    typedef Mission_Automat_ABC&   (* T_MissionAllocator )( Automat& target, uint nExecutionTick );
+    typedef Mission_Automat_ABC&   (* T_MissionAllocator )( Automat& target );
     //@}
 
 private:
@@ -79,7 +79,7 @@ private:
 
     //! @name Helpers
     //@{
-    Mission_Automat_ABC& Instanciate( Automat& target, uint nExecutionTick = 0 ) const;
+    Mission_Automat_ABC& Instanciate( Automat& target ) const;
     //@}
 
 private:

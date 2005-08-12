@@ -21,33 +21,38 @@
 #include "Entities/Automat.h"
 #include "Entities/KnowledgeGroup.h"
 #include "Entities/Team.h"
-#include "Entities/Types/AutomatType.h"
-#include "Entities/Types/PawnType.h"
+#include "Types/TypeManager.h"
+#include "Types/Entities/AutomatType.h"
+#include "Types/Entities/PawnType.h"
+#include "Types/Entities/PawnModel.h"
+#include "Types/TacticalLineManager.h"
 #include "Tools/Path.h"
 #include "Tools/Position.h"
 #include "Tools/Location.h"
-#include "TacticalLines/TacticalLineManager.h"
+#include "Actions/Scheduler.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
 
 using namespace TEST;
-
-Pawn::T_PawnMap      Pawn::pawns_;
 
 //-----------------------------------------------------------------------------
 // Name: Pawn::Pawn
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Pawn::Pawn( const ASN1T_MsgPionCreation& asnMsg )
-    : ConcreteEntity    ()
-    , nId_              ( asnMsg.oid_pion )
+Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg )
+    : nId_              ( asnMsg.oid_pion )
     , strName_          ( asnMsg.nom )
-    , pType_            ( PawnType::Find( asnMsg.type_pion ) )
-    , pAutomat_         ( Automat::Find( asnMsg.oid_automate ) )
+    , pType_            ( workspace.GetTypeManager().FindPawnType( asnMsg.type_pion ) )
+    , pAutomat_         ( workspace.GetEntityManager().FindAutomat( asnMsg.oid_automate ) )
     , bIsPc_            ( false )
+    , position_         ()
+    , nDirection_       ( 0 )
+    , nHeight_          ( 0 )
+    , rSpeed_           ( 0. )
+    , nOpState_         ( 0 )
     , bIsLoaded_        ( false )
     , nLeftLimit_       ( 0 )
     , nRightLimit_      ( 0 )
-
+    , workspace_        ( workspace )
 {
     assert( pType_ );
     assert( pAutomat_ );
@@ -58,25 +63,28 @@ Pawn::Pawn( const ASN1T_MsgPionCreation& asnMsg )
 // Name: Pawn::Pawn
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
-Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
-    : ConcreteEntity    ()
-    , nId_              ( asnMsg.oid_automate )
+Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
+    : nId_              ( asnMsg.oid_automate )
     , strName_          ( asnMsg.nom )
     , pType_            ( 0 )
     , pAutomat_         ( &automat )
     , bIsPc_            ( true )
+    , position_         ()
+    , nDirection_       ( 0 )
+    , nHeight_          ( 0 )
+    , rSpeed_           ( 0. )
+    , nOpState_         ( 0 )
     , bIsLoaded_        ( false )
     , nLeftLimit_       ( 0 )
     , nRightLimit_      ( 0 )
+    , workspace_        ( workspace )
 {
     // retrieve PC type for the parent automat
-    const AutomatType *pAutomatType = AutomatType::Find( asnMsg.type_automate );
+    const AutomatType* pAutomatType = workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate );
     assert( pAutomatType );
     pType_ = &pAutomatType->GetPcType();
     assert( pType_ );
-
-    assert( pAutomat_ );
-    pAutomat_->AttachPawn( *this );
+    automat.AttachPawn( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -85,27 +93,7 @@ Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
 //-----------------------------------------------------------------------------
 Pawn::~Pawn()
 {
-}
-
-//-----------------------------------------------------------------------------
-// Name: Pawn::Initialize
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void Pawn::Initialize()
-{
-    Mission_Pawn_Type::Initialize();
-}
-
-//-----------------------------------------------------------------------------
-// Name: Pawn::Terminate
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void Pawn::Terminate()
-{
-    for( CIT_PawnMap it = pawns_.begin(); it != pawns_.end(); ++it )
-        delete it->second;
-    pawns_.clear();
-    Mission_Pawn_Type::Terminate();
+    path_.Clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -178,6 +166,30 @@ void Pawn::OnReceiveTerrainType( DIN::DIN_Input& /*input*/ )
 }
 
 //-----------------------------------------------------------------------------
+// SCHEDULING
+//-----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::ScheduleAllMissions
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+void Pawn::ScheduleAllMissions( Scheduler& scheduler )
+{
+    assert( pType_ );
+    pType_->GetModel().ScheduleAllMissions( *this, scheduler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::ScheduleMission
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+void Pawn::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName )
+{
+    assert( pType_ );
+    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName );
+}
+
+//-----------------------------------------------------------------------------
 // TEST PARAMETERS
 //-----------------------------------------------------------------------------
 
@@ -197,8 +209,8 @@ T_EntityId Pawn::GetTestParam_ID() const
 // -----------------------------------------------------------------------------
 Position& Pawn::GetTestParam_Point() const
 {
-    double rX = position_.X();
-    double rY = position_.Y();
+    double rX = position_.GetSimX();
+    double rY = position_.GetSimY();
 
     rX += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
     rY += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
@@ -228,7 +240,7 @@ T_EntityId Pawn::GetTestParam_LeftLimit()
 {
     // if left limit is not ser get an existing limit which is not the right limit
     if( nLeftLimit_ == 0 )
-        nLeftLimit_ = TacticalLineManager::GetLimitIdExcluding( nRightLimit_ );
+        nLeftLimit_ = workspace_.GetTacticalLineManager().GetLimitIdExcluding( nRightLimit_ );
     // at least world border limits should exist
     assert( nLeftLimit_ );
     return nLeftLimit_;
@@ -242,7 +254,7 @@ T_EntityId Pawn::GetTestParam_RightLimit()
 {
     // if right limit is not ser get an existing limit which is not the left limit
     if( nRightLimit_ == 0 )
-        nRightLimit_ = TacticalLineManager::GetLimitIdExcluding( nLeftLimit_ );
+        nRightLimit_ = workspace_.GetTacticalLineManager().GetLimitIdExcluding( nLeftLimit_ );
     // at least world border limits should exist
     assert( nRightLimit_ );
     return nRightLimit_;
@@ -311,6 +323,7 @@ T_IdVector& Pawn::GetTestParam_AgentList() const
 {
     // return a vector of up to 5 pawn ids
     T_IdVector* pPawns = new T_IdVector();
+    /*
     uint i = 0;
     for( CIT_PawnMap it = pawns_.begin(); it != pawns_.end() && i < 5; ++it )
         if( it->first != GetId() )
@@ -318,6 +331,8 @@ T_IdVector& Pawn::GetTestParam_AgentList() const
             pPawns->push_back( it->first );
             ++i;
         }
+    */
+    pPawns->push_back( GetId() );
     return *pPawns;
 }
 

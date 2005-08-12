@@ -27,6 +27,8 @@
 
 namespace TEST {
 
+    class Workspace;
+
 // =============================================================================
 /** @class  TestSet_PawnMissions
     @brief  TestSet_PawnMissions
@@ -49,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( Scheduler& scheduler );
+    virtual void Load( Workspace& workspace );
     //@}
 };
 

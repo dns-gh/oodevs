@@ -23,8 +23,8 @@ namespace TEST {
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 template< typename T >
-Action< T >::Action( uint nExecutionTick /* = 0 */)
-    : Action_ABC ( nExecutionTick )
+Action< T >::Action()
+    : Action_ABC ()
     , pTarget_   ( 0 )
 {
     // NOTHING
@@ -35,8 +35,8 @@ Action< T >::Action( uint nExecutionTick /* = 0 */)
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
 template< typename T >
-Action< T >::Action( T& target, uint nExecutionTick /* = 0 */)
-    : Action_ABC ( nExecutionTick )
+Action< T >::Action( T& target)
+    : Action_ABC ()
     , pTarget_   ( &target )
 {
     // NOTHING

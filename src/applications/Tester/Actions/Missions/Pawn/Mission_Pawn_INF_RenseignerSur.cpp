@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_RenseignerSur constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_RenseignerSur::Mission_Pawn_INF_RenseignerSur( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_RenseignerSur::Mission_Pawn_INF_RenseignerSur( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_RenseignerSur";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_INF_RenseignerSur::Clean()
     ASN1T_Mission_Pion_INF_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_renseigner_sur;
 
     ASN_Tools::Delete( asnMission.itineraire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

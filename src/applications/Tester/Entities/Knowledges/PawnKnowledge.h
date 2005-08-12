@@ -29,6 +29,7 @@
 namespace TEST {
 
     class Pawn;
+    class EntityManager;
 
 // =============================================================================
 /** @class  PawnKnowledge
@@ -46,7 +47,9 @@ class PawnKnowledge
 public:
     //! @name Constructors/Destructor
     //@{
-             PawnKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, const KnowledgeGroup& knowledgeGroup );
+             PawnKnowledge( const EntityManager&                  entityManager, 
+                            const ASN1T_MsgUnitKnowledgeCreation& asnMsg, 
+                            const KnowledgeGroup&                 knowledgeGroup );
     virtual ~PawnKnowledge();
     //@}
 

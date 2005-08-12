@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( Scheduler& scheduler );
+    virtual void Load( Workspace& workspace );
     //@}
 };
 

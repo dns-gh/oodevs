@@ -34,8 +34,8 @@ IDManager Mission_Automat_ABC::idManager_( 145 );
 // Name: Mission_Automat_ABC constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-Mission_Automat_ABC::Mission_Automat_ABC( Automat& automat, uint nExecutionTick /* = 0 */ )
-    : Action< Automat > ( automat, nExecutionTick )
+Mission_Automat_ABC::Mission_Automat_ABC( Automat& automat )
+    : Action< Automat > ( automat )
 {
     // NOTHING
 }

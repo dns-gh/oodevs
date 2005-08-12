@@ -20,12 +20,12 @@
 #define __AutomatType_h_
 
 #include "Types.h"
-#include "Messages/ASN_Messages.h"
 
 namespace TEST
 {
     class PawnType;
     class AutomatModel;
+    class TypeManager;
 
 // =============================================================================
 /** @class  AutomatType
@@ -42,13 +42,10 @@ class AutomatType
     MT_COPYNOTALLOWED( AutomatType );
 
 public:
-    //! @name Manager
+    //! @name Constructors/Destructor
     //@{
-    static void               Initialize( const std::string& strScipioAutomatConfigFile );
-    static void               Terminate ();
-
-    static const AutomatType* Find      ( const std::string& strName );
-    static const AutomatType* Find      ( ASN1T_TypeAutomate asnId );
+             AutomatType( const TypeManager& typeManager, const std::string& strName, XmlInputArchive& archive );
+    virtual ~AutomatType();
     //@}
 
     //! @name Accessors
@@ -60,28 +57,12 @@ public:
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-             AutomatType( const std::string& strName, XmlInputArchive& archive );
-    virtual ~AutomatType();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const AutomatType*, sCaseInsensitiveLess > T_AutomatTypeMap;
-    typedef T_AutomatTypeMap::const_iterator                                  CIT_AutomatTypeMap;
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::string             strName_;
 	uint                    nId_;
     const PawnType*         pPcPawnType_;
     const AutomatModel*     pModel_;
-
-    // global type list
-    static T_AutomatTypeMap automatTypes_;
     //@}
 };
 

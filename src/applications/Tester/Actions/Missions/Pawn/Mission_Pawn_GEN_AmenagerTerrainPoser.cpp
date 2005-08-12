@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_AmenagerTerrainPoser constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_AmenagerTerrainPoser::Mission_Pawn_GEN_AmenagerTerrainPoser( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_AmenagerTerrainPoser::Mission_Pawn_GEN_AmenagerTerrainPoser( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_AmenagerTerrainPoser";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_GEN_AmenagerTerrainPoser::Clean()
     ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_amenager_terrain_poser;
 
     ASN_Tools::Delete( asnMission.pos_obstacle );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

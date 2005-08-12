@@ -29,6 +29,7 @@
 namespace TEST {
 
     class Team;
+    class Workspace;
 
 // =============================================================================
 /** @class  Object
@@ -46,17 +47,8 @@ class Object
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const ASN1T_MsgObjectCreation& asnMsg );
+             Object( const Workspace& workspace, const ASN1T_MsgObjectCreation& asnMsg );
     virtual ~Object();
-    //@}
-
-    //! @name Operations
-    //@{
-    static void    Initialize();
-    static void    Terminate ();
-    static Object* Find      ( T_EntityId nId );
-    static void    Register  ( Object& automat );
-    static void    Unregister( Object& automat );
     //@}
 
     //! @name Accessors
@@ -82,14 +74,11 @@ private:
 private:
     //! @name Member data
     //@{
-    T_EntityId             nId_;
-    Team*                  pTeam_;
-    uint                   nType_;
-    uint                   nTypeLocalisation_;
+    T_EntityId       nId_;
+    Team*            pTeam_;
+    uint             nType_;
+    uint             nTypeLocalisation_;
     T_PositionVector positionVector_;
-
-    // global automat list
-    static T_ObjectMap  objects_;
     //@}
 };
 

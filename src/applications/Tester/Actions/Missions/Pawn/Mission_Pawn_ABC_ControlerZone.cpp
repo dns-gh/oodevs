@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ABC_ControlerZone constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC_ControlerZone::Mission_Pawn_ABC_ControlerZone( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ABC_ControlerZone::Mission_Pawn_ABC_ControlerZone( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ABC_ControlerZone";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_ABC_ControlerZone::Clean()
     ASN1T_Mission_Pion_ABC_ControlerZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_controler_zone;
 
     ASN_Tools::Delete( asnMission.zone );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

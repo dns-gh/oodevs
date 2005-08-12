@@ -23,19 +23,18 @@
 #include "Tester_pch.h"
 #include "Object.h"
 #include "Team.h"
+#include "Workspace.h"
 
 using namespace TEST;
-
-Object::T_ObjectMap   Object::objects_;
 
 //-----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Object::Object( const ASN1T_MsgObjectCreation& asnMsg )
+Object::Object( const Workspace& workspace, const ASN1T_MsgObjectCreation& asnMsg )
     : nId_               ( asnMsg.oid  )
     , nType_             ( asnMsg.type )
-    , pTeam_             ( Team::Find( asnMsg.camp ) )
+    , pTeam_             ( workspace.GetEntityManager().FindTeam( asnMsg.camp ) )
     , nTypeLocalisation_ ( asnMsg.localisation.type  )
 {
     assert( pTeam_ );
@@ -56,23 +55,4 @@ Object::~Object()
     for( CIT_PositionVector it = positionVector_.begin(); it != positionVector_.end(); ++it )
         delete *it;
     positionVector_.clear();
-}
-
-//-----------------------------------------------------------------------------
-// Name: Object::Initialize
-// Created: SBO 2005-08-08
-//-----------------------------------------------------------------------------
-void Object::Initialize()
-{
-}
-
-//-----------------------------------------------------------------------------
-// Name: Object::Terminate
-// Created: SBO 2005-08-08
-//-----------------------------------------------------------------------------
-void Object::Terminate()
-{
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-        delete it->second;
-    objects_.clear();
 }

@@ -16,50 +16,11 @@
 //
 // *****************************************************************************
 
-#include "Types/PawnType.h"
-
-#include "Entities/Automat.h"
-#include "Entities/Types/PawnType.h"
+#include "Types/Entities/PawnType.h"
+#include "Automat.h"
 
 namespace TEST
 {
-
-//-----------------------------------------------------------------------------
-// Name: Pawn::Find
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-Pawn* Pawn::Find( T_EntityId nId )
-{
-	CIT_PawnMap it;
-	it = pawns_.find( nId );
-	if ( it != pawns_.end() )
-		return ( *it ).second;
-	return 0;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Pawn::Register
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-void Pawn::Register( Pawn& pawn )
-{
-    bool bOut = pawns_.insert( std::make_pair( pawn.GetId(), &pawn ) ).second;
-    assert( bOut );
-}
-
-//-----------------------------------------------------------------------------
-// Name: Pawn::Unregister
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-void Pawn::Unregister( Pawn& pawn )
-{
-    int nOut = pawns_.erase( pawn.GetId() );
-    assert( nOut == 1 );
-}
-
 
 //-----------------------------------------------------------------------------
 // Name: Pawn::IsPc
@@ -112,6 +73,56 @@ const Automat& Pawn::GetAutomat() const
 {
     assert( pAutomat_ );
     return *pAutomat_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Pawn::GetDirection
+// Created: SBO 2005-05-11
+//-----------------------------------------------------------------------------
+inline
+T_Direction Pawn::GetDirection() const
+{
+	return nDirection_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Pawn::GetSpeed
+// Created: SBO 2005-05-11
+//-----------------------------------------------------------------------------
+inline
+T_Speed Pawn::GetSpeed() const
+{
+	return rSpeed_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Pawn::GetPosition
+// Created: SBO 2005-05-11
+//-----------------------------------------------------------------------------
+inline
+const Position& Pawn::GetPosition() const
+{
+	return position_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Pawn::GetHeight
+// Created: SBO 2005-06-02
+//-----------------------------------------------------------------------------
+inline
+T_Height Pawn::GetHeight() const
+{
+	return nHeight_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Pawn::GetState
+// Created: SBO 2005-05-11
+//-----------------------------------------------------------------------------
+inline
+int Pawn::GetState() const
+{
+	return nOpState_;
 }
 
 } // end namespace TEST

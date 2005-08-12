@@ -22,22 +22,21 @@
 
 #include "Tester_pch.h"
 #include "TacticalLineManager.h"
-#include "TacticalLine_ABC.h"
-#include "TacticalLine_Limit.h"
+#include "TacticalLines/TacticalLine_ABC.h"
+#include "TacticalLines/TacticalLine_Limit.h"
 #include "Tools/PositionManager.h"
 #include "Tools/Position.h"
 
 using namespace TEST;
 
-TacticalLineManager::T_TacticalLineSet TacticalLineManager::lines_;
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLineManager constructor
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-TacticalLineManager::TacticalLineManager()
+TacticalLineManager::TacticalLineManager( const PositionManager& posMgr )
+    : lines_ ()
 {
-    // NOTHING
+    CreateDefaultTacticalLines( posMgr );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,24 +45,26 @@ TacticalLineManager::TacticalLineManager()
 // -----------------------------------------------------------------------------
 TacticalLineManager::~TacticalLineManager()
 {
-    // NOTHING
+    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
+        delete *it;
+    lines_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineManager::Initialize
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-void TacticalLineManager::Initialize()
+void TacticalLineManager::CreateDefaultTacticalLines( const PositionManager& posMgr )
 {
     // Create default limits: world borders
     Position* pTopLeft     = new Position();
     Position* pTopRight    = new Position();
     Position* pBottomRight = new Position();
     Position* pBottomLeft  = new Position();
-    pTopLeft    ->SetSimCoordinates(                                    0, PositionManager::GetWorldHeight() - 1 );
-    pTopRight   ->SetSimCoordinates( PositionManager::GetWorldWidth() - 1, PositionManager::GetWorldHeight() - 1 );
-    pBottomRight->SetSimCoordinates( PositionManager::GetWorldWidth() - 1,                                     0 );
-    pBottomLeft ->SetSimCoordinates(                                    0,                                     0 );
+    pTopLeft    ->SetSimCoordinates(                          0, posMgr.GetWorldHeight() - 1 );
+    pTopRight   ->SetSimCoordinates( posMgr.GetWorldWidth() - 1, posMgr.GetWorldHeight() - 1 );
+    pBottomRight->SetSimCoordinates( posMgr.GetWorldWidth() - 1,                           0 );
+    pBottomLeft ->SetSimCoordinates(                          0,                           0 );
 
     T_PositionVector* pPointsLeft = new T_PositionVector();
     pPointsLeft->push_back( pBottomLeft );
@@ -74,16 +75,6 @@ void TacticalLineManager::Initialize()
     pPointsRight->push_back( pBottomRight );
     pPointsRight->push_back( pTopRight    );
     Register( *new TacticalLine_Limit( *pPointsRight ) );
-}
-// -----------------------------------------------------------------------------
-// Name: TacticalLineManager::Terminate
-// Created: SBO 2005-08-09
-// -----------------------------------------------------------------------------
-void TacticalLineManager::Terminate()
-{
-    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
-        delete *it;
-    lines_.clear();
 }
 
 // -----------------------------------------------------------------------------

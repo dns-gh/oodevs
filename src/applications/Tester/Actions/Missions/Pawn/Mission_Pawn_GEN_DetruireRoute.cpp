@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_DetruireRoute constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_DetruireRoute::Mission_Pawn_GEN_DetruireRoute( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_DetruireRoute::Mission_Pawn_GEN_DetruireRoute( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_DetruireRoute";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_GEN_DetruireRoute::Clean()
     ASN1T_Mission_Pion_GEN_DetruireRoute& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_detruire_route;
 
     ASN_Tools::Delete( asnMission.pos_obstacle );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_Generique constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_Generique::Mission_Pawn_Generique( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_Generique::Mission_Pawn_Generique( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_Generique";
 }
@@ -81,7 +81,6 @@ void Mission_Pawn_Generique::Clean()
 
     ASN_Tools::Delete( asnMission.connaissances_agents );
     ASN_Tools::Delete( asnMission.connaissances_objets );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

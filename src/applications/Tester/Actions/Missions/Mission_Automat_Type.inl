@@ -27,9 +27,9 @@ namespace TEST {
 template < class Mission >
 struct sMissionAutomatCreator
 {
-    static Mission_Automat_ABC& Create( Automat& target, uint nExecutionTick )
+    static Mission_Automat_ABC& Create( Automat& target )
     {
-        return *new Mission( target, nExecutionTick );
+        return *new Mission( target );
     }
 };
 
@@ -51,9 +51,9 @@ void Mission_Automat_Type::Register( const std::string& strName )
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-Mission_Automat_ABC& Mission_Automat_Type::Instanciate( Automat& target, uint nExecutionTick /* = 0 */ ) const
+Mission_Automat_ABC& Mission_Automat_Type::Instanciate( Automat& target ) const
 {
-    return missionAllocator_( target, nExecutionTick );
+    return missionAllocator_( target );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +61,11 @@ Mission_Automat_ABC& Mission_Automat_Type::Instanciate( Automat& target, uint nE
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-Mission_Automat_ABC& Mission_Automat_Type::CreateMission( const std::string& strName, Automat& target, uint nExecutionTick /*= 0*/ )
+Mission_Automat_ABC& Mission_Automat_Type::CreateMission( const std::string& strName, Automat& target )
 {
     Mission_Automat_Type* pType = missions_.find( strName )->second;
     assert( pType );
-    return pType->Instanciate( target, nExecutionTick );
+    return pType->Instanciate( target );
 }
 
 // -----------------------------------------------------------------------------

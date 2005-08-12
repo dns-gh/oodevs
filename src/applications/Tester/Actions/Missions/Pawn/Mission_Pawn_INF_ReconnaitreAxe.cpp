@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_ReconnaitreAxe constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_ReconnaitreAxe::Mission_Pawn_INF_ReconnaitreAxe( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_ReconnaitreAxe::Mission_Pawn_INF_ReconnaitreAxe( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_ReconnaitreAxe";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_INF_ReconnaitreAxe::Clean()
     ASN1T_Mission_Pion_INF_ReconnaitreAxe& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_reconnaitre_axe;
 
     ASN_Tools::Delete( asnMission.itineraire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

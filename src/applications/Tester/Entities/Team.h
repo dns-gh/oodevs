@@ -21,6 +21,7 @@
 
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
+#include "Entities/EntityManager.h"
 
 namespace TEST
 {
@@ -53,17 +54,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( T_EntityId nSimId, DIN::DIN_Input& input );
+             Team( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Input& input );
     virtual ~Team();
-    //@}
-
-    //! @name Operations
-    //@{
-    static void  Initialize();
-    static void  Terminate ();
-    static Team* Find      ( T_EntityId nId  );
-    static void  Register  ( Team&      team );
-    static void  Unregister( Team&      team );
     //@}
 
     //! @name Accessors
@@ -107,9 +99,6 @@ private:
     typedef std::map< const Team*, E_Diplomacy > T_TeamRelationMap;
     typedef T_TeamRelationMap::const_iterator    CIT_TeamRelationMap;
 
-	typedef std::map< T_EntityId, Team* >		 T_TeamMap;
-	typedef T_TeamMap::const_iterator			 CIT_TeamMap;
-
     typedef std::map< T_EntityId, ObjectKnowledge* > T_ObjectKnowledgeMap;
     typedef T_ObjectKnowledgeMap::const_iterator     CIT_ObjectKnowledgeMap;
     //@}
@@ -122,8 +111,7 @@ private:
 	T_TeamRelationMap    relations_;
     T_ObjectKnowledgeMap knownObjects_;
 
-    // global team list
-    static T_TeamMap     teams_;
+    const EntityManager& entityManager_;
     //@}
 };
 

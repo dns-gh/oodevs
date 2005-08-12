@@ -34,8 +34,8 @@ IDManager Mission_Pawn_ABC::idManager_( 145 );
 // Name: Mission_Pawn_ABC constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC::Mission_Pawn_ABC( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Action< Pawn > ( pawn, nExecutionTick )
+Mission_Pawn_ABC::Mission_Pawn_ABC( Pawn& pawn )
+    : Action< Pawn > ( pawn )
 {
     // NOTHING
 }

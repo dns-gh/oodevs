@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ALAT_ReconnaitreDansLaProfondeur";
 }
@@ -83,7 +83,6 @@ void Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Clean()
     ASN_Tools::Delete( asnMission.plots_ravitaillement );
     ASN_Tools::Delete( asnMission.point_dislocation );
     ASN_Tools::Delete( asnMission.zone );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

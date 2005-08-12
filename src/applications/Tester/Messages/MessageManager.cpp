@@ -20,7 +20,7 @@
 #include "MessageManager.h"
 
 #include "Types.h"
-#include "TestManager.h"
+#include "Workspace.h"
 #include "Network/NetworkManager.h"
 #include "Network/ConnectionHandler.h"
 
@@ -31,9 +31,9 @@
 #include "Entities/Pawn.h"
 #include "Entities/Object.h"
 
-#include "Entities/TacticalLines/TacticalLineManager.h"
-#include "Entities/TacticalLines/TacticalLine_Limit.h"
-#include "Entities/TacticalLines/TacticalLine_Lima.h"
+#include "Types/TacticalLineManager.h"
+#include "Types/TacticalLines/TacticalLine_Limit.h"
+#include "Types/TacticalLines/TacticalLine_Lima.h"
 
 #include "Actions/Scheduler.h"
 #include "TestSets/TestSet_ABC.h"
@@ -49,9 +49,8 @@ using namespace NEK;
 // Name: MessageManager constructor
 // Created: SBO 2005-05-09
 //-----------------------------------------------------------------------------
-MessageManager::MessageManager( NetworkManager& networkManager )
-    : bPaused_          ( false )
-    , bReceivingState_  ( true )
+MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkManager )
+    : workspace_ ( workspace )
 {
     DIN_ConnectorGuest connector( eConnector_SIM_TEST );
     pMessageService_ = new DIN_MessageServiceUserCbk< MessageManager >( 
@@ -138,7 +137,7 @@ DIN::DIN_BufferedMessage MessageManager::BuildMessage()
 //-----------------------------------------------------------------------------
 void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 {
-	if ( !TestManager::GetTestManager().GetNetworkManager().IsConnected() )
+	if ( !workspace_.GetNetworkManager().IsConnected() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -155,7 +154,7 @@ void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    pMessageService_->Send( TestManager::GetTestManager().GetNetworkManager().GetLink(), eMsgMosSim, dinMsg );
+    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSim, dinMsg );
 }
 
 
@@ -165,7 +164,7 @@ void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 //-----------------------------------------------------------------------------
 void MessageManager::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, T_NetContextId nCtx )
 {
-    if ( !TestManager::GetTestManager().GetNetworkManager().IsConnected() )
+    if ( !workspace_.GetNetworkManager().IsConnected() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -184,7 +183,7 @@ void MessageManager::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnM
 
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    pMessageService_->Send( TestManager::GetTestManager().GetNetworkManager().GetLink(), eMsgMosSimWithContext, dinMsg );
+    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSimWithContext, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +195,7 @@ void MessageManager::SendMsgMosSim( ASN1OCTET* pMsg, int nMsgLength )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( pMsg, nMsgLength );
 
-    pMessageService_->Send( TestManager::GetTestManager().GetNetworkManager().GetLink(), eMsgMosSim, dinMsg );
+    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSim, dinMsg );
 }
 
 
@@ -211,7 +210,7 @@ void MessageManager::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, 
 
     dinMsg.GetOutput().Append( pMsg, nMsgLength );
 
-    pMessageService_->Send( TestManager::GetTestManager().GetNetworkManager().GetLink(), eMsgMosSimWithContext, dinMsg );
+    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSimWithContext, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +219,7 @@ void MessageManager::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, 
 // -----------------------------------------------------------------------------
 void MessageManager::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg )
 {
-    pMessageService_->Send( TestManager::GetTestManager().GetNetworkManager().GetLink(), eMsgDebugDrawPoints, msg  );
+    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgDebugDrawPoints, msg  );
 }
 
 //=============================================================================
@@ -235,11 +234,11 @@ void MessageManager::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DI
 {
     uint32 nId;
     input >> nId;
-    if( !KnowledgeGroup::Find( nId ) )
+    if( !workspace_.GetEntityManager().FindKnowledgeGroup( nId ) )
     {
-        KnowledgeGroup* pKnowledgeGroup = new KnowledgeGroup( nId, input );
-        KnowledgeGroup::Register( *pKnowledgeGroup );
-        MT_LOG_INFO_MSG( "TEST -> MM - Knowledge Group created ID#" << nId );
+        KnowledgeGroup& knowledgeGroup = *new KnowledgeGroup( workspace_.GetEntityManager(), nId, input );
+        workspace_.GetEntityManager().Register( knowledgeGroup );
+        //MT_LOG_INFO_MSG( "TEST -> MM - Knowledge Group created ID#" << nId );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Knowledge Group with ID#" << nId << " already created" );
@@ -253,11 +252,11 @@ void MessageManager::OnReceiveMsgTeam( DIN::DIN_Link& /*linkForm*/, DIN::DIN_Inp
 {
     uint32 nId;
     input >> nId;
-    if( !Team::Find( nId ) )
+    if( !workspace_.GetEntityManager().FindTeam( nId ) )
     {
-        Team* pTeam = new Team( nId, input );
-        Team::Register( *pTeam );
-        MT_LOG_INFO_MSG( "TEST -> MM - Team created ID#" << nId );
+        Team& team = *new Team( workspace_.GetEntityManager(), nId, input );
+        workspace_.GetEntityManager().Register( team );
+        //MT_LOG_INFO_MSG( "TEST -> MM - Team created ID#" << nId );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Team with ID#" << nId << " already created" );
@@ -381,9 +380,9 @@ void MessageManager::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
                  << " - Tick duration : "       << asnMsg.tick_duration
                  << " - Time factor : "         << asnMsg.time_factor;
 
-    TestManager::GetTestManager().SetTickDuration( asnMsg.tick_duration );
-    TestManager::GetTestManager().SetTick        ( asnMsg.current_tick  );
-    //TestManager::GetTestManager().SetTimeFactor  ( asnMSg.time_factor   );
+    workspace_.SetTickDuration( asnMsg.tick_duration );
+    workspace_.SetTick        ( asnMsg.current_tick  );
+    //Workspace::GetWorkspace().SetTimeFactor  ( asnMSg.time_factor   );
     
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
@@ -394,7 +393,7 @@ void MessageManager::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& asnMsg )
 {
-    TestManager::GetTestManager().SetTick( asnMsg );
+    workspace_.SetTick( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,7 +402,7 @@ void MessageManager::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& as
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnMsg*/ )
 {
-    TestManager::GetTestManager().GetScheduler().Run();
+    workspace_.GetScheduler().Run( workspace_.GetTick() );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,7 +415,7 @@ void MessageManager::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlCha
     // don't do anything if original command was malformed
     if( asnMsg.error_code == EnumCtrlErrorCode::no_error )
     {
-        TestManager::GetTestManager().SetTimeFactor( asnMsg.time_factor );
+        Workspace::GetWorkspace().SetTimeFactor( asnMsg.time_factor );
     }
 */
 }
@@ -440,11 +439,11 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
     MT_LOG_INFO_MSG( "End current state..." );
     // create default limits
-    TacticalLineManager::UpdateToSim();
+    workspace_.GetTacticalLineManager().UpdateToSim();
     // load tests
-    TestManager::GetTestManager().GetTestSet().Load( TestManager::GetTestManager().GetScheduler() );
+    workspace_.GetTestSet().Load( workspace_ );
     // run scheduler
-    TestManager::GetTestManager().GetScheduler().Run();
+    workspace_.GetScheduler().Run( workspace_.GetTick() );
 }
 
 //-----------------------------------------------------------------------------
@@ -457,11 +456,11 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgAutomatCreation( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    if( !Automat::Find( asnMsg.oid_automate ) )
+    if( !workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate ) )
     {
         // automat creation
-        Automat* pAutomat = new Automat( asnMsg );
-        Automat::Register( *pAutomat );
+        Automat& automat = *new Automat( workspace_, asnMsg );
+        workspace_.GetEntityManager().Register( automat );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Automat with ID#" << asnMsg.oid_automate << " already created" );
@@ -473,10 +472,10 @@ void MessageManager::OnReceiveMsgAutomatCreation( const ASN1T_MsgAutomateCreatio
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgPawnCreation( const ASN1T_MsgPionCreation& asnMsg )
 {
-    if( !Pawn::Find( asnMsg.oid_pion ) )
+    if( !workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion ) )
     {
-        Pawn* pPawn = new Pawn( asnMsg );
-        Pawn::Register( *pPawn );
+        Pawn& pawn = *new Pawn( workspace_, asnMsg );
+        workspace_.GetEntityManager().Register( pawn );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Pawn with ID#" << asnMsg.oid_pion << " already created" );
@@ -488,10 +487,10 @@ void MessageManager::OnReceiveMsgPawnCreation( const ASN1T_MsgPionCreation& asnM
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgChangeAutomat( const ASN1T_MsgChangeAutomate& asnMsg )
 {
-    Pawn* pPawn = Pawn::Find( asnMsg.oid_pion );
+    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion );
     assert( pPawn );
 
-    Automat* pAutomat = Automat::Find( asnMsg.oid_automate );
+    Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate );
     assert( pAutomat );
     
     pPawn->OnAutomatChanged( *pAutomat );
@@ -506,10 +505,10 @@ void MessageManager::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomat
     // don't do anything if original command was malformed
     if( asnMsg.error_code == EnumOrderErrorCode::no_error )
     {
-        Pawn* pPawn = Pawn::Find( asnMsg.oid_pion );
+        Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion );
         assert( pPawn );
 
-        Automat* pAutomat = Automat::Find( asnMsg.oid_automate );
+        Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate );
         assert( pAutomat );
         
         pPawn->OnAutomatChanged( *pAutomat );
@@ -522,7 +521,7 @@ void MessageManager::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomat
 //-----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& asnMsg )
 {
-    Pawn* pPawn = Pawn::Find( asnMsg.oid_pion );
+    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion );
     assert( pPawn );
     pPawn->OnAttributeUpdated( asnMsg );
 }
@@ -533,7 +532,7 @@ void MessageManager::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& 
 //-----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& asnMsg )
 {
-    Pawn* pPawn = Pawn::Find( asnMsg.oid_pion );
+    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion );
     assert( pPawn );
     pPawn->OnAttributeUpdated( asnMsg );
 }
@@ -544,10 +543,10 @@ void MessageManager::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& as
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgChangeTeamRelation( const ASN1T_MsgChangeDiplomatie& asnMsg )
 {
-    Team* pTeam1 = Team::Find( asnMsg.oid_camp1 );
+    Team* pTeam1 = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp1 );
     assert( pTeam1 );
 
-    Team* pTeam2 = Team::Find( asnMsg.oid_camp2 );
+    Team* pTeam2 = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp2 );
     assert( pTeam2 );
 
     pTeam1->SetRelation( *pTeam2, asnMsg.diplomatie );
@@ -562,10 +561,10 @@ void MessageManager::OnReceiveMsgChangeTeamRelationAck( const ASN1T_MsgChangeDip
     // don't do anything if original command was malformed
     if( asnMsg.error_code == EnumChangeDiplomatieErrorCode::no_error )
     {
-        Team* pTeam1 = Team::Find( asnMsg.oid_camp1 );
+        Team* pTeam1 = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp1 );
         assert( pTeam1 );
 
-        Team* pTeam2 = Team::Find( asnMsg.oid_camp2 );
+        Team* pTeam2 = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp2 );
         assert( pTeam2 );
 
         pTeam1->SetRelation( *pTeam2, asnMsg.diplomatie );
@@ -580,10 +579,10 @@ void MessageManager::OnReceiveMsgChangeKnowledgeGroupAck( const ASN1T_MsgChangeG
 {
     if( asnMsg.error_code == EnumChangeGroupeConnaissanceErrorCode::no_error )
     {
-        Automat* pAutomat = Automat::Find( asnMsg.oid_automate );
+        Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_automate );
         assert( pAutomat );
 
-        KnowledgeGroup* pKnowledgeGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_connaissance );
+        KnowledgeGroup* pKnowledgeGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_connaissance );
         assert( pKnowledgeGroup );
 
         pAutomat->OnKnowledgeGroupChanged( *pKnowledgeGroup );
@@ -596,7 +595,7 @@ void MessageManager::OnReceiveMsgChangeKnowledgeGroupAck( const ASN1T_MsgChangeG
 //-----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgPawnPathFind( const ASN1T_MsgUnitPathFind& asnMsg )
 {
-    Pawn* pPawn = Pawn::Find( asnMsg.oid_pion );
+    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion );
     assert( pPawn );
     pPawn->OnReceivePathfind( asnMsg );
 }
@@ -609,7 +608,7 @@ void MessageManager::OnReceiveMsgPawnTerrainType( DIN::DIN_Link& /*linkFrom*/, D
 {
     uint32 nPawnId;
     input >> nPawnId;
-    Pawn* pPawn = Pawn::Find( nPawnId );
+    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( nPawnId );
     assert( pPawn );
     pPawn->OnReceiveTerrainType( input );
 }
@@ -630,10 +629,10 @@ void MessageManager::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFrom*/, D
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
 {
-    if( !Object::Find( asnMsg.oid ) )
+    if( !workspace_.GetEntityManager().FindObject( asnMsg.oid ) )
     {
-        Object* pObject = new Object( asnMsg );
-        Object::Register( *pObject );
+        Object& object = *new Object( workspace_, asnMsg );
+        workspace_.GetEntityManager().Register( object );
     }
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Object with ID#" << asnMsg.oid << " already created" );
@@ -654,11 +653,11 @@ void MessageManager::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& /*as
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruction& asnMsg )
 {
-    Object* pObject = Object::Find( asnMsg );
+    Object* pObject = workspace_.GetEntityManager().FindObject( asnMsg );
     
     if( pObject )
     {
-        Object::Unregister( *pObject );
+        workspace_.GetEntityManager().Unregister( *pObject );
         delete pObject;
     }
     else
@@ -671,7 +670,7 @@ void MessageManager::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruc
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
-    KnowledgeGroup* pKGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_possesseur );
+    KnowledgeGroup* pKGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_possesseur );
     assert( pKGroup );
     pKGroup->OnReceiveMsgUnitKnowledgeCreation( asnMsg );
 }
@@ -682,7 +681,7 @@ void MessageManager::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowl
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 {
-    KnowledgeGroup* pKGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_possesseur );
+    KnowledgeGroup* pKGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_possesseur );
     assert( pKGroup );
     pKGroup->OnReceiveMsgUnitKnowledgeUpdate( asnMsg );
 }
@@ -693,7 +692,7 @@ void MessageManager::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowled
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
 {
-    KnowledgeGroup* pKGroup = KnowledgeGroup::Find( asnMsg.oid_groupe_possesseur );
+    KnowledgeGroup* pKGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_possesseur );
     assert( pKGroup );
     pKGroup->OnReceiveMsgUnitKnowledgeDestruction( asnMsg );
 }
@@ -704,7 +703,7 @@ void MessageManager::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKn
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
 {
-    Team* pTeam = Team::Find( asnMsg.oid_camp_possesseur );
+    Team* pTeam = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp_possesseur );
     assert( pTeam );
     pTeam->OnReceiveMsgObjectKnowledgeCreation( asnMsg );
 }
@@ -715,7 +714,7 @@ void MessageManager::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectK
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
 {
-    Team* pTeam = Team::Find( asnMsg.oid_camp_possesseur );
+    Team* pTeam = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp_possesseur );
     assert( pTeam );
     pTeam->OnReceiveMsgObjectKnowledgeUpdate( asnMsg );
 }
@@ -726,7 +725,7 @@ void MessageManager::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKno
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
 {
-    Team* pTeam = Team::Find( asnMsg.oid_camp_possesseur );
+    Team* pTeam = workspace_.GetEntityManager().FindTeam( asnMsg.oid_camp_possesseur );
     assert( pTeam );
     pTeam->OnReceiveMsgObjectKnowledgeDestruction( asnMsg );
 }
@@ -753,9 +752,8 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation& asnMsg )
 {
-    TacticalLine_Limit* pLimit = new TacticalLine_Limit( asnMsg );
-    assert( pLimit );
-    TacticalLineManager::Register( *pLimit );
+    TacticalLine_Limit& limit = *new TacticalLine_Limit( asnMsg );
+    workspace_.GetTacticalLineManager().Register( limit );
 }
 
 // -----------------------------------------------------------------------------
@@ -764,9 +762,9 @@ void MessageManager::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation& as
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestruction& asnMsg )
 {
-    TacticalLine_ABC* pLimit = TacticalLineManager::Find( asnMsg );
+    TacticalLine_ABC* pLimit = workspace_.GetTacticalLineManager().Find( asnMsg );
     if( pLimit )
-        TacticalLineManager::UnRegister( *pLimit );
+        workspace_.GetTacticalLineManager().UnRegister( *pLimit );
 }
 
 // -----------------------------------------------------------------------------
@@ -775,9 +773,8 @@ void MessageManager::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestructi
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& asnMsg )
 {
-    TacticalLine_Lima* pLima = new TacticalLine_Lima( asnMsg );
-    assert( pLima );
-    TacticalLineManager::Register( *pLima );
+    TacticalLine_Lima& lima = *new TacticalLine_Lima( asnMsg );
+    workspace_.GetTacticalLineManager().Register( lima );
 }
 
 // -----------------------------------------------------------------------------
@@ -786,9 +783,9 @@ void MessageManager::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& asnM
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruction& asnMsg )
 {
-    TacticalLine_ABC* pLima = TacticalLineManager::Find( asnMsg );
+    TacticalLine_ABC* pLima = workspace_.GetTacticalLineManager().Find( asnMsg );
     if( pLima )
-        TacticalLineManager::UnRegister( *pLima );
+        workspace_.GetTacticalLineManager().Register( *pLima );
 }
 
 //-----------------------------------------------------------------------------

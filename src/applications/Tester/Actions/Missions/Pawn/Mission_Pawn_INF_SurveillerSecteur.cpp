@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_SurveillerSecteur constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_SurveillerSecteur::Mission_Pawn_INF_SurveillerSecteur( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_SurveillerSecteur::Mission_Pawn_INF_SurveillerSecteur( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_SurveillerSecteur";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_INF_SurveillerSecteur::Clean()
     ASN1T_Mission_Pion_INF_SurveillerSecteur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_surveiller_secteur;
 
     ASN_Tools::Delete( asnMission.position_installation );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

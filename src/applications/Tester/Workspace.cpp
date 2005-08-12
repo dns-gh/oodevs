@@ -8,23 +8,25 @@
 // *****************************************************************************
 //
 // $Created: SBO 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/TestManager.cpp $
+// $Archive: /MVW_v10/Build/SDK/TIC/src/Workspace.cpp $
 // $Author: Sbo $
 // $Modtime: 5/07/05 11:54 $
 // $Revision: 18 $
-// $Workfile: TestManager.cpp $
+// $Workfile: Workspace.cpp $
 //
 // *****************************************************************************
 #include <time.h>
 
 #include "Tester_Pch.h"
-#include "TestManager.h"
+#include "Workspace.h"
 
 #include "Network/NetworkManager.h"
 #include "Entities/EntityManager.h"
 #include "Tools/PositionManager.h"
-#include "Entities/TacticalLines/TacticalLineManager.h"
+#include "Types/TypeManager.h"
+#include "Types/TacticalLineManager.h"
 #include "Actions/Scheduler.h"
+#include "Actions/Missions/Mission_Pawn_Type.h"
 
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
@@ -32,47 +34,21 @@
 
 using namespace TEST;
 
-TestManager* TestManager::pTestManager_;
+Workspace* Workspace::pWorkspace_;
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::Initialize
-// Created: SBO 2005-05-20
-//-----------------------------------------------------------------------------
-void TestManager::Initialize( TestSet_ABC*             pTestSet,
-                              const std::string&       strServer, 
-                              uint                     nServerPort, 
-                              const std::string&       strScipioConfigFile )
-{
-    pTestManager_ = new TestManager( pTestSet, strServer, nServerPort, strScipioConfigFile );
-    assert( pTestManager_ );
-    pTestManager_->pNetworkManager_->Connect();
-}
-
-//-----------------------------------------------------------------------------
-// Name: TestManager::Terminate
-// Created: SBO 2005-05-20
-//-----------------------------------------------------------------------------
-void TestManager::Terminate()
-{
-    if( GetTestManager().GetNetworkManager().IsConnected() )
-        GetTestManager().GetNetworkManager().Disconnect();
-    assert( pTestManager_ );
-    delete pTestManager_;
-
-    TacticalLineManager::Terminate();
-    PositionManager    ::Terminate();
-}
-
-//-----------------------------------------------------------------------------
-// Name: TestManager::TestManager
+// Name: Workspace::Workspace
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-TestManager::TestManager( TestSet_ABC*             pTestSet,
-                          const std::string&       strServer, 
-                          uint                     nServerPort, 
-                          const std::string&       strScipioConfigFile )
+Workspace::Workspace( TestSet_ABC*       pTestSet,
+                      const std::string& strServer, 
+                      uint               nServerPort, 
+                      const std::string& strScipioConfigFile )
     : pNetworkManager_  ( 0 )
     , pEntityManager_   ( 0 )
+    , pTypeManager_     ( 0 )
+    , pPositionManager_ ( 0 )
+    , pTacticalLineManager_ ( 0 )
     , pScheduler_       ( 0 )
     , pTestSet_         ( pTestSet )
     , nTick_            ( 0 )
@@ -82,37 +58,41 @@ TestManager::TestManager( TestSet_ABC*             pTestSet,
     // scheduler
     pScheduler_ = new Scheduler();
 
-    // entity manager
-    pEntityManager_ = new EntityManager();
-    assert( pEntityManager_ );
-    
+    Mission_Pawn_Type::Initialize();
     LoadScipioConfigFile( strScipioConfigFile );
 
     // network manager
-    pNetworkManager_ = new NetworkManager( strServer, nServerPort );
+    pNetworkManager_ = new NetworkManager( *this, strServer, nServerPort );
     assert( pNetworkManager_ );
+    pNetworkManager_->Connect();
+
+    pWorkspace_ = this;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::~TestManager
+// Name: Workspace::~Workspace
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-TestManager::~TestManager()
+Workspace::~Workspace()
 {
-    if( pScheduler_ )
-        delete pScheduler_;
-	if ( pNetworkManager_ )
-		delete pNetworkManager_;
-	if ( pEntityManager_ )
-		delete pEntityManager_;
+    Mission_Pawn_Type::Terminate();
+    if( pNetworkManager_->IsConnected() )
+        pNetworkManager_->Disconnect();
+	delete pNetworkManager_;
+    delete pTestSet_;
+    delete pScheduler_;
+    delete pTypeManager_;
+    delete pPositionManager_;
+    delete pTacticalLineManager_;
+    delete pEntityManager_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: TestManager::Update
+// Name: Workspace::Update
 // Created: SBO 2005-05-13
 // @return true if something a new export must be done (something updated or new tick)
 //-----------------------------------------------------------------------------
-void TestManager::Update()
+void Workspace::Update()
 {
     try
     {
@@ -125,13 +105,11 @@ void TestManager::Update()
     }
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Name: TestManager::LoadScipioConfigFile
+// Name: Workspace::LoadScipioConfigFile
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
-void TestManager::LoadScipioConfigFile( const std::string& strScipioConfigFile )
+void Workspace::LoadScipioConfigFile( const std::string& strScipioConfigFile )
 {
     std::string           strCurrentDir = MT_GetCurrentDir();
     std::string           strDir;
@@ -148,17 +126,18 @@ void TestManager::LoadScipioConfigFile( const std::string& strScipioConfigFile )
         archive.Open      ( strFile );
         archive.Section   ( "Donnees" );
 
-        std::string       strConfigFile;
-        std::string       strConfigFile2;
-        std::string       strConfigFile3;
+        std::string       strFileName, strFileName2, strFileName3;
 
         // entity position manager
-        archive.ReadField          ( "Terrain"    , strConfigFile );
-        PositionManager::Initialize( strConfigFile );
-        // once world is initialized, initialize tactical line manager
-        TacticalLineManager::Initialize();
+        archive.ReadField( "Terrain"  , strFileName );
+        pPositionManager_     = new PositionManager( strFileName );
+        pTacticalLineManager_ = new TacticalLineManager( *pPositionManager_ );
 
-        pEntityManager_->Initialize( archive );
+        archive.ReadField( "Decisionnel", strFileName );
+        archive.ReadField( "Pions"      , strFileName2  );
+        archive.ReadField( "Automates"  , strFileName3 );
+        pTypeManager_         = new TypeManager( strFileName, strFileName2, strFileName3 );
+        pEntityManager_       = new EntityManager();
 
         archive.EndSection(); // Donnees
         archive.Close     ();

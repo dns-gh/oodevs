@@ -21,10 +21,10 @@
 
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
+#include "Workspace.h"
 
 namespace TEST
 {
-    class EntityManager;
     class KnowledgeGroup;
     class Team;
     class Pawn;
@@ -41,22 +41,12 @@ namespace TEST
 // =============================================================================
 class Automat
 {
-    friend class Pawn;
 
 public:
     //! @name Constructors/Destructor
     //@{
-                    Automat( const ASN1T_MsgAutomateCreation& asnMsg );
-    virtual        ~Automat();
-    //@}
-
-    //! @name Operations
-    //@{
-    static       void     Initialize         ();
-    static       void     Terminate          ();
-    static       Automat* Find               ( T_EntityId nId );
-    static       void     Register           ( Automat& automat );
-    static       void     Unregister         ( Automat& automat );
+             Automat( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg );
+    virtual ~Automat();
     //@}
 
     //! @name Accessors
@@ -69,7 +59,19 @@ public:
 
     //! @name Operations
     //@{
-          void            OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup );
+    void OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup );
+    //@}
+
+    //! @name Pawn management
+    //@{
+    void AttachPawn( Pawn& pawn );
+	void DetachPawn( Pawn& pawn );
+    //@}
+
+    //! @name Mission Scheduling
+    //@{
+    void ScheduleAllMissions ( Scheduler& scheduler ) const;
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName ) const;
     //@}
 
 private:
@@ -79,33 +81,23 @@ private:
     Automat& operator=( const Automat& ); //!< Assignement operator
     //@}
 
-    //! @name Pawn management
-    //@{
-    void AttachPawn ( Pawn& pawn );
-	void DetachPawn ( Pawn& pawn );
-    //@}
-
 private:
     //! @name types
     //@{
-	typedef std::map< T_EntityId, Automat* > T_AutomatMap;
-	typedef T_AutomatMap::const_iterator	 CIT_AutomatMap;
-
-    typedef std::set< Pawn* >                T_PawnSet;
-    typedef T_PawnSet::const_iterator        CIT_PawnSet;
+    typedef std::set< Pawn* >         T_PawnSet;
+    typedef T_PawnSet::const_iterator CIT_PawnSet;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_EntityId           nId_;
-	Team*                pTeam_;
-	KnowledgeGroup*      pKnowledgeGroup_;
-	T_PawnSet            childPawns_;
-	Pawn*			     pPc_;
+    T_EntityId       nId_;
+	Team*            pTeam_;
+	KnowledgeGroup*  pKnowledgeGroup_;
+	Pawn*			 pPc_;
+	T_PawnSet        childPawns_;
 
-    // global automat list
-    static T_AutomatMap  automats_;
+    const Workspace& workspace_;
     //@}
 };
 

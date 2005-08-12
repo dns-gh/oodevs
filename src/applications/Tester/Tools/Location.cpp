@@ -74,41 +74,41 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLo
     case EnumTypeLocalisation::circle:
         // 5km radius point
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() + 5000, pNode->Y() );
+        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
         loc.points_.push_back( pNode );
         break;
     case EnumTypeLocalisation::ellipse:
         // 2km small axis
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X(), pNode->Y() + 2000 );
+        pNode->SetSimCoordinates( pNode->GetSimX(), pNode->GetSimY() + 2000 );
         loc.points_.push_back( pNode );
         // 5km big axis
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() + 5000, pNode->Y() );
+        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
         loc.points_.push_back( pNode );
         break;
     case EnumTypeLocalisation::line:
         // line second point 5km to the right
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() + 5000, pNode->Y() );
+        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
         loc.points_.push_back( pNode );
         break;
     case EnumTypeLocalisation::polygon:
         // triangle
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() + 5000, pNode->Y() + 2000 );
+        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() + 2000 );
         loc.points_.push_back( pNode );
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() + 6000, pNode->Y() + 3000 );
+        pNode->SetSimCoordinates( pNode->GetSimX() + 6000, pNode->GetSimY() + 3000 );
         loc.points_.push_back( pNode );
         break;
     case EnumTypeLocalisation::sector:
         // 90° sector around North ( 315° -> 45° )
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() - 3000, pNode->Y() + 3000 );
+        pNode->SetSimCoordinates( pNode->GetSimX() - 3000, pNode->GetSimY() + 3000 );
         loc.points_.push_back( pNode );
         pNode = new Position();
-        pNode->SetSimCoordinates( pNode->X() + 3000, pNode->Y() + 3000 );
+        pNode->SetSimCoordinates( pNode->GetSimX() + 3000, pNode->GetSimY() + 3000 );
         loc.points_.push_back( pNode );
         break;
     default:
@@ -128,8 +128,8 @@ T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, uint
     T_LocationVector& locations = *new T_LocationVector();
     Position pt;
 
-    double rX = pos.X();
-    double rY = pos.Y();
+    double rX = pos.GetSimX();
+    double rY = pos.GetSimY();
 
     for( uint i = 0; i < nLocation - 1; ++i )
     {

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ALAT_Escorter constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ALAT_Escorter::Mission_Pawn_ALAT_Escorter( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ALAT_Escorter::Mission_Pawn_ALAT_Escorter( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ALAT_Escorter";
 }
@@ -81,7 +81,6 @@ void Mission_Pawn_ALAT_Escorter::Clean()
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

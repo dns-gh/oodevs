@@ -20,11 +20,11 @@
 #define __PawnType_h_
 
 #include "Types.h"
-#include "Messages/ASN_Messages.h"
 
 namespace TEST
 {
     class PawnModel;
+    class TypeManager;
 
 // =============================================================================
 /** @class  PawnType
@@ -40,16 +40,13 @@ class PawnType
 {
     MT_COPYNOTALLOWED( PawnType );
 
-    friend class Pawn;
+    //friend class Pawn;
 
 public:
-    //! @name Manager
+    //! @name Constructors/Destructor
     //@{
-    static void            Initialize( const std::string& strScipioPawnConfigFile );
-    static void            Terminate ();
-
-    static const PawnType* Find      ( const std::string& strName );
-    static const PawnType* Find      ( ASN1T_TypePion     asnId   );
+             PawnType( const TypeManager& typeManager, const std::string& strName, XmlInputArchive& archive );
+    virtual ~PawnType();
     //@}
 
     //! @name Accessors
@@ -60,27 +57,11 @@ public:
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-             PawnType( const std::string& strName, XmlInputArchive& archive );
-    virtual ~PawnType();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, const PawnType*, sCaseInsensitiveLess > T_PawnTypeMap;
-    typedef T_PawnTypeMap::const_iterator                                  CIT_PawnTypeMap;
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::string          strName_;
 	uint                 nId_;
     const PawnModel*     pModel_;
-
-    // global type list
-    static T_PawnTypeMap pawnTypes_;
     //@}
 };
 

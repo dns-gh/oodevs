@@ -31,8 +31,9 @@ using namespace TEST;
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
 Scheduler::Scheduler()
-    : actions_         ()
-    , itCurrentAction_ ( actions_.begin() )
+    : actions_            ()
+    , itCurrentAction_    ( actions_.begin() )
+    , nNextExecutionTick_ ( 0 )
 {
     // NOTHING
 }
@@ -50,12 +51,15 @@ Scheduler::~Scheduler()
 // Name: Scheduler::Process
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-bool Scheduler::Run()
+bool Scheduler::Run( uint nCurrentTick /* = 0 */ )
 {
     if( itCurrentAction_ == actions_.end() )
         return false;
 
-    while( itCurrentAction_ != actions_.end() && itCurrentAction_->second->IsReady() )
+    std::cout << nCurrentTick << " != " << itCurrentAction_->first << std::endl;
+    while( itCurrentAction_ != actions_.end()  && 
+           itCurrentAction_->first <= nCurrentTick &&
+           itCurrentAction_->second->IsReady() )
     {
         itCurrentAction_->second->Run();
         ++itCurrentAction_;
@@ -67,9 +71,22 @@ bool Scheduler::Run()
 // Name: Scheduler::AddAction
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-void Scheduler::AddAction( Action_ABC& action )
+void Scheduler::AddAction( Action_ABC& action, int nExecutionTick /* = -1 */ )
 {
-    bool bOut = actions_.insert( std::make_pair( action.GetExecutionTick(), &action ) ).second;
+    if( nExecutionTick == -1 )
+        nExecutionTick = GetNextExecutionTick();
+    bool bOut = actions_.insert( std::make_pair( nExecutionTick, &action ) ).second;
     assert( bOut );
     itCurrentAction_ = actions_.begin();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Scheduler::GetNextExecutionTick
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+uint Scheduler::GetNextExecutionTick()
+{
+    uint nExecutionTick = nNextExecutionTick_;
+    nNextExecutionTick_ += 10;
+    return nExecutionTick;
 }

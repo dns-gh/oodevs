@@ -27,9 +27,9 @@ namespace TEST {
 template < class Mission >
 struct sMissionPawnCreator
 {
-    static Mission_Pawn_ABC& Create( Pawn& target, uint nExecutionTick )
+    static Mission_Pawn_ABC& Create( Pawn& target )
     {
-        return *new Mission( target, nExecutionTick );
+        return *new Mission( target );
     }
 };
 
@@ -51,9 +51,9 @@ void Mission_Pawn_Type::Register( const std::string& strName )
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-Mission_Pawn_ABC& Mission_Pawn_Type::Instanciate( Pawn& target, uint nExecutionTick /* = 0 */ ) const
+Mission_Pawn_ABC& Mission_Pawn_Type::Instanciate( Pawn& target ) const
 {
-    return missionAllocator_( target, nExecutionTick );
+    return missionAllocator_( target );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +61,11 @@ Mission_Pawn_ABC& Mission_Pawn_Type::Instanciate( Pawn& target, uint nExecutionT
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const std::string& strName, Pawn& target, uint nExecutionTick /*= 0*/ )
+Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const std::string& strName, Pawn& target )
 {
     Mission_Pawn_Type* pType = missions_.find( strName )->second;
     assert( pType );
-    return pType->Instanciate( target, nExecutionTick );
+    return pType->Instanciate( target );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +73,9 @@ Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const std::string& strName, 
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
 inline
-Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const Mission_Pawn_Type& type, Pawn& target, uint nExecutionTick /*= 0*/ )
+Mission_Pawn_ABC& Mission_Pawn_Type::CreateMission( const Mission_Pawn_Type& type, Pawn& target )
 {
-    return type.Instanciate( target, nExecutionTick );
+    return type.Instanciate( target );
 }
 
 // -----------------------------------------------------------------------------

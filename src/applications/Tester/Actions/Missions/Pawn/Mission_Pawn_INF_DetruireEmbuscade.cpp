@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_DetruireEmbuscade constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_DetruireEmbuscade::Mission_Pawn_INF_DetruireEmbuscade( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_DetruireEmbuscade::Mission_Pawn_INF_DetruireEmbuscade( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_DetruireEmbuscade";
 }
@@ -78,7 +78,6 @@ void Mission_Pawn_INF_DetruireEmbuscade::Clean()
 
     ASN_Tools::Delete( asnMission.position_embuscade );
     ASN_Tools::Delete( asnMission.position_regroupement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

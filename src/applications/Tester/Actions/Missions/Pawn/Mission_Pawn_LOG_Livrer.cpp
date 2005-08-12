@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_LOG_Livrer constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_Livrer::Mission_Pawn_LOG_Livrer( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_LOG_Livrer::Mission_Pawn_LOG_Livrer( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_LOG_Livrer";
 }
@@ -71,7 +71,6 @@ void Mission_Pawn_LOG_Livrer::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_livrer );
     ASN1T_Mission_Pion_LOG_Livrer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_livrer;
-
 
 
     delete &asnMission;

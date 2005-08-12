@@ -17,45 +17,11 @@
 // *****************************************************************************
 
 #include "Entities/KnowledgeGroup.h"
+#include "Entities/Team.h"
+#include "Entities/Pawn.h"
 
 namespace TEST
 {
-
-//-----------------------------------------------------------------------------
-// Name: Automat::Find
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-Automat* Automat::Find( T_EntityId nId )
-{
-	CIT_AutomatMap it;
-	it = automats_.find( nId );
-	if ( it != automats_.end() )
-		return ( *it ).second;
-	return 0;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Automat::Register
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-void Automat::Register( Automat& automat )
-{
-    bool bOut = automats_.insert( std::make_pair( automat.GetId(), &automat ) ).second;
-    assert( bOut );
-}
-
-//-----------------------------------------------------------------------------
-// Name: Automat::Unregister
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-inline
-void Automat::Unregister( Automat& automat )
-{
-    int nOut = automats_.erase( automat.GetId() );
-    assert( nOut == 1 );
-}
 
 //-----------------------------------------------------------------------------
 // Name: Automat::GetTeam

@@ -29,6 +29,7 @@
 namespace TEST {
 
     class Object;
+    class EntityManager;
 
 // =============================================================================
 /** @class  ObjectKnowledge
@@ -46,7 +47,9 @@ class ObjectKnowledge
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& asnMsg, const Team& team );
+             ObjectKnowledge( const EntityManager&                    entityManager, 
+                              const ASN1T_MsgObjectKnowledgeCreation& asnMsg, 
+                              const Team&                             team );
     virtual ~ObjectKnowledge();
     //@}
 

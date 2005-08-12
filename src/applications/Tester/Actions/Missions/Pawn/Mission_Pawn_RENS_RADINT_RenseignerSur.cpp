@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_RENS_RADINT_RenseignerSur constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_RENS_RADINT_RenseignerSur::Mission_Pawn_RENS_RADINT_RenseignerSur( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_RENS_RADINT_RenseignerSur::Mission_Pawn_RENS_RADINT_RenseignerSur( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_RENS_RADINT_RenseignerSur";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_RENS_RADINT_RenseignerSur::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_rens_radint_renseigner_sur );
     ASN1T_Mission_Pion_RENS_RADINT_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_radint_renseigner_sur;
-
 
 
     delete &asnMission;

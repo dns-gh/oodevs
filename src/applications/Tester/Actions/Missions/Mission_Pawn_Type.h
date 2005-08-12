@@ -29,13 +29,6 @@ namespace TEST {
 
     class Pawn;
     class Mission_Pawn_ABC;
-    class Mission_Pawn_Type;
-
-//! @name Types
-//@{
-typedef std::vector< const Mission_Pawn_Type* > T_MissionPawnTypeVector;
-typedef T_MissionPawnTypeVector::const_iterator CIT_MissionPawnTypeVector;
-//@}
 
 // =============================================================================
 /** @class  Mission_Pawn_Type
@@ -59,8 +52,8 @@ public:
 
     template< typename Mission >
     static void Register( const std::string& strName );
-    static Mission_Pawn_ABC& CreateMission( const std::string&       strName, Pawn& target, uint nExecutionTick = 0 );
-    static Mission_Pawn_ABC& CreateMission( const Mission_Pawn_Type& type   , Pawn& target, uint nExecutionTick = 0 );
+    static Mission_Pawn_ABC& CreateMission( const std::string&       strName, Pawn& target );
+    static Mission_Pawn_ABC& CreateMission( const Mission_Pawn_Type& type   , Pawn& target );
     //@}
 
 private:
@@ -69,7 +62,7 @@ private:
     typedef std::map< std::string, Mission_Pawn_Type* > T_MissionPawnTypeMap;
     typedef T_MissionPawnTypeMap::const_iterator        CIT_MissionPawnTypeMap;
 
-    typedef Mission_Pawn_ABC&   (* T_MissionAllocator )( Pawn& target, uint nExecutionTick );
+    typedef Mission_Pawn_ABC&   (* T_MissionAllocator )( Pawn& target );
     //@}
 
 private:
@@ -87,7 +80,7 @@ private:
 
     //! @name Helpers
     //@{
-    Mission_Pawn_ABC& Instanciate( Pawn& target, uint nExecutionTick = 0 ) const;
+    Mission_Pawn_ABC& Instanciate( Pawn& target ) const;
     //@}
 
 private:

@@ -23,6 +23,7 @@
 #include "Tester_pch.h"
 #include "ObjectKnowledge.h"
 #include "Entities/Object.h"
+#include "Entities/EntityManager.h"
 
 using namespace TEST;
 
@@ -30,10 +31,10 @@ using namespace TEST;
 // Name: ObjectKnowledge constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation& asnMsg, const Team& team )
+ObjectKnowledge::ObjectKnowledge( const EntityManager& entityManager, const ASN1T_MsgObjectKnowledgeCreation& asnMsg, const Team& team )
     : owner_       ( team )
     , nId_         ( asnMsg.oid_connaissance ) 
-    , pRealObject_ ( asnMsg.oid_objet_reel == 0 ? 0 : Object::Find( asnMsg.oid_objet_reel ) )
+    , pRealObject_ ( asnMsg.oid_objet_reel == 0 ? 0 : entityManager.FindObject( asnMsg.oid_objet_reel ) )
 {
     // NOTHING
 }

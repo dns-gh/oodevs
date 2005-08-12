@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_MILICE_PrendreEtTenir constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_MILICE_PrendreEtTenir::Mission_Pawn_MILICE_PrendreEtTenir( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_MILICE_PrendreEtTenir::Mission_Pawn_MILICE_PrendreEtTenir( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_MILICE_PrendreEtTenir";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_MILICE_PrendreEtTenir::Clean()
     ASN1T_Mission_Pion_MILICE_PrendreEtTenir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_prendre_et_tenir;
 
     ASN_Tools::Delete( asnMission.point_a_prendre );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

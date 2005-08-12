@@ -16,77 +16,61 @@
 //
 // *****************************************************************************
 
-#ifndef __PawnModel_h_
-#define __PawnModel_h_
+#ifndef __AutomatModel_h_
+#define __AutomatModel_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
 #include "Types.h"
-#include "Actions/Missions/Mission_Pawn_Type.h"
 
 namespace TEST {
 
+    class Mission_Automat_Type;
+
 // =============================================================================
-/** @class  PawnModel
-    @brief  PawnModel
+/** @class  AutomatModel
+    @brief  AutomatModel
     @par    Using example
     @code
-    PawnModel;
+    AutomatModel;
     @endcode
 */
 // Created: SBO 2005-08-11
 // =============================================================================
-class PawnModel
+class AutomatModel
 {
 
 public:
-    //! @name Static methods
+    //! @name Constructors/Destructor
     //@{
-    static       void       Initialize( const std::string& strScipioModelFile );
-    static       void       Terminate ();
-    static const PawnModel* Find      ( const std::string& strModel );
-    //@}
-    
-    //! @name Accessors
-    //@{
-    const T_MissionPawnTypeVector& GetMissions() const;
+             AutomatModel( const std::string& strName, XmlInputArchive& archive );
+    virtual ~AutomatModel();
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-             PawnModel( const std::string& strName, XmlInputArchive& archive );
-    virtual ~PawnModel();
-    //@}
-
     //! @name Copy/Assignment
     //@{
-    PawnModel( const PawnModel& );            //!< Copy constructor
-    PawnModel& operator=( const PawnModel& ); //!< Assignment operator
+    AutomatModel( const AutomatModel& );            //!< Copy constructor
+    AutomatModel& operator=( const AutomatModel& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, PawnModel* >     T_PawnModelMap;
-    typedef T_PawnModelMap::const_iterator          CIT_PawnModelMap;
+    typedef std::vector< const Mission_Automat_Type* > T_MissionAutomatTypeVector;
+    typedef T_MissionAutomatTypeVector::const_iterator CIT_MissionAutomatTypeVector;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string             strName_;
-    T_MissionPawnTypeVector missionTypes_;
-
-    // global type list
-    static T_PawnModelMap   models_;
+    std::string                strName_;
+    T_MissionAutomatTypeVector missionTypes_;
     //@}
 };
 
 } // end namespace TEST
 
-#include "PawnModel.inl"
-
-#endif // __PawnModel_h_
+#endif // __AutomatModel_h_

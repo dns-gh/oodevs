@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_SeFaireDecontaminer constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_SeFaireDecontaminer::Mission_Pawn_SeFaireDecontaminer( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_SeFaireDecontaminer::Mission_Pawn_SeFaireDecontaminer( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_SeFaireDecontaminer";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_SeFaireDecontaminer::Clean()
     ASN1T_Mission_Pion_SeFaireDecontaminer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_se_faire_decontaminer;
 
     ASN_Tools::Delete( asnMission.point_arrivee );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

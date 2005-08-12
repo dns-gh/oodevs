@@ -23,7 +23,7 @@ namespace TEST {
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-double PositionManager::GetWorldWidth()
+double PositionManager::GetWorldWidth() const
 {
     return rWorldWidth_;
 }
@@ -33,9 +33,29 @@ double PositionManager::GetWorldWidth()
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
 inline
-double PositionManager::GetWorldHeight()
+double PositionManager::GetWorldHeight() const
 {
     return rWorldHeight_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PositionManager::RadianFromDegree
+// Created: SBO 2005-05-31
+//-----------------------------------------------------------------------------
+inline
+double  PositionManager::RadianFromDegree( double rDegree )
+{
+    return PI / 180.0 * rDegree;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PositionManager::RadianFromDegree
+// Created: SBO 2005-05-31
+//-----------------------------------------------------------------------------
+inline
+double  PositionManager::DegreeFromRadian( double rRadian )
+{
+    return rRadian * 180.0 / PI;
 }
 
 } // end namespace TEST

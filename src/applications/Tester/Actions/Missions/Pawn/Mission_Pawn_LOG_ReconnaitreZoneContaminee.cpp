@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_LOG_ReconnaitreZoneContaminee constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_LOG_ReconnaitreZoneContaminee::Mission_Pawn_LOG_ReconnaitreZoneContaminee( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_LOG_ReconnaitreZoneContaminee::Mission_Pawn_LOG_ReconnaitreZoneContaminee( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_LOG_ReconnaitreZoneContaminee";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_LOG_ReconnaitreZoneContaminee::Clean()
     ASN1T_Mission_Pion_LOG_ReconnaitreZoneContaminee& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_reconnaitre_zone_contaminee;
 
     ASN_Tools::Delete( asnMission.zone );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

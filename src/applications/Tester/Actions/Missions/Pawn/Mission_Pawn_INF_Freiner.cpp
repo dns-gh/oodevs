@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_Freiner constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_Freiner::Mission_Pawn_INF_Freiner( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_Freiner::Mission_Pawn_INF_Freiner( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_Freiner";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_INF_Freiner::Clean()
     ASN1T_Mission_Pion_INF_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_freiner;
 
     ASN_Tools::Delete( asnMission.itineraire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

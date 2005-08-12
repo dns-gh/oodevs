@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_NBC_ReconnaitreItineraire constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_NBC_ReconnaitreItineraire::Mission_Pawn_NBC_ReconnaitreItineraire( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_NBC_ReconnaitreItineraire::Mission_Pawn_NBC_ReconnaitreItineraire( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_NBC_ReconnaitreItineraire";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_NBC_ReconnaitreItineraire::Clean()
     ASN1T_Mission_Pion_NBC_ReconnaitreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_itineraire;
 
     ASN_Tools::Delete( asnMission.itineraire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

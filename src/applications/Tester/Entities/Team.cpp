@@ -22,15 +22,14 @@
 
 using namespace TEST;
 
-Team::T_TeamMap Team::teams_;
-
 //-----------------------------------------------------------------------------
 // Name: Team::Team
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Team::Team( T_EntityId nSimId, DIN::DIN_Input& input )
-    : nId_          ( nSimId )
-    , knownObjects_ ()
+Team::Team( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Input& input )
+    : nId_           ( nSimId )
+    , knownObjects_  ()
+    , entityManager_ ( entityManager )
 {
     input >> strName_;
 }
@@ -43,25 +42,6 @@ Team::~Team()
 {
     knownObjects_.clear();
     relations_   .clear();
-}
-
-//-----------------------------------------------------------------------------
-// Name: Team::Initialize
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void Team::Initialize()
-{
-}
-
-//-----------------------------------------------------------------------------
-// Name: Team::Terminate
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void Team::Terminate()
-{
-    for( CIT_TeamMap it = teams_.begin(); it != teams_.end(); ++it )
-        delete it->second;
-    teams_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +134,7 @@ void Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCr
 {
     if( knownObjects_.find( asnMsg.oid_connaissance ) != knownObjects_.end() )
         return;
-    ObjectKnowledge* pKnownObject = new ObjectKnowledge( asnMsg, *this );
+    ObjectKnowledge* pKnownObject = new ObjectKnowledge( entityManager_, asnMsg, *this );
     bool bOut = knownObjects_.insert( std::make_pair( pKnownObject->GetId(), pKnownObject ) ).second;
     assert( bOut );
 }

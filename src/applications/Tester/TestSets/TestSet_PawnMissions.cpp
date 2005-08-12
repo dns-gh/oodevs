@@ -22,12 +22,12 @@
 
 #include "Tester_pch.h"
 #include "TestSet_PawnMissions.h"
-#include "TestManager.h"
+#include "Workspace.h"
 #include "Actions/Scheduler.h"
 #include "Actions/MagicActions/Action_Magic_Move.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
 #include "Entities/Pawn.h"
-#include "Entities/Types/PawnModel.h"
+#include "Types/Entities/PawnModel.h"
 
 using namespace TEST;
 
@@ -55,25 +55,14 @@ TestSet_PawnMissions::~TestSet_PawnMissions()
 // Name: TestSet_PawnMissions::Load
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-void TestSet_PawnMissions::Load( Scheduler& scheduler )
+void TestSet_PawnMissions::Load( Workspace& workspace )
 {
-    assert( !pScheduler_ );
-    pScheduler_ = &scheduler;
+    Scheduler& scheduler = workspace.GetScheduler();
 
-    Pawn* pPawn = Pawn::Find( 6000044 );
+    Pawn* pPawn = workspace.GetEntityManager().FindPawn( 6000044 );
     if( pPawn )
-    {
-        const T_MissionPawnTypeVector& missions = pPawn->GetType().GetModel().GetMissions();
-    
-        uint nExecTick = 20;
-        for( CIT_MissionPawnTypeVector it = missions.begin(); it != missions.end(); ++it )
-        {
-            pScheduler_->AddAction( Mission_Pawn_Type::CreateMission( **it, *pPawn, nExecTick ) );
-            nExecTick += 10;
-        }
-    }
+        pPawn->ScheduleAllMissions( scheduler );
     else
         MT_LOG_ERROR_MSG( "Pawn does not exist" );
 }
-
 

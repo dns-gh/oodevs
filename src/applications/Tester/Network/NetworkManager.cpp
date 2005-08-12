@@ -21,6 +21,7 @@
 
 #include "ConnectionHandler.h"
 #include "Messages/MessageManager.h"
+#include "Workspace.h"
 
 #include "DIN/DIN_EventManager.h"
 
@@ -30,14 +31,14 @@ using namespace TEST;
 // Name: NetworkManager constructor
 // Created: SBO 2005-05-09
 //-----------------------------------------------------------------------------
-NetworkManager::NetworkManager( const std::string& strHostName, uint nPort )
+NetworkManager::NetworkManager( Workspace& workspace, const std::string& strHostName, uint nPort )
     : dinEngine_     ()
     , pLink_         ( 0 )
     , strServerHost_ ( strHostName )
     , nServerPort_   ( nPort )
 {
     pConnectionHandler_ = new ConnectionHandler( *this );
-	pMessageMgr_        = new MessageManager   ( *this );
+	pMessageMgr_        = new MessageManager   ( workspace, *this );
 }
 
 //-----------------------------------------------------------------------------

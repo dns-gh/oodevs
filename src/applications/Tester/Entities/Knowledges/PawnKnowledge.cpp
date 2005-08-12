@@ -23,6 +23,7 @@
 #include "Tester_pch.h"
 #include "PawnKnowledge.h"
 #include "Entities/Pawn.h"
+#include "Entities/EntityManager.h"
 
 using namespace TEST;
 
@@ -30,10 +31,10 @@ using namespace TEST;
 // Name: PawnKnowledge constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-PawnKnowledge::PawnKnowledge( const ASN1T_MsgUnitKnowledgeCreation& asnMsg, const KnowledgeGroup& knowledgeGroup )
+PawnKnowledge::PawnKnowledge( const EntityManager& entityManager, const ASN1T_MsgUnitKnowledgeCreation& asnMsg, const KnowledgeGroup& knowledgeGroup )
     : owner_     ( knowledgeGroup )
     , nId_       ( asnMsg.oid_connaissance ) 
-    , pRealPawn_ ( asnMsg.oid_unite_reelle == 0 ? 0 : Pawn::Find( asnMsg.oid_unite_reelle ) )
+    , pRealPawn_ ( asnMsg.oid_unite_reelle == 0 ? 0 : entityManager.FindPawn( asnMsg.oid_unite_reelle ) )
 {
     // NOTHING
     std::cout << "group: " << knowledgeGroup.GetId() << " knows: " << asnMsg.oid_unite_reelle 

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_OrganiserUnCheckPoint constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_OrganiserUnCheckPoint::Mission_Pawn_INF_OrganiserUnCheckPoint( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_OrganiserUnCheckPoint::Mission_Pawn_INF_OrganiserUnCheckPoint( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_OrganiserUnCheckPoint";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_INF_OrganiserUnCheckPoint::Clean()
     ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_organiser_un_check_point;
 
     ASN_Tools::Delete( asnMission.point_installation );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

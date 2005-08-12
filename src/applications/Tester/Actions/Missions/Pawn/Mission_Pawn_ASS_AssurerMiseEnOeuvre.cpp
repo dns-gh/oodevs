@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ASS_AssurerMiseEnOeuvre constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ASS_AssurerMiseEnOeuvre::Mission_Pawn_ASS_AssurerMiseEnOeuvre( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ASS_AssurerMiseEnOeuvre::Mission_Pawn_ASS_AssurerMiseEnOeuvre( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ASS_AssurerMiseEnOeuvre";
 }
@@ -73,7 +73,6 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvre::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre );
     ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre;
-
 
 
     delete &asnMission;

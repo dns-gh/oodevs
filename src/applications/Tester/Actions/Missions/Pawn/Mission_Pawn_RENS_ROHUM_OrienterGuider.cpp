@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_RENS_ROHUM_OrienterGuider constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_RENS_ROHUM_OrienterGuider::Mission_Pawn_RENS_ROHUM_OrienterGuider( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_RENS_ROHUM_OrienterGuider::Mission_Pawn_RENS_ROHUM_OrienterGuider( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_RENS_ROHUM_OrienterGuider";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_RENS_ROHUM_OrienterGuider::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_rens_rohum_orienter_guider );
     ASN1T_Mission_Pion_RENS_ROHUM_OrienterGuider& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_rohum_orienter_guider;
-
 
 
     delete &asnMission;

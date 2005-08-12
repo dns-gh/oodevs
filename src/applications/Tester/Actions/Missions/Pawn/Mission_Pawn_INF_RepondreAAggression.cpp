@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_RepondreAAggression constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_RepondreAAggression::Mission_Pawn_INF_RepondreAAggression( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_RepondreAAggression::Mission_Pawn_INF_RepondreAAggression( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_RepondreAAggression";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_INF_RepondreAAggression::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_repondre_a_aggression );
     ASN1T_Mission_Pion_INF_RepondreAAggression& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_repondre_a_aggression;
-
 
 
     delete &asnMission;

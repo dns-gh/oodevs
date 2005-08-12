@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-11 - 11:53:19
+// Generated: 2005-08-12 - 15:12:56
 // =============================================================================
 class Mission_Pawn_ASA_MISTRAL_DefendreSite : public Mission_Pawn_ABC
 {
@@ -46,7 +46,7 @@ class Mission_Pawn_ASA_MISTRAL_DefendreSite : public Mission_Pawn_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_ASA_MISTRAL_DefendreSite( Pawn& target, uint nExecutionTick = 0 );
+             Mission_Pawn_ASA_MISTRAL_DefendreSite( Pawn& target );
     virtual ~Mission_Pawn_ASA_MISTRAL_DefendreSite();
     //@}
 

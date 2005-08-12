@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_AppuyerDebarquementTroupesGU constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_AppuyerDebarquementTroupesGU::Mission_Pawn_GEN_AppuyerDebarquementTroupesGU( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_AppuyerDebarquementTroupesGU::Mission_Pawn_GEN_AppuyerDebarquementTroupesGU( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_AppuyerDebarquementTroupesGU";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_GEN_AppuyerDebarquementTroupesGU::Clean()
     ASN1T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_appuyer_debarquement_troupes_gu;
 
     ASN_Tools::Delete( asnMission.zone_appui );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

@@ -48,8 +48,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Action( uint nExecutionTick = 0 );
-             Action( T& target, uint nExecutionTick = 0 );
+             Action();
+             Action( T& target );
     virtual ~Action();
     //@}
 

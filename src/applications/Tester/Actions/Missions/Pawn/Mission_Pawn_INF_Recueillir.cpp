@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_Recueillir constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_Recueillir::Mission_Pawn_INF_Recueillir( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_Recueillir::Mission_Pawn_INF_Recueillir( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_Recueillir";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_INF_Recueillir::Clean()
 
     ASN_Tools::Delete( asnMission.position_installation );
     ASN_Tools::Delete( asnMission.pia );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

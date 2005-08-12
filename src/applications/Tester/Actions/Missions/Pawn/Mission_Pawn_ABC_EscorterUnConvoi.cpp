@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ABC_EscorterUnConvoi constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC_EscorterUnConvoi::Mission_Pawn_ABC_EscorterUnConvoi( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ABC_EscorterUnConvoi::Mission_Pawn_ABC_EscorterUnConvoi( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ABC_EscorterUnConvoi";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_ABC_EscorterUnConvoi::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_escorter_un_convoi );
     ASN1T_Mission_Pion_ABC_EscorterUnConvoi& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_escorter_un_convoi;
-
 
 
     delete &asnMission;

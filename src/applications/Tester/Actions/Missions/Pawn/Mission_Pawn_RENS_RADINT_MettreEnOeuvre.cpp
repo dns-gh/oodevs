@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_RENS_RADINT_MettreEnOeuvre constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_RENS_RADINT_MettreEnOeuvre::Mission_Pawn_RENS_RADINT_MettreEnOeuvre( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_RENS_RADINT_MettreEnOeuvre::Mission_Pawn_RENS_RADINT_MettreEnOeuvre( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_RENS_RADINT_MettreEnOeuvre";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_RENS_RADINT_MettreEnOeuvre::Clean()
     ASN1T_Mission_Pion_RENS_RADINT_MettreEnOeuvre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_radint_mettre_en_oeuvre;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

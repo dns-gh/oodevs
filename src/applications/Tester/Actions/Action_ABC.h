@@ -43,7 +43,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              Action_ABC();
-             Action_ABC( uint nExecutionTick );
     virtual ~Action_ABC();
     //@}
 
@@ -55,13 +54,7 @@ public:
     //! @name Accessors
     //@{
     virtual       bool         IsReady         () const;
-    virtual       uint         GetExecutionTick() const;
     virtual const std::string& GetName         () const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    virtual void SetExecutionTick( uint nExecutionTick );
     //@}
 
 private:
@@ -83,7 +76,6 @@ protected:
 protected:
     //! @name Member data
     //@{
-    uint        nExecutionTick_;
     std::string strName_;
     //@}
 };

@@ -53,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_ABC( Pawn& target, uint nExecutionTick = 0 );
+             Mission_Pawn_ABC( Pawn& target );
     virtual ~Mission_Pawn_ABC();
     //@}
 

@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Action_Magic_Move constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Action_Magic_Move::Action_Magic_Move( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Action< Pawn > ( pawn, nExecutionTick )
+Action_Magic_Move::Action_Magic_Move( Pawn& pawn )
+    : Action< Pawn > ( pawn )
 {
     strName_ = "Magic Move";
 }
@@ -77,5 +77,5 @@ void Action_Magic_Move::Send()
 // -----------------------------------------------------------------------------
 void Action_Magic_Move::Clean()
 {
-    std::cout << "executing magic move" << std::endl;
+    delete asnMsg_.GetAsnMsg().action.u.move_to;
 }

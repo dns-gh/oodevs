@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_ReconnaitrePoint constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_ReconnaitrePoint::Mission_Pawn_INF_ReconnaitrePoint( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_ReconnaitrePoint::Mission_Pawn_INF_ReconnaitrePoint( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_ReconnaitrePoint";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_INF_ReconnaitrePoint::Clean()
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.point_a_reconnaitre );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

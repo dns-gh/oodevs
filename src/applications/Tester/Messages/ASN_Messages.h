@@ -13,7 +13,7 @@
 #define __ASN_Messages_h_
 
 
-#include "TestManager.h"
+#include "Workspace.h"
 #include "Network/NetworkManager.h"
 #include "MessageManager.h"
 
@@ -34,7 +34,7 @@ public:                                                                     \
                                                                             \
         globalAsnMsg.t              = T_MsgsMosSim_msg_##ASNVAR;            \
         globalAsnMsg.u.msg_##ASNVAR  = asnMsg_;                              \
-		TestManager::GetTestManager().GetNetworkManager().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+		Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -58,7 +58,7 @@ public:                                                                     \
                                                                             \
         globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;              \
         globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                              \
-        TestManager::GetTestManager().GetNetworkManager().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -81,7 +81,7 @@ public:                                                                         
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
         globalAsnMsg.u.msg_##ASNVAR = asnMsg_;                                       \
-        TestManager::GetTestManager().GetNetworkManager().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
                                                                                     \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
@@ -104,7 +104,7 @@ public:                                                                         
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
         globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                                      \
-        TestManager::GetTestManager().GetNetworkManager().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
                                                                                     \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
@@ -126,7 +126,7 @@ public:                                                                         
         ASN1T_MsgsMosSimWithContext    globalAsnMsg;                                \
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSimWithContext_msg_##ASNVAR;          \
-        TestManager::GetTestManager().GetNetworkManager().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
+        Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgMosSimWithContext( globalAsnMsg, nCtx ); \
     }                                                                               \
 };
 
@@ -140,7 +140,7 @@ public:                                                                         
         ASN1T_MsgsMosSim    globalAsnMsg;                                           \
                                                                                     \
         globalAsnMsg.t             = T_MsgsMosSim_msg_##ASNVAR;                     \
-        TestManager::GetTestManager().GetNetworkManager().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
+        Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgMosSim( globalAsnMsg ); \
     }                                                                               \
 };                                                      
 

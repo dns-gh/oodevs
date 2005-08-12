@@ -24,20 +24,19 @@
 
 using namespace TEST;
 
-KnowledgeGroup::T_KnowledgeGroupMap KnowledgeGroup::knowledgeGroups_;
-
 //-----------------------------------------------------------------------------
 // Name: KnowledgeGroup::KnowledgeGroup
 // Created: SBO 2005-05-12
 //-----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( T_EntityId nSimId, DIN::DIN_Input& input )
-    : nId_        ( nSimId )
-    , knownPawns_ ()
-    , pTeam_      ( 0 )
+KnowledgeGroup::KnowledgeGroup( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Input& input )
+    : nId_           ( nSimId )
+    , knownPawns_    ()
+    , pTeam_         ( 0 )
+    , entityManager_ ( entityManager )
 {
     uint32 nTeamId;
     input >> nTeamId;
-    pTeam_ = Team::Find( nTeamId );
+    pTeam_ = entityManager_.FindTeam( nTeamId );
     assert( pTeam_ != 0 );
 }
 
@@ -52,35 +51,15 @@ KnowledgeGroup::~KnowledgeGroup()
     knownPawns_.clear();
 }
 
-//-----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Initialize
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void KnowledgeGroup::Initialize()
-{
-}
-
-//-----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Terminate
-// Created: SBO 2005-05-19
-//-----------------------------------------------------------------------------
-void KnowledgeGroup::Terminate()
-{
-    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        delete it->second;
-    knowledgeGroups_.clear();
-}
-
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
-    std::cout << "knownledge creation: " << std::endl;
     if( knownPawns_.find( asnMsg.oid_connaissance ) != knownPawns_.end() )
         return;
-    PawnKnowledge* pKnownPawn = new PawnKnowledge( asnMsg, *this );    
+    PawnKnowledge* pKnownPawn = new PawnKnowledge( entityManager_, asnMsg, *this );    
     bool bOut = knownPawns_.insert( std::make_pair( pKnownPawn->GetId(), pKnownPawn ) ).second;
     assert( bOut );
 }

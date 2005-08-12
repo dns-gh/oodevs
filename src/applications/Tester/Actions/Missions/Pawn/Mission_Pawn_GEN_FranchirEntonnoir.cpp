@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_GEN_FranchirEntonnoir constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_GEN_FranchirEntonnoir::Mission_Pawn_GEN_FranchirEntonnoir( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_GEN_FranchirEntonnoir::Mission_Pawn_GEN_FranchirEntonnoir( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_GEN_FranchirEntonnoir";
 }
@@ -72,7 +72,6 @@ void Mission_Pawn_GEN_FranchirEntonnoir::Clean()
 {
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_franchir_entonnoir );
     ASN1T_Mission_Pion_GEN_FranchirEntonnoir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_franchir_entonnoir;
-
 
 
     delete &asnMission;

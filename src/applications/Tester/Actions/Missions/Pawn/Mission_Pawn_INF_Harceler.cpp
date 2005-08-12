@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_INF_Harceler constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_INF_Harceler::Mission_Pawn_INF_Harceler( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_INF_Harceler::Mission_Pawn_INF_Harceler( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_INF_Harceler";
 }
@@ -77,7 +77,6 @@ void Mission_Pawn_INF_Harceler::Clean()
 
     ASN_Tools::Delete( asnMission.secteur );
     ASN_Tools::Delete( asnMission.point_regroupement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

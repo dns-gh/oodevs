@@ -53,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Automat_ABC( Automat& target, uint nExecutionTick = 0 );
+             Mission_Automat_ABC( Automat& target );
     virtual ~Mission_Automat_ABC();
     //@}
 

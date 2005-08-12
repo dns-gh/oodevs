@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ALAT_Jalonner constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ALAT_Jalonner::Mission_Pawn_ALAT_Jalonner( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ALAT_Jalonner::Mission_Pawn_ALAT_Jalonner( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ALAT_Jalonner";
 }
@@ -80,7 +80,6 @@ void Mission_Pawn_ALAT_Jalonner::Clean()
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

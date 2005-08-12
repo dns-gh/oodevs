@@ -31,7 +31,7 @@ namespace TEST
 {
     class ConnectionHandler;
     class MessageManager;
-
+    class Workspace;
 
 enum EConnector
 {
@@ -64,7 +64,7 @@ class NetworkManager
 public:
     //! @name Constructors/Destructor
     //@{
-             NetworkManager( const std::string& strHostName, uint nPort );
+             NetworkManager( Workspace& workspace, const std::string& strHostName, uint nPort );
     virtual ~NetworkManager();
     //@}
 

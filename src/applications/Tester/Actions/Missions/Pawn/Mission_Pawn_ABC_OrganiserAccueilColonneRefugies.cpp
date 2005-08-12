@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ABC_OrganiserAccueilColonneRefugies constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Mission_Pawn_ABC_OrganiserAccueilColonneRefugies( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Mission_Pawn_ABC_OrganiserAccueilColonneRefugies( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ABC_OrganiserAccueilColonneRefugies";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Clean()
     ASN1T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies;
 
     ASN_Tools::Delete( asnMission.position_installation );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

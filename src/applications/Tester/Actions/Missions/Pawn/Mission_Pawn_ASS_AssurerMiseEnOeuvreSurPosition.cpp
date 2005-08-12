@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ASS_AssurerMiseEnOeuvreSurPosition";
 }
@@ -75,7 +75,6 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Clean()
     ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
 
     ASN_Tools::Delete( asnMission.position_implantation );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

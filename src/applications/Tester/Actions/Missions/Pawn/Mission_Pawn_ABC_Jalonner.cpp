@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ABC_Jalonner constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ABC_Jalonner::Mission_Pawn_ABC_Jalonner( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ABC_Jalonner::Mission_Pawn_ABC_Jalonner( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ABC_Jalonner";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_ABC_Jalonner::Clean()
     ASN1T_Mission_Pion_ABC_Jalonner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_jalonner;
 
     ASN_Tools::Delete( asnMission.itineraire );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

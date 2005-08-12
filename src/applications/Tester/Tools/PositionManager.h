@@ -20,9 +20,19 @@
 #define __PositionManager_h_
 
 #include "Types.h"
+#include "geometry/Point2.h"
+#include "geocoord/PlanarCartesian.h"
+
+#define PI 3.141592654
+
+namespace geocoord
+{
+    class MGRS;
+}
 
 namespace TEST
 {
+    class Position;
 
 // =============================================================================
 /** @class  PositionManager
@@ -39,39 +49,53 @@ class PositionManager
     MT_COPYNOTALLOWED( PositionManager );
 
 public:
-    //! @name Operations
+	//! @name Constructors/Destructor
     //@{
-    static void Initialize( const std::string& strWorldConfigFile );
-    static void Terminate ();
+             PositionManager( const std::string& strWorldConfigFile );
+    virtual ~PositionManager();
     //@}
 
     //! @name Accessors
     //@{
-    static double GetWorldWidth ();
-    static double GetWorldHeight();
+    double GetWorldWidth () const;
+    double GetWorldHeight() const;
     //@}
 
-    //! @name Modifiers
+    //! @name Coordinate Conversion
     //@{
-    static void SetWorldBoundaries( double rWidth, double rHeight );
+    Position&    PositionFromMgrs( const std::string& strMgrs  );
+    std::string  MgrsFromPosition( const Position&    position );
+    Position&    PositionFromWGS ( double rLatitude, double rLongitude );
+    /* // TODO: add if needed
+    std::string  MgrsFromWGS     ( double rLatitude, double rLongitude );
+    */
+
+    double       RadianFromDegree( double rDegree );
+    double       DegreeFromRadian( double rRadian );
     //@}
 
 private:
-	//! @name Constructors/Destructor
+    //! @name Helpers
     //@{
-             PositionManager();
-    virtual ~PositionManager();
+    void InitializeCoordinateConverter( const std::string& strWorldConfigFile );
     //@}
 
 private:
     //! @name Member data
     //@{
-    static double rWorldWidth_;
-    static double rWorldHeight_;
+    double rWorldWidth_;
+    double rWorldHeight_;
+    //@}
+
+    //! @name reference values
+    //@{
+    geocoord::PlanarCartesian*             pPlanar_;
+    geocoord::PlanarCartesian::Parameters* pParameters_;
+    geometry::Point2< double >*            pTranslation_;
+    geocoord::Geodetic*                    pGeodetic_;
     //@}
 
 };
-
 
 } // end namespace TIC
 

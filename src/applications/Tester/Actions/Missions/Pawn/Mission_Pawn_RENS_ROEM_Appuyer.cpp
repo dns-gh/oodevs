@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_RENS_ROEM_Appuyer constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_RENS_ROEM_Appuyer::Mission_Pawn_RENS_ROEM_Appuyer( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_RENS_ROEM_Appuyer::Mission_Pawn_RENS_ROEM_Appuyer( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_RENS_ROEM_Appuyer";
 }
@@ -76,7 +76,6 @@ void Mission_Pawn_RENS_ROEM_Appuyer::Clean()
 
     ASN_Tools::Delete( asnMission.position_deploiement );
     ASN_Tools::Delete( asnMission.point_regroupement );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

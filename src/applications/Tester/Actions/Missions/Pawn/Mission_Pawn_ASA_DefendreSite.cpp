@@ -32,8 +32,8 @@ using namespace TEST;
 // Name: Mission_Pawn_ASA_DefendreSite constructor
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-Mission_Pawn_ASA_DefendreSite::Mission_Pawn_ASA_DefendreSite( Pawn& pawn, uint nExecutionTick /* = 0 */ )
-    : Mission_Pawn_ABC ( pawn, nExecutionTick )
+Mission_Pawn_ASA_DefendreSite::Mission_Pawn_ASA_DefendreSite( Pawn& pawn )
+    : Mission_Pawn_ABC ( pawn )
 {
     strName_ = "Pawn_ASA_DefendreSite";
 }
@@ -74,7 +74,6 @@ void Mission_Pawn_ASA_DefendreSite::Clean()
     ASN1T_Mission_Pion_ASA_DefendreSite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_defendre_site;
 
     ASN_Tools::Delete( asnMission.site );
-
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();
