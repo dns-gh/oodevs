@@ -30,7 +30,7 @@ public:
      MOS_ChangeLogisticLinksDialog( QWidget* pParent = 0 );
     ~MOS_ChangeLogisticLinksDialog();
 
-    void SetAgent( const MOS_Agent& agent );
+    void SetAgent( MOS_Agent& agent );
 
 private slots:
     //-------------------------------------------------------------------------
@@ -49,7 +49,7 @@ private:
     //@}
    
 private:
-    const MOS_Agent* pAgent_;
+    MOS_Agent* pAgent_;
 
     QComboBox* pTC2ComboBox_;
     QComboBox* pMaintenanceComboBox_;

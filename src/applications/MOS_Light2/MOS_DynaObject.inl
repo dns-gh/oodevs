@@ -293,6 +293,37 @@ void MOS_DynaObject::SetNBCParameter( uint nNuageNBCAgentNbcID )
     nNuageNBCAgentNbcID_ = nNuageNBCAgentNbcID;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::SetCampParameter
+/** @param  nTC2ID
+*/
+// Created: HME 2005-08-3
+// -----------------------------------------------------------------------------
+MOS_INLINE
+void MOS_DynaObject::SetCampParameter( uint nTC2ID )
+{
+    bAttrTC2Present_ = true;
+    nTC2ID_ = nTC2ID;
+}
 
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::AreAttrTC2Present
+// Created: HME 2005-08-3
+// -----------------------------------------------------------------------------
+MOS_INLINE
+bool MOS_DynaObject::AreAttrTC2Present() const
+{
+    return bAttrTC2Present_ ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetTC2ID
+// Created: HME 2005-08-3
+// -----------------------------------------------------------------------------
+MOS_INLINE
+uint MOS_DynaObject::GetTC2ID() const
+{
+    return nTC2ID_ ;
+}
 
 

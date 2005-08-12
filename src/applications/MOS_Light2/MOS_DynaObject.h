@@ -69,6 +69,9 @@ public:
     uint GetSiteFranchissementProfondeur     () const;
     uint GetSiteFranchissementVitesseCourant () const;
     bool GetSiteFranchissementBergesAAmenager() const;
+
+	bool AreAttrTC2Present () const;
+	uint GetTC2ID		   () const;
     
     bool AreAttrNuageNBCPresent() const;
     uint GetNuageNBCAgentNbcId () const;
@@ -87,6 +90,8 @@ public:
                                       uint nSiteFranchissementVitesseCourant, bool nSiteFranchissementBergesAAmenager );
     
     void SetNBCParameter( uint nNuageNBCAgentNbcID );
+
+	void SetCampParameter( uint nTC2ID_ );
     //@}
 
     void ReadODB( MT_XXmlInputArchive& archive );
@@ -119,6 +124,10 @@ private:
     // Attributs spécifiques nuage NBC
     bool bAttrNuageNBCPresent_;
     uint nNuageNBCAgentNbcID_;
+
+	// Attributs spécifiques camps
+	bool bAttrTC2Present_;
+	uint nTC2ID_;
 
 public:
     //! @name Types

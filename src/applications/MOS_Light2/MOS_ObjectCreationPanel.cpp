@@ -27,6 +27,7 @@
 #include "MOS_App.h"
 #include "MOS_MainWindow.h"
 #include "MOS_ParamLocation.h"
+#include "MOS_ParamAgent.h"
 #include "MOS_AgentManager.h"
 #include "MOS_DynaObjectManager.h"
 #include "MOS_Team.h"
@@ -108,9 +109,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pCrossingParamsGroup_->setInsideMargin( 0 );
     pCrossingParamsGroup_->setMargin( 0 );
     pLayout->addMultiCellWidget( pTC2Group_, 5, 5, 0, 1 );
-    new QLabel( tr( "TC2:" ), pTC2Group_ );
-    pTC2ComboBox_ = new QComboBox( FALSE, pTC2Group_ );
-    pTC2ComboBox_->hide();
+	pAgent_ = new MOS_ParamAgent( asnAgent_ , "Tc2: ", "Tc2", pTC2Group_ );
 
     QPushButton* pOkButton = new QPushButton( tr( "Créer" ), this );
     pLayout->addWidget( pOkButton, 6, 1, Qt::AlignRight );
@@ -171,6 +170,9 @@ void MOS_ObjectCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const 
 {
     if( pParent_->currentPage() == this && this->isVisible() )
         pLocation_->FillRemotePopupMenu( popupMenu, context );
+	ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)pObjectTypeCombo_->GetValue();
+    if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
+        pAgent_->FillRemotePopupMenu( popupMenu, context );
 }
 
 
@@ -192,8 +194,10 @@ void MOS_ObjectCreationPanel::OnObjectChanged()
         pCrossingParamsGroup_->hide();
 
     if( nType == EnumObjectType::camp_prisonniers
-     || nType == EnumObjectType::camp_refugies )
-        pTC2Group_->show();
+		|| nType == EnumObjectType::camp_refugies )
+	{
+		pTC2Group_->show();
+	}
     else
         pTC2Group_->hide();
 }
@@ -222,6 +226,10 @@ void MOS_ObjectCreationPanel::OnOk()
         
         pObject->SetLocalisation( pLocation_->GetType(), pLocation_->GetPointList() );
         pLocation_->Clear();
+		
+		if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
+            pObject->SetCampParameter( pAgent_->GetAgent()->GetAgentID() );
+		pAgent_->Clear();
         
         if( nType == EnumObjectType::nuage_nbc )
             pObject->SetNBCParameter( pNBCTypeCombo_->GetValue() );
@@ -309,7 +317,8 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_AttrObjectCampPrisonniers attributsCampPrisonniers;
     if( asnAction.type == EnumObjectType::camp_prisonniers )
     {
-        attributsCampPrisonniers.tc2 = automateComboBoxIDs_.find( pTC2ComboBox_->currentItem() )->second->GetAgentID();
+		pAgent_->WriteMsg( strMsg );
+        attributsCampPrisonniers.tc2 = asnAgent_;
         asnMsg.GetAsnMsg().action.u.create_object->m.attributs_specifiquesPresent    = 1;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.t           = T_AttrObjectSpecific_camp_prisonniers;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.u.camp_prisonniers= &attributsCampPrisonniers;
@@ -318,16 +327,18 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_AttrObjectCampRefugies attributsCampRefugies;
     if( asnAction.type == EnumObjectType::camp_refugies )
     {
-        attributsCampRefugies.tc2 = automateComboBoxIDs_.find( pTC2ComboBox_->currentItem() )->second->GetAgentID();
+        pAgent_->WriteMsg( strMsg );
+		attributsCampRefugies.tc2 = asnAgent_;
         asnMsg.GetAsnMsg().action.u.create_object->m.attributs_specifiquesPresent    = 1;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.t           = T_AttrObjectSpecific_camp_refugies;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.u.camp_refugies = &attributsCampRefugies;
     }
 
+
     asnMsg.Send( 912 );
 
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
-
+	pAgent_->Clear();
     pLocation_->Clear();
 }
 
@@ -423,7 +434,7 @@ void MOS_ObjectCreationPanel::OnConnexionStatusChanged( bool bConnected )
 
     // Populate agents;
     automateComboBoxIDs_.clear();
-    pTC2ComboBox_->clear();
+    int i = 0;
     MOS_AgentManager::CT_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
     for( MOS_AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
     {
@@ -431,7 +442,6 @@ void MOS_ObjectCreationPanel::OnConnexionStatusChanged( bool bConnected )
         if( !agent.IsAutomate() || !agent.pSupplyData_ )
             continue;
 
-        automateComboBoxIDs_.insert( std::make_pair( pTC2ComboBox_->count(), &agent ) );
-        pTC2ComboBox_->insertItem( agent.GetName().c_str() );
+        automateComboBoxIDs_.insert( std::make_pair( i, &agent ) );
     }
 }

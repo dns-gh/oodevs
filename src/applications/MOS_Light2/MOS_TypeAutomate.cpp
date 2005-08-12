@@ -21,10 +21,15 @@
 // -----------------------------------------------------------------------------
 MOS_TypeAutomate::MOS_TypeAutomate( const std::string& strName, MT_InputArchive_ABC& archive )
     : strName_( strName )
+	, strType_( std::string("") )
     , pModel_ ( 0 )
     , pTypePC_( 0 )
 {
-    if( !archive.ReadField( "MosID", nID_ ) )
+	
+	if( !archive.ReadAttribute( "type", strType_ ) )
+		throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+	
+	if( !archive.ReadField( "MosID", nID_ ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
 
     if( !archive.Section( "Automate" ) )

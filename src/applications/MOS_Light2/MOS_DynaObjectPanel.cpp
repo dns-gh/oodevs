@@ -97,11 +97,16 @@ MOS_DynaObjectPanel::MOS_DynaObjectPanel( QWidget* pParent )
     pNBCAgentTitle_->hide();
     pNBCAgentLabel_->hide();
 
+	pTC2Title_ = new QLabel( tr( "TC2:" ), this );
+	pTC2Label_ = new QLabel( this );
+	pTC2Title_->hide();
+	pTC2Label_->hide();
+
     new QWidget( this );
     new QWidget( this );
 
-    pLayout->setRowStretch( 12, 100 );
-    pLayout->setRowSpacing( 12, 25 );
+    pLayout->setRowStretch( 13, 100 );
+    pLayout->setRowSpacing( 13, 26 );
 
     pApplyButton_ = new QPushButton( tr( "Appliquer" ), this );
     pCancelButton_ = new QPushButton( tr( "Annuler" ), this );
@@ -153,6 +158,9 @@ void MOS_DynaObjectPanel::OnDynaObjectUpdated( MOS_DynaObject& object )
     pNBCAgentTitle_->hide();
     pNBCAgentLabel_->hide();
 
+	pTC2Title_->hide();
+	pTC2Label_->hide();
+
     pApplyButton_->setEnabled( pObject != 0 );
     pCancelButton_->setEnabled( pObject != 0 );
 
@@ -197,6 +205,14 @@ void MOS_DynaObjectPanel::OnDynaObjectUpdated( MOS_DynaObject& object )
         pNBCAgentLabel_->show();
 
         pNBCAgentLabel_->setText( (MOS_App::GetApp().GetNBCName( pObject->GetNuageNBCAgentNbcId() )).c_str() );
+    }
+
+	if( pObject->AreAttrTC2Present() )
+    {
+		pTC2Title_->show();
+		pTC2Label_->show();
+
+		pTC2Label_->setText( QString::number(pObject->GetTC2ID()) );
     }
 }
 

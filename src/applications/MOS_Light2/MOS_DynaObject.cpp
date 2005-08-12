@@ -43,6 +43,8 @@ MOS_DynaObject::MOS_DynaObject()
     , bAttrSiteFranchissementPresent_    ( false )
     , bAttrNuageNBCPresent_              ( false )
     , nNuageNBCAgentNbcID_               ( 0 )
+	, bAttrTC2Present_						 ( false )
+	, nTC2ID_							 ( 0 )
 {
 }
 
@@ -96,6 +98,16 @@ void MOS_DynaObject::Initialize( const ASN1T_MsgObjectCreation& asnMsg )
         {
             bAttrNuageNBCPresent_ = true;
             nNuageNBCAgentNbcID_ = asnMsg.attributs_specifiques.u.nuage_nbc->agent_nbc;
+        }
+		else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_camp_prisonniers)
+        {
+            bAttrTC2Present_ = true;
+            nTC2ID_ = asnMsg.attributs_specifiques.u.camp_prisonniers->tc2;
+        }
+		else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_camp_refugies)
+        {
+            bAttrTC2Present_ = true;
+            nTC2ID_ = asnMsg.attributs_specifiques.u.camp_refugies->tc2;
         }
     }
 
@@ -210,6 +222,12 @@ void MOS_DynaObject::ReadODB( MT_XXmlInputArchive& archive )
         archive.EndSection();
     }
 
+    if( nType_ == EnumObjectType::camp_refugies || nType_ == EnumObjectType::camp_prisonniers )
+    {
+        bAttrTC2Present_ = true;
+        archive.ReadField( "TC2", nTC2ID_ );
+    }
+
     archive.EndSection();
 }
 
@@ -270,6 +288,12 @@ void MOS_DynaObject::WriteODB( MT_XXmlOutputArchive& archive )
         archive.Section( "AgentNBC" );
         archive.WriteAttribute( "type", MOS_App::GetApp().GetNBCName( nNuageNBCAgentNbcID_ ) );
         archive.EndSection();
+    }
+
+	if( nType_ == EnumObjectType::camp_prisonniers || nType_ == EnumObjectType::camp_refugies )
+    {
+        if ( bAttrTC2Present_ )
+			archive.WriteField( "TC2", nTC2ID_ );
     }
 
     archive.EndSection();

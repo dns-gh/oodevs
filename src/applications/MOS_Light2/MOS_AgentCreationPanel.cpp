@@ -37,7 +37,6 @@
 #include "MOS_Nature.h"
 #include "MOS_ChangeLogisticLinksDialog.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentCreationPanel constructor
 /** @param  pParent 

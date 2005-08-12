@@ -210,6 +210,7 @@ MOS_Agent& MOS_AgentCreationMapFilter::CreateAgent( const MOS_AgentCreationPanel
         pParent->AddChild( *pNewAgent );
     pNewAgent->symbolName_      = agentType.pNature_->symbol_;
     pNewAgent->levelSymbolName_ = agentType.pNature_->levelSymbol_;
+	pNewAgent->pTypeAutomate_ = MOS_App::GetApp().GetAgentManager().FindTypeAutomate( agentType.strName_ );
 
 //$$$$$$
 //    MOS_AgentModel* pModel = MOS_App::GetApp().GetAgentManager().FindModel( agentType.strDIAModel_ );

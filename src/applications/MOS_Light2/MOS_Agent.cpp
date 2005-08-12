@@ -50,7 +50,10 @@ int MOS_Agent::nMaxId_ = 5000000;
 MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     : nAgentID_  ( asnMsg.oid_automate  )
     , bAutomate_ ( true )
-    
+	, nTC2_		 ( 0 )
+	, nLogMaintenanceSuperior_ ( 0 )
+	, nLogMedicalSuperior_ ( 0 )
+	, nLogSupplySuperior_ ( 0 )
 {
     Initialize();
     sName_ = asnMsg.nom;
@@ -65,7 +68,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
     }
 
     if( asnMsg.m.oid_tc2Present )
-        nTC2_ = asnMsg.oid_tc2;
+		nTC2_ = asnMsg.oid_tc2;
     if( asnMsg.m.oid_maintenancePresent )
         nLogMaintenanceSuperior_ = asnMsg.oid_maintenance;
     if( asnMsg.m.oid_santePresent )
@@ -85,6 +88,10 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
 MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
     : nAgentID_  ( asnMsg.oid_pion  )
     , bAutomate_ ( false )
+	, nTC2_		 ( 0 )
+	, nLogMaintenanceSuperior_ ( 0 )
+	, nLogMedicalSuperior_ ( 0 )
+	, nLogSupplySuperior_ ( 0 )
 {
     Initialize();
     sName_ = asnMsg.nom;
@@ -109,6 +116,10 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
 //-----------------------------------------------------------------------------
 MOS_Agent::MOS_Agent( bool bGenerateId )
     : nAgentID_ ( bGenerateId ? ++nMaxId_ : 0 )
+	, nTC2_		 ( 0 )
+	, nLogMaintenanceSuperior_ ( 0 )
+	, nLogMedicalSuperior_ ( 0 )
+	, nLogSupplySuperior_ ( 0 )
 {
     Initialize();
 }
@@ -150,10 +161,7 @@ void MOS_Agent::Initialize()
     pMedicalData_                 = 0;
     pMaintenanceData_             = 0;
     pSupplyData_                  = 0;
-    nTC2_                         = 0;
-    nLogMaintenanceSuperior_      = 0;
-    nLogMedicalSuperior_          = 0;
-    nLogSupplySuperior_           = 0;
+    pTypeAutomate_				  = 0;
 }
 
 
@@ -180,7 +188,7 @@ MOS_Agent::~MOS_Agent()
 void MOS_Agent::OnLogisticLinksUpdated( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg )
 {
     if( asnMsg.m.oid_tc2Present )
-        nTC2_ = asnMsg.oid_tc2;
+		nTC2_ = asnMsg.oid_tc2;
     if( asnMsg.m.oid_maintenancePresent )
         nLogMaintenanceSuperior_ = asnMsg.oid_maintenance;
     if( asnMsg.m.oid_santePresent )
@@ -815,6 +823,7 @@ void MOS_Agent::OnSuperiorChanged( MOS_Gtia& superior )
 // -----------------------------------------------------------------------------
 void MOS_Agent::ReadODB( MT_XXmlInputArchive& archive, bool bAutomata )
 {
+
     if( bAutomata )
         archive.Section( "Automate" );
     else
@@ -868,7 +877,34 @@ void MOS_Agent::ReadODB( MT_XXmlInputArchive& archive, bool bAutomata )
         assert( pGtia_ != 0 );
         if( archive.Section( "TC2" ) )
         {
-            archive.ReadAttribute( "automate", nTC2_ );
+			archive.ReadAttribute( "automate", nTC2_ );
+            archive.EndSection();
+        }
+        else
+            archive.ClearLastError();
+        if( archive.Section( "Logistique" ) )
+        {
+			if( archive.Section( "Maintenance" ) )
+			{
+				archive.ReadAttribute( "automate", nLogMaintenanceSuperior_ );
+				archive.EndSection();
+			}
+			else
+				archive.ClearLastError();
+			if( archive.Section( "Sante" ) )
+			{
+				archive.ReadAttribute( "automate", nLogMedicalSuperior_ );
+				archive.EndSection();
+			}
+			else
+				archive.ClearLastError();
+			if( archive.Section( "Ravitaillement" ) )
+			{
+				archive.ReadAttribute( "automate", nLogSupplySuperior_ );
+				archive.EndSection();
+			}
+			else
+				archive.ClearLastError();
             archive.EndSection();
         }
         else
@@ -916,14 +952,41 @@ void MOS_Agent::WriteODB( MT_XXmlOutputArchive& archive )
         archive.Section( "LiensHierarchiques" );
         archive.WriteField( "Armee", pGtia_->GetTeam().GetName() );
         archive.WriteField( "GroupeConnaissance", pGtia_->GetID() );
-        archive.EndSection();
         archive.WriteField( "Embraye", bEmbraye_ );
         if( nTC2_ != (uint)0 )
         {
             archive.Section( "TC2" );
-            archive.WriteAttribute( "Automate", nTC2_ );
+            archive.WriteAttribute( "automate", nTC2_ );
             archive.EndSection();
-        }
+		}
+        if( nLogMaintenanceSuperior_ != (uint)0
+			||nLogMedicalSuperior_ != (uint)0
+			||nLogSupplySuperior_ != (uint)0 )
+        {
+	            archive.Section( "Logistique" );
+				if( nLogMaintenanceSuperior_ != (uint)0 )
+				{
+					archive.Section( "Maintenance" );
+					archive.WriteAttribute( "automate", nLogMaintenanceSuperior_ );
+					archive.EndSection();
+				}
+				if( nLogMedicalSuperior_ != (uint)0 )
+				{
+					archive.Section( "Sante" );
+					archive.WriteAttribute( "automate", nLogMedicalSuperior_ );
+					archive.EndSection();
+				}
+				if( nLogSupplySuperior_ != (uint)0 )
+				{
+					archive.Section( "Ravitaillement" );
+					archive.WriteAttribute( "automate", nLogSupplySuperior_ );
+					archive.Section( "Quotas" );
+					archive.EndSection();
+					archive.EndSection();
+				}
+				archive.EndSection();
+		}
+		archive.EndSection();
     }
     else
     {

@@ -15,9 +15,11 @@
 #undef max
 
 #include "geometry/Types.h"
+#include "MT/MT_IO/MT_DirEntry.h"
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+
 #include "geocoord/Geoid.h"
 #include "graphics/GraphicShape.h"
 #include "graphics/DrawDetection.h"

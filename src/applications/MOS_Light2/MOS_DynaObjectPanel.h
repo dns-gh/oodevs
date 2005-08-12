@@ -79,6 +79,9 @@ private:
     QLabel* pNBCAgentTitle_;
     QLabel* pNBCAgentLabel_;
 
+	QLabel* pTC2Title_;
+	QLabel* pTC2Label_;
+
     QPushButton* pApplyButton_;
     QPushButton* pCancelButton_;
     //@}

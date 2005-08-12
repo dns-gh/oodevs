@@ -29,6 +29,7 @@
 
 class MOS_ParamLocation;
 class MOS_ActionContext;
+class MOS_ParamAgent;
 class QCheckBox;
 class QTabWidget;
 class MOS_Agent;
@@ -94,6 +95,9 @@ private:
 
     MOS_ParamLocation* pLocation_;
     ASN1T_Localisation asnLocation_;
+
+	MOS_ParamAgent* pAgent_;
+	ASN1T_Agent asnAgent_;
     
     QGroupBox*  pNBCParamsGroup_;
     MT_ValuedComboBox< uint >*  pNBCTypeCombo_;

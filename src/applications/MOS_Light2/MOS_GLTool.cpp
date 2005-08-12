@@ -636,12 +636,26 @@ void MOS_GLTool::Draw( MOS_DynaObjectManager& manager )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_DynaObject& object, E_State nState )
 {
-    glLineWidth( 1 );
+    glLineWidth( 2 );
+
+
+	if( nState == eSelected )
+	{
+		glColor4f( MOS_COLOR_SEL_DYNAOBJECT );
+	}
+	else
+	{
+	    GFX_Color color = MOS_GLTool::GetColorForTeam( object.GetTeam() );
+		color.AddRGB( 100, 200, 100 );
+		color.SetGLColor();
+	}
+    
+	/*
     if( nState == eSelected )
         glColor4f( MOS_COLOR_SEL_DYNAOBJECT );
     else
         glColor4f( MOS_COLOR_DYNAOBJECT );
-
+	*/
     const T_PointVector& p = object.pointVector_;
     switch( object.nTypeLocalisation_ )
     {

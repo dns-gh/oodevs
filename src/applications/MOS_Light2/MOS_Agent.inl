@@ -611,3 +611,14 @@ const MOS_TypePion* MOS_Agent::GetTypePion() const
 {
     return pTypePion_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: mos_agent::GetTypeAutomate
+// Created: HME 2005-08-08
+// -----------------------------------------------------------------------------
+MOS_INLINE
+const MOS_TypeAutomate* MOS_Agent::GetTypeAutomate() const
+{
+    return pTypeAutomate_;
+}
+

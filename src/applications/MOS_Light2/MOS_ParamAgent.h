@@ -57,7 +57,10 @@ public:
     void FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
     bool CheckValidity();
     void WriteMsg( std::stringstream& strMsg );
-    //@}
+    
+	void Clear();
+	MOS_Agent* GetAgent();
+	//@}
 
 private slots:
     //! @name Private slots

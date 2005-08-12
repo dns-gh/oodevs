@@ -41,10 +41,12 @@ public:
           uint            GetID    () const;
     const MOS_AgentModel& GetModel () const;
     const MOS_TypePion&   GetTypePC() const;
+    const std::string 	  GetType  () const;
     //@}
 
 private:
     const std::string     strName_;
+	std::string	          strType_;
     uint                  nID_;
     const MOS_AgentModel* pModel_;
     const MOS_TypePion*   pTypePC_;

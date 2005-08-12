@@ -19,6 +19,7 @@
 #include "MOS_Attr_Def.h"
 #include "MOS_Agent.h"
 #include "MOS_AgentManager.h"
+#include "MOS_TypeAutomate.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ChangeLogisticLinksDialog constructor
@@ -82,29 +83,39 @@ MOS_ChangeLogisticLinksDialog::MOS_ChangeLogisticLinksDialog( QWidget* pParent  
         if( !agent.IsAutomate() )
             continue;
 
-        //if( agent.GetTypePion()->IsLogistic() )
-        if( agent.pMaintenanceData_ || agent.pMedicalData_ || agent.pSupplyData_ )
+		std::string strii = agent.GetTypeAutomate()->GetType();
+		if( strii == std::string("Automate LOG TC2")
+			|| strii == std::string("Automate LOG BLD Maintenance")
+			|| strii == std::string("Automate LOG BLT Maintenance")
+			|| strii == std::string("Automate LOG BLD Sante")
+			|| strii == std::string("Automate LOG BLT Sante")
+			|| strii == std::string("Automate LOG BLD Ravitaillement")
+			|| strii == std::string("Automate LOG BLT Ravitaillement"))
+        //if( agent.pMaintenanceData_ || agent.pMedicalData_ || agent.pSupplyData_ )
         {
             tc2ComboBoxIDs_.insert( std::make_pair( pTC2ComboBox_->count(), &agent ) );
             pTC2ComboBox_->insertItem( agent.GetName().c_str() );
         }
 
-        //if( agent.GetTypePion()->HasMaintenance() )
-        if( agent.pMaintenanceData_ )
+		if( strii == std::string("Automate LOG BLD Maintenance")
+			|| strii == std::string("Automate LOG BLT Maintenance"))
+		//if( agent.pMaintenanceData_ )
         {
             maintenanceComboBoxIDs_.insert( std::make_pair( pMaintenanceComboBox_->count(), &agent ) );
             pMaintenanceComboBox_->insertItem( agent.GetName().c_str() );
         }
 
-        //if( agent.GetTypePion()->HasMedical() )
-        if( agent.pMedicalData_ )
+		if( strii == std::string("Automate LOG BLD Sante")
+			|| strii == std::string("Automate LOG BLT Sante"))  
+		//if( agent.pMedicalData_ )
         {
             medicalComboBoxIDs_.insert( std::make_pair( pMedicalComboBox_->count(), &agent ) );
             pMedicalComboBox_->insertItem( agent.GetName().c_str() );
         }
 
-        //if( agent.GetTypePion()->HasSupply() )
-        if( agent.pSupplyData_ )
+		if( strii == std::string("Automate LOG BLD Ravitaillement")
+			|| strii == std::string("Automate LOG BLT Ravitaillement"))
+        //if( agent.pSupplyData_ )
         {
             supplyComboBoxIDs_.insert( std::make_pair( pSupplyComboBox_->count(), &agent ) );
             pSupplyComboBox_->insertItem( agent.GetName().c_str() );
@@ -125,7 +136,7 @@ MOS_ChangeLogisticLinksDialog::~MOS_ChangeLogisticLinksDialog()
 // Name: MOS_ChangeLogisticLinksDialog::SetAgent
 // Created: NLD 2004-11-30
 // -----------------------------------------------------------------------------
-void MOS_ChangeLogisticLinksDialog::SetAgent( const MOS_Agent& agent )
+void MOS_ChangeLogisticLinksDialog::SetAgent( MOS_Agent& agent )
 {
     pAgent_ = &agent;
 
@@ -136,15 +147,37 @@ void MOS_ChangeLogisticLinksDialog::SetAgent( const MOS_Agent& agent )
 
     if( !pAgent_->IsAutomate() )
         return;
-
-    pTC2ComboBox_->setEnabled( true );
-    if( pAgent_->pMaintenanceData_ )
+	
+	std::string strii = pAgent_->GetTypeAutomate()->GetType();	
+	if( strii != std::string("Automate LOG TC2")
+		&& strii != std::string("Automate LOG BLD Maintenance")
+		&& strii != std::string("Automate LOG BLT Maintenance")
+		&& strii != std::string("Automate LOG BLD Sante")
+		&& strii != std::string("Automate LOG BLT Sante")
+		&& strii != std::string("Automate LOG BLD Ravitaillement")
+		&& strii != std::string("Automate LOG BLT Ravitaillement"))
+		pTC2ComboBox_->setEnabled( true );
+	if( strii == std::string("Automate LOG TC2")
+		|| strii == std::string("Automate LOG BLD Maintenance")
+		|| strii == std::string("Automate LOG BLT Maintenance"))
         pMaintenanceComboBox_->setEnabled( true );
-    if( pAgent_->pMedicalData_ )
+	if( strii == std::string("Automate LOG TC2")
+		|| strii == std::string("Automate LOG BLD Sante")
+		|| strii == std::string("Automate LOG BLT Sante"))
         pMedicalComboBox_->setEnabled( true );
-    if( pAgent_->pSupplyData_ )
+	if( strii == std::string("Automate LOG TC2")
+		|| strii == std::string("Automate LOG BLD Ravitaillement")
+		|| strii == std::string("Automate LOG BLT Ravitaillement")
+		|| strii == std::string("Automate LOG BLD Sante")
+		|| strii == std::string("Automate LOG BLT Sante")
+		|| strii == std::string("Automate LOG BLD Maintenance")
+		|| strii == std::string("Automate LOG BLT Maintenance"))
         pSupplyComboBox_->setEnabled( true );
 
+	pTC2ComboBox_->setCurrentItem( 0 );
+	pMaintenanceComboBox_->setCurrentItem( 0 );
+	pMedicalComboBox_->setCurrentItem( 0 );
+	pSupplyComboBox_->setCurrentItem( 0 );
 
     ///$$$ TMP DEGUEU
     CIT_AgentIDMap it;
@@ -181,54 +214,91 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 {
     assert( pAgent_ );
 
-    MOS_ASN_MsgChangeLiensLogistiques asnMsg;
-    asnMsg.GetAsnMsg().oid_automate = pAgent_->GetAgentID();
+    if( MOS_App::GetApp().IsODBEdition() )
+	{
+		if( pTC2ComboBox_->isEnabled() )
+		{
+			CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
+			if( it != tc2ComboBoxIDs_.end() )
+				pAgent_->nTC2_ = it->second->GetAgentID();
+			else
+				pAgent_->nTC2_ = (uint)0;
+		}
+	    if( pMaintenanceComboBox_->isEnabled() )
+		{
+			CIT_AgentIDMap it = maintenanceComboBoxIDs_.find( pMaintenanceComboBox_->currentItem() );
+			if( it != maintenanceComboBoxIDs_.end() )
+				pAgent_->nLogMaintenanceSuperior_ =  it->second->GetAgentID();
+			else
+				pAgent_->nLogMaintenanceSuperior_ = (uint)0;
+		}
+	    if( pMedicalComboBox_->isEnabled() )
+		{
+			CIT_AgentIDMap it = medicalComboBoxIDs_.find( pMedicalComboBox_->currentItem() );
+			if( it != medicalComboBoxIDs_.end() )
+				pAgent_->nLogMedicalSuperior_ =  it->second->GetAgentID();
+			else
+				pAgent_->nLogMedicalSuperior_ = (uint)0;
+		}
+	    if( pSupplyComboBox_->isEnabled() )
+		{
+			CIT_AgentIDMap it = supplyComboBoxIDs_.find( pSupplyComboBox_->currentItem() );
+			if( it != supplyComboBoxIDs_.end() )
+				pAgent_->nLogSupplySuperior_ =  it->second->GetAgentID();
+			else
+				pAgent_->nLogSupplySuperior_ = (uint)0;
+		}
+	}
+	else
+	{
+		MOS_ASN_MsgChangeLiensLogistiques asnMsg;
+		asnMsg.GetAsnMsg().oid_automate = pAgent_->GetAgentID();
 
-    if( pTC2ComboBox_->isEnabled() )
-    {
-        asnMsg.GetAsnMsg().m.oid_tc2Present = 1;
-        CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
-        if( it == tc2ComboBoxIDs_.end() )
-            asnMsg.GetAsnMsg().oid_tc2 = 0;
-        else
-            asnMsg.GetAsnMsg().oid_tc2 = it->second->GetAgentID();
-    }
+		if( pTC2ComboBox_->isEnabled() )
+		{
+			asnMsg.GetAsnMsg().m.oid_tc2Present = 1;
+			CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
+			if( it == tc2ComboBoxIDs_.end() )
+				asnMsg.GetAsnMsg().oid_tc2 = 0;
+			else
+				asnMsg.GetAsnMsg().oid_tc2 = it->second->GetAgentID();
+		}
 
-    if( pMaintenanceComboBox_->isEnabled() )
-    {
-        asnMsg.GetAsnMsg().m.oid_maintenancePresent = 1;
-        CIT_AgentIDMap it = maintenanceComboBoxIDs_.find( pMaintenanceComboBox_->currentItem() );
-        if( it == maintenanceComboBoxIDs_.end() )
-            asnMsg.GetAsnMsg().oid_maintenance = 0;
-        else
-            asnMsg.GetAsnMsg().oid_maintenance = it->second->GetAgentID();
+		if( pMaintenanceComboBox_->isEnabled() )
+		{
+			asnMsg.GetAsnMsg().m.oid_maintenancePresent = 1;
+			CIT_AgentIDMap it = maintenanceComboBoxIDs_.find( pMaintenanceComboBox_->currentItem() );
+			if( it == maintenanceComboBoxIDs_.end() )
+				asnMsg.GetAsnMsg().oid_maintenance = 0;
+			else
+				asnMsg.GetAsnMsg().oid_maintenance = it->second->GetAgentID();
 
-    }
+		}
 
-    if( pMedicalComboBox_->isEnabled() )
-    {
-        asnMsg.GetAsnMsg().m.oid_santePresent = 1;
-        CIT_AgentIDMap it = medicalComboBoxIDs_.find( pMedicalComboBox_->currentItem() );
-        if( it == medicalComboBoxIDs_.end() )
-            asnMsg.GetAsnMsg().oid_sante = 0;
-        else
-            asnMsg.GetAsnMsg().oid_sante = it->second->GetAgentID();
+		if( pMedicalComboBox_->isEnabled() )
+		{
+			asnMsg.GetAsnMsg().m.oid_santePresent = 1;
+			CIT_AgentIDMap it = medicalComboBoxIDs_.find( pMedicalComboBox_->currentItem() );
+			if( it == medicalComboBoxIDs_.end() )
+				asnMsg.GetAsnMsg().oid_sante = 0;
+			else
+				asnMsg.GetAsnMsg().oid_sante = it->second->GetAgentID();
 
-    }
+		}
 
-    if( pSupplyComboBox_->isEnabled() )
-    {
-        asnMsg.GetAsnMsg().m.oid_ravitaillementPresent = 1;
-        CIT_AgentIDMap it = supplyComboBoxIDs_.find( pSupplyComboBox_->currentItem() );
-        if( it == supplyComboBoxIDs_.end() )
-            asnMsg.GetAsnMsg().oid_ravitaillement = 0;
-        else
-            asnMsg.GetAsnMsg().oid_ravitaillement = it->second->GetAgentID();
+		if( pSupplyComboBox_->isEnabled() )
+		{
+			asnMsg.GetAsnMsg().m.oid_ravitaillementPresent = 1;
+			CIT_AgentIDMap it = supplyComboBoxIDs_.find( pSupplyComboBox_->currentItem() );
+			if( it == supplyComboBoxIDs_.end() )
+				asnMsg.GetAsnMsg().oid_ravitaillement = 0;
+			else
+				asnMsg.GetAsnMsg().oid_ravitaillement = it->second->GetAgentID();
 
-    }
-    
+		}
+		asnMsg.Send( 57 );
+	}
     pAgent_ = 0;
-    asnMsg.Send( 57 );
     hide();
 }
 
