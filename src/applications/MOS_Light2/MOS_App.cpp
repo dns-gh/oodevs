@@ -72,9 +72,9 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     this->SetSplashText( tr("Chargement des données...") );
 
     MT_CommandLine cmdLine( argc(), argv() );
-    const std::string strConfFile = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
-    MT_ExtractFilePath( strConfFile, strRootDirectory_ );
-    this->InitializeData( strConfFile );
+    strRootConfigFile_ = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
+    MT_ExtractFilePath( strRootConfigFile_, strRootDirectory_ );
+    this->InitializeData( strRootConfigFile_ );
 
     if( cmdLine.IsOptionSet( "-odb" ) )
     {
@@ -468,8 +468,17 @@ void MOS_App::InitializeObjectIds( MT_InputArchive_ABC& scipioArchive )
 // -----------------------------------------------------------------------------
 void MOS_App::ReadODB( std::string strFilename )
 {
+    const std::string   strCurrentDir = MT_GetCurrentDir();
+
+    std::string         strDir;
+    std::string         strFile;
+    MT_ExtractFilePath( strFilename, strDir  );
+    MT_ExtractFileName( strFilename, strFile );
+
+    MT_ChangeDir      ( strDir );
+
     MT_XXmlInputArchive archive;
-    bool b = archive.Open( strFilename );
+    bool b = archive.Open( strFile );
     if( !b )
     {
         strODBFilename_ = "";
@@ -499,6 +508,8 @@ void MOS_App::ReadODB( std::string strFilename )
         QMessageBox::critical( 0, "MOSLight 2", strMsg.str().c_str() );
         exit();
     }
+
+    MT_ChangeDir( strCurrentDir );
 }
 
 

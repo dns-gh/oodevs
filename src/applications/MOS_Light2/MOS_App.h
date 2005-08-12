@@ -70,6 +70,7 @@ public:
     void ReadODB( std::string strFilename );
     void WriteODB( std::string strFilename );
     void WriteODB();
+    const std::string& GetRootConfigFile() const;
 
     //-------------------------------------------------------------------------
     /** @name Notifications */
@@ -234,6 +235,7 @@ private:
 
     // $$$$ SBO 2005-07-26: to manage -conffile cmd line option
     std::string            strRootDirectory_;
+    std::string            strRootConfigFile_;
 
     QTimer*                pNetworkTimer_;
     QTimer*                pDisplayTimer_;

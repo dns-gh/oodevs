@@ -208,3 +208,13 @@ bool MOS_App::IsODBEdition()
 {
     return bODBEditor_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::GetRootConfigFile
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+MOS_INLINE
+const std::string& MOS_App::GetRootConfigFile() const
+{
+    return strRootConfigFile_;
+}

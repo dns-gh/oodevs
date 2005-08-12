@@ -224,115 +224,130 @@ void MOS_AgentCreationPanel::LogisticLinksDialog()
 // -----------------------------------------------------------------------------
 void MOS_AgentCreationPanel::Initialize()
 {
-    //$$$ Hard coded file location!
-    //$$$ No try catch!
+    const std::string   strCurrentDir = MT_GetCurrentDir();
+
+    std::string         strDir;
+    std::string         strFile;
+    MT_ExtractFilePath( MOS_App::GetApp().GetRootConfigFile(), strDir  );
+    MT_ExtractFileName( MOS_App::GetApp().GetRootConfigFile(), strFile );
+
+    MT_ChangeDir      ( strDir );
 
     MT_XXmlInputArchive scipioArchive;
     scipioArchive.EnableExceptions( true );
-    scipioArchive.Open( "./scipio.xml" );
-    scipioArchive.Section( "Scipio" );
-    scipioArchive.Section( "Donnees" );
-
-    std::string strUnitFilename;
-    std::string strAutomataFilename;
-    std::string strGtiaFilename;
-    scipioArchive.ReadField( "Pions", strUnitFilename );
-    scipioArchive.ReadField( "Automates", strAutomataFilename );
-    scipioArchive.ReadField( "GroupesConnaissance", strGtiaFilename );
-
-    MT_XXmlInputArchive unitArchive;
-    unitArchive.EnableExceptions( true );
-    unitArchive.Open( strUnitFilename );
-
-    unitArchive.BeginList( "Pions" );
-    while( unitArchive.NextListElement() )
+    try
     {
-        unitArchive.Section( "Unite" );
+        scipioArchive.Open( strFile );
+        scipioArchive.Section( "Scipio" );
+        scipioArchive.Section( "Donnees" );
 
-        std::string strName;
-        unitArchive.ReadAttribute( "nom", strName );
+        std::string strUnitFilename;
+        std::string strAutomataFilename;
+        std::string strGtiaFilename;
+        scipioArchive.ReadField( "Pions", strUnitFilename );
+        scipioArchive.ReadField( "Automates", strAutomataFilename );
+        scipioArchive.ReadField( "GroupesConnaissance", strGtiaFilename );
 
-        MOS_AgentType* pUnitType = new MOS_AgentType();
-        pUnitType->strName_ = strName;
-        pUnitType->pNature_ = new MOS_Nature( unitArchive );
-        unitTypes_.push_back( pUnitType );
+        MT_XXmlInputArchive unitArchive;
+        unitArchive.EnableExceptions( true );
+        unitArchive.Open( strUnitFilename );
 
-        unitArchive.EndSection(); // Unite
-    }
-    unitArchive.EndList();
-    unitArchive.Close();
+        unitArchive.BeginList( "Pions" );
+        while( unitArchive.NextListElement() )
+        {
+            unitArchive.Section( "Unite" );
 
-    MT_XXmlInputArchive automataArchive;
-    automataArchive.EnableExceptions( true );
-    automataArchive.Open( strAutomataFilename );
+            std::string strName;
+            unitArchive.ReadAttribute( "nom", strName );
 
-    automataArchive.BeginList( "Automates" );
-    while( automataArchive.NextListElement() )
-    {
-        automataArchive.Section( "Unite" );
+            MOS_AgentType* pUnitType = new MOS_AgentType();
+            pUnitType->strName_ = strName;
+            pUnitType->pNature_ = new MOS_Nature( unitArchive );
+            unitTypes_.push_back( pUnitType );
 
-        std::string strName;
-        automataArchive.ReadAttribute( "nom", strName );
-        MOS_AgentType* pAutomateType = new MOS_AgentType();
-        pAutomateType->strName_ = strName;
+            unitArchive.EndSection(); // Unite
+        }
+        unitArchive.EndList();
+        unitArchive.Close();
 
-        automateTypes_.push_back( pAutomateType );
+        MT_XXmlInputArchive automataArchive;
+        automataArchive.EnableExceptions( true );
+        automataArchive.Open( strAutomataFilename );
 
-        automataArchive.Section( "Automate" );
-        automataArchive.BeginList( "Constitution" );
+        automataArchive.BeginList( "Automates" );
         while( automataArchive.NextListElement() )
         {
-            std::string strElement;
-            std::string strRegExp;
-            automataArchive.Section( "Pion" );
-            automataArchive.ReadAttribute( "nom", strElement );
-            automataArchive >> strRegExp;
-            automataArchive.EndSection();
+            automataArchive.Section( "Unite" );
 
-            // We are given either a number of units, or a reg exp for that number.
-            // Out of simplicity, if it's a reg exp, we'll assume the number to be 1.
-            QString strRegExp2( strRegExp.c_str() );
-            bool bIsNbr = false;
-            int nNbr = strRegExp2.toInt( &bIsNbr );
-            if( !bIsNbr )
-                nNbr = 1;
-            
-            IT_AgentTypeVector it = std::find_if( unitTypes_.begin(), unitTypes_.end(), MOS_AgentType_Cmp( strElement ) );
-            assert( it != unitTypes_.end() );
-            for( int n = 0; n < nNbr; ++n )
-                pAutomateType->composition_.push_back( *it );
+            std::string strName;
+            automataArchive.ReadAttribute( "nom", strName );
+            MOS_AgentType* pAutomateType = new MOS_AgentType();
+            pAutomateType->strName_ = strName;
+
+            automateTypes_.push_back( pAutomateType );
+
+            automataArchive.Section( "Automate" );
+            automataArchive.BeginList( "Constitution" );
+            while( automataArchive.NextListElement() )
+            {
+                std::string strElement;
+                std::string strRegExp;
+                automataArchive.Section( "Pion" );
+                automataArchive.ReadAttribute( "nom", strElement );
+                automataArchive >> strRegExp;
+                automataArchive.EndSection();
+
+                // We are given either a number of units, or a reg exp for that number.
+                // Out of simplicity, if it's a reg exp, we'll assume the number to be 1.
+                QString strRegExp2( strRegExp.c_str() );
+                bool bIsNbr = false;
+                int nNbr = strRegExp2.toInt( &bIsNbr );
+                if( !bIsNbr )
+                    nNbr = 1;
+                
+                IT_AgentTypeVector it = std::find_if( unitTypes_.begin(), unitTypes_.end(), MOS_AgentType_Cmp( strElement ) );
+                assert( it != unitTypes_.end() );
+                for( int n = 0; n < nNbr; ++n )
+                    pAutomateType->composition_.push_back( *it );
+            }
+            automataArchive.EndList();      // Constitution
+            automataArchive.EndSection();   // Automate
+
+            automataArchive.Section( "PionPC" );
+            std::string strPCType;
+            automataArchive.ReadAttribute( "type", strPCType );
+            IT_AgentTypeVector it = std::find_if( unitTypes_.begin(), unitTypes_.end(), MOS_AgentType_Cmp( strPCType ) );
+            if( it != unitTypes_.end() )
+                pAutomateType->pNature_ = new MOS_Nature( *(*it)->pNature_ );
+            automataArchive.EndSection(); // PionPC
+
+            automataArchive.EndSection();   // Unite
         }
-        automataArchive.EndList();      // Constitution
-        automataArchive.EndSection();   // Automate
+        automataArchive.EndList();    
+        automataArchive.Close();
 
-        automataArchive.Section( "PionPC" );
-        std::string strPCType;
-        automataArchive.ReadAttribute( "type", strPCType );
-        IT_AgentTypeVector it = std::find_if( unitTypes_.begin(), unitTypes_.end(), MOS_AgentType_Cmp( strPCType ) );
-        if( it != unitTypes_.end() )
-            pAutomateType->pNature_ = new MOS_Nature( *(*it)->pNature_ );
-        automataArchive.EndSection(); // PionPC
+        MT_XXmlInputArchive gtiaArchive;
+        gtiaArchive.EnableExceptions( true );
+        gtiaArchive.Open( strGtiaFilename );
 
-        automataArchive.EndSection();   // Unite
+        gtiaArchive.BeginList( "GroupesConnaissance" );
+        while( gtiaArchive.NextListElement() )
+        {
+            gtiaArchive.Section( "GroupeConnaissance" );
+            std::string strName;
+            gtiaArchive.ReadAttribute( "nom", strName );
+            gtiaTypes_.push_back( strName );
+            gtiaArchive.EndSection(); // GroupeConnaissance
+        }
+        gtiaArchive.EndList(); // GroupesConnaissance
+        gtiaArchive.Close();
     }
-    automataArchive.EndList();    
-    automataArchive.Close();
-
-    MT_XXmlInputArchive gtiaArchive;
-    gtiaArchive.EnableExceptions( true );
-    gtiaArchive.Open( strGtiaFilename );
-
-    gtiaArchive.BeginList( "GroupesConnaissance" );
-    while( gtiaArchive.NextListElement() )
+    catch( MT_Exception& e )
     {
-        gtiaArchive.Section( "GroupeConnaissance" );
-        std::string strName;
-        gtiaArchive.ReadAttribute( "nom", strName );
-        gtiaTypes_.push_back( strName );
-        gtiaArchive.EndSection(); // GroupeConnaissance
+        throw;
     }
-    gtiaArchive.EndList(); // GroupesConnaissance
-    gtiaArchive.Close();
+
+    MT_ChangeDir( strCurrentDir );
 }
 
 // -----------------------------------------------------------------------------
