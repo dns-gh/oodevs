@@ -18,6 +18,7 @@
 #include "PHY_RoleAction_DirectFiring.h"
 
 class PHY_DirectFireResults;
+class PHY_AmmoDotationClass;
 
 // =============================================================================
 // @class  PHY_ActionDirectFire_ABC
@@ -44,6 +45,7 @@ private:
     const MT_Float                                    rPercentageComposantesToUse_;
     const PHY_RoleAction_DirectFiring::E_Mode        nFireMode_;
     const PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
+    const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
           PHY_DirectFireResults*                     pFireResult_;
 };
 

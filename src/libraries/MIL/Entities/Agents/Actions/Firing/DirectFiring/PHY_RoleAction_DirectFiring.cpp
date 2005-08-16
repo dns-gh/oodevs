@@ -158,7 +158,7 @@ void PHY_RoleAction_DirectFiring::Fire( PHY_DirectFireData& firerWeapons, MIL_Ag
 // Name: PHY_RoleAction_DirectFiring::Fire
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, E_Mode nFireMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult )
+int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, E_Mode nFireMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
     MIL_Agent_ABC* pTarget = GetTarget( nTargetKnowledgeID );
     if( !pTarget )
@@ -172,11 +172,11 @@ int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, E_Mode nFireMode
     if( !pFireResult )
         pFireResult = new PHY_DirectFireResults( *pPion_, *pTarget );
 
-    pPion_->NotifyAttacking( *pTarget );
-    pTarget->NotifyAttackedBy( *pPion_ );
+    pPion_ ->NotifyAttacking ( *pTarget );
+    pTarget->NotifyAttackedBy( *pPion_  );
 
     // Firers
-    PHY_DirectFireData firerWeapons( *pPion_, nComposanteFiringType );
+    PHY_DirectFireData firerWeapons( *pPion_, nComposanteFiringType, pAmmoDotationClass );
     GetRole< PHY_RolePion_Composantes >().FillDirectFireData( firerWeapons );
     if( !firerWeapons.HasWeaponsReady() )
     {

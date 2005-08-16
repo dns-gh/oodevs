@@ -19,6 +19,7 @@
 class PHY_Composante_ABC;
 class PHY_ComposantePion;
 class PHY_Weapon;
+class PHY_AmmoDotationClass;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 
@@ -43,7 +44,7 @@ public:
     //@}
 
 public:
-     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType );
+     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     ~PHY_DirectFireData();
 
     //! @name Operations
@@ -104,12 +105,13 @@ private:
     //@}
 
 private:
-    MIL_AgentPion&         firer_;
-    E_ComposanteFiringType nComposanteFiringType_;
-    T_ComposanteWeaponsMap composantesWeapons_;
-    bool                   bHasWeaponsReady_;
-    bool                   bHasWeaponsNotReady_;
-    bool                   bHasWeaponsAndNoAmmo_;
+          MIL_AgentPion&         firer_;
+    const PHY_AmmoDotationClass* pAmmoDotationClass_;
+          E_ComposanteFiringType nComposanteFiringType_;
+          T_ComposanteWeaponsMap composantesWeapons_;
+          bool                   bHasWeaponsReady_;
+          bool                   bHasWeaponsNotReady_;
+          bool                   bHasWeaponsAndNoAmmo_;
 
 private:
     static MT_Random randomGenerator_;

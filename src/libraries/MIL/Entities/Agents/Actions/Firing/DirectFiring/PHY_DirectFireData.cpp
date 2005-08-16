@@ -14,6 +14,8 @@
 #include "PHY_DirectFireData.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
@@ -70,12 +72,13 @@ void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 // Name: PHY_DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType )
+PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, const PHY_AmmoDotationClass* pAmmoDotationClass /* = 0 */ )
     : bHasWeaponsReady_     ( false )
     , bHasWeaponsNotReady_  ( false )
     , bHasWeaponsAndNoAmmo_ ( false )
     , firer_                ( firer )
     , nComposanteFiringType_( nComposanteFiringType )
+    , pAmmoDotationClass_   ( pAmmoDotationClass )
 {
 }
 
@@ -137,6 +140,8 @@ void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& w
     if( nComposanteFiringType_ == eFireComposantesCarrier && !compFirer.CanTransportHumans() )
         return;
 
+    if( pAmmoDotationClass_ && ( !weapon.GetDotationCategory().GetAmmoDotationClass() || *weapon.GetDotationCategory().GetAmmoDotationClass() != *pAmmoDotationClass_ ) )
+        return;  
 
     if( !firer_.GetRole< PHY_RolePion_Dotations >().HasDotation( weapon.GetDotationCategory() ) )
         bHasWeaponsAndNoAmmo_ = true;

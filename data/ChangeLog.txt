@@ -21,6 +21,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Les fonctions de Tir direct (DEC_StartTirDirectXXX) prennent maintenant en paramètre optionnel le type de munition à utiliser.
+            Par défaut, tous les types de munitions sont utilisés.    
     - NLD - Nouvelles fonctions pour l'IMEX 
                 V DEC_InterdireEvacuationAutomatiqueBlesses( A /*T_Pion*/ );
                 V DEC_AutoriserEvacuationAutomatiqueBlesses( A /*T_Pion*/ );   

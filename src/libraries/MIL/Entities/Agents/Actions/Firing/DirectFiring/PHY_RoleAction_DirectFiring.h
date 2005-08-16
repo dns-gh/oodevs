@@ -19,10 +19,11 @@
 #include "PHY_DirectFireData.h"
 
 class PHY_RoleInterface_FireTarget;
-class MIL_Agent_ABC;
-class MIL_AgentPion;
+class PHY_AmmoDotationClass;
 class PHY_DirectFireResults;
 class PHY_ControlZoneFireResults;
+class MIL_Agent_ABC;
+class MIL_AgentPion;
 class MIL_ControlZone;
 
 // =============================================================================
@@ -63,7 +64,7 @@ public:
 
     //! @name Operations
     //@{
-    int  Fire         ( uint nTargetKnowledgeID, E_Mode nFireMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult );
+    int  Fire         ( uint nTargetKnowledgeID, E_Mode nFireMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     void FireSuspended( uint nTargetKnowledgeID );
     void FireZone     ( const MIL_ControlZone& zone, PHY_ControlZoneFireResults*& pFireResult );
     //@}

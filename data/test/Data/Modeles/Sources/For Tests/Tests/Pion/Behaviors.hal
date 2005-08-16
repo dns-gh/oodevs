@@ -541,9 +541,9 @@ action ACT_TirDirect( T_ConnaissanceAgent target, bool bOnlyTransporteurs )
         if( DIA_ModuleBegins() )
         { 
             if( bOnlyTransporteurs ) 
-                currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal );
+                currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal/*, eMunitionClasse_Obus*/ );
             else
-                currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal ); 
+                currentAction = DEC_StartTirDirect( nTirDirectState, target, 1.0, eTirDirectNormal/*, eMunitionClasse_Obus*/ ); 
             return;
         }
 /*        if( currentAction != 0 )

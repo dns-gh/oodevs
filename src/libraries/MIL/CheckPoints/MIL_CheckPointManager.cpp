@@ -131,7 +131,6 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
     return MIL_Tools::ComputeCRC( strFileName );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::CheckFilesCRC
 // Created: JVT 2005-04-11
@@ -229,6 +228,7 @@ void MIL_CheckPointManager::LoadCheckPoint( std::string strCheckPointPath )
 // =============================================================================
 // TOOLS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::ManageOldCheckPoints
 // Created: JVT 2005-04-13
@@ -239,14 +239,21 @@ void MIL_CheckPointManager::ManageOldCheckPoints( const std::string& strNewName 
 
     assert( currentCheckPoints_.size() <= nMaxCheckPointNbr_ );
      
-    if ( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
+    if( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
     {
         const path oldPath( currentCheckPoints_.front() );
-        
-        remove_all( oldPath );
+     
+        try
+        {
+            remove_all( oldPath );
+        }
+        catch( std::exception& exception )
+        {
+            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoing ( '%s' )", exception.what() ) );
+        }
+
         currentCheckPoints_.pop();        
-    }
-    
+    }    
     currentCheckPoints_.push( strNewName );
 }
 
