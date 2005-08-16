@@ -45,9 +45,12 @@ private slots:
     //@{
     void Validate               ();
     void Reject                 ();
+    void closeEvent             ( QCloseEvent * e );
     void OnDotationChanged      ( int nRow, int nCol );
-    void OnMunitionChanged      ( int nRow, int nCol );
     void OnMunitionFamilyChanged( int nRow, int nCol );
+    void OnEquipmentChanged     ( int nRow, int nCol );
+    void OnPersonalChanged      ( int nRow, int nCol );
+    //void OnMunitionChanged      ( int nRow, int nCol );
     //@}
 
 private:
@@ -61,16 +64,18 @@ private:
     const MOS_Agent* pAgent_;
 
     QGroupBox*       pEquiPersoGroupBox_;
-    QCheckBox*       pEquipmentCheckBox_;
-    QSpinBox*        pEquipmentSpinBox_;
-    QCheckBox*       pPersonalCheckBox_;
-    QSpinBox*        pPersonalSpinBox_;
+    QTable*          pEquipmentsTable_;
+    QStringList*     pEquipmentsStringList_;
+    T_IntVector      equipmentsMax_;
+    QTable*          pPersonalsTable_;
 
     QGroupBox*       pDotationsGroupBox_;
     QTable*          pDotationsTable_;
     QTable*          pMunitionsFamilyTable_;
+    /*
     QTable*          pMunitionsTable_;
     QStringList*     pMunitionsStringList_;
+    */
 };
 
 #include "MOS_LogisticSupplyRecompletionDialog.inl"
