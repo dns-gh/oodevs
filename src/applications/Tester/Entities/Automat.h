@@ -22,12 +22,14 @@
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
 #include "Workspace.h"
+#include "Testable_Entity.h"
 
 namespace TEST
 {
     class KnowledgeGroup;
     class Team;
     class Pawn;
+    class AutomatType;
 
 // =============================================================================
 /** @class  Automat
@@ -39,7 +41,7 @@ namespace TEST
 */
 // Created: SBO 2005-05-11
 // =============================================================================
-class Automat
+class Automat : public Testable_Entity
 {
 
 public:
@@ -51,10 +53,13 @@ public:
 
     //! @name Accessors
     //@{
-          T_EntityId      GetId              () const;
-	const Team&           GetTeam            () const;
-	const KnowledgeGroup& GetKnowledgeGroup  () const;
-	const Pawn&	          GetPc              () const;
+    virtual       T_EntityId      GetId            () const;
+    virtual const Position&       GetPosition      () const;
+    virtual const Automat&        GetAutomat       () const;
+
+	        const Team&           GetTeam          () const;
+	        const KnowledgeGroup& GetKnowledgeGroup() const;
+	        const Pawn&	          GetPc            () const;
     //@}
 
     //! @name Operations
@@ -70,8 +75,8 @@ public:
 
     //! @name Mission Scheduling
     //@{
-    void ScheduleAllMissions ( Scheduler& scheduler ) const;
-    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName ) const;
+    void ScheduleAllMissions ( Scheduler& scheduler );
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName );
     //@}
 
 private:
@@ -91,13 +96,14 @@ private:
 private:
     //! @name Member data
     //@{
-    T_EntityId       nId_;
-	Team*            pTeam_;
-	KnowledgeGroup*  pKnowledgeGroup_;
-	Pawn*			 pPc_;
-	T_PawnSet        childPawns_;
+    T_EntityId         nId_;
+	Team*              pTeam_;
+    KnowledgeGroup*    pKnowledgeGroup_;
+	Pawn*			   pPc_;
+    const AutomatType* pType_;
+    T_PawnSet          childPawns_;
 
-    const Workspace& workspace_;
+    const Workspace&   workspace_;
     //@}
 };
 

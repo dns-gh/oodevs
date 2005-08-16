@@ -53,6 +53,7 @@ public:
     template< typename Mission >
     static void Register( const std::string& strName );
     static Mission_Automat_ABC& CreateMission( const std::string& strName, Automat& target );
+    static Mission_Automat_ABC& CreateMission( const Mission_Automat_Type& type, Automat& target );
     //@}
 
 private:

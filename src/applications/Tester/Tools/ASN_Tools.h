@@ -48,31 +48,33 @@ class ASN_Tools
 public:
     //! @name Copy Operations
     //@{
-    static void CopyID                 ( uint                    nIdValue  , ASN1T_OID&                 asn );
-    static void CopyIDList             ( const T_IdVector&       ids       , ASN1T_ListOID&             asn );
+    static void CopyID                 ( uint                    nIdValue  , ASN1T_OID&                  asn );
+    static void CopyIDList             ( const T_IdVector&       ids       , ASN1T_ListOID&              asn );
 
-    static void CopyAgent              ( uint                    nIdValue  , ASN1T_Agent&               asn );
-    static void CopyAgentList          ( const T_IdVector&       ids       , ASN1T_ListAgent&           asn );
-    static void CopyAgentKnowledge     ( uint                    nIdAgent  , ASN1T_KnowledgeAgent&      asn );
-    static void CopyAgentKnowledgeList ( const T_IdVector&       ids       , ASN1T_ListKnowledgeAgent&  asn );
-    static void CopyAutomate           ( uint                    nIdValue  , ASN1T_Automate&            asn );
-    static void CopyAutomateList       ( const T_IdVector&       ids       , ASN1T_ListAutomate&        asn );
-    static void CopyObjectKnowledge    ( uint                    nIdObject , ASN1T_KnowledgeObject&     asn );
-    static void CopyObjectKnowledgeList( const T_IdVector&       ids       , ASN1T_ListKnowledgeObject& asn );
-    static void CopyBool               ( bool                    bValue    , ASN1BOOL&                  asn );
-    static void CopyNumeric            ( int                     nValue    , ASN1INT&                   asn );
-    static void CopyNumeric            ( int                     nValue    , ASN1REAL&                  asn );
-    static void CopyPoint              ( const Position&         position  , ASN1T_CoordUTM&            asn );
-    static void CopyPoint              ( const Position&         position  , ASN1T_Point&               asn );
-    static void CopyPointList          ( const T_PositionVector& positions , ASN1T_ListPoint&           asn );
-    static void CopyPath               ( const Path&             path      , ASN1T_Itineraire&          asn );
-    static void CopyPathList           ( const T_PathVector&     path      , ASN1T_ListItineraire&      asn );
-    static void CopyDirection          ( uint                    nDirection, ASN1T_Direction&           asn );
-    static void CopyLocation           ( const Location&         location  , ASN1T_Localisation&        asn );
-    static void CopyPolygon            ( const Location&         location  , ASN1T_Polygon&             asn );
-    static void CopyPolygonList        ( const T_LocationVector& locations , ASN1T_ListPolygon&         asn );
-    static void CopyNatureAtlas        ( uint                    nValue    , ASN1T_NatureAtlas&         asn );
-    static void CopyGDH                ( uint                    nTime     , ASN1T_GDH&                 asn );
+    static void CopyAgent              ( uint                    nIdValue  , ASN1T_Agent&                asn );
+    static void CopyAgentList          ( const T_IdVector&       ids       , ASN1T_ListAgent&            asn );
+    static void CopyAgentKnowledge     ( uint                    nIdAgent  , ASN1T_KnowledgeAgent&       asn );
+    static void CopyAgentKnowledgeList ( const T_IdVector&       ids       , ASN1T_ListKnowledgeAgent&   asn );
+    static void CopyAutomate           ( uint                    nIdValue  , ASN1T_Automate&             asn );
+    static void CopyAutomateList       ( const T_IdVector&       ids       , ASN1T_ListAutomate&         asn );
+    static void CopyObjectKnowledge    ( uint                    nIdObject , ASN1T_KnowledgeObject&      asn );
+    static void CopyObjectKnowledgeList( const T_IdVector&       ids       , ASN1T_ListKnowledgeObject&  asn );
+    static void CopyGenObject          ( uint                    nIdValue  , ASN1T_MissionGenObject&     asn );
+    static void CopyGenObjectList      ( const T_IdVector&       ids       , ASN1T_ListMissionGenObject& asn );
+    static void CopyBool               ( bool                    bValue    , ASN1BOOL&                   asn );
+    static void CopyNumeric            ( int                     nValue    , ASN1INT&                    asn );
+    static void CopyNumeric            ( int                     nValue    , ASN1REAL&                   asn );
+    static void CopyPoint              ( const Position&         position  , ASN1T_CoordUTM&             asn );
+    static void CopyPoint              ( const Position&         position  , ASN1T_Point&                asn );
+    static void CopyPointList          ( const T_PositionVector& positions , ASN1T_ListPoint&            asn );
+    static void CopyPath               ( const Path&             path      , ASN1T_Itineraire&           asn );
+    static void CopyPathList           ( const T_PathVector&     path      , ASN1T_ListItineraire&       asn );
+    static void CopyDirection          ( uint                    nDirection, ASN1T_Direction&            asn );
+    static void CopyLocation           ( const Location&         location  , ASN1T_Localisation&         asn );
+    static void CopyPolygon            ( const Location&         location  , ASN1T_Polygon&              asn );
+    static void CopyPolygonList        ( const T_LocationVector& locations , ASN1T_ListPolygon&          asn );
+    static void CopyNatureAtlas        ( uint                    nValue    , ASN1T_NatureAtlas&          asn );
+    static void CopyGDH                ( uint                    nTime     , ASN1T_GDH&                  asn );
 
     template< typename T >
     static void CopyEnumeration( uint nEnumValue, T& asn )

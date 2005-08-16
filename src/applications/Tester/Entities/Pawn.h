@@ -21,9 +21,8 @@
 
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
-#include "Tools/Path.h"
-#include "Tools/Location.h"
 #include "Workspace.h"
+#include "Testable_Entity.h"
 
 namespace DIN
 {
@@ -45,7 +44,7 @@ namespace TEST
 */
 // Created: SBO 2005-05-11
 // =============================================================================
-class Pawn
+class Pawn : public Testable_Entity
 {
 
 public:
@@ -58,17 +57,18 @@ public:
 
     //! @name Accessors
     //@{
-          T_EntityId   GetId       () const;
-	const std::string& GetName     () const;
-    const PawnType&    GetType     () const;
-	      bool	       IsPc        () const;
-          T_Direction  GetDirection() const;
-          T_Speed      GetSpeed    () const;
-    const Position&    GetPosition () const;
-          int          GetState    () const;
-		  T_Height     GetHeight   () const;
-    const Automat&     GetAutomat  () const;
-    const Path&        GetPath     () const;
+    virtual       T_EntityId   GetId       () const;
+    virtual const Position&    GetPosition () const;
+    virtual const Automat&     GetAutomat  () const;
+
+	        const std::string& GetName     () const;
+            const PawnType&    GetType     () const;
+                  bool         IsPc        () const;
+                  T_Direction  GetDirection() const;
+                  T_Speed      GetSpeed    () const;
+                  int          GetState    () const;
+		          T_Height     GetHeight   () const;
+            const Path&        GetPath     () const;
     //@}
 
     //! @name Messages handlers
@@ -88,32 +88,8 @@ public:
 
     //! @name Test Parameters
     //@{
-    T_EntityId        GetTestParam_LeftLimit          ();
-    T_EntityId        GetTestParam_RightLimit         ();
-    T_IdVector&       GetTestParam_Limas              () const;
-
-    T_EntityId        GetTestParam_ID                 () const;
-    uint              GetTestParam_Direction          () const;
-    bool              GetTestParam_Bool               () const;
-    int               GetTestParam_Numeric            ( int  nMin = 0, int  nMax = std::numeric_limits< int >::max() ) const;
-    uint              GetTestParam_Enumeration        ( uint nMin    , uint nMax            ) const;
-    Position&         GetTestParam_Point              () const;
-    T_PositionVector& GetTestParam_PointList          () const;
-    Path&             GetTestParam_Path               () const;
-    T_PathVector&     GetTestParam_PathList           () const;
-    T_EntityId        GetTestParam_Agent              () const;
-    T_IdVector&       GetTestParam_AgentList          () const;
-    T_EntityId        GetTestParam_AgentKnowledge     () const;
-    T_IdVector&       GetTestParam_AgentKnowledgeList () const;
-    T_EntityId        GetTestParam_Automate           () const;
-    T_IdVector&       GetTestParam_AutomateList       () const;
-    T_EntityId        GetTestParam_ObjectKnowledge    () const;
-    T_IdVector&       GetTestParam_ObjectKnowledgeList() const;
-    Location&         GetTestParam_Location           () const;
-    Location&         GetTestParam_Polygon            () const;
-    T_LocationVector& GetTestParam_PolygonList        () const;
-    uint              GetTestParam_NatureAtlas        () const;
-    uint              GetTestParam_GDH                () const;
+    T_EntityId GetTestParam_LeftLimit  ();
+    T_EntityId GetTestParam_RightLimit ();
     //@}
 
 private:

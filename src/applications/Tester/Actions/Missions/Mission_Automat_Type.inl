@@ -69,6 +69,16 @@ Mission_Automat_ABC& Mission_Automat_Type::CreateMission( const std::string& str
 }
 
 // -----------------------------------------------------------------------------
+// Name: Mission_Automat_ABC::CreateMission
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+inline
+Mission_Automat_ABC& Mission_Automat_Type::CreateMission( const Mission_Automat_Type& type, Automat& target )
+{
+    return type.Instanciate( target );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Mission_Automat_Type::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------

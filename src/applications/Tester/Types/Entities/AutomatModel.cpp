@@ -23,6 +23,8 @@
 #include "Tester_Pch.h"
 #include "AutomatModel.h"
 #include "Actions/Missions/Mission_Automat_Type.h"
+#include "Actions/Scheduler.h"
+#include "Entities/Automat.h"
 
 using namespace TEST;
 
@@ -67,4 +69,23 @@ AutomatModel::AutomatModel( const std::string& strName, XmlInputArchive& archive
 AutomatModel::~AutomatModel()
 {
     missionTypes_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatModel::ScheduleAllMissions
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+void AutomatModel::ScheduleAllMissions( Automat& automat, Scheduler& scheduler ) const
+{
+    for( CIT_MissionAutomatTypeVector it = missionTypes_.begin(); it != missionTypes_.end(); ++it )
+        scheduler.AddAction( Mission_Automat_Type::CreateMission( **it, automat ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatModel::ScheduleMission
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+void AutomatModel::ScheduleMission( Automat& automat, Scheduler& scheduler, const std::string& strMissionName ) const
+{
+    scheduler.AddAction( Mission_Automat_Type::CreateMission( strMissionName, automat ) );
 }

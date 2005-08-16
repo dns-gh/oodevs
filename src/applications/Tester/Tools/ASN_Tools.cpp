@@ -148,6 +148,31 @@ void ASN_Tools::CopyObjectKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowle
 }
 
 // -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyGenObject
+// Created: SBO 2005-08-16
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyGenObject( uint nIdValue, ASN1T_MissionGenObject& asn )
+{
+    // TODO: fill in the other fields
+    asn.oid_obstacle_planifie = nIdValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyGenObjectList
+// Created: SBO 2005-08-16
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyGenObjectList( const T_IdVector& ids, ASN1T_ListMissionGenObject& asn )
+{
+    asn.n = ids.size();
+    if( ids.empty() )
+        return;
+    asn.elem = new ASN1T_MissionGenObject[ ids.size() ]; //$$$$ RAM
+    uint i = 0;
+    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
+        CopyGenObject( *it, asn.elem[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyBool
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------

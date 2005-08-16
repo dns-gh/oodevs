@@ -28,6 +28,8 @@
 namespace TEST {
 
     class Mission_Automat_Type;
+    class Automat;
+    class Scheduler;
 
 // =============================================================================
 /** @class  AutomatModel
@@ -47,6 +49,12 @@ public:
     //@{
              AutomatModel( const std::string& strName, XmlInputArchive& archive );
     virtual ~AutomatModel();
+    //@}
+
+    //! @name Accessors
+    //@{
+    void ScheduleAllMissions( Automat& automat, Scheduler& scheduler ) const;
+    void ScheduleMission    ( Automat& automat, Scheduler& scheduler, const std::string& strMissionName ) const;
     //@}
 
 private:

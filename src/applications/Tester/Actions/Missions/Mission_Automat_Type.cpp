@@ -22,7 +22,7 @@
 
 #include "Tester_pch.h"
 #include "Mission_Automat_Type.h"
-/*
+
 #include "Automat/Mission_Automat_ABC_ArmerPointDeControle.cpp"
 #include "Automat/Mission_Automat_ABC_OrganiserAccueilColonneRefugies.cpp"
 #include "Automat/Mission_Automat_ABC_ProtegerPC.cpp"
@@ -164,7 +164,6 @@
 #include "Automat/Mission_Automat_RENS_ROEM_RenseignerSur.cpp"
 #include "Automat/Mission_Automat_RENS_RADINT_RenseignerSur.cpp"
 #include "Automat/Mission_Automat_TRANS_Commander.cpp"
-*/
 
 using namespace TEST;
 
@@ -196,7 +195,6 @@ Mission_Automat_Type::~Mission_Automat_Type()
 // -----------------------------------------------------------------------------
 void Mission_Automat_Type::Initialize()
 {
-    /*
     Register< Mission_Automat_ABC_ArmerPointDeControle >( "Automate ABC ArmerPointDeControle" );
     Register< Mission_Automat_ABC_OrganiserAccueilColonneRefugies >( "Automate ABC OrganiserAccueilColonneRefugies" );
     Register< Mission_Automat_ABC_ProtegerPC >( "Automate ABC ProtegerPC" );
@@ -338,7 +336,6 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_RENS_ROEM_RenseignerSur >( "Automate RENS ROEM RenseignerSur" );
     Register< Mission_Automat_RENS_RADINT_RenseignerSur >( "Automate RENS RADINT RenseignerSur" );
     Register< Mission_Automat_TRANS_Commander >( "Automate TRANS Commander" );
-    */
 }
     
 // -----------------------------------------------------------------------------

@@ -66,5 +66,25 @@ T_EntityId Automat::GetId() const
 	return nId_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Automat::GetPosition
+// Created: SBO 2005-08-16
+// -----------------------------------------------------------------------------
+inline
+const Position& Automat::GetPosition() const
+{
+    assert( pPc_ );
+    return pPc_->GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetAutomat
+// Created: SBO 2005-08-16
+// -----------------------------------------------------------------------------
+inline
+const Automat& Automat::GetAutomat() const
+{
+    return *this;
+}
 
 } // end namespace TEST

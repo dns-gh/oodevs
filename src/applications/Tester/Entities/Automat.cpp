@@ -22,6 +22,9 @@
 #include "Entities/Team.h"
 #include "Entities/KnowledgeGroup.h"
 #include "Entities/EntityManager.h"
+#include "Types/TypeManager.h"
+#include "Types/Entities/AutomatType.h"
+#include "Types/Entities/AutomatModel.h"
 
 using namespace TEST;
 
@@ -30,9 +33,11 @@ using namespace TEST;
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 Automat::Automat( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg )
-    : nId_             ( asnMsg.oid_automate )
+    : Testable_Entity  ()
+    , nId_             ( asnMsg.oid_automate )
     , pTeam_           ( workspace.GetEntityManager().FindTeam( asnMsg.oid_camp ) )
     , pKnowledgeGroup_ ( workspace.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_connaissance ) )
+    , pType_           ( workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate ) )
     , workspace_       ( workspace )
 {
     assert( pTeam_ );
@@ -84,16 +89,18 @@ void Automat::OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup )
 // Name: Automat::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Automat::ScheduleAllMissions( Scheduler& scheduler ) const
+void Automat::ScheduleAllMissions( Scheduler& scheduler )
 {
-
+    assert( pType_ );
+    pType_->GetModel().ScheduleAllMissions( *this, scheduler );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName ) const
+void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName )
 {
-
+    assert( pType_ );
+    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName );
 }
