@@ -44,6 +44,7 @@ private slots:
     //@{
     void Validate               ();
     void Reject                 ();
+    void closeEvent             ( QCloseEvent * e );
     void OnDotationChanged      ( int nRow, int nCol );
     void OnMunitionFamilyChanged( int nRow, int nCol );
     void OnEquipmentChanged     ( int nRow, int nCol );

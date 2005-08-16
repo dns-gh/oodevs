@@ -113,8 +113,17 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
 
     connect( pDotationsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnDotationChanged( int, int ) ) );
     connect( pMunitionsFamilyTable_, SIGNAL( valueChanged( int, int ) ), SLOT( OnMunitionFamilyChanged( int, int ) ) );
-    connect( pEquipmentsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged( int, int ) ) );
+    connect( pEquipmentsTable_     , SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged( int, int ) ) );
     //connect( pMunitionsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnMunitionChanged( int, int ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogisticSupplyRecompletionDialog::closeEvent
+// Created: SBO 2005-08-16
+// -----------------------------------------------------------------------------
+void MOS_LogisticSupplyRecompletionDialog::closeEvent( QCloseEvent * e )
+{
+    Reject();
 }
 
 // -----------------------------------------------------------------------------
