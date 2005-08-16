@@ -141,6 +141,7 @@ public:
     //@{
     std::string GetResourceName         ( MIL_AgentID ) const;
     std::string GetEquipmentName        ( MIL_AgentID ) const;
+    uint        GetEquipementID         ( const std::string& strName ) const;
     std::string GetTransportDotationName( MIL_AgentID ) const;
     std::string GetBreakDownName        ( uint )        const;
     std::string GetNBCName              ( uint )        const;

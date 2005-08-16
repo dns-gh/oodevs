@@ -981,6 +981,18 @@ std::string MOS_App::GetEquipmentName( MIL_AgentID id ) const
         return itostring( id );    
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_App::GetEquipementID
+// Created: NLD 2005-08-16
+// -----------------------------------------------------------------------------
+uint MOS_App::GetEquipementID( const std::string& strName ) const
+{
+    for( CIT_MosId_String_Map it = equipementNameMap_.begin(); it != equipementNameMap_.end(); ++it )
+        if( it->second == strName )
+            return it->first;
+    return (unsigned)(-1);
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: MOS_App::GetBreakDownName

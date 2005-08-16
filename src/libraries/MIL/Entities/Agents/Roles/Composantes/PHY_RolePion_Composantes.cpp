@@ -380,6 +380,7 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& arc
             else
                 break;
         }
+        
         if( nNbrDead || nNbrRepairable )
             MT_LOG_WARNING_MSG( "Agent " << pPion_->GetID() << " - Cannot apply all the composantes states overloading specified in ODB" );
 
@@ -441,33 +442,45 @@ void PHY_RolePion_Composantes::ReadOverloading( MIL_InputArchive& archive )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ChangeComposantesAvailability
-// Created: NLD 2005-07-28
+// Created: NLD 2005-08-16
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ChangeComposantesAvailability( MT_Float rRatio )
+void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNewNbrUndamagedComposantes )
 {
-    T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
+    uint nNbrUndamagedComposantes = 0;
+    uint nNbrComposantes          = 0;
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        const PHY_ComposantePion& composante = **it;
+        if( composante.GetType() != composanteType )
+            continue;
+        
+        ++ nNbrComposantes;
+        if( composante.GetState() == PHY_ComposanteState::undamaged_ )
+            ++ nNbrUndamagedComposantes;
+    }
 
-    const uint nNewNbrUndamagedComposantes = (uint)( composantes.size() * rRatio );
-          uint nNbrUndamagedComposantes    = nNbrUndamagedMajorComposantes_ + nNbrUndamagedNonMajorComposantes_;
+    nNewNbrUndamagedComposantes = std::min( nNewNbrUndamagedComposantes, nNbrComposantes );
+
     if( nNewNbrUndamagedComposantes > nNbrUndamagedComposantes )
     {
-        for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && nNbrUndamagedComposantes < nNewNbrUndamagedComposantes; ++it )
+        for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && nNbrUndamagedComposantes < nNewNbrUndamagedComposantes; ++it )
         {
-            if( (**it).GetState() != PHY_ComposanteState::undamaged_ )
+            PHY_ComposantePion& composante = **it;
+            if( composante.GetType() == composanteType && composante.GetState() != PHY_ComposanteState::undamaged_ )
             {
-                (**it).Repair();
+                composante.Repair();
                 ++ nNbrUndamagedComposantes;
             }
         }
     }
     else if( nNewNbrUndamagedComposantes < nNbrUndamagedComposantes )
     {
-        for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && nNbrUndamagedComposantes > nNewNbrUndamagedComposantes; ++it )
+        for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && nNbrUndamagedComposantes > nNewNbrUndamagedComposantes; ++it )
         {
-            if( (**it).GetState() == PHY_ComposanteState::undamaged_ )
+            PHY_ComposantePion& composante = **it;
+            if( composante.GetType() == composanteType && composante.GetState() == PHY_ComposanteState::undamaged_ )
             {
-                (**it).ReinitializeState( PHY_ComposanteState::dead_ );
+                composante.ReinitializeState( PHY_ComposanteState::dead_ );
                 -- nNbrUndamagedComposantes;
             }
         }

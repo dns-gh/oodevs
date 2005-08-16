@@ -66,8 +66,6 @@ private:
     QStringList*     pEquipmentsStringList_;
     T_IntVector      equipmentsMax_;
 
-    QCheckBox*       pEquipmentCheckBox_;
-    QSpinBox*        pEquipmentSpinBox_;
     QCheckBox*       pPersonalCheckBox_;
     QSpinBox*        pPersonalSpinBox_;
 

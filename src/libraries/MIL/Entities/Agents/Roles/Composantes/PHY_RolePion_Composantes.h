@@ -89,7 +89,7 @@ public:
 
     //! @name Composantes management
     //@{
-    void ChangeComposantesAvailability( MT_Float rRatio );
+    void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable );
     void RepairAllComposantes         ();
     void DestroyRandomComposante      ();
     void DestroyAllComposantes        ();
@@ -288,16 +288,16 @@ private:
     //@}
 
 private:
-          MIL_AgentPion*         pPion_;
-          T_ComposantePionVector composantes_;
-          T_LentComposanteMap    lentComposantes_;
-          bool                   bLendsChanged_;
-          T_ComposanteTypeMap    composanteTypes_;
-          uint                   nNbrComposanteChanged_;
-          MT_Float               rEtatOps_;
+    MIL_AgentPion*         pPion_;
+    T_ComposantePionVector composantes_;
+    T_LentComposanteMap    lentComposantes_;
+    bool                   bLendsChanged_;
+    T_ComposanteTypeMap    composanteTypes_;
+    uint                   nNbrComposanteChanged_;
+    MT_Float               rEtatOps_;
     bool                   bEtatOpsChanged_;    
-          PHY_ComposantePion*    pMajorComposante_;
-          uint                   nNeutralizationEndTimeStep_;
+    PHY_ComposantePion*    pMajorComposante_;
+    uint                   nNeutralizationEndTimeStep_;
 
     uint                   nNbrUsableComposantes_;
 

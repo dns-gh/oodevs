@@ -205,9 +205,15 @@ RecompletementDotationMunition ::= SEQUENCE
     pourcentage      Pourcentage
 }
 
+RecompletementEquipement ::= SEQUENCE
+{
+    type-equipement     TypeEquipement,
+    nombre              INTEGER
+}
+
 MagicActionRecompletementPartiel ::= SEQUENCE
 {
-    equipements Pourcentage                                 OPTIONAL,
+    equipements SEQUENCE OF RecompletementEquipement        OPTIONAL,
     personnels  Pourcentage                                 OPTIONAL,    
     dotations   SEQUENCE OF RecompletementDotation          OPTIONAL,
     munitions   SEQUENCE OF RecompletementDotationMunition  OPTIONAL

@@ -764,7 +764,18 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupplyAll()
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActionRecompletementPartiel& asn )
 {
     if( asn.m.equipementsPresent )
-        GetRole< PHY_RolePion_Composantes >().ChangeComposantesAvailability( asn.equipements / 100. );
+    {
+        PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
+
+        for( uint i = 0; i < asn.equipements.n; ++i )
+        {
+            const ASN1T_RecompletementEquipement& asnEquipement = asn.equipements.elem[ i ];
+
+            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::FindComposanteType( asnEquipement.type_equipement );
+            if( pComposanteType )
+                roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre );
+        }
+    }
 
     if( asn.m.personnelsPresent )
         GetRole< PHY_RolePion_Humans >().ChangeHumansAvailability( asn.personnels / 100. );

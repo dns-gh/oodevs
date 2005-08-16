@@ -232,11 +232,28 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         asnMagicAction.m.personnelsPresent = 1;
         asnMagicAction.personnels = pPersonalSpinBox_->value();
     }
-
-    if( pEquipmentCheckBox_->isChecked() )
+    
+    // Equipements
+    if( pEquipmentsTable_->numRows() > 1 )
     {
         asnMagicAction.m.equipementsPresent = 1;
-        asnMagicAction.equipements = pEquipmentSpinBox_->value();
+        uint nAsnIdx = 0;
+        ASN1T_RecompletementEquipement* pAsnEquipement = new ASN1T_RecompletementEquipement[ pEquipmentsTable_->numRows() - 1 ];
+        for( uint nRow = 0; nRow < pEquipmentsTable_->numRows() - 1; ++nRow )
+        {
+            QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( pEquipmentsTable_->item( nRow, 0 ) );
+            QTableItem*      pNbrItem         = pEquipmentsTable_->item( nRow, 1 );
+
+            assert( pEquipementItem );
+            assert( pNbrItem );
+
+            ASN1T_RecompletementEquipement& asnEquipement = pAsnEquipement[ nAsnIdx ++ ];
+            asnEquipement.type_equipement = MOS_App::GetApp().GetEquipementID( pEquipementItem->currentText().ascii() );
+            asnEquipement.nombre          = pNbrItem->text().toUInt();
+        }
+
+        asnMagicAction.equipements.n    = pEquipmentsTable_->numRows() - 1;
+        asnMagicAction.equipements.elem = pAsnEquipement;
     }
 
     // Dotations
@@ -347,6 +364,9 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
 
     if( asnMagicAction.m.munitionsPresent && asnMagicAction.munitions.n > 0 )
         delete [] asnMagicAction.munitions.elem;
+
+    if( asnMagicAction.m.equipementsPresent && asnMagicAction.equipements.n > 0 )
+        delete [] asnMagicAction.equipements.elem;
     
     pAgent_ = 0;
     hide();
