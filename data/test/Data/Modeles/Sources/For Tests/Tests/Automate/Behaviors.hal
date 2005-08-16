@@ -21,49 +21,7 @@ behavior BEH_Defaut( id nDummy )
 
 behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )
 {  
-    when updated:
-    {   
-        persistent T_CalculLignesAvantArriere tacheTmp;
-
-        if( DIA_ModuleBegins() )
-        {
-            DEC_Debug( "MIS_Automate_CDT_Test_MoveTo" );
-            tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsSansPC() );
-                                    
-            T_Lima lima = DEC_GetLima( eTypeLima_LC );
-            if( lima != 0 )
-            {
-                bool bOut;
-                T_ListePoints points = DEC_Geometrie_CalculerPositionsParRapportALima( lima, 1000, 3, bOut );
-                if( bOut )
-                    DEC_DebugAffichePoints( points );
-            }            
-            
-        }
-        
-        //$$ Test ligne avant/arrière
-        //float rProut  = DEC_Geometrie_CalculeDistanceLigneAvant  ( tacheTmp, DEC_Automate_PionPC() );
-        //float rProut2 = DEC_Geometrie_CalculeDistanceLigneArriere( tacheTmp, DEC_Automate_PionPC() );
-        //DEC_Debug( "Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );       
-        
-        T_ListePions selPions = DEC_Automate_PionsAvecPC();
-        with( y in selPions )
-        {
-            T_Pion pion = y;
-            
-            float rProut  = DEC_Geometrie_CalculeDistanceLigneAvant  ( tacheTmp, y );
-            float rProut2 = DEC_Geometrie_CalculeDistanceLigneArriere( tacheTmp, y );
-                
-            DEC_Debug( "Pion " + y.szName_ + " - Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );
-        }
-    }
-        
-    on spontaneous end:
-    {
-        DEC_Geometrie_StopCalculLignesAvantEtArriere( tacheTmp );
-    }        
-    
-/*
+           
     if( DIA_ModuleBegins() )
     {   
         DEC_Debug( "MIS_Automate_MRT_Test_MoveTo" );
@@ -82,26 +40,18 @@ behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
             T_Pion pion = y;
 
             DEC_RC( eRC_SurPIA, pion );
+  
             
-            T_Mission_Pion_ALAT_Freiner missionPion = DEC_MRT_CreerMissionPion( pion, eMission_Pion_ALAT_Freiner );
+            T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( pion, eMission_Pion_Test_MoveTo );
             if( missionPion != 0 )
             {
-                DEC_Copie_Point( DEC_Automate_PionPosition( pion ), missionPion.pointRegroupement_ );
-                T_ListeConnaissancesObjet toto;
-                missionPion.plotsRavitaillement_ = toto;
-                missionPion.ciblesPrioritaires_ = eNatureAtlas_Log | eNatureAtlas_ASA | eNatureAtlas_PC;
+                DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
+                DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
             }
-            
-            //T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( pion, eMission_Pion_Test_MoveTo );
-            //if( missionPion != 0 )
-            //{
-            //    DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
-            //    DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
-            //}
         }       
 
         DEC_MRT_Valide();
-    }*/
+    }
 }
 
 behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )

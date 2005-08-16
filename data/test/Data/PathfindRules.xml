@@ -16,6 +16,9 @@
             </ToleratedDistanceOutside>
             <ComfortDistanceInside costPerMeter="0.002">500</ComfortDistanceInside>
         </Fuseau>
+        <AutomataFuseau>
+            <ToleratedDistanceOutside costPerMeter="1">0</ToleratedDistanceOutside>
+        </AutomataFuseau>
         <DangerDirection>
             <BaseCostBeyond>1</BaseCostBeyond>
             <CostPerMeterBeyond>0.001</CostPerMeterBeyond>
@@ -117,6 +120,9 @@
             </ToleratedDistanceOutside>
             <ComfortDistanceInside costPerMeter="0.002">500</ComfortDistanceInside>
         </Fuseau>
+        <AutomataFuseau>
+            <ToleratedDistanceOutside costPerMeter="1">1000000000</ToleratedDistanceOutside>
+        </AutomataFuseau>
         <DangerDirection>
             <BaseCostBeyond>1</BaseCostBeyond>
             <CostPerMeterBeyond>0.001</CostPerMeterBeyond>
@@ -203,6 +209,9 @@
             </ToleratedDistanceOutside>
             <ComfortDistanceInside costPerMeter="0">0</ComfortDistanceInside>
         </Fuseau>
+        <AutomataFuseau>
+            <ToleratedDistanceOutside costPerMeter="0">1000000000</ToleratedDistanceOutside>
+        </AutomataFuseau>
         <DangerDirection>
             <BaseCostBeyond>0</BaseCostBeyond>
             <CostPerMeterBeyond>0</CostPerMeterBeyond>
@@ -225,6 +234,9 @@
             </ToleratedDistanceOutside>
             <ComfortDistanceInside costPerMeter="0">0</ComfortDistanceInside>
         </Fuseau>
+        <AutomataFuseau>
+            <ToleratedDistanceOutside costPerMeter="0">1000000000</ToleratedDistanceOutside>
+        </AutomataFuseau>
         <DangerDirection>
             <BaseCostBeyond>0</BaseCostBeyond>
             <CostPerMeterBeyond>0</CostPerMeterBeyond>

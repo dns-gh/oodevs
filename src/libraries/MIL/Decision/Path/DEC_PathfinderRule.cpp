@@ -30,13 +30,13 @@
 // Name: DEC_PathfinderRule constructor
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort )
+DEC_PathfinderRule::DEC_PathfinderRule( const PHY_Speeds& speeds, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort )
     : world_                     ( TER_World::GetWorld() )
     , altitudeData_              ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , speeds_                    ( path.GetUnitSpeeds() )
+    , speeds_                    ( speeds )
     , pFuseau_                   ( 0 ) 
     , pAutomateFuseau_           ( 0 )
-    , dangerDirection_           ( path.GetDirDanger() )
+    , dangerDirection_           ( )
     , rDangerDirectionBaseCost_  ( 1 )
     , rDangerDirectionLinearCost_( 0.01 )
     , rMaxSpeed_                 ( float( speeds_.GetMaxSpeed() ) * 1.1f )
@@ -51,14 +51,8 @@ DEC_PathfinderRule::DEC_PathfinderRule( const DEC_Path& path, const MT_Vector2D&
     , rMinAltitude_              ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMinAltitude() )
     , rMaxAltitude_              ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetMaxAltitude() )
     , rAltitudeCostPerMeter_     ( 1e-3 )
-    , rMaxSlope_                 ( path.GetUnitMaxSlope() )
+    , rMaxSlope_                 ( std::numeric_limits<MT_Float>::infinity() )
 {
-    if( ! path.GetFuseau().IsNull() )
-        pFuseau_ = & path.GetFuseau();
-    if( ! path.GetAutomataFuseau().IsNull() 
-       && path.GetAutomataFuseau().IsInside( from )
-       && path.GetAutomataFuseau().IsInside( to ) )
-        pAutomateFuseau_ = & path.GetAutomataFuseau();
     dangerPoint_ = DotProduct( dangerDirection_, from ) > DotProduct( dangerDirection_, to ) ? from : to;
     agents_ .reserve( 10 );
     objects_.reserve( 10 );
@@ -103,11 +97,12 @@ void DEC_PathfinderRule::SetMaximumEnemyCost( MT_Float rNewCost )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathfinderRule::SetDangerDirectionCosts
-// Created: AGE 2005-06-24
+// Name: DEC_PathfinderRule::SetDangerDirection
+// Created: AGE 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_PathfinderRule::SetDangerDirectionCosts( MT_Float rBaseCost, MT_Float rLinearCost )
+void DEC_PathfinderRule::SetDangerDirection( const MT_Vector2D& dangerDirection, MT_Float rBaseCost, MT_Float rLinearCost )
 {
+    dangerDirection_ = dangerDirection;
     rDangerDirectionBaseCost_ = rBaseCost;
     rDangerDirectionLinearCost_ = rLinearCost;
 }
@@ -140,21 +135,34 @@ void DEC_PathfinderRule::SetAvoidedTerrain( const TerrainData& data, MT_Float rC
 // Name: DEC_PathfinderRule::SetAltitudePreference
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-void DEC_PathfinderRule::SetAltitudePreference( MT_Float rCostPerMeter )
+void DEC_PathfinderRule::SetAltitudePreference( MT_Float rMaxSlope, MT_Float rCostPerMeter )
 {
+    rMaxSlope_ = rMaxSlope;
     rAltitudeCostPerMeter_ = rCostPerMeter;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathfinderRule::SetFuseauCosts
-// Created: AGE 2005-08-04
+// Name: DEC_PathfinderRule::SetFuseau
+// Created: AGE 2005-08-12
 // -----------------------------------------------------------------------------
-void DEC_PathfinderRule::SetFuseauCosts( MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn )
+void DEC_PathfinderRule::SetFuseau( const MIL_Fuseau& fuseau, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn )
 {
+    pFuseau_ = &fuseau;
     rMaximumFuseauDistance_ = rMaxDistanceOut;
     rComfortFuseauDistance_ = rComfortDistanceIn;
     rFuseauCostPerMeterOut_ = rCostPerMeterOut; 
     rFuseauCostPerMeterIn_  = rCostPerMeterIn;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathfinderRule::SetAutomataFuseau
+// Created: AGE 2005-08-12
+// -----------------------------------------------------------------------------
+void DEC_PathfinderRule::SetAutomataFuseau( const MIL_Fuseau& fuseau, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut )
+{
+    pAutomateFuseau_ = &fuseau;
+    rMaximumAutomataFuseauDistance_ = rMaxDistanceOut;
+    rAutomataFuseauCostPerMeterOut_ = rCostPerMeterOut; 
 }
 
 // -----------------------------------------------------------------------------
@@ -217,20 +225,21 @@ MT_Float DEC_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
         rDynamicCost += ( rAltitudeTo - rMinAltitude_ ) * - rAltitudeCostPerMeter_;
 
     // Vérification si le link est dans le fuseau de l'agent
-    MT_Float rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
-    if( rFuseauCost < 0 )
-        return -1;
-
-    if( rFuseauCost > 0 )
     {
-         // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
-        const MT_Float rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, 10, 1, 0, 0 ) : 0;
+        const MT_Float rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
+        if( rFuseauCost < 0 )
+            return rFuseauCost;
+        rDynamicCost += rFuseauCost;
+    }
+    
+    // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
+    {
+        const MT_Float rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
         if( rAutomateFuseauCost < 0 )
             return rAutomateFuseauCost;
-        rFuseauCost += rAutomateFuseauCost;
+        rDynamicCost += rAutomateFuseauCost;
     }
-    rDynamicCost += rFuseauCost;
-
+    
     // types de terrain
     rDynamicCost += TerrainCost( nLinkTerrainType );
 

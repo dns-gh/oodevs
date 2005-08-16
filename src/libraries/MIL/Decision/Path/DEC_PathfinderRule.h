@@ -40,7 +40,7 @@ class DEC_PathfinderRule : public TerrainRule_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathfinderRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort );
+             DEC_PathfinderRule( const PHY_Speeds& speeds, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort );
     virtual ~DEC_PathfinderRule();
     //@}
 
@@ -55,12 +55,13 @@ public:
     void AddEnemyKnowledge ( const DEC_Path_KnowledgeAgent & enemy, MT_Float rCostOnTarget, MT_Float rCostAtSecurityRange );
     void AddObjectKnowledge( const DEC_Path_KnowledgeObject& object, MT_Float rCost );
 
-    void SetMaximumEnemyCost     ( MT_Float rNewCost );
-    void SetDangerDirectionCosts ( MT_Float rBaseCost, MT_Float rLinearCost );
-    void SetPreferedTerrain      ( const TerrainData& data, MT_Float rCostOut );
-    void SetAvoidedTerrain       ( const TerrainData& data, MT_Float rCostIn );
-    void SetAltitudePreference   ( MT_Float rCostPerMeter ); 
-    void SetFuseauCosts          ( MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn );
+    void SetMaximumEnemyCost  ( MT_Float rNewCost );
+    void SetDangerDirection   ( const MT_Vector2D& dangerDirection, MT_Float rBaseCost, MT_Float rLinearCost );
+    void SetPreferedTerrain   ( const TerrainData& data, MT_Float rCostOut );
+    void SetAvoidedTerrain    ( const TerrainData& data, MT_Float rCostIn );
+    void SetAltitudePreference( MT_Float rMaxSlope, MT_Float rCostPerMeter ); 
+    void SetAutomataFuseau    ( const MIL_Fuseau& fuseau, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut );
+    void SetFuseau            ( const MIL_Fuseau& fuseau, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn );
     //@}
 
 private:
@@ -104,6 +105,8 @@ private:
     MT_Float rComfortFuseauDistance_;
     MT_Float rFuseauCostPerMeterOut_;
     MT_Float rFuseauCostPerMeterIn_;
+    MT_Float rMaximumAutomataFuseauDistance_;
+    MT_Float rAutomataFuseauCostPerMeterOut_;
 
     T_PathKnowledgeAgentVector  agents_;
     MT_Float rMaxEnemyCost_;

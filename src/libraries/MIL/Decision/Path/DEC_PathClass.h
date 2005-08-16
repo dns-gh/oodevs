@@ -53,6 +53,7 @@ private:
     //@{
     void Initialize( MIL_InputArchive& archive );
     void ReadFuseau( MIL_InputArchive& archive );
+    void ReadAutomataFuseau( MIL_InputArchive& archive );
     void ReadDangerDirection( MIL_InputArchive& archive );
     void ReadEnemiesCost( MIL_InputArchive& archive );
     void ReadTerrains( MIL_InputArchive& archive, TerrainData& data );
@@ -77,6 +78,9 @@ private:
     MT_Float rComfortFuseauDistance_;
     MT_Float rFuseauCostPerMeterOut_;
     MT_Float rFuseauCostPerMeterIn_;
+
+    MT_Float rMaximumAutomataFuseauDistance_;
+    MT_Float rAutomataFuseauCostPerMeterOut_;
 
     MT_Float rDangerDirectionBaseCost_;
     MT_Float rDangerDirectionLinearCost_;

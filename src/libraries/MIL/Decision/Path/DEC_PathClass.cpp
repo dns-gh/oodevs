@@ -39,6 +39,8 @@ DEC_PathClass::DEC_PathClass( MIL_InputArchive& archive, const DEC_PathClass* pC
     , rComfortFuseauDistance_            ( 500 )
     , rFuseauCostPerMeterOut_            ( 1 )
     , rFuseauCostPerMeterIn_             ( 0.002 )
+    , rMaximumAutomataFuseauDistance_    ( 10 )
+    , rAutomataFuseauCostPerMeterOut_    ( 1 )
     , rDangerDirectionBaseCost_          ( 1 )
     , rDangerDirectionLinearCost_        ( 0.001 )
     , rCostOnContact_                    ( 0 )
@@ -66,11 +68,12 @@ DEC_PathClass::~DEC_PathClass()
 // -----------------------------------------------------------------------------
 TerrainRule_ABC& DEC_PathClass::CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    DEC_PathfinderRule& rule = *new DEC_PathfinderRule( path, from, to, bShort_ );
+    DEC_PathfinderRule& rule = *new DEC_PathfinderRule( path.GetUnitSpeeds(), from, to, bShort_ );
 
     rule.SetAvoidedTerrain ( avoid_,  rAvoidCost_ );
     rule.SetPreferedTerrain( prefer_, rPreferCost_ );
-    rule.SetAltitudePreference( rAltitudePreference_ );
+    rule.SetAltitudePreference( path.GetUnitMaxSlope(), rAltitudePreference_ );
+    if( ! path.GetFuseau().IsNull() )
     {
         MT_Float rMaxFuseauDistance = rMaximumFuseauDistance_;
         if( ! path.GetFuseau().IsInside( from ) )
@@ -82,9 +85,18 @@ TerrainRule_ABC& DEC_PathClass::CreateRule( const DEC_Path& path, const MT_Vecto
         if( ! path.GetFuseau().IsInside( to ) ) // our destination is outside
             rMaxFuseauDistance = std::numeric_limits< MT_Float >::max();
 
-        rule.SetFuseauCosts( rMaxFuseauDistance, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ );
+        rule.SetFuseau( path.GetFuseau(), rMaxFuseauDistance, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ );
     }
-    rule.SetDangerDirectionCosts( rDangerDirectionBaseCost_, rDangerDirectionLinearCost_ );
+    if( ! path.GetAutomataFuseau().IsNull() )
+    {
+        MT_Float rMaxAutomataFuseauDistance = rMaximumAutomataFuseauDistance_;
+        if( ! path.GetAutomataFuseau().IsInside( from ) )
+            rMaxAutomataFuseauDistance += path.GetAutomataFuseau().Distance( from ) * 1.3;
+        rule.SetAutomataFuseau( path.GetAutomataFuseau(), rMaxAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut_ );
+    }
+
+    rule.SetDangerDirection( path.GetDirDanger(), rDangerDirectionBaseCost_, rDangerDirectionLinearCost_ );
+
     {
         if( rCostOnContact_ || rCostAtSecurityRange_ )
         {
@@ -175,6 +187,11 @@ void DEC_PathClass::Initialize( MIL_InputArchive& archive )
         ReadFuseau( archive );
         archive.EndSection(); // Fuseau
     }
+    if( archive.Section( "AutomataFuseau", MIL_InputArchive::eNothing ) )
+    {
+        ReadAutomataFuseau( archive );
+        archive.EndSection(); // AutomataFuseau
+    }
 
     if( archive.Section( "DangerDirection", MIL_InputArchive::eNothing ) )
     {
@@ -227,6 +244,22 @@ void DEC_PathClass::ReadFuseau( MIL_InputArchive& archive )
         archive.ReadAttribute( "costPerMeter", rFuseauCostPerMeterIn_, MIL_InputArchive::eNothing );
         archive.Read( rComfortFuseauDistance_ );
         archive.EndSection(); //ComfortDistanceInside
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathClass::ReadAutomataFuseau
+// Created: AGE 2005-08-12
+// -----------------------------------------------------------------------------
+void DEC_PathClass::ReadAutomataFuseau( MIL_InputArchive& archive )
+{
+    if( archive.Section( "ToleratedDistanceOutside", MIL_InputArchive::eNothing ) )
+    {
+        archive.ReadAttribute( "costPerMeter", rAutomataFuseauCostPerMeterOut_, MIL_InputArchive::eNothing );
+        archive.Read( rMaximumAutomataFuseauDistance_ );
+        if( rMaximumAutomataFuseauDistance_ < 10 )
+            rMaximumAutomataFuseauDistance_ = 10;
+        archive.EndSection(); // ToleratedDistanceOutside
     }
 }
 
