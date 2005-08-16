@@ -20,11 +20,11 @@ const PHY_HumanRank::T_HumanRankMap& PHY_HumanRank::GetHumanRanks()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanRank::FindHumanRank
+// Name: PHY_HumanRank::Find
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 inline
-const PHY_HumanRank* PHY_HumanRank::FindHumanRank( const std::string& strName )
+const PHY_HumanRank* PHY_HumanRank::Find( const std::string& strName )
 {
     CIT_HumanRankMap it = humanRanks_.find( strName );
     
@@ -32,14 +32,24 @@ const PHY_HumanRank* PHY_HumanRank::FindHumanRank( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanRank::FindHumanRank
+// Name: PHY_HumanRank::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 inline
-const PHY_HumanRank* PHY_HumanRank::FindHumanRank( uint nID )
+const PHY_HumanRank* PHY_HumanRank::Find( uint nID )
 {
     CIT_HumanRankMap it = std::find_if( humanRanks_.begin(), humanRanks_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_HumanRank::GetID ), std::select2nd< T_HumanRankMap::value_type >() ) ) );
+    return it == humanRanks_.end() ? 0 : it->second;
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanRank::Find
+// Created: NLD 2005-08-16
+// -----------------------------------------------------------------------------
+inline
+const PHY_HumanRank* PHY_HumanRank::Find( ASN1T_EnumHumanRank nAsnID )
+{
+    CIT_HumanRankMap it = std::find_if( humanRanks_.begin(), humanRanks_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanRank::GetAsnID ), std::select2nd< T_HumanRankMap::value_type >() ) ) );
     return it == humanRanks_.end() ? 0 : it->second;
 }
 

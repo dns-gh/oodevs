@@ -49,9 +49,9 @@ public:
     static void Terminate            ();
 
     static const T_HumanWoundMap& GetHumanWounds();
-    static const PHY_HumanWound*  FindHumanWound( const std::string& strName );
-    static const PHY_HumanWound*  FindHumanWound( ASN1T_EnumHumanWound nAsnID );
-    static const PHY_HumanWound*  FindHumanWound( uint nID );
+    static const PHY_HumanWound*  Find( const std::string& strName );
+    static const PHY_HumanWound*  Find( ASN1T_EnumHumanWound nAsnID );
+    static const PHY_HumanWound*  Find( uint nID );
 
     static uint GetDiagnosticTime           ();
     static uint GetSortingTime              ();

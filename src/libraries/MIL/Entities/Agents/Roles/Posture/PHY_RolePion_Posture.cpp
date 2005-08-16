@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
 
@@ -240,7 +241,9 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SetPostureMovement()
 {
-    if( bDiscreteModeEnabled_ )
+    if( !GetRole< PHY_RoleAction_Loading >().IsLoaded() ) //$$$ bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions)
+        ChangePosture( PHY_Posture::posteReflexe_ );
+    else if( bDiscreteModeEnabled_ )
         ChangePosture( PHY_Posture::mouvementDiscret_ );
     else
         ChangePosture( PHY_Posture::mouvement_ );

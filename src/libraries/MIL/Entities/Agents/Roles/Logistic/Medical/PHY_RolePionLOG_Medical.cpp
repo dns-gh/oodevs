@@ -114,7 +114,7 @@ namespace boost
         {
             uint nID;
             file >> nID;
-            vector.push_back( PHY_HumanWound::FindHumanWound( nID ) );
+            vector.push_back( PHY_HumanWound::Find( nID ) );
         }
     }
 

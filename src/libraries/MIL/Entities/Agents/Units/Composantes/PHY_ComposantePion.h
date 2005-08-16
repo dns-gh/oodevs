@@ -117,8 +117,8 @@ public:
     //@{
     uint GetNbrUsableHumans() const;
     void HealAllHumans     ();
-    uint HealHumans        ( uint nNbrToChange );
-    uint WoundHumans       ( uint nNbrToChange, const PHY_HumanWound& wound, const PHY_HumanRank* pHumanRank = 0 );
+    uint HealHumans        ( const PHY_HumanRank& rank, uint nNbrToChange );
+    uint WoundHumans       ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& wound );
     bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
 
     void NotifyHumanAdded  ( PHY_Human& human );

@@ -323,7 +323,7 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
     CIT_ComposantePionVector itEndComp = itCurrentComp;
     while( nNbr )
     {
-        nNbr -= (*itCurrentComp)->WoundHumans( nNbr, newWound, &rank );
+        nNbr -= (*itCurrentComp)->WoundHumans( rank, nNbr, newWound );
         if(  ++itCurrentComp == composantes_.end() )
             itCurrentComp = composantes_.begin();
         if( itCurrentComp == itEndComp && nNbr > 0 )
@@ -407,7 +407,7 @@ void PHY_RolePion_Composantes::ReadHumansOverloading( MIL_InputArchive& archive 
         std::string strState;
         archive.ReadAttribute( "etat", strState );
 
-        const PHY_HumanWound* pWound = PHY_HumanWound::FindHumanWound( strState );
+        const PHY_HumanWound* pWound = PHY_HumanWound::Find( strState );
         if( !pWound )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown human wound", archive.GetContext() );
 
@@ -491,7 +491,7 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
 // Name: PHY_RolePion_Composantes::WoundHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WoundHumans( uint nNbr )
+void PHY_RolePion_Composantes::WoundHumans( const PHY_HumanRank& rank, uint nNbr )
 {
     T_ComposantePionVector composantes = composantes_;
     std::random_shuffle( composantes.begin(), composantes.end() );
@@ -499,7 +499,7 @@ void PHY_RolePion_Composantes::WoundHumans( uint nNbr )
     IT_ComposantePionVector itCurrentComp = composantes.begin();
     while( nNbr && itCurrentComp != composantes.end() )
     {
-        uint nNbrChanged = (*itCurrentComp)->WoundHumans( 1, PHY_HumanWound::killed_ );
+        uint nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
         if( nNbrChanged == 0 )
             itCurrentComp = composantes.erase( itCurrentComp );
         else
@@ -516,7 +516,7 @@ void PHY_RolePion_Composantes::WoundHumans( uint nNbr )
 // Name: PHY_RolePion_Composantes::HealHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::HealHumans( uint nNbr )
+void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, uint nNbr )
 {
     T_ComposantePionVector composantes = composantes_;
     std::random_shuffle( composantes.begin(), composantes.end() );
@@ -524,7 +524,7 @@ void PHY_RolePion_Composantes::HealHumans( uint nNbr )
     IT_ComposantePionVector itCurrentComp = composantes.begin();
     while( nNbr && itCurrentComp != composantes.end() )
     {
-        uint nNbrChanged = (*itCurrentComp)->HealHumans( 1 );
+        uint nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
         if( nNbrChanged == 0 )
             itCurrentComp = composantes.erase( itCurrentComp );
         else

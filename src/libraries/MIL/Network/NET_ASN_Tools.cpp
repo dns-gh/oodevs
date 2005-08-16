@@ -1293,7 +1293,7 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const ASN1T_SantePriorites& asn, T_Me
     for( uint i = 0; i < asn.n; ++i )
     {
         ASN1T_EnumHumanWound nWoundID = asn.elem[i];
-        const PHY_HumanWound* pWound = PHY_HumanWound::FindHumanWound( nWoundID );
+        const PHY_HumanWound* pWound = PHY_HumanWound::Find( nWoundID );
         if( !pWound )
         {
             dia.SetValue( 0, &DEC_Tools::GetTypeMaintenancePriorites() );

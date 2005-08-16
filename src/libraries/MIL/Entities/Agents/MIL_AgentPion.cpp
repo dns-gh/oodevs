@@ -44,6 +44,7 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/RC/MIL_RC.h"
@@ -766,19 +767,26 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActi
     if( asn.m.equipementsPresent )
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
-
         for( uint i = 0; i < asn.equipements.n; ++i )
         {
             const ASN1T_RecompletementEquipement& asnEquipement = asn.equipements.elem[ i ];
-
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::FindComposanteType( asnEquipement.type_equipement );
             if( pComposanteType )
-                roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre );
+                roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre_disponible );
         }
     }
 
     if( asn.m.personnelsPresent )
-        GetRole< PHY_RolePion_Humans >().ChangeHumansAvailability( asn.personnels / 100. );
+    {
+        PHY_RolePion_Humans& roleHumans = GetRole< PHY_RolePion_Humans >();
+        for( uint i = 0 ; i < asn.personnels.n; ++i )
+        {
+            const ASN1T_RecompletementPersonnel& asnPersonnel = asn.personnels.elem[ i ];
+            const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( asnPersonnel.rang );
+            if( pHumanRank )
+                roleHumans.ChangeHumansAvailability( *pHumanRank, asnPersonnel.nombre_disponible ); 
+        }
+    }
     
     if( asn.m.dotationsPresent )
     {
@@ -786,7 +794,6 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActi
         for( uint i = 0; i < asn.dotations.n; ++i )
         {
             const ASN1T_RecompletementDotation& asnDotation = asn.dotations.elem[ i ];
-
             const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( asnDotation.famille_dotation ); 
             if( pDotationType )
                 roleDotations.ResupplyDotations( *pDotationType, asnDotation.pourcentage / 100. );
@@ -799,7 +806,6 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActi
         for( uint i = 0; i < asn.munitions.n; ++i )
         {
             const ASN1T_RecompletementDotationMunition& asnMunition = asn.munitions.elem[ i ];
-
             const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( asnMunition.famille_munition ); 
             if( pAmmoClass )
                 roleDotations.ResupplyDotations( *pAmmoClass, asnMunition.pourcentage / 100. );

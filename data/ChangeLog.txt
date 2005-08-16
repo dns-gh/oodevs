@@ -21,6 +21,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - posteReflexe
+    - NLD / SBO - Update de l'action magique de recomplétement 'partiel' => gestion plus fine des équipements et des humains
     - AGE - Il est maintenant possible de spécifier le comportement du pathfind vis à vis du fuseau d'automate
     - NLD - Les fonctions de Tir direct (DEC_StartTirDirectXXX) prennent maintenant en paramètre optionnel le type de munition à utiliser.
             Par défaut, tous les types de munitions sont utilisés.    

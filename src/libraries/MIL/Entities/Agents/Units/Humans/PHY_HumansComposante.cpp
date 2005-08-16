@@ -114,7 +114,7 @@ void PHY_HumansComposante::HealAllHumans()
 // Name: PHY_HumansComposante::HealHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-uint PHY_HumansComposante::HealHumans( uint nNbrToChange )
+uint PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, uint nNbrToChange )
 {
     std::random_shuffle( humans_.begin(), humans_.end() );
 
@@ -124,7 +124,7 @@ uint PHY_HumansComposante::HealHumans( uint nNbrToChange )
     {
         PHY_Human& human = **it;
 
-        if( human.NeedMedical() || !human.IsAlive() )
+        if( human.GetRank() == rank && ( human.NeedMedical() || !human.IsAlive() ) )
         {
             human.Heal();
             -- nNbrToChange;
@@ -138,7 +138,7 @@ uint PHY_HumansComposante::HealHumans( uint nNbrToChange )
 // Name: PHY_HumansComposante::WoundHumans
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-uint PHY_HumansComposante::WoundHumans( uint nNbrToChange, const PHY_HumanWound& newWound, const PHY_HumanRank* pRank )
+uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound )
 {
     if( newWound == PHY_HumanWound::notWounded_ )
         return 0;
@@ -147,7 +147,7 @@ uint PHY_HumansComposante::WoundHumans( uint nNbrToChange, const PHY_HumanWound&
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
     {
         PHY_Human& human = **it;
-        if( pRank && human.GetRank() != *pRank )
+        if( human.GetRank() != rank )
             continue;
 
         if( human.NeedMedical() || !human.IsAlive() )

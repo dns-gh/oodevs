@@ -97,10 +97,10 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const uint )
     
     uint nID;
     file >> nID;
-    pRank_ = PHY_HumanRank::FindHumanRank( nID );
+    pRank_ = PHY_HumanRank::Find( nID );
     
     file >> nID;
-    pWound_ = PHY_HumanWound::FindHumanWound( nID );
+    pWound_ = PHY_HumanWound::Find( nID );
     
     file >> bMentalDiseased_
          >> bContamined_

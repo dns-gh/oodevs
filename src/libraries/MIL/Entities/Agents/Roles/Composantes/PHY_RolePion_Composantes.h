@@ -82,8 +82,8 @@ public:
 
     //! @name Humans management
     //@{
-    void WoundHumans  ( uint nNbr );
-    void HealHumans   ( uint nNbr );    
+    void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr );
+    void HealHumans   ( const PHY_HumanRank& rank, uint nNbr );    
     void HealAllHumans();
     //@}
 

@@ -43,8 +43,9 @@ public:
     static void Terminate ();
 
     static const T_HumanRankMap& GetHumanRanks();
-    static const PHY_HumanRank*  FindHumanRank( const std::string& strName );
-    static const PHY_HumanRank*  FindHumanRank( uint nID );
+    static const PHY_HumanRank*  Find( const std::string& strName );
+    static const PHY_HumanRank*  Find( uint nID );
+    static const PHY_HumanRank*  Find( ASN1T_EnumHumanRank nAsnID );
     //@}
 
     //! @name Accessors

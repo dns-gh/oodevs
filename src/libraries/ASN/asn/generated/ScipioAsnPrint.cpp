@@ -17795,8 +17795,8 @@ void asn1Print_RecompletementEquipement (ASN1ConstCharPtr name, ASN1T_Recomplete
    sprintf (namebuf, "%s.type_equipement", name);
    asn1Print_TypeEquipement (namebuf, &pvalue->type_equipement);
 
-   sprintf (namebuf, "%s.nombre", name);
-   rtPrintInteger (namebuf, pvalue->nombre);
+   sprintf (namebuf, "%s.nombre_disponible", name);
+   rtPrintInteger (namebuf, pvalue->nombre_disponible);
 
 }
 
@@ -17825,6 +17825,45 @@ void ASN1C__SeqOfRecompletementEquipement::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print__SeqOfRecompletementEquipement (name, &msgData);
+}
+
+void asn1Print_RecompletementPersonnel (ASN1ConstCharPtr name, ASN1T_RecompletementPersonnel* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.rang", name);
+   asn1Print_EnumHumanRank (namebuf, &pvalue->rang);
+
+   sprintf (namebuf, "%s.nombre_disponible", name);
+   rtPrintInteger (namebuf, pvalue->nombre_disponible);
+
+}
+
+void ASN1C_RecompletementPersonnel::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_RecompletementPersonnel (name, &msgData);
+}
+
+void asn1Print__SeqOfRecompletementPersonnel (ASN1ConstCharPtr name, ASN1T__SeqOfRecompletementPersonnel* pvalue)
+{
+   char namebuf[512];
+
+   printf ("%s.n = %d\n", name, pvalue->n);
+   {
+   ASN1UINT xx1;
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      sprintf (namebuf, "%s.elem[%d]", name, xx1);
+      asn1Print_RecompletementPersonnel (namebuf, &pvalue->elem[xx1]);
+   }
+   }
+
+}
+
+void ASN1C__SeqOfRecompletementPersonnel::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print__SeqOfRecompletementPersonnel (name, &msgData);
 }
 
 void asn1Print_RecompletementDotation (ASN1ConstCharPtr name, ASN1T_RecompletementDotation* pvalue)
@@ -17920,7 +17959,7 @@ void asn1Print_MagicActionRecompletementPartiel (ASN1ConstCharPtr name, ASN1T_Ma
 
    if (pvalue->m.personnelsPresent) {
       sprintf (namebuf, "%s.personnels", name);
-      asn1Print_Pourcentage (namebuf, &pvalue->personnels);
+      asn1Print__SeqOfRecompletementPersonnel (namebuf, &pvalue->personnels);
    }
 
    if (pvalue->m.dotationsPresent) {

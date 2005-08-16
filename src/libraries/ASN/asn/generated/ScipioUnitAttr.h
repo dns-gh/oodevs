@@ -924,7 +924,7 @@ EXTERN void asn1Print_MagicActionRecompletementTotal (ASN1ConstCharPtr name);
 
 typedef struct EXTERN ASN1T_RecompletementEquipement {
    ASN1T_TypeEquipement  type_equipement;
-   ASN1INT   nombre;
+   ASN1INT   nombre_disponible;
 } ASN1T_RecompletementEquipement;
 
 class EXTERN ASN1C_RecompletementEquipement : public ASN1CType {
@@ -967,6 +967,58 @@ EXTERN int asn1PE__SeqOfRecompletementEquipement (ASN1CTXT* ctxt_p, ASN1T__SeqOf
 EXTERN int asn1PD__SeqOfRecompletementEquipement (ASN1CTXT* ctxt_p, ASN1T__SeqOfRecompletementEquipement* pvalue);
 
 EXTERN void asn1Print__SeqOfRecompletementEquipement (ASN1ConstCharPtr name, ASN1T__SeqOfRecompletementEquipement* pvalue);
+
+/**************************************************************/
+/*                                                            */
+/*  RecompletementPersonnel                                   */
+/*                                                            */
+/**************************************************************/
+
+typedef struct EXTERN ASN1T_RecompletementPersonnel {
+   ASN1T_EnumHumanRank  rang;
+   ASN1INT   nombre_disponible;
+} ASN1T_RecompletementPersonnel;
+
+class EXTERN ASN1C_RecompletementPersonnel : public ASN1CType {
+public:
+   ASN1T_RecompletementPersonnel& msgData;
+   ASN1C_RecompletementPersonnel (
+      ASN1MessageBuffer& msgBuf, ASN1T_RecompletementPersonnel& data);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_RecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T_RecompletementPersonnel* pvalue);
+EXTERN int asn1PD_RecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T_RecompletementPersonnel* pvalue);
+
+EXTERN void asn1Print_RecompletementPersonnel (ASN1ConstCharPtr name, ASN1T_RecompletementPersonnel* pvalue);
+
+/**************************************************************/
+/*                                                            */
+/*  _SeqOfRecompletementPersonnel                             */
+/*                                                            */
+/**************************************************************/
+
+typedef struct EXTERN ASN1T__SeqOfRecompletementPersonnel {
+   ASN1UINT n;
+   ASN1T_RecompletementPersonnel *elem;
+} ASN1T__SeqOfRecompletementPersonnel;
+
+class EXTERN ASN1C__SeqOfRecompletementPersonnel : public ASN1CType {
+public:
+   ASN1T__SeqOfRecompletementPersonnel& msgData;
+   ASN1C__SeqOfRecompletementPersonnel (
+      ASN1MessageBuffer& msgBuf, ASN1T__SeqOfRecompletementPersonnel& data);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE__SeqOfRecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T__SeqOfRecompletementPersonnel* pvalue);
+EXTERN int asn1PD__SeqOfRecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T__SeqOfRecompletementPersonnel* pvalue);
+
+EXTERN void asn1Print__SeqOfRecompletementPersonnel (ASN1ConstCharPtr name, ASN1T__SeqOfRecompletementPersonnel* pvalue);
 
 /**************************************************************/
 /*                                                            */
@@ -1086,7 +1138,7 @@ typedef struct EXTERN ASN1T_MagicActionRecompletementPartiel {
       unsigned munitionsPresent : 1;
    } m;
    ASN1T__SeqOfRecompletementEquipement  equipements;
-   ASN1T_Pourcentage  personnels;
+   ASN1T__SeqOfRecompletementPersonnel  personnels;
    ASN1T__SeqOfRecompletementDotation  dotations;
    ASN1T__SeqOfRecompletementDotationMunition  munitions;
 

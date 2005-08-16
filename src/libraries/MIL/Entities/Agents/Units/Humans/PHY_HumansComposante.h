@@ -51,9 +51,9 @@ public:
     void KillAllHumans    ();
     void KillAllHumans    ( PHY_AgentFireResult& fireResult );
 
-    uint WoundHumans      ( uint nNbrToChange, const PHY_HumanWound& newWound, const PHY_HumanRank* pHumanRank = 0 );
-    void HealAllHumans    ();
-    uint HealHumans       ( uint nNbrToChange );
+    uint WoundHumans      ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
+    uint HealHumans       ( const PHY_HumanRank& rank, uint nNbrToChange );
+    void HealAllHumans    ();    
     //@}
 
     //! @name Medical

@@ -356,7 +356,6 @@ MT_Float MIL_Limit::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 MT_Float MIL_Limit::SquareDistance( const MT_Vector2D& p ) const
 {
     MT_Float rResult = std::numeric_limits< MT_Float >::max();
-    const MT_Vector2D* pPrevious = 0;
     for( CIT_DistanceDatas it = distanceDatas_.begin(); it != distanceDatas_.end(); ++it )
     {
         const DistanceData& data = *it;

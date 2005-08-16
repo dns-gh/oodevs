@@ -60,22 +60,22 @@ const PHY_HumanWound::T_HumanWoundMap& PHY_HumanWound::GetHumanWounds()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::FindHumanWound
+// Name: PHY_HumanWound::Find
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 inline
-const PHY_HumanWound* PHY_HumanWound::FindHumanWound( const std::string& strName )
+const PHY_HumanWound* PHY_HumanWound::Find( const std::string& strName )
 {
     CIT_HumanWoundMap it = humanWounds_.find( strName );
     return it == humanWounds_.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::FindHumanWound
+// Name: PHY_HumanWound::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 inline
-const PHY_HumanWound* PHY_HumanWound::FindHumanWound( ASN1T_EnumHumanWound nAsnID )
+const PHY_HumanWound* PHY_HumanWound::Find( ASN1T_EnumHumanWound nAsnID )
 {
     CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
 
@@ -83,11 +83,11 @@ const PHY_HumanWound* PHY_HumanWound::FindHumanWound( ASN1T_EnumHumanWound nAsnI
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumanWound::FindHumanWound
+// Name: PHY_HumanWound::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 inline
-const PHY_HumanWound* PHY_HumanWound::FindHumanWound( uint nID )
+const PHY_HumanWound* PHY_HumanWound::Find( uint nID )
 {
     CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
 

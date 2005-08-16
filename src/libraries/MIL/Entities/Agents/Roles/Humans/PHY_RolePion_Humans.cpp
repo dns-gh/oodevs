@@ -146,13 +146,15 @@ bool PHY_RolePion_Humans::IsUsable() const
 // Name: PHY_RolePion_Humans::ChangeHumansAvailability
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::ChangeHumansAvailability( MT_Float rFactor /*= 1.*/ )
+void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNewNbrFullyAliveHumans )
 {
-    const uint nNewNbrFullyAliveHumans_ = nNbrHumans_ * rFactor;
-    if( nNewNbrFullyAliveHumans_ > nNbrFullyAliveHumans_ )
-        GetRole< PHY_RolePion_Composantes >().HealHumans( nNewNbrFullyAliveHumans_ - nNbrFullyAliveHumans_ );
-    else if( nNewNbrFullyAliveHumans_ < nNbrFullyAliveHumans_ )
-        GetRole< PHY_RolePion_Composantes >().WoundHumans( nNbrFullyAliveHumans_ - nNewNbrFullyAliveHumans_ );
+     const T_HumanData& humanData = humansData_[ rank.GetID() ];
+    nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
+
+    if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )
+        GetRole< PHY_RolePion_Composantes >().HealHumans( rank, nNewNbrFullyAliveHumans - humanData.nNbrOperational_ );
+    else if( nNewNbrFullyAliveHumans < humanData.nNbrOperational_ )
+        GetRole< PHY_RolePion_Composantes >().WoundHumans( rank, humanData.nNbrOperational_ - nNewNbrFullyAliveHumans );
 }
 
 // -----------------------------------------------------------------------------

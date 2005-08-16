@@ -182,11 +182,11 @@ void MOS_LogisticSupplyRecompletionDialog::SetAgent( const MOS_Agent& agent )
 
         uint nMax = 0;
         if( eType == eHumanRank_Officier )
-            nMax = sizeof( agent.GetComposition().officiers_ ) / sizeof( uint );
+            nMax = agent.GetComposition().officiers_[ eTroopHealthStateTotal ];
         else if( eType == eHumanRank_SousOfficer )
-            nMax = sizeof( agent.GetComposition().sousOfficiers_ ) / sizeof( uint );
+            nMax = agent.GetComposition().sousOfficiers_[ eTroopHealthStateTotal ];
         else
-            nMax = sizeof( agent.GetComposition().mdr_ ) / sizeof( uint );
+            nMax = agent.GetComposition().mdr_[ eTroopHealthStateTotal ];
         pPersonalsTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pPersonalsTable_, 0, nMax, 1 ) );
     }
     pPersonalsTable_->setMinimumHeight( pPersonalsTable_->rowHeight( 0 ) * 5 );
@@ -251,6 +251,45 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
 
     asnMsg.GetAsnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
     asnMsg.GetAsnMsg().action.u.recompletement_partiel = &asnMagicAction;
+
+    // Personnels
+    {
+    uint nNbrPersonals = 0;
+    uint nRow;
+    for( nRow = 0; nRow < pPersonalsTable_->numRows(); ++nRow )
+    {
+        QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pPersonalsTable_->item( nRow, 0 ) );
+        assert( pCheckTableItem );
+        if( pCheckTableItem->isChecked() )
+            ++ nNbrPersonals;
+    }
+    if( nNbrPersonals > 0 )
+    {   
+        asnMagicAction.personnels .n        = nNbrPersonals;
+        asnMagicAction.m.personnelsPresent  = 1;
+
+        ASN1T_RecompletementPersonnel* pAsnPersonnel = new ASN1T_RecompletementPersonnel[ nNbrPersonals ];
+        asnMagicAction.personnels.elem = pAsnPersonnel;
+        uint nAsnIdx = 0;
+        for( uint nRow = 0; nRow < pPersonalsTable_->numRows(); ++nRow )
+        {
+            QCheckTableItem* pPersonnelItemCheckBox = static_cast< QCheckTableItem* >( pPersonalsTable_->item( nRow, 0 ) );
+            QTableItem*      pRangItem              = pPersonalsTable_->item( nRow, 1 );
+            QTableItem*      pNbrItem               = pPersonalsTable_->item( nRow, 2 );
+
+            assert( pPersonnelItemCheckBox );
+            if( !pPersonnelItemCheckBox->isChecked() )
+                continue;
+
+            assert( pRangItem );            
+            assert( pNbrItem );
+
+            ASN1T_RecompletementPersonnel& asnPersonnel = pAsnPersonnel[ nAsnIdx ++ ];
+            asnPersonnel.rang                           = (ASN1T_EnumHumanRank)ENT_Tr::ConvertToHumanRank( pRangItem->text().ascii() );
+            asnPersonnel.nombre_disponible              = pNbrItem->text().toUInt();
+        }
+    }   
+    }
     
     // Equipements
     if( pEquipmentsTable_->numRows() > 1 )
@@ -267,8 +306,8 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
             assert( pNbrItem );
 
             ASN1T_RecompletementEquipement& asnEquipement = pAsnEquipement[ nAsnIdx ++ ];
-            asnEquipement.type_equipement = MOS_App::GetApp().GetEquipementID( pEquipementItem->currentText().ascii() );
-            asnEquipement.nombre          = pNbrItem->text().toUInt();
+            asnEquipement.type_equipement   = MOS_App::GetApp().GetEquipementID( pEquipementItem->currentText().ascii() );
+            asnEquipement.nombre_disponible = pNbrItem->text().toUInt();
         }
 
         asnMagicAction.equipements.n    = pEquipmentsTable_->numRows() - 1;
@@ -386,6 +425,9 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
 
     if( asnMagicAction.m.equipementsPresent && asnMagicAction.equipements.n > 0 )
         delete [] asnMagicAction.equipements.elem;
+
+    if( asnMagicAction.m.personnelsPresent && asnMagicAction.personnels.n > 0 )
+        delete [] asnMagicAction.personnels.elem;
     
     pAgent_ = 0;
     hide();

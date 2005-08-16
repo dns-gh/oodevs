@@ -559,10 +559,10 @@ void PHY_ComposantePion::HealAllHumans()
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposantePion::HealHumans( uint nNbrToChange )
+uint PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, uint nNbrToChange )
 {
     if( *pState_ != PHY_ComposanteState::dead_ )
-        return humans_.HealHumans( nNbrToChange );
+        return humans_.HealHumans( rank, nNbrToChange );
     return 0;
 }
 
@@ -571,10 +571,10 @@ uint PHY_ComposantePion::HealHumans( uint nNbrToChange )
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposantePion::WoundHumans( uint nNbrToChange, const PHY_HumanWound& wound, const PHY_HumanRank* pHumanRank )
+uint PHY_ComposantePion::WoundHumans( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& wound )
 {
     if( *pState_ != PHY_ComposanteState::dead_ )
-        return humans_.WoundHumans( nNbrToChange, wound, pHumanRank );
+        return humans_.WoundHumans( rank, nNbrToChange, wound );
     return 0;    
 }
 

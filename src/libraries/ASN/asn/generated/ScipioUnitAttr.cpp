@@ -3806,11 +3806,11 @@ EXTERN int asn1PE_RecompletementEquipement (ASN1CTXT* ctxt_p, ASN1T_Recompleteme
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
-   /* encode nombre */
+   /* encode nombre_disponible */
 
-   PU_PUSHNAME (ctxt_p, "nombre");
+   PU_PUSHNAME (ctxt_p, "nombre_disponible");
 
-   stat = pe_UnconsInteger (ctxt_p, pvalue->nombre);
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nombre_disponible);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -3841,11 +3841,11 @@ EXTERN int asn1PD_RecompletementEquipement (ASN1CTXT* ctxt_p, ASN1T_Recompleteme
 
    PU_POPNAME (ctxt_p);
 
-   /* decode nombre */
+   /* decode nombre_disponible */
 
-   PU_PUSHNAME (ctxt_p, "nombre");
+   PU_PUSHNAME (ctxt_p, "nombre_disponible");
 
-   stat = pd_UnconsInteger (ctxt_p, &pvalue->nombre);
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nombre_disponible);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -3947,6 +3947,174 @@ EXTERN int asn1PD__SeqOfRecompletementEquipement (ASN1CTXT* ctxt_p, ASN1T__SeqOf
 int ASN1C__SeqOfRecompletementEquipement::Decode ()
 {
    return asn1PD__SeqOfRecompletementEquipement (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  RecompletementPersonnel                                   */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_RecompletementPersonnel::ASN1C_RecompletementPersonnel (
+   ASN1MessageBuffer& msgBuf, ASN1T_RecompletementPersonnel& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_RecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T_RecompletementPersonnel* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_RecompletementPersonnel: start\n");
+
+   /* encode rang */
+
+   PU_PUSHNAME (ctxt_p, "rang");
+
+   stat = asn1PE_EnumHumanRank (ctxt_p, pvalue->rang);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode nombre_disponible */
+
+   PU_PUSHNAME (ctxt_p, "nombre_disponible");
+
+   stat = pe_UnconsInteger (ctxt_p, pvalue->nombre_disponible);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_RecompletementPersonnel: end\n");
+   return (stat);
+}
+
+int ASN1C_RecompletementPersonnel::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_RecompletementPersonnel (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_RecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T_RecompletementPersonnel* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_RecompletementPersonnel: start\n");
+
+   /* decode rang */
+
+   PU_PUSHNAME (ctxt_p, "rang");
+
+   stat = asn1PD_EnumHumanRank (ctxt_p, &pvalue->rang);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode nombre_disponible */
+
+   PU_PUSHNAME (ctxt_p, "nombre_disponible");
+
+   stat = pd_UnconsInteger (ctxt_p, &pvalue->nombre_disponible);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_RecompletementPersonnel: end\n");
+
+   return (stat);
+}
+
+int ASN1C_RecompletementPersonnel::Decode ()
+{
+   return asn1PD_RecompletementPersonnel (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  _SeqOfRecompletementPersonnel                             */
+/*                                                            */
+/**************************************************************/
+
+ASN1C__SeqOfRecompletementPersonnel::ASN1C__SeqOfRecompletementPersonnel (
+   ASN1MessageBuffer& msgBuf, ASN1T__SeqOfRecompletementPersonnel& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE__SeqOfRecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T__SeqOfRecompletementPersonnel* pvalue)
+{
+   int stat = ASN_OK;
+   ASN1UINT xx1;
+
+   rtdiag ("asn1PE__SeqOfRecompletementPersonnel: start\n");
+
+   /* encode length determinant */
+
+   PU_PUSHNAME (ctxt_p, "n");
+
+   stat = pe_Length (ctxt_p, pvalue->n);
+   if (stat < 0) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* encode elements */
+
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      PU_PUSHELEMNAME (ctxt_p, xx1);
+
+      stat = asn1PE_RecompletementPersonnel (ctxt_p, &pvalue->elem[xx1]);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+      PU_POPNAME (ctxt_p);
+   }
+
+   rtdiag ("asn1PE__SeqOfRecompletementPersonnel: end\n");
+   return (stat);
+}
+
+int ASN1C__SeqOfRecompletementPersonnel::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE__SeqOfRecompletementPersonnel (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD__SeqOfRecompletementPersonnel (ASN1CTXT* ctxt_p, ASN1T__SeqOfRecompletementPersonnel* pvalue)
+{
+   int stat = ASN_OK;
+   ASN1UINT xx1;
+
+   rtdiag ("asn1PD__SeqOfRecompletementPersonnel: start\n");
+
+   /* decode length determinant */
+
+   PU_PUSHNAME (ctxt_p, "n");
+
+   stat = pd_Length (ctxt_p, &pvalue->n);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode elements */
+
+   ALLOC_ASN1ARRAY (ctxt_p, pvalue, ASN1T_RecompletementPersonnel);
+
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      PU_PUSHELEMNAME (ctxt_p, xx1);
+
+      stat = asn1PD_RecompletementPersonnel (ctxt_p, &pvalue->elem[xx1]);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_POPNAME (ctxt_p);
+   }
+
+
+   rtdiag ("asn1PD__SeqOfRecompletementPersonnel: end\n");
+
+   return (stat);
+}
+
+int ASN1C__SeqOfRecompletementPersonnel::Decode ()
+{
+   return asn1PD__SeqOfRecompletementPersonnel (mpContext->GetPtr(), &msgData);
 }
 
 /**************************************************************/
@@ -4345,7 +4513,7 @@ EXTERN int asn1PE_MagicActionRecompletementPartiel (ASN1CTXT* ctxt_p, ASN1T_Magi
    if (pvalue->m.personnelsPresent) {
       PU_PUSHNAME (ctxt_p, "personnels");
 
-      stat = asn1PE_Pourcentage (ctxt_p, pvalue->personnels);
+      stat = asn1PE__SeqOfRecompletementPersonnel (ctxt_p, &pvalue->personnels);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
       PU_POPNAME (ctxt_p);
    }
@@ -4441,7 +4609,7 @@ EXTERN int asn1PD_MagicActionRecompletementPartiel (ASN1CTXT* ctxt_p, ASN1T_Magi
    if (pvalue->m.personnelsPresent) {
       PU_PUSHNAME (ctxt_p, "personnels");
 
-      stat = asn1PD_Pourcentage (ctxt_p, &pvalue->personnels);
+      stat = asn1PD__SeqOfRecompletementPersonnel (ctxt_p, &pvalue->personnels);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
       PU_POPNAME (ctxt_p);

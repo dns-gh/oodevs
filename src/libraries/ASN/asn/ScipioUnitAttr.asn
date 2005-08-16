@@ -207,14 +207,20 @@ RecompletementDotationMunition ::= SEQUENCE
 
 RecompletementEquipement ::= SEQUENCE
 {
-    type-equipement     TypeEquipement,
-    nombre              INTEGER
+    type-equipement   TypeEquipement,
+    nombre-disponible INTEGER
+}
+
+RecompletementPersonnel ::= SEQUENCE
+{
+    rang              EnumHumanRank,
+    nombre-disponible INTEGER
 }
 
 MagicActionRecompletementPartiel ::= SEQUENCE
 {
     equipements SEQUENCE OF RecompletementEquipement        OPTIONAL,
-    personnels  Pourcentage                                 OPTIONAL,    
+    personnels  SEQUENCE OF RecompletementPersonnel         OPTIONAL,    
     dotations   SEQUENCE OF RecompletementDotation          OPTIONAL,
     munitions   SEQUENCE OF RecompletementDotationMunition  OPTIONAL
 }

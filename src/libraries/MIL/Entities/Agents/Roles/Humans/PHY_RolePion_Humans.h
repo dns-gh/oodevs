@@ -85,7 +85,7 @@ public:
     bool HasChanged    () const;
 
     void HealAllHumans           ();
-    void ChangeHumansAvailability( MT_Float rRatio );
+    void ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNbrAvailable );
     //@}
 
     //! @name Network
