@@ -45,7 +45,7 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
     pEquiPersoGroupBox_->setFlat( true );
 
     pEquipmentsTable_ = new QTable( 0, 3, pEquiPersoGroupBox_ );
-    pEquipmentsTable_->horizontalHeader()->setLabel( 0, "Equipement" );
+    pEquipmentsTable_->horizontalHeader()->setLabel( 0, tr( "Equipement" ) );
     pEquipmentsTable_->horizontalHeader()->setLabel( 1, tr( "Nombre" ) );
     pEquipmentsTable_->horizontalHeader()->setLabel( 2, tr( "Max" ) );
     pEquipmentsTable_->setColumnWidth( 0, pEquipmentsTable_->columnWidth( 0 ) + 20 );
@@ -54,12 +54,16 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
     pEquipmentsTable_->setColumnReadOnly( 2, true );
     pEquipmentsTable_->setLeftMargin( 0 );
     pEquipmentsTable_->setShowGrid( false );
-    pMainLayout->addWidget( pEquipmentsTable_ );
 
-    QHBox* pPersonalBox = new QHBox( pEquiPersoGroupBox_ );
-    pPersonalCheckBox_ = new QCheckBox( tr( "Personnel" ), pPersonalBox );
-    pPersonalSpinBox_  = new QSpinBox( 0, 100, 1, pPersonalBox );
-    new QLabel( " %", pPersonalBox );
+    pPersonalsTable_ = new QTable( 0, 3, pEquiPersoGroupBox_ );
+    pPersonalsTable_->horizontalHeader()->setLabel( 0, "" );
+    pPersonalsTable_->horizontalHeader()->setLabel( 1, tr( "Personnel" ) );
+    pPersonalsTable_->horizontalHeader()->setLabel( 2, tr( "Quantité" ) );
+    pPersonalsTable_->setColumnWidth( 0, 20 );
+    pPersonalsTable_->setColumnWidth( 2, 60 );
+    pPersonalsTable_->setColumnReadOnly( 1, true );
+    pPersonalsTable_->setLeftMargin( 0 );
+    pPersonalsTable_->setShowGrid( false );
 
     pMainLayout->addWidget( pEquiPersoGroupBox_ );
 
@@ -114,6 +118,7 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
     connect( pDotationsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnDotationChanged( int, int ) ) );
     connect( pMunitionsFamilyTable_, SIGNAL( valueChanged( int, int ) ), SLOT( OnMunitionFamilyChanged( int, int ) ) );
     connect( pEquipmentsTable_     , SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged( int, int ) ) );
+    connect( pPersonalsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnPersonalChanged( int, int ) ) );
     //connect( pMunitionsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnMunitionChanged( int, int ) ) );
 }
 
@@ -165,6 +170,26 @@ void MOS_LogisticSupplyRecompletionDialog::SetAgent( const MOS_Agent& agent )
     pEquipmentsTable_->setItem( 0, 0, new QComboTableItem( pEquipmentsTable_, *pEquipmentsStringList_ ) );
     pEquipmentsTable_->setText( 0, 1, "0" );
     pEquipmentsTable_->setMinimumHeight( pEquipmentsTable_->rowHeight( 0 ) * 4 );
+
+    // initialize personal table
+    pPersonalsTable_->setNumRows( 0 );
+    for( uint eType = 0; eType < ( uint )eNbrHumanRank; ++eType )
+    {
+        uint nPos = pPersonalsTable_->numRows();
+        pPersonalsTable_->insertRows( nPos, 1 );
+        pPersonalsTable_->setItem( nPos, 0, new QCheckTableItem( pPersonalsTable_, 0 ) );
+        pPersonalsTable_->setText( nPos, 1, ENT_Tr::ConvertFromHumanRank( ( E_HumanRank )eType ).c_str() );
+
+        uint nMax = 0;
+        if( eType == eHumanRank_Officier )
+            nMax = sizeof( agent.GetComposition().officiers_ ) / sizeof( uint );
+        else if( eType == eHumanRank_SousOfficer )
+            nMax = sizeof( agent.GetComposition().sousOfficiers_ ) / sizeof( uint );
+        else
+            nMax = sizeof( agent.GetComposition().mdr_ ) / sizeof( uint );
+        pPersonalsTable_->setItem( nPos, 2, new MT::MT_SpinTableItem( pPersonalsTable_, 0, nMax, 1 ) );
+    }
+    pPersonalsTable_->setMinimumHeight( pPersonalsTable_->rowHeight( 0 ) * 5 );
 
     // initialize dotation table
     pDotationsTable_->setNumRows( 0 );
@@ -226,12 +251,6 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
 
     asnMsg.GetAsnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
     asnMsg.GetAsnMsg().action.u.recompletement_partiel = &asnMagicAction;
-
-    if( pPersonalCheckBox_->isChecked() )
-    {
-        asnMagicAction.m.personnelsPresent = 1;
-        asnMagicAction.personnels = pPersonalSpinBox_->value();
-    }
     
     // Equipements
     if( pEquipmentsTable_->numRows() > 1 )
@@ -408,6 +427,21 @@ void MOS_LogisticSupplyRecompletionDialog::OnMunitionFamilyChanged( int nRow, in
         return;
     // check the checkbox on the same row, first cell
     QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pMunitionsFamilyTable_->item( nRow, 0 ) );
+    assert( pCheckTableItem );
+    pCheckTableItem->setChecked( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogisticSupplyRecompletionDialog::OnPersonalChanged
+// Created: SBO 2005-08-16
+// -----------------------------------------------------------------------------
+void MOS_LogisticSupplyRecompletionDialog::OnPersonalChanged( int nRow, int nCol )
+{
+    // do only if "quantity" field has been changed
+    if( nCol != 2 )
+        return;
+    // check the checkbox on the same row, first cell
+    QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pPersonalsTable_->item( nRow, 0 ) );
     assert( pCheckTableItem );
     pCheckTableItem->setChecked( true );
 }

@@ -48,6 +48,7 @@ private slots:
     void OnDotationChanged      ( int nRow, int nCol );
     void OnMunitionFamilyChanged( int nRow, int nCol );
     void OnEquipmentChanged     ( int nRow, int nCol );
+    void OnPersonalChanged      ( int nRow, int nCol );
     //void OnMunitionChanged      ( int nRow, int nCol );
     //@}
 
@@ -65,9 +66,7 @@ private:
     QTable*          pEquipmentsTable_;
     QStringList*     pEquipmentsStringList_;
     T_IntVector      equipmentsMax_;
-
-    QCheckBox*       pPersonalCheckBox_;
-    QSpinBox*        pPersonalSpinBox_;
+    QTable*          pPersonalsTable_;
 
     QGroupBox*       pDotationsGroupBox_;
     QTable*          pDotationsTable_;
