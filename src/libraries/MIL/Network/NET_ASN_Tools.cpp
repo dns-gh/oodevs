@@ -746,21 +746,11 @@ void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
 //=============================================================================
 
 
-//-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::Delete
-// Created: NLD 2003-07-23
-//-----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_Localisation& asnLoc )
-{
-    if( asnLoc.vecteur_point.n > 0 )
-        delete [] asnLoc.vecteur_point.elem;
-}
-
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
-// Created: NLD 2004-12-29
+// Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeAgent&  asn )
+void NET_ASN_Tools::Delete( ASN1T_ListAgent& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -768,26 +758,99 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeAgent&  asn )
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
-// Created: NLD 2004-12-29
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListAutomate& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_Polygon& asn )
+{
+    if( asn.vecteur_point.n > 0 )
+        delete [] asn.vecteur_point.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListPolygon& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[ i ] );
+        delete [] asn.elem;
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListPoint& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[ i ] );
+        delete [] asn.elem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListItineraire& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[ i ] );
+        delete [] asn.elem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListLocalisation& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[i] );
+        delete [] asn.elem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-10
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeAgent& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
-}
-//-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::Delete
-// Created: AGN 03-08-18
-//-----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListLocalisation& asnLocalisation )
-{
-    if( asnLocalisation.n > 0 )
-    {
-        for( uint i = 0; i < asnLocalisation.n; ++i )
-            Delete( asnLocalisation.elem[i] );
-
-        delete [] asnLocalisation.elem;
-    }
 }
 
 // =============================================================================
