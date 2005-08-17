@@ -44,13 +44,15 @@ DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points, cons
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( queryMaker )
     , fuseau_            () //$$$ Debile
+    , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
 {
-    fuseau_ = queryMaker.GetFuseau();
+    fuseau_         = queryMaker.GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
 
     T_PointVector pointsTmp;
     pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
@@ -66,13 +68,16 @@ DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( queryMaker )
     , fuseau_            () //$$$ Debile
+    , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
     , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
 {
-    fuseau_ = queryMaker.GetFuseau();
+    fuseau_         = queryMaker.GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
+
     T_PointVector pointsTmp;
     pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
     pointsTmp.push_back( vPosEnd );
@@ -87,6 +92,7 @@ DEC_Path::DEC_Path( const DEC_Path& rhs )
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( rhs.queryMaker_ )
     , fuseau_            () //$$$ Debile
+    , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( rhs.vDirDanger_ )
  //   , unitSpeeds_        ( rhs.unitSpeeds_ ) $$$ TODO
     , unitSpeeds_        ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
@@ -94,7 +100,8 @@ DEC_Path::DEC_Path( const DEC_Path& rhs )
     , pathType_          ( rhs.pathType_ )
     , bDecPointsInserted_( false )
 {
-    fuseau_ = rhs.fuseau_;
+    fuseau_         = rhs.fuseau_;
+    automateFuseau_ = rhs.automateFuseau_;
 
     T_PointVector pointsTmp;
     rhs.GetPathPoints( pointsTmp );
@@ -115,7 +122,8 @@ DEC_Path::~DEC_Path()
         delete *itPoint;
     }
     resultList_.clear();
-    fuseau_.Reset();
+    fuseau_        .Reset();
+    automateFuseau_.Reset();
 }
 
 //=============================================================================
@@ -765,11 +773,3 @@ void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObje
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Path::GetAutomataFuseau
-// Created: AGE 2005-06-16
-// -----------------------------------------------------------------------------
-const MIL_Fuseau& DEC_Path::GetAutomataFuseau() const
-{
-    return queryMaker_.GetAutomate().GetFuseau();
-}

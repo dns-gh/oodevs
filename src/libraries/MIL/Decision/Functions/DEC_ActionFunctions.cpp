@@ -37,10 +37,7 @@ void DEC_ActionFunctions::StopAction( DIA_Call_ABC& call, MIL_AgentPion& callerA
 
     PHY_Action_ABC* pAction = call.GetParameter( 0 ).ToUserPtr( pAction );
     if( !pAction )
-    {
-        assert( false );
         return;
-    }
     assert( callerAgent.HasAction( *pAction ) );
     MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDebug().NotifyActionStopped( call, callerAgent, *pAction );
     delete pAction;

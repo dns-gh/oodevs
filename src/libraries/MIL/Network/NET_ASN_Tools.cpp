@@ -2057,7 +2057,8 @@ bool NET_ASN_Tools::CopyDirection( const DIA_Variable_ABC& diaFrom, MT_Vector2D&
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::ResetDirection( MT_Vector2D& container, DIA_Variable_ABC& dia )
 {
-    container.Reset();
+//    container.Reset();
+    container = MT_Vector2D( 0., 1. ); //$$$
     dia.SetValue( &container, &DEC_Tools::GetTypeDirection() );
 }
 

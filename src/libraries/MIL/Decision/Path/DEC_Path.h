@@ -152,6 +152,7 @@ private:
     // Path calculation parameters
     DEC_PathType                 pathType_;
     MIL_Fuseau                   fuseau_;
+    MIL_Fuseau                   automateFuseau_;
     MT_Vector2D                  vDirDanger_;
     PHY_Speeds                   unitSpeeds_;
     MT_Float                     rMaxSlope_;

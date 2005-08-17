@@ -52,6 +52,16 @@ MT_Float DEC_Path::GetUnitMaxSlope() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Path::GetAutomataFuseau
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+inline
+const MIL_Fuseau& DEC_Path::GetAutomataFuseau() const
+{
+    return automateFuseau_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Path::GetFuseau
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------

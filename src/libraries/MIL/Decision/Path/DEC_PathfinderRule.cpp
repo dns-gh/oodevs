@@ -102,8 +102,8 @@ void DEC_PathfinderRule::SetMaximumEnemyCost( MT_Float rNewCost )
 // -----------------------------------------------------------------------------
 void DEC_PathfinderRule::SetDangerDirection( const MT_Vector2D& dangerDirection, MT_Float rBaseCost, MT_Float rLinearCost )
 {
-    dangerDirection_ = dangerDirection;
-    rDangerDirectionBaseCost_ = rBaseCost;
+    dangerDirection_            = dangerDirection;
+    rDangerDirectionBaseCost_   = rBaseCost;
     rDangerDirectionLinearCost_ = rLinearCost;
 }
 
@@ -137,7 +137,7 @@ void DEC_PathfinderRule::SetAvoidedTerrain( const TerrainData& data, MT_Float rC
 // -----------------------------------------------------------------------------
 void DEC_PathfinderRule::SetAltitudePreference( MT_Float rMaxSlope, MT_Float rCostPerMeter )
 {
-    rMaxSlope_ = rMaxSlope;
+    rMaxSlope_             = rMaxSlope;
     rAltitudeCostPerMeter_ = rCostPerMeter;
 }
 
@@ -147,7 +147,7 @@ void DEC_PathfinderRule::SetAltitudePreference( MT_Float rMaxSlope, MT_Float rCo
 // -----------------------------------------------------------------------------
 void DEC_PathfinderRule::SetFuseau( const MIL_Fuseau& fuseau, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn )
 {
-    pFuseau_ = &fuseau;
+    pFuseau_                = &fuseau;
     rMaximumFuseauDistance_ = rMaxDistanceOut;
     rComfortFuseauDistance_ = rComfortDistanceIn;
     rFuseauCostPerMeterOut_ = rCostPerMeterOut; 
@@ -160,7 +160,7 @@ void DEC_PathfinderRule::SetFuseau( const MIL_Fuseau& fuseau, MT_Float rMaxDista
 // -----------------------------------------------------------------------------
 void DEC_PathfinderRule::SetAutomataFuseau( const MIL_Fuseau& fuseau, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut )
 {
-    pAutomateFuseau_ = &fuseau;
+    pAutomateFuseau_                = &fuseau;
     rMaximumAutomataFuseauDistance_ = rMaxDistanceOut;
     rAutomataFuseauCostPerMeterOut_ = rCostPerMeterOut; 
 }
