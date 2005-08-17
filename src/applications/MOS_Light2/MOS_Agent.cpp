@@ -949,10 +949,10 @@ void MOS_Agent::WriteODB( MT_XXmlOutputArchive& archive )
 
     if( bAutomate_ )
     {
+		archive.WriteField( "Embraye", bEmbraye_ );
         archive.Section( "LiensHierarchiques" );
         archive.WriteField( "Armee", pGtia_->GetTeam().GetName() );
         archive.WriteField( "GroupeConnaissance", pGtia_->GetID() );
-        archive.WriteField( "Embraye", bEmbraye_ );
         if( nTC2_ != (uint)0 )
         {
             archive.Section( "TC2" );
