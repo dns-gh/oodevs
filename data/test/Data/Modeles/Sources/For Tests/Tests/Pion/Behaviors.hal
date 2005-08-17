@@ -373,7 +373,8 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
     {
         //DEC_Perception_Furtivite( 1 );
         DEC_Debug( "MIS_Pion_Test_MoveTo : on spontaneous end" );
-        DEC_StopAction( currentAction );
+        if( currentAction != 0 )
+          DEC_StopAction( currentAction );
         
         DEC_AutoriserEvacuationAutomatiqueBlesses( myself );
     }
@@ -419,7 +420,8 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
         if( repObjet != 0 )
         {
-            DEC_StopAction( currentAction );
+            if( currentAction != 0 )
+              DEC_StopAction( currentAction );
             currentAction = DEC_StartReprendreTravauxObjet( nState, repObjet );
             DEC_Debug( "MIS_Pion_Test_CreateObject : connaissance retournée" );
         }
@@ -429,7 +431,8 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
     on spontaneous end:
     {
         DEC_Debug( "MIS_Pion_Test_CreateObject : on spontaneous end" );
-        DEC_StopAction( currentAction );
+        if( currentAction != 0 )
+          DEC_StopAction( currentAction );
         //DEC_Perception_DesactiverDetectionObjetLocalisation( perception );
         //perception = 0;
 
@@ -454,7 +457,8 @@ behavior MIS_Pion_Test_DestroyObject( T_Mission_Pion_Test_DestroyObject mission,
     on spontaneous end:
     {
         DEC_Debug( "MIS_Pion_Test_DestroyObject : on spontaneous end" );
-        DEC_StopAction( currentAction );
+        if( currentAction != 0 )
+          DEC_StopAction( currentAction );
     }    
 }
 
@@ -666,7 +670,8 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
     on spontaneous end:
     {
         DEC_Debug( "ACT_TirIndirect on spontaneous end" );
-        DEC_StopAction( currentAction );
+        if( currentAction != 0 )
+          DEC_StopAction( currentAction );
     }     
     
 }
@@ -756,7 +761,8 @@ behavior BEH_DirectFire( T_ListeConnaissancesAgent targets )
 {
     when updated:
     {
-        action ACT_TirDirect( DEC_UserTypeList_GetAt( targets, 0 ), false );
+        if( DIA_Size( targets ) >  0 )
+          action ACT_TirDirect( DEC_UserTypeList_GetAt( targets, 0 ), false );
            
 /*            if( DIA_Size( targets ) == 2 )
             {
