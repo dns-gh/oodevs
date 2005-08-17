@@ -745,7 +745,6 @@ void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
 // MISC TOOLS
 //=============================================================================
 
-
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
@@ -853,10 +852,22 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
         delete [] asn.elem;
 }
 
-// =============================================================================
-// 
-// =============================================================================
-
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: NLD 2005-08-17
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+        {
+            ASN1T_MissionGenObject* pGenObject = &asn.elem[ i ];
+            delete pGenObject;
+        }
+        delete [] asn.elem;
+    }
+}
 
 // =============================================================================
 // MISSION PARAMETERS : KNOWLEDGE OBJECT DIA - SIM - ASN
