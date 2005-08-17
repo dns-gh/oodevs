@@ -21,7 +21,10 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
-    - NLD - posteReflexe
+
+Version 0.116 [17/08/2005] - Codename 'himaix'
+    - NLD - Les pions débarqués en mouvement sont maintenant en posture 'posteReflexe' à la place de 'mouvement'
+                (bDummy pour l'infanterie ... a virer le jour ou le débarquement n'existera plus (1 pion INF => 2 pions))
     - NLD / SBO - Update de l'action magique de recomplétement 'partiel' => gestion plus fine des équipements et des humains
     - AGE - Il est maintenant possible de spécifier le comportement du pathfind vis à vis du fuseau d'automate
     - NLD - Les fonctions de Tir direct (DEC_StartTirDirectXXX) prennent maintenant en paramètre optionnel le type de munition à utiliser.
