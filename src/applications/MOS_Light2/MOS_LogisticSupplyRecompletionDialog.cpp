@@ -34,6 +34,7 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
     , pEquipmentsTable_      ( 0 )
     , pEquipmentsStringList_ ( 0 )
     , pDotationsTable_       ( 0 )
+    , pPersonalsTable_       ( 0 )
 {
     resize( 280, 430 );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );

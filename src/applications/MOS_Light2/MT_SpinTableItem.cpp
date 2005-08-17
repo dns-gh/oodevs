@@ -34,7 +34,7 @@ MT_SpinTableItem::MT_SpinTableItem( QTable* pTable )
     , nMaxValue_ ( 99 ) //-| default values from QRangeControl used by QSpinBox
     , nStep_     ( 1  ) //-|
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ MT_SpinTableItem::MT_SpinTableItem( QTable* pTable, int nMinValue, int nMaxValue
     , nMaxValue_ ( nMaxValue )
     , nStep_     ( nStep     )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ MT_SpinTableItem::MT_SpinTableItem( QTable* pTable, int nMinValue, int nMaxValue
 // -----------------------------------------------------------------------------
 MT_SpinTableItem::~MT_SpinTableItem()
 {
-
+    // NOTHING
 }
 
 
@@ -67,20 +67,16 @@ MT_SpinTableItem::~MT_SpinTableItem()
 // -----------------------------------------------------------------------------
 QWidget* MT_SpinTableItem::createEditor() const
 {
+    QString strValue = text();
     const_cast< MT_SpinTableItem * >( this )->pSpinBox_ = new QSpinBox( nMinValue_, nMaxValue_, nStep_, table()->viewport(), "mt_spintableitem" );
-    //const_cast< MT_SpinTableItem * >( this )->pSpinBox_ = new QSpinBox( table()->viewport() );
     QObject::connect( pSpinBox_, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
 	
+    if( !strValue.isNull() )
+        pSpinBox_->setValue( strValue.toInt() );
+    else
+        pSpinBox_->setValue( 0 );
+
     return pSpinBox_;
-/*
-	if(! temp.isNull()) {
-		sb->setValue(temp.toInt());
-	} 
-	else {
-		sb->setValue(1);
-	}
-	return sb;
-*/
 }
 
 // -----------------------------------------------------------------------------
@@ -91,11 +87,7 @@ void MT_SpinTableItem::setContentFromEditor( QWidget* pWidget )
 {
     QSpinBox* pSpinBox = static_cast< QSpinBox* >( pWidget );
     if( pSpinBox )
-    {   
         setText( pSpinBox->text() );
-    }
     else
-    {
         QTableItem::setContentFromEditor( pWidget );
-    }
 }
