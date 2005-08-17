@@ -131,13 +131,14 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_DIAFunctions::IsNight            , "DEC_Nuit"            );
 
     // Parameters copy
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyDirection          , "DEC_Copie_Direction"             );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPoint              , "DEC_Copie_Point"                 );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListPoint          , "DEC_Copie_ListePoints"           );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToListPoint   , "DEC_Copie_PointDansListePoints"  );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisation       , "DEC_Copie_Localisation"          );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToLocalisation, "DEC_Copie_PointDansLocalisation" );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListLocalisation   , "DEC_Copie_ListeLocalisations"    );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyDirection                     , "DEC_Copie_Direction"                          );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPoint                         , "DEC_Copie_Point"                              );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListPoint                     , "DEC_Copie_ListePoints"                        );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToListPoint              , "DEC_Copie_PointDansListePoints"               );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisation                  , "DEC_Copie_Localisation"                       );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyPointToLocalisation           , "DEC_Copie_PointDansLocalisation"              );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyListLocalisation              , "DEC_Copie_ListeLocalisations"                 );
+    pFuncTable->RegisterFunction( DEC_DIAFunctions::CopyLocalisationToListLocalisation, "DEC_Copie_LocalisationDansListeLocalisations" );
 
     // User type lists manipulation
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_GetAt   , "DEC_UserTypeList_GetAt"     );

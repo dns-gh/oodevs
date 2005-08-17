@@ -72,6 +72,30 @@ void DEC_DIAFunctions::PathToString( DIA_Call_ABC& call )
 //=============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_DIAFunctions::CopyLocalisationToListLocalisation
+// Created: NLD 2005-08-17
+// -----------------------------------------------------------------------------
+void DEC_DIAFunctions::CopyLocalisationToListLocalisation( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeLocalisation      ( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 1 ) ) );
+
+    const TER_Localisation* pLocSource = call.GetParameter( 0 ).ToUserPtr( pLocSource );
+    DIA_Variable_ObjectList& diaListTo = static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 1 ) );
+
+    assert( pLocSource) ;
+
+    TER_Localisation* pNewLoc = new TER_Localisation(); //$$$$ RAM
+    pNewLoc->Reset( *pLocSource );
+
+    DIA_Variable_Void* pVar = new DIA_Variable_Void();
+    pVar->SetValue( pNewLoc, &DEC_Tools::GetTypeLocalisation() );
+
+    T_ObjectVariableVector&  container = const_cast < T_ObjectVariableVector&  >( diaListTo.GetContainer() );
+    container.push_back( pVar );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::CopyListLocalisation
 // Created: NLD 2004-05-18
 // -----------------------------------------------------------------------------

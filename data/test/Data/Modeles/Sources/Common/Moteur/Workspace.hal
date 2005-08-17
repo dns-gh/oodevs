@@ -42,13 +42,14 @@ signatures
     R                    DEC_DureePasDeTemps();
     B                    DEC_Nuit           ();
 
-    V                    DEC_Copie_Direction            ( U /*T_Direction src*/         , U /*T_Direction dest*/         );
-    V                    DEC_Copie_Point                ( U /*T_Point src*/             , U /*T_Point dest*/             );
-    V                    DEC_Copie_ListePoints          ( U /*T_ListePoints src*/       , U /*T_ListePoints dest*/       ); 
-    V                    DEC_Copie_PointDansListePoints ( U /*T_Point src*/             , U /*T_ListePoints dest*/       ); 
-    V                    DEC_Copie_Localisation         ( U /*T_Localisation src*/      , U /*T_Localisation dest*/      ); 
-    V                    DEC_Copie_PointDansLocalisation( U /*T_Point src*/             , U /*T_Localisation dest*/      ); 
-    V                    DEC_Copie_ListeLocalisations   ( S /*T_ListeLocalisations src*/, S /*T_ListeLocalisations dst*/ );
+    V                    DEC_Copie_Direction                         ( U /*T_Direction src*/         , U /*T_Direction dest*/         );
+    V                    DEC_Copie_Point                             ( U /*T_Point src*/             , U /*T_Point dest*/             );
+    V                    DEC_Copie_ListePoints                       ( U /*T_ListePoints src*/       , U /*T_ListePoints dest*/       ); 
+    V                    DEC_Copie_PointDansListePoints              ( U /*T_Point src*/             , U /*T_ListePoints dest*/       ); 
+    V                    DEC_Copie_Localisation                      ( U /*T_Localisation src*/      , U /*T_Localisation dest*/      ); 
+    V                    DEC_Copie_PointDansLocalisation             ( U /*T_Point src*/             , U /*T_Localisation dest*/      ); 
+    V                    DEC_Copie_ListeLocalisations                ( S /*T_ListeLocalisations src*/, S /*T_ListeLocalisations dst*/ );
+    V                    DEC_Copie_LocalisationDansListeLocalisations( U /*T_Localisation src*/      , S /*T_ListeLocalisations dst*/ );    
 
     // Manipulation de listes
     U                    DEC_UserTypeList_GetAt    ( S /*liste*/, R /*elt idx*/ ); // Pour toutes les listes de UserTypes

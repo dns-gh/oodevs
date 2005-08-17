@@ -21,6 +21,10 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD / SBO - Bug fix : crash dans thread pathfind quand destruction de la mission automate alors qu'un calcul est en cours
+            => Le fuseau automate est maintenant copié dans DEC_Path
+    - NLD / SBO - Bug fix : les directions par défaut sont maintenant valides (au nord)
+    - NLD - Nouvelle fonction DEC : DEC_Copie_LocalisationDansListeLocalisations()
 
 Version 0.116 [17/08/2005] - Codename 'himaix'
     - NLD - Les pions débarqués en mouvement sont maintenant en posture 'posteReflexe' à la place de 'mouvement'

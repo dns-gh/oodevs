@@ -49,13 +49,14 @@ public:
     static void IsNight            ( DIA_Call_ABC& );
 
     // Parameters copy
-    static void CopyDirection            ( DIA_Call_ABC& call );
-    static void CopyPoint                ( DIA_Call_ABC& call );
-    static void CopyListPoint            ( DIA_Call_ABC& call );
-    static void CopyPointToListPoint     ( DIA_Call_ABC& call );
-    static void CopyLocalisation         ( DIA_Call_ABC& call );
-    static void CopyPointToLocalisation  ( DIA_Call_ABC& call );
-    static void CopyListLocalisation     ( DIA_Call_ABC& call );
+    static void CopyDirection                     ( DIA_Call_ABC& call );
+    static void CopyPoint                         ( DIA_Call_ABC& call );
+    static void CopyListPoint                     ( DIA_Call_ABC& call );
+    static void CopyPointToListPoint              ( DIA_Call_ABC& call );
+    static void CopyLocalisation                  ( DIA_Call_ABC& call );
+    static void CopyPointToLocalisation           ( DIA_Call_ABC& call );
+    static void CopyListLocalisation              ( DIA_Call_ABC& call );
+    static void CopyLocalisationToListLocalisation( DIA_Call_ABC& call );
 
 	// DIA Thing management
 	static void CreateDIAThing ( DIA_Call_ABC& call );	
