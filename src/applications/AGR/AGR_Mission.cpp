@@ -280,7 +280,7 @@ void AGR_Mission::GenerateTesterClassHeader( const AGR_Workspace& workspace, con
     // replace the mission name
     workspace.ReplaceInString( strBaseContent, "$MissionName$", strMissionBaseName );
 
-    std::string strResultFileName =  "./Missions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".h";
+    std::string strResultFileName =  "./TesterMissions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".h";
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );
@@ -338,7 +338,7 @@ void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const 
     workspace.ReplaceInString( strBaseContent, "$CleanSerializedMembers$", strMemberCleanSerialization );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    std::string strResultFileName =  "./Missions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".cpp";
+    std::string strResultFileName =  "./TesterMissions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".cpp";
     workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );  
 }
 

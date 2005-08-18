@@ -61,11 +61,13 @@ void Mission_Automat_ASA_DefendreZone::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
+    const T_PositionVector& positionsSections_ = pTarget_->GetTestParam_PointList();
 
     ASN_Tools::CopyPolygon( zone_, asnMission.zone );
-    ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.angle );
+    ASN_Tools::CopyPointList( positionsSections_, asnMission.positions_sections );
 
     delete &zone_;
+    delete &positionsSections_;
 
 }
 
@@ -79,6 +81,7 @@ void Mission_Automat_ASA_DefendreZone::Clean()
     ASN1T_Mission_Automate_ASA_DefendreZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_zone;
 
     ASN_Tools::Delete( asnMission.zone );
+    ASN_Tools::Delete( asnMission.positions_sections );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

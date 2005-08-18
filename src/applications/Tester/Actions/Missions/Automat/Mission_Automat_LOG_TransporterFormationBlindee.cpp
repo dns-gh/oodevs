@@ -63,17 +63,14 @@ void Mission_Automat_LOG_TransporterFormationBlindee::Serialize()
     const T_IdVector& unitesATransporter_ = pTarget_->GetTestParam_AgentList();
     const Position& pointRendezVous_ = pTarget_->GetTestParam_Point();
     const Position& pointDestination_ = pTarget_->GetTestParam_Point();
-    const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
     ASN_Tools::CopyAgentList( unitesATransporter_, asnMission.unites_a_transporter );
     ASN_Tools::CopyPoint( pointRendezVous_, asnMission.point_rendez_vous );
     ASN_Tools::CopyPoint( pointDestination_, asnMission.point_destination );
-    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
 
     delete &unitesATransporter_;
     delete &pointRendezVous_;
     delete &pointDestination_;
-    delete &itineraire_;
 
 }
 
@@ -89,7 +86,6 @@ void Mission_Automat_LOG_TransporterFormationBlindee::Clean()
     ASN_Tools::Delete( asnMission.unites_a_transporter );
     ASN_Tools::Delete( asnMission.point_rendez_vous );
     ASN_Tools::Delete( asnMission.point_destination );
-    ASN_Tools::Delete( asnMission.itineraire );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

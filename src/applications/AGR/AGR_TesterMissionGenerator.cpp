@@ -49,10 +49,10 @@ AGR_TesterMissionGenerator::~AGR_TesterMissionGenerator()
 // -----------------------------------------------------------------------------
 void AGR_TesterMissionGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/Missions" );
-    MT_MakeDir( strOutputPath + "/Missions/Pawn" );
-    MT_MakeDir( strOutputPath + "/Missions/Automat" );
-    MT_MakeDir( strOutputPath + "/Missions/Order" );
+    MT_MakeDir( strOutputPath + "/TesterMissions" );
+    MT_MakeDir( strOutputPath + "/TesterMissions/Pawn" );
+    MT_MakeDir( strOutputPath + "/TesterMissions/Automat" );
+    MT_MakeDir( strOutputPath + "/TesterMissions/Order" );
 
     std::cout << "Generating TESTER mission files" << std::endl;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )

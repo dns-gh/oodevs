@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-17 - 16:32:41
+// Generated: 2005-08-18 - 18:12:10
 // =============================================================================
 class Mission_Pawn_ABC_ArmerPIA : public Mission_Pawn_ABC
 {

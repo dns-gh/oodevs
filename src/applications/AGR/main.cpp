@@ -10,8 +10,8 @@
 #include "AGR_EnumGenerator.h"
 #include "AGR_Adn2Generator.h"
 #include "AGR_FichesMissionsGenerator.h"
-//#include "AGR_TesterMissionGenerator.h"
-//#include "AGR_TesterProjectGenerator.h"
+#include "AGR_TesterMissionGenerator.h"
+#include "AGR_TesterProjectGenerator.h"
 
 #include "MT_Tools/MT_Version.h"
 #include <windows.h>
@@ -58,17 +58,17 @@ int main( int /*argc*/, char** /*argv*/ )
             workspace.Read( itFiles->fileName_ );
 
         std::vector< AGR_Generator_ABC* > generators;
-        generators.push_back( new AGR_MilMissionGenerator() );
+        /*generators.push_back( new AGR_MilMissionGenerator() );
         generators.push_back( new AGR_MilFragOrderGenerator() );
         generators.push_back( new AGR_MilProjectGenerator() );
         generators.push_back( new AGR_Mos2Generator() );
         generators.push_back( new AGR_HalGenerator() );
         generators.push_back( new AGR_MosGenerator() );
         generators.push_back( new AGR_EnumGenerator() );
-        generators.push_back( new AGR_Adn2Generator() );
+        generators.push_back( new AGR_Adn2Generator() );*/
         generators.push_back( new AGR_FichesMissionsGenerator() );
-//        generators.push_back( new AGR_TesterMissionGenerator() );
-//        generators.push_back( new AGR_TesterProjectGenerator() );
+        generators.push_back( new AGR_TesterMissionGenerator() );
+        generators.push_back( new AGR_TesterProjectGenerator() );
 
         MT_MakeDir( strOutputPath );        
         for( std::vector< AGR_Generator_ABC* >::iterator it = generators.begin(); it != generators.end(); ++it )

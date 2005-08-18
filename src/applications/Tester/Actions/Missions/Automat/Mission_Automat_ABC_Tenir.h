@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-17 - 16:32:40
+// Generated: 2005-08-18 - 18:12:10
 // =============================================================================
 class Mission_Automat_ABC_Tenir : public Mission_Automat_ABC
 {

@@ -21,6 +21,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+
+Version 0.117 [18/08/2005] - Codename 'ghost != fantôme (TM)'
     - NLD / SBO - Bug fix : crash dans thread pathfind quand destruction de la mission automate alors qu'un calcul est en cours
             => Le fuseau automate est maintenant copié dans DEC_Path
     - NLD / SBO - Bug fix : les directions par défaut sont maintenant valides (au nord)
@@ -31,7 +33,7 @@ Next Version - Codename ''
     - NLD - Mise à jour missions ALAT / CIRCU
     - NLD - Bug fix : le point 'sur lima' n'était plus ajouté + bug sur point 'avant lima'
     - NLD - Ajout du compte rendu 'Materiel réparé sur place' envoyé par le moteur
-    - NLD - Gestion des 'pions fantômes' - 
+    - NLD - Gestion des 'pions fantômes' 
               * Rappel : les 'pions fantômes' de la DSRO sont les pions 'morts' (donc caché de l'interface Thales) car leurs equipements 
                          sont tous dans la chaine maintenance. Au retour de la maintenance, ces pion réapparaissent dans l'interface Thales
                          car il ne sont plus 'morts'. Accessoirement, ils réapparaissent très loin de leur automate, et donc ralentissent 
