@@ -60,12 +60,18 @@ void Mission_Pawn_ALAT_Attaquer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_attaquer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_attaquer = &asnMission;
 
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
     ASN_Tools::CopyNatureAtlas( pTarget_->GetTestParam_NatureAtlas(), asnMission.cibles_prioritaires );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
+
+    delete &pointRegroupement_;
+    delete &plotsRavitaillement_;
 
 }
 

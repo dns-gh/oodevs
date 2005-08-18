@@ -60,7 +60,9 @@ void Mission_Pawn_NBC_ReconnaitreUnSiteROTA::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_nbc_reconnaitre_un_site_rota;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_un_site_rota = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.site_ROTA );
+
 
 }
 

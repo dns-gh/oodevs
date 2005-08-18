@@ -60,7 +60,11 @@ void Mission_Automat_RENS_ROIM_SDTI_RenseignerSur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_roim_sdti_renseigner_sur;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_roim_sdti_renseigner_sur = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.ficelle_de_vole );
+    const Path& ficelleDeVole_ = pTarget_->GetTestParam_Path();
+
+    ASN_Tools::CopyPath( ficelleDeVole_, asnMission.ficelle_de_vole );
+
+    delete &ficelleDeVole_;
 
 }
 

@@ -60,7 +60,11 @@ void Mission_Automat_SeFaireTransporter::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_se_faire_transporter;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_se_faire_transporter = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_embarquement );
+    const Location& zoneEmbarquement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneEmbarquement_, asnMission.zone_embarquement );
+
+    delete &zoneEmbarquement_;
 
 }
 

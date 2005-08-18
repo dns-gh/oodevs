@@ -60,7 +60,9 @@ void Mission_Pawn_ABC_Fixer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_fixer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_fixer = &asnMission;
 
+
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.unite_a_fixer );
+
 
 }
 

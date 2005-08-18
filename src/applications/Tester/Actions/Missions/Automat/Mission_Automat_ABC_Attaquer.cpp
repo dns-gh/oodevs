@@ -61,6 +61,8 @@ void Mission_Automat_ABC_Attaquer::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_attaquer = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

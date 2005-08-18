@@ -60,8 +60,14 @@ void Mission_Automat_ASA_HAWK_DefendreSite::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_defendre_site;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_site = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
-    ASN_Tools::CopyPointList( pTarget_->GetTestParam_PointList(), asnMission.positions_sections );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+    const T_PositionVector& positionsSections_ = pTarget_->GetTestParam_PointList();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+    ASN_Tools::CopyPointList( positionsSections_, asnMission.positions_sections );
+
+    delete &zone_;
+    delete &positionsSections_;
 
 }
 
@@ -75,6 +81,7 @@ void Mission_Automat_ASA_HAWK_DefendreSite::Clean()
     ASN1T_Mission_Automate_ASA_HAWK_DefendreSite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_site;
 
     ASN_Tools::Delete( asnMission.zone );
+    ASN_Tools::Delete( asnMission.positions_sections );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

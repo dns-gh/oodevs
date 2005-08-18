@@ -60,13 +60,21 @@ void Mission_Pawn_ALAT_Couvrir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_couvrir;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_couvrir = &asnMission;
 
+    const T_IdVector& unitesACouvrir_ = pTarget_->GetTestParam_AgentList();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
     ASN_Tools::CopyNatureAtlas( pTarget_->GetTestParam_NatureAtlas(), asnMission.cibles_prioritaires );
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.unites_a_couvrir );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    ASN_Tools::CopyAgentList( unitesACouvrir_, asnMission.unites_a_couvrir );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
+
+    delete &unitesACouvrir_;
+    delete &pointRegroupement_;
+    delete &plotsRavitaillement_;
 
 }
 
@@ -79,6 +87,7 @@ void Mission_Pawn_ALAT_Couvrir::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_couvrir );
     ASN1T_Mission_Pion_ALAT_Couvrir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_couvrir;
 
+    ASN_Tools::Delete( asnMission.unites_a_couvrir );
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );
 

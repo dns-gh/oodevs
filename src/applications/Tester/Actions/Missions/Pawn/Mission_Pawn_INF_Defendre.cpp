@@ -60,8 +60,12 @@ void Mission_Pawn_INF_Defendre::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_defendre;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_defendre = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_a_defendre );
+    const Position& pointADefendre_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointADefendre_, asnMission.point_a_defendre );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.preparer_terrain );
+
+    delete &pointADefendre_;
 
 }
 

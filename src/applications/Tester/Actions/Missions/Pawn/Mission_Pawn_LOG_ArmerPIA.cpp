@@ -60,7 +60,11 @@ void Mission_Pawn_LOG_ArmerPIA::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_armer_pia;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_armer_pia = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point );
+    const Position& point_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( point_, asnMission.point );
+
+    delete &point_;
 
 }
 

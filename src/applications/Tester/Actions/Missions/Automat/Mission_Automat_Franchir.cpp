@@ -60,8 +60,12 @@ void Mission_Automat_Franchir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_franchir;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_franchir = &asnMission;
 
+    const Location& zoneArrivee_ = pTarget_->GetTestParam_Polygon();
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.pont_flottant );
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_arrivee );
+    ASN_Tools::CopyPolygon( zoneArrivee_, asnMission.zone_arrivee );
+
+    delete &zoneArrivee_;
 
 }
 

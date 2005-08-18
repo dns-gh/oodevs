@@ -60,8 +60,14 @@ void Mission_Pawn_JOINT_AIR_EffectuerRaid::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_joint_air_effectuer_raid;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_air_effectuer_raid = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+
+    delete &itineraire_;
+    delete &zone_;
 
 }
 

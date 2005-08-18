@@ -60,9 +60,13 @@ void Mission_Pawn_ASS_AcquerirLanceursEni::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_acquerir_lanceurs_eni;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_acquerir_lanceurs_eni = &asnMission;
 
-    ASN_Tools::CopyPolygonList( pTarget_->GetTestParam_PolygonList(), asnMission.zones_a_observer );
+    const T_LocationVector& zonesAObserver_ = pTarget_->GetTestParam_PolygonList();
+
+    ASN_Tools::CopyPolygonList( zonesAObserver_, asnMission.zones_a_observer );
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.zone_implantation );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.menance_roem );
+
+    delete &zonesAObserver_;
 
 }
 
@@ -75,6 +79,7 @@ void Mission_Pawn_ASS_AcquerirLanceursEni::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_ass_acquerir_lanceurs_eni );
     ASN1T_Mission_Pion_ASS_AcquerirLanceursEni& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_acquerir_lanceurs_eni;
 
+    ASN_Tools::Delete( asnMission.zones_a_observer );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

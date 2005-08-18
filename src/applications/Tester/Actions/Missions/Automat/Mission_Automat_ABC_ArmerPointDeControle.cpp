@@ -60,7 +60,11 @@ void Mission_Automat_ABC_ArmerPointDeControle::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_armer_point_de_controle;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_de_controle );
+    const Location& zoneDeControle_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneDeControle_, asnMission.zone_de_controle );
+
+    delete &zoneDeControle_;
 
 }
 

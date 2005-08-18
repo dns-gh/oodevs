@@ -60,9 +60,13 @@ void Mission_Pawn_GEN_RealiserFosseAC::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_fosse_ac;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_fosse_ac = &asnMission;
 
-    ASN_Tools::CopyLocation( pTarget_->GetTestParam_Location(), asnMission.pos_obstacle );
+    const Location& posObstacle_ = pTarget_->GetTestParam_Location();
+
+    ASN_Tools::CopyLocation( posObstacle_, asnMission.pos_obstacle );
     ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 1 ), asnMission.type );
+
+    delete &posObstacle_;
 
 }
 

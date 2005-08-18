@@ -60,7 +60,11 @@ void Mission_Pawn_INF_Semparer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_semparer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_semparer = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.objectif );
+    const Position& objectif_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( objectif_, asnMission.objectif );
+
+    delete &objectif_;
 
 }
 

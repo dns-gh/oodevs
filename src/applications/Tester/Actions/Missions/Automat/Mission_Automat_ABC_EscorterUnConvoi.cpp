@@ -60,7 +60,9 @@ void Mission_Automat_ABC_EscorterUnConvoi::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_escorter_un_convoi;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_escorter_un_convoi = &asnMission;
 
+
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.convoi_a_escorter );
+
 
 }
 

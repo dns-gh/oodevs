@@ -60,7 +60,11 @@ void Mission_Pawn_RENS_RADINT_RenseignerSur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_radint_renseigner_sur;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_radint_renseigner_sur = &asnMission;
 
-    ASN_Tools::CopyPolygonList( pTarget_->GetTestParam_PolygonList(), asnMission.zones_de_recherche );
+    const T_LocationVector& zonesDeRecherche_ = pTarget_->GetTestParam_PolygonList();
+
+    ASN_Tools::CopyPolygonList( zonesDeRecherche_, asnMission.zones_de_recherche );
+
+    delete &zonesDeRecherche_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Pawn_RENS_RADINT_RenseignerSur::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_rens_radint_renseigner_sur );
     ASN1T_Mission_Pion_RENS_RADINT_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_radint_renseigner_sur;
 
+    ASN_Tools::Delete( asnMission.zones_de_recherche );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

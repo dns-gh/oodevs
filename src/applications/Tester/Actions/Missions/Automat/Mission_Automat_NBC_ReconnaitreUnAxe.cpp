@@ -61,6 +61,8 @@ void Mission_Automat_NBC_ReconnaitreUnAxe::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_nbc_reconnaitre_un_axe = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

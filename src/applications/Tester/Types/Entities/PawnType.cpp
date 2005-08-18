@@ -56,4 +56,5 @@ PawnType::PawnType( const TypeManager& typeManager, const std::string& strName, 
 // -----------------------------------------------------------------------------
 PawnType::~PawnType()
 {
+    // NOTHING
 }

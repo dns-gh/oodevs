@@ -60,8 +60,14 @@ void Mission_Pawn_INF_ReconnaitrePoint::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_reconnaitre_point;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_reconnaitre_point = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_a_reconnaitre );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+    const Position& pointAReconnaitre_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
+    ASN_Tools::CopyPoint( pointAReconnaitre_, asnMission.point_a_reconnaitre );
+
+    delete &itineraire_;
+    delete &pointAReconnaitre_;
 
 }
 

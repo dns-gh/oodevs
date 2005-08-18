@@ -60,10 +60,18 @@ void Mission_Pawn_JOINT_MARINE_Transporter::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_joint_marine_transporter;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_marine_transporter = &asnMission;
 
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.unites_a_transporter );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_debarquement );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_embarquement );
+    const T_IdVector& unitesATransporter_ = pTarget_->GetTestParam_AgentList();
+    const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
+    const Position& pointEmbarquement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyAgentList( unitesATransporter_, asnMission.unites_a_transporter );
+    ASN_Tools::CopyPoint( pointDebarquement_, asnMission.point_debarquement );
+    ASN_Tools::CopyPoint( pointEmbarquement_, asnMission.point_embarquement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.avec_materiel );
+
+    delete &unitesATransporter_;
+    delete &pointDebarquement_;
+    delete &pointEmbarquement_;
 
 }
 
@@ -76,6 +84,7 @@ void Mission_Pawn_JOINT_MARINE_Transporter::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_joint_marine_transporter );
     ASN1T_Mission_Pion_JOINT_MARINE_Transporter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_marine_transporter;
 
+    ASN_Tools::Delete( asnMission.unites_a_transporter );
     ASN_Tools::Delete( asnMission.point_debarquement );
     ASN_Tools::Delete( asnMission.point_embarquement );
 

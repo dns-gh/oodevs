@@ -60,7 +60,11 @@ void Mission_Automat_ASS_SeDeployer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_se_deployer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_ass_se_deployer = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_deploiement );
+    const Location& zoneDeploiement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneDeploiement_, asnMission.zone_deploiement );
+
+    delete &zoneDeploiement_;
 
 }
 

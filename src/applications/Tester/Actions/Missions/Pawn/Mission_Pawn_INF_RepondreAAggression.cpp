@@ -60,7 +60,9 @@ void Mission_Pawn_INF_RepondreAAggression::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_repondre_a_aggression;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_repondre_a_aggression = &asnMission;
 
+
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.aggresseur );
+
 
 }
 

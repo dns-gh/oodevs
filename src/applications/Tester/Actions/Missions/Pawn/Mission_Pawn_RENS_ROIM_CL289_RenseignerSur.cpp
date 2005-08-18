@@ -60,8 +60,14 @@ void Mission_Pawn_RENS_ROIM_CL289_RenseignerSur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_roim_cl289_renseigner_sur;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_roim_cl289_renseigner_sur = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.ficelle_de_vole );
-    ASN_Tools::CopyPolygonList( pTarget_->GetTestParam_PolygonList(), asnMission.zones_de_recherche );
+    const Path& ficelleDeVole_ = pTarget_->GetTestParam_Path();
+    const T_LocationVector& zonesDeRecherche_ = pTarget_->GetTestParam_PolygonList();
+
+    ASN_Tools::CopyPath( ficelleDeVole_, asnMission.ficelle_de_vole );
+    ASN_Tools::CopyPolygonList( zonesDeRecherche_, asnMission.zones_de_recherche );
+
+    delete &ficelleDeVole_;
+    delete &zonesDeRecherche_;
 
 }
 
@@ -75,6 +81,7 @@ void Mission_Pawn_RENS_ROIM_CL289_RenseignerSur::Clean()
     ASN1T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_roim_cl289_renseigner_sur;
 
     ASN_Tools::Delete( asnMission.ficelle_de_vole );
+    ASN_Tools::Delete( asnMission.zones_de_recherche );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

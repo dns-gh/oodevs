@@ -61,6 +61,8 @@ void Mission_Automat_INF_ReconnaissanceOffensive::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_reconnaissance_offensive = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

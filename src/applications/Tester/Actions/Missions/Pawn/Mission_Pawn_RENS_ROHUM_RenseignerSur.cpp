@@ -60,7 +60,11 @@ void Mission_Pawn_RENS_ROHUM_RenseignerSur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_rohum_renseigner_sur;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_rohum_renseigner_sur = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_a_observer );
+    const Location& zoneAObserver_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneAObserver_, asnMission.zone_a_observer );
+
+    delete &zoneAObserver_;
 
 }
 

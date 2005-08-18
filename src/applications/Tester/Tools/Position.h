@@ -55,6 +55,12 @@ public:
     virtual ~Position();
     //@}
 
+    //! @name Copy constructor/assignment operator
+    //@{
+    Position( const Position& position );
+    Position& operator=( const Position& position );
+    //@}
+
     //! @name Static Operations
     //@{
     static void SetPositionManager( PositionManager& positionManager );

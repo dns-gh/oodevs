@@ -60,10 +60,16 @@ void Mission_Pawn_INF_DetruireParCoupDeMain::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_detruire_par_coup_de_main = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.objectif );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
+    const Position& objectif_ = pTarget_->GetTestParam_Point();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( objectif_, asnMission.objectif );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyGDH( pTarget_->GetTestParam_GDH(), asnMission.heure_destruction );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.nature_destruction );
+
+    delete &objectif_;
+    delete &pointRegroupement_;
 
 }
 

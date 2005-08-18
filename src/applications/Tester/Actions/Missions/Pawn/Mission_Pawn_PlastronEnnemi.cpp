@@ -60,9 +60,15 @@ void Mission_Pawn_PlastronEnnemi::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_plastron_ennemi;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_plastron_ennemi = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_mission );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+    const Position& pointMission_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
+    ASN_Tools::CopyPoint( pointMission_, asnMission.point_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.type );
+
+    delete &itineraire_;
+    delete &pointMission_;
 
 }
 

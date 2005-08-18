@@ -60,9 +60,13 @@ void Mission_Pawn_Test_CreateObject::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_create_object;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_object = &asnMission;
 
-    ASN_Tools::CopyLocation( pTarget_->GetTestParam_Location(), asnMission.forme );
+    const Location& forme_ = pTarget_->GetTestParam_Location();
+
+    ASN_Tools::CopyLocation( forme_, asnMission.forme );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 37 ), asnMission.type );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.param );
+
+    delete &forme_;
 
 }
 

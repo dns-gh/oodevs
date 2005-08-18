@@ -358,6 +358,7 @@ void MessageManager::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, DIN_
         case T_MsgsSimMosWithContext_msg_change_automate_ack:            OnReceiveMsgChangeAutomateAck      ( *asnMsg.u.msg_change_automate_ack           , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_change_diplomatie_ack:          OnReceiveMsgChangeTeamRelationAck  ( *asnMsg.u.msg_change_diplomatie_ack         , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack: OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.u.msg_change_groupe_connaissance_ack, nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_automate_order_ack:             OnReceiveMsgAutomateOrderAck       ( *asnMsg.u.msg_automate_order_ack            , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_pion_order_ack:                 OnReceiveMsgPionOrderAck           ( *asnMsg.u.msg_pion_order_ack                , nCtx ); break;
         default:
             ;
@@ -382,7 +383,7 @@ void MessageManager::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
 
     workspace_.SetTickDuration( asnMsg.tick_duration );
     workspace_.SetTick        ( asnMsg.current_tick  );
-    //Workspace::GetWorkspace().SetTimeFactor  ( asnMSg.time_factor   );
+    //workspace_.SetTimeFactor  ( asnMSg.time_factor   );
     
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
@@ -415,7 +416,7 @@ void MessageManager::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrlCha
     // don't do anything if original command was malformed
     if( asnMsg.error_code == EnumCtrlErrorCode::no_error )
     {
-        Workspace::GetWorkspace().SetTimeFactor( asnMsg.time_factor );
+        workspace_.SetTimeFactor( asnMsg.time_factor );
     }
 */
 }
@@ -742,6 +743,21 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
     std::stringstream strOutputMsg;
     strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] (" << pPawn->GetType().GetName() << ")"
                  << "PionOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
+    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgAutomateOrderAck
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& asnMsg, T_NetContextId /*nCtx*/ )
+{
+    Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_unite_executante );
+    assert( pAutomat );
+
+    std::stringstream strOutputMsg;
+    strOutputMsg << "Automat [" << asnMsg.oid_unite_executante << "] (" << pAutomat->GetType().GetName() << ")"
+                 << "AutomatOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 

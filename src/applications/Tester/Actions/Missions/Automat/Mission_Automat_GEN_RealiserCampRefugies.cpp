@@ -60,8 +60,12 @@ void Mission_Automat_GEN_RealiserCampRefugies::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_camp_refugies;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_camp_refugies = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.camp );
+    const Location& camp_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( camp_, asnMission.camp );
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.tc2 );
+
+    delete &camp_;
 
 }
 

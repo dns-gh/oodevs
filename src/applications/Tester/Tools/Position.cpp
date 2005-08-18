@@ -35,6 +35,28 @@ Position::Position()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: Position constructor
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+Position::Position( const Position& position )
+    : rX_ ( position.rX_ )
+    , rY_ ( position.rY_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::operator=
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+Position& Position::operator=( const Position& position )
+{
+    rX_ = position.rX_;
+    rY_ = position.rY_;
+    return *this;
+}
+
 //-----------------------------------------------------------------------------
 // Name: Position::Position
 // Created: SBO 2005-05-23

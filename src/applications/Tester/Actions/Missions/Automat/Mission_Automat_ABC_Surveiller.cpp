@@ -60,7 +60,11 @@ void Mission_Automat_ABC_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_surveiller = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_installation );
+    const Location& zoneInstallation_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneInstallation_, asnMission.zone_installation );
+
+    delete &zoneInstallation_;
 
 }
 

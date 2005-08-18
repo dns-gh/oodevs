@@ -68,9 +68,9 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowl
 // Name: KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
+void KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& /*asnMsg*/ )
 {
-    // TODO
+    //$$$ TODO
 }
 
 // -----------------------------------------------------------------------------
@@ -90,13 +90,16 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKn
 // Name: KnowledgeGroup::GetTestParam_Knowledges
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-T_IdVector& KnowledgeGroup::GetTestParam_Knowledges() const
+T_IdVector& KnowledgeGroup::GetTestParam_Knowledges( uint nNbr ) const
 {
     // return the list of known enemies
     T_IdVector& targets = *new T_IdVector();
-    for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )
+    for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); nNbr > 0 && it != knownPawns_.end(); ++it )
         if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat().GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
+        {
             targets.push_back( it->second->GetId() );
+            --nNbr;
+        }
     return targets;
 }
 

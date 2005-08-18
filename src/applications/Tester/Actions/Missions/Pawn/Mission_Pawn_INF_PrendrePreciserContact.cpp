@@ -60,7 +60,9 @@ void Mission_Pawn_INF_PrendrePreciserContact::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_prendre_preciser_contact;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_prendre_preciser_contact = &asnMission;
 
+
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.ennemi );
+
 
 }
 

@@ -60,7 +60,11 @@ void Mission_Pawn_RENS_ROHUM_SExfiltrer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_rohum_sexfiltrer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_rohum_sexfiltrer = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_de_regroupement );
+    const Position& pointDeRegroupement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointDeRegroupement_, asnMission.point_de_regroupement );
+
+    delete &pointDeRegroupement_;
 
 }
 

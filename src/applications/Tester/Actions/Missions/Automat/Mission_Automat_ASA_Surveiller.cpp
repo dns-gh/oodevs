@@ -60,8 +60,12 @@ void Mission_Automat_ASA_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_surveiller = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.angle );
+
+    delete &zone_;
 
 }
 

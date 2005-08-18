@@ -60,12 +60,20 @@ void Mission_Automat_ALAT_AttaquerFormationAeromobile::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile = &asnMission;
 
-    ASN_Tools::CopyAgentKnowledgeList( pTarget_->GetTestParam_AgentKnowledgeList(), asnMission.unites_a_attaquer );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    const T_IdVector& unitesAAttaquer_ = pTarget_->GetTestParam_AgentKnowledgeList();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
+    ASN_Tools::CopyAgentKnowledgeList( unitesAAttaquer_, asnMission.unites_a_attaquer );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
+
+    delete &unitesAAttaquer_;
+    delete &pointRegroupement_;
+    delete &plotsRavitaillement_;
 
 }
 

@@ -60,7 +60,11 @@ void Mission_Pawn_ABC_ControlerZone::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_controler_zone;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_controler_zone = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+
+    delete &zone_;
 
 }
 

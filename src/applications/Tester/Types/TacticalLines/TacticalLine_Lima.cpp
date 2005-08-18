@@ -31,7 +31,7 @@ IDManager TacticalLine_Lima::idManager_( 137 );
 // Name: TacticalLine_Lima constructor
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-TacticalLine_Lima::TacticalLine_Lima( T_PositionVector& points )
+TacticalLine_Lima::TacticalLine_Lima( const T_PositionVector& points )
     : TacticalLine_ABC ( points )
 {
     nId_ = idManager_.GetFreeIdentifier();

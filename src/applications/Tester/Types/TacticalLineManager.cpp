@@ -57,24 +57,24 @@ TacticalLineManager::~TacticalLineManager()
 void TacticalLineManager::CreateDefaultTacticalLines( const PositionManager& posMgr )
 {
     // Create default limits: world borders
-    Position* pTopLeft     = new Position();
-    Position* pTopRight    = new Position();
-    Position* pBottomRight = new Position();
-    Position* pBottomLeft  = new Position();
-    pTopLeft    ->SetSimCoordinates(                          0, posMgr.GetWorldHeight() - 1 );
-    pTopRight   ->SetSimCoordinates( posMgr.GetWorldWidth() - 1, posMgr.GetWorldHeight() - 1 );
-    pBottomRight->SetSimCoordinates( posMgr.GetWorldWidth() - 1,                           0 );
-    pBottomLeft ->SetSimCoordinates(                          0,                           0 );
+    Position topLeft;
+    Position topRight;
+    Position bottomRight;
+    Position bottomLeft;
+    topLeft    .SetSimCoordinates(                          0, posMgr.GetWorldHeight() - 1 );
+    topRight   .SetSimCoordinates( posMgr.GetWorldWidth() - 1, posMgr.GetWorldHeight() - 1 );
+    bottomRight.SetSimCoordinates( posMgr.GetWorldWidth() - 1,                           0 );
+    bottomLeft .SetSimCoordinates(                          0,                           0 );
 
-    T_PositionVector* pPointsLeft = new T_PositionVector();
-    pPointsLeft->push_back( pBottomLeft );
-    pPointsLeft->push_back( pTopLeft    );
-    Register( *new TacticalLine_Limit( *pPointsLeft ) );
+    T_PositionVector pointsLeft;
+    pointsLeft.push_back( &bottomLeft );
+    pointsLeft.push_back( &topLeft    );
+    Register( *new TacticalLine_Limit( pointsLeft ) );
 
-    T_PositionVector* pPointsRight = new T_PositionVector();
-    pPointsRight->push_back( pBottomRight );
-    pPointsRight->push_back( pTopRight    );
-    Register( *new TacticalLine_Limit( *pPointsRight ) );
+    T_PositionVector pointsRight;
+    pointsRight.push_back( &bottomRight );
+    pointsRight.push_back( &topRight    );
+    Register( *new TacticalLine_Limit( pointsRight ) );
 }
 
 // -----------------------------------------------------------------------------

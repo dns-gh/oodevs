@@ -61,6 +61,8 @@ void Mission_Automat_INF_MenerDefenseUsure::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_mener_defense_usure = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

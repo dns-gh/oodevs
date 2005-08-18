@@ -60,7 +60,9 @@ void Mission_Pawn_INF_EscorterUnConvoi::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_escorter_un_convoi;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_escorter_un_convoi = &asnMission;
 
+
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.convoi_a_escorter );
+
 
 }
 

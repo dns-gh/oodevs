@@ -60,7 +60,11 @@ void Mission_Pawn_MILICE_PrendreEtTenir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_milice_prendre_et_tenir;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_prendre_et_tenir = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_a_prendre );
+    const Position& pointAPrendre_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointAPrendre_, asnMission.point_a_prendre );
+
+    delete &pointAPrendre_;
 
 }
 

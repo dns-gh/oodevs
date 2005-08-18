@@ -60,11 +60,17 @@ void Mission_Pawn_Test_Fire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_fire;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_fire = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point );
+    const Position& point_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& targets_ = pTarget_->GetTestParam_AgentKnowledgeList();
+
+    ASN_Tools::CopyPoint( point_, asnMission.point );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.tir_indirect );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 5 ), asnMission.munitions );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.nb_obus );
-    ASN_Tools::CopyAgentKnowledgeList( pTarget_->GetTestParam_AgentKnowledgeList(), asnMission.targets );
+    ASN_Tools::CopyAgentKnowledgeList( targets_, asnMission.targets );
+
+    delete &point_;
+    delete &targets_;
 
 }
 

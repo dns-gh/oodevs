@@ -23,6 +23,7 @@
 #include "Tester_pch.h"
 #include "Mission_Pawn_ABC.h"
 #include "Entities/Pawn.h"
+#include "Entities/Automat.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/ASN_Tools.h"
 
@@ -55,12 +56,16 @@ Mission_Pawn_ABC::~Mission_Pawn_ABC()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC::Serialize()
 {
+    const T_IdVector& oid_limas = pTarget_->GetTestParam_Limas();
+
     ASN_Tools::CopyID       ( pTarget_->GetId()                  , asnMsg_.GetAsnMsg().oid_unite_executante );
     ASN_Tools::CopyID       ( idManager_.GetFreeIdentifier()     , asnMsg_.GetAsnMsg().order_id             );
     ASN_Tools::CopyID       ( pTarget_->GetTestParam_LeftLimit() , asnMsg_.GetAsnMsg().oid_limite_gauche    );
     ASN_Tools::CopyID       ( pTarget_->GetTestParam_RightLimit(), asnMsg_.GetAsnMsg().oid_limite_droite    );
-    ASN_Tools::CopyIDList   ( pTarget_->GetTestParam_Limas()     , asnMsg_.GetAsnMsg().oid_limas            );
+    ASN_Tools::CopyIDList   ( oid_limas                          , asnMsg_.GetAsnMsg().oid_limas            );
     ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction() , asnMsg_.GetAsnMsg().direction_dangereuse );
+
+    delete &oid_limas;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +74,12 @@ void Mission_Pawn_ABC::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC::Send()
 {
+    // disengage automat first
+    MOS_ASN_MsgSetAutomateMode msg;
+    msg.GetAsnMsg().mode    = EnumAutomateState::debraye;
+    msg.GetAsnMsg().unit_id = pTarget_->GetAutomat().GetId();
+    msg.Send( 56 );
+    // then send msg
     asnMsg_.Send( 56 );
 }
 

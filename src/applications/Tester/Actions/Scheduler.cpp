@@ -56,7 +56,6 @@ bool Scheduler::Run( uint nCurrentTick /* = 0 */ )
     if( itCurrentAction_ == actions_.end() )
         return false;
 
-    std::cout << nCurrentTick << " != " << itCurrentAction_->first << std::endl;
     while( itCurrentAction_ != actions_.end()  && 
            itCurrentAction_->first <= nCurrentTick &&
            itCurrentAction_->second->IsReady() )

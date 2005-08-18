@@ -60,8 +60,14 @@ void Mission_Pawn_INF_Recueillir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_recueillir;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_recueillir = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_installation );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.pia );
+    const Position& positionInstallation_ = pTarget_->GetTestParam_Point();
+    const Position& pia_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionInstallation_, asnMission.position_installation );
+    ASN_Tools::CopyPoint( pia_, asnMission.pia );
+
+    delete &positionInstallation_;
+    delete &pia_;
 
 }
 

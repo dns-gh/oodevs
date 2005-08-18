@@ -60,8 +60,12 @@ void Mission_Pawn_GEN_RealiserPlateFormeDeploiement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_plate_forme_deploiement = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_obstacle );
+    const Position& positionObstacle_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionObstacle_, asnMission.position_obstacle );
     ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
+
+    delete &positionObstacle_;
 
 }
 

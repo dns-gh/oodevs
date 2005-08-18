@@ -60,7 +60,11 @@ void Mission_Automat_ABC_Reduire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_reduire;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reduire = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_resistance );
+    const Location& zoneResistance_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneResistance_, asnMission.zone_resistance );
+
+    delete &zoneResistance_;
 
 }
 

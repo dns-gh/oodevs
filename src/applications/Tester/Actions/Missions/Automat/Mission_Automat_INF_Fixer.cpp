@@ -60,7 +60,11 @@ void Mission_Automat_INF_Fixer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_fixer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_fixer = &asnMission;
 
-    ASN_Tools::CopyAgentKnowledgeList( pTarget_->GetTestParam_AgentKnowledgeList(), asnMission.ennemis );
+    const T_IdVector& ennemis_ = pTarget_->GetTestParam_AgentKnowledgeList();
+
+    ASN_Tools::CopyAgentKnowledgeList( ennemis_, asnMission.ennemis );
+
+    delete &ennemis_;
 
 }
 

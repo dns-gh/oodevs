@@ -60,7 +60,9 @@ void Mission_Automat_ABC_FlancGarder::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_flanc_garder;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_flanc_garder = &asnMission;
 
+
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
+
 
 }
 

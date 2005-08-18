@@ -21,7 +21,6 @@
 
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
-#include "Workspace.h"
 #include "Testable_Entity.h"
 
 namespace DIN
@@ -33,6 +32,7 @@ namespace TEST
 {
     class Automat;
     class PawnType;
+    class Workspace;
 
 // =============================================================================
 /** @class  Pawn
@@ -86,12 +86,6 @@ public:
     void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName );
     //@}
 
-    //! @name Test Parameters
-    //@{
-    T_EntityId GetTestParam_LeftLimit  ();
-    T_EntityId GetTestParam_RightLimit ();
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -112,14 +106,8 @@ private:
     Position         position_;
     T_Height         nHeight_;
     int              nOpState_;
-
     Path             path_;
-
     bool             bIsLoaded_;
-    T_EntityId       nLeftLimit_;
-    T_EntityId       nRightLimit_;
-
-    const Workspace& workspace_;
     //@}
 };
 

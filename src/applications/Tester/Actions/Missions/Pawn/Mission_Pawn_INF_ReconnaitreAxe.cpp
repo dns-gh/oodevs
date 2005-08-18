@@ -60,7 +60,11 @@ void Mission_Pawn_INF_ReconnaitreAxe::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_reconnaitre_axe;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_reconnaitre_axe = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
+
+    delete &itineraire_;
 
 }
 

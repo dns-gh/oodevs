@@ -31,7 +31,7 @@ IDManager TacticalLine_Limit::idManager_( 138 );
 // Name: TacticalLine_Limit constructor
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-TacticalLine_Limit::TacticalLine_Limit( T_PositionVector& points )
+TacticalLine_Limit::TacticalLine_Limit( const T_PositionVector& points )
     : TacticalLine_ABC ( points )
 {
     nId_ = idManager_.GetFreeIdentifier();

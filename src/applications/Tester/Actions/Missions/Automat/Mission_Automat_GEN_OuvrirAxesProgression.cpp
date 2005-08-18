@@ -60,7 +60,11 @@ void Mission_Automat_GEN_OuvrirAxesProgression::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_ouvrir_axes_progression = &asnMission;
 
-    ASN_Tools::CopyPathList( pTarget_->GetTestParam_PathList(), asnMission.axes );
+    const T_PathVector& axes_ = pTarget_->GetTestParam_PathList();
+
+    ASN_Tools::CopyPathList( axes_, asnMission.axes );
+
+    delete &axes_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_GEN_OuvrirAxesProgression::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression );
     ASN1T_Mission_Automate_GEN_OuvrirAxesProgression& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_ouvrir_axes_progression;
 
+    ASN_Tools::Delete( asnMission.axes );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

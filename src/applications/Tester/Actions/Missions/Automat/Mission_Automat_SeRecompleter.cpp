@@ -60,7 +60,11 @@ void Mission_Automat_SeRecompleter::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_se_recompleter;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_se_recompleter = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_ravitaillement );
+    const Location& zoneRavitaillement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneRavitaillement_, asnMission.zone_ravitaillement );
+
+    delete &zoneRavitaillement_;
 
 }
 

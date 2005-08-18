@@ -60,8 +60,12 @@ void Mission_Pawn_INF_FlancGarder::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_flanc_garder;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_flanc_garder = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite_a_flancgarder );
+
+    delete &itineraire_;
 
 }
 

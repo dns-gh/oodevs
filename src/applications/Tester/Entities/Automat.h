@@ -21,7 +21,6 @@
 
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
-#include "Workspace.h"
 #include "Testable_Entity.h"
 
 namespace TEST
@@ -30,6 +29,7 @@ namespace TEST
     class Team;
     class Pawn;
     class AutomatType;
+    class Workspace;
 
 // =============================================================================
 /** @class  Automat
@@ -57,6 +57,7 @@ public:
     virtual const Position&       GetPosition      () const;
     virtual const Automat&        GetAutomat       () const;
 
+            const AutomatType&    GetType          () const;
 	        const Team&           GetTeam          () const;
 	        const KnowledgeGroup& GetKnowledgeGroup() const;
 	        const Pawn&	          GetPc            () const;
@@ -102,8 +103,6 @@ private:
 	Pawn*			   pPc_;
     const AutomatType* pType_;
     T_PawnSet          childPawns_;
-
-    const Workspace&   workspace_;
     //@}
 };
 

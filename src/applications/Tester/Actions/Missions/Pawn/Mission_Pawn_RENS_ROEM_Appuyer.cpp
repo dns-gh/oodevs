@@ -60,8 +60,14 @@ void Mission_Pawn_RENS_ROEM_Appuyer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_roem_appuyer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_roem_appuyer = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_deploiement );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
+    const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionDeploiement_, asnMission.position_deploiement );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+
+    delete &positionDeploiement_;
+    delete &pointRegroupement_;
 
 }
 

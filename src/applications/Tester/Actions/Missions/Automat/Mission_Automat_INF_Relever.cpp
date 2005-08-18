@@ -60,7 +60,9 @@ void Mission_Automat_INF_Relever::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_relever;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_relever = &asnMission;
 
+
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
+
 
 }
 

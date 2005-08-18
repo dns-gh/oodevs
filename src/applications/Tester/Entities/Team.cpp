@@ -40,6 +40,8 @@ Team::Team( const EntityManager& entityManager, T_EntityId nSimId, DIN::DIN_Inpu
 //-----------------------------------------------------------------------------
 Team::~Team()
 {
+    for( CIT_ObjectKnowledgeMap it = knownObjects_.begin(); it != knownObjects_.end(); ++it )
+        delete it->second;
     knownObjects_.clear();
     relations_   .clear();
 }
@@ -143,9 +145,9 @@ void Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCr
 // Name: Team::OnReceiveMsgObjectKnowledgeUpdate
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Team::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
+void Team::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& /*asnMsg*/ )
 {
-    // TODO
+    //$$$ TODO
 }
 
 // -----------------------------------------------------------------------------
@@ -154,6 +156,7 @@ void Team::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpda
 // -----------------------------------------------------------------------------
 void Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
 {
+    delete knownObjects_[ asnMsg.oid_connaissance ];
     knownObjects_.erase( asnMsg.oid_connaissance );
 }
 

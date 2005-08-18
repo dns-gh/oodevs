@@ -60,7 +60,11 @@ void Mission_Pawn_ASS_ReconnaitreZoneDeploiement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_reconnaitre_zone_deploiement;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_reconnaitre_zone_deploiement = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_deploiement );
+    const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionDeploiement_, asnMission.position_deploiement );
+
+    delete &positionDeploiement_;
 
 }
 

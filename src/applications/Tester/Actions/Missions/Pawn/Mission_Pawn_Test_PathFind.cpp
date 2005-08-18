@@ -60,7 +60,9 @@ void Mission_Pawn_Test_PathFind::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_path_find;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_path_find = &asnMission;
 
+
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.nb_pathfind );
+
 
 }
 

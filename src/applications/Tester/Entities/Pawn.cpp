@@ -25,12 +25,11 @@
 #include "Types/Entities/AutomatType.h"
 #include "Types/Entities/PawnType.h"
 #include "Types/Entities/PawnModel.h"
-#include "Types/TacticalLineManager.h"
 #include "Tools/Path.h"
 #include "Tools/Position.h"
-#include "Tools/Location.h"
 #include "Actions/Scheduler.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
+#include "Workspace.h"
 
 using namespace TEST;
 
@@ -39,7 +38,7 @@ using namespace TEST;
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg )
-    : Testable_Entity ()
+    : Testable_Entity ( workspace )
     , nId_            ( asnMsg.oid_pion )
     , strName_        ( asnMsg.nom )
     , pType_          ( workspace.GetTypeManager().FindPawnType( asnMsg.type_pion ) )
@@ -51,9 +50,6 @@ Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg )
     , rSpeed_         ( 0. )
     , nOpState_       ( 0 )
     , bIsLoaded_      ( false )
-    , nLeftLimit_     ( 0 )
-    , nRightLimit_    ( 0 )
-    , workspace_      ( workspace )
 {
     assert( pType_ );
     assert( pAutomat_ );
@@ -65,7 +61,7 @@ Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgPionCreation& asnMsg )
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
 Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
-    : Testable_Entity ()
+    : Testable_Entity ( workspace )
     , nId_            ( asnMsg.oid_automate )
     , strName_        ( asnMsg.nom )
     , pType_          ( 0 )
@@ -77,9 +73,6 @@ Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg,
     , rSpeed_         ( 0. )
     , nOpState_       ( 0 )
     , bIsLoaded_      ( false )
-    , nLeftLimit_     ( 0 )
-    , nRightLimit_    ( 0 )
-    , workspace_      ( workspace )
 {
     // retrieve PC type for the parent automat
     const AutomatType* pAutomatType = workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate );
@@ -191,34 +184,3 @@ void Pawn::ScheduleMission( Scheduler& scheduler, const std::string& strMissionN
     pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName );
 }
 
-//-----------------------------------------------------------------------------
-// TEST PARAMETERS
-//-----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
-// Name: Pawn::GetTestParam_LeftLimit
-// Created: SBO 2005-08-05
-// -----------------------------------------------------------------------------
-T_EntityId Pawn::GetTestParam_LeftLimit()
-{
-    // if left limit is not ser get an existing limit which is not the right limit
-    if( nLeftLimit_ == 0 )
-        nLeftLimit_ = workspace_.GetTacticalLineManager().GetLimitIdExcluding( nRightLimit_ );
-    // at least world border limits should exist
-    assert( nLeftLimit_ );
-    return nLeftLimit_;
- }
-
-// -----------------------------------------------------------------------------
-// Name: Pawn::GetTestParam_RightLimit
-// Created: SBO 2005-08-05
-// -----------------------------------------------------------------------------
-T_EntityId Pawn::GetTestParam_RightLimit()
-{
-    // if right limit is not ser get an existing limit which is not the left limit
-    if( nRightLimit_ == 0 )
-        nRightLimit_ = workspace_.GetTacticalLineManager().GetLimitIdExcluding( nLeftLimit_ );
-    // at least world border limits should exist
-    assert( nRightLimit_ );
-    return nRightLimit_;
-}

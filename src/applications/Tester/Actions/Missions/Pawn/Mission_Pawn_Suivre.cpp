@@ -60,7 +60,9 @@ void Mission_Pawn_Suivre::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_suivre;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_suivre = &asnMission;
 
+
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite_a_suivre );
+
 
 }
 

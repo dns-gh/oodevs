@@ -60,7 +60,11 @@ void Mission_Automat_ABC_SurveillerItineraire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_surveiller_itineraire;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_surveiller_itineraire = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
+
+    delete &itineraire_;
 
 }
 

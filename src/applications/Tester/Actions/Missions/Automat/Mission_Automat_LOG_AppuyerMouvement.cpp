@@ -60,7 +60,11 @@ void Mission_Automat_LOG_AppuyerMouvement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_appuyer_mouvement;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement = &asnMission;
 
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.unites_a_appuyer );
+    const T_IdVector& unitesAAppuyer_ = pTarget_->GetTestParam_AgentList();
+
+    ASN_Tools::CopyAgentList( unitesAAppuyer_, asnMission.unites_a_appuyer );
+
+    delete &unitesAAppuyer_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_LOG_AppuyerMouvement::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_log_appuyer_mouvement );
     ASN1T_Mission_Automate_LOG_AppuyerMouvement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement;
 
+    ASN_Tools::Delete( asnMission.unites_a_appuyer );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

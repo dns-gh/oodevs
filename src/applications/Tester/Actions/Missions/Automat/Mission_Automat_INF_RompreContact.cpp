@@ -60,7 +60,11 @@ void Mission_Automat_INF_RompreContact::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_rompre_contact;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_rompre_contact = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_regroupement );
+    const Location& zoneRegroupement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneRegroupement_, asnMission.zone_regroupement );
+
+    delete &zoneRegroupement_;
 
 }
 

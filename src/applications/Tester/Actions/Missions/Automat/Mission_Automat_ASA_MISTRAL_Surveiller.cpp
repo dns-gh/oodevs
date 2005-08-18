@@ -60,9 +60,13 @@ void Mission_Automat_ASA_MISTRAL_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_mistral_surveiller = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 5 ), asnMission.mode_deploiement );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.angle );
+
+    delete &zone_;
 
 }
 

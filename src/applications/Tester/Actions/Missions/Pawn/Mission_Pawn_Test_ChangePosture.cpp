@@ -60,7 +60,9 @@ void Mission_Pawn_Test_ChangePosture::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_change_posture;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_change_posture = &asnMission;
 
+
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 6 ), asnMission.posture );
+
 
 }
 

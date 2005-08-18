@@ -60,7 +60,9 @@ void Mission_Automat_ABC_ReleverEnDepassant::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_relever_en_depassant;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_relever_en_depassant = &asnMission;
 
+
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
+
 
 }
 

@@ -60,8 +60,14 @@ void Mission_Automat_INF_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_surveiller = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_regroupement );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+    const Location& zoneRegroupement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+    ASN_Tools::CopyPolygon( zoneRegroupement_, asnMission.zone_regroupement );
+
+    delete &zone_;
+    delete &zoneRegroupement_;
 
 }
 

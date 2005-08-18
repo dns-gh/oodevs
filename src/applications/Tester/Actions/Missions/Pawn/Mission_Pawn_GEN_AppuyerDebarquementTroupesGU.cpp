@@ -60,7 +60,11 @@ void Mission_Pawn_GEN_AppuyerDebarquementTroupesGU::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_appuyer_debarquement_troupes_gu;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_appuyer_debarquement_troupes_gu = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_appui );
+    const Location& zoneAppui_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneAppui_, asnMission.zone_appui );
+
+    delete &zoneAppui_;
 
 }
 

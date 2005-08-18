@@ -60,7 +60,11 @@ void Mission_Automat_RENS_ROEM_RenseignerSur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_roem_renseignersur;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_roem_renseignersur = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+
+    delete &zone_;
 
 }
 

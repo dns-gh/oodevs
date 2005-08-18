@@ -60,7 +60,11 @@ void Mission_Automat_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Seri
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial = &asnMission;
 
-    ASN_Tools::CopyGenObjectList( pTarget_->GetTestParam_GenObjectList(), asnMission.plates_formes );
+    const T_IdVector& platesFormes_ = pTarget_->GetTestParam_GenObjectList();
+
+    ASN_Tools::CopyGenObjectList( platesFormes_, asnMission.plates_formes );
+
+    delete &platesFormes_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Clea
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial );
     ASN1T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial;
 
+    ASN_Tools::Delete( asnMission.plates_formes );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

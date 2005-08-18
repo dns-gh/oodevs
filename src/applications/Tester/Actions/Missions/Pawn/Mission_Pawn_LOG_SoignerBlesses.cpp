@@ -61,6 +61,8 @@ void Mission_Pawn_LOG_SoignerBlesses::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_soigner_blesses = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

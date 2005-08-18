@@ -60,8 +60,12 @@ void Mission_Pawn_INF_Interdire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_interdire;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_interdire = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_a_interdire );
+    const Position& pointAInterdire_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointAInterdire_, asnMission.point_a_interdire );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.preparer_terrain );
+
+    delete &pointAInterdire_;
 
 }
 

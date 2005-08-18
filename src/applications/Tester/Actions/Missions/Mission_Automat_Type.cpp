@@ -165,6 +165,7 @@
 #include "Automat/Mission_Automat_RENS_RADINT_RenseignerSur.cpp"
 #include "Automat/Mission_Automat_TRANS_Commander.cpp"
 
+
 using namespace TEST;
 
 Mission_Automat_Type::T_MissionAutomatTypeMap Mission_Automat_Type::missions_;
@@ -336,6 +337,7 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_RENS_ROEM_RenseignerSur >( "Automate RENS ROEM RenseignerSur" );
     Register< Mission_Automat_RENS_RADINT_RenseignerSur >( "Automate RENS RADINT RenseignerSur" );
     Register< Mission_Automat_TRANS_Commander >( "Automate TRANS Commander" );
+
 }
     
 // -----------------------------------------------------------------------------

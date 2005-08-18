@@ -60,7 +60,11 @@ void Mission_Automat_ABC_ReconnaitrePoint::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_reconnaitre_point;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reconnaitre_point = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.point_a_reconnaitre );
+    const Location& pointAReconnaitre_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( pointAReconnaitre_, asnMission.point_a_reconnaitre );
+
+    delete &pointAReconnaitre_;
 
 }
 

@@ -60,9 +60,13 @@ void Mission_Pawn_GEN_RealiserZoneMineeParDispersion::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_par_dispersion = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.pos_obstacle );
+    const Location& posObstacle_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( posObstacle_, asnMission.pos_obstacle );
     ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.densite );
+
+    delete &posObstacle_;
 
 }
 

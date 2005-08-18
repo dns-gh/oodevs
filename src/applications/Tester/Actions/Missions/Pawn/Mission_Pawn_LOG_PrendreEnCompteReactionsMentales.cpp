@@ -61,6 +61,8 @@ void Mission_Pawn_LOG_PrendreEnCompteReactionsMentales::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_prendre_en_compte_reactions_mentales = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

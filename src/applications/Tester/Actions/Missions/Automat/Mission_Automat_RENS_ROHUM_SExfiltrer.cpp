@@ -60,7 +60,11 @@ void Mission_Automat_RENS_ROHUM_SExfiltrer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_rohum_sexfiltrer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_rohum_sexfiltrer = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_de_regroupement );
+    const Location& zoneDeRegroupement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneDeRegroupement_, asnMission.zone_de_regroupement );
+
+    delete &zoneDeRegroupement_;
 
 }
 

@@ -60,7 +60,11 @@ void Mission_Automat_LOG_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_log_surveiller = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+
+    delete &zone_;
 
 }
 

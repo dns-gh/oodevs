@@ -60,9 +60,13 @@ void Mission_Pawn_ASS_EO_AcquerirObjectifs::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_eo_acquerir_objectifs;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_eo_acquerir_objectifs = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_a_observer );
+    const Location& zoneAObserver_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneAObserver_, asnMission.zone_a_observer );
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.unite_a_appuyer );
     ASN_Tools::CopyNatureAtlas( pTarget_->GetTestParam_NatureAtlas(), asnMission.categories );
+
+    delete &zoneAObserver_;
 
 }
 

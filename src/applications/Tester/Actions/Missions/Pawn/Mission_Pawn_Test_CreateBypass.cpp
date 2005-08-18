@@ -60,7 +60,9 @@ void Mission_Pawn_Test_CreateBypass::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_create_bypass;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_bypass = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.objet );
+
 
 }
 

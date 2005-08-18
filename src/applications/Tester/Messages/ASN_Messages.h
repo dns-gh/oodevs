@@ -158,6 +158,7 @@ MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( UnitMagicAction  , unit_magic_action   )
 
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( PionOrder, pion_order )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( AutomateOrder, automate_order )
+MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( SetAutomateMode, set_automate_mode )
 
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( LimitCreation, limit_creation )
 MOS_GENERATE_SEND_ASN_MSG_NOPTR_CTX( LimitDestruction, limit_destruction )

@@ -61,6 +61,8 @@ void Mission_Automat_SeRendre::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_se_rendre = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

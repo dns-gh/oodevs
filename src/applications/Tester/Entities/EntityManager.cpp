@@ -25,6 +25,7 @@
 #include "Entities/Automat.h"
 #include "Entities/Pawn.h"
 #include "Entities/Object.h"
+#include "Entities/Testable_Entity.h"
 #include "Actions/Scheduler.h"
 
 using namespace TEST;
@@ -212,4 +213,38 @@ void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler ) const
 {
     for( CIT_AutomatMap it = automats_.begin(); it != automats_.end(); ++it )
         it->second->ScheduleAllMissions( scheduler );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityManager::GetTestParam_AgentList
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+T_IdVector& EntityManager::GetTestParam_AgentList( uint nNbr, const Testable_Entity& target ) const
+{
+    T_IdVector& agents = *new T_IdVector();
+    for( CIT_PawnMap it = pawns_.begin(); nNbr > 0 && it != pawns_.end(); ++it )
+        if( it->first != target.GetId() && 
+            it->second->GetAutomat().GetKnowledgeGroup().GetId() == target.GetAutomat().GetKnowledgeGroup().GetId() )
+        {
+            agents.push_back( it->first );
+            --nNbr;
+        }
+    return agents;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityManager::GetTestParam_AutomateList
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+T_IdVector& EntityManager::GetTestParam_AutomateList( uint nNbr, const Testable_Entity& target ) const
+{
+    T_IdVector& automats = *new T_IdVector();
+    for( CIT_AutomatMap it = automats_.begin(); nNbr > 0 && it != automats_.end(); ++it )
+        if( it->first != target.GetId() &&
+            it->second->GetAutomat().GetKnowledgeGroup().GetId() == target.GetAutomat().GetKnowledgeGroup().GetId() )
+        {
+            automats.push_back( it->first );
+            --nNbr;
+        }
+    return automats;
 }

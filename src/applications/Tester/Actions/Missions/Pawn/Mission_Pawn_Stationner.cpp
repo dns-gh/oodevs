@@ -60,7 +60,11 @@ void Mission_Pawn_Stationner::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_stationner;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_stationner = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_attente );
+    const Position& pointAttente_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointAttente_, asnMission.point_attente );
+
+    delete &pointAttente_;
 
 }
 

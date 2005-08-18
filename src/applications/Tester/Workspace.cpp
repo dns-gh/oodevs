@@ -27,6 +27,8 @@
 #include "Types/TacticalLineManager.h"
 #include "Actions/Scheduler.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
+#include "Actions/Missions/Mission_Automat_Type.h"
+#include "TestSets/TestSet_ABC.h"
 
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
@@ -59,6 +61,7 @@ Workspace::Workspace( TestSet_ABC*       pTestSet,
     pScheduler_ = new Scheduler();
 
     Mission_Pawn_Type::Initialize();
+    Mission_Automat_Type::Initialize();
     LoadScipioConfigFile( strScipioConfigFile );
 
     // network manager
@@ -75,6 +78,7 @@ Workspace::Workspace( TestSet_ABC*       pTestSet,
 //-----------------------------------------------------------------------------
 Workspace::~Workspace()
 {
+    Mission_Automat_Type::Terminate();
     Mission_Pawn_Type::Terminate();
     if( pNetworkManager_->IsConnected() )
         pNetworkManager_->Disconnect();

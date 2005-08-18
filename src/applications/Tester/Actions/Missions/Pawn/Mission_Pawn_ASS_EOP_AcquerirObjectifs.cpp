@@ -60,9 +60,17 @@ void Mission_Pawn_ASS_EOP_AcquerirObjectifs::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_eop_acquerir_objectifs;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_eop_acquerir_objectifs = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_a_observer );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_installation );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_debarquement );
+    const Location& zoneAObserver_ = pTarget_->GetTestParam_Polygon();
+    const Position& positionInstallation_ = pTarget_->GetTestParam_Point();
+    const Position& positionDebarquement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPolygon( zoneAObserver_, asnMission.zone_a_observer );
+    ASN_Tools::CopyPoint( positionInstallation_, asnMission.position_installation );
+    ASN_Tools::CopyPoint( positionDebarquement_, asnMission.position_debarquement );
+
+    delete &zoneAObserver_;
+    delete &positionInstallation_;
+    delete &positionDebarquement_;
 
 }
 

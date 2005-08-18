@@ -60,7 +60,9 @@ void Mission_Pawn_GEN_ComblerEntonnoir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_combler_entonnoir;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_combler_entonnoir = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.obstacle );
+
 
 }
 

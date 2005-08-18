@@ -60,7 +60,11 @@ void Mission_Automat_GEN_RealiserTravauxSommairesAuProfitPopulation::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population = &asnMission;
 
-    ASN_Tools::CopyGenObjectList( pTarget_->GetTestParam_GenObjectList(), asnMission.travaux );
+    const T_IdVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
+
+    ASN_Tools::CopyGenObjectList( travaux_, asnMission.travaux );
+
+    delete &travaux_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_GEN_RealiserTravauxSommairesAuProfitPopulation::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population );
     ASN1T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population;
 
+    ASN_Tools::Delete( asnMission.travaux );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

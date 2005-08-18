@@ -60,7 +60,11 @@ void Mission_Automat_GEN_AppuyerDebarquementTroupes::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_appuyer_debarquement_troupes = &asnMission;
 
-    ASN_Tools::CopyGenObjectList( pTarget_->GetTestParam_GenObjectList(), asnMission.zones_debarquement );
+    const T_IdVector& zonesDebarquement_ = pTarget_->GetTestParam_GenObjectList();
+
+    ASN_Tools::CopyGenObjectList( zonesDebarquement_, asnMission.zones_debarquement );
+
+    delete &zonesDebarquement_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_GEN_AppuyerDebarquementTroupes::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes );
     ASN1T_Mission_Automate_GEN_AppuyerDebarquementTroupes& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_appuyer_debarquement_troupes;
 
+    ASN_Tools::Delete( asnMission.zones_debarquement );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

@@ -60,9 +60,15 @@ void Mission_Pawn_INF_Harceler::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_harceler;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_harceler = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.secteur );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
+    const Location& secteur_ = pTarget_->GetTestParam_Polygon();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPolygon( secteur_, asnMission.secteur );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.nature_objectif );
+
+    delete &secteur_;
+    delete &pointRegroupement_;
 
 }
 

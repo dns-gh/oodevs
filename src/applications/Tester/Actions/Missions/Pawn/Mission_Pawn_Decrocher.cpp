@@ -60,7 +60,11 @@ void Mission_Pawn_Decrocher::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_decrocher;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_decrocher = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+
+    delete &pointRegroupement_;
 
 }
 

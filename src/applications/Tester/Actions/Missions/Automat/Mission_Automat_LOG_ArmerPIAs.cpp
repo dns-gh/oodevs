@@ -61,6 +61,8 @@ void Mission_Automat_LOG_ArmerPIAs::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_log_armer_pias = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

@@ -61,6 +61,8 @@ void Mission_Pawn_LOG_Livrer::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_livrer = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

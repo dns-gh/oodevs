@@ -60,7 +60,9 @@ void Mission_Pawn_ABC_Appuyer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_appuyer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_appuyer = &asnMission;
 
+
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite_a_appuyer );
+
 
 }
 

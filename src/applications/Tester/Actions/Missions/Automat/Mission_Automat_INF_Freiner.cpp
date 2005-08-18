@@ -61,6 +61,8 @@ void Mission_Automat_INF_Freiner::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_freiner = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

@@ -60,8 +60,12 @@ void Mission_Automat_INF_Interdire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_interdire;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_interdire = &asnMission;
 
-    ASN_Tools::CopyPointList( pTarget_->GetTestParam_PointList(), asnMission.points_a_interdire );
+    const T_PositionVector& pointsAInterdire_ = pTarget_->GetTestParam_PointList();
+
+    ASN_Tools::CopyPointList( pointsAInterdire_, asnMission.points_a_interdire );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.preparer_terrain );
+
+    delete &pointsAInterdire_;
 
 }
 
@@ -74,6 +78,7 @@ void Mission_Automat_INF_Interdire::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_interdire );
     ASN1T_Mission_Automate_INF_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_interdire;
 
+    ASN_Tools::Delete( asnMission.points_a_interdire );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

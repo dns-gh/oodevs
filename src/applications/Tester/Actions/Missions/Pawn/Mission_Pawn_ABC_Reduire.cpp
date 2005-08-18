@@ -60,7 +60,9 @@ void Mission_Pawn_ABC_Reduire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_reduire;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_reduire = &asnMission;
 
+
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.unite_a_reduire );
+
 
 }
 

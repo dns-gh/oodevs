@@ -60,7 +60,11 @@ void Mission_Pawn_INF_OrganiserUnCheckPoint::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_organiser_un_check_point;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_organiser_un_check_point = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_installation );
+    const Position& pointInstallation_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointInstallation_, asnMission.point_installation );
+
+    delete &pointInstallation_;
 
 }
 

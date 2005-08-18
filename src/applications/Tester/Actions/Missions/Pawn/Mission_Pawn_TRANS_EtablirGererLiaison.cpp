@@ -60,7 +60,11 @@ void Mission_Pawn_TRANS_EtablirGererLiaison::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_trans_etablir_gerer_liaison = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_deploiement );
+    const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionDeploiement_, asnMission.position_deploiement );
+
+    delete &positionDeploiement_;
 
 }
 

@@ -19,9 +19,21 @@
 #include "Entities/KnowledgeGroup.h"
 #include "Entities/Team.h"
 #include "Entities/Pawn.h"
+#include "Types/Entities/AutomatType.h"
 
 namespace TEST
 {
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetType
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+inline
+const AutomatType& Automat::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
+}
 
 //-----------------------------------------------------------------------------
 // Name: Automat::GetTeam

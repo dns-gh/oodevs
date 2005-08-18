@@ -60,13 +60,23 @@ void Mission_Automat_ALAT_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_surveiller = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+    const Position& pointLogistique_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_logistique );
+    ASN_Tools::CopyPoint( pointLogistique_, asnMission.point_logistique );
+
+    delete &zone_;
+    delete &pointRegroupement_;
+    delete &plotsRavitaillement_;
+    delete &pointLogistique_;
 
 }
 

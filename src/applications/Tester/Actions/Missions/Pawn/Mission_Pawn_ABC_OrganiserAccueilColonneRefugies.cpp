@@ -60,7 +60,11 @@ void Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_installation );
+    const Position& positionInstallation_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionInstallation_, asnMission.position_installation );
+
+    delete &positionInstallation_;
 
 }
 

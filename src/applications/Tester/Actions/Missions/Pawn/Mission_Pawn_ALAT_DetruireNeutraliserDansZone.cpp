@@ -60,15 +60,25 @@ void Mission_Pawn_ALAT_DetruireNeutraliserDansZone::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_detruire_neutraliser_dans_zone;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_detruire_neutraliser_dans_zone = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_dislocation );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+    const Position& pointDislocation_ = pTarget_->GetTestParam_Point();
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+    ASN_Tools::CopyPoint( pointDislocation_, asnMission.point_dislocation );
     ASN_Tools::CopyNatureAtlas( pTarget_->GetTestParam_NatureAtlas(), asnMission.cibles_prioritaires );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.neutraliser );
+
+    delete &zone_;
+    delete &pointDislocation_;
+    delete &pointRegroupement_;
+    delete &plotsRavitaillement_;
 
 }
 

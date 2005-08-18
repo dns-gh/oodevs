@@ -60,8 +60,12 @@ void Mission_Automat_INF_DonnerCoupArret::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_donner_coup_arret;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_donner_coup_arret = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_regroupement );
+    const Location& zoneRegroupement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneRegroupement_, asnMission.zone_regroupement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.preparer_terrain );
+
+    delete &zoneRegroupement_;
 
 }
 

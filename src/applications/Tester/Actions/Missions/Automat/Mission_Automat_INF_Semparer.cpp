@@ -60,7 +60,11 @@ void Mission_Automat_INF_Semparer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_semparer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_semparer = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.objectif );
+    const Location& objectif_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( objectif_, asnMission.objectif );
+
+    delete &objectif_;
 
 }
 

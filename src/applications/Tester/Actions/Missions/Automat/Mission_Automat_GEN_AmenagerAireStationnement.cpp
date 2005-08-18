@@ -60,7 +60,11 @@ void Mission_Automat_GEN_AmenagerAireStationnement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_amenager_aire_stationnement = &asnMission;
 
-    ASN_Tools::CopyGenObjectList( pTarget_->GetTestParam_GenObjectList(), asnMission.travaux );
+    const T_IdVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
+
+    ASN_Tools::CopyGenObjectList( travaux_, asnMission.travaux );
+
+    delete &travaux_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_GEN_AmenagerAireStationnement::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement );
     ASN1T_Mission_Automate_GEN_AmenagerAireStationnement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_amenager_aire_stationnement;
 
+    ASN_Tools::Delete( asnMission.travaux );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

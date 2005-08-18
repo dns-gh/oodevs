@@ -60,7 +60,11 @@ void Mission_Automat_GEN_RealiserSystemeObstacles::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_systeme_obstacles = &asnMission;
 
-    ASN_Tools::CopyGenObjectList( pTarget_->GetTestParam_GenObjectList(), asnMission.obstacles );
+    const T_IdVector& obstacles_ = pTarget_->GetTestParam_GenObjectList();
+
+    ASN_Tools::CopyGenObjectList( obstacles_, asnMission.obstacles );
+
+    delete &obstacles_;
 
 }
 
@@ -73,6 +77,7 @@ void Mission_Automat_GEN_RealiserSystemeObstacles::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles );
     ASN1T_Mission_Automate_GEN_RealiserSystemeObstacles& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_systeme_obstacles;
 
+    ASN_Tools::Delete( asnMission.obstacles );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

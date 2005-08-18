@@ -60,10 +60,14 @@ void Mission_Pawn_GEN_ExecuterVariantement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_executer_variantement;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_executer_variantement = &asnMission;
 
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.site_franchissement );
     ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_objet_planifie );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 1 ), asnMission.type_pontage );
+
+    delete &pointRegroupement_;
 
 }
 

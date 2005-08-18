@@ -60,8 +60,12 @@ void Mission_Automat_INF_BarrerDirection::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_barrer_direction;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_barrer_direction = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.position );
+    const Location& position_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( position_, asnMission.position );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.preparer_terrain );
+
+    delete &position_;
 
 }
 

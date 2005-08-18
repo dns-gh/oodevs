@@ -60,7 +60,11 @@ void Mission_Automat_TRANS_Commander::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_trans_commander;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_trans_commander = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_deploiement );
+    const Location& zoneDeploiement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneDeploiement_, asnMission.zone_deploiement );
+
+    delete &zoneDeploiement_;
 
 }
 

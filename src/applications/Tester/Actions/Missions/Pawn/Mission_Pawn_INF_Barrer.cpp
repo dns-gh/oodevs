@@ -60,7 +60,11 @@ void Mission_Pawn_INF_Barrer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_barrer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_barrer = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_a_barrer );
+    const Position& positionABarrer_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionABarrer_, asnMission.position_a_barrer );
+
+    delete &positionABarrer_;
 
 }
 

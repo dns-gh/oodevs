@@ -60,7 +60,9 @@ void Mission_Pawn_GEN_ReconnaitreSiteFranchissement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.site_franchissement );
+
 
 }
 

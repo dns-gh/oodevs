@@ -85,10 +85,16 @@ public:
 
     //! @name Delete Operations
     //@{
-    static void Delete( ASN1T_Localisation&        asn ); 
-    static void Delete( ASN1T_ListLocalisation&    asn ); 
-    static void Delete( ASN1T_ListKnowledgeAgent&  asn );
-    static void Delete( ASN1T_ListKnowledgeObject& asn );
+    static void Delete( ASN1T_ListAgent&            asn );
+    static void Delete( ASN1T_ListAutomate&         asn );
+    static void Delete( ASN1T_Polygon&              asn );
+    static void Delete( ASN1T_ListPolygon&          asn );
+    static void Delete( ASN1T_ListPoint&            asn );
+    static void Delete( ASN1T_ListItineraire&       asn );
+    static void Delete( ASN1T_ListLocalisation&     asn );
+    static void Delete( ASN1T_ListKnowledgeAgent&   asn );
+    static void Delete( ASN1T_ListKnowledgeObject&  asn );
+    static void Delete( ASN1T_ListMissionGenObject& asn );
     //@}
 
     //! @name Enumeration translation to/from strings

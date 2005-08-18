@@ -36,10 +36,16 @@ AutomatType::AutomatType( const TypeManager& typeManager, const std::string& str
 
         archive.ReadField    ( "MosID", nId_ );
 
+        archive.Section      ( "Automate" );
+        std::string strModel;
+        archive.ReadField( "ModeleDecisionnel", strModel );
+        pModel_ = typeManager.FindAutomatModel( strModel );
+        assert( pModel_ );
+        archive.EndSection   (); // Automate
+
         archive.Section      ( "PionPC" );
         archive.ReadAttribute( "type", strValue );
         archive.EndSection   (); // PionPC
-
         pPcPawnType_ = typeManager.FindPawnType( strValue );
         assert( pPcPawnType_ );
     }
@@ -56,4 +62,5 @@ AutomatType::AutomatType( const TypeManager& typeManager, const std::string& str
 // -----------------------------------------------------------------------------
 AutomatType::~AutomatType()
 {
+    // NOTHING
 }

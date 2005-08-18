@@ -63,7 +63,7 @@ public:
     //! @name Test Parameters
     //@{
     T_EntityId  GetTestParam_Knowledge () const;
-    T_IdVector& GetTestParam_Knowledges() const;
+    T_IdVector& GetTestParam_Knowledges( uint nNbr ) const;
     //@}
 
 private:

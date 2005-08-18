@@ -60,7 +60,11 @@ void Mission_Automat_NBC_ReconnaitreDesSitesROTA::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_nbc_reconnaitre_des_sites_rota;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_nbc_reconnaitre_des_sites_rota = &asnMission;
 
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.sites_ROTA );
+    const T_IdVector& sitesROTA_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
+    ASN_Tools::CopyObjectKnowledgeList( sitesROTA_, asnMission.sites_ROTA );
+
+    delete &sitesROTA_;
 
 }
 

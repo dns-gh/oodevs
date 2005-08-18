@@ -61,6 +61,8 @@ void Mission_Automat_ABC_RenseignerSurUnAxe::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_renseigner_sur_un_axe = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

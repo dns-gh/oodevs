@@ -32,8 +32,9 @@
 #include <windows.h>
 
 #include "TestSets/TestSet_Simple.h"
-#include "TestSets/Testset_PawnMissions.h"
-#include "TestSets/Testset_AllPawnMissions.h"
+#include "TestSets/TestSet_PawnMissions.h"
+#include "TestSets/TestSet_AllPawnMissions.h"
+#include "TestSets/TestSet_AllAutomatMissions.h"
 
 using namespace TEST;
 
@@ -60,7 +61,7 @@ void Run()
 {
     signal( SIGINT, ctrl_c_handler );
 
-    //TestSet_Simple tests;
+    //TestSet_AllAutomatMissions tests;
     TestSet_AllPawnMissions tests;
 
     Workspace ws( &tests, "127.0.0.1", 10000, "D:/Dev/scipio-svn/data/test/scipio.xml" );

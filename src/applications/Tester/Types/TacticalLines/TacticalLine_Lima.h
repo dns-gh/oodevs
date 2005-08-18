@@ -53,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_Lima( T_PositionVector& points );
+             TacticalLine_Lima( const T_PositionVector& points );
              TacticalLine_Lima( const ASN1T_MsgLimaCreation& asnMsg );
     virtual ~TacticalLine_Lima();
     //@}

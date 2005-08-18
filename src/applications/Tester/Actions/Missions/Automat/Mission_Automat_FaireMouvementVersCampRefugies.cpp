@@ -61,6 +61,8 @@ void Mission_Automat_FaireMouvementVersCampRefugies::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_faire_mouvement_vers_camp_refugies = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

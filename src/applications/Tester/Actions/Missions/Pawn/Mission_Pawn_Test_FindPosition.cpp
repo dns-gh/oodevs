@@ -60,9 +60,13 @@ void Mission_Pawn_Test_FindPosition::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_find_position;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_find_position = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.retreat );
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.unite );
+    const Position& point_ = pTarget_->GetTestParam_Point();
+    const Position& retreat_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& unite_ = pTarget_->GetTestParam_AgentList();
+
+    ASN_Tools::CopyPoint( point_, asnMission.point );
+    ASN_Tools::CopyPoint( retreat_, asnMission.retreat );
+    ASN_Tools::CopyAgentList( unite_, asnMission.unite );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 4 ), asnMission.type_objectif );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 9 ), asnMission.type_operation );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.avoid );
@@ -72,6 +76,10 @@ void Mission_Pawn_Test_FindPosition::Serialize()
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.dec_points );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.niveau_identification );
     ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction(), asnMission.dgo );
+
+    delete &point_;
+    delete &retreat_;
+    delete &unite_;
 
 }
 
@@ -86,6 +94,7 @@ void Mission_Pawn_Test_FindPosition::Clean()
 
     ASN_Tools::Delete( asnMission.point );
     ASN_Tools::Delete( asnMission.retreat );
+    ASN_Tools::Delete( asnMission.unite );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

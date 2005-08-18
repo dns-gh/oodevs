@@ -60,8 +60,12 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_implantation );
+    const Position& positionImplantation_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionImplantation_, asnMission.position_implantation );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.presence_contre_batterie );
+
+    delete &positionImplantation_;
 
 }
 

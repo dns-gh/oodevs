@@ -60,9 +60,17 @@ void Mission_Pawn_Test_Heliporter::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_heliporter;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_heliporter = &asnMission;
 
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.agents );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_embarquement );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_debarquement );
+    const T_IdVector& agents_ = pTarget_->GetTestParam_AgentList();
+    const Position& pointEmbarquement_ = pTarget_->GetTestParam_Point();
+    const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyAgentList( agents_, asnMission.agents );
+    ASN_Tools::CopyPoint( pointEmbarquement_, asnMission.point_embarquement );
+    ASN_Tools::CopyPoint( pointDebarquement_, asnMission.point_debarquement );
+
+    delete &agents_;
+    delete &pointEmbarquement_;
+    delete &pointDebarquement_;
 
 }
 
@@ -75,6 +83,7 @@ void Mission_Pawn_Test_Heliporter::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_heliporter );
     ASN1T_Mission_Pion_Test_Heliporter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_heliporter;
 
+    ASN_Tools::Delete( asnMission.agents );
     ASN_Tools::Delete( asnMission.point_embarquement );
     ASN_Tools::Delete( asnMission.point_debarquement );
 

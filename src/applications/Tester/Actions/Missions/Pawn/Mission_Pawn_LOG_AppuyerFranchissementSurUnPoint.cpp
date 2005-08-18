@@ -60,7 +60,9 @@ void Mission_Pawn_LOG_AppuyerFranchissementSurUnPoint::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_appuyer_franchissement_sur_un_point;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_appuyer_franchissement_sur_un_point = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.pont_flottant );
+
 
 }
 

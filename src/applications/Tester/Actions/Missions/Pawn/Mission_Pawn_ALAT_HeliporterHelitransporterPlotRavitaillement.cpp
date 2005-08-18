@@ -60,11 +60,19 @@ void Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_debarquement );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
+    const Position& positionRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
+    ASN_Tools::CopyPoint( pointDebarquement_, asnMission.point_debarquement );
+    ASN_Tools::CopyPoint( positionRegroupement_, asnMission.position_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
+
+    delete &pointDebarquement_;
+    delete &positionRegroupement_;
+    delete &plotsRavitaillement_;
 
 }
 

@@ -60,9 +60,13 @@ void Mission_Pawn_GEN_DetruirePont::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_detruire_pont;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_detruire_pont = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.pos_obstacle );
+    const Position& posObstacle_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( posObstacle_, asnMission.pos_obstacle );
     ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 1 ), asnMission.preliminaire );
+
+    delete &posObstacle_;
 
 }
 

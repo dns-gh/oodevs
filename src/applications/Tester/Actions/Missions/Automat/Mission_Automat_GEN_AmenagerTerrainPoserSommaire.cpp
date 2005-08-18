@@ -60,7 +60,9 @@ void Mission_Automat_GEN_AmenagerTerrainPoserSommaire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_amenager_terrain_poser_sommaire = &asnMission;
 
+
     ASN_Tools::CopyGenObject( pTarget_->GetTestParam_GenObject(), asnMission.terrain );
+
 
 }
 

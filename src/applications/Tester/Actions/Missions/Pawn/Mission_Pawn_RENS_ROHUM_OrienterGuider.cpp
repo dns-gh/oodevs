@@ -60,7 +60,9 @@ void Mission_Pawn_RENS_ROHUM_OrienterGuider::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_rohum_orienter_guider;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_rohum_orienter_guider = &asnMission;
 
+
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.ami );
+
 
 }
 

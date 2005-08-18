@@ -60,9 +60,15 @@ void Mission_Pawn_ASA_MISTRAL_DefendreZoneAPartirPosition::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asa_mistral_defendre_zone_a_partir_position;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_mistral_defendre_zone_a_partir_position = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_de_deploiement );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+    const Position& pointDeDeploiement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+    ASN_Tools::CopyPoint( pointDeDeploiement_, asnMission.point_de_deploiement );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 1 ), asnMission.mode_deploiement );
+
+    delete &zone_;
+    delete &pointDeDeploiement_;
 
 }
 

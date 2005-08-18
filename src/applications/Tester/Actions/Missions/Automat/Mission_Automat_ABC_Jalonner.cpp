@@ -61,6 +61,8 @@ void Mission_Automat_ABC_Jalonner::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_jalonner = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

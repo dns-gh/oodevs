@@ -60,8 +60,14 @@ void Mission_Automat_GEN_FaireFranchir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_faire_franchir;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_faire_franchir = &asnMission;
 
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.sites_de_franchissement );
-    ASN_Tools::CopyLocation( pTarget_->GetTestParam_Location(), asnMission.zone_regroupement );
+    const T_IdVector& sitesDeFranchissement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+    const Location& zoneRegroupement_ = pTarget_->GetTestParam_Location();
+
+    ASN_Tools::CopyObjectKnowledgeList( sitesDeFranchissement_, asnMission.sites_de_franchissement );
+    ASN_Tools::CopyLocation( zoneRegroupement_, asnMission.zone_regroupement );
+
+    delete &sitesDeFranchissement_;
+    delete &zoneRegroupement_;
 
 }
 

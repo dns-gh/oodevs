@@ -60,7 +60,11 @@ void Mission_Automat_Stationner::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_stationner;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_stationner = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_attente );
+    const Location& zoneAttente_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zoneAttente_, asnMission.zone_attente );
+
+    delete &zoneAttente_;
 
 }
 

@@ -60,7 +60,9 @@ void Mission_Automat_INF_Appuyer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_appuyer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer = &asnMission;
 
+
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
+
 
 }
 

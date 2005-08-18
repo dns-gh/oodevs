@@ -60,7 +60,11 @@ void Mission_Pawn_ABC_RenseignerSur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_renseigner_sur;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_renseigner_sur = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_a_renseigner );
+    const Position& pointARenseigner_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointARenseigner_, asnMission.point_a_renseigner );
+
+    delete &pointARenseigner_;
 
 }
 

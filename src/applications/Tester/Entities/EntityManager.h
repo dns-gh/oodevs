@@ -29,6 +29,7 @@ namespace TEST
     class KnowledgeGroup;
     class Object;
     class Scheduler;
+    class Testable_Entity;
 
 // =============================================================================
 /** @class  EntityManager
@@ -70,6 +71,12 @@ public:
     //@{
     void ScheduleAllPawnMissions   ( Scheduler& scheduler ) const;
     void ScheduleAllAutomatMissions( Scheduler& scheduler ) const;
+    //@}
+
+    //! @name Test parameters
+    //@{
+    T_IdVector& GetTestParam_AgentList   ( uint nNbr, const Testable_Entity& target ) const;
+    T_IdVector& GetTestParam_AutomateList( uint nNbr, const Testable_Entity& target ) const;
     //@}
 
 private:

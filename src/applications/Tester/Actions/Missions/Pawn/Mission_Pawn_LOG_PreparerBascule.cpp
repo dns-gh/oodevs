@@ -60,7 +60,9 @@ void Mission_Pawn_LOG_PreparerBascule::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_preparer_bascule;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_preparer_bascule = &asnMission;
 
+
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.automate_pour_bascule );
+
 
 }
 

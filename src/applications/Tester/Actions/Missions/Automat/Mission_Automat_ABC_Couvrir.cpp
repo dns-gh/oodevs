@@ -60,8 +60,12 @@ void Mission_Automat_ABC_Couvrir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_couvrir;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_couvrir = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.position_installation );
+    const Location& positionInstallation_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( positionInstallation_, asnMission.position_installation );
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
+
+    delete &positionInstallation_;
 
 }
 

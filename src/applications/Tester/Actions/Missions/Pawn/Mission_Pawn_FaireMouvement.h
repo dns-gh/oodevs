@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-12 - 15:12:57
+// Generated: 2005-08-17 - 16:32:41
 // =============================================================================
 class Mission_Pawn_FaireMouvement : public Mission_Pawn_ABC
 {

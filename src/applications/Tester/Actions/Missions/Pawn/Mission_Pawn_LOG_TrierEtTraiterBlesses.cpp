@@ -61,6 +61,8 @@ void Mission_Pawn_LOG_TrierEtTraiterBlesses::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

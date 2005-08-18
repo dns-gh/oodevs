@@ -61,6 +61,8 @@ void Mission_Pawn_LOG_DecontaminerBlesses::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_pion_log_decontaminer_blesses = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

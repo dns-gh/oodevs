@@ -60,7 +60,11 @@ void Mission_Pawn_ABC_ArmerPointDeControle::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_armer_point_de_controle;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_armer_point_de_controle = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_de_controle );
+    const Position& pointDeControle_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointDeControle_, asnMission.point_de_controle );
+
+    delete &pointDeControle_;
 
 }
 

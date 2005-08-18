@@ -60,8 +60,12 @@ void Mission_Pawn_GEN_Renforcer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_renforcer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_renforcer = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.lieu_renforcement );
+    const Position& lieuRenforcement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( lieuRenforcement_, asnMission.lieu_renforcement );
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite );
+
+    delete &lieuRenforcement_;
 
 }
 

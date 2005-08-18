@@ -60,7 +60,11 @@ void Mission_Automat_ABC_Tenir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_tenir;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_tenir = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.position_installation );
+    const Location& positionInstallation_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( positionInstallation_, asnMission.position_installation );
+
+    delete &positionInstallation_;
 
 }
 

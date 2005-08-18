@@ -55,12 +55,16 @@ Mission_Automat_ABC::~Mission_Automat_ABC()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC::Serialize()
 {
-    /*ASN_Tools::CopyID       ( pTarget_->GetId()                  , asnMsg_.GetAsnMsg().oid_unite_executante );
+    const T_IdVector& oid_limas = pTarget_->GetTestParam_Limas();
+
+    ASN_Tools::CopyID       ( pTarget_->GetId()                  , asnMsg_.GetAsnMsg().oid_unite_executante );
     ASN_Tools::CopyID       ( idManager_.GetFreeIdentifier()     , asnMsg_.GetAsnMsg().order_id             );
     ASN_Tools::CopyID       ( pTarget_->GetTestParam_LeftLimit() , asnMsg_.GetAsnMsg().oid_limite_gauche    );
     ASN_Tools::CopyID       ( pTarget_->GetTestParam_RightLimit(), asnMsg_.GetAsnMsg().oid_limite_droite    );
-    ASN_Tools::CopyIDList   ( pTarget_->GetTestParam_Limas()     , asnMsg_.GetAsnMsg().oid_limas            );
-    ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction() , asnMsg_.GetAsnMsg().direction_dangereuse );*/
+    ASN_Tools::CopyIDList   ( oid_limas                          , asnMsg_.GetAsnMsg().oid_limas            );
+    ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction() , asnMsg_.GetAsnMsg().direction_dangereuse );
+
+    delete &oid_limas;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +73,12 @@ void Mission_Automat_ABC::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC::Send()
 {
+    // engage automat first
+    MOS_ASN_MsgSetAutomateMode msg;
+    msg.GetAsnMsg().mode    = EnumAutomateState::embraye;
+    msg.GetAsnMsg().unit_id = pTarget_->GetId();
+    msg.Send( 56 );
+    // then send msg
     asnMsg_.Send( 56 );
 }
 

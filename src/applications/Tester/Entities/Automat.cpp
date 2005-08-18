@@ -25,6 +25,7 @@
 #include "Types/TypeManager.h"
 #include "Types/Entities/AutomatType.h"
 #include "Types/Entities/AutomatModel.h"
+#include "Workspace.h"
 
 using namespace TEST;
 
@@ -33,12 +34,11 @@ using namespace TEST;
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 Automat::Automat( const Workspace& workspace, const ASN1T_MsgAutomateCreation& asnMsg )
-    : Testable_Entity  ()
+    : Testable_Entity  ( workspace )
     , nId_             ( asnMsg.oid_automate )
     , pTeam_           ( workspace.GetEntityManager().FindTeam( asnMsg.oid_camp ) )
     , pKnowledgeGroup_ ( workspace.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_connaissance ) )
     , pType_           ( workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate ) )
-    , workspace_       ( workspace )
 {
     assert( pTeam_ );
     assert( pKnowledgeGroup_ );

@@ -60,7 +60,11 @@ void Mission_Pawn_SeFaireTransporter::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_se_faire_transporter;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_se_faire_transporter = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_embarquement );
+    const Position& pointEmbarquement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointEmbarquement_, asnMission.point_embarquement );
+
+    delete &pointEmbarquement_;
 
 }
 

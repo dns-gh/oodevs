@@ -60,7 +60,11 @@ void Mission_Pawn_NBC_AnimerUnPlotDeDecontamination::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_animer_un_plot_de_decontamination = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_site_decontamination );
+    const Position& positionSiteDecontamination_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionSiteDecontamination_, asnMission.position_site_decontamination );
+
+    delete &positionSiteDecontamination_;
 
 }
 

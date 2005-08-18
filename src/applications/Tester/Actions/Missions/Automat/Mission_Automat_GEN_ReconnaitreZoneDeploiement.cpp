@@ -60,7 +60,11 @@ void Mission_Automat_GEN_ReconnaitreZoneDeploiement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_reconnaitre_zone_deploiement;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone_deploiement = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
+
+    delete &zone_;
 
 }
 

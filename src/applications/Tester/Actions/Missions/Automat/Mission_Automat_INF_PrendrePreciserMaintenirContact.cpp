@@ -61,6 +61,8 @@ void Mission_Automat_INF_PrendrePreciserMaintenirContact::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_prendre_preciser_maintenir_contact = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

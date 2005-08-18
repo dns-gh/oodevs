@@ -60,8 +60,12 @@ void Mission_Automat_INF_Couvrir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_couvrir;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_couvrir = &asnMission;
 
+    const T_PositionVector& objectifs_ = pTarget_->GetTestParam_PointList();
+
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
-    ASN_Tools::CopyPointList( pTarget_->GetTestParam_PointList(), asnMission.objectifs );
+    ASN_Tools::CopyPointList( objectifs_, asnMission.objectifs );
+
+    delete &objectifs_;
 
 }
 
@@ -74,6 +78,7 @@ void Mission_Automat_INF_Couvrir::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_couvrir );
     ASN1T_Mission_Automate_INF_Couvrir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_couvrir;
 
+    ASN_Tools::Delete( asnMission.objectifs );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

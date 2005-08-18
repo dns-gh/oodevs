@@ -60,12 +60,18 @@ void Mission_Pawn_Test_MoveTo::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_move_to;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_move_to = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+    const Position& visionPoint_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 6 ), asnMission.type_itineraire );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.debarque );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.verrouillage_vision );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.vision_point );
+    ASN_Tools::CopyPoint( visionPoint_, asnMission.vision_point );
     ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction(), asnMission.vision_direction );
+
+    delete &itineraire_;
+    delete &visionPoint_;
 
 }
 

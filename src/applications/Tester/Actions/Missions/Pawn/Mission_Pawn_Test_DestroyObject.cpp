@@ -60,7 +60,9 @@ void Mission_Pawn_Test_DestroyObject::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_destroy_object;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_test_destroy_object = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.objet );
+
 
 }
 

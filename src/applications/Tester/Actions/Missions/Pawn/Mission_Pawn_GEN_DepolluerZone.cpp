@@ -60,7 +60,11 @@ void Mission_Pawn_GEN_DepolluerZone::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_depolluer_zone;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_depolluer_zone = &asnMission;
 
-    ASN_Tools::CopyLocation( pTarget_->GetTestParam_Location(), asnMission.zone );
+    const Location& zone_ = pTarget_->GetTestParam_Location();
+
+    ASN_Tools::CopyLocation( zone_, asnMission.zone );
+
+    delete &zone_;
 
 }
 

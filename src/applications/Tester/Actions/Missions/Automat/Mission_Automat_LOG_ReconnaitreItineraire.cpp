@@ -60,7 +60,11 @@ void Mission_Automat_LOG_ReconnaitreItineraire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_reconnaitre_itineraire;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_itineraire = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire_log );
+    const Path& itineraireLog_ = pTarget_->GetTestParam_Path();
+
+    ASN_Tools::CopyPath( itineraireLog_, asnMission.itineraire_log );
+
+    delete &itineraireLog_;
 
 }
 

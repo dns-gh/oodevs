@@ -60,7 +60,9 @@ void Mission_Pawn_GEN_NeutraliserEnginsExplosifs::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_neutraliser_engins_explosifs = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.obstacle );
+
 
 }
 

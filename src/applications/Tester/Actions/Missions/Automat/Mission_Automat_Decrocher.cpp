@@ -60,7 +60,11 @@ void Mission_Automat_Decrocher::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_decrocher;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_decrocher = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.point_regroupement );
+    const Location& pointRegroupement_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( pointRegroupement_, asnMission.point_regroupement );
+
+    delete &pointRegroupement_;
 
 }
 

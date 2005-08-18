@@ -37,8 +37,6 @@ PawnKnowledge::PawnKnowledge( const EntityManager& entityManager, const ASN1T_Ms
     , pRealPawn_ ( asnMsg.oid_unite_reelle == 0 ? 0 : entityManager.FindPawn( asnMsg.oid_unite_reelle ) )
 {
     // NOTHING
-    std::cout << "group: " << knowledgeGroup.GetId() << " knows: " << asnMsg.oid_unite_reelle 
-        << " from group: " << pRealPawn_->GetAutomat().GetKnowledgeGroup().GetId() << std::endl;
 }
 
 // -----------------------------------------------------------------------------

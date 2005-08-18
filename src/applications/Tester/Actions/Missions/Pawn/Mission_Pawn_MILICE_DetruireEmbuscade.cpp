@@ -60,9 +60,15 @@ void Mission_Pawn_MILICE_DetruireEmbuscade::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_milice_detruire_embuscade;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_detruire_embuscade = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_embuscade );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_regroupement );
+    const Position& positionEmbuscade_ = pTarget_->GetTestParam_Point();
+    const Position& positionRegroupement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionEmbuscade_, asnMission.position_embuscade );
+    ASN_Tools::CopyPoint( positionRegroupement_, asnMission.position_regroupement );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 37 ), asnMission.nature_obstacle );
+
+    delete &positionEmbuscade_;
+    delete &positionRegroupement_;
 
 }
 

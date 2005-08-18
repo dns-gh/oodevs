@@ -60,8 +60,10 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvre::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre = &asnMission;
 
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.zone_implantation );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.presence_contre_batterie );
+
 
 }
 

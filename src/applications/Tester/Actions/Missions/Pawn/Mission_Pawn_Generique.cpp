@@ -60,13 +60,29 @@ void Mission_Pawn_Generique::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_generique;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_generique = &asnMission;
 
-    ASN_Tools::CopyPolygonList( pTarget_->GetTestParam_PolygonList(), asnMission.zones );
-    ASN_Tools::CopyPointList( pTarget_->GetTestParam_PointList(), asnMission.points );
-    ASN_Tools::CopyPathList( pTarget_->GetTestParam_PathList(), asnMission.itineraires );
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.unites );
-    ASN_Tools::CopyAutomateList( pTarget_->GetTestParam_AutomateList(), asnMission.automates );
-    ASN_Tools::CopyAgentKnowledgeList( pTarget_->GetTestParam_AgentKnowledgeList(), asnMission.connaissances_agents );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.connaissances_objets );
+    const T_LocationVector& zones_ = pTarget_->GetTestParam_PolygonList();
+    const T_PositionVector& points_ = pTarget_->GetTestParam_PointList();
+    const T_PathVector& itineraires_ = pTarget_->GetTestParam_PathList();
+    const T_IdVector& unites_ = pTarget_->GetTestParam_AgentList();
+    const T_IdVector& automates_ = pTarget_->GetTestParam_AutomateList();
+    const T_IdVector& connaissancesAgents_ = pTarget_->GetTestParam_AgentKnowledgeList();
+    const T_IdVector& connaissancesObjets_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+
+    ASN_Tools::CopyPolygonList( zones_, asnMission.zones );
+    ASN_Tools::CopyPointList( points_, asnMission.points );
+    ASN_Tools::CopyPathList( itineraires_, asnMission.itineraires );
+    ASN_Tools::CopyAgentList( unites_, asnMission.unites );
+    ASN_Tools::CopyAutomateList( automates_, asnMission.automates );
+    ASN_Tools::CopyAgentKnowledgeList( connaissancesAgents_, asnMission.connaissances_agents );
+    ASN_Tools::CopyObjectKnowledgeList( connaissancesObjets_, asnMission.connaissances_objets );
+
+    delete &zones_;
+    delete &points_;
+    delete &itineraires_;
+    delete &unites_;
+    delete &automates_;
+    delete &connaissancesAgents_;
+    delete &connaissancesObjets_;
 
 }
 
@@ -79,6 +95,11 @@ void Mission_Pawn_Generique::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_generique );
     ASN1T_Mission_Pion_Generique& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_generique;
 
+    ASN_Tools::Delete( asnMission.zones );
+    ASN_Tools::Delete( asnMission.points );
+    ASN_Tools::Delete( asnMission.itineraires );
+    ASN_Tools::Delete( asnMission.unites );
+    ASN_Tools::Delete( asnMission.automates );
     ASN_Tools::Delete( asnMission.connaissances_agents );
     ASN_Tools::Delete( asnMission.connaissances_objets );
 

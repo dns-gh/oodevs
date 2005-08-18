@@ -55,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_ABC();
-             TacticalLine_ABC( T_PositionVector& points );
+             TacticalLine_ABC( const T_PositionVector& points );
     virtual ~TacticalLine_ABC();
     //@}
 

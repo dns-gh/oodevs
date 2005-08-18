@@ -60,7 +60,11 @@ void Mission_Pawn_ASA_DefendreSite::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asa_defendre_site;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_defendre_site = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.site );
+    const Location& site_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( site_, asnMission.site );
+
+    delete &site_;
 
 }
 

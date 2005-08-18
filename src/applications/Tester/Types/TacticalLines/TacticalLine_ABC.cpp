@@ -42,12 +42,13 @@ TacticalLine_ABC::TacticalLine_ABC()
 // Name: TacticalLine_ABC constructor
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( T_PositionVector& points )
+TacticalLine_ABC::TacticalLine_ABC( const T_PositionVector& points )
     : nId_            ( 0 )
-    , points_         ( points )
+    , points_         ()
     , bIsSyncWithSim_ ( false )
 {
-    // NOTHING
+    for( CIT_PositionVector it = points.begin(); it != points.end(); ++it )
+        points_.push_back( new Position( **it ) );
 }
 
 // -----------------------------------------------------------------------------

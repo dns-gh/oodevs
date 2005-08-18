@@ -60,13 +60,23 @@ void Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_dans_la_profondeur = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_regroupement );
-    ASN_Tools::CopyObjectKnowledgeList( pTarget_->GetTestParam_ObjectKnowledgeList(), asnMission.plots_ravitaillement );
+    const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
+    const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+    const Position& pointDislocation_ = pTarget_->GetTestParam_Point();
+    const Location& zone_ = pTarget_->GetTestParam_Location();
+
+    ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
+    ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_dislocation );
-    ASN_Tools::CopyLocation( pTarget_->GetTestParam_Location(), asnMission.zone );
+    ASN_Tools::CopyPoint( pointDislocation_, asnMission.point_dislocation );
+    ASN_Tools::CopyLocation( zone_, asnMission.zone );
+
+    delete &pointRegroupement_;
+    delete &plotsRavitaillement_;
+    delete &pointDislocation_;
+    delete &zone_;
 
 }
 

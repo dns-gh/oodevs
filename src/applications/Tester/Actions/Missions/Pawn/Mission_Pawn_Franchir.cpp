@@ -60,8 +60,12 @@ void Mission_Pawn_Franchir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_franchir;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_franchir = &asnMission;
 
+    const Position& pointArrivee_ = pTarget_->GetTestParam_Point();
+
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.pont_flottant );
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_arrivee );
+    ASN_Tools::CopyPoint( pointArrivee_, asnMission.point_arrivee );
+
+    delete &pointArrivee_;
 
 }
 

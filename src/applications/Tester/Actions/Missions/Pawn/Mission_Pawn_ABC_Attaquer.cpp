@@ -60,7 +60,11 @@ void Mission_Pawn_ABC_Attaquer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_attaquer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_attaquer = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire_assaut );
+    const Path& itineraireAssaut_ = pTarget_->GetTestParam_Path();
+
+    ASN_Tools::CopyPath( itineraireAssaut_, asnMission.itineraire_assaut );
+
+    delete &itineraireAssaut_;
 
 }
 

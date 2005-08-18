@@ -217,9 +217,8 @@ void ASN_Tools::CopyPoint( const Position& position, ASN1T_Point& asn )
     asn.type = EnumTypeLocalisation::point;
     asn.vecteur_point.n     = 1;
 
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[1]; //$$$ RAM
-    CopyPoint( position, *pCoord );
-    asn.vecteur_point.elem = pCoord;
+    asn.vecteur_point.elem = new ASN1T_CoordUTM[1]; //$$$ RAM
+    CopyPoint( position, *asn.vecteur_point.elem );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,11 +231,10 @@ void ASN_Tools::CopyPointList( const T_PositionVector& positions, ASN1T_ListPoin
     if( positions.empty() )
         return;
 
-    ASN1T_Point* pPoint = new ASN1T_Point[ positions.size() ]; //$$$ RAM
-    asn.elem = pPoint;
+    asn.elem = new ASN1T_Point[ positions.size() ]; //$$$ RAM
     uint i = 0;
     for( CIT_PositionVector it = positions.begin(); it != positions.end(); ++it )
-        CopyPoint( **it, pPoint[ i++ ] );
+        CopyPoint( **it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,11 +250,10 @@ void ASN_Tools::CopyPath( const Path& path, ASN1T_Itineraire& asn )
     if( posVector.empty() )
         return;
 
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
-    asn.vecteur_point.elem = pCoord;
+    asn.vecteur_point.elem = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
     uint i = 0;
     for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
-        CopyPoint( **it, pCoord[ i++ ] );
+        CopyPoint( **it, asn.vecteur_point.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,11 +298,10 @@ void ASN_Tools::CopyLocation( const Location& location, ASN1T_Localisation& asn 
     if( posVector.empty() )
         return;
 
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
-    asn.vecteur_point.elem = pCoord;
+    asn.vecteur_point.elem = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
     uint i = 0;
     for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
-        CopyPoint( **it, pCoord[ i++ ] );
+        CopyPoint( **it, asn.vecteur_point.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,11 +317,10 @@ void ASN_Tools::CopyPolygon( const Location& location, ASN1T_Polygon& asn )
     if( posVector.empty() )
         return;
 
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
-    asn.vecteur_point.elem = pCoord;
+    asn.vecteur_point.elem = new ASN1T_CoordUTM[ posVector.size() ]; //$$$ RAM
     uint i = 0;
     for( CIT_PositionVector it = posVector.begin(); it != posVector.end(); ++it )
-        CopyPoint( **it, pCoord[ i++ ] );
+        CopyPoint( **it, asn.vecteur_point.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -338,11 +333,10 @@ void ASN_Tools::CopyPolygonList( const T_LocationVector& locations, ASN1T_ListPo
     if( locations.empty() )
         return;
 
-    ASN1T_Polygon* pPoly = new ASN1T_Polygon[ locations.size() ]; //$$$ RAM
-    asn.elem = pPoly;
+    asn.elem = new ASN1T_Polygon[ locations.size() ]; //$$$ RAM
     uint i = 0;
     for( CIT_LocationVector it = locations.begin(); it != locations.end(); ++it )
-        CopyPolygon( **it, pPoly[ i++ ] );
+        CopyPolygon( **it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,12 +362,75 @@ void ASN_Tools::CopyGDH( uint nTime, ASN1T_GDH& asn )
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
-// Created: SBO 2005-08-10
+// Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void ASN_Tools::Delete( ASN1T_Localisation& asn )
+void ASN_Tools::Delete( ASN1T_ListAgent& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_ListAutomate& asn )
+{
+    if( asn.n > 0 )
+        delete [] asn.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_Polygon& asn )
 {
     if( asn.vecteur_point.n > 0 )
         delete [] asn.vecteur_point.elem;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_ListPolygon& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[ i ] );
+        delete [] asn.elem;
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_ListPoint& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[ i ] );
+        delete [] asn.elem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_ListItineraire& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[ i ] );
+        delete [] asn.elem;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -386,7 +443,6 @@ void ASN_Tools::Delete( ASN1T_ListLocalisation& asn )
     {
         for( uint i = 0; i < asn.n; ++i )
             Delete( asn.elem[i] );
-
         delete [] asn.elem;
     }
 }
@@ -413,6 +469,19 @@ void ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
         delete [] asn.elem;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n ; ++i )
+            delete &asn.elem[ i ];
+        delete [] asn.elem;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::ToString

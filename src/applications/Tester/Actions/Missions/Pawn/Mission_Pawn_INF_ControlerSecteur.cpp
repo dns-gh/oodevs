@@ -60,8 +60,12 @@ void Mission_Pawn_INF_ControlerSecteur::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_controler_secteur;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_controler_secteur = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.secteur );
+    const Location& secteur_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( secteur_, asnMission.secteur );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.preparer_terrain );
+
+    delete &secteur_;
 
 }
 

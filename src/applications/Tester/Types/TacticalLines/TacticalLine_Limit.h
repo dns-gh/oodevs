@@ -53,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_Limit( T_PositionVector& points );
+             TacticalLine_Limit( const T_PositionVector& points );
              TacticalLine_Limit( const ASN1T_MsgLimitCreation& asnMsg );
     virtual ~TacticalLine_Limit();
     //@}

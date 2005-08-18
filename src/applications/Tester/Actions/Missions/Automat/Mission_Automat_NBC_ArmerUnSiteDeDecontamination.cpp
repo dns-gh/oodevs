@@ -60,7 +60,11 @@ void Mission_Automat_NBC_ArmerUnSiteDeDecontamination::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_nbc_armer_un_site_de_decontamination;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_nbc_armer_un_site_de_decontamination = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.site );
+    const Location& site_ = pTarget_->GetTestParam_Polygon();
+
+    ASN_Tools::CopyPolygon( site_, asnMission.site );
+
+    delete &site_;
 
 }
 

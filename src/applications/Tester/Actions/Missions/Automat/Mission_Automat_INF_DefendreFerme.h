@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-12 - 15:12:56
+// Generated: 2005-08-17 - 16:32:40
 // =============================================================================
 class Mission_Automat_INF_DefendreFerme : public Mission_Automat_ABC
 {

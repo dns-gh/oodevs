@@ -61,6 +61,8 @@ void Mission_Automat_ABC_Eclairer::Serialize()
     asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_eclairer = &asnMission;
 
 
+
+
 }
 
 // -----------------------------------------------------------------------------

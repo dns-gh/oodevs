@@ -60,8 +60,12 @@ void Mission_Pawn_ASA_MISTRAL_Surveiller::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asa_mistral_surveiller;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_mistral_surveiller = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_de_deploiement );
+    const Position& pointDeDeploiement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointDeDeploiement_, asnMission.point_de_deploiement );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 1 ), asnMission.mode_deploiement );
+
+    delete &pointDeDeploiement_;
 
 }
 

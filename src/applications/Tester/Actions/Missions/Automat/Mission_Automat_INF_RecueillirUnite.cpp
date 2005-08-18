@@ -60,9 +60,15 @@ void Mission_Automat_INF_RecueillirUnite::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_recueillir_unite;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_recueillir_unite = &asnMission;
 
-    ASN_Tools::CopyPolygon( pTarget_->GetTestParam_Polygon(), asnMission.zone_deploiement );
+    const Location& zoneDeploiement_ = pTarget_->GetTestParam_Polygon();
+    const T_PositionVector& pias_ = pTarget_->GetTestParam_PointList();
+
+    ASN_Tools::CopyPolygon( zoneDeploiement_, asnMission.zone_deploiement );
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
-    ASN_Tools::CopyPointList( pTarget_->GetTestParam_PointList(), asnMission.pias );
+    ASN_Tools::CopyPointList( pias_, asnMission.pias );
+
+    delete &zoneDeploiement_;
+    delete &pias_;
 
 }
 
@@ -76,6 +82,7 @@ void Mission_Automat_INF_RecueillirUnite::Clean()
     ASN1T_Mission_Automate_INF_RecueillirUnite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_recueillir_unite;
 
     ASN_Tools::Delete( asnMission.zone_deploiement );
+    ASN_Tools::Delete( asnMission.pias );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

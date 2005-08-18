@@ -60,7 +60,9 @@ void Mission_Pawn_MILICE_Provoquer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_milice_provoquer;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_provoquer = &asnMission;
 
+
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.unite_a_provoquer );
+
 
 }
 

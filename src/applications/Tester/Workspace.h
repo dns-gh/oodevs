@@ -95,7 +95,7 @@ private:
 private:
 	//! @name Member data
     //@{
-	static Workspace*   pWorkspace_;
+	static Workspace*   pWorkspace_; // keep static for ASN_Message
 
     uint32              nCurrentSimTime_;
     uint32              nTick_;

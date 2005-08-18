@@ -60,8 +60,12 @@ void Mission_Pawn_GEN_RealiserZonePoserHelicoptere::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_poser_helicoptere = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.zone_poser );
+    const Position& zonePoser_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( zonePoser_, asnMission.zone_poser );
     ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
+
+    delete &zonePoser_;
 
 }
 

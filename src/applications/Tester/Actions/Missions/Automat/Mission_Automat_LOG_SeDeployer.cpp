@@ -60,7 +60,11 @@ void Mission_Automat_LOG_SeDeployer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_se_deployer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_log_se_deployer = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.position_deploiement );
+    const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( positionDeploiement_, asnMission.position_deploiement );
+
+    delete &positionDeploiement_;
 
 }
 

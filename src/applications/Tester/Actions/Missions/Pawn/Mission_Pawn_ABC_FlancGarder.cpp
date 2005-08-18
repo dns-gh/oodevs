@@ -60,8 +60,14 @@ void Mission_Pawn_ABC_FlancGarder::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_flanc_garder;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_flanc_garder = &asnMission;
 
-    ASN_Tools::CopyPath( pTarget_->GetTestParam_Path(), asnMission.itineraire );
-    ASN_Tools::CopyAgentList( pTarget_->GetTestParam_AgentList(), asnMission.unites_a_couvrir );
+    const Path& itineraire_ = pTarget_->GetTestParam_Path();
+    const T_IdVector& unitesACouvrir_ = pTarget_->GetTestParam_AgentList();
+
+    ASN_Tools::CopyPath( itineraire_, asnMission.itineraire );
+    ASN_Tools::CopyAgentList( unitesACouvrir_, asnMission.unites_a_couvrir );
+
+    delete &itineraire_;
+    delete &unitesACouvrir_;
 
 }
 
@@ -75,6 +81,7 @@ void Mission_Pawn_ABC_FlancGarder::Clean()
     ASN1T_Mission_Pion_ABC_FlancGarder& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_flanc_garder;
 
     ASN_Tools::Delete( asnMission.itineraire );
+    ASN_Tools::Delete( asnMission.unites_a_couvrir );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

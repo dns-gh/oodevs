@@ -186,7 +186,8 @@ private:
     void OnReceiveMsgDebugDrawPoints          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // communication/orders
-    void OnReceiveMsgPionOrderAck             ( const ASN1T_MsgPionOrderAck& asnMsg, T_NetContextId nCtx );
+    void OnReceiveMsgAutomateOrderAck         ( const ASN1T_MsgAutomateOrderAck& asnMsg, T_NetContextId nCtx );
+    void OnReceiveMsgPionOrderAck             ( const ASN1T_MsgPionOrderAck&     asnMsg, T_NetContextId nCtx );
     //@}
 
 private:

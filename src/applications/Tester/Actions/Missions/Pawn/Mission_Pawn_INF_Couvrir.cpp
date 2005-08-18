@@ -60,8 +60,12 @@ void Mission_Pawn_INF_Couvrir::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_couvrir;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_couvrir = &asnMission;
 
-    ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), asnMission.point_couverture );
+    const Position& pointCouverture_ = pTarget_->GetTestParam_Point();
+
+    ASN_Tools::CopyPoint( pointCouverture_, asnMission.point_couverture );
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.cible );
+
+    delete &pointCouverture_;
 
 }
 
