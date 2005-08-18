@@ -23,30 +23,41 @@
     ============================================================================
     -->
     <target name="libraries" description="build static library">
-        <build-lib name="MT_Tools_Scipio" input="MT_Tools"/>
+        <!--build-lib name="TIC">
+            <includepath path="${libraries.dir}/TIC"/>
+            <includepath path="${include.dir}/ASN"/>
+        </build-lib>
+
+        <build-lib name="TIC_Export">
+            <includepath path="${libraries.dir}/TIC"/>
+            <includepath path="${libraries.dir}/TIC_Export"/>
+            <includepath path="${include.dir}/ASN"/>
+        </build-lib-->
+
+        <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
         <build-lib name="TER"/>
         <build-lib name="ASN">
-            <includepath path="${include.dir}/ASN"/>            
+            <includepath path="${include.dir}/ASN"/>
             <compilerarg value="/W3"/>
         </build-lib>
-        
+
         <build-lib name="MIL">
             <includepath path="${libraries.dir}/MIL"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
-        
+
         <build-lib name="Missions" excludes="**/MIL_*">
             <includepath path="${libraries.dir}/MIL"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
-        
+
         <build-lib name="GFX">
             <includepath path="${include.dir}/qt"/>
-        </build-lib>            
-        
+        </build-lib>
+
         <build-lib name="ENT">
             <includepath path="${include.dir}/qt"/>
-        </build-lib>                           
+        </build-lib>
     </target>
 
     <!--
@@ -55,59 +66,78 @@
     ============================================================================
     -->
     <target name="applications" depends="" description="build executables">
-        <build-app name="SIM" 
-                   subsystem="console"                   
+        <!--build-app name="TIC_Sample"
+                   subsystem="console"
+                   libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
+                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,
+                         pathfind,geocoord,
+                         TIC_Export,ASN,
+                         boost_thread-vc71-mt-1_32,
+                         asn1per,xerces-c_2">
+            <includepath path="${include.dir}/ASN"/>
+        </build-app>
+
+        <build-app name="TIC_XmlExporter"
+                   subsystem="console"
+                   libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
+                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,
+                         pathfind,geocoord,
+                         TIC_Export,ASN,
+                         boost_thread-vc71-mt-1_32,
+                         asn1per,xerces-c_2">
+            <includepath path="${include.dir}/ASN"/>
+        </build-app-->
+
+        <build-app name="SIM"
+                   subsystem="console"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,
-                         DIA_Motivation,DIA_Representation,DIA_SDK_Manager,DIA_Tool_Archive,DIA_Tool_Debugger,DIA_Tool_DebugInfoGen,DIA_Tool_Scripts,DIA_ToolManager,DIA_Behavior,DIA_Kernel,                         
-                         tools,HLA,libFedTime,pathfind,geocoord,                         
+                         DIA_Motivation,DIA_Representation,DIA_SDK_Manager,DIA_Tool_Archive,DIA_Tool_Debugger,DIA_Tool_DebugInfoGen,DIA_Tool_Scripts,DIA_ToolManager,DIA_Behavior,DIA_Kernel,
+                         tools,HLA,libFedTime,pathfind,geocoord,
                          MT_Tools_Scipio,TER,ASN,MIL,Missions,
                          boost_thread-vc71-mt-1_32,libboost_serialization-vc71-mt-1_32,libboost_filesystem-vc71-mt-1_32,
                          asn1per,xerces-c_2">
 			      <syslibset libs="advapi32,user32,wsock32,winmm,dbghelp"/>
             <includepath path="${libraries.dir}/MIL"/>
-            <includepath path="${include.dir}/ASN"/>		            
-            <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->            
+            <includepath path="${include.dir}/ASN"/>
+            <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
-        
-        <build-app name="ADN" 
+
+        <build-app name="ADN"
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          MT_Tools_SCIPIO,ENT,
-                         qtmain,qt-mt333,xerces-c_2"
-                   moc="ADN_Automata_SubUnitsTable,ADN_BoolEditor,ADN_Categories_GUI,ADN_ChangeValueCommand_Bool,ADN_ChangeValueCommand_Double,ADN_ChangeValueCommand_Int,ADN_ChangeValueCommand_String,ADN_CheckBox,ADN_ComboBox,ADN_Composantes_BreakdownsTable,ADN_Composantes_Dotations_GUI,ADN_Composantes_GUI,ADN_Composantes_RadarsListView,ADN_Composantes_WeaponsListView,ADN_Connector_ABC,ADN_Connector_Vector_ABC,ADN_Data_ABC,ADN_EditLine_ABC,ADN_EquipementSelector,ADN_Equipement_GUI,ADN_FileChooser,ADN_Graph,ADN_GraphValue,ADN_GroupBox,ADN_ListView,ADN_ListView_Composantes_Objects,ADN_ListView_Launchers,ADN_MainWindow,ADN_Objects_GUI,ADN_Ref_ABC,ADN_SupplyUnitSelector,ADN_Table,ADN_TableDialog,ADN_Units_Composantes_GUI,ADN_Units_GUI,ADN_Workspace,GQ_Plot,GQ_PlotAxis,GQ_PlotCaption,GQ_PlotData,qtundo">
+                         qtmain,qt-mt333,xerces-c_2">
             <syslibset libs="advapi32,user32"/>
         </build-app>
-        
-        <build-app name="MOS_Light" 
+
+        <build-app name="MOS_Light"
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools_SCIPIO,ASN,GFX,
                          geocoord,graphics,pathfind,terrain,
-                         asn1per,qtmain,qt-mt333,xerces-c_2"
-                   moc="MOS_ObjectKnowledge_ListView,MOS_AgentEditor,MOS_AgentKnowledge_Editor,MOS_AgentListView,MOS_AgentMission,MOS_AgentSelector,MOS_App,MOS_AttrEditor,MOS_ChangeDiplomacyDialog,MOS_ChangeHumanFactorsDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_DisconnectDialog,MOS_DynaObject_Creator,MOS_DynaObject_Editor,MOS_DynaObject_ListView,MOS_EnemyInfo_Editor,MOS_EnemyInfo_List,MOS_EnemyInfo_Sending,MOS_GLWidget,MOS_KnowledgeList_View,MOS_LimaEditor,MOS_LimaListView,MOS_LimaMission,MOS_LimaSelector,MOS_LimitEditor,MOS_LimitListView,MOS_LimitMission,MOS_LimitSelector,MOS_LogWindow,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MTH_AgentKnowledgeList,MOS_MTH_GDH,MOS_MTH_ListLocalisation_Editor,MOS_MTH_ListLocalisation_ListView,MOS_MTH_MaintenancePriorities,MOS_MTH_MedicalPriorities,MOS_MTH_ObjectKnowledgeList,MOS_MTH_Obstacle_Editor,MOS_MTH_Obstacle_ListView,MOS_MTH_PointList_Editor,MOS_MTH_PointList_ListView,MOS_MainWindow,MOS_Meteo_Global_GUI,MOS_Meteo_ListView,MOS_MissionAction,MOS_Mission_ABC,MOS_ODBListView,MOS_ODBNumberSelector,MOS_OrderConduiteMissionDialog,MOS_PointListView,MOS_RCEditor,MOS_RCListView,MOS_SIMControl,MOS_SurrenderDialog,MOS_TraceEditor,MOS_Value,MOS_traceListView">
-            <includepath path="${include.dir}/ASN"/>		            
+                         asn1per,qtmain,qt-mt333,xerces-c_2">
+            <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32"/>
-            <defineset define="MOS_USE_INLINE"/> 
-        </build-app>        
-        
+            <defineset define="MOS_USE_INLINE"/>
+        </build-app>
+
         <!-- A corriger excludes="**/MOS_**_Gen.*" -->
-        <build-app name="MOS_Light2" 
+        <build-app name="MOS_Light2"
                    subsystem="gui"
-                   excludes="**/font/*,**/MOS_**_Gen.*" 
+                   excludes="**/font/*,**/MOS_**_Gen.*"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools_SCIPIO,ASN,GFX,ENT,
                          geocoord,graphics,pathfind,terrain,
-                         asn1per,qtmain,qt-mt333,xerces-c_2"                         
-                   moc="MOS_AgentCreationMapFilter,MOS_AgentCreationPanel,MOS_AgentKnowledgePanel,MOS_AgentListView,MOS_App,MOS_AutomateMissionInterface,MOS_ChangeDiplomacyDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_ControllerToolbar,MOS_DefaultMapEventHandler,MOS_DisconnectDialog,MOS_DynaObjectKnowledgePanel,MOS_DynaObjectListView,MOS_DynaObjectPanel,MOS_EventToolButton,MOS_EventToolbar,MOS_FragmentaryOrderInterface,MOS_GL3DWidget,MOS_GLWidget,MOS_InfoPanel,MOS_InfoPanel_ABC,MOS_Logger,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MainWindow,MOS_MapToolbar,MOS_MissionInterface_ABC,MOS_MissionPanel,MOS_ODBToolbar,MOS_ObjectCreationPanel,MOS_OptionsPanel,MOS_ParamAgent,MOS_ParamAgentKnowledge,MOS_ParamAgentKnowledgeList,MOS_ParamAgentList,MOS_ParamDynaObjectKnowledge,MOS_ParamDynaObjectKnowledgeList,MOS_ParamGDH,MOS_ParamLimaList,MOS_ParamLimits,MOS_ParamListView,MOS_ParamLocation,MOS_ParamLocationList,MOS_ParamObstacleList,MOS_ParamPath,MOS_ParamPathList,MOS_ParamPoint,MOS_ParamSlider,MOS_RecorderToolbar,MOS_ReportListView,MOS_SIMControlToolbar,MOS_ShapeEditorMapEventFilter,MOS_SurrenderDialog,MOS_UnitMissionInterface,MOS_UnitToolbar,MOS_WeatherPanel,MT_GLDLayerDialog,MT_GLDShape,MT_GLDShapeDialog,MT_GLDrawer,MT_Slider">
-            <includepath path="${include.dir}/ASN"/>		            
+                         asn1per,qtmain,qt-mt333,xerces-c_2">
+            <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32"/>
-        </build-app>   
-        
+        </build-app>
+
         <build-app name="Tester" 
                    subsystem="console"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
@@ -123,20 +153,19 @@
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
                          HLA,libfedtime,
                          MIL,
-                         qtmain,qt-mt333,xerces-c_2"
-                    moc="HLA_MainWindow,HLA_CreateFederationBox">
+                         qtmain,qt-mt333,xerces-c_2">
             <syslibset libs="wsock32"/>
-        </build-app>   
+        </build-app>
 
-        <build-app name="AGR" 
+        <build-app name="AGR"
                    subsystem="console"
-                   excludes="**/*_Skeleton.*" 
+                   excludes="**/*_Skeleton.*"
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
                          libboost_filesystem-vc71-mt-1_32,xerces-c_2">
             <syslibset libs="user32"/>
-        </build-app>   
-        
-        <build-app name="LAU" 
+        </build-app>
+
+        <build-app name="LAU"
                    subsystem="console"
                    excludes="TerminateApp.c"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
@@ -145,27 +174,27 @@
                          asn1per,xerces-c_2">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="ole32,advapi32,user32,wsock32,winmm"/>
-        </build-app>   
-        
-        <build-app name="LAU_Mos_Part" 
+        </build-app>
+
+        <build-app name="LAU_Mos_Part"
                    subsystem="gui"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,MT_Thread,MT_Time,
                          ASN,
                          asn1per,qtmain,qt-mt333"
-                   moc="LMP_App,LMP_MainWindow">
+                   pch="LAM_pch">
             <syslibset libs="user32,wsock32,winmm"/>
             <includepath path="${include.dir}/ASN"/>
-        </build-app>                                
-        
-        <build-app name="ScriptCompiler" 
+        </build-app>
+
+        <build-app name="ScriptCompiler"
                    subsystem="console"
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,
                          DIA_Motivation,DIA_Representation,DIA_SDK_Manager,DIA_Tool_Archive,DIA_Tool_Debugger,DIA_Tool_DebugInfoGen,DIA_Tool_Scripts,DIA_ToolManager,DIA_Behavior,DIA_Kernel,
                          MT_Tools_Scipio,
                          xerces-c_2">
             <syslibset libs="advapi32,user32"/>
-        </build-app>                  
+        </build-app>
     </target>
 
     <!--
@@ -174,7 +203,27 @@
     ============================================================================
     -->
     <target name="clean" depends="clean-reports" description="clean intermediate build artifacts">
-        <clean name="MT_Tools"/>
+        <clean name="TIC"/>
+        <clean name="TIC_Export"/>
+        <clean name="MT_Tools_Scipio"/>
+        <clean name="TER"/>
+        <clean name="ASN"/>
+        <clean name="MIL"/>
+        <clean name="Missions"/>
+        <clean name="GFX"/>
+        <clean name="ENT"/>
+        <clean name="TIC_Sample"/>
+        <clean name="TIC_XmlExporter"/>
+        <clean name="SIM"/>
+        <clean name="ADN"/>
+        <clean name="MOS_Light"/>
+        <clean name="MOS_Light2"/>
+        <clean name="Tester"/>
+        <clean name="HLA_Manager"/>
+        <clean name="AGR"/>
+        <clean name="LAU"/>
+        <clean name="LAU_Mos_Part"/>
+        <clean name="ScriptCompiler"/>
     </target>
 
     <target name="clean-reports">
@@ -207,7 +256,7 @@
             <arg value="-test"/>
             <arg value="-forceodbcomposition"/>
         </exec>
-    </target>       
+    </target>
 
     <target name="configure" description="initialize local project structure with libraries">
         <update name="terrain" modules="terrain,geometry,geocoord,graphics,pathfind"/>
@@ -216,14 +265,14 @@
         <update name="qt"/>
         <update name="DIN"/>
         <update name="boost"/>
-        <update name="rti"/>        
+        <update name="rti"/>
         <update name="DIA"/>
         <update name="hla"/>
         <update name="tools"/>
         <update name="xerces-c"/>
 
         <update-app library="terrain" name="generation_app"/>
-        <update-app library="DIA" name="DIA_Tool_DebugGUI"/>        
+        <update-app library="DIA" name="DIA_Tool_DebugGUI"/>
     </target>
 
     <target name="build" depends="libraries,applications"/>

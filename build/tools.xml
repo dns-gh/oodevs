@@ -103,7 +103,7 @@
                  </sequential>
             </for>
         </sequential>
-    </macrodef>    
+    </macrodef>
 
     <macrodef name="build">
         <attribute name="name"/>
@@ -114,18 +114,30 @@
         <attribute name="outtype"/>
         <attribute name="configuration"/>
         <attribute name="excludes" default=""/>
+        <attribute name="pch" default=""/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
+            <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{pch}.cpp">
+                <not>
+                    <equals arg1="@{pch}" arg2=""/>
+                </not>
+            </condition>
+            <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{name}_pch.cpp">
+                <available property="@{name}.pch" file="${libraries.dir}/@{input}/@{name}_pch.cpp"/>
+            </condition>
             <mkdir dir="${bin.dir}/@{configuration}/libraries/@{name}"/>
             <cc name="${compiler}" outfile="${bin.dir}/@{configuration}/libraries/@{name}/@{name}@{suffix}" objdir="${bin.dir}/@{configuration}/libraries/@{name}"
                                    optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true" incremental="false" outtype="@{outtype}">
-                <fileset dir="${libraries.dir}/@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes}"/>
+                <fileset dir="${libraries.dir}/@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes},${@{name}.pch}"/>
                 <defineset define="WIN32"/> <!-- for MT only -->
                 <includepath path="${libraries.dir}"/>
                 <includepath path="${include.dir}"/>
                 <compilerarg value='/Fd"${bin.dir}/@{configuration}/libraries/@{name}/@{name}@{suffix}.pdb"'/>
                 <compilerarg value="/W4"/>
                 <cc-elements/>
+                <compiler name="${compiler}">
+                    <precompile prototype="${@{name}.pch}" if="@{name}.pch"/>
+                </compiler>
             </cc>
             <copy todir="${lib.dir}/vc71" verbose="true">
                 <fileset dir="${bin.dir}/@{configuration}/libraries/@{name}" includes="@{name}@{suffix}.lib"/>
@@ -147,12 +159,13 @@
         <attribute name="outtype" default="static"/>
         <attribute name="suffix" default="_d"/>
         <attribute name="excludes" default=""/>
+        <attribute name="pch" default=""/>
         <element name="options" optional="true" implicit="true"/>
         <sequential>
-            <build name="@{name}" input="@{input}" configuration="release" debug="false" optimize="full" outtype="@{outtype}" excludes="@{excludes}">
+            <build name="@{name}" input="@{input}" configuration="release" debug="false" optimize="full" outtype="@{outtype}" excludes="@{excludes}" pch="@{pch}">
                 <options/>
             </build>
-            <build name="@{name}" input="@{input}" configuration="debug" debug="true" optimize="none" outtype="@{outtype}" suffix="@{suffix}" excludes="@{excludes}">
+            <build name="@{name}" input="@{input}" configuration="debug" debug="true" optimize="none" outtype="@{outtype}" suffix="@{suffix}" excludes="@{excludes}" pch="@{pch}">
                 <options/>
             </build>
         </sequential>
@@ -222,17 +235,27 @@
 
     <macrodef name="build-app">
         <attribute name="name"/>
+        <attribute name="input" default="@{name}"/>
         <attribute name="libs" default=""/>
         <attribute name="moc" default=""/>
         <attribute name="subsystem" default="gui"/>
         <attribute name="excludes" default=""/>
+        <attribute name="pch" default=""/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
-            <moc dir="${applications.dir}/@{name}" files="@{moc}"/>
+            <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{pch}.cpp">
+                <not>
+                    <equals arg1="@{pch}" arg2=""/>
+                </not>
+            </condition>
+            <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{name}_pch.cpp">
+                <available property="@{name}.pch" file="${libraries.dir}/@{input}/@{name}_pch.cpp"/>
+            </condition>
+            <moc dir="${applications.dir}/@{input}" files="@{moc}"/>
             <mkdir dir="${bin.dir}/release/applications/@{name}"/>
             <cc name="${compiler}" outfile="${bin.dir}/release/applications/@{name}/@{name}" objdir="${bin.dir}/release/applications/@{name}"
                                    optimize="full" debug="false" exceptions="true" rtti="true" incremental="false" outtype="executable" subsystem="@{subsystem}">
-                <fileset dir="${applications.dir}/@{name}" includes="**/*.cpp" excludes="**/moc_*.cpp,@{excludes}"/>
+                <fileset dir="${applications.dir}/@{input}" includes="**/*.cpp" excludes="**/moc_*.cpp,@{excludes},${@{name}.pch}"/>
                 <includepath path="${libraries.dir}"/>
                 <includepath path="${include.dir}"/>
                 <includepath path="${include.dir}/qt"/>
@@ -240,6 +263,9 @@
                 <libset dir="${lib.dir}/vc71" libs="@{libs}"/>
                 <compilerarg value="/W4"/>
                 <cc-elements/>
+                <compiler name="${compiler}">
+                    <precompile prototype="${@{name}.pch}" if="@{name}.pch"/>
+                </compiler>
             </cc>
         </sequential>
     </macrodef>
