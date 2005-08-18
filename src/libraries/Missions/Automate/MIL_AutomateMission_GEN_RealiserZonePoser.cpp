@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_GEN_RealiserZonePoser::nDIAZoneIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserZonePoser constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserZonePoser::MIL_AutomateMission_GEN_RealiserZonePoser( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_GEN_RealiserZonePoser::MIL_AutomateMission_GEN_RealiserZoneP
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserZonePoser destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserZonePoser::~MIL_AutomateMission_GEN_RealiserZonePoser()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_GEN_RealiserZonePoser::InitializeDIA( const MIL_Automat
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserZonePoser::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserZonePoser::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserZonePoser::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserZonePoser::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_GEN_RealiserZonePoser::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserZonePoser::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserZonePoser::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_GEN_RealiserZonePoser::Serialize( ASN1T_MsgAutomateOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserZonePoser::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserZonePoser::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

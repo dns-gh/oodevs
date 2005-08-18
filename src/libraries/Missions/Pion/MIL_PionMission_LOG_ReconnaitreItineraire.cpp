@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_LOG_ReconnaitreItineraire::nDIAItineraireLogIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_ReconnaitreItineraire::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_LOG_ReconnaitreItineraire::InitializeDIA( const MIL_PionMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_ReconnaitreItineraire::MIL_PionMission_LOG_ReconnaitreItineraire( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_LOG_ReconnaitreItineraire::MIL_PionMission_LOG_ReconnaitreItiner
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_ReconnaitreItineraire::~MIL_PionMission_LOG_ReconnaitreItineraire()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_LOG_ReconnaitreItineraire::~MIL_PionMission_LOG_ReconnaitreItine
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( const MIL_AutomateMi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( MIL_PionMission_ABC&
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreItineraire::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_LOG_ReconnaitreItineraire::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreItineraire::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_LOG_ReconnaitreItineraire::Serialize( ASN1T_MsgPionOrder& a
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ReconnaitreItineraire::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreItineraire::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

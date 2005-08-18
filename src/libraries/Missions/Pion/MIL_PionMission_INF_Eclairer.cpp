@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_INF_Eclairer::nDIAItineraireIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_INF_Eclairer::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_INF_Eclairer::InitializeDIA( const MIL_PionMissionType& typ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_Eclairer::MIL_PionMission_INF_Eclairer( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_INF_Eclairer::MIL_PionMission_INF_Eclairer( MIL_AgentPion& pion,
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_Eclairer::~MIL_PionMission_INF_Eclairer()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_INF_Eclairer::~MIL_PionMission_INF_Eclairer()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Eclairer::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Eclairer::Initialize( const ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_INF_Eclairer::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_INF_Eclairer::Initialize( const MIL_AutomateMission_ABC& pa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_INF_Eclairer::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_INF_Eclairer::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Eclairer::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_INF_Eclairer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Eclairer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_INF_Eclairer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Eclairer::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Eclairer::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

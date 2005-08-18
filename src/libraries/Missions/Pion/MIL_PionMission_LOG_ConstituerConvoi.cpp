@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,7 +24,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_ConstituerConvoi::InitializeDIA( const MIL_PionMissionType& type )
@@ -36,7 +36,7 @@ void MIL_PionMission_LOG_ConstituerConvoi::InitializeDIA( const MIL_PionMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_ConstituerConvoi::MIL_PionMission_LOG_ConstituerConvoi( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -47,7 +47,7 @@ MIL_PionMission_LOG_ConstituerConvoi::MIL_PionMission_LOG_ConstituerConvoi( MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_ConstituerConvoi::~MIL_PionMission_LOG_ConstituerConvoi()
 {
@@ -57,7 +57,7 @@ MIL_PionMission_LOG_ConstituerConvoi::~MIL_PionMission_LOG_ConstituerConvoi()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ConstituerConvoi::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ConstituerConvoi::Initialize( const
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_ConstituerConvoi::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -85,7 +85,7 @@ bool MIL_PionMission_LOG_ConstituerConvoi::Initialize( const MIL_AutomateMission
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_ConstituerConvoi::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -99,7 +99,7 @@ bool MIL_PionMission_LOG_ConstituerConvoi::Initialize( MIL_PionMission_ABC& miss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ConstituerConvoi::Terminate()
 {
@@ -113,7 +113,7 @@ void MIL_PionMission_LOG_ConstituerConvoi::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ConstituerConvoi::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -128,7 +128,7 @@ void MIL_PionMission_LOG_ConstituerConvoi::Serialize( ASN1T_MsgPionOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_ConstituerConvoi::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ConstituerConvoi::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

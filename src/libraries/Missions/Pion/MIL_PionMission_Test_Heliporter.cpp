@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_Test_Heliporter::nDIAPointDebarquementIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_Test_Heliporter::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_Test_Heliporter::InitializeDIA( const MIL_PionMissionType& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_Test_Heliporter::MIL_PionMission_Test_Heliporter( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_Test_Heliporter::MIL_PionMission_Test_Heliporter( MIL_AgentPion&
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_Test_Heliporter::~MIL_PionMission_Test_Heliporter()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_Test_Heliporter::~MIL_PionMission_Test_Heliporter()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_Test_Heliporter::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_Heliporter::Initialize( const ASN1
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_Test_Heliporter::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_Test_Heliporter::Initialize( const MIL_AutomateMission_ABC&
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_Test_Heliporter::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_Test_Heliporter::Initialize( MIL_PionMission_ABC& missionTm
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_Heliporter::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_Test_Heliporter::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_Heliporter::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,13 +151,14 @@ void MIL_PionMission_Test_Heliporter::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Test_Heliporter::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_Heliporter::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_test_heliporter );
     ASN1T_Mission_Pion_Test_Heliporter& asnMission = *asnMsg.mission.u.mission_pion_test_heliporter;
 
+    NET_ASN_Tools::Delete( asnMission.agents );
     NET_ASN_Tools::Delete( asnMission.point_embarquement );
     NET_ASN_Tools::Delete( asnMission.point_debarquement );
 

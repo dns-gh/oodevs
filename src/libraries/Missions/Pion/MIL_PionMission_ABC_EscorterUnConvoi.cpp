@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_ABC_EscorterUnConvoi::nDIAConvoiAEscorterIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ABC_EscorterUnConvoi::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_ABC_EscorterUnConvoi::InitializeDIA( const MIL_PionMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_EscorterUnConvoi::MIL_PionMission_ABC_EscorterUnConvoi( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_ABC_EscorterUnConvoi::MIL_PionMission_ABC_EscorterUnConvoi( MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_EscorterUnConvoi::~MIL_PionMission_ABC_EscorterUnConvoi()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_ABC_EscorterUnConvoi::~MIL_PionMission_ABC_EscorterUnConvoi()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const MIL_AutomateMission
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_EscorterUnConvoi::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_ABC_EscorterUnConvoi::Initialize( MIL_PionMission_ABC& miss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_EscorterUnConvoi::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_ABC_EscorterUnConvoi::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_EscorterUnConvoi::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_ABC_EscorterUnConvoi::Serialize( ASN1T_MsgPionOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_EscorterUnConvoi::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_EscorterUnConvoi::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

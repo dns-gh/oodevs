@@ -195,11 +195,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 void PHY_HumansComposante::ApplyWounds( const MIL_NbcAgentType& nbcAgentType )
 {
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
-    {
-        PHY_Human& human = **it;
-        if( human.IsUsable() )
-            human.ApplyWound( nbcAgentType );
-    }
+        (**it).ApplyWound( nbcAgentType );
 }
 
 // =============================================================================

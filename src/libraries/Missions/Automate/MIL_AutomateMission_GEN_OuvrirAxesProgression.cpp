@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_GEN_OuvrirAxesProgression::nDIAAxesIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_OuvrirAxesProgression constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_OuvrirAxesProgression::MIL_AutomateMission_GEN_OuvrirAxesProgression( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_GEN_OuvrirAxesProgression::MIL_AutomateMission_GEN_OuvrirAxe
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_OuvrirAxesProgression destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_OuvrirAxesProgression::~MIL_AutomateMission_GEN_OuvrirAxesProgression()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_GEN_OuvrirAxesProgression::InitializeDIA( const MIL_Aut
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_OuvrirAxesProgression::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_OuvrirAxesProgression::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_OuvrirAxesProgression::Initiali
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_OuvrirAxesProgression::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_GEN_OuvrirAxesProgression::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_OuvrirAxesProgression::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_OuvrirAxesProgression::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,13 +107,14 @@ void MIL_AutomateMission_GEN_OuvrirAxesProgression::Serialize( ASN1T_MsgAutomate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_OuvrirAxesProgression::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_OuvrirAxesProgression::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression );
     ASN1T_Mission_Automate_GEN_OuvrirAxesProgression& asnMission = *asnMsg.mission.u.mission_automate_gen_ouvrir_axes_progression;
 
+    NET_ASN_Tools::Delete( asnMission.axes );
 
     delete &asnMission;
 

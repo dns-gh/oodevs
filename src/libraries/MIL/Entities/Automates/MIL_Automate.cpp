@@ -779,7 +779,8 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
         {
             const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
             for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-                (**itPion).OnReceiveMagicMove( vTranslation );
+                (**itPion).MagicMove( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() + vTranslation );
+
             pDecision_->Reset();
             orderManager_.CancelAllOrders();
 

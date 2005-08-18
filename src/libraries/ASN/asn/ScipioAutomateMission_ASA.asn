@@ -21,20 +21,20 @@ EnumModeDeploiement ::= ENUMERATED
         
 Mission-Automate-ASA-DefendreZone ::= SEQUENCE 
 {
-    zone  Polygon,
-    angle Angle
+    zone                Polygon,
+    positions-sections  ListPoint
 }
      
 Mission-Automate-ASA-DefendreSite ::= SEQUENCE 
 {
-    zone  Polygon,
-    angle Angle
+    zone                Polygon,
+    positions-sections  ListPoint
 }
 
 Mission-Automate-ASA-Surveiller ::= SEQUENCE 
 {
-    zone  Polygon,
-    angle Angle
+    zone                Polygon,
+    positions-sections  ListPoint
 }
 
 Mission-Automate-ASA-DefendreItineraire ::= SEQUENCE

@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Decrocher::InitializeDIA
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Decrocher::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Decrocher::InitializeDIA( const MIL_OrderConduiteType& ty
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Decrocher constructor
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Decrocher::MIL_OrderConduite_Decrocher( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Decrocher::MIL_OrderConduite_Decrocher( const MIL_KnowledgeGro
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Decrocher destructor
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Decrocher::~MIL_OrderConduite_Decrocher()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Decrocher::~MIL_OrderConduite_Decrocher()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Decrocher::Initialize
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Decrocher::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Decrocher::Initialize( const ASN1T_Ms
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Decrocher::Initialize
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Decrocher::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

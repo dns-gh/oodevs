@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -21,12 +21,11 @@
 int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAUnitesATransporterIdx_ = 0 ;
 int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAPointRendezVousIdx_ = 0 ;
 int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAPointDestinationIdx_ = 0 ;
-int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAItineraireIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_TransporterFormationBlindee::MIL_AutomateMission_LOG_TransporterFormationBlindee( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -37,7 +36,7 @@ MIL_AutomateMission_LOG_TransporterFormationBlindee::MIL_AutomateMission_LOG_Tra
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_TransporterFormationBlindee::~MIL_AutomateMission_LOG_TransporterFormationBlindee()
 {
@@ -59,13 +58,12 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::InitializeDIA( const M
     nDIAUnitesATransporterIdx_ = DEC_Tools::InitializeDIAField( "unitesATransporter_", diaType );
     nDIAPointRendezVousIdx_ = DEC_Tools::InitializeDIAField( "pointRendezVous_", diaType );
     nDIAPointDestinationIdx_ = DEC_Tools::InitializeDIAField( "pointDestination_", diaType );
-    nDIAItineraireIdx_ = DEC_Tools::InitializeDIAField( "itineraire_", diaType );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterFormationBlindee::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,19 +78,17 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterFormationBlindee::In
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_destination, pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterFormationBlindee::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::ResetPoint( pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) );
 
     MIL_AutomateMission_ABC::Terminate();
 }
@@ -103,7 +99,7 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -116,22 +112,21 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize( ASN1T_MsgAu
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesATransporterIdx_ ), asnMission.unites_a_transporter );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRendezVousIdx_ ), asnMission.point_rendez_vous );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointDestinationIdx_ ), asnMission.point_destination );
-    NET_ASN_Tools::CopyPath( GetVariable( nDIAItineraireIdx_ ), asnMission.itineraire );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterFormationBlindee::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_log_transporter_formation_blindee );
     ASN1T_Mission_Automate_LOG_TransporterFormationBlindee& asnMission = *asnMsg.mission.u.mission_automate_log_transporter_formation_blindee;
 
+    NET_ASN_Tools::Delete( asnMission.unites_a_transporter );
     NET_ASN_Tools::Delete( asnMission.point_rendez_vous );
     NET_ASN_Tools::Delete( asnMission.point_destination );
-    NET_ASN_Tools::Delete( asnMission.itineraire );
 
     delete &asnMission;
 

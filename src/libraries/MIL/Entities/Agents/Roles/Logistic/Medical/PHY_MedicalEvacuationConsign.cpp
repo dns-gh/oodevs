@@ -32,9 +32,12 @@ PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( PHY_RolePionLOG_Medi
     , pEvacuationAmbulance_ ( 0 )
 {
     if( humanState.EvacuatedByThirdParty() )
+    {
+        humanState.NotifyHandledByMedical();
         ChooseStateAfterEvacuation();
+    }
     else
-    EnterStateWaitingForEvacuation();
+        EnterStateWaitingForEvacuation();
 }
 
 // -----------------------------------------------------------------------------

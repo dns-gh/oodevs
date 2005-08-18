@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_ABC_Couvrir::nDIAUnitesACouvrirIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ABC_Couvrir::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_ABC_Couvrir::InitializeDIA( const MIL_PionMissionType& type
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Couvrir::MIL_PionMission_ABC_Couvrir( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_ABC_Couvrir::MIL_PionMission_ABC_Couvrir( MIL_AgentPion& pion, c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Couvrir::~MIL_PionMission_ABC_Couvrir()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_ABC_Couvrir::~MIL_PionMission_ABC_Couvrir()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Couvrir::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Couvrir::Initialize( const ASN1T_Ms
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Couvrir::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( const MIL_AutomateMission_ABC& par
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Couvrir::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_ABC_Couvrir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_ABC_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Couvrir::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Couvrir::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -152,6 +152,7 @@ void MIL_PionMission_ABC_Couvrir::CleanAfterSerialization( ASN1T_MsgPionOrder& a
     ASN1T_Mission_Pion_ABC_Couvrir& asnMission = *asnMsg.mission.u.mission_pion_abc_couvrir;
 
     NET_ASN_Tools::Delete( asnMission.position );
+    NET_ASN_Tools::Delete( asnMission.unites_a_couvrir );
 
     delete &asnMission;
 

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_INF_Soutenir::nDIACompagnieIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_Soutenir constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_Soutenir::MIL_AutomateMission_INF_Soutenir( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_INF_Soutenir::MIL_AutomateMission_INF_Soutenir( MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_Soutenir destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_Soutenir::~MIL_AutomateMission_INF_Soutenir()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_INF_Soutenir::InitializeDIA( const MIL_AutomateMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_Soutenir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Soutenir::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Soutenir::Initialize( const ASN
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Soutenir::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_INF_Soutenir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_Soutenir::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Soutenir::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_INF_Soutenir::Serialize( ASN1T_MsgAutomateOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_Soutenir::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Soutenir::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: AGR 2005-08-01 - 11:23:53
+// $Created: AGR 2005-08-17 - 16:30:44
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderConduite_Pion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 19/10/04 14:30 $
@@ -19,7 +19,7 @@
 /** @class  MIL_OrderConduite_ModifierPrioritesTactiquesBlesses
     @brief  MIL_OrderConduite_ModifierPrioritesTactiquesBlesses
 */
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 // =============================================================================
 class MIL_OrderConduite_ModifierPrioritesTactiquesBlesses : public MIL_OrderConduite_ABC
 {

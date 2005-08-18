@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -29,7 +29,7 @@ int MIL_AutomateMission_ALAT_Escorter::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Escorter constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Escorter::MIL_AutomateMission_ALAT_Escorter( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -40,7 +40,7 @@ MIL_AutomateMission_ALAT_Escorter::MIL_AutomateMission_ALAT_Escorter( MIL_Automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Escorter destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Escorter::~MIL_AutomateMission_ALAT_Escorter()
 {
@@ -71,7 +71,7 @@ void MIL_AutomateMission_ALAT_Escorter::InitializeDIA( const MIL_AutomateMission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Escorter::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Escorter::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Escorter::Initialize( const AS
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Escorter::Terminate()
 {
@@ -115,7 +115,7 @@ void MIL_AutomateMission_ALAT_Escorter::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Escorter::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Escorter::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -137,13 +137,14 @@ void MIL_AutomateMission_ALAT_Escorter::Serialize( ASN1T_MsgAutomateOrder& asnMs
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Escorter::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Escorter::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_alat_escorter );
     ASN1T_Mission_Automate_ALAT_Escorter& asnMission = *asnMsg.mission.u.mission_automate_alat_escorter;
 
+    NET_ASN_Tools::Delete( asnMission.unites_a_escorter );
     NET_ASN_Tools::Delete( asnMission.point_regroupement );
     NET_ASN_Tools::Delete( asnMission.plots_ravitaillement );
 

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_ASA_DefendreItineraire::nDIAItineraireIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreItineraire constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_DefendreItineraire::MIL_AutomateMission_ASA_DefendreItineraire( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_ASA_DefendreItineraire::MIL_AutomateMission_ASA_DefendreItin
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreItineraire destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_DefendreItineraire::~MIL_AutomateMission_ASA_DefendreItineraire()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_ASA_DefendreItineraire::InitializeDIA( const MIL_Automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreItineraire::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreItineraire::Initialize(
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreItineraire::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_ASA_DefendreItineraire::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreItineraire::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreItineraire::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_ASA_DefendreItineraire::Serialize( ASN1T_MsgAutomateOrd
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreItineraire::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreItineraire::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,7 +24,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_Evacuer::InitializeDIA( const MIL_PionMissionType& type )
@@ -36,7 +36,7 @@ void MIL_PionMission_LOG_Evacuer::InitializeDIA( const MIL_PionMissionType& type
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_Evacuer::MIL_PionMission_LOG_Evacuer( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -47,7 +47,7 @@ MIL_PionMission_LOG_Evacuer::MIL_PionMission_LOG_Evacuer( MIL_AgentPion& pion, c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_Evacuer::~MIL_PionMission_LOG_Evacuer()
 {
@@ -57,7 +57,7 @@ MIL_PionMission_LOG_Evacuer::~MIL_PionMission_LOG_Evacuer()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_Evacuer::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_Evacuer::Initialize( const ASN1T_Ms
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_Evacuer::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -85,7 +85,7 @@ bool MIL_PionMission_LOG_Evacuer::Initialize( const MIL_AutomateMission_ABC& par
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_Evacuer::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -99,7 +99,7 @@ bool MIL_PionMission_LOG_Evacuer::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_Evacuer::Terminate()
 {
@@ -113,7 +113,7 @@ void MIL_PionMission_LOG_Evacuer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_Evacuer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -128,7 +128,7 @@ void MIL_PionMission_LOG_Evacuer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_Evacuer::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_Evacuer::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

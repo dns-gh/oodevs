@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-08-05 - 14:24:58 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 7/03/05 11:46 $
@@ -47,7 +47,7 @@ using namespace DIN;
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate constructor
-// Created:  2005-08-05 - 14:24:58 
+// Created:  2005-08-17 - 16:30:44 
 //-----------------------------------------------------------------------------
 MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
@@ -58,7 +58,7 @@ MOS_MissionAutomate::MOS_MissionAutomate( E_MissionID nTypeMission, QWidget* pPa
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate destructor
-// Created:  2005-08-05 - 14:24:58 
+// Created:  2005-08-17 - 16:30:44 
 //-----------------------------------------------------------------------------
 MOS_MissionAutomate::~MOS_MissionAutomate()
 {
@@ -71,7 +71,7 @@ MOS_MissionAutomate::~MOS_MissionAutomate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::Initialize
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::Initialize()
 {
@@ -114,7 +114,7 @@ void MOS_MissionAutomate::Initialize()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::Terminate
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::Terminate()
 {
@@ -270,7 +270,7 @@ void MOS_MissionAutomate::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::SetAgent
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::SetAgent( MOS_Agent* pAgent )
 {
@@ -284,7 +284,7 @@ void MOS_MissionAutomate::SetAgent( MOS_Agent* pAgent )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::CreateMissionTools
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::CreateMissionTools()
 {
@@ -439,7 +439,7 @@ void MOS_MissionAutomate::CreateMissionTools()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::SendMsg
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 void MOS_MissionAutomate::SendMsg( std::string& sParam )
 {
@@ -452,7 +452,7 @@ void MOS_MissionAutomate::SendMsg( std::string& sParam )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::FillRandomParameters
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::FillRandomParameters()
 {
@@ -460,7 +460,7 @@ void MOS_MissionAutomate::FillRandomParameters()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::FillRandomParameters
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 {
@@ -469,7 +469,7 @@ void MOS_MissionAutomate::ReloadParameters( MT_InputArchive_ABC& /*archive*/ )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionAutomate::FillRandomParameters
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionAutomate::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 {
@@ -480,7 +480,7 @@ void MOS_MissionAutomate::ResaveParameters( MT_OutputArchive_ABC& /*archive*/ )
 // Name: MOS_MissionPion::IsAutomateMission
 /** @return 
 */
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MOS_MissionAutomate::IsAutomateMission() const
 {
@@ -1110,8 +1110,7 @@ void MOS_MissionAutomate::CreateMission_ASA_DefendreZone()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_zone;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone = &asnMission;
     CreateLocation( asnMission.zone, "zone" );
-    MOS_ValueList* pParameters_angle= &CreateValueList( "", 1, 2 );
-    pParameters_angle->CreateValue( asnMission.angle, "angle", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );
+    CreatePointList( asnMission.positions_sections, "positions_sections" );
 }
 
 void MOS_MissionAutomate::CreateMission_ASA_DefendreSite()
@@ -1120,8 +1119,7 @@ void MOS_MissionAutomate::CreateMission_ASA_DefendreSite()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_site;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site = &asnMission;
     CreateLocation( asnMission.zone, "zone" );
-    MOS_ValueList* pParameters_angle= &CreateValueList( "", 1, 2 );
-    pParameters_angle->CreateValue( asnMission.angle, "angle", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );
+    CreatePointList( asnMission.positions_sections, "positions_sections" );
 }
 
 void MOS_MissionAutomate::CreateMission_ASA_Surveiller()
@@ -1130,8 +1128,7 @@ void MOS_MissionAutomate::CreateMission_ASA_Surveiller()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_surveiller;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller = &asnMission;
     CreateLocation( asnMission.zone, "zone" );
-    MOS_ValueList* pParameters_angle= &CreateValueList( "", 1, 2 );
-    pParameters_angle->CreateValue( asnMission.angle, "angle", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );
+    CreatePointList( asnMission.positions_sections, "positions_sections" );
 }
 
 void MOS_MissionAutomate::CreateMission_ASA_DefendreItineraire()
@@ -1645,7 +1642,6 @@ void MOS_MissionAutomate::CreateMission_LOG_TransporterFormationBlindee()
     CreateAgentList( asnMission.unites_a_transporter, "unites_a_transporter" );
     CreatePoint( asnMission.point_rendez_vous, "point_rendez_vous" );
     CreatePoint( asnMission.point_destination, "point_destination" );
-    CreatePath( asnMission.itineraire, "itineraire" );
 }
 
 void MOS_MissionAutomate::CreateMission_LOG_AppuyerMouvementDansZone()

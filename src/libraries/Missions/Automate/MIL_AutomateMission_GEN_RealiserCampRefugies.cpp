@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -24,7 +24,7 @@ int MIL_AutomateMission_GEN_RealiserCampRefugies::nDIATc2Idx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampRefugies constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserCampRefugies::MIL_AutomateMission_GEN_RealiserCampRefugies( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_GEN_RealiserCampRefugies::MIL_AutomateMission_GEN_RealiserCa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampRefugies destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserCampRefugies::~MIL_AutomateMission_GEN_RealiserCampRefugies()
 {
@@ -61,7 +61,7 @@ void MIL_AutomateMission_GEN_RealiserCampRefugies::InitializeDIA( const MIL_Auto
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampRefugies::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserCampRefugies::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserCampRefugies::Initializ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampRefugies::Terminate()
 {
@@ -95,7 +95,7 @@ void MIL_AutomateMission_GEN_RealiserCampRefugies::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampRefugies::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampRefugies::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -112,7 +112,7 @@ void MIL_AutomateMission_GEN_RealiserCampRefugies::Serialize( ASN1T_MsgAutomateO
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserCampRefugies::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampRefugies::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

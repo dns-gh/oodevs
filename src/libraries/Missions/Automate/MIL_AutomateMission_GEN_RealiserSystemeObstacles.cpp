@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_GEN_RealiserSystemeObstacles::nDIAObstaclesIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserSystemeObstacles constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserSystemeObstacles::MIL_AutomateMission_GEN_RealiserSystemeObstacles( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_GEN_RealiserSystemeObstacles::MIL_AutomateMission_GEN_Realis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserSystemeObstacles destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserSystemeObstacles::~MIL_AutomateMission_GEN_RealiserSystemeObstacles()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_GEN_RealiserSystemeObstacles::InitializeDIA( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserSystemeObstacles::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserSystemeObstacles::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserSystemeObstacles::Initi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserSystemeObstacles::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_GEN_RealiserSystemeObstacles::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserSystemeObstacles::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserSystemeObstacles::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,13 +107,14 @@ void MIL_AutomateMission_GEN_RealiserSystemeObstacles::Serialize( ASN1T_MsgAutom
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserSystemeObstacles::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserSystemeObstacles::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles );
     ASN1T_Mission_Automate_GEN_RealiserSystemeObstacles& asnMission = *asnMsg.mission.u.mission_automate_gen_realiser_systeme_obstacles;
 
+    NET_ASN_Tools::Delete( asnMission.obstacles );
 
     delete &asnMission;
 

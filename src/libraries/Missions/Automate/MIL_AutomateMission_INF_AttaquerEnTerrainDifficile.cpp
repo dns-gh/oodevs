@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::nDIAObjectifsIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AttaquerEnTerrainDifficile constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::MIL_AutomateMission_INF_AttaquerEnTerrainDifficile( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::MIL_AutomateMission_INF_Atta
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AttaquerEnTerrainDifficile destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::~MIL_AutomateMission_INF_AttaquerEnTerrainDifficile()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::InitializeDIA( const MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Ini
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,13 +107,14 @@ void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Serialize( ASN1T_MsgAut
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_inf_attaquer_en_terrain_difficile );
     ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile& asnMission = *asnMsg.mission.u.mission_automate_inf_attaquer_en_terrain_difficile;
 
+    NET_ASN_Tools::Delete( asnMission.objectifs );
 
     delete &asnMission;
 

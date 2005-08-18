@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -19,12 +19,12 @@
 #include "MIL/Decision/DEC_Tools.h"
 
 int MIL_AutomateMission_ASA_Surveiller::nDIAZoneIdx_ = 0 ;
-int MIL_AutomateMission_ASA_Surveiller::nDIAAngleIdx_ = 0 ;
+int MIL_AutomateMission_ASA_Surveiller::nDIAPositionsSectionsIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_Surveiller constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_Surveiller::MIL_AutomateMission_ASA_Surveiller( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_ASA_Surveiller::MIL_AutomateMission_ASA_Surveiller( MIL_Auto
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_Surveiller destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_Surveiller::~MIL_AutomateMission_ASA_Surveiller()
 {
@@ -55,13 +55,13 @@ void MIL_AutomateMission_ASA_Surveiller::InitializeDIA( const MIL_AutomateMissio
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
-    nDIAAngleIdx_ = DEC_Tools::InitializeDIAField( "angle_", diaType );
+    nDIAPositionsSectionsIdx_ = DEC_Tools::InitializeDIAField( "positionsSections_", diaType );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_Surveiller::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_Surveiller::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_Surveiller::Initialize( const A
     const ASN1T_Mission_Automate_ASA_Surveiller& asnMission = *asnMsg.mission.u.mission_automate_asa_surveiller;
     if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyNumeric( asnMission.angle, GetVariable( nDIAAngleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_sections, positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,11 +80,11 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_Surveiller::Initialize( const A
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_Surveiller::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIAAngleIdx_ ) );
+    NET_ASN_Tools::ResetPointList( positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) );
 
     MIL_AutomateMission_ABC::Terminate();
 }
@@ -95,7 +95,7 @@ void MIL_AutomateMission_ASA_Surveiller::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_Surveiller::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_Surveiller::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -106,13 +106,13 @@ void MIL_AutomateMission_ASA_Surveiller::Serialize( ASN1T_MsgAutomateOrder& asnM
     asnMsg.mission.u.mission_automate_asa_surveiller  = &asnMission;
 
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
-    NET_ASN_Tools::CopyNumeric( GetVariable( nDIAAngleIdx_ ), asnMission.angle );
+    NET_ASN_Tools::CopyPointList( GetVariable( nDIAPositionsSectionsIdx_ ), asnMission.positions_sections );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_Surveiller::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_Surveiller::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -120,6 +120,7 @@ void MIL_AutomateMission_ASA_Surveiller::CleanAfterSerialization( ASN1T_MsgAutom
     ASN1T_Mission_Automate_ASA_Surveiller& asnMission = *asnMsg.mission.u.mission_automate_asa_surveiller;
 
     NET_ASN_Tools::Delete( asnMission.zone );
+    NET_ASN_Tools::Delete( asnMission.positions_sections );
 
     delete &asnMission;
 

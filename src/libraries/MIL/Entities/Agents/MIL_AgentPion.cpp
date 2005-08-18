@@ -673,11 +673,22 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicAct
 
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
-    
-    GetRole< PHY_RolePion_Location >().MagicMove( vPosTmp );
+
+    MagicMove( vPosTmp );
+
+    return EnumUnitAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::MagicMove
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
+{
+    GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
     GetRole< DEC_RolePion_Decision >().Reset();
     orderManager_.CancelAllOrders();
-    return EnumUnitAttrErrorCode::no_error;
+    UpdatePhysicalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -850,19 +861,6 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
     }
     UpdatePhysicalState();
     asnReplyMsg.Send( nCtx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMagicMove
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMagicMove( const MT_Vector2D& vTranslation )
-{
-    PHY_RolePion_Location& roleLocation = GetRole< PHY_RolePion_Location >();
-    roleLocation.MagicMove( roleLocation.GetPosition() + vTranslation );
-    GetRole< DEC_RolePion_Decision >().Reset();
-    orderManager_.CancelAllOrders();
-    UpdatePhysicalState();
 }
 
 // -----------------------------------------------------------------------------

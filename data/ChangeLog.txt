@@ -25,6 +25,13 @@ Next Version - Codename ''
             => Le fuseau automate est maintenant copié dans DEC_Path
     - NLD / SBO - Bug fix : les directions par défaut sont maintenant valides (au nord)
     - NLD - Nouvelle fonction DEC : DEC_Copie_LocalisationDansListeLocalisations()
+    
+    EN COURS - Bug : un humain contaminé/débile qui meurt restait contaminé/débile
+    EN COURS - bug fix lima + avant point lima
+    
+    suppression d'un parametre pour mission circu
+    modifs 3 missions ASA automate
+    bug LIMA
 
 Version 0.116 [17/08/2005] - Codename 'himaix'
     - NLD - Les pions débarqués en mouvement sont maintenant en posture 'posteReflexe' à la place de 'mouvement'

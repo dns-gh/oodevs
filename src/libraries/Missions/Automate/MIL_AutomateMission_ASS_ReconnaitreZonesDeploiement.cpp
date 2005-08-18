@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::nDIAPositionsAReconnait
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::MIL_AutomateMission_ASS_Rec
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::~MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::InitializeDIA( const M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::In
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,13 +107,14 @@ void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Serialize( ASN1T_MsgAu
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement );
     ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement& asnMission = *asnMsg.mission.u.mission_automate_ass_reconnaitre_zones_deploiement;
 
+    NET_ASN_Tools::Delete( asnMission.positions_a_reconnaitre );
 
     delete &asnMission;
 

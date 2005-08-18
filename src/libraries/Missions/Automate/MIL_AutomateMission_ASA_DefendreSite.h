@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:35 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //=============================================================================
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //=============================================================================
 class MIL_AutomateMission_ASA_DefendreSite : public MIL_AutomateMission_ABC
 {
@@ -42,10 +42,11 @@ public:
 
 private:
     TER_Localisation zone_;
+    T_PointVector positionsSections_;
 
 private:
     static int nDIAZoneIdx_;
-    static int nDIAAngleIdx_;
+    static int nDIAPositionsSectionsIdx_;
 
 };
 

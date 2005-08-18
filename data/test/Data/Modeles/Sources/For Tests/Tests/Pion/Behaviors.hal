@@ -65,10 +65,11 @@ default Default()
     if( DEC_Agent_EtatOps() == 0 )
         DEC_Debug( "Shit, I'm dead" );
 
-//    DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_PorteeMaximaleTirIndirect( eObusExplosif ) ) );
-//    DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_PorteeMinimaleTirIndirect( eObusExplosif ) ) );
-//    DEC_Debug( "Tir indirect max fumigene : " + FloatToString( DEC_PorteeMaximaleTirIndirect( eObusFumigenes ) ) );
-//    DEC_Debug( "Tir indirect min fumigene : " + FloatToString( DEC_PorteeMinimaleTirIndirect( eObusFumigenes ) ) );   
+/*    DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Explosif ) ) );
+    DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Explosif ) ) );
+    DEC_Debug( "Tir indirect max fumigene : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Fumigenes ) ) );
+    DEC_Debug( "Tir indirect min fumigene : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Fumigenes ) ) );   
+    */
 }
 
 behavior BEH_Defaut( id nDummy )

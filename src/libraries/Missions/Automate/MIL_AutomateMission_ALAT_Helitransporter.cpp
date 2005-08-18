@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -31,7 +31,7 @@ int MIL_AutomateMission_ALAT_Helitransporter::nDIAAvecMaterielIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Helitransporter constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Helitransporter::MIL_AutomateMission_ALAT_Helitransporter( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -42,7 +42,7 @@ MIL_AutomateMission_ALAT_Helitransporter::MIL_AutomateMission_ALAT_Helitransport
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Helitransporter destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Helitransporter::~MIL_AutomateMission_ALAT_Helitransporter()
 {
@@ -75,7 +75,7 @@ void MIL_AutomateMission_ALAT_Helitransporter::InitializeDIA( const MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Helitransporter::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Helitransporter::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -108,7 +108,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Helitransporter::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Helitransporter::Terminate()
 {
@@ -123,7 +123,7 @@ void MIL_AutomateMission_ALAT_Helitransporter::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Helitransporter::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Helitransporter::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -147,13 +147,14 @@ void MIL_AutomateMission_ALAT_Helitransporter::Serialize( ASN1T_MsgAutomateOrder
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Helitransporter::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Helitransporter::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_alat_helitransporter );
     ASN1T_Mission_Automate_ALAT_Helitransporter& asnMission = *asnMsg.mission.u.mission_automate_alat_helitransporter;
 
+    NET_ASN_Tools::Delete( asnMission.unites_a_helitransporter );
     NET_ASN_Tools::Delete( asnMission.point_debarquement );
     NET_ASN_Tools::Delete( asnMission.point_embarquement );
     NET_ASN_Tools::Delete( asnMission.point_regroupement );

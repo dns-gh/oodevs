@@ -1,6 +1,6 @@
 // *******************************************************************************************
 // Automate mission types for DirectIA
-// Created : 2005-7-29 - 10:23:21
+// Created : 2005-08-17 - 16:30:44
 // *******************************************************************************************
 
 typedef struct T_Mission_Automate_ABC_ArmerPointDeControle : T_Mission_Automate
@@ -339,19 +339,19 @@ id porteeAction_;
 typedef struct T_Mission_Automate_ASA_DefendreZone : T_Mission_Automate
 {
 T_Localisation zone_;
-float angle_;
+T_ListePoints positionsSections_;
 };
 
 typedef struct T_Mission_Automate_ASA_DefendreSite : T_Mission_Automate
 {
 T_Localisation zone_;
-float angle_;
+T_ListePoints positionsSections_;
 };
 
 typedef struct T_Mission_Automate_ASA_Surveiller : T_Mission_Automate
 {
 T_Localisation zone_;
-float angle_;
+T_ListePoints positionsSections_;
 };
 
 typedef struct T_Mission_Automate_ASA_DefendreItineraire : T_Mission_Automate
@@ -664,7 +664,6 @@ typedef struct T_Mission_Automate_LOG_TransporterFormationBlindee : T_Mission_Au
 T_ListePions unitesATransporter_;
 T_Point pointRendezVous_;
 T_Point pointDestination_;
-T_ListePoints itineraire_;
 };
 
 typedef struct T_Mission_Automate_LOG_AppuyerMouvementDansZone : T_Mission_Automate

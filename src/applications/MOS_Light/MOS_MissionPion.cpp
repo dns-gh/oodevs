@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-08-05 - 14:24:58 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/05/05 10:24 $
@@ -45,7 +45,7 @@ using namespace DIN;
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion constructor
-// Created:  2005-08-05 - 14:24:58
+// Created:  2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MOS_MissionPion::MOS_MissionPion( E_MissionID nTypeMission, QWidget* pParent )
     : MOS_Mission_ABC( nTypeMission, pParent )
@@ -56,7 +56,7 @@ MOS_MissionPion::MOS_MissionPion( E_MissionID nTypeMission, QWidget* pParent )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion destructor
-// Created:  2005-08-05 - 14:24:58
+// Created:  2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MOS_MissionPion::~MOS_MissionPion()
 {
@@ -69,7 +69,7 @@ MOS_MissionPion::~MOS_MissionPion()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::Initialize
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::Initialize()
 {
@@ -103,7 +103,7 @@ void MOS_MissionPion::Initialize()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::Terminate
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::Terminate()
 {                                
@@ -318,7 +318,7 @@ void MOS_MissionPion::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::SetAgent
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::SetAgent( MOS_Agent* pAgent )
 {
@@ -333,7 +333,7 @@ void MOS_MissionPion::SetAgent( MOS_Agent* pAgent )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::CreateMissionTools
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::CreateMissionTools()
 {
@@ -553,7 +553,7 @@ void MOS_MissionPion::CreateMissionTools()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::WriteOrder
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::SendMsg( std::string& sParam )
 {
@@ -580,7 +580,7 @@ void MOS_MissionPion::SendMsg( std::string& sParam )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::FillRandomParameters
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::FillRandomParameters()
 {
@@ -590,7 +590,7 @@ void MOS_MissionPion::FillRandomParameters()
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::FillRandomParameters
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::ReloadParameters( MT_InputArchive_ABC& archive )
 {
@@ -605,7 +605,7 @@ void MOS_MissionPion::ReloadParameters( MT_InputArchive_ABC& archive )
 
 //-----------------------------------------------------------------------------
 // Name: MOS_MissionPion::ResaveParameters
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MOS_MissionPion::ResaveParameters( MT_OutputArchive_ABC& archive )
 {
@@ -622,7 +622,7 @@ void MOS_MissionPion::ResaveParameters( MT_OutputArchive_ABC& archive )
 // Name: MOS_MissionPion::IsAutomateMission
 /** @return 
 */
-// Created: 2005-08-05 - 14:24:58
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MOS_MissionPion::IsAutomateMission() const
 {

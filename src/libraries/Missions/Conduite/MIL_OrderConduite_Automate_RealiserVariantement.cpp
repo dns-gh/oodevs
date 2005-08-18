@@ -24,7 +24,7 @@ int MIL_OrderConduite_Automate_RealiserVariantement::nDIASiteFranchissementVaria
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_RealiserVariantement::InitializeDIA
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Automate_RealiserVariantement::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -38,7 +38,7 @@ void MIL_OrderConduite_Automate_RealiserVariantement::InitializeDIA( const MIL_O
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_RealiserVariantement constructor
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_RealiserVariantement::MIL_OrderConduite_Automate_RealiserVariantement( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -49,7 +49,7 @@ MIL_OrderConduite_Automate_RealiserVariantement::MIL_OrderConduite_Automate_Real
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_RealiserVariantement destructor
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_RealiserVariantement::~MIL_OrderConduite_Automate_RealiserVariantement()
 {
@@ -62,7 +62,7 @@ MIL_OrderConduite_Automate_RealiserVariantement::~MIL_OrderConduite_Automate_Rea
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_RealiserVariantement::Initialize
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_RealiserVariantement::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_RealiserVariantement::Initia
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_RealiserVariantement::Initialize
-// Created: AGR 2005-08-01 - 11:23:53
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Automate_RealiserVariantement::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

@@ -95,13 +95,13 @@ public:
     PHY_MedicalHumanState* NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) const;
     PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) const;
     void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) const;
-    bool                   CanEvacuateCasualties() const;
-    bool                   CanCollectCasualties () const;
-    bool                   CanDiagnoseHumans    () const;
-    bool                   CanSortHumans        () const;
-    bool                   CanHealHuman         ( const PHY_Human& human ) const;
-    uint                   GetHealingTime       ( const PHY_Human& human ) const;
-    void                   Heal                 (       PHY_Human& human ) const;
+    bool                   CanEvacuateCasualties           () const;
+    bool                   CanCollectCasualties            () const;
+    bool                   CanDiagnoseHumans               () const;
+    bool                   CanSortHumans                   () const;
+    bool                   CanHealHuman                    ( const PHY_Human& human ) const;
+    uint                   GetHealingTime                  ( const PHY_Human& human ) const;
+    void                   Heal                            (       PHY_Human& human ) const;
     //@}
 
     //! @name Logisitc - Supply

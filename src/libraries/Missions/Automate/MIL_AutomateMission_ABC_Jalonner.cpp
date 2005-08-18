@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Jalonner constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_Jalonner::MIL_AutomateMission_ABC_Jalonner( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_ABC_Jalonner::MIL_AutomateMission_ABC_Jalonner( MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Jalonner destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_Jalonner::~MIL_AutomateMission_ABC_Jalonner()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_ABC_Jalonner::InitializeDIA( const MIL_AutomateMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Jalonner::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Jalonner::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Jalonner::Initialize( const ASN
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Jalonner::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_ABC_Jalonner::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Jalonner::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Jalonner::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_ABC_Jalonner::Serialize( ASN1T_MsgAutomateOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Jalonner::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Jalonner::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

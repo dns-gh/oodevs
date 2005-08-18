@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -30,7 +30,7 @@ int MIL_PionMission_ALAT_Jalonner::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_Jalonner::InitializeDIA( const MIL_PionMissionType& type )
@@ -48,7 +48,7 @@ void MIL_PionMission_ALAT_Jalonner::InitializeDIA( const MIL_PionMissionType& ty
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Jalonner::MIL_PionMission_ALAT_Jalonner( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -59,7 +59,7 @@ MIL_PionMission_ALAT_Jalonner::MIL_PionMission_ALAT_Jalonner( MIL_AgentPion& pio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Jalonner::~MIL_PionMission_ALAT_Jalonner()
 {
@@ -69,7 +69,7 @@ MIL_PionMission_ALAT_Jalonner::~MIL_PionMission_ALAT_Jalonner()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Jalonner::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -97,7 +97,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Jalonner::Initialize( const ASN1T_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Jalonner::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -116,7 +116,7 @@ bool MIL_PionMission_ALAT_Jalonner::Initialize( const MIL_AutomateMission_ABC& p
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Jalonner::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -136,7 +136,7 @@ bool MIL_PionMission_ALAT_Jalonner::Initialize( MIL_PionMission_ABC& missionTmp 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Jalonner::Terminate()
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_ALAT_Jalonner::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Jalonner::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -172,7 +172,7 @@ void MIL_PionMission_ALAT_Jalonner::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Jalonner::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Jalonner::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

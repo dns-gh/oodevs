@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -30,7 +30,7 @@ int MIL_PionMission_ALAT_DetruireAeromobile::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_DetruireAeromobile::InitializeDIA( const MIL_PionMissionType& type )
@@ -48,7 +48,7 @@ void MIL_PionMission_ALAT_DetruireAeromobile::InitializeDIA( const MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_DetruireAeromobile::MIL_PionMission_ALAT_DetruireAeromobile( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -59,7 +59,7 @@ MIL_PionMission_ALAT_DetruireAeromobile::MIL_PionMission_ALAT_DetruireAeromobile
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_DetruireAeromobile::~MIL_PionMission_ALAT_DetruireAeromobile()
 {
@@ -69,7 +69,7 @@ MIL_PionMission_ALAT_DetruireAeromobile::~MIL_PionMission_ALAT_DetruireAeromobil
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_DetruireAeromobile::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -97,7 +97,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_DetruireAeromobile::Initialize( co
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_DetruireAeromobile::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -116,7 +116,7 @@ bool MIL_PionMission_ALAT_DetruireAeromobile::Initialize( const MIL_AutomateMiss
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_DetruireAeromobile::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -136,7 +136,7 @@ bool MIL_PionMission_ALAT_DetruireAeromobile::Initialize( MIL_PionMission_ABC& m
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_DetruireAeromobile::Terminate()
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_ALAT_DetruireAeromobile::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_DetruireAeromobile::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -172,7 +172,7 @@ void MIL_PionMission_ALAT_DetruireAeromobile::Serialize( ASN1T_MsgPionOrder& asn
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_DetruireAeromobile::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_DetruireAeromobile::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

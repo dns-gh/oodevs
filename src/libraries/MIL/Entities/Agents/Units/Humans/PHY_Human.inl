@@ -111,8 +111,16 @@ bool PHY_Human::IsAnEmergency() const
 inline
 bool PHY_Human::NeedMedical() const
 {
-    return IsWounded() || IsContaminated() || IsMentalDiseased();
+    return IsAlive() && ( IsWounded() || IsContaminated() || IsMentalDiseased() );
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::NeedEvacuation
+// Created: NLD 2005-08-08
+// -----------------------------------------------------------------------------
+inline
+bool PHY_Human::NeedEvacuation()
+{
+    return NeedMedical() && !pMedicalState_;
+}
 

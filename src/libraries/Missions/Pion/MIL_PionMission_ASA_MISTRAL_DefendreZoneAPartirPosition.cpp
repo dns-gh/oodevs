@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::nDIAModeDeploiement
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::InitializeDIA( con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::MIL_PionMission_ASA_MIS
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::~MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::~MIL_PionMission_ASA_MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( const 
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( MIL_Pi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Serialize( ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

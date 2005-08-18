@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_NBC_ReconnaitreUnAxe constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_NBC_ReconnaitreUnAxe::MIL_AutomateMission_NBC_ReconnaitreUnAxe( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_NBC_ReconnaitreUnAxe::MIL_AutomateMission_NBC_ReconnaitreUnA
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_NBC_ReconnaitreUnAxe destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_NBC_ReconnaitreUnAxe::~MIL_AutomateMission_NBC_ReconnaitreUnAxe()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_NBC_ReconnaitreUnAxe::InitializeDIA( const MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_NBC_ReconnaitreUnAxe::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_ReconnaitreUnAxe::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_ReconnaitreUnAxe::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_ReconnaitreUnAxe::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_NBC_ReconnaitreUnAxe::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_NBC_ReconnaitreUnAxe::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_ReconnaitreUnAxe::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_NBC_ReconnaitreUnAxe::Serialize( ASN1T_MsgAutomateOrder
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_NBC_ReconnaitreUnAxe::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_ReconnaitreUnAxe::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

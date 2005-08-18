@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-08-05 - 14:24:58 $
+// $Created: APE 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_AutomateMissionInterface_Gen_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 25/10/04 10:45 $
@@ -1120,7 +1120,7 @@ void MOS_AutomateMissionInterface::CreateMission_ASA_DefendreZone()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_zone;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone = &asnMission;
     CreateLocation( asnMission.zone, "Zone" );
-    CreateNumeric( asnMission.angle, "Angle" );
+    CreatePointList( asnMission.positions_sections, "Positions sections" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1133,7 +1133,7 @@ void MOS_AutomateMissionInterface::CreateMission_ASA_DefendreSite()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_site;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site = &asnMission;
     CreateLocation( asnMission.zone, "Zone" );
-    CreateNumeric( asnMission.angle, "Angle" );
+    CreatePointList( asnMission.positions_sections, "Positions sections" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1146,7 +1146,7 @@ void MOS_AutomateMissionInterface::CreateMission_ASA_Surveiller()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_surveiller;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller = &asnMission;
     CreateLocation( asnMission.zone, "Zone" );
-    CreateNumeric( asnMission.angle, "Angle" );
+    CreatePointList( asnMission.positions_sections, "Positions sections" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1883,7 +1883,6 @@ void MOS_AutomateMissionInterface::CreateMission_LOG_TransporterFormationBlindee
     CreateAgentList( asnMission.unites_a_transporter, "Unites a transporter" );
     CreatePoint( asnMission.point_rendez_vous, "Point rendez vous" );
     CreatePoint( asnMission.point_destination, "Point destination" );
-    CreatePath( asnMission.itineraire, "Itineraire" );
 }
 
 // -----------------------------------------------------------------------------

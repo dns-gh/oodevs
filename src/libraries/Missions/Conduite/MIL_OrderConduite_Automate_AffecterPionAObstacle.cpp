@@ -24,7 +24,7 @@ int MIL_OrderConduite_Automate_AffecterPionAObstacle::nDIAObstacleIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_AffecterPionAObstacle::InitializeDIA
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Automate_AffecterPionAObstacle::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -38,7 +38,7 @@ void MIL_OrderConduite_Automate_AffecterPionAObstacle::InitializeDIA( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_AffecterPionAObstacle constructor
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_AffecterPionAObstacle::MIL_OrderConduite_Automate_AffecterPionAObstacle( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -49,7 +49,7 @@ MIL_OrderConduite_Automate_AffecterPionAObstacle::MIL_OrderConduite_Automate_Aff
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_AffecterPionAObstacle destructor
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_AffecterPionAObstacle::~MIL_OrderConduite_Automate_AffecterPionAObstacle()
 {
@@ -62,7 +62,7 @@ MIL_OrderConduite_Automate_AffecterPionAObstacle::~MIL_OrderConduite_Automate_Af
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_AffecterPionAObstacle::Initialize
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_AffecterPionAObstacle::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_AffecterPionAObstacle::Initi
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_AffecterPionAObstacle::Initialize
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Automate_AffecterPionAObstacle::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

@@ -789,7 +789,6 @@ void NET_ASN_Tools::Delete( ASN1T_ListPolygon& asn )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
@@ -859,14 +858,7 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 void NET_ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
 {
     if( asn.n > 0 )
-    {
-        for( uint i = 0; i < asn.n; ++i )
-        {
-            ASN1T_MissionGenObject* pGenObject = &asn.elem[ i ];
-            delete pGenObject;
-        }
         delete [] asn.elem;
-    }
 }
 
 // =============================================================================

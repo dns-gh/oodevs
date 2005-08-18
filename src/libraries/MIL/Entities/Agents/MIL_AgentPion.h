@@ -116,7 +116,6 @@ public:
     void OnReceiveMsgPionOrder      ( ASN1T_MsgPionOrder&       msg, MIL_MOSContextID nCtx ); 
     void OnReceiveMsgOrderConduite  ( ASN1T_MsgOrderConduite&   msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgChangeAutomate ( ASN1T_MsgChangeAutomate&  msg, MIL_MOSContextID nCtx );
-    void OnReceiveMagicMove         ( const MT_Vector2D& vTranslation );    
     void OnReceiveMagicSurrender    ();
     //@}
 
@@ -135,6 +134,7 @@ public:
 
     //! @name Misc operations
     //@{
+            void MagicMove       ( const MT_Vector2D& vNewPos );    
             void NotifyAttacking ( MIL_Agent_ABC& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
             void ChangeAutomate  ( MIL_Automate& newAutomate );

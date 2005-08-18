@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_GEN_RetablirItineraire::nDIAItineraireIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RetablirItineraire::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_GEN_RetablirItineraire::InitializeDIA( const MIL_PionMissio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RetablirItineraire::MIL_PionMission_GEN_RetablirItineraire( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_GEN_RetablirItineraire::MIL_PionMission_GEN_RetablirItineraire( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RetablirItineraire::~MIL_PionMission_GEN_RetablirItineraire()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_GEN_RetablirItineraire::~MIL_PionMission_GEN_RetablirItineraire(
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RetablirItineraire::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RetablirItineraire::Initialize( con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RetablirItineraire::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( const MIL_AutomateMissi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RetablirItineraire::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( MIL_PionMission_ABC& mi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RetablirItineraire::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_GEN_RetablirItineraire::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RetablirItineraire::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_GEN_RetablirItineraire::Serialize( ASN1T_MsgPionOrder& asnM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RetablirItineraire::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RetablirItineraire::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

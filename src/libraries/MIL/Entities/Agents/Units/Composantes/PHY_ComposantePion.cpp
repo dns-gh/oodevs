@@ -691,7 +691,6 @@ void PHY_ComposantePion::NotifyHandledByMaintenance()
 void PHY_ComposantePion::NotifyRepairedByMaintenance()
 {
     assert( pRole_ );
-    
     ReinitializeState( PHY_ComposanteState::undamaged_ );
     MIL_RC::pRcMaterielRetourDeMaintenance_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
 }

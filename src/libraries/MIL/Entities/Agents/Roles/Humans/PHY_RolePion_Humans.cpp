@@ -148,7 +148,7 @@ bool PHY_RolePion_Humans::IsUsable() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNewNbrFullyAliveHumans )
 {
-     const T_HumanData& humanData = humansData_[ rank.GetID() ];
+    const T_HumanData& humanData = humansData_[ rank.GetID() ];
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, humanData.nNbrTotal_ );
 
     if( nNewNbrFullyAliveHumans > humanData.nNbrOperational_ )

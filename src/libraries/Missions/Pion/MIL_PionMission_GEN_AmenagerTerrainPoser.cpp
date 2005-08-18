@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_GEN_AmenagerTerrainPoser::nDIATypeObjetIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_AmenagerTerrainPoser::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_GEN_AmenagerTerrainPoser::InitializeDIA( const MIL_PionMiss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_AmenagerTerrainPoser::MIL_PionMission_GEN_AmenagerTerrainPoser( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_GEN_AmenagerTerrainPoser::MIL_PionMission_GEN_AmenagerTerrainPos
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_AmenagerTerrainPoser::~MIL_PionMission_GEN_AmenagerTerrainPoser()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_GEN_AmenagerTerrainPoser::~MIL_PionMission_GEN_AmenagerTerrainPo
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( const MIL_AutomateMis
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( MIL_PionMission_ABC& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_AmenagerTerrainPoser::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_GEN_AmenagerTerrainPoser::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_AmenagerTerrainPoser::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_GEN_AmenagerTerrainPoser::Serialize( ASN1T_MsgPionOrder& as
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_AmenagerTerrainPoser::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_AmenagerTerrainPoser::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::nDIAZonesDeRechercheIdx_ = 0 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::InitializeDIA( const MIL_Pio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::MIL_PionMission_RENS_ROIM_CL289_RenseignerSur( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::MIL_PionMission_RENS_ROIM_CL289_R
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::~MIL_PionMission_RENS_ROIM_CL289_RenseignerSur()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::~MIL_PionMission_RENS_ROIM_CL289_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initiali
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( const MIL_Automa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( MIL_PionMission_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Serialize( ASN1T_MsgPionOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -152,6 +152,7 @@ void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::CleanAfterSerialization( ASN
     ASN1T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg.mission.u.mission_pion_rens_roim_cl289_renseigner_sur;
 
     NET_ASN_Tools::Delete( asnMission.ficelle_de_vole );
+    NET_ASN_Tools::Delete( asnMission.zones_de_recherche );
 
     delete &asnMission;
 

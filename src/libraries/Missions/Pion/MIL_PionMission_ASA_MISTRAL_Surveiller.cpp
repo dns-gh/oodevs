@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_ASA_MISTRAL_Surveiller::nDIAModeDeploiementIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ASA_MISTRAL_Surveiller::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_ASA_MISTRAL_Surveiller::InitializeDIA( const MIL_PionMissio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASA_MISTRAL_Surveiller::MIL_PionMission_ASA_MISTRAL_Surveiller( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_ASA_MISTRAL_Surveiller::MIL_PionMission_ASA_MISTRAL_Surveiller( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASA_MISTRAL_Surveiller::~MIL_PionMission_ASA_MISTRAL_Surveiller()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_ASA_MISTRAL_Surveiller::~MIL_PionMission_ASA_MISTRAL_Surveiller(
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( const MIL_AutomateMissi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( MIL_PionMission_ABC& mi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_Surveiller::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_ASA_MISTRAL_Surveiller::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_Surveiller::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_ASA_MISTRAL_Surveiller::Serialize( ASN1T_MsgPionOrder& asnM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_Surveiller::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_Surveiller::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

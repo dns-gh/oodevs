@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_GEN_RealiserZoneMineeParDispersion::nDIADensiteIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::InitializeDIA( const MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserZoneMineeParDispersion::MIL_PionMission_GEN_RealiserZoneMineeParDispersion( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_GEN_RealiserZoneMineeParDispersion::MIL_PionMission_GEN_Realiser
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserZoneMineeParDispersion::~MIL_PionMission_GEN_RealiserZoneMineeParDispersion()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_GEN_RealiserZoneMineeParDispersion::~MIL_PionMission_GEN_Realise
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Ini
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize( const MIL_A
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Initialize( MIL_PionMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::Serialize( ASN1T_MsgPio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserZoneMineeParDispersion::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserZoneMineeParDispersion::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

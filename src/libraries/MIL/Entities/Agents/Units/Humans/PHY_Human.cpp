@@ -140,62 +140,132 @@ void PHY_Human::NotifyHumanChanged( const PHY_Human& oldHumanState )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::NotifyHandledByMedical
+// Name: PHY_Human::CancelLogisticRequest
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_Human::NotifyHandledByMedical()
-{
-    assert( nLocation_ != eMedical );
-
-    PHY_Human oldHumanState( *this );
-    nLocation_ = eMedical;
-    NotifyHumanChanged( oldHumanState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::NotifyBackFromMedical
-// Created: NLD 2005-01-10
-// -----------------------------------------------------------------------------
-inline
-void PHY_Human::NotifyBackFromMedical()
+void PHY_Human::CancelLogisticRequest()
 {
     assert( pComposante_ );
     if( pMedicalState_ )
     {
+        PHY_Human oldHumanState( *this );
         pComposante_->NotifyHumanBackFromMedical( *pMedicalState_ );
-        if ( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
+        if( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
             nLocation_ = eMaintenance;
         else 
             nLocation_ = eBattleField;
         pMedicalState_->Cancel();
         delete pMedicalState_;
         pMedicalState_ = 0;
+        NotifyHumanChanged( oldHumanState );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::NotifyBackToWar
-// Created: JVT 2005-04-28
+// Name: PHY_Human::Evacuate
+// Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-void PHY_Human::NotifyBackToWar()
+void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 {
-    assert( pComposante_ );
-    assert( pMedicalState_ );
+    if( NeedEvacuation() )
+        pMedicalState_ = pComposante_->NotifyHumanEvacuatedByThirdParty( *this, destinationTC2 );
+}
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::Heal
+// Created: NLD 2005-01-13
+// -----------------------------------------------------------------------------
+void PHY_Human::Heal()
+{
+    HealMentalDisease    ();
+    HealContamination    ();
+    ChangeWound          ( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => don't heal deads ...
+    CancelLogisticRequest();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::HealMentalDisease
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+void PHY_Human::HealMentalDisease()
+{
+    if( !IsMentalDiseased() )
+        return;
     PHY_Human oldHumanState( *this );
+    bMentalDiseased_ = false;
+    NotifyHumanChanged( oldHumanState );
+}
 
-    pComposante_->NotifyHumanBackFromMedical( *pMedicalState_ );
-    if( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
-        nLocation_ = eMaintenance;
-    else
-        nLocation_ = eBattleField;
-        
-    pComposante_->NotifyHumanChanged( *this, oldHumanState );
-    pMedicalState_->Cancel();
-    delete pMedicalState_;
-    pMedicalState_ = 0;
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::HealWound
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+void PHY_Human::HealWound()
+{
+    if( !IsWounded() )
+        return;
+    PHY_Human oldHumanState( *this );
+    pWound_ = &PHY_HumanWound::notWounded_;
+    nDeathTimeStep_ = std::numeric_limits< uint >::max();
+    NotifyHumanChanged( oldHumanState );
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::HealContamination
+// Created: NLD 2005-01-12
+// -----------------------------------------------------------------------------
+void PHY_Human::HealContamination()
+{
+    if( !IsContaminated() )
+        return;
+    PHY_Human oldHumanState( *this );
+    bContamined_ = false;
+    NotifyHumanChanged( oldHumanState );
+}
 
-    MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeOperational );
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyWound
+// Created: NLD 2004-12-21
+// -----------------------------------------------------------------------------
+bool PHY_Human::ApplyWound()
+{
+    assert( pWound_ );
+    return ChangeWound( pWound_->ApplyRandomWound() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyWound
+// Created: NLD 2004-12-21
+// -----------------------------------------------------------------------------
+bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
+{
+    if( !IsUsable() )
+        return false;
+
+    if( !bContamined_ )
+    {
+        PHY_Human oldHumanState( *this );
+        bContamined_ = true;
+        NotifyHumanChanged( oldHumanState );
+    }
+    return ChangeWound( pWound_->Degrade( nbcAgentType.GetRandomWound() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyMentalDisease
+// Created: NLD 2005-01-14
+// -----------------------------------------------------------------------------
+void PHY_Human::ApplyMentalDisease()
+{
+    if( !IsUsable() || bMentalDiseased_ )
+        return;
+
+    if( PHY_HumanWound::ChooseMentalDesease() )
+    {
+        PHY_Human oldHumanState( *this );
+        bMentalDiseased_ = true;
+        NotifyHumanChanged( oldHumanState );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -223,105 +293,47 @@ bool PHY_Human::ChangeWound( const PHY_HumanWound& newWound )
         return false;
     pWound_ = &newWound;
 
-    if( *pWound_ == PHY_HumanWound::notWounded_ )
+    if( *pWound_ == PHY_HumanWound::killed_ )
     {
+        nDeathTimeStep_  = 0;
+        bMentalDiseased_ = false;
+        bContamined_     = false;        
+    }
+    else if( *pWound_ == PHY_HumanWound::notWounded_ )
         nDeathTimeStep_ = std::numeric_limits< uint >::max();
-        NotifyBackFromMedical();
-    }
-    else if( *pWound_ == PHY_HumanWound::killed_ )
-    {
-        nDeathTimeStep_ = 0;
-        NotifyBackFromMedical();
-    }
     else
         nDeathTimeStep_ = std::min( nDeathTimeStep_, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWound_->GetLifeExpectancy() );
+    NotifyHumanChanged( oldHumanState );   
 
-    NotifyHumanChanged( oldHumanState );
+    if( !NeedMedical() )
+        CancelLogisticRequest();
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::Heal
-// Created: NLD 2005-01-13
+// Name: PHY_Human::NotifyBackToWar
+// Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
-void PHY_Human::Heal()
+void PHY_Human::NotifyBackToWar()
 {
-    if( *pWound_ == PHY_HumanWound::notWounded_ && !bContamined_ && !bMentalDiseased_ )
-        return;
+    assert( pComposante_ );
+    assert( pMedicalState_ );
+
+    CancelLogisticRequest();
+    MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeOperational );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::NotifyHandledByMedical
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+void PHY_Human::NotifyHandledByMedical()
+{
+    assert( nLocation_ != eMedical );
 
     PHY_Human oldHumanState( *this );
-    bContamined_     = false;
-    bMentalDiseased_ = false;
-    pWound_          = &PHY_HumanWound::notWounded_;
-    nDeathTimeStep_  = std::numeric_limits< uint >::max();
-    if( pComposante_->GetState() == PHY_ComposanteState::maintenance_ )
-        nLocation_ = eMaintenance;
-    else 
-        nLocation_ = eBattleField; 
-    NotifyBackFromMedical();
+    nLocation_ = eMedical;
     NotifyHumanChanged( oldHumanState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::HealMentalDisease
-// Created: NLD 2005-01-12
-// -----------------------------------------------------------------------------
-void PHY_Human::HealMentalDisease()
-{
-    assert( IsMentalDiseased() );
-    PHY_Human oldHumanState( *this );
-    bMentalDiseased_ = false;
-    NotifyHumanChanged( oldHumanState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::HealWound
-// Created: NLD 2005-01-12
-// -----------------------------------------------------------------------------
-void PHY_Human::HealWound()
-{
-    assert( IsWounded() );
-    PHY_Human oldHumanState( *this );
-    pWound_ = &PHY_HumanWound::notWounded_;
-    nDeathTimeStep_ = std::numeric_limits< uint >::max();
-    NotifyHumanChanged( oldHumanState );
-}
- 
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::HealContamination
-// Created: NLD 2005-01-12
-// -----------------------------------------------------------------------------
-void PHY_Human::HealContamination()
-{
-    assert( IsContaminated() );
-    PHY_Human oldHumanState( *this );
-    bContamined_ = false;
-    NotifyHumanChanged( oldHumanState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyWound
-// Created: NLD 2004-12-21
-// -----------------------------------------------------------------------------
-bool PHY_Human::ApplyWound()
-{
-    assert( pWound_ );
-    return ChangeWound( pWound_->ApplyRandomWound() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyWound
-// Created: NLD 2004-12-21
-// -----------------------------------------------------------------------------
-bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
-{
-    if( !bContamined_ )
-    {
-        PHY_Human oldHumanState( *this );
-        bContamined_ = true;
-        NotifyHumanChanged( oldHumanState );
-    }
-    return ChangeWound( pWound_->Degrade( nbcAgentType.GetRandomWound() ) );
 }
 
 // =============================================================================
@@ -348,49 +360,13 @@ void PHY_Human::NotifyComposanteHandledByMaintenance()
 // -----------------------------------------------------------------------------
 void PHY_Human::NotifyComposanteBackFromMaintenance()
 {
-    //assert( nLocation_ != eBattleField ); <== Peut asserté si la composante meurt avant d'avoir été récupérée par le remorqueur (=> appel de NotifyComposanteBackFromMaintenance(), mais composante pas encore dans maintenance, juste pMaintenanceState pour la demande)
+    //assert( nLocation_ != eBattleField ); <== Peut asserter si la composante meurt avant d'avoir été récupérée par le remorqueur (=> appel de NotifyComposanteBackFromMaintenance(), mais composante pas encore dans maintenance, juste pMaintenanceState pour la demande)
     if( nLocation_ == eMaintenance )
     {
         PHY_Human oldHumanState( *this );
         nLocation_ = eBattleField;
         NotifyHumanChanged( oldHumanState );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyMentalDisease
-// Created: NLD 2005-01-14
-// -----------------------------------------------------------------------------
-void PHY_Human::ApplyMentalDisease()
-{
-    if ( bMentalDiseased_ )
-        return;
-
-    if ( PHY_HumanWound::ChooseMentalDesease() )
-    {
-        PHY_Human oldHumanState( *this );
-        bMentalDiseased_ = true;
-        NotifyHumanChanged( oldHumanState );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::NeedEvacuation
-// Created: NLD 2005-08-08
-// -----------------------------------------------------------------------------
-bool PHY_Human::NeedEvacuation()
-{
-    return NeedMedical() && !pMedicalState_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::Evacuate
-// Created: NLD 2005-08-01
-// -----------------------------------------------------------------------------
-void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
-{
-    if( NeedEvacuation() )
-        pMedicalState_ = pComposante_->NotifyHumanEvacuatedByThirdParty( *this, destinationTC2 );
 }
 
 // =============================================================================
@@ -403,7 +379,6 @@ void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 // -----------------------------------------------------------------------------
 void PHY_Human::Update()
 {
-    assert( NeedMedical() );
     assert( pComposante_ );
 
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nDeathTimeStep_ )
@@ -417,20 +392,9 @@ void PHY_Human::Update()
             else
                 MIL_RC::pRcDecesBlessePendantHospitalisation_->Send( pComposante_->GetRole().GetPion(), MIL_RC::eRcTypeEvent );
         }
-        return;
     }
 
     // Demande santé
-    if( !pMedicalState_ )
+    if( NeedMedical() && !pMedicalState_ )
         pMedicalState_ = pComposante_->NotifyHumanWaitingForMedical( *this );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::CancelLogisticRequest
-// Created: NLD 2005-01-18
-// -----------------------------------------------------------------------------
-void PHY_Human::CancelLogisticRequest()
-{
-    NotifyBackFromMedical();
-}
-

@@ -23,7 +23,7 @@ int MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::nDIAOrderCondu
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::InitializeDIA
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::InitializeDIA
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement constructor
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::MIL_OrderConduite_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement destructor
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::~MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::~MIL_OrderConduite
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::Initialize
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplac
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::Initialize
-// Created: AGR 2005-08-01 - 11:23:54
+// Created: AGR 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

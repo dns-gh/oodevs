@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -19,12 +19,12 @@
 #include "MIL/Decision/DEC_Tools.h"
 
 int MIL_AutomateMission_ASA_DefendreSite::nDIAZoneIdx_ = 0 ;
-int MIL_AutomateMission_ASA_DefendreSite::nDIAAngleIdx_ = 0 ;
+int MIL_AutomateMission_ASA_DefendreSite::nDIAPositionsSectionsIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreSite constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_DefendreSite::MIL_AutomateMission_ASA_DefendreSite( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -35,7 +35,7 @@ MIL_AutomateMission_ASA_DefendreSite::MIL_AutomateMission_ASA_DefendreSite( MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreSite destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ASA_DefendreSite::~MIL_AutomateMission_ASA_DefendreSite()
 {
@@ -55,13 +55,13 @@ void MIL_AutomateMission_ASA_DefendreSite::InitializeDIA( const MIL_AutomateMiss
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
-    nDIAAngleIdx_ = DEC_Tools::InitializeDIAField( "angle_", diaType );
+    nDIAPositionsSectionsIdx_ = DEC_Tools::InitializeDIAField( "positionsSections_", diaType );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreSite::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreSite::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreSite::Initialize( const
     const ASN1T_Mission_Automate_ASA_DefendreSite& asnMission = *asnMsg.mission.u.mission_automate_asa_defendre_site;
     if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyNumeric( asnMission.angle, GetVariable( nDIAAngleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_sections, positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,11 +80,11 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreSite::Initialize( const
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreSite::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIAAngleIdx_ ) );
+    NET_ASN_Tools::ResetPointList( positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) );
 
     MIL_AutomateMission_ABC::Terminate();
 }
@@ -95,7 +95,7 @@ void MIL_AutomateMission_ASA_DefendreSite::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreSite::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreSite::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -106,13 +106,13 @@ void MIL_AutomateMission_ASA_DefendreSite::Serialize( ASN1T_MsgAutomateOrder& as
     asnMsg.mission.u.mission_automate_asa_defendre_site  = &asnMission;
 
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
-    NET_ASN_Tools::CopyNumeric( GetVariable( nDIAAngleIdx_ ), asnMission.angle );
+    NET_ASN_Tools::CopyPointList( GetVariable( nDIAPositionsSectionsIdx_ ), asnMission.positions_sections );
 
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ASA_DefendreSite::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreSite::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -120,6 +120,7 @@ void MIL_AutomateMission_ASA_DefendreSite::CleanAfterSerialization( ASN1T_MsgAut
     ASN1T_Mission_Automate_ASA_DefendreSite& asnMission = *asnMsg.mission.u.mission_automate_asa_defendre_site;
 
     NET_ASN_Tools::Delete( asnMission.zone );
+    NET_ASN_Tools::Delete( asnMission.positions_sections );
 
     delete &asnMission;
 

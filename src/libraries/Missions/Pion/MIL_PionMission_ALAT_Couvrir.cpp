@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:43 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -31,7 +31,7 @@ int MIL_PionMission_ALAT_Couvrir::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_Couvrir::InitializeDIA( const MIL_PionMissionType& type )
@@ -50,7 +50,7 @@ void MIL_PionMission_ALAT_Couvrir::InitializeDIA( const MIL_PionMissionType& typ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Couvrir::MIL_PionMission_ALAT_Couvrir( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -61,7 +61,7 @@ MIL_PionMission_ALAT_Couvrir::MIL_PionMission_ALAT_Couvrir( MIL_AgentPion& pion,
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Couvrir::~MIL_PionMission_ALAT_Couvrir()
 {
@@ -71,7 +71,7 @@ MIL_PionMission_ALAT_Couvrir::~MIL_PionMission_ALAT_Couvrir()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Couvrir::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -101,7 +101,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Couvrir::Initialize( const ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Couvrir::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -121,7 +121,7 @@ bool MIL_PionMission_ALAT_Couvrir::Initialize( const MIL_AutomateMission_ABC& pa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -142,7 +142,7 @@ bool MIL_PionMission_ALAT_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Couvrir::Terminate()
 {
@@ -157,7 +157,7 @@ void MIL_PionMission_ALAT_Couvrir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -179,13 +179,14 @@ void MIL_PionMission_ALAT_Couvrir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Couvrir::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:43
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Couvrir::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
     assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_alat_couvrir );
     ASN1T_Mission_Pion_ALAT_Couvrir& asnMission = *asnMsg.mission.u.mission_pion_alat_couvrir;
 
+    NET_ASN_Tools::Delete( asnMission.unites_a_couvrir );
     NET_ASN_Tools::Delete( asnMission.point_regroupement );
     NET_ASN_Tools::Delete( asnMission.plots_ravitaillement );
 

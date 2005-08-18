@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-01 - 11:23:53 $
+// $Created: 2005-08-17 - 16:30:44 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_GEN_RealiserTravauxProtection::nDIAOidObjetPlanifieIdx_ = 0 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::InitializeDIA
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RealiserTravauxProtection::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_GEN_RealiserTravauxProtection::InitializeDIA( const MIL_Pio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection constructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserTravauxProtection::MIL_PionMission_GEN_RealiserTravauxProtection( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_GEN_RealiserTravauxProtection::MIL_PionMission_GEN_RealiserTrava
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection destructor
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserTravauxProtection::~MIL_PionMission_GEN_RealiserTravauxProtection()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_GEN_RealiserTravauxProtection::~MIL_PionMission_GEN_RealiserTrav
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserTravauxProtection::Initiali
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( const MIL_Automa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::Initialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( MIL_PionMission_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::Terminate
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserTravauxProtection::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_GEN_RealiserTravauxProtection::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::Serialize
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserTravauxProtection::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_GEN_RealiserTravauxProtection::Serialize( ASN1T_MsgPionOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserTravauxProtection::CleanAfterSerialization
-// Created: 2005-08-01 - 11:23:53
+// Created: 2005-08-17 - 16:30:44
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserTravauxProtection::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
