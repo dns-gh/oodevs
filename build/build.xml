@@ -182,7 +182,7 @@
                          MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,MT_Thread,MT_Time,
                          ASN,
                          asn1per,qtmain,qt-mt333"
-                   pch="LAM_pch">
+                   pch="LMP_pch">
             <syslibset libs="user32,wsock32,winmm"/>
             <includepath path="${include.dir}/ASN"/>
         </build-app>
