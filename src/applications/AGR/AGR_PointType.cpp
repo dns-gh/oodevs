@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_PointType::AGR_PointType()
-    : AGR_Type_ABC( "ScipioBase:Point", "Point", "MT_Vector2D", "T_Point", true )
+    : AGR_Type_ABC( "ScipioBase:Point", "Point", "MT_Vector2D", "T_Point", "Position", true )
 {
     //NOTHING
 }

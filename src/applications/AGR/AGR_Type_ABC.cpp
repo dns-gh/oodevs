@@ -28,13 +28,14 @@
 // Name: AGR_Type_ABC constructor
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
-AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strCPPType, const std::string& strDIAType, bool bRequiresCleaning )
-    : strAsnType_( strAsnType )
-    , strFunctionSuffix_( strFunctionSuffix )
-    , strCPPType_( strCPPType )
-    , strDIAType_( strDIAType )
-    , bExplicitMember_( !strCPPType_.empty() )
-    , bRequiresCleaning_( bRequiresCleaning )
+AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strCPPType, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning )
+    : strAsnType_         ( strAsnType )
+    , strFunctionSuffix_  ( strFunctionSuffix )
+    , strCPPType_         ( strCPPType )
+    , strDIAType_         ( strDIAType )
+    , strTesterType_      ( strTesterType )
+    , bExplicitMember_    ( !strCPPType_.empty() )
+    , bRequiresCleaning_  ( bRequiresCleaning )
 {
     //NOTHING
 }
@@ -194,15 +195,43 @@ std::string AGR_Type_ABC::SerializationCleaningCode( const AGR_Member& member ) 
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::TesterParamAllocationCode
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::TesterParamAllocationCode( const AGR_Member& member ) const
+{
+    if( bRequiresCleaning_ )
+        return "    const " + strTesterType_ + "& " + member.CPPName() 
+               + " = pTarget_->GetTestParam_" + strFunctionSuffix_ + "();\n";
+    else
+        return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::TesterParamCleaningCode
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::TesterParamCleaningCode( const AGR_Member& member ) const
+{
+    if( bRequiresCleaning_ )
+        return "    delete &" + member.CPPName() + ";\n";
+    else
+        return "";
+}
+
+// -----------------------------------------------------------------------------
 // Name: AGR_Type_ABC::TesterSerializationCode
 // Created: AGE 2004-09-21
 // -----------------------------------------------------------------------------
 std::string AGR_Type_ABC::TesterSerializationCode( const AGR_Member& member ) const
 {
-    return "    ASN_Tools::Copy" + strFunctionSuffix_
-        + "( pTarget_->GetTestParam_" + strFunctionSuffix_ + "()"
-           + ", asnMission." + member.ASNName()
-           + " );\n";
+    if( bRequiresCleaning_ )
+        return "    ASN_Tools::Copy" + strFunctionSuffix_
+               + "( " + member.CPPName() + ", asnMission." + member.ASNName() + " );\n";
+    else
+        return "    ASN_Tools::Copy" + strFunctionSuffix_
+               + "( pTarget_->GetTestParam_" + strFunctionSuffix_ + "()"
+               + ", asnMission." + member.ASNName() + " );\n";
 }
 
 // -----------------------------------------------------------------------------

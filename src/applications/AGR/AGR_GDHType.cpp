@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_GDHType::AGR_GDHType()
-    : AGR_Type_ABC( "ScipioBase:GDH", "GDH", "", "float", false )
+    : AGR_Type_ABC( "ScipioBase:GDH", "GDH", "", "float", "double", false )
 {
     //NOTHING
 }

@@ -37,7 +37,7 @@ class AGR_Type_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strCPPType, const std::string& strDIAType, bool bRequiresCleaning );
+    AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strCPPType, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning );
     virtual ~AGR_Type_ABC();
     //@}
 
@@ -60,6 +60,8 @@ public:
     virtual std::string Mos2InitialisationCode         ( const AGR_Member& member ) const;
     virtual std::string SerializationCode              ( const AGR_Member& member ) const;
 
+    virtual std::string TesterParamAllocationCode      ( const AGR_Member& member ) const;
+    virtual std::string TesterParamCleaningCode        ( const AGR_Member& member ) const;
     virtual std::string TesterSerializationCode        ( const AGR_Member& member ) const;
             std::string TesterSerializationCleaningCode( const AGR_Member& member ) const;
     //@}
@@ -87,6 +89,7 @@ private:
     std::string strFunctionSuffix_;
     std::string strCPPType_;
     std::string strDIAType_;
+    std::string strTesterType_;
     bool bExplicitMember_;
     bool bRequiresCleaning_;
     //@}

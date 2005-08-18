@@ -316,42 +316,25 @@ void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const 
     workspace.ReplaceInString( strBaseContent, "$MissionName$", strMissionBaseName );
     workspace.ReplaceInString( strBaseContent, "$LowerMissionName$", LowName() );
 
-    std::string strAsnMemberInit;
-    std::string strMemberInit;
-    std::string strMissionMemberInit;
-    std::string strMemberReset;
     std::string strMemberSerialization;
     std::string strMemberCleanSerialization;
-
-    if( ! MemberList().empty() )
-    {
-        if( ! bMissionForAutomata_ )
-            strAsnMemberInit += "    const ASN1T_Mission_Pion_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
-        else
-            strAsnMemberInit += "    const ASN1T_Mission_Automate_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
-    }
+    std::string strDynamicParamAllocation;
+    std::string strDynamicParamCleaning;
 
     for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
     {
         assert( *it );
         const AGR_Member& member = **it;
 
-        strMemberReset = member.ResetCode();
-        strAsnMemberInit += member.ASNInitialisationCode();
         strMemberSerialization      += member.TesterSerializationCode();
         strMemberCleanSerialization += member.TesterSerializationCleaningCode();
-        if( ! bMissionForAutomata_ )
-        {
-            strMemberInit               += member.MemberInitialisationCode();
-            strMissionMemberInit        += member.MissionInitialisationCode();
-        }
+        strDynamicParamAllocation   += member.TesterParamAllocationCode();
+        strDynamicParamCleaning     += member.TesterParamCleaningCode();
     }
 
-    workspace.ReplaceInString( strBaseContent, "$InitMembersFromAsn$", strAsnMemberInit );
-    workspace.ReplaceInString( strBaseContent, "$InitMembers$", strMemberInit );
-    workspace.ReplaceInString( strBaseContent, "$InitMemberFromMission$", strMissionMemberInit );
-    workspace.ReplaceInString( strBaseContent, "$ResetMembers$", strMemberReset );
+    workspace.ReplaceInString( strBaseContent, "$DynamicParamAllocation$", strDynamicParamAllocation );
     workspace.ReplaceInString( strBaseContent, "$SerializeMembers$", strMemberSerialization );
+    workspace.ReplaceInString( strBaseContent, "$DynamicParamCleaning$", strDynamicParamCleaning );
     workspace.ReplaceInString( strBaseContent, "$CleanSerializedMembers$", strMemberCleanSerialization );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 

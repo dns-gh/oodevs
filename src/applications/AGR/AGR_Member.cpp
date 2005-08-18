@@ -301,6 +301,24 @@ std::string AGR_Member::TesterSerializationCleaningCode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_Member::TesterParamAllocationCode
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+std::string AGR_Member::TesterParamAllocationCode() const
+{
+    return pType_->TesterParamAllocationCode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Member::TesterParamCleaningCode
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+std::string AGR_Member::TesterParamCleaningCode() const
+{
+    return pType_->TesterParamCleaningCode( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AGR_Member::DIAType
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------

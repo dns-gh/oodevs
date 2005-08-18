@@ -30,7 +30,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_KnowledgeAgentListType::AGR_KnowledgeAgentListType()
-    : AGR_Type_ABC( "ScipioBase:ListKnowledgeAgent", "AgentKnowledgeList", "", "T_ListeConnaissancesAgent", true )
+    : AGR_Type_ABC( "ScipioBase:ListKnowledgeAgent", "AgentKnowledgeList", "", "T_ListeConnaissancesAgent", "T_IdVector", true )
 {
     //NOTHING
 }

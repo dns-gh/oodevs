@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_IntegerType::AGR_IntegerType()
-    : AGR_Type_ABC( "xsd:integer", "Numeric", "", "float", false )
+    : AGR_Type_ABC( "xsd:integer", "Numeric", "", "float", "int", false )
 {
     //NOTHING
 }
@@ -39,7 +39,7 @@ AGR_IntegerType::AGR_IntegerType()
 // Created: NLD 2005-03-14
 // -----------------------------------------------------------------------------
 AGR_IntegerType::AGR_IntegerType( const std::string& strAsnType )
-    : AGR_Type_ABC( strAsnType, "Numeric", "", "float", false )
+    : AGR_Type_ABC( strAsnType, "Numeric", "", "float", "int", false )
 {
 
 }

@@ -30,7 +30,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_KnowledgeAgentType::AGR_KnowledgeAgentType()
-    : AGR_Type_ABC( "ScipioBase:KnowledgeAgent", "AgentKnowledge", "", "T_ConnaissanceAgent", false )
+    : AGR_Type_ABC( "ScipioBase:KnowledgeAgent", "AgentKnowledge", "", "T_ConnaissanceAgent", "uint", false )
 {
     //NOTHING
 }

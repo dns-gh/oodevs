@@ -65,8 +65,10 @@ public:
     std::string SerializationCode        () const;
     std::string SerializationCleaningCode() const;
 
-    std::string TesterSerializationCode  () const;
+    std::string TesterSerializationCode        () const;
     std::string TesterSerializationCleaningCode() const;
+    std::string TesterParamAllocationCode      () const;
+    std::string TesterParamCleaningCode        () const;
 
     std::string DIAType                  () const;
     //@}

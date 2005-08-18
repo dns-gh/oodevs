@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_DoubleType::AGR_DoubleType()
-    : AGR_Type_ABC( "xsd:double", "Numeric", "", "float", false )
+    : AGR_Type_ABC( "xsd:double", "Numeric", "", "float", "double", false )
 {
     //NOTHING
 }
