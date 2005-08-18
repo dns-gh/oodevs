@@ -428,7 +428,9 @@
             </LiensHierarchiques>
             <Position>31TCN0070480048</Position>
             <Equipements>                
-                <Equipement type="CompNBC" disponible="0" indisponible="0" reparable="50" />
+                <Equipement type="CompNBC" disponible="0" indisponible="0" reparable="50" />                
+                <Equipement type="CompTest" disponible="0" indisponible="60" reparable="0" />
+                <Equipement type="CompTest2" disponible="0" indisponible="50" reparable="0" />
             </Equipements>                  
             
             <Personnels>
