@@ -117,6 +117,7 @@ public:
     void OnReceiveMsgOrderConduite  ( ASN1T_MsgOrderConduite&   msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgChangeAutomate ( ASN1T_MsgChangeAutomate&  msg, MIL_MOSContextID nCtx );
     void OnReceiveMagicSurrender    ();
+    void OnReceiveMsgMagicMove      ( const MT_Vector2D& vPosition ); // Magic move automate
     //@}
 
     //! @name HLA

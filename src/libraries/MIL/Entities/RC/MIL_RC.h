@@ -54,6 +54,8 @@ public:
     //! @name Statics
     //@{    
     static const MIL_RC*                                    pRcEnCoursDeFranchissement_;
+    static const MIL_RC*                                    pRcANouveauDisponibleApresReparation_;
+    static const MIL_RC*                                    pRcMaterielRepareSurPlace_;
     static const MIL_RC*                                    pRcMaterielRetourDeMaintenance_;
     static const MIL_RC_ObservationTirIndirect*             pRcObservationTirIndirect_;
     static const MIL_RC*                                    pRcDemandeRavitaillement_;
@@ -212,15 +214,17 @@ protected:
         eRC_SituationLogDefavorable,    // Paramètre : enum E_TypeDotation
     
         /* Log */
-        eRC_MaterielRetourDeMaintenance,
-        eRC_SectionDeployee,
-        eRC_DemandeRavitaillement,
-        eRC_DemandeEvacuationSanitaire,
-        eRC_DemandeEvacuationMateriel,
-        eRC_AllocationConsentieBientotEpuisee, // Paramètre dotation (envoyé par moteur)
-        eRC_RavitaillementDotationsEffectue,
-        eRC_RavitaillementStockEffectue,
-        eRC_HumainRetourDeSante,   
+        eRC_ANouveauDisponibleApresReparation,       // Moteur                                         
+        eRC_MaterielRetourDeMaintenance,            // Moteur                                         
+        eRC_MaterielRepareSurPlace,                 // Moteur                                         
+        eRC_SectionDeployee,                                                                          
+        eRC_DemandeRavitaillement,                  // Moteur                                         
+        eRC_DemandeEvacuationSanitaire,             // Moteur                                         
+        eRC_DemandeEvacuationMateriel,              // Moteur                                         
+        eRC_AllocationConsentieBientotEpuisee,      // Moteur - Paramètre dotation
+        eRC_RavitaillementDotationsEffectue,        // Moteur                                         
+        eRC_RavitaillementStockEffectue,            // Moteur                                         
+        eRC_HumainRetourDeSante,                    // Moteur                                         
 
         /* LOG / Transport / Embarquement */
         eRC_EnCoursRavitaillement,

@@ -763,9 +763,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
 void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState )
 {
     const PHY_ComposanteState& newState = composante.GetState();
-
     assert( oldState != newState );
-
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     T_ComposanteTypeProperties& properties = composanteTypes_[ &composante.GetType() ];
 
@@ -782,6 +780,20 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
 
     GetRole< PHY_RoleAction_Loading   >().CheckConsistency();
     GetRole< PHY_RoleAction_Transport >().CheckConsistency();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::NotifyComposanteRepaired
+// Created: NLD 2005-08-18
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::NotifyComposanteRepaired()
+{
+    assert( pPion_ );
+    if( pPion_->IsDead() ) // == IsUsable()
+    {
+        pPion_->MagicMove( pPion_->GetAutomate().GetAlivePionsBarycenter() );   
+        MIL_RC::pRcANouveauDisponibleApresReparation_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+    }
 }
 
 // -----------------------------------------------------------------------------

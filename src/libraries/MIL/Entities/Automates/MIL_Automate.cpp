@@ -773,20 +773,15 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
 
         NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
         asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid;
-//        if( IsSurrendered() )
-//            asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::error_unit_surrendered;
-//        else
-        {
-            const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
-            for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-                (**itPion).MagicMove( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() + vTranslation );
 
-            pDecision_->Reset();
-            orderManager_.CancelAllOrders();
+        const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
+        for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+            (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() + vTranslation );
 
-            asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::no_error;
-        }
+        pDecision_->Reset();
+        orderManager_.CancelAllOrders();
 
+        asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::no_error;
         asnReplyMsg.Send( nCtx );
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )

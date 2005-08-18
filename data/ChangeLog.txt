@@ -30,6 +30,15 @@ Next Version - Codename ''
     - NLD - les humains évacués par l'IMEX n'étaient pas dans l'état 'dans chaine santé'
     - NLD - Mise à jour missions ALAT / CIRCU
     - NLD - Bug fix : le point 'sur lima' n'était plus ajouté + bug sur point 'avant lima'
+    - NLD - Ajout du compte rendu 'Materiel réparé sur place' envoyé par le moteur
+    - NLD - Gestion des 'pions fantômes' - 
+              * Rappel : les 'pions fantômes' de la DSRO sont les pions 'morts' (donc caché de l'interface Thales) car leurs equipements 
+                         sont tous dans la chaine maintenance. Au retour de la maintenance, ces pion réapparaissent dans l'interface Thales
+                         car il ne sont plus 'morts'. Accessoirement, ils réapparaissent très loin de leur automate, et donc ralentissent 
+                         la manoeuvre ...)
+              * Solution : lorsqu'un pion passe de l'état 'mort' à l'état 'non mort' suite à un retour de composante de la chaine maintenance, 
+                           le moteur 'magic move' ce pion à la position du barycentre des pions vivants de l'automate
+                           Et en plus, le pion émet un compte rendu de type 'A Nouveau Disponible Apres Reparation'
 
 Version 0.116 [17/08/2005] - Codename 'himaix'
     - NLD - Les pions débarqués en mouvement sont maintenant en posture 'posteReflexe' à la place de 'mouvement'

@@ -121,6 +121,8 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_obstacle_degage                              : strTitle_ = "Obstacle dégagé"; break;
         case T_MsgCR_cr_cr_section_deployee                             : strTitle_ = "Section déployée"; break;
         case T_MsgCR_cr_cr_materiel_retour_de_maintenance               : strTitle_ = "Materiel retour de maintenance"; break;
+        case T_MsgCR_cr_cr_materiel_repare_sur_place                    : strTitle_ = "Materiel réparé sur place"; break;
+        case T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation        : strTitle_ = "A nouveau disponible après réparation"; break;
         case T_MsgCR_cr_cr_reconnaissance_terminee                      : strTitle_ = "Reconnaissance terminee"; break;
         case T_MsgCR_cr_cr_reconnaissance_initiale_terminee             : strTitle_ = "Reconnaissance initiale terminee"; break;
 //        case T_MsgCR_cr_cr_declenchement_aussitot_pret                  : strTitle_ = "Déclenchement aussitôt prêt"; break;

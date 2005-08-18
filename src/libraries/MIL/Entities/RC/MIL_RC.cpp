@@ -58,31 +58,33 @@
 MIL_RC::T_RCMap MIL_RC::rcs_;
 
 // Statics
-const MIL_RC*                                   MIL_RC::pRcMissionImpossible_                 = 0;
-const MIL_RC*                                   MIL_RC::pRcEnCoursDeFranchissement_           = 0;
-const MIL_RC*                                   MIL_RC::pRcMaterielRetourDeMaintenance_       = 0;
-const MIL_RC_ObservationTirIndirect*            MIL_RC::pRcObservationTirIndirect_            = 0;
-const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillement_             = 0;
-const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationSanitaire_        = 0;
-const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationMateriel_         = 0;
-const MIL_RC*                                   MIL_RC::pRcDecesBlesse_                       = 0;
-const MIL_RC*                                   MIL_RC::pRcDecesBlessePendantTransport_       = 0;
-const MIL_RC*                                   MIL_RC::pRcDecesBlessePendantHospitalisation_ = 0;
-const MIL_RC*                                   MIL_RC::pRcTirDansZoneInterdite_              = 0;
-const MIL_RC_TirSurCampAmi*                     MIL_RC::pRcTirSurCampAmi_                     = 0;
-const MIL_RC_TireParCampAmi*                    MIL_RC::pRcTireParCampAmi_                    = 0;
-const MIL_RC_TirSurCampNeutre*                  MIL_RC::pRcTirSurCampNeutre_                  = 0;
-const MIL_RC_TireParCampNeutre*                 MIL_RC::pRcTireParCampNeutre_                 = 0;
-const MIL_RC_TirSurCivil*                       MIL_RC::pRcTirSurCivil_                       = 0;
-const MIL_RC_TireParCivil*                      MIL_RC::pRcTireParCivil_                      = 0;
-const MIL_RC*                                   MIL_RC::pRcDestructionPC_                     = 0;
-const MIL_RC_PionDecontamine*                   MIL_RC::pRcPionDecontamine_                   = 0;
-const MIL_RC_AllocationConsentieBientotEpuisee* MIL_RC::pRcAllocationConsentieBientotEpuisee_ = 0;
-const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_                   = 0;
-const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                  = 0;
-const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_   = 0;
-const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_       = 0;
-const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_               = 0;
+const MIL_RC*                                   MIL_RC::pRcMissionImpossible_                  = 0;
+const MIL_RC*                                   MIL_RC::pRcEnCoursDeFranchissement_            = 0;
+const MIL_RC*                                   MIL_RC::pRcANouveauDisponibleApresReparation_  = 0;
+const MIL_RC*                                   MIL_RC::pRcMaterielRepareSurPlace_             = 0;
+const MIL_RC*                                   MIL_RC::pRcMaterielRetourDeMaintenance_        = 0;
+const MIL_RC_ObservationTirIndirect*            MIL_RC::pRcObservationTirIndirect_             = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillement_              = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationSanitaire_         = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationMateriel_          = 0;
+const MIL_RC*                                   MIL_RC::pRcDecesBlesse_                        = 0;
+const MIL_RC*                                   MIL_RC::pRcDecesBlessePendantTransport_        = 0;
+const MIL_RC*                                   MIL_RC::pRcDecesBlessePendantHospitalisation_  = 0;
+const MIL_RC*                                   MIL_RC::pRcTirDansZoneInterdite_               = 0;
+const MIL_RC_TirSurCampAmi*                     MIL_RC::pRcTirSurCampAmi_                      = 0;
+const MIL_RC_TireParCampAmi*                    MIL_RC::pRcTireParCampAmi_                     = 0;
+const MIL_RC_TirSurCampNeutre*                  MIL_RC::pRcTirSurCampNeutre_                   = 0;
+const MIL_RC_TireParCampNeutre*                 MIL_RC::pRcTireParCampNeutre_                  = 0;
+const MIL_RC_TirSurCivil*                       MIL_RC::pRcTirSurCivil_                        = 0;
+const MIL_RC_TireParCivil*                      MIL_RC::pRcTireParCivil_                       = 0;
+const MIL_RC*                                   MIL_RC::pRcDestructionPC_                      = 0;
+const MIL_RC_PionDecontamine*                   MIL_RC::pRcPionDecontamine_                    = 0;
+const MIL_RC_AllocationConsentieBientotEpuisee* MIL_RC::pRcAllocationConsentieBientotEpuisee_  = 0;
+const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_                    = 0;
+const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                   = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_        = 0;
+const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_                = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -182,7 +184,9 @@ void MIL_RC::Initialize()
     rcs_[ eRC_ItineraireRetabli                                 ] = new MIL_RC                                     ( eRC_ItineraireRetabli                                  , T_MsgCR_cr_cr_itineraire_retabli                                      ); 
     rcs_[ eRC_RenforcementBientotFini                           ] = new MIL_RC_RenforcementBientotFini             ( eRC_RenforcementBientotFini                            , T_MsgCR_cr_cr_renforcement_bientot_fini                               ); 
     rcs_[ eRC_EnCoursDeFranchissement                           ] = new MIL_RC                                     ( eRC_EnCoursDeFranchissement                            , T_MsgCR_cr_cr_en_cours_de_franchissement                              );
+    rcs_[ eRC_ANouveauDisponibleApresReparation                 ] = new MIL_RC                                     ( eRC_ANouveauDisponibleApresReparation                  , T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation                   );
     rcs_[ eRC_MaterielRetourDeMaintenance                       ] = new MIL_RC                                     ( eRC_MaterielRetourDeMaintenance                        , T_MsgCR_cr_cr_materiel_retour_de_maintenance                          );
+    rcs_[ eRC_MaterielRepareSurPlace                            ] = new MIL_RC                                     ( eRC_MaterielRepareSurPlace                             , T_MsgCR_cr_cr_materiel_repare_sur_place                               );
     rcs_[ eRC_AttenteOrdrePoursuivre                            ] = new MIL_RC                                     ( eRC_AttenteOrdrePoursuivre                             , T_MsgCR_cr_cr_attente_ordre_poursuivre                                );
     rcs_[ eRC_AttenteOrdreDeboucher                             ] = new MIL_RC                                     ( eRC_AttenteOrdreDeboucher                              , T_MsgCR_cr_cr_attente_ordre_deboucher                                 );
     rcs_[ eRC_DroneLance                                        ] = new MIL_RC                                     ( eRC_DroneLance                                         , T_MsgCR_cr_cr_drone_lance                                             );
@@ -256,6 +260,8 @@ void MIL_RC::Initialize()
     pRcRavitaillementDotationsEffectue_   =                                            rcs_[ eRC_RavitaillementDotationsEffectue   ];
     pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
     pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
+    pRcANouveauDisponibleApresReparation_ =                                            rcs_[ eRC_ANouveauDisponibleApresReparation ];
+    pRcMaterielRepareSurPlace_            =                                            rcs_[ eRC_MaterielRepareSurPlace            ];
     pRcMaterielRetourDeMaintenance_       =                                            rcs_[ eRC_MaterielRetourDeMaintenance       ];
     pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
     pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];

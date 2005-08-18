@@ -194,9 +194,10 @@ public:
 
     //! @name Notifications (internal)
     //@{
-    void NotifyComposanteAdded  ( PHY_ComposantePion& composante );
-    void NotifyComposanteRemoved( PHY_ComposantePion& composante );
-    void NotifyComposanteChanged( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState );
+    void NotifyComposanteAdded   ( PHY_ComposantePion& composante );
+    void NotifyComposanteRemoved ( PHY_ComposantePion& composante );
+    void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState );
+    void NotifyComposanteRepaired();
 
     void NotifyHumanAdded  ( PHY_Human& human );
     void NotifyHumanRemoved( PHY_Human& human );

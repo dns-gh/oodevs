@@ -691,8 +691,9 @@ void PHY_ComposantePion::NotifyHandledByMaintenance()
 void PHY_ComposantePion::NotifyRepairedByMaintenance()
 {
     assert( pRole_ );
-    ReinitializeState( PHY_ComposanteState::undamaged_ );
     MIL_RC::pRcMaterielRetourDeMaintenance_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
+    pRole_->NotifyComposanteRepaired();    
+    ReinitializeState( PHY_ComposanteState::undamaged_ );    
 }
 
 // -----------------------------------------------------------------------------
@@ -787,7 +788,11 @@ void PHY_ComposantePion::Update()
 {
     // Réparation automatique
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nAutoRepairTimeStep_ )
-        ReinitializeState( PHY_ComposanteState::undamaged_ );
+    {                
+        MIL_RC::pRcMaterielRepareSurPlace_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
+        pRole_->NotifyComposanteRepaired();
+        ReinitializeState( PHY_ComposanteState::undamaged_ );        
+    }
 
     // Panne aléatoire
     if( pRandomBreakdownState_ && nRandomBreakdownNextTimeStep_ == MIL_AgentServer::GetWorkspace().GetCurrentTimeStep()  )
@@ -807,5 +812,3 @@ void PHY_ComposantePion::Update()
         pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
     }
 }
-
-

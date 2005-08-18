@@ -53,7 +53,6 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     std::stringstream strMsg;
     switch( asnMsg.cr.t )
     {
-    // $$$$ AGE 2005-03-14: 
     case T_MsgCR_cr_cr_zone_reconnue                                 : strMsg << "Zone reconnue"; break;
     case T_MsgCR_cr_cr_zone_decontaminee                             : strMsg << "Zone décontaminée"; break;
     case T_MsgCR_cr_cr_site_rota_reconnu                             : strMsg << "Site ROTA reconnu"; break;
@@ -74,6 +73,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     case T_MsgCR_cr_cr_trace_id                                      : strMsg << "Trace ID"; break;
     case T_MsgCR_cr_cr_obstacle_en_attente_activation                : strMsg << "Obstacle en attente d'activation"; break;
     case T_MsgCR_cr_cr_materiel_retour_de_maintenance                : strMsg << "Materiel retour de maintenance"; break;
+    case T_MsgCR_cr_cr_materiel_repare_sur_place                     : strMsg << "Materiel réparé sur place"; break;
     case T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee          : strMsg << "allocation consentie bientot épuisée"; break;
     case T_MsgCR_cr_cr_en_cours_ravitaillement                       : strMsg << "En cours de ravitaillement"; break;
     case T_MsgCR_cr_cr_ravitaillement_termine                        : strMsg << "Ravitaillement terminé"; break;

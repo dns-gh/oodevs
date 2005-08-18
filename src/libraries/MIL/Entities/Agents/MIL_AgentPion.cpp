@@ -661,25 +661,6 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( DIN::DIN_Input& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgMagicMove
-// Created: NLD 2004-09-21
-// -----------------------------------------------------------------------------
-ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
-{
-//    if( GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
-//        return EnumUnitAttrErrorCode::error_unit_surrendered;
-    if( pAutomate_->IsEmbraye() )
-        return EnumUnitAttrErrorCode::error_automate_embraye;
-
-    MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
-
-    MagicMove( vPosTmp );
-
-    return EnumUnitAttrErrorCode::no_error;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::MagicMove
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
@@ -688,7 +669,34 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
     GetRole< DEC_RolePion_Decision >().Reset();
     orderManager_.CancelAllOrders();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgMagicMove
+// Created: NLD 2005-08-18
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
+{
+    MagicMove( vPosition );
     UpdatePhysicalState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgMagicMove
+// Created: NLD 2004-09-21
+// -----------------------------------------------------------------------------
+ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
+{
+    if( pAutomate_->IsEmbraye() )
+        return EnumUnitAttrErrorCode::error_automate_embraye;
+
+    MT_Vector2D vPosTmp;
+    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
+
+    MagicMove( vPosTmp );
+    UpdatePhysicalState();
+
+    return EnumUnitAttrErrorCode::no_error;
 }
 
 // -----------------------------------------------------------------------------

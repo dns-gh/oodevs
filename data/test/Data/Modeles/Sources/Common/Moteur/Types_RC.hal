@@ -128,15 +128,17 @@ typedef enum E_TypeRC
     eRC_SituationLogDefavorable,    // Paramètre : enum E_FamilleDotation
 
     /* Log */
-    eRC_MaterielRetourDeMaintenance,
+    eRC_PionANouveauDisponibleApresReparation, // Moteur
+    eRC_MaterielRetourDeMaintenance,           // Moteur 
+    eRC_MaterielRepareSurPlace,                // Moteur
     eRC_SectionDeployee,
-    eRC_DemandeRavitaillement,
-    eRC_DemandeEvacuationSanitaire,
-    eRC_DemandeEvacuationMateriel,
-    eRC_AllocationConsentieBientotEpuisee, // Paramètre dotation (envoyé par moteur)
-    eRC_RavitaillementDotationsEffectue,
-    eRC_RavitaillementStockEffectue,
-    eRC_HumainRetourDeSante,       
+    eRC_DemandeRavitaillement,                 // Moteur 
+    eRC_DemandeEvacuationSanitaire,            // Moteur
+    eRC_DemandeEvacuationMateriel,             // Moteur
+    eRC_AllocationConsentieBientotEpuisee,     // Moteur - Paramètre dotation 
+    eRC_RavitaillementDotationsEffectue,       // Moteur 
+    eRC_RavitaillementStockEffectue,           // Moteur 
+    eRC_HumainRetourDeSante,                   // Moteur 
 
     /* LOG / Transport / Embarquement */
     eRC_EnCoursRavitaillement,

@@ -137,7 +137,8 @@ CR-SituationLogDefavorable                  ::= EnumFamilleDotation
                                             
 -- Log                                      
 CR-SectionDeployee                          ::= NULL
-
+CR-ANouveauDisponibleApresReparation        ::= NULL
+CR-MaterielRepareSurPlace                   ::= NULL
 CR-MaterielRetourDeMaintenance              ::= NULL
 CR-DemandeRavitaillement                    ::= NULL
 CR-DemandeEvacuationSanitaire               ::= NULL
@@ -349,8 +350,10 @@ MsgCR ::= SEQUENCE
         cr-situation-log-defavorable                                CR-SituationLogDefavorable,                  
                                                                                                     
         -- log                                         
-        cr-section-deployee                                         CR-SectionDeployee,                                                        
+        cr-section-deployee                                         CR-SectionDeployee,       
+        cr-a-nouveau-disponible-apres-reparation                    CR-ANouveauDisponibleApresReparation,
         cr-materiel-retour-de-maintenance                           CR-MaterielRetourDeMaintenance,
+        cr-materiel-repare-sur-place                                CR-MaterielRepareSurPlace,
         cr-demande-ravitaillement                                   CR-DemandeRavitaillement,
         cr-demande-evacuation-sanitaire                             CR-DemandeEvacuationSanitaire,
         cr-demande-evacuation-materiel                              CR-DemandeEvacuationMateriel,

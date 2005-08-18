@@ -106,7 +106,17 @@
                    moc="MOS_AgentCreationMapFilter,MOS_AgentCreationPanel,MOS_AgentKnowledgePanel,MOS_AgentListView,MOS_App,MOS_AutomateMissionInterface,MOS_ChangeDiplomacyDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_ControllerToolbar,MOS_DefaultMapEventHandler,MOS_DisconnectDialog,MOS_DynaObjectKnowledgePanel,MOS_DynaObjectListView,MOS_DynaObjectPanel,MOS_EventToolButton,MOS_EventToolbar,MOS_FragmentaryOrderInterface,MOS_GL3DWidget,MOS_GLWidget,MOS_InfoPanel,MOS_InfoPanel_ABC,MOS_Logger,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MainWindow,MOS_MapToolbar,MOS_MissionInterface_ABC,MOS_MissionPanel,MOS_ODBToolbar,MOS_ObjectCreationPanel,MOS_OptionsPanel,MOS_ParamAgent,MOS_ParamAgentKnowledge,MOS_ParamAgentKnowledgeList,MOS_ParamAgentList,MOS_ParamDynaObjectKnowledge,MOS_ParamDynaObjectKnowledgeList,MOS_ParamGDH,MOS_ParamLimaList,MOS_ParamLimits,MOS_ParamListView,MOS_ParamLocation,MOS_ParamLocationList,MOS_ParamObstacleList,MOS_ParamPath,MOS_ParamPathList,MOS_ParamPoint,MOS_ParamSlider,MOS_RecorderToolbar,MOS_ReportListView,MOS_SIMControlToolbar,MOS_ShapeEditorMapEventFilter,MOS_SurrenderDialog,MOS_UnitMissionInterface,MOS_UnitToolbar,MOS_WeatherPanel,MT_GLDLayerDialog,MT_GLDShape,MT_GLDShapeDialog,MT_GLDrawer,MT_Slider">
             <includepath path="${include.dir}/ASN"/>		            
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32"/>
-        </build-app>       
+        </build-app>   
+        
+        <build-app name="Tester" 
+                   subsystem="console"
+                   libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
+                         NEK,DIN,DIN_ConnectionService,DIN_MessageService,
+                         MT_Tools_SCIPIO,ASN,
+                         asn1per,xerces-c_2">
+            <includepath path="${include.dir}/ASN"/>		            
+            <syslibset libs="gdi32,user32,wsock32,winmm"/>
+        </build-app>               
         
         <build-app name="HLA_Manager" 
                    subsystem="gui"
