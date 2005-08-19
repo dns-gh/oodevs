@@ -21,6 +21,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+
+Version 0.117.1 [19/08/2005] - Codename 'ongneaux'
     - NLD - MaJ mission LOG
     - NLD - Nouveau RC : 'silence radar'
 
