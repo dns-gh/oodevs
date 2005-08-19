@@ -1,6 +1,6 @@
 // *******************************************************************************************
 // Pion mission types for DirectIA
-// Created : 2005-08-17 - 16:30:44
+// Created : 2005-08-19 - 11:30:56
 // *******************************************************************************************
 
 typedef struct T_Mission_Pion_ALAT_EvacuationSanitaire : T_Mission_Pion
@@ -912,7 +912,6 @@ typedef struct T_Mission_Pion_LOG_TransporterUniteChars : T_Mission_Pion
 T_ListePions unitesATransporter_;
 T_Point pointRendezVous_;
 T_Point pointDestination_;
-T_ListePoints itineraire_;
 };
 
 typedef struct T_Mission_Pion_LOG_ReconnaitreZoneContaminee : T_Mission_Pion

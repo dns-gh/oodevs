@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-08-17 - 16:30:44 $
+// $Created: APE 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.h $
 // $Author: Ape $
 // $Modtime: 13/05/04 18:03 $

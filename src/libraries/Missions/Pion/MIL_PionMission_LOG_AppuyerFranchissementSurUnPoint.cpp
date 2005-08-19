@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::nDIAPontFlottantIdx_ = 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::InitializeDIA( const M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::MIL_PionMission_LOG_Appuyer
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::~MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::~MIL_PionMission_LOG_Appuye
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::In
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( const MIL_
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( MIL_PionMi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Serialize( ASN1T_MsgPi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

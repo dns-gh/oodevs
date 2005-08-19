@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:55 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -29,7 +29,7 @@ int MIL_AutomateMission_ALAT_DonnerCoupArret::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_DonnerCoupArret constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_DonnerCoupArret::MIL_AutomateMission_ALAT_DonnerCoupArret( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -40,7 +40,7 @@ MIL_AutomateMission_ALAT_DonnerCoupArret::MIL_AutomateMission_ALAT_DonnerCoupArr
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_DonnerCoupArret destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_DonnerCoupArret::~MIL_AutomateMission_ALAT_DonnerCoupArret()
 {
@@ -71,7 +71,7 @@ void MIL_AutomateMission_ALAT_DonnerCoupArret::InitializeDIA( const MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_DonnerCoupArret::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DonnerCoupArret::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DonnerCoupArret::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DonnerCoupArret::Terminate()
 {
@@ -115,7 +115,7 @@ void MIL_AutomateMission_ALAT_DonnerCoupArret::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_DonnerCoupArret::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DonnerCoupArret::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_AutomateMission_ALAT_DonnerCoupArret::Serialize( ASN1T_MsgAutomateOrder
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_DonnerCoupArret::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DonnerCoupArret::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

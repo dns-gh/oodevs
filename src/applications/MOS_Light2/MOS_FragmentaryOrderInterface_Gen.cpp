@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-08-17 - 16:30:44 $
+// $Created: APE 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_FragmentaryOrderInterface_Gen_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 25/10/04 10:45 $
@@ -504,7 +504,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesReparations()
     ASN1T_OrderConduite_ModifierPrioritesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_reparations = &asnMission;
-    //CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
+    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesBlesses()
     ASN1T_OrderConduite_ModifierPrioritesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_blesses = &asnMission;
-    //CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
+    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
 }
 
 // -----------------------------------------------------------------------------

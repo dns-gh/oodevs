@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_ASS_EOP_AcquerirObjectifs::nDIAPositionDebarquementIdx_ = 0 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::InitializeDIA
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ASS_EOP_AcquerirObjectifs::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_ASS_EOP_AcquerirObjectifs::InitializeDIA( const MIL_PionMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASS_EOP_AcquerirObjectifs::MIL_PionMission_ASS_EOP_AcquerirObjectifs( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_ASS_EOP_AcquerirObjectifs::MIL_PionMission_ASS_EOP_AcquerirObjec
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASS_EOP_AcquerirObjectifs::~MIL_PionMission_ASS_EOP_AcquerirObjectifs()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_ASS_EOP_AcquerirObjectifs::~MIL_PionMission_ASS_EOP_AcquerirObje
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( const MIL_AutomateMi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( MIL_PionMission_ABC&
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_EOP_AcquerirObjectifs::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_ASS_EOP_AcquerirObjectifs::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_EOP_AcquerirObjectifs::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_ASS_EOP_AcquerirObjectifs::Serialize( ASN1T_MsgPionOrder& a
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_EOP_AcquerirObjectifs::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

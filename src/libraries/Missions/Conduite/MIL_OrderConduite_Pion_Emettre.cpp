@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Emettre::InitializeDIA
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Pion_Emettre::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Pion_Emettre::InitializeDIA( const MIL_OrderConduiteType&
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Emettre constructor
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_Emettre::MIL_OrderConduite_Pion_Emettre( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Pion_Emettre::MIL_OrderConduite_Pion_Emettre( const MIL_Knowle
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Emettre destructor
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_Emettre::~MIL_OrderConduite_Pion_Emettre()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Pion_Emettre::~MIL_OrderConduite_Pion_Emettre()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Emettre::Initialize
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_Emettre::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_Emettre::Initialize( const ASN1T
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Emettre::Initialize
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Pion_Emettre::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

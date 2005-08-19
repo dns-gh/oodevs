@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:34 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //*****************************************************************************
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //*****************************************************************************
 class MIL_PionMission_LOG_TransporterUniteChars: public MIL_PionMission_ABC
 {
@@ -46,13 +46,11 @@ private:
     static int nDIAUnitesATransporterIdx_;
     static int nDIAPointRendezVousIdx_;
     static int nDIAPointDestinationIdx_;
-    static int nDIAItineraireIdx_;
 
 
 private:
     MT_Vector2D pointRendezVous_;
     MT_Vector2D pointDestination_;
-    T_PointVector itineraire_;
 
 };
 

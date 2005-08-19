@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -25,7 +25,7 @@ int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAPointDestinationIdx
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_TransporterFormationBlindee::MIL_AutomateMission_LOG_TransporterFormationBlindee( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -36,7 +36,7 @@ MIL_AutomateMission_LOG_TransporterFormationBlindee::MIL_AutomateMission_LOG_Tra
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_TransporterFormationBlindee::~MIL_AutomateMission_LOG_TransporterFormationBlindee()
 {
@@ -63,7 +63,7 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::InitializeDIA( const M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterFormationBlindee::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -84,7 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterFormationBlindee::In
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterFormationBlindee::Terminate()
 {
@@ -99,7 +99,7 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -117,7 +117,7 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize( ASN1T_MsgAu
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterFormationBlindee::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

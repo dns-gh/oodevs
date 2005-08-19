@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:55 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::n
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::MIL_A
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::~MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDe
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

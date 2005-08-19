@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_Stationner::nDIAPointAttenteIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_Stationner::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_Stationner::InitializeDIA( const MIL_PionMissionType& type 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_Stationner::MIL_PionMission_Stationner( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_Stationner::MIL_PionMission_Stationner( MIL_AgentPion& pion, con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_Stationner::~MIL_PionMission_Stationner()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_Stationner::~MIL_PionMission_Stationner()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_Stationner::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Stationner::Initialize( const ASN1T_Msg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_Stationner::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_Stationner::Initialize( const MIL_AutomateMission_ABC& pare
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_Stationner::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_Stationner::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Stationner::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_Stationner::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Stationner::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_Stationner::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Stationner::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Stationner::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

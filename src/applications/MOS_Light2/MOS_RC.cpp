@@ -209,6 +209,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     case T_MsgCR_cr_cr_dispositif_disperse                                     : strMsg << "Dispositif dispersé"; break;
     case T_MsgCR_cr_cr_pion_neutralise                                         : strMsg << "Pion neutralisé"; break;
     case T_MsgCR_cr_cr_silence_radio                                           : strMsg << "Silence radio"; break;
+    case T_MsgCR_cr_cr_silence_radar                                           : strMsg << "Silence radar"; break;
     case T_MsgCR_cr_cr_tir_restreint                                           : strMsg << "Tir restreint"; break;
     case T_MsgCR_cr_cr_tir_interdit                                            : strMsg << "Tir interdit"; break;
     case T_MsgCR_cr_cr_tir_libre                                               : strMsg << "Tir libre"; break;                                                                       

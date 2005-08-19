@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_ASA_MISTRAL_DefendreZone::nDIAModeDeploiementIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::InitializeDIA
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ASA_MISTRAL_DefendreZone::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_ASA_MISTRAL_DefendreZone::InitializeDIA( const MIL_PionMiss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASA_MISTRAL_DefendreZone::MIL_PionMission_ASA_MISTRAL_DefendreZone( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_ASA_MISTRAL_DefendreZone::MIL_PionMission_ASA_MISTRAL_DefendreZo
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_ASA_MISTRAL_DefendreZone::~MIL_PionMission_ASA_MISTRAL_DefendreZone()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_ASA_MISTRAL_DefendreZone::~MIL_PionMission_ASA_MISTRAL_DefendreZ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( const MIL_AutomateMis
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( MIL_PionMission_ABC& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZone::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_ASA_MISTRAL_DefendreZone::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZone::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_ASA_MISTRAL_DefendreZone::Serialize( ASN1T_MsgPionOrder& as
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZone::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

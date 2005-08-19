@@ -230,6 +230,7 @@ CR-PlusDeCarburant                                      ::= NULL -- Moteur
 CR-DispositifDisperse                                   ::= NULL
 CR-PionNeutralise                                       ::= NULL -- Un ou plusieurs pions de l'automate a subi un tir indirect et est (sont) neutralisé(s)
 CR-SilenceRadio                                         ::= NULL
+CR-SilenceRadar                                         ::= NULL
 CR-TirRestreint                                         ::= NULL
 CR-TirInterdit                                          ::= NULL
 CR-TirLibre                                             ::= NULL
@@ -439,6 +440,7 @@ MsgCR ::= SEQUENCE
         cr-dispositif-disperse                                      CR-DispositifDisperse,
         cr-pion-neutralise                                          CR-PionNeutralise,
         cr-silence-radio                                            CR-SilenceRadio,
+        cr-silence-radar                                            CR-SilenceRadar,
         cr-tir-restreint                                            CR-TirRestreint,
         cr-tir-interdit                                             CR-TirInterdit,
         cr-tir-libre                                                CR-TirLibre,

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:55 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_PrendrePreciserMaintenirContact constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::MIL_AutomateMission_INF_PrendrePreciserMaintenirContact( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::MIL_AutomateMission_INF
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_PrendrePreciserMaintenirContact destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::~MIL_AutomateMission_INF_PrendrePreciserMaintenirContact()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::InitializeDIA( con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_PrendrePreciserMaintenirContact
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Serialize( ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

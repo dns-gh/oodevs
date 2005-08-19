@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_INF_Interdire::nDIAPreparerTerrainIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_INF_Interdire::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_INF_Interdire::InitializeDIA( const MIL_PionMissionType& ty
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_Interdire::MIL_PionMission_INF_Interdire( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_INF_Interdire::MIL_PionMission_INF_Interdire( MIL_AgentPion& pio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_Interdire::~MIL_PionMission_INF_Interdire()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_INF_Interdire::~MIL_PionMission_INF_Interdire()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Interdire::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Interdire::Initialize( const ASN1T_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_INF_Interdire::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_INF_Interdire::Initialize( const MIL_AutomateMission_ABC& p
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_INF_Interdire::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_INF_Interdire::Initialize( MIL_PionMission_ABC& missionTmp 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Interdire::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_INF_Interdire::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Interdire::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_INF_Interdire::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Interdire::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Interdire::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

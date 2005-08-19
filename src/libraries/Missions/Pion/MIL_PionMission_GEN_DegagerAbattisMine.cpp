@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_GEN_DegagerAbattisMine::nDIAObstacleIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_DegagerAbattisMine::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_GEN_DegagerAbattisMine::InitializeDIA( const MIL_PionMissio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_DegagerAbattisMine::MIL_PionMission_GEN_DegagerAbattisMine( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_GEN_DegagerAbattisMine::MIL_PionMission_GEN_DegagerAbattisMine( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_DegagerAbattisMine::~MIL_PionMission_GEN_DegagerAbattisMine()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_GEN_DegagerAbattisMine::~MIL_PionMission_GEN_DegagerAbattisMine(
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DegagerAbattisMine::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DegagerAbattisMine::Initialize( con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_DegagerAbattisMine::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_GEN_DegagerAbattisMine::Initialize( const MIL_AutomateMissi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_DegagerAbattisMine::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_GEN_DegagerAbattisMine::Initialize( MIL_PionMission_ABC& mi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DegagerAbattisMine::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_GEN_DegagerAbattisMine::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DegagerAbattisMine::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_GEN_DegagerAbattisMine::Serialize( ASN1T_MsgPionOrder& asnM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_DegagerAbattisMine::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DegagerAbattisMine::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

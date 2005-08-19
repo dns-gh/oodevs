@@ -302,6 +302,7 @@ protected:
         eRC_DispositifDisperse,
         eRC_PionNeutralise,
         eRC_SilenceRadio,
+        eRC_SilenceRadar,
         eRC_TirRestreint,
         eRC_TirInterdit,
         eRC_TirLibre,        

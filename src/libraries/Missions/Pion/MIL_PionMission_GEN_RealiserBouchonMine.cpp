@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_GEN_RealiserBouchonMine::nDIAUrgenceIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RealiserBouchonMine::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_GEN_RealiserBouchonMine::InitializeDIA( const MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserBouchonMine::MIL_PionMission_GEN_RealiserBouchonMine( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_GEN_RealiserBouchonMine::MIL_PionMission_GEN_RealiserBouchonMine
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserBouchonMine::~MIL_PionMission_GEN_RealiserBouchonMine()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_GEN_RealiserBouchonMine::~MIL_PionMission_GEN_RealiserBouchonMin
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserBouchonMine::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserBouchonMine::Initialize( co
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserBouchonMine::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_GEN_RealiserBouchonMine::Initialize( const MIL_AutomateMiss
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserBouchonMine::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_GEN_RealiserBouchonMine::Initialize( MIL_PionMission_ABC& m
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserBouchonMine::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_GEN_RealiserBouchonMine::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserBouchonMine::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_GEN_RealiserBouchonMine::Serialize( ASN1T_MsgPionOrder& asn
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserBouchonMine::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserBouchonMine::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

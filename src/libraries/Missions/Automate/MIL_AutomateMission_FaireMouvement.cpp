@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_FaireMouvement::nDIAItineraireIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_FaireMouvement constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_FaireMouvement::MIL_AutomateMission_FaireMouvement( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_FaireMouvement::MIL_AutomateMission_FaireMouvement( MIL_Auto
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_FaireMouvement destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_FaireMouvement::~MIL_AutomateMission_FaireMouvement()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_FaireMouvement::InitializeDIA( const MIL_AutomateMissio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_FaireMouvement::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_FaireMouvement::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_FaireMouvement::Initialize( const A
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_FaireMouvement::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_FaireMouvement::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_FaireMouvement::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_FaireMouvement::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_FaireMouvement::Serialize( ASN1T_MsgAutomateOrder& asnM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_FaireMouvement::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_FaireMouvement::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

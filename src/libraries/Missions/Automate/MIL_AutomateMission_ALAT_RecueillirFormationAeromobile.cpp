@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:55 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -29,7 +29,7 @@ int MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::nDIAAmbianceMissionI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::MIL_AutomateMission_ALAT_RecueillirFormationAeromobile( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -40,7 +40,7 @@ MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::MIL_AutomateMission_ALAT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::~MIL_AutomateMission_ALAT_RecueillirFormationAeromobile()
 {
@@ -71,7 +71,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::InitializeDIA( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_RecueillirFormationAeromobile:
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Terminate()
 {
@@ -115,7 +115,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Serialize( ASN1T_Ms
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

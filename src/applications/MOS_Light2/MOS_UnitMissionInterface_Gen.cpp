@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-08-17 - 16:30:44 $
+// $Created: APE 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_UnitMissionInterface_Gen_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 25/10/04 10:45 $
@@ -2591,7 +2591,6 @@ void MOS_UnitMissionInterface::CreateMission_LOG_TransporterUniteChars()
     CreateAgentList( asnMission.unites_a_transporter, "Unites a transporter" );
     CreatePoint( asnMission.point_rendez_vous, "Point rendez vous" );
     CreatePoint( asnMission.point_destination, "Point destination" );
-    CreatePath( asnMission.itineraire, "Itineraire" );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,7 +23,7 @@ int MIL_OrderConduite_ChangerPositionDebarquement::nDIAOrderConduiteChangerPosit
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ChangerPositionDebarquement::InitializeDIA
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_ChangerPositionDebarquement::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_ChangerPositionDebarquement::InitializeDIA( const MIL_Ord
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ChangerPositionDebarquement constructor
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ChangerPositionDebarquement::MIL_OrderConduite_ChangerPositionDebarquement( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_ChangerPositionDebarquement::MIL_OrderConduite_ChangerPosition
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ChangerPositionDebarquement destructor
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ChangerPositionDebarquement::~MIL_OrderConduite_ChangerPositionDebarquement()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_ChangerPositionDebarquement::~MIL_OrderConduite_ChangerPositio
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ChangerPositionDebarquement::Initialize
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_ChangerPositionDebarquement::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ChangerPositionDebarquement::Initiali
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ChangerPositionDebarquement::Initialize
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_ChangerPositionDebarquement::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

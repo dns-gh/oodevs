@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:55 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_ReconnaissanceOffensive constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_ReconnaissanceOffensive::MIL_AutomateMission_INF_ReconnaissanceOffensive( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_INF_ReconnaissanceOffensive::MIL_AutomateMission_INF_Reconna
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_ReconnaissanceOffensive destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_ReconnaissanceOffensive::~MIL_AutomateMission_INF_ReconnaissanceOffensive()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_INF_ReconnaissanceOffensive::InitializeDIA( const MIL_A
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_ReconnaissanceOffensive::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_ReconnaissanceOffensive::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_ReconnaissanceOffensive::Initia
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_ReconnaissanceOffensive::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_INF_ReconnaissanceOffensive::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_ReconnaissanceOffensive::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_ReconnaissanceOffensive::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_INF_ReconnaissanceOffensive::Serialize( ASN1T_MsgAutoma
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_ReconnaissanceOffensive::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_ReconnaissanceOffensive::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

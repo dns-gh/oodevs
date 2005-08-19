@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Brouiller::InitializeDIA
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Brouiller::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Brouiller::InitializeDIA( const MIL_OrderConduiteType& ty
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Brouiller constructor
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Brouiller::MIL_OrderConduite_Brouiller( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Brouiller::MIL_OrderConduite_Brouiller( const MIL_KnowledgeGro
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Brouiller destructor
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Brouiller::~MIL_OrderConduite_Brouiller()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Brouiller::~MIL_OrderConduite_Brouiller()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Brouiller::Initialize
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Brouiller::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Brouiller::Initialize( const ASN1T_Ms
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Brouiller::Initialize
-// Created: AGR 2005-08-17 - 16:30:44
+// Created: AGR 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Brouiller::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -28,7 +28,7 @@ int MIL_PionMission_INF_DetruireParCoupDeMain::nDIANatureDestructionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_INF_DetruireParCoupDeMain::InitializeDIA( const MIL_PionMissionType& type )
@@ -44,7 +44,7 @@ void MIL_PionMission_INF_DetruireParCoupDeMain::InitializeDIA( const MIL_PionMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_DetruireParCoupDeMain::MIL_PionMission_INF_DetruireParCoupDeMain( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -55,7 +55,7 @@ MIL_PionMission_INF_DetruireParCoupDeMain::MIL_PionMission_INF_DetruireParCoupDe
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_DetruireParCoupDeMain::~MIL_PionMission_INF_DetruireParCoupDeMain()
 {
@@ -65,7 +65,7 @@ MIL_PionMission_INF_DetruireParCoupDeMain::~MIL_PionMission_INF_DetruireParCoupD
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -89,7 +89,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( const MIL_AutomateMi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -124,7 +124,7 @@ bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( MIL_PionMission_ABC&
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_DetruireParCoupDeMain::Terminate()
 {
@@ -139,7 +139,7 @@ void MIL_PionMission_INF_DetruireParCoupDeMain::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_DetruireParCoupDeMain::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -158,7 +158,7 @@ void MIL_PionMission_INF_DetruireParCoupDeMain::Serialize( ASN1T_MsgPionOrder& a
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_DetruireParCoupDeMain::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_DetruireParCoupDeMain::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

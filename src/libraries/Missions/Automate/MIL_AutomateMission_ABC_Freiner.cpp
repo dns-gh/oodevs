@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:43 $
+// $Created: 2005-08-19 - 11:30:55 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Freiner constructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_Freiner::MIL_AutomateMission_ABC_Freiner( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_ABC_Freiner::MIL_AutomateMission_ABC_Freiner( MIL_Automate& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Freiner destructor
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_Freiner::~MIL_AutomateMission_ABC_Freiner()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_ABC_Freiner::InitializeDIA( const MIL_AutomateMissionTy
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Freiner::Initialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Freiner::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Freiner::Initialize( const ASN1
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Freiner::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_ABC_Freiner::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Freiner::Serialize
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Freiner::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_ABC_Freiner::Serialize( ASN1T_MsgAutomateOrder& asnMsg 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Freiner::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:43
+// Created: 2005-08-19 - 11:30:55
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Freiner::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

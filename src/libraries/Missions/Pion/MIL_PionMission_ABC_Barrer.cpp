@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-17 - 16:30:44 $
+// $Created: 2005-08-19 - 11:30:56 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_ABC_Barrer::nDIAPositionInstallationIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::InitializeDIA
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ABC_Barrer::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_ABC_Barrer::InitializeDIA( const MIL_PionMissionType& type 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer constructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Barrer::MIL_PionMission_ABC_Barrer( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_ABC_Barrer::MIL_PionMission_ABC_Barrer( MIL_AgentPion& pion, con
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer destructor
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Barrer::~MIL_PionMission_ABC_Barrer()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_ABC_Barrer::~MIL_PionMission_ABC_Barrer()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Barrer::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Barrer::Initialize( const ASN1T_Msg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Barrer::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_ABC_Barrer::Initialize( const MIL_AutomateMission_ABC& pare
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::Initialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Barrer::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_ABC_Barrer::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::Terminate
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Barrer::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_ABC_Barrer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::Serialize
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Barrer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_ABC_Barrer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Barrer::CleanAfterSerialization
-// Created: 2005-08-17 - 16:30:44
+// Created: 2005-08-19 - 11:30:56
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Barrer::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

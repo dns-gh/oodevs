@@ -21,6 +21,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - MaJ mission LOG
+    - NLD - Nouveau RC : 'silence radar'
 
 Version 0.117 [18/08/2005] - Codename 'ghost != fantôme (TM)'
     - NLD / SBO - Bug fix : crash dans thread pathfind quand destruction de la mission automate alors qu'un calcul est en cours
