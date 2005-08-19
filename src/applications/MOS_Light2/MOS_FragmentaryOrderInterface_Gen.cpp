@@ -504,7 +504,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesReparations()
     ASN1T_OrderConduite_ModifierPrioritesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_reparations = &asnMission;
-    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
+    //CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesBlesses()
     ASN1T_OrderConduite_ModifierPrioritesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_blesses = &asnMission;
-    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
+    //CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
 }
 
 // -----------------------------------------------------------------------------
