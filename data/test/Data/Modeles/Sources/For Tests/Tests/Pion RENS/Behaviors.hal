@@ -294,7 +294,6 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
     {
         DEC_Debug( "MIS_Pion_Test_CreateObject : on spontaneous end" );
         //DEC_StopAction( currentAction );
-        radar = 0;        
         DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_EcouteRadar, radar );
     }    
 } 

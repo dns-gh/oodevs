@@ -243,13 +243,13 @@
         <attribute name="pch" default=""/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
-            <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{pch}.cpp">
+            <condition property="@{name}.pch" value="${applications.dir}/@{input}/@{pch}.cpp">
                 <not>
                     <equals arg1="@{pch}" arg2=""/>
                 </not>
             </condition>
-            <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{name}_pch.cpp">
-                <available property="@{name}.pch" file="${libraries.dir}/@{input}/@{name}_pch.cpp"/>
+            <condition property="@{name}.pch" value="${applications.dir}/@{input}/@{name}_pch.cpp">
+                <available property="@{name}.pch" file="${applications.dir}/@{input}/@{name}_pch.cpp"/>
             </condition>
             <moc dir="${applications.dir}/@{input}" files="@{moc}"/>
             <mkdir dir="${bin.dir}/release/applications/@{name}"/>
