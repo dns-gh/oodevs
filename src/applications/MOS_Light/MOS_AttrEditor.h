@@ -47,7 +47,6 @@ class MOS_LogSupplyConsign_ListView;
 class MOS_LogisticSupplyChangeQuotasDialog;
 class MOS_LogisticSupplyPushFlowDialog;
 class MOS_LogisticSupplyRecompletionDialog;
-class MOS_SurrenderDialog;
 class QListBox;
 class QCheckBox;
 class QListView;
