@@ -223,7 +223,6 @@ typedef enum E_EtatNiveauInstallation
     eNiveauInstallation_Poste            ,
     eNiveauInstallation_PosteAmenage     ,
     eNiveauInstallation_PostePrepareGenie,
-    eNiveauInstallation_Transporte 
 };
 
 // -----------------------------------------------------------------------------

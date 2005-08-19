@@ -80,8 +80,7 @@ private:
         ePosturePosteReflexe      = 3,
         ePosturePoste             = 4,
         ePosturePosteAmenage      = 5,
-        ePosturePostePrepareGenie = 6,
-        ePostureTransporte        = 7
+        ePosturePostePrepareGenie = 6
     };
 
     enum E_PostureFlags
