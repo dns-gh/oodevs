@@ -156,7 +156,7 @@
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools_SCIPIO,ASN,GFX,
+                         MT_Tools_SCIPIO,ASN,GFX,ENT,
                          geocoord,graphics,pathfind,terrain,
                          asn1per,qtmain,qt-mt333,xerces-c_2"
                    moc="MOS_ObjectKnowledge_ListView,MOS_AgentEditor,MOS_AgentKnowledge_Editor,MOS_AgentListView,MOS_AgentMission,MOS_AgentSelector,MOS_App,MOS_AttrEditor,MOS_ChangeDiplomacyDialog,MOS_ChangeHumanFactorsDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_DisconnectDialog,MOS_DynaObject_Creator,MOS_DynaObject_Editor,MOS_DynaObject_ListView,MOS_EnemyInfo_Editor,MOS_EnemyInfo_List,MOS_EnemyInfo_Sending,MOS_GLWidget,MOS_KnowledgeList_View,MOS_LimaEditor,MOS_LimaListView,MOS_LimaMission,MOS_LimaSelector,MOS_LimitEditor,MOS_LimitListView,MOS_LimitMission,MOS_LimitSelector,MOS_LogWindow,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MTH_AgentKnowledgeList,MOS_MTH_GDH,MOS_MTH_ListLocalisation_Editor,MOS_MTH_ListLocalisation_ListView,MOS_MTH_MaintenancePriorities,MOS_MTH_MedicalPriorities,MOS_MTH_ObjectKnowledgeList,MOS_MTH_Obstacle_Editor,MOS_MTH_Obstacle_ListView,MOS_MTH_PointList_Editor,MOS_MTH_PointList_ListView,MOS_MainWindow,MOS_Meteo_Global_GUI,MOS_Meteo_ListView,MOS_MissionAction,MOS_Mission_ABC,MOS_ODBListView,MOS_ODBNumberSelector,MOS_OrderConduiteMissionDialog,MOS_PointListView,MOS_RCEditor,MOS_RCListView,MOS_SIMControl,MOS_TraceEditor,MOS_Value,MOS_traceListView,MOS_LogisticSupplyRecompletionDialog">
