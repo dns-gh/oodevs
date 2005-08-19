@@ -15,6 +15,7 @@
 // $Workfile: main.cpp $
 //
 // *****************************************************************************
+#include "Tester_pch.h"
 #include "Types.h"
 
 #include "Workspace.h"
