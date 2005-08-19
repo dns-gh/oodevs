@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_GL3DWidget.h"
 #include "MT_GLDrawer.h"
 #include "MOS_MainWindow.h"

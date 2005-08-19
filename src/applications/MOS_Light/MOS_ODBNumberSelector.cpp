@@ -23,7 +23,7 @@
 #	pragma implementation
 #endif
 
-#include "MOS_Light_Pch.h"
+#include "MOS_Light_pch.h"
 
 #include "MOS_ODBNumberSelector.h"
 #include "moc_MOS_ODBNumberSelector.cpp"

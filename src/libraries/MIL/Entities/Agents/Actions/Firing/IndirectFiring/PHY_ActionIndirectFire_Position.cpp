@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_ActionIndirectFire_Position.h"
 #include "PHY_RoleAction_IndirectFiring.h"

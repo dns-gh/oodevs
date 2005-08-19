@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
 
 #include <qpopupmenu.h>

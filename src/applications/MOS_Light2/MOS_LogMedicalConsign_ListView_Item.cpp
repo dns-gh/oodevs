@@ -9,7 +9,7 @@
 // 
 //*****************************************************************************
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_LogMedicalConsign_ListView_Item.h"
 
 #include "MOS_App.h"

@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalConsign_ABC.h"

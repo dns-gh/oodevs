@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "MIL_AgentTypePionLOGTC2.h"
 #include "MIL_AgentPionLOGTC2.h"

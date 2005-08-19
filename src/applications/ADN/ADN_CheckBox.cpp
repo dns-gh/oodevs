@@ -8,7 +8,7 @@
 // $Workfile: ADN_CheckBox.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_CheckBox.h"
 
 #include "moc_ADN_CheckBox.cpp"

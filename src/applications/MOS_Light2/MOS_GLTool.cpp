@@ -20,7 +20,7 @@
 #   pragma implementation
 #endif
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_GLTool.h"
 
 #include "MOS_GLToolColors.h"

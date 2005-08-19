@@ -8,7 +8,7 @@
 // $Workfile: ADN_Radars_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_Radars_GUI.h"
 
 #include <qlabel.h>

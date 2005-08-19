@@ -8,7 +8,7 @@
 // $Workfile: ADN_Launchers_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_Launchers_GUI.h"
 
 #include <qlabel.h>

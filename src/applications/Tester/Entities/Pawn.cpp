@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_Pch.h"
+#include "Tester_pch.h"
 #include "Entities/Pawn.h"
 #include "Entities/Automat.h"
 #include "Entities/KnowledgeGroup.h"

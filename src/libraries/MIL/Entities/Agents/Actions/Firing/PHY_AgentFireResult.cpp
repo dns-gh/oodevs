@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_AgentFireResult.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"

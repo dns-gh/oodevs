@@ -19,7 +19,7 @@
 //
 //*****************************************************************************
 
-#include "MOS_Light_Pch.h"
+#include "MOS_Light_pch.h"
 #include "MOS_ODBPionListViewItem.h"
 
 #ifndef MOS_USE_INLINE

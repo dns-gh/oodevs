@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MOS_Light_Pch.h"
+#include "MOS_Light_pch.h"
 
 #include "MOS_Mission_ABC.h"
 #include "moc_MOS_Mission_ABC.cpp"

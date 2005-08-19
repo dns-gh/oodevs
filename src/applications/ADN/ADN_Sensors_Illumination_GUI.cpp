@@ -8,7 +8,7 @@
 // $Workfile: ADN_Sensors_Illumination_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_Sensors_Illumination_GUI.h"
 
 #include "ADN_App.h"

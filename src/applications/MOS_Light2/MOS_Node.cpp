@@ -3,7 +3,7 @@
 // Created: FBD 02-09-19
 //*****************************************************************************
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_Node.h"
 
 #ifndef  MOS_USE_INLINE

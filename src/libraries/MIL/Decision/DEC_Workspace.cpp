@@ -2,7 +2,7 @@
 // Created: JVT 02-06-28
 //*****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "DEC_Workspace.h"
 

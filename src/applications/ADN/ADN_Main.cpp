@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_App.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <windows.h>

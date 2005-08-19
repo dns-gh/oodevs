@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "MIL_VirtualObjectType_ControlZone.h"
 #include "MIL_ControlZone.h"

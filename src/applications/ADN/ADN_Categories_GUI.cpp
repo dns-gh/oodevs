@@ -8,7 +8,7 @@
 // $Workfile: ADN_Categories_GUI.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_Categories_GUI.h"
 
 #include "moc_ADN_Categories_GUI.cpp"

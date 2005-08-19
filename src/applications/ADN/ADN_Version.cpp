@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "MT_Tools/MT_Version.h"
 
 const char* szADN_Version   = "ADN - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;

@@ -17,7 +17,7 @@
 // *****************************************************************************
 #include <time.h>
 
-#include "TIC_Pch.h"
+#include "TIC_pch.h"
 #include "TicManager.h"
 
 #include "Network/NetworkManager.h"

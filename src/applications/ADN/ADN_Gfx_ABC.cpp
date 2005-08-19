@@ -8,7 +8,7 @@
 // $Workfile: ADN_Gfx_ABC.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_Gfx_ABC.h"
 
 

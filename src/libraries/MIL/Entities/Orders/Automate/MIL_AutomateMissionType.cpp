@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "MIL_AutomateMissionType.h"
 #include "MIL_AutomateMission_ABC.h"

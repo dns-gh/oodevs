@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_MedicalCollectionConsign.h"
 #include "PHY_RolePion_Medical.h"

@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "MOS_Light_Pch.h"
+#include "MOS_Light_pch.h"
 #include "MOS_GraphicSetup.h"
 #include "pathfind/TerrainData.h"
 #include "graphics/GraphicData.h"

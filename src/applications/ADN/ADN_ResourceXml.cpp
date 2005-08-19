@@ -8,7 +8,7 @@
 // $Workfile: ADN_ResourceXml.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_ResourceXml.h"
 
 #include <windows.h>

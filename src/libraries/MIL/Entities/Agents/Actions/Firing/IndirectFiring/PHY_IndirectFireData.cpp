@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_IndirectFireData.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"

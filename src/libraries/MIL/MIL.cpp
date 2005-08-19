@@ -3,7 +3,7 @@
 //*****************************************************************************
 
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 std::ostream& operator << ( std::ostream& out, const MT_Vector3D& vect )
 {

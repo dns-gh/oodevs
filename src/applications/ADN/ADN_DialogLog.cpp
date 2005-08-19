@@ -8,7 +8,7 @@
 // $Workfile: ADN_DialogLog.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_DialogLog.h"
 
 #include <qlabel.h>

@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "TER_Pch.h"
+#include "TER_pch.h"
 #include "TER_Localisation.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_ScipioException.h"

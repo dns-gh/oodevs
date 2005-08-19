@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_Pch.h"
+#include "Tester_pch.h"
 #include "KnowledgeGroup.h"
 #include "Knowledges/PawnKnowledge.h"
 #include "Team.h"

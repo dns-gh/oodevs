@@ -23,7 +23,7 @@
 #    pragma implementation
 #endif
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_MOSServer.h"
 
 #ifndef MOS_USE_INLINE

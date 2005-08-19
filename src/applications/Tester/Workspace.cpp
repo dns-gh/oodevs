@@ -17,7 +17,7 @@
 // *****************************************************************************
 #include <time.h>
 
-#include "Tester_Pch.h"
+#include "Tester_pch.h"
 #include "Workspace.h"
 
 #include "Network/NetworkManager.h"

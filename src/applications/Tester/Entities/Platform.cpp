@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "TIC_Pch.h"
+#include "TIC_pch.h"
 #include "Entities/Platform.h"
 #include "Entities/Pawn.h"
 #include "Entities/Types/PawnType.h"

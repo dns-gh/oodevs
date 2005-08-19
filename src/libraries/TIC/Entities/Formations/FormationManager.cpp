@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "TIC_Pch.h"
+#include "TIC_pch.h"
 #include "Entities/Formations/FormationManager.h"
 #include "Entities/Formations/Formation_ABC.h"
 #include "Entities/Formations/Formation_Line.h"

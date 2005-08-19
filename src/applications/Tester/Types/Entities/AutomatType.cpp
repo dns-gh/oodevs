@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "Tester_Pch.h"
+#include "Tester_pch.h"
 #include "AutomatType.h"
 #include "Types/TypeManager.h"
 #include "AutomatModel.h"

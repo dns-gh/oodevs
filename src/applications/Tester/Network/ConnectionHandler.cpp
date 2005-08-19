@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "Tester_Pch.h"
+#include "Tester_pch.h"
 
 #include "ConnectionHandler.h"
 

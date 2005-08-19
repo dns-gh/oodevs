@@ -131,6 +131,9 @@
 				RelativePath="..\..\src\libraries\Missions\Missions.h">
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\Missions\Missions_pch.h">
+			</File>			
+			<File
 				RelativePath="..\..\src\libraries\Missions\Missions_pch.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">

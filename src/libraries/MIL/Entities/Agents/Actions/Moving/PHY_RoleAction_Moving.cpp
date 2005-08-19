@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_RoleAction_Moving.h"
 #include "Entities/MIL_EntityManager.h"

@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "MIL_Eboulement.h"
 #include "MIL_RealObjectType.h"

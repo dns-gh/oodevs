@@ -8,7 +8,7 @@
 // $Workfile: ADN_Categories_Data.cpp $
 //
 //*****************************************************************************
-#include "ADN_Pch.h"
+#include "ADN_pch.h"
 #include "ADN_Categories_Data.h"
 
 #include "ADN_Workspace.h"

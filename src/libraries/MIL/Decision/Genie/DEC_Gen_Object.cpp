@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 #include "DEC_Gen_Object.h"
 
 #include "Network/NET_ASN_Tools.h"

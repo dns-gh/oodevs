@@ -20,7 +20,7 @@
 #   pragma implementation
 #endif
 
-#include "Tester_Pch.h"
+#include "Tester_pch.h"
 #include "PawnModel.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
 #include "Actions/Scheduler.h"

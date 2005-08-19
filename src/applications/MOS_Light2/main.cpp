@@ -1,5 +1,5 @@
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_App.h"
 
 #include "MT_Tools/MT_Version.h"

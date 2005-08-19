@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 
-#include "MOS_Light2_Pch.h"
+#include "MOS_Light2_pch.h"
 #include "MOS_Tools.h"
 
 #include "MOS_Meteo_ABC.h"

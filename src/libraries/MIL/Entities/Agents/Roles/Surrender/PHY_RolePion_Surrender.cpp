@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "PHY_RolePion_Surrender.h"
 #include "Network/NET_ASN_Messages.h"

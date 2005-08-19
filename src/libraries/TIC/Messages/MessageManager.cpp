@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "TIC_Pch.h"
+#include "TIC_pch.h"
 #include "MessageManager.h"
 
 #include "Types.h"

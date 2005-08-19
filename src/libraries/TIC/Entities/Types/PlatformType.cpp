@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "TIC_Pch.h"
+#include "TIC_pch.h"
 
 #include "PlatformType.h"
 #include "Entities/Natures/Platform/Device.h"

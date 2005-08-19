@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_Pch.h"
+#include "MIL_pch.h"
 
 #include "MIL_Effect_DirectFire.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
