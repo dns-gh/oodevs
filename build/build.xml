@@ -90,8 +90,7 @@
     <target name="applications" description="build executables" depends="applications.SCIPIO"/>
     
     <target name="applications.SCIPIO" description="build SCIPIO executables" 
-            depends="application.SIM,application.ADN,application.MOS_Light,application.MOS_Light2,
-            application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
+            depends="application.SIM,application.ADN,application.MOS_Light,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
     
     <target name="applications.TIC" description="build TIC executables"
             depends="application.TIC_Sample,application.TIC_XmlExporter"/>
@@ -160,16 +159,7 @@
                          MT_Tools_SCIPIO,ASN,GFX,
                          geocoord,graphics,pathfind,terrain,
                          asn1per,qtmain,qt-mt333,xerces-c_2"
-                   moc="MOS_ObjectKnowledge_ListView,MOS_AgentEditor,MOS_AgentKnowledge_Editor,MOS_AgentListView,MOS_AgentMission,
-                        MOS_AgentSelector,MOS_App,MOS_AttrEditor,MOS_ChangeDiplomacyDialog,MOS_ChangeHumanFactorsDialog,MOS_ChangeLogisticLinksDialog,
-                        MOS_ConnectDialog,MOS_DisconnectDialog,MOS_DynaObject_Creator,MOS_DynaObject_Editor,MOS_DynaObject_ListView,MOS_EnemyInfo_Editor,
-                        MOS_EnemyInfo_List,MOS_EnemyInfo_Sending,MOS_GLWidget,MOS_KnowledgeList_View,MOS_LimaEditor,MOS_LimaListView,MOS_LimaMission,
-                        MOS_LimaSelector,MOS_LimitEditor,MOS_LimitListView,MOS_LimitMission,MOS_LimitSelector,MOS_LogWindow,MOS_LogisticSupplyChangeQuotasDialog,
-                        MOS_LogisticSupplyPushFlowDialog,MOS_MTH_AgentKnowledgeList,MOS_MTH_GDH,MOS_MTH_ListLocalisation_Editor,MOS_MTH_ListLocalisation_ListView,
-                        MOS_MTH_MaintenancePriorities,MOS_MTH_MedicalPriorities,MOS_MTH_ObjectKnowledgeList,MOS_MTH_Obstacle_Editor,MOS_MTH_Obstacle_ListView,
-                        MOS_MTH_PointList_Editor,MOS_MTH_PointList_ListView,MOS_MainWindow,MOS_Meteo_Global_GUI,MOS_Meteo_ListView,MOS_MissionAction,MOS_Mission_ABC,
-                        MOS_ODBListView,MOS_ODBNumberSelector,MOS_OrderConduiteMissionDialog,MOS_PointListView,MOS_RCEditor,MOS_RCListView,MOS_SIMControl,MOS_TraceEditor,
-                        MOS_Value,MOS_traceListView,MOS_LogisticSupplyRecompletionDialog">
+                   moc="MOS_ObjectKnowledge_ListView,MOS_AgentEditor,MOS_AgentKnowledge_Editor,MOS_AgentListView,MOS_AgentMission,MOS_AgentSelector,MOS_App,MOS_AttrEditor,MOS_ChangeDiplomacyDialog,MOS_ChangeHumanFactorsDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_DisconnectDialog,MOS_DynaObject_Creator,MOS_DynaObject_Editor,MOS_DynaObject_ListView,MOS_EnemyInfo_Editor,MOS_EnemyInfo_List,MOS_EnemyInfo_Sending,MOS_GLWidget,MOS_KnowledgeList_View,MOS_LimaEditor,MOS_LimaListView,MOS_LimaMission,MOS_LimaSelector,MOS_LimitEditor,MOS_LimitListView,MOS_LimitMission,MOS_LimitSelector,MOS_LogWindow,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MTH_AgentKnowledgeList,MOS_MTH_GDH,MOS_MTH_ListLocalisation_Editor,MOS_MTH_ListLocalisation_ListView,MOS_MTH_MaintenancePriorities,MOS_MTH_MedicalPriorities,MOS_MTH_ObjectKnowledgeList,MOS_MTH_Obstacle_Editor,MOS_MTH_Obstacle_ListView,MOS_MTH_PointList_Editor,MOS_MTH_PointList_ListView,MOS_MainWindow,MOS_Meteo_Global_GUI,MOS_Meteo_ListView,MOS_MissionAction,MOS_Mission_ABC,MOS_ODBListView,MOS_ODBNumberSelector,MOS_OrderConduiteMissionDialog,MOS_PointListView,MOS_RCEditor,MOS_RCListView,MOS_SIMControl,MOS_TraceEditor,MOS_Value,MOS_traceListView,MOS_LogisticSupplyRecompletionDialog">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32"/>
             <defineset define="MOS_USE_INLINE"/>
@@ -186,15 +176,7 @@
                          MT_Tools_SCIPIO,ASN,GFX,ENT,
                          geocoord,graphics,pathfind,terrain,
                          asn1per,qtmain,qt-mt333,xerces-c_2"                         
-                   moc="MOS_AgentCreationMapFilter,MOS_AgentCreationPanel,MOS_AgentKnowledgePanel,MOS_AgentListView,MOS_App,MOS_AutomateMissionInterface,
-                        MOS_ChangeDiplomacyDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_ControllerToolbar,MOS_DefaultMapEventHandler,MOS_DisconnectDialog,
-                        MOS_DynaObjectKnowledgePanel,MOS_DynaObjectListView,MOS_DynaObjectPanel,MOS_EventToolButton,MOS_EventToolbar,MOS_FragmentaryOrderInterface,MOS_GL3DWidget,
-                        MOS_GLWidget,MOS_InfoPanel,MOS_InfoPanel_ABC,MOS_Logger,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MainWindow,MOS_MapToolbar,
-                        MOS_MissionInterface_ABC,MOS_MissionPanel,MOS_ODBToolbar,MOS_ObjectCreationPanel,MOS_OptionsPanel,MOS_ParamAgent,MOS_ParamAgentKnowledge,
-                        MOS_ParamAgentKnowledgeList,MOS_ParamAgentList,MOS_ParamDynaObjectKnowledge,MOS_ParamDynaObjectKnowledgeList,MOS_ParamGDH,MOS_ParamLimaList,
-                        MOS_ParamLimits,MOS_ParamListView,MOS_ParamLocation,MOS_ParamLocationList,MOS_ParamObstacleList,MOS_ParamPath,MOS_ParamPathList,MOS_ParamPoint,
-                        MOS_ParamSlider,MOS_RecorderToolbar,MOS_ReportListView,MOS_SIMControlToolbar,MOS_ShapeEditorMapEventFilter,MOS_UnitMissionInterface,MOS_UnitToolbar,
-                        MOS_WeatherPanel,MOS_LogisticSupplyRecompletionDialog,MT_GLDLayerDialog,MT_GLDShape,MT_GLDShapeDialog,MT_GLDrawer,MT_Slider">
+                   moc="MOS_AgentCreationMapFilter,MOS_AgentCreationPanel,MOS_AgentKnowledgePanel,MOS_AgentListView,MOS_App,MOS_AutomateMissionInterface,MOS_ChangeDiplomacyDialog,MOS_ChangeLogisticLinksDialog,MOS_ConnectDialog,MOS_ControllerToolbar,MOS_DefaultMapEventHandler,MOS_DisconnectDialog,MOS_DynaObjectKnowledgePanel,MOS_DynaObjectListView,MOS_DynaObjectPanel,MOS_EventToolButton,MOS_EventToolbar,MOS_FragmentaryOrderInterface,MOS_GL3DWidget,MOS_GLWidget,MOS_InfoPanel,MOS_InfoPanel_ABC,MOS_Logger,MOS_LogisticSupplyChangeQuotasDialog,MOS_LogisticSupplyPushFlowDialog,MOS_MainWindow,MOS_MapToolbar,MOS_MissionInterface_ABC,MOS_MissionPanel,MOS_ODBToolbar,MOS_ObjectCreationPanel,MOS_OptionsPanel,MOS_ParamAgent,MOS_ParamAgentKnowledge,MOS_ParamAgentKnowledgeList,MOS_ParamAgentList,MOS_ParamDynaObjectKnowledge,MOS_ParamDynaObjectKnowledgeList,MOS_ParamGDH,MOS_ParamLimaList,MOS_ParamLimits,MOS_ParamListView,MOS_ParamLocation,MOS_ParamLocationList,MOS_ParamObstacleList,MOS_ParamPath,MOS_ParamPathList,MOS_ParamPoint,MOS_ParamSlider,MOS_RecorderToolbar,MOS_ReportListView,MOS_SIMControlToolbar,MOS_ShapeEditorMapEventFilter,MOS_UnitMissionInterface,MOS_UnitToolbar,MOS_WeatherPanel,MOS_LogisticSupplyRecompletionDialog,MT_GLDLayerDialog,MT_GLDShape,MT_GLDShapeDialog,MT_GLDrawer,MT_Slider">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm,opengl32,glu32,shell32"/>
         </build-app>
