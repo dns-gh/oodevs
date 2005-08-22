@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-19 - 11:31:08
+// Generated: 2005-08-22 - 15:06:59
 // =============================================================================
 class Mission_Pawn_INF_PrendrePreciserContact : public Mission_Pawn_ABC
 {

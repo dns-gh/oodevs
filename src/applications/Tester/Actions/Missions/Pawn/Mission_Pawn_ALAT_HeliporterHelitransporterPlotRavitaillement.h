@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-19 - 11:31:01
+// Generated: 2005-08-22 - 15:06:58
 // =============================================================================
 class Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement : public Mission_Pawn_ABC
 {

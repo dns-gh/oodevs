@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-19 - 11:31:03
+// Generated: 2005-08-22 - 15:06:58
 // =============================================================================
 class Mission_Automat_INF_PrendrePreciserMaintenirContact : public Mission_Automat_ABC
 {

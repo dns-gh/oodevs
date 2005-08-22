@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-19 - 11:31:00
+// Generated: 2005-08-22 - 15:06:57
 // =============================================================================
 class Mission_Automat_ABC_ProtegerPC : public Mission_Automat_ABC
 {
