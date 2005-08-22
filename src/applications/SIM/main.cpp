@@ -15,6 +15,8 @@
 #include <dbghelp.h>
 #include <direct.h>
 
+#include "tools/Win32/Win32Exception.h"
+
 
 ///$$$$ TEST A GICLER
 /*#include <qdatetime.h>
@@ -222,6 +224,7 @@ int main( uint nArgc, char* pArgv[] )
 {
      __try
     {
+        Win32Exception::InstallHandler();
         return Run( nArgc, pArgv );
     }
     __except( WriteMiniDump( GetExceptionInformation() ) )
