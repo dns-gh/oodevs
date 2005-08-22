@@ -55,7 +55,6 @@ public:
           unsigned int GetArity  () const;
     const std::string& GetType   () const;
     const std::string& GetSubType() const;
-    const std::string  GetSubject() const;
     const std::string& GetMessage() const;
           bool         IsReport  () const;
     //@}

@@ -81,17 +81,6 @@ const std::string& Communication::GetSubType() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: Communication::GetSubject
-// Created: SBO 2005-06-29
-//-----------------------------------------------------------------------------
-const std::string  Communication::GetSubject() const
-{
-    assert( pCom_ );
-    return pCom_->GetSubject();
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: Communication::GetMessage
 // Created: SBO 2005-07-01
 //-----------------------------------------------------------------------------
