@@ -21,6 +21,7 @@
 
 #include "Types.h"
 #include "Tools/Position.h"
+#include "Messages/ASN_Types.h"
 
 namespace TIC
 {
@@ -70,7 +71,7 @@ protected:
     T_Height    nHeight_;
 
     // state
-    int32       nOpState_;
+    ASN1T_EnumEtatOperationnel eOpState_;
 
     //@}
 };

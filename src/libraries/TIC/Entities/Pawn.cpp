@@ -259,8 +259,12 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
             ( *it )->nHeight_ = nHeight_;
     }
 
+    if( asnMsg.m.etat_operationnelPresent )
+        eOpState_ = asnMsg.etat_operationnel;
+    /*
     if( asnMsg.m.etat_opPresent )
         nOpState_ = asnMsg.etat_op;
+    */
 }
 
 //-----------------------------------------------------------------------------
