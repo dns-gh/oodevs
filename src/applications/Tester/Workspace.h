@@ -84,6 +84,7 @@ public:
     //@{
     void SetTick        ( uint32 nTick );
     void SetTickDuration( uint32 nTickDuration );
+    void SetTimeFactor  ( uint32 nFactor );
     //@}
 
 private:

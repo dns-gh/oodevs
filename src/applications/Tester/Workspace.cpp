@@ -83,7 +83,6 @@ Workspace::~Workspace()
     if( pNetworkManager_->IsConnected() )
         pNetworkManager_->Disconnect();
 	delete pNetworkManager_;
-    delete pTestSet_;
     delete pScheduler_;
     delete pTypeManager_;
     delete pPositionManager_;
@@ -156,3 +155,18 @@ void Workspace::LoadScipioConfigFile( const std::string& strScipioConfigFile )
     }
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: Workspace::SetTimeFactor
+// Created: SBO 2005-08-22
+// -----------------------------------------------------------------------------
+void Workspace::SetTimeFactor( uint32 nFactor )
+{
+    MOS_ASN_MsgCtrlChangeTimeFactor asnMsg;
+    asnMsg.GetAsnMsg() = nFactor;
+    asnMsg.Send();
+
+    std::stringstream strMsg;
+    strMsg << "Changing speed to " << nFactor;
+    MT_LOG_INFO_MSG( strMsg.str().c_str() );
+}

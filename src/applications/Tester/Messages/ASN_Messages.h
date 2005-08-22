@@ -153,6 +153,7 @@ public:                                                                         
 //=============================================================================
 
 MOS_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlClientAnnouncement, ctrl_client_announcement   )
+MOS_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlChangeTimeFactor, ctrl_change_time_factor )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( ObjectMagicAction, object_magic_action )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( UnitMagicAction  , unit_magic_action   )
 

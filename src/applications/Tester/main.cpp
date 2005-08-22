@@ -65,12 +65,15 @@ void Run()
     //TestSet_AllAutomatMissions tests;
     TestSet_AllPawnMissions tests;
 
-    Workspace ws( &tests, "127.0.0.1", 10000, "D:/Dev/scipio-svn/data/test/scipio.xml" );
+    Workspace ws( &tests, "intel2", 10000, "D:/Dev/Tests-autos/scipio.xml" );
+
+    // change time factor
+    ws.SetTimeFactor( 40 );
 
     while( bRun )
     {
         ws.Update();
-        Sleep( 0 );
+        Sleep( 10 );
     }
 
     MT_LOG_INFO_MSG( "Program terminated normally" );
