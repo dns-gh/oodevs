@@ -20,6 +20,7 @@
 #include "NET_LAU_Mgr.h"
 #include "MIL_AgentServer.h"
 #include "DIN/DIN_EventManager.h"
+#include "tools/win32/Win32Exception.h"
 
 using namespace NEK;
 using namespace DIN;
@@ -176,5 +177,33 @@ bool NET_AgentServer::MustInitUnitVisionCones() const
     return bSendUnitVisionCones_ && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() == nUnitVisionConesChangeTimeStep_ + 1;
 }
 
+// -----------------------------------------------------------------------------
+// Name: NET_AgentServer::OnUnexpected
+// Created: AGE 2005-08-22
+// -----------------------------------------------------------------------------
+void NET_AgentServer::OnUnexpected( Win32Exception& e )
+{
+    MT_LOG_ERROR_MSG( "Win32 Exception caught in network thread : " << e.what() );
+}
 
+// -----------------------------------------------------------------------------
+// Name: NET_AgentServer::OnUnexpected
+// Created: AGE 2005-08-22
+// -----------------------------------------------------------------------------
+void NET_AgentServer::OnUnexpected( std::exception& e )
+{
+    MT_LOG_ERROR_MSG( "Exception caught in network thread : " << e.what() );
+    MT_CriticalSectionLocker locker( dinEngineCriticalSection_ );
+    dinEngine_.~DIN_Engine();
+    new (&dinEngine_) DIN_Engine();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_AgentServer::OnUnexpected
+// Created: AGE 2005-08-22
+// -----------------------------------------------------------------------------
+void NET_AgentServer::OnUnexpected()
+{
+    MT_LOG_ERROR_MSG( "Unknown exception caught in network thread" );
+}
 

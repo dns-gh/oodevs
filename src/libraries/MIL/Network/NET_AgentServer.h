@@ -63,6 +63,9 @@ private:
     //! @name Thread Main Loop
     //@{
     virtual void Run();
+    virtual void OnUnexpected( Win32Exception& e );
+    virtual void OnUnexpected( std::exception& e );
+    virtual void OnUnexpected();
     //@}
 
     //! @name Operations
