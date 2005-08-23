@@ -55,7 +55,7 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_IntegerType( "Hauteur" ) );
     typeList_.push_back( new AGR_IntegerType( "Altitude" ) );
     typeList_.push_back( new AGR_IntegerType( "Vitesse" ) );
-    typeList_.push_back( new AGR_IntegerType( "Angle" ) );
+    typeList_.push_back( new AGR_IntegerType( "Angle", 0, 360 ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Itineraire", "Path", "T_PointVector", "T_ListePoints", "Path", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListItineraire", "PathList", "", "T_ListeListesPoints", "T_PathVector", true ) );
     typeList_.push_back( new AGR_KnowledgeAgentListType() );

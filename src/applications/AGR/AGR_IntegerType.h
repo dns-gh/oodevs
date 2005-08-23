@@ -38,13 +38,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              AGR_IntegerType();
-             AGR_IntegerType( const std::string& strAsnType );
+             AGR_IntegerType( const std::string& strAsnType, unsigned int nMin = 0, int nMax = std::numeric_limits< unsigned int >::max() );
     virtual ~AGR_IntegerType();
     //@}
 
     //! @name Operations
     //@{
     virtual std::string MosInitialisationCode    ( const AGR_Member& member ) const;
+    virtual std::string TesterSerializationCode  ( const AGR_Member& member ) const;
     //@}
 
 private:
@@ -57,6 +58,8 @@ private:
 private:
     //! @name Member data
     //@{
+    unsigned int nMin_;
+    unsigned int nMax_;
     //@}
 };
 

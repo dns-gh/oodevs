@@ -30,16 +30,20 @@
 // -----------------------------------------------------------------------------
 AGR_IntegerType::AGR_IntegerType()
     : AGR_Type_ABC( "xsd:integer", "Numeric", "", "float", "int", false )
+    , nMin_( std::numeric_limits< int >::min() )
+    , nMax_( std::numeric_limits< int >::max() )
 {
     //NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: AGR_IntegerType constructor
-// Created: NLD 2005-03-14
+// Created: AGE 2005-08-23
 // -----------------------------------------------------------------------------
-AGR_IntegerType::AGR_IntegerType( const std::string& strAsnType )
-    : AGR_Type_ABC( strAsnType, "Numeric", "", "float", "int", false )
+AGR_IntegerType::AGR_IntegerType( const std::string& strAsnType, unsigned int nMin /*= 0*/, int nMax /*= std::numeric_limits< unsigned int >::max()*/ )
+   : AGR_Type_ABC( strAsnType, "Numeric", "", "float", "int", false )
+   , nMin_( nMin )
+   , nMax_( nMax )
 {
 
 }
@@ -63,4 +67,16 @@ std::string AGR_IntegerType::MosInitialisationCode( const AGR_Member& member ) c
          + "    pParameters_" + member.ASNName() + "->CreateValue( asnMission." + member.ASNName() + ", \"" + member.ASNName() + "\", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );\n";
 }
 
+// -----------------------------------------------------------------------------
+// Name: AGR_IntegerType::TesterSerializationCode
+// Created: AGE 2005-08-23
+// -----------------------------------------------------------------------------
+std::string AGR_IntegerType::TesterSerializationCode( const AGR_Member& member ) const
+{
+    std::stringstream result;
+    result << "    ASN_Tools::CopyNumeric( "
+           << "pTarget_->GetTestParam_Numeric( " << nMin_ << ", " << nMax_ << " ), "
+           << "asnMission." + member.ASNName() + " );\n";
+    return result.str();
+}
 
