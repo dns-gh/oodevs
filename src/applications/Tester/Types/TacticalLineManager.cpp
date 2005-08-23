@@ -27,6 +27,10 @@
 #include "Tools/PositionManager.h"
 #include "Tools/Position.h"
 
+#include "MT/MT_IO/MT_DirectoryBrowser.h"
+#include "MT/MT_IO/MT_Dir.h"
+#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+
 using namespace TEST;
 
 // -----------------------------------------------------------------------------
@@ -36,7 +40,66 @@ using namespace TEST;
 TacticalLineManager::TacticalLineManager( const PositionManager& posMgr )
     : lines_ ()
 {
-    CreateDefaultTacticalLines( posMgr );
+    //CreateDefaultTacticalLines( posMgr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLineManager::LoadTacticalLines
+// Created: SBO 2005-08-23
+// -----------------------------------------------------------------------------
+void TacticalLineManager::LoadTacticalLines( const std::string& strConfigFile )
+{
+    std::string           strCurrentDir = MT_GetCurrentDir();
+    std::string           strDir;
+    std::string           strFile;
+
+    MT_ExtractFilePath    ( strConfigFile, strDir  );
+    MT_ExtractFileName    ( strConfigFile, strFile );
+
+    try
+    {
+        XmlInputArchive   archive;
+
+        MT_ChangeDir      ( strDir );
+        archive.Open      ( strFile );
+
+        archive.BeginList( "Lines" );
+        while( archive.NextListElement() )
+        {
+            T_PositionVector points;
+            archive.Section( "Limit" );
+            archive.BeginList( "Points" );
+            while( archive.NextListElement() )
+            {
+                archive.Section( "Point" );
+                double rX;
+                double rY;
+                archive.ReadField( "X", rX );
+                archive.ReadField( "Y", rY );
+                Position& pos = *new Position();
+                pos.SetSimCoordinates( rX, rY );
+                points.push_back( &pos );
+                archive.EndSection(); // Point
+            }
+            archive.EndList(); // Points
+            archive.EndSection(); // Limit
+            Register( *new TacticalLine_Limit( points ) );
+            for( CIT_PositionVector it = points.begin(); it != points.end(); ++it )
+                delete *it;
+            points.clear();
+        }
+        archive.EndList(); // Lines
+            
+        archive.Close     ();
+
+        MT_ChangeDir      ( strCurrentDir );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_ChangeDir    ( strCurrentDir );
+        MT_LOG_ERROR_MSG( exception.what().c_str() << "Parse error" );
+        throw;
+    }
 }
 
 // -----------------------------------------------------------------------------

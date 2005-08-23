@@ -34,6 +34,10 @@ Scheduler::Scheduler()
     : actions_            ()
     , itCurrentAction_    ( actions_.begin() )
     , nNextExecutionTick_ ( 0 )
+    , nExecutionStep_     ( 10 )
+    , nTestRun_           ( 0 )
+    , nTestSetRun_        ( 0 )
+    , nTestTotal_         ( 0 )
 {
     // NOTHING
 }
@@ -54,14 +58,22 @@ Scheduler::~Scheduler()
 bool Scheduler::Run( uint nCurrentTick /* = 0 */ )
 {
     if( itCurrentAction_ == actions_.end() )
-        return false;
+    {
+        nTestRun_ = 0;
+        ++nTestSetRun_;
+        itCurrentAction_ = actions_.begin();
+        nStartTick_ -= nCurrentTick;
+    }
 
     while( itCurrentAction_ != actions_.end()  && 
-           itCurrentAction_->first <= nCurrentTick &&
+           itCurrentAction_->first <= nStartTick_ + nCurrentTick &&
            itCurrentAction_->second->IsReady() )
     {
+        MT_LOG_INFO_MSG( "[" << nTestSetRun_ << "][" << nTestRun_ << "/" << nTestTotal_ << "] Starting action: " 
+                             << itCurrentAction_->second->GetName() );
         itCurrentAction_->second->Run();
         ++itCurrentAction_;
+        ++nTestRun_;
     }
     return true;
 }
@@ -74,9 +86,9 @@ void Scheduler::AddAction( Action_ABC& action, int nExecutionTick /* = -1 */ )
 {
     if( nExecutionTick == -1 )
         nExecutionTick = GetNextExecutionTick();
-    bool bOut = actions_.insert( std::make_pair( nExecutionTick, &action ) ).second;
-    assert( bOut );
+    actions_.insert( std::make_pair( nExecutionTick, &action ) );
     itCurrentAction_ = actions_.begin();
+    ++nTestTotal_;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +98,33 @@ void Scheduler::AddAction( Action_ABC& action, int nExecutionTick /* = -1 */ )
 uint Scheduler::GetNextExecutionTick()
 {
     uint nExecutionTick = nNextExecutionTick_;
-    nNextExecutionTick_ += 10;
+    nNextExecutionTick_ += nExecutionStep_;
     return nExecutionTick;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Scheduler::SetStartTick
+// Created: SBO 2005-08-22
+// -----------------------------------------------------------------------------
+void Scheduler::SetStartTick( uint nTick )
+{
+    nStartTick_ = nTick;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Scheduler::ResetExecutionTick
+// Created: SBO 2005-08-22
+// -----------------------------------------------------------------------------
+void Scheduler::ResetExecutionTick()
+{
+    nNextExecutionTick_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Scheduler::SetExecutionStep
+// Created: SBO 2005-08-22
+// -----------------------------------------------------------------------------
+void Scheduler::SetExecutionStep( uint nStep )
+{
+    nExecutionStep_ = nStep;
 }

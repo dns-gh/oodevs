@@ -69,8 +69,8 @@ public:
 
     //! @name Scheduling
     //@{
-    void ScheduleAllPawnMissions   ( Scheduler& scheduler ) const;
-    void ScheduleAllAutomatMissions( Scheduler& scheduler ) const;
+    void ScheduleAllPawnMissions   ( Scheduler& scheduler, bool bParallel = false ) const;
+    void ScheduleAllAutomatMissions( Scheduler& scheduler, bool bParallel = false ) const;
     //@}
 
     //! @name Test parameters

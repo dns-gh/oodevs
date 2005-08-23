@@ -48,10 +48,11 @@ class Workspace
 public:
 	//! @name Constructors/Destructor
     //@{
-     Workspace( TestSet_ABC*       pTestSet_,
+     Workspace( TestSet_ABC&       testSet_,
                 const std::string& strServer, 
                 uint               nServerPort, 
-                const std::string& strScipioConfigFile );
+                const std::string& strScipioConfigFile,
+                uint               nTimeFactor );
     ~Workspace();
     //@}
 
@@ -84,7 +85,7 @@ public:
     //@{
     void SetTick        ( uint32 nTick );
     void SetTickDuration( uint32 nTickDuration );
-    void SetTimeFactor  ( uint32 nFactor );
+    void SetTimeFactor  ( uint32 nFactor = 0 );
     //@}
 
 private:
@@ -101,6 +102,7 @@ private:
     uint32              nCurrentSimTime_;
     uint32              nTick_;
     uint32              nTickDuration_;
+    uint32              nTimeFactor_;
 
     // Managers
 	NetworkManager*      pNetworkManager_;

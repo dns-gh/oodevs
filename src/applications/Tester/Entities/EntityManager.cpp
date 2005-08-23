@@ -199,20 +199,28 @@ void EntityManager::Unregister( Object& object )
 // Name: EntityManager::ScheduleAllPawnMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void EntityManager::ScheduleAllPawnMissions( Scheduler& scheduler ) const
+void EntityManager::ScheduleAllPawnMissions( Scheduler& scheduler, bool bParallel /* = false */ ) const
 {
     for( CIT_PawnMap it = pawns_.begin(); it != pawns_.end(); ++it )
+    {
+        if( bParallel )
+            scheduler.ResetExecutionTick();
         it->second->ScheduleAllMissions( scheduler );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityManager::ScheduleAllAutomatMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler ) const
+void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler, bool bParallel /* = false */ ) const
 {
     for( CIT_AutomatMap it = automats_.begin(); it != automats_.end(); ++it )
+    {
+        if( bParallel )
+            scheduler.ResetExecutionTick();
         it->second->ScheduleAllMissions( scheduler );
+    }
 }
 
 // -----------------------------------------------------------------------------

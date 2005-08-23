@@ -195,6 +195,8 @@ private:
     //@{
     DIN::DIN_MessageServiceUserCbk< MessageManager >*  pMessageService_;
     Workspace&                                         workspace_;
+
+    bool bIsInitialized_; //$$$ ugly bDummy to handle MOS_Light connection after start and avoid re-lauching missions 
 	
     // ASN
     ASN1OCTET        aASNEncodeBuffer_[100000];

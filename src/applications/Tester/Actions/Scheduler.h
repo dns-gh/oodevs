@@ -49,8 +49,15 @@ public:
 
     //! @name Operations
     //@{
-    bool     Run      ( uint nCurrentTick = 0 );
-    void     AddAction( Action_ABC& action, int nExecutionTick = -1 );
+    bool     Run               ( uint nCurrentTick = 0 );
+    void     AddAction         ( Action_ABC& action, int nExecutionTick = -1 );
+    void     ResetExecutionTick();
+    //@}
+
+    //! @name Modifiers
+    //@{
+    void     SetStartTick      ( uint nTick );
+    void     SetExecutionStep  ( uint nStep );
     //@}
 
 private:
@@ -68,8 +75,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, Action_ABC* > T_ActionMap;
-    typedef T_ActionMap::iterator         IT_ActionMap;
+    typedef std::multimap< uint, Action_ABC* > T_ActionMap;
+    typedef T_ActionMap::iterator              IT_ActionMap;
     //@}
 
 private:
@@ -78,6 +85,13 @@ private:
     T_ActionMap  actions_;
     IT_ActionMap itCurrentAction_;
     uint         nNextExecutionTick_;
+    uint         nStartTick_;
+    uint         nExecutionStep_;
+
+    // test statistics
+    uint         nTestRun_;
+    uint         nTestSetRun_;
+    uint         nTestTotal_;
     //@}
 };
 

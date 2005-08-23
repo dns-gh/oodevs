@@ -42,20 +42,22 @@ Workspace* Workspace::pWorkspace_;
 // Name: Workspace::Workspace
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Workspace::Workspace( TestSet_ABC*       pTestSet,
+Workspace::Workspace( TestSet_ABC&       testSet,
                       const std::string& strServer, 
                       uint               nServerPort, 
-                      const std::string& strScipioConfigFile )
+                      const std::string& strScipioConfigFile,
+                      uint               nTimeFactor )
     : pNetworkManager_  ( 0 )
     , pEntityManager_   ( 0 )
     , pTypeManager_     ( 0 )
     , pPositionManager_ ( 0 )
     , pTacticalLineManager_ ( 0 )
     , pScheduler_       ( 0 )
-    , pTestSet_         ( pTestSet )
+    , pTestSet_         ( &testSet )
     , nTick_            ( 0 )
     , nTickDuration_    ( 0 )
     , nCurrentSimTime_  ( 0 )
+    , nTimeFactor_      ( nTimeFactor )
 {
     // scheduler
     pScheduler_ = new Scheduler();
@@ -63,6 +65,10 @@ Workspace::Workspace( TestSet_ABC*       pTestSet,
     Mission_Pawn_Type::Initialize();
     Mission_Automat_Type::Initialize();
     LoadScipioConfigFile( strScipioConfigFile );
+
+    std::string strTacticalLineFile;
+    MT_ExtractFilePath( strScipioConfigFile, strTacticalLineFile  );
+    pTacticalLineManager_->LoadTacticalLines( strTacticalLineFile + "TacticalLines.xml" );
 
     // network manager
     pNetworkManager_ = new NetworkManager( *this, strServer, nServerPort );
@@ -160,8 +166,11 @@ void Workspace::LoadScipioConfigFile( const std::string& strScipioConfigFile )
 // Name: Workspace::SetTimeFactor
 // Created: SBO 2005-08-22
 // -----------------------------------------------------------------------------
-void Workspace::SetTimeFactor( uint32 nFactor )
+void Workspace::SetTimeFactor( uint32 nFactor /* = 0 */ )
 {
+    if( nFactor == 0 )
+        nFactor = nTimeFactor_;
+
     MOS_ASN_MsgCtrlChangeTimeFactor asnMsg;
     asnMsg.GetAsnMsg() = nFactor;
     asnMsg.Send();

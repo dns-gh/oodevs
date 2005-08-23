@@ -53,10 +53,11 @@ public:
 
     //! @name Operations
     //@{
-    void              Register           ( TacticalLine_ABC& line );
-    void              UnRegister         ( TacticalLine_ABC& line );
-    TacticalLine_ABC* Find               ( T_EntityId        nId  );
-    T_EntityId        GetLimitIdExcluding( T_EntityId        nId  );
+    void              LoadTacticalLines  ( const std::string& strConfigFile );
+    void              Register           ( TacticalLine_ABC&  line          );
+    void              UnRegister         ( TacticalLine_ABC&  line          );
+    TacticalLine_ABC* Find               ( T_EntityId         nId           );
+    T_EntityId        GetLimitIdExcluding( T_EntityId         nId           );
     void              UpdateToSim        ();
     //@}
 

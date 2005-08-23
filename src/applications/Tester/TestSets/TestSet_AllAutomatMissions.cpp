@@ -56,5 +56,6 @@ TestSet_AllAutomatMissions::~TestSet_AllAutomatMissions()
 void TestSet_AllAutomatMissions::Load( Workspace& workspace )
 {
     Scheduler& scheduler = workspace.GetScheduler();
-    workspace.GetEntityManager().ScheduleAllAutomatMissions( scheduler );
+    // launch all missions in parallel
+    workspace.GetEntityManager().ScheduleAllAutomatMissions( scheduler, true );
 }

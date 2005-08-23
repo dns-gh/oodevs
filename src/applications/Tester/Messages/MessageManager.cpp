@@ -50,7 +50,8 @@ using namespace NEK;
 // Created: SBO 2005-05-09
 //-----------------------------------------------------------------------------
 MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkManager )
-    : workspace_ ( workspace )
+    : workspace_      ( workspace )
+    , bIsInitialized_ ( false )
 {
     DIN_ConnectorGuest connector( eConnector_SIM_TEST );
     pMessageService_ = new DIN_MessageServiceUserCbk< MessageManager >( 
@@ -439,12 +440,19 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateBegin()
 void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
     MT_LOG_INFO_MSG( "End current state..." );
+    // change time factor
+    workspace_.SetTimeFactor();
     // create default limits
     workspace_.GetTacticalLineManager().UpdateToSim();
-    // load tests
-    workspace_.GetTestSet().Load( workspace_ );
-    // run scheduler
-    workspace_.GetScheduler().Run( workspace_.GetTick() );
+    if( !bIsInitialized_ )
+    {
+        // load tests
+        workspace_.GetTestSet().Load( workspace_ );
+        // run scheduler
+        workspace_.GetScheduler().SetStartTick( workspace_.GetTick() );
+        workspace_.GetScheduler().Run( workspace_.GetTick() );
+        bIsInitialized_ = true;
+    }
 }
 
 //-----------------------------------------------------------------------------
