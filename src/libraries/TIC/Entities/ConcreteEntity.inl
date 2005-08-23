@@ -76,6 +76,7 @@ int32 ConcreteEntity::GetState() const
     default:
         assert( false );
     }
+    return 0;
 }
 
 } // end namespace TIC
