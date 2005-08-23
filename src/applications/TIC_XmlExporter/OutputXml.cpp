@@ -354,7 +354,6 @@ void OutputXml::OutputCommunication( const Communication& communication )
     archive_.WriteAttribute( "type"       , communication.GetType   () );
     archive_.WriteAttribute( "soustype"   , communication.GetSubType() );
     archive_.WriteAttribute( "nombre"     , communication.GetArity  () );
-    //archive_.WriteAttribute( "sujet"      , communication.GetSubject() );
     if( communication.IsReport() )
         archive_.WriteAttribute( "message", communication.GetMessage() );
     archive_.EndSection();
