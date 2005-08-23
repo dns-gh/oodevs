@@ -30,8 +30,8 @@
 // -----------------------------------------------------------------------------
 AGR_IntegerType::AGR_IntegerType()
     : AGR_Type_ABC( "xsd:integer", "Numeric", "", "float", "int", false )
-    , nMin_( std::numeric_limits< int >::min() )
-    , nMax_( std::numeric_limits< int >::max() )
+    , nMin_( 0 )
+    , nMax_( std::numeric_limits< unsigned int >::max() )
 {
     //NOTHING
 }
