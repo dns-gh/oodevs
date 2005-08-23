@@ -77,11 +77,11 @@ void ProcessCommandLine( int nArgc, char** ppArgv )
         else if( !stricmp( ppArgv[ i ], "-conffile" ) && i + 1 <= nArgc )
             strConfigFile = ppArgv[ ++i ];
         else if( !stricmp( ppArgv[ i ], "-timefactor" ) && i + 1 <= nArgc )
-            nTimeFactor = atoi( ppArgv[ i ] );
+            nTimeFactor = atoi( ppArgv[ ++i ] );
         else if( !stricmp( ppArgv[ i ], "-testpawns" ) )
             bTestAutomat = false;
         else if( !stricmp( ppArgv[ i ], "-period" ) && i + 1 <= nArgc )
-            nPeriod = atoi( ppArgv[ i ] );
+            nPeriod = atoi( ppArgv[ ++i ] );
         else
             MT_LOG_WARNING_MSG( "invalid parameter" << ppArgv[ i ] );
     }
@@ -108,9 +108,7 @@ void Run()
     }
 
     MT_LOG_INFO_MSG( "Starting tests on '" << strServer << ":" << nPort << "' with time factor '" << nTimeFactor << "'" );
-    Workspace ws( *pTestSet, strServer, nPort, strConfigFile, nTimeFactor );
-    // set execution every nPeriod tick
-    ws.GetScheduler().SetExecutionStep( nPeriod );
+    Workspace ws( *pTestSet, strServer, nPort, strConfigFile, nTimeFactor, nPeriod );
 
     while( bRun )
     {

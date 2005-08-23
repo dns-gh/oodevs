@@ -52,7 +52,8 @@ public:
                 const std::string& strServer, 
                 uint               nServerPort, 
                 const std::string& strScipioConfigFile,
-                uint               nTimeFactor );
+                uint               nTimeFactor, 
+                uint               nPeriod );
     ~Workspace();
     //@}
 

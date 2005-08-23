@@ -66,7 +66,7 @@ void Mission_Pawn_Test_Fire::Serialize()
     ASN_Tools::CopyPoint( point_, asnMission.point );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.tir_indirect );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 5 ), asnMission.munitions );
-    ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.nb_obus );
+    ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric( 0, 4294967295 ), asnMission.nb_obus );
     ASN_Tools::CopyAgentKnowledgeList( targets_, asnMission.targets );
 
     delete &point_;

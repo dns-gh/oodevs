@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-22 - 15:06:58
+// Generated: 2005-08-23 - 19:03:03
 // =============================================================================
 class Mission_Pawn_ASS_AcquerirLanceursEni : public Mission_Pawn_ABC
 {

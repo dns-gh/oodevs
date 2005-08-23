@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-22 - 15:06:59
+// Generated: 2005-08-23 - 19:03:04
 // =============================================================================
 class Mission_Pawn_Test_ChangePosture : public Mission_Pawn_ABC
 {

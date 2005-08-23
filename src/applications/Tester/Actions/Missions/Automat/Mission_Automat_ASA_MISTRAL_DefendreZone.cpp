@@ -64,7 +64,7 @@ void Mission_Automat_ASA_MISTRAL_DefendreZone::Serialize()
 
     ASN_Tools::CopyPolygon( zone_, asnMission.zone );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 5 ), asnMission.mode_deploiement );
-    ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.angle );
+    ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric( 0, 360 ), asnMission.angle );
 
     delete &zone_;
 

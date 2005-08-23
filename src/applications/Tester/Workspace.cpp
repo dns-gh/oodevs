@@ -46,7 +46,8 @@ Workspace::Workspace( TestSet_ABC&       testSet,
                       const std::string& strServer, 
                       uint               nServerPort, 
                       const std::string& strScipioConfigFile,
-                      uint               nTimeFactor )
+                      uint               nTimeFactor,
+                      uint               nPeriod )
     : pNetworkManager_  ( 0 )
     , pEntityManager_   ( 0 )
     , pTypeManager_     ( 0 )
@@ -61,6 +62,7 @@ Workspace::Workspace( TestSet_ABC&       testSet,
 {
     // scheduler
     pScheduler_ = new Scheduler();
+    pScheduler_->SetExecutionStep( nPeriod );
 
     Mission_Pawn_Type::Initialize();
     Mission_Automat_Type::Initialize();
