@@ -26,7 +26,8 @@ Next Version - Codename ''
                 [Pion, Automate] B A::DEC_ConnaissanceAgent_EstEnVol                   ( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
                 [Pion]           B A::DEC_ConnaissanceAgent_EstDansDirection           ( U /*T_ConnaissanceAgent*/, U /*T_Direction*/ );
                 [Pion]           B A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone ( U /*T_ConnaissanceAgent*/  U /*T_Direction*/, R /*angle en degré*/ );
-                
+    - JVT - Bug fix : Manquait un BOOST_CLASS_EXPORT_GUID pour la classe MIL_RealObject_ABC (référencé directement dans PHY_RolePion_Communications::T_JammerSet)
+
 Version 0.117.1 [19/08/2005] - Codename 'ongneaux'
     - NLD - MaJ mission LOG
     - NLD - Nouveau RC : 'silence radar'
