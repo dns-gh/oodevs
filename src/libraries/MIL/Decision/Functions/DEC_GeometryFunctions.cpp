@@ -72,31 +72,6 @@ void DEC_GeometryFunctions::ComputeDestPointForPion( DIA_Call_ABC& call, MIL_Aut
     ComputeDestPoint( call, pPion->GetPion() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::IsPionInSameDirectionAsPoint
-// Created: JVT 2004-12-06
-// -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::IsPionInSameDirectionAsPoint( DIA_Call_ABC& call, const MIL_AgentPion& caller )
-{
-    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
-
-    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
-
-    if( !pKnowledge )
-    {
-        call.GetResult().SetValue( false );
-        return;
-    }
-
-    MT_Vector2D* pTarget = call.GetParameter( 1 ).ToUserPtr( pTarget );
-    assert( pTarget );
-
-    const MT_Vector2D& vOrigin = caller.GetRole< PHY_RolePion_Location >().GetPosition();
-
-    call.GetResult().SetValue( ( *pTarget - vOrigin ) * ( pKnowledge->GetPosition() - vOrigin ) > 0. );
-}
-
-
 // =============================================================================
 // CREATION / DESTRUCTION
 // =============================================================================

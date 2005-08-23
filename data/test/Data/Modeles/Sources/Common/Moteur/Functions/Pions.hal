@@ -171,6 +171,7 @@ signatures
     R                                A::DEC_ConnaissanceAgent_Vitesse                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
     R                                A::DEC_ConnaissanceAgent_EtatOps                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
     U /*T_Point*/                    A::DEC_ConnaissanceAgent_Position                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceAgent_EstEnVol                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     I /*E_NatureAtlasType*/          A::DEC_ConnaissanceAgent_NatureAtlas                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     I /*E_NatureWeaponType*/         A::DEC_ConnaissanceAgent_NatureArme                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     I /*E_NiveauPerception*/         A::DEC_ConnaissanceAgent_NiveauPerceptionMax            ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)
@@ -190,6 +191,8 @@ signatures
     B                                A::DEC_ConnaissanteAgent_EstRefugiePrisEnCompte         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     V                                A::DEC_ConnaissanceAgent_Verrouiller                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     V                                A::DEC_ConnaissanceAgent_Deverrouiller                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                A::DEC_ConnaissanceAgent_EstDansDirection               ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/ );
+    B                                A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone     ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/, R /*angle en degré*/ );
 
     // Interceptions
     U /*T_Point*/                    A::DEC_Agent_PositionInterception    ( U /*T_ConnaissanceAgent*/ );                                                            // Attention, le résultat peut être nul
@@ -251,11 +254,9 @@ signatures
     U /*T_Point*/                    A::DEC_Geometrie_CalculeEntreeFuseauLaPlusProche          ();           
     U /*T_Point*/                    A::DEC_Geometrie_CalculePointArrivee                      ();
     U /*T_Point*/                    A::DEC_Geometrie_CalculePointDepart                       ();    
-    B                                A::DEC_Geometrie_ConnaissanceDansDirectionPoint           ( U /*T_ConnaissanceAgent*/, U /*T_Point*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculeBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
     A                                A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
     A                                A::DEC_Geometrie_PionDerriere                             ( S /*T_ListePions*/, U /*T_Direction*/ );
-
 
     // Etat
     V                                A::DEC_Elongation( R /*facteur d'élongation du pion*/ );

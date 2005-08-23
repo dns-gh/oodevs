@@ -404,6 +404,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetEtatOps                                , "DEC_ConnaissanceAgent_EtatOps"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetSpeed       < MIL_AgentPion >          , "DEC_ConnaissanceAgent_Vitesse"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetPosition    < MIL_AgentPion >          , "DEC_ConnaissanceAgent_Position"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsFlying       < MIL_AgentPion >          , "DEC_ConnaissanceAgent_EstEnVol"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetNatureAtlas                            , "DEC_ConnaissanceAgent_NatureAtlas"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetNatureWeapon                           , "DEC_ConnaissanceAgent_NatureArme"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup    , "DEC_ConnaissanceAgent_NiveauPerceptionMax"             );
@@ -423,6 +424,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsMilita        < MIL_AgentPion >         , "DEC_ConnaissanceAgent_EstMilice"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Lock            < MIL_AgentPion >         , "DEC_ConnaissanceAgent_Verrouiller"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Unlock          < MIL_AgentPion >         , "DEC_ConnaissanceAgent_Deverrouiller"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsInSameDirection                         , "DEC_ConnaissanceAgent_EstDansDirection"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsInDetectionCone                         , "DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone"      );
 
     // Object knowledges accessors
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                 < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstValide"                         );
@@ -493,7 +496,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPoint                       < MIL_AgentPion >, "DEC_Geometrie_CalculePointArrivee"                       ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeStartPoint                      < MIL_AgentPion >, "DEC_Geometrie_CalculePointDepart"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::IsPointInFuseau                        < MIL_AgentPion >, "DEC_Geometrie_EstPointDansFuseau"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::IsPionInSameDirectionAsPoint                            , "DEC_Geometrie_ConnaissanceDansDirectionPoint"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter                         , "DEC_Geometrie_CalculeBarycentreListeConnaissancesAgents" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                   < MIL_AgentPion >, "DEC_Geometrie_PionDevant"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_AgentPion >, "DEC_Geometrie_PionDerriere"                              );    

@@ -87,7 +87,6 @@ public:
                            static void ComputeLocalisationPointsForPionsInFuseau( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     template< typename T > static void ComputeNearestLocalisationPointInFuseau  ( DIA_Call_ABC& call, const T& caller                    );
     template< typename T > static void IsPointInFuseau                          ( DIA_Call_ABC& call, const T& caller                    );
-                           static void IsPionInSameDirectionAsPoint             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeKnowledgeAgentBarycenter          ( DIA_Call_ABC& call, const MIL_AgentPion& caller        );
     template< typename T > static void ComputeFrontestAgent                     ( DIA_Call_ABC& call, const T& callerAgent );
     template< typename T > static void ComputeBackestAgent                      ( DIA_Call_ABC& call, const T& callerAgent );

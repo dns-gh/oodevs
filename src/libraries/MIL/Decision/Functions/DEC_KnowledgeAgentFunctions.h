@@ -35,11 +35,14 @@ public:
     static void IsAnEnemy                             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsMoving                              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivingAgent                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsInSameDirection                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void IsInDetectionCone                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
     template< typename T > static void GetDangerosityOnPion     ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetDangerosityOnKnowledge( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetSpeed                 ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetPosition              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsFlying                 ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsKnowledgeValid         ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsSurrendered            ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsPrisoner               ( DIA_Call_ABC& call, const T& caller );

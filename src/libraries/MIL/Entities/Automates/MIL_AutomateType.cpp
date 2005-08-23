@@ -370,6 +370,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Lock                             < MIL_Automate >, "DEC_ConnaissanceAgent_Verrouiller"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::Unlock                           < MIL_Automate >, "DEC_ConnaissanceAgent_Deverrouiller"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetPosition                      < MIL_Automate >, "DEC_ConnaissanceAgent_Position"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsFlying                         < MIL_Automate >, "DEC_ConnaissanceAgent_EstEnVol"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetSpeed                         < MIL_Automate >, "DEC_ConnaissanceAgent_Vitesse"                           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsKnowledgeValid                 < MIL_Automate >, "DEC_ConnaissanceAgent_EstValide"                         );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsRefugee                        < MIL_Automate >, "DEC_ConnaissanceAgent_EstRefugie"                        );

@@ -15,10 +15,16 @@
 #include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/MIL_Army.h"
 
 #include "Entities/Agents/Units/Categories/PHY_NatureWeapon.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
+
+#include "Decision/DEC_Tools.h"
+
+#include "MT_Tools/MT_Sector.h"
 
 // =============================================================================
 // FUNCTIONS
@@ -111,13 +117,67 @@ void DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( DIA_Ca
     call.GetParameter( 1 ).SetValue( eQueryValid );
     call.GetResult().SetValue( (int)pKnowledge->GetMaxPerceptionLevel().GetID() );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsInSameDirection
+// Created: JVT 2004-12-06
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::IsInSameDirection( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 1 ) ) );
+
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+
+    if ( !pKnowledge )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+
+    MT_Vector2D* pDirection = call.GetParameter( 1 ).ToUserPtr( pDirection );
+    assert( pDirection );
+
+    const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RolePion_Location >().GetPosition();
+
+    call.GetResult().SetValue( *pDirection * ( pKnowledge->GetPosition() - vOrigin ) > 0. );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsInDetectionCone
+// Created: JVT 2005-08-23
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::IsInDetectionCone( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeDirection( call.GetParameter( 1 ) ) );
+
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    
+    if ( !pKnowledge )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+        
+    const MT_Vector2D& vOrigin    = callerAgent.GetRole< PHY_RolePion_Location >().GetPosition();
+          MT_Vector2D* pDirection = call.GetParameter( 1 ).ToUserPtr( pDirection );
+    const MT_Float     rAngle     = call.GetParameter( 2 ).ToFloat() * MT_PI / 180.;
+    const MT_Float     rDist      = callerAgent.GetRole< PHY_RolePion_Perceiver >().GetMaxAgentPerceptionDistance();
+    
+    assert( pDirection );
+
+    call.GetResult().SetValue( MT_Sector( vOrigin, *pDirection, rAngle ).IsInCone( pKnowledge->GetPosition(), rDist ) );
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivedByAgent
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
@@ -135,7 +195,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const 
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
@@ -152,7 +212,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup( DIA_Call_ABC& cal
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
@@ -169,7 +229,7 @@ void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_Agent
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeAgentFunctions::IsMoving( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
@@ -188,7 +248,7 @@ void DEC_KnowledgeAgentFunctions::IsMoving( DIA_Call_ABC& call, const MIL_AgentP
 void DEC_KnowledgeAgentFunctions::IsPerceivingAgent( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     //$$$ Fonction BOF : trop de triche ...
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    const DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );

@@ -48,6 +48,25 @@ void DEC_KnowledgeAgentFunctions::GetPosition( DIA_Call_ABC& call, const T& call
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsFlying
+// Created: JVT 2005-08-23
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_KnowledgeAgentFunctions::IsFlying( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    
+    if ( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        return;
+    }
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( pKnowledge->GetAltitude() > MIL_Tools::GetAltitude( pKnowledge->GetPosition() ) );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsKnowledgeValid
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
