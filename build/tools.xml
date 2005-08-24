@@ -115,6 +115,7 @@
         <attribute name="configuration"/>
         <attribute name="excludes" default=""/>
         <attribute name="pch" default=""/>
+        <attribute name="pchexcludes" default=""/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
             <condition property="@{name}.pch" value="${libraries.dir}/@{input}/@{pch}.cpp">
@@ -136,7 +137,9 @@
                 <compilerarg value="/W4"/>
                 <cc-elements/>
                 <compiler name="${compiler}">
-                    <precompile prototype="${@{name}.pch}" if="@{name}.pch"/>
+                    <precompile prototype="${@{name}.pch}" if="@{name}.pch">
+                        <except dir="${libraries.dir}/@{input}" includes="@{pchexcludes}"/>
+                    </precompile>
                 </compiler>
             </cc>
             <copy todir="${lib.dir}/vc71" verbose="true">
@@ -160,12 +163,15 @@
         <attribute name="suffix" default="_d"/>
         <attribute name="excludes" default=""/>
         <attribute name="pch" default=""/>
+        <attribute name="pchexcludes" default=""/>
         <element name="options" optional="true" implicit="true"/>
         <sequential>
-            <build name="@{name}" input="@{input}" configuration="release" debug="false" optimize="full" outtype="@{outtype}" excludes="@{excludes}" pch="@{pch}">
+            <build name="@{name}" input="@{input}" configuration="release" debug="false" optimize="full" outtype="@{outtype}" excludes="@{excludes}" 
+                   pch="@{pch}" pchexcludes="@{pchexcludes}">
                 <options/>
             </build>
-            <build name="@{name}" input="@{input}" configuration="debug" debug="true" optimize="none" outtype="@{outtype}" suffix="@{suffix}" excludes="@{excludes}" pch="@{pch}">
+            <build name="@{name}" input="@{input}" configuration="debug" debug="true" optimize="none" outtype="@{outtype}" suffix="@{suffix}" excludes="@{excludes}" 
+                   pch="@{pch}" pchexcludes="@{pchexcludes}">
                 <options/>
             </build>
         </sequential>
@@ -241,8 +247,10 @@
         <attribute name="subsystem" default="gui"/>
         <attribute name="excludes" default=""/>
         <attribute name="pch" default=""/>
+        <attribute name="pchexcludes" default=""/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
+                        <echo>================ @{pchexcludes} ==============</echo>
             <condition property="@{name}.pch" value="${applications.dir}/@{input}/@{pch}.cpp">
                 <not>
                     <equals arg1="@{pch}" arg2=""/>
@@ -264,7 +272,11 @@
                 <compilerarg value="/W4"/>
                 <cc-elements/>
                 <compiler name="${compiler}">
-                    <precompile prototype="${@{name}.pch}" if="@{name}.pch"/>
+                    <precompile prototype="${@{name}.pch}" if="@{name}.pch">
+                        <except>
+                            <fileset dir="${applications.dir}/@{input}" includes="@{excludes}"/>
+                        </except>
+                    </precompile>
                 </compiler>
             </cc>
         </sequential>

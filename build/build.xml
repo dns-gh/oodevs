@@ -44,7 +44,7 @@
         <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
     </target>
 
-    <target name="library.TER" description="build TER static library">
+    <target name="library.TER" description="build TER static library" depends="library.MT_Tools_Scipio">
         <build-lib name="TER"/>
     </target>
     
@@ -55,21 +55,21 @@
         </build-lib>
     </target>
 
-    <target name="library.MIL" description="build MIL static library">
+    <target name="library.MIL" description="build MIL static library" depends="library.ASN,library.TER">
         <build-lib name="MIL">
             <includepath path="${libraries.dir}/MIL"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
     
-    <target name="library.Missions" description="build Missions static library">
+    <target name="library.Missions" description="build Missions static library" depends="library.MIL">
         <build-lib name="Missions" excludes="**/MIL_*">
             <includepath path="${libraries.dir}/MIL"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
 
-    <target name="library.GFX" description="build GFX static library">
+    <target name="library.GFX" description="build GFX static library" depends="library.MT_Tools_Scipio">
         <build-lib name="GFX">
             <includepath path="${include.dir}/qt"/>
         </build-lib>
@@ -121,7 +121,7 @@
         </build-app>
     </target>
 
-    <target name="application.SIM" description="build SIM executable">
+    <target name="application.SIM" description="build SIM executable" depends="library.Missions">
         <build-app name="SIM"
                    subsystem="console"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
@@ -140,18 +140,19 @@
         </build-app>
     </target>
     
-    <target name="application.ADN" description="build ADN executable">
+    <target name="application.ADN" description="build ADN executable" depends="library.ENT,library.MT_Tools_Scipio">
         <build-app name="ADN"
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          MT_Tools_SCIPIO,ENT,
                          qtmain,qt-mt333,xerces-c_2"
-                   moc="ADN_Automata_SubUnitsTable,ADN_BoolEditor,ADN_Categories_GUI,ADN_ChangeValueCommand_Bool,ADN_ChangeValueCommand_Double,ADN_ChangeValueCommand_Int,ADN_ChangeValueCommand_String,ADN_CheckBox,ADN_ComboBox,ADN_Composantes_BreakdownsTable,ADN_Composantes_Dotations_GUI,ADN_Composantes_GUI,ADN_Composantes_RadarsListView,ADN_Composantes_WeaponsListView,ADN_Connector_ABC,ADN_Connector_Vector_ABC,ADN_Data_ABC,ADN_EditLine_ABC,ADN_EquipementSelector,ADN_Equipement_GUI,ADN_FileChooser,ADN_Graph,ADN_GraphValue,ADN_GroupBox,ADN_ListView,ADN_ListView_Composantes_Objects,ADN_ListView_Launchers,ADN_MainWindow,ADN_Objects_GUI,ADN_Ref_ABC,ADN_SupplyUnitSelector,ADN_Table,ADN_TableDialog,ADN_Units_Composantes_GUI,ADN_Units_GUI,ADN_Workspace,GQ_Plot,GQ_PlotAxis,GQ_PlotCaption,GQ_PlotData,qtundo">
+                   moc="ADN_Automata_SubUnitsTable,ADN_BoolEditor,ADN_Categories_GUI,ADN_ChangeValueCommand_Bool,ADN_ChangeValueCommand_Double,ADN_ChangeValueCommand_Int,ADN_ChangeValueCommand_String,ADN_CheckBox,ADN_ComboBox,ADN_Composantes_BreakdownsTable,ADN_Composantes_Dotations_GUI,ADN_Composantes_GUI,ADN_Composantes_RadarsListView,ADN_Composantes_WeaponsListView,ADN_Connector_ABC,ADN_Connector_Vector_ABC,ADN_Data_ABC,ADN_EditLine_ABC,ADN_EquipementSelector,ADN_Equipement_GUI,ADN_FileChooser,ADN_Graph,ADN_GraphValue,ADN_GroupBox,ADN_ListView,ADN_ListView_Composantes_Objects,ADN_ListView_Launchers,ADN_MainWindow,ADN_Objects_GUI,ADN_Ref_ABC,ADN_SupplyUnitSelector,ADN_Table,ADN_TableDialog,ADN_Units_Composantes_GUI,ADN_Units_GUI,ADN_Workspace,GQ_Plot,GQ_PlotAxis,GQ_PlotCaption,GQ_PlotData,qtundo"
+                   pchexcludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
     
-    <target name="application.MOS_Light" description="build MOS_Light executable">
+    <target name="application.MOS_Light" description="build MOS_Light executable" depends="library.ASN,library.ENT,library.GFX,library.MT_Tools_Scipio">
         <build-app name="MOS_Light"
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
@@ -166,7 +167,7 @@
         </build-app>
     </target>
 
-    <target name="application.MOS_Light2" description="build MOS_Light2 executable">
+    <target name="application.MOS_Light2" description="build MOS_Light2 executable" depends="library.ASN,library.ENT,library.GFX,library.MT_Tools_Scipio">
         <!-- A corriger excludes="**/MOS_**_Gen.*" -->
         <build-app name="MOS_Light2"
                    subsystem="gui"
@@ -182,7 +183,7 @@
         </build-app>
     </target>
 
-    <target name="application.Tester" description="build Tester executable">
+    <target name="application.Tester" description="build Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
         <build-app name="Tester" 
                    subsystem="console"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
@@ -196,7 +197,7 @@
         </build-app>               
     </target>
     
-    <target name="application.HLA_Manager" description="build HLA_Manager executable">
+    <target name="application.HLA_Manager" description="build HLA_Manager executable" depends="library.MIL">
         <build-app name="HLA_Manager" 
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
@@ -218,7 +219,7 @@
         </build-app>
     </target>
 
-    <target name="application.LAU" description="build LAU executable">
+    <target name="application.LAU" description="build LAU executable" depends="library.ASN,library.MT_Tools_Scipio">
         <build-app name="LAU"
                    subsystem="console"
                    excludes="TerminateApp.c"
@@ -231,7 +232,7 @@
         </build-app>
     </target>
 
-    <target name="application.LAU_Mos_Part" description="build LAU_Mos_Part executable">
+    <target name="application.LAU_Mos_Part" description="build LAU_Mos_Part executable" depends="library.ASN">
         <build-app name="LAU_Mos_Part"
                    subsystem="gui"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
@@ -245,7 +246,7 @@
         </build-app>
     </target>
 
-    <target name="application.ScriptCompiler" description="build ScriptCompiler executable">
+    <target name="application.ScriptCompiler" description="build ScriptCompiler executable" depends="library.MT_Tools_Scipio">
         <build-app name="ScriptCompiler"
                    subsystem="console"
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,MT_Logger,
