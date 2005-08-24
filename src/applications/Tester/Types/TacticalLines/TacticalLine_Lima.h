@@ -55,12 +55,14 @@ public:
     //@{
              TacticalLine_Lima( const T_PositionVector& points );
              TacticalLine_Lima( const ASN1T_MsgLimaCreation& asnMsg );
+             TacticalLine_Lima( XmlInputArchive& points );
     virtual ~TacticalLine_Lima();
     //@}
 
     //! @name Accessors
     //@{
     virtual TacticalLine_ABC::E_LineType GetLineType() const;
+            ASN1T_EnumTypeLima           GetLimaType() const;
     //@}
 
     //! @name Operations
@@ -73,6 +75,12 @@ private:
     //@{
     TacticalLine_Lima( const TacticalLine_Lima& );            //!< Copy constructor
     TacticalLine_Lima& operator=( const TacticalLine_Lima& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ASN1T_EnumTypeLima eLimaType_;
     //@}
 
 };

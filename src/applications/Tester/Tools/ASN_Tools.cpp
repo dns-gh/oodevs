@@ -507,3 +507,23 @@ const char* ASN_Tools::ToString( const ASN1T_EnumOrderErrorCode& nCode )
             return "Unknown";
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::ToString
+// Created: SBO 2005-08-24
+// -----------------------------------------------------------------------------
+const char* ASN_Tools::ToString( const ASN1T_EnumSetAutomateModeErrorCode& nCode )
+{
+    switch( nCode )
+    {
+    case EnumSetAutomateModeErrorCode::no_error                 : return "No error";
+    case EnumSetAutomateModeErrorCode::error_invalid_unit       : return "Invalid unit";
+    case EnumSetAutomateModeErrorCode::error_unit_not_automate  : return "Unit not automat";
+    case EnumSetAutomateModeErrorCode::error_already_embraye    : return "Already engaged";
+    case EnumSetAutomateModeErrorCode::error_already_debraye    : return "Already disengaged";
+    case EnumSetAutomateModeErrorCode::error_unit_surrendered   : return "Unit surrendered";
+    default:
+        assert( false );
+        return "Unknown";
+    }
+};

@@ -55,6 +55,7 @@ public:
     //@{
              TacticalLine_Limit( const T_PositionVector& points );
              TacticalLine_Limit( const ASN1T_MsgLimitCreation& asnMsg );
+             TacticalLine_Limit( XmlInputArchive& points );
     virtual ~TacticalLine_Limit();
     //@}
 

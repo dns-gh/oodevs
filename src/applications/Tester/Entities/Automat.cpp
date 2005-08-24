@@ -89,18 +89,18 @@ void Automat::OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup )
 // Name: Automat::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Automat::ScheduleAllMissions( Scheduler& scheduler )
+void Automat::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 */ )
 {
     assert( pType_ );
-    pType_->GetModel().ScheduleAllMissions( *this, scheduler );
+    pType_->GetModel().ScheduleAllMissions( *this, scheduler, nIteration );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName )
+void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ )
 {
     assert( pType_ );
-    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName );
+    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName, nIteration );
 }

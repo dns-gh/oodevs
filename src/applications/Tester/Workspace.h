@@ -30,6 +30,7 @@ namespace TEST
     class TacticalLineManager;
     class Scheduler;
     class TestSet_ABC;
+    class Config;
 
 // =============================================================================
 /** @class  Workspace
@@ -48,12 +49,8 @@ class Workspace
 public:
 	//! @name Constructors/Destructor
     //@{
-     Workspace( TestSet_ABC&       testSet_,
-                const std::string& strServer, 
-                uint               nServerPort, 
-                const std::string& strScipioConfigFile,
-                uint               nTimeFactor, 
-                uint               nPeriod );
+     Workspace( TestSet_ABC&  testSet,
+                const Config& config );
     ~Workspace();
     //@}
 

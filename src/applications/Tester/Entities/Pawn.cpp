@@ -168,19 +168,19 @@ void Pawn::OnReceiveTerrainType( DIN::DIN_Input& /*input*/ )
 // Name: Pawn::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Pawn::ScheduleAllMissions( Scheduler& scheduler )
+void Pawn::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 */ )
 {
     assert( pType_ );
-    pType_->GetModel().ScheduleAllMissions( *this, scheduler );
+    pType_->GetModel().ScheduleAllMissions( *this, scheduler, nIteration );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Pawn::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Pawn::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName )
+void Pawn::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ )
 {
     assert( pType_ );
-    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName );
+    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName, nIteration );
 }
 

@@ -43,13 +43,19 @@ class TestSet_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TestSet_ABC();
+             TestSet_ABC( uint nIteration = 1 );
     virtual ~TestSet_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void Load( Workspace& workspace ) = 0;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    uint nIteration_;
     //@}
 };
 

@@ -26,6 +26,7 @@
 namespace TEST {
 
     class Action_ABC;
+    class Config;
 
 // =============================================================================
 /** @class  Scheduler
@@ -43,21 +44,22 @@ class Scheduler
 public:
     //! @name Constructors/Destructor
     //@{
-             Scheduler();
+             Scheduler( const Config& config );
     virtual ~Scheduler();
     //@}
 
     //! @name Operations
     //@{
-    bool     Run               ( uint nCurrentTick = 0 );
-    void     AddAction         ( Action_ABC& action, int nExecutionTick = -1 );
+    bool     Run               ( uint nCurrentTick );
+    void     AddAction         ( Action_ABC& action );
+    void     AddAction         ( Action_ABC& action, uint nExecutionTick );
+    void     AddActions        ( Action_ABC& action, uint nIteration );
     void     ResetExecutionTick();
     //@}
 
-    //! @name Modifiers
+    //! @name Accessors
     //@{
-    void     SetStartTick      ( uint nTick );
-    void     SetExecutionStep  ( uint nStep );
+    uint     GetNextExecutionTick() const;
     //@}
 
 private:
@@ -69,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    uint GetNextExecutionTick();
+    uint ComputeNextExecutionTick();
     //@}
 
 private:
@@ -85,12 +87,13 @@ private:
     T_ActionMap  actions_;
     IT_ActionMap itCurrentAction_;
     uint         nNextExecutionTick_;
-    uint         nStartTick_;
     uint         nExecutionStep_;
+    uint         nCurrentTick_;
+    uint         nLastExecutionTick_;
+    uint         nSameMissionInterval_;
 
     // test statistics
     uint         nTestRun_;
-    uint         nTestSetRun_;
     uint         nTestTotal_;
     //@}
 };

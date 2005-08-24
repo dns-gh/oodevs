@@ -296,7 +296,14 @@ uint Testable_Entity::GetTestParam_GDH() const
 // -----------------------------------------------------------------------------
 T_IdVector& Testable_Entity::GetTestParam_Limas() const
 {
-    return *new T_IdVector();
+    T_IdVector& limas = *new T_IdVector();
+    for( uint i = 0; i < 10; ++i )
+    {
+        uint nId = workspace_.GetTacticalLineManager().GetLimaByType( ( ASN1T_EnumTypeLima )i );
+        if( nId )
+            limas.push_back( nId );
+    }
+    return limas;
 }
 
 // -----------------------------------------------------------------------------

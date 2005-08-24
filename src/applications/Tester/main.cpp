@@ -20,6 +20,7 @@
 
 #include "Workspace.h"
 #include "Actions/Scheduler.h"
+#include "Config.h"
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"
@@ -42,14 +43,8 @@ using namespace TEST;
 
 //-----------------------------------------------------------------------------
 // clean exit management
-bool bRun = true;
-
-std::string strServer     = "127.0.0.1";
-std::string strConfigFile = "./scipio.xml";
-uint        nPort         = 10000;
-uint        nTimeFactor   = 40;
-bool        bTestAutomat  = true;
-uint        nPeriod       = 180; // default is 180 tick
+bool        bRun          = true;
+std::string strConfigFile = "./test.xml";
 
 //-----------------------------------------------------------------------------
 // Name: ctrl_c_handler
@@ -70,18 +65,8 @@ void ProcessCommandLine( int nArgc, char** ppArgv )
 {
     for( int i = 1; i < nArgc; ++i )
     {
-        if( !stricmp( ppArgv[ i ], "-host" ) && i + 1 <= nArgc )
-            strServer = ppArgv[ ++i ];
-        else if( !stricmp( ppArgv[ i ], "-port" ) && i + 1 <= nArgc )
-            nPort = atoi( ppArgv[ ++i ] );
-        else if( !stricmp( ppArgv[ i ], "-conffile" ) && i + 1 <= nArgc )
+        if( !stricmp( ppArgv[ i ], "-conffile" ) && i + 1 <= nArgc )
             strConfigFile = ppArgv[ ++i ];
-        else if( !stricmp( ppArgv[ i ], "-timefactor" ) && i + 1 <= nArgc )
-            nTimeFactor = atoi( ppArgv[ ++i ] );
-        else if( !stricmp( ppArgv[ i ], "-testpawns" ) )
-            bTestAutomat = false;
-        else if( !stricmp( ppArgv[ i ], "-period" ) && i + 1 <= nArgc )
-            nPeriod = atoi( ppArgv[ ++i ] );
         else
             MT_LOG_WARNING_MSG( "invalid parameter" << ppArgv[ i ] );
     }
@@ -95,20 +80,23 @@ void Run()
 {
     signal( SIGINT, ctrl_c_handler );
 
+    Config config( strConfigFile );
+
     TestSet_ABC* pTestSet;
-    if( bTestAutomat )
+    if( config.MustTestAutomat() )
     {
-        pTestSet = new TestSet_AllAutomatMissions();
+        pTestSet = new TestSet_AllAutomatMissions( config.GetIterationNumber() );
         MT_LOG_INFO_MSG( "Testing automat missions" );
     }
     else
     {
-        pTestSet = new TestSet_AllPawnMissions();
+        pTestSet = new TestSet_AllPawnMissions( config.GetIterationNumber() );
         MT_LOG_INFO_MSG( "Testing pawn missions" );
     }
 
-    MT_LOG_INFO_MSG( "Starting tests on '" << strServer << ":" << nPort << "' with time factor '" << nTimeFactor << "'" );
-    Workspace ws( *pTestSet, strServer, nPort, strConfigFile, nTimeFactor, nPeriod );
+    MT_LOG_INFO_MSG( "Starting tests on '" << config.GetServer() << ":" << config.GetPort() << 
+                     "' with time factor '" << config.GetTimeFactor() << "'" );
+    Workspace ws( *pTestSet, config );
 
     while( bRun )
     {

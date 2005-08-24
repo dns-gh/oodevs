@@ -34,8 +34,8 @@ using namespace TEST;
 // Name: TestSet_AllAutomatMissions constructor
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-TestSet_AllAutomatMissions::TestSet_AllAutomatMissions()
-    : TestSet_ABC ()
+TestSet_AllAutomatMissions::TestSet_AllAutomatMissions( uint nIteration /* = 1 */ )
+    : TestSet_ABC ( nIteration )
 {
     // NOTHING
 }
@@ -57,5 +57,5 @@ void TestSet_AllAutomatMissions::Load( Workspace& workspace )
 {
     Scheduler& scheduler = workspace.GetScheduler();
     // launch all missions in parallel
-    workspace.GetEntityManager().ScheduleAllAutomatMissions( scheduler, true );
+    workspace.GetEntityManager().ScheduleAllAutomatMissions( scheduler, true, nIteration_ );
 }

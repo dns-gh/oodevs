@@ -23,6 +23,10 @@
 #include "Tester_pch.h"
 #include "TacticalLine_Limit.h"
 
+#include "MT/MT_IO/MT_DirectoryBrowser.h"
+#include "MT/MT_IO/MT_Dir.h"
+#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+
 using namespace TEST;
 
 IDManager TacticalLine_Limit::idManager_( 138 );
@@ -36,6 +40,31 @@ TacticalLine_Limit::TacticalLine_Limit( const T_PositionVector& points )
 {
     nId_ = idManager_.GetFreeIdentifier();
     bIsSyncWithSim_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_Limit constructor
+// Created: SBO 2005-08-24
+// -----------------------------------------------------------------------------
+TacticalLine_Limit::TacticalLine_Limit( XmlInputArchive& archive )
+    : TacticalLine_ABC ()
+{
+    nId_ = idManager_.GetFreeIdentifier();
+    bIsSyncWithSim_ = false;
+    archive.BeginList( "Points" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "Point" );
+        double rX;
+        double rY;
+        archive.ReadField( "X", rX );
+        archive.ReadField( "Y", rY );
+        Position& pos = *new Position();
+        pos.SetSimCoordinates( rX, rY );
+        points_.push_back( &pos );
+        archive.EndSection(); // Point
+    }
+    archive.EndList(); // Points
 }
 
 // -----------------------------------------------------------------------------

@@ -361,6 +361,7 @@ void MessageManager::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, DIN_
         case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack: OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.u.msg_change_groupe_connaissance_ack, nCtx ); break;
         case T_MsgsSimMosWithContext_msg_automate_order_ack:             OnReceiveMsgAutomateOrderAck       ( *asnMsg.u.msg_automate_order_ack            , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_pion_order_ack:                 OnReceiveMsgPionOrderAck           ( *asnMsg.u.msg_pion_order_ack                , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_set_automate_mode_ack:          OnReceiveMsgSetAutomatModeAck      ( *asnMsg.u.msg_set_automate_mode_ack         , nCtx ); break;
         default:
             ;
     }
@@ -404,6 +405,7 @@ void MessageManager::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& as
 // -----------------------------------------------------------------------------
 void MessageManager::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnMsg*/ )
 {
+    MT_LOG_INFO_MSG( "Tick: " << workspace_.GetTick() << " (next test at " << workspace_.GetScheduler().GetNextExecutionTick() << ")" );
     workspace_.GetScheduler().Run( workspace_.GetTick() );
 }
 
@@ -449,7 +451,6 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
         // load tests
         workspace_.GetTestSet().Load( workspace_ );
         // run scheduler
-        workspace_.GetScheduler().SetStartTick( workspace_.GetTick() );
         workspace_.GetScheduler().Run( workspace_.GetTick() );
         bIsInitialized_ = true;
     }
@@ -749,7 +750,7 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
     assert( pPawn );
 
     std::stringstream strOutputMsg;
-    strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] (" << pPawn->GetType().GetName() << ")"
+    strOutputMsg << "Agent [" << asnMsg.oid_unite_executante << "] (" << pPawn->GetType().GetName() << ") "
                  << "PionOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
@@ -764,9 +765,25 @@ void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderA
     assert( pAutomat );
 
     std::stringstream strOutputMsg;
-    strOutputMsg << "Automat [" << asnMsg.oid_unite_executante << "] (" << pAutomat->GetType().GetName() << ")"
+    strOutputMsg << "Automat [" << asnMsg.oid_unite_executante << "] (" << pAutomat->GetType().GetName() << ") "
                  << "AutomatOrderAck - " << ASN_Tools::ToString( asnMsg.error_code );
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgSetAutomatModeAck
+// Created: SBO 2005-08-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, T_NetContextId /*nCtx*/ )
+{
+    /*
+    Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.unit_id );
+    assert( pAutomat );
+
+    std::stringstream strOutputMsg;
+    strOutputMsg << "Automat [" << asnMsg.unit_id << "] SetMode - " << ASN_Tools::ToString( asnMsg.error_code );
+    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+    */
 }
 
 //-----------------------------------------------------------------------------

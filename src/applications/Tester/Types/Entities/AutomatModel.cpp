@@ -75,17 +75,17 @@ AutomatModel::~AutomatModel()
 // Name: AutomatModel::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void AutomatModel::ScheduleAllMissions( Automat& automat, Scheduler& scheduler ) const
+void AutomatModel::ScheduleAllMissions( Automat& automat, Scheduler& scheduler, uint nIteration /* = 1 */ ) const
 {
     for( CIT_MissionAutomatTypeVector it = missionTypes_.begin(); it != missionTypes_.end(); ++it )
-        scheduler.AddAction( Mission_Automat_Type::CreateMission( **it, automat ) );
+        scheduler.AddActions( Mission_Automat_Type::CreateMission( **it, automat ), nIteration );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AutomatModel::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void AutomatModel::ScheduleMission( Automat& automat, Scheduler& scheduler, const std::string& strMissionName ) const
+void AutomatModel::ScheduleMission( Automat& automat, Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ ) const
 {
-    scheduler.AddAction( Mission_Automat_Type::CreateMission( strMissionName, automat ) );
+    scheduler.AddActions( Mission_Automat_Type::CreateMission( strMissionName, automat ), nIteration );
 }

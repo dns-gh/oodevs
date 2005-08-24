@@ -100,6 +100,7 @@ public:
     //! @name Enumeration translation to/from strings
     //@{
     static const char* ToString( const ASN1T_EnumOrderErrorCode& nCode );
+    static const char* ToString( const ASN1T_EnumSetAutomateModeErrorCode& nCode );
     //@}
 
 private:

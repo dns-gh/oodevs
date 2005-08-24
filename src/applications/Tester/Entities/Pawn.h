@@ -82,8 +82,8 @@ public:
 
     //! @name Mission Scheduling
     //@{
-    void ScheduleAllMissions ( Scheduler& scheduler );
-    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName );
+    void ScheduleAllMissions ( Scheduler& scheduler, uint nIteration = 1 );
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 );
     //@}
 
 private:

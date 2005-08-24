@@ -34,8 +34,8 @@ using namespace TEST;
 // Name: TestSet_AllPawnMissions constructor
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-TestSet_AllPawnMissions::TestSet_AllPawnMissions()
-    : TestSet_ABC ()
+TestSet_AllPawnMissions::TestSet_AllPawnMissions( uint nIteration /* = 1 */ )
+    : TestSet_ABC ( nIteration )
 {
     // NOTHING
 }
@@ -57,5 +57,5 @@ TestSet_AllPawnMissions::~TestSet_AllPawnMissions()
 void TestSet_AllPawnMissions::Load( Workspace& workspace )
 {
     Scheduler& scheduler = workspace.GetScheduler();
-    workspace.GetEntityManager().ScheduleAllPawnMissions( scheduler );
+    workspace.GetEntityManager().ScheduleAllPawnMissions( scheduler, true, nIteration_ );
 }

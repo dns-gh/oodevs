@@ -24,6 +24,7 @@
 #include "TacticalLineManager.h"
 #include "TacticalLines/TacticalLine_ABC.h"
 #include "TacticalLines/TacticalLine_Limit.h"
+#include "TacticalLines/TacticalLine_Lima.h"
 #include "Tools/PositionManager.h"
 #include "Tools/Position.h"
 
@@ -66,27 +67,16 @@ void TacticalLineManager::LoadTacticalLines( const std::string& strConfigFile )
         archive.BeginList( "Lines" );
         while( archive.NextListElement() )
         {
-            T_PositionVector points;
-            archive.Section( "Limit" );
-            archive.BeginList( "Points" );
-            while( archive.NextListElement() )
+            if( archive.Section( "Limit", XmlInputArchive::eNothing ) )
             {
-                archive.Section( "Point" );
-                double rX;
-                double rY;
-                archive.ReadField( "X", rX );
-                archive.ReadField( "Y", rY );
-                Position& pos = *new Position();
-                pos.SetSimCoordinates( rX, rY );
-                points.push_back( &pos );
-                archive.EndSection(); // Point
+                Register( *new TacticalLine_Limit( archive ) );
+                archive.EndSection(); // Limit
             }
-            archive.EndList(); // Points
-            archive.EndSection(); // Limit
-            Register( *new TacticalLine_Limit( points ) );
-            for( CIT_PositionVector it = points.begin(); it != points.end(); ++it )
-                delete *it;
-            points.clear();
+            else if( archive.Section( "Lima", XmlInputArchive::eNothing ) )
+            {
+                Register( *new TacticalLine_Lima( archive ) );
+                archive.EndSection(); // Lima
+            }
         }
         archive.EndList(); // Lines
             
@@ -179,6 +169,19 @@ T_EntityId TacticalLineManager::GetLimitIdExcluding( T_EntityId nId )
 {
     for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
         if( ( *it )->GetLineType() == TacticalLine_ABC::eLimit && ( *it )->GetId() != nId )
+            return ( *it )->GetId();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLineManager::GetLimaByType
+// Created: SBO 2005-08-24
+// -----------------------------------------------------------------------------
+T_EntityId TacticalLineManager::GetLimaByType( ASN1T_EnumTypeLima eLimaType )
+{
+    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
+        if( ( *it )->GetLineType() == TacticalLine_ABC::eLima && 
+            static_cast< const TacticalLine_Lima* >( *it )->GetLimaType() == eLimaType )
             return ( *it )->GetId();
     return 0;
 }

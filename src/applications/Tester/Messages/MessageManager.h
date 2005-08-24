@@ -173,6 +173,9 @@ private:
     void OnReceiveMsgLimaDestruction          ( const ASN1T_MsgLimaDestruction&  asnMsg );
     //@}
 
+    // automat mode
+    void OnReceiveMsgSetAutomatModeAck        ( const ASN1T_MsgSetAutomateModeAck& asnMsg, T_NetContextId nCtx );
+
     // Hierarchy changes
     void OnReceiveMsgChangeAutomat            ( const ASN1T_MsgChangeAutomate& asnMsg );
     void OnReceiveMsgChangeAutomateAck        ( const ASN1T_MsgChangeAutomateAck& asnMsg, T_NetContextId nCtx );

@@ -19,6 +19,7 @@
 
 #include "Tester_pch.h"
 #include "Workspace.h"
+#include "Config.h"
 
 #include "Network/NetworkManager.h"
 #include "Entities/EntityManager.h"
@@ -42,12 +43,7 @@ Workspace* Workspace::pWorkspace_;
 // Name: Workspace::Workspace
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Workspace::Workspace( TestSet_ABC&       testSet,
-                      const std::string& strServer, 
-                      uint               nServerPort, 
-                      const std::string& strScipioConfigFile,
-                      uint               nTimeFactor,
-                      uint               nPeriod )
+Workspace::Workspace( TestSet_ABC& testSet, const Config& config )
     : pNetworkManager_  ( 0 )
     , pEntityManager_   ( 0 )
     , pTypeManager_     ( 0 )
@@ -58,22 +54,21 @@ Workspace::Workspace( TestSet_ABC&       testSet,
     , nTick_            ( 0 )
     , nTickDuration_    ( 0 )
     , nCurrentSimTime_  ( 0 )
-    , nTimeFactor_      ( nTimeFactor )
+    , nTimeFactor_      ( config.GetTimeFactor() )
 {
     // scheduler
-    pScheduler_ = new Scheduler();
-    pScheduler_->SetExecutionStep( nPeriod );
+    pScheduler_ = new Scheduler( config );
 
     Mission_Pawn_Type::Initialize();
     Mission_Automat_Type::Initialize();
-    LoadScipioConfigFile( strScipioConfigFile );
+    LoadScipioConfigFile( config.GetConfigFile() );
 
     std::string strTacticalLineFile;
-    MT_ExtractFilePath( strScipioConfigFile, strTacticalLineFile  );
+    MT_ExtractFilePath( config.GetConfigFile(), strTacticalLineFile  );
     pTacticalLineManager_->LoadTacticalLines( strTacticalLineFile + "TacticalLines.xml" );
 
     // network manager
-    pNetworkManager_ = new NetworkManager( *this, strServer, nServerPort );
+    pNetworkManager_ = new NetworkManager( *this, config.GetServer(), config.GetPort() );
     assert( pNetworkManager_ );
     pNetworkManager_->Connect();
 

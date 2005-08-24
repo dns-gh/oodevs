@@ -45,7 +45,7 @@ class TestSet_AllAutomatMissions : public TestSet_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TestSet_AllAutomatMissions();
+             TestSet_AllAutomatMissions( uint nIteration = 1 );
     virtual ~TestSet_AllAutomatMissions();
     //@}
 

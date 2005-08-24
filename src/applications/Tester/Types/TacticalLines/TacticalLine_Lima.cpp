@@ -23,6 +23,10 @@
 #include "Tester_pch.h"
 #include "TacticalLine_Lima.h"
 
+#include "MT/MT_IO/MT_DirectoryBrowser.h"
+#include "MT/MT_IO/MT_Dir.h"
+#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+
 using namespace TEST;
 
 IDManager TacticalLine_Lima::idManager_( 137 );
@@ -33,9 +37,37 @@ IDManager TacticalLine_Lima::idManager_( 137 );
 // -----------------------------------------------------------------------------
 TacticalLine_Lima::TacticalLine_Lima( const T_PositionVector& points )
     : TacticalLine_ABC ( points )
+    , eLimaType_       ( EnumTypeLima::ligne_debouche )
 {
     nId_ = idManager_.GetFreeIdentifier();
     bIsSyncWithSim_  = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_Lima constructor
+// Created: SBO 2005-08-24
+// -----------------------------------------------------------------------------
+TacticalLine_Lima::TacticalLine_Lima( XmlInputArchive& archive )
+    : TacticalLine_ABC ()
+    , eLimaType_       ( EnumTypeLima::ligne_debouche )
+{
+    nId_ = idManager_.GetFreeIdentifier();
+    bIsSyncWithSim_  = false;
+    archive.ReadField( "Type", ( uint& )eLimaType_ );
+    archive.BeginList( "Points" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "Point" );
+        double rX;
+        double rY;
+        archive.ReadField( "X", rX );
+        archive.ReadField( "Y", rY );
+        Position& pos = *new Position();
+        pos.SetSimCoordinates( rX, rY );
+        points_.push_back( &pos );
+        archive.EndSection(); // Point
+    }
+    archive.EndList(); // Points
 }
 
 // -----------------------------------------------------------------------------
@@ -73,5 +105,29 @@ TacticalLine_Lima::~TacticalLine_Lima()
 // -----------------------------------------------------------------------------
 void TacticalLine_Lima::UpdateToSim()
 {
-    // NOTHING
+    if( bIsSyncWithSim_ )
+        return;
+
+    assert( !points_.empty() );
+
+    MOS_ASN_MsgLimaCreation asnMsg;
+
+    asnMsg.GetAsnMsg().oid                          = nId_;
+    asnMsg.GetAsnMsg().fonction                     = eLimaType_;
+    asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
+    asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = points_.size();
+    asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ points_.size() ];
+
+    uint i = 0;
+    for ( CIT_PositionVector it = points_.begin() ; it != points_.end() ; ++it )
+    {
+        std::string strMGRS = ( *it )->GetMgrsCoordinate();
+        asnMsg.GetAsnMsg().geometrie.vecteur_point.elem[i] = strMGRS.c_str();
+        ++i;
+    }
+
+    asnMsg.Send( (T_NetContextId)this );
+    bIsSyncWithSim_ = true;
+
+    delete[] asnMsg.GetAsnMsg().geometrie.vecteur_point.elem;
 }
