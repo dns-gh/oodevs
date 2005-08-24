@@ -311,26 +311,26 @@ MIL_PionMission_ABC* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentP
 
     if( !pion.GetType().GetModel().IsMissionAvailable( missionType ) )
     {
-        MT_LOG_ERROR( MT_FormatString( "Mission ID %d (%s) not available for pion %d", missionType.GetID(), missionType.GetName(), pion.GetID() ).c_str(), 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Mission ID " << missionType.GetID() << " (" << missionType.GetName() << ") not available for pion " << pion.GetID(), 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
     if( pMission_->GetMRT().IsActivated() )
     {
-        MT_LOG_ERROR( MT_FormatString( "MRT already activated for pion %d", pion.GetID() ).c_str(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "MRT already activated for pion " << pion.GetID(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
     
     MIL_PionMission_ABC& pionMission = missionType.InstanciateMission( pion );
     if( !pionMission.Initialize( *pMission_ ) )
     {
-        MT_LOG_ERROR( MT_FormatString( "Mission (ID %d) initialisation failed for pion %d", missionType.GetID(), pion.GetID() ).c_str(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Mission (ID " << missionType.GetID() << ") initialisation failed for pion " << pion.GetID(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
     if( !pMission_->GetMRT().SetMissionForPion( pion, pionMission ) )
     {
-        MT_LOG_ERROR( MT_FormatString( "Pion %d has already the mission (ID %d)", pion.GetID(), missionType.GetID() ).c_str(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Pion " << pion.GetID() << " has already the mission (ID " << missionType.GetID() << ")", 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
