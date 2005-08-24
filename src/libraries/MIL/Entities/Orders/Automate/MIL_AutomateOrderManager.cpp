@@ -311,7 +311,7 @@ MIL_PionMission_ABC* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentP
 
     if( !pion.GetType().GetModel().IsMissionAvailable( missionType ) )
     {
-        MT_LOG_ERROR( MT_FormatString( "Mission (ID %d) not available for pion %d", missionType.GetID(), pion.GetID() ).c_str(), 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( MT_FormatString( "Mission ID %d (%s) not available for pion %d", missionType.GetID(), missionType.GetName(), pion.GetID() ).c_str(), 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
