@@ -43,7 +43,7 @@ class MIL_RealObject_ABC : public MIL_Object_ABC
     MT_COPYNOTALLOWED( MIL_RealObject_ABC );
    
 public:
-             MIL_RealObject_ABC( const MIL_RealObjectType& type );
+    explicit MIL_RealObject_ABC( const MIL_RealObjectType& type );
              MIL_RealObject_ABC();
     virtual ~MIL_RealObject_ABC();
     
