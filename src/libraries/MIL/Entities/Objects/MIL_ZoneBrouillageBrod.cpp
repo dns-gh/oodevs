@@ -60,7 +60,7 @@ void MIL_ZoneBrouillageBrod::serialize( Archive& file, const uint )
 void MIL_ZoneBrouillageBrod::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    agent.GetRole< PHY_RoleInterface_Communications >().Jam( MIL_RealObjectType::zoneBrouillageBrod_ );
+    agent.GetRole< PHY_RoleInterface_Communications >().Jam( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,5 +70,5 @@ void MIL_ZoneBrouillageBrod::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_ZoneBrouillageBrod::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentExiting( agent );
-    agent.GetRole< PHY_RoleInterface_Communications >().Unjam( MIL_RealObjectType::zoneBrouillageBrod_ );
+    agent.GetRole< PHY_RoleInterface_Communications >().Unjam( *this );
 }

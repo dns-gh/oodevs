@@ -73,15 +73,9 @@ PHY_RolePion_Communications::~PHY_RolePion_Communications()
 namespace boost
 {
     namespace serialization
-    {
+    {        
         template< typename Archive >
-        inline void serialize( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const uint nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-        
-        template< typename Archive >
-        void save( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const uint )
+        void save( Archive& file, const PHY_RolePion_Communications::T_JammerSet& set, const uint )
         {
             file << set.size();
             for ( PHY_RolePion_Communications::CIT_JammerSet it = set.begin(); it != set.end(); ++it )
@@ -99,6 +93,12 @@ namespace boost
                 file >> pObject;
                 set.insert( pObject );
             }
+        }
+
+        template< typename Archive >
+        inline void serialize( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const uint nVersion )
+        {
+            split_free( file, set, nVersion );
         }
     }
 }

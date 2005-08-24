@@ -63,7 +63,7 @@ void MIL_ZoneBrouillageBromure::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
     if( GetArmy().IsAnEnemy( agent.GetArmy() ) == eTristate_True )
-        agent.GetRole< PHY_RoleInterface_Communications >().Jam( MIL_RealObjectType::zoneBrouillageBromure_ );
+        agent.GetRole< PHY_RoleInterface_Communications >().Jam( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,5 +73,5 @@ void MIL_ZoneBrouillageBromure::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_ZoneBrouillageBromure::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentExiting( agent );
-    agent.GetRole< PHY_RoleInterface_Communications >().Unjam( MIL_RealObjectType::zoneBrouillageBromure_ );
+    agent.GetRole< PHY_RoleInterface_Communications >().Unjam( *this );
 }

@@ -38,8 +38,6 @@
 #include "HLA/Deserializer.h"
 #include "HLA/AttributeIdentifier.h"
 
-BOOST_CLASS_EXPORT_GUID( MIL_RealObject_ABC, "MIL_RealObject_ABC" )
-
 MT_Random MIL_RealObject_ABC::random_;
 
 //-----------------------------------------------------------------------------

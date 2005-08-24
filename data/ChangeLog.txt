@@ -26,7 +26,10 @@ Next Version - Codename ''
                 [Pion, Automate] B A::DEC_ConnaissanceAgent_EstEnVol                   ( U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ );
                 [Pion]           B A::DEC_ConnaissanceAgent_EstDansDirection           ( U /*T_ConnaissanceAgent*/, U /*T_Direction*/ );
                 [Pion]           B A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone ( U /*T_ConnaissanceAgent*/  U /*T_Direction*/, R /*angle en degré*/ );
-    - JVT - Bug fix : Manquait un BOOST_CLASS_EXPORT_GUID pour la classe MIL_RealObject_ABC (référencé directement dans PHY_RolePion_Communications::T_JammerSet)
+    - JVT - Bug fix : Manquait le const dans le save de PHY_RolePion_Communications::T_JammerSet (PHY_RolePion_Communications.cpp)
+                      => le save utilisé était celui par défaut de boost mais le load était celui surchargé
+    - AGE/JVT - Bug fix : Manquait un explicit dans le constructeur de MIL_RealObject_ABC
+    - JVT - Bug fix : Jam/Unjam pourri (Jam stockait un ptr sur un objet local et idem pour le erase de Unjam)
 
 Version 0.117.1 [19/08/2005] - Codename 'ongneaux'
     - NLD - MaJ mission LOG
