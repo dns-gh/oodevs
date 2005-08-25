@@ -67,9 +67,16 @@ public:
         eUnitUnknown,
         eUnitLost,
         eObject,
-        eObjectLost
+        eObjectLost,
           
         // rc subtypes
+        eReportEnemy,
+        eReportObstacle,
+        eReportNbc,
+        eReportLogisticSituation,
+        eReportArtillery,
+        eReportMission,
+        eReportScipio
     };
     //@}
 
