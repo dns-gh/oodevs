@@ -224,7 +224,9 @@ int main( uint nArgc, char* pArgv[] )
 {
      __try
     {
+#ifndef  _DEBUG
         Win32Exception::InstallHandler();
+#endif
         return Run( nArgc, pArgv );
     }
     __except( WriteMiniDump( GetExceptionInformation() ) )
