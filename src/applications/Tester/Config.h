@@ -57,6 +57,7 @@ public:
     uint               GetPeriod           () const;
     uint               GetIterationNumber  () const;
     uint               GetIterationInterval() const;
+    const std::string& GetLogFile          () const;
     //@}
 
 private:
@@ -82,6 +83,7 @@ private:
     uint        nPeriod_;
     uint        nItNumber_;
     uint        nItInterval_;
+    std::string strLogFile_;
     //@}
 };
 

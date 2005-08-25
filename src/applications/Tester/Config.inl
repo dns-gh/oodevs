@@ -98,4 +98,14 @@ uint Config::GetIterationInterval() const
     return nItInterval_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Config::GetLogFile
+// Created: SBO 2005-08-25
+// -----------------------------------------------------------------------------
+inline
+const std::string& Config::GetLogFile() const
+{
+    return strLogFile_;
+}
+
 } // end namespace TEST

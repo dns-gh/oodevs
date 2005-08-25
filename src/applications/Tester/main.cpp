@@ -82,6 +82,9 @@ void Run()
 
     Config config( strConfigFile );
 
+    MT_FileLogger           fileLogger( config.GetLogFile().c_str() );
+    MT_LOG_REGISTER_LOGGER( fileLogger );
+
     TestSet_ABC* pTestSet;
     if( config.MustTestAutomat() )
     {
@@ -106,6 +109,8 @@ void Run()
 
     delete pTestSet;
     MT_LOG_INFO_MSG( "Program terminated normally" );
+
+    MT_LOG_UNREGISTER_LOGGER( fileLogger );
 }
 
 

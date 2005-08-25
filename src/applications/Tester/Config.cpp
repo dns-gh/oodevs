@@ -42,6 +42,7 @@ Config::Config( const std::string& strFile )
     , nPeriod_       ( 180 )
     , nItNumber_     ( 1 )
     , nItInterval_   ( 1 )
+    , strLogFile_    ( "./test.log" )
 {
     LoadConfigFile( strFile );
 }
@@ -90,6 +91,7 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.ReadField( "Period"                , nPeriod_      );
         archive.ReadField( "NumberOfSameMissions"  , nItNumber_    );
         archive.ReadField( "IntervalOfSameMissions", nItInterval_  );
+        archive.ReadField( "LogFile"               , strLogFile_   );
         archive.EndSection(); // Actions
 
         archive.EndSection(); // Tester
