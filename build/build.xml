@@ -25,17 +25,16 @@
     <target name="libraries" description="build static library" 
             depends="library.MT_Tools_Scipio,library.TER,library.ASN,library.MIL,library.Missions,library.GFX,library.ENT"/>
     
-    <target name="library.TIC" description="build TIC static library">
+    <target name="library.TIC" description="build TIC static library" depends="library.ASN,library.MT_Tools_Scipio">
         <build-lib name="TIC">
             <includepath path="${libraries.dir}/TIC"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
     
-    <target name="library.TIC_Export" description="build TIC_Export static library">
+    <target name="library.TIC_Export" description="build TIC_Export static library" depends="library.TIC">
         <build-lib name="TIC_Export">
             <includepath path="${libraries.dir}/TIC"/>
-            <includepath path="${libraries.dir}/TIC_Export"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
@@ -95,29 +94,33 @@
     <target name="applications.TIC" description="build TIC executables"
             depends="application.TIC_Sample,application.TIC_XmlExporter"/>
     
-    <target name="application.TIC_Sample" description="build TIC_Sample executable">
+    <target name="application.TIC_Sample" description="build TIC_Sample executable" depends="library.TIC_Export">
         <build-app name="TIC_Sample"
                    subsystem="console"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,
+                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,MT_Time,MT_Thread,MT_Memory,
                          pathfind,geocoord,
-                         TIC_Export,ASN,
-                         boost_thread-vc71-mt-1_32,
+                         TIC_Export,TIC,ASN,
+                         boost_thread-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32,
                          asn1per,xerces-c_2">
             <includepath path="${include.dir}/ASN"/>
+            <includepath path="${libraries.dir}/TIC_Export"/>
+            <syslibset libs="user32,wsock32,winmm"/>
         </build-app>
     </target>
 
-    <target name="application.TIC_XmlExporter" description="build TIC_XmlExporter executable">
+    <target name="application.TIC_XmlExporter" description="build TIC_XmlExporter executable" depends="library.TIC_Export,library.MT_Tools_Scipio">
         <build-app name="TIC_XmlExporter"
                    subsystem="console"
                    libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,
+                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,MT_Time,MT_Thread,MT_Memory,
                          pathfind,geocoord,
-                         TIC_Export,ASN,
-                         boost_thread-vc71-mt-1_32,
+                         TIC_Export,TIC,ASN,
+                         boost_thread-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32,
                          asn1per,xerces-c_2">
             <includepath path="${include.dir}/ASN"/>
+            <includepath path="${libraries.dir}/TIC_Export"/>
+            <syslibset libs="user32,wsock32,winmm"/>
         </build-app>
     </target>
 
