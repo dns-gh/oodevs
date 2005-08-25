@@ -101,16 +101,22 @@ void Run()
                      "' with time factor '" << config.GetTimeFactor() << "'" );
     Workspace ws( *pTestSet, config );
 
-    while( bRun )
+    try
     {
-        ws.Update();
-        Sleep( 10 );
+        while( bRun )
+        {
+            ws.Update();
+            Sleep( 10 );
+        }
+        delete pTestSet;
+        MT_LOG_INFO_MSG( "Program terminated normally" );
+        MT_LOG_UNREGISTER_LOGGER( fileLogger );
     }
-
-    delete pTestSet;
-    MT_LOG_INFO_MSG( "Program terminated normally" );
-
-    MT_LOG_UNREGISTER_LOGGER( fileLogger );
+    catch( ... )
+    {
+        MT_LOG_UNREGISTER_LOGGER( fileLogger );
+        throw;
+    }
 }
 
 
