@@ -130,18 +130,17 @@ void DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau( DIA_Call_ABC&
     // 1. Clippe le polygone dans le fuseau
     T_PointVector clippedPointVector;
     pLocalisation->GetPointsClippedByPolygon( caller.GetFuseau(), clippedPointVector );
-    if( clippedPointVector.empty() )
+    // 2. Barycentre polygone clippé
+    MT_Vector2D vBarycenter = MT_ComputeBarycenter( clippedPointVector );
+
+    if( clippedPointVector.empty() || ! caller.GetFuseau().IsInside( vBarycenter ) )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
         diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return; 
     }
 
-    // 2. Barycentre polygone clippé
-    MT_Vector2D vBarycenter = MT_ComputeBarycenter( clippedPointVector );
-    assert( caller.GetFuseau().IsInside( vBarycenter ) );
     assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
-
     // 3. Envoi du résulat à DIA
     MT_Vector2D* pOutVector = new MT_Vector2D( vBarycenter );
     diaCall.GetResult().SetValue( (void*)pOutVector, &DEC_Tools::GetTypePoint() );

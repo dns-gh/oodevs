@@ -653,12 +653,11 @@ bool PHY_RoleAction_Moving::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, 
 //-----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::TryToMoveTo( const DEC_Path& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining )
 {
-    assert( rCurrentSpeed_ > 0. );
-
     // Deplacement de vNewPos_ vers vNewPosTmp
     if( vNewPosTmp == vNewPos_ )
         return true;
 
+    assert( rCurrentSpeed_ > 0. );
     bool bFirstMove = ( vNewPos_ == (*path.GetResult().begin())->GetPos() );
 
 	sMoveStepCmp  cmp( vNewPos_ );
