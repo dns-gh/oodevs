@@ -397,10 +397,10 @@ void DEC_DIAFunctions::UserTypeList_Delete( DIA_Call_ABC& call )
     
     for ( IT_ObjectVariableVector it = vector.begin(); it != vector.end(); ++it )
     {
-        delete (**it).ToPtr();
+        void* pPointer = (**it).ToPtr();
+        delete pPointer; // $$$$ AGE 2005-08-29: No destructor called ! (mem. leak for TER_Whatever)
         delete *it;
     }
-    
     vector.clear();
 }
 
