@@ -776,6 +776,12 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
 {
-    resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+    // Do not add the same point more than once (happens at the end of each section)
+    if( resultList_.empty() || resultList_.back()->GetPos() != vPos )
+    {
+        assert( GetUnitSpeeds().IsPassable( nObjectTypes ) );
+        assert( resultList_.empty() || GetUnitSpeeds().GetMaxSpeed( resultList_.back()->GetObjectTypesToNextPoint() ) > 0 );
+        resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+    }
 }
 

@@ -106,10 +106,7 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
             if( bJobCanceled_ )
                 nState_ = eCanceled;
             else if( itPathSection == pathSections_.begin() && pathSection.IsImpossible() )
-            {
                 nState_ = eImpossible;
-//                assert( false );
-            }
             else
                 nState_ = ePartial;
             return;
