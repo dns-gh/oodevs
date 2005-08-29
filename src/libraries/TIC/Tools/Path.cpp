@@ -106,7 +106,7 @@ Path::const_reverse_iterator& Path::const_reverse_iterator::operator+( double rD
         if( rDistance > rDistanceToNext )
         {
             rDistance -= rDistanceToNext;
-            cursor_.Set( ( *itNext )->X(), ( *itNext )->Y() );
+            cursor_.SetSimCoordinates( ( *itNext )->GetSimX(), ( *itNext )->GetSimY() );
             itNext++;
             if( itNext == itEnd_ )
                 throw std::exception();
@@ -116,9 +116,9 @@ Path::const_reverse_iterator& Path::const_reverse_iterator::operator+( double rD
             if( rDistanceToNext == 0 )
                 return *this;
             double rRatio = rDistance / rDistanceToNext;
-            cursor_.Set( ( ( *itNext )->X() - cursor_.X() ) * rRatio + cursor_.X()
-                       , ( ( *itNext )->Y() - cursor_.Y() ) * rRatio + cursor_.Y() );
-            assert( !_isnan( cursor_.X() ) );
+            cursor_.SetSimCoordinates( ( ( *itNext )->GetSimX() - cursor_.GetSimX() ) * rRatio + cursor_.GetSimX()
+                                     , ( ( *itNext )->GetSimY() - cursor_.GetSimY() ) * rRatio + cursor_.GetSimY() );
+            assert( !_isnan( cursor_.GetSimX() ) );
             return *this;
         }
     }

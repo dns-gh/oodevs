@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-23 - 19:03:03
+// Generated: 2005-08-26 - 18:34:59
 // =============================================================================
 class Mission_Automat_NBC_DecontaminerUneZone : public Mission_Automat_ABC
 {

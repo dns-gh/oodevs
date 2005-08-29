@@ -60,9 +60,11 @@ void Mission_Automat_GEN_RealiserZonePoser::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_zone_poser;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_zone_poser = &asnMission;
 
+    const GenObject& zone_ = pTarget_->GetTestParam_GenObject();
 
-    ASN_Tools::CopyGenObject( pTarget_->GetTestParam_GenObject(), asnMission.zone );
+    ASN_Tools::CopyGenObject( zone_, asnMission.zone );
 
+    delete &zone_;
 
 }
 
@@ -75,6 +77,7 @@ void Mission_Automat_GEN_RealiserZonePoser::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_realiser_zone_poser );
     ASN1T_Mission_Automate_GEN_RealiserZonePoser& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_zone_poser;
 
+    ASN_Tools::Delete( asnMission.zone );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

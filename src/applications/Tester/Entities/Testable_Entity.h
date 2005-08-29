@@ -24,6 +24,7 @@
 #endif
 
 #include "Types.h"
+#include "GenObject.h"
 #include "Tools/Path.h"
 #include "Tools/Location.h"
 #include "Workspace.h"
@@ -61,34 +62,34 @@ public:
 
     //! @name Test Parameters
     //@{
-    virtual T_EntityId        GetTestParam_ID                 () const;
-    virtual uint              GetTestParam_Direction          () const;
-    virtual bool              GetTestParam_Bool               () const;
-    virtual int               GetTestParam_Numeric            ( int  nMin = 0, int  nMax = std::numeric_limits< int >::max() ) const;
-    virtual uint              GetTestParam_Enumeration        ( uint nMin    , uint nMax ) const;
-    virtual Position&         GetTestParam_Point              () const;
-    virtual T_PositionVector& GetTestParam_PointList          () const;
-    virtual Path&             GetTestParam_Path               () const;
-    virtual T_PathVector&     GetTestParam_PathList           () const;
-    virtual T_EntityId        GetTestParam_Agent              () const;
-    virtual T_IdVector&       GetTestParam_AgentList          () const;
-    virtual T_EntityId        GetTestParam_AgentKnowledge     () const;
-    virtual T_IdVector&       GetTestParam_AgentKnowledgeList () const;
-    virtual T_EntityId        GetTestParam_Automate           () const;
-    virtual T_IdVector&       GetTestParam_AutomateList       () const;
-    virtual T_EntityId        GetTestParam_ObjectKnowledge    () const;
-    virtual T_IdVector&       GetTestParam_ObjectKnowledgeList() const;
-    virtual T_EntityId        GetTestParam_GenObject          () const;
-    virtual T_IdVector&       GetTestParam_GenObjectList      () const;
-    virtual Location&         GetTestParam_Location           () const;
-    virtual Location&         GetTestParam_Polygon            () const;
-    virtual T_LocationVector& GetTestParam_PolygonList        () const;
-    virtual uint              GetTestParam_NatureAtlas        () const;
-    virtual uint              GetTestParam_GDH                () const;
+    virtual T_EntityId         GetTestParam_ID                 () const;
+    virtual uint               GetTestParam_Direction          () const;
+    virtual bool               GetTestParam_Bool               () const;
+    virtual int                GetTestParam_Numeric            ( int  nMin = 0, int  nMax = std::numeric_limits< int >::max() ) const;
+    virtual uint               GetTestParam_Enumeration        ( uint nMin    , uint nMax ) const;
+    virtual Position&          GetTestParam_Point              () const;
+    virtual T_PositionVector&  GetTestParam_PointList          () const;
+    virtual Path&              GetTestParam_Path               () const;
+    virtual T_PathVector&      GetTestParam_PathList           () const;
+    virtual T_EntityId         GetTestParam_Agent              () const;
+    virtual T_IdVector&        GetTestParam_AgentList          () const;
+    virtual T_EntityId         GetTestParam_AgentKnowledge     () const;
+    virtual T_IdVector&        GetTestParam_AgentKnowledgeList () const;
+    virtual T_EntityId         GetTestParam_Automate           () const;
+    virtual T_IdVector&        GetTestParam_AutomateList       () const;
+    virtual T_EntityId         GetTestParam_ObjectKnowledge    () const;
+    virtual T_IdVector&        GetTestParam_ObjectKnowledgeList() const;
+    virtual GenObject&         GetTestParam_GenObject          () const;
+    virtual T_GenObjectVector& GetTestParam_GenObjectList      () const;
+    virtual Location&          GetTestParam_Location           () const;
+    virtual Location&          GetTestParam_Polygon            () const;
+    virtual T_LocationVector&  GetTestParam_PolygonList        () const;
+    virtual uint               GetTestParam_NatureAtlas        () const;
+    virtual uint               GetTestParam_GDH                () const;
 
-    virtual T_IdVector&       GetTestParam_Limas              () const;
-    virtual T_EntityId        GetTestParam_LeftLimit          ();
-    virtual T_EntityId        GetTestParam_RightLimit         ();
+    virtual T_IdVector&        GetTestParam_Limas              () const;
+    virtual T_EntityId         GetTestParam_LeftLimit          ();
+    virtual T_EntityId         GetTestParam_RightLimit         ();
     //@}
 
 private:

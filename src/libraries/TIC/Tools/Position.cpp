@@ -42,12 +42,19 @@ Geodetic*                     Position::pGeodetic_;
 // Created: SBO 2005-05-23
 //-----------------------------------------------------------------------------
 Position::Position()
-    : Point2< double > ()
-    , strMgrs_         ()
-    , rLongitude_      ( 0.0 )
-    , rLatitude_       ( 0.0 )
+    : geometry::Point2< double > ( 0.0, 0.0 )
 {
-    // nothing
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position constructor
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
+Position::Position( const Position& position )
+    : geometry::Point2< double >( position.X(), position.Y() )
+{
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -55,12 +62,11 @@ Position::Position()
 // Created: SBO 2005-05-23
 //-----------------------------------------------------------------------------
 Position::Position( const std::string& strMgrs )
-    : Point2< double > ( Point2FromMgrs( strMgrs ) )
-    , strMgrs_         ( strMgrs )
-    , rLongitude_      ( 0.0 )
-    , rLatitude_       ( 0.0 )
+    : geometry::Point2< double >( 0.0, 0.0 )
 {
-    UpdateWGS84();
+    Position& pos = PositionFromMgrs( strMgrs );
+    SetSimCoordinates( pos.X(), pos.Y() );
+    delete &pos;
 }
 
 //-----------------------------------------------------------------------------
@@ -68,30 +74,11 @@ Position::Position( const std::string& strMgrs )
 // Created: SBO 2005-06-29
 //-----------------------------------------------------------------------------
 Position::Position( double rLatitude, double rLongitude )
-    : Point2< double > ()
-    , strMgrs_         ()
-    , rLatitude_       ( rLatitude  )
-    , rLongitude_      ( rLongitude )
+    : geometry::Point2< double >( 0.0, 0.0 )
 {
-    pGeodetic_->Set( RadianFromDegree( rLatitude_ ), RadianFromDegree( rLongitude_ ) );
-    MGRS mgrs;
-    pGeodetic_->GetCoordinates( mgrs );
-    strMgrs_ = mgrs.GetString();
-    Point2< double > pt( Point2FromMgrs( strMgrs_ ) );
-    Set( pt.X(), pt.Y() );
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::Position
-// Created: SBO 2005-06-29
-//-----------------------------------------------------------------------------
-Position::Position( const Point2< double >& pt )
-    : Point2< double > ( pt )
-    , strMgrs_         ( MgrsFromPoint2( pt ) )
-    , rLongitude_      ( 0.0 )
-    , rLatitude_       ( 0.0 )
-{
-    UpdateWGS84();
+    Position& pos = PositionFromWGS( rLatitude, rLongitude );
+    SetSimCoordinates( pos.X(), pos.Y() );
+    delete &pos;
 }
 
 //-----------------------------------------------------------------------------
@@ -100,6 +87,7 @@ Position::Position( const Point2< double >& pt )
 //-----------------------------------------------------------------------------
 Position::~Position()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -160,72 +148,42 @@ void Position::Terminate()
     delete pParameters_;
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: Position::operator=
-// Created: SBO 2005-05-23
-//-----------------------------------------------------------------------------
-Position& Position::operator=( const std::string& strMgrs )
-{
-    strMgrs_ = strMgrs;
-
-    try
-    {
-        MGRS        mgrs;
-        mgrs.SetString( strMgrs_ );
-        pPlanar_->SetCoordinates( mgrs );
-        Set( pPlanar_->GetX() + pTranslation_->X(), pPlanar_->GetY() + pTranslation_->Y() );
-        UpdateWGS84();
-        return *this;
-    }
-    catch( std::exception& exception )
-    {
-        MT_LOG_ERROR_MSG( exception.what() << ": " << strMgrs );
-        throw;
-    }
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::operator=
-// Created: SBO 2005-05-31
-//-----------------------------------------------------------------------------
-Position& Position::operator=( const Point2< double >& pt )
-{
-    strMgrs_ = MgrsFromPoint2( pt );
-    Set( pt.X(), pt.Y() );
-    UpdateWGS84();
-    return *this;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::operator=
-// Created: SBO 2005-06-16
-//-----------------------------------------------------------------------------
+// Created: SBO 2005-08-17
+// -----------------------------------------------------------------------------
 Position& Position::operator=( const Position& position )
 {
-    Set( position.X(), position.Y() );
-    strMgrs_    = position.strMgrs_;
-    rLatitude_  = position.rLatitude_;
-    rLongitude_ = position.rLongitude_;
+    SetSimCoordinates( position.X(), position.Y() );
     return *this;
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: Position::operator+
-// Created: SBO 2005-06-20
-//-----------------------------------------------------------------------------
-Position Position::operator+( const Point2< double >& pt ) const
+// Created: SBO 2005-08-29
+// -----------------------------------------------------------------------------
+Position Position::operator+( const Position& position ) const
 {
-    geometry::Point2< double > tmpPt( pt.X() + X(), pt.Y() + Y() );
     Position tmpPos;
-    tmpPos = tmpPt;
-    return tmpPos;
+    tmpPos.SetSimCoordinates( X() + position.X(), Y() + position.Y() );
+    return Position( tmpPos );
 }
 
 //-----------------------------------------------------------------------------
-// Name: Position::Point2FromMgrs
-// Created: SBO 2005-05-23
+// Name: Position::IsOnSegment
+// Created: SBO 2005-07-06
 //-----------------------------------------------------------------------------
-geometry::Point2< double > Position::Point2FromMgrs( const std::string& strMgrs )
+bool Position::IsOnSegment( const Position& start, const Position& end ) const
+{
+    double rDistanceDelta = start.GetDistanceTo( end ) - GetDistanceTo( start ) - GetDistanceTo( end );
+    return fabs( rDistanceDelta ) < 5; // 5 meters tolerance
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::PositionFromMgrs
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+Position& Position::PositionFromMgrs( const std::string& strMgrs  )
 {
     MGRS mgrs;
 
@@ -233,8 +191,10 @@ geometry::Point2< double > Position::Point2FromMgrs( const std::string& strMgrs 
     {
         mgrs.SetString( strMgrs );
         pPlanar_->SetCoordinates( mgrs );
-        return geometry::Point2< double >( pPlanar_->GetX() + pTranslation_->X(),
-                                           pPlanar_->GetY() + pTranslation_->Y() );
+        Position& position = *new Position();
+        position.SetSimCoordinates( pPlanar_->GetX() + pTranslation_->X()
+                                  , pPlanar_->GetY() + pTranslation_->Y() );
+        return position;
     }
     catch( std::exception& exception )
     {
@@ -243,57 +203,90 @@ geometry::Point2< double > Position::Point2FromMgrs( const std::string& strMgrs 
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: Position::Point2FromPolar
-// Created: SBO 2005-05-31
-//-----------------------------------------------------------------------------
-Point2< double > Position::Point2FromPolar( double rRadius, double rDegAngle )
-{
-    double x = rRadius * std::cos( RadianFromDegree( rDegAngle ) );
-    double y = rRadius * std::sin( RadianFromDegree( rDegAngle ) );
-
-    return geometry::Point2< double >( x, y );
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::MgrsFromPoint2
-// Created: SBO 2005-05-31
-//-----------------------------------------------------------------------------
-std::string Position::MgrsFromPoint2( const Point2< double >& pt )
+// -----------------------------------------------------------------------------
+// Name: Position::MgrsFromPosition
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+std::string Position::MgrsFromPosition( const Position& position ) const
 {
     MGRS mgrs;
 
     try
     {
-        pPlanar_->Set( pt.X() - pTranslation_->X(), pt.Y() - pTranslation_->Y() );
+        pPlanar_->Set( position.GetSimX() - pTranslation_->X(), position.GetSimY() - pTranslation_->Y() );
         mgrs.SetCoordinates( *pPlanar_ );
         return mgrs.GetString();
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << pt.X() << 
-                          ", " << pt.Y() << ") to mgrs : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << position.GetSimX() << 
+                          ", " << position.GetSimY() << ") to mgrs : " << e.what() );
         throw;
     }
 }
 
-//-----------------------------------------------------------------------------
-// Name: Position::UpdateWGS84
-// Created: SBO 2005-06-06
-//-----------------------------------------------------------------------------
-void Position::UpdateWGS84()
+// -----------------------------------------------------------------------------
+// Name: Position::PositionFromWGS
+// Created: SBO 2005-08-12
+// -----------------------------------------------------------------------------
+Position& Position::PositionFromWGS( double rLatitude, double rLongitude )
 {
-    pPlanar_->GetCoordinates( *pGeodetic_ );
-    rLatitude_  = pGeodetic_->GetLatitude ();
-    rLongitude_ = pGeodetic_->GetLongitude();
+    pGeodetic_->Set( RadianFromDegree( rLatitude ), RadianFromDegree( rLongitude ) );
+    pPlanar_->SetCoordinates( *pGeodetic_ );
+    Position& pos = *new Position();
+    pos.SetSimCoordinates( pPlanar_->GetX() + pTranslation_->X(), pPlanar_->GetY() + pTranslation_->Y() );
+    return pos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::SetSimCoordinates
+// Created: SBO 2005-08-05
+// -----------------------------------------------------------------------------
+void Position::SetSimCoordinates( double rX, double rY )
+{
+    Set( rX, rY );
 }
 
 //-----------------------------------------------------------------------------
-// Name: Position::IsOnLine
-// Created: SBO 2005-07-06
+// Name: Position::PositionFromPolar
+// Created: SBO 2005-05-31
 //-----------------------------------------------------------------------------
-bool Position::IsOnSegment( const Position& start, const Position& end ) const
+Position Position::PositionFromPolar( double rRadius, double rDegAngle )
 {
-    double rDistanceDelta = start.GetDistanceTo( end ) - GetDistanceTo( start ) - GetDistanceTo( end );
-    return fabs( rDistanceDelta ) < 5; // 5 meters tolerance
+    double x = rRadius * std::cos( RadianFromDegree( rDegAngle ) );
+    double y = rRadius * std::sin( RadianFromDegree( rDegAngle ) );
+    Position tmpPos;
+    tmpPos.SetSimCoordinates( x, y );
+    return Position( tmpPos );
+}
+
+//-----------------------------------------------------------------------------
+// Name: Position::GetMgrsCoordinate
+// Created: SBO 2005-05-24
+//-----------------------------------------------------------------------------
+const std::string Position::GetMgrsCoordinate() const
+{
+    return MgrsFromPosition( *this );
+}
+
+//-----------------------------------------------------------------------------
+// Name: Position::GetLatitude
+// Created: SBO 2005-06-06
+//-----------------------------------------------------------------------------
+double Position::GetLatitude() const
+{
+    pPlanar_->Set( GetSimX() - pTranslation_->X(), GetSimY() - pTranslation_->Y() );
+    pGeodetic_->SetCoordinates( *pPlanar_ );
+    return DegreeFromRadian( pGeodetic_->GetLatitude() );
+}
+
+//-----------------------------------------------------------------------------
+// Name: Position::GetLongitude
+// Created: SBO 2005-06-06
+//-----------------------------------------------------------------------------
+double Position::GetLongitude() const
+{
+    pPlanar_->Set( GetSimX() - pTranslation_->X(), GetSimY() - pTranslation_->Y() );
+    pGeodetic_->SetCoordinates( *pPlanar_ );
+    return DegreeFromRadian( pGeodetic_->GetLongitude() );
 }

@@ -60,7 +60,7 @@ void Mission_Automat_GEN_RealiserPlatesformesSommairesDeDeploiementInitial::Seri
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial = &asnMission;
 
-    const T_IdVector& platesFormes_ = pTarget_->GetTestParam_GenObjectList();
+    const T_GenObjectVector& platesFormes_ = pTarget_->GetTestParam_GenObjectList();
 
     ASN_Tools::CopyGenObjectList( platesFormes_, asnMission.plates_formes );
 

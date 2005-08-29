@@ -50,6 +50,33 @@ private:
     enum E_Type
     {
         eNone,
+        eFixedWingAircraft,
+        eRotaryWingAircraft,
+        eAmbulance,
+        eArmouredPersonnelCarrier,
+        eArmouredPersonnelCarrierRecovery,
+        eArmouredReconnaissanceCarrier,
+        eArmouredVehicleLight,
+        eArmouredServiceSupport,
+        eAutomobile,
+        eBicycle,
+        eBattleTankHeavyRecovery,
+        eBattleTankMediumRecovery,
+        eBus,
+        eCrossCountryTruck,
+        eFireFighting,
+        eHeavyEquipmentTransport,
+        eMaintenance,
+        eMaterielHandling,
+        eMilitaryUtility,
+        eMotorcycle,
+        eNotKnown,
+        eNotOtherwiseSpecified,
+        eSemi,
+        eTractor,
+        eTrailer,
+        eTrolleyBus,
+        eTruck
     };
 
     typedef std::map< std::string, const DeviceCategory*, sCaseInsensitiveLess > T_DeviceCategoryMap;

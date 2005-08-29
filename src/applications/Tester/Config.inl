@@ -39,6 +39,16 @@ const std::string& Config::GetConfigFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Config::GetRandomSeedFile
+// Created: SBO 2005-08-29
+// -----------------------------------------------------------------------------
+inline
+const std::string& Config::GetRandomSeedFile() const
+{
+    return strRandomSeedFile_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::GetPort
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------

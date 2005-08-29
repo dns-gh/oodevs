@@ -136,7 +136,6 @@ void TacticalLineManager::CreateDefaultTacticalLines( const PositionManager& pos
 // -----------------------------------------------------------------------------
 void TacticalLineManager::Register( TacticalLine_ABC& line )
 {
-    MT_LOG_INFO_MSG( "Creating tactical line with id: " << line.GetId() );
     lines_.insert( &line );
 }
 

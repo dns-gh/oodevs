@@ -24,6 +24,7 @@
 #include "Testable_Entity.h"
 #include "Automat.h"
 #include "Pawn.h"
+#include "GenObject.h"
 #include "Types/TacticalLineManager.h"
 #include "Tools/Position.h"
 #include "Tools/Path.h"
@@ -142,18 +143,18 @@ T_IdVector& Testable_Entity::GetTestParam_ObjectKnowledgeList() const
 // Name: Testable_Entity::GetTestParam_GenObject
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-T_EntityId Testable_Entity::GetTestParam_GenObject() const
+GenObject& Testable_Entity::GetTestParam_GenObject() const
 {
-    return ( uint )rand();
+    return GenObject::GetTestParam_GenObject( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_GenObjectList
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-T_IdVector& Testable_Entity::GetTestParam_GenObjectList() const
+T_GenObjectVector& Testable_Entity::GetTestParam_GenObjectList() const
 {
-    return *new T_IdVector();
+    return GenObject::GetTestParam_GenObjectList( *this, 5 );
 }
 
 // -----------------------------------------------------------------------------

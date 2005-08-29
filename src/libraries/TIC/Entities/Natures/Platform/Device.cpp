@@ -28,15 +28,15 @@ const Device        Device::notDefined( "None", eNone, "NONE" );
 // -----------------------------------------------------------------------------
 void Device::Initialize()
 {
-    devices_[ "arme" ]                   = new Device( "arme"                   , eArme                  , "WEAPON"  );
-    devices_[ "equipementNBC" ]          = new Device( "Equipement NBC"         , eEquipementNBC         , "EQNBC"   );
-    devices_[ "aeronef" ]                = new Device( "Aeronef"                , eAeronef               , "AIR"     );
-    devices_[ "equipementGenie" ]        = new Device( "Equipement du genie"    , eEquipementGenie       , "EQINGE"  );
-    devices_[ "vehicule" ]               = new Device( "Vehicule"               , eVehicule              , "VEHICU"  );
-    devices_[ "equipementElectronique" ] = new Device( "Equipement electronique", eEquipementElectronique, "EQELECT" );
-    devices_[ "batiment" ]               = new Device( "Batiment"               , eBatiment              , "BUILD"   );
-    devices_[ "autreTypeEquipement" ]    = new Device( "Autre type d'equipement", eAutreTypeEquipement   , "OTHEREQ" );
-    devices_[ notDefined.GetName() ]     = &notDefined;
+    devices_[ "WEAPON" ]  = new Device( "Arme"                   , eArme                  , "WEAPON"  );
+    devices_[ "EQNBC" ]   = new Device( "Equipement NBC"         , eEquipementNBC         , "EQNBC"   );
+    devices_[ "AIR" ]     = new Device( "Aeronef"                , eAeronef               , "AIR"     );
+    devices_[ "EQINGE" ]  = new Device( "Equipement du genie"    , eEquipementGenie       , "EQINGE"  );
+    devices_[ "VEHICU" ]  = new Device( "Vehicule"               , eVehicule              , "VEHICU"  );
+    devices_[ "EQELECT" ] = new Device( "Equipement electronique", eEquipementElectronique, "EQELECT" );
+    devices_[ "BUILD" ]   = new Device( "Batiment"               , eBatiment              , "BUILD"   );
+    devices_[ "OTHEREQ" ] = new Device( "Autre type d'equipement", eAutreTypeEquipement   , "OTHEREQ" );
+    devices_[ "NONE" ]    = &notDefined;
 }
 
 // -----------------------------------------------------------------------------

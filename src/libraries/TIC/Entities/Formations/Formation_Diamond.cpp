@@ -82,13 +82,13 @@ void Formation_Diamond::ApplyTo( Platform& platform )
     }
     else
     {
-        geometry::Point2< double > ptTmp;
+        Position ptTmp;
         // add some chaos so that diamond formation is not too much obviously "square"
         //double rChaos = ( ( double )rand() / RAND_MAX - 0.5 ) * 40.0; // +/- 20m
         double rChaos = 0;
         for( double rDirection = pPawn_->GetDirection() + rAngle_; rDirection >= 360.0; rDirection -= 360.0 )
             ;
-        ptTmp = Position::Point2FromPolar( rRadius_ * rDistanceBetweenPlatforms_ + rChaos, rDirection );
+        ptTmp = Position::PositionFromPolar( rRadius_ * rDistanceBetweenPlatforms_ + rChaos, rDirection );
         platform.MoveTo( pPawn_->GetPosition() + ptTmp );
 
         nPlatformPositionedOnLevel_++;

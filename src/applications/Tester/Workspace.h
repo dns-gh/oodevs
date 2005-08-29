@@ -90,6 +90,7 @@ private:
     //! @name Operations
     //@{
     void LoadScipioConfigFile( const std::string& strScipioConfigFile );
+    void InitializeRandomSeed( const std::string& strConfigFile );
 	//@}
 
 private:

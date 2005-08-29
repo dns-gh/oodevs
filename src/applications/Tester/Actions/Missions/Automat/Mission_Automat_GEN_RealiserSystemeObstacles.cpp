@@ -60,7 +60,7 @@ void Mission_Automat_GEN_RealiserSystemeObstacles::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_systeme_obstacles = &asnMission;
 
-    const T_IdVector& obstacles_ = pTarget_->GetTestParam_GenObjectList();
+    const T_GenObjectVector& obstacles_ = pTarget_->GetTestParam_GenObjectList();
 
     ASN_Tools::CopyGenObjectList( obstacles_, asnMission.obstacles );
 

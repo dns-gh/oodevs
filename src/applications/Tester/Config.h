@@ -51,6 +51,7 @@ public:
     //@{
     const std::string& GetServer           () const;
     const std::string& GetConfigFile       () const;
+    const std::string& GetRandomSeedFile   () const;
     uint               GetPort             () const;
     uint               GetTimeFactor       () const;
     bool               MustTestAutomat     () const;
@@ -77,6 +78,7 @@ private:
     //@{
     std::string strServer_;
     std::string strConfigFile_;
+    std::string strRandomSeedFile_;
     uint        nPort_;
     uint        nTimeFactor_;
     bool        bTestAutomat_;

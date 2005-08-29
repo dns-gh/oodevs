@@ -34,15 +34,16 @@ using namespace TEST;
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
 Config::Config( const std::string& strFile )
-    : strServer_     ( "127.0.0.1" )
-    , strConfigFile_ ( "./scipio.xml" )
-    , nPort_         ( 10000 )
-    , nTimeFactor_   ( 40 )
-    , bTestAutomat_  ( true )
-    , nPeriod_       ( 180 )
-    , nItNumber_     ( 1 )
-    , nItInterval_   ( 1 )
-    , strLogFile_    ( "./test.log" )
+    : strServer_         ( "127.0.0.1" )
+    , strConfigFile_     ( "./scipio.xml" )
+    , nPort_             ( 10000 )
+    , nTimeFactor_       ( 40 )
+    , bTestAutomat_      ( true )
+    , nPeriod_           ( 180 )
+    , nItNumber_         ( 1 )
+    , nItInterval_       ( 1 )
+    , strLogFile_        ( "./test.log" )
+    , strRandomSeedFile_ ( "./test_seed.xml" )
 {
     LoadConfigFile( strFile );
 }
@@ -87,11 +88,12 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.EndSection(); // Sim
 
         archive.Section( "Actions" );
-        archive.ReadField( "TestAutomats"          , bTestAutomat_ );
-        archive.ReadField( "Period"                , nPeriod_      );
-        archive.ReadField( "NumberOfSameMissions"  , nItNumber_    );
-        archive.ReadField( "IntervalOfSameMissions", nItInterval_  );
-        archive.ReadField( "LogFile"               , strLogFile_   );
+        archive.ReadField( "TestAutomats"          , bTestAutomat_      );
+        archive.ReadField( "Period"                , nPeriod_           );
+        archive.ReadField( "NumberOfSameMissions"  , nItNumber_         );
+        archive.ReadField( "IntervalOfSameMissions", nItInterval_       );
+        archive.ReadField( "LogFile"               , strLogFile_        );
+        archive.ReadField( "RandSeedFile"          , strRandomSeedFile_ );
         archive.EndSection(); // Actions
 
         archive.EndSection(); // Tester

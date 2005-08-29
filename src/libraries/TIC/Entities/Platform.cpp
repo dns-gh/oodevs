@@ -118,8 +118,8 @@ void Platform::MoveTo( const Position& position )
             rSpeed_ = pType_->GetType().GetMaxSpeed();
 
         double rRatio = rNeededSpeed / rSpeed_;
-        position_.Set( ( position.X() - position_.X() ) / rRatio + position_.X()
-                     , ( position.Y() - position_.Y() ) / rRatio + position_.Y() );
+        position_.SetSimCoordinates( ( position.X() - position_.X() ) / rRatio + position_.X()
+                                   , ( position.Y() - position_.Y() ) / rRatio + position_.Y() );
         assert( !_isnan( position_.X() ) );
     }
 }

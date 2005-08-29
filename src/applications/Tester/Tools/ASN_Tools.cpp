@@ -151,25 +151,29 @@ void ASN_Tools::CopyObjectKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowle
 // Name: ASN_Tools::CopyGenObject
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-void ASN_Tools::CopyGenObject( uint nIdValue, ASN1T_MissionGenObject& asn )
+void ASN_Tools::CopyGenObject( const GenObject& genObject, ASN1T_MissionGenObject& asn )
 {
-    // TODO: fill in the other fields
-    asn.oid_obstacle_planifie = nIdValue;
+    CopyID      ( genObject.GetObstacleId(), asn.oid_obstacle_planifie );
+    CopyLocation( genObject.GetLocation()  , asn.pos_obstacle );
+    asn.type_obstacle = genObject.GetType();
+    asn.urgence       = genObject.GetUrgency();
+    asn.preliminaire  = genObject.GetObstacleSubType();
+    asn.priorite      = genObject.GetPriority();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::CopyGenObjectList
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-void ASN_Tools::CopyGenObjectList( const T_IdVector& ids, ASN1T_ListMissionGenObject& asn )
+void ASN_Tools::CopyGenObjectList( const T_GenObjectVector& genObjects, ASN1T_ListMissionGenObject& asn )
 {
-    asn.n = ids.size();
-    if( ids.empty() )
+    asn.n = genObjects.size();
+    if( genObjects.empty() )
         return;
-    asn.elem = new ASN1T_MissionGenObject[ ids.size() ]; //$$$$ RAM
+    asn.elem = new ASN1T_MissionGenObject[ genObjects.size() ]; //$$$$ RAM
     uint i = 0;
-    for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
-        CopyGenObject( *it, asn.elem[ i++ ] );
+    for( CIT_GenObjectVector it = genObjects.begin(); it != genObjects.end(); ++it )
+        CopyGenObject( **it, asn.elem[ i++ ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -442,7 +446,7 @@ void ASN_Tools::Delete( ASN1T_ListLocalisation& asn )
     if( asn.n > 0 )
     {
         for( uint i = 0; i < asn.n; ++i )
-            Delete( asn.elem[i] );
+            Delete( asn.elem[ i ] );
         delete [] asn.elem;
     }
 }
@@ -471,6 +475,15 @@ void ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 
 // -----------------------------------------------------------------------------
 // Name: ASN_Tools::Delete
+// Created: SBO 2005-08-26
+// -----------------------------------------------------------------------------
+void ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
+{
+    Delete( asn.pos_obstacle );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
 void ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
@@ -478,7 +491,7 @@ void ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
     if( asn.n > 0 )
     {
         for( uint i = 0; i < asn.n ; ++i )
-            delete &asn.elem[ i ];
+            Delete( asn.elem[ i ] );
         delete [] asn.elem;
     }
 }

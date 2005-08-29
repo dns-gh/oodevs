@@ -60,7 +60,7 @@ void Mission_Automat_GEN_AmenagerAireStationnement::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_amenager_aire_stationnement = &asnMission;
 
-    const T_IdVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
+    const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
     ASN_Tools::CopyGenObjectList( travaux_, asnMission.travaux );
 

@@ -295,6 +295,7 @@ void OutputXml::OutputPlatform( const Platform& platform )
     archive_.WriteField( "Vitesse"   , platform.GetSpeed()          );
 
     archive_.Section( "Position" );
+
     std::stringstream  ss;
     ss.precision( 6 );
     ss.setf( std::ios::showpos );

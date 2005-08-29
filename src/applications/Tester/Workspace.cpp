@@ -34,6 +34,7 @@
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+#include "MT/MT_XmlTools/MT_XXmlOutputArchive.h"
 
 using namespace TEST;
 
@@ -56,6 +57,8 @@ Workspace::Workspace( TestSet_ABC& testSet, const Config& config )
     , nCurrentSimTime_  ( 0 )
     , nTimeFactor_      ( config.GetTimeFactor() )
 {
+    InitializeRandomSeed( config.GetRandomSeedFile() );
+
     // scheduler
     pScheduler_ = new Scheduler( config );
 
@@ -158,6 +161,51 @@ void Workspace::LoadScipioConfigFile( const std::string& strScipioConfigFile )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Workspace::InitializeRandomSeed
+// Created: SBO 2005-08-29
+// -----------------------------------------------------------------------------
+void Workspace::InitializeRandomSeed( const std::string& strConfigFile )
+{
+    std::string           strCurrentDir = MT_GetCurrentDir();
+    std::string           strDir;
+    std::string           strFile;
+
+    MT_ExtractFilePath    ( strConfigFile, strDir  );
+    MT_ExtractFileName    ( strConfigFile, strFile );
+
+    try
+    {
+        XmlInputArchive   archive;
+        MT_ChangeDir      ( strDir );
+        archive.Open      ( strFile );
+        archive.Section   ( "Random" );
+        uint nSeed = 0;
+        archive.ReadField( "Seed", nSeed );
+        srand( nSeed );
+        MT_LOG_INFO_MSG( "Using random seed from file: " << nSeed );
+        archive.EndSection(); // Random
+        archive.Close     ();
+        MT_ChangeDir      ( strCurrentDir );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_ChangeDir    ( strCurrentDir );
+        MT_LOG_WARNING_MSG( exception.what().c_str() );
+        uint nSeed = time( 0 );
+        srand( nSeed );
+        MT_LOG_INFO_MSG( "Using time as random seed: " << nSeed );
+
+        MT_XXmlOutputArchive archive;
+        archive.Section   ( "Random" );
+        archive.WriteField( "Seed", nSeed );
+        archive.EndSection(); // Random
+
+        MT_ChangeDir       ( strDir );
+        archive.WriteToFile( strFile );
+        MT_ChangeDir       ( strCurrentDir );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Workspace::SetTimeFactor

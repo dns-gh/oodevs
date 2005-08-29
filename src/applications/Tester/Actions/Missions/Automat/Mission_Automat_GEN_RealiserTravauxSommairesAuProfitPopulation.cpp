@@ -60,7 +60,7 @@ void Mission_Automat_GEN_RealiserTravauxSommairesAuProfitPopulation::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population = &asnMission;
 
-    const T_IdVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
+    const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
     ASN_Tools::CopyGenObjectList( travaux_, asnMission.travaux );
 

@@ -20,36 +20,6 @@ namespace TIC
 {
 
 //-----------------------------------------------------------------------------
-// Name: Position::GetMgrsCoordinate
-// Created: SBO 2005-05-24
-//-----------------------------------------------------------------------------
-inline
-const  std::string& Position::GetMgrsCoordinate() const
-{
-    return strMgrs_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::GetLatitude
-// Created: SBO 2005-06-06
-//-----------------------------------------------------------------------------
-inline
-double Position::GetLatitude() const
-{
-    return DegreeFromRadian( rLatitude_ );
-}
-
-//-----------------------------------------------------------------------------
-// Name: Position::GetLongitude
-// Created: SBO 2005-06-06
-//-----------------------------------------------------------------------------
-inline
-double Position::GetLongitude() const
-{
-    return DegreeFromRadian( rLongitude_ );
-}
-
-//-----------------------------------------------------------------------------
 // Name: Position::RadianFromDegree
 // Created: SBO 2005-05-31
 //-----------------------------------------------------------------------------
@@ -77,6 +47,26 @@ inline
 double Position::GetDistanceTo( const Position& position ) const
 {
     return sqrt( ( position.X() - X() ) * ( position.X() - X() ) + ( position.Y() - Y() ) * ( position.Y() - Y() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Position::GetSimX
+// Created: SBO 2005-08-29
+// -----------------------------------------------------------------------------
+inline
+double Position::GetSimX() const
+{
+    return X();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Position::GetSimY
+// Created: SBO 2005-08-29
+// -----------------------------------------------------------------------------
+inline
+double Position::GetSimY() const
+{
+    return Y();
 }
 
 } // end namespace TIC

@@ -68,7 +68,7 @@ void Formation_Line::ApplyTo( Platform& platform )
     assert( pPawn_ != 0 );
 
     // get next point on line orthogonal to direction vector
-    geometry::Point2< double > ptTmp = Position::Point2FromPolar( rCurrentPos_ * rDistanceBetweenPlatforms_, pPawn_->GetDirection() - 90 );
+    Position ptTmp = Position::PositionFromPolar( rCurrentPos_ * rDistanceBetweenPlatforms_, pPawn_->GetDirection() - 90 );
     // update platform position and speed
     platform.MoveTo( pPawn_->GetPosition() + ptTmp );
 

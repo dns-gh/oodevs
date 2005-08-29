@@ -60,9 +60,11 @@ void Mission_Automat_GEN_AmenagerTerrainPoserSommaire::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_amenager_terrain_poser_sommaire = &asnMission;
 
+    const GenObject& terrain_ = pTarget_->GetTestParam_GenObject();
 
-    ASN_Tools::CopyGenObject( pTarget_->GetTestParam_GenObject(), asnMission.terrain );
+    ASN_Tools::CopyGenObject( terrain_, asnMission.terrain );
 
+    delete &terrain_;
 
 }
 
@@ -75,6 +77,7 @@ void Mission_Automat_GEN_AmenagerTerrainPoserSommaire::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire );
     ASN1T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_amenager_terrain_poser_sommaire;
 
+    ASN_Tools::Delete( asnMission.terrain );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

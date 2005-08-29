@@ -24,8 +24,8 @@ class DEC_MiscFunctions
 {
 public:
     // Communication
-    template< typename T > static void RC_Operational                     ( DIA_Call_ABC& call, T& caller );
-    template< typename T > static void RC_Message                         ( DIA_Call_ABC& call, T& caller );
+    template< typename T > static void RC_Operational( DIA_Call_ABC& call, T& caller );
+    template< typename T > static void RC_Message    ( DIA_Call_ABC& call, T& caller );
     template< typename T > static void RC_Warning    ( DIA_Call_ABC& call, T& caller );    
    
     // Reinforcement

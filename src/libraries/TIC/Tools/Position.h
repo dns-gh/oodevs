@@ -48,25 +48,31 @@ public:
 	//! @name Constructors/Destructor
     //@{
              Position();
+             Position( const Position& position );
              Position( const std::string& strMgrs );
              Position( double rLatitude, double rLongitude );
-             Position( const geometry::Point2< double >& pt );
     virtual ~Position();
     //@}
 
     //! @name Static Operations
     //@{
-    static void    Initialize( const std::string& strWorldConfigFile );
-    static void    Terminate ();
-
-    static geometry::Point2< double > Point2FromPolar( double rRadius, double rDegAngle );
+    static void     Initialize       ( const std::string& strWorldConfigFile );
+    static void     Terminate        ();
+    static Position PositionFromPolar( double rRadius, double rDegAngle );
     //@}
 
     //! @name Accessors
     //@{
-    const  std::string& GetMgrsCoordinate () const;
-           double       GetLatitude       () const;
-           double       GetLongitude      () const;
+    const std::string GetMgrsCoordinate() const;
+          double      GetLatitude      () const;
+          double      GetLongitude     () const;
+          double      GetSimX          () const;
+          double      GetSimY          () const;
+    //@}
+
+    //! @name Modifiers
+    //@{
+    void SetSimCoordinates( double rX, double rY );
     //@}
 
     //! @name Operations
@@ -78,29 +84,26 @@ public:
     //! @name Operators
     //@{
     Position& operator=( const Position& position );
-    Position& operator=( const std::string& strMgrs );
-    Position& operator=( const geometry::Point2< double >& pt );
-    Position  operator+( const geometry::Point2< double >& pt ) const;
+    Position  operator+( const Position& position ) const;
     //@}
 
 private:
-    //! @name Operations
+    //! @name Static Operations
     //@{
-    static geometry::Point2< double > Point2FromMgrs  ( const std::string& strMgrs );
-    static std::string                MgrsFromPoint2  ( const geometry::Point2< double >& pt );
-    static double                     RadianFromDegree( double rDegree );
-    static double                     DegreeFromRadian( double rRadian );
-
-           void                       UpdateWGS84     ();
+    static double RadianFromDegree( double rDegree );
+    static double DegreeFromRadian( double rRadian );
     //@}
+
+   //! @name Coordinate Conversion Operations
+   //@{
+   Position&   PositionFromMgrs( const std::string& strMgrs  );
+   std::string MgrsFromPosition( const Position&    position ) const;
+   Position&   PositionFromWGS ( double rLatitude, double rLongitude );
+   //@}
 
 private:
 	//! @name Member data
     //@{
-    std::string strMgrs_;
-    double      rLatitude_;
-    double      rLongitude_;
-
     // reference values
     static geocoord::PlanarCartesian*             pPlanar_;
     static geocoord::PlanarCartesian::Parameters* pParameters_;
