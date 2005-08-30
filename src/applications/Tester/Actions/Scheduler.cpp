@@ -41,6 +41,7 @@ Scheduler::Scheduler( const Config& config )
     , nTestRun_             ( 0 )
     , nTestTotal_           ( 0 )
     , nSameMissionInterval_ ( config.GetIterationInterval() )
+    , nRecoveryTick_        ( config.MustRecover() ? config.GetRecoveryTick() : 0 )
 {
     // NOTHING
 }
@@ -52,6 +53,22 @@ Scheduler::Scheduler( const Config& config )
 Scheduler::~Scheduler()
 {
     actions_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Scheduler::RecoverIfNeeded
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void Scheduler::RecoverIfNeeded( uint nCurrentTick )
+{
+    if( nRecoveryTick_ == 0 )
+        return;
+    if( itCurrentAction_ == actions_.end() )
+        return;
+    nCurrentTick_ = nRecoveryTick_;
+    for( ; itCurrentAction_ != actions_.end() && itCurrentAction_->first < nCurrentTick_; ++itCurrentAction_ )
+        ;
+    nLastExecutionTick_ = nCurrentTick;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +92,8 @@ bool Scheduler::Run( uint nCurrentTick )
         itCurrentAction_->second->Run();
         ++itCurrentAction_;
         ++nTestRun_;
-        nLastExecutionTick_ = nCurrentTick;
     }
+    nLastExecutionTick_ = nCurrentTick;
     return true;
 }
 
@@ -134,4 +151,13 @@ uint Scheduler::GetNextExecutionTick() const
 void Scheduler::ResetExecutionTick()
 {
     nNextExecutionTick_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Scheduler::GetCurrentTick
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+uint Scheduler::GetCurrentTick() const
+{
+    return nCurrentTick_;
 }

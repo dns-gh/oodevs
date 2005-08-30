@@ -50,6 +50,7 @@ public:
 
     //! @name Operations
     //@{
+    void     RecoverIfNeeded   ( uint nCurrentTick );
     bool     Run               ( uint nCurrentTick );
     void     AddAction         ( Action_ABC& action );
     void     AddAction         ( Action_ABC& action, uint nExecutionTick );
@@ -60,6 +61,7 @@ public:
     //! @name Accessors
     //@{
     uint     GetNextExecutionTick() const;
+    uint     GetCurrentTick      () const;
     //@}
 
 private:
@@ -67,11 +69,6 @@ private:
     //@{
     Scheduler( const Scheduler& );            //!< Copy constructor
     Scheduler& operator=( const Scheduler& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    uint ComputeNextExecutionTick();
     //@}
 
 private:
@@ -91,6 +88,7 @@ private:
     uint         nCurrentTick_;
     uint         nLastExecutionTick_;
     uint         nSameMissionInterval_;
+    uint         nRecoveryTick_;
 
     // test statistics
     uint         nTestRun_;

@@ -49,8 +49,7 @@ class Workspace
 public:
 	//! @name Constructors/Destructor
     //@{
-     Workspace( TestSet_ABC&  testSet,
-                const Config& config );
+     Workspace( TestSet_ABC&  testSet, const Config& config );
     ~Workspace();
     //@}
 
@@ -62,7 +61,8 @@ public:
 public:
     //! @name Operations
     //@{
-    void Update();
+    void Update           ();
+    void SaveRecoveryPoint();
     //@}
 
     //! @name Accessors
@@ -114,6 +114,8 @@ private:
     Scheduler*          pScheduler_;
     // Test Set
     TestSet_ABC*        pTestSet_;
+    // Recover file
+    std::string         strRecoveryFile_;
 	//@}
 };
 

@@ -406,6 +406,9 @@ void MessageManager::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick& as
 void MessageManager::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*asnMsg*/ )
 {
     MT_LOG_INFO_MSG( "Tick: " << workspace_.GetTick() << " (next test at " << workspace_.GetScheduler().GetNextExecutionTick() << ")" );
+    // save recovery point
+    workspace_.SaveRecoveryPoint();
+    // run required actions
     workspace_.GetScheduler().Run( workspace_.GetTick() );
 }
 
@@ -450,7 +453,10 @@ void MessageManager::OnReceiveMsgCtrlSendCurrentStateEnd()
     {
         // load tests
         workspace_.GetTestSet().Load( workspace_ );
+        // save recovery point
+        workspace_.SaveRecoveryPoint();
         // run scheduler
+        workspace_.GetScheduler().RecoverIfNeeded( workspace_.GetTick() );
         workspace_.GetScheduler().Run( workspace_.GetTick() );
         bIsInitialized_ = true;
     }

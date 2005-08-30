@@ -56,6 +56,7 @@ Workspace::Workspace( TestSet_ABC& testSet, const Config& config )
     , nTickDuration_    ( 0 )
     , nCurrentSimTime_  ( 0 )
     , nTimeFactor_      ( config.GetTimeFactor() )
+    , strRecoveryFile_  ( config.GetRecoveryFile() )
 {
     InitializeRandomSeed( config.GetRandomSeedFile() );
 
@@ -223,4 +224,34 @@ void Workspace::SetTimeFactor( uint32 nFactor /* = 0 */ )
     std::stringstream strMsg;
     strMsg << "Changing speed to " << nFactor;
     MT_LOG_INFO_MSG( strMsg.str().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workspace::SaveRecoveryPoint
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void Workspace::SaveRecoveryPoint()
+{
+    std::string           strCurrentDir = MT_GetCurrentDir();
+    std::string           strDir;
+    std::string           strFile;
+
+    MT_ExtractFilePath    ( strRecoveryFile_, strDir  );
+    MT_ExtractFileName    ( strRecoveryFile_, strFile );
+
+    try
+    {
+        MT_XXmlOutputArchive archive;
+        archive.Section   ( "Recover" );
+        archive.WriteField( "LastTick", GetScheduler().GetCurrentTick() );
+        archive.EndSection(); // Recover
+
+        MT_ChangeDir       ( strDir );
+        archive.WriteToFile( strFile );
+        MT_ChangeDir       ( strCurrentDir );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_LOG_INFO_MSG( exception.what().c_str() );
+    }
 }

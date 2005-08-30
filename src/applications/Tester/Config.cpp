@@ -44,6 +44,9 @@ Config::Config( const std::string& strFile )
     , nItInterval_       ( 1 )
     , strLogFile_        ( "./test.log" )
     , strRandomSeedFile_ ( "./test_seed.xml" )
+    , bRecover_          ( false )
+    , nRecoveryTick_     ( 0 )
+    , strRecoveryFile_   ( "./test_recover.xml" )
 {
     LoadConfigFile( strFile );
 }
@@ -93,7 +96,13 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.ReadField( "NumberOfSameMissions"  , nItNumber_         );
         archive.ReadField( "IntervalOfSameMissions", nItInterval_       );
         archive.ReadField( "LogFile"               , strLogFile_        );
-        archive.ReadField( "RandSeedFile"          , strRandomSeedFile_ );
+        archive.ReadField( "RandomSeedFile"        , strRandomSeedFile_ );
+        archive.Section( "Recovery" );
+        archive.ReadField( "Recover", bRecover_       );
+        archive.ReadField( "File"   , strRecoveryFile_ );
+        if( bRecover_ )
+            LoadRecoveryFile( strRecoveryFile_ );
+        archive.EndSection(); // Recover
         archive.EndSection(); // Actions
 
         archive.EndSection(); // Tester
@@ -106,5 +115,37 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         MT_ChangeDir    ( strCurrentDir );
         MT_LOG_ERROR_MSG( exception.what().c_str() << "Parse error" );
         throw;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::LoadRecoveryFile
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void Config::LoadRecoveryFile( const std::string& strConfigFile )
+{
+    std::string           strCurrentDir = MT_GetCurrentDir();
+    std::string           strDir;
+    std::string           strFile;
+
+    MT_ExtractFilePath    ( strConfigFile, strDir  );
+    MT_ExtractFileName    ( strConfigFile, strFile );
+
+    try
+    {
+        XmlInputArchive   archive;
+        MT_ChangeDir      ( strDir );
+        archive.Open      ( strFile );
+        archive.Section   ( "Recovery" );
+        archive.ReadField( "LastTick", nRecoveryTick_ );
+        archive.EndSection(); // Recover
+        archive.Close     ();
+        MT_ChangeDir      ( strCurrentDir );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_ChangeDir      ( strCurrentDir );
+        MT_LOG_WARNING_MSG( exception.what().c_str() );
+        MT_LOG_INFO_MSG   ( "Cannot load recover file, starting tests from beginning" );
     }
 }

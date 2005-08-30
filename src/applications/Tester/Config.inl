@@ -49,6 +49,36 @@ const std::string& Config::GetRandomSeedFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Config::MustRecover
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+inline
+bool Config::MustRecover() const
+{
+    return bRecover_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetRecoveryTick
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+inline
+uint Config::GetRecoveryTick() const
+{
+    return nRecoveryTick_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetRecoveryFile
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+inline
+const std::string& Config::GetRecoveryFile() const
+{
+    return strRecoveryFile_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::GetPort
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------

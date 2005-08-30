@@ -52,6 +52,9 @@ public:
     const std::string& GetServer           () const;
     const std::string& GetConfigFile       () const;
     const std::string& GetRandomSeedFile   () const;
+    bool               MustRecover         () const;
+    uint               GetRecoveryTick     () const;
+    const std::string& GetRecoveryFile     () const;
     uint               GetPort             () const;
     uint               GetTimeFactor       () const;
     bool               MustTestAutomat     () const;
@@ -70,7 +73,8 @@ private:
 
     //! @name Operations
     //@{
-    void LoadConfigFile( const std::string& strFile );
+    void LoadConfigFile  ( const std::string& strConfigFile );
+    void LoadRecoveryFile( const std::string& strConfigFile );
     //@}
 
 private:
@@ -79,6 +83,9 @@ private:
     std::string strServer_;
     std::string strConfigFile_;
     std::string strRandomSeedFile_;
+    bool        bRecover_;
+    uint        nRecoveryTick_;
+    std::string strRecoveryFile_;
     uint        nPort_;
     uint        nTimeFactor_;
     bool        bTestAutomat_;
