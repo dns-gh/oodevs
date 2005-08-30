@@ -109,6 +109,7 @@ void DEC_GeometryFunctions::DeleteListLocalisation( DIA_Call_ABC&  call )
     T_LocalisationPtrVector localisations = diaObjectList.ToUserTypeList( localisations );
     for( CIT_LocalisationPtrVector itLoc = localisations.begin(); itLoc != localisations.end(); ++itLoc )
         delete *itLoc;
+    localisations.clear();
 }
 
 //-----------------------------------------------------------------------------
