@@ -168,13 +168,18 @@ void DEC_GeometryFunctions::CreateDirection( DIA_Call_ABC& call )
     MT_Vector2D* pPosSource = call.GetParameter( 0 ).ToUserPtr( pPosSource );
     MT_Vector2D* pPosDest   = call.GetParameter( 1 ).ToUserPtr( pPosDest   );
 
+    assert( pPosSource );
+    assert( pPosDest   );
+
     if( *pPosSource == *pPosDest )
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeDirection() );
+    {
+        MT_Vector2D* pVect = new MT_Vector2D( 0., 1. );
+        call.GetResult().SetValue( (void*)pVect, &DEC_Tools::GetTypeDirection() );
+    }
     else
     {
         MT_Vector2D* pVect = new MT_Vector2D( (*pPosDest) - (*pPosSource) );
         pVect->Normalize();
-
         call.GetResult().SetValue( (void*)pVect, &DEC_Tools::GetTypeDirection() );
     }
 }
