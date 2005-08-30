@@ -63,20 +63,9 @@ T_Height ConcreteEntity::GetHeight() const
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
 inline
-int32 ConcreteEntity::GetState() const
+ConcreteEntity::EState ConcreteEntity::GetState() const
 {
-    switch( eOpState_ )
-    {
-    case EnumEtatOperationnel::detruit_totalement:
-        return 0;
-    case EnumEtatOperationnel::detruit_tactiquement:
-        return 50;
-    case EnumEtatOperationnel::operationnel:
-        return 100;
-    default:
-        assert( false );
-    }
-    return 0;
+    return eState_;
 }
 
 } // end namespace TIC

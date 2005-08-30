@@ -206,10 +206,10 @@ int Pawn::GetHeight() const
 // Name: Pawn::GetState
 // Created: SBO 2005-05-18
 //-----------------------------------------------------------------------------
-int Pawn::GetState() const
+Pawn::EState Pawn::GetState() const
 {
     assert( pPawn_ );
-    return pPawn_->GetState();
+    return ( Pawn::EState )( pPawn_->GetState() );
 }
 
 //-----------------------------------------------------------------------------

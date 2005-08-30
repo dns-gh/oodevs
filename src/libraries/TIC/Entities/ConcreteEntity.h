@@ -38,6 +38,16 @@ namespace TIC
 // =============================================================================
 class ConcreteEntity
 {
+public:
+    //! @name Types
+    //@{
+    enum EState
+    {
+        eStateOperational,
+        eStateFixable,
+        eStateDestroyed
+    };
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -48,11 +58,11 @@ public:
 
     //! @name Accessors
     //@{
-          T_Direction  GetDirection() const;
-          T_Speed      GetSpeed    () const;
-    const Position&    GetPosition () const;
-          int32        GetState    () const;
-		  T_Height     GetHeight   () const;
+          T_Direction GetDirection() const;
+          T_Speed     GetSpeed    () const;
+    const Position&   GetPosition () const;
+          EState      GetState    () const;
+		  T_Height    GetHeight   () const;
     //@}
 
 private:
@@ -71,7 +81,7 @@ protected:
     T_Height    nHeight_;
 
     // state
-    ASN1T_EnumEtatOperationnel eOpState_;
+    EState      eState_;
 
     //@}
 };

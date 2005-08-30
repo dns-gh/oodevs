@@ -46,6 +46,17 @@ class Pawn
     friend class Automat;
 
 public:
+    //! @name Types
+    //@{
+    enum EState
+    {
+        eStateOperational,
+        eStateFixable,
+        eStateDestroyed
+    };
+    //@}
+
+public:
 	//! @name Constructors/Destructor
     //@{
              Pawn();
@@ -68,7 +79,7 @@ public:
           double       GetLatitude            () const;
           double       GetLongitude           () const;
           int          GetHeight              () const;
-          int          GetState               () const;
+          EState       GetState               () const;
           bool         IsPc                   () const;
     //@}
 

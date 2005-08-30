@@ -260,11 +260,25 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
     }
 
     if( asnMsg.m.etat_operationnelPresent )
-        eOpState_ = asnMsg.etat_operationnel;
-    /*
+    {
+        if( asnMsg.etat_operationnel >= 100 )
+            eState_ = eStateOperational;
+        else
+            eState_ = eStateFixable;
+        if( asnMsg.mort )
+            eState_ = eStateDestroyed;
+    }
+/*
     if( asnMsg.m.etat_opPresent )
-        nOpState_ = asnMsg.etat_op;
-    */
+    {
+        if( asnMsg.etat_op >= 100 )
+            eState_ = eStateOperational;
+        else
+            eState_ = eStateFixable;
+        if( asnMsg.etat == EnumUnitState::mort )
+            eState_ = eStateDestroyed;
+    }
+*/
 }
 
 //-----------------------------------------------------------------------------

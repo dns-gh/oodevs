@@ -252,14 +252,21 @@ void OutputXml::OutputPawn( const Pawn& pawn )
     archive_.WriteField( "Hauteur" , pawn.GetHeight()  );
     archive_.EndSection(); // Position
 
-    uint nState = pawn.GetState();
     std::string strState;
-    if( nState >= 100 )
+    switch( pawn.GetState() )
+    {
+    case Pawn::eStateOperational:
         strState = "Operationnel";
-    else if( nState > 0 )
+        break;
+    case Pawn::eStateFixable:
         strState = "Reparable";
-    else
+        break;
+    case Pawn::eStateDestroyed:
         strState = "Detruit";
+        break;
+    default:
+        break;
+    }
     archive_.WriteField( "Etat", strState );
 
     uint nNbrPlatforms = pawn.GetPlatformCount();
