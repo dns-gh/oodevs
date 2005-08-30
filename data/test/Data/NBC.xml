@@ -45,7 +45,7 @@
         <Humains_UE>0.15</Humains_UE>
         <Humains_Mort>0.3</Humains_Mort>
       </Attritions>
-      <DureeDeVie>30s</DureeDeVie>
+      <DureeDeVie>300s</DureeDeVie>
       <AngleDePropagation unite="degre">20</AngleDePropagation>
     </AgentNBC>
     <AgentNBC nom="HCN">

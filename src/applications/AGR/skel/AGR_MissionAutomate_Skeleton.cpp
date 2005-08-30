@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@ $StaticMemberInit$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_$MissionName$ constructor
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_$MissionName$::MIL_AutomateMission_$MissionName$( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_$MissionName$::MIL_AutomateMission_$MissionName$( MIL_Automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_$MissionName$ destructor
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_$MissionName$::~MIL_AutomateMission_$MissionName$()
 {
@@ -56,7 +56,7 @@ $StaticMemberScriptInit$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_$MissionName$::Initialize
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_$MissionName$::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -70,7 +70,7 @@ $InitMembersFromAsn$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_$MissionName$::Terminate()
 {
@@ -84,7 +84,7 @@ $ResetMembers$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_$MissionName$::Serialize
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_$MissionName$::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -99,7 +99,7 @@ $SerializeMembers$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_$MissionName$::CleanAfterSerialization
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

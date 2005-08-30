@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,7 +24,7 @@ $StaticMemberInit$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::InitializeDIA
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_$MissionName$::InitializeDIA( const MIL_PionMissionType& type )
@@ -35,7 +35,7 @@ $StaticMemberScriptInit$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$ constructor
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_$MissionName$::MIL_PionMission_$MissionName$( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -46,7 +46,7 @@ MIL_PionMission_$MissionName$::MIL_PionMission_$MissionName$( MIL_AgentPion& pio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$ destructor
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_$MissionName$::~MIL_PionMission_$MissionName$()
 {
@@ -56,7 +56,7 @@ MIL_PionMission_$MissionName$::~MIL_PionMission_$MissionName$()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::Initialize
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_$MissionName$::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ $InitMembersFromAsn$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::Initialize
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_$MissionName$::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -84,7 +84,7 @@ $InitMembers$
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::Initialize
-// Created: $TIME$
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_$MissionName$::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -98,7 +98,7 @@ $InitMemberFromMission$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::Terminate
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_$MissionName$::Terminate()
 {

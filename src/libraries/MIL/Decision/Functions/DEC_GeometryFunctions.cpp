@@ -105,11 +105,11 @@ void DEC_GeometryFunctions::DeleteListLocalisation( DIA_Call_ABC&  call )
 {
     assert( DEC_Tools::CheckTypeListeLocalisations( call.GetParameter( 0 ) ) );
 
-    const DIA_Variable_ObjectList& diaObjectList = static_cast< const DIA_Variable_ObjectList& >( call.GetParameter( 0 ) );
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) );
     T_LocalisationPtrVector localisations = diaObjectList.ToUserTypeList( localisations );
     for( CIT_LocalisationPtrVector itLoc = localisations.begin(); itLoc != localisations.end(); ++itLoc )
         delete *itLoc;
-    localisations.clear();
+    diaObjectList.Reset();
 }
 
 //-----------------------------------------------------------------------------

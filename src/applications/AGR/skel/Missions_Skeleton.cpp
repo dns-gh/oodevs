@@ -22,7 +22,7 @@ using namespace missions;
 
 //-----------------------------------------------------------------------------
 // Name: RegisterAutomateMissions
-// Created: AGR $TIME$
+// Created: AGR 
 //-----------------------------------------------------------------------------
 void missions::RegisterAutomateMissions()
 {
@@ -31,7 +31,7 @@ $AutomateMissionsRegistration$
 
 // -----------------------------------------------------------------------------
 // Name: RegisterPionMissions
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void missions::RegisterPionMissions()
 {
@@ -40,7 +40,7 @@ $PionMissionsRegistration$
 
 // -----------------------------------------------------------------------------
 // Name: RegisterOrderConduites
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void missions::RegisterOrderConduites()
 {

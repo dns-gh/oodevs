@@ -307,17 +307,6 @@ void DEC_DIAFunctions::UserTypeList_GetAt( DIA_Call_ABC& call  )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::UserTypeList_Size
-// Created: JVT 2004-12-14
-// -----------------------------------------------------------------------------
-void DEC_DIAFunctions::UserTypeList_Size( DIA_Call_ABC& call )
-{
-    DIA_Variable_ObjectList& diaUserList = static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) );
-    
-    call.GetResult().SetValue( (float)diaUserList.GetContainer().size() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::UserTypeList_Contains
 // Created: NLD 2004-04-09
 // -----------------------------------------------------------------------------
@@ -364,44 +353,12 @@ void DEC_DIAFunctions::UserTypeList_Remove( DIA_Call_ABC& call )
     {
         if( (**it).ToPtr() == pPtr )
         {
-            delete *it;
+            delete *it; //$$$ FOIREUX
             it = vector.erase( it );
         }
         else
             ++it;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::UserTypeList_Clear
-// Created: JVT 2005-02-07
-// -----------------------------------------------------------------------------
-void DEC_DIAFunctions::UserTypeList_Clear( DIA_Call_ABC& call )
-{
-    // $$$$ JVT : Il y a peut-être un moyen de faire ça proprement ????    
-    DIA_Variable_ObjectList& diaUserList = static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) );
-    T_ObjectVariableVector&  vector      = const_cast < T_ObjectVariableVector&  >( diaUserList.GetContainer() );
-
-    vector.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_DIAFunctions::UserTypeList_Delete
-// Created: JVT 2005-02-07
-// -----------------------------------------------------------------------------
-void DEC_DIAFunctions::UserTypeList_Delete( DIA_Call_ABC& call )
-{
-    // $$$$ JVT : Il y a peut-être un moyen de faire ça proprement ????    
-    DIA_Variable_ObjectList& diaUserList = static_cast< DIA_Variable_ObjectList& >( call.GetParameter( 0 ) );
-    T_ObjectVariableVector&  vector      = const_cast < T_ObjectVariableVector&  >( diaUserList.GetContainer() );
-    
-    for ( IT_ObjectVariableVector it = vector.begin(); it != vector.end(); ++it )
-    {
-        void* pPointer = (**it).ToPtr();
-        delete pPointer; // $$$$ AGE 2005-08-29: No destructor called ! (mem. leak for TER_Whatever)
-        delete *it;
-    }
-    vector.clear();
 }
 
 //-----------------------------------------------------------------------------

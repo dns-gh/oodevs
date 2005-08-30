@@ -142,12 +142,10 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 
     // User type lists manipulation
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_GetAt   , "DEC_UserTypeList_GetAt"     );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Size    , "DEC_UserTypeList_Size"      );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Contains, "DEC_UserTypeList_Contient"  );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_PushBack, "DEC_UserTypeList_PushBack"  );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Remove  , "DEC_UserTypeList_Remove"    );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Delete  , "DEC_UserTypeList_DeleteAll" );
-    pFuncTable->RegisterFunction( DEC_DIAFunctions::UserTypeList_Clear   , "DEC_UserTypeList_Clear"     );
+        
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_GetAt      , "DEC_ListePoints_GetAt"      );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_Size       , "DEC_ListePoints_Size"       );
     pFuncTable->RegisterFunction( DEC_DIAFunctions::ListPoint_PushBack   , "DEC_ListePoints_PushBack"   );

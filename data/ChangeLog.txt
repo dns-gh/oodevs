@@ -21,7 +21,20 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Plus de memory leak dans la fonction DEC_Geometrie_DetruireListeLocalisations()
+    - NLD - Suppression des fonctions DEC
+                - DEC_UserTypeList_Clear
+                - DEC_UserTypeList_DeleteAll
+                - DEC_UserTypeList_Size (utiliser DIA_Size() )     
+                
+WARNING : DEC_UserTypeList_Remove() a bien utiliser                
+            
 
+Version 0.118 [30/08/2005] - Codename 'clean'
+    - AGE - Win32 exceptions catchées
+    - AGE - Bug fix : pathfind : le même point d'est plus inséré 2 fois dans le résultat (=> assert() pour les chalands)
+    - NLD/JVT - Bug fix : DEC_CreerDirection() retourne une direction 'vers le nord' si les 2 points données en paramètres sont identiques
+        
 Version 0.117.2 [24/08/2005] - Codename 'nld encore et toujours en train de buller'
     - JVT - Suppression fonction DEC : A::DEC_Geometrie_ConnaissanceDansDirectionPoint
     - JVT - Nouvelles fonctions DEC : 

@@ -30,12 +30,9 @@ public:
 
     // DIA user types list manipulation
     static void UserTypeList_GetAt   ( DIA_Call_ABC& );
-    static void UserTypeList_Size    ( DIA_Call_ABC& );
     static void UserTypeList_Contains( DIA_Call_ABC& );
     static void UserTypeList_PushBack( DIA_Call_ABC& );
     static void UserTypeList_Remove  ( DIA_Call_ABC& );
-    static void UserTypeList_Delete  ( DIA_Call_ABC& );
-    static void UserTypeList_Clear   ( DIA_Call_ABC& );
     static void ListPoint_GetAt      ( DIA_Call_ABC& );
     static void ListPoint_Size       ( DIA_Call_ABC& );
     static void ListPoint_PushBack   ( DIA_Call_ABC& );

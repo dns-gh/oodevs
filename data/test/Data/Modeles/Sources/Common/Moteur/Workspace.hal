@@ -53,12 +53,9 @@ signatures
 
     // Manipulation de listes
     U                    DEC_UserTypeList_GetAt    ( S /*liste*/, R /*elt idx*/ ); // Pour toutes les listes de UserTypes
-    R                    DEC_UserTypeList_Size     ( S /*liste*/ );                // Pour toutes les listes de UserTypes
     B                    DEC_UserTypeList_Contient ( S /*list*/ , U /*elt*/     ); // Pour toutes les listes de UserTypes
     V                    DEC_UserTypeList_PushBack ( S /*liste*/, U /*elt*/ ); 
     V                    DEC_UserTypeList_Remove   ( S /*liste*/, U /*elt*/ );
-    V                    DEC_UserTypeList_DeleteAll( S /*liste*/ );
-    V                    DEC_UserTypeList_Clear    ( S /*liste*/ );
                       
     U /*T_Point*/        DEC_ListePoints_GetAt    ( U /*T_ListePoints*/, R /*nIdx*/ ); // Le point retourné doit être détruit par l'utilisateur quand il n'est plus utile
     R                    DEC_ListePoints_Size     ( U /*T_ListePoints*/ );
