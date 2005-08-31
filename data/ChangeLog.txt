@@ -26,10 +26,10 @@ Next Version - Codename ''
                 - DEC_UserTypeList_Clear
                 - DEC_UserTypeList_DeleteAll
                 - DEC_UserTypeList_Size (utiliser DIA_Size() )     
-                
-WARNING : DEC_UserTypeList_Remove() a bien utiliser                
+        WARNING : DEC_UserTypeList_Remove() à bien utiliser                
+    - NLD - La fonction DEC_ListePoints_GetAt() renvoit maintenant une réference, et non plus une copie !!        
+    - AGE - Bug fix - assert() dans pathfind (AddResultPoint())
             
-
 Version 0.118 [30/08/2005] - Codename 'clean'
     - AGE - Win32 exceptions catchées
     - AGE - Bug fix : pathfind : le même point d'est plus inséré 2 fois dans le résultat (=> assert() pour les chalands)

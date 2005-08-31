@@ -384,7 +384,7 @@ void DEC_DIAFunctions::ListPoint_GetAt( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
 
-    T_PointVector* pList = call.GetParameter( 0 ).ToUserPtr( pList );
+    const T_PointVector* pList = call.GetParameter( 0 ).ToUserPtr( pList );
     assert( pList != 0 );
     int nId = (int)call.GetParameter( 1 ).ToFloat();
 
@@ -392,8 +392,8 @@ void DEC_DIAFunctions::ListPoint_GetAt( DIA_Call_ABC& call )
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
     else
     {
-        MT_Vector2D* pVect = new MT_Vector2D( (*pList)[nId] ); //$$$ RAM
-        call.GetResult().SetValue( (void*)pVect, &DEC_Tools::GetTypePoint() );
+        const MT_Vector2D& vPos = (*pList)[ nId ];
+        call.GetResult().SetValue( (void*)&vPos, &DEC_Tools::GetTypePoint() );
     }
 }
 

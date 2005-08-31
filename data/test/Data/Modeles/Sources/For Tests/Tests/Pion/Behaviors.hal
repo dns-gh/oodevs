@@ -327,7 +327,10 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 {
     when updated:
     {
-       
+        //T_Point cock = DEC_ListePoints_GetAt( mission.itineraire_, 0 );
+        //DEC_Debug( DEC_PointToString( cock ) );
+         
+         
         //DEC_Perception_Furtivite( 0 );
         persistent T_Action                       currentAction;
         persistent E_EtatActionEmbarquerDebarquer nDebarquementReturn;
