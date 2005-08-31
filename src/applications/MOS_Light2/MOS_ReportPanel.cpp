@@ -19,16 +19,19 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ReportPanel.h"
 #include "MOS_ReportListView.h"
+#include "MOS_FireResultListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportPanel constructor
 // Created: AGE 2005-04-21
 // -----------------------------------------------------------------------------
 MOS_ReportPanel::MOS_ReportPanel( QWidget* pParent )
-    : MOS_InfoPanel_ABC( pParent )
-    , pReportListView_( 0 )
+    : MOS_InfoPanel_ABC    ( pParent )
+    , pReportListView_     ( 0 )
+    , pFireResultListView_ ( 0 )
 {
-    pReportListView_ = new MOS_ReportListView( this );
+    pReportListView_     = new MOS_ReportListView( this );
+    pFireResultListView_ = new MOS_FireResultListView( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,5 +59,8 @@ void MOS_ReportPanel::OnUpdate()
 void MOS_ReportPanel::OnAgentUpdated( MOS_Agent& agent )
 {
     if( ShouldDisplay( agent ) )
+    {
         pReportListView_->SetAgent( selectedItem_.pAgent_ );
+        pFireResultListView_->SetAgent( selectedItem_.pAgent_ );
+    }
 }

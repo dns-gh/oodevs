@@ -22,6 +22,7 @@
 #include "MOS_InfoPanel_ABC.h"
 
 class MOS_ReportListView;
+class MOS_FireResultListView;
 
 // =============================================================================
 /** @class  MOS_ReportPanel
@@ -52,8 +53,8 @@ private:
 private:
     //! @name Member data
     //@{
-    MOS_ReportListView* pReportListView_;
-
+    MOS_ReportListView*     pReportListView_;
+    MOS_FireResultListView* pFireResultListView_;
     //@}
 };
 

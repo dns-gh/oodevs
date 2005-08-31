@@ -37,6 +37,7 @@ class MOS_Morale;
 class MOS_LogSupplyConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogMaintenanceConsign;
+class MOS_FireResult;
 
 // =============================================================================
 /** @class  MOS_Agent
@@ -189,6 +190,10 @@ public:
     void DeleteAllTraces();
 
     T_ReportVector& GetReports();
+
+    // fire results
+    void OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg );
+    void DeleteAllFireResults();
     //@}
 
     //-------------------------------------------------------------------------
@@ -256,7 +261,11 @@ public:
 
     typedef std::vector< std::pair< uint, uint > >        T_LogisticAvailabilities;
     typedef T_LogisticAvailabilities::const_iterator    CIT_LogisticAvailabilities;
+
+    typedef std::vector< MOS_FireResult* >                T_FireResults;
+    typedef T_FireResults::const_iterator                 CIT_FireResults;
     //@}
+
 
 //$$$$$ Foutre tout ce binz en public ou utiliser des friend pour eviter d'avoir 34846 fonctions set/get
 //$$$$$ qui puent.
@@ -290,6 +299,7 @@ public:
     T_ObjectConstPtrSet     objectsPerceptionInProgress_;
 
     std::vector< MT_Vector2D > reportPoints_;
+    T_FireResults           fireResults_;
 
     T_SurfaceVector         surfaces_;
     T_VisionResultMap       surfaceVision_;

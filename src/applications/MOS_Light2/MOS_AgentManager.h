@@ -153,6 +153,7 @@ public:
     MOS_LogMaintenanceConsign* FindMaintenanceConsign( ASN1T_OID nConsignId );
     MOS_LogMedicalConsign*     FindMedicalConsign( ASN1T_OID nConsignId );
     MOS_LogSupplyConsign*      FindSupplyConsign( ASN1T_OID nConsignId );
+    MOS_Agent*                 FindConflictOrigin( ASN1T_OID nConflictID );
 
     void DeleteMaintenanceConsign( ASN1T_OID nConsignId );
     void DeleteMedicalConsign( ASN1T_OID nConsignId );

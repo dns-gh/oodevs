@@ -34,6 +34,7 @@
 #include "MOS_Experience.h"
 #include "MOS_Tiredness.h"
 #include "MOS_Morale.h"
+#include "MOS_FireResult.h"
 
 using namespace DIN;
 
@@ -1126,4 +1127,28 @@ void MOS_Agent::HandleConsign( MOS_LogMedicalConsign& consign )
 void MOS_Agent::TerminateConsign( MOS_LogMedicalConsign& consign )
 {
     handledMedical_.erase( &consign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMsgStopFire
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg )
+{
+    MOS_FireResult& fireResult = *new MOS_FireResult( *this );
+    fireResult.Initialize( asnMsg );
+    fireResults_.push_back( &fireResult );
+    if( fireResults_.size() > 20 )
+        fireResults_.erase( fireResults_.begin() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::DeleteAllFireResults
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void MOS_Agent::DeleteAllFireResults()
+{
+    for( CIT_FireResults it = fireResults_.begin(); it != fireResults_.end(); ++it )
+        delete *it;
+    fireResults_.clear();
 }

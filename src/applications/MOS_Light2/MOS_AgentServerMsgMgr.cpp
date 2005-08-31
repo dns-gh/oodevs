@@ -1625,6 +1625,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopDirectFire( const ASN1T_MsgStopDirec
     strOutputMsg << "StopDirectFire - ID: " << asnMsg.oid_tir;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
+    // fire results
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
+    assert( pAgent );
+    pAgent->OnReceiveMsgStopFire( asnMsg.resultat );
+    
     MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
 
@@ -1638,6 +1643,12 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopIndirectFire( const ASN1T_MsgStopInd
     std::stringstream strOutputMsg;
     strOutputMsg << "StopIndirectFire - ID: " << asnMsg.oid_tir;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+
+    // fire results
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
+    assert( pAgent );
+    for( uint i = 0; i < asnMsg.resultats.n; ++i )
+        pAgent->OnReceiveMsgStopFire( asnMsg.resultats.elem[ i ] );
 
     MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
@@ -1666,7 +1677,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireE
     std::stringstream strOutputMsg;
     strOutputMsg << "Stop ammunition meteo effect - ID: " << asnMsg;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
+    
     MOS_App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( asnMsg );
 }
 
@@ -1680,6 +1691,12 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
     std::stringstream strOutputMsg;
     strOutputMsg << "Explosion"
                  << " - ID objet " << asnMsg.oid_objet;
+    
+    // fire results
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_objet );
+    assert( pAgent );
+    for( uint i = 0; i < asnMsg.resultats.n; ++i )
+        pAgent->OnReceiveMsgStopFire( asnMsg.resultats.elem[ i ] );
 
 //$$$$ ASN1T_FireResult  resultat à afficher.
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );    

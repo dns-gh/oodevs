@@ -183,3 +183,20 @@ void MOS_AgentManager::DeleteConflict( ASN1T_OID nConflictID )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindConflictOrigin
+/** @param  nConsignId 
+    @return 
+*/
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+MOS_INLINE
+MOS_Agent* MOS_AgentManager::FindConflictOrigin( ASN1T_OID nConflictID )
+{
+    IT_ConflictMap it = conflictMap_.find( nConflictID );
+    if( it != conflictMap_.end() )
+    {
+        return it->second.pOrigin_;
+    }
+    return 0;
+}
