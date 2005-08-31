@@ -18,7 +18,7 @@
 #include "Types.h"
 
 // Tic Lib
-#include "Workspace.h"
+#include "TIC_Export/Workspace.h"
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"

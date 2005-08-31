@@ -20,7 +20,7 @@
 #define __OutputXml_h_
 
 #include "Types.h"
-#include "Callback_ABC.h"
+#include "TIC_Export/Callback_ABC.h"
 
 namespace TICExport
 {

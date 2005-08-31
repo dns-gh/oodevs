@@ -19,12 +19,12 @@
 #include "Types.h"
 
 #include "OutputXml.h"
-#include "Workspace.h"
-#include "Automat.h"
-#include "Pawn.h"
-#include "Platform.h"
-#include "Communication.h"
-#include "CommunicationLink.h"
+#include "TIC_Export/Workspace.h"
+#include "TIC_Export/Automat.h"
+#include "TIC_Export/Pawn.h"
+#include "TIC_Export/Platform.h"
+#include "TIC_Export/Communication.h"
+#include "TIC_Export/CommunicationLink.h"
 
 using namespace TICExport;
 
@@ -163,14 +163,21 @@ void OutputXml::OutputPawn( const Pawn& pawn )
     archive_ << strIndent << "    <Hauteur>" << pawn.GetHeight() << "</Hauteur> " << std::endl;
     archive_ << strIndent << "  </Position>" << std::endl;
 
-    uint nState = pawn.GetState();
     std::string strState;
-    if( nState >= 100 )
+    switch( pawn.GetState() )
+    {
+    case Pawn::eStateOperational:
         strState = "Operationnel";
-    else if( nState > 0 )
+        break;
+    case Pawn::eStateFixable:
         strState = "Reparable";
-    else
+        break;
+    case Pawn::eStateDestroyed:
         strState = "Detruit";
+        break;
+    default:
+        break;
+    }
 
     archive_ << strIndent << "  <Etat>" << strState << "</Etat>" << std::endl;
 

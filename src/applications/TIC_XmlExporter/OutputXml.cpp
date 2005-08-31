@@ -21,13 +21,13 @@
 #include "OutputXml.h"
 #include "Config.h"
 
-#include "Workspace.h"
-#include "Callback_ABC.h"
-#include "Automat.h"
-#include "Pawn.h"
-#include "Platform.h"
-#include "Communication.h"
-#include "CommunicationLink.h"
+#include "TIC_Export/Workspace.h"
+#include "TIC_Export/Callback_ABC.h"
+#include "TIC_Export/Automat.h"
+#include "TIC_Export/Pawn.h"
+#include "TIC_Export/Platform.h"
+#include "TIC_Export/Communication.h"
+#include "TIC_Export/CommunicationLink.h"
 
 // MT
 #include "MT/MT_Tools/MT_Tools_lib.h"

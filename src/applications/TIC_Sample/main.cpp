@@ -18,7 +18,7 @@
 #include "Types.h"
 
 // Tic Lib
-#include "Workspace.h"
+#include "TIC_Export/Workspace.h"
 
 // Local includes
 #include "OutputXml.h"

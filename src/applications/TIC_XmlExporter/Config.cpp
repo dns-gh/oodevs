@@ -20,7 +20,7 @@
 #include <vector>
 
 #include "Config.h"
-#include "Workspace.h"
+#include "TIC_Export/Workspace.h"
 
 // archive logger
 #include "MT_Tools/MT_Assert.h"
