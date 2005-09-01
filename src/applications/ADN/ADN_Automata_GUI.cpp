@@ -132,6 +132,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
     builder.AddTableCell( pTable, 0, 1, tr( "Unit" ) );
     builder.AddTableCell( pTable, 0, 2, tr( "Composante" ) );
     pTable->AddBoldGridRow( 0 );
+    pTable->sortColumn( 0, true, true );
 
     // Fill the table.
     int nRow = 1;
@@ -144,11 +145,23 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
         builder.AddTableCell( pTable, nRow, 2 );
 
         int nSubRow = 0;
-        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); ++it2 )
+
+        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); )
         {
-            ADN_Automata_Data::UnitInfos& unitInfos = **it2;
-            assert( unitInfos.ptrUnit_.GetData() != 0 );
-            ADN_Units_Data::UnitInfos& unit = * unitInfos.ptrUnit_.GetData();
+            ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
+            ADN_Units_Data::UnitInfos*    pUnit;
+
+            if( nSubRow == 0 )
+            {
+                pUnit = automaton.ptrUnit_.GetData();
+            }
+            else
+            {
+                pUnitInfos = *it2;
+                assert( pUnitInfos->ptrUnit_.GetData() != 0 );
+                pUnit = pUnitInfos->ptrUnit_.GetData();
+            }
+            ADN_Units_Data::UnitInfos&    unit      = * pUnit;
             pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + 1 ) );
             
             int nSubSubRow = 0;
@@ -156,14 +169,32 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             {
                 pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + nSubSubRow + 1 ) );
 
-                QString strText( tr( "%1 x %2 %3" ) );
-                strText = strText.arg( unitInfos.strNbrRegExp_.GetData().c_str() ).arg( (*it3)->nNb_.GetData() ).arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
-                builder.AddTableCell( pTable, nRow + nSubRow + nSubSubRow, 2, strText );
+                QString strText;
+                if( pUnitInfos != 0 )
+                {
+                    strText = tr( "%1 x %2 %3" );
+                    strText = strText.arg( pUnitInfos->strNbrRegExp_.GetData().c_str() ).arg( (*it3)->nNb_.GetData() ).arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
+                }
+                else
+                {
+                    strText = tr( "%2 %3" );
+                    strText = strText.arg( (*it3)->nNb_.GetData() ).arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
+                }
+                builder.AddTableCell( pTable, nRow + nSubRow + nSubSubRow, 2, strText );                
             }
             int nRowSpan = std::max( 1, (int)unit.vComposantes_.size() );
-            QString strText( tr( "%1 x %2" ) );
-            strText = strText.arg( unitInfos.strNbrRegExp_.GetData().c_str(), unit.strName_.GetData().c_str() );
+            QString strText;
+            if( pUnitInfos != 0 )
+            {
+                strText = tr( "%1 x %2" );
+                strText = strText.arg( pUnitInfos->strNbrRegExp_.GetData().c_str(), unit.strName_.GetData().c_str() );
+            }
+            else
+                strText = tr( unit.strName_.GetData().c_str() );
             builder.AddTableCell( pTable, nRow + nSubRow, 1, nRowSpan, 1, strText );
+
+            if( nSubRow > 0 )
+                ++it2;
             nSubRow += nRowSpan;
         }
 

@@ -9,6 +9,10 @@
         <source>new </source>
         <translation>nouveau </translation>
     </message>
+    <message>
+        <source>Automata compositions</source>
+        <translation type="obsolete">Composition des automates</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AiEngine_GUI</name>
@@ -137,11 +141,15 @@
     </message>
     <message>
         <source>Automata compositions</source>
-        <translation>Composition des automates</translation>
+        <translation type="unfinished">Composition des automates</translation>
     </message>
     <message>
         <source>Command post</source>
         <translation>PC</translation>
+    </message>
+    <message>
+        <source>%2 %3</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -42,14 +42,15 @@ public:
     void AddBoldGridRow( int nIndex );
     void AddBoldGridCol( int nIndex );
 
+    // SBO 2005-09-01 : was protected
+    virtual void sortColumn( int nCol, bool bAscending = true, bool wholerows = false );
+
 protected:
     virtual void drawContents ( QPainter * p, int cx, int cy, int cw, int ch );
 
     virtual void paintCell ( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg );
     virtual void paintCell ( QPainter * p, int row, int col, const QRect & cr, bool selected );
     virtual void paintEmptyArea ( QPainter * p, int cx, int cy, int cw, int ch );
-
-    virtual void sortColumn( int nCol, bool bAscending = true, bool wholerows = false );
 
     virtual QWidget* createEditor( int nRow, int nCol, bool bInitFromCell ) const;
 
