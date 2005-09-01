@@ -61,3 +61,12 @@ void DEC_KnowledgeSource_ABC::Prepare()
 {
     // Nothing
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeSource_ABC::Clean
+// Created: NLD 2005-09-01
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeSource_ABC::Clean()
+{
+    // Nothing
+}

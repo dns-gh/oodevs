@@ -391,13 +391,23 @@ bool MIL_AgentPion::IsNeutralized() const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::UpdateKnowledge
+// Name: MIL_AgentPion::UpdateKnowledges
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::UpdateKnowledge()
+void MIL_AgentPion::UpdateKnowledges()
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CleanKnowledges
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::CleanKnowledges()
+{
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->Clean();
 }
 
 // -----------------------------------------------------------------------------

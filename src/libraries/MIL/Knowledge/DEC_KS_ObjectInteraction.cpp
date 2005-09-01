@@ -125,9 +125,8 @@ void DEC_KS_ObjectInteraction::Talk()
     objectCollisions_.clear();
 
     // Remove all invalid knowledges
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> methodDestroyInvalidCollisionObjectKnowledge( DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge, *this );
-    
     assert( pBlackBoard_ );
+    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> methodDestroyInvalidCollisionObjectKnowledge( DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge, *this );        
     pBlackBoard_->ApplyOnKnowledgesObjectCollision( methodDestroyInvalidCollisionObjectKnowledge );    
 }
 

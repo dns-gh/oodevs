@@ -53,6 +53,7 @@ void MIL_PosteControle::serialize( Archive& file, const uint )
 // =============================================================================
 // EVENTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PosteControle::ProcessAgentInside
 // Created: NLD 2005-03-23
@@ -65,6 +66,7 @@ void MIL_PosteControle::ProcessAgentInside( MIL_Agent_ABC& agent )
     if( GetConstructionPercentage() < 1. || animators.empty() )
         return;
     
+    //$$$$$ NotifyAgentExternalPerception() A GICLER  - remplacer par perception::AddPerceptionLocalisationBlabla()
     for( CIT_AgentSet itAnimator = animators.begin(); itAnimator != animators.end(); ++itAnimator )
         const_cast< MIL_AgentPion& >(**itAnimator).GetRole< PHY_RolePion_Perceiver >().NotifyAgentExternalPerception( agent, PHY_PerceptionLevel::identified_ );
 }

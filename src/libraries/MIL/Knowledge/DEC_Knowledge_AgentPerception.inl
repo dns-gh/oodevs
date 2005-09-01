@@ -67,17 +67,6 @@ const PHY_PerceptionLevel& DEC_Knowledge_AgentPerception::GetPreviousPerceptionL
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentPerception::MustBeDestroyed
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_AgentPerception::MustBeDestroyed() const
-{
-    assert( pPreviousPerceptionLevel_ );
-    return *pPreviousPerceptionLevel_ == PHY_PerceptionLevel::notSeen_ && !( bRecordModeEnabled_ || bPreviousRecordModeEnabled_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerception::IsPerceived
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
@@ -85,7 +74,7 @@ inline
 bool DEC_Knowledge_AgentPerception::IsPerceived() const
 {
     assert( pCurrentPerceptionLevel_ );
-    return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_;
+    return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ || bRecordModeEnabled_;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,16 +115,6 @@ inline
 bool DEC_Knowledge_AgentPerception::IsAvailable() const
 {
     return !bRecordModeEnabled_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentPerception::MakeAvailable
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-void DEC_Knowledge_AgentPerception::MakeAvailable()
-{
-    bRecordModeEnabled_ = false;
 }
 
 // -----------------------------------------------------------------------------

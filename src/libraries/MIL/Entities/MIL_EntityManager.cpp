@@ -554,15 +554,11 @@ void MIL_EntityManager::UpdateKnowledges()
 {
     profiler_.Start();
 
-    // Pions (+ PC)
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->UpdateKnowledge();
-
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->UpdateKnowledge();
-
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         itArmy->second->UpdateKnowledges();
+
+    for( itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
+        itArmy->second->CleanKnowledges();
 
     rKnowledgesTime_ = profiler_.Stop();
 }

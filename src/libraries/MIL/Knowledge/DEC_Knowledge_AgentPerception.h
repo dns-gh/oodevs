@@ -71,10 +71,8 @@ public:
     const PHY_PerceptionLevel& GetPreviousPerceptionLevel() const;
     const PHY_PerceptionLevel& GetMaxPerceptionLevel     () const;
           bool                 IsPerceived               () const; // Perception au tick courant
-          bool                 MustBeDestroyed           () const;
           
           bool                 IsAvailable               () const;
-          void                 MakeAvailable             ();
           void                 MakeAvailable             ( uint nDelay );
 
     const DEC_Knowledge_AgentPerceptionDataDetection&      GetDetectionData     () const;

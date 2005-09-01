@@ -92,7 +92,8 @@ public:
     //! @name Operations
     //@{
     void PreprocessRandomBreakdowns( uint nEndDayTimeStep ) const;
-    void UpdateKnowledge            ();
+    void UpdateKnowledges           ();
+    void CleanKnowledges            ();
     void UpdateDecision             ();
     void UpdateActions              ();
     void UpdateState                ();

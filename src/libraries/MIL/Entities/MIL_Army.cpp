@@ -241,6 +241,18 @@ void MIL_Army::UpdateKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Army::CleanKnowledges
+// Created: NLD 2005-09-01
+// -----------------------------------------------------------------------------
+void MIL_Army::CleanKnowledges()
+{
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->Clean();
+    for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
+        itKnowledgeGroup->second->CleanKnowledges();        
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Army::IsPerceived
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

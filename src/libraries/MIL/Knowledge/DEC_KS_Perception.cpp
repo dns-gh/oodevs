@@ -136,13 +136,27 @@ void DEC_KS_Perception::save( boost::archive::binary_oarchive& file, const uint 
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::PrepareKnowledgeAgentPerception
+// Name: DEC_KS_Perception::Prepare
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::Prepare()
+{
+    assert( pBlackBoard_ );
+    pBlackBoard_->ApplyOnKnowledgesAgentPerception ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception  ::Prepare ) );
+    pBlackBoard_->ApplyOnKnowledgesObjectPerception( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception ::Prepare ) );
+}
+
+// =============================================================================
+// CLEAN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::CleanKnowledgeAgentPerception
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::PrepareKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge )
+void DEC_KS_Perception::CleanKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge )
 {
-    knowledge.Prepare();
-    if ( knowledge.MustBeDestroyed() )
+    if( !knowledge.IsPerceived() )
     {
         assert( pBlackBoard_ );
         pBlackBoard_->DestroyKnowledgeAgentPerception( knowledge ); // The knowledge will be deleted
@@ -150,13 +164,12 @@ void DEC_KS_Perception::PrepareKnowledgeAgentPerception( DEC_Knowledge_AgentPerc
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::PrepareKnowledgeObjectPerception
+// Name: DEC_KS_Perception::CleanKnowledgeObjectPerception
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::PrepareKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge )
+void DEC_KS_Perception::CleanKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge )
 {
-    knowledge.Prepare();
-    if ( knowledge.MustBeDestroyed() )
+    if( !knowledge.IsPerceived() )
     {
         assert( pBlackBoard_ );
         pBlackBoard_->DestroyKnowledgeObjectPerception( knowledge ); // The knowledge will be deleted
@@ -164,19 +177,20 @@ void DEC_KS_Perception::PrepareKnowledgeObjectPerception( DEC_Knowledge_ObjectPe
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::Prepare
+// Name: DEC_KS_Perception::Clean
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::Prepare()
+void DEC_KS_Perception::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception> methodAgent( DEC_KS_Perception::PrepareKnowledgeAgentPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception> methodAgent( DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
     pBlackBoard_->ApplyOnKnowledgesAgentPerception( methodAgent );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception> methodObject( DEC_KS_Perception::PrepareKnowledgeObjectPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception> methodObject( DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
     pBlackBoard_->ApplyOnKnowledgesObjectPerception( methodObject );
 }
+
 
 // =============================================================================
 // EVENTS
@@ -233,15 +247,6 @@ void DEC_KS_Perception::NotifyObjectPerception( MIL_RealObject_ABC& objectPercei
     }
 
     pKnowledge->Update( level );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::MakePerceptionAvailable
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-void DEC_KS_Perception::MakePerceptionAvailable( DEC_Knowledge_AgentPerception& perception )
-{
-    perception.MakeAvailable();
 }
 
 // =============================================================================
@@ -314,8 +319,7 @@ void DEC_KS_Perception::Talk()
 
     if( bMakePerceptionsAvailable_ )
     {
-        class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception > methodAgent( DEC_KS_Perception::MakePerceptionAvailable, *this );
-        pBlackBoard_->ApplyOnKnowledgesAgentPerception( methodAgent );    
+        pBlackBoard_->ApplyOnKnowledgesAgentPerception( std::bind2nd( std::mem_fun_ref( & DEC_Knowledge_AgentPerception::MakeAvailable ), 0) );
         bMakePerceptionsAvailable_ = false;
     }
 
@@ -363,3 +367,5 @@ bool DEC_KS_Perception::HasDelayedPerceptions() const
     pBlackBoard_->ApplyOnKnowledgesAgentPerception( sDelayedPerceptionFinder( bHasDelayedPerceptions ) );
     return bHasDelayedPerceptions;
 }
+
+

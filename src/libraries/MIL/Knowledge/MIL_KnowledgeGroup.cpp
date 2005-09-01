@@ -146,8 +146,24 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledges()
 {
+    for( CIT_AutomateVector itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
+        (**itAutomate).UpdateKnowledges();
+
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::CleanKnowledges
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::CleanKnowledges()
+{
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->Clean();
+
+    for( CIT_AutomateVector itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
+        (**itAutomate).CleanKnowledges();
 }
 
 // -----------------------------------------------------------------------------

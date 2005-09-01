@@ -71,6 +71,7 @@ public:
     //@{
     virtual void Prepare                      ();
     virtual void Talk                         ();
+    virtual void Clean                        ();
             void MakePerceptionsAvailable     ();
             void MakePerceptionsAvailableTimed();
     //@}
@@ -78,10 +79,8 @@ public:
 private:
     //! @name Operations
     //@{
-    void PrepareKnowledgeAgentPerception ( DEC_Knowledge_AgentPerception& perception );
-    void PrepareKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& perception );
-
-    void MakePerceptionAvailable( DEC_Knowledge_AgentPerception& perception );
+    void CleanKnowledgeAgentPerception ( DEC_Knowledge_AgentPerception& perception );
+    void CleanKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& perception );
     //@}
 
 public:

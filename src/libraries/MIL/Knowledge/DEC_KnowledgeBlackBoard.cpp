@@ -99,6 +99,18 @@ void DEC_KnowledgeBlackBoard::Update()
         (**itKS).Talk();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard::Clean
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard::Clean()
+{
+    IT_KnowledgeSourceList itKS;
+
+    for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+        (**itKS).Clean();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard::AddToScheduler

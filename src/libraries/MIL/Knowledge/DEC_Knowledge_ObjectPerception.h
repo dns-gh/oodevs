@@ -67,7 +67,6 @@ public:
     const MIL_AgentPion&       GetAgentPerceiving       () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
           bool                 IsPerceived              () const;
-          bool                 MustBeDestroyed          () const;
     //@}
 
 private:

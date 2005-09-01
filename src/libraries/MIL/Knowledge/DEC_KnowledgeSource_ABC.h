@@ -47,6 +47,7 @@ public:
     //@{
     virtual void Prepare();
     virtual void Talk   ();
+    virtual void Clean  ();
     //@}
 
 protected:

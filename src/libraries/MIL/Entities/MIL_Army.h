@@ -81,6 +81,7 @@ public:
     //! @name Knowledge
     //@{
     void                UpdateKnowledges  ();
+    void                CleanKnowledges   ();
     MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const;
     //@}
 

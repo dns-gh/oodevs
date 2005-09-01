@@ -63,6 +63,7 @@ public:
     //! @name Main operations
     //@{
     void Update();
+    void Clean ();
     //@}
 
     //! @name Knowledge sources management

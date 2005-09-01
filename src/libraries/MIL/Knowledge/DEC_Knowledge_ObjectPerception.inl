@@ -43,17 +43,6 @@ bool DEC_Knowledge_ObjectPerception::IsPerceived() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectPerception::MustBeDestroyed
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_ObjectPerception::MustBeDestroyed() const
-{
-    assert( pPreviousPerceptionLevel_ );
-    return *pPreviousPerceptionLevel_ == PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception::GetCurrentPerceptionLevel
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------

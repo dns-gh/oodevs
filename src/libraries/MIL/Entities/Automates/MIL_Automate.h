@@ -99,11 +99,12 @@ public:
     void RegisterPion  ( MIL_AgentPion& pion );
     void UnregisterPion( MIL_AgentPion& pion );
 
-            void UpdateDecision ();
-            void UpdateKnowledge();
-    virtual void UpdateNetwork  () const;
-    virtual void UpdateState    ();
-    virtual void Clean          ();
+            void UpdateDecision  ();
+            void UpdateKnowledges();
+            void CleanKnowledges ();
+    virtual void UpdateNetwork   () const;
+    virtual void UpdateState     ();
+    virtual void Clean           ();
 
     bool IsPerceived ( const DEC_Knowledge_Agent&  knowledge ) const;
     bool IsPerceived ( const DEC_Knowledge_Object& knowledge ) const;

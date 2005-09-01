@@ -327,12 +327,28 @@ void MIL_Automate::UpdateDecision()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::UpdateKnowledge
+// Name: MIL_Automate::UpdateKnowledges
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_Automate::UpdateKnowledge()
+void MIL_Automate::UpdateKnowledges()
 {
+    // Pions (+ PC)
+    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        (**itPion).UpdateKnowledges();
     knowledgeBlackBoard_.Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::CleanKnowledges
+// Created: NLD 2005-09-01
+// -----------------------------------------------------------------------------
+void MIL_Automate::CleanKnowledges()
+{
+    knowledgeBlackBoard_.Clean();
+
+    // Pions (+ PC)
+    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        (**itPion).CleanKnowledges();    
 }
 
 // -----------------------------------------------------------------------------

@@ -64,6 +64,7 @@ public:
     void UnregisterAutomate( MIL_Automate& automate );
 
     void UpdateKnowledges();
+    void CleanKnowledges ();
     bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceived     ( const DEC_Knowledge_Agent&  knowledge ) const;
 
