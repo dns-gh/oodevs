@@ -70,7 +70,7 @@ public:
     //! @name Path calculation
     //@{
     virtual void Execute( TerrainPathfinder& pathfind );
-            void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     //@}
     
     //! @name Operations
@@ -140,6 +140,11 @@ private:
     IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
     //@}
 
+    //! @name Tools
+    //@{
+    virtual void NotifySectionEnded();
+    //@}
+
     //! @name Operators
     //@{
     DEC_Path& operator=( const DEC_Path& rhs );
@@ -164,7 +169,8 @@ private:
     
     //! @name
     //@{
-    bool            bDecPointsInserted_;
+    bool bDecPointsInserted_;
+    bool bSectionJustEnded_;
     T_PathPointList resultList_;
     //@}
 

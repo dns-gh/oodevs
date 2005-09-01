@@ -50,6 +50,7 @@ DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points, cons
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
+    , bSectionJustEnded_ ( false )
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
@@ -74,6 +75,7 @@ DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
+    , bSectionJustEnded_ ( false )
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
@@ -99,6 +101,7 @@ DEC_Path::DEC_Path( const DEC_Path& rhs )
     , rMaxSlope_         ( rhs.rMaxSlope_ )
     , pathType_          ( rhs.pathType_ )
     , bDecPointsInserted_( false )
+    , bSectionJustEnded_ ( false )
 {
     fuseau_         = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
@@ -776,10 +779,23 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
 // -----------------------------------------------------------------------------
 void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
 {
-    if( ! resultList_.empty() && resultList_.back()->GetPos() == vPos )
+    if( bSectionJustEnded_ )
+    {
+        // Pop last point
         resultList_.pop_back();
+        bSectionJustEnded_ = false;
+    }
     assert( resultList_.empty() || GetUnitSpeeds().GetMaxSpeed( resultList_.back()->GetObjectTypesToNextPoint() ) > 0 );
     assert( resultList_.empty() || GetUnitSpeeds().IsPassable( resultList_.back()->GetObjectTypes() ) );
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::NotifySectionEnded
+// Created: AGE 2005-09-01
+// -----------------------------------------------------------------------------
+void DEC_Path::NotifySectionEnded()
+{
+    bSectionJustEnded_ = true;
 }
 

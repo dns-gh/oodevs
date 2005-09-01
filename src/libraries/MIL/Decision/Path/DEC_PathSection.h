@@ -19,6 +19,7 @@
 #include "pathfind/AStarManagementCallback_ABC.h"
 #include "tools/thread/Handler_ABC.h"
 
+class DEC_Path_ABC;
 class DEC_Path;
 class TerrainRule_ABC;
 
@@ -59,7 +60,7 @@ private:
 private:
     MT_Vector2D      vStartPoint_;
     MT_Vector2D      vEndPoint_;
-    DEC_Path&        path_;
+    DEC_Path_ABC&    path_;
     TerrainRule_ABC* pRule_;
 
     bool          bCanceled_;

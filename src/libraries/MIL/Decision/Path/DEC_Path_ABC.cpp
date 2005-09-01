@@ -111,6 +111,7 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
                 nState_ = ePartial;
             return;
         }
+        NotifySectionEnded();
     }
     nState_ = eValid;
 }

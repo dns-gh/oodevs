@@ -46,6 +46,8 @@ public:
     virtual void Execute( TerrainPathfinder& pathfind );
             void Cancel ();
     MT_Float GetLength() const;
+
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
     //@}
 
     //! @name References
@@ -75,6 +77,7 @@ protected:
     void        RegisterPathSection( DEC_PathSection& section );
     std::string GetStateAsString   () const;
     std::string GetPathAsString    () const;
+    virtual void NotifySectionEnded() = 0;
     //@}
 
     //! @name Types
