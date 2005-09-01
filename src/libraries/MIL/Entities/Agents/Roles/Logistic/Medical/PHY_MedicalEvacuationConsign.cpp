@@ -129,7 +129,7 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationLoading()
     assert( pHumanState_ );
     //    assert( pEvacuationAmbulance_ ); // Peut asserter quand EnterStateEvacuationGoingTo() quand consign associée à une ambulance déjà affectée à un automate
     assert( !pDoctor_ );
-    assert( GetState() == eEvacuationGoingTo );
+    assert( GetState() == eEvacuationGoingTo || GetState() == eWaitingForEvacuation );
     SetState( eEvacuationLoading );
     nTimer_ = 0;
     pHumanState_->NotifyHandledByMedical();
