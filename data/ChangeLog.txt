@@ -22,6 +22,8 @@ TODO de merde
 
 Next Version - Codename ''
     - NLD - Bug fix : assert() dans ASN quand sauvegarde juste apres un changement d'état des humains suite à recomplétement total
+    - SBO - ADN : Bug Fix : Les pions PC sont maintenant listés dans la table de composition des automates
+    - SBO - MOS_Light2 : Ajout d'une fenetre "résultat de tir" pour chaque pion dans le volet "rapport"
 
 Version 0.118.1 [31/08/2005] - Codename 'Enlarge your DIA_Size()'
     - NLD - Plus de memory leak dans la fonction DEC_Geometrie_DetruireListeLocalisations()
