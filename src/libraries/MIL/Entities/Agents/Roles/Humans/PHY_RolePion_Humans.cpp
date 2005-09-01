@@ -49,7 +49,6 @@ PHY_RolePion_Humans::T_HumanData::T_HumanData()
 template< typename Archive >
 void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
 {
-    bHasChanged_ = false;    
     file & nNbrTotal_                
          & nNbrOperational_
          & nNbrDead_                 
@@ -57,7 +56,8 @@ void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
          & nNbrMentalDiseased_       
          & nNbrNBC_                  
          & nNbrInLogisticMedical_    
-         & nNbrInLogisticMaintenance_;
+         & nNbrInLogisticMaintenance_
+         & bHasChanged_;
 }
 
 
@@ -126,6 +126,7 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
          & nNbrHumans_ 
          & nNbrFullyAliveHumans_
          & humansToUpdate_
+         & nNbrHumansDataChanged_
          & medicalHumanStates_;
 }
 
@@ -461,6 +462,7 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitDotations& asn ) cons
         personnel.nb_dans_chaine_sante         = humanData.nNbrInLogisticMedical_;
         personnel.nb_utilises_pour_maintenance = humanData.nNbrInLogisticMaintenance_;
     }
+    assert( i == nNbrHumansDataChanged_ );
 
     asn.GetAsnMsg().dotation_eff_personnel.n        = nNbrHumansDataChanged_;
     asn.GetAsnMsg().dotation_eff_personnel.elem     = pPersonnel;

@@ -21,6 +21,9 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Bug fix : assert() dans ASN quand sauvegarde juste apres un changement d'état des humains suite à recomplétement total
+
+Version 0.118.1 [31/08/2005] - Codename 'Enlarge your DIA_Size()'
     - NLD - Plus de memory leak dans la fonction DEC_Geometrie_DetruireListeLocalisations()
     - NLD - Suppression des fonctions DEC
                 - DEC_UserTypeList_Clear
