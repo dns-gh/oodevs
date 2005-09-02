@@ -12,7 +12,7 @@
 #ifndef __MOS_DynaObjectManager_h_
 #define __MOS_DynaObjectManager_h_
 
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 
 
 // =============================================================================
@@ -31,7 +31,7 @@ public:
     /** @name Types */
     //-------------------------------------------------------------------------
     //@{
-    typedef std::map< uint, MOS_DynaObject* >       T_DynaObjectMap;
+    typedef std::map< uint, MOS_DynaObject_ABC* >   T_DynaObjectMap;
     typedef T_DynaObjectMap::iterator               IT_DynaObjectMap;
     typedef T_DynaObjectMap::const_iterator         CIT_DynaObjectMap;
     typedef T_DynaObjectMap::const_reverse_iterator RCIT_DynaObjectMap;
@@ -45,11 +45,11 @@ public:
     /** @name Main */
     //-------------------------------------------------------------------------
     //@{
-    void RegisterDynaObject  ( MOS_DynaObject& object );
-    void UnregisterDynaObject( MOS_DynaObject& object );
+    void RegisterDynaObject  ( MOS_DynaObject_ABC& object );
+    void UnregisterDynaObject( MOS_DynaObject_ABC& object );
     void DeleteAllDynaObjects();
 
-    MOS_DynaObject* FindDynaObject( uint nID ) const;
+    MOS_DynaObject_ABC*    FindDynaObject( uint nID ) const;
     const T_DynaObjectMap& GetDynaObjects() const;
     //@}
 

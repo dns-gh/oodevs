@@ -29,7 +29,7 @@
 #include "MOS_DynaObjectManager.h"
 #include "MOS_MainWindow.h"
 #include "MOS_Agent.h"
-#include "MOS_DynaObject.h"
+//#include "MOS_DynaObject.h"
 #include "MOS_DynaObjectKnowledge.h"
 #include "MOS_AgentKnowledge.h"
 #include "MOS_Report_ABC.h"

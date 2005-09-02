@@ -25,7 +25,7 @@
 #include "MOS_DynaObjectKnowledge.h"
 #include "MOS_AgentModel.h"
 #include "MOS_DynaObjectManager.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_Team.h"
 #include "MOS_Gtia.h"
 #include "MOS_Surface.h"
@@ -247,10 +247,10 @@ void MOS_Agent::OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input )
 
     input >> nObjectID;
     input >> nObjectVisType;
-    MOS_DynaObject* pObject = MOS_App::GetApp().GetDynaObjectManager().FindDynaObject( nObjectID );
+    MOS_DynaObject_ABC* pObject = MOS_App::GetApp().GetDynaObjectManager().FindDynaObject( nObjectID );
     assert( pObject );
 
-    objectsPerceived_           .erase( pObject );
+    objectsPerceived_.erase( pObject );
 
     switch( nObjectVisType )
     {

@@ -25,7 +25,7 @@
 
 class MOS_SelectedElement;
 class MOS_ActionContext;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 
 
 // =============================================================================
@@ -64,8 +64,8 @@ public:
     //@}
 
 public slots:
-    void AddObject( MOS_DynaObject& object );
-    void RemoveObject( MOS_DynaObject& object );
+    void AddObject( MOS_DynaObject_ABC& object );
+    void RemoveObject( MOS_DynaObject_ABC& object );
     void SetSelectedElement( MOS_SelectedElement& selectedElement );
 
 private slots:
@@ -83,7 +83,7 @@ signals:
 private:
     //! @name Helpers
     //@{
-    MOS_DynaObject* ToObject( QListViewItem* pItem );
+    MOS_DynaObject_ABC* ToObject( QListViewItem* pItem );
     //@}
 
     void keyPressEvent( QKeyEvent* pEvent );

@@ -25,7 +25,7 @@
 #include "moc_MOS_ParamDynaObjectKnowledgeList.cpp"
 
 #include "MOS_App.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_ActionContext.h"
 #include "MOS_DynaObjectKnowledge.h"
 #include "MOS_Agent.h"

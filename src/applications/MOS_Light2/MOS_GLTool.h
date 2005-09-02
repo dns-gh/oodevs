@@ -36,7 +36,7 @@ class MOS_AgentKnowledge;
 class MOS_Team;
 class MOS_Gtia;
 class MOS_DynaObjectManager;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_DynaObjectKnowledge;
 class MOS_LineManager;
 class MOS_TacticalLine_ABC;
@@ -125,7 +125,7 @@ public:
     static void Draw( MOS_AgentKnowledge& knowledge, E_State nState = eNormal );
 
     static void Draw( MOS_DynaObjectManager& manager );
-    static void Draw( MOS_DynaObject& object, E_State nState = eNormal );
+    static void Draw( MOS_DynaObject_ABC& object, E_State nState = eNormal );
     static void Draw( MOS_DynaObjectKnowledge& knowledge, E_State nState = eNormal );
 
     static void Draw( MOS_LineManager& lineManager );

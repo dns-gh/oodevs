@@ -27,6 +27,13 @@
 #   include "MOS_SelectedElement.inl"
 #endif
 
+#include "MOS_Agent.h"
+#include "MOS_Gtia.h"
+#include "MOS_Team.h"
+#include "MOS_DynaObject_ABC.h"
+#include "MOS_AgentKnowledge.h"
+#include "MOS_DynaObjectKnowledge.h"
+
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement constructor
 // Created: APE 2004-05-05
@@ -82,7 +89,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Team& team )
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_SelectedElement::MOS_SelectedElement( MOS_DynaObject& object )
+MOS_SelectedElement::MOS_SelectedElement( MOS_DynaObject_ABC& object )
 {
     this->Init();
     pDynaObject_ = &object;
@@ -185,13 +192,6 @@ bool MOS_SelectedElement::operator==( const MOS_SelectedElement& rhs ) const
         && pLine_                == rhs.pLine_
         && nLinePoint_           == rhs.nLinePoint_;
 }
-
-#include "MOS_Agent.h"
-#include "MOS_Gtia.h"
-#include "MOS_Team.h"
-#include "MOS_DynaObject.h"
-#include "MOS_AgentKnowledge.h"
-#include "MOS_DynaObjectKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement::Dump

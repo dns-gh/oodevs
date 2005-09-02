@@ -75,6 +75,17 @@ public:
     
     bool AreAttrNuageNBCPresent() const;
     uint GetNuageNBCAgentNbcId () const;
+
+    bool                       AreAttrRotaPresent() const;
+    uint                       GetRotaDanger     () const;
+    const std::vector< uint >& GetRotaNbcAgents  () const;
+
+    bool AreAttrItineraireLogistiquePresent() const;
+    bool IsItineraireLogistiqueEquipped    () const;
+    uint GetItineraireLogistiqueFlow       () const;
+    uint GetItineraireLogistiqueWidth      () const;
+    uint GetItineraireLogistiqueLength     () const;
+    uint GetItineraireLogistiqueMaxWeight  () const;
     //@}
     
     //-------------------------------------------------------------------------
@@ -128,6 +139,19 @@ private:
 	// Attributs spécifiques camps
 	bool bAttrTC2Present_;
 	uint nTC2ID_;
+
+    // Attributs spécifiques ROTA
+    bool                bAttrRotaPresent_;
+    uint                nRotaDanger_;
+    std::vector< uint > rotaNbcAgents_;
+
+    // Attributs spécifiques 
+    bool bAttrItineraireLogisticPresent_;
+    bool bItineraireLogistiqueEquipped_;
+    uint nItineraireLogistiqueFlow_;
+    uint nItineraireLogistiqueWidth_;
+    uint nItineraireLogistiqueLength_;
+    uint nItineraireLogistiqueMaxWeight_;
 
 public:
     //! @name Types

@@ -25,7 +25,7 @@
 #include "moc_MOS_DynaObjectListView.cpp"
 
 #include "MOS_App.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_DynaObjectManager.h"
 #include "MOS_MainWindow.h"
 #include "MOS_Options.h"
@@ -54,8 +54,8 @@ MOS_DynaObjectListView::MOS_DynaObjectListView( QWidget* pParent )
     this->setRootIsDecorated( true );
     this->setResizeMode( QListView::LastColumn );
 
-    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectCreated( MOS_DynaObject& ) ), this, SLOT( AddObject( MOS_DynaObject& ) ) );
-    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectDeleted( MOS_DynaObject& ) ), this, SLOT( RemoveObject( MOS_DynaObject& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectCreated( MOS_DynaObject_ABC& ) ), this, SLOT( AddObject( MOS_DynaObject_ABC& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectDeleted( MOS_DynaObject_ABC& ) ), this, SLOT( RemoveObject( MOS_DynaObject_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( clear() ) );
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
@@ -93,7 +93,7 @@ MOS_DynaObjectListView::~MOS_DynaObjectListView()
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_DynaObjectListView::AddObject( MOS_DynaObject& object )
+void MOS_DynaObjectListView::AddObject( MOS_DynaObject_ABC& object )
 {
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
     if( nPlayedTeam != MOS_Options::eController && nPlayedTeam != (int)object.GetTeam().GetIdx() )
@@ -141,7 +141,7 @@ void MOS_DynaObjectListView::AddObject( MOS_DynaObject& object )
     if( pTypeItem == 0 )
         pTypeItem = new MT_ValuedListViewItem< ASN1T_EnumObjectType, eObjectType >( nType, pTeamItem, ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType ).c_str() );
 
-    new MT_ValuedListViewItem< MOS_DynaObject*, eObject >( &object, pTypeItem, QString::number( object.GetID() ) );
+    new MT_ValuedListViewItem< MOS_DynaObject_ABC*, eObject >( &object, pTypeItem, QString::number( object.GetID() ) );
 }
 
 
@@ -151,14 +151,14 @@ void MOS_DynaObjectListView::AddObject( MOS_DynaObject& object )
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_DynaObjectListView::RemoveObject( MOS_DynaObject& object )
+void MOS_DynaObjectListView::RemoveObject( MOS_DynaObject_ABC& object )
 {
     QListViewItemIterator it( this );
     while( it.current() )
     {
         if( it.current()->rtti() == eObject )
         {
-            MT_ValuedListViewItem< MOS_DynaObject*, eObject >* pCastItem = (MT_ValuedListViewItem< MOS_DynaObject*, eObject >*)(it.current());
+            MT_ValuedListViewItem< MOS_DynaObject_ABC*, eObject >* pCastItem = (MT_ValuedListViewItem< MOS_DynaObject_ABC*, eObject >*)(it.current());
             if( pCastItem->GetValue() == &object )
             {
                 delete it.current();
@@ -189,7 +189,7 @@ void MOS_DynaObjectListView::SetSelectedElement( MOS_SelectedElement& selectedEl
     {
         if( it.current()->rtti() == eObject )
         {
-            MT_ValuedListViewItem< MOS_DynaObject*, eObject >* pCastItem = (MT_ValuedListViewItem< MOS_DynaObject*, eObject >*)(it.current());
+            MT_ValuedListViewItem< MOS_DynaObject_ABC*, eObject >* pCastItem = (MT_ValuedListViewItem< MOS_DynaObject_ABC*, eObject >*)(it.current());
             if( pCastItem->GetValue() == selectedElement.pDynaObject_ )
             {
                 disconnect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
@@ -226,7 +226,7 @@ void MOS_DynaObjectListView::OnRequestPopup( QListViewItem* pItem, const QPoint&
 // -----------------------------------------------------------------------------
 void MOS_DynaObjectListView::OnRequestCenter()
 {
-    MOS_DynaObject* pObject = this->ToObject( this->selectedItem() );
+    MOS_DynaObject_ABC* pObject = this->ToObject( this->selectedItem() );
     if( pObject != 0 )
         emit CenterOnPoint( pObject->GetCenter() );
 }
@@ -243,7 +243,7 @@ void MOS_DynaObjectListView::OnSelectionChange( QListViewItem* pItem )
     if( pItem == 0 )
         return;
 
-    MOS_DynaObject* pObject = this->ToObject( pItem );
+    MOS_DynaObject_ABC* pObject = this->ToObject( pItem );
     MOS_SelectedElement selectedElement( *pObject );
 
     // Disconnect and connect to avoid having the signal come back to us.
@@ -278,7 +278,7 @@ void MOS_DynaObjectListView::keyPressEvent( QKeyEvent* pEvent )
     {
         if( this->currentItem() != 0 && this->currentItem()->rtti() == eObject )
         {
-            MOS_DynaObject* pObject = this->ToObject( this->currentItem() );
+            MOS_DynaObject_ABC* pObject = this->ToObject( this->currentItem() );
             if( MOS_App::GetApp().IsODBEdition() )
             {
                 MOS_App::GetApp().GetDynaObjectManager().UnregisterDynaObject( *pObject );

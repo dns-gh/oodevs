@@ -34,7 +34,7 @@
 #include "MOS_Team.h"
 #include "MOS_Gtia.h"
 #include "MOS_DynaObjectManager.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_DynaObjectKnowledge.h"
 #include "MOS_Team.h"
 #include "MOS_LineManager.h"
@@ -634,7 +634,7 @@ void MOS_GLTool::Draw( MOS_DynaObjectManager& manager )
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void MOS_GLTool::Draw( MOS_DynaObject& object, E_State nState )
+void MOS_GLTool::Draw( MOS_DynaObject_ABC& object, E_State nState )
 {
     glLineWidth( 2 );
 

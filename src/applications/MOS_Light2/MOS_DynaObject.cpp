@@ -45,6 +45,13 @@ MOS_DynaObject::MOS_DynaObject()
     , nNuageNBCAgentNbcID_               ( 0 )
 	, bAttrTC2Present_						 ( false )
 	, nTC2ID_							 ( 0 )
+    , bAttrItineraireLogisticPresent_    ( false )
+    , bItineraireLogistiqueEquipped_     ( false )
+    , nItineraireLogistiqueFlow_         ( 0 )
+    , nItineraireLogistiqueWidth_        ( 0 )
+    , nItineraireLogistiqueLength_       ( 0 )
+    , nItineraireLogistiqueMaxWeight_    ( 0 )
+    , bAttrRotaPresent_                  ( false )
 {
 }
 
@@ -70,7 +77,6 @@ void MOS_DynaObject::Initialize( const ASN1T_MsgObjectCreation& asnMsg )
     bPrepared_                     = false;
 
     nID_   = asnMsg.oid;
-
     nType_ = asnMsg.type;
 
     MOS_DynaObject::GetIDManagerForObjectType( nType_ ).LockIdentifier( nID_ );
@@ -108,6 +114,30 @@ void MOS_DynaObject::Initialize( const ASN1T_MsgObjectCreation& asnMsg )
         {
             bAttrTC2Present_ = true;
             nTC2ID_ = asnMsg.attributs_specifiques.u.camp_refugies->tc2;
+        }
+
+
+        else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_zone_nbc )
+        {
+            bAttrNuageNBCPresent_ = true;
+            nNuageNBCAgentNbcID_ = asnMsg.attributs_specifiques.u.zone_nbc->agent_nbc;
+        }
+        else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_rota )
+        {
+            bAttrRotaPresent_ = true;
+            nRotaDanger_ = asnMsg.attributs_specifiques.u.rota->niveau_danger;
+            rotaNbcAgents_.clear();
+            for( uint i = 0; i < asnMsg.attributs_specifiques.u.rota->agents_nbc.n; ++i )
+                rotaNbcAgents_.push_back( asnMsg.attributs_specifiques.u.rota->agents_nbc.elem[i] );
+        }
+        else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_itineraire_logistique )
+        {
+            bAttrItineraireLogisticPresent_ = true;
+            bItineraireLogistiqueEquipped_  = asnMsg.attributs_specifiques.u.itineraire_logistique->itineraire_equipe;
+            nItineraireLogistiqueFlow_      = asnMsg.attributs_specifiques.u.itineraire_logistique->debit;
+            nItineraireLogistiqueWidth_     = asnMsg.attributs_specifiques.u.itineraire_logistique->largeur;
+            nItineraireLogistiqueLength_    = asnMsg.attributs_specifiques.u.itineraire_logistique->longueur;
+            nItineraireLogistiqueMaxWeight_ = asnMsg.attributs_specifiques.u.itineraire_logistique->poids_max_supporte;
         }
     }
 

@@ -27,7 +27,7 @@
 
 class MOS_DynaObjectKnowledge;
 class MOS_AgentKnowledge;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_Gtia;
 
 // =============================================================================
@@ -98,7 +98,7 @@ public:
 
     const T_ObjectKnowledgeMap& GetObjectKnowledges() const;
     MOS_DynaObjectKnowledge*    FindObjectKnowledge( int nId );
-    MOS_DynaObjectKnowledge*    FindKnowledgeOnObject( const MOS_DynaObject& object );
+    MOS_DynaObjectKnowledge*    FindKnowledgeOnObject( const MOS_DynaObject_ABC& object );
     //@}
 
     //! @name Network events

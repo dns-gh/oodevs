@@ -31,7 +31,7 @@ class MOS_Gtia;
 class MOS_Team;
 class MOS_AgentKnowledge;
 class MOS_DynaObjectKnowledge;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_TacticalLine_ABC;
 class QSplashScreen;
 
@@ -86,9 +86,9 @@ public:
     void NotifyAgentUpdated( MOS_Agent& agent );
     void NotifyAgentReparented( MOS_Agent& agent );
 
-    void NotifyDynaObjectCreated( MOS_DynaObject& object );
-    void NotifyDynaObjectUpdated( MOS_DynaObject& object );
-    void NotifyDynaObjectDeleted( MOS_DynaObject& object );
+    void NotifyDynaObjectCreated( MOS_DynaObject_ABC& object );
+    void NotifyDynaObjectUpdated( MOS_DynaObject_ABC& object );
+    void NotifyDynaObjectDeleted( MOS_DynaObject_ABC& object );
 
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );
@@ -161,9 +161,9 @@ signals:
     void AgentUpdated( MOS_Agent& agent );
     void AgentReparented( MOS_Agent& agent );
 
-    void DynaObjectCreated( MOS_DynaObject& object );
-    void DynaObjectUpdated( MOS_DynaObject& object );
-    void DynaObjectDeleted( MOS_DynaObject& object );
+    void DynaObjectCreated( MOS_DynaObject_ABC& object );
+    void DynaObjectUpdated( MOS_DynaObject_ABC& object );
+    void DynaObjectDeleted( MOS_DynaObject_ABC& object );
     
     void GtiaCreated( MOS_Gtia& gtia );
     void GtiaDeleted( MOS_Gtia& gtia );

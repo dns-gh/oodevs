@@ -27,7 +27,7 @@ class MOS_DynaObjectKnowledge;
 class MOS_AgentModel;
 class MOS_Gtia;
 class MOS_Team;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_Surface;
 class MOS_TypePion;
 class MOS_TypeAutomate;
@@ -63,9 +63,9 @@ public:
     typedef T_AgentConstPtrSet::iterator        IT_AgentConstPtrSet;
     typedef T_AgentConstPtrSet::const_iterator  CIT_AgentConstPtrSet;
 
-    typedef std::set< const MOS_DynaObject* >    T_ObjectConstPtrSet;
-    typedef T_ObjectConstPtrSet::iterator        IT_ObjectConstPtrSet;
-    typedef T_ObjectConstPtrSet::const_iterator  CIT_ObjectConstPtrSet;
+    typedef std::set< const MOS_DynaObject_ABC* > T_ObjectConstPtrSet;
+    typedef T_ObjectConstPtrSet::iterator         IT_ObjectConstPtrSet;
+    typedef T_ObjectConstPtrSet::const_iterator   CIT_ObjectConstPtrSet;
 
     typedef MT_Quad< MT_Float, MT_Vector2D, MT_Vector2D, MT_Float > T_VisionConeQuad;
     typedef std::vector< T_VisionConeQuad >                         T_VisionConeVector;

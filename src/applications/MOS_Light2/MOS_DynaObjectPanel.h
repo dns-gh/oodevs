@@ -25,7 +25,7 @@
 
 #include "MOS_InfoPanel_ABC.h"
 
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class QCheckBox;
 
 // =============================================================================
@@ -50,10 +50,28 @@ private slots:
     //! @name Helpers
     //@{
     virtual void OnUpdate();
-    virtual void OnDynaObjectUpdated( MOS_DynaObject& object );
+    virtual void OnDynaObjectUpdated( MOS_DynaObject_ABC& object );
 
     void OnApply();
     void OnCancel();
+    //@}
+
+private:
+    //! @name Object types Helpers
+    //@{
+    void InitializeGeneric             ();
+    void InitializeSiteFranchissement  ();
+    void InitializeCamp                ();
+    void InitializeNBC                 ();
+    void InitializeROTA                ();
+    void InitializeItineraireLogistique();
+
+    void UpdateGeneric             ( MOS_DynaObject_ABC& object );
+    void UpdateSiteFranchissement  ( MOS_DynaObject_ABC& object );
+    void UpdateCamp                ( MOS_DynaObject_ABC& object );
+    void UpdateNBC                 ( MOS_DynaObject_ABC& object );
+    void UpdateROTA                ( MOS_DynaObject_ABC& object );
+    void UpdateItineraireLogistique( MOS_DynaObject_ABC& object );    
     //@}
 
 private:
@@ -81,6 +99,22 @@ private:
 
 	QLabel* pTC2Title_;
 	QLabel* pTC2Label_;
+
+    QLabel* pROTADangerTitle_;
+    QLabel* pROTADangerLabel_;
+    QLabel* pROTAAgentsNbcTitle_;
+    QLabel* pROTAAgentsNbcLabel_;
+
+    QLabel* pItLogEquippedTitle_;
+    QLabel* pItLogEquippedLabel_;
+    QLabel* pItLogFlowTitle_;
+    QLabel* pItLogFlowLabel_;
+    QLabel* pItLogWidthTitle_;
+    QLabel* pItLogWidthLabel_;
+    QLabel* pItLogLengthTitle_;
+    QLabel* pItLogLengthLabel_;
+    QLabel* pItLogMaxWeightTitle_;
+    QLabel* pItLogMaxWeightLabel_;
 
     QPushButton* pApplyButton_;
     QPushButton* pCancelButton_;

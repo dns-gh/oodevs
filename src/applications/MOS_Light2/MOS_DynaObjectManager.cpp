@@ -12,7 +12,8 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_DynaObjectManager.h"
 
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
+#include "MOS_DynaObject_Factory.h"
 
 #ifndef MOS_USE_INLINE
 #   include "MOS_DynaObjectManager.inl"
@@ -41,7 +42,7 @@ MOS_DynaObjectManager::~MOS_DynaObjectManager()
 // Name: MOS_DynaObjectManager::RegisterDynaObject
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-void MOS_DynaObjectManager::RegisterDynaObject( MOS_DynaObject& object )
+void MOS_DynaObjectManager::RegisterDynaObject( MOS_DynaObject_ABC& object )
 {
     bool bOut = dynaObjectMap_.insert( std::make_pair( object.GetID(), &object ) ).second;
     assert( bOut );
@@ -52,7 +53,7 @@ void MOS_DynaObjectManager::RegisterDynaObject( MOS_DynaObject& object )
 // Name: MOS_DynaObjectManager::UnregisterDynaObject
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-void MOS_DynaObjectManager::UnregisterDynaObject( MOS_DynaObject& object )
+void MOS_DynaObjectManager::UnregisterDynaObject( MOS_DynaObject_ABC& object )
 {
     uint nOut = dynaObjectMap_.erase( object.GetID() );
     assert( nOut == 1 );
@@ -66,11 +67,7 @@ void MOS_DynaObjectManager::UnregisterDynaObject( MOS_DynaObject& object )
 void MOS_DynaObjectManager::DeleteAllDynaObjects()
 {
     for( IT_DynaObjectMap it = dynaObjectMap_.begin(); it != dynaObjectMap_.end(); ++it )
-    {
-        MOS_DynaObject& object = *it->second;
-        delete &object;
-    }
-
+        delete it->second;
     dynaObjectMap_.clear();
 }
 
@@ -87,9 +84,8 @@ void MOS_DynaObjectManager::ReadODB( MT_XXmlInputArchive& archive )
     archive.BeginList( "Objets" );
     while( archive.NextListElement())
     {
-        std::auto_ptr<MOS_DynaObject> spDynaObject( new MOS_DynaObject() );
-        spDynaObject->ReadODB( archive );
-        this->RegisterDynaObject( *(spDynaObject.release()));
+        MOS_DynaObject_ABC* pDynaObject = MOS_DynaObject_Factory::Create( archive );
+        this->RegisterDynaObject( *pDynaObject );
     }
     archive.EndList();
 }

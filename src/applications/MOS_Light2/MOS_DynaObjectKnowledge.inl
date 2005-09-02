@@ -62,7 +62,7 @@ const T_PointVector& MOS_DynaObjectKnowledge::GetPointList() const
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObject* MOS_DynaObjectKnowledge::GetRealObject() const
+MOS_DynaObject_ABC* MOS_DynaObjectKnowledge::GetRealObject() const
 {
     return pRealObject_;    
 }

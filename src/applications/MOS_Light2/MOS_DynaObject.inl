@@ -327,3 +327,92 @@ uint MOS_DynaObject::GetTC2ID() const
 }
 
 
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::AreAttrRotaPresent
+// Created: NLD 2004-10-29
+// -----------------------------------------------------------------------------
+inline
+bool MOS_DynaObject::AreAttrRotaPresent() const
+{
+    return bAttrRotaPresent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetRotaDanger
+// Created: NLD 2004-10-29
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetRotaDanger() const
+{
+    return nRotaDanger_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< uint > MOS_DynaObject::GetRotaNbcAgents
+// Created: NLD 2004-10-29
+// -----------------------------------------------------------------------------
+inline
+const std::vector< uint >& MOS_DynaObject::GetRotaNbcAgents() const
+{
+    return rotaNbcAgents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::AreAttrItineraireLogistiquePresent
+// Created: NLD 2005-02-18
+// -----------------------------------------------------------------------------
+inline
+bool MOS_DynaObject::AreAttrItineraireLogistiquePresent() const
+{
+    return bAttrItineraireLogisticPresent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::IsItineraireLogistiqueEquipped
+// Created: NLD 2005-02-18
+// -----------------------------------------------------------------------------
+inline
+bool MOS_DynaObject::IsItineraireLogistiqueEquipped() const
+{
+    return bItineraireLogistiqueEquipped_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetItineraireLogistiqueFlow
+// Created: NLD 2005-04-27
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetItineraireLogistiqueFlow() const
+{
+    return nItineraireLogistiqueFlow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetItineraireLogistiqueWidth
+// Created: NLD 2005-04-27
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetItineraireLogistiqueWidth() const
+{
+    return nItineraireLogistiqueWidth_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetItineraireLogistiqueLength
+// Created: NLD 2005-04-27
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetItineraireLogistiqueLength() const
+{
+    return nItineraireLogistiqueLength_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DynaObject::GetItineraireLogistiqueMaxWeight
+// Created: NLD 2005-04-27
+// -----------------------------------------------------------------------------
+inline
+uint MOS_DynaObject::GetItineraireLogistiqueMaxWeight() const
+{
+    return nItineraireLogistiqueMaxWeight_;
+}

@@ -33,7 +33,14 @@
 #include "MOS_Team.h"
 #include "MOS_Tools.h"
 #include "MOS_ASN_Messages.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
+#include "MOS_DynaObject_Factory.h"
+#include "MOS_DynaObject_Generic.h"
+#include "MOS_DynaObject_SiteFranchissement.h"
+#include "MOS_DynaObject_NBC.h"
+#include "MOS_DynaObject_Camp.h"
+#include "MOS_DynaObject_ROTA.h"
+#include "MOS_DynaObject_ItineraireLogistique.h"
 #include "MOS_Agent.h"
 
 #ifndef MOS_USE_INLINE
@@ -214,29 +221,31 @@ void MOS_ObjectCreationPanel::OnOk()
         
     if( MOS_App::GetApp().IsODBEdition() )
     {
-        MOS_DynaObject* pObject = new MOS_DynaObject();
+        ASN1T_EnumObjectType nType = pObjectTypeCombo_->GetValue();
+        MOS_DynaObject_ABC* pObject = MOS_DynaObject_Factory::Create( nType );
+
         MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeam( pTeamCombo_->GetValue() );
         assert( pTeam != 0 );
         pObject->SetTeam( *pTeam );
-        ASN1T_EnumObjectType nType = pObjectTypeCombo_->GetValue();
-        pObject->SetType( nType );
+        
 
-        uint nID =  MOS_DynaObject::GetIDManagerForObjectType( nType ).GetFreeIdentifier();
+        uint nID =  MOS_DynaObject_ABC::GetIDManagerForObjectType( nType ).GetFreeIdentifier();
         pObject->SetID( nID );
         
         pObject->SetLocalisation( pLocation_->GetType(), pLocation_->GetPointList() );
         pLocation_->Clear();
 		
 		if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
-            pObject->SetCampParameter( pAgent_->GetAgent()->GetAgentID() );
+            static_cast< MOS_DynaObject_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetAgentID() );
 		pAgent_->Clear();
         
         if( nType == EnumObjectType::nuage_nbc )
-            pObject->SetNBCParameter( pNBCTypeCombo_->GetValue() );
+            static_cast< MOS_DynaObject_NBC* >( pObject )->SetAgentNbcId( pNBCTypeCombo_->GetValue() );
         
         if( nType == EnumObjectType::site_franchissement )
         {
-            pObject->SetFranchissementParameters( pCrossingWidthEdit_->value(), pCrossingDepthEdit_->value(),
+            static_cast< MOS_DynaObject_SiteFranchissement* >( pObject )->SetParameters( 
+                                                  pCrossingWidthEdit_->value(), pCrossingDepthEdit_->value(),
                                                   pCrossingSpeedEdit_->value(), pCrossingToConstructCheckbox_->isOn() );
         }
         
@@ -249,7 +258,7 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_MagicActionCreateObject asnAction;
 
     asnAction.type = (ASN1T_EnumObjectType)pObjectTypeCombo_->GetValue();
-    asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject::GetIDManagerForObjectType( asnAction.type ).GetFreeIdentifier();
+    asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_ABC::GetIDManagerForObjectType( asnAction.type ).GetFreeIdentifier();
     
     asnAction.camp  = pTeamCombo_->GetValue();
 
@@ -382,7 +391,7 @@ bool MOS_ObjectCreationPanel::OnKeyPress( const QKeyEvent& keyEvent )
                 // while editing an odb, we can delete it immediatly.
                 if( MOS_App::GetApp().IsODBEdition() )
                 {
-                    MOS_DynaObject* pObject = selectedElement_.pDynaObject_;
+                    MOS_DynaObject_ABC* pObject = selectedElement_.pDynaObject_;
                     MOS_App::GetApp().GetDynaObjectManager().UnregisterDynaObject( *pObject );
                     MOS_App::GetApp().NotifyDynaObjectDeleted( *pObject );
                     delete pObject;

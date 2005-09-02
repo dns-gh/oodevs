@@ -20,8 +20,9 @@
 #include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_Agent.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_DynaObjectManager.h"
+#include "MOS_DynaObject_Factory.h"
 #include "MOS_App.h"
 #include "MOS_MOSServer.h"
 #include "MOS_LineManager.h"
@@ -1523,8 +1524,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCre
     if( objectManager.FindDynaObject( asnMsg.oid ) != 0 )
         return;
 
-    MOS_DynaObject* pObject = new MOS_DynaObject();
-    pObject->Initialize( asnMsg );
+    MOS_DynaObject_ABC* pObject = MOS_DynaObject_Factory::Create( asnMsg );
+    assert( pObject );
     objectManager.RegisterDynaObject( *pObject );
     MOS_App::GetApp().NotifyDynaObjectCreated( *pObject );
 
@@ -1537,7 +1538,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCre
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& asnMsg )
 {
-    MOS_DynaObject* pObject = MOS_App::GetApp().GetDynaObjectManager().FindDynaObject( asnMsg.oid );
+    MOS_DynaObject_ABC* pObject = MOS_App::GetApp().GetDynaObjectManager().FindDynaObject( asnMsg.oid );
     assert( pObject );
 
     pObject->Update( asnMsg );
@@ -1552,7 +1553,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObject
 {
     MOS_DynaObjectManager& dynaObjectManager = MOS_App::GetApp().GetDynaObjectManager();
 
-    MOS_DynaObject* pObject = dynaObjectManager.FindDynaObject( asnMsg );
+    MOS_DynaObject_ABC* pObject = dynaObjectManager.FindDynaObject( asnMsg );
     assert( pObject );
 
     MOS_App::GetApp().NotifyDynaObjectDeleted( *pObject );

@@ -38,9 +38,9 @@ QSize MOS_DynaObjectListView::sizeHint() const
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObject* MOS_DynaObjectListView::ToObject( QListViewItem* pItem )
+MOS_DynaObject_ABC* MOS_DynaObjectListView::ToObject( QListViewItem* pItem )
 {
     if( pItem == 0 || pItem->rtti() != eObject )
         return 0;
-    return ((MT_ValuedListViewItem< MOS_DynaObject*, eObject>*)pItem)->GetValue();
+    return ((MT_ValuedListViewItem< MOS_DynaObject_ABC*, eObject>*)pItem)->GetValue();
 }

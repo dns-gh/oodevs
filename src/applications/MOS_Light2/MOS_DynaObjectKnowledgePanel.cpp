@@ -28,7 +28,7 @@
 #include "MOS_MainWindow.h"
 #include "MOS_World.h"
 #include "MOS_Tools.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_Agent.h"
 #include "MOS_Team.h"
 #include "MOS_DynaObjectKnowledge.h"

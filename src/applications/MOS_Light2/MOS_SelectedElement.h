@@ -28,7 +28,7 @@
 class MOS_Agent;
 class MOS_Gtia;
 class MOS_Team;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_AgentKnowledge;
 class MOS_DynaObjectKnowledge;
 class MOS_RC;
@@ -51,7 +51,7 @@ public:
     MOS_SelectedElement( MOS_Agent& agent );
     MOS_SelectedElement( MOS_Gtia& gtia );
     MOS_SelectedElement( MOS_Team& team );
-    MOS_SelectedElement( MOS_DynaObject& object );
+    MOS_SelectedElement( MOS_DynaObject_ABC& object );
     MOS_SelectedElement( MOS_AgentKnowledge& agentKnowledge );
     MOS_SelectedElement( MOS_DynaObjectKnowledge& dynaObjectKnowledge );
     MOS_SelectedElement( MOS_RC& rc );
@@ -74,7 +74,7 @@ public:
     MOS_Agent*               pAgent_;
     MOS_Gtia*                pGtia_;
     MOS_Team*                pTeam_;
-    MOS_DynaObject*          pDynaObject_;
+    MOS_DynaObject_ABC*      pDynaObject_;
     MOS_AgentKnowledge*      pAgentKnowledge_;
     MOS_DynaObjectKnowledge* pDynaObjectKnowledge_;
     MOS_RC*                  pRC_;

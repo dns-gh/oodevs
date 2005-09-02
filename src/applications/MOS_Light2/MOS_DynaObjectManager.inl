@@ -15,7 +15,7 @@
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObject* MOS_DynaObjectManager::FindDynaObject( uint nID ) const
+MOS_DynaObject_ABC* MOS_DynaObjectManager::FindDynaObject( uint nID ) const
 {
     CIT_DynaObjectMap itObject = dynaObjectMap_.find( nID );
     if( itObject == dynaObjectMap_.end() )

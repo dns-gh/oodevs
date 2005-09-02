@@ -15,7 +15,7 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_IDManager.h"
 
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_Agent;
 class MOS_Team;
 
@@ -59,12 +59,12 @@ public:
 
     //! @name Accessors
     //@{
-    uint               GetID       () const;
-    bool               IsValid     ( E_AttributeUpdated ) const;
-    const MT_Vector2D& GetCenter   () const;
-    MOS_DynaObject*    GetRealObject() const;
-    MOS_Team&          GetOwner     () const;
-    const T_PointVector& GetPointList() const;
+    uint                 GetID        () const;
+    bool                 IsValid      ( E_AttributeUpdated ) const;
+    const MT_Vector2D&   GetCenter    () const;
+    MOS_DynaObject_ABC*  GetRealObject() const;
+    MOS_Team&            GetOwner     () const;
+    const T_PointVector& GetPointList () const;
 
     uint GetSiteFranchissementLargeur        () const;
     uint GetSiteFranchissementProfondeur     () const;
@@ -83,21 +83,21 @@ private:
     //@}
 
 private:
-    MOS_Team& owner_;
-    uint nAttrUpdated_;
+    MOS_Team&            owner_;
+    uint                 nAttrUpdated_;
 
-    uint              nID_;
-    MOS_DynaObject*   pRealObject_;
-    MT_Vector2D       vCenter_;
+    uint                 nID_;
+    MOS_DynaObject_ABC*  pRealObject_;
+    MT_Vector2D          vCenter_;
     ASN1T_EnumObjectType nObjectTypeID_;
     
-    T_PointVector     points_;
+    T_PointVector        points_;
     
-    uint nPourcentageConstruction_;
-    uint nPourcentageValorisation_;
-    uint nPourcentageContournement_;
-    bool bEnPreparation_;
-    bool bIsPerceived_;
+    uint                 nPourcentageConstruction_;
+    uint                 nPourcentageValorisation_;
+    uint                 nPourcentageContournement_;
+    bool                 bEnPreparation_;
+    bool                 bIsPerceived_;
 
     T_AutomatePerceptionSet automatePerceptionSet_;
     uint nRelevance_;

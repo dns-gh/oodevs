@@ -31,7 +31,7 @@ class MOS_Agent;
 class MOS_ShapeEditorMapEventFilter;
 class MOS_ActionContext;
 class MOS_TacticalLine_ABC;
-class MOS_DynaObject;
+class MOS_DynaObject_ABC;
 class MOS_MapMouseEvent;
 class QPopupMenu;
 
@@ -74,7 +74,7 @@ public slots:
     void SetSelectedElement( MOS_SelectedElement& selectedElement );
     void ClearSelection();
 
-    void OnDynaObjectDeleted( MOS_DynaObject& object );
+    void OnDynaObjectDeleted( MOS_DynaObject_ABC& object );
     void OnTacticalLineDeleted( MOS_TacticalLine_ABC& line );
     void OnAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void OnObjectKnowledgeDeleted( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
@@ -107,8 +107,8 @@ private:
     bool IsLineAtPos( const MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
     int GetPointAtPos( MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_DynaObject* GetDynaObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    bool IsDynaObjectAtPos( const MOS_DynaObject& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    MOS_DynaObject_ABC* GetDynaObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool IsDynaObjectAtPos( const MOS_DynaObject_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
     MOS_DynaObjectKnowledge* GetDynaObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
     bool IsDynaObjectKnowledgeAtPos( const MOS_DynaObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );

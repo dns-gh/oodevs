@@ -28,7 +28,7 @@
 #include "MOS_MainWindow.h"
 #include "MOS_ShapeEditorMapEventFilter.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_DynaObjectKnowledge.h"
 #include "MOS_DynaObjectManager.h"
 #include "MOS_ActionContext.h"
@@ -68,7 +68,7 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
 
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( ClearSelection() ) );
 
-    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectDeleted( MOS_DynaObject& ) ), this, SLOT( OnDynaObjectDeleted( MOS_DynaObject& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectDeleted( MOS_DynaObject_ABC& ) ), this, SLOT( OnDynaObjectDeleted( MOS_DynaObject_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TacticalLineDeleted( MOS_TacticalLine_ABC& ) ), this, SLOT( OnTacticalLineDeleted( MOS_TacticalLine_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( AgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ), this, SLOT( OnAgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectKnowledgeDeleted( MOS_Team&, MOS_DynaObjectKnowledge& ) ), this, SLOT( OnObjectKnowledgeDeleted( MOS_Team&, MOS_DynaObjectKnowledge& ) ) );
@@ -295,7 +295,7 @@ void MOS_DefaultMapEventHandler::ClearSelection()
 */
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-void MOS_DefaultMapEventHandler::OnDynaObjectDeleted( MOS_DynaObject& object )
+void MOS_DefaultMapEventHandler::OnDynaObjectDeleted( MOS_DynaObject_ABC& object )
 {
     if( selectedElement_.pDynaObject_ == &object )
     {
@@ -399,7 +399,7 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
     // Only enable direct object selection in all-team mode.
     if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == MOS_Options::eController )
     {
-        MOS_DynaObject* pObject = GetDynaObjectAtPos( vGLPos, rDistancePerPixel );
+        MOS_DynaObject_ABC* pObject = GetDynaObjectAtPos( vGLPos, rDistancePerPixel );
         if( pObject != 0 )
         {
             selectedElement_ = MOS_SelectedElement( *pObject );
@@ -601,7 +601,7 @@ int MOS_DefaultMapEventHandler::GetPointAtPos( MOS_TacticalLine_ABC& line, const
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_DynaObject* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+MOS_DynaObject_ABC* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     const MOS_DynaObjectManager::T_DynaObjectMap& objectMap = MOS_App::GetApp().GetDynaObjectManager().GetDynaObjects();
     MOS_DynaObjectManager::RCIT_DynaObjectMap rit;
@@ -623,7 +623,7 @@ MOS_DynaObject* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vector2
         if( rit == objectMap.rend() )
             rit = objectMap.rbegin();
 
-        MOS_DynaObject* pObject = (*rit).second;
+        MOS_DynaObject_ABC* pObject = (*rit).second;
         if( IsDynaObjectAtPos( *pObject, vGLPos, rDistancePerPixel ) )
             return pObject;
 
@@ -642,7 +642,7 @@ MOS_DynaObject* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vector2
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-bool MOS_DefaultMapEventHandler::IsDynaObjectAtPos( const MOS_DynaObject& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
+bool MOS_DefaultMapEventHandler::IsDynaObjectAtPos( const MOS_DynaObject_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     return MOS_Tools::PointNearLine( vGLPos, object.GetPointList(), 9.0 * rDistancePerPixel, object.GetLocationType() == EnumTypeLocalisation::polygon );
 }
@@ -703,7 +703,7 @@ MOS_DynaObjectKnowledge* MOS_DefaultMapEventHandler::GetDynaObjectKnowledgeAtPos
 // -----------------------------------------------------------------------------
 bool MOS_DefaultMapEventHandler::IsDynaObjectKnowledgeAtPos( const MOS_DynaObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
-    MOS_DynaObject* pDynaObject = object.GetRealObject();
+    MOS_DynaObject_ABC* pDynaObject = object.GetRealObject();
     if( pDynaObject != 0 )
         return IsDynaObjectAtPos( *pDynaObject, vGLPos, rDistancePerPixel );
     else

@@ -27,7 +27,7 @@
 #include "MOS_LogSupplyConsign.h"
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogMaintenanceConsign.h"
-#include "MOS_DynaObject.h"
+#include "MOS_DynaObject_ABC.h"
 #include "MOS_Options.h"
 #include "MT/MT_IO/MT_CommandLine.h"
 
@@ -457,7 +457,7 @@ void MOS_App::InitializeObjectIds( MT_InputArchive_ABC& scipioArchive )
     MT_XXmlInputArchive classeIds;
     classeIds.EnableExceptions( true );
     classeIds.Open( strClassId );
-    MOS_DynaObject::InitializeObjectIds( classeIds );
+    MOS_DynaObject_ABC::InitializeObjectIds( classeIds );
 }
 
 // -----------------------------------------------------------------------------
@@ -719,7 +719,7 @@ void MOS_App::NotifyLogisticConsignUpdated( MOS_LogMaintenanceConsign& consign )
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyDynaObjectCreated( MOS_DynaObject& object )
+void MOS_App::NotifyDynaObjectCreated( MOS_DynaObject_ABC& object )
 {
     emit DynaObjectCreated( object );
 }
@@ -731,7 +731,7 @@ void MOS_App::NotifyDynaObjectCreated( MOS_DynaObject& object )
 */
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyDynaObjectUpdated( MOS_DynaObject& object )
+void MOS_App::NotifyDynaObjectUpdated( MOS_DynaObject_ABC& object )
 {
     emit DynaObjectUpdated( object );
 }
@@ -743,7 +743,7 @@ void MOS_App::NotifyDynaObjectUpdated( MOS_DynaObject& object )
 */
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyDynaObjectDeleted( MOS_DynaObject& object )
+void MOS_App::NotifyDynaObjectDeleted( MOS_DynaObject_ABC& object )
 {
     emit DynaObjectDeleted( object );
 }
