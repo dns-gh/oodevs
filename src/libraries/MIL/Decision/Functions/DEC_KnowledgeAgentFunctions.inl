@@ -41,6 +41,7 @@ void DEC_KnowledgeAgentFunctions::GetPosition( DIA_Call_ABC& call, const T& call
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
