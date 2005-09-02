@@ -5,11 +5,6 @@
     <typedef resource="cpptasks.types"/>
     <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 
-    <!--
-    ============================================================================
-      updates
-    ============================================================================
-    -->
     <macrodef name="update-all">
         <attribute name="name"/>
         <attribute name="dir"/>
@@ -86,17 +81,17 @@
             </for>
         </sequential>
     </macrodef>
-    
-    <macrodef name="update-app">
-        <attribute name="library"/>
+
+    <macrodef name="update-application">
         <attribute name="name"/>
+        <attribute name="package"/>
         <sequential>
             <for list="${repositories}" param="repository">
                 <sequential>
                     <unzip dest="${bin.dir}">
                         <fileset dir="@{repository}">
-                            <include name="@{library}/@{name}.zip"/>
-                            <include name="@{library}/current/@{name}.zip"/>
+                            <include name="@{name}/@{package}.zip"/>
+                            <include name="@{name}/current/@{package}.zip"/>
                         </fileset>               
                     </unzip>
                  </sequential>
@@ -104,11 +99,6 @@
         </sequential>
     </macrodef>
 
-    <!--
-    ============================================================================
-      precompiled header property setting
-    ============================================================================
-    -->
     <macrodef name="detect-pch">
         <attribute name="name"/>
         <attribute name="property"/>
@@ -126,125 +116,6 @@
         </sequential>
     </macrodef>
 
-    <!--
-    ============================================================================
-      build libraries
-    ============================================================================
-    -->
-    <macrodef name="build">
-        <attribute name="name"/>
-        <attribute name="input"/>
-        <attribute name="debug"/>
-        <attribute name="optimize"/>
-        <attribute name="suffix" default=""/>
-        <attribute name="outtype"/>
-        <attribute name="configuration"/>
-        <attribute name="excludes" default=""/>
-        <attribute name="pch" default=""/>
-        <attribute name="pchexcludes" default=""/>
-        <element name="cc-elements" optional="true" implicit="true"/>
-        <sequential>
-            <detect-pch name="@{name}" property="@{name}.pch" path="${libraries.dir}/@{input}" pch="@{pch}"/>
-            <mkdir dir="${bin.dir}/@{configuration}/libraries/@{name}"/>
-            <cc name="${compiler}" outfile="${bin.dir}/@{configuration}/libraries/@{name}/@{name}@{suffix}" objdir="${bin.dir}/@{configuration}/libraries/@{name}"
-                                   optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true" incremental="false" outtype="@{outtype}">
-                <fileset dir="${libraries.dir}/@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes}"/>
-                <defineset define="WIN32"/> <!-- for MT only -->
-                <includepath path="${libraries.dir}"/>
-                <includepath path="${include.dir}"/>
-                <compilerarg value='/Fd"${bin.dir}/@{configuration}/libraries/@{name}/@{name}@{suffix}.pdb"'/>
-                <compilerarg value="/W4"/>
-                <cc-elements/>
-                <compiler name="${compiler}">
-                    <precompile prototype="${@{name}.pch}" if="@{name}.pch">
-                        <except dir="${libraries.dir}/@{input}" includes="@{pchexcludes}"/>
-                    </precompile>
-                </compiler>
-            </cc>
-            <copy todir="${lib.dir}/vc71" verbose="true">
-                <fileset dir="${bin.dir}/@{configuration}/libraries/@{name}" includes="@{name}@{suffix}.lib"/>
-            </copy>
-            <copy todir="${run.dir}" verbose="true">
-                <fileset dir="${bin.dir}/@{configuration}/libraries/@{name}" includes="@{name}@{suffix}.dll"/>
-            </copy>
-        </sequential>
-    </macrodef>
-
-    <macrodef name="build-lib">
-        <attribute name="name"/>
-        <attribute name="input" default="@{name}"/>
-        <attribute name="outtype" default="static"/>
-        <attribute name="suffix" default="_d"/>
-        <attribute name="debug" default="true"/>
-        <attribute name="excludes" default=""/>
-        <attribute name="pch" default=""/>
-        <attribute name="pchexcludes" default=""/>
-        <element name="options" optional="true" implicit="true"/>
-        <sequential>
-            <build name="@{name}" input="@{input}" configuration="release" debug="false" optimize="full" outtype="@{outtype}" excludes="@{excludes}" pch="@{pch}">
-                <options/>
-            </build>
-            <if>
-                <equals arg1="@{debug}" arg2="true"/>
-                <then>
-                    <build name="@{name}" input="@{input}" configuration="debug" debug="true" optimize="none" outtype="@{outtype}" suffix="@{suffix}" excludes="@{excludes}" pch="@{pch}">
-                        <options/>
-                    </build>
-                </then>
-            </if>
-        </sequential>
-    </macrodef>
-
-    <!--
-    ============================================================================
-      build tests
-    ============================================================================
-    -->
-    <macrodef name="build-test">
-        <attribute name="name"/>
-        <attribute name="input" default="@{name}_test"/>
-        <attribute name="libs" default=""/>
-        <attribute name="excludes" default=""/>
-        <attribute name="pch" default=""/>
-        <element name="cc-elements" optional="true" implicit="true"/>
-        <sequential>
-            <detect-pch name="@{name}" property="@{name}_test.pch" path="${tests.dir}/@{input}" pch="@{pch}"/>
-            <mkdir dir="${bin.dir}/release/tests/@{input}"/>
-            <cc name="${compiler}" outfile="${bin.dir}/release/tests/@{input}/@{input}" objdir="${bin.dir}/release/tests/@{input}"
-                                   optimize="full" debug="false" exceptions="true" rtti="true" incremental="false" outtype="executable" subsystem="console">
-                <fileset dir="${tests.dir}/@{input}" includes="**/*.cpp" excludes="@{excludes}"/>
-                <includepath path="${libraries.dir}"/>
-                <includepath path="${include.dir}"/>
-                <defineset define="WIN32"/> <!-- for MT only -->
-                <libset dir="${lib.dir}/vc71" libs="@{libs}"/>
-                <linkerarg value="/SUBSYSTEM:CONSOLE"/>
-                <compilerarg value="/W4"/>
-                <cc-elements/>
-                <compiler name="${compiler}">
-                    <precompile prototype="${@{name}_test.pch}" if="@{name}_test.pch"/>
-                </compiler>
-            </cc>
-        </sequential>
-    </macrodef>
-
-    <macrodef name="run-test">
-        <attribute name="name"/>
-        <attribute name="input" default="@{name}_test"/>
-        <sequential>
-            <mkdir dir="${reports.dir}"/>
-            <exec executable="${bin.dir}/release/tests/@{input}/@{input}" dir="${run.dir}" resolveExecutable="true" error="${reports.dir}/@{input}.xml" failonerror="true">
-                <arg value="--log_level=warnings"/>
-                <arg value="--report_format=XML"/>
-                <arg value="--report_level=detailed"/>
-            </exec>
-        </sequential>
-    </macrodef>
-
-    <!--
-    ============================================================================
-      build applications
-    ============================================================================
-    -->
     <macrodef name="moc">
         <attribute name="files" default=""/>
         <attribute name="dir"/>
@@ -265,6 +136,112 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="build">
+        <attribute name="name"/>
+        <attribute name="input"/>
+        <attribute name="path"/>
+        <attribute name="debug"/>
+        <attribute name="optimize"/>
+        <attribute name="suffix" default=""/>
+        <attribute name="outtype"/>
+        <attribute name="configuration"/>
+        <attribute name="excludes" default=""/>
+        <attribute name="pch" default=""/>
+        <attribute name="pch-excludes" default=""/>
+        <attribute name="outdir" default="${bin.dir}/@{configuration}/@{path}/@{name}"/>
+        <attribute name="moc" default=""/>
+        <attribute name="subsystem" default="other"/>
+        <element name="cc-elements" optional="true" implicit="true"/>
+        <sequential>
+            <detect-pch name="@{name}" property="@{name}.pch" path="@{input}" pch="@{pch}"/>
+            <mkdir dir="@{outdir}"/>
+            <moc dir="@{input}" files="@{moc}"/>
+            <cc name="${compiler}" outfile="@{outdir}/@{name}@{suffix}" objdir="@{outdir}" subsystem="@{subsystem}"
+                                   incremental="false" outtype="@{outtype}">
+                <fileset dir="@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes},moc_*.cpp"/>
+                <compilerarg value="/W4"/>
+                <compiler name="${compiler}" optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true">
+                    <precompile prototype="${@{name}.pch}" if="@{name}.pch">
+                        <except dir="@{input}" includes="@{pch-excludes}"/>
+                    </precompile>
+                    <defineset define="WIN32"/> <!-- for MT only -->
+                    <includepath path="${libraries.dir}"/>
+                    <includepath path="${include.dir}"/>
+                    <includepath path="${include.dir}/qt"/>
+                </compiler>
+                <cc-elements/>
+            </cc>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build-lib">
+        <attribute name="name"/>
+        <attribute name="input" default="@{name}"/>
+        <attribute name="outtype" default="static"/>
+        <attribute name="suffix" default="_d"/>
+        <attribute name="debug" default="true"/>
+        <attribute name="excludes" default=""/>
+        <attribute name="pch" default=""/>
+        <attribute name="pch-excludes" default=""/>
+        <element name="cc-elements" optional="true" implicit="true"/>
+        <sequential>
+            <build name="@{name}" input="${libraries.dir}/@{input}" path="libraries" debug="false" optimize="full"
+                   outtype="@{outtype}" configuration="release" excludes="@{excludes}"
+                   pch="@{pch}" pch-excludes="@{pch-excludes}">
+                <compilerarg value='/Fd"${bin.dir}/release/libraries/@{name}/@{name}.pdb"'/>
+                <cc-elements/>
+            </build>
+            <if>
+                <equals arg1="@{debug}" arg2="true"/>
+                <then>
+                    <build name="@{name}" input="${libraries.dir}/@{input}" path="libraries" debug="true" optimize="none"
+                           suffix="@{suffix}" outtype="@{outtype}" configuration="debug" excludes="@{excludes}"
+                           pch="@{pch}" pch-excludes="@{pch-excludes}">
+                        <compilerarg value='/Fd"${bin.dir}/debug/libraries/@{name}/@{name}@{suffix}.pdb"'/>
+                        <cc-elements/>
+                    </build>
+                </then>
+            </if>
+            <copy todir="${lib.dir}/${platform}" verbose="true" flatten="true">
+                <fileset dir="${bin.dir}" includes="**/@{name}/@{name}*.lib"/>
+            </copy>
+            <copy todir="${run.dir}" verbose="true" flatten="true">
+                <fileset dir="${bin.dir}" includes="**/@{name}/@{name}*.dll"/>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build-test">
+        <attribute name="name"/>
+        <attribute name="input" default="@{name}_test"/>
+        <attribute name="libs" default=""/>
+        <attribute name="excludes" default=""/>
+        <attribute name="pch" default=""/>
+        <attribute name="pch-excludes" default=""/>
+        <element name="cc-elements" optional="true" implicit="true"/>
+        <sequential>
+            <build name="@{name}_test" input="${tests.dir}/@{input}" path="tests" debug="false" optimize="full"
+                   outtype="executable" configuration="release" excludes="@{excludes}"
+                   pch="@{pch}" pch-excludes="@{pch-excludes}">
+                <libset dir="${lib.dir}/${platform}" libs="@{libs}"/>
+                <cc-elements/>
+            </build>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="run-test">
+        <attribute name="name"/>
+        <attribute name="input" default="@{name}_test"/>
+        <sequential>
+            <mkdir dir="${reports.dir}"/>
+            <exec executable="${bin.dir}/release/tests/@{input}/@{input}" dir="${run.dir}" resolveExecutable="true" error="${reports.dir}/@{input}.xml" failonerror="true">
+                <arg value="--log_level=warnings"/>
+                <arg value="--report_format=XML"/>
+                <arg value="--report_level=detailed"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <macrodef name="build-app">
         <attribute name="name"/>
         <attribute name="input" default="@{name}"/>
@@ -273,38 +250,18 @@
         <attribute name="subsystem" default="gui"/>
         <attribute name="excludes" default=""/>
         <attribute name="pch" default=""/>
-        <attribute name="pchexcludes" default=""/>
+        <attribute name="pch-excludes" default=""/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
-            <detect-pch name="@{name}" property="@{name}.pch" path="${applications.dir}/@{input}" pch="@{pch}"/>
-            <moc dir="${applications.dir}/@{input}" files="@{moc}"/>
-            <mkdir dir="${bin.dir}/release/applications/@{name}"/>
-            <cc name="${compiler}" outfile="${bin.dir}/release/applications/@{name}/@{name}" objdir="${bin.dir}/release/applications/@{name}"
-                                   optimize="full" debug="false" exceptions="true" rtti="true" incremental="false" outtype="executable" subsystem="@{subsystem}">
-                <fileset dir="${applications.dir}/@{input}" includes="**/*.cpp" excludes="**/moc_*.cpp,@{excludes}"/>
-                <includepath path="${libraries.dir}"/>
-                <includepath path="${include.dir}"/>
-                <includepath path="${include.dir}/qt"/>
-                <defineset define="WIN32"/>
-                <libset dir="${lib.dir}/vc71" libs="@{libs}"/>
-                <compilerarg value="/W4"/>
+            <build name="@{name}" input="${applications.dir}/@{input}" path="applications" debug="false" optimize="full"
+                   outtype="executable" configuration="release" excludes="@{excludes}"
+                   pch="@{pch}" pch-excludes="@{pch-excludes}" moc="@{moc}" subsystem="@{subsystem}">
+                <libset dir="${lib.dir}/${platform}" libs="@{libs}"/>
                 <cc-elements/>
-                <compiler name="${compiler}">
-                    <precompile prototype="${@{name}.pch}" if="@{name}.pch">
-                        <except>
-                            <fileset dir="${applications.dir}/@{input}" includes="@{excludes}"/>
-                        </except>
-                    </precompile>
-                </compiler>
-            </cc>
+            </build>
         </sequential>
     </macrodef>
 
-    <!--
-    ============================================================================
-      clean
-    ============================================================================
-    -->
     <macrodef name="clean">
         <attribute name="name"/>
         <sequential>
@@ -316,4 +273,3 @@
     </macrodef>
 
 </project>
-

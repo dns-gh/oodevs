@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <project name="scipio" default="all">
 
+    <import file="tools.xml"/>
+
+    <property name="platform" value="vc71"/>
+    <property name="compiler" value="msvc"/>
+
     <property name="include.dir"      location="../include"/>
     <property name="lib.dir"          location="../lib"/>
     <property name="reports.dir"      location="../reports"/>
@@ -12,10 +17,6 @@
     <property name="bin.dir"          location="../bin"/>
     <property name="data.dir"         location="../data"/>
     <property name="repositories"     value="\\install\Masa\common\dev\delivery\external,\\install\Masa\common\dev\delivery\internal,\\install\masa\simulation\projects\common"/>
-
-    <property name="compiler" value="msvc"/>
-
-    <import file="tools.xml"/>
 
     <!--
     ============================================================================
@@ -334,8 +335,8 @@
         <update name="tools"/>
         <update name="xerces-c"/>
 
-        <update-app library="terrain" name="generation_app"/>
-        <update-app library="DIA" name="DIA_Tool_DebugGUI"/>
+        <update-application name="terrain" package="generation_app"/>
+        <update-application name="DIA" package="DIA_Tool_DebugGUI"/>
     </target>
 
     <target name="build" depends="libraries,applications"/>
