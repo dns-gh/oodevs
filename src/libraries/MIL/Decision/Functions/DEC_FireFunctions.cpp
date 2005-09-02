@@ -32,6 +32,7 @@ void DEC_FireFunctions::GetMaxRangeToFireOnEnemy( DIA_Call_ABC& call, const MIL_
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)-1. );
         return;
     }
 
@@ -55,6 +56,7 @@ void DEC_FireFunctions::GetMinRangeToFireOnEnemy( DIA_Call_ABC& call, const MIL_
     if ( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)-1. );
         return;
     }
     
@@ -82,6 +84,7 @@ void DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded( DIA_Call_ABC& call
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)-1. );
         return;
     }
 
@@ -105,6 +108,7 @@ void DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy( DIA_Call_ABC& call, const M
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)-1. );
         return;
     }
 

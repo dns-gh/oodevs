@@ -90,6 +90,7 @@ void DEC_ActionFunctions::TakePrisoner( DIA_Call_ABC& call, MIL_AgentPion& calle
     if( !pKnowledge || !pCampKnowledge || !pCampKnowledge->GetObjectKnown() || pCampKnowledge->GetObjectKnown()->GetType() != MIL_RealObjectType::campPrisonniers_ )
     {
         call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -111,6 +112,7 @@ void DEC_ActionFunctions::OrientateRefugee( DIA_Call_ABC& call, MIL_AgentPion& c
     if( !pKnowledge || !pCampKnowledge || !pCampKnowledge->GetObjectKnown() || pCampKnowledge->GetObjectKnown()->GetType() != MIL_RealObjectType::campRefugies_ )
     {
         call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }   
     call.GetParameter( 2 ).SetValue( eQueryValid );
@@ -248,5 +250,5 @@ void DEC_ActionFunctions::CanTransportPion( DIA_Call_ABC& call, const MIL_AgentP
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_IsTransporting( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsTransporting() );
+    call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Transport >().IsTransporting() );
 }

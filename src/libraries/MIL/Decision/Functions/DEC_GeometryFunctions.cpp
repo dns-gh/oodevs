@@ -335,6 +335,7 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
         if( !( static_cast< DEC_RolePion_Decision& >( **itPion ).GetPion().GetFuseau() == fuseau ) ) //$$$ beark
         {
             diaReturnCode.SetValue( eError_PionsPasDansMemeFuseau );
+            diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
             return;
         }
     }
@@ -345,6 +346,7 @@ void DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( DIA_Call_
     if( clippedPointVector.empty() )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
+        diaCall.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
     }
 
@@ -823,7 +825,10 @@ void DEC_GeometryFunctions::ComputePosDeploiementASANasse( DIA_Call_ABC& call, c
     assert( MT_IsZero( pMainDirection->SquareMagnitude() - 1. ) );
 
     if( !nNbrPos )
+    {
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
+    }
 
     vCenter += rIniDist * *pMainDirection;
 
@@ -875,7 +880,10 @@ void DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( DIA_Call_ABC& 
     MT_Vector2D vSupport2( -vSupport1 );
 
     if( !nNbrPos )
+    {
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
+    }
 
     T_PointVector* pResult = new T_PointVector(); // $$$$ RAM
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
@@ -919,6 +927,7 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
     if( !pLima )
     {
         diaReturnCode.SetValue( false );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         return;
     }
 

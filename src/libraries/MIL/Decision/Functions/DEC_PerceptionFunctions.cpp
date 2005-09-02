@@ -318,7 +318,6 @@ void DEC_PerceptionFunctions::HasNoDelayedPeceptions( DIA_Call_ABC& call, const 
     call.GetResult().SetValue( !callerAgent.GetRole< PHY_RolePion_Perceiver >().HasDelayedPerceptions() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableRecoSurveillance
 // Created: NLD 2004-11-17

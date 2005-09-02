@@ -77,6 +77,7 @@ void DEC_KnowledgeObjectFunctions::GetLocalisation( DIA_Call_ABC& call, const T&
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLocalisation() );
         return;
     }
 
