@@ -34,19 +34,20 @@ using namespace TEST;
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
 Config::Config( const std::string& strFile )
-    : strServer_         ( "127.0.0.1" )
-    , strConfigFile_     ( "./scipio.xml" )
-    , nPort_             ( 10000 )
-    , nTimeFactor_       ( 40 )
-    , bTestAutomat_      ( true )
-    , nPeriod_           ( 180 )
-    , nItNumber_         ( 1 )
-    , nItInterval_       ( 1 )
-    , strLogFile_        ( "./test.log" )
-    , strRandomSeedFile_ ( "./test_seed.xml" )
-    , bRecover_          ( false )
-    , nRecoveryTick_     ( 0 )
-    , strRecoveryFile_   ( "./test_recover.xml" )
+    : strServer_           ( "127.0.0.1" )
+    , strConfigFile_       ( "./scipio.xml" )
+    , nPort_               ( 10000 )
+    , nTimeFactor_         ( 40 )
+    , bTestAutomat_        ( true )
+    , nPeriod_             ( 180 )
+    , nRecompletionPeriod_ ( 180 )
+    , nItNumber_           ( 1 )
+    , nItInterval_         ( 1 )
+    , strLogFile_          ( "./test.log" )
+    , strRandomSeedFile_   ( "./test_seed.xml" )
+    , bRecover_            ( false )
+    , nRecoveryTick_       ( 0 )
+    , strRecoveryFile_     ( "./test_recover.xml" )
 {
     LoadConfigFile( strFile );
 }
@@ -91,12 +92,13 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.EndSection(); // Sim
 
         archive.Section( "Actions" );
-        archive.ReadField( "TestAutomats"          , bTestAutomat_      );
-        archive.ReadField( "Period"                , nPeriod_           );
-        archive.ReadField( "NumberOfSameMissions"  , nItNumber_         );
-        archive.ReadField( "IntervalOfSameMissions", nItInterval_       );
-        archive.ReadField( "LogFile"               , strLogFile_        );
-        archive.ReadField( "RandomSeedFile"        , strRandomSeedFile_ );
+        archive.ReadField( "TestAutomats"          , bTestAutomat_        );
+        archive.ReadField( "Period"                , nPeriod_             );
+        archive.ReadField( "NumberOfSameMissions"  , nItNumber_           );
+        archive.ReadField( "IntervalOfSameMissions", nItInterval_         );
+        archive.ReadField( "RecompletionPeriod"    , nRecompletionPeriod_ );
+        archive.ReadField( "LogFile"               , strLogFile_          );
+        archive.ReadField( "RandomSeedFile"        , strRandomSeedFile_   );
         archive.Section( "Recovery" );
         archive.ReadField( "Recover", bRecover_       );
         archive.ReadField( "File"   , strRecoveryFile_ );

@@ -49,19 +49,20 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetServer           () const;
-    const std::string& GetConfigFile       () const;
-    const std::string& GetRandomSeedFile   () const;
-    bool               MustRecover         () const;
-    uint               GetRecoveryTick     () const;
-    const std::string& GetRecoveryFile     () const;
-    uint               GetPort             () const;
-    uint               GetTimeFactor       () const;
-    bool               MustTestAutomat     () const;
-    uint               GetPeriod           () const;
-    uint               GetIterationNumber  () const;
-    uint               GetIterationInterval() const;
-    const std::string& GetLogFile          () const;
+    const std::string& GetServer            () const;
+    const std::string& GetConfigFile        () const;
+    const std::string& GetRandomSeedFile    () const;
+    bool               MustRecover          () const;
+    uint               GetRecoveryTick      () const;
+    const std::string& GetRecoveryFile      () const;
+    uint               GetPort              () const;
+    uint               GetTimeFactor        () const;
+    bool               MustTestAutomat      () const;
+    uint               GetPeriod            () const;
+    uint               GetIterationNumber   () const;
+    uint               GetIterationInterval () const;
+    uint               GetRecompletionPeriod() const;
+    const std::string& GetLogFile           () const;
     //@}
 
 private:
@@ -92,6 +93,7 @@ private:
     uint        nPeriod_;
     uint        nItNumber_;
     uint        nItInterval_;
+    uint        nRecompletionPeriod_;
     std::string strLogFile_;
     //@}
 };

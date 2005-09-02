@@ -25,6 +25,7 @@
 #include "Entities/Automat.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/ASN_Tools.h"
+#include "Actions/Scheduler.h"
 
 using namespace TEST;
 
@@ -71,13 +72,21 @@ void Mission_Automat_ABC::Serialize()
 // Name: Mission_Automat_ABC::Send
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Mission_Automat_ABC::Send()
+void Mission_Automat_ABC::Send( const Scheduler& scheduler )
 {
     // engage automat first
     MOS_ASN_MsgSetAutomateMode msg;
     msg.GetAsnMsg().mode    = EnumAutomateState::embraye;
     msg.GetAsnMsg().unit_id = pTarget_->GetId();
     msg.Send( 56 );
+
+    // recomplete automat if needed
+    if( scheduler.MustRecomplete() )
+    {
+        pTarget_->SendMagicAction( T_MsgUnitMagicAction_action_recompletement_total );
+        MT_LOG_INFO_MSG( "Pawn #" << pTarget_->GetId() << " - Magic recompletion" );
+    }
+    
     // then send msg
     asnMsg_.Send( 56 );
 }

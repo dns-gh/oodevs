@@ -25,6 +25,7 @@
 
 namespace TEST {
 
+    class Scheduler;
 
 // =============================================================================
 /** @class  Action_ABC
@@ -48,13 +49,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Run() = 0;
+    virtual bool Run( const Scheduler& scheduler ) = 0;
     //@}
 
     //! @name Accessors
     //@{
-    virtual       bool         IsReady         () const;
-    virtual const std::string& GetName         () const;
+    virtual       bool         IsReady() const;
+    virtual const std::string& GetName() const;
     //@}
 
 private:
@@ -69,7 +70,7 @@ protected:
     //@{
     virtual bool CheckParameters() const;
     virtual void Serialize      () = 0;
-    virtual void Send           () = 0;
+    virtual void Send           ( const Scheduler& scheduler ) = 0;
     virtual void Clean          () = 0;
     //@}
 

@@ -25,6 +25,7 @@
 #include "Entities/Pawn.h"
 #include "Messages/ASN_Messages.h"
 #include "Tools/ASN_Tools.h"
+#include "Actions/Scheduler.h"
 
 using namespace TEST;
 
@@ -66,7 +67,7 @@ void Action_Magic_Move::Serialize()
 // Name: Action_Magic_Move::Send
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Action_Magic_Move::Send()
+void Action_Magic_Move::Send( const Scheduler& scheduler )
 {
     asnMsg_.Send( 56 );
 }

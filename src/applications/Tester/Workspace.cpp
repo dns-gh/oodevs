@@ -242,9 +242,9 @@ void Workspace::SaveRecoveryPoint()
     try
     {
         MT_XXmlOutputArchive archive;
-        archive.Section   ( "Recover" );
+        archive.Section   ( "Recovery" );
         archive.WriteField( "LastTick", GetScheduler().GetCurrentTick() );
-        archive.EndSection(); // Recover
+        archive.EndSection(); // Recovery
 
         MT_ChangeDir       ( strDir );
         archive.WriteToFile( strFile );

@@ -22,7 +22,6 @@
 
 #include "Tester_pch.h"
 #include "Action_ABC.h"
-#include "Workspace.h"
 
 using namespace TEST;
 

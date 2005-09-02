@@ -80,6 +80,11 @@ public:
     void OnReceiveTerrainType(       DIN::DIN_Input&          input   );
     //@}
 
+    //! @name Operations
+    //@{
+    void SendMagicAction( int action ) const;
+    //@}
+
     //! @name Mission Scheduling
     //@{
     void ScheduleAllMissions ( Scheduler& scheduler, uint nIteration = 1 );

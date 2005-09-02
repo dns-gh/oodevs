@@ -16,6 +16,8 @@
 //
 // *****************************************************************************
 
+#include "Scheduler.h"
+
 namespace TEST {
 
 // -----------------------------------------------------------------------------
@@ -58,12 +60,12 @@ Action< T >::~Action()
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-bool Action< T >::Run()
+bool Action< T >::Run( const Scheduler& scheduler )
 {
     if( CheckParameters() )
     {
         Serialize();
-        Send     ();
+        Send     ( scheduler );
         Clean    ();
         return true;
     }

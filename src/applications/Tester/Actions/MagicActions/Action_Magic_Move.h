@@ -29,6 +29,7 @@
 namespace TEST {
 
     class Pawn;
+    class Scheduler;
 
 // =============================================================================
 /** @class  Action_Magic_Move
@@ -54,7 +55,7 @@ protected:
     //! @name Action validation and commit
     //@{
     virtual void Serialize();
-    virtual void Send     ();
+    virtual void Send     ( const Scheduler& scheduler );
     virtual void Clean    ();
     //@}
 

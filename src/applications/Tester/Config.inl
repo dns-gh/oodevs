@@ -139,6 +139,16 @@ uint Config::GetIterationInterval() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Config::GetRecompletionPeriod
+// Created: SBO 2005-09-01
+// -----------------------------------------------------------------------------
+inline
+uint Config::GetRecompletionPeriod() const
+{
+    return nRecompletionPeriod_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::GetLogFile
 // Created: SBO 2005-08-25
 // -----------------------------------------------------------------------------

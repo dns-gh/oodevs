@@ -86,6 +86,23 @@ void Automat::OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Automat::SendMagicAction
+// Created: SBO 2005-09-01
+// -----------------------------------------------------------------------------
+void Automat::SendMagicAction( int action ) const
+{
+    // send magic action for automat
+    MOS_ASN_MsgUnitMagicAction msg;
+    msg.GetAsnMsg().oid        = nId_;
+    msg.GetAsnMsg().action.t   = action;
+    msg.Send( 56 );
+
+    // send magic action for all its pawns
+    for( CIT_PawnSet it = childPawns_.begin(); it != childPawns_.end(); ++it )
+        ( *it )->SendMagicAction( action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------

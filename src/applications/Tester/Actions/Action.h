@@ -28,6 +28,8 @@
 
 namespace TEST {
 
+    class Scheduler;
+
 // =============================================================================
 /** @class  Action
     @brief  Action
@@ -55,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Run();
+    virtual bool Run( const Scheduler& scheduler );
     //@}
 
     //! @name Modifiers
@@ -66,9 +68,9 @@ public:
 protected:
     //! @name Action validation and commit
     //@{
-    virtual void Serialize() = 0;
-    virtual void Send     () = 0;
-    virtual void Clean    () = 0;
+    virtual void Serialize(                            ) = 0;
+    virtual void Send     ( const Scheduler& scheduler ) = 0;
+    virtual void Clean    (                            ) = 0;
     //@}
 
 protected:

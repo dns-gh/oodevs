@@ -66,6 +66,7 @@ public:
     //! @name Operations
     //@{
     void OnKnowledgeGroupChanged( KnowledgeGroup& knowledgeGroup );
+    void SendMagicAction        ( int             action         ) const;
     //@}
 
     //! @name Pawn management

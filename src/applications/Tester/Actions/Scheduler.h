@@ -62,6 +62,7 @@ public:
     //@{
     uint     GetNextExecutionTick() const;
     uint     GetCurrentTick      () const;
+    bool     MustRecomplete      () const;
     //@}
 
 private:
@@ -84,8 +85,9 @@ private:
     T_ActionMap  actions_;
     IT_ActionMap itCurrentAction_;
     uint         nNextExecutionTick_;
-    uint         nExecutionStep_;
-    uint         nCurrentTick_;
+    uint         nExecutionPeriod_;
+    uint         nRecompletionPeriod_;
+    int          nCurrentTick_;
     uint         nLastExecutionTick_;
     uint         nSameMissionInterval_;
     uint         nRecoveryTick_;

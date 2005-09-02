@@ -160,6 +160,19 @@ void Pawn::OnReceiveTerrainType( DIN::DIN_Input& /*input*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: Pawn::SendMagicAction
+// Created: SBO 2005-09-01
+// -----------------------------------------------------------------------------
+void Pawn::SendMagicAction( int action ) const
+{
+    // send magic action for automat
+    MOS_ASN_MsgUnitMagicAction msg;
+    msg.GetAsnMsg().oid        = nId_;
+    msg.GetAsnMsg().action.t   = action;
+    msg.Send( 56 );
+}
+
 //-----------------------------------------------------------------------------
 // SCHEDULING
 //-----------------------------------------------------------------------------

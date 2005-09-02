@@ -30,6 +30,7 @@
 namespace TEST {
 
     class Pawn;
+    class Scheduler;
 
 // =============================================================================
 /** @class  Mission_Pawn_ABC
@@ -61,7 +62,7 @@ protected:
     //! @name Action validation and commit
     //@{
     virtual void Serialize();
-    virtual void Send     ();
+    virtual void Send     ( const Scheduler& scheduler );
     virtual void Clean    ();
     //@}
 
