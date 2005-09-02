@@ -151,7 +151,7 @@
                          MT_Tools_SCIPIO,ENT,
                          qtmain,qt-mt333,xerces-c_2"
                    moc="ADN_Automata_SubUnitsTable,ADN_BoolEditor,ADN_Categories_GUI,ADN_ChangeValueCommand_Bool,ADN_ChangeValueCommand_Double,ADN_ChangeValueCommand_Int,ADN_ChangeValueCommand_String,ADN_CheckBox,ADN_ComboBox,ADN_Composantes_BreakdownsTable,ADN_Composantes_Dotations_GUI,ADN_Composantes_GUI,ADN_Composantes_RadarsListView,ADN_Composantes_WeaponsListView,ADN_Connector_ABC,ADN_Connector_Vector_ABC,ADN_Data_ABC,ADN_EditLine_ABC,ADN_EquipementSelector,ADN_Equipement_GUI,ADN_FileChooser,ADN_Graph,ADN_GraphValue,ADN_GroupBox,ADN_ListView,ADN_ListView_Composantes_Objects,ADN_ListView_Launchers,ADN_MainWindow,ADN_Objects_GUI,ADN_Ref_ABC,ADN_SupplyUnitSelector,ADN_Table,ADN_TableDialog,ADN_Units_Composantes_GUI,ADN_Units_GUI,ADN_Workspace,GQ_Plot,GQ_PlotAxis,GQ_PlotCaption,GQ_PlotData,qtundo"
-                   pchexcludes="qtundo.cpp">
+                   pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
