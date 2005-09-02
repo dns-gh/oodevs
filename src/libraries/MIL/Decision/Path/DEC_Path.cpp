@@ -154,8 +154,8 @@ void DEC_Path::Initialize( const T_PointVector& points )
     {
         if( pLastPoint )
         {
-        DEC_PathSection* pSection = new DEC_PathSection( *this, pathType_, *pLastPoint, *itPoint );
-        RegisterPathSection( *pSection );
+            DEC_PathSection* pSection = new DEC_PathSection( *this, pathType_, *pLastPoint, *itPoint );
+            RegisterPathSection( *pSection );
         }
         pLastPoint = &*itPoint;
     }
@@ -745,6 +745,8 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
     }
 
     assert( resultList_.empty() );
+
+    ///$$$ try/catch() à déplacer DEC_Path_ABC
     try
     {
         DEC_Path_ABC::Execute( pathfind );
@@ -752,10 +754,22 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
     catch( ... )
     {
         Cancel();
-        DEC_Path_ABC::Execute( pathfind );
+        DEC_Path_ABC::Execute( pathfind ); //$$$$ ???
         DecRef();
         throw;
     }
+
+#ifndef NDEBUG
+    for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )
+    {
+        DEC_PathPoint& point = **itPoint;
+
+        assert( unitSpeeds_.IsPassable( point.GetObjectTypes() ) );
+        ++itPoint;
+        if( itPoint != resultList_.end() )
+            assert( unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) > 0 );
+    }
+#endif
 
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
@@ -785,9 +799,8 @@ void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObje
         resultList_.pop_back();
         bSectionJustEnded_ = false;
     }
-    assert( resultList_.empty() || GetUnitSpeeds().GetMaxSpeed( resultList_.back()->GetObjectTypesToNextPoint() ) > 0 );
-    assert( resultList_.empty() || GetUnitSpeeds().IsPassable( resultList_.back()->GetObjectTypes() ) );
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+    assert( unitSpeeds_.IsPassable ( nObjectTypes ) );
 }
 
 // -----------------------------------------------------------------------------
