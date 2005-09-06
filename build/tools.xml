@@ -5,7 +5,7 @@
     <typedef resource="cpptasks.types"/>
     <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 
-    <macrodef name="update-all">
+    <macrodef name="update-all-modules">
         <attribute name="name"/>
         <attribute name="dir"/>
         <sequential>
@@ -60,41 +60,43 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="update-package">
+        <attribute name="name"/>
+        <attribute name="package"/>
+        <attribute name="dir"/>
+        <sequential>
+            <unzip dest="${bin.dir}">
+                <fileset dir="@{dir}" includes="@{name}/@{package}.zip"/>
+            </unzip>
+        </sequential>
+    </macrodef>
+
     <macrodef name="update">
         <attribute name="name"/>
         <attribute name="modules" default=""/>
+        <attribute name="package" default=""/>
+        <attribute name="version" default="current"/>
         <sequential>
             <for list="${repositories}" param="repository">
                 <sequential>
                     <if>
-                        <equals arg1="@{modules}" arg2=""/>
+                        <equals arg1="@{package}" arg2=""/>
                         <then>
-                            <update-all name="@{name}/current" dir="@{repository}"/>
-                            <update-all name="@{name}" dir="@{repository}"/>
+                            <if>
+                                <equals arg1="@{modules}" arg2=""/>
+                                <then>
+                                    <update-all-modules name="@{name}/@{version}" dir="@{repository}"/>
+                                </then>
+                                <else>
+                                    <update-module name="@{name}/@{version}" modules="@{modules}" dir="@{repository}"/>
+                                </else>
+                            </if>
                         </then>
                         <else>
-                            <update-module name="@{name}/current" modules="@{modules}" dir="@{repository}"/>
-                            <update-module name="@{name}" modules="@{modules}" dir="@{repository}"/>
+                            <update-package name="@{name}/@{version}" package="@{package}" dir="@{repository}"/>
                         </else>
                     </if>
                 </sequential>
-            </for>
-        </sequential>
-    </macrodef>
-
-    <macrodef name="update-application">
-        <attribute name="name"/>
-        <attribute name="package"/>
-        <sequential>
-            <for list="${repositories}" param="repository">
-                <sequential>
-                    <unzip dest="${bin.dir}">
-                        <fileset dir="@{repository}">
-                            <include name="@{name}/@{package}.zip"/>
-                            <include name="@{name}/current/@{package}.zip"/>
-                        </fileset>               
-                    </unzip>
-                 </sequential>
             </for>
         </sequential>
     </macrodef>

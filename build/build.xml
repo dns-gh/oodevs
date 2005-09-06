@@ -334,9 +334,8 @@
         <update name="hla"/>
         <update name="tools"/>
         <update name="xerces-c"/>
-
-        <update-application name="terrain" package="generation_app"/>
-        <update-application name="DIA" package="DIA_Tool_DebugGUI"/>
+        <update name="terrain" package="generation_app"/>
+        <update name="DIA" package="DIA_Tool_DebugGUI"/>
     </target>
 
     <target name="build" depends="libraries,applications"/>
