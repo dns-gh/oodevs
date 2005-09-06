@@ -118,26 +118,6 @@
         </sequential>
     </macrodef>
 
-    <macrodef name="moc">
-        <attribute name="files" default=""/>
-        <attribute name="dir"/>
-        <sequential>
-            <for list="@{files}" param="file">
-                <sequential>
-                    <outofdate>
-                        <sourcefiles path="@{dir}/@{file}.h"/>
-                        <targetfiles path="@{dir}/moc_@{file}.cpp"/>
-                        <sequential>
-                            <exec dir="@{dir}" executable="moc" failonerror="true">
-                                <arg line="@{file}.h -o moc_@{file}.cpp"/>
-                            </exec>
-                        </sequential>
-                    </outofdate>
-                </sequential>
-            </for>
-        </sequential>
-    </macrodef>
-
     <macrodef name="build">
         <attribute name="name"/>
         <attribute name="input"/>
@@ -151,16 +131,21 @@
         <attribute name="pch" default=""/>
         <attribute name="pch-excludes" default=""/>
         <attribute name="outdir" default="${bin.dir}/@{configuration}/@{path}/@{name}"/>
-        <attribute name="moc" default=""/>
+        <attribute name="moc-excludes" default=""/>
         <attribute name="subsystem" default="other"/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
-            <detect-pch name="@{name}" property="@{name}.pch" path="@{input}" pch="@{pch}"/>
             <mkdir dir="@{outdir}"/>
-            <moc dir="@{input}" files="@{moc}"/>
+            <cc objdir="@{outdir}">
+                <compiler name="moc">
+                    <fileset dir="@{input}" includes="**/*.h" excludes="@{moc-excludes}"/>
+                    <compilerarg value="-nw"/>
+                </compiler>
+            </cc>
+            <detect-pch name="@{name}" property="@{name}.pch" path="@{input}" pch="@{pch}"/>
             <cc name="${compiler}" outfile="@{outdir}/@{name}@{suffix}" objdir="@{outdir}" subsystem="@{subsystem}"
                                    incremental="false" outtype="@{outtype}">
-                <fileset dir="@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes},moc_*.cpp"/>
+                <fileset dir="@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes},moc_*.cpp"/> <!-- moc_*.cpp excluded because of MSVC IDE compiling them in src directory -->
                 <compilerarg value="/W4"/>
                 <compiler name="${compiler}" optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true">
                     <precompile prototype="${@{name}.pch}" if="@{name}.pch">
@@ -168,6 +153,7 @@
                     </precompile>
                     <defineset define="WIN32"/> <!-- for MT only -->
                     <includepath path="${libraries.dir}"/>
+                    <includepath path="@{outdir}"/> <!-- for moc_*.cpp -->
                     <includepath path="${include.dir}"/>
                     <includepath path="${include.dir}/qt"/>
                 </compiler>
@@ -248,7 +234,6 @@
         <attribute name="name"/>
         <attribute name="input" default="@{name}"/>
         <attribute name="libs" default=""/>
-        <attribute name="moc" default=""/>
         <attribute name="subsystem" default="gui"/>
         <attribute name="excludes" default=""/>
         <attribute name="pch" default=""/>
@@ -257,7 +242,7 @@
         <sequential>
             <build name="@{name}" input="${applications.dir}/@{input}" path="applications" debug="false" optimize="full"
                    outtype="executable" configuration="release" excludes="@{excludes}"
-                   pch="@{pch}" pch-excludes="@{pch-excludes}" moc="@{moc}" subsystem="@{subsystem}">
+                   pch="@{pch}" pch-excludes="@{pch-excludes}" subsystem="@{subsystem}">
                 <libset dir="${lib.dir}/${platform}" libs="@{libs}"/>
                 <cc-elements/>
             </build>
@@ -269,7 +254,7 @@
         <sequential>
             <delete includeEmptyDirs="true" failonerror="false" quiet="true">
                 <fileset dir="${bin.dir}" includes="**/@{name}/**"/>
-                <fileset dir="${applications.dir}/@{name}" includes="**/moc_*.cpp"/>
+                <fileset dir="${applications.dir}/@{name}" includes="**/moc_*.cpp"/> <!-- because of MSVC IDE compiling them in src directory-->
             </delete>
         </sequential>
     </macrodef>
