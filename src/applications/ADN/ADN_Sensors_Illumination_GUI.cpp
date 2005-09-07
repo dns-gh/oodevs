@@ -46,7 +46,8 @@ public:
         
         // disable first column
         pItemString->setEnabled(false);
-        pItemString->setText(ADN_Tr::ConvertFromTimeCategory(static_cast<ModificatorIlluminationInfos*>(obj)->eType_,ENT_Tr_ABC::eToTr).c_str());
+        std::string strTmp = ADN_Tr::ConvertFromTimeCategory(static_cast<ModificatorIlluminationInfos*>(obj)->eType_,ENT_Tr_ABC::eToTr);
+        pItemString->setText(strTmp.c_str());
 
         // set table item properties
         pItemDouble->GetValidator().setRange( 0, 1, 2 );

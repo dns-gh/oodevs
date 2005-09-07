@@ -23,185 +23,185 @@ ADN_Tr::T_ConverterLocation ADN_Tr::locationConverter_[] =
 {
     T_ConverterLocation( "inconnu",            QT_TRANSLATE_NOOP( "ADN_Tr", "inconnu" ),            eLocation_Unknown            ),
 
-        T_ConverterLocation( "foret",              QT_TRANSLATE_NOOP( "ADN_Tr", "foret" ),              eLocation_Forest             ),
-        T_ConverterLocation( "plantation",         QT_TRANSLATE_NOOP( "ADN_Tr", "plantation" ),         eLocation_Plantation         ),
-        T_ConverterLocation( "marais",             QT_TRANSLATE_NOOP( "ADN_Tr", "marais" ),             eLocation_Swamp              ),
-        T_ConverterLocation( "dune",               QT_TRANSLATE_NOOP( "ADN_Tr", "dune" ),               eLocation_Dune               ),
-        T_ConverterLocation( "urbain",             QT_TRANSLATE_NOOP( "ADN_Tr", "urbain" ),             eLocation_Urban              ),
-        T_ConverterLocation( "etendue eau",        QT_TRANSLATE_NOOP( "ADN_Tr", "etendue eau" ),        eLocation_Water              ),
-        T_ConverterLocation( "glace",              QT_TRANSLATE_NOOP( "ADN_Tr", "glace" ),              eLocation_Ice                ),
+    T_ConverterLocation( "foret",              QT_TRANSLATE_NOOP( "ADN_Tr", "foret" ),              eLocation_Forest             ),
+    T_ConverterLocation( "plantation",         QT_TRANSLATE_NOOP( "ADN_Tr", "plantation" ),         eLocation_Plantation         ),
+    T_ConverterLocation( "marais",             QT_TRANSLATE_NOOP( "ADN_Tr", "marais" ),             eLocation_Swamp              ),
+    T_ConverterLocation( "dune",               QT_TRANSLATE_NOOP( "ADN_Tr", "dune" ),               eLocation_Dune               ),
+    T_ConverterLocation( "urbain",             QT_TRANSLATE_NOOP( "ADN_Tr", "urbain" ),             eLocation_Urban              ),
+    T_ConverterLocation( "etendue eau",        QT_TRANSLATE_NOOP( "ADN_Tr", "etendue eau" ),        eLocation_Water              ),
+    T_ConverterLocation( "glace",              QT_TRANSLATE_NOOP( "ADN_Tr", "glace" ),              eLocation_Ice                ),
 
-        T_ConverterLocation( "lisiere",            QT_TRANSLATE_NOOP( "ADN_Tr", "lisiere" ),            eLocation_ForestBorder       ),
-        T_ConverterLocation( "banlieue",           QT_TRANSLATE_NOOP( "ADN_Tr", "banlieue" ),           eLocation_UrbanBorder        ),
-        T_ConverterLocation( "cote",               QT_TRANSLATE_NOOP( "ADN_Tr", "cote" ),               eLocation_WaterBorder        ),
-        T_ConverterLocation( "bord de plantation", QT_TRANSLATE_NOOP( "ADN_Tr", "bord de plantation" ), eLocation_PlantationBorder   ),
-        T_ConverterLocation( "bord de marais",     QT_TRANSLATE_NOOP( "ADN_Tr", "bord de marais" ),     eLocation_SwampBorder        ),
-        T_ConverterLocation( "bord de dune",       QT_TRANSLATE_NOOP( "ADN_Tr", "bord de dune" ),       eLocation_DuneBorder         ),
-        T_ConverterLocation( "bord de glace",      QT_TRANSLATE_NOOP( "ADN_Tr", "bord de glace" ),      eLocation_IceBorder          ),
+    T_ConverterLocation( "lisiere",            QT_TRANSLATE_NOOP( "ADN_Tr", "lisiere" ),            eLocation_ForestBorder       ),
+    T_ConverterLocation( "banlieue",           QT_TRANSLATE_NOOP( "ADN_Tr", "banlieue" ),           eLocation_UrbanBorder        ),
+    T_ConverterLocation( "cote",               QT_TRANSLATE_NOOP( "ADN_Tr", "cote" ),               eLocation_WaterBorder        ),
+    T_ConverterLocation( "bord de plantation", QT_TRANSLATE_NOOP( "ADN_Tr", "bord de plantation" ), eLocation_PlantationBorder   ),
+    T_ConverterLocation( "bord de marais",     QT_TRANSLATE_NOOP( "ADN_Tr", "bord de marais" ),     eLocation_SwampBorder        ),
+    T_ConverterLocation( "bord de dune",       QT_TRANSLATE_NOOP( "ADN_Tr", "bord de dune" ),       eLocation_DuneBorder         ),
+    T_ConverterLocation( "bord de glace",      QT_TRANSLATE_NOOP( "ADN_Tr", "bord de glace" ),      eLocation_IceBorder          ),
 
-        T_ConverterLocation( "chemin",             QT_TRANSLATE_NOOP( "ADN_Tr", "chemin" ),             eLocation_SmallRoad          ),
-        T_ConverterLocation( "autoroute",          QT_TRANSLATE_NOOP( "ADN_Tr", "autoroute" ),          eLocation_Motorway           ),
-        T_ConverterLocation( "nationale",          QT_TRANSLATE_NOOP( "ADN_Tr", "nationale" ),          eLocation_LargeRoad          ),
-        T_ConverterLocation( "departementale",     QT_TRANSLATE_NOOP( "ADN_Tr", "departementale" ),     eLocation_MediumRoad         ),
-        T_ConverterLocation( "ruisseau",           QT_TRANSLATE_NOOP( "ADN_Tr", "ruisseau" ),           eLocation_SmallRiver         ),
-        T_ConverterLocation( "riviere",            QT_TRANSLATE_NOOP( "ADN_Tr", "riviere" ),            eLocation_MediumRiver        ),
-        T_ConverterLocation( "riviere importante", QT_TRANSLATE_NOOP( "ADN_Tr", "riviere importante" ), eLocation_LargeRiver         ),
-        T_ConverterLocation( "pont",               QT_TRANSLATE_NOOP( "ADN_Tr", "pont" ),               eLocation_Bridge             ),
-        T_ConverterLocation( "falaise",            QT_TRANSLATE_NOOP( "ADN_Tr", "falaise" ),            eLocation_Cliff              ),
-        T_ConverterLocation( "voie ferree",        QT_TRANSLATE_NOOP( "ADN_Tr", "voie ferree" ),        eLocation_Railroad           ),
-        T_ConverterLocation( "carrefour",          QT_TRANSLATE_NOOP( "ADN_Tr", "carrefour" ),          eLocation_Crossroad          ),
-        T_ConverterLocation( "",                   QT_TRANSLATE_NOOP( "ADN_Tr", "" ),                   (E_Location)-1               )
+    T_ConverterLocation( "chemin",             QT_TRANSLATE_NOOP( "ADN_Tr", "chemin" ),             eLocation_SmallRoad          ),
+    T_ConverterLocation( "autoroute",          QT_TRANSLATE_NOOP( "ADN_Tr", "autoroute" ),          eLocation_Motorway           ),
+    T_ConverterLocation( "nationale",          QT_TRANSLATE_NOOP( "ADN_Tr", "nationale" ),          eLocation_LargeRoad          ),
+    T_ConverterLocation( "departementale",     QT_TRANSLATE_NOOP( "ADN_Tr", "departementale" ),     eLocation_MediumRoad         ),
+    T_ConverterLocation( "ruisseau",           QT_TRANSLATE_NOOP( "ADN_Tr", "ruisseau" ),           eLocation_SmallRiver         ),
+    T_ConverterLocation( "riviere",            QT_TRANSLATE_NOOP( "ADN_Tr", "riviere" ),            eLocation_MediumRiver        ),
+    T_ConverterLocation( "riviere importante", QT_TRANSLATE_NOOP( "ADN_Tr", "riviere importante" ), eLocation_LargeRiver         ),
+    T_ConverterLocation( "pont",               QT_TRANSLATE_NOOP( "ADN_Tr", "pont" ),               eLocation_Bridge             ),
+    T_ConverterLocation( "falaise",            QT_TRANSLATE_NOOP( "ADN_Tr", "falaise" ),            eLocation_Cliff              ),
+    T_ConverterLocation( "voie ferree",        QT_TRANSLATE_NOOP( "ADN_Tr", "voie ferree" ),        eLocation_Railroad           ),
+    T_ConverterLocation( "carrefour",          QT_TRANSLATE_NOOP( "ADN_Tr", "carrefour" ),          eLocation_Crossroad          ),
+    T_ConverterLocation( "",                   QT_TRANSLATE_NOOP( "ADN_Tr", "" ),                   (E_Location)-1               )
 };
 
 
 ADN_Tr::T_ConverterConsumptionType ADN_Tr::consumptionTypeConverter_[] =
 {
     T_ConverterConsumptionType( "ArretMoteurEteint" , QT_TRANSLATE_NOOP( "ADN_Tr" , "ArretMoteurEteint" ) , eEngineStopped ) ,
-        T_ConverterConsumptionType( "ArretMoteurAllume" , QT_TRANSLATE_NOOP( "ADN_Tr" , "ArretMoteurAllume" ) , eEngineStarted ) ,
-        T_ConverterConsumptionType( "Deplacement" ,       QT_TRANSLATE_NOOP( "ADN_Tr" , "Deplacement" ) ,       eMoving ) ,
-        T_ConverterConsumptionType( "EnTravaux" ,         QT_TRANSLATE_NOOP( "ADN_Tr" , "EnTravaux" ) ,         eWorking ) ,
-        T_ConverterConsumptionType( "" , "" , (E_ConsumptionType)-1 )
+    T_ConverterConsumptionType( "ArretMoteurAllume" , QT_TRANSLATE_NOOP( "ADN_Tr" , "ArretMoteurAllume" ) , eEngineStarted ) ,
+    T_ConverterConsumptionType( "Deplacement" ,       QT_TRANSLATE_NOOP( "ADN_Tr" , "Deplacement" ) ,       eMoving ) ,
+    T_ConverterConsumptionType( "EnTravaux" ,         QT_TRANSLATE_NOOP( "ADN_Tr" , "EnTravaux" ) ,         eWorking ) ,
+    T_ConverterConsumptionType( "" , "" , (E_ConsumptionType)-1 )
 };
 
 
 ADN_Tr::T_ConverterTimeCategory ADN_Tr::timeCategoryConverter_[] =
 {
-    T_ConverterTimeCategory( "JourSansNuage"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"clear day")          , eTimeTypeDay_NoCloud        ) ,
-        T_ConverterTimeCategory( "JourPeuNuageux"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"day with few clouds")          , eTimeTypeDay_LightCloud        ) ,
-        T_ConverterTimeCategory( "JourMoyennementNuageux"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"day with some clouds")          , eTimeTypeDay_MiddleCloud        ) ,
-        T_ConverterTimeCategory( "JourAssezNuageux"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"cloudy day")          , eTimeTypeDay_HeavyCloud        ) ,
-        T_ConverterTimeCategory( "JourTresNuageux"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"very cloudy day")          , eTimeTypeDay_FullCloud        ) ,
-        T_ConverterTimeCategory( "NuitPleineLune"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"full moon night")          , eTimeTypeNight_FullMoon        ) ,
-        T_ConverterTimeCategory( "NuitTroisQuartDeLune"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"three quarters moon night")          , eTimeTypeNight_ThreeQuarterMoon        ) ,
-        T_ConverterTimeCategory( "NuitDemiLune"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"half moon night")          , eTimeTypeNight_HalfMoon        ) ,
-        T_ConverterTimeCategory( "NuitQuartDeLune"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"quarter moon night")          , eTimeTypeNight_OneQuarterMoon        ) ,
-        T_ConverterTimeCategory( "NuitNouvelleLune" , QT_TRANSLATE_NOOP("ADN_Tr" ,"new moon night")  , eTimeTypeNight_NewMoon ) ,
-        T_ConverterTimeCategory( "Eclairant" , QT_TRANSLATE_NOOP("ADN_Tr" ,"lighting rocket")  , eTimeTypeNight_LightingRocket ) ,
-        T_ConverterTimeCategory( ""            , ""                                            , (E_TimeCategory)-1  )
+    T_ConverterTimeCategory( "JourSansNuage"         , QT_TRANSLATE_NOOP("ADN_Tr" ,"JourSansNuage")         , eTimeTypeDay_NoCloud            ),
+    T_ConverterTimeCategory( "JourPeuNuageux"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"JourPeuNuageux")        , eTimeTypeDay_LightCloud         ),
+    T_ConverterTimeCategory( "JourMoyennementNuageux", QT_TRANSLATE_NOOP("ADN_Tr" ,"JourMoyennementNuageux"), eTimeTypeDay_MiddleCloud        ),
+    T_ConverterTimeCategory( "JourAssezNuageux"      , QT_TRANSLATE_NOOP("ADN_Tr" ,"JourAssezNuageux")      , eTimeTypeDay_HeavyCloud         ),
+    T_ConverterTimeCategory( "JourTresNuageux"       , QT_TRANSLATE_NOOP("ADN_Tr" ,"JourTresNuageux")       , eTimeTypeDay_FullCloud          ),
+    T_ConverterTimeCategory( "NuitPleineLune"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"NuitPleineLune")        , eTimeTypeNight_FullMoon         ),
+    T_ConverterTimeCategory( "NuitTroisQuartDeLune"  , QT_TRANSLATE_NOOP("ADN_Tr" ,"NuitTroisQuartDeLune")  , eTimeTypeNight_ThreeQuarterMoon ),
+    T_ConverterTimeCategory( "NuitDemiLune"          , QT_TRANSLATE_NOOP("ADN_Tr" ,"NuitDemiLune")          , eTimeTypeNight_HalfMoon         ),
+    T_ConverterTimeCategory( "NuitQuartDeLune"       , QT_TRANSLATE_NOOP("ADN_Tr" ,"NuitQuartDeLune")       , eTimeTypeNight_OneQuarterMoon   ),
+    T_ConverterTimeCategory( "NuitNouvelleLune"      , QT_TRANSLATE_NOOP("ADN_Tr" ,"NuitNouvelleLune")      , eTimeTypeNight_NewMoon          ),
+    T_ConverterTimeCategory( "Eclairant"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"Eclairant")             , eTimeTypeNight_LightingRocket   ),
+    T_ConverterTimeCategory( ""                      , ""                                                   , (E_TimeCategory)-1              )
 };
 
 
 ADN_Tr::T_ConverterVisionObject ADN_Tr::visionObjectConverter_[] =
 {
-    T_ConverterVisionObject( "Sol"    ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"ground")    ,   eVisionGround      ) ,
-        T_ConverterVisionObject( "Vide"   ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"empty")     ,   eVisionEmpty       ) ,
-        T_ConverterVisionObject( "Foret"  ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"forest")    ,   eVisionForest      ) ,
-        T_ConverterVisionObject( "Urbain" ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"urban")     ,   eVisionUrban       ) ,
-        T_ConverterVisionObject( ""       ,  ""                                         ,   (E_VisionObject)-1 )
+    T_ConverterVisionObject( "Sol"    ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Sol")   ,   eVisionGround      ) ,
+    T_ConverterVisionObject( "Vide"   ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Vide")  ,   eVisionEmpty       ) ,
+    T_ConverterVisionObject( "Foret"  ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Foret") ,   eVisionForest      ) ,
+    T_ConverterVisionObject( "Urbain" ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Urbain"),   eVisionUrban       ) ,
+    T_ConverterVisionObject( ""       ,  ""                                   ,   (E_VisionObject)-1 )
 };
 
 
 ADN_Tr::T_ConverterKeyPoint ADN_Tr::keyPointConverter_[] =
 {
     T_ConverterKeyPoint( "foret" ,       QT_TRANSLATE_NOOP( "ADN_Tr" , "foret" ) ,     eKeyPointForest ) ,
-        T_ConverterKeyPoint( "urbain" ,      QT_TRANSLATE_NOOP( "ADN_Tr" , "urbain" ) ,    eKeyPointUrban ) ,
-        T_ConverterKeyPoint( "carrefour" ,   QT_TRANSLATE_NOOP( "ADN_Tr" , "carrefour" ) , eKeyPointCrossroads ) ,
-        T_ConverterKeyPoint( "pont" ,        QT_TRANSLATE_NOOP( "ADN_Tr" , "pont" ) ,      eKeyPointBridge ) ,
-        T_ConverterKeyPoint( "lima" ,        QT_TRANSLATE_NOOP( "ADN_Tr" , "lima" ) ,      eKeyPointLima ) ,
-        T_ConverterKeyPoint( "" , "" , (E_KeyPoint)-1 )
+    T_ConverterKeyPoint( "urbain" ,      QT_TRANSLATE_NOOP( "ADN_Tr" , "urbain" ) ,    eKeyPointUrban ) ,
+    T_ConverterKeyPoint( "carrefour" ,   QT_TRANSLATE_NOOP( "ADN_Tr" , "carrefour" ) , eKeyPointCrossroads ) ,
+    T_ConverterKeyPoint( "pont" ,        QT_TRANSLATE_NOOP( "ADN_Tr" , "pont" ) ,      eKeyPointBridge ) ,
+    T_ConverterKeyPoint( "lima" ,        QT_TRANSLATE_NOOP( "ADN_Tr" , "lima" ) ,      eKeyPointLima ) ,
+    T_ConverterKeyPoint( "" , "" , (E_KeyPoint)-1 )
 };
 
 
 ADN_Tr::T_ConverterAgentTypePion ADN_Tr::agentTypePionConverter_[] =
 {
     T_ConverterAgentTypePion( "Pion INF"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion INF" ),                           eAgentTypePionINF ),
-        T_ConverterAgentTypePion( "Pion ASA"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ASA" ),                           eAgentTypePionASA ),
-        T_ConverterAgentTypePion( "Pion ALAT"                       ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ALAT" ),                          eAgentTypePionALAT ),
-        T_ConverterAgentTypePion( "Pion RENS"                       ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion RENS" ),                          eAgentTypePionRENS ),
-        T_ConverterAgentTypePion( "Pion NBC"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion NBC" ),                           eAgentTypePionNBC ),
-        T_ConverterAgentTypePion( "Pion ABC"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ABC" ),                           eAgentTypePionABC ),
-        T_ConverterAgentTypePion( "Pion GEN"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion GEN" ),                           eAgentTypePionGEN ),
-        T_ConverterAgentTypePion( "Pion ASS"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ASS" ),                           eAgentTypePionASS ),
-        T_ConverterAgentTypePion( "Pion TRANS"                      ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion TRANS" ),                         eAgentTypePionTRANS ),
-        T_ConverterAgentTypePion( "Pion LOG TC2"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG TC2" ),                       eAgentTypePionLOGTC2 ),
-        T_ConverterAgentTypePion( "Pion LOG BLD Sante"              ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLD Sante" ),                 eAgentTypePionLOGBLDSante ),
-        T_ConverterAgentTypePion( "Pion LOG BLD Maintenance"        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLD Maintenance" ),           eAgentTypePionLOGBLDMaintenance ),
-        T_ConverterAgentTypePion( "Pion LOG BLD Ravitaillement"     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLD Ravitaillement" ),        eAgentTypePionLOGBLDRavitaillement ),
-        T_ConverterAgentTypePion( "Pion LOG BLT Sante"              ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLT Sante" ),                 eAgentTypePionLOGBLTSante ),
-        T_ConverterAgentTypePion( "Pion LOG BLT Maintenance"        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLT Maintenance" ),           eAgentTypePionLOGBLTMaintenance ),
-        T_ConverterAgentTypePion( "Pion LOG BLT Ravitaillement"     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLT Ravitaillement" ),        eAgentTypePionLOGBLTRavitaillement ),
-        T_ConverterAgentTypePion( "Pion LOG Convoi"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG Convoi" ),                    eAgentTypePionLOGConvoi ),
-        T_ConverterAgentTypePion( "Pion CIRCULATION"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion CIRCULATION" ),                   eAgentTypePionCIRCULATION ),
-        T_ConverterAgentTypePion( "Pion REFUGIE"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion REFUGIE" ),                       eAgentTypePionREFUGIE ),
-        T_ConverterAgentTypePion( "Pion MILICE"                     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion MILICE" ),                        eAgentTypePionMILICE ),
-        T_ConverterAgentTypePion( "Pion JOINT"                      ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion JOINT" ),                         eAgentTypePionJOINT ),
-        T_ConverterAgentTypePion( "",         "",          (E_AgentTypePion)-1 )
+    T_ConverterAgentTypePion( "Pion ASA"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ASA" ),                           eAgentTypePionASA ),
+    T_ConverterAgentTypePion( "Pion ALAT"                       ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ALAT" ),                          eAgentTypePionALAT ),
+    T_ConverterAgentTypePion( "Pion RENS"                       ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion RENS" ),                          eAgentTypePionRENS ),
+    T_ConverterAgentTypePion( "Pion NBC"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion NBC" ),                           eAgentTypePionNBC ),
+    T_ConverterAgentTypePion( "Pion ABC"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ABC" ),                           eAgentTypePionABC ),
+    T_ConverterAgentTypePion( "Pion GEN"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion GEN" ),                           eAgentTypePionGEN ),
+    T_ConverterAgentTypePion( "Pion ASS"                        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion ASS" ),                           eAgentTypePionASS ),
+    T_ConverterAgentTypePion( "Pion TRANS"                      ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion TRANS" ),                         eAgentTypePionTRANS ),
+    T_ConverterAgentTypePion( "Pion LOG TC2"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG TC2" ),                       eAgentTypePionLOGTC2 ),
+    T_ConverterAgentTypePion( "Pion LOG BLD Sante"              ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLD Sante" ),                 eAgentTypePionLOGBLDSante ),
+    T_ConverterAgentTypePion( "Pion LOG BLD Maintenance"        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLD Maintenance" ),           eAgentTypePionLOGBLDMaintenance ),
+    T_ConverterAgentTypePion( "Pion LOG BLD Ravitaillement"     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLD Ravitaillement" ),        eAgentTypePionLOGBLDRavitaillement ),
+    T_ConverterAgentTypePion( "Pion LOG BLT Sante"              ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLT Sante" ),                 eAgentTypePionLOGBLTSante ),
+    T_ConverterAgentTypePion( "Pion LOG BLT Maintenance"        ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLT Maintenance" ),           eAgentTypePionLOGBLTMaintenance ),
+    T_ConverterAgentTypePion( "Pion LOG BLT Ravitaillement"     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG BLT Ravitaillement" ),        eAgentTypePionLOGBLTRavitaillement ),
+    T_ConverterAgentTypePion( "Pion LOG Convoi"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion LOG Convoi" ),                    eAgentTypePionLOGConvoi ),
+    T_ConverterAgentTypePion( "Pion CIRCULATION"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion CIRCULATION" ),                   eAgentTypePionCIRCULATION ),
+    T_ConverterAgentTypePion( "Pion REFUGIE"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion REFUGIE" ),                       eAgentTypePionREFUGIE ),
+    T_ConverterAgentTypePion( "Pion MILICE"                     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion MILICE" ),                        eAgentTypePionMILICE ),
+    T_ConverterAgentTypePion( "Pion JOINT"                      ,QT_TRANSLATE_NOOP( "ADN_Tr", "Pion JOINT" ),                         eAgentTypePionJOINT ),
+    T_ConverterAgentTypePion( "",         "",          (E_AgentTypePion)-1 )
 };
 
 
 ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
 {
     T_ConverterAgentTypeAutomate( "Automate INF"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate INF" ),                       eAgentTypeAutomateINF ),
-        T_ConverterAgentTypeAutomate( "Automate ASA"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ASA" ),                       eAgentTypeAutomateASA ),
-        T_ConverterAgentTypeAutomate( "Automate ALAT"                   ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ALAT" ),                      eAgentTypeAutomateALAT ),
-        T_ConverterAgentTypeAutomate( "Automate RENS"                   ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate RENS" ),                      eAgentTypeAutomateRENS ),
-        T_ConverterAgentTypeAutomate( "Automate NBC"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate NBC" ),                       eAgentTypeAutomateNBC ),
-        T_ConverterAgentTypeAutomate( "Automate ABC"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ABC" ),                       eAgentTypeAutomateABC ),
-        T_ConverterAgentTypeAutomate( "Automate GEN"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate GEN" ),                       eAgentTypeAutomateGEN ),
-        T_ConverterAgentTypeAutomate( "Automate ASS"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ASS" ),                       eAgentTypeAutomateASS ),
-        T_ConverterAgentTypeAutomate( "Automate TRANS"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate TRANS" ),                     eAgentTypeAutomateTRANS ),
-        T_ConverterAgentTypeAutomate( "Automate LOG TC2"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG TC2" ),                   eAgentTypeAutomateLOGTC2 ),
-        T_ConverterAgentTypeAutomate( "Automate LOG BLD Sante"          ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLD Sante" ),             eAgentTypeAutomateLOGBLDSante ),
-        T_ConverterAgentTypeAutomate( "Automate LOG BLD Maintenance"    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLD Maintenance" ),       eAgentTypeAutomateLOGBLDMaintenance ),
-        T_ConverterAgentTypeAutomate( "Automate LOG BLD Ravitaillement" ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLD Ravitaillement" ),    eAgentTypeAutomateLOGBLDRavitaillement ),
-        T_ConverterAgentTypeAutomate( "Automate LOG BLT Sante"          ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLT Sante" ),             eAgentTypeAutomateLOGBLTSante ),
-        T_ConverterAgentTypeAutomate( "Automate LOG BLT Maintenance"    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLT Maintenance" ),       eAgentTypeAutomateLOGBLTMaintenance ),
-        T_ConverterAgentTypeAutomate( "Automate LOG BLT Ravitaillement" ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLT Ravitaillement" ),    eAgentTypeAutomateLOGBLTRavitaillement ),
-        T_ConverterAgentTypeAutomate( "Automate CIRCULATION"            ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate CIRCULATION" ),               eAgentTypeAutomateCIRCULATION ),  
-        T_ConverterAgentTypeAutomate( "Automate REFUGIE"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate REFUGIE" ),                   eAgentTypeAutomateREFUGIE ),
-        T_ConverterAgentTypeAutomate( "Automate MILICE"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate MILICE" ),                    eAgentTypeAutomateMILICE ),
-        T_ConverterAgentTypeAutomate( "Automate JOINT"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate JOINT" ),                     eAgentTypeAutomateJOINT ),
-        T_ConverterAgentTypeAutomate( "",         "",          (E_AgentTypeAutomate)-1 )
+    T_ConverterAgentTypeAutomate( "Automate ASA"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ASA" ),                       eAgentTypeAutomateASA ),
+    T_ConverterAgentTypeAutomate( "Automate ALAT"                   ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ALAT" ),                      eAgentTypeAutomateALAT ),
+    T_ConverterAgentTypeAutomate( "Automate RENS"                   ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate RENS" ),                      eAgentTypeAutomateRENS ),
+    T_ConverterAgentTypeAutomate( "Automate NBC"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate NBC" ),                       eAgentTypeAutomateNBC ),
+    T_ConverterAgentTypeAutomate( "Automate ABC"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ABC" ),                       eAgentTypeAutomateABC ),
+    T_ConverterAgentTypeAutomate( "Automate GEN"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate GEN" ),                       eAgentTypeAutomateGEN ),
+    T_ConverterAgentTypeAutomate( "Automate ASS"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate ASS" ),                       eAgentTypeAutomateASS ),
+    T_ConverterAgentTypeAutomate( "Automate TRANS"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate TRANS" ),                     eAgentTypeAutomateTRANS ),
+    T_ConverterAgentTypeAutomate( "Automate LOG TC2"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG TC2" ),                   eAgentTypeAutomateLOGTC2 ),
+    T_ConverterAgentTypeAutomate( "Automate LOG BLD Sante"          ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLD Sante" ),             eAgentTypeAutomateLOGBLDSante ),
+    T_ConverterAgentTypeAutomate( "Automate LOG BLD Maintenance"    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLD Maintenance" ),       eAgentTypeAutomateLOGBLDMaintenance ),
+    T_ConverterAgentTypeAutomate( "Automate LOG BLD Ravitaillement" ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLD Ravitaillement" ),    eAgentTypeAutomateLOGBLDRavitaillement ),
+    T_ConverterAgentTypeAutomate( "Automate LOG BLT Sante"          ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLT Sante" ),             eAgentTypeAutomateLOGBLTSante ),
+    T_ConverterAgentTypeAutomate( "Automate LOG BLT Maintenance"    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLT Maintenance" ),       eAgentTypeAutomateLOGBLTMaintenance ),
+    T_ConverterAgentTypeAutomate( "Automate LOG BLT Ravitaillement" ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate LOG BLT Ravitaillement" ),    eAgentTypeAutomateLOGBLTRavitaillement ),
+    T_ConverterAgentTypeAutomate( "Automate CIRCULATION"            ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate CIRCULATION" ),               eAgentTypeAutomateCIRCULATION ),  
+    T_ConverterAgentTypeAutomate( "Automate REFUGIE"                ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate REFUGIE" ),                   eAgentTypeAutomateREFUGIE ),
+    T_ConverterAgentTypeAutomate( "Automate MILICE"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate MILICE" ),                    eAgentTypeAutomateMILICE ),
+    T_ConverterAgentTypeAutomate( "Automate JOINT"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Automate JOINT" ),                     eAgentTypeAutomateJOINT ),
+    T_ConverterAgentTypeAutomate( "",         "",          (E_AgentTypeAutomate)-1 )
 };
 
 
 ADN_Tr::T_ConverterNatureAtlasType ADN_Tr::natureAtlasTypeConverter_[] =
 {
-    T_ConverterNatureAtlasType( "PC"              , QT_TRANSLATE_NOOP("ADN_Tr" ,"pc"    )  ,       eNatureAtlas_PC                  ) ,
-        T_ConverterNatureAtlasType( "ASS"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"ass"   )  ,       eNatureAtlas_ASS                 ) ,
-        T_ConverterNatureAtlasType( "Log"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"log"   )  ,       eNatureAtlas_Log                 ) ,
-        T_ConverterNatureAtlasType( "None"            , QT_TRANSLATE_NOOP("ADN_Tr" ,"none")          ,eNatureAtlas_None                ) ,
-        T_ConverterNatureAtlasType( "Blinde"          , QT_TRANSLATE_NOOP("ADN_Tr" ,"armoured")  ,       eNatureAtlas_Armored             ) ,
-        T_ConverterNatureAtlasType( "Mortier"         , QT_TRANSLATE_NOOP("ADN_Tr" ,"mortar") ,       eNatureAtlas_Mortar              ) ,
-        T_ConverterNatureAtlasType( "Lance roquette"  , QT_TRANSLATE_NOOP("ADN_Tr" ,"rocket launcher") ,eNatureAtlas_RocketLauncher      ) ,
-        T_ConverterNatureAtlasType( "Vehicule"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"vehicle"   )  ,       eNatureAtlas_Vehicule                 ) ,
-        T_ConverterNatureAtlasType( "Personnel a pied", QT_TRANSLATE_NOOP("ADN_Tr" ,"footmen") ,       eNatureAtlas_PersonnelAPied              ) ,
-        T_ConverterNatureAtlasType( "Helicoptere"     , QT_TRANSLATE_NOOP("ADN_Tr" ,"helicopter") ,eNatureAtlas_Helicoptere      ) ,
-        T_ConverterNatureAtlasType( "ASA"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"ASA") ,eNatureAtlas_ASA ) ,
-        T_ConverterNatureAtlasType( "Indefini"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"undefined")          ,eNatureAtlas_Indefini                ) ,
-        T_ConverterNatureAtlasType( ""                , "" ,(E_NatureAtlasType)-1            )
+    T_ConverterNatureAtlasType( "PC"              , QT_TRANSLATE_NOOP("ADN_Tr" ,"PC"    )          , eNatureAtlas_PC             ),
+    T_ConverterNatureAtlasType( "ASS"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"ASS"   )          , eNatureAtlas_ASS            ),
+    T_ConverterNatureAtlasType( "Log"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"Log"   )          , eNatureAtlas_Log            ),
+    T_ConverterNatureAtlasType( "None"            , QT_TRANSLATE_NOOP("ADN_Tr" ,"None")            , eNatureAtlas_None           ),
+    T_ConverterNatureAtlasType( "Blinde"          , QT_TRANSLATE_NOOP("ADN_Tr" ,"Blinde")          , eNatureAtlas_Armored        ),
+    T_ConverterNatureAtlasType( "Mortier"         , QT_TRANSLATE_NOOP("ADN_Tr" ,"Mortier")         , eNatureAtlas_Mortar         ),
+    T_ConverterNatureAtlasType( "Lance roquette"  , QT_TRANSLATE_NOOP("ADN_Tr" ,"Lance roquette")  , eNatureAtlas_RocketLauncher ),
+    T_ConverterNatureAtlasType( "Vehicule"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"Vehicule"   )     , eNatureAtlas_Vehicule       ),
+    T_ConverterNatureAtlasType( "Personnel a pied", QT_TRANSLATE_NOOP("ADN_Tr" ,"Personnel a pied"), eNatureAtlas_PersonnelAPied ),
+    T_ConverterNatureAtlasType( "Helicoptere"     , QT_TRANSLATE_NOOP("ADN_Tr" ,"Helicoptere")     , eNatureAtlas_Helicoptere    ),
+    T_ConverterNatureAtlasType( "ASA"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"ASA")             , eNatureAtlas_ASA            ),
+    T_ConverterNatureAtlasType( "Indefini"        , QT_TRANSLATE_NOOP("ADN_Tr" ,"Indefini")        , eNatureAtlas_Indefini       ),
+    T_ConverterNatureAtlasType( ""                , ""                                             , (E_NatureAtlasType)-1       )
 };
 
 
 ADN_Tr::T_ConverterSpeedImpact ADN_Tr::speedImpactConverter_[] =
 {
     T_ConverterSpeedImpact( "AuPlusLent",      QT_TRANSLATE_NOOP( "ADN_Tr", "AuPlusLent" ),      eSpeedImpact_AuPlusLent ),
-        T_ConverterSpeedImpact( "VitesseMaxObjet", QT_TRANSLATE_NOOP( "ADN_Tr", "VitesseMaxObjet" ), eSpeedImpact_VitesseMaxObjet ),
-        T_ConverterSpeedImpact( "VitesseMaxAgent", QT_TRANSLATE_NOOP( "ADN_Tr", "VitesseMaxAgent" ), eSpeedImpact_VitesseMaxAgent ),
-        T_ConverterSpeedImpact( "", "", (E_SpeedImpact)-1 )
+    T_ConverterSpeedImpact( "VitesseMaxObjet", QT_TRANSLATE_NOOP( "ADN_Tr", "VitesseMaxObjet" ), eSpeedImpact_VitesseMaxObjet ),
+    T_ConverterSpeedImpact( "VitesseMaxAgent", QT_TRANSLATE_NOOP( "ADN_Tr", "VitesseMaxAgent" ), eSpeedImpact_VitesseMaxAgent ),
+    T_ConverterSpeedImpact( "", "", (E_SpeedImpact)-1 )
 };
 
 
 ADN_Tr::T_ConverterSensorWeatherModifiers ADN_Tr::sensorWeatherModifiersConverter_[] =
 {
     T_ConverterSensorWeatherModifiers( "PasDePrecipitation", QT_TRANSLATE_NOOP( "ADN_Tr", "PasDePrecipitation" ),eSensorWeatherModifiers_PasDePrecipitation ),
-        T_ConverterSensorWeatherModifiers( "TempeteDeSable",     QT_TRANSLATE_NOOP( "ADN_Tr", "TempeteDeSable" ),    eSensorWeatherModifiers_TempeteSable ),
-        T_ConverterSensorWeatherModifiers( "Brouillard",         QT_TRANSLATE_NOOP( "ADN_Tr", "Brouillard" ),        eSensorWeatherModifiers_Brouillard ),
-        T_ConverterSensorWeatherModifiers( "Crachin",            QT_TRANSLATE_NOOP( "ADN_Tr", "Crachin" ),           eSensorWeatherModifiers_Crachin ),
-        T_ConverterSensorWeatherModifiers( "Pluie",              QT_TRANSLATE_NOOP( "ADN_Tr", "Pluie" ),             eSensorWeatherModifiers_Pluie ),
-        T_ConverterSensorWeatherModifiers( "Neige",              QT_TRANSLATE_NOOP( "ADN_Tr", "Neige" ),             eSensorWeatherModifiers_Neige ),
-        T_ConverterSensorWeatherModifiers( "Fumigene",           QT_TRANSLATE_NOOP( "ADN_Tr", "Fumigene" ),          eSensorWeatherModifiers_Fumigene ),
-        T_ConverterSensorWeatherModifiers( "", "", (E_SensorWeatherModifiers)-1 )
+    T_ConverterSensorWeatherModifiers( "TempeteDeSable",     QT_TRANSLATE_NOOP( "ADN_Tr", "TempeteDeSable" ),    eSensorWeatherModifiers_TempeteSable ),
+    T_ConverterSensorWeatherModifiers( "Brouillard",         QT_TRANSLATE_NOOP( "ADN_Tr", "Brouillard" ),        eSensorWeatherModifiers_Brouillard ),
+    T_ConverterSensorWeatherModifiers( "Crachin",            QT_TRANSLATE_NOOP( "ADN_Tr", "Crachin" ),           eSensorWeatherModifiers_Crachin ),
+    T_ConverterSensorWeatherModifiers( "Pluie",              QT_TRANSLATE_NOOP( "ADN_Tr", "Pluie" ),             eSensorWeatherModifiers_Pluie ),
+    T_ConverterSensorWeatherModifiers( "Neige",              QT_TRANSLATE_NOOP( "ADN_Tr", "Neige" ),             eSensorWeatherModifiers_Neige ),
+    T_ConverterSensorWeatherModifiers( "Fumigene",           QT_TRANSLATE_NOOP( "ADN_Tr", "Fumigene" ),          eSensorWeatherModifiers_Fumigene ),
+    T_ConverterSensorWeatherModifiers( "", "", (E_SensorWeatherModifiers)-1 )
 };
 
 
 ADN_Tr::T_ConverterDoctorSkills ADN_Tr::doctorSkillsConverter_[] =
 {
     T_ConverterDoctorSkills( "U1",              QT_TRANSLATE_NOOP( "ADN_Tr", "U1" ),             eDoctorSkills_U1 ),
-        T_ConverterDoctorSkills( "U2",              QT_TRANSLATE_NOOP( "ADN_Tr", "U2" ),             eDoctorSkills_U2 ),
-        T_ConverterDoctorSkills( "U3",              QT_TRANSLATE_NOOP( "ADN_Tr", "U3" ),             eDoctorSkills_U3 ),
-        T_ConverterDoctorSkills( "UE",              QT_TRANSLATE_NOOP( "ADN_Tr", "UE" ),             eDoctorSkills_UE ),
-        T_ConverterDoctorSkills( "", "", (E_DoctorSkills)-1 )
+    T_ConverterDoctorSkills( "U2",              QT_TRANSLATE_NOOP( "ADN_Tr", "U2" ),             eDoctorSkills_U2 ),
+    T_ConverterDoctorSkills( "U3",              QT_TRANSLATE_NOOP( "ADN_Tr", "U3" ),             eDoctorSkills_U3 ),
+    T_ConverterDoctorSkills( "UE",              QT_TRANSLATE_NOOP( "ADN_Tr", "UE" ),             eDoctorSkills_UE ),
+    T_ConverterDoctorSkills( "", "", (E_DoctorSkills)-1 )
 };
 
 
@@ -699,22 +699,22 @@ E_RadarType ADN_Tr::ConvertToRadarType( const std::string& strName )
 // -----------------------------------------------------------------------------
 void ADN_Tr::InitTranslations()
 {
-    InitTr( smissionConverter_ );
-    InitTr( locationConverter_ );
-    InitTr( consumptionTypeConverter_ );
-    InitTr( timeCategoryConverter_ );
-    InitTr( visionObjectConverter_ );
-    InitTr( keyPointConverter_ );
-    InitTr( agentTypePionConverter_ );
-    InitTr( agentTypeAutomateConverter_ );
-    InitTr( natureAtlasTypeConverter_ );
-    InitTr( speedImpactConverter_ );
-    InitTr( sensorWeatherModifiersConverter_ );
-    InitTr( doctorSkillsConverter_ );
-    InitTr( protectionTypeConverter_ );
-    InitTr( breakdownTypeConverter_ );
-    InitTr( breakdownNTIConverter_ );
-    InitTr( munitionTypeConverter_ );
-    InitTr( capacityMissionConverter_ );
-    InitTr( radarTypeConverter_ );
+    InitTr( smissionConverter_, "ADN_Tr" );
+    InitTr( locationConverter_, "ADN_Tr" );
+    InitTr( consumptionTypeConverter_, "ADN_Tr" );
+    InitTr( timeCategoryConverter_, "ADN_Tr" );
+    InitTr( visionObjectConverter_, "ADN_Tr" );
+    InitTr( keyPointConverter_, "ADN_Tr" );
+    InitTr( agentTypePionConverter_, "ADN_Tr" );
+    InitTr( agentTypeAutomateConverter_, "ADN_Tr" );
+    InitTr( natureAtlasTypeConverter_, "ADN_Tr" );
+    InitTr( speedImpactConverter_, "ADN_Tr" );
+    InitTr( sensorWeatherModifiersConverter_, "ADN_Tr" );
+    InitTr( doctorSkillsConverter_, "ADN_Tr" );
+    InitTr( protectionTypeConverter_, "ADN_Tr" );
+    InitTr( breakdownTypeConverter_, "ADN_Tr" );
+    InitTr( breakdownNTIConverter_, "ADN_Tr" );
+    InitTr( munitionTypeConverter_, "ADN_Tr" );
+    InitTr( capacityMissionConverter_, "ADN_Tr" );
+    InitTr( radarTypeConverter_, "ADN_Tr" );
 }

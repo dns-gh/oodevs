@@ -141,7 +141,7 @@
     </message>
     <message>
         <source>Automata compositions</source>
-        <translation type="unfinished">Composition des automates</translation>
+        <translation>Composition des automates</translation>
     </message>
     <message>
         <source>Command post</source>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>%2 %3</source>
-        <translation type="unfinished">%2 %3</translation>
+        <translation>%2 %3</translation>
     </message>
 </context>
 <context>
@@ -286,11 +286,11 @@
     </message>
     <message>
         <source>NTI</source>
-        <translation type="unfinished"></translation>
+        <translation>NTI</translation>
     </message>
     <message>
         <source>General parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres généraux</translation>
     </message>
 </context>
 <context>
@@ -932,7 +932,7 @@
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -2414,7 +2414,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
+        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2795,7 @@
     </message>
     <message>
         <source>Phs modificators</source>
-        <translation type="unfinished">Coefficients modificateurs de portée</translation>
+        <translation>Coefficients modificateurs de portée</translation>
     </message>
     <message>
         <source>Shooter&apos;s
@@ -2850,7 +2850,7 @@ du tireur</translation>
     </message>
     <message>
         <source>New size</source>
-        <translation type="unfinished">Nouveau volume</translation>
+        <translation>Nouveau volume</translation>
     </message>
     <message>
         <source>Delete size</source>
@@ -2891,7 +2891,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
+        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -3596,7 +3596,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished">min</translation>
+        <translation>min</translation>
     </message>
 </context>
 <context>
@@ -4291,63 +4291,63 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>clear day</source>
-        <translation>Jour sans nuages</translation>
+        <translation type="obsolete">Jour sans nuages</translation>
     </message>
     <message>
         <source>day with few clouds</source>
-        <translation>Jour peu nuageux</translation>
+        <translation type="obsolete">Jour peu nuageux</translation>
     </message>
     <message>
         <source>day with some clouds</source>
-        <translation>Jour moyennement nuageux</translation>
+        <translation type="obsolete">Jour moyennement nuageux</translation>
     </message>
     <message>
         <source>cloudy day</source>
-        <translation>Jour assez nuageux</translation>
+        <translation type="obsolete">Jour assez nuageux</translation>
     </message>
     <message>
         <source>very cloudy day</source>
-        <translation>Jour très nuageux</translation>
+        <translation type="obsolete">Jour très nuageux</translation>
     </message>
     <message>
         <source>full moon night</source>
-        <translation>Nuit pleine lune</translation>
+        <translation type="obsolete">Nuit pleine lune</translation>
     </message>
     <message>
         <source>three quarters moon night</source>
-        <translation>Nuit trois quart de lune</translation>
+        <translation type="obsolete">Nuit trois quart de lune</translation>
     </message>
     <message>
         <source>half moon night</source>
-        <translation>Nuit demi lune</translation>
+        <translation type="obsolete">Nuit demi lune</translation>
     </message>
     <message>
         <source>quarter moon night</source>
-        <translation>Nuit quart de lune</translation>
+        <translation type="obsolete">Nuit quart de lune</translation>
     </message>
     <message>
         <source>new moon night</source>
-        <translation>Nuit nouvelle lune</translation>
+        <translation type="obsolete">Nuit nouvelle lune</translation>
     </message>
     <message>
         <source>lighting rocket</source>
-        <translation>Eclairant</translation>
+        <translation type="obsolete">Eclairant</translation>
     </message>
     <message>
         <source>ground</source>
-        <translation>Sol</translation>
+        <translation type="obsolete">Sol</translation>
     </message>
     <message>
         <source>empty</source>
-        <translation>Vide</translation>
+        <translation type="obsolete">Vide</translation>
     </message>
     <message>
         <source>forest</source>
-        <translation>Forêt</translation>
+        <translation type="obsolete">Forêt</translation>
     </message>
     <message>
         <source>urban</source>
-        <translation>Urbain</translation>
+        <translation type="obsolete">Urbain</translation>
     </message>
     <message>
         <source>Pion INF</source>
@@ -4515,43 +4515,43 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>pc</source>
-        <translation>pc</translation>
+        <translation type="obsolete">pc</translation>
     </message>
     <message>
         <source>ass</source>
-        <translation>ass</translation>
+        <translation type="obsolete">ass</translation>
     </message>
     <message>
         <source>log</source>
-        <translation>log</translation>
+        <translation type="obsolete">log</translation>
     </message>
     <message>
         <source>none</source>
-        <translation>aucun</translation>
+        <translation type="obsolete">aucun</translation>
     </message>
     <message>
         <source>armoured</source>
-        <translation>Blindé</translation>
+        <translation type="obsolete">Blindé</translation>
     </message>
     <message>
         <source>mortar</source>
-        <translation>Mortier</translation>
+        <translation type="obsolete">Mortier</translation>
     </message>
     <message>
         <source>rocket launcher</source>
-        <translation>Lance roquettes</translation>
+        <translation type="obsolete">Lance roquettes</translation>
     </message>
     <message>
         <source>vehicle</source>
-        <translation>Véhicule</translation>
+        <translation type="obsolete">Véhicule</translation>
     </message>
     <message>
         <source>footmen</source>
-        <translation>Infanterie</translation>
+        <translation type="obsolete">Infanterie</translation>
     </message>
     <message>
         <source>helicopter</source>
-        <translation>Helicoptère</translation>
+        <translation type="obsolete">Helicoptère</translation>
     </message>
     <message>
         <source>ASA</source>
@@ -4559,7 +4559,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>undefined</source>
-        <translation>Non défini</translation>
+        <translation type="obsolete">Non défini</translation>
     </message>
     <message>
         <source>AuPlusLent</source>
@@ -5047,15 +5047,119 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>NTI1</source>
-        <translation type="unfinished">NTI1</translation>
+        <translation>NTI1</translation>
     </message>
     <message>
         <source>NTI2</source>
-        <translation type="unfinished">NTI2</translation>
+        <translation>NTI2</translation>
     </message>
     <message>
         <source>NTI3</source>
-        <translation type="unfinished">NTI3</translation>
+        <translation>NTI3</translation>
+    </message>
+    <message>
+        <source>JourSansNuage</source>
+        <translation>Jour sans nuage</translation>
+    </message>
+    <message>
+        <source>JourPeuNuageux</source>
+        <translation>Jour peu nuageux</translation>
+    </message>
+    <message>
+        <source>JourMoyennementNuageux</source>
+        <translation>Jour moyennement nuageux</translation>
+    </message>
+    <message>
+        <source>JourAssezNuageux</source>
+        <translation>Jour assez nuageux</translation>
+    </message>
+    <message>
+        <source>JourTresNuageux</source>
+        <translation>Jour très nuageux</translation>
+    </message>
+    <message>
+        <source>NuitPleineLune</source>
+        <translation>Nuit de pleine lune</translation>
+    </message>
+    <message>
+        <source>NuitTroisQuartDeLune</source>
+        <translation>Nuit de trois-quarts de lune</translation>
+    </message>
+    <message>
+        <source>NuitDemiLune</source>
+        <translation>Nuit de demi-lune</translation>
+    </message>
+    <message>
+        <source>NuitQuartDeLune</source>
+        <translation>Nuit de quart de lune</translation>
+    </message>
+    <message>
+        <source>NuitNouvelleLune</source>
+        <translation>Nuit de nouvelle lune</translation>
+    </message>
+    <message>
+        <source>Eclairant</source>
+        <translation>Eclairage de roquette</translation>
+    </message>
+    <message>
+        <source>Sol</source>
+        <translation>Sol</translation>
+    </message>
+    <message>
+        <source>Vide</source>
+        <translation>Vide</translation>
+    </message>
+    <message>
+        <source>Foret</source>
+        <translation>Forêt</translation>
+    </message>
+    <message>
+        <source>Urbain</source>
+        <translation>Urbain</translation>
+    </message>
+    <message>
+        <source>PC</source>
+        <translation>PC</translation>
+    </message>
+    <message>
+        <source>ASS</source>
+        <translation>ASS</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Log</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucune</translation>
+    </message>
+    <message>
+        <source>Blinde</source>
+        <translation>Blindé</translation>
+    </message>
+    <message>
+        <source>Mortier</source>
+        <translation>Mortier</translation>
+    </message>
+    <message>
+        <source>Lance roquette</source>
+        <translation>Lance roquette</translation>
+    </message>
+    <message>
+        <source>Vehicule</source>
+        <translation>Véhicule</translation>
+    </message>
+    <message>
+        <source>Personnel a pied</source>
+        <translation>Personnel à pied</translation>
+    </message>
+    <message>
+        <source>Helicoptere</source>
+        <translation>Hélicoptère</translation>
+    </message>
+    <message>
+        <source>Indefini</source>
+        <translation>Indéfini</translation>
     </message>
 </context>
 <context>

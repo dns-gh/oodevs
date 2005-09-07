@@ -110,10 +110,10 @@ public:
     // Name: InitTr
     // Created: JDY 03-07-24
     //-----------------------------------------------------------------------------
-    template < typename T > static void InitTr( converter<T> conv[] )
+    template < typename T > static void InitTr( converter<T> conv[], const char* szContext = "ENT" )
     {
         for ( uint i = 0; !conv[i].simname_.empty(); ++i )
-            conv[i].trname_ = qApp->translate( "ENT", conv[i].appname_.c_str() ).ascii();
+            conv[i].trname_ = qApp->translate( szContext, conv[i].appname_.c_str() ).ascii();
     }
 };
 
