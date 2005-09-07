@@ -177,7 +177,9 @@ void ADN_FileChooser::FilenameChanged(const QString& file)
 //-----------------------------------------------------------------------------
 void ADN_FileChooser::SetFilename( const QString &fn )
 {
+    int nPos = pLineEdit_->cursorPosition();
     pLineEdit_->setText( fn );    
+    pLineEdit_->setCursorPosition( nPos );
 }
 
 //-----------------------------------------------------------------------------
