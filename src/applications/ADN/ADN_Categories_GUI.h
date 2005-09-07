@@ -57,10 +57,6 @@ public:
 
     void Build();
 
-public slots:    
-    void IncSize();
-    void DecSize();
-
 private:
     ADN_Categories_Data& data_;
 
