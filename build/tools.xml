@@ -131,14 +131,13 @@
         <attribute name="pch" default=""/>
         <attribute name="pch-excludes" default=""/>
         <attribute name="outdir" default="${bin.dir}/@{configuration}/@{path}/@{name}"/>
-        <attribute name="moc-excludes" default=""/>
         <attribute name="subsystem" default="other"/>
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
             <mkdir dir="@{outdir}"/>
             <cc objdir="@{outdir}">
                 <compiler name="moc">
-                    <fileset dir="@{input}" includes="**/*.h" excludes="@{moc-excludes}"/>
+                    <fileset dir="@{input}" includes="**/*.h" excludes="@{excludes}"/>
                     <compilerarg value="-nw"/>
                 </compiler>
             </cc>
