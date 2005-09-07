@@ -21,7 +21,6 @@
 
 #include "ADN_ListView.h"
 #include "ADN_Breakdowns_Data.h"
-typedef ADN_Breakdowns_Data::NTIInfo NTIInfo;
 
 // =============================================================================
 /** @class  ADN_Breakdowns_ListView
@@ -37,7 +36,7 @@ class ADN_Breakdowns_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Breakdowns_ListView( NTIInfo& ntiInfo, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    ADN_Breakdowns_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Breakdowns_ListView();
     //@}
 
@@ -46,9 +45,6 @@ public:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
     //@}
-
-private:
-    NTIInfo& ntiInfo_;
 };
 
 #endif // __ADN_Breakdowns_ListView_h_

@@ -125,13 +125,9 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
     QPopupMenu addMenu( &menu );
 
     ADN_Breakdowns_Data& breakdownsData = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData();
-    for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.NTI1Breakdowns_.vBreakdowns_.begin(); it != breakdownsData.NTI1Breakdowns_.vBreakdowns_.end(); ++it )
+    for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.vBreakdowns_.begin(); it != breakdownsData.vBreakdowns_.end(); ++it )
         addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
-    for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.NTI2Breakdowns_.vBreakdowns_.begin(); it != breakdownsData.NTI2Breakdowns_.vBreakdowns_.end(); ++it )
-        addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
-    for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.NTI3Breakdowns_.vBreakdowns_.begin(); it != breakdownsData.NTI3Breakdowns_.vBreakdowns_.end(); ++it )
-        addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
-
+    
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
     menu.setItemEnabled( 1, GetCurrentData() != 0 );
@@ -153,7 +149,8 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
         ADN_Breakdowns_Data::BreakdownInfo* pCast = (ADN_Breakdowns_Data::BreakdownInfo*)nMenuResult;
         BreakdownInfos* pNewInfo = new BreakdownInfos();
         pNewInfo->ptrBreakdown_ = pCast;
-        pNewInfo->ptrBreakdown_.SetVector( pCast->nti_.vBreakdowns_ );
+        pNewInfo->ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
+        //pNewInfo->ptrBreakdown_.SetVector( pCast->nti_.vBreakdowns_ );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );  

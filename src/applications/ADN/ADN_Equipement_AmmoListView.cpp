@@ -21,6 +21,7 @@
 
 #include <qpopupmenu.h>
 
+#include "ADN_Weapons_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Equipement_Wizard.h"
 #include "ADN_Equipement_GUI.h"
@@ -107,4 +108,21 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
     ADN_Equipement_Wizard wizard( dotation, this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AmmoListView::GetToolTipFor
+// Created: SBO 2005-09-06
+// -----------------------------------------------------------------------------
+std::string ADN_Equipement_AmmoListView::GetToolTipFor( QListViewItem& item )
+{
+    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    AmmoCategoryInfo* pCastData = (AmmoCategoryInfo*)pData;
+    assert( pCastData != 0 );
+
+    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    strToolTip += ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData );
+
+    return strToolTip;
 }

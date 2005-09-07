@@ -58,8 +58,6 @@ public:
     void Build();
 
 public slots:    
-    void IncArmor();
-    void DecArmor();
     void IncSize();
     void DecSize();
 

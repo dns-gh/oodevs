@@ -116,26 +116,11 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( MT_OutputArchive_ABC& ou
 
 // -----------------------------------------------------------------------------
 // Name: BreakdownInfo::BreakdownInfo
-// Created: APE 2005-04-27
+// Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
 : ADN_Ref_ABC                       ()
 , ADN_DataTreeNode_ABC              ()
-, nti_                              ( *((NTIInfo*)this) )
-{
-    // NOT TO BE USED
-    assert( 0 );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownInfo::BreakdownInfo
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( NTIInfo& nti )
-: ADN_Ref_ABC                       ()
-, ADN_DataTreeNode_ABC              ()
-, nti_                              ( nti )
 , nId_                              ( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetNextId() )
 , rRepairTime_                      ( 0.0 )
 , rRepairTimeVariance_              ( 0.0 )
@@ -179,9 +164,10 @@ std::string ADN_Breakdowns_Data::BreakdownInfo::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCopy()
 {
-    BreakdownInfo* pCopy = new BreakdownInfo( nti_ );
+    BreakdownInfo* pCopy = new BreakdownInfo();
     pCopy->strName_ = tr( "New breakdown" ).ascii();
     pCopy->nType_ = nType_.GetData();
+    pCopy->nNTI_  = nNTI_.GetData();
     pCopy->rRepairTime_ = rRepairTime_.GetData();
     pCopy->rRepairTimeVariance_ = rRepairTimeVariance_.GetData();
 
@@ -246,90 +232,14 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( MT_OutputArchive_ABC& out
     output.EndSection(); // Panne
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfo::NTIInfo
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-ADN_Breakdowns_Data::NTIInfo::NTIInfo( const std::string& strName )
-: strName_ ( strName )
-{
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfo::~NTIInfo
-// Created: APE 2005-03-17
-// -----------------------------------------------------------------------------
-ADN_Breakdowns_Data::NTIInfo::~NTIInfo()
-{
-    MT_DELETEOWNED( vBreakdowns_ );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfo::Reset
-// Created: APE 2005-03-17
-// -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::NTIInfo::Reset()
-{
-    vBreakdowns_.Reset();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Breakdowns_Data::FindBreakdown
-// Created: APE 2005-04-27
-// -----------------------------------------------------------------------------
-ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::NTIInfo::FindBreakdown( const std::string& strName )
-{
-    IT_BreakdownInfoVector it = std::find_if( vBreakdowns_.begin(), vBreakdowns_.end(), ADN_Tools::NameCmp<BreakdownInfo>( strName ) );
-    if( it == vBreakdowns_.end() )
-        return 0;
-    return *it;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfo::ReadArchiveTypes
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::NTIInfo::ReadArchiveTypes( ADN_XmlInput_Helper& input )
-{
-    input.BeginList( strName_ );
-    while( input.NextListElement() )
-    {
-        std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo( *this ) );
-        spNew->ReadArchive( input );
-        vBreakdowns_.AddItem( spNew.release() );
-    }
-    input.EndList();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfo::WriteArchiveTypes
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::NTIInfo::WriteArchiveTypes( MT_OutputArchive_ABC& output )
-{
-    output.BeginList( strName_, vBreakdowns_.size() );
-    for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
-        (*it)->WriteArchive( output );
-    output.EndList();
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data constructor
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::ADN_Breakdowns_Data()
-: ADN_Data_ABC   ()
-, nNextId_       ( 1 )
-, NTI1Breakdowns_( "NTI1" )
-, NTI2Breakdowns_( "NTI2" )
-, NTI3Breakdowns_( "NTI3" )
+: ADN_Data_ABC ()
+, nNextId_     ( 1 )
+, vBreakdowns_ ()
 {
 }
 
@@ -370,9 +280,7 @@ int ADN_Breakdowns_Data::GetNextId()
 void ADN_Breakdowns_Data::Reset()
 {
     nNextId_ = 1;
-    NTI1Breakdowns_.Reset();
-    NTI2Breakdowns_.Reset();
-    NTI3Breakdowns_.Reset();
+    vBreakdowns_.Reset();
 }
 
 
@@ -382,15 +290,11 @@ void ADN_Breakdowns_Data::Reset()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const std::string& strName )
 {
-    BreakdownInfo* pResult = 0;
-    pResult = NTI1Breakdowns_.FindBreakdown( strName );
-    if( pResult == 0 )
-        pResult = NTI2Breakdowns_.FindBreakdown( strName );        
-    if( pResult == 0 )
-        pResult = NTI3Breakdowns_.FindBreakdown( strName );
-    return pResult;
+    IT_BreakdownInfoVector it = std::find_if( vBreakdowns_.begin(), vBreakdowns_.end(), ADN_Tools::NameCmp<BreakdownInfo>( strName ) );
+    if( it == vBreakdowns_.end() )
+        return 0;
+    return *it;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::ReadArchive
@@ -402,9 +306,20 @@ void ADN_Breakdowns_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadTimeField( "TempsDiagnostique", rAverageDiagnosticTime_ );
 
     input.Section( "Types" );
-    NTI1Breakdowns_.ReadArchiveTypes( input );
-    NTI2Breakdowns_.ReadArchiveTypes( input );
-    NTI3Breakdowns_.ReadArchiveTypes( input );
+    
+    for( uint i = 0; i < eNbrBreakdownNTI; ++i )
+    {
+        input.BeginList( ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ) );
+        while( input.NextListElement() )
+        {
+            std::auto_ptr<BreakdownInfo> spNew( new BreakdownInfo() );
+            spNew->ReadArchive( input );
+            spNew->nNTI_ = ( E_BreakdownNTI )i;
+            vBreakdowns_.AddItem( spNew.release() );
+        }
+        input.EndList();
+    }
+
     input.EndSection(); // Types
 
     input.EndSection(); // Pannes
@@ -421,9 +336,16 @@ void ADN_Breakdowns_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "TempsDiagnostique", ADN_Tools::SecondToString( rAverageDiagnosticTime_.GetData() ) );
 
     output.Section( "Types" );
-    NTI1Breakdowns_.WriteArchiveTypes( output );
-    NTI2Breakdowns_.WriteArchiveTypes( output );
-    NTI3Breakdowns_.WriteArchiveTypes( output );
+
+    for( uint i = 0; i < eNbrBreakdownNTI; ++i )
+    {
+        output.BeginList( ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ), vBreakdowns_.size() );
+        for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+            if( (*it)->nNTI_ == ( E_BreakdownNTI )i )
+                (*it)->WriteArchive( output );
+        output.EndList();
+    }
+
     output.EndSection(); // Types
 
     output.EndSection(); // Pannes

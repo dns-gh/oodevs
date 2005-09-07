@@ -877,7 +877,7 @@ std::string ADN_Units_Data::GetUnitsThatUse( ADN_Composantes_Data::ComposanteInf
             {
                 if( strResult != "" )
                     strResult += "<br>";
-                strResult += pUnit->strName_.GetData();
+                strResult += "<nobr>" + pUnit->strName_.GetData() + "</nobr>";
                 break;
             }
         }

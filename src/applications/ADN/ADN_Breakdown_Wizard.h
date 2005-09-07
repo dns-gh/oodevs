@@ -20,7 +20,6 @@
 #define __ADN_Breakdown_Wizard_h_
 
 #include "ADN_Breakdowns_Data.h"
-typedef ADN_Breakdowns_Data::NTIInfo NTIInfo;
 #include "ADN_Wizard_ABC.h"
 
 
@@ -38,7 +37,7 @@ class ADN_Breakdown_Wizard
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Breakdown_Wizard( NTIInfo& ntiInfo, QWidget* pParent = 0, const char* szName = 0 );
+    ADN_Breakdown_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Breakdown_Wizard();
     //@}
 };

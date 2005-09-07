@@ -113,7 +113,7 @@
     </message>
     <message>
         <source>Unit</source>
-        <translation>Unité</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>Force ratio feedback time</source>
@@ -125,11 +125,11 @@
     </message>
     <message>
         <source>Sub-units</source>
-        <translation>Sous-unités</translation>
+        <translation>Pions</translation>
     </message>
     <message>
         <source>Composante</source>
-        <translation>Composante</translation>
+        <translation>Composantes</translation>
     </message>
     <message>
         <source>%1 x %2 %3</source>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>%2 %3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%2 %3</translation>
     </message>
 </context>
 <context>
@@ -282,7 +282,15 @@
     </message>
     <message>
         <source>General parameters</source>
-        <translation>Paramètres</translation>
+        <translation type="obsolete">Paramètres</translation>
+    </message>
+    <message>
+        <source>NTI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General parameter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -339,23 +347,23 @@
     </message>
     <message>
         <source>EVA</source>
-        <translation>EVA</translation>
+        <translation>Réparable avec évacuation</translation>
     </message>
     <message>
         <source>NEVA</source>
-        <translation>NEAV</translation>
+        <translation>Réparable sans évacuation</translation>
     </message>
     <message>
         <source>Wounded humans</source>
-        <translation>Attritions humaines</translation>
+        <translation>Impact sur le personnel</translation>
     </message>
     <message>
         <source>Evac</source>
-        <translation>Evacuation</translation>
+        <translation>Réparable avec évacuation</translation>
     </message>
     <message>
         <source>No evac</source>
-        <translation>Sans évacuation</translation>
+        <translation>Réparable sans évacuation</translation>
     </message>
     <message>
         <source>Sizes</source>
@@ -371,11 +379,11 @@
     </message>
     <message>
         <source>Strongest armor</source>
-        <translation>Plus forte</translation>
+        <translation type="obsolete">Plus forte</translation>
     </message>
     <message>
         <source>Weakest armor</source>
-        <translation>Plus faible</translation>
+        <translation type="obsolete">Plus faible</translation>
     </message>
     <message>
         <source>Armor class</source>
@@ -383,11 +391,11 @@
     </message>
     <message>
         <source>Biggest size</source>
-        <translation>Plus grande</translation>
+        <translation>Plus grand</translation>
     </message>
     <message>
         <source>Smallest size</source>
-        <translation>Plus petite</translation>
+        <translation>Plus petit</translation>
     </message>
     <message>
         <source>s</source>
@@ -600,7 +608,7 @@
     </message>
     <message>
         <source>Weight</source>
-        <translation>Poids</translation>
+        <translation>Masse</translation>
     </message>
     <message>
         <source>T</source>
@@ -652,11 +660,11 @@
     </message>
     <message>
         <source>Cargo transport</source>
-        <translation>Transport d&apos;unités</translation>
+        <translation>Transport de pions</translation>
     </message>
     <message>
         <source>Weight capacity</source>
-        <translation>Poids max. transportable</translation>
+        <translation>Masse max transportable</translation>
     </message>
     <message>
         <source>Loading time per ton</source>
@@ -728,7 +736,7 @@
     </message>
     <message>
         <source>Ambulance</source>
-        <translation>Ambulance</translation>
+        <translation>Ambulance de ramassage</translation>
     </message>
     <message>
         <source>Ambulance releve</source>
@@ -760,11 +768,11 @@
     </message>
     <message>
         <source>Load time per person</source>
-        <translation>Temps de chargement par personne</translation>
+        <translation>Temps d&apos;embarquement par personne</translation>
     </message>
     <message>
         <source>Unload time per person</source>
-        <translation>Temps de déchargement par personne</translation>
+        <translation>Temps de débarquement par personne</translation>
     </message>
     <message>
         <source>Supply</source>
@@ -808,7 +816,7 @@
     </message>
     <message>
         <source>Max repair time</source>
-        <translation>Temps max. de réparaison</translation>
+        <translation>Temps max. de réparation</translation>
     </message>
     <message>
         <source>Composante speeds</source>
@@ -921,6 +929,10 @@
     <message>
         <source>Max volume carried</source>
         <translation>Volume max transportable</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
 </context>
 <context>
@@ -2400,6 +2412,10 @@
         <source>Ammunition</source>
         <translation>Munition</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <translation type="unfinished">&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_AttritionTable</name>
@@ -2632,7 +2648,7 @@
     </message>
     <message>
         <source>Treating time</source>
-        <translation>Temps de traitement</translation>
+        <translation>Temps de soin</translation>
     </message>
     <message>
         <source>Percentage</source>
@@ -2779,7 +2795,7 @@
     </message>
     <message>
         <source>Phs modificators</source>
-        <translation>Modificateurs de PH</translation>
+        <translation type="unfinished">Coefficients modificateurs de portée</translation>
     </message>
     <message>
         <source>Shooter&apos;s
@@ -2793,7 +2809,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Indirect</source>
-        <translation>Indirect</translation>
+        <translation>Tir indirect</translation>
     </message>
     <message>
         <source>Shooter&apos;s stance / Target&apos;s stance</source>
@@ -2834,11 +2850,11 @@ du tireur</translation>
     </message>
     <message>
         <source>New size</source>
-        <translation>Nouvelle taille</translation>
+        <translation type="unfinished">Nouveau volume</translation>
     </message>
     <message>
         <source>Delete size</source>
-        <translation>Effacer cet taille</translation>
+        <translation>Effacer ce volume</translation>
     </message>
 </context>
 <context>
@@ -2872,6 +2888,10 @@ du tireur</translation>
     <message>
         <source>Launchers</source>
         <translation>Lanceurs</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <translation type="unfinished">&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -3095,7 +3115,7 @@ du tireur</translation>
     <name>ADN_Models_GUI</name>
     <message>
         <source>Unit models</source>
-        <translation>Modèles d&apos;unités</translation>
+        <translation>Modèles de Pions</translation>
     </message>
     <message>
         <source>Automata models</source>
@@ -3154,7 +3174,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Consistency graphs</source>
-        <translation>Graphes de cohérence</translation>
+        <translation type="obsolete">Graphes de cohérence</translation>
     </message>
     <message>
         <source>Human attritions</source>
@@ -3468,7 +3488,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation>Pannes</translation>
+        <translation>Probabilités de pannes aléatoires par jour</translation>
     </message>
     <message>
         <source>Knowledge groups</source>
@@ -3564,7 +3584,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Interval</source>
-        <translation>Intervale</translation>
+        <translation>Intervalle</translation>
     </message>
     <message>
         <source>Max nbr</source>
@@ -3573,6 +3593,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Rules file</source>
         <translation type="obsolete">Fichier de règles</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation type="unfinished">min</translation>
     </message>
 </context>
 <context>
@@ -3699,7 +3723,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Modificators (%)</source>
-        <translation>Modificateur (%)</translation>
+        <translation>Coefficient modificateur</translation>
     </message>
 </context>
 <context>
@@ -3953,7 +3977,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Modificators (%)</source>
-        <translation>Modificateur (%)</translation>
+        <translation>Coefficient modificateur</translation>
     </message>
 </context>
 <context>
@@ -3964,14 +3988,14 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Modificators (%)</source>
-        <translation>Modificateur (%)</translation>
+        <translation>Coefficient modificateur</translation>
     </message>
 </context>
 <context>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
         <source>Modificator (%)</source>
-        <translation>Modificateur (%)</translation>
+        <translation>Coefficient modificateur</translation>
     </message>
 </context>
 <context>
@@ -3982,7 +4006,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Modificators (%)</source>
-        <translation>Modificateur (%)</translation>
+        <translation>Coefficient modificateur</translation>
     </message>
 </context>
 <context>
@@ -5020,6 +5044,18 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>lima</source>
         <translation>lima</translation>
+    </message>
+    <message>
+        <source>NTI1</source>
+        <translation type="unfinished">NTI1</translation>
+    </message>
+    <message>
+        <source>NTI2</source>
+        <translation type="unfinished">NTI2</translation>
+    </message>
+    <message>
+        <source>NTI3</source>
+        <translation type="unfinished">NTI3</translation>
     </message>
 </context>
 <context>

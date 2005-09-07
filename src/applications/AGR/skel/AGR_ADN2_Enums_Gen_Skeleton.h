@@ -71,6 +71,16 @@ $RensMisssionPion$
 $NbcMisssionPion$
     eSMission_Pion_NBC_Fin,
 
+    // MILICE
+    eSMission_Pion_MILICE_Debut,
+$MiliceMisssionPion$
+    eSMission_Pion_MILICE_Fin,
+
+    // JOINT
+    eSMission_Pion_JOINT_Debut,
+$JointMisssionPion$
+    eSMission_Pion_JOINT_Fin,
+
     // 
     // MISSIONS AUTOMATE
     // 
@@ -119,6 +129,16 @@ $RensMisssionAutomate$
     eSMission_Automate_NBC_Debut,
 $NbcMisssionAutomate$
     eSMission_Automate_NBC_Fin,
+
+    // MILICE
+    eSMission_Automate_MILICE_Debut,
+$MiliceMisssionAutomate$
+    eSMission_Automate_MILICE_Fin,
+
+    // NBC
+    eSMission_Automate_JOINT_Debut,
+$JointMisssionAutomate$
+    eSMission_Automate_JOINT_Fin,
 
     eNbrSMission,
 

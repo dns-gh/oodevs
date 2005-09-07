@@ -63,13 +63,50 @@ void ADN_Breakdowns_GUI::Build()
     ADN_GuiBuilder builder;
 
     // Create the main widget.
-    pMainWidget_ = new QWidget( 0, "sensors main widget" );
+    pMainWidget_ = new QWidget( 0, "breakdowns main widget" );
+    
+    // Breakdown list
+    T_ConnectorVector vInfosConnectors( eNbrBreakdownGuiElements, (ADN_Connector_ABC*)0 );
+    ADN_Breakdowns_ListView* pBreakdownsListView = new ADN_Breakdowns_ListView( pMainWidget_ );
+    pBreakdownsListView->GetConnector().Connect( &data_.vBreakdowns_ );
+
+    // Breakdown parameters
+    QGroupBox* pBreakdownGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Breakdown" ), pMainWidget_ );
+
+    QWidget* pHolder = builder.AddFieldHolder( pBreakdownGroup );
+
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddEnumField<E_BreakdownType>( pHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
+    builder.AddEnumField<E_BreakdownNTI>( pHolder, tr( "NTI" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
+    builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Id" ), vInfosConnectors[eId] );
+    builder.SetEnabled( false );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Repair time" ), vInfosConnectors[eRepairTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Repair time variance" ), vInfosConnectors[eRepairTimeVariance], tr( "s" ), eGreaterEqualZero );
+
+    QGroupBox* pPartsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Required parts" ), pBreakdownGroup );
+    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( pPartsGroup );
+    vInfosConnectors[eParts] = & pPartsTable->GetConnector();
+
+    builder.AddStretcher( pBreakdownGroup, Qt::Vertical );
+
+    pBreakdownsListView->SetItemConnectors( vInfosConnectors );
+
+    QGroupBox* pGeneralGroup = new QGroupBox( 1, Qt::Horizontal, tr( "General parameter" ), pMainWidget_ );
+    QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
+    builder.AddField<ADN_EditLine_Double>( pHolder2, tr( "Average diagnostic time" ), data_.rAverageDiagnosticTime_, tr( "s" ), eGreaterEqualZero );
+
+    // Layout
+    QHBoxLayout* pLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
+    pLayout->addWidget( pBreakdownsListView, 1 );
+    pLayout->addWidget( pBreakdownGroup, 3 );
+    pLayout->addWidget( pGeneralGroup, 1 );
+
+/*
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
 
     pTabWidget->addTab( this->BuildNTI( pMainWidget_, 1 ), data_.NTI1Breakdowns_.strName_.c_str() );
     pTabWidget->addTab( this->BuildNTI( pMainWidget_, 2 ), data_.NTI2Breakdowns_.strName_.c_str() );
     pTabWidget->addTab( this->BuildNTI( pMainWidget_, 3 ), data_.NTI3Breakdowns_.strName_.c_str() );
-
     QHBox* pGeneralPage = new QHBox( pTabWidget );
     QWidget* pHolder = builder.AddFieldHolder( pGeneralPage );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Average diagnostic time" ), data_.rAverageDiagnosticTime_, tr( "s" ), eGreaterEqualZero );
@@ -78,9 +115,10 @@ void ADN_Breakdowns_GUI::Build()
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
+*/
 }
 
-
+/*
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_GUI::BuildNTI
 // Created: APE 2005-03-18
@@ -125,3 +163,4 @@ QWidget* ADN_Breakdowns_GUI::BuildNTI( QWidget* pParent, int nNti )
 
     return pMainWidget;
 }
+*/

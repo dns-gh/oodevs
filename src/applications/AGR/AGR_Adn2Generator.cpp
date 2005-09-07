@@ -70,6 +70,8 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     std::string strAlatMissionPion( "\n" );
     std::string strRensMissionPion( "\n" );
     std::string strNbcMissionPion( "\n" );
+    std::string strMiliceMissionPion( "\n" );
+    std::string strJointMissionPion( "\n" );
 
     std::string strCommomMissionAutomate( "\n" );
     std::string strAbcMissionAutomate( "\n" );
@@ -80,6 +82,8 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     std::string strAlatMissionAutomate( "\n" );
     std::string strRensMissionAutomate( "\n" );
     std::string strNbcMissionAutomate( "\n" );
+    std::string strMiliceMissionAutomate( "\n" );
+    std::string strJointMissionAutomate( "\n" );
 
     std::string strMissionTest;
 
@@ -109,12 +113,18 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
                 strLogMissionAutomate += strMissionEnum;
             else if( IsOfType( mission, "TC2" ) )
                 strLogMissionAutomate += strMissionEnum;
+            else if( IsOfType( mission, "LOG" ) )
+                strLogMissionAutomate += strMissionEnum;
             else if( IsOfType( mission, "ALAT" ) )
                 strAlatMissionAutomate += strMissionEnum;
             else if( IsOfType( mission, "RENS" ) )
                 strRensMissionAutomate += strMissionEnum;
             else if( IsOfType( mission, "NBC" ) )
                 strNbcMissionAutomate += strMissionEnum;
+            else if( IsOfType( mission, "MILICE" ) )
+                strMiliceMissionAutomate += strMissionEnum;
+            else if( IsOfType( mission, "JOINT" ) )
+                strJointMissionAutomate += strMissionEnum;
             else 
                 strCommomMissionAutomate += strMissionEnum;
         }
@@ -134,12 +144,18 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
                 strLogMissionPion += strMissionEnum;
             else if( IsOfType( mission, "TC2" ) )
                 strLogMissionPion += strMissionEnum;
+            else if( IsOfType( mission, "LOG" ) )
+                strLogMissionPion += strMissionEnum;
             else if( IsOfType( mission, "ALAT" ) )
                 strAlatMissionPion += strMissionEnum;
             else if( IsOfType( mission, "RENS" ) )
                 strRensMissionPion += strMissionEnum;
             else if( IsOfType( mission, "NBC" ) )
                 strNbcMissionPion += strMissionEnum;
+            else if( IsOfType( mission, "MILICE" ) )
+                strMiliceMissionPion += strMissionEnum;
+            else if( IsOfType( mission, "JOINT" ) )
+                strJointMissionPion += strMissionEnum;
             else
                 strCommomMissionPion += strMissionEnum;
         }
@@ -157,6 +173,8 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     workspace.ReplaceInString( strBaseContent, "$LogMisssionPion$", strLogMissionPion );
     workspace.ReplaceInString( strBaseContent, "$RensMisssionPion$", strRensMissionPion );
     workspace.ReplaceInString( strBaseContent, "$NbcMisssionPion$", strNbcMissionPion );
+    workspace.ReplaceInString( strBaseContent, "$MiliceMisssionPion$", strMiliceMissionPion );
+    workspace.ReplaceInString( strBaseContent, "$JointMisssionPion$", strJointMissionPion );
     workspace.ReplaceInString( strBaseContent, "$CommonMissionAutomate$", strCommomMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$AbcMissionAutomate$", strAbcMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$InfMissionAutomate$", strInfMissionAutomate );
@@ -166,6 +184,8 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     workspace.ReplaceInString( strBaseContent, "$LogMissionAutomate$", strLogMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$RensMisssionAutomate$", strRensMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$NbcMisssionAutomate$", strNbcMissionAutomate );
+    workspace.ReplaceInString( strBaseContent, "$MiliceMisssionAutomate$", strMiliceMissionAutomate );
+    workspace.ReplaceInString( strBaseContent, "$JointMisssionAutomate$", strJointMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$TestMission$", strMissionTest );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 

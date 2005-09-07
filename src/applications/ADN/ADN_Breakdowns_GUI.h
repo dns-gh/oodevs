@@ -40,6 +40,7 @@ public:
     {
         eName,
         eType,
+        eNTI,
         eId,
         eRepairTime,
         eRepairTimeVariance,
@@ -57,12 +58,6 @@ public:
     //! @name Operations
     //@{
     void Build();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    QWidget* BuildNTI( QWidget* pParent, int nNti );
     //@}
 
 private:

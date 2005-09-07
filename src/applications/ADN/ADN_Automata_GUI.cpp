@@ -123,19 +123,26 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
     ADN_Table* pTable = builder.CreateTable( 0 );
 
     // Setup the header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
-
+    //pTable->horizontalHeader()->hide();
     pTable->setNumCols( 3 );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Automata" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Unit" ) );
+    pTable->horizontalHeader()->setLabel( 2, tr( "Composante" ) );
+    pTable->horizontalHeader()->show();
+    //pTable->setTopMargin( 0 );
+
     pTable->setNumRows( 1 );
     builder.AddTableCell( pTable, 0, 0, tr( "Automata" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Unit" ) );
     builder.AddTableCell( pTable, 0, 2, tr( "Composante" ) );
+    pTable->hideRow( 0 );
     pTable->AddBoldGridRow( 0 );
     pTable->sortColumn( 0, true, true );
+    pTable->setSorting( false );
 
     // Fill the table.
     int nRow = 1;
+    std::sort( data_.vAutomata_.begin(), data_.vAutomata_.end(), ADN_Tools::NameSort<ADN_Automata_Data::AutomatonInfos>() );
     for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;

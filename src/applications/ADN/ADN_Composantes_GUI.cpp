@@ -114,19 +114,8 @@ void ADN_Composantes_GUI::Build()
     // Weight
     builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Weight" ), vInfosConnectors[eWeight], tr( "T" ), eGreaterZero );
 
-    // Max speed
-    builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Max speed" ), vInfosConnectors[eMaxSpeed], tr( "km/h" ), eGreaterZero );
-
     // Max slope
-    builder.AddOptionnalField<ADN_EditLine_Double>( pParamHolder, tr( "Max slope" ), vInfosConnectors[eHasMaxSlope], vInfosConnectors[eMaxSlope], "", eZeroOne );
-
-    // ID groupbox
-    QGroupBox* pIdGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Military codes" ), pDataPage );
-
-    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code NNO:" ),   vInfosConnectors[eNNOCode] );
-    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT6:" ), vInfosConnectors[eEMAT6Code] );
-    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT8:" ), vInfosConnectors[eEMAT8Code] );
-    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code LFRIL:" ), vInfosConnectors[eLFRILCode] );
+    builder.AddOptionnalField<ADN_EditLine_Double>( pParamHolder, tr( "Max slope" ), vInfosConnectors[eHasMaxSlope], vInfosConnectors[eMaxSlope], tr( "%" ), eGreaterZero );
 
     // Troop/Crew groupbox
     QGroupBox* pTroopGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ), pDataPage );
@@ -139,6 +128,14 @@ void ADN_Composantes_GUI::Build()
 
     builder.AddField<ADN_EditLine_Double>( pEmbarkTimesGroupBox, tr( "Embark time per person" ), vInfosConnectors[eEmbarkingTimePerPerson], tr( "s" ), eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pEmbarkTimesGroupBox, tr( "Disembark time per person" ), vInfosConnectors[eDisembarkingTimePerPerson], tr( "s" ), eGreaterZero );
+
+    // ID groupbox
+    QGroupBox* pIdGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Military codes" ), pDataPage );
+
+    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code NNO:" ),   vInfosConnectors[eNNOCode] );
+    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT6:" ), vInfosConnectors[eEMAT6Code] );
+    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code EMAT8:" ), vInfosConnectors[eEMAT8Code] );
+    builder.AddField<ADN_EditLine_String>( pIdGroupBox, tr( "Code LFRIL:" ), vInfosConnectors[eLFRILCode] );
 
     // Cargo transport groupbox
     ADN_GroupBox* pCargoGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Cargo transport" ), pDataPage );
@@ -159,7 +156,11 @@ void ADN_Composantes_GUI::Build()
 
 
     // Speeds
-    QHGroupBox* pSpeedGroup = new QHGroupBox( tr( "Speeds" ), pDataPage );
+    QVGroupBox* pSpeedGroup = new QVGroupBox( tr( "Speeds" ), pDataPage );
+    QWidget* pMaxSpeedHolder = builder.AddFieldHolder( pSpeedGroup );
+    // Max speed
+    builder.AddField<ADN_EditLine_Double>( pMaxSpeedHolder, tr( "Max speed" ), vInfosConnectors[eMaxSpeed], tr( "km/h" ), eGreaterZero );
+
     pSpeeds_ = new ADN_Composantes_Speeds_GUI( pSpeedGroup );
     vInfosConnectors[eSpeeds] = &pSpeeds_->GetConnector();
 
@@ -268,9 +269,9 @@ void ADN_Composantes_GUI::Build()
     pDataLayout->setStretchFactor( pTopLayout, 1 );
 
     pTopLayoutCol1->addWidget( pParamHolder );
-    pTopLayoutCol1->addWidget( pCargoGroupBox );
+    pTopLayoutCol2->addWidget( pCargoGroupBox );
 
-    pTopLayoutCol2->addWidget( pIdGroupBox );
+    pTopLayoutCol1->addWidget( pIdGroupBox );
     pTopLayoutCol2->addWidget( pTroopGroupBox );
 
     pTopLayoutCol3->addWidget( pBreakdownsGroup_ );
@@ -577,5 +578,14 @@ void ADN_Composantes_GUI::OnProtectionTypeChanged()
     if( pInfos == 0 )
         pBreakdownsGroup_->setEnabled( false );
     else
-        pBreakdownsGroup_->setEnabled( pInfos->ptrArmor_.GetData()->nType_ == eProtectionType_Material );
+    {
+        if( pInfos->ptrArmor_.GetData()->nType_ == eProtectionType_Material )
+        {
+            pBreakdownsGroup_->show();
+            pBreakdownsGroup_->setEnabled( true );
+        }
+        else
+            pBreakdownsGroup_->hide();
+        //pBreakdownsGroup_->setEnabled( pInfos->ptrArmor_.GetData()->nType_ == eProtectionType_Material );
+    }
 }

@@ -198,6 +198,8 @@ public:
     T_WeaponInfosVector& GetWeaponInfos();
     WeaponInfos*         FindWeapon( const std::string& strLauncher, const std::string& strAmmunition );
     int                  GetIndex( WeaponInfos& weapon );
+    std::string          GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher );
+    std::string          GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition );
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );

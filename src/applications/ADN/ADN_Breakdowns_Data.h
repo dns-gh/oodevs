@@ -65,7 +65,6 @@ public:
 
 
 // *****************************************************************************
-    class NTIInfo;
 
     class BreakdownInfo
         : public ADN_Ref_ABC
@@ -73,8 +72,7 @@ public:
     {
         MT_COPYNOTALLOWED( BreakdownInfo )
     public:
-         BreakdownInfo();  //!< Not to be used.
-         BreakdownInfo( NTIInfo& nti );
+         BreakdownInfo();
         ~BreakdownInfo();
 
         virtual std::string GetNodeName();
@@ -86,12 +84,12 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        NTIInfo& nti_;
-        ADN_Type_String  strName_;
+        ADN_Type_String   strName_;
+        ADN_Type_Enum<E_BreakdownNTI, eNbrBreakdownNTI>    nNTI_;
         ADN_Type_Enum<E_BreakdownType, eNbrBreakdownType>  nType_;
-        ADN_Type_Int     nId_;
-        ADN_Type_Double  rRepairTime_;
-        ADN_Type_Double  rRepairTimeVariance_;
+        ADN_Type_Int      nId_;
+        ADN_Type_Double   rRepairTime_;
+        ADN_Type_Double   rRepairTimeVariance_;
 
         T_RepairPartInfoVector vRepairParts_;
     };
@@ -99,28 +97,6 @@ public:
     typedef ADN_Type_Vector_ABC<BreakdownInfo>      T_BreakdownInfoVector;
     typedef T_BreakdownInfoVector::iterator         IT_BreakdownInfoVector;
     typedef T_BreakdownInfoVector::const_iterator   CIT_BreakdownInfoVector;
-
-
-// *****************************************************************************
-    class NTIInfo
-    {
-        MT_COPYNOTALLOWED( NTIInfo )
-    public:
-         NTIInfo( const std::string& strName );
-        ~NTIInfo();
-
-        void Reset();
-
-        ADN_Breakdowns_Data::BreakdownInfo* FindBreakdown( const std::string& strName );
-
-        void ReadArchiveTypes( ADN_XmlInput_Helper& input );
-        void WriteArchiveTypes( MT_OutputArchive_ABC& output );
-
-    public:
-        const std::string strName_;
-
-        T_BreakdownInfoVector vBreakdowns_;
-    };
 
 
 // *****************************************************************************
@@ -147,10 +123,8 @@ private:
 
 public:
     int nNextId_;
-    ADN_Type_Double rAverageDiagnosticTime_;
-    NTIInfo NTI1Breakdowns_;
-    NTIInfo NTI2Breakdowns_;
-    NTIInfo NTI3Breakdowns_;
+    ADN_Type_Double       rAverageDiagnosticTime_;
+    T_BreakdownInfoVector vBreakdowns_;
 };
 
 #endif // __ADN_Breakdowns_Data_h_

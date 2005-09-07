@@ -118,7 +118,7 @@ void ADN_Project_GUI::Build()
     builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Time step" ), data_.simInfos_.nTimeStep_, tr( "s" ), eGreaterZero );
     builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Time factor" ), data_.simInfos_.nTimeFactor_, 0, eGreaterZero );
     QGroupBox* pSavesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Saves" ), pSimGroup );
-    builder.AddField<ADN_EditLine_Int>( pSavesGroup, tr( "Interval" ), data_.simInfos_.nAutosaveTime_, tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_EditLine_Int>( pSavesGroup, tr( "Interval" ), data_.simInfos_.nAutosaveTime_, tr( "min" ), eGreaterZero );
     builder.AddField<ADN_EditLine_Int>( pSavesGroup, tr( "Max nbr" ), data_.simInfos_.nNbrMax_, 0, eGreaterZero );
 
 

@@ -48,6 +48,7 @@ public:
     static const std::string&   ConvertFromDoctorSkills( E_DoctorSkills, E_Conversion = eToSim );
     static const std::string&   ConvertFromProtectionType( E_ProtectionType, E_Conversion = eToSim );
     static const std::string&   ConvertFromBreakdownType( E_BreakdownType, E_Conversion = eToSim );
+    static const std::string&   ConvertFromBreakdownNTI( E_BreakdownNTI, E_Conversion = eToSim );
     static const std::string&   ConvertFromMunitionType( E_MunitionType, E_Conversion = eToSim );
     static const std::string&   ConvertFromCapacityMission( E_CapacityMission, E_Conversion = eToSim );
     static const std::string&   ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
@@ -55,23 +56,24 @@ public:
 
     //! @name Convert To functions
     //@{
-    static E_SMission        ConvertToSMission        ( const std::string& );
-    static E_Location        ConvertToLocation        ( const std::string& );
-    static E_ConsumptionType ConvertToConsumptionType ( const std::string& );
-    static E_TimeCategory    ConvertToTimeCategory    ( const std::string& );
-    static E_VisionObject    ConvertToVisionObject    ( const std::string& );
-    static E_KeyPoint        ConvertToKeyPoint        ( const std::string& );
-    static E_AgentTypePion   ConvertToAgentTypePion   ( const std::string& );
+    static E_SMission        ConvertToSMission         ( const std::string& );
+    static E_Location        ConvertToLocation         ( const std::string& );
+    static E_ConsumptionType ConvertToConsumptionType  ( const std::string& );
+    static E_TimeCategory    ConvertToTimeCategory     ( const std::string& );
+    static E_VisionObject    ConvertToVisionObject     ( const std::string& );
+    static E_KeyPoint        ConvertToKeyPoint         ( const std::string& );
+    static E_AgentTypePion   ConvertToAgentTypePion    ( const std::string& );
     static E_AgentTypeAutomate   ConvertToAgentTypeAutomate( const std::string& );
-    static E_NatureAtlasType ConvertToNatureAtlasType ( const std::string& );
-    static E_SpeedImpact     ConvertToSpeedImpact     ( const std::string& );
+    static E_NatureAtlasType ConvertToNatureAtlasType  ( const std::string& );
+    static E_SpeedImpact     ConvertToSpeedImpact      ( const std::string& );
     static E_SensorWeatherModifiers ConvertToSensorWeatherModifiers( const std::string& );
-    static E_DoctorSkills   ConvertToDoctorSkills     ( const std::string& );
-    static E_ProtectionType ConvertToProtectionType   ( const std::string& );
-    static E_BreakdownType  ConvertToBreakdownType    ( const std::string& );
-    static E_MunitionType   ConvertToMunitionType     ( const std::string& );
-    static E_CapacityMission ConvertToCapacityMission ( const std::string& );
-    static E_RadarType      ConvertToRadarType        ( const std::string& );
+    static E_DoctorSkills    ConvertToDoctorSkills     ( const std::string& );
+    static E_ProtectionType  ConvertToProtectionType   ( const std::string& );
+    static E_BreakdownType   ConvertToBreakdownType    ( const std::string& );
+    static E_BreakdownNTI    ConvertToBreakdownNTI     ( const std::string& );
+    static E_MunitionType    ConvertToMunitionType     ( const std::string& );
+    static E_CapacityMission ConvertToCapacityMission  ( const std::string& );
+    static E_RadarType       ConvertToRadarType        ( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -93,6 +95,7 @@ public:
     typedef converter<E_DoctorSkills>        T_ConverterDoctorSkills;
     typedef converter<E_ProtectionType>      T_ConverterProtectionType;
     typedef converter<E_BreakdownType>       T_ConverterBreakdownType;
+    typedef converter<E_BreakdownNTI>        T_ConverterBreakdownNTI;
     typedef converter<E_MunitionType>        T_ConverterMunitionType;
     typedef converter<E_CapacityMission>     T_ConverterCapacityMission;
     typedef converter<E_RadarType>           T_ConverterRadarType;
@@ -114,6 +117,7 @@ public:
     static T_ConverterDoctorSkills      doctorSkillsConverter_[];
     static T_ConverterProtectionType    protectionTypeConverter_[];
     static T_ConverterBreakdownType     breakdownTypeConverter_[];
+    static T_ConverterBreakdownNTI      breakdownNTIConverter_[];
     static T_ConverterMunitionType      munitionTypeConverter_[];
     static T_ConverterCapacityMission   capacityMissionConverter_[];
     static T_ConverterRadarType         radarTypeConverter_[];

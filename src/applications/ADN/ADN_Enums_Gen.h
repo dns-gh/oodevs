@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 2005-09-06 - 16:30:52 $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_Enums_Gen_Skeleton.h $
 // $Author: Ape $
 // $Modtime: 18/02/05 16:06 $
@@ -29,32 +29,6 @@ enum E_SMission
     // Common
     eSMission_Pion_Common_Debut,
 
-    eSMission_Pion_LOG_SeDeployer,
-    eSMission_Pion_LOG_DistribuerMoyens,
-    eSMission_Pion_LOG_TrierBlesses,
-    eSMission_Pion_LOG_TraiterBlesses,
-    eSMission_Pion_LOG_TrierEtTraiterBlesses,
-    eSMission_Pion_LOG_SoignerBlesses,
-    eSMission_Pion_LOG_PrendreEnCompteReactionsMentales,
-    eSMission_Pion_LOG_DecontaminerBlesses,
-    eSMission_Pion_LOG_Reparer,
-    eSMission_Pion_LOG_Evacuer,
-    eSMission_Pion_LOG_Convoyer,
-    eSMission_Pion_LOG_DistribuerRessources,
-    eSMission_Pion_LOG_ConstituerConvoi,
-    eSMission_Pion_LOG_Livrer,
-    eSMission_Pion_LOG_PreparerBascule,
-    eSMission_Pion_LOG_AppuyerMouvement,
-    eSMission_Pion_LOG_ReconnaitreItineraire,
-    eSMission_Pion_LOG_TransporterUniteChars,
-    eSMission_Pion_LOG_ReconnaitreZoneContaminee,
-    eSMission_Pion_LOG_AppuyerMouvementDansZone,
-    eSMission_Pion_LOG_MettreEnOeuvreZoneStationnement,
-    eSMission_Pion_LOG_AppuyerFranchissementSurUnPoint,
-    eSMission_Pion_LOG_BloquerZone,
-    eSMission_Pion_LOG_ReconnaitreZoneDeDeploiement,
-    eSMission_Pion_LOG_ArmerPIA,
-    eSMission_Pion_LOG_Surveiller,
     eSMission_Pion_PlastronEnnemi,
     eSMission_Pion_FaireMouvement,
     eSMission_Pion_Suivre,
@@ -64,11 +38,6 @@ enum E_SMission
     eSMission_Pion_Stationner,
     eSMission_Pion_SeFaireTransporter,
     eSMission_Pion_Generique,
-    eSMission_Pion_MILICE_Provoquer,
-    eSMission_Pion_MILICE_PrendreEtTenir,
-    eSMission_Pion_MILICE_DetruireEmbuscade,
-    eSMission_Pion_JOINT_MARINE_Transporter,
-    eSMission_Pion_JOINT_AIR_EffectuerRaid,
     eSMission_Pion_TRANS_EtablirGererLiaison,
 
     eSMission_Pion_Common_Fin,
@@ -238,6 +207,32 @@ enum E_SMission
     // LOG - SANTE
     eSMission_Pion_LOG_Debut,
 
+    eSMission_Pion_LOG_SeDeployer,
+    eSMission_Pion_LOG_DistribuerMoyens,
+    eSMission_Pion_LOG_TrierBlesses,
+    eSMission_Pion_LOG_TraiterBlesses,
+    eSMission_Pion_LOG_TrierEtTraiterBlesses,
+    eSMission_Pion_LOG_SoignerBlesses,
+    eSMission_Pion_LOG_PrendreEnCompteReactionsMentales,
+    eSMission_Pion_LOG_DecontaminerBlesses,
+    eSMission_Pion_LOG_Reparer,
+    eSMission_Pion_LOG_Evacuer,
+    eSMission_Pion_LOG_Convoyer,
+    eSMission_Pion_LOG_DistribuerRessources,
+    eSMission_Pion_LOG_ConstituerConvoi,
+    eSMission_Pion_LOG_Livrer,
+    eSMission_Pion_LOG_PreparerBascule,
+    eSMission_Pion_LOG_AppuyerMouvement,
+    eSMission_Pion_LOG_ReconnaitreItineraire,
+    eSMission_Pion_LOG_TransporterUniteChars,
+    eSMission_Pion_LOG_ReconnaitreZoneContaminee,
+    eSMission_Pion_LOG_AppuyerMouvementDansZone,
+    eSMission_Pion_LOG_MettreEnOeuvreZoneStationnement,
+    eSMission_Pion_LOG_AppuyerFranchissementSurUnPoint,
+    eSMission_Pion_LOG_BloquerZone,
+    eSMission_Pion_LOG_ReconnaitreZoneDeDeploiement,
+    eSMission_Pion_LOG_ArmerPIA,
+    eSMission_Pion_LOG_Surveiller,
 
     eSMission_Pion_LOG_Fin,
 
@@ -269,6 +264,23 @@ enum E_SMission
 
     eSMission_Pion_NBC_Fin,
 
+    // MILICE
+    eSMission_Pion_MILICE_Debut,
+
+    eSMission_Pion_MILICE_Provoquer,
+    eSMission_Pion_MILICE_PrendreEtTenir,
+    eSMission_Pion_MILICE_DetruireEmbuscade,
+
+    eSMission_Pion_MILICE_Fin,
+
+    // JOINT
+    eSMission_Pion_JOINT_Debut,
+
+    eSMission_Pion_JOINT_MARINE_Transporter,
+    eSMission_Pion_JOINT_AIR_EffectuerRaid,
+
+    eSMission_Pion_JOINT_Fin,
+
     // 
     // MISSIONS AUTOMATE
     // 
@@ -276,18 +288,6 @@ enum E_SMission
     // Common
     eSMission_Automate_Common_Debut,
 
-    eSMission_Automate_LOG_SeDeployer,
-    eSMission_Automate_LOG_AppuyerMouvement,
-    eSMission_Automate_LOG_ReconnaitreItineraire,
-    eSMission_Automate_LOG_Surveiller,
-    eSMission_Automate_LOG_TransporterFormationBlindee,
-    eSMission_Automate_LOG_AppuyerMouvementDansZone,
-    eSMission_Automate_LOG_MettreEnOeuvreZoneStationnement,
-    eSMission_Automate_LOG_AppuyerFranchissementDansZone,
-    eSMission_Automate_LOG_BloquerZone,
-    eSMission_Automate_LOG_ReconnaitreZoneContaminee,
-    eSMission_Automate_LOG_ReconnaitreZoneDeDeploiement,
-    eSMission_Automate_LOG_ArmerPIAs,
     eSMission_Automate_Decrocher,
     eSMission_Automate_ReleverSurPlace,
     eSMission_Automate_FaireMouvement,
@@ -396,6 +396,18 @@ enum E_SMission
     // LOG : SANTE
     eSMission_Automate_LOG_Debut,
 
+    eSMission_Automate_LOG_SeDeployer,
+    eSMission_Automate_LOG_AppuyerMouvement,
+    eSMission_Automate_LOG_ReconnaitreItineraire,
+    eSMission_Automate_LOG_Surveiller,
+    eSMission_Automate_LOG_TransporterFormationBlindee,
+    eSMission_Automate_LOG_AppuyerMouvementDansZone,
+    eSMission_Automate_LOG_MettreEnOeuvreZoneStationnement,
+    eSMission_Automate_LOG_AppuyerFranchissementDansZone,
+    eSMission_Automate_LOG_BloquerZone,
+    eSMission_Automate_LOG_ReconnaitreZoneContaminee,
+    eSMission_Automate_LOG_ReconnaitreZoneDeDeploiement,
+    eSMission_Automate_LOG_ArmerPIAs,
 
     eSMission_Automate_LOG_Fin,
 
@@ -466,6 +478,18 @@ enum E_SMission
     eSMission_Automate_NBC_ReconnaitreDesSitesROTA,
 
     eSMission_Automate_NBC_Fin,
+
+    // MILICE
+    eSMission_Automate_MILICE_Debut,
+
+
+    eSMission_Automate_MILICE_Fin,
+
+    // NBC
+    eSMission_Automate_JOINT_Debut,
+
+
+    eSMission_Automate_JOINT_Fin,
 
     eNbrSMission,
 

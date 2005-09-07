@@ -14,6 +14,7 @@
 
 #include <qpopupmenu.h>
 
+#include "ADN_Weapons_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Launcher_Wizard.h"
 #include "ADN_Tools.h"
@@ -83,4 +84,20 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
     ADN_Launcher_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Launchers::GetToolTipFor
+// Created: SBO 2005-09-06
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_Launchers::GetToolTipFor( QListViewItem& item )
+{
+    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    LauncherInfos* pCastData = (LauncherInfos*)pData;
+    assert( pCastData != 0 );
+
+    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    strToolTip += ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData );
+
+    return strToolTip;
 }

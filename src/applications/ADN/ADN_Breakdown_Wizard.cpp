@@ -22,8 +22,8 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Breakdowns_Data.h"
-#include "ADN_Breakdown_Wizard_Page0.h"
 #include "ADN_Wizard_LastPage.h"
+#include "ADN_Wizard_FirstPage_Default.h"
 
 typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 
@@ -32,12 +32,13 @@ typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 // Name: ADN_Breakdown_Wizard constructor
 // Created: AGN 2003-11-03
 // -----------------------------------------------------------------------------
-ADN_Breakdown_Wizard::ADN_Breakdown_Wizard( NTIInfo& ntiInfo, QWidget* pParent, const char* szName )
+ADN_Breakdown_Wizard::ADN_Breakdown_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<BreakdownInfo>( pParent, szName )
 {
     setCaption( tr( "New breakdown creation" ) );
 
-    ADN_Wizard_FirstPage_Default<BreakdownInfo>* pFirstPage = new ADN_Breakdown_Wizard_Page0( ntiInfo, this );
+    ADN_Breakdowns_Data::T_BreakdownInfoVector& breakdowns = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_;
+    ADN_Wizard_FirstPage_Default<BreakdownInfo>* pFirstPage = new ADN_Wizard_FirstPage_Default<BreakdownInfo>( breakdowns, this );
     pFirstPage->SetCaptions( tr( "New breakdown creation" ), tr( "Breakdowns" ) );
     pFirstPage_ = pFirstPage;
 

@@ -154,6 +154,7 @@ void ADN_NBC_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "UE" ), vInfosConnectors[eNbrHurt4], tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "Killed" ), vInfosConnectors[eNbrDead], tr( "%" ), ePercentage );
 
+    /*
     // Consistency graphs
     QGroupBox* pPlotGroup = new QGroupBox( 4, Qt::Horizontal, tr( "Consistency graphs" ), pMainWidget_ );
 
@@ -165,6 +166,7 @@ void ADN_NBC_GUI::Build()
     this->BuildGraph( pPlotGroup, *pNBCAgentListView, 5, tr( "Killed" ), tr( "%" ), 0.0, 100.0 );
     this->BuildGraph( pPlotGroup, *pNBCAgentListView, 6, tr( "Lifetime" ), tr( "s" ), 0.0, 0.0 );
     this->BuildGraph( pPlotGroup, *pNBCAgentListView, 7, tr( "Spread angle" ), tr( "°" ), 0.0, 360.0 );
+    */
 
     pNBCAgentListView->SetItemConnectors( vInfosConnectors );
 
@@ -177,7 +179,7 @@ void ADN_NBC_GUI::Build()
     pListAndDataLayout->addWidget( pGroup, 4 );
 
     pMainLayout->addLayout( pListAndDataLayout, 2 );
-    pMainLayout->addWidget( pPlotGroup, 3 );
+    //pMainLayout->addWidget( pPlotGroup, 3 );
 }
 
 

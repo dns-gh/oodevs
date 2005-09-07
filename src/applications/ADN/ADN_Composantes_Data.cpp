@@ -750,7 +750,8 @@ void ADN_Composantes_Data::BreakdownInfos::ReadArchive( ADN_XmlInput_Helper& inp
         input.ThrowError( tr( "Breakdown %1 does not exist." ).arg( strName.c_str() ).ascii() );
 
     ptrBreakdown_ = pBreakdown;
-    ptrBreakdown_.SetVector( pBreakdown->nti_.vBreakdowns_ );
+    ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
+    //ptrBreakdown_.SetVector( pBreakdown->nti_.vBreakdowns_ );
 
     input.ReadAttribute( "pourcentage", rPercentage_ );
     input.EndSection(); // Panne
@@ -1389,7 +1390,7 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 , rCoeffDestructionTime_    ( 0 )
 , rValorizationTime_        ( 0 )
 , rDevalorizationTime_      ( 0 )
-, rCoeffCirc_           ( 0 )
+, rCoeffCirc_               ( 0 )
 , rSpeedCirc_               ( 0 )
 , rSpeedNotCirc_            ( 0 )
 , bInitialBuildTime_        ( false )
@@ -1776,7 +1777,7 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , attritionBreakdowns_( "PannesAttritions" )
 , randomBreakdowns_   ( "PannesAleatoires" )
 , bMaxSlope_( false )
-, rMaxSlope_( 0 )
+, rMaxSlope_( 60 )
 {
     strName_.SetDataName( "le nom" );
     strName_.SetParentNode( *this );
@@ -2037,7 +2038,11 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& in
     }
 
     if( input.ReadField( "DeniveleMaximum", rMaxSlope_, ADN_XmlInput_Helper::eNothing ) )
+    {
         bMaxSlope_ = true;
+        double rTmp = rMaxSlope_.GetData() * 100.0;
+        rMaxSlope_ = rTmp; // display percentage
+    }
 
     input.EndSection(); // Composante
 }
@@ -2128,7 +2133,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& 
     }
 
     if( bMaxSlope_.GetData() )
-        output.WriteField( "DeniveleMaximum", rMaxSlope_.GetData() );
+        output.WriteField( "DeniveleMaximum", rMaxSlope_.GetData() / 100.0 );
 
     output.EndSection(); // Composante
 }
@@ -2239,7 +2244,7 @@ std::string ADN_Composantes_Data::GetComposantesThatUse( ADN_Sensors_Data::Senso
             {
                 if( strResult != "" )
                     strResult += "<br>";
-                strResult += pComp->strName_.GetData();
+                strResult += "<nobr>" + pComp->strName_.GetData() + "</nobr>";
                 break;
             }
         }
@@ -2264,7 +2269,7 @@ std::string ADN_Composantes_Data::GetComposantesThatUse( ADN_Weapons_Data::Weapo
             {
                 if( strResult != "" )
                     strResult += "<br>";
-                strResult += pComp->strName_.GetData();
+                strResult += "<nobr>" + pComp->strName_.GetData() + "</nobr>";
                 break;
             }
         }

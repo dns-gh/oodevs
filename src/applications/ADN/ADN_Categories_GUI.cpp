@@ -86,21 +86,6 @@ void ADN_Categories_GUI::Build()
     pListArmor_ = new ADN_ListView_Categories_Armor( pArmorListViewGroup );
     static_cast<ADN_Connector_Vector_ABC*>( &pListArmor_->GetConnector() )->Connect( &data_.GetArmorsInfos() );
 
-    // Armor listview info and + / - buttons
-    QVGroupBox* pGroupOrderArmor = new QVGroupBox( tr( "Order" ), pArmorListViewGroup );
-    pGroupOrderArmor->setAlignment( Qt::AlignCenter );
-    new QLabel( tr( "Strongest armor" ), pGroupOrderArmor );
-    
-    QPushButton* pBtnIncArmor=new QPushButton("+",pGroupOrderArmor);
-    pBtnIncArmor->setMaximumWidth(30);
-    connect(pBtnIncArmor,SIGNAL(clicked()),this,SLOT(IncArmor()));
-
-    QPushButton* pBtnDecArmor=new QPushButton("-",pGroupOrderArmor);
-    pBtnDecArmor->setMaximumWidth(30);
-    connect(pBtnDecArmor,SIGNAL(clicked()),this,SLOT(DecArmor()));
-
-    new QLabel( tr( "Weakest armor" ), pGroupOrderArmor );
-
     // Armor info
     QVGroupBox* pArmorInfoGroup  = new QVGroupBox( tr( "Armor class" ), pArmorGroup );
 
@@ -132,7 +117,7 @@ void ADN_Categories_GUI::Build()
     T_ConnectorVector    vSizeInfosConnectors(eNbrSizeGuiElements,(ADN_Connector_ABC*)0 );
     pListSize_=new ADN_ListView_Categories_Size(pGroupSize);
     static_cast<ADN_Connector_Vector_ABC*>( &pListSize_->GetConnector() )->Connect( &data_.GetSizesInfos() );
-    QWhatsThis::add( pListSize_, "Les différentes catégories de taille existantes dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
+    QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
 
     // sizes infos + modify
     QVGroupBox  *  pGroupOrderSize = new QVGroupBox( tr( "Order" ),pGroupSize);
@@ -171,37 +156,6 @@ void ADN_Categories_GUI::Build()
     // set auto connectors
     pListArmor_->SetItemConnectors(vArmorInfosConnectors);
     pListSize_->SetItemConnectors(vSizeInfosConnectors);
-}
-
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Categories_GUI::IncArmor
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void ADN_Categories_GUI::IncArmor()
-{
-    void *curData=pListArmor_->GetCurrentData();
-    if (curData)
-    {
-        int pos=pListArmor_->FindNdx(curData);
-        static_cast<ADN_Connector_Vector_ABC*>(&pListArmor_->GetConnector())->SwapItem(pos-1,pos);
-    }
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Categories_GUI::DecArmor
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void ADN_Categories_GUI::DecArmor()
-{
-    void *curData=pListArmor_->GetCurrentData();
-    if (curData)
-    {
-        int pos=pListArmor_->FindNdx(curData);
-        static_cast<ADN_Connector_Vector_ABC*>(&pListArmor_->GetConnector())->SwapItem(pos,pos+1);
-    }
 }
 
 

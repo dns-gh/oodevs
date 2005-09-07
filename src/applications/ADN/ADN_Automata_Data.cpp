@@ -357,7 +357,7 @@ std::string ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& un
         {
             if( strResult != "" )
                 strResult += "<br>";
-            strResult += pAutomaton->strName_.GetData();
+            strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
         }
 
         for( IT_UnitInfosVector it2 = pAutomaton->vSubUnits_.begin(); it2 != pAutomaton->vSubUnits_.end(); ++it2 )
@@ -366,7 +366,7 @@ std::string ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& un
             {
                 if( strResult != "" )
                     strResult += "<br>";
-                strResult += pAutomaton->strName_.GetData();
+                strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
                 break;
             }
         }

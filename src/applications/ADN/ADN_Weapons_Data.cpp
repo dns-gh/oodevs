@@ -443,3 +443,44 @@ void ADN_Weapons_Data::WriteArchive( MT_OutputArchive_ABC& output )
     }
     output.EndSection();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::GetWeaponThatUse
+// Created: SBO 2005-09-06
+// -----------------------------------------------------------------------------
+std::string ADN_Weapons_Data::GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher )
+{
+    std::string strResult;
+    for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
+    {
+        WeaponInfos* pWeapon = *it;
+        if( pWeapon->ptrLauncher_ == &launcher )
+        {
+            if( strResult != "" )
+                strResult += "<br>";
+            strResult += "<nobr>" + pWeapon->strName_.GetData() + "</nobr>";
+        }
+    }
+    return strResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::GetWeaponThatUse
+// Created: SBO 2005-09-06
+// -----------------------------------------------------------------------------
+std::string ADN_Weapons_Data::GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition )
+{
+    std::string strResult;
+    for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
+    {
+        WeaponInfos* pWeapon = *it;
+        if( pWeapon->ptrAmmunition_ == &ammunition )
+        {
+            if( strResult != "" )
+                strResult += "<br>";
+            strResult += "<nobr>" + pWeapon->strName_.GetData() + "</nobr>";
+        }
+    }
+    return strResult;
+}

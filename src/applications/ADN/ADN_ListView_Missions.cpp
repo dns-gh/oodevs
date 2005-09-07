@@ -168,6 +168,14 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         QCheckListItem* pSubPion7 = new QCheckListItem( pPion, "NBC", QCheckListItem::CheckBoxController );
         FillList( pSubPion7, eSMission_Pion_NBC_Debut, eSMission_Pion_NBC_Fin );
 
+        // MILICE
+        QCheckListItem* pSubPion8 = new QCheckListItem( pPion, "MILICE", QCheckListItem::CheckBoxController );
+        FillList( pSubPion8, eSMission_Pion_MILICE_Debut, eSMission_Pion_MILICE_Fin );
+
+        // JOINT
+        QCheckListItem* pSubPion9 = new QCheckListItem( pPion, "JOINT", QCheckListItem::CheckBoxController );
+        FillList( pSubPion9, eSMission_Pion_JOINT_Debut, eSMission_Pion_JOINT_Fin );
+
         int nResult = cfgDlg.exec();
 
         if( nResult != QDialog::Accepted )
@@ -182,6 +190,8 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         ApplyModifications( pSubPion5 );
         ApplyModifications( pSubPion6 );
         ApplyModifications( pSubPion7 );
+        ApplyModifications( pSubPion8 );
+        ApplyModifications( pSubPion9 );
     }
     else
     {
@@ -223,6 +233,14 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         QCheckListItem* pSubAutomate7 = new QCheckListItem( pAutomate, "NBC", QCheckListItem::CheckBoxController );
         FillList( pSubAutomate7, eSMission_Automate_NBC_Debut, eSMission_Automate_NBC_Fin );
 
+        // MILICE
+        QCheckListItem* pSubAutomate8 = new QCheckListItem( pAutomate, "MILICE", QCheckListItem::CheckBoxController );
+        FillList( pSubAutomate8, eSMission_Automate_MILICE_Debut, eSMission_Automate_MILICE_Fin );
+
+        // JOINT
+        QCheckListItem* pSubAutomate9 = new QCheckListItem( pAutomate, "JOINT", QCheckListItem::CheckBoxController );
+        FillList( pSubAutomate9, eSMission_Automate_JOINT_Debut, eSMission_Automate_JOINT_Fin );
+
         int nResult = cfgDlg.exec();
 
         if( nResult != QDialog::Accepted )
@@ -237,6 +255,8 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         ApplyModifications( pSubAutomate5 );
         ApplyModifications( pSubAutomate6 );
         ApplyModifications( pSubAutomate7 );
+        ApplyModifications( pSubAutomate8 );
+        ApplyModifications( pSubAutomate9 );
     }
 }
 

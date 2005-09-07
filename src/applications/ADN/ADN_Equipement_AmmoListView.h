@@ -43,8 +43,9 @@ public:
 private:
     //! @name Operations
     //@{
-    void ConnectItem( bool bConnect );
-    void OnContextMenu( const QPoint& pt );
+    void        ConnectItem  ( bool           bConnect );
+    void        OnContextMenu( const QPoint&  pt       );
+    std::string GetToolTipFor( QListViewItem& item     );
     //@}
 };
 

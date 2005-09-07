@@ -208,18 +208,25 @@ ADN_Tr::T_ConverterDoctorSkills ADN_Tr::doctorSkillsConverter_[] =
 ADN_Tr::T_ConverterProtectionType ADN_Tr::protectionTypeConverter_[] =
 {
     T_ConverterProtectionType( "materiel",   QT_TRANSLATE_NOOP( "ADN_Tr", "materiel" ),  eProtectionType_Material ),
-        T_ConverterProtectionType( "humain",     QT_TRANSLATE_NOOP( "ADN_Tr", "humain" ),    eProtectionType_Human ),
-        T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
+    T_ConverterProtectionType( "humain",     QT_TRANSLATE_NOOP( "ADN_Tr", "humain" ),    eProtectionType_Human ),
+    T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
 };
 
 
 ADN_Tr::T_ConverterBreakdownType ADN_Tr::breakdownTypeConverter_[] =
 {
     T_ConverterBreakdownType( "EA",   QT_TRANSLATE_NOOP( "ADN_Tr", "EA" ),  eBreakdownType_EA ),
-        T_ConverterBreakdownType( "M",    QT_TRANSLATE_NOOP( "ADN_Tr", "M" ),   eBreakdownType_M ),
-        T_ConverterBreakdownType( "", "", (E_BreakdownType)-1 )
+    T_ConverterBreakdownType( "M",    QT_TRANSLATE_NOOP( "ADN_Tr", "M" ),   eBreakdownType_M ),
+    T_ConverterBreakdownType( "", "", (E_BreakdownType)-1 )
 };
 
+ADN_Tr::T_ConverterBreakdownNTI ADN_Tr::breakdownNTIConverter_[] =
+{
+    T_ConverterBreakdownNTI( "NTI1",   QT_TRANSLATE_NOOP( "ADN_Tr", "NTI1" ),  eBreakdownNTI_NTI1 ),
+    T_ConverterBreakdownNTI( "NTI2",   QT_TRANSLATE_NOOP( "ADN_Tr", "NTI2" ),  eBreakdownNTI_NTI2 ),
+    T_ConverterBreakdownNTI( "NTI3",   QT_TRANSLATE_NOOP( "ADN_Tr", "NTI3" ),  eBreakdownNTI_NTI3 ),
+    T_ConverterBreakdownNTI( "", "", (E_BreakdownNTI)-1 )
+};
 
 ADN_Tr::T_ConverterMunitionType ADN_Tr::munitionTypeConverter_[] =
 {
@@ -476,6 +483,14 @@ const std::string& ADN_Tr::ConvertFromBreakdownType( E_BreakdownType nValue, E_C
     return ADN_Tr::InverseFindInConverter( breakdownTypeConverter_, nValue, nConversion );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromBreakdownNTI
+// Created: SBO 2005-09-07
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromBreakdownNTI( E_BreakdownNTI nValue, E_Conversion nConversion )
+{
+    return ADN_Tr::InverseFindInConverter( breakdownNTIConverter_, nValue, nConversion );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromMunitionType
@@ -638,6 +653,15 @@ E_BreakdownType ADN_Tr::ConvertToBreakdownType( const std::string& strName )
     return ADN_Tr::FindInConverter( breakdownTypeConverter_, strName );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToBreakdownNTI
+// Created: SBO 2005-09-07
+// -----------------------------------------------------------------------------
+E_BreakdownNTI ADN_Tr::ConvertToBreakdownNTI( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( breakdownNTIConverter_, strName );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToMunitionType
@@ -689,6 +713,7 @@ void ADN_Tr::InitTranslations()
     InitTr( doctorSkillsConverter_ );
     InitTr( protectionTypeConverter_ );
     InitTr( breakdownTypeConverter_ );
+    InitTr( breakdownNTIConverter_ );
     InitTr( munitionTypeConverter_ );
     InitTr( capacityMissionConverter_ );
     InitTr( radarTypeConverter_ );
