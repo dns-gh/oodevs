@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_Generated_Enums_Skeleton.h $
 // $Author: Ape $
 // $Modtime: 17/02/05 18:17 $

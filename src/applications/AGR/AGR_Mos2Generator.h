@@ -58,6 +58,7 @@ private:
     void GenerateMos2MissionInterfaceHeaderFiles( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateMos2MissionInterfaceCppFiles   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateMos2EnumConverterFiles         ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateMos2Rcs                        ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     //@}
 };
 

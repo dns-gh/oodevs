@@ -108,7 +108,7 @@ bool MIL_RealObject_ABC::IsMined() const
 inline
 bool MIL_RealObject_ABC::IsBypassed() const
 {
-    return rBypassPercentage_ > 0.;
+    return rBypassPercentage_ >= 1.;
 }
 
 //-----------------------------------------------------------------------------

@@ -41,7 +41,7 @@ $OrderConduiteEnumList$
 /** @class  MOS_EnumConverter
     @brief  Converts enumerated IDs from and to strings
 */
-// Created: AGE $TIME$
+// Created: AGE 
 // =============================================================================
 class MOS_EnumConverter
 {

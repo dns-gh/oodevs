@@ -178,7 +178,6 @@ void DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DIA_Call_ABC& call )
     call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_Humans >().HasWoundedHumansToEvacuate() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation
 // Created: NLD 2005-08-12
@@ -334,8 +333,7 @@ void DEC_LogisticFunctions::UndoLendCollectionComposantes( DIA_Call_ABC& call, M
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::PionGetTC2( DIA_Call_ABC& call, const MIL_AgentPion& agent )
 {
-    MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2();
-    
+    MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2();    
     call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
 }
 
@@ -345,8 +343,7 @@ void DEC_LogisticFunctions::PionGetTC2( DIA_Call_ABC& call, const MIL_AgentPion&
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateGetTC2( DIA_Call_ABC& call, const MIL_Automate& agent )
 {
-    MIL_AutomateLOG* pTC2 = agent.GetTC2();
-    
+    MIL_AutomateLOG* pTC2 = agent.GetTC2();    
     call.GetResult().SetValue( pTC2 ? pTC2->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
 }
 

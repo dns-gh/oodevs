@@ -493,12 +493,60 @@ action ACT_TirIndirect( T_Mission_Pion_Test_Fire mission )
     
 }
 
+action Trouduc()
+{
+    when selected:
+    {
+        if( DIA_ModuleBegins() )        
+            DEC_Debug( "Trouduc::DIA_ModuleBegins" );
+        DEC_Debug( "Trouduc::updated" );      
+    }
+    
+    on focus loss:
+    {
+        DEC_Debug( "Trouduc::on focus loss" );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "Trouduc::on spontaneous end" );
+    }     
+}
+
+behavior Dumbass()
+{
+    when updated:
+    {
+        persistent bool bDummy = false;
+        if( DIA_ModuleBegins() )        
+            DEC_Debug( "Dumbass::DIA_ModuleBegins" );
+        DEC_Debug( "Dumbass::updated" );            
+        
+        if( bDummy )
+        {
+            action Trouduc();
+            bDummy = false;
+        }
+        else
+            bDummy = true;
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "Dumbass::on spontaneous end" );
+    }       
+}
+
 behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
 {
     when updated:
     {
+        behavior Dumbass();
+    
         if( DIA_ModuleBegins() )        
-            DEC_Debug( "MIS_Pion_Test_Fire" );
+        {
+            DEC_Debug( "MIS_Pion_Test_Fire::DIA_ModuleBegins" );
+        }
+        
+        DEC_Debug( "MIS_Pion_Test_Fire::updated" );
         
         E_ValiditeRequete nValidite;
         DEC_ConnaissanceAgent_Verrouiller( DEC_UserTypeList_GetAt( mission.targets_, 0 ), nValidite );

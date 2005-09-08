@@ -69,3 +69,16 @@ std::string AGR_KnowledgeAgentType::SerializationCode( const AGR_Member& member 
          + ", asnMission." + member.ASNName() + 
          + ", " + member.OwnerClass().KnowledgeAccessor() + " );\n";
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_KnowledgeAgentType::MOS2RCCode
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+std::string AGR_KnowledgeAgentType::MOS2RCCode( const std::string& strAsnParam ) const
+{
+    std::stringstream strTmp;
+    strTmp << "AgentKnowledgeLink( "
+           << strAsnParam
+           << " )";
+    return strTmp.str();
+}

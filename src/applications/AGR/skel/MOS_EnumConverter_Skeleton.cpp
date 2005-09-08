@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: AGR $TIME$ $
+// $Created: AGR  $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/MOS_EnumConverter_Skeleton.cpp $
 // $Author: Age $
 // $Modtime: 22/10/04 17:12 $
@@ -21,7 +21,7 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::AutomataMissionToString
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 QString MOS_EnumConverter::AutomataMissionToString( unsigned int nAutomataMission )
 {
@@ -36,7 +36,7 @@ $AutomataMissionToString$
     
 // -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::AutomataMissionToId
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 unsigned int MOS_EnumConverter::AutomataMissionToId( const std::string& strMission )
 {
@@ -46,7 +46,7 @@ $AutomataMissionToId$
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::UnitMissionToString
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 QString MOS_EnumConverter::UnitMissionToString( unsigned int nUnitMission )
 {
@@ -61,7 +61,7 @@ $UnitMissionToString$
     
 // -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::UnitMissionToId
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 unsigned int MOS_EnumConverter::UnitMissionToId( const std::string& strMission )
 {
@@ -71,7 +71,7 @@ $UnitMissionToId$
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::FragOrderToString
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 QString MOS_EnumConverter::FragOrderToString( unsigned int nFragOrder )
 {
@@ -86,7 +86,7 @@ $FragOrderToString$
     
 // -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::FragOrderToId
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 unsigned int MOS_EnumConverter::FragOrderToId( const std::string& strFragOrder )
 {

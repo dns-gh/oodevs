@@ -37,21 +37,21 @@ FireResult ::= SEQUENCE
 -- Direct
 MsgStartDirectFire ::= SEQUENCE
 {
-    oid-tir     OID,
+    oid-tir     TirDirect,
     oid-src     Agent,
     oid-dst     Agent
 }
 
 MsgStopDirectFire ::= SEQUENCE
 {
-    oid-tir     OID,
+    oid-tir     TirDirect,
     resultat    FireResult
 }
 
 -- Indirect
 MsgStartIndirectFire ::= SEQUENCE
 {
-    oid-tir     OID,
+    oid-tir     TirIndirect,
     oid-src     Agent,
     position    CoordUTM,
     munition    TypeDotation
@@ -60,7 +60,7 @@ MsgStartIndirectFire ::= SEQUENCE
                   
 MsgStopIndirectFire ::= SEQUENCE
 {
-    oid-tir     OID,
+    oid-tir     TirIndirect,
     resultats   SEQUENCE OF FireResult
 }
 

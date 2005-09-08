@@ -58,6 +58,7 @@ private:
     void GenerateMosMissionHeaderFiles( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateMosMissionCppFiles   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateMosMissionConverter  ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateMosRcs               ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     //@}
 };
 

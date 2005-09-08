@@ -453,7 +453,6 @@ void DEC_DIAFunctions::ListPoint_Clear( DIA_Call_ABC& call )
 // static
 void DEC_DIAFunctions::CreateDIAThing( DIA_Call_ABC& call )
 {
-
 	DIA_Thing* pThing = new DIA_Thing( DIA_Thing::ThingType(), *DIA_TypeManager::Instance().GetType( call.GetParameter( 0 ).ToId() ) );
 	call.GetResult().SetValue( *pThing );
 }

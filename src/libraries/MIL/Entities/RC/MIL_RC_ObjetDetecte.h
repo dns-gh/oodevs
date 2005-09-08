@@ -1,32 +1,32 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_PionRuptureContact.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_ObjetDetecte.h $
 // $Author: Nld $
-// $Modtime: 9/03/05 15:20 $
-// $Revision: 3 $
-// $Workfile: MIL_RC_PionRuptureContact.h $
+// $Modtime: 9/03/05 15:59 $
+// $Revision: 1 $
+// $Workfile: MIL_RC_ObjetDetecte.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_RC_PionRuptureContact_h_
-#define __MIL_RC_PionRuptureContact_h_
+#ifndef __MIL_RC_ObjetDetecte_h_
+#define __MIL_RC_ObjetDetecte_h_
 
 #include "MIL.h"
 
 #include "MIL_RC.h"
 
 // =============================================================================
-// @class  MIL_RC_PionRuptureContact
+// @class  MIL_RC_ObjetDetecte
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_RC_PionRuptureContact : public MIL_RC
+class MIL_RC_ObjetDetecte : public MIL_RC
 {
-    MT_COPYNOTALLOWED( MIL_RC_PionRuptureContact )
+    MT_COPYNOTALLOWED( MIL_RC_ObjetDetecte )
 
 public:   
-    MIL_RC_PionRuptureContact( E_RC nRC, int nAsnID );
-    virtual ~MIL_RC_PionRuptureContact();
+    MIL_RC_ObjetDetecte( E_RC nRC, int nAsnID );
+    virtual ~MIL_RC_ObjetDetecte();
     
     //! @name Operations
     //@{
@@ -35,4 +35,4 @@ public:
     //@}
 };
 
-#endif // __MIL_RC_PionRuptureContact_h_
+#endif // __MIL_RC_ObjetDetecte_h_

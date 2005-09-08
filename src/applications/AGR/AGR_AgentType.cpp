@@ -60,3 +60,16 @@ std::string AGR_AgentType::ASNInitialisationCode( const AGR_Member& member ) con
     strResult += " )\n        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
     return strResult;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_AgentType::MOS2RCCode
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+std::string AGR_AgentType::MOS2RCCode( const std::string& strAsnParam ) const
+{
+    std::stringstream strTmp;
+    strTmp << "AgentLink( "
+           << strAsnParam
+           << " )";
+    return strTmp.str();
+}

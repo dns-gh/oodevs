@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN_Generated_Enums_Skeleton.h $
 // $Author: Agn $
 // $Modtime: 28/04/04 9:54 $

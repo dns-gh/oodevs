@@ -25,6 +25,7 @@ void DEC_KnowledgeObjectFunctions::IsRecon( DIA_Call_ABC& call, const T& caller 
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
@@ -43,6 +44,7 @@ void DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( DIA_Call_ABC& cal
     if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::siteFranchissement_ )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
         return;
     }
     DEC_Knowledge_ObjectSiteFranchissement* pKnowledgeSiteFranchissement = static_cast< DEC_Knowledge_ObjectSiteFranchissement* >( pKnowledge );
@@ -60,6 +62,7 @@ void DEC_KnowledgeObjectFunctions::IsSiteFranchissementBanksToFitOut( DIA_Call_A
     if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::siteFranchissement_ )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     DEC_Knowledge_ObjectSiteFranchissement* pKnowledgeSiteFranchissement = static_cast< DEC_Knowledge_ObjectSiteFranchissement* >( pKnowledge );
@@ -108,6 +111,7 @@ void DEC_KnowledgeObjectFunctions::IsBypassed( DIA_Call_ABC& call, const T& call
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
@@ -126,6 +130,7 @@ void DEC_KnowledgeObjectFunctions::IsPrepared( DIA_Call_ABC& call, const T& call
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
@@ -144,6 +149,7 @@ void DEC_KnowledgeObjectFunctions::GetType( DIA_Call_ABC& call, const T& caller 
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
@@ -161,6 +167,7 @@ void DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped( DIA_Call_ABC& call, 
     if( !pKnowledge || pKnowledge->GetType() != MIL_RealObjectType::itineraireLogistique_ )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     DEC_Knowledge_ObjectItineraireLogistique* pKnowledgeItiLog = static_cast< DEC_Knowledge_ObjectItineraireLogistique* >( pKnowledge );

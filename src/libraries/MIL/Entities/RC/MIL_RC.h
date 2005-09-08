@@ -24,7 +24,7 @@ class MIL_RC_TirSurCampNeutre;
 class MIL_RC_TireParCampNeutre;
 class MIL_RC_TirSurCivil;      
 class MIL_RC_TireParCivil;
-class MIL_RC_PionDecontamine;
+class MIL_RC_UniteDecontaminee;
 
 struct ASN1T_MsgCR;
 
@@ -77,7 +77,7 @@ public:
     static const MIL_RC*                                    pRcDestructionPC_;
     static const MIL_RC_AllocationConsentieBientotEpuisee*  pRcAllocationConsentieBientotEpuisee_;
     static const MIL_RC*                                    pRcMissionImpossible_;
-    static const MIL_RC_PionDecontamine*                    pRcPionDecontamine_;
+    static const MIL_RC_UniteDecontaminee*                  pRcUniteDecontaminee_;
     static const MIL_RC*                                    pRcPlusDeCarburant_;
     static const MIL_RC*                                    pRcTerrainDifficile_;
     //@}
@@ -109,142 +109,128 @@ protected:
     //@{
     enum E_RC
     {
-        /* RAS */
         eRC_RAS,
-
-        /* Obstacle */
-        eRC_EnPosteFaceAObstacle,       // Paramètre : Rep_Objet
+        eRC_EnPosteFaceAObstacle, // Parametre : T_ConnaissanceObjet
         eRC_EnContournementObstacle,
-    
-        /* Phase de mission */
-        eRC_MissionTerminee,
         eRC_MissionImpossible,
-        eRC_PretPourNouvelleMission,
-        eRC_RejointFuseau,
         eRC_ProgressionSurAxe,
-        eRC_ProgressionVersLocalisation,
-        eRC_ArriveSurLocalisation,
-        eRC_ReconnaissanceLocalisation,
+        eRC_ProgressionVersPosition,
+        eRC_ArriveSurPosition,
+        eRC_ReconnaissancePoint,
         eRC_EnPosteFaceADirectionDangereuse,
-        eRC_EnPosteSurBond,
         eRC_EnJalonnement,
-        eRC_PreparationMission,      // Paramètre OPTIONAL : delai en float
+        eRC_PreparationMission, // Parametre : delai (float), 
         eRC_DebutMission,
         eRC_FinMission,
         eRC_DispositifInstalle,
         eRC_EnPosition,
         eRC_ObjectifAtteint,
-        eRC_FuseauRejoint,
         eRC_Debouche,
-        eRC_SurPIA,                     // Paramètres T_Pion
+        eRC_RejointUnite,
+        eRC_EscorteUnite,
+        eRC_EnFreinage,
+        eRC_Assaut,
+        eRC_EnCouverture,
+        eRC_EnEclairage,
+        eRC_EnManoeuvreRavitaillement,
+        eRC_SurPIA, // Parametre : T_Pion
         eRC_PassageSurPIA,
-        eRC_UniteRecueillie,            // Paramètres T_Pion
+        eRC_UniteRecueillie, // Parametre : T_Pion
         eRC_EnCoursDeFranchissement,
         eRC_AttenteOrdrePoursuivre,
         eRC_AttenteOrdreDeboucher,
-    
-        /* Ennemi */
-        eRC_EnPause,                    // Paramètre : Rep_Pion
-        eRC_EnEsquive,                  // Paramètre : Rep_Pion
-        eRC_PrecisionContact,
-        eRC_PionPriseContact,
-        eRC_PionRuptureContact,
-        eRC_EnnemiDetruit,              // Paramètre : Rep_Pion
-        eRC_PerteDeContactVisuel,       
-        eRC_PosteFaceEni,
+        eRC_Fixe,
+        eRC_EnEsquive,
+        eRC_PriseContact,
+        eRC_RuptureContact,
+        eRC_PrecisionContact, // Parametre : T_ConnaissanceAgent
+        eRC_EnnemiDetruit, // Parametre : T_ConnaissanceAgent
+        eRC_PrisAPartieParTirDirect,
+        eRC_PrisSousTirArtillerie,
+        eRC_PointTenuParEni, // Parametre : T_ConnaissanceAgent
+        eRC_ProgressionVersEni, // Parametre : T_ConnaissanceAgent
         eRC_Decroche,
-        eRC_PriseAPartie,
-        eRC_PointTenuParEni,         // Paramètre : Rep_Pion
-        eRC_PresenceEniProbable,
-        eRC_ProgressionVersEni,
-        eRC_EniSurObjectif,
+        eRC_EniSurObjectif, // Parametre : T_ConnaissanceAgent
         eRC_Riposte,
-        eRC_Automate_PriseContact,
-        eRC_Automate_RuptureContact,
-    
-        /* Rens */
-        eRC_EnControleZone,
-        eRC_EnSurveillance,
+        eRC_DebutControleZone,
+        eRC_FinControleZone,
+        eRC_DebutSurveillance,
+        eRC_FinSurveillance,
         eRC_EnInfiltration,
         eRC_EnExfiltration,
         eRC_AttenteConditionFavorablePourInfiltration,
         eRC_DroneLance,
         eRC_DroneEnExploitation,
         eRC_DroneExploite,
+        eRC_DroneDisponible,
         eRC_DebutMiseEnOeuvreDrone,
         eRC_FinMiseEnOeuvreDrone,
-        eRC_Brouille,
-        eRC_EnEcoute,
-        eRC_EnEcouteRadar,
-        
-        /* Ami */
-        eRC_Releve,                 // Paramètres T_Pion
+        eRC_ActivationBrouillage,
+        eRC_DesactivationBrouillage,
+        eRC_ActivationSystemeEcoute,
+        eRC_DesactivationSystemeEcoute,
+        eRC_ActivationSystemeEcouteRadar,
+        eRC_DesactivationSystemeEcouteRadar,
+        eRC_DebutLiaison,
+        eRC_FinLiaison,
+        eRC_EtablissementLiaisonImpossible,
+        eRC_UniteTropDistante,
+        eRC_EnregistrementDonnes,
+        eRC_ExploitationDonnees,
+        eRC_ExtractionDonnes,
+        eRC_Releve, // Parametre : T_Pion
         eRC_SuitUnite,
         eRC_PasseEnAppui,
         eRC_EnAppui,
-       
-        /* Etat du pion */
-        eRC_DetruitTactiquement,
-    
-        /* Deplacement */
+        eRC_NonOperationnel,
+        eRC_Operationnel,
         eRC_AmbianceVitesse,
         eRC_AmbianceSurete,
-        eRC_SurLima,                    // Paramètre : enum E_TypeLima
-        eRC_SurTypeTerrainParticulier,  // Paramètre : enum Type Terrain
-    
-        /* Génie */
-        eRC_TravauxRealises,
+        eRC_SurLima, // Parametre : id
+        eRC_DebutTravaux,
+        eRC_FinTravaux,
         eRC_ObstacleDegage,
         eRC_OrganisationChantier,
         eRC_DesorganisationChantier,
         eRC_ReconnaissancePositionObstacle,
         eRC_ContournementRealise,
         eRC_AttenteRenforcement,
-        eRC_DebutTravaux,
-        eRC_DebutFranchissement,
-        eRC_FinFranchissement,
-        eRC_ReussiteRenforcement,        // Paramètres T_Pion, T_Automate
-        eRC_EchecRenforcement,           // Paramètres T_Pion, T_Automate
-        eRC_ItineraireRetabli,
-        eRC_RenforcementBientotFini,     // Paramètre T_Pion
-        eRC_ObstacleEnAttenteActivation, // Paramètre T_ConnaissanceObjet
-    
-        /* Logistique du pion */
-        eRC_SituationLogFavorable,      
-        eRC_SituationLogDefavorable,    // Paramètre : enum E_TypeDotation
-    
-        /* Log */
-        eRC_ANouveauDisponibleApresReparation,       // Moteur                                         
-        eRC_MaterielRetourDeMaintenance,            // Moteur                                         
-        eRC_MaterielRepareSurPlace,                 // Moteur                                         
-        eRC_SectionDeployee,                                                                          
-        eRC_DemandeRavitaillement,                  // Moteur                                         
-        eRC_DemandeEvacuationSanitaire,             // Moteur                                         
-        eRC_DemandeEvacuationMateriel,              // Moteur                                         
-        eRC_AllocationConsentieBientotEpuisee,      // Moteur - Paramètre dotation
-        eRC_RavitaillementDotationsEffectue,        // Moteur                                         
-        eRC_RavitaillementStockEffectue,            // Moteur                                         
-        eRC_HumainRetourDeSante,                    // Moteur                                         
-
-        /* LOG / Transport / Embarquement */
+        eRC_DebutExploitationSiteFranchissement,
+        eRC_FinExploitationSiteFranchissement,
+        eRC_ReussiteRenforcement, // Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
+        eRC_EchecRenforcement, // Parametres : pion_renforcant (T_Pion), automate_renforce (T_Pion), 
+        eRC_ObstacleEnAttenteActivation, // Parametre : T_ConnaissanceObjet
+        eRC_DebutAmenagementBerges,
+        eRC_FinAmenagementBerges,
+        eRC_SectionDeployee,
+        eRC_ANouveauDisponibleApresReparation,
+        eRC_MaterielRetourDeMaintenance,
+        eRC_MaterielRepareSurPlace,
+        eRC_DemandeRavitaillement,
+        eRC_DemandeEvacuationSanitaire,
+        eRC_DemandeEvacuationMateriel,
+        eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
+        eRC_RavitaillementDotationsEffectue,
+        eRC_RavitaillementStockEffectue,
+        eRC_HumainRetourDeSante,
         eRC_EnCoursRavitaillement,
         eRC_RavitaillementTermine,
         eRC_HelicoptereEnObservation,
         eRC_PerteInfoGuidage,
-        eRC_TransportUnitePasPrete,
+        eRC_TransportUnitePasPrete, // Parametre : T_Pion
+        eRC_TransportUnitePrete, // Parametre : T_Pion
         eRC_TransportEnCours,
         eRC_TransportEmbarquement,
         eRC_TransportDebarquement,
         eRC_VehiculeLaisseSurPosition,
         eRC_RejointPositionEmbarquement,
         eRC_EnAttenteTransporteurs,
-        
-        /* NBC */
         eRC_ContamineNBC,
         eRC_DecontamineNBC,
         eRC_TenueProtectionNBCMise,
         eRC_TenueProtectionNBCEnlevee,
-        eRC_AlerteNBC,
+        eRC_AlerteNBCNiveau4,
+        eRC_FinAlerteNBCNiveau4,
         eRC_SiteDecontaminationAnime,
         eRC_SiteDecontaminationDesactive,
         eRC_DemandeDecontamination,
@@ -252,64 +238,68 @@ protected:
         eRC_ZoneDecontaminee,
         eRC_SiteROTAReconnu,
         eRC_IncidentNBCTermine,
-        eRC_PionDecontamine,                // Paramètre T_Pion
-    
-        /* Artillerie */
+        eRC_UniteDecontaminee, // Parametre : T_Pion
+        eRC_SiteSature,
+        eRC_DebutMesure,
+        eRC_FinMesure,
         eRC_ReconnaissanceTerminee,
         eRC_ReconnaissanceInitialeTerminee,
         eRC_RejointPlotRavitaillement,
         eRC_PremierCoupParti,
         eRC_TirExecute,
-        eRC_ChangementDePosition,
-        eRC_DebutSurveillance,
-        eRC_DebutInstallation,
-        eRC_PretPourConduiteTir,
-        eRC_ObservationTirIndirect,
-        eRC_ReceptionOrdreDeFeu,
-        eRC_PretAuTir,
-        eRC_ZoneImplantationOccupee,
-        eRC_InstallationSurZoneImplantation,
         eRC_TirHorsDePortee,
         eRC_TirAnnule,
-
-        /* Population */
+        eRC_ChangementDePosition,
+        eRC_DebutInstallation,
+        eRC_FinInstallation,
+        eRC_PretPourConduiteTir,
+        eRC_ObservationTirIndirect, // Parametre : TirIndirect
+        eRC_ZoneImplantationOccupee,
+        eRC_InstallationSurZoneImplantation,
+        eRC_ReceptionOrdreDeFeu,
+        eRC_PretAuTir,
         eRC_PresencePopulation,
         eRC_OrientationPopulationVersCampRefugies,
         eRC_PasDeCampRefugiesDisponible,
         eRC_PresenceEnnemiRendu,
         eRC_OrientationEnnemiRenduVersCampPrisonniers,
         eRC_PasDeCampPrisonniersDisponible,
-
-        /* Evt exceptionnels */
         eRC_TirDansZoneInterdite,
-        eRC_TirSurCampAmi,
-        eRC_TireParCampAmi,
-        eRC_TirSurCampNeutre,
-        eRC_TireParCampNeutre,
-        eRC_TirSurCivil,
-        eRC_TireParCivil,
+        eRC_TirSurCampAmi, // Parametre : T_Pion
+        eRC_TireParCampAmi, // Parametre : T_Pion
+        eRC_TirSurCampNeutre, // Parametre : T_Pion
+        eRC_TireParCampNeutre, // Parametre : T_Pion
+        eRC_TirSurCivil, // Parametre : T_Pion
+        eRC_TireParCivil, // Parametre : T_Pion
         eRC_DestructionPC,
         eRC_DecesBlesse,
         eRC_DecesBlessePendantTransport,
         eRC_DecesBlessePendantHospitalisation,
-
-        eRC_MissionImpossiblePionsSubordonnesNonOperationnels,
+        eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles,
         eRC_MissionImpossibleLimaInvalide,
         eRC_MissionImpossibleZoneHorsFuseau,
         eRC_RapportDeForceDefavorable,
         eRC_TerrainDifficile,
         eRC_PlusDeCarburant,
         eRC_DispositifDisperse,
-        eRC_PionNeutralise,
-        eRC_SilenceRadio,
-        eRC_SilenceRadar,
+        eRC_DebutNeutralisation,
+        eRC_FinNeutralisation,
+        eRC_DebutSilenceRadio,
+        eRC_FinSilenceRadio,
+        eRC_DebutSilenceRadar,
+        eRC_FinSilenceRadar,
         eRC_TirRestreint,
         eRC_TirInterdit,
-        eRC_TirLibre,        
+        eRC_TirLibre,
+        eRC_UniteDetectee, // Parametre : T_ConnaissanceAgent
+        eRC_UniteAmieReconnue, // Parametre : T_ConnaissanceAgent
+        eRC_UniteEnnemieReconnue, // Parametre : T_ConnaissanceAgent
+        eRC_UniteNeutreReconnue, // Parametre : T_ConnaissanceAgent
+        eRC_ObjetDetecte, // Parametre : T_ConnaissanceObjet
+        eRC_Trace, // Parametre : message
+        eRC_TraceID, // Parametre : float
+        eNbr
 
-        /* Adaptation */
-        eRC_Trace, // Paramètre : ID en float
-        eRC_TraceID, // Paramètre : string
     };
     //@}
 

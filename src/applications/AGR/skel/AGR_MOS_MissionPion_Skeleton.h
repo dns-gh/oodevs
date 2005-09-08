@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionPion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 18/10/04 13:04 $
@@ -26,7 +26,7 @@
 class MOS_ASN_MsgPionOrder;
 
 //=============================================================================
-// Created:  NLD $TIME$
+// Created:  NLD 
 //=============================================================================
 class MOS_MissionPion : public MOS_Mission_ABC
 {

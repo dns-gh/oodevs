@@ -72,6 +72,7 @@ void DEC_MiscFunctions::Reinforce( DIA_Call_ABC& call, MIL_AgentPion& callerAgen
     if( !pTarget )
     {
         assert( false );
+        call.GetResult().SetValue( false );
         return;
     }
     bool bResult = callerAgent.GetRole< PHY_RolePion_Reinforcement >().Reinforce( pTarget->GetPion() );

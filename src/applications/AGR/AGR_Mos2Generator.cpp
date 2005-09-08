@@ -25,6 +25,7 @@
 #include "AGR_Workspace.h"
 #include "AGR_Mission.h"
 #include "AGR_FragOrder.h"
+#include "AGR_RC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mos2Generator constructor
@@ -50,11 +51,12 @@ AGR_Mos2Generator::~AGR_Mos2Generator()
 // -----------------------------------------------------------------------------
 void AGR_Mos2Generator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    std::cout << "Generating MOS_Light2 mission files" << std::endl;
+    std::cout << "Generating MOS_Light2 files" << std::endl;
     MT_MakeDir( strOutputPath + "/MOS_Light2" );
     GenerateMos2MissionInterfaceHeaderFiles( workspace, strOutputPath );
     GenerateMos2MissionInterfaceCppFiles   ( workspace, strOutputPath );
     GenerateMos2EnumConverterFiles         ( workspace, strOutputPath );
+    GenerateMos2Rcs                        ( workspace, strOutputPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +135,7 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
         std::string strAsnDeletion = "        case " + mission.ASNTypeName() + " : delete pASNMsgOrder_->GetAsnMsg().mission.u." + mission.LowName() + "; break;\n";
         std::string strCreation    = "        case " + mission.EnumName() + " : CreateMission_" + mission.BaseName() + "(); break;\n";
         std::string strFunctions   = mission.GenerateMos2Implementation() + "\n";
-        
+
         if( mission.IsMissionForAutomate() )
         {
             strAsnDeletionAutomate += strAsnDeletion;
@@ -275,4 +277,28 @@ void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& wor
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_EnumConverter.cpp" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Mos2Generator::GenerateMos2Rcs
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+void AGR_Mos2Generator::GenerateMos2Rcs( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
+{
+    std::string strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "MOS2_RC.cpp.skel", strBaseContent );
+
+    std::stringstream strTmp;
+
+    const AGR_Workspace::T_RCVector& rcs = workspace.GetRCs();
+    for( AGR_Workspace::CIT_RCVector it = rcs.begin(); it != rcs.end(); ++it )
+    {
+        const AGR_RC& rc = **it;
+
+        strTmp << "        ";
+        strTmp << rc.GenerateMOS2();
+    }
+
+    workspace.ReplaceInString( strBaseContent, "$AGR_MOS2_RC$", strTmp.str() );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/MOS_Light2/MOS_RC.cpp" );
 }

@@ -58,6 +58,7 @@ private:
     void GenerateMissionEnumFile        ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateMissionScriptFile      ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateOrderConduiteScriptFile( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
+    void GenerateRCEnumFile             ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     //@}
 };
 

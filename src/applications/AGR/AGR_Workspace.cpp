@@ -24,6 +24,8 @@
 #include "AGR_Member.h"
 #include "AGR_Type_ABC.h"
 #include "AGR_FragOrder.h"
+#include "AGR_TypeRC.h"
+#include "AGR_RC.h"
 
 #include <windows.h>
 
@@ -36,6 +38,7 @@
 // Created: AGN 2004-04-22
 // -----------------------------------------------------------------------------
 AGR_Workspace::AGR_Workspace()
+: bMsgCRParsed_( false )
 {
     parsedFileSet_.insert( std::string( "osxsdlib.xsd" ) );
 
@@ -72,6 +75,10 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListPolygon", "PolygonList", "", "T_ListeLocalisations", "T_LocationVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:MaintenancePriorites", "MaintenancePriorities", "T_MaintenancePriorityVector", "T_MaintenancePriorites", "", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:SantePriorites", "MedicalPriorities", "T_MedicalPriorityVector", "T_SantePriorites", "", true ) );
+
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TypeDotation", "TypeDotation", "TypeDotation", "TypeDotation", "TypeDotation", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TirIndirect", "TirIndirect", "TirIndirect", "TirIndirect", "TirIndirect", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "xsd::string", "message", "message", "message", "message", true ) );
 
     typeList_.push_back( new AGR_PolygonType() );
 }
@@ -162,7 +169,6 @@ void AGR_Workspace::Read( MT_XXmlInputArchive& input, const std::string& strModu
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AGR_Workspace::ReadImport
 // Created: AGE 2004-09-15
@@ -207,6 +213,16 @@ void AGR_Workspace::ReadSimpleType( MT_XXmlInputArchive& input, const std::strin
         
         input.EndList(); // "xsd:simpleType"
         return;
+    }
+
+    // RC
+    else if( strTypeName.substr( 0, 3 ) == "CR_" )
+    {
+        if( typeRCs_.find( strTypeName ) == typeRCs_.end() )
+        {
+            const AGR_TypeRC* pRC = new AGR_TypeRC( strTypeName, input, *this );
+            typeRCs_.insert( std::make_pair( strTypeName, pRC ) ).second;
+        }
     }
 
     // POSSIBLY AN ENUM
@@ -285,7 +301,7 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
     }
 
     // MsgAttenteOrderConduite
-    if( strTypeName == "MsgAttenteOrdreConduite" )
+    else if( strTypeName == "MsgAttenteOrdreConduite" )
     {
         input.Section( "xsd:sequence" );
         while( input.NextListElement() )
@@ -330,7 +346,7 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
     }
 
     // A FRAGMETARY ORDER ENUMERATION
-    if( strTypeName == "MsgOrderConduite" )
+    else if( strTypeName == "MsgOrderConduite" )
     {
         input.Section( "xsd:sequence" );
         while( input.NextListElement() )
@@ -368,7 +384,7 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
     }
 
     // A MISSION
-    if( strTypeName.substr( 0, 8 ) == "Mission_" )
+    else if( strTypeName.substr( 0, 8 ) == "Mission_" )
     {
         // this is a complex type whose name starts with Mission_ --> define a mission
         // Some items can be read multiple times because of file inclusions. Ensure that we read them only once.
@@ -383,7 +399,7 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
     }
 
     // A FRAGMENTARY ORDER
-    if( strTypeName.substr( 0, 14 ) == "OrderConduite_" )
+    else if( strTypeName.substr( 0, 14 ) == "OrderConduite_" )
     {
         // this is a complex type whose name starts with OrderConduite_ --> define a order
         // Some items can be read multiple times because of file inclusions. Ensure that we read them only once.
@@ -395,6 +411,43 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
         }
         input.EndList(); // xsd:complexType
         return;
+    }
+
+    // RC Type
+    else if( strTypeName.substr( 0, 3 ) == "CR_" )
+    {
+        if( typeRCs_.find( strTypeName ) == typeRCs_.end() )
+        {
+            const AGR_TypeRC* pRC = new AGR_TypeRC( strTypeName, input, *this );
+            typeRCs_.insert( std::make_pair( strTypeName, pRC ) ).second;
+        }
+    }
+
+    // RC list
+    else if( strTypeName == "MsgCR" && !bMsgCRParsed_ )
+    {
+        bMsgCRParsed_ =  true; /// $$$ n'importe quoi
+        input.BeginList( "xsd:sequence" );
+        while( input.NextListElement() )
+        {
+            input.Section( "xsd:element" );
+            std::string strTmp;
+            input.ReadAttribute( "name", strTmp );
+            if( strTmp == "cr" )
+            {
+                input.Section( "xsd:complexType" );
+                input.BeginList( "xsd:choice" );
+                while( input.NextListElement() )
+                {
+                    AGR_RC* pRC = new AGR_RC( input, *this );
+                    rcs_.push_back( pRC );
+                }
+                input.EndList(); // xsd:choice
+                input.EndSection(); //  xsd:complextype
+            }
+            input.EndSection(); // xsd:element
+        }
+        input.EndList(); // xsd:sequence
     }
     
     input.EndList(); // xsd:complexType

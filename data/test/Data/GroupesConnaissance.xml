@@ -12,7 +12,7 @@
     <Connaissance>
       <DureeDeVieMax>43200s</DureeDeVieMax>
       <DistanceMaxEntreUniteReelleEtUniteConnue>-1</DistanceMaxEntreUniteReelleEtUniteConnue>
-      <TempsInterpolation>120s</TempsInterpolation>
+      <TempsInterpolation>12000s</TempsInterpolation>
     </Connaissance>
   </GroupeConnaissance>
 

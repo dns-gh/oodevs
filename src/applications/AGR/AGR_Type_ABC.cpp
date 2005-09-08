@@ -34,10 +34,12 @@ AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& st
     , strCPPType_         ( strCPPType )
     , strDIAType_         ( strDIAType )
     , strTesterType_      ( strTesterType )
+    , strHumanName_       ( strDIAType )
     , bExplicitMember_    ( !strCPPType_.empty() )
     , bRequiresCleaning_  ( bRequiresCleaning )
 {
-    //NOTHING
+    if( strHumanName_.substr( 0, 2 ) == "T_" )
+        strHumanName_.erase( 0, 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,4 +276,40 @@ std::string AGR_Type_ABC::RemoveNamespace( const std::string& strName ) const
     if( nIdx != std::string::npos && nIdx + 1 < strName.size() )
         return strName.substr( nIdx + 1 );
     return strName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::GetDIAType
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+const std::string& AGR_Type_ABC::GetDIAType() const
+{
+    return strDIAType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::MOS2RCCode
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::MOS2RCCode( const std::string& strAsnParam ) const
+{
+    return strAsnParam;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::MOSRCCode
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::MOSRCCode( const std::string& strAsnParam ) const
+{
+    return strAsnParam;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::GetHumanName
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+const std::string& AGR_Type_ABC::GetHumanName() const
+{
+    return strHumanName_;
 }

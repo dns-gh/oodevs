@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderTools_Skeleton.cpp $
 // $Author: Agn $
 // $Modtime: 28/04/04 14:10 $
@@ -44,7 +44,7 @@ $IncludeAutomateMissionHeaders$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::GetFreePionMission
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 MIL_PionMission_ABC* MIL_OrderTools::GetFreePionMission( E_MissionID nMissionID )
@@ -68,7 +68,7 @@ $CreatePionMission$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::GetFreeAutomateMission
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 MIL_AutomateMission_ABC* MIL_OrderTools::GetFreeAutomateMission( E_MissionID nMissionID )
@@ -84,7 +84,7 @@ $CreateAutomateMission$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::RecycleMission
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderTools::RecycleMission( MIL_PionMission_ABC& mission )
@@ -95,7 +95,7 @@ void MIL_OrderTools::RecycleMission( MIL_PionMission_ABC& mission )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::RecycleMission
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderTools::RecycleMission( MIL_AutomateMission_ABC& mission )
@@ -107,7 +107,7 @@ void MIL_OrderTools::RecycleMission( MIL_AutomateMission_ABC& mission )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::InitializeDIA
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderTools::InitializeDIA()
@@ -135,7 +135,7 @@ $InitMissionDiaIdx$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::ConvertMissionIDAsnToSim
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 E_MissionID MIL_OrderTools::ConvertMissionIDAsnToSim( const ASN1T_Mission_Pion& asnMission )
@@ -151,7 +151,7 @@ $ConvertPionIdAsnToSim$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderTools::ConvertMissionIDAsnToSim
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 E_MissionID MIL_OrderTools::ConvertMissionIDAsnToSim( const ASN1T_Mission_Automate& asnMission )
 {

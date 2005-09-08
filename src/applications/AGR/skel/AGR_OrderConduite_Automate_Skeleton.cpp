@@ -22,7 +22,7 @@ $StaticMemberInit$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_$OrderName$::InitializeDIA
-// Created: AGR $TIME$
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_$OrderName$::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -33,7 +33,7 @@ $StaticMemberScriptInit$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_$OrderName$ constructor
-// Created: AGR $TIME$
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_$OrderName$::MIL_OrderConduite_$OrderName$( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -44,7 +44,7 @@ MIL_OrderConduite_$OrderName$::MIL_OrderConduite_$OrderName$( const MIL_Knowledg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_$OrderName$ destructor
-// Created: AGR $TIME$
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_$OrderName$::~MIL_OrderConduite_$OrderName$()
 {
@@ -57,7 +57,7 @@ MIL_OrderConduite_$OrderName$::~MIL_OrderConduite_$OrderName$()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_$OrderName$::Initialize
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_$OrderName$::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ $InitMembersFromAsn$
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_$OrderName$::Initialize
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_$OrderName$::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

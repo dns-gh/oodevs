@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_MissionConverter_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 17/02/05 17:22 $

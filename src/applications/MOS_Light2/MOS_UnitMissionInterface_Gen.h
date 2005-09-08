@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE 2005-08-19 - 11:30:56 $
+// $Created: APE $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_UnitMissionInterface_Gen_Skeleton.h $
 // $Author: Ape $
 // $Modtime: 28/04/04 15:11 $

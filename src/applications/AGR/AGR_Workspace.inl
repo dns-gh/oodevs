@@ -16,3 +16,26 @@
 //
 // *****************************************************************************
 
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Workspace::FindTypeRC
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+inline
+const AGR_TypeRC* AGR_Workspace::FindTypeRC( const std::string& strType ) const
+{
+    CIT_TypeRCMap it = typeRCs_.find( strType );
+    if( it == typeRCs_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Workspace::GetRCs
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+inline
+const AGR_Workspace::T_RCVector& AGR_Workspace::GetRCs() const
+{
+    return rcs_;
+}

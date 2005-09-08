@@ -1,32 +1,32 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_EnPause.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_UniteDetectee.h $
 // $Author: Nld $
 // $Modtime: 9/03/05 15:20 $
 // $Revision: 3 $
-// $Workfile: MIL_RC_EnPause.h $
+// $Workfile: MIL_RC_UniteDetectee.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_RC_EnPause_h_
-#define __MIL_RC_EnPause_h_
+#ifndef __MIL_RC_UniteDetectee_h_
+#define __MIL_RC_UniteDetectee_h_
 
 #include "MIL.h"
 
 #include "MIL_RC.h"
 
 // =============================================================================
-// @class  MIL_RC_EnPause
+// @class  MIL_RC_UniteDetectee
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_RC_EnPause : public MIL_RC
+class MIL_RC_UniteDetectee : public MIL_RC
 {
-    MT_COPYNOTALLOWED( MIL_RC_EnPause )
+    MT_COPYNOTALLOWED( MIL_RC_UniteDetectee )
 
 public:   
-    MIL_RC_EnPause( E_RC nRC );
-    virtual ~MIL_RC_EnPause();
+    MIL_RC_UniteDetectee( E_RC nRC, int nAsnID );
+    virtual ~MIL_RC_UniteDetectee();
     
     //! @name Operations
     //@{
@@ -35,4 +35,4 @@ public:
     //@}
 };
 
-#endif // __MIL_RC_EnPause_h_
+#endif // __MIL_RC_UniteDetectee_h_

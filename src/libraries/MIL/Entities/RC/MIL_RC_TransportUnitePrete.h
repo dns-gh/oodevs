@@ -1,32 +1,32 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_MissionTerminee.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_TransportUnitePrete.h $
 // $Author: Nld $
-// $Modtime: 9/03/05 15:20 $
-// $Revision: 3 $
-// $Workfile: MIL_RC_MissionTerminee.h $
+// $Modtime: 18/03/05 14:30 $
+// $Revision: 1 $
+// $Workfile: MIL_RC_TransportUnitePrete.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_RC_MissionTerminee_h_
-#define __MIL_RC_MissionTerminee_h_
+#ifndef __MIL_RC_TransportUnitePrete_h_
+#define __MIL_RC_TransportUnitePrete_h_
 
 #include "MIL.h"
 
 #include "MIL_RC.h"
 
 // =============================================================================
-// @class  MIL_RC_MissionTerminee
+// @class  MIL_RC_TransportUnitePrete
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_RC_MissionTerminee : public MIL_RC
+class MIL_RC_TransportUnitePrete : public MIL_RC
 {
-    MT_COPYNOTALLOWED( MIL_RC_MissionTerminee )
+    MT_COPYNOTALLOWED( MIL_RC_TransportUnitePrete )
 
 public:   
-    MIL_RC_MissionTerminee( E_RC nRC );
-    virtual ~MIL_RC_MissionTerminee();
+    MIL_RC_TransportUnitePrete( E_RC nRC, int nAsnID );
+    virtual ~MIL_RC_TransportUnitePrete();
     
     //! @name Operations
     //@{
@@ -35,4 +35,4 @@ public:
     //@}
 };
 
-#endif // __MIL_RC_MissionTerminee_h_
+#endif // __MIL_RC_TransportUnitePrete_h_

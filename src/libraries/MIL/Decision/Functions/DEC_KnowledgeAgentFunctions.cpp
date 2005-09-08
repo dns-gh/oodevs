@@ -40,6 +40,7 @@ void DEC_KnowledgeAgentFunctions::GetEtatOps( DIA_Call_ABC& call, const MIL_Agen
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
         return;
     }
 
@@ -57,6 +58,7 @@ void DEC_KnowledgeAgentFunctions::GetNatureWeapon( DIA_Call_ABC& call, const MIL
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
         return;
     }
 
@@ -74,6 +76,7 @@ void DEC_KnowledgeAgentFunctions::GetNatureAtlas( DIA_Call_ABC& call, const MIL_
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
         return;
     }
     
@@ -111,6 +114,7 @@ void DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( DIA_Ca
      if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
         return;
     }
 
@@ -181,6 +185,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const 
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
 
@@ -199,6 +204,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByKnowledgeGroup( DIA_Call_ABC& cal
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
 
@@ -216,6 +222,7 @@ void DEC_KnowledgeAgentFunctions::IsAnEnemy( DIA_Call_ABC& call, const MIL_Agent
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
         return;
     }
     
@@ -233,6 +240,7 @@ void DEC_KnowledgeAgentFunctions::IsMoving( DIA_Call_ABC& call, const MIL_AgentP
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -252,6 +260,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivingAgent( DIA_Call_ABC& call, const M
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );

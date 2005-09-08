@@ -1,0 +1,159 @@
+// *****************************************************************************
+//
+// $Created: JVT 2004-08-03 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Rc/MIL_RC.cpp $
+// $Author: Nld $
+// $Modtime: 4/07/05 16:03 $
+// $Revision: 18 $
+// $Workfile: MIL_RC.cpp $
+//
+// *****************************************************************************
+
+#include "MIL_pch.h"
+
+#include "MIL_RC.h"
+
+$AGR_MIL_RCs_Includes$
+
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+
+MIL_RC::T_RCMap MIL_RC::rcs_;
+
+// Statics
+const MIL_RC*                                   MIL_RC::pRcMissionImpossible_                  = 0;
+const MIL_RC*                                   MIL_RC::pRcEnCoursDeFranchissement_            = 0;
+const MIL_RC*                                   MIL_RC::pRcANouveauDisponibleApresReparation_  = 0;
+const MIL_RC*                                   MIL_RC::pRcMaterielRepareSurPlace_             = 0;
+const MIL_RC*                                   MIL_RC::pRcMaterielRetourDeMaintenance_        = 0;
+const MIL_RC_ObservationTirIndirect*            MIL_RC::pRcObservationTirIndirect_             = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillement_              = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationSanitaire_         = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationMateriel_          = 0;
+const MIL_RC*                                   MIL_RC::pRcDecesBlesse_                        = 0;
+const MIL_RC*                                   MIL_RC::pRcDecesBlessePendantTransport_        = 0;
+const MIL_RC*                                   MIL_RC::pRcDecesBlessePendantHospitalisation_  = 0;
+const MIL_RC*                                   MIL_RC::pRcTirDansZoneInterdite_               = 0;
+const MIL_RC_TirSurCampAmi*                     MIL_RC::pRcTirSurCampAmi_                      = 0;
+const MIL_RC_TireParCampAmi*                    MIL_RC::pRcTireParCampAmi_                     = 0;
+const MIL_RC_TirSurCampNeutre*                  MIL_RC::pRcTirSurCampNeutre_                   = 0;
+const MIL_RC_TireParCampNeutre*                 MIL_RC::pRcTireParCampNeutre_                  = 0;
+const MIL_RC_TirSurCivil*                       MIL_RC::pRcTirSurCivil_                        = 0;
+const MIL_RC_TireParCivil*                      MIL_RC::pRcTireParCivil_                       = 0;
+const MIL_RC*                                   MIL_RC::pRcDestructionPC_                      = 0;
+const MIL_RC_UniteDecontaminee*                 MIL_RC::pRcUniteDecontaminee_                  = 0;
+const MIL_RC_AllocationConsentieBientotEpuisee* MIL_RC::pRcAllocationConsentieBientotEpuisee_  = 0;
+const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_                    = 0;
+const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                   = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_        = 0;
+const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_                = 0;
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC::Initialize
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC::Initialize()
+{
+    MT_LOG_INFO_MSG( "Initializing RCs" );
+
+    $AGR_MIL_RCs_Initialize$
+
+    pRcRavitaillementDotationsEffectue_   =                                            rcs_[ eRC_RavitaillementDotationsEffectue   ];
+    pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
+    pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
+    pRcANouveauDisponibleApresReparation_ =                                            rcs_[ eRC_ANouveauDisponibleApresReparation ];
+    pRcMaterielRepareSurPlace_            =                                            rcs_[ eRC_MaterielRepareSurPlace            ];
+    pRcMaterielRetourDeMaintenance_       =                                            rcs_[ eRC_MaterielRetourDeMaintenance       ];
+    pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
+    pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];
+    pRcDemandeRavitaillement_             =                                            rcs_[ eRC_DemandeRavitaillement             ];
+    pRcDemandeEvacuationSanitaire_        =                                            rcs_[ eRC_DemandeEvacuationSanitaire        ];
+    pRcDemandeEvacuationMateriel_         =                                            rcs_[ eRC_DemandeEvacuationMateriel         ];
+    pRcDecesBlesse_                       =                                            rcs_[ eRC_DecesBlesse                       ];
+    pRcDecesBlessePendantTransport_       =                                            rcs_[ eRC_DecesBlessePendantTransport       ];
+    pRcDecesBlessePendantHospitalisation_ =                                            rcs_[ eRC_DecesBlessePendantHospitalisation ];
+    pRcTirDansZoneInterdite_              =                                            rcs_[ eRC_TirDansZoneInterdite              ];
+    pRcTirSurCampAmi_                     = (MIL_RC_TirSurCampAmi*)                    rcs_[ eRC_TirSurCampAmi                     ];
+    pRcTireParCampAmi_                    = (MIL_RC_TireParCampAmi*)                   rcs_[ eRC_TireParCampAmi                    ];
+    pRcTirSurCampNeutre_                  = (MIL_RC_TirSurCampNeutre*)                 rcs_[ eRC_TirSurCampNeutre                  ];
+    pRcTireParCampNeutre_                 = (MIL_RC_TireParCampNeutre*)                rcs_[ eRC_TireParCampNeutre                 ];
+    pRcTirSurCivil_                       = (MIL_RC_TirSurCivil*)                      rcs_[ eRC_TirSurCivil                       ];
+    pRcTireParCivil_                      = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                      ];
+    pRcAllocationConsentieBientotEpuisee_ = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee ];
+    pRcMissionImpossible_                 =                                            rcs_[ eRC_MissionImpossible                 ];
+    pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];
+    pRcPlusDeCarburant_                   =                                            rcs_[ eRC_PlusDeCarburant                   ];
+    pRcTerrainDifficile_                  =                                            rcs_[ eRC_TerrainDifficile                  ];
+
+    // Internes Sim                                       
+//    rcs_[ eRC_MissionTerminee                            ] = new MIL_RC_MissionTerminee                ( eRC_MissionTerminee );      
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC::Terminate
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC::Terminate()
+{
+    // Voir pb RC statiques et non statiques pour destruction
+}
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC constructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+MIL_RC::MIL_RC( E_RC nRC, int nAsnID )
+    : nRC_   ( nRC )
+    , nAsnID_( nAsnID )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC constructor
+// Created: NLD 2004-10-18
+// -----------------------------------------------------------------------------
+MIL_RC::MIL_RC( E_RC nRC )
+    : nRC_   ( nRC )
+    , nAsnID_( (int)-1 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC destructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+MIL_RC::~MIL_RC()
+{
+}
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC destructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC::Send( const MIL_AgentPion& sender, E_RcType nRcType, DIA_Parameters& /*parameters*/ ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nRcType );
+    asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC destructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC::Send( const MIL_Automate& sender, E_RcType nRcType, DIA_Parameters& /*parameters*/ ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nRcType );
+    asnMsg.Send();
+}

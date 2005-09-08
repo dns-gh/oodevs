@@ -45,6 +45,7 @@ public:
     //@{
     virtual std::string ASNInitialisationCode    ( const AGR_Member& member ) const;
     virtual std::string SerializationCode        ( const AGR_Member& member ) const;
+    virtual std::string MOS2RCCode               ( const std::string& strAsnParam ) const;
     //@}
 
 private:

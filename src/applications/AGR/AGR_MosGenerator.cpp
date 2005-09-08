@@ -24,6 +24,7 @@
 #include "AGR_MosGenerator.h"
 #include "AGR_Workspace.h"
 #include "AGR_Mission.h"
+#include "AGR_RC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AGR_MosGenerator constructor
@@ -54,6 +55,7 @@ void AGR_MosGenerator::Generate( const AGR_Workspace& workspace, const std::stri
     GenerateMosMissionHeaderFiles( workspace, strOutputPath );
     GenerateMosMissionCppFiles   ( workspace, strOutputPath );
     GenerateMosMissionConverter  ( workspace, strOutputPath );
+    GenerateMosRcs               ( workspace, strOutputPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,4 +174,29 @@ void AGR_MosGenerator::GenerateMosMissionConverter( const AGR_Workspace& workspa
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent,  strOutputPath + "MOS_Light/MOS_MissionConverter.cpp" );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AGR_MosGenerator::GenerateMosRcs
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+void AGR_MosGenerator::GenerateMosRcs( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
+{
+    std::string strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "MOS_RC.cpp.skel", strBaseContent );
+
+    std::stringstream strTmp;
+
+    const AGR_Workspace::T_RCVector& rcs = workspace.GetRCs();
+    for( AGR_Workspace::CIT_RCVector it = rcs.begin(); it != rcs.end(); ++it )
+    {
+        const AGR_RC& rc = **it;
+
+        strTmp << "        ";
+        strTmp << rc.GenerateMOS();
+    }
+
+    workspace.ReplaceInString( strBaseContent, "$AGR_MOS_RC$", strTmp.str() );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/MOS_Light/MOS_RC.cpp" );
 }

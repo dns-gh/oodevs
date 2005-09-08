@@ -112,7 +112,7 @@ $ResetMembers$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::Serialize
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_$MissionName$::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -127,7 +127,7 @@ $SerializeMembers$
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_$MissionName$::CleanAfterSerialization
-// Created: $TIME$
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

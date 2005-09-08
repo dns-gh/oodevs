@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: $TIME$
+// Generated: 
 // =============================================================================
 class Mission_Pawn_$MissionName$ : public Mission_Pawn_ABC
 {

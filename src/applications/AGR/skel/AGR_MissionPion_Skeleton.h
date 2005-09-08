@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: $TIME$ $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:34 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //*****************************************************************************
-// Created: $TIME$
+// Created: 
 //*****************************************************************************
 class MIL_PionMission_$MissionName$: public MIL_PionMission_ABC
 {

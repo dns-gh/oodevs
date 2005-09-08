@@ -13,7 +13,7 @@
 
 #include "MIL_SiteDecontamination.h"
 #include "MIL_RealObjectType.h"
-#include "Entities/RC/MIL_RC_PionDecontamine.h"
+#include "Entities/RC/MIL_RC_UniteDecontaminee.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
@@ -80,7 +80,7 @@ void MIL_SiteDecontamination::ProcessAgentInside( MIL_Agent_ABC& agent )
         {
             const T_AgentSet& animators = GetAnimators();
             for( CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
-                MIL_RC::pRcPionDecontamine_->Send( **it, MIL_RC::eRcTypeOperational, agent );
+                MIL_RC::pRcUniteDecontaminee_->Send( **it, MIL_RC::eRcTypeOperational, agent );
         }
         bHasDecontaminated_ = true;
     }

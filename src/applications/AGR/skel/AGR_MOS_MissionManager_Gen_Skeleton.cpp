@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: APE $TIME$ $
+// $Created: APE $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_MissionManager_Gen_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 28/04/04 16:53 $

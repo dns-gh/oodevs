@@ -70,3 +70,16 @@ std::string AGR_KnowledgeObjectType::SerializationCode( const AGR_Member& member
          + ", " + member.OwnerClass().KnowledgeAccessor() + " );\n";
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: AGR_KnowledgeObjectType::MOS2RCCode
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+std::string AGR_KnowledgeObjectType::MOS2RCCode( const std::string& strAsnParam ) const
+{
+    std::stringstream strTmp;
+    strTmp << "ObjectKnowledgeLink( "
+           << strAsnParam
+           << " )";
+    return strTmp.str();
+}

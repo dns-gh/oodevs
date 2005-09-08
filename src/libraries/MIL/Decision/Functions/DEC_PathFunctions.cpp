@@ -35,7 +35,7 @@ void DEC_PathFunctions::CreatePathToPoint( DIA_Call_ABC& call, MIL_AgentPion& ca
 {
     assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
 
-    MT_Vector2D* pEnd        = call.GetParameter( 0 ).ToUserPtr( pEnd   );
+    MT_Vector2D* pEnd = call.GetParameter( 0 ).ToUserPtr( pEnd   );
 
     DEC_PathType pathType( (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId() );
 

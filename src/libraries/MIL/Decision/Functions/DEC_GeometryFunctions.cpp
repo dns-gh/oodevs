@@ -601,7 +601,7 @@ void DEC_GeometryFunctions::ComputeSupportPosition( DIA_Call_ABC& call, const MI
     T_PointSet collisions( cmpLeft );
 
     fuseau.IntersectWithBorder( line1, collisions );
-    fuseau.IntersectWithBorder( line1, collisions );
+    fuseau.IntersectWithBorder( line2, collisions );
     if( collisions.empty() )
     {
         *pResult = vSupportPos1; //$$$ POURRI
@@ -938,7 +938,10 @@ void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const M
     if( bResult )
         call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypeListePoints() );
     else
+    {
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeListePoints() );
         delete pResult;
+    }
 }
 
 // =============================================================================

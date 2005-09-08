@@ -25,6 +25,7 @@
 #include "AGR_Workspace.h"
 #include "AGR_Mission.h"
 #include "AGR_FragOrder.h"
+#include "AGR_RC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AGR_HalGenerator constructor
@@ -56,6 +57,7 @@ void AGR_HalGenerator::Generate( const AGR_Workspace& workspace, const std::stri
     GenerateMissionEnumFile  ( workspace, strOutputPath );
     GenerateMissionScriptFile( workspace, strOutputPath );
     GenerateOrderConduiteScriptFile( workspace, strOutputPath );
+    GenerateRCEnumFile( workspace, strOutputPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,3 +150,29 @@ void AGR_HalGenerator::GenerateOrderConduiteScriptFile( const AGR_Workspace& wor
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "Data_Moteur/Types_OrdresConduite.hal" );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: AGR_HalGenerator::GenerateRCEnumFile
+// Created: NLD 2005-09-07
+// -----------------------------------------------------------------------------
+void AGR_HalGenerator::GenerateRCEnumFile( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
+{
+    // MIL_RC.h
+    std::string strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "Types_RC.hal.skel", strBaseContent );
+
+    std::stringstream strTmp;
+
+    const AGR_Workspace::T_RCVector& rcs = workspace.GetRCs();
+    for( AGR_Workspace::CIT_RCVector it = rcs.begin(); it != rcs.end(); ++it )
+    {
+        const AGR_RC& rc = **it;
+
+        strTmp << "    ";
+        strTmp << rc.GenerateHALEnum();
+        
+    }   
+    strTmp << "    eNbr" << std::endl;
+    workspace.ReplaceInString( strBaseContent, "$AGR_HAL_EnumRcs$", strTmp.str() );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/Data_Moteur/Types_RC.hal" );
+}

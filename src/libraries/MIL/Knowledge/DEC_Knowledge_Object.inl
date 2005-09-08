@@ -97,7 +97,7 @@ bool DEC_Knowledge_Object::IsDissociatedFromRealObject() const
 inline
 bool DEC_Knowledge_Object::IsBypassed() const
 {
-    return nBypassPercentage_ != 0;    
+    return nBypassPercentage_ >= 100;
 }
 
 // -----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // *******************************************************************************************
 // Pion mission types for DirectIA
-// Created : 2005-08-19 - 11:30:56
+// Created : 
 // *******************************************************************************************
 
 typedef struct T_Mission_Pion_ALAT_EvacuationSanitaire : T_Mission_Pion

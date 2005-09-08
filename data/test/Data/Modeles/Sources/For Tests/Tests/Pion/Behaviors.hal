@@ -27,8 +27,11 @@ default Default()
     DEC_DebugAffichePoints( points );
     */
 
-//    DEC_Warning( eRC_Trace, "cock" );
-//    DEC_RC( eRC_Trace, "cock" );
+    // DEC_Warning( eRC_Trace, "cock" );
+    // DEC_RC( eRC_Trace, "cock" );
+    
+    // DEC_RC( eRC_ReussiteRenforcement, myself, myself.automate_ );
+    
 
     // DEC_Debug( FloatToString( DIA_Size( DEC_Renforts() ) ) + " Renforts" );
 //    DEC_Agent_ChangeEtatRapportDeForce   ( eEtatRapportDeForce_Neutre );
@@ -490,6 +493,12 @@ behavior MIS_Pion_Test_CreateBypass( T_Mission_Pion_Test_CreateBypass mission, i
                 DEC_Debug( "Objet prepare" );
             else
                 DEC_Debug( "Objet non prepare" );
+                
+            if( DEC_ConnaissanceObjet_EstContourne( mission.objet_, nFusse ) )
+                DEC_Debug( "Objet contourné" );
+            else
+                DEC_Debug( "Objet non contourné" );
+            
         }
         
         //DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );

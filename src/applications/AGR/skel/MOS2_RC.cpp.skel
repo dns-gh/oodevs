@@ -1,0 +1,152 @@
+//*****************************************************************************
+//
+// $Created: NLD 2002-07-15 $
+// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_RC.cpp $
+// $Author: Nld $
+// $Modtime: 4/07/05 12:33 $
+// $Revision: 16 $
+// $Workfile: MOS_RC.cpp $
+//
+//*****************************************************************************
+
+#ifdef __GNUG__
+#    pragma implementation
+#endif
+
+#include "MOS_Light2_pch.h"
+#include "MOS_RC.h"
+
+#include "MOS_App.h"
+#include "MOS_AgentManager.h"
+#include "MOS_Agent.h"
+
+#ifndef MOS_USE_INLINE
+#   include "MOS_RC.inl"
+#endif
+
+
+//-----------------------------------------------------------------------------
+// Name: MOS_RC constructor
+// Created: NLD 2002-07-16
+//-----------------------------------------------------------------------------
+MOS_RC::MOS_RC( MOS_Agent& agent )
+    : MOS_Report_ABC( agent.GetPos() )
+    , agent_        ( agent )
+{
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MOS_RC destructor
+// Created: NLD 2002-07-16
+//-----------------------------------------------------------------------------
+MOS_RC::~MOS_RC()
+{
+}
+
+//-----------------------------------------------------------------------------
+// Name: MOS_RC::Initialize
+// Created: NLD 2002-10-07
+//-----------------------------------------------------------------------------
+void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
+{
+    std::stringstream strMsg;
+    switch( asnMsg.cr.t )
+    {
+    
+    $AGR_MOS2_RC$
+/*    case T_MsgCR_cr_cr_preparation_mission                           : 
+        {
+            if( asnMsg.cr.u.cr_preparation_mission->m.delaiPresent )
+                strMsg << "Preparation mission - Délai " << asnMsg.cr.u.cr_preparation_mission->delai << " minutes";
+            else
+                strMsg << "Preparation mission - Pas de délai";
+            break;
+        }  */
+    default:
+        assert( false );
+    }
+
+    strTitle_ = strMsg.str();
+}
+
+
+
+//-----------------------------------------------------------------------------
+// Name: MOS_RC::Initialize
+// Created: NLD 2003-04-04
+//-----------------------------------------------------------------------------
+void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
+{
+    strTitle_ = "Attente d'ordre";
+
+    for( uint i = 0; i < asnMsg.ordres_conduite.n; ++i )
+    {
+        uint nOrderConduiteID;
+        switch( asnMsg.ordres_conduite.elem[i].t  )
+        {
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_attendre_se_poster     : nOrderConduiteID = eOrdreConduite_AttendreSePoster                            ; break;
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_poursuivre             : nOrderConduiteID = eOrdreConduite_Poursuivre                                  ; break;
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_decrocher              : nOrderConduiteID = eOrdreConduite_Decrocher                              ; break;
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_deboucher              : nOrderConduiteID = eOrdreConduite_Deboucher                              ; break;
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_executer_tir      : nOrderConduiteID = eOrdreConduite_Pion_ExecuterTir                            ; break;
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_contourner        : nOrderConduiteID = eOrdreConduite_Pion_Contourner                             ; break;
+            case T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_pion_activer_obstacle  : nOrderConduiteID = eOrdreConduite_Pion_ActiverObstacle                        ; break;
+            default:
+                assert( false );
+        }
+        fragOrderVector_.push_back( nOrderConduiteID );
+    }
+}
+
+
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_RC::ObjectKnowledgeLink
+/** @param  nId 
+    @return 
+*/
+// Created: APE 2004-09-09
+// -----------------------------------------------------------------------------
+std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
+{
+    std::stringstream str;
+    str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
+    return str.str();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_RC::AgentKnowledgeLink
+/** @param  nId 
+    @return 
+*/
+// Created: APE 2004-09-09
+// -----------------------------------------------------------------------------
+std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
+{
+    std::stringstream str;
+    str << "<a href=\"AgentKnowledge:" << nId << "\">" << nId << "</a>";
+    return str.str();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_RC::AgentLink
+/** @param  nId 
+    @return 
+    */
+// Created: APE 2004-09-09
+// -----------------------------------------------------------------------------
+std::string MOS_RC::AgentLink( ASN1T_OID nId )
+{
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
+    if( pAgent == 0 )
+        return std::string( " !Agent non trouvé! " );
+
+    std::stringstream str;
+    str << "<a href=\"Agent:" << nId << "\">" << pAgent->GetName() << "</a>";
+    return str.str();
+
+}

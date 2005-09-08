@@ -58,14 +58,15 @@ void DEC_GeometryFunctions::SplitLocalisationInParts( DIA_Call_ABC& diaCall, con
 
     assert( pLocalisation );
 
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( diaCall.GetResult() );
+
     TER_Localisation clippedLocalisation;
     if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
+        diaObjectList.SetValueUserType( T_LocalisationPtrVector(), DEC_Tools::GetTypeLocalisation() );
         return; 
     }
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( diaCall.GetResult() );
     SplitLocalisation( *pLocalisation, nNbrParts, diaReturnCode, diaObjectList );
 }
 
@@ -85,17 +86,18 @@ void DEC_GeometryFunctions::SplitLocalisationInSurfaces( DIA_Call_ABC& diaCall, 
     DIA_Variable_ABC& diaReturnCode = diaParams[ 2 ];
     
     assert( pLocalisation );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( diaCall.GetResult() );
     
     TER_Localisation clippedLocalisation;
     if ( !ClipLocalisationInFuseau( *pLocalisation, caller.GetFuseau(), clippedLocalisation ) )
     {
         diaReturnCode.SetValue( eError_LocalisationPasDansFuseau );
+        diaObjectList.SetValueUserType( T_LocalisationPtrVector(), DEC_Tools::GetTypeLocalisation() );
         return;
     }
     
     const uint nNbrParts = std::max( (uint)1, (uint)( pLocalisation->GetArea() / rAverageArea ) );
-    
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( diaCall.GetResult() );
     SplitLocalisation( *pLocalisation, nNbrParts, diaReturnCode, diaObjectList );
 }
 
@@ -309,9 +311,10 @@ void DEC_GeometryFunctions::ComputeFrontestAgent( DIA_Call_ABC& call, const T& )
     
     const T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();
     
-    if ( pions.empty() )
+    if( pions.empty() )
     {
         assert( !"La liste ne doit pas etre vide" );
+        call.GetResult().SetValue( *(DEC_RolePion_Decision*)0 );
         return;
     }
     
@@ -337,6 +340,7 @@ void DEC_GeometryFunctions::ComputeBackestAgent( DIA_Call_ABC& call, const T& )
     if ( pions.empty() )
     {
         assert( !"La liste ne doit pas etre vide" );
+        call.GetResult().SetValue( *(DEC_RolePion_Decision*)0 );
         return;
     }
     
@@ -367,6 +371,7 @@ void DEC_GeometryFunctions::ComputePointBeforeLima( DIA_Call_ABC& call, const T&
     if( !pLima )
     {
         diaReturnCode.SetValue( false );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
     }
 

@@ -55,6 +55,9 @@ public:
     std::string ResetCode                      ( const AGR_Member& member ) const;
     std::string SerializationCleaningCode      ( const AGR_Member& member ) const;
 
+    virtual std::string MOS2RCCode                     ( const std::string& strAsnParam ) const;
+    virtual std::string MOSRCCode                      ( const std::string& strAsnParam ) const;
+
     virtual std::string ASNInitialisationCode          ( const AGR_Member& member ) const;
     virtual std::string MosInitialisationCode          ( const AGR_Member& member ) const;
     virtual std::string Mos2InitialisationCode         ( const AGR_Member& member ) const;
@@ -69,6 +72,8 @@ public:
     //! @name Accessors
     //@{
     const std::string& ASNType() const;
+    const std::string& GetDIAType() const;
+    const std::string& GetHumanName() const;
     //@}
 
 private:
@@ -85,6 +90,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string strHumanName_;
     std::string strAsnType_;
     std::string strFunctionSuffix_;
     std::string strCPPType_;

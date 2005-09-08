@@ -1,32 +1,32 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_PosteFaceEni.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Rc/MIL_RC_UniteNeutreReconnue.h $
 // $Author: Nld $
 // $Modtime: 9/03/05 15:20 $
 // $Revision: 3 $
-// $Workfile: MIL_RC_PosteFaceEni.h $
+// $Workfile: MIL_RC_UniteNeutreReconnue.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_RC_PosteFaceEni_h_
-#define __MIL_RC_PosteFaceEni_h_
+#ifndef __MIL_RC_UniteNeutreReconnue_h_
+#define __MIL_RC_UniteNeutreReconnue_h_
 
 #include "MIL.h"
 
 #include "MIL_RC.h"
 
 // =============================================================================
-// @class  MIL_RC_PosteFaceEni
+// @class  MIL_RC_UniteNeutreReconnue
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_RC_PosteFaceEni : public MIL_RC
+class MIL_RC_UniteNeutreReconnue : public MIL_RC
 {
-    MT_COPYNOTALLOWED( MIL_RC_PosteFaceEni )
+    MT_COPYNOTALLOWED( MIL_RC_UniteNeutreReconnue )
 
 public:   
-    MIL_RC_PosteFaceEni( E_RC nRC, int nAsnID );
-    virtual ~MIL_RC_PosteFaceEni();
+    MIL_RC_UniteNeutreReconnue( E_RC nRC, int nAsnID );
+    virtual ~MIL_RC_UniteNeutreReconnue();
     
     //! @name Operations
     //@{
@@ -35,4 +35,4 @@ public:
     //@}
 };
 
-#endif // __MIL_RC_PosteFaceEni_h_
+#endif // __MIL_RC_UniteNeutreReconnue_h_

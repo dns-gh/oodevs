@@ -12,6 +12,7 @@
 #include "AGR_FichesMissionsGenerator.h"
 #include "AGR_TesterMissionGenerator.h"
 #include "AGR_TesterProjectGenerator.h"
+#include "AGR_MilRCGenerator.h"
 
 #include "MT_Tools/MT_Version.h"
 #include <windows.h>
@@ -37,8 +38,15 @@ int main( int /*argc*/, char** /*argv*/ )
 
         std::cout << "Destroying old directories" << std::endl;
         const std::string strOutputPath = "./Generated/";
-        boost::filesystem::remove_all( "agr_tmp" );
-        boost::filesystem::remove_all( strOutputPath );        
+        try
+        {
+            boost::filesystem::remove_all( "agr_tmp" );
+            boost::filesystem::remove_all( strOutputPath );        
+        }
+        catch( std::exception& e )
+        {
+            std::cout << e.what() << std::endl;
+        }
 
         std::cout << "Generating XSD files from ASN files" << std::endl;
         MT_MakeDir( "agr_tmp" );
@@ -61,6 +69,7 @@ int main( int /*argc*/, char** /*argv*/ )
         generators.push_back( new AGR_MilMissionGenerator() );
         generators.push_back( new AGR_MilFragOrderGenerator() );
         generators.push_back( new AGR_MilProjectGenerator() );
+        generators.push_back( new AGR_MilRCGenerator() );
         generators.push_back( new AGR_Mos2Generator() );
         generators.push_back( new AGR_HalGenerator() );
         generators.push_back( new AGR_MosGenerator() );
@@ -69,6 +78,7 @@ int main( int /*argc*/, char** /*argv*/ )
         generators.push_back( new AGR_FichesMissionsGenerator() );
         generators.push_back( new AGR_TesterMissionGenerator() );
         generators.push_back( new AGR_TesterProjectGenerator() );
+        
 
         MT_MakeDir( strOutputPath );        
         for( std::vector< AGR_Generator_ABC* >::iterator it = generators.begin(); it != generators.end(); ++it )

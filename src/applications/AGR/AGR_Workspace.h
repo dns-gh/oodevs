@@ -26,6 +26,9 @@ class AGR_Member;
 class AGR_Type_ABC;
 class AGR_FragOrder;
 class AGR_Class;
+class AGR_TypeRC;
+class AGR_RC;
+
 // =============================================================================
 /** @class  AGR_Workspace
     @brief  AGR_Workspace
@@ -54,6 +57,9 @@ public:
 
     typedef std::vector< AGR_FragOrder* >           T_FragOrder_Vector;
     typedef T_FragOrder_Vector::const_iterator    CIT_FragOrder_Vector;
+
+    typedef std::vector< const AGR_RC* > T_RCVector;
+    typedef T_RCVector::const_iterator   CIT_RCVector;
     //@}
 
     //! @name Accessors
@@ -61,12 +67,16 @@ public:
     const T_Mission_Vector& Missions() const;
     const T_FragOrder_Vector& FragOrders() const;
     const T_Enumeration_Vector& Enums() const;
+    const T_RCVector&           GetRCs() const;
     //@}
 
     //! @name Operations
     //@{
     AGR_Member* CreateMember( const std::string& strName, const std::string& strASNType, const AGR_Class& ownerClass, bool bOptional ) const;
     AGR_Member* CreateLocalTypeMember( const std::string& strMissionName, const std::string& strMemberName, MT_XXmlInputArchive& input, const AGR_Class& ownerClass, bool bOptional ) const;
+
+    const AGR_Type_ABC* FindType  ( const std::string& strName ) const;
+    const AGR_TypeRC*   FindTypeRC( const std::string& strType ) const;
     //@}
 
     //! @name Tools
@@ -90,6 +100,9 @@ private:
 
     typedef std::map< std::string, std::string >      T_StringMap;
     typedef T_StringMap::const_iterator             CIT_StringMap;
+
+    typedef std::map< std::string, const AGR_TypeRC* > T_TypeRCMap;
+    typedef T_TypeRCMap::const_iterator                CIT_TypeRCMap;
     //@}
 
     //! @name Helpers
@@ -97,7 +110,6 @@ private:
     void Read( MT_XXmlInputArchive& input, const std::string& strModuleName );
     AGR_Mission* FindMission( const std::string& strFullName ) const;
     AGR_FragOrder* FindFragOrder( const std::string& strName ) const;
-    const AGR_Type_ABC* FindType( const std::string& strName ) const;
     
     void ReadImport( MT_XXmlInputArchive& input, const std::string& strModuleName );
     void ReadSimpleType( MT_XXmlInputArchive& input, const std::string& strModuleName );
@@ -113,9 +125,16 @@ private:
     T_TypeVector typeList_;
     T_String_Set parsedFileSet_;
 
+    T_TypeRCMap typeRCs_;
+    T_RCVector  rcs_;
+
     T_StringMap lowNameMap_;
     T_StringMap demandLowNameMap_;
+
+    bool bMsgCRParsed_; //$$$ N'importe quoi
     //@}
 };
+
+#include "AGR_Workspace.inl"
 
 #endif // __AGR_Workspace_h_

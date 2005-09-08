@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: AGR $TIME$
+// $Created: AGR $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderConduite_Pion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 19/10/04 14:30 $
@@ -19,7 +19,7 @@
 /** @class  MIL_OrderConduite_$OrderName$
     @brief  MIL_OrderConduite_$OrderName$
 */
-// Created: AGR $TIME$
+// Created: AGR 
 // =============================================================================
 class MIL_OrderConduite_$OrderName$ : public MIL_OrderConduite_ABC
 {

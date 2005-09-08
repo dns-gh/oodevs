@@ -7,7 +7,7 @@ TODO
     - CheckPoints :
         -> renforcements
         -> transports       
-    - MOS_Light2 : création magique des rotas/itineraire log  
+²    - MOS_Light2 : création magique des rotas/itineraire log  
     - Virer les types de terrain 'bord de' dans ADN
     - Bugs : suppression des consignes maintenance/santé quand un des automates de la chaine n'a pas de supérieur (Cf. Suppression des liens logistiques d'un TC2 ...)
     
@@ -21,9 +21,22 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Bug fix : valeurs de retour de certaines fonctions DEC quand errorcode != noerror
+    - NLD - RCs : mise à jour - La majorité du code lié aux RCs est maintenant génèré par AGR (MOS_Lights / DIA / MIL)
+    - NLD - La fonction 'Objet_EstContourne' ne renvoit 'true' que quand le pourcentage de 'contournement' de l'objet vaut 100% (et non plus >0%)
+
+Version 0.118.3 [02/09/2005] - Codename 'bDIAMustBePropagated'
+    - NLD - DIA - Bug fix : mauvaise propagation et appel des 'on spontaneous end' après DIA_DeactivateOrder() quand les comportements concernés n'ont été évalués qu'une fois (state = eBeginning)
+    - NLD - Changement des asserts() de DEC_Path ...
+    
+Version 0.118.2 [02/09/2005] - Codename 'ça dérape !'
     - NLD - Bug fix : assert() dans ASN quand sauvegarde juste apres un changement d'état des humains suite à recomplétement total
+    - NLD - Bug fix : assert() chaine santé, quand un humain est embarqué directement dans une ambulance (pas de passage par état 'AmbulanceGoingTo')
+    - NLD/JVT - Bug fix : crash lié à mauvaise synchronisation entre destruction des objets et maj connaissance (crash très rare uniquement lors de la sauvegarde)
+    - AGE - Bug fix - assert() dans pathfind (AddResultPoint())
     - SBO - ADN : Bug Fix : Les pions PC sont maintenant listés dans la table de composition des automates
     - SBO - MOS_Light2 : Ajout d'une fenetre "résultat de tir" pour chaque pion dans le volet "rapport"
+    - NLD/JVT - Bug fix : retour correct des fonctions renvoyant des 'UserTypes' avec un code d'erreur 
 
 Version 0.118.1 [31/08/2005] - Codename 'Enlarge your DIA_Size()'
     - NLD - Plus de memory leak dans la fonction DEC_Geometrie_DetruireListeLocalisations()

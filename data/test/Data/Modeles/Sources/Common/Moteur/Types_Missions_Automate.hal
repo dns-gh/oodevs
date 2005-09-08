@@ -1,6 +1,6 @@
 // *******************************************************************************************
 // Automate mission types for DirectIA
-// Created : 2005-08-19 - 11:30:56
+// Created : 
 // *******************************************************************************************
 
 typedef struct T_Mission_Automate_ABC_ArmerPointDeControle : T_Mission_Automate

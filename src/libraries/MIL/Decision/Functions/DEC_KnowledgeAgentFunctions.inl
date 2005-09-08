@@ -24,6 +24,7 @@ void DEC_KnowledgeAgentFunctions::GetSpeed( DIA_Call_ABC& call, const T& caller 
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
@@ -60,6 +61,7 @@ void DEC_KnowledgeAgentFunctions::IsFlying( DIA_Call_ABC& call, const T& caller 
     if ( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
@@ -89,6 +91,7 @@ void DEC_KnowledgeAgentFunctions::IsSurrendered( DIA_Call_ABC& call, const T& ca
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -107,6 +110,7 @@ void DEC_KnowledgeAgentFunctions::IsPrisoner( DIA_Call_ABC& call, const T& calle
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -125,6 +129,7 @@ void DEC_KnowledgeAgentFunctions::IsRefugee( DIA_Call_ABC& call, const T& caller
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -143,6 +148,7 @@ void DEC_KnowledgeAgentFunctions::IsRefugeeManaged( DIA_Call_ABC& call, const T&
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -161,6 +167,7 @@ void DEC_KnowledgeAgentFunctions::IsMilita( DIA_Call_ABC& call, const T& caller 
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
         return;
     }
     
@@ -217,6 +224,7 @@ void DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( DIA_Call_ABC& call,
     if( !pSource || !pTarget )
     {
         call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
         return;
     }
     call.GetParameter( 2 ).SetValue( eQueryValid );
@@ -238,6 +246,7 @@ void DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( DIA_Call_ABC& call, cons
     if( !pKnowledge )
     {
         call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
         return;
     }
     call.GetParameter( 2 ).SetValue( eQueryValid );
