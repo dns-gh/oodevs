@@ -24,8 +24,10 @@
 #endif
 
 #include "MT_ValuedRichListViewItem.h"
+#include "MOS_FireResult.h"
 
 class MOS_Agent;
+class MOS_Object_ABC;
 
 // =============================================================================
 /** @class  MOS_FireResultListView
@@ -51,18 +53,27 @@ public:
 
     //! @name Operations
     //@{
-    void SetAgent( MOS_Agent* pAgent );
+    void SetAgent ( MOS_Agent*      pAgent  );
+    void SetObject( MOS_Object_ABC* pObject );
     //@}
 
 private slots:
     //! @name slots
     //@{
-    void OnFireResultCreated( MOS_Agent& agent );
+    void OnAgentConflictEnded( MOS_Agent&      agent  );
+    void OnObjectExplosion   ( MOS_Object_ABC& object );
     //@}
 
 private:
-    MOS_Agent*     pAgent_;
-    QListViewItem* pPopupItem_;
+    //! @name Operations
+    //@{
+    void OnFireResultCreated( const T_FireResults& fireResults );
+    //@}
+
+private:
+    MOS_Agent*      pAgent_;
+    MOS_Object_ABC* pObject_;
+    QListViewItem*  pPopupItem_;
 };
 
 #include "MOS_FireResultListView.inl"

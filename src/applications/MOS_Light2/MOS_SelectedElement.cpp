@@ -30,9 +30,9 @@
 #include "MOS_Agent.h"
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"
-#include "MOS_DynaObject_ABC.h"
+#include "MOS_Object_ABC.h"
 #include "MOS_AgentKnowledge.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement constructor
@@ -89,10 +89,10 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Team& team )
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_SelectedElement::MOS_SelectedElement( MOS_DynaObject_ABC& object )
+MOS_SelectedElement::MOS_SelectedElement( MOS_Object_ABC& object )
 {
     this->Init();
-    pDynaObject_ = &object;
+    pObject_ = &object;
 }
 
 
@@ -111,14 +111,14 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_AgentKnowledge& agentKnowledge )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement constructor
-/** @param  dynaObjectKnowledge 
+/** @param  ObjectKnowledge 
 */
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-MOS_SelectedElement::MOS_SelectedElement( MOS_DynaObjectKnowledge& dynaObjectKnowledge )
+MOS_SelectedElement::MOS_SelectedElement( MOS_ObjectKnowledge& ObjectKnowledge )
 {
     this->Init();
-    pDynaObjectKnowledge_ = &dynaObjectKnowledge;
+    pObjectKnowledge_ = &ObjectKnowledge;
 }
 
 
@@ -168,9 +168,9 @@ void MOS_SelectedElement::Init()
     pAgent_               = 0;
     pGtia_                = 0;
     pTeam_                = 0;
-    pDynaObject_          = 0;
+    pObject_          = 0;
     pAgentKnowledge_      = 0;
-    pDynaObjectKnowledge_ = 0;
+    pObjectKnowledge_ = 0;
     pRC_                  = 0;
     pLine_                = 0;
     nLinePoint_           = -1;
@@ -185,9 +185,9 @@ bool MOS_SelectedElement::operator==( const MOS_SelectedElement& rhs ) const
     return pAgent_               == rhs.pAgent_
         && pGtia_                == rhs.pGtia_
         && pTeam_                == rhs.pTeam_
-        && pDynaObject_          == rhs.pDynaObject_
+        && pObject_          == rhs.pObject_
         && pAgentKnowledge_      == rhs.pAgentKnowledge_
-        && pDynaObjectKnowledge_ == rhs.pDynaObjectKnowledge_
+        && pObjectKnowledge_ == rhs.pObjectKnowledge_
         && pRC_                  == rhs.pRC_
         && pLine_                == rhs.pLine_
         && nLinePoint_           == rhs.nLinePoint_;
@@ -207,11 +207,11 @@ void MOS_SelectedElement::Dump()
         str << " gtia : "             << pGtia_->GetID()                << "; ";
     if( pTeam_ )
         str << " team : "             << pTeam_->GetID()                << "; ";
-    if( pDynaObject_ )
-        str << " object : "           << pDynaObject_->GetID()          << "; ";
+    if( pObject_ )
+        str << " object : "           << pObject_->GetID()          << "; ";
     if( pAgentKnowledge_ )
         str << " agent knowledge : "  << pAgentKnowledge_->GetID()      << "; ";
-    if( pDynaObjectKnowledge_ )
-        str << " object knowledge : " << pDynaObjectKnowledge_->GetID() << "; ";
+    if( pObjectKnowledge_ )
+        str << " object knowledge : " << pObjectKnowledge_->GetID() << "; ";
     MT_LOG_INFO_MSG( str.str() );
 }

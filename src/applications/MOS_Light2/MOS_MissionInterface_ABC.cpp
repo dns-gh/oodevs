@@ -39,8 +39,8 @@
 #include "MOS_ParamAgentType.h"
 #include "MOS_ParamAgentKnowledge.h"
 #include "MOS_ParamAgentKnowledgeList.h"
-#include "MOS_ParamDynaObjectKnowledge.h"
-#include "MOS_ParamDynaObjectKnowledgeList.h"
+#include "MOS_ParamObjectKnowledge.h"
+#include "MOS_ParamObjectKnowledgeList.h"
 #include "MOS_ParamObstacle.h"
 #include "MOS_ParamObstacleList.h"
 #include "MOS_ParamDirection.h"
@@ -344,7 +344,7 @@ void MOS_MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgen
 // -----------------------------------------------------------------------------
 void MOS_MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn, const std::string& strName )
 {
-    paramVector_.push_back( new MOS_ParamDynaObjectKnowledge( asn, agent_, strName, strName, this ) );
+    paramVector_.push_back( new MOS_ParamObjectKnowledge( asn, agent_, strName, strName, this ) );
 }
 
 
@@ -357,7 +357,7 @@ void MOS_MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn
 // -----------------------------------------------------------------------------
 void MOS_MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn, const std::string& strName )
 {
-    paramVector_.push_back( new MOS_ParamDynaObjectKnowledgeList( asn, agent_, strName, strName, 1, 999, this ) );
+    paramVector_.push_back( new MOS_ParamObjectKnowledgeList( asn, agent_, strName, strName, 1, 999, this ) );
 }
 
 

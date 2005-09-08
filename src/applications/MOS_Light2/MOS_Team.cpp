@@ -26,7 +26,7 @@
 #include "MOS_App.h"
 #include "MOS_Gtia.h"
 #include "MOS_Tools.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectKnowledge.h"
 
 #ifndef MOS_USE_INLINE
 #   include "MOS_Team.inl"
@@ -165,7 +165,7 @@ void MOS_Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowled
     if( objectKnowledges_.find( asnMsg.oid_connaissance ) != objectKnowledges_.end() )
         return;
 
-    MOS_DynaObjectKnowledge* pObjectKnowledge = new MOS_DynaObjectKnowledge( asnMsg, *this );
+    MOS_ObjectKnowledge* pObjectKnowledge = new MOS_ObjectKnowledge( asnMsg, *this );
     objectKnowledges_.insert( std::make_pair( pObjectKnowledge->GetID(), pObjectKnowledge ) );
 
     MOS_App::GetApp().NotifyObjectKnowledgeCreated( *this, *pObjectKnowledge );

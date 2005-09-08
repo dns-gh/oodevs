@@ -32,6 +32,7 @@ class MOS_ActionContext;
 class MOS_ParamAgent;
 class QCheckBox;
 class QTabWidget;
+class QTable;
 class MOS_Agent;
 
 // =============================================================================
@@ -66,8 +67,9 @@ private slots:
 
     void SetSelectedElement( MOS_SelectedElement& selectedElement );
 
-    void OnTeamCreated( MOS_Team& team );
+    void OnTeamCreated           ( MOS_Team& team );
     void OnConnexionStatusChanged( bool bConnected );
+    void OnROTANBCAgentChanged   ( int nRow, int nCol );
     //@}
 
 private:
@@ -88,31 +90,47 @@ private:
 private:
     //! @name Member data
     //@{
-    QTabWidget* pParent_;
+    QTabWidget*         pParent_;
+    MOS_SelectedElement selectedElement_;
 
-    MT_ValuedComboBox< uint >* pTeamCombo_;
+    // Common parameters
+    MT_ValuedComboBox< uint >*                 pTeamCombo_;
     MT_ValuedComboBox< ASN1T_EnumObjectType >* pObjectTypeCombo_;
-
-    MOS_ParamLocation* pLocation_;
-    ASN1T_Localisation asnLocation_;
-
-	MOS_ParamAgent* pAgent_;
-	ASN1T_Agent asnAgent_;
+    MOS_ParamLocation*                         pLocation_;
+    ASN1T_Localisation                         asnLocation_;
+	MOS_ParamAgent*                            pAgent_;
+	ASN1T_Agent                                asnAgent_;
     
-    QGroupBox*  pNBCParamsGroup_;
-    MT_ValuedComboBox< uint >*  pNBCTypeCombo_;
+    // NBC parameters
+    QStringList*               pNBCAgentsStringList_;
+    QGroupBox*                 pNBCParamsGroup_;
+    MT_ValuedComboBox< uint >* pNBCTypeCombo_;
 
-    QGroupBox*  pCrossingParamsGroup_;
-    QSpinBox*   pCrossingWidthEdit_;
-    QSpinBox*   pCrossingDepthEdit_;
-    QSpinBox*   pCrossingSpeedEdit_;
-    QCheckBox*  pCrossingToConstructCheckbox_;
+    // ROTA parameters
+    QGroupBox*    pROTAParamsGroup_;
+    QSpinBox*     pROTADangerEdit_;
+    QTable*       pROTANBCAgentsTable_;
 
-    QGroupBox* pTC2Group_;
-    QComboBox* pTC2ComboBox_;
+    // Crossing parameters
+    QGroupBox*    pCrossingParamsGroup_;
+    QSpinBox*     pCrossingWidthEdit_;
+    QSpinBox*     pCrossingDepthEdit_;
+    QSpinBox*     pCrossingSpeedEdit_;
+    QCheckBox*    pCrossingToConstructCheckbox_;
+
+    // prisonners/refugees camp parameters
+    QGroupBox*    pTC2Group_;
+    QComboBox*    pTC2ComboBox_;
     T_AgentIDMap  automateComboBoxIDs_;
 
-    MOS_SelectedElement selectedElement_;
+    // log route parameters
+    QGroupBox*    pLogRouteGroup_;
+    QSpinBox*     pLogRouteFlow_;
+    QSpinBox*     pLogRouteWidth_;
+    QSpinBox*     pLogRouteLength_;
+    QSpinBox*     pLogRouteMaxWeight_;
+    QCheckBox*    pLogRouteEquipped_;
+
     //@}
 };
 

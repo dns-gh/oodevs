@@ -36,10 +36,9 @@
 // Name: MOS_FireResult constructor
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-MOS_FireResult::MOS_FireResult( MOS_Agent& agent )
-    : agent_ ( agent )
+MOS_FireResult::MOS_FireResult()
 {
-
+    // NOTHING
 }
    
 // -----------------------------------------------------------------------------

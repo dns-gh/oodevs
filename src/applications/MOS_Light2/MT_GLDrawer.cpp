@@ -59,7 +59,7 @@
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
-MT_GLDrawer::MT_GLDrawer( QGLWidget& glWidget, T_ScreenToGLFunc pFunc, QMainWindow& mainWindow )
+MT_GLDrawer::MT_GLDrawer( QGLWidget& glWidget, T_ScreenToGLFunc pFunc, QMainWindow& mainWindow, bool bDrawToolbar /* = true */ )
     : QObject           ( &glWidget )
     , glWidget_         ( glWidget )
     , bOn_              ( false )
@@ -78,61 +78,64 @@ MT_GLDrawer::MT_GLDrawer( QGLWidget& glWidget, T_ScreenToGLFunc pFunc, QMainWind
     , pSelectedPoint_   ( 0 )
 {
     pShapeDialog_ = new MT_GLDShapeDialog( &glWidget, *this );
-    pToolBar_ = new QToolBar( tr( "Dessin" ), &mainWindow );
-    pToolBar_->hide();
-
-    pCombo_ = new MT_ValuedComboBox<MT_GLDLayer*>( pToolBar_ );
-    pCombo_->setEditable( false );
-    pCombo_->AddItem( tr( "Inactif" ), 0 );
-
-    pVisibleButton_ = new QToolButton( QPixmap( xpm_visible ), tr( "Affichage des calques" ), tr( "Affichage des calques" ), 0, 0, pToolBar_ );
-    pVisibleButton_->setToggleButton( true );
-    pVisibleButton_->setOn( true );
-
-    pLayerVisibleButton_ = new QToolButton( QPixmap( xpm_visible ), tr( "Affichage du calque" ), tr( "Affichage du calque" ), 0, 0, pToolBar_ );
-    pLayerVisibleButton_->setToggleButton( true );
-    pLayerVisibleButton_->setOn( true );
-    
-    pToolBar_->addSeparator();
-
-    pLoadButton_ = new QToolButton( QPixmap( xpm_open ), tr( "Ouvrir" ), tr( "Ouvrir" ), this, SLOT( Load() ), pToolBar_ );
-    pSaveButton_ = new QToolButton( QPixmap( xpm_save ), tr( "Enregistrer" ), tr( "Enregistrer" ), this, SLOT( Save() ), pToolBar_ );
-    pSaveAllButton_ = new QToolButton( QPixmap( xpm_saveall ), tr( "Enregistrer tous" ), tr( "Enregistrer tous" ), this, SLOT( SaveAll() ), pToolBar_ );
-
-    pToolBar_->addSeparator();
-
-    pToolButtonGroup_ = new QButtonGroup( pToolBar_ );
-    pToolButtonGroup_->setExclusive( true );
-    pToolButtonGroup_->hide();
-
-    pDefaultButton_ = new QToolButton( QPixmap( xpm_select ), tr( "Sélection des objets" ), tr( "Sélection des objets" ), 0, 0, pToolBar_ );
-    pDefaultButton_->setToggleButton( true );
-    pDefaultButton_->setOn( true );
-    pToolButtonGroup_->insert( pDefaultButton_ );
-
-    QSignalMapper* pMapper = new QSignalMapper( this );
-    connect( pMapper, SIGNAL( mapped( int ) ), this, SLOT( OnShapeAction( int ) ) );
-    shapeButtons_[MT_GLDShape::ePoint]      =  new QToolButton( QPixmap( xpm_point ),     tr( "Point" ),     tr( "Point" ),     pMapper, SLOT( map() ), pToolBar_ );
-    shapeButtons_[MT_GLDShape::eLine]       =  new QToolButton( QPixmap( xpm_line ),      tr( "Ligne" ),     tr( "Ligne" ),     pMapper, SLOT( map() ), pToolBar_ );
-    shapeButtons_[MT_GLDShape::eRectangle]  =  new QToolButton( QPixmap( xpm_rectangle ), tr( "Rectangle" ), tr( "Rectangle" ), pMapper, SLOT( map() ), pToolBar_ );
-    shapeButtons_[MT_GLDShape::ePolygon]    =  new QToolButton( QPixmap( xpm_polygon ),   tr( "Polygone" ),  tr( "Polygone" ),  pMapper, SLOT( map() ), pToolBar_ );
-    shapeButtons_[MT_GLDShape::eCircle]     =  new QToolButton( QPixmap( xpm_circle ),    tr( "Cercle" ),    tr( "Cercle" ),    pMapper, SLOT( map() ), pToolBar_ );
-    shapeButtons_[MT_GLDShape::eText]       =  new QToolButton( QPixmap( xpm_text ),      tr( "Texte" ),     tr( "Texte" ),     pMapper, SLOT( map() ), pToolBar_ );
-    shapeButtons_[MT_GLDShape::eImage]      =  new QToolButton( QPixmap( xpm_image ),     tr( "Image" ),     tr( "Image" ),     pMapper, SLOT( map() ), pToolBar_ );
-
-    for( int n = 0; n < MT_GLDShape::eNbrShapes; ++n )
+    if( bDrawToolbar )
     {
-        shapeButtons_[n]->setToggleButton( true );
-        pToolButtonGroup_->insert( shapeButtons_[n] );
-        pMapper->setMapping( shapeButtons_[n], n );
+        pToolBar_ = new QToolBar( tr( "Dessin" ), &mainWindow );
+        pToolBar_->hide();
+
+        pCombo_ = new MT_ValuedComboBox<MT_GLDLayer*>( pToolBar_ );
+        pCombo_->setEditable( false );
+        pCombo_->AddItem( tr( "Inactif" ), 0 );
+
+        pVisibleButton_ = new QToolButton( QPixmap( xpm_visible ), tr( "Affichage des calques" ), tr( "Affichage des calques" ), 0, 0, pToolBar_ );
+        pVisibleButton_->setToggleButton( true );
+        pVisibleButton_->setOn( true );
+
+        pLayerVisibleButton_ = new QToolButton( QPixmap( xpm_visible ), tr( "Affichage du calque" ), tr( "Affichage du calque" ), 0, 0, pToolBar_ );
+        pLayerVisibleButton_->setToggleButton( true );
+        pLayerVisibleButton_->setOn( true );
+    
+        pToolBar_->addSeparator();
+
+        pLoadButton_ = new QToolButton( QPixmap( xpm_open ), tr( "Ouvrir" ), tr( "Ouvrir" ), this, SLOT( Load() ), pToolBar_ );
+        pSaveButton_ = new QToolButton( QPixmap( xpm_save ), tr( "Enregistrer" ), tr( "Enregistrer" ), this, SLOT( Save() ), pToolBar_ );
+        pSaveAllButton_ = new QToolButton( QPixmap( xpm_saveall ), tr( "Enregistrer tous" ), tr( "Enregistrer tous" ), this, SLOT( SaveAll() ), pToolBar_ );
+
+        pToolBar_->addSeparator();
+
+        pToolButtonGroup_ = new QButtonGroup( pToolBar_ );
+        pToolButtonGroup_->setExclusive( true );
+        pToolButtonGroup_->hide();
+
+        pDefaultButton_ = new QToolButton( QPixmap( xpm_select ), tr( "Sélection des objets" ), tr( "Sélection des objets" ), 0, 0, pToolBar_ );
+        pDefaultButton_->setToggleButton( true );
+        pDefaultButton_->setOn( true );
+        pToolButtonGroup_->insert( pDefaultButton_ );
+
+        QSignalMapper* pMapper = new QSignalMapper( this );
+        connect( pMapper, SIGNAL( mapped( int ) ), this, SLOT( OnShapeAction( int ) ) );
+        shapeButtons_[MT_GLDShape::ePoint]      =  new QToolButton( QPixmap( xpm_point ),     tr( "Point" ),     tr( "Point" ),     pMapper, SLOT( map() ), pToolBar_ );
+        shapeButtons_[MT_GLDShape::eLine]       =  new QToolButton( QPixmap( xpm_line ),      tr( "Ligne" ),     tr( "Ligne" ),     pMapper, SLOT( map() ), pToolBar_ );
+        shapeButtons_[MT_GLDShape::eRectangle]  =  new QToolButton( QPixmap( xpm_rectangle ), tr( "Rectangle" ), tr( "Rectangle" ), pMapper, SLOT( map() ), pToolBar_ );
+        shapeButtons_[MT_GLDShape::ePolygon]    =  new QToolButton( QPixmap( xpm_polygon ),   tr( "Polygone" ),  tr( "Polygone" ),  pMapper, SLOT( map() ), pToolBar_ );
+        shapeButtons_[MT_GLDShape::eCircle]     =  new QToolButton( QPixmap( xpm_circle ),    tr( "Cercle" ),    tr( "Cercle" ),    pMapper, SLOT( map() ), pToolBar_ );
+        shapeButtons_[MT_GLDShape::eText]       =  new QToolButton( QPixmap( xpm_text ),      tr( "Texte" ),     tr( "Texte" ),     pMapper, SLOT( map() ), pToolBar_ );
+        shapeButtons_[MT_GLDShape::eImage]      =  new QToolButton( QPixmap( xpm_image ),     tr( "Image" ),     tr( "Image" ),     pMapper, SLOT( map() ), pToolBar_ );
+
+        for( int n = 0; n < MT_GLDShape::eNbrShapes; ++n )
+        {
+            shapeButtons_[n]->setToggleButton( true );
+            pToolButtonGroup_->insert( shapeButtons_[n] );
+            pMapper->setMapping( shapeButtons_[n], n );
+        }
+
+        NewLayer();
+        SetActive( false );
+
+        connect( pLayerVisibleButton_, SIGNAL( toggled( bool ) ), this, SLOT( SetCurrentLayerVisible( bool ) ) );
+        connect( pCombo_, SIGNAL( activated( int ) ), this, SLOT( OnComboBoxChange() ) );
+        connect( pLayerDialog_, SIGNAL( LayerEdited( MT_GLDLayer& ) ), this, SLOT( UpdateLayerInCombo( MT_GLDLayer& ) ) );
     }
-
-    NewLayer();
-    SetActive( false );
-
-    connect( pLayerVisibleButton_, SIGNAL( toggled( bool ) ), this, SLOT( SetCurrentLayerVisible( bool ) ) );
-    connect( pCombo_, SIGNAL( activated( int ) ), this, SLOT( OnComboBoxChange() ) );
-    connect( pLayerDialog_, SIGNAL( LayerEdited( MT_GLDLayer& ) ), this, SLOT( UpdateLayerInCombo( MT_GLDLayer& ) ) );
 }
 
 
@@ -154,7 +157,7 @@ MT_GLDrawer::~MT_GLDrawer()
 // -----------------------------------------------------------------------------
 void MT_GLDrawer::Draw()
 {
-    if( ! pVisibleButton_->isOn() )
+    if( !pToolBar_ || !pVisibleButton_->isOn() )
         return;
 
     for( IT_LayerVector it = layers_.begin(); it != layers_.end(); ++it )
@@ -164,6 +167,24 @@ void MT_GLDrawer::Draw()
         pUnderCreation_->Draw();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MT_GLDrawer::OnShow
+// Created: SBO 2005-09-05
+// -----------------------------------------------------------------------------
+void MT_GLDrawer::OnShow()
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MT_GLDrawer::OnHide
+// Created: SBO 2005-09-05
+// -----------------------------------------------------------------------------
+void MT_GLDrawer::OnHide()
+{
+    if( pToolBar_ )
+        SetActive( false );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MT_GLDrawer::SetActive

@@ -33,7 +33,7 @@
 #include "MOS_Options.h"
 #include "MOS_ActionContext.h"
 #include "MOS_AgentKnowledge.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectKnowledge.h"
 #include "MOS_ASN_Messages.h"
 
 #ifndef MOS_USE_INLINE
@@ -254,7 +254,7 @@ void MOS_AgentListView::SetSelectedElement( MOS_SelectedElement& selectedElement
         && selectedElement.pTeam_ == 0 
         && selectedElement.pGtia_ == 0
         && selectedElement.pAgentKnowledge_ == 0
-        && selectedElement.pDynaObjectKnowledge_ == 0 )
+        && selectedElement.pObjectKnowledge_ == 0 )
     {
         this->selectAll( false );
         return;
@@ -265,7 +265,7 @@ void MOS_AgentListView::SetSelectedElement( MOS_SelectedElement& selectedElement
         || ( selectedElement.pGtia_ != 0                && this->ToGtia( this->selectedItem() ) == selectedElement.pGtia_ )
         || ( selectedElement.pTeam_ != 0                && this->ToTeam( this->selectedItem() ) == selectedElement.pTeam_ )
         || ( selectedElement.pAgentKnowledge_ != 0      && this->ToGtia( this->selectedItem() ) == &(selectedElement.pAgentKnowledge_->GetOwner()) )
-        || ( selectedElement.pDynaObjectKnowledge_ != 0 && this->ToTeam( this->selectedItem() ) == &(selectedElement.pDynaObjectKnowledge_->GetOwner()) ) )
+        || ( selectedElement.pObjectKnowledge_ != 0 && this->ToTeam( this->selectedItem() ) == &(selectedElement.pObjectKnowledge_->GetOwner()) ) )
         return;
 
     QListViewItemIterator it( this->firstChild() );
@@ -275,7 +275,7 @@ void MOS_AgentListView::SetSelectedElement( MOS_SelectedElement& selectedElement
             || ( selectedElement.pGtia_ != 0                && this->ToGtia( it.current() ) == selectedElement.pGtia_ )
             || ( selectedElement.pTeam_ != 0                && this->ToTeam( it.current() ) == selectedElement.pTeam_ )
             || ( selectedElement.pAgentKnowledge_ != 0      && this->ToGtia( it.current() ) == &(selectedElement.pAgentKnowledge_->GetOwner()) )
-            || ( selectedElement.pDynaObjectKnowledge_ != 0 && this->ToTeam( it.current() ) == &(selectedElement.pDynaObjectKnowledge_->GetOwner()) ) )
+            || ( selectedElement.pObjectKnowledge_ != 0 && this->ToTeam( it.current() ) == &(selectedElement.pObjectKnowledge_->GetOwner()) ) )
         {
             disconnect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
             this->setSelected( it.current(), true );

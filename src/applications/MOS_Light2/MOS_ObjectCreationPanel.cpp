@@ -29,19 +29,20 @@
 #include "MOS_ParamLocation.h"
 #include "MOS_ParamAgent.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObjectManager.h"
+#include "MOS_ObjectManager.h"
 #include "MOS_Team.h"
 #include "MOS_Tools.h"
 #include "MOS_ASN_Messages.h"
-#include "MOS_DynaObject_ABC.h"
-#include "MOS_DynaObject_Factory.h"
-#include "MOS_DynaObject_Generic.h"
-#include "MOS_DynaObject_SiteFranchissement.h"
-#include "MOS_DynaObject_NBC.h"
-#include "MOS_DynaObject_Camp.h"
-#include "MOS_DynaObject_ROTA.h"
-#include "MOS_DynaObject_ItineraireLogistique.h"
+#include "MOS_Object_ABC.h"
+#include "MOS_Object_Factory.h"
+#include "MOS_Object_Generic.h"
+#include "MOS_Object_SiteFranchissement.h"
+#include "MOS_Object_NBC.h"
+#include "MOS_Object_Camp.h"
+#include "MOS_Object_ROTA.h"
+#include "MOS_Object_ItineraireLogistique.h"
 #include "MOS_Agent.h"
+#include <qtable.h>
 
 #ifndef MOS_USE_INLINE
 #   include "MOS_ObjectCreationPanel.inl"
@@ -64,6 +65,8 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pLayout->setRowStretch( 5, 1 );
     pLayout->setRowStretch( 2, 0 );
 
+    //! @name Common part
+    //@{
     QLabel* pTeamLabel = new QLabel( tr( "Camp:" ), this );
     pLayout->addWidget( pTeamLabel, 0, 0, Qt::AlignLeft );
 
@@ -81,7 +84,10 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
 
     pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement nouvel objet", this );
     pLayout->addWidget( pLocation_, 2, 1, Qt::AlignRight );
+    //@}
 
+    //! @name NBC parameters
+    //@{
     pNBCParamsGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres NBC" ), this );
     pNBCParamsGroup_->setFlat( true );
     pNBCParamsGroup_->setInsideMargin( 0 );
@@ -91,9 +97,41 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     new QLabel( tr( "Type:" ), pNBCParamsGroup_ );
     pNBCTypeCombo_ = new MT_ValuedComboBox< uint >( pNBCParamsGroup_ );
     const T_MosId_String_Map& nbcTypes = MOS_App::GetApp().GetNBCNames();
+    pNBCAgentsStringList_ = new QStringList();
+    pNBCAgentsStringList_->push_back( "" );
     for( CIT_MosId_String_Map it = nbcTypes.begin(); it != nbcTypes.end(); ++it )
+    {
         pNBCTypeCombo_->AddItem( QString( ((*it).second).c_str() ), (*it).first ); 
+        pNBCAgentsStringList_->push_back( QString( it->second.c_str() ) );
+    }
+    //@}
 
+    //! @name ROTA parameters
+    //@{
+    pROTAParamsGroup_ = new QGroupBox( 2, Qt::Vertical, tr( "Paramètres ROTA" ), this );
+    pROTAParamsGroup_->setFlat( true );
+    pROTAParamsGroup_->setInsideMargin( 0 );
+    pROTAParamsGroup_->setMargin( 0 );
+    pLayout->addMultiCellWidget( pROTAParamsGroup_, 3, 3, 0, 1 );
+
+    QGroupBox* pDangerGroup = new QGroupBox( 2, Qt::Horizontal, pROTAParamsGroup_ );
+    pDangerGroup->setFlat( true );
+    pDangerGroup->setInsideMargin( 0 );
+    pDangerGroup->setMargin( 0 );
+    new QLabel( tr( "Danger:" ), pDangerGroup );
+    pROTADangerEdit_ = new QSpinBox( 0, 100, 1, pDangerGroup );
+
+    pROTANBCAgentsTable_ = new QTable( 0, 1, pROTAParamsGroup_ );
+    pROTANBCAgentsTable_->horizontalHeader()->setLabel( 0, tr( "Agents NBC" ) );
+    pROTANBCAgentsTable_->setLeftMargin( 0 );
+    pROTANBCAgentsTable_->setShowGrid( false );
+
+    pROTANBCAgentsTable_->insertRows( 0, 1 );
+    pROTANBCAgentsTable_->setItem( 0, 0, new QComboTableItem( pROTANBCAgentsTable_, *pNBCAgentsStringList_ ) );
+    //@}
+
+    //! @name Crossing parameters
+    //@{
     pCrossingParamsGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres Franchissement" ), this );
     pCrossingParamsGroup_->setFlat( true );
     pCrossingParamsGroup_->setInsideMargin( 0 );
@@ -110,13 +148,36 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pCrossingSpeedEdit_ = new QSpinBox( 0, 200, 1, pCrossingParamsGroup_ );
 
     pCrossingToConstructCheckbox_ = new QCheckBox( tr( "A aménager:" ), pCrossingParamsGroup_ );
+    //@}
 
+    //! @name Prisonner/Refugees camp
+    //@{
     pTC2Group_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres Camp" ), this );
     pCrossingParamsGroup_->setFlat( true );
     pCrossingParamsGroup_->setInsideMargin( 0 );
     pCrossingParamsGroup_->setMargin( 0 );
     pLayout->addMultiCellWidget( pTC2Group_, 5, 5, 0, 1 );
 	pAgent_ = new MOS_ParamAgent( asnAgent_ , "Tc2: ", "Tc2", pTC2Group_ );
+    //@}
+
+    //! @name Logistic route
+    //@{
+    pLogRouteGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres itinéraire logistique" ), this );
+    pLogRouteGroup_->setFlat( true );
+    pLogRouteGroup_->setInsideMargin( 0 );
+    pLogRouteGroup_->setMargin( 0 );
+    pLayout->addMultiCellWidget( pLogRouteGroup_, 4, 4, 0, 1 );
+
+    new QLabel( tr( "Débit:" )        , pLogRouteGroup_ );
+    pLogRouteFlow_      = new QSpinBox( 0, 10000, 1, pLogRouteGroup_ );
+    new QLabel( tr( "Largeur:" )      , pLogRouteGroup_ );
+    pLogRouteWidth_     = new QSpinBox( 0, 10000, 1, pLogRouteGroup_ );
+    new QLabel( tr( "Longueur:" )     , pLogRouteGroup_ );
+    pLogRouteLength_    = new QSpinBox( 0, 10000, 1, pLogRouteGroup_ );
+    new QLabel( tr( "Poids maximum:" ), pLogRouteGroup_ );
+    pLogRouteMaxWeight_ = new QSpinBox( 0, 10000, 1, pLogRouteGroup_ );
+    pLogRouteEquipped_  = new QCheckBox( tr( "Equipé:" ), pLogRouteGroup_ );
+    //@}
 
     QPushButton* pOkButton = new QPushButton( tr( "Créer" ), this );
     pLayout->addWidget( pOkButton, 6, 1, Qt::AlignRight );
@@ -134,7 +195,8 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pNBCTypeCombo_->setMinimumWidth( pObjectTypeCombo_->width() );
 
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
-    connect( pObjectTypeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnObjectChanged() ) );
+    connect( pObjectTypeCombo_   , SIGNAL( activated( int ) ), this, SLOT( OnObjectChanged() ) );
+    connect( pROTANBCAgentsTable_, SIGNAL( valueChanged( int, int ) ), SLOT( OnROTANBCAgentChanged( int, int ) ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), this,   SLOT( FillRemotePopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this,   SLOT( OnConnexionStatusChanged( bool ) ) );
@@ -190,23 +252,30 @@ void MOS_ObjectCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const 
 void MOS_ObjectCreationPanel::OnObjectChanged()
 {
     ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)pObjectTypeCombo_->GetValue();
-    if( nType == EnumObjectType::rota || nType == EnumObjectType::nuage_nbc || nType == EnumObjectType::zone_nbc )
+    if( nType == EnumObjectType::nuage_nbc || nType == EnumObjectType::zone_nbc )
         pNBCParamsGroup_->show();
     else
         pNBCParamsGroup_->hide();
+
+    if( nType == EnumObjectType::rota )
+        pROTAParamsGroup_->show();
+    else
+        pROTAParamsGroup_->hide();
 
     if( nType == EnumObjectType::site_franchissement )
         pCrossingParamsGroup_->show();
     else
         pCrossingParamsGroup_->hide();
 
-    if( nType == EnumObjectType::camp_prisonniers
-		|| nType == EnumObjectType::camp_refugies )
-	{
-		pTC2Group_->show();
-	}
+    if( nType == EnumObjectType::camp_prisonniers || nType == EnumObjectType::camp_refugies )
+        pTC2Group_->show();
     else
         pTC2Group_->hide();
+
+    if( nType == EnumObjectType::itineraire_logistique )
+        pLogRouteGroup_->show();
+    else
+        pLogRouteGroup_->hide();
 }
 
 
@@ -222,35 +291,61 @@ void MOS_ObjectCreationPanel::OnOk()
     if( MOS_App::GetApp().IsODBEdition() )
     {
         ASN1T_EnumObjectType nType = pObjectTypeCombo_->GetValue();
-        MOS_DynaObject_ABC* pObject = MOS_DynaObject_Factory::Create( nType );
+        MOS_Object_ABC* pObject = MOS_Object_Factory::Create( nType );
 
         MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeam( pTeamCombo_->GetValue() );
         assert( pTeam != 0 );
         pObject->SetTeam( *pTeam );
         
-
-        uint nID =  MOS_DynaObject_ABC::GetIDManagerForObjectType( nType ).GetFreeIdentifier();
+        uint nID =  MOS_Object_ABC::GetIDManagerForObjectType( nType ).GetFreeIdentifier();
         pObject->SetID( nID );
         
         pObject->SetLocalisation( pLocation_->GetType(), pLocation_->GetPointList() );
         pLocation_->Clear();
 		
 		if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
-            static_cast< MOS_DynaObject_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetAgentID() );
+        {
+            static_cast< MOS_Object_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetAgentID() );
+        }
 		pAgent_->Clear();
         
-        if( nType == EnumObjectType::nuage_nbc )
-            static_cast< MOS_DynaObject_NBC* >( pObject )->SetAgentNbcId( pNBCTypeCombo_->GetValue() );
-        
-        if( nType == EnumObjectType::site_franchissement )
+        if( nType == EnumObjectType::nuage_nbc || nType == EnumObjectType::zone_nbc )
         {
-            static_cast< MOS_DynaObject_SiteFranchissement* >( pObject )->SetParameters( 
-                                                  pCrossingWidthEdit_->value(), pCrossingDepthEdit_->value(),
-                                                  pCrossingSpeedEdit_->value(), pCrossingToConstructCheckbox_->isOn() );
+            static_cast< MOS_Object_NBC* >( pObject )->SetAgentNbcId( pNBCTypeCombo_->GetValue() );
         }
         
-        MOS_App::GetApp().GetDynaObjectManager().RegisterDynaObject( *pObject );
-        MOS_App::GetApp().NotifyDynaObjectCreated( *pObject );
+        if( nType == EnumObjectType::rota )
+        {
+            static_cast< MOS_Object_ROTA* >( pObject )->SetDanger( pROTADangerEdit_->value() );
+            for( uint i = 0; i < pROTANBCAgentsTable_->numRows() - 1; ++i )
+            {
+                QComboTableItem* pROTAItem  = static_cast< QComboTableItem* >( pROTANBCAgentsTable_->item( i, 0 ) );
+                assert( pROTAItem );
+                static_cast< MOS_Object_ROTA* >( pObject )->AddNBCAgent( MOS_App::GetApp().GetNBCID( std::string( pROTAItem->currentText() ) ) );
+            }
+        }
+
+        if( nType == EnumObjectType::site_franchissement )
+        {
+            MOS_Object_SiteFranchissement* pObj = static_cast< MOS_Object_SiteFranchissement* >( pObject );
+            pObj->SetWidth    ( pCrossingWidthEdit_->value() );
+            pObj->SetDepth    ( pCrossingDepthEdit_->value() );
+            pObj->SetSpeed    ( pCrossingSpeedEdit_->value() );
+            pObj->SetConstruct( pCrossingToConstructCheckbox_->isOn() );
+        }
+        
+        if( nType == EnumObjectType::itineraire_logistique )
+        {
+            MOS_Object_ItineraireLogistique* pObj = static_cast< MOS_Object_ItineraireLogistique* >( pObject );
+            pObj->SetFlow     ( pLogRouteFlow_->value()      );
+            pObj->SetWidth    ( pLogRouteWidth_->value()     );
+            pObj->SetLength   ( pLogRouteLength_->value()    );
+            pObj->SetMaxWeight( pLogRouteMaxWeight_->value() );
+            pObj->SetEquipped ( pLogRouteEquipped_->isOn()   );
+        }
+
+        MOS_App::GetApp().GetObjectManager().RegisterObject( *pObject );
+        MOS_App::GetApp().NotifyObjectCreated( *pObject );
         return;
     }
 
@@ -258,7 +353,7 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_MagicActionCreateObject asnAction;
 
     asnAction.type = (ASN1T_EnumObjectType)pObjectTypeCombo_->GetValue();
-    asnMsg.GetAsnMsg().oid_objet = MOS_DynaObject_ABC::GetIDManagerForObjectType( asnAction.type ).GetFreeIdentifier();
+    asnMsg.GetAsnMsg().oid_objet = MOS_Object_ABC::GetIDManagerForObjectType( asnAction.type ).GetFreeIdentifier();
     
     asnAction.camp  = pTeamCombo_->GetValue();
 
@@ -290,10 +385,15 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_AttrObjectROTA     attributsRota;
     if( asnAction.type == EnumObjectType::rota )
     {
-        attributsRota.agents_nbc.n = 1;
-        attributsRota.agents_nbc.elem  = new uint[1];
-        *attributsRota.agents_nbc.elem = pNBCTypeCombo_->GetValue();
-        attributsRota.niveau_danger = 5;
+        attributsRota.agents_nbc.n = pROTANBCAgentsTable_->numRows() - 1;
+        attributsRota.agents_nbc.elem  = new uint[ attributsRota.agents_nbc.n ];
+        for( uint i = 0; i < pROTANBCAgentsTable_->numRows() - 1; ++i )
+        {
+            QComboTableItem* pROTAItem  = static_cast< QComboTableItem* >( pROTANBCAgentsTable_->item( i, 0 ) );
+            assert( pROTAItem );
+            attributsRota.agents_nbc.elem[ i ] = MOS_App::GetApp().GetNBCID( std::string( pROTAItem->currentText() ) );
+        }
+        attributsRota.niveau_danger = pROTADangerEdit_->text().toUInt();
         asnMsg.GetAsnMsg().action.u.create_object->m.attributs_specifiquesPresent    = 1;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.t           = T_AttrObjectSpecific_rota;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.u.rota      = &attributsRota;
@@ -312,12 +412,11 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_AttrObjectItineraireLogistique attributsItineraire;
     if( asnAction.type == EnumObjectType::itineraire_logistique )
     {
-        // $$$$ AGE 2005-05-02: 
-        attributsItineraire.itineraire_equipe = true;
-        attributsItineraire.poids_max_supporte = 12;
-        attributsItineraire.largeur = 13;
-        attributsItineraire.longueur = 14;
-        attributsItineraire.debit = 42;
+        attributsItineraire.itineraire_equipe  = pLogRouteEquipped_->isOn();
+        attributsItineraire.poids_max_supporte = pLogRouteMaxWeight_->value();
+        attributsItineraire.largeur            = pLogRouteWidth_->value();
+        attributsItineraire.longueur           = pLogRouteLength_->value();
+        attributsItineraire.debit              = pLogRouteFlow_->value();
         asnMsg.GetAsnMsg().action.u.create_object->m.attributs_specifiquesPresent    = 1;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.t           = T_AttrObjectSpecific_itineraire_logistique;
         asnMsg.GetAsnMsg().action.u.create_object->attributs_specifiques.u.itineraire_logistique = &attributsItineraire;
@@ -386,25 +485,25 @@ bool MOS_ObjectCreationPanel::OnKeyPress( const QKeyEvent& keyEvent )
         case Qt::Key_Delete:
         {
             // If we're trying to delete a dynamic object...
-            if( selectedElement_.pDynaObject_ != 0 )
+            if( selectedElement_.pObject_ != 0 )
             {
                 // while editing an odb, we can delete it immediatly.
                 if( MOS_App::GetApp().IsODBEdition() )
                 {
-                    MOS_DynaObject_ABC* pObject = selectedElement_.pDynaObject_;
-                    MOS_App::GetApp().GetDynaObjectManager().UnregisterDynaObject( *pObject );
-                    MOS_App::GetApp().NotifyDynaObjectDeleted( *pObject );
+                    MOS_Object_ABC* pObject = selectedElement_.pObject_;
+                    MOS_App::GetApp().GetObjectManager().UnregisterObject( *pObject );
+                    MOS_App::GetApp().NotifyObjectDeleted( *pObject );
                     delete pObject;
                 }
                 else  // otherwise, request its deletion.
                 {
                     MOS_ASN_MsgObjectMagicAction asnMsg;
-                    asnMsg.GetAsnMsg().oid_objet = selectedElement_.pDynaObject_->GetID();
+                    asnMsg.GetAsnMsg().oid_objet = selectedElement_.pObject_->GetID();
                     asnMsg.GetAsnMsg().action.t  = T_MsgObjectMagicAction_action_destroy_object;
                     asnMsg.Send( 546 );
 
                     std::stringstream strMsg;
-                    strMsg << "Demande destruction objet " << selectedElement_.pDynaObject_->GetID();
+                    strMsg << "Demande destruction objet " << selectedElement_.pObject_->GetID();
                     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
                 }
                 return true;
@@ -452,5 +551,42 @@ void MOS_ObjectCreationPanel::OnConnexionStatusChanged( bool bConnected )
             continue;
 
         automateComboBoxIDs_.insert( std::make_pair( i, &agent ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectCreationPanel::OnROTANBCAgentChanged
+// Created: SBO 2005-09-05
+// -----------------------------------------------------------------------------
+void MOS_ObjectCreationPanel::OnROTANBCAgentChanged( int nRow, int nCol )
+{
+    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( pROTANBCAgentsTable_->item( nRow, 0 ) );
+    assert( pComboTableItem );
+
+    if( pComboTableItem->currentItem() == 0 )
+    {
+        // if not last row, delete empty row
+        if( nRow != pROTANBCAgentsTable_->numRows() - 1 )
+        {
+            pROTANBCAgentsTable_->removeRow( nRow );
+            // select non existing cell to lose focus
+            pROTANBCAgentsTable_->setCurrentCell( 0, 1 );
+        }
+    }
+    else
+    {
+        // if last row is set, add a new row to table
+        if( nRow == pROTANBCAgentsTable_->numRows() - 1 )
+        {
+            // need to save combo box selected element before to insert a line
+            int nCurrentItem = pComboTableItem->currentItem();
+            uint nPos = nRow + 1;
+            pROTANBCAgentsTable_->insertRows( nPos, 1 );
+            pROTANBCAgentsTable_->setItem( nPos, 0, new QComboTableItem( pROTANBCAgentsTable_, *pNBCAgentsStringList_ ) );
+            // need to set again the combo box selected element
+            pComboTableItem->setCurrentItem( nCurrentItem );
+        }
+        // select non existing cell to lose focus
+        pROTANBCAgentsTable_->setCurrentCell( 0, 1 );
     }
 }

@@ -30,10 +30,10 @@
 #include "MOS_GLWidget.h"
 #include "MOS_SIMControlToolbar.h"
 #include "MOS_AgentListView.h"
-#include "MOS_DynaObjectListView.h"
+#include "MOS_ObjectListView.h"
 #include "MOS_InfoPanel.h"
 #include "MOS_AgentKnowledgePanel.h"
-#include "MOS_DynaObjectKnowledgePanel.h"
+#include "MOS_ObjectKnowledgePanel.h"
 #include "MOS_MapToolbar.h"
 #include "MOS_UnitToolbar.h"
 #include "MOS_EventToolbar.h"
@@ -88,9 +88,9 @@ MOS_MainWindow::MOS_MainWindow()
     pAgentList_ = new MOS_AgentListView( pListsTabWidget );
     pListsTabWidget->addTab( pAgentList_, tr( "Agents" ) );
     pAgentList_->header()->hide();
-    pDynaObjectList_ = new MOS_DynaObjectListView( pListsTabWidget );
-    pListsTabWidget->addTab( pDynaObjectList_, tr( "Objets" ) );
-    pDynaObjectList_->header()->hide();
+    pObjectList_ = new MOS_ObjectListView( pListsTabWidget );
+    pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
+    pObjectList_->header()->hide();
     pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );

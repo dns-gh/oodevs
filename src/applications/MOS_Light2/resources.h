@@ -51,5 +51,6 @@ DECLARE_ICON( nbc );
 DECLARE_ICON( construction );
 DECLARE_ICON( observe );
 DECLARE_ICON( tacticallines );
+DECLARE_ICON( threed );
 
 #endif // __demo_resources_h_

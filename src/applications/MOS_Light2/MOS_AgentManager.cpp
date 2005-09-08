@@ -28,7 +28,7 @@
 
 #include "MOS_Agent.h"
 #include "MOS_App.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectKnowledge.h"
 #include "MOS_AgentModel.h"
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"

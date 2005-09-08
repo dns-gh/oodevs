@@ -25,9 +25,9 @@
 
 #include "MOS_ASN_Types.h"
 
-class MOS_DynaObjectKnowledge;
+class MOS_ObjectKnowledge;
 class MOS_AgentKnowledge;
-class MOS_DynaObject_ABC;
+class MOS_Object_ABC;
 class MOS_Gtia;
 
 // =============================================================================
@@ -55,7 +55,7 @@ public:
     typedef T_GtiaMap::iterator         IT_GtiaMap;
     typedef T_GtiaMap::const_iterator   CIT_GtiaMap;
 
-    typedef std::map< uint, MOS_DynaObjectKnowledge* >   T_ObjectKnowledgeMap;
+    typedef std::map< uint, MOS_ObjectKnowledge* >   T_ObjectKnowledgeMap;
     typedef T_ObjectKnowledgeMap::iterator               IT_ObjectKnowledgeMap;
     typedef T_ObjectKnowledgeMap::const_iterator         CIT_ObjectKnowledgeMap;
     typedef T_ObjectKnowledgeMap::const_reverse_iterator RCIT_ObjectKnowledgeMap;
@@ -97,8 +97,8 @@ public:
 
 
     const T_ObjectKnowledgeMap& GetObjectKnowledges() const;
-    MOS_DynaObjectKnowledge*    FindObjectKnowledge( int nId );
-    MOS_DynaObjectKnowledge*    FindKnowledgeOnObject( const MOS_DynaObject_ABC& object );
+    MOS_ObjectKnowledge*    FindObjectKnowledge( int nId );
+    MOS_ObjectKnowledge*    FindKnowledgeOnObject( const MOS_Object_ABC& object );
     //@}
 
     //! @name Network events

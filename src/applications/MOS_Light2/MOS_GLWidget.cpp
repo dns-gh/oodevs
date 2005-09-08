@@ -228,6 +228,7 @@ bool MOS_GLWidget::event( QEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MOS_GLWidget::hideEvent( QHideEvent* )
 {
+    pGLDrawer_->OnHide();
     disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), this,   SLOT( OnCenterOnPoint( const MT_Vector2D& ) ) );
 }
 
@@ -237,6 +238,7 @@ void MOS_GLWidget::hideEvent( QHideEvent* )
 // -----------------------------------------------------------------------------
 void MOS_GLWidget::showEvent( QShowEvent* )
 {
+    pGLDrawer_->OnShow();
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), this,   SLOT( OnCenterOnPoint( const MT_Vector2D& ) ) );
 }
 

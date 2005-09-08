@@ -25,7 +25,7 @@
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
 #include "MOS_LineManager.h"
-#include "MOS_DynaObjectManager.h"
+#include "MOS_ObjectManager.h"
 #include "MOS_Net_Def.h"
 #include "MOS_App.h"
 #include "MOS_ASN_Messages.h"
@@ -164,7 +164,7 @@ void MOS_AgentServerConnectionMgr::OnConnectionLost( DIN_Link& link, const DIN_E
     MOS_App::GetApp().GetAgentManager().DeleteAllAgents();
     MOS_App::GetApp().GetAgentManager().DeleteAllTeams();
     MOS_App::GetApp().GetLineManager ().OnDeconnexion();
-    MOS_App::GetApp().GetDynaObjectManager().DeleteAllDynaObjects();
+    MOS_App::GetApp().GetObjectManager().DeleteAllObjects();
 
     const MOS_AgentManager::T_TeamMap& teams = MOS_App::GetApp().GetAgentManager().GetTeams();
     for( MOS_AgentManager::CIT_TeamMap itTeam = teams.begin(); itTeam != teams.end(); ++itTeam )

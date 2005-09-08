@@ -56,7 +56,7 @@ class MT_GLDrawer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-     MT_GLDrawer( QGLWidget& glWidget, T_ScreenToGLFunc pFunc, QMainWindow& mainWindow );
+     MT_GLDrawer( QGLWidget& glWidget, T_ScreenToGLFunc pFunc, QMainWindow& mainWindow, bool bDrawToolbar = true );
     ~MT_GLDrawer();
     //@}
 
@@ -66,6 +66,8 @@ public:
 
     void Draw();
     MT_Vector2D ScreenToGL( const MT_Vector2D& vScreenPos );
+    void OnShow();
+    void OnHide();
     //@}
 
     //! @name Accessors

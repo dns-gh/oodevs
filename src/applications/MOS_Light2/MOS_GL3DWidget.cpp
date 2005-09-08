@@ -53,7 +53,7 @@ MOS_GL3DWidget::MOS_GL3DWidget( QWidget* pParent )
     SetZRatio( rZFactor_ );
 
     glInit();
-    pGLDrawer_ = new MT_GLDrawer( *this, &(::ScreenToGL), MOS_MainWindow::GetMainWindow() ); // $$$$ AGE 2005-03-16: ??
+    pGLDrawer_ = new MT_GLDrawer( *this, &(::ScreenToGL), MOS_MainWindow::GetMainWindow(), false ); // $$$$ AGE 2005-03-16: ??
     update();
 
     pTimer_ = new QTimer( this );
@@ -106,6 +106,7 @@ bool MOS_GL3DWidget::event( QEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MOS_GL3DWidget::hideEvent( QHideEvent* )
 {
+    pGLDrawer_->OnHide();
     disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), this,   SLOT( OnCenterOnPoint( const MT_Vector2D& ) ) );
     disconnect( pTimer_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
 }
@@ -116,6 +117,7 @@ void MOS_GL3DWidget::hideEvent( QHideEvent* )
 // -----------------------------------------------------------------------------
 void MOS_GL3DWidget::showEvent( QShowEvent* )
 {
+    pGLDrawer_->OnShow();
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), this,   SLOT( OnCenterOnPoint( const MT_Vector2D& ) ) );
     connect( pTimer_, SIGNAL( timeout() ), this, SLOT( updateGL() ) );
 }

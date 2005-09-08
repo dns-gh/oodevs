@@ -240,7 +240,7 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
                                 << "}\n\n";
 
         //     InitTr(carriedAmmoConverter_);
-        strInitTr << "    InitTr( " << strConverterName << " );\n";
+        strInitTr << "    InitTr( " << strConverterName << ", \"ENT_Tr\" );\n";
     }
 
 

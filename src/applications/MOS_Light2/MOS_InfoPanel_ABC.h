@@ -50,7 +50,7 @@ protected slots:
     //@{
     virtual void OnUpdate();
     virtual void OnAgentUpdated     ( MOS_Agent&          agent  );
-    virtual void OnDynaObjectUpdated( MOS_DynaObject_ABC& object );
+    virtual void OnObjectUpdated( MOS_Object_ABC& object );
 
     virtual void showEvent( QShowEvent* );
     //@}
@@ -80,7 +80,7 @@ protected:
     }
 
     bool ShouldDisplay( MOS_Agent& agent );
-    bool ShouldDisplay( MOS_DynaObject_ABC& object );
+    bool ShouldDisplay( MOS_Object_ABC& object );
     //@}
 
 private:

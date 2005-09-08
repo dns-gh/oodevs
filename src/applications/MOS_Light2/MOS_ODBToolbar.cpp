@@ -26,7 +26,7 @@
 
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObjectManager.h"
+#include "MOS_ObjectManager.h"
 #include "MOS_MainWindow.h"
 
 
@@ -77,7 +77,7 @@ void MOS_ODBToolbar::OnOpen()
 
     MOS_App::GetApp().GetAgentManager().DeleteAllAgents();
     MOS_App::GetApp().GetAgentManager().DeleteAllGtias();
-    MOS_App::GetApp().GetDynaObjectManager().DeleteAllDynaObjects();
+    MOS_App::GetApp().GetObjectManager().DeleteAllObjects();
     MOS_App::GetApp().ReadODB( strFilename.ascii() );
     emit ODBLoaded();
 }

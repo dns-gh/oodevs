@@ -27,14 +27,15 @@ class MOS_AgentStatePanel;
 class MOS_AgentResourcesPanel;
 class MOS_AgentCargoPanel;
 class MOS_AgentKnowledgePanel;
-class MOS_DynaObjectPanel;
-class MOS_DynaObjectKnowledgePanel;
 class MOS_Agent;
 class MOS_SelectedElement;
 class MOS_AgentMaintenancePanel;
 class MOS_AgentMedicalPanel;
 class MOS_AgentSupplyPanel;
 class MOS_ReportPanel;
+class MOS_ObjectPanel;
+class MOS_ObjectReportPanel;
+class MOS_ObjectKnowledgePanel;
 
 // =============================================================================
 /** @class  MOS_InfoPanel
@@ -62,7 +63,7 @@ public:
     //! @name Accessors
     //@{
     MOS_AgentKnowledgePanel&      GetAgentKnowledgePanel();
-    MOS_DynaObjectKnowledgePanel& GetDynaObjectKnowledgePanel();
+    MOS_ObjectKnowledgePanel& GetObjectKnowledgePanel();
     //@}
 
     QSize sizeHint() const;
@@ -83,16 +84,18 @@ private:
     MOS_ReportPanel*              pReportPanel_;
     MOS_AgentResourcesPanel*      pResourcesPanel_;
     MOS_AgentKnowledgePanel*      pAgentKnowledgePanel_;
-    MOS_DynaObjectPanel*          pDynaObjectPanel_;
-    MOS_DynaObjectKnowledgePanel* pDynaObjectKnowledgePanel_;
     MOS_AgentMaintenancePanel*    pAgentMaintenancePanel_;
     MOS_AgentMedicalPanel*        pAgentMedicalPanel_;
     MOS_AgentSupplyPanel*         pAgentSupplyPanel_;
-    
+
+    MOS_ObjectPanel*              pObjectPanel_;
+    MOS_ObjectReportPanel*        pObjectReportPanel_;
+    MOS_ObjectKnowledgePanel*     pObjectKnowledgePanel_;
+
     bool bAgentVisible_;
     bool bAgentKnowledgeVisible_;
-    bool bDynaObjectVisible_;
-    bool bDynaObjectKnowledgeVisible_;
+    bool bObjectVisible_;
+    bool bObjectKnowledgeVisible_;
     bool bLogisiticVisible_;
 
     QTabWidget* pTabWidget_;

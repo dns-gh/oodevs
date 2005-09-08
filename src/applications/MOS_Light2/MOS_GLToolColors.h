@@ -1,8 +1,8 @@
 #define MOS_COLOR_PARAM         0.9, 0.4, 0.4, 1.0
 #define MOS_COLOR_SEL_PARAM     1.0, 0.6, 0.6, 1.0
 
-#define MOS_COLOR_DYNAOBJECT      0.8, 0.8, 0.4, 1.0
-#define MOS_COLOR_SEL_DYNAOBJECT  1.0, 1.0, 0.7, 1.0
+#define MOS_COLOR_Object      0.8, 0.8, 0.4, 1.0
+#define MOS_COLOR_SEL_Object  1.0, 1.0, 0.7, 1.0
 
 #define MOS_COLOR_KNOWLEDGE     0.85, 0.85, 0.85, 1.0
 #define MOS_COLOR_SEL_KNOWLEDGE 1.0,  1.0,  1.0,  1.0

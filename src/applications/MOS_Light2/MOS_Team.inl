@@ -18,7 +18,7 @@
 
 
 #include "MOS_AgentKnowledge.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectKnowledge.h"
 #include "MOS_Gtia.h"
 
 
@@ -85,7 +85,7 @@ const MOS_Team::T_ObjectKnowledgeMap& MOS_Team::GetObjectKnowledges() const
 // Created: APE 2004-09-10
 // -----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObjectKnowledge* MOS_Team::FindObjectKnowledge( int nId )
+MOS_ObjectKnowledge* MOS_Team::FindObjectKnowledge( int nId )
 {
     IT_ObjectKnowledgeMap it = objectKnowledges_.find( nId );    
     if( it != objectKnowledges_.end() )
@@ -99,7 +99,7 @@ MOS_DynaObjectKnowledge* MOS_Team::FindObjectKnowledge( int nId )
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObjectKnowledge* MOS_Team::FindKnowledgeOnObject( const MOS_DynaObject_ABC& object )
+MOS_ObjectKnowledge* MOS_Team::FindKnowledgeOnObject( const MOS_Object_ABC& object )
 {
     for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
         if( it->second->GetRealObject() == &object )

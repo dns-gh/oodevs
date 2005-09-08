@@ -33,9 +33,9 @@
 #include "MOS_AgentKnowledge.h"
 #include "MOS_Team.h"
 #include "MOS_Gtia.h"
-#include "MOS_DynaObjectManager.h"
-#include "MOS_DynaObject_ABC.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectManager.h"
+#include "MOS_Object_ABC.h"
+#include "MOS_ObjectKnowledge.h"
 #include "MOS_Team.h"
 #include "MOS_LineManager.h"
 #include "MOS_TacticalLine_ABC.h"
@@ -141,7 +141,7 @@ void MOS_GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
 
     DrawNameObjects( MOS_App::GetApp().GetWorld() );
 
-    Draw( MOS_App::GetApp().GetDynaObjectManager() );
+    Draw( MOS_App::GetApp().GetObjectManager() );
     Draw( MOS_App::GetApp().GetAgentManager() );
     if( MOS_MainWindow::GetMainWindow().GetOptions().nDrawTacticalLines_ != MOS_Options::eNone )
         Draw( MOS_App::GetApp().GetLineManager() );
@@ -617,13 +617,13 @@ void MOS_GLTool::Draw( MOS_AgentKnowledge& knowledge, E_State nState )
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void MOS_GLTool::Draw( MOS_DynaObjectManager& manager )
+void MOS_GLTool::Draw( MOS_ObjectManager& manager )
 {
     // Only draw the real objects when in all teams mode (ie. controller view).
     if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
         return;
 
-    for( MOS_DynaObjectManager::IT_DynaObjectMap it = manager.dynaObjectMap_.begin(); it != manager.dynaObjectMap_.end(); ++it )
+    for( MOS_ObjectManager::IT_ObjectMap it = manager.ObjectMap_.begin(); it != manager.ObjectMap_.end(); ++it )
         Draw( *(it->second) );
 }
 
@@ -634,14 +634,14 @@ void MOS_GLTool::Draw( MOS_DynaObjectManager& manager )
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void MOS_GLTool::Draw( MOS_DynaObject_ABC& object, E_State nState )
+void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
 {
     glLineWidth( 2 );
 
 
 	if( nState == eSelected )
 	{
-		glColor4f( MOS_COLOR_SEL_DYNAOBJECT );
+		glColor4f( MOS_COLOR_SEL_Object );
 	}
 	else
 	{
@@ -652,9 +652,9 @@ void MOS_GLTool::Draw( MOS_DynaObject_ABC& object, E_State nState )
     
 	/*
     if( nState == eSelected )
-        glColor4f( MOS_COLOR_SEL_DYNAOBJECT );
+        glColor4f( MOS_COLOR_SEL_Object );
     else
-        glColor4f( MOS_COLOR_DYNAOBJECT );
+        glColor4f( MOS_COLOR_Object );
 	*/
     const T_PointVector& p = object.pointVector_;
     switch( object.nTypeLocalisation_ )
@@ -683,13 +683,13 @@ void MOS_GLTool::Draw( MOS_DynaObject_ABC& object, E_State nState )
 */
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
-void MOS_GLTool::Draw( MOS_DynaObjectKnowledge& knowledge, E_State nState )
+void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
 {
-    if( knowledge.nAttrUpdated_ & MOS_DynaObjectKnowledge::eUpdated_RealObject && knowledge.pRealObject_ != 0 )
+    if( knowledge.nAttrUpdated_ & MOS_ObjectKnowledge::eUpdated_RealObject && knowledge.pRealObject_ != 0 )
     {
         Draw( *knowledge.pRealObject_, nState );
     }
-    else if( knowledge.nAttrUpdated_ & MOS_DynaObjectKnowledge::eUpdated_Localisation )
+    else if( knowledge.nAttrUpdated_ & MOS_ObjectKnowledge::eUpdated_Localisation )
     {
         glLineWidth( 1 );
         if( nState == eSelected )
@@ -1221,11 +1221,11 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
     if( eventHandler.selectedElement_.pAgentKnowledge_ != 0 )
         Draw( *eventHandler.selectedElement_.pAgentKnowledge_, eSelected );
 
-    if( eventHandler.selectedElement_.pDynaObject_ != 0 )
-        Draw( *eventHandler.selectedElement_.pDynaObject_, eSelected );
+    if( eventHandler.selectedElement_.pObject_ != 0 )
+        Draw( *eventHandler.selectedElement_.pObject_, eSelected );
 
-    if( eventHandler.selectedElement_.pDynaObjectKnowledge_ != 0 )
-        Draw( *eventHandler.selectedElement_.pDynaObjectKnowledge_, eSelected );
+    if( eventHandler.selectedElement_.pObjectKnowledge_ != 0 )
+        Draw( *eventHandler.selectedElement_.pObjectKnowledge_, eSelected );
     
     if( eventHandler.selectedElement_.pLine_ != 0 )
         Draw( * eventHandler.selectedElement_.pLine_, eSelected, eventHandler.selectedElement_.nLinePoint_);

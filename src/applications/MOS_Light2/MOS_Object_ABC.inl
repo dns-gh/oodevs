@@ -1,0 +1,161 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+//
+// $Created: SBO 2005-09-02 $
+// $Archive: $
+// $Author: $
+// $Modtime: $
+// $Revision: $
+// $Workfile: $
+//
+// *****************************************************************************
+
+//-----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetID
+// Created: NLD 2003-01-29
+//-----------------------------------------------------------------------------
+MOS_INLINE
+uint MOS_Object_ABC::GetID() const
+{
+    return nID_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetType
+// Created: AGN 03-07-18
+//-----------------------------------------------------------------------------
+MOS_INLINE
+ASN1T_EnumObjectType MOS_Object_ABC::GetType() const
+{
+    return nType_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetTeam
+/** @return 
+*/
+// Created: APE 2004-08-05
+// -----------------------------------------------------------------------------
+MOS_INLINE
+const MOS_Team& MOS_Object_ABC::GetTeam() const
+{
+    assert( pTeam_ != 0 );
+    return *pTeam_;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::IsPrepared
+// Created: AGN 03-07-18
+//-----------------------------------------------------------------------------
+MOS_INLINE
+bool MOS_Object_ABC::IsPrepared() const
+{
+    return bPrepared_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetConstructionPercentage
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_Object_ABC::GetConstructionPercentage() const
+{
+    return rConstructionPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetValorizationPercentage
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_Object_ABC::GetValorizationPercentage() const
+{
+    return rValorizationPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetBypassConstructionPercentage
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_Object_ABC::GetBypassConstructionPercentage() const
+{
+    return rBypassConstructionPercentage_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetCenter
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MOS_Object_ABC::GetCenter() const
+{
+    return center_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetPointList
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+const T_PointVector& MOS_Object_ABC::GetPointList() const
+{
+    return pointVector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetLocationType
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+ASN1T_EnumTypeLocalisation MOS_Object_ABC::GetLocationType() const
+{
+    return nTypeLocalisation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::SetID
+/** @param  nID 
+*/
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+void MOS_Object_ABC::SetID( uint nID )
+{
+    nID_ = nID;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::SetTeam
+/** @param  team 
+*/
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+void MOS_Object_ABC::SetTeam( MOS_Team& team )
+{
+    pTeam_ = &team;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::MOS_Object::SetLocalisation
+// Created: SBO 2005-09-02
+// -----------------------------------------------------------------------------
+inline
+void MOS_Object_ABC::SetLocalisation( ASN1T_EnumTypeLocalisation nType, const T_PointVector& pointVector )
+{
+    nTypeLocalisation_ = nType;
+    pointVector_ = pointVector;
+    center_ = MT_Vector2D( 0.0, 0.0 );
+    for( CIT_PointVector it = pointVector.begin(); it != pointVector.end(); ++it );
+        center_ = center_ + (*it) * (1.0/(double)pointVector.size());
+}

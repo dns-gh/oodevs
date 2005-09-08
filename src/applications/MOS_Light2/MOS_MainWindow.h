@@ -27,7 +27,7 @@ class MOS_GL3DWidget;
 class MOS_GLWidget;
 class MOS_InfoPanel;
 class MOS_AgentListView;
-class MOS_DynaObjectListView;
+class MOS_ObjectListView;
 class MOS_MissionPanel;
 class MOS_MapEventHandler_ABC;
 class MOS_SelectedElement;
@@ -116,7 +116,7 @@ private:
 
     MOS_InfoPanel*      pInfoPanel_;
     MOS_AgentListView*  pAgentList_;
-    MOS_DynaObjectListView* pDynaObjectList_;
+    MOS_ObjectListView* pObjectList_;
     MOS_MissionPanel*   pMissionPanel_;
     MOS_Logger*         pLogPanel_;
     MOS_WeatherPanel*   pWeatherPanel_;

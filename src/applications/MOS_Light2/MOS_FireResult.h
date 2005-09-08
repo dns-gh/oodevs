@@ -23,6 +23,10 @@
 #include "MOS_ASN_Types.h"
 
 class MOS_Agent;
+class MOS_FireResult;
+
+typedef std::vector< MOS_FireResult* > T_FireResults;
+typedef T_FireResults::const_iterator  CIT_FireResults;
 
 // =============================================================================
 /** @class  MOS_FireResult
@@ -55,14 +59,14 @@ public:
     typedef std::vector< std::string >             T_FireResultEquipments;
     typedef T_FireResultEquipments::const_iterator CIT_FireResultEquipments;
 
-    typedef std::map< uint, T_FireResultHuman* > T_FireResultHumans;
-    typedef T_FireResultHumans::const_iterator   CIT_FireResultHumans;
+    typedef std::map< uint, T_FireResultHuman* >   T_FireResultHumans;
+    typedef T_FireResultHumans::const_iterator     CIT_FireResultHumans;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_FireResult( MOS_Agent& agent );
+             MOS_FireResult();
     virtual ~MOS_FireResult();
     //@}
 
@@ -81,9 +85,6 @@ public:
 private:
     //! @name Member data
     //@{
-    MOS_Agent&      agent_;
-
-    // fire information
     MOS_Agent*                 pTarget_;
     T_FireResultEquipments     equipments_;
     T_FireResultHumans         humans_;

@@ -27,6 +27,7 @@
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
 #include "MOS_Agent.h"
+#include "MOS_Object_ABC.h"
 #include "MOS_FireResult.h"
 
 #ifndef MOS_USE_INLINE
@@ -43,7 +44,8 @@ MOS_FireResultListView::MOS_FireResultListView( QWidget* pParent )
 {
     this->addColumn( tr( "Cible" ) );
 
-    connect( &MOS_App::GetApp(), SIGNAL( AgentConflictEnded( MOS_Agent& ) ), this, SLOT( OnFireResultCreated( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( AgentConflictEnded( MOS_Agent&      ) ), this, SLOT( OnAgentConflictEnded( MOS_Agent&      ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( ObjectExplosion   ( MOS_Object_ABC& ) ), this, SLOT( OnObjectExplosion   ( MOS_Object_ABC& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,22 +67,39 @@ void MOS_FireResultListView::SetAgent( MOS_Agent* pAgent )
         return;
 
     pAgent_ = pAgent;
+    pObject_ = 0;
     if( pAgent_ == 0 )
         return;
 
-    OnFireResultCreated( *pAgent_ );
+    OnFireResultCreated( pAgent_->fireResults_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_FireResultListView::SetObject
+// Created: SBO 2005-09-07
+// -----------------------------------------------------------------------------
+void MOS_FireResultListView::SetObject( MOS_Object_ABC* pObject )
+{
+    if( pObject_ == pObject )
+        return;
+
+    pAgent_ = 0;
+    pObject_ = pObject;
+    if( pObject_ == 0 )
+        return;
+
+    OnFireResultCreated( pObject->explosionResults_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_FireResultListView::OnFireResultCreated
 // Created: SBO 2005-08-31
 // -----------------------------------------------------------------------------
-void MOS_FireResultListView::OnFireResultCreated( MOS_Agent& agent )
+void MOS_FireResultListView::OnFireResultCreated( const T_FireResults& fireResults )
 {
     clear();
 
-    MOS_Agent::T_FireResults& fireResults = agent.fireResults_;
-    for( MOS_Agent::CIT_FireResults it = fireResults.begin(); it != fireResults.end(); ++it )
+    for( CIT_FireResults it = fireResults.begin(); it != fireResults.end(); ++it )
     {
         QListViewItem* pParentItem = new QListViewItem( this );
         pParentItem->setText( 0, ( *it )->GetTarget().GetName().c_str() );
@@ -140,4 +159,22 @@ void MOS_FireResultListView::OnFireResultCreated( MOS_Agent& agent )
             pItem->setText( 0, ss.str().c_str() );
         }
     }    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_FireResultListView::OnAgentConflictEnded
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+void MOS_FireResultListView::OnAgentConflictEnded( MOS_Agent& agent )
+{
+    OnFireResultCreated( agent.fireResults_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_FireResultListView::OnObjectExplosion
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+void MOS_FireResultListView::OnObjectExplosion( MOS_Object_ABC& object )
+{
+    OnFireResultCreated( object.explosionResults_ );
 }

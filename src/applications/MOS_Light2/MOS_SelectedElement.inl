@@ -26,5 +26,5 @@
 MOS_INLINE
 bool MOS_SelectedElement::IsAMapElementSelected() const
 {
-    return pAgent_ != 0 || pDynaObject_ != 0 || pLine_ != 0 || pAgentKnowledge_ != 0;
+    return pAgent_ != 0 || pObject_ != 0 || pLine_ != 0 || pAgentKnowledge_ != 0;
 }

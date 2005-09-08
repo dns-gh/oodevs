@@ -20,9 +20,9 @@
 #include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_Agent.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObject_ABC.h"
-#include "MOS_DynaObjectManager.h"
-#include "MOS_DynaObject_Factory.h"
+#include "MOS_Object_ABC.h"
+#include "MOS_ObjectManager.h"
+#include "MOS_Object_Factory.h"
 #include "MOS_App.h"
 #include "MOS_MOSServer.h"
 #include "MOS_LineManager.h"
@@ -1520,14 +1520,14 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
 {
-    MOS_DynaObjectManager& objectManager = MOS_App::GetApp().GetDynaObjectManager();
-    if( objectManager.FindDynaObject( asnMsg.oid ) != 0 )
+    MOS_ObjectManager& objectManager = MOS_App::GetApp().GetObjectManager();
+    if( objectManager.FindObject( asnMsg.oid ) != 0 )
         return;
 
-    MOS_DynaObject_ABC* pObject = MOS_DynaObject_Factory::Create( asnMsg );
+    MOS_Object_ABC* pObject = MOS_Object_Factory::Create( asnMsg );
     assert( pObject );
-    objectManager.RegisterDynaObject( *pObject );
-    MOS_App::GetApp().NotifyDynaObjectCreated( *pObject );
+    objectManager.RegisterObject( *pObject );
+    MOS_App::GetApp().NotifyObjectCreated( *pObject );
 
     MT_LOG_INFO( "ObjectCreation - ID: " << asnMsg.oid, eReceived, 0 );
 }
@@ -1538,11 +1538,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCre
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdate& asnMsg )
 {
-    MOS_DynaObject_ABC* pObject = MOS_App::GetApp().GetDynaObjectManager().FindDynaObject( asnMsg.oid );
+    MOS_Object_ABC* pObject = MOS_App::GetApp().GetObjectManager().FindObject( asnMsg.oid );
     assert( pObject );
 
     pObject->Update( asnMsg );
-    MOS_App::GetApp().NotifyDynaObjectUpdated( *pObject );
+    MOS_App::GetApp().NotifyObjectUpdated( *pObject );
 }
 
 //-----------------------------------------------------------------------------
@@ -1551,14 +1551,14 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const ASN1T_MsgObjectUpdat
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruction& asnMsg )
 {
-    MOS_DynaObjectManager& dynaObjectManager = MOS_App::GetApp().GetDynaObjectManager();
+    MOS_ObjectManager& ObjectManager = MOS_App::GetApp().GetObjectManager();
 
-    MOS_DynaObject_ABC* pObject = dynaObjectManager.FindDynaObject( asnMsg );
+    MOS_Object_ABC* pObject = ObjectManager.FindObject( asnMsg );
     assert( pObject );
 
-    MOS_App::GetApp().NotifyDynaObjectDeleted( *pObject );
+    MOS_App::GetApp().NotifyObjectDeleted( *pObject );
 
-    dynaObjectManager.UnregisterDynaObject( *pObject );
+    ObjectManager.UnregisterObject( *pObject );
     delete pObject;         //$$$ TMP - devrait être fait par le manager
 
     MT_LOG_INFO( "ObjectDestruction - ID: " << asnMsg, eReceived, 0 );
@@ -1692,14 +1692,14 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
     std::stringstream strOutputMsg;
     strOutputMsg << "Explosion"
                  << " - ID objet " << asnMsg.oid_objet;
-    
-    // fire results
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_objet );
-    assert( pAgent );
-    for( uint i = 0; i < asnMsg.resultats.n; ++i )
-        pAgent->OnReceiveMsgStopFire( asnMsg.resultats.elem[ i ] );
 
-//$$$$ ASN1T_FireResult  resultat à afficher.
+    // fire results
+    MOS_Object_ABC* pObject = MOS_App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet );
+    assert( pObject );
+    for( uint i = 0; i < asnMsg.resultats.n; ++i )
+        pObject->OnReceiveMsgExplosion( asnMsg.resultats.elem[ i ] );
+
+    MOS_App::GetApp().NotifyObjectExplosion( *pObject );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );    
 }
 

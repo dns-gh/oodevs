@@ -35,9 +35,9 @@ class MOS_Agent;
 class MOS_AgentKnowledge;
 class MOS_Team;
 class MOS_Gtia;
-class MOS_DynaObjectManager;
-class MOS_DynaObject_ABC;
-class MOS_DynaObjectKnowledge;
+class MOS_ObjectManager;
+class MOS_Object_ABC;
+class MOS_ObjectKnowledge;
 class MOS_LineManager;
 class MOS_TacticalLine_ABC;
 class MOS_Meteo_Manager;
@@ -124,9 +124,9 @@ public:
     static void Draw( MOS_Gtia& gtia );
     static void Draw( MOS_AgentKnowledge& knowledge, E_State nState = eNormal );
 
-    static void Draw( MOS_DynaObjectManager& manager );
-    static void Draw( MOS_DynaObject_ABC& object, E_State nState = eNormal );
-    static void Draw( MOS_DynaObjectKnowledge& knowledge, E_State nState = eNormal );
+    static void Draw( MOS_ObjectManager& manager );
+    static void Draw( MOS_Object_ABC& object, E_State nState = eNormal );
+    static void Draw( MOS_ObjectKnowledge& knowledge, E_State nState = eNormal );
 
     static void Draw( MOS_LineManager& lineManager );
     static void Draw( MOS_TacticalLine_ABC& line, E_State nState = eNormal, int nSelectedPoint = -1 );

@@ -28,9 +28,9 @@
 #include "MOS_MainWindow.h"
 #include "MOS_ShapeEditorMapEventFilter.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObject_ABC.h"
-#include "MOS_DynaObjectKnowledge.h"
-#include "MOS_DynaObjectManager.h"
+#include "MOS_Object_ABC.h"
+#include "MOS_ObjectKnowledge.h"
+#include "MOS_ObjectManager.h"
 #include "MOS_ActionContext.h"
 #include "MOS_TacticalLine_ABC.h"
 #include "MOS_LineManager.h"
@@ -68,10 +68,10 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
 
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( ClearSelection() ) );
 
-    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectDeleted( MOS_DynaObject_ABC& ) ), this, SLOT( OnDynaObjectDeleted( MOS_DynaObject_ABC& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( ObjectDeleted( MOS_Object_ABC& ) ), this, SLOT( OnObjectDeleted( MOS_Object_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TacticalLineDeleted( MOS_TacticalLine_ABC& ) ), this, SLOT( OnTacticalLineDeleted( MOS_TacticalLine_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( AgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ), this, SLOT( OnAgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ) );
-    connect( &MOS_App::GetApp(), SIGNAL( ObjectKnowledgeDeleted( MOS_Team&, MOS_DynaObjectKnowledge& ) ), this, SLOT( OnObjectKnowledgeDeleted( MOS_Team&, MOS_DynaObjectKnowledge& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( ObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ), this, SLOT( OnObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ) );
 }
 
 
@@ -290,14 +290,14 @@ void MOS_DefaultMapEventHandler::ClearSelection()
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_DefaultMapEventHandler::OnDynaObjectDeleted
+// Name: MOS_DefaultMapEventHandler::OnObjectDeleted
 /** @param  object 
 */
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-void MOS_DefaultMapEventHandler::OnDynaObjectDeleted( MOS_DynaObject_ABC& object )
+void MOS_DefaultMapEventHandler::OnObjectDeleted( MOS_Object_ABC& object )
 {
-    if( selectedElement_.pDynaObject_ == &object )
+    if( selectedElement_.pObject_ == &object )
     {
         selectedElement_ = MOS_SelectedElement();
         emit ElementSelected( selectedElement_ );
@@ -343,9 +343,9 @@ void MOS_DefaultMapEventHandler::OnAgentKnowledgeDeleted( MOS_Gtia& /*gtia*/, MO
 */
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, MOS_DynaObjectKnowledge& knowledge )
+void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, MOS_ObjectKnowledge& knowledge )
 {
-    if( selectedElement_.pDynaObjectKnowledge_ == &knowledge )
+    if( selectedElement_.pObjectKnowledge_ == &knowledge )
     {
         selectedElement_ = MOS_SelectedElement();
         emit ElementSelected( selectedElement_ );
@@ -399,7 +399,7 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
     // Only enable direct object selection in all-team mode.
     if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == MOS_Options::eController )
     {
-        MOS_DynaObject_ABC* pObject = GetDynaObjectAtPos( vGLPos, rDistancePerPixel );
+        MOS_Object_ABC* pObject = GetObjectAtPos( vGLPos, rDistancePerPixel );
         if( pObject != 0 )
         {
             selectedElement_ = MOS_SelectedElement( *pObject );
@@ -410,7 +410,7 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
     // Only enable knowledge selection in non all-team mode.
     if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
     {
-        MOS_DynaObjectKnowledge* pObjectKnowledge = GetDynaObjectKnowledgeAtPos( vGLPos, rDistancePerPixel );
+        MOS_ObjectKnowledge* pObjectKnowledge = GetObjectKnowledgeAtPos( vGLPos, rDistancePerPixel );
         if( pObjectKnowledge != 0 )
         {
             selectedElement_ = MOS_SelectedElement( *pObjectKnowledge );
@@ -595,26 +595,26 @@ int MOS_DefaultMapEventHandler::GetPointAtPos( MOS_TacticalLine_ABC& line, const
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_DefaultMapEventHandler::GetDynaObjectAt
+// Name: MOS_DefaultMapEventHandler::GetObjectAt
 /** @param  vGLPos 
     @return 
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_DynaObject_ABC* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+MOS_Object_ABC* MOS_DefaultMapEventHandler::GetObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
-    const MOS_DynaObjectManager::T_DynaObjectMap& objectMap = MOS_App::GetApp().GetDynaObjectManager().GetDynaObjects();
-    MOS_DynaObjectManager::RCIT_DynaObjectMap rit;
+    const MOS_ObjectManager::T_ObjectMap& objectMap = MOS_App::GetApp().GetObjectManager().GetObjects();
+    MOS_ObjectManager::RCIT_ObjectMap rit;
 
-    if( selectedElement_.pDynaObject_ == 0 )
+    if( selectedElement_.pObject_ == 0 )
     {
         rit = objectMap.rbegin();
     }
     else
     {
-        MOS_DynaObjectManager::CIT_DynaObjectMap it = objectMap.find( selectedElement_.pDynaObject_->GetID() );
+        MOS_ObjectManager::CIT_ObjectMap it = objectMap.find( selectedElement_.pObject_->GetID() );
         assert( it != objectMap.end() );
-        rit = MOS_DynaObjectManager::RCIT_DynaObjectMap( ++it );
+        rit = MOS_ObjectManager::RCIT_ObjectMap( ++it );
         ++rit;
     }
 
@@ -623,8 +623,8 @@ MOS_DynaObject_ABC* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vec
         if( rit == objectMap.rend() )
             rit = objectMap.rbegin();
 
-        MOS_DynaObject_ABC* pObject = (*rit).second;
-        if( IsDynaObjectAtPos( *pObject, vGLPos, rDistancePerPixel ) )
+        MOS_Object_ABC* pObject = (*rit).second;
+        if( IsObjectAtPos( *pObject, vGLPos, rDistancePerPixel ) )
             return pObject;
 
         ++rit;
@@ -635,27 +635,27 @@ MOS_DynaObject_ABC* MOS_DefaultMapEventHandler::GetDynaObjectAtPos( const MT_Vec
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_DefaultMapEventHandler::IsDynaObjectAtPos
+// Name: MOS_DefaultMapEventHandler::IsObjectAtPos
 /** @param  object 
     @param  vGLPos 
     @return 
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-bool MOS_DefaultMapEventHandler::IsDynaObjectAtPos( const MOS_DynaObject_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
+bool MOS_DefaultMapEventHandler::IsObjectAtPos( const MOS_Object_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     return MOS_Tools::PointNearLine( vGLPos, object.GetPointList(), 9.0 * rDistancePerPixel, object.GetLocationType() == EnumTypeLocalisation::polygon );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_DefaultMapEventHandler::GetDynaObjectKnowledgeAtPos
+// Name: MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos
 /** @param  vGLPos 
     @return 
 */
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_DynaObjectKnowledge* MOS_DefaultMapEventHandler::GetDynaObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+MOS_ObjectKnowledge* MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
     assert( options.nPlayedTeam_ != MOS_Options::eController );
@@ -665,13 +665,13 @@ MOS_DynaObjectKnowledge* MOS_DefaultMapEventHandler::GetDynaObjectKnowledgeAtPos
 
     MOS_Team::RCIT_ObjectKnowledgeMap rit;
 
-    if( selectedElement_.pDynaObjectKnowledge_ == 0 )
+    if( selectedElement_.pObjectKnowledge_ == 0 )
     {
         rit = objectMap.rbegin();
     }
     else
     {
-        MOS_Team::CIT_ObjectKnowledgeMap it = objectMap.find( selectedElement_.pDynaObjectKnowledge_->GetID() );
+        MOS_Team::CIT_ObjectKnowledgeMap it = objectMap.find( selectedElement_.pObjectKnowledge_->GetID() );
         assert( it != objectMap.end() );
         rit = MOS_Team::RCIT_ObjectKnowledgeMap( ++it );
         ++rit;
@@ -682,8 +682,8 @@ MOS_DynaObjectKnowledge* MOS_DefaultMapEventHandler::GetDynaObjectKnowledgeAtPos
         if( rit == objectMap.rend() )
             rit = objectMap.rbegin();
 
-        MOS_DynaObjectKnowledge* pObject = (*rit).second;
-        if( IsDynaObjectKnowledgeAtPos( *pObject, vGLPos, rDistancePerPixel ) )
+        MOS_ObjectKnowledge* pObject = (*rit).second;
+        if( IsObjectKnowledgeAtPos( *pObject, vGLPos, rDistancePerPixel ) )
             return pObject;
 
         ++rit;
@@ -694,18 +694,18 @@ MOS_DynaObjectKnowledge* MOS_DefaultMapEventHandler::GetDynaObjectKnowledgeAtPos
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_DefaultMapEventHandler::IsDynaObjectKnowledgeAtPos
+// Name: MOS_DefaultMapEventHandler::IsObjectKnowledgeAtPos
 /** @param  object 
     @param  vGLPos 
     @return 
 */
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-bool MOS_DefaultMapEventHandler::IsDynaObjectKnowledgeAtPos( const MOS_DynaObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
+bool MOS_DefaultMapEventHandler::IsObjectKnowledgeAtPos( const MOS_ObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
-    MOS_DynaObject_ABC* pDynaObject = object.GetRealObject();
-    if( pDynaObject != 0 )
-        return IsDynaObjectAtPos( *pDynaObject, vGLPos, rDistancePerPixel );
+    MOS_Object_ABC* pObject = object.GetRealObject();
+    if( pObject != 0 )
+        return IsObjectAtPos( *pObject, vGLPos, rDistancePerPixel );
     else
         return MOS_Tools::PointNearLine( vGLPos, object.GetPointList(), 9.0 * rDistancePerPixel );
 }
@@ -723,7 +723,7 @@ void MOS_DefaultMapEventHandler::PopupMenu( const MT_Vector2D& vGLPos, float rDi
     // If nothing selected, try selecting what's under the click.
     if(   ( ! selectedElement_.IsAMapElementSelected() )
        || ( selectedElement_.pAgent_          != 0 && ! IsAgentAtPos( *selectedElement_.pAgent_, vGLPos ) )
-       || ( selectedElement_.pDynaObject_     != 0 && ! IsDynaObjectAtPos( *selectedElement_.pDynaObject_, vGLPos, rDistancePerPixel ) )
+       || ( selectedElement_.pObject_     != 0 && ! IsObjectAtPos( *selectedElement_.pObject_, vGLPos, rDistancePerPixel ) )
        || ( selectedElement_.pLine_           != 0 && ! IsLineAtPos( *selectedElement_.pLine_, vGLPos, rDistancePerPixel ) )
        || ( selectedElement_.pAgentKnowledge_ != 0 && ! IsAgentKnowledgeAtPos( *selectedElement_.pAgentKnowledge_, vGLPos ) ) )
     {

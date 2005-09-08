@@ -61,6 +61,7 @@
 #include "res/agentmessage.xpm"
 #include "res/messageoptions.xpm"
 #include "res/conflict.xpm"
+#include "res/threed.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

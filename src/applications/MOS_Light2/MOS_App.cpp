@@ -17,7 +17,7 @@
 #include "MOS_AgentManager.h"
 #include "MOS_LineManager.h"
 #include "MOS_World.h"
-#include "MOS_DynaObjectManager.h"
+#include "MOS_ObjectManager.h"
 #include "MOS_Meteo_Manager.h"
 #include "MOS_MainWindow.h"
 #include "MOS_SensorType.h"
@@ -27,7 +27,7 @@
 #include "MOS_LogSupplyConsign.h"
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogMaintenanceConsign.h"
-#include "MOS_DynaObject_ABC.h"
+#include "MOS_Object_ABC.h"
 #include "MOS_Options.h"
 #include "MT/MT_IO/MT_CommandLine.h"
 
@@ -63,11 +63,11 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     pSplashScreen_->show();
 
     this->SetSplashText( tr("Démarrage...") );
-    pMOSServer_         = new MOS_MOSServer         ();
-    pAgentManager_      = new MOS_AgentManager      ();
-    pLineManager_       = new MOS_LineManager       ();
-    pDynaObjectManager_ = new MOS_DynaObjectManager ();
-    pWeatherManager_    = new MOS_Meteo_Manager     ();
+    pMOSServer_      = new MOS_MOSServer    ();
+    pAgentManager_   = new MOS_AgentManager ();
+    pLineManager_    = new MOS_LineManager  ();
+    pObjectManager_  = new MOS_ObjectManager();
+    pWeatherManager_ = new MOS_Meteo_Manager();
 
     this->SetSplashText( tr("Chargement des données...") );
 
@@ -144,7 +144,7 @@ MOS_App::~MOS_App()
     }
     MT_ChangeDir( strInitialDir );
 
-    delete pDynaObjectManager_;
+    delete pObjectManager_;
     delete pAgentManager_;
     delete pLineManager_;
     delete pWorld_;
@@ -457,7 +457,7 @@ void MOS_App::InitializeObjectIds( MT_InputArchive_ABC& scipioArchive )
     MT_XXmlInputArchive classeIds;
     classeIds.EnableExceptions( true );
     classeIds.Open( strClassId );
-    MOS_DynaObject_ABC::InitializeObjectIds( classeIds );
+    MOS_Object_ABC::InitializeObjectIds( classeIds );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +492,7 @@ void MOS_App::ReadODB( std::string strFilename )
     {
         archive.Section( "ODB" );
         pAgentManager_->ReadODB( archive );
-        pDynaObjectManager_->ReadODB( archive );
+        pObjectManager_->ReadODB( archive );
         archive.EndSection();
     }
     catch( MT_Exception& e )
@@ -500,7 +500,7 @@ void MOS_App::ReadODB( std::string strFilename )
         // Clean up what has been partially read.
         pAgentManager_->DeleteAllAgents();
         pAgentManager_->DeleteAllGtias();
-        pDynaObjectManager_->DeleteAllDynaObjects();
+        pObjectManager_->DeleteAllObjects();
 
         std::stringstream strMsg;
         strMsg << tr("Le fichier ODB ") << strFilename << tr(" contient des erreurs, et n'a pu être chargé.") << std::endl;
@@ -527,7 +527,7 @@ void MOS_App::WriteODB( std::string strFilename )
 
     archive.Section( "ODB" );
     pAgentManager_->WriteODB( archive );
-    pDynaObjectManager_->WriteODB( archive );
+    pObjectManager_->WriteODB( archive );
     archive.EndSection();
 
     while( true )
@@ -714,38 +714,38 @@ void MOS_App::NotifyLogisticConsignUpdated( MOS_LogMaintenanceConsign& consign )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_App::NotifyDynaObjectCreated
+// Name: MOS_App::NotifyObjectCreated
 /** @param  object 
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyDynaObjectCreated( MOS_DynaObject_ABC& object )
+void MOS_App::NotifyObjectCreated( MOS_Object_ABC& object )
 {
-    emit DynaObjectCreated( object );
+    emit ObjectCreated( object );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_App::NotifyDynaObjectUpdated
+// Name: MOS_App::NotifyObjectUpdated
 /** @param  object 
 */
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyDynaObjectUpdated( MOS_DynaObject_ABC& object )
+void MOS_App::NotifyObjectUpdated( MOS_Object_ABC& object )
 {
-    emit DynaObjectUpdated( object );
+    emit ObjectUpdated( object );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_App::NotifyDynaObjectDeleted
+// Name: MOS_App::NotifyObjectDeleted
 /** @param  object 
 */
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyDynaObjectDeleted( MOS_DynaObject_ABC& object )
+void MOS_App::NotifyObjectDeleted( MOS_Object_ABC& object )
 {
-    emit DynaObjectDeleted( object );
+    emit ObjectDeleted( object );
 }
 
 
@@ -841,6 +841,17 @@ void MOS_App::NotifyAgentConflictEnded( MOS_Agent& agent )
     emit AgentConflictEnded( agent );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyObjectExplosion
+/** @param  object 
+*/
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyObjectExplosion( MOS_Object_ABC& object )
+{
+    emit ObjectExplosion( object );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifySpeedChanged
@@ -897,7 +908,7 @@ void MOS_App::NotifyAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& k
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge )
+void MOS_App::NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
 {
     emit ObjectKnowledgeCreated( team, knowledge );
 }
@@ -910,7 +921,7 @@ void MOS_App::NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_DynaObjectKnowle
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge )
+void MOS_App::NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
 {
     emit ObjectKnowledgeUpdated( team, knowledge );
 }
@@ -923,7 +934,7 @@ void MOS_App::NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_DynaObjectKnowle
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge )
+void MOS_App::NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
 {
     emit ObjectKnowledgeDeleted( team, knowledge );
 }

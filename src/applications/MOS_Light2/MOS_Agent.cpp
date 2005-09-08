@@ -22,10 +22,10 @@
 #include "MOS_Net_Def.h"
 #include "MOS_ASN_Messages.h"
 #include "MOS_AgentKnowledge.h"
-#include "MOS_DynaObjectKnowledge.h"
+#include "MOS_ObjectKnowledge.h"
 #include "MOS_AgentModel.h"
-#include "MOS_DynaObjectManager.h"
-#include "MOS_DynaObject_ABC.h"
+#include "MOS_ObjectManager.h"
+#include "MOS_Object_ABC.h"
 #include "MOS_Team.h"
 #include "MOS_Gtia.h"
 #include "MOS_Surface.h"
@@ -247,7 +247,7 @@ void MOS_Agent::OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input )
 
     input >> nObjectID;
     input >> nObjectVisType;
-    MOS_DynaObject_ABC* pObject = MOS_App::GetApp().GetDynaObjectManager().FindDynaObject( nObjectID );
+    MOS_Object_ABC* pObject = MOS_App::GetApp().GetObjectManager().FindObject( nObjectID );
     assert( pObject );
 
     objectsPerceived_.erase( pObject );
@@ -1135,7 +1135,7 @@ void MOS_Agent::TerminateConsign( MOS_LogMedicalConsign& consign )
 // -----------------------------------------------------------------------------
 void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg )
 {
-    MOS_FireResult& fireResult = *new MOS_FireResult( *this );
+    MOS_FireResult& fireResult = *new MOS_FireResult();
     fireResult.Initialize( asnMsg );
     fireResults_.push_back( &fireResult );
     if( fireResults_.size() > 20 )

@@ -20,14 +20,15 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_AgentComposition.h"
 #include "MOS_IDManager.h"
+#include "MOS_FireResult.h"
 #include "MT_Tools/MT_Quad.h"
 
 class MOS_Report_ABC;
-class MOS_DynaObjectKnowledge;
+class MOS_ObjectKnowledge;
 class MOS_AgentModel;
 class MOS_Gtia;
 class MOS_Team;
-class MOS_DynaObject_ABC;
+class MOS_Object_ABC;
 class MOS_Surface;
 class MOS_TypePion;
 class MOS_TypeAutomate;
@@ -37,7 +38,6 @@ class MOS_Morale;
 class MOS_LogSupplyConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogMaintenanceConsign;
-class MOS_FireResult;
 
 // =============================================================================
 /** @class  MOS_Agent
@@ -63,7 +63,7 @@ public:
     typedef T_AgentConstPtrSet::iterator        IT_AgentConstPtrSet;
     typedef T_AgentConstPtrSet::const_iterator  CIT_AgentConstPtrSet;
 
-    typedef std::set< const MOS_DynaObject_ABC* > T_ObjectConstPtrSet;
+    typedef std::set< const MOS_Object_ABC* > T_ObjectConstPtrSet;
     typedef T_ObjectConstPtrSet::iterator         IT_ObjectConstPtrSet;
     typedef T_ObjectConstPtrSet::const_iterator   CIT_ObjectConstPtrSet;
 
@@ -261,9 +261,6 @@ public:
 
     typedef std::vector< std::pair< uint, uint > >        T_LogisticAvailabilities;
     typedef T_LogisticAvailabilities::const_iterator    CIT_LogisticAvailabilities;
-
-    typedef std::vector< MOS_FireResult* >                T_FireResults;
-    typedef T_FireResults::const_iterator                 CIT_FireResults;
     //@}
 
 

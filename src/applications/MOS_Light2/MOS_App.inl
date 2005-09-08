@@ -67,14 +67,14 @@ MOS_LineManager& MOS_App::GetLineManager() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MOS_App::GetDynaObjectManager
+// Name: MOS_App::GetObjectManager
 // Created: NLD 2002-11-28
 //-----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObjectManager& MOS_App::GetDynaObjectManager() const
+MOS_ObjectManager& MOS_App::GetObjectManager() const
 {
-    assert( pDynaObjectManager_ );
-    return *pDynaObjectManager_;
+    assert( pObjectManager_ );
+    return *pObjectManager_;
 }
  
 
@@ -170,7 +170,7 @@ std::string MOS_App::GetNBCName( uint nId ) const
     if( found != nbcNamesMap_.end() )
         return found->second;
     else
-        return itostring( nId );   
+        return itostring( nId );
 }
 
 
@@ -184,6 +184,18 @@ const T_MosId_String_Map& MOS_App::GetNBCNames() const
     return nbcNamesMap_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_App::GetNBCID
+// Created: SBO 2005-09-05
+// -----------------------------------------------------------------------------
+MOS_INLINE
+uint MOS_App::GetNBCID( const std::string& strName ) const
+{
+    for( CIT_MosId_String_Map it = nbcNamesMap_.begin(); it != nbcNamesMap_.end(); ++it )
+        if( it->second == strName )
+            return it->first;
+    return 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::FindSensorType

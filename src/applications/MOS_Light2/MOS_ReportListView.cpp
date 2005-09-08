@@ -26,11 +26,11 @@
 
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
-#include "MOS_DynaObjectManager.h"
+#include "MOS_ObjectManager.h"
 #include "MOS_MainWindow.h"
 #include "MOS_Agent.h"
-//#include "MOS_DynaObject.h"
-#include "MOS_DynaObjectKnowledge.h"
+//#include "MOS_Object.h"
+#include "MOS_ObjectKnowledge.h"
 #include "MOS_AgentKnowledge.h"
 #include "MOS_Report_ABC.h"
 #include "MOS_RC.h"
@@ -212,7 +212,7 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
 
     if( this->InterpretLink( str, "ObjectKnowledge:", nId ) )
     {
-        MOS_DynaObjectKnowledge* pKnowledge = pAgent_->GetTeam().FindObjectKnowledge( nId );
+        MOS_ObjectKnowledge* pKnowledge = pAgent_->GetTeam().FindObjectKnowledge( nId );
         if( pKnowledge != 0 )
         {
             //$$$ can't do this here cauze it would destroy the listview item we clicked on...

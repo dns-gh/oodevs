@@ -30,7 +30,7 @@ MOS_InfoPanel_ABC::MOS_InfoPanel_ABC( QWidget* pParent )
     , bVisible_( false )
 {
     connect( &MOS_App::GetApp(), SIGNAL( AgentUpdated( MOS_Agent& ) ),           this, SLOT( OnAgentUpdated( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(), SIGNAL( DynaObjectUpdated( MOS_DynaObject_ABC& ) ), this, SLOT( OnDynaObjectUpdated( MOS_DynaObject_ABC& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( ObjectUpdated( MOS_Object_ABC& ) ), this, SLOT( OnObjectUpdated( MOS_Object_ABC& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,10 +65,10 @@ void MOS_InfoPanel_ABC::OnAgentUpdated( MOS_Agent& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_InfoPanel_ABC::OnDynaObjectUpdated
+// Name: MOS_InfoPanel_ABC::OnObjectUpdated
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-void MOS_InfoPanel_ABC::OnDynaObjectUpdated( MOS_DynaObject_ABC& )
+void MOS_InfoPanel_ABC::OnObjectUpdated( MOS_Object_ABC& )
 {
     // NOTHING
 }
@@ -95,9 +95,9 @@ bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Agent& agent )
 // Name: MOS_InfoPanel_ABC::ShouldDisplay
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_DynaObject_ABC& object )
+bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Object_ABC& object )
 {
-    return isVisible() && selectedItem_.pDynaObject_ != 0 && selectedItem_.pDynaObject_ == &object;
+    return isVisible() && selectedItem_.pObject_ != 0 && selectedItem_.pObject_ == &object;
 }
 
 // -----------------------------------------------------------------------------

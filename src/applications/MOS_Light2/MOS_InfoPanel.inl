@@ -32,16 +32,16 @@ MOS_AgentKnowledgePanel& MOS_InfoPanel::GetAgentKnowledgePanel()
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_InfoPanel::GetDynaObjectKnowledgePanel
+// Name: MOS_InfoPanel::GetObjectKnowledgePanel
 /** @return 
 */
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
 MOS_INLINE
-MOS_DynaObjectKnowledgePanel& MOS_InfoPanel::GetDynaObjectKnowledgePanel()
+MOS_ObjectKnowledgePanel& MOS_InfoPanel::GetObjectKnowledgePanel()
 {
-    assert( pDynaObjectKnowledgePanel_ != 0 );
-    return *pDynaObjectKnowledgePanel_;
+    assert( pObjectKnowledgePanel_ != 0 );
+    return *pObjectKnowledgePanel_;
 }
 
 // -----------------------------------------------------------------------------

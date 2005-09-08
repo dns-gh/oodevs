@@ -22,7 +22,7 @@ class MOS_MOSServer;
 class MOS_AgentManager;
 class MOS_LineManager;
 class MOS_World;
-class MOS_DynaObjectManager;
+class MOS_ObjectManager;
 class MOS_Meteo_Manager;
 class MOS_MainWindow;
 class MOS_Agent;
@@ -30,8 +30,8 @@ class MOS_Report_ABC;
 class MOS_Gtia;
 class MOS_Team;
 class MOS_AgentKnowledge;
-class MOS_DynaObjectKnowledge;
-class MOS_DynaObject_ABC;
+class MOS_ObjectKnowledge;
+class MOS_Object_ABC;
 class MOS_TacticalLine_ABC;
 class QSplashScreen;
 
@@ -86,9 +86,9 @@ public:
     void NotifyAgentUpdated( MOS_Agent& agent );
     void NotifyAgentReparented( MOS_Agent& agent );
 
-    void NotifyDynaObjectCreated( MOS_DynaObject_ABC& object );
-    void NotifyDynaObjectUpdated( MOS_DynaObject_ABC& object );
-    void NotifyDynaObjectDeleted( MOS_DynaObject_ABC& object );
+    void NotifyObjectCreated( MOS_Object_ABC& object );
+    void NotifyObjectUpdated( MOS_Object_ABC& object );
+    void NotifyObjectDeleted( MOS_Object_ABC& object );
 
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );
@@ -104,16 +104,17 @@ public:
     void NotifyAgentOutOfGas( MOS_Agent& agent );
     void NotifyAgentRefueled( MOS_Agent& agent );
 
-    void NotifyAgentConflictStarted( MOS_Agent& agent );
-    void NotifyAgentConflictEnded  ( MOS_Agent& agent );
+    void NotifyAgentConflictStarted( MOS_Agent&      agent  );
+    void NotifyAgentConflictEnded  ( MOS_Agent&      agent  );
+    void NotifyObjectExplosion     ( MOS_Object_ABC& object );
 
     void NotifyAgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void NotifyAgentKnowledgeUpdated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void NotifyAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
 
-    void NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
-    void NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
-    void NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
+    void NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
+    void NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
+    void NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
 
     void NotifyTacticalLineDeleted( MOS_TacticalLine_ABC& line );
     //@}
@@ -122,15 +123,15 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    MOS_MOSServer&         GetMOSServer        () const;
-    MOS_AgentManager&      GetAgentManager     () const;
-    MOS_LineManager&       GetLineManager      () const;
-    MOS_World&             GetWorld            () const;
-    MOS_DynaObjectManager& GetDynaObjectManager() const;
-    MOS_RawVisionData&     GetRawVisionData    ();
-    MOS_Meteo_Manager&     GetWeatherManager   () const;
-    MOS_MainWindow&        GetMainWindow       () const;
-    uint                   GetTime             () const;
+    MOS_MOSServer&     GetMOSServer     () const;
+    MOS_AgentManager&  GetAgentManager  () const;
+    MOS_LineManager&   GetLineManager   () const;
+    MOS_World&         GetWorld         () const;
+    MOS_ObjectManager& GetObjectManager () const;
+    MOS_RawVisionData& GetRawVisionData ();
+    MOS_Meteo_Manager& GetWeatherManager() const;
+    MOS_MainWindow&    GetMainWindow    () const;
+    uint               GetTime          () const;
     //@}
 
     void SetSplashText( const QString& strText );
@@ -145,6 +146,7 @@ public:
     std::string GetTransportDotationName( MIL_AgentID ) const;
     std::string GetBreakDownName        ( uint )        const;
     std::string GetNBCName              ( uint )        const;
+    uint        GetNBCID                ( const std::string& strName ) const;
     const T_MosId_String_Map& GetNBCNames() const;
     const MOS_SensorType* FindSensorType( const std::string& strName ) const;
     unsigned int GetRessourceID( const std::string& strRessource ) const;
@@ -161,9 +163,9 @@ signals:
     void AgentUpdated( MOS_Agent& agent );
     void AgentReparented( MOS_Agent& agent );
 
-    void DynaObjectCreated( MOS_DynaObject_ABC& object );
-    void DynaObjectUpdated( MOS_DynaObject_ABC& object );
-    void DynaObjectDeleted( MOS_DynaObject_ABC& object );
+    void ObjectCreated( MOS_Object_ABC& object );
+    void ObjectUpdated( MOS_Object_ABC& object );
+    void ObjectDeleted( MOS_Object_ABC& object );
     
     void GtiaCreated( MOS_Gtia& gtia );
     void GtiaDeleted( MOS_Gtia& gtia );
@@ -175,16 +177,17 @@ signals:
     void AgentOutOfGas( MOS_Agent& agent );
     void AgentRefueled( MOS_Agent& agent );
 
-    void AgentConflictStarted( MOS_Agent& agent );
-    void AgentConflictEnded( MOS_Agent& agent );
+    void AgentConflictStarted( MOS_Agent&      agent  );
+    void AgentConflictEnded  ( MOS_Agent&      agent  );
+    void ObjectExplosion     ( MOS_Object_ABC& object );
 
     void AgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void AgentKnowledgeUpdated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void AgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
 
-    void ObjectKnowledgeCreated( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
-    void ObjectKnowledgeUpdated( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
-    void ObjectKnowledgeDeleted( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
+    void ObjectKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
+    void ObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
+    void ObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
 
     void TacticalLineDeleted( MOS_TacticalLine_ABC& line );
 
@@ -211,39 +214,39 @@ private:
 private:
     //! @name Member data
     //@{
-    MOS_MOSServer*         pMOSServer_;
-    MOS_World*             pWorld_;
-    MOS_AgentManager*      pAgentManager_;
-    MOS_LineManager*       pLineManager_;
-    MOS_DynaObjectManager* pDynaObjectManager_;
-    MOS_Meteo_Manager*     pWeatherManager_;
-    MOS_RawVisionData      rawData_;
+    MOS_MOSServer*     pMOSServer_;
+    MOS_World*         pWorld_;
+    MOS_AgentManager*  pAgentManager_;
+    MOS_LineManager*   pLineManager_;
+    MOS_ObjectManager* pObjectManager_;
+    MOS_Meteo_Manager* pWeatherManager_;
+    MOS_RawVisionData  rawData_;
 
-    MOS_MainWindow*        pMainWindow_;
-    QSplashScreen*         pSplashScreen_;
+    MOS_MainWindow*    pMainWindow_;
+    QSplashScreen*     pSplashScreen_;
 
-    uint                   nTimeSeconds_;
+    uint               nTimeSeconds_;
 
-    T_MosId_String_Map     equipementNameMap_;
-    T_MosId_String_Map     resourcesNameMap_;
-    T_MosId_String_Map     breakDownsNameMap_;
-    T_MosId_String_Map     nbcNamesMap_;
+    T_MosId_String_Map equipementNameMap_;
+    T_MosId_String_Map resourcesNameMap_;
+    T_MosId_String_Map breakDownsNameMap_;
+    T_MosId_String_Map nbcNamesMap_;
 
-    T_SensorTypeMap        sensorTypes_;
+    T_SensorTypeMap    sensorTypes_;
 
-    bool                   bODBEditor_;
-    std::string            strODBFilename_;
+    bool               bODBEditor_;
+    std::string        strODBFilename_;
 
     // $$$$ SBO 2005-07-26: to manage -conffile cmd line option
-    std::string            strRootDirectory_;
-    std::string            strRootConfigFile_;
+    std::string        strRootDirectory_;
+    std::string        strRootConfigFile_;
 
-    QTimer*                pNetworkTimer_;
-    QTimer*                pDisplayTimer_;
+    QTimer*            pNetworkTimer_;
+    QTimer*            pDisplayTimer_;
     //@}
 
 private:
-    static MOS_App*        pInstance_;
+    static MOS_App*    pInstance_;
 };
 
 

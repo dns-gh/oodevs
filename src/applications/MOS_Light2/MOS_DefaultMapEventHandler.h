@@ -31,7 +31,7 @@ class MOS_Agent;
 class MOS_ShapeEditorMapEventFilter;
 class MOS_ActionContext;
 class MOS_TacticalLine_ABC;
-class MOS_DynaObject_ABC;
+class MOS_Object_ABC;
 class MOS_MapMouseEvent;
 class QPopupMenu;
 
@@ -74,10 +74,10 @@ public slots:
     void SetSelectedElement( MOS_SelectedElement& selectedElement );
     void ClearSelection();
 
-    void OnDynaObjectDeleted( MOS_DynaObject_ABC& object );
+    void OnObjectDeleted( MOS_Object_ABC& object );
     void OnTacticalLineDeleted( MOS_TacticalLine_ABC& line );
     void OnAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
-    void OnObjectKnowledgeDeleted( MOS_Team& team, MOS_DynaObjectKnowledge& knowledge );
+    void OnObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
 
     void SwitchToLineCreation( int nType );     //$$$ Transfer those 2 to a new class...
     void LineCreated();
@@ -107,11 +107,11 @@ private:
     bool IsLineAtPos( const MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
     int GetPointAtPos( MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_DynaObject_ABC* GetDynaObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    bool IsDynaObjectAtPos( const MOS_DynaObject_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    MOS_Object_ABC* GetObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool IsObjectAtPos( const MOS_Object_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_DynaObjectKnowledge* GetDynaObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    bool IsDynaObjectKnowledgeAtPos( const MOS_DynaObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    MOS_ObjectKnowledge* GetObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool IsObjectKnowledgeAtPos( const MOS_ObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
     void PopupMenu( const MT_Vector2D& vGLPos, float rDistancePerPixel );
     //@}
