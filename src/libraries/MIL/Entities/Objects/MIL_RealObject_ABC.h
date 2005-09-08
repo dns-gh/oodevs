@@ -82,7 +82,7 @@ public:
     void Destroy  ();
     void Mine     ();
     
-    virtual bool CanCollideWithAgent( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWithAgent( const MIL_Agent_ABC& agent ) const;
 
     bool CanBePerceived                    () const;
     bool CanBePrepared                     () const;
@@ -179,9 +179,9 @@ protected:
   
     //! @name Tools
     //@{
-            void              ApplyAttrition    ( MIL_Agent_ABC& agent );    
-    virtual void              UpdateLocalisation( const TER_Localisation& newLocalisation );
-            const T_AgentSet& GetAnimators      () const;
+            void              ApplyAttrition     ( MIL_Agent_ABC& agent );    
+    virtual void              UpdateLocalisation ( const TER_Localisation& newLocalisation );
+            const T_AgentSet& GetAnimators       () const;
     //@}
 
     //! @name Network

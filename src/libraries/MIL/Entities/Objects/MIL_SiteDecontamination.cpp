@@ -64,6 +64,9 @@ void MIL_SiteDecontamination::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
 
+    if( !CanInteractWithAgent( agent ) )
+        return;
+
     PHY_RoleInterface_NBC& roleNBC = agent.GetRole< PHY_RoleInterface_NBC >();
 
     if(    GetConstructionPercentage() < 1.

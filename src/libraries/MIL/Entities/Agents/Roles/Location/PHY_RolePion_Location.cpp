@@ -222,16 +222,16 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
     if( rHeight == rHeight_ )
         return;
 
-    TER_DynaObject_ABC::T_DynaObjectVector objectsColliding;
+/*    TER_DynaObject_ABC::T_DynaObjectVector objectsColliding;
     TER_DynaObject_ABC::CIT_DynaObjectVector itObject;
     TER_World::GetWorld().GetListDynaObjectsAt( vPosition_, objectsColliding );
     for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyMovingOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
-
+*/
     SetHeight( rHeight );
 
-    for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
-        NotifyMovingInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
+  /*  for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+        NotifyMovingInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) ); */
 }
 
 // -----------------------------------------------------------------------------

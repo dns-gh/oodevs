@@ -108,6 +108,15 @@ bool MIL_Object_ABC::CanCollideWithAgent( const MIL_Agent_ABC& /*agent*/ ) const
     return !IsMarkedForDestruction();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::CanInteractWithAgent
+// Created: NLD 2005-09-08
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
+{
+    return CanCollideWithAgent( agent );
+}
+
 // =============================================================================
 // EVENTS
 // =============================================================================

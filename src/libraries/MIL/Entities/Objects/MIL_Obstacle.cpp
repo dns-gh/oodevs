@@ -40,13 +40,13 @@ MIL_Obstacle::~MIL_Obstacle()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Obstacle::CanCollideWithAgent
+// Name: MIL_Obstacle::CanInteractWithAgent
 // Created: NLD 2005-03-29
 // -----------------------------------------------------------------------------
-bool MIL_Obstacle::CanCollideWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_Obstacle::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
 {
-    if( !MIL_RealObject_ABC::CanCollideWithAgent( agent ) )
+    if( agent.GetArmy() == GetArmy() )
         return false;
 
-    return agent.GetArmy() != GetArmy();
+    return MIL_RealObject_ABC::CanInteractWithAgent( agent );
 }

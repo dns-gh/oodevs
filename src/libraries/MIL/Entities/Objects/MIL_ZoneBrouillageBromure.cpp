@@ -62,7 +62,7 @@ void MIL_ZoneBrouillageBromure::serialize( Archive& file, const uint )
 void MIL_ZoneBrouillageBromure::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( GetArmy().IsAnEnemy( agent.GetArmy() ) == eTristate_True )
+    if( CanInteractWithAgent( agent ) && GetArmy().IsAnEnemy( agent.GetArmy() ) == eTristate_True )
         agent.GetRole< PHY_RoleInterface_Communications >().Jam( *this );
 }
 

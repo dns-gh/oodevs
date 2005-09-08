@@ -73,7 +73,7 @@ void MIL_ZoneProtegee::ProcessAgentInside( MIL_Agent_ABC& agent )
 {   
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
 
-    if( GetConstructionPercentage() < 1. )
+    if( !CanInteractWithAgent( agent ) || GetConstructionPercentage() < 1. )
         return;
 
     if( GetOccupier() == &agent )

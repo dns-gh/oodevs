@@ -41,6 +41,7 @@ MIL_ZoneImplantationCOBRA::~MIL_ZoneImplantationCOBRA()
 // =============================================================================
 // NOTIFICATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneImplantationCOBRA::ProcessAgentEntering
 // Created: JVT 2005-05-11
@@ -48,7 +49,8 @@ MIL_ZoneImplantationCOBRA::~MIL_ZoneImplantationCOBRA()
 void MIL_ZoneImplantationCOBRA::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
+    if( CanInteractWithAgent( agent ) )
+        agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
 }
 
 // -----------------------------------------------------------------------------

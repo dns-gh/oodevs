@@ -47,7 +47,8 @@ MIL_ZoneImplantationCanon::~MIL_ZoneImplantationCanon()
 void MIL_ZoneImplantationCanon::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
+    if( CanInteractWithAgent( agent ) )
+        agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
 }
 
 // -----------------------------------------------------------------------------

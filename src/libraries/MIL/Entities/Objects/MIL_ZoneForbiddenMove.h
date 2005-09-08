@@ -40,9 +40,10 @@ public:
     static MIL_RealObject_ABC& Create();
     //@}
 
+private:
     //! @name Operations
     //@{
-    virtual bool CanCollideWithAgent( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWithAgent( const MIL_Agent_ABC& agent ) const;
     //@}
 };
 

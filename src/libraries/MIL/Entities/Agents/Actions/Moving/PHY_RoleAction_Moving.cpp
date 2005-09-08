@@ -527,7 +527,7 @@ void PHY_RoleAction_Moving::ComputeObjectsCollision( const MT_Vector2D& vStart, 
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
 
-        if( !object.CanCollideWithAgent( *pPion_ ) )
+        if( !object.CanInteractWithAgent( *pPion_ ) )
             continue;
 
         // Ajout des points de collision dans moveStepSet

@@ -54,11 +54,14 @@ void MIL_ZoneForbiddenFire::serialize( Archive& file, const uint )
 // =============================================================================
 // COLLISION
 // =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneForbiddenFire::CanCollideWithAgent
+// Name: MIL_ZoneForbiddenFire::CanInteractWithAgent
 // Created: NLD 2005-02-18
 // -----------------------------------------------------------------------------
-bool MIL_ZoneForbiddenFire::CanCollideWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_ZoneForbiddenFire::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
 {
-    return agent.GetArmy() == GetArmy();
+    if( agent.GetArmy() != GetArmy() )
+        return false;
+    return MIL_RealObject_ABC::CanInteractWithAgent( agent );
 }

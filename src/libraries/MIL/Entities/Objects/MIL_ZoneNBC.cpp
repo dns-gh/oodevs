@@ -159,7 +159,7 @@ ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( uint nID, const ASN1T_MagicAc
 void MIL_ZoneNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( !IsAgentInsideDecontaminatedZone( agent ) )
+    if( CanInteractWithAgent( agent ) && !IsAgentInsideDecontaminatedZone( agent ) )
         agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
 }
 
@@ -170,7 +170,7 @@ void MIL_ZoneNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_ZoneNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    if( !IsAgentInsideDecontaminatedZone( agent ) )
+    if( CanInteractWithAgent( agent ) && !IsAgentInsideDecontaminatedZone( agent ) )
         agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
 }
 

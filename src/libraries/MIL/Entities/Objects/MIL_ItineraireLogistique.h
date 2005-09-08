@@ -59,13 +59,12 @@ public:
 
     //! @name Specific
     //@{
-            MT_Float GetWeightSupported () const;
-            MT_Float GetWidth           () const;
-            MT_Float GetLength          () const;
-            MT_Float GetFlow            () const;
-            bool     IsEquipped         () const;
-            void     Equip              ();
-    virtual bool     CanCollideWithAgent( const MIL_Agent_ABC& agent ) const;
+            MT_Float GetWeightSupported  () const;
+            MT_Float GetWidth            () const;
+            MT_Float GetLength           () const;
+            MT_Float GetFlow             () const;
+            bool     IsEquipped          () const;
+            void     Equip               ();
     //@}
 
 private:               
@@ -74,6 +73,11 @@ private:
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
     virtual void WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&   asnMsg );
             bool TransformLocalisation  ();
+    //@}
+
+    //! @name Tools
+    //@{
+    virtual bool CanInteractWithAgent( const MIL_Agent_ABC& agent ) const;
     //@}
 
 private:

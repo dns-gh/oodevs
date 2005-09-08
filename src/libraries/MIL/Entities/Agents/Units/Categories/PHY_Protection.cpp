@@ -108,6 +108,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, MIL_InputArchive& ar
     neutralizationTime_ = MT_GaussianRandom( rTimeVal, rVariance );
     archive.EndSection(); // Neutralisation
 
+    //$$$ Ne pas lire quand type == eHuman
     archive.Section( "ProbabilitePanneAleatoire" );
     archive.ReadAttribute( "EVA" , rBreakdownProbabilityEva_ , CheckValueBound( 0., 100. ) );
     archive.ReadAttribute( "NEVA", rBreakdownProbabilityNeva_, CheckValueBound( 0., 100. ) );

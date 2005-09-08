@@ -50,15 +50,17 @@ void MIL_ZoneForbiddenMove::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
 }
 
-
 // =============================================================================
 // COLLISION
 // =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneForbiddenMove::CanCollideWithAgent
+// Name: MIL_ZoneForbiddenMove::CanInteractWithAgent
 // Created: NLD 2005-02-18
 // -----------------------------------------------------------------------------
-bool MIL_ZoneForbiddenMove::CanCollideWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_ZoneForbiddenMove::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
 {
-    return agent.GetArmy() == GetArmy();
+    if( agent.GetArmy() != GetArmy() )
+        return false;
+    return MIL_RealObject_ABC::CanInteractWithAgent( agent );
 }

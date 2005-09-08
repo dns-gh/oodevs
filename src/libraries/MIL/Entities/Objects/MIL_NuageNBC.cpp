@@ -185,7 +185,9 @@ ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( uint nID, const ASN1T_MagicA
 void MIL_NuageNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
+
+    if( CanInteractWithAgent( agent ) )
+        agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +197,9 @@ void MIL_NuageNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_NuageNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
+
+    if( CanInteractWithAgent( agent ) )
+        agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
 }
 
 // =============================================================================

@@ -54,6 +54,7 @@ void MIL_PosteTir::serialize( Archive& file, const uint )
 // =============================================================================
 // EVENTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PosteTir::ProcessAgentExiting
 // Created: NLD 2004-04-29
@@ -74,7 +75,7 @@ void MIL_PosteTir::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
 
-    if( GetConstructionPercentage() < 1. )
+    if( !CanInteractWithAgent( agent ) || GetConstructionPercentage() < 1. )
         return;
 
     if( GetOccupier() == &agent )

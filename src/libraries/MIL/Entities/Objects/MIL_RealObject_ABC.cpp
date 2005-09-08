@@ -628,13 +628,18 @@ void MIL_RealObject_ABC::Serialize( HLA_UpdateFunctor& functor ) const
 //=============================================================================
 
 // ----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::CanCollideWithAgent
+// Name: MIL_RealObject_ABC::CanInteractWithAgent
 // Created: NLD 2003-09-02
 // -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::CanCollideWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_RealObject_ABC::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
 {
-    assert( pType_ );
-    return !bPrepared_ && !rConstructionPercentage_ == 0 && !IsMarkedForDestruction() && agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= pType_->GetMaxInteractionHeight();
+    if( bPrepared_ || rConstructionPercentage_ == 0 )
+        return false;
+
+    if( agent.GetRole< PHY_RoleInterface_Location >().GetHeight() > pType_->GetMaxInteractionHeight() )
+        return false;
+
+    return MIL_Object_ABC::CanInteractWithAgent( agent ); // NB : Call MIL_Object_ABC::CanCollideWithAgent()
 }
 
 // -----------------------------------------------------------------------------

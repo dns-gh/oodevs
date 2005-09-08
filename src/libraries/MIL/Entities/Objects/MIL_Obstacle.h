@@ -28,9 +28,10 @@ public:
              MIL_Obstacle( const MIL_RealObjectType& type );
     virtual ~MIL_Obstacle();
 
+protected:
     //! @name Operations
     //@{
-    virtual bool CanCollideWithAgent( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWithAgent( const MIL_Agent_ABC& agent ) const;
     //@}
 };
 

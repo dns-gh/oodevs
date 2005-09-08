@@ -126,7 +126,7 @@ ASN1T_EnumObjectErrorCode MIL_CampRefugies::Initialize( uint nID, const ASN1T_Ma
 void MIL_CampRefugies::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( pTC2_ )
+    if( pTC2_ && CanInteractWithAgent( agent ) )
         agent.GetRole< PHY_RoleInterface_Refugee >().NotifyInsideRefugeeCamp( *this );
 }
     
@@ -137,7 +137,7 @@ void MIL_CampRefugies::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_CampRefugies::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    if( pTC2_ )
+    if( pTC2_ && CanInteractWithAgent( agent ) )
         agent.GetRole< PHY_RoleInterface_Refugee >().NotifyInsideRefugeeCamp( *this );
 }
 

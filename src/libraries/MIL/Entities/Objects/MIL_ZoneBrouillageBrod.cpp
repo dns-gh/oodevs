@@ -40,6 +40,7 @@ MIL_ZoneBrouillageBrod::~MIL_ZoneBrouillageBrod()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneBrouillageBrod::serialize
 // Created: JVT 2005-04-14
@@ -53,6 +54,7 @@ void MIL_ZoneBrouillageBrod::serialize( Archive& file, const uint )
 // =============================================================================
 // EVENTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneBrouillageBrod::ProcessAgentInside
 // Created: NLD 2004-11-04
@@ -60,7 +62,8 @@ void MIL_ZoneBrouillageBrod::serialize( Archive& file, const uint )
 void MIL_ZoneBrouillageBrod::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    agent.GetRole< PHY_RoleInterface_Communications >().Jam( *this );
+    if( CanInteractWithAgent( agent ) )
+        agent.GetRole< PHY_RoleInterface_Communications >().Jam( *this );
 }
 
 // -----------------------------------------------------------------------------
