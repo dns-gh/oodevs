@@ -51,6 +51,10 @@ public:
         eNbrSizeGuiElements
     };
 
+public slots:
+    void IncSize();
+    void DecSize();
+
 public:
      ADN_Categories_GUI( ADN_Categories_Data& data );
     ~ADN_Categories_GUI();
