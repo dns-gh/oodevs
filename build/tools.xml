@@ -127,9 +127,9 @@
         <attribute name="suffix" default=""/>
         <attribute name="outtype"/>
         <attribute name="configuration"/>
-        <attribute name="excludes" default=""/>
-        <attribute name="pch" default=""/>
-        <attribute name="pch-excludes" default=""/>
+        <attribute name="excludes"/>
+        <attribute name="pch"/>
+        <attribute name="pch-excludes"/>
         <attribute name="outdir" default="${bin.dir}/@{configuration}/@{path}/@{name}"/>
         <attribute name="subsystem" default="other"/>
         <element name="cc-elements" optional="true" implicit="true"/>
@@ -148,10 +148,11 @@
                 <compilerarg value="/W4"/>
                 <compiler name="${compiler}" optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true">
                     <precompile prototype="${@{name}.pch}" if="@{name}.pch">
-                        <except dir="@{input}" includes="@{pch-excludes}"/>
+                        <except dir="@{input}" includes="${@{name}.pch},@{pch-excludes}"/>
                     </precompile>
                     <defineset define="WIN32"/> <!-- for MT only -->
                     <includepath path="${libraries.dir}"/>
+                    <includepath path="@{input}"/> <!-- to find *_pch.h when included from subdirectories -->
                     <includepath path="${include.dir}"/>
                     <includepath path="${include.dir}/qt"/>
                 </compiler>
