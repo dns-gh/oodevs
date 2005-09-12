@@ -101,7 +101,6 @@ MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
     pCrossingRiverSpeedLabel_ = new QLabel( pCrossingGroup_ );
     new QLabel( tr( "Berges à aménager:" ), pCrossingGroup_ );
     pCrossingBanksNeedWorkLabel_ = new QLabel( pCrossingGroup_ );
-    pCrossingGroup_->hide();
     //@}
     
     //! @name NBC
@@ -109,7 +108,6 @@ MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
     pNBCGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Nuage/zone NBC" ), this );
     new QLabel( tr( "Agent NBC:" ), pNBCGroup_ );
     pNBCAgentLabel_ = new QLabel( pNBCGroup_ );
-    pNBCGroup_->hide();
     //@}
 
     //! @name ROTA
@@ -119,7 +117,6 @@ MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
     pROTADangerLabel_ = new QLabel( pROTAGroup_ );
     new QLabel( tr( "Agents NBC:" ), pROTAGroup_ );
     pROTANBCAgentsLabel_ = new QLabel( pROTAGroup_ );
-    pROTAGroup_->hide();
     //@}
 
     //! @name prisoner/refugee camp
@@ -127,7 +124,6 @@ MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
     pCampGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Camp de prisonniers/réfugiés" ), this );
     new QLabel( tr( "TC2:" ), pCampGroup_ );
     pCampTC2ID_ = new QLabel( pCampGroup_ );
-    pCampGroup_->hide();
     //@}
 
     //! @name logistic route

@@ -52,6 +52,10 @@ MOS_Object_ABC::MOS_Object_ABC( ASN1T_EnumObjectType eType )
     , rBypassConstructionPercentage_ ( 0.0 )
     , bPrepared_                     ( false )
     , nTypeLocalisation_             ( (ASN1T_EnumTypeLocalisation)0 )
+    , strTypeDotationConstruction_   ()
+    , strTypeDotationValorization_   ()
+    , nNbrDotationConstruction_      ( 0 )
+    , nNbrDotationValorization_      ( 0 )
 {
     // NOTHING
 }
@@ -69,6 +73,10 @@ MOS_Object_ABC::MOS_Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
     , rBypassConstructionPercentage_ ( 0.0 )
     , bPrepared_                     ( false )
     , nTypeLocalisation_             ( asnMsg.localisation.type )
+    , strTypeDotationConstruction_   ()
+    , strTypeDotationValorization_   ()
+    , nNbrDotationConstruction_      ( 0 )
+    , nNbrDotationValorization_      ( 0 )
 {
     GetIDManagerForObjectType( nType_ ).LockIdentifier( nID_ );
 
@@ -82,6 +90,18 @@ MOS_Object_ABC::MOS_Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
 
     if( pointVector_.size() > 1 )
         center_ /= pointVector_.size();
+
+    if( asnMsg.m.type_dotation_constructionPresent )
+    {
+        strTypeDotationConstruction_ = MOS_App::GetApp().GetResourceName( asnMsg.type_dotation_construction );
+        nNbrDotationConstruction_    = 0;
+    }
+    
+    if( asnMsg.m.type_dotation_valorisationPresent )
+    {
+        strTypeDotationValorization_ = MOS_App::GetApp().GetResourceName( asnMsg.type_dotation_valorisation );
+        nNbrDotationValorization_    = 0;
+    }
 }
 
 
@@ -104,12 +124,33 @@ void MOS_Object_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
 {
     bPrepared_ = asnMsg.en_preparation;
 
+    if( asnMsg.m.nb_dotation_constructionPresent )
+        nNbrDotationConstruction_ = asnMsg.nb_dotation_construction;
+    if( asnMsg.m.nb_dotation_valorisationPresent )
+        nNbrDotationValorization_ = asnMsg.nb_dotation_valorisation;
+
     if( asnMsg.m.pourcentage_constructionPresent )
         rConstructionPercentage_ = asnMsg.pourcentage_construction;
     if( asnMsg.m.pourcentage_valorisationPresent )
         rValorizationPercentage_ = asnMsg.pourcentage_valorisation;
     if( asnMsg.m.pourcentage_creation_contournementPresent )
         rBypassConstructionPercentage_ = asnMsg.pourcentage_creation_contournement;
+
+    if( asnMsg.m.localisationPresent )
+    {
+        center_.Reset();
+        pointVector_.clear();
+        nTypeLocalisation_ = asnMsg.localisation.type;
+        for( uint i = 0; i < asnMsg.localisation.vecteur_point.n; ++i )
+        {
+            MT_Vector2D vTmp;
+            MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.localisation.vecteur_point.elem[i].data, vTmp );
+            pointVector_.push_back( vTmp );
+            center_ += vTmp;
+        }
+        if( pointVector_.size() > 1 )
+            center_ /= pointVector_.size();
+    }
 
     std::stringstream strOutputMsg;
     strOutputMsg << "ObjectUpdate - ID: " << (int)nID_ 

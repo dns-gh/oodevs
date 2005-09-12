@@ -58,8 +58,7 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    MOS_Report_ABC::E_Type GetType() const;
-    MOS_Agent& GetAgent();
+    MOS_Agent&               GetAgent     ();
     const T_FragOrderVector& GetFragOrders() const;
     //@}
 
@@ -69,8 +68,8 @@ private:
     std::string AgentLink( ASN1T_OID nId );
 
 private:
-    MOS_Agent& agent_;
-    T_FragOrderVector   fragOrderVector_;
+    MOS_Agent&             agent_;
+    T_FragOrderVector      fragOrderVector_;
 };
 
 

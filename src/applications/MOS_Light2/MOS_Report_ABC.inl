@@ -70,3 +70,23 @@ void MOS_Report_ABC::SetNew( bool bNew )
 {
     bNew_ = bNew;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Report_ABC::GetType
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+MOS_INLINE
+MOS_Report_ABC::E_Type MOS_Report_ABC::GetType() const
+{
+    return eType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Report_ABC::IsRCType
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+MOS_INLINE
+bool MOS_Report_ABC::IsRCType() const
+{
+    return eType_ == eRC || eType_ == eMessage || eType_ == eEvent || eType_ == eWarning;
+}

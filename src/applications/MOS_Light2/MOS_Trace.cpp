@@ -43,6 +43,7 @@ using namespace DIN;
 MOS_Trace::MOS_Trace( MOS_Agent& agent )
     : MOS_Report_ABC( agent.GetPos() )
 {
+    eType_ = MOS_Report_ABC::eTrace;
 }
  
 

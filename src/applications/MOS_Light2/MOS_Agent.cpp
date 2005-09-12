@@ -710,7 +710,7 @@ void MOS_Agent::DeleteAllRCs()
 {
     for( IT_ReportVector it = reportVector_.begin(); it != reportVector_.end(); )
     {
-        if( (*it)->GetType() == MOS_Report_ABC::eRC )
+        if( (*it)->IsRCType() )
         {
             delete *it;
             it = reportVector_.erase( it );

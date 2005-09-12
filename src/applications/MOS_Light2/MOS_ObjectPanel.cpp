@@ -60,8 +60,8 @@ MOS_ObjectPanel::MOS_ObjectPanel( QWidget* pParent )
     new QWidget( this );
     new QWidget( this );
 
-    pLayout->setRowStretch( 20, 100 );
-    pLayout->setRowSpacing( 20, 26 );
+    pLayout->setRowStretch( 22, 100 );
+    pLayout->setRowSpacing( 22, 26 );
 
     pApplyButton_ = new QPushButton( tr( "Appliquer" ), this );
     pCancelButton_ = new QPushButton( tr( "Annuler" ), this );
@@ -97,6 +97,8 @@ void MOS_ObjectPanel::OnObjectUpdated( MOS_Object_ABC& object )
     pPercentValueEdit_   ->setValue( 0 );
     pPercentAroundEdit_  ->setValue( 0 );
     pIsUnderPrepCheckBox_->setChecked( false );
+    pDotationConstructionLabel_->setText( "-" );
+    pDotationValorisationLabel_->setText( "-" );
 
     pCrossingWidthTitle_->hide();
     pCrossingWidthLabel_->hide();
@@ -245,6 +247,11 @@ void MOS_ObjectPanel::InitializeGeneric()
 
     new QLabel( tr( "En préparation:" ), this );
     pIsUnderPrepCheckBox_ = new QCheckBox( this );
+
+    new QLabel( tr( "Dotation construction:" ), this );
+    pDotationConstructionLabel_ = new QLabel( this );
+    new QLabel( tr( "Dotation valorisation:" ), this );
+    pDotationValorisationLabel_ = new QLabel( this );
 }
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel::InitializeSiteFranchissement
@@ -364,6 +371,9 @@ void MOS_ObjectPanel::UpdateGeneric( MOS_Object_ABC& object )
     pPercentValueEdit_->setValue( object.GetValorizationPercentage() );
     pPercentAroundEdit_->setValue( object.GetBypassConstructionPercentage() );
     pIsUnderPrepCheckBox_->setChecked( object.IsPrepared() );
+
+    pDotationConstructionLabel_->setText( QString::number( object.GetNbrDotationConstruction() ) + " " + object.GetTypeDotationConstruction().c_str() );
+    pDotationValorisationLabel_->setText( QString::number( object.GetNbrDotationValorization() ) + " " + object.GetTypeDotationValorization().c_str() );
 }
     
 // -----------------------------------------------------------------------------

@@ -66,6 +66,11 @@ public:
     const MT_Vector2D&         GetCenter                      () const;
     const T_PointVector&       GetPointList                   () const;
     ASN1T_EnumTypeLocalisation GetLocationType                () const;
+
+    const std::string&         GetTypeDotationConstruction    () const;
+    const std::string&         GetTypeDotationValorization    () const;
+    uint                       GetNbrDotationConstruction     () const;
+    uint                       GetNbrDotationValorization     () const;
     //@}
 
     //! @name Modifiers
@@ -89,6 +94,14 @@ public:
     void DeleteAllExplosionResults();
     //@}
 
+public:
+    //! @name Member data
+    //@{
+    T_PointVector              pointVector_;
+    MT_Vector2D                center_;
+    T_FireResults              explosionResults_;
+    //@}
+
 protected:
     //! @name Member data
     //@{
@@ -103,16 +116,15 @@ private:
 
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;
 
-public:
-    T_PointVector              pointVector_;
-    MT_Vector2D                center_;
-
-    T_FireResults              explosionResults_;
-
-private:
     MT_Float                   rConstructionPercentage_;
     MT_Float                   rValorizationPercentage_;
     MT_Float                   rBypassConstructionPercentage_;
+
+    // Dotations
+    std::string                strTypeDotationConstruction_;
+    std::string                strTypeDotationValorization_;
+    uint                       nNbrDotationConstruction_;
+    uint                       nNbrDotationValorization_;
 
     bool                       bPrepared_;
     //@}

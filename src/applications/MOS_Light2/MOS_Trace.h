@@ -42,8 +42,6 @@ public:
     //@{
     void Initialize( DIN::DIN_Input& input );
     //@}
-
-    MOS_Report_ABC::E_Type GetType() const;
 };
 
 

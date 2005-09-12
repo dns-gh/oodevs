@@ -41,8 +41,11 @@ class MOS_Report_ABC
 public:
     enum E_Type
     {
-        eRC     = 1000,
-        eTrace  = 1001
+        eRC      = 1000,
+        eTrace   = 1001,
+        eEvent   = 1002,
+        eMessage = 1003,
+        eWarning = 1004
     };
 
 public:
@@ -56,10 +59,11 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    const MT_Vector2D& GetPos() const;
+    const MT_Vector2D& GetPos  () const;
     const std::string& GetTitle() const;
-    int                GetTime() const;
-    virtual E_Type     GetType() const = 0;             
+    int                GetTime () const;
+    E_Type             GetType () const;
+    bool               IsRCType() const;
 
     bool IsNew() const;
     void SetNew( bool bNew );
@@ -70,6 +74,7 @@ protected:
     MT_Vector2D vPos_;
     int         nTime_;
     bool        bNew_;
+    E_Type      eType_;
 };
 
 

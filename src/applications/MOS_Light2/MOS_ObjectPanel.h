@@ -77,44 +77,54 @@ private:
 private:
     //! @name Member data
     //@{
-    QLabel* pIdLabel_;
-    QLabel* pObjectTypeLabel_;
-    QLabel* pPositionLabel_;
-    QSpinBox* pPercentBuiltEdit_;
-    QSpinBox* pPercentValueEdit_;
-    QSpinBox* pPercentAroundEdit_;
+    QLabel*    pIdLabel_;
+    QLabel*    pObjectTypeLabel_;
+    QLabel*    pPositionLabel_;
+    QSpinBox*  pPercentBuiltEdit_;
+    QSpinBox*  pPercentValueEdit_;
+    QSpinBox*  pPercentAroundEdit_;
     QCheckBox* pIsUnderPrepCheckBox_;
 
-    QLabel* pCrossingWidthTitle_;
-    QLabel* pCrossingWidthLabel_;
-    QLabel* pCrossingDepthTitle_;
-    QLabel* pCrossingDepthLabel_;
-    QLabel* pCrossingRiverSpeedTitle_;
-    QLabel* pCrossingRiverSpeedLabel_;
-    QLabel* pCrossingBanksNeedWorkTitle_;
-    QLabel* pCrossingBanksNeedWorkLabel_;
+    // dotation construction / valorisation
+    QGroupBox* pDotationGroup_;
+    QLabel*    pDotationConstructionLabel_;
+    QLabel*    pDotationValorisationLabel_;
 
-    QLabel* pNBCAgentTitle_;
-    QLabel* pNBCAgentLabel_;
+    // crossing
+    QLabel*    pCrossingWidthTitle_;
+    QLabel*    pCrossingWidthLabel_;
+    QLabel*    pCrossingDepthTitle_;
+    QLabel*    pCrossingDepthLabel_;
+    QLabel*    pCrossingRiverSpeedTitle_;
+    QLabel*    pCrossingRiverSpeedLabel_;
+    QLabel*    pCrossingBanksNeedWorkTitle_;
+    QLabel*    pCrossingBanksNeedWorkLabel_;
 
-	QLabel* pTC2Title_;
-	QLabel* pTC2Label_;
+    // NBC
+    QLabel*    pNBCAgentTitle_;
+    QLabel*    pNBCAgentLabel_;
 
-    QLabel* pROTADangerTitle_;
-    QLabel* pROTADangerLabel_;
-    QLabel* pROTAAgentsNbcTitle_;
-    QLabel* pROTAAgentsNbcLabel_;
+    // Camp
+	QLabel*    pTC2Title_;
+	QLabel*    pTC2Label_;
 
-    QLabel* pItLogEquippedTitle_;
-    QLabel* pItLogEquippedLabel_;
-    QLabel* pItLogFlowTitle_;
-    QLabel* pItLogFlowLabel_;
-    QLabel* pItLogWidthTitle_;
-    QLabel* pItLogWidthLabel_;
-    QLabel* pItLogLengthTitle_;
-    QLabel* pItLogLengthLabel_;
-    QLabel* pItLogMaxWeightTitle_;
-    QLabel* pItLogMaxWeightLabel_;
+    // ROTA
+    QLabel*    pROTADangerTitle_;
+    QLabel*    pROTADangerLabel_;
+    QLabel*    pROTAAgentsNbcTitle_;
+    QLabel*    pROTAAgentsNbcLabel_;
+
+    // Logistic route
+    QLabel*    pItLogEquippedTitle_;
+    QLabel*    pItLogEquippedLabel_;
+    QLabel*    pItLogFlowTitle_;
+    QLabel*    pItLogFlowLabel_;
+    QLabel*    pItLogWidthTitle_;
+    QLabel*    pItLogWidthLabel_;
+    QLabel*    pItLogLengthTitle_;
+    QLabel*    pItLogLengthLabel_;
+    QLabel*    pItLogMaxWeightTitle_;
+    QLabel*    pItLogMaxWeightLabel_;
 
     QPushButton* pApplyButton_;
     QPushButton* pCancelButton_;

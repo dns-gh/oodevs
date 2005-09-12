@@ -33,6 +33,7 @@ MOS_RC::MOS_RC( MOS_Agent& agent )
     : MOS_Report_ABC( agent.GetPos() )
     , agent_        ( agent )
 {
+    // NOTHING
 }
 
 
@@ -257,6 +258,23 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     }
 
     strTitle_ = strMsg.str();
+    switch( asnMsg.type_cr )
+    {
+    case EnumTypeCR::message:
+        eType_ = MOS_Report_ABC::eMessage;
+        break;
+    case EnumTypeCR::operationel:
+        eType_ = MOS_Report_ABC::eRC;
+        break;
+    case EnumTypeCR::evenement_exceptionnel:
+        eType_ = MOS_Report_ABC::eEvent;
+        break;
+    case EnumTypeCR::warning:
+        eType_ = MOS_Report_ABC::eWarning;
+        break;
+    default:
+        assert( false );
+    }
 }
 
 
@@ -286,6 +304,7 @@ void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
         }
         fragOrderVector_.push_back( nOrderConduiteID );
     }
+    eType_ = MOS_Report_ABC::eRC;
 }
 
 

@@ -100,7 +100,7 @@ private:
     ASN1T_Localisation                         asnLocation_;
 	MOS_ParamAgent*                            pAgent_;
 	ASN1T_Agent                                asnAgent_;
-    
+
     // NBC parameters
     QStringList*               pNBCAgentsStringList_;
     QGroupBox*                 pNBCParamsGroup_;

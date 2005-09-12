@@ -137,7 +137,7 @@ void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& repo
 
     std::string strTime = MT_FormatString( "%02d:%02d:%02d", ( report.GetTime() / 3600 ) % 24, ( report.GetTime() / 60 ) % 60 , report.GetTime() % 60  ).c_str();
 
-    if( report.GetType() == MOS_Report_ABC::eRC )
+    if( report.IsRCType() )
     {
         T_RichReportItem* pItem = new T_RichReportItem( &report, this, strTime.c_str(), report.GetTitle().c_str() );
         pItem->setRenameEnabled( 0, false );
@@ -146,6 +146,12 @@ void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& repo
         MOS_RC& rc = (MOS_RC&)report;
         if( ! rc.GetFragOrders().empty() )
             pItem->SetFontColor( QColor( 200, 0, 0 ) );
+        else if( rc.GetType() == MOS_Report_ABC::eMessage ) // blue
+            pItem->SetFontColor( QColor( 0, 0, 200 ) );
+        else if( rc.GetType() == MOS_Report_ABC::eWarning ) // orange
+            pItem->SetFontColor( QColor( 255, 128, 64 ) );
+        else if( rc.GetType() == MOS_Report_ABC::eEvent ) // green
+            pItem->SetFontColor( QColor( 32, 200, 64 ) );
     }
     else
     {
@@ -267,7 +273,7 @@ void MOS_ReportListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos
         pPopupMenu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
 
         MOS_Report_ABC& report = this->GetItemValue( *pItem );
-        if( report.GetType() == MOS_Report_ABC::eRC )
+        if( report.IsRCType() )
         {
             MOS_RC& rc = (MOS_RC&)report;
             

@@ -185,6 +185,16 @@ const T_MosId_String_Map& MOS_App::GetNBCNames() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_App::GetResourceNames
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+MOS_INLINE
+const T_MosId_String_Map& MOS_App::GetResourceNames() const
+{
+    return resourcesNameMap_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_App::GetNBCID
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------

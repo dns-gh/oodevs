@@ -67,21 +67,15 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
 
     //! @name Common part
     //@{
-    QLabel* pTeamLabel = new QLabel( tr( "Camp:" ), this );
-    pLayout->addWidget( pTeamLabel, 0, 0, Qt::AlignLeft );
-
-    QLabel* pObjectLabel = new QLabel( tr( "Objet:" ), this );
-    pLayout->addWidget( pObjectLabel, 1, 0, Qt::AlignLeft );
-
-    QLabel* pLocationLabel = new QLabel( tr( "Emplacement:" ), this );
-    pLayout->addWidget( pLocationLabel, 2, 0, Qt::AlignLeft );
-
+    pLayout->addWidget( new QLabel( tr( "Camp:" ), this ), 0, 0, Qt::AlignLeft );
     pTeamCombo_ = new MT_ValuedComboBox< uint >( this );
     pLayout->addWidget( pTeamCombo_, 0, 1, Qt::AlignRight );
 
+    pLayout->addWidget( new QLabel( tr( "Objet:" ), this ), 1, 0, Qt::AlignLeft );
     pObjectTypeCombo_ = new MT_ValuedComboBox< ASN1T_EnumObjectType >( this );
     pLayout->addWidget( pObjectTypeCombo_, 1, 1, Qt::AlignRight );
 
+    pLayout->addWidget( new QLabel( tr( "Emplacement:" ), this ), 2, 0, Qt::AlignLeft );
     pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement nouvel objet", this );
     pLayout->addWidget( pLocation_, 2, 1, Qt::AlignRight );
     //@}
@@ -425,6 +419,8 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_AttrObjectCampPrisonniers attributsCampPrisonniers;
     if( asnAction.type == EnumObjectType::camp_prisonniers )
     {
+        if( ! pAgent_->CheckValidity() )
+            return;
 		pAgent_->WriteMsg( strMsg );
         attributsCampPrisonniers.tc2 = asnAgent_;
         asnMsg.GetAsnMsg().action.u.create_object->m.attributs_specifiquesPresent    = 1;
@@ -435,6 +431,8 @@ void MOS_ObjectCreationPanel::OnOk()
     ASN1T_AttrObjectCampRefugies attributsCampRefugies;
     if( asnAction.type == EnumObjectType::camp_refugies )
     {
+        if( ! pAgent_->CheckValidity() )
+            return;
         pAgent_->WriteMsg( strMsg );
 		attributsCampRefugies.tc2 = asnAgent_;
         asnMsg.GetAsnMsg().action.u.create_object->m.attributs_specifiquesPresent    = 1;

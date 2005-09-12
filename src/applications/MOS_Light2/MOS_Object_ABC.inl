@@ -93,6 +93,46 @@ MT_Float MOS_Object_ABC::GetBypassConstructionPercentage() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetTypeDotationConstruction
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+inline
+const std::string& MOS_Object_ABC::GetTypeDotationConstruction() const
+{
+    return strTypeDotationConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetTypeDotationValorization
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+inline
+const std::string& MOS_Object_ABC::GetTypeDotationValorization() const
+{
+    return strTypeDotationValorization_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetNbrDotationConstruction
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+inline
+uint MOS_Object_ABC::GetNbrDotationConstruction() const
+{
+    return nNbrDotationConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetNbrDotationValorization
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+inline
+uint MOS_Object_ABC::GetNbrDotationValorization() const
+{
+    return nNbrDotationValorization_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_Object_ABC::GetCenter
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------

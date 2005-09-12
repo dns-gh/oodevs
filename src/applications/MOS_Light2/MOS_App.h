@@ -147,9 +147,10 @@ public:
     std::string GetBreakDownName        ( uint )        const;
     std::string GetNBCName              ( uint )        const;
     uint        GetNBCID                ( const std::string& strName ) const;
-    const T_MosId_String_Map& GetNBCNames() const;
-    const MOS_SensorType* FindSensorType( const std::string& strName ) const;
-    unsigned int GetRessourceID( const std::string& strRessource ) const;
+    const T_MosId_String_Map& GetNBCNames     () const;
+    const T_MosId_String_Map& GetResourceNames() const;
+    const MOS_SensorType*     FindSensorType  ( const std::string& strName ) const;
+    unsigned int              GetRessourceID  ( const std::string& strRessource ) const;
     //@}
 
 signals:
