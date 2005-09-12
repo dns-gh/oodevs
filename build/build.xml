@@ -23,22 +23,22 @@
       libraries
     ============================================================================
     -->
-    <target name="libraries" description="build static library" 
+    <target name="libraries" description="build static library"
             depends="library.MT_Tools_Scipio,library.TER,library.ASN,library.MIL,library.Missions,library.GFX,library.ENT"/>
-    
+
     <target name="library.TIC" description="build TIC static library" depends="library.ASN,library.MT_Tools_Scipio">
         <build-lib name="TIC">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
+
     <target name="library.TIC_Export" description="build TIC_Export static library" depends="library.TIC">
         <build-lib name="TIC_Export">
             <includepath path="${libraries.dir}/TIC"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-  
+
     <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
         <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
     </target>
@@ -46,7 +46,7 @@
     <target name="library.TER" description="build TER static library" depends="library.MT_Tools_Scipio">
         <build-lib name="TER"/>
     </target>
-    
+
     <target name="library.ASN" description="build ASN static library">
         <build-lib name="ASN">
             <includepath path="${include.dir}/ASN"/>
@@ -59,7 +59,7 @@
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
+
     <target name="library.Missions" description="build Missions static library" depends="library.MIL">
         <build-lib name="Missions" excludes="**/MIL_*">
             <includepath path="${libraries.dir}/MIL"/>
@@ -82,13 +82,13 @@
     ============================================================================
     -->
     <target name="applications" description="build executables" depends="applications.SCIPIO"/>
-    
-    <target name="applications.SCIPIO" description="build SCIPIO executables" 
+
+    <target name="applications.SCIPIO" description="build SCIPIO executables"
             depends="application.SIM,application.ADN,application.MOS_Light,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
-    
+
     <target name="applications.TIC" description="build TIC executables"
             depends="application.TIC_Sample,application.TIC_XmlExporter"/>
-    
+
     <target name="application.TIC_Sample" description="build TIC_Sample executable" depends="library.TIC_Export">
         <build-app name="TIC_Sample"
                    subsystem="console"
@@ -137,7 +137,7 @@
             <linkerarg value="/LARGEADDRESSAWARE"/>   <!-- Executable can access 3GiB instead of 2GiB -->
         </build-app>
     </target>
-    
+
     <target name="application.ADN" description="build ADN executable" depends="library.ENT,library.MT_Tools_Scipio">
         <build-app name="ADN"
                    subsystem="gui"
@@ -148,7 +148,7 @@
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
-    
+
     <target name="application.MOS_Light" description="build MOS_Light executable" depends="library.ASN,library.ENT,library.GFX,library.MT_Tools_Scipio">
         <build-app name="MOS_Light"
                    subsystem="gui"
@@ -179,7 +179,7 @@
     </target>
 
     <target name="application.Tester" description="build Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
-        <build-app name="Tester" 
+        <build-app name="Tester"
                    subsystem="console"
                    libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
@@ -188,11 +188,11 @@
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm"/>
-        </build-app>               
+        </build-app>
     </target>
-    
+
     <target name="application.HLA_Manager" description="build HLA_Manager executable" depends="library.MIL">
-        <build-app name="HLA_Manager" 
+        <build-app name="HLA_Manager"
                    subsystem="gui"
                    libs="MT_Tools,MT_IO,MT_Archive,MT_XmlTools,
                          HLA,libfedtime,
