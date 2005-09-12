@@ -91,19 +91,21 @@ void ADN_Categories_GUI::Build()
 
     QWidget* pHolder = builder.AddFieldHolder( pArmorInfoGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vArmorInfosConnectors[eArmorName], 0, eVarName );
-    builder.AddEnumField<E_ProtectionType>( pHolder, tr( "Type" ), vArmorInfosConnectors[eArmorType], ADN_Tr::ConvertFromProtectionType );
+    pComboType_ = builder.AddEnumField<E_ProtectionType>( pHolder, tr( "Type" ), vArmorInfosConnectors[eArmorType], ADN_Tr::ConvertFromProtectionType );
+
+    connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
     QGroupBox* pArmorNeutralizationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Neutralization" ), pArmorInfoGroup );
     builder.AddField<ADN_EditLine_Double>( pArmorNeutralizationGroup, tr( "Average time" ), vArmorInfosConnectors[eNeutralizationAverage], tr( "s" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pArmorNeutralizationGroup, tr( "Variance" ), vArmorInfosConnectors[eNeutralizationVariance], tr( "s" ), eGreaterEqualZero );
 
-    QGroupBox* pArmorBreakdownGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Breakdowns" ), pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup, tr( "EVA" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup, tr( "NEVA" ), vArmorInfosConnectors[eBreakdownNEVA], tr( "%" ), ePercentage );
+    pArmorBreakdownGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Breakdowns" ), pArmorInfoGroup );
+    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "EVA" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "NEVA" ), vArmorInfosConnectors[eBreakdownNEVA], tr( "%" ), ePercentage );
 
-    QGroupBox* pWoundedGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Wounded humans" ), pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_Double>( pWoundedGroup, tr( "Evac" ), vArmorInfosConnectors[eWoundedEvac], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pWoundedGroup, tr( "No evac" ), vArmorInfosConnectors[eWondedNoEvac], tr( "%" ), ePercentage );
+    pWoundedGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Wounded humans" ), pArmorInfoGroup );
+    builder.AddField<ADN_EditLine_Double>( pWoundedGroup_, tr( "Evac" ), vArmorInfosConnectors[eWoundedEvac], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Double>( pWoundedGroup_, tr( "No evac" ), vArmorInfosConnectors[eWondedNoEvac], tr( "%" ), ePercentage );
 
     ///////////////////
     // Sizes
@@ -185,5 +187,24 @@ void ADN_Categories_GUI::DecSize()
     {
         int pos=pListSize_->FindNdx(curData);
         static_cast<ADN_Connector_Vector_ABC*>(&pListSize_->GetConnector())->SwapItem(pos,pos+1);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_GUI::OnTypeChanged
+// Created: SBO 2005-09-08
+// -----------------------------------------------------------------------------
+void ADN_Categories_GUI::OnTypeChanged()
+{
+    const QString& strItem = pComboType_->currentText();
+    if( ADN_Tr::ConvertToProtectionType( std::string( strItem ) ) == eProtectionType_Human )
+    {
+        pArmorBreakdownGroup_->hide();
+        pWoundedGroup_->hide();
+    }
+    else
+    {
+        pArmorBreakdownGroup_->show();
+        pWoundedGroup_->show();
     }
 }

@@ -39,7 +39,6 @@ public:
         eName,
         eTypeId,
         eModel,
-        eMosId,
         eDecontaminationDelay,
         eStrengthRatioFeedbackTime,
         eProbeWidth,

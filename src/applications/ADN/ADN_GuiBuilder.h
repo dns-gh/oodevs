@@ -189,7 +189,9 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
     this->DoFieldLayout( pParent, pNameLabel, pField, pUnitLabel );
     this->DoValidator( pField, nValidator );
 
-    pField->GetConnector().Connect( &itemConnector );
+    ADN_Connector_ABC* pConnector = &pField->GetConnector();
+    assert( pConnector );
+    pConnector->Connect( &itemConnector );
     return pField;
 }
 

@@ -258,7 +258,7 @@
     </message>
     <message>
         <source>Id</source>
-        <translation>Id</translation>
+        <translation type="obsolete">Id</translation>
     </message>
     <message>
         <source>Repair time</source>
@@ -2636,7 +2636,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Sorting time</source>
@@ -2648,15 +2648,15 @@
     </message>
     <message>
         <source>Treating time</source>
-        <translation>Temps de soin</translation>
+        <translation type="obsolete">Temps de soin</translation>
     </message>
     <message>
         <source>Percentage</source>
-        <translation>Pourcentage</translation>
+        <translation type="obsolete">Pourcentage</translation>
     </message>
     <message>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <source>Contamination</source>
@@ -2664,11 +2664,23 @@
     </message>
     <message>
         <source>Life expectency</source>
-        <translation>Espérance de vie</translation>
+        <translation type="obsolete">Espérance de vie</translation>
     </message>
     <message>
         <source>Health</source>
         <translation>Santé</translation>
+    </message>
+    <message>
+        <source>Treating time (s)</source>
+        <translation>Temps de traitement (s)</translation>
+    </message>
+    <message>
+        <source>Repartition (%)</source>
+        <translation>Répartition (%)</translation>
+    </message>
+    <message>
+        <source>Life expectency (s)</source>
+        <translation>Espérance de vie (s)</translation>
     </message>
 </context>
 <context>
@@ -5227,7 +5239,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>MosID</source>
-        <translation>ID Mos</translation>
+        <translation type="obsolete">ID Mos</translation>
     </message>
     <message>
         <source>Type</source>

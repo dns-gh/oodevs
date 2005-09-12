@@ -24,6 +24,7 @@
 #include "ADN_Breakdowns_ListView.h"
 #include "ADN_Breakdowns_PartsTable.h"
 #include "ADN_EditLine.h"
+#include "ADN_TimeField.h"
 #include "ADN_Tr.h"
 
 #include <qwidget.h>
@@ -78,8 +79,6 @@ void ADN_Breakdowns_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddEnumField<E_BreakdownType>( pHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
     builder.AddEnumField<E_BreakdownNTI>( pHolder, tr( "NTI" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
-    builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Id" ), vInfosConnectors[eId] );
-    builder.SetEnabled( false );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Repair time" ), vInfosConnectors[eRepairTime], tr( "s" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Repair time variance" ), vInfosConnectors[eRepairTimeVariance], tr( "s" ), eGreaterEqualZero );
 
@@ -93,7 +92,8 @@ void ADN_Breakdowns_GUI::Build()
 
     QGroupBox* pGeneralGroup = new QGroupBox( 1, Qt::Horizontal, tr( "General parameter" ), pMainWidget_ );
     QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
-    builder.AddField<ADN_EditLine_Double>( pHolder2, tr( "Average diagnostic time" ), data_.rAverageDiagnosticTime_, tr( "s" ), eGreaterEqualZero );
+    //builder.AddField<ADN_EditLine_Double>( pHolder2, tr( "Average diagnostic time" ), data_.rAverageDiagnosticTime_, tr( "s" ), eGreaterEqualZero );
+    builder.AddField<ADN_TimeField>( pHolder2, tr( "Average diagnostic time" ), data_.strAverageDiagnosticTime_ );
 
     // Layout
     QHBoxLayout* pLayout = new QHBoxLayout( pMainWidget_, 10, 10 );

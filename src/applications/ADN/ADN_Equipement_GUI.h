@@ -81,7 +81,6 @@ public:
         ePackageNbr,
         ePackageWeight,
         ePackageVolume,
-        eNbrInUnitVolume,
         eGenEMAT6Code,
         eGenEMAT8Code,
         eGenLFRILCode,

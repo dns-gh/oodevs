@@ -54,7 +54,6 @@ public:
     {
         eName,
         eComments,
-        eMosId,
         eArmor,
         eSize,
         eWeight,

@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    QWidget* BuildWound( QWidget* pParent, E_DoctorSkills nWound );
-    //@}
-
-private:
     //! @name Member data
     //@{
     ADN_Health_Data& data_;

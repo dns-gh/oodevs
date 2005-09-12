@@ -19,7 +19,6 @@ class ADN_Categories_Data;
 class ADN_ListView_Categories_Armor;
 class ADN_ListView_Categories_Size;
 
-
 // =============================================================================
 /** @class  ADN_Categories_GUI
     @brief  ADN_Categories_GUI
@@ -54,6 +53,7 @@ public:
 public slots:
     void IncSize();
     void DecSize();
+    void OnTypeChanged();
 
 public:
      ADN_Categories_GUI( ADN_Categories_Data& data );
@@ -66,6 +66,11 @@ private:
 
     ADN_ListView_Categories_Armor*  pListArmor_;
     ADN_ListView_Categories_Size*   pListSize_;
+
+    QComboBox*  pComboType_;
+    QGroupBox*  pArmorBreakdownGroup_;
+    QGroupBox*  pWoundedGroup_;
+
 };
 
 

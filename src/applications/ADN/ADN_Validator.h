@@ -36,7 +36,7 @@ public:
 
 
 // =============================================================================
-/** @class  ADN_IntValidator
+/** @class  ADN_DoubleValidator
     @brief  A better double validator than Qt's.
 */
 // Created: APE 2005-01-03

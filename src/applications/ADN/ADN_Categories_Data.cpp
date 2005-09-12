@@ -84,6 +84,15 @@ void ADN_Categories_Data::ArmorInfos::WriteArchive( MT_OutputArchive_ABC& output
     output.WriteAttribute( "nom", trim( strName_.GetData() ) );
     output.WriteAttribute( "type", ADN_Tr::ConvertFromProtectionType( nType_.GetData() ) );
 
+    // override xml archive values if Human
+    if( nType_ == eProtectionType_Human )
+    {
+        rBreakdownEVA_                  = 0.;
+        rBreakdownNEVA_                 = 0.;
+        rPercentageWoundedHumansEvac_   = 100.;
+        rPercentageWoundedHumansNoEvac_ = 100.;
+    }
+
     output.Section( "Neutralisation" );
     output.WriteAttribute( "tempsMoyen", ADN_Tools::SecondToString( rNeutralizationAverageTime_.GetData() ) );
     output.WriteAttribute( "variance",   ADN_Tools::SecondToString( rNeutralizationVariance_.GetData() ) );

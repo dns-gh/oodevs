@@ -23,6 +23,9 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_Tr.h"
+#include "ADN_Table.h"
+#include "ADN_TableItem_Edit.h"
+#include "ADN_TimeField.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -68,41 +71,50 @@ void ADN_Health_GUI::Build()
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
 
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Diagnostic time" ), data_.rDiagnosticTime_, tr( "s" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Sorting time" ), data_.rSortingTime_, tr( "s" ), eGreaterEqualZero );
-
+    builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic time" ), data_.diagnosticTime_ );
+    builder.AddField< ADN_TimeField >( pHolder, tr( "Sorting time" ), data_.sortingTime_ );
+    
+    // wounds
     QHBox* pWoundsGroup = new QHBox( pGroup );
     pWoundsGroup->setSpacing( 5 );
-    
-    for( int n = 0; n < eNbrDoctorSkills; ++n )
-        this->BuildWound( pWoundsGroup, (E_DoctorSkills)n );
-    
-    QGroupBox* pShockGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Shock" ), pWoundsGroup );
-    builder.AddField<ADN_EditLine_Double>( pShockGroup, tr( "Treating time" ), data_.rShockTreatTime_, tr( "s" ), eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pShockGroup, tr( "Percentage" ), data_.rShockPercentage_, tr( "%" ), ePercentage );
 
-    QGroupBox* pContaminationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Contamination" ), pWoundsGroup );
-    builder.AddField<ADN_EditLine_Double>( pContaminationGroup, tr( "Treating time" ), data_.rContaminationTreatTime_, tr( "s" ), eGreaterZero );
+    ADN_Table* pWoundTable = builder.CreateTable( pWoundsGroup );
+    pWoundTable->setNumCols( eNbrDoctorSkills + 2 );
+    pWoundTable->setNumRows( 3 );
+    pWoundTable->verticalHeader()->show();
+    pWoundTable->setLeftMargin( 5 );
+
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+    {
+        pWoundTable->horizontalHeader()->setLabel( n, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str() );
+        pWoundTable->setColumnStretchable( n, true );
+    }
+    pWoundTable->horizontalHeader()->setLabel( n, tr( "Shock" ) );
+    pWoundTable->setColumnStretchable( n, true );
+    pWoundTable->horizontalHeader()->setLabel( n + 1, tr( "Contamination" ) );
+    pWoundTable->setColumnStretchable( n + 1, true );
+
+    pWoundTable->verticalHeader()->setLabel( 0, tr( "Treating time (s)" ) );
+    pWoundTable->verticalHeader()->setLabel( 1, tr( "Repartition (%)" ) );
+    pWoundTable->verticalHeader()->setLabel( 2, tr( "Life expectency (s)" ) );
+
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+    {
+        ADN_Health_Data::WoundInfo& wound = data_.wounds[n];
+        builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &wound, 0, n, wound.rTreatTime_, eGreaterZero );
+        builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &wound, 1, n, wound.rPercentage_, ePercentage );
+        builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &wound, 2, n, wound.rLifeExpectancy_, eGreaterZero );
+    }
+    builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &data_, 0, n, data_.rShockTreatTime_, eGreaterZero );
+    builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &data_, 1, n, data_.rShockPercentage_, ePercentage );
+    pWoundTable->setItem( 2, n, new QTableItem( pWoundTable, QTableItem::Never ) );
+
+    builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &data_, 0, n + 1, data_.rContaminationTreatTime_, eGreaterZero );
+    pWoundTable->setItem( 1, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
+    pWoundTable->setItem( 2, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
 
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 5 );
     pLayout->addWidget( pGroup );
     builder.AddStretcher( pLayout, Qt::Vertical );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Health_GUI::BuildWound
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-QWidget* ADN_Health_GUI::BuildWound( QWidget* pParent, E_DoctorSkills nWound )
-{
-    ADN_GuiBuilder builder;
-    ADN_Health_Data::WoundInfo& wound = data_.wounds[nWound];
-    QGroupBox* pGroup = new QGroupBox( 3, Qt::Horizontal, ADN_Tr::ConvertFromDoctorSkills( wound.nType_ ).c_str(), pParent );
-    builder.AddField<ADN_EditLine_Double>( pGroup, tr( "Treating time" ), wound.rTreatTime_, tr( "s" ), eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroup, tr( "Percentage" ), wound.rPercentage_, tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pGroup, tr( "Life expectency" ), wound.rLifeExpectancy_, tr( "s" ), eGreaterZero );
-
-    return pGroup;
 }

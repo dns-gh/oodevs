@@ -189,6 +189,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
 
     QWidget* pLogPage = new QWidget();
     QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );
+    
     elements_[eLog]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eSupply]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
     elements_[eHealth]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );

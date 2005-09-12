@@ -68,7 +68,6 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Composantes_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eComments]->Connect( &pInfos->strAdditionalComments_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eMosId]->Connect( &pInfos->nMosId_, bConnect );  
     vItemConnectors_[ADN_Composantes_GUI::eArmor]->Connect( &pInfos->ptrArmor_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSize]->Connect( &pInfos->ptrSize_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeight]->Connect( &pInfos->rWeight_, bConnect );

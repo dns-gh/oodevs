@@ -64,7 +64,6 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Units_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eTypeId]->Connect( &pInfos->eTypeId_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eMosId]->Connect( &pInfos->nMosId_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eDecontaminationDelay]->Connect( &pInfos->rDecontaminationDelay_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eStrengthRatioFeedbackTime]->Connect( &pInfos->rStrengthRatioFeedbackTime_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eProbeWidth]->Connect( &pInfos->rProbeWidth_, bConnect );

@@ -110,8 +110,8 @@ void ADN_Health_Data::Reset()
 void ADN_Health_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Sante" );
-    input.ReadTimeField( "TempsDiagnostique", rDiagnosticTime_ );
-    input.ReadTimeField( "TempsTri", rSortingTime_ );
+    input.ReadField( "TempsDiagnostique", diagnosticTime_ );
+    input.ReadField( "TempsTri", sortingTime_ );
 
     input.Section( "CategoriesBlesse" );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
@@ -138,8 +138,8 @@ void ADN_Health_Data::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Health_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Sante" );
-    output.WriteField( "TempsDiagnostique", ADN_Tools::SecondToString( rDiagnosticTime_.GetData() ) );
-    output.WriteField( "TempsTri", ADN_Tools::SecondToString( rSortingTime_.GetData() ) );
+    output.WriteField( "TempsDiagnostique", diagnosticTime_.GetData() );
+    output.WriteField( "TempsTri", sortingTime_.GetData() );
 
     output.Section( "CategoriesBlesse" );
     for( int n = 0; n < eNbrDoctorSkills; ++n )

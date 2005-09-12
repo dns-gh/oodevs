@@ -89,10 +89,6 @@ void ADN_Units_GUI::Build()
     // Name
     builder.AddField<ADN_EditLine_String>( pParamGroup, tr( "Name" ), vInfosConnectors[eName] );
 
-    // Mos ID
-    builder.AddField<ADN_EditLine_Int>( pParamGroup, tr( "MosID" ), vInfosConnectors[eMosId] );
-    builder.SetEnabled( false );
-
     // Unit type
     pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pParamGroup, tr( "Type" ), vInfosConnectors[eTypeId], &ADN_Tr::ConvertFromAgentTypePion );
     builder.SetToolTip( "Le type de l'unité dans la simulation. Ce type doit correspondre au type du modèle comportemental associé." );

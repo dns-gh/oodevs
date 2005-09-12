@@ -303,7 +303,8 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const st
 void ADN_Breakdowns_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Pannes" );
-    input.ReadTimeField( "TempsDiagnostique", rAverageDiagnosticTime_ );
+    //input.ReadTimeField( "TempsDiagnostique", rAverageDiagnosticTime_ );
+    input.ReadField( "TempsDiagnostique", strAverageDiagnosticTime_ );
 
     input.Section( "Types" );
     
@@ -333,7 +334,8 @@ void ADN_Breakdowns_Data::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Breakdowns_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Pannes" );
-    output.WriteField( "TempsDiagnostique", ADN_Tools::SecondToString( rAverageDiagnosticTime_.GetData() ) );
+    //output.WriteField( "TempsDiagnostique", ADN_Tools::SecondToString( rAverageDiagnosticTime_.GetData() ) );
+    output.WriteField( "TempsDiagnostique", strAverageDiagnosticTime_.GetData() );
 
     output.Section( "Types" );
 

@@ -100,10 +100,6 @@ void ADN_Composantes_GUI::Build()
     // Comments
     builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Comments" ), vInfosConnectors[eComments] );
 
-    // Mos Id
-    builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "MOS Id" ), vInfosConnectors[eMosId] );
-    builder.SetEnabled( false );
-
     // Armors
     QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector<ADN_Categories_Data::ArmorInfos> >( pParamHolder, tr( "Armor-Plating" ), vInfosConnectors[eArmor]  );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );

@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    QWidget* BuildWorkTimeModifiers( QWidget* pParent, ADN_Log_Data::WorkTimeModifiersInfo& modifiers );
-    //@}
-
-private:
     //! @name Member data
     //@{
     ADN_Log_Data& data_;

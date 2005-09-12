@@ -75,8 +75,8 @@ private:
     void WriteArchive( MT_OutputArchive_ABC& output );
 
 public:
-    ADN_Type_Double rDiagnosticTime_;
-    ADN_Type_Double rSortingTime_;
+    ADN_Type_Time   diagnosticTime_;
+    ADN_Type_Time   sortingTime_;
 
     WoundInfo wounds[eNbrDoctorSkills];
 
