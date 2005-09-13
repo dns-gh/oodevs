@@ -55,6 +55,18 @@
 			<xs:enumeration value="Reparable"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="TEtatPlateforme">
+		<xs:annotation>
+			<xs:documentation>Enumération représentant l'état d'une plateforme.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Operationnel"/>
+			<xs:enumeration value="Detruit"/>
+			<xs:enumeration value="Reparable"/>
+			<xs:enumeration value="EnReparation"/>
+		    <xs:enumeration value="Prisonnier"/>
+		</xs:restriction>
+	</xs:simpleType>	
 	<xs:complexType name="TPlateformeEquipement">
 		<xs:annotation>
 			<xs:documentation>Nature de l'équipement de la plateforme.</xs:documentation>
@@ -236,7 +248,12 @@
 					<xs:annotation>
 						<xs:documentation>La position extrapolée à partir de celle du pion.</xs:documentation>
 					</xs:annotation>
-				</xs:element>
+				</xs:element>				
+				<xs:element name="Etat" type="TEtatPlateforme">
+					<xs:annotation>
+						<xs:documentation>L'état de la plate-forme.</xs:documentation>
+					</xs:annotation>
+				</xs:element>							
 				<xs:element name="Protection" type="xs:string">
 					<xs:annotation>
 						<xs:documentation>Le type de protection de la plateforme.</xs:documentation>
