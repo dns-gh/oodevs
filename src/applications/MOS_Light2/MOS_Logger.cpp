@@ -43,7 +43,8 @@ MOS_Logger::MOS_Logger( QWidget* pParent )
 
     this->setMinimumSize( 1, 1 );
     this->setShowSortIndicator( true );
-    this->setSorting( 0, false );
+    //this->setSorting( 0, false );
+    this->setSorting( -1 );
     this->setRootIsDecorated( true );
     this->addColumn( tr( "Recu" ) );
     this->addColumn( tr( "Log" ) );
@@ -72,6 +73,7 @@ MOS_Logger::~MOS_Logger()
 // -----------------------------------------------------------------------------
 void MOS_Logger::LogString( const char* /*szLayerName*/, E_LogLevel /*nLevel*/, const char* szMsg, const char* szContext, int nCode )
 {
+    // lastItem() ?  firstChild();
     MT_ValuedListViewItem<E_DataFlow>* pItem = new MT_ValuedListViewItem<E_DataFlow>( (E_DataFlow)nCode, this, this->GetTimestampAsString(), szMsg );
     if( nCode == eReceived )
         pItem->SetFontColor( Qt::darkBlue );

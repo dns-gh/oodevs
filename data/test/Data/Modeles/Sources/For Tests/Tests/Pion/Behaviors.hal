@@ -15,7 +15,13 @@ default Default()
     for( float i = 0 ; i < 1000; ++i )
     	DIA_PushBack( carreux, myself );
     */
-
+    
+    /*
+    DEC_Debug( "DEC_Agent_PeutConstruireObjet " + BoolToString( DEC_Agent_PeutConstruireObjet( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_Agent_PeutDetruireObjet "   + BoolToString( DEC_Agent_PeutDetruireObjet( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_Agent_PeutValoriserObjet "  + BoolToString( DEC_Agent_PeutValoriserObjet( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_Agent_PeutActiverObjet "    + BoolToString( DEC_Agent_PeutActiverObjet( eTypeObjectBouchonMines ) ) );    
+    */
                
                   
 //    T_ListeConnaissancesAgent perceivedAgents = DEC_Connaissances_AgentsPercus();

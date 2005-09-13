@@ -8,7 +8,8 @@ signatures
     V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     
-    
+    V                                A::DEC_FinMission();
+        
     // Actions
     V                                A::DEC_StopAction   ( U /*T_Action*/ );
     V                                A::DEC_PauseAction  ( U /*T_Action*/ );
@@ -142,6 +143,8 @@ signatures
     B                                A::DEC_Agent_PeutConstruireObjet             ( I /*E_TypeObject*/ );
     B                                A::DEC_Agent_PeutConstruireContournementObjet( I /*E_TypeObject*/ );
     B                                A::DEC_Agent_PeutDetruireObjet               ( I /*E_TypeObject*/ );
+    B                                A::DEC_Agent_PeutValoriserObjet              ( I /*E_TypeObject*/ );         
+    B                                A::DEC_Agent_PeutActiverObjet                ( I /*E_TypeObject*/ );             
     B                                A::DEC_Agent_EstNeutralise                   ();                  
     B                                A::DEC_Agent_AutomateEstEmbraye              ();         
     U /*T_Point*/                    A::DEC_Agent_Position                        ();

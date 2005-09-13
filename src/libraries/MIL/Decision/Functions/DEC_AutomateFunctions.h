@@ -72,6 +72,8 @@ public:
     static void CanPionConstructObject                      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void CanPionBypassObject                         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void CanPionDestroyObject                        ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void CanPionMineObject                           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void CanPionActivateObject                       ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void ComputePointBeforeLimaForPion               ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void ComputePionNearestLocalisationPointInFuseau ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void PionTimeLeftForMoving                       ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );

@@ -400,6 +400,9 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_Automate >, "DEC_Message" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Automate >, "DEC_Warning" );
 
+    // Mission
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::FinishMission < MIL_Automate >, "DEC_FinMission" );
+
     // Geometry       
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_Automate >, "DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInParts               < MIL_Automate >, "DEC_Geometrie_DecoupeLocalisation"                       );
@@ -461,6 +464,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionConstructObject                     , "DEC_Automate_PionPeutConstruireObjet"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionBypassObject                        , "DEC_Automate_PionPeutConstruireContournementObjet"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionDestroyObject                       , "DEC_Automate_PionPeutDetruireObjet"                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionMineObject                          , "DEC_Automate_PionPeutValoriserObjet"                           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionActivateObject                      , "DEC_Automate_PionPeutActiverObjet"                             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionTimeLeftForMoving                      , "DEC_Automate_PionAutonomieEnDeplacement"                       );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionTimeToMoveDistance                     , "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite"      );   
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::CanPionTransportPion                       , "DEC_Automate_PionPeutTransporterPion"                          );

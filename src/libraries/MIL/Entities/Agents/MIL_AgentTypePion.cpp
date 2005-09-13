@@ -306,8 +306,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
 
     // Objects
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::ActivateObject    < MIL_AgentPion >, "DEC_ActiverObjet"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >            , "DEC_CreerObjetSansDelais"            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicDestroyObject< MIL_AgentPion >            , "DEC_DetruireObjetSansDelais"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, "DEC_CreerObjetSansDelais"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions::MagicDestroyObject< MIL_AgentPion >, "DEC_DetruireObjetSansDelais"         );
 
     // Path
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::CreatePathToPoint    , "DEC_CreerItineraire"               );
@@ -367,6 +367,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanConstructObject , "DEC_Agent_PeutConstruireObjet"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanBypassObject    , "DEC_Agent_PeutConstruireContournementObjet" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanDestroyObject   , "DEC_Agent_PeutDetruireObjet"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanMineObject      , "DEC_Agent_PeutValoriserObjet"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanActivateObject  , "DEC_Agent_PeutActiverObjet"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableDiscreteMode , "DEC_Agent_ActiverModeDiscret"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableDiscreteMode, "DEC_Agent_DesactiverModeDiscret"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsNeutralized      , "DEC_Agent_EstNeutralise"                    );
@@ -513,6 +515,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_AgentPion >, "DEC_RC"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_AgentPion >, "DEC_Message" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_AgentPion >, "DEC_Warning" );
+    
+    // Mission
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::FinishMission < MIL_AgentPion >, "DEC_FinMission" );
 
     // Hiérarchie
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPionsWithPC             , "DEC_Pion_PionsAvecPC"           );

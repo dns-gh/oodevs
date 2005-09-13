@@ -87,6 +87,7 @@ public:
     bool CanConstructWithReinforcement( const MIL_RealObjectType& objectType ) const;
     bool CanBypassWithReinforcement   ( const MIL_RealObjectType& objectType ) const;
     bool CanDestroyWithReinforcement  ( const MIL_RealObjectType& objectType ) const;
+    bool CanMineWithReinforcement     ( const MIL_RealObjectType& objectType ) const;    
     //@}
 
 private:

@@ -7,7 +7,6 @@ TODO
     - CheckPoints :
         -> renforcements
         -> transports       
-²    - MOS_Light2 : création magique des rotas/itineraire log  
     - Virer les types de terrain 'bord de' dans ADN
     - Bugs : suppression des consignes maintenance/santé quand un des automates de la chaine n'a pas de supérieur (Cf. Suppression des liens logistiques d'un TC2 ...)
     
@@ -21,6 +20,15 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Nouvelles fonctions DEC :   
+                - DEC_FinMission() (=> comportement identique à l'ancien DEC_RC( eMissionTerminee )
+                - DEC_Automate_PionPeutValoriserObjet / DEC_Agent_PeutValoriserObjet
+                - DEC_Automate_PionPeutActiverObjet   / DEC_Agent_PeutActiverObjet
+    - NLD - MOS_Light2 : modification affichage fenêtre de logs (dans ordre de réception ...)
+    - NLD - Changement des asserts() de DEC_Path ...
+
+Version 0.119 [08/09/2005] - Codename 'GetResult'
+    - NLD - Bug fix : problèmes divers d'interactions agents-objets (suite à MagicMove, ou création d'objet sur des agents) => nettoyage important                
     - NLD - Bug fix : valeurs de retour de certaines fonctions DEC quand errorcode != noerror
     - NLD - RCs : mise à jour - La majorité du code lié aux RCs est maintenant génèré par AGR (MOS_Lights / DIA / MIL)
     - NLD - La fonction 'Objet_EstContourne' ne renvoit 'true' que quand le pourcentage de 'contournement' de l'objet vaut 100% (et non plus >0%)

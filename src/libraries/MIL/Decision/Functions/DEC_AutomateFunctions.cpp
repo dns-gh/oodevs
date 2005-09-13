@@ -344,6 +344,44 @@ void DEC_AutomateFunctions::CanPionDestroyObject( DIA_Call_ABC& call, const MIL_
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::CanPionMineObject
+// Created: NLD 2005-09-13
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::CanPionMineObject( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+
+    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    
+    assert( pPion );
+    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
+
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    assert( pObjectType );
+     
+    call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( *pObjectType ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::CanPionActivateObject
+// Created: NLD 2005-09-13
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::CanPionActivateObject( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+
+    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    
+    assert( pPion );
+    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
+
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    assert( pObjectType );
+
+    call.GetResult().SetValue( true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::PionTimeLeftForMoving
 // Created: NLD 2005-03-18
 // -----------------------------------------------------------------------------

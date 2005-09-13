@@ -289,6 +289,30 @@ void DEC_AgentFunctions::CanDestroyObject( DIA_Call_ABC& call, const MIL_AgentPi
         call.GetResult().SetValue( false );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanMineObject
+// Created: NLD 2005-09-08
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::CanMineObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    assert( pObjectType );
+        if( pObjectType )
+        call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( *pObjectType ) );
+    else
+        call.GetResult().SetValue( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanActivateObject
+// Created: NLD 2005-09-08
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::CanActivateObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    assert( pObjectType );
+    call.GetResult().SetValue( true );
+}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::EnableDiscreteMode
@@ -725,4 +749,3 @@ void DEC_AgentFunctions::GetInterceptionPoint( DIA_Call_ABC& call, const MIL_Age
     else
         call.GetResult().SetValue( new MT_Vector2D( vInterceptionPosition ), &DEC_Tools::GetTypePoint() );
 }
-

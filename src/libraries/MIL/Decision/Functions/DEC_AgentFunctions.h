@@ -44,6 +44,8 @@ public:
     static void CanConstructObject        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void CanBypassObject           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void CanDestroyObject          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void CanMineObject             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void CanActivateObject         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     
     static void EnableDiscreteMode        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void DisableDiscreteMode       ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
@@ -93,7 +95,7 @@ public:
     static void WearNbcProtectionSuit     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void RemoveNbcProtectionSuit   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void SelfDecontaminate         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    
+   
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void Debug          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

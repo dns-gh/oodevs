@@ -565,4 +565,14 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_RealObjectTy
     return capabilityComputer.HasCapability();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::CanMineWithReinforcement
+// Created: NLD 2005-09-08
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_RealObjectType& objectType ) const
+{
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( PHY_RoleAction_Objects_CapabilityComputer::eMine, objectType );
+    ComputeCapabilityWithReinforcement( capabilityComputer );
+    return capabilityComputer.HasCapability();
+}
 

@@ -7,6 +7,8 @@ signatures
     V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    
+    V                                A::DEC_FinMission();
                                       
     // Accesseurs                     
     S /*T_ListePions*/               A::DEC_Automate_PionsAvecPC  ();
@@ -128,6 +130,8 @@ signatures
     B                                A::DEC_Automate_PionPeutConstruireObjet             ( A /*T_Pion*/, I /*E_TypeObject*/ );         
     B                                A::DEC_Automate_PionPeutConstruireContournementObjet( A /*T_Pion*/, I /*E_TypeObject*/ );
     B                                A::DEC_Automate_PionPeutDetruireObjet               ( A /*T_Pion*/, I /*E_TypeObject*/ );   
+    B                                A::DEC_Automate_PionPeutValoriserObjet              ( A /*T_Pion*/, I /*E_TypeObject*/ );         
+    B                                A::DEC_Automate_PionPeutActiverObjet                ( A /*T_Pion*/, I /*E_TypeObject*/ );         
     
     V                                A::DEC_CreerObjetSansDelais   ( I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
     V                                A::DEC_DetruireObjetSansDelais( U /*T_ConnaissanceObjet*/ );

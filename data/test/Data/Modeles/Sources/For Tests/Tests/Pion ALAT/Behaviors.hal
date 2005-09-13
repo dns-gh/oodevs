@@ -6,7 +6,7 @@ actuators = deplacement, ordre;
 
 default Default()
 {
-    DEC_Agent_HauteurDeVol( 300 );
+    //DEC_Agent_HauteurDeVol( 300 );
 
     /*DEC_Debug( FloatToString( DIA_Size( DEC_Renforts() ) ) + " Renforts" );
     DEC_Debug( "Non vus termine : " + BoolToString( DEC_ALAT_ReconnaissanceNonVuTerminee() ) );
@@ -14,16 +14,23 @@ default Default()
     DEC_Debug( "Temps de vol restant : " + FloatToString( DEC_ALAT_TempsVolRestant() ) );
     DEC_Debug( "Temps nécessaire pour parcourir 1000 m : " + FloatToString( DEC_ALAT_TempsVolPourParcourirDistance( 5000 ) ) );
     */
-    
+       
+   
     DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTactiquement );
  
     persistent float i = 0;
     
     if( i < 50 )
+    {
+        DEC_Agent_HauteurDeVol( 300 );
         DEC_Perception_DesactiverRadar( eRadarType_Radar );
+        }
        
     else
+    {
         DEC_Perception_ActiverRadar( eRadarType_Radar ); 
+        DEC_Agent_HauteurDeVol( 0 );
+        }
       
     i++;
     if( i > 100 )

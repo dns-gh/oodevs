@@ -10,6 +10,8 @@
 // *****************************************************************************
 
 #include "Entities/RC/MIL_RC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::RC_Operational
@@ -22,7 +24,6 @@ void DEC_MiscFunctions::RC_Operational( DIA_Call_ABC& call, T& caller )
     assert( pRC );
     pRC->Send( caller, MIL_RC::eRcTypeOperational, call.GetParameters() );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::RC_Message
@@ -46,4 +47,14 @@ void DEC_MiscFunctions::RC_Warning( DIA_Call_ABC& call, T& caller )
     const MIL_RC* pRC = MIL_RC::Find( call.GetParameter( 0 ).ToId() );
     assert( pRC );
     pRC->Send( caller, MIL_RC::eRcTypeWarning, call.GetParameters() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_MiscFunctions::FinishMission
+// Created: NLD 2005-09-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_MiscFunctions::FinishMission( DIA_Call_ABC& call, T& caller )
+{
+    caller.GetOrderManager().OnReceiveRCMissionFinished();
 }
