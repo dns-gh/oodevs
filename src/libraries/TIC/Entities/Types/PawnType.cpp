@@ -28,7 +28,6 @@
 #include "Entities/Natures/Pawn/NatureQualifier.h"
 #include "Entities/Natures/Pawn/NatureCapacity.h"
 
-
 using namespace TIC;
 
 PawnType::T_PawnTypeMap PawnType::pawnTypes_;
@@ -51,31 +50,61 @@ PawnType::PawnType( const std::string& strName, XmlInputArchive& archive )
         archive.Section      ( "Niveau" );
         archive.ReadAttribute( "type", strValue );
         pLevel_              = NatureLevel::Find( strValue );
+        if( !pLevel_ )
+        {
+            MT_LOG_ERROR_MSG( "Unknown platform level " << strValue );
+            throw std::exception();
+        }
         archive.EndSection   (); // Niveau
 
         archive.Section      ( "Arme" );
         archive.ReadAttribute( "type", strValue );
         pWeapon_             = NatureWeapon::Find( strValue );
+        if( !pWeapon_ )
+        {
+            MT_LOG_ERROR_MSG( "Unknown platform weapon " << strValue );
+            throw std::exception();
+        }
         archive.EndSection   (); // Arme
 
         archive.Section      ( "Specialisation" );
         archive.ReadAttribute( "type", strValue );
         pSpecialization_     = NatureSpecialization::Find( strValue );
+        if( !pSpecialization_ )
+        {
+            MT_LOG_ERROR_MSG( "Unknown platform specialization " << strValue );
+            throw std::exception();
+        }
         archive.EndSection   (); // Specialisation
 
         archive.Section      ( "Categorie" );
         archive.ReadAttribute( "type", strValue );
         pCategory_           = NatureCategory::Find( strValue );
+        if( !pCategory_ )
+        {
+            MT_LOG_ERROR_MSG( "Unknown platform category " << strValue );
+            throw std::exception();
+        }
         archive.EndSection   (); // Categorie
 
         archive.Section      ( "TypeMobilite" );
         archive.ReadAttribute( "type", strValue );
         pMobility_           = NatureMobility::Find( strValue );
+        if( !pMobility_ )
+        {
+            MT_LOG_ERROR_MSG( "Unknown platform mobility " << strValue );
+            throw std::exception();
+        }
         archive.EndSection   (); // TypeMobilite
 
         archive.Section      ( "Qualificatif" );
         archive.ReadAttribute( "type", strValue );
         pQualifier_          = NatureQualifier::Find( strValue );
+        if( !pQualifier_ )
+        {
+            MT_LOG_ERROR_MSG( "Unknown platform qualifier " << strValue );
+            throw std::exception();
+        }
         archive.EndSection   (); // Qualifier
 
         archive.Section      ( "CapaciteMission" );

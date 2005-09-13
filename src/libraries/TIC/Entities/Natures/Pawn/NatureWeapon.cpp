@@ -58,6 +58,7 @@ void NatureWeapon::Initialize()
     natureWeapons_[ "Ravitaillement"                       ] = new NatureWeapon( "Ravitaillement"                      , eRavitaillement                  , EnumUnitNatureWeapon::ravitaillement                     , "SUPPLY" );
     natureWeapons_[ "Tactical air control party"           ] = new NatureWeapon( "Tactical air control party"          , eTacticalAirControlParty         , EnumUnitNatureWeapon::tactical_air_control_party         , "NKN"    );
     natureWeapons_[ "Transport"                            ] = new NatureWeapon( "Transport"                           , eTransport                       , EnumUnitNatureWeapon::transport                          , "TRANS"  );
+    natureWeapons_[ "None"                                 ] = new NatureWeapon( "None"                                , eNone                            , EnumUnitNatureWeapon::none                               , "NKN"    );
 }
 
 // -----------------------------------------------------------------------------
