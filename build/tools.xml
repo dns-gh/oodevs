@@ -135,7 +135,7 @@
         <element name="cc-elements" optional="true" implicit="true"/>
         <sequential>
             <mkdir dir="@{outdir}"/>
-            <cc objdir="@{input}">
+            <cc objdir="@{outdir}">
                 <compiler name="moc">
                     <fileset dir="@{input}" includes="**/*.h" excludes="@{excludes}"/>
                     <compilerarg value="-nw"/>
@@ -144,17 +144,18 @@
             <detect-pch name="@{name}" property="@{name}.pch" path="@{input}" pch="@{pch}"/>
             <cc name="${compiler}" outfile="@{outdir}/@{name}@{suffix}" objdir="@{outdir}" subsystem="@{subsystem}"
                                    incremental="false" outtype="@{outtype}">
-                <fileset dir="@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes},moc_*.cpp"/> <!-- moc_*.cpp excluded because of MSVC IDE compiling them in src directory -->
-                <compilerarg value="/W4"/>
+                <fileset dir="@{input}" includes="**/*.cpp,**/*.c" excludes="@{excludes}"/>
                 <compiler name="${compiler}" optimize="@{optimize}" debug="@{debug}" exceptions="true" rtti="true">
                     <precompile prototype="${@{name}.pch}" if="@{name}.pch">
                         <except dir="@{input}" includes="${@{name}.pch},@{pch-excludes}"/>
                     </precompile>
-                    <defineset define="WIN32"/> <!-- for MT only -->
+                    <defineset define="WIN32"/>            <!-- for MT only -->
                     <includepath path="${libraries.dir}"/>
-                    <includepath path="@{input}"/> <!-- to find *_pch.h when included from subdirectories -->
+                    <includepath path="@{outdir}"/>        <!-- for *_moc.cpp -->
+                    <includepath path="@{input}"/>         <!-- to find *_pch.h when included from other directories -->
                     <includepath path="${include.dir}"/>
                     <includepath path="${include.dir}/qt"/>
+                    <compilerarg value="/W4"/>             <!-- should be platform dependent -->
                 </compiler>
                 <cc-elements/>
             </cc>
@@ -211,6 +212,7 @@
                    outtype="executable" configuration="release" excludes="@{excludes}"
                    pch="@{pch}" pch-excludes="@{pch-excludes}">
                 <libset dir="${lib.dir}/${platform}" libs="@{libs}"/>
+                <linkerarg value="/SUBSYSTEM:CONSOLE"/> <!-- should be removed as soon as <cc> subsystem is working -->
                 <cc-elements/>
             </build>
         </sequential>
@@ -253,8 +255,6 @@
         <sequential>
             <delete includeEmptyDirs="true" failonerror="false" quiet="true">
                 <fileset dir="${bin.dir}" includes="**/@{name}/**"/>
-                <fileset dir="${applications.dir}/@{name}" includes="**/moc_*.cpp"/> <!-- because of MSVC IDE compiling them in src directory-->
-                <fileset dir="${applications.dir}/@{name}" includes="history.xml,dependencies.xml"/>  <!-- for moc -->
             </delete>
         </sequential>
     </macrodef>
