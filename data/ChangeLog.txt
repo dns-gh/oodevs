@@ -20,12 +20,16 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Envoi des comptes-rendus unité détecte / amie reconnue / ennemie reconnue / neutre reconnue / objet détecté par le moteur
+
+Version 0.119.1 [13/09/2005] - Codename 'formafion'
     - NLD - Nouvelles fonctions DEC :   
                 - DEC_FinMission() (=> comportement identique à l'ancien DEC_RC( eMissionTerminee )
                 - DEC_Automate_PionPeutValoriserObjet / DEC_Agent_PeutValoriserObjet
                 - DEC_Automate_PionPeutActiverObjet   / DEC_Agent_PeutActiverObjet
     - NLD - MOS_Light2 : modification affichage fenêtre de logs (dans ordre de réception ...)
     - NLD - Changement des asserts() de DEC_Path ...
+    - SBO - ADN : Divers bugs fixes + affichage correct des 'TimeFields' (choix s/m/h)
 
 Version 0.119 [08/09/2005] - Codename 'GetResult'
     - NLD - Bug fix : problèmes divers d'interactions agents-objets (suite à MagicMove, ou création d'objet sur des agents) => nettoyage important                

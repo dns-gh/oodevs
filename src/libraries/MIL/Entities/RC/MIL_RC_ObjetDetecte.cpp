@@ -18,6 +18,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -70,3 +71,14 @@ void MIL_RC_ObjetDetecte::Send( const MIL_Automate& sender, E_RcType nType, DIA_
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_ObjetDetecte::Send
+// Created: NLD 2005-03-30
+// -----------------------------------------------------------------------------
+void MIL_RC_ObjetDetecte::Send( const MIL_AgentPion& sender, E_RcType nType, const DEC_Knowledge_Object& param ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    asnMsg.GetAsnMsg().cr.u.cr_objet_detecte = param.GetMosID();
+    asnMsg.Send();
+}

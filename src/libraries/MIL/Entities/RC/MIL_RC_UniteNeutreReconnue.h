@@ -16,6 +16,8 @@
 
 #include "MIL_RC.h"
 
+class DEC_Knowledge_Agent;
+
 // =============================================================================
 // @class  MIL_RC_UniteNeutreReconnue
 // Created: JVT 2004-08-03
@@ -32,6 +34,7 @@ public:
     //@{
     virtual void Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& parameters ) const;
     virtual void Send( const MIL_Automate&  sender, E_RcType nType, DIA_Parameters& parameters ) const;
+            void Send( const MIL_AgentPion& sender, E_RcType nType, const DEC_Knowledge_Agent& param ) const;
     //@}
 };
 

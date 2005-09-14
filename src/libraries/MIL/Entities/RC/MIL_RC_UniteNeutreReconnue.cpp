@@ -18,6 +18,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC_UniteNeutreReconnue constructor
@@ -65,3 +66,14 @@ void MIL_RC_UniteNeutreReconnue::Send( const MIL_Automate& sender, E_RcType nTyp
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_UniteNeutreReconnue::Send
+// Created: NLD 2005-03-30
+// -----------------------------------------------------------------------------
+void MIL_RC_UniteNeutreReconnue::Send( const MIL_AgentPion& sender, E_RcType nType, const DEC_Knowledge_Agent& param ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_reconnue = param.GetMosID();
+    asnMsg.Send();
+}

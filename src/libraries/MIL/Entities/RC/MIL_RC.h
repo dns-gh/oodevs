@@ -25,6 +25,11 @@ class MIL_RC_TireParCampNeutre;
 class MIL_RC_TirSurCivil;      
 class MIL_RC_TireParCivil;
 class MIL_RC_UniteDecontaminee;
+class MIL_RC_UniteDetectee;     
+class MIL_RC_UniteAmieReconnue;  
+class MIL_RC_UniteEnnemieReconnue;
+class MIL_RC_UniteNeutreReconnue;
+class MIL_RC_ObjetDetecte;
 
 struct ASN1T_MsgCR;
 
@@ -80,6 +85,11 @@ public:
     static const MIL_RC_UniteDecontaminee*                  pRcUniteDecontaminee_;
     static const MIL_RC*                                    pRcPlusDeCarburant_;
     static const MIL_RC*                                    pRcTerrainDifficile_;
+    static const MIL_RC_UniteDetectee*                      pRcUniteDetectee_;
+    static const MIL_RC_UniteAmieReconnue*                  pRcUniteAmieReconnue_;
+    static const MIL_RC_UniteEnnemieReconnue*               pRcUniteEnnemieReconnue_;
+    static const MIL_RC_UniteNeutreReconnue*                pRcUniteNeutreReconnue_;
+    static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;
     //@}
    
 public:

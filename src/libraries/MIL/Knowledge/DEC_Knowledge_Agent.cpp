@@ -20,6 +20,11 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/RC/MIL_RC.h"
+#include "Entities/RC/MIL_RC_UniteDetectee.h"
+#include "Entities/RC/MIL_RC_UniteAmieReconnue.h"
+#include "Entities/RC/MIL_RC_UniteEnnemieReconnue.h"
+#include "Entities/RC/MIL_RC_UniteNeutreReconnue.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
@@ -315,6 +320,22 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataIdentification_.Update( perception.GetIdentificationData() );
 
     UpdatePerceptionSources( perception );
+
+    // CRs auto
+    if( bMaxPerceptionLevelUpdated_ )
+    {
+        if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
+            MIL_RC::pRcUniteDetectee_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
+
+        else if( GetArmy() && pKnowledgeGroup_->GetArmy().IsAFriend( *GetArmy() ) == eTristate_True )
+            MIL_RC::pRcUniteAmieReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
+
+        else if( GetArmy() && pKnowledgeGroup_->GetArmy().IsAnEnemy( *GetArmy() ) == eTristate_True )
+            MIL_RC::pRcUniteEnnemieReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
+
+        else if( GetArmy() && pKnowledgeGroup_->GetArmy().IsNeutral( *GetArmy() ) == eTristate_True )
+            MIL_RC::pRcUniteNeutreReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
+    }
 
     nTimeExtrapolationEnd_ = nTimeLastUpdate_ + pKnowledgeGroup_->GetType().GetKnowledgeExtrapolationTime();
 }   

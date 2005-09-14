@@ -136,7 +136,7 @@ private:
     void UpdateStates                ();
     void UpdatePerceptionSources     ( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
-    void UpdateMaxPerceptionLevel    ( const PHY_PerceptionLevel& perceptionLevel );
+    bool UpdateMaxPerceptionLevel    ( const PHY_PerceptionLevel& perceptionLevel );
     //@}
     
     //! @name Internal network senders

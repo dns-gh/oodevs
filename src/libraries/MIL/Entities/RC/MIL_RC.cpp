@@ -81,6 +81,11 @@ const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_    
 const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_        = 0;
 const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_                = 0;
+const MIL_RC_UniteDetectee*                     MIL_RC::pRcUniteDetectee_                      = 0;
+const MIL_RC_UniteAmieReconnue*                 MIL_RC::pRcUniteAmieReconnue_                  = 0;
+const MIL_RC_UniteEnnemieReconnue*              MIL_RC::pRcUniteEnnemieReconnue_               = 0;
+const MIL_RC_UniteNeutreReconnue*               MIL_RC::pRcUniteNeutreReconnue_                = 0;
+const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -307,9 +312,11 @@ void MIL_RC::Initialize()
     pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];
     pRcPlusDeCarburant_                   =                                            rcs_[ eRC_PlusDeCarburant                   ];
     pRcTerrainDifficile_                  =                                            rcs_[ eRC_TerrainDifficile                  ];
-
-    // Internes Sim                                       
-//    rcs_[ eRC_MissionTerminee                            ] = new MIL_RC_MissionTerminee                ( eRC_MissionTerminee );      
+    pRcUniteDetectee_                     = (MIL_RC_UniteDetectee*)                    rcs_[ eRC_UniteDetectee                     ];
+    pRcUniteAmieReconnue_                 = (MIL_RC_UniteAmieReconnue*)                rcs_[ eRC_UniteAmieReconnue                 ];
+    pRcUniteEnnemieReconnue_              = (MIL_RC_UniteEnnemieReconnue*)             rcs_[ eRC_UniteEnnemieReconnue              ];
+    pRcUniteNeutreReconnue_               = (MIL_RC_UniteNeutreReconnue*)              rcs_[ eRC_UniteNeutreReconnue               ];
+    pRcObjetDetecte_                      = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                      ];
 }
 
 // -----------------------------------------------------------------------------
@@ -318,7 +325,7 @@ void MIL_RC::Initialize()
 // -----------------------------------------------------------------------------
 void MIL_RC::Terminate()
 {
-    // Voir pb RC statiques et non statiques pour destruction
+    //$$ Voir pb RC statiques et non statiques pour destruction
 }
 
 // =============================================================================

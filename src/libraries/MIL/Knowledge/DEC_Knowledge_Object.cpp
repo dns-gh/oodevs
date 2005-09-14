@@ -19,6 +19,7 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/RC/MIL_RC_ObjetDetecte.h"
 #include "Entities/MIL_Army.h"
 
 #include "Tools/MIL_MOSIDManager.h"
@@ -308,13 +309,15 @@ void DEC_Knowledge_Object::UpdateCurrentPerceptionLevel( const PHY_PerceptionLev
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
 inline
-void DEC_Knowledge_Object::UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel )
+bool DEC_Knowledge_Object::UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel )
 {
     if( perceptionLevel > *pMaxPerceptionLevel_ )
     {
         pMaxPerceptionLevel_ = &perceptionLevel;
         NotifyAttributeUpdated( eAttr_MaxPerceptionLevel );
+        return true;
     }    
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -348,7 +351,8 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
     const PHY_PerceptionLevel&  currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
     
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
-    UpdateMaxPerceptionLevel    ( currentPerceptionLevel );
+    if( UpdateMaxPerceptionLevel( currentPerceptionLevel ) )
+        MIL_RC::pRcObjetDetecte_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
 
     // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
     //      => Pas de eNotPerceived aux ticks suivant la perte de contact
