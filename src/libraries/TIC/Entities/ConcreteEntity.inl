@@ -58,14 +58,4 @@ T_Height ConcreteEntity::GetHeight() const
 	return nHeight_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: ConcreteEntity::GetState
-// Created: SBO 2005-05-11
-//-----------------------------------------------------------------------------
-inline
-ConcreteEntity::EState ConcreteEntity::GetState() const
-{
-    return eState_;
-}
-
 } // end namespace TIC

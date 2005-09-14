@@ -84,9 +84,7 @@ void Pawn::AddDisaggregation( T_EntityId nId )
 inline
 bool Pawn::MustBeDisaggregated() const
 {
-    return ( bConfigDisaggreg_ || pAutomat_->MustBeDisaggregated() ) && // disaggreg if config-file specified
-          !  bIsTransported_                                         && // do not disaggreg when transported
-          !( pReinforcedPawn_  && pReinforcedPawn_->IsAggregated() ) ;  // do not disaggreg when reinforcing an aggregated pawn
+    return ( bConfigDisaggreg_ || pAutomat_->MustBeDisaggregated() ); // disaggreg if config-file specified
 }
 
 //-----------------------------------------------------------------------------
@@ -148,6 +146,16 @@ const std::string& Pawn::GetType() const
 {
     assert( pType_ );
     return pType_->GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pawn::GetState
+// Created: SBO 2005-09-14
+// -----------------------------------------------------------------------------
+inline
+Pawn::EState Pawn::GetState() const
+{
+    return eState_;
 }
 
 // -----------------------------------------------------------------------------

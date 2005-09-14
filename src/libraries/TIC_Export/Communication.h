@@ -19,6 +19,7 @@
 #ifndef __TICExport_Communication_h_
 #define __TICExport_Communication_h_
 
+#include "TIC_Export.h"
 #include <string>
 
 namespace TIC
@@ -39,7 +40,7 @@ namespace TICExport
 */
 // Created: SBO 2005-05-25
 // =============================================================================
-class Communication
+class ENGINE_API Communication
 {
     friend class CommunicationLink;
 

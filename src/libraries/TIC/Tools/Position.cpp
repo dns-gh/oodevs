@@ -253,8 +253,12 @@ void Position::SetSimCoordinates( double rX, double rY )
 //-----------------------------------------------------------------------------
 Position Position::PositionFromPolar( double rRadius, double rDegAngle )
 {
+    /*
     double x = rRadius * std::cos( RadianFromDegree( rDegAngle ) );
     double y = rRadius * std::sin( RadianFromDegree( rDegAngle ) );
+    */
+    double x = rRadius * std::sin( RadianFromDegree( rDegAngle ) );
+    double y = rRadius * std::cos( RadianFromDegree( rDegAngle ) );
     Position tmpPos;
     tmpPos.SetSimCoordinates( x, y );
     return Position( tmpPos );

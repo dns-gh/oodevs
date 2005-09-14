@@ -58,6 +58,16 @@ namespace TIC
 // =============================================================================
 class Pawn : public ConcreteEntity
 {
+public:
+    //! @name Types
+    //@{
+    enum EState
+    {
+        eStateOperational,
+        eStateFixable,
+        eStateDestroyed
+    };
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -83,6 +93,7 @@ public:
           T_EntityId            GetId                  () const;
 	const std::string&          GetName                () const;
     const std::string&          GetType                () const;
+          EState                GetState               () const;
     const NatureLevel&          GetNatureLevel         () const;
     const NatureWeapon&         GetNatureWeapon        () const;
     const NatureSpecialization& GetNatureSpecialization() const;
@@ -173,6 +184,7 @@ private:
 	std::string 		  strName_;
 	bool                  bIsPc_;
     const PawnType*       pType_;
+    EState                eState_;
 	T_PlatformVector      childPlatforms_;
     Automat*              pAutomat_;
 

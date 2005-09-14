@@ -51,60 +51,42 @@ PawnType::PawnType( const std::string& strName, XmlInputArchive& archive )
         archive.ReadAttribute( "type", strValue );
         pLevel_              = NatureLevel::Find( strValue );
         if( !pLevel_ )
-        {
-            MT_LOG_ERROR_MSG( "Unknown platform level " << strValue );
-            throw std::exception();
-        }
+            throw std::exception( std::string( "Unknown platform level '" +  strValue + "'" ).c_str() );
         archive.EndSection   (); // Niveau
 
         archive.Section      ( "Arme" );
         archive.ReadAttribute( "type", strValue );
         pWeapon_             = NatureWeapon::Find( strValue );
         if( !pWeapon_ )
-        {
-            MT_LOG_ERROR_MSG( "Unknown platform weapon " << strValue );
-            throw std::exception();
-        }
+            throw std::exception( std::string( "Unknown platform weapon '" +  strValue + "'" ).c_str() );
         archive.EndSection   (); // Arme
 
         archive.Section      ( "Specialisation" );
         archive.ReadAttribute( "type", strValue );
         pSpecialization_     = NatureSpecialization::Find( strValue );
         if( !pSpecialization_ )
-        {
-            MT_LOG_ERROR_MSG( "Unknown platform specialization " << strValue );
-            throw std::exception();
-        }
+            throw std::exception( std::string( "Unknown platform specialization '" +  strValue + "'" ).c_str() );
         archive.EndSection   (); // Specialisation
 
         archive.Section      ( "Categorie" );
         archive.ReadAttribute( "type", strValue );
         pCategory_           = NatureCategory::Find( strValue );
         if( !pCategory_ )
-        {
-            MT_LOG_ERROR_MSG( "Unknown platform category " << strValue );
-            throw std::exception();
-        }
+            throw std::exception( std::string( "Unknown platform category '" +  strValue + "'" ).c_str() );
         archive.EndSection   (); // Categorie
 
         archive.Section      ( "TypeMobilite" );
         archive.ReadAttribute( "type", strValue );
         pMobility_           = NatureMobility::Find( strValue );
         if( !pMobility_ )
-        {
-            MT_LOG_ERROR_MSG( "Unknown platform mobility " << strValue );
-            throw std::exception();
-        }
+            throw std::exception( std::string( "Unknown platform mobility '" +  strValue + "'" ).c_str() );
         archive.EndSection   (); // TypeMobilite
 
         archive.Section      ( "Qualificatif" );
         archive.ReadAttribute( "type", strValue );
         pQualifier_          = NatureQualifier::Find( strValue );
         if( !pQualifier_ )
-        {
-            MT_LOG_ERROR_MSG( "Unknown platform qualifier " << strValue );
-            throw std::exception();
-        }
+            throw std::exception( std::string( "Unknown platform qualifier '" + strValue + "'" ).c_str() );
         archive.EndSection   (); // Qualifier
 
         archive.Section      ( "CapaciteMission" );
@@ -125,10 +107,7 @@ PawnType::PawnType( const std::string& strName, XmlInputArchive& archive )
             archive.ReadAttribute( "nom", strTmp );
             pPlatformType = PlatformType::Find( strTmp );
             if( pPlatformType == 0 )
-            {
-                MT_LOG_ERROR_MSG( "Unknown platform type " << strTmp );
-                throw std::exception();
-            }
+                throw std::exception( std::string( "Unknown platform type '" + strTmp + "'" ).c_str() );
 
             bool bIsEmbarquable = false;
             archive.ReadAttribute( "embarquable", bIsEmbarquable, XmlInputArchive::eNothing );

@@ -44,6 +44,7 @@ Pawn::Pawn( const ASN1T_MsgPionCreation& asnMsg )
     , nId_              ( asnMsg.oid_pion )
     , strName_          ( asnMsg.nom )
     , pType_            ( PawnType::Find( asnMsg.type_pion ) )
+    , eState_           ( EState::eStateOperational )
     , pAutomat_         ( Automat::Find( asnMsg.oid_automate ) )
     , bIsAggregated_    ( true  )
     , bConfigDisaggreg_ ( disaggregPawns_.find( nId_ ) != disaggregPawns_.end() )
@@ -74,6 +75,7 @@ Pawn::Pawn( const ASN1T_MsgAutomateCreation& asnMsg, Automat& automat )
     , nId_              ( asnMsg.oid_automate )
     , strName_          ( asnMsg.nom )
     , pType_            ( 0 )
+    , eState_           ( EState::eStateOperational )
     , pAutomat_         ( &automat )
     , bIsAggregated_    ( true  )
     , bConfigDisaggreg_ ( disaggregPawns_.find( nId_ ) != disaggregPawns_.end() )
@@ -146,8 +148,11 @@ void Pawn::Terminate()
 //-----------------------------------------------------------------------------
 void Pawn::Aggregate()
 {
+    if( !bIsAggregated_ )
+    {
     SendPlatformPositionToMos( true );
     bIsAggregated_ = true;
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -156,7 +161,11 @@ void Pawn::Aggregate()
 //-----------------------------------------------------------------------------
 void Pawn::Disaggregate()
 {
+    if(    ! bIsTransported_                                             // do not disaggreg when transported
+        && !( pReinforcedPawn_  && pReinforcedPawn_->IsAggregated() ) )  // do not disaggreg when reinforcing an aggregated pawn
     bIsAggregated_ = false;
+    else
+        Aggregate();
 }
 
 //-----------------------------------------------------------------------------
@@ -165,15 +174,10 @@ void Pawn::Disaggregate()
 //-----------------------------------------------------------------------------
 void Pawn::UpdateDisaggregationStatus()
 {
-    if( MustBeDisaggregated() )
-        Disaggregate();
-    else
-    {
-        if( PositionManager::IsInAnArea( position_ ) )
+    if( MustBeDisaggregated() || PositionManager::IsInAnArea( position_ ) )
             Disaggregate();
         else
             Aggregate();
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -324,6 +328,43 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& asnMsg )
         }
         previousLends.clear();
     }
+
+    if( asnMsg.m.dotation_eff_materielPresent )
+    {
+        for( uint i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
+        {
+            const ASN1T_DotationEquipement& equip = asnMsg.dotation_eff_materiel.elem[ i ];
+            const PlatformType* pType = PlatformType::Find( equip.type_equipement );
+            assert( pType );
+
+            uint nState     = ( uint )Platform::EPlatformState::ePlatformStatePrisoner;
+            uint nNbOfState = equip.nb_prisonniers;
+            for( CIT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); ++it )
+            {
+                while( nNbOfState == 0 )
+                {
+                    ++nState;
+                    if( nState == ( uint )Platform::EPlatformState::ePlatformStateDestroyed )
+                        nNbOfState = equip.nb_indisponibles;
+                    else if( nState == ( uint )Platform::EPlatformState::ePlatformStateFixable )
+                        nNbOfState = equip.nb_reparables;
+                    else if( nState == ( uint )Platform::EPlatformState::ePlatformStateFixing )
+                        nNbOfState = equip.nb_dans_chaine_maintenance;
+                    else if( nState == ( uint )Platform::EPlatformState::ePlatformStateOk )
+                        nNbOfState = equip.nb_disponibles;
+                    else
+                        break;
+                }
+                if( nNbOfState == 0 )
+                    break;
+                if( &( *it )->pType_->GetType() == pType )
+                {
+                    ( *it )->eState_ = ( Platform::EPlatformState )nState;
+                    --nNbOfState;
+                }
+            }
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -429,7 +470,7 @@ void Pawn::OnReceiveTerrainType( DIN::DIN_Input& input )
 }
 
 //-----------------------------------------------------------------------------
-// Name: Pawn::Disaggregate
+// Name: Pawn::UpdatePlatformPositions
 // Created: SBO 2005-07-05
 //-----------------------------------------------------------------------------
 void Pawn::UpdatePlatformPositions()
@@ -476,22 +517,30 @@ void Pawn::UpdatePlatformPosition() const
 //-----------------------------------------------------------------------------
 void Pawn::SetFormation( Formation_ABC& formation ) const
 {
-    formation.Begin( *this, GetPlatformCount() );
+    // use a special platform count only for "moveable" platforms
+    uint nPlatformCount = 0;
+    if( bIsAggregated_ )
+        nPlatformCount = 0;
+    for( CIT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); ++it )
+        if( ( *it )->MustBeDisaggregated() && ( *it )->CanMove() )
+            nPlatformCount++;
+
+    formation.Begin( *this, nPlatformCount );
 
     if( !formation.IsReverse() )
     {
         for( CIT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); ++it )
-            if( ( *it )->MustBeDisaggregated() )
+            if( ( *it )->MustBeDisaggregated() && ( *it )->CanMove() )
                 formation.ApplyTo( **it );
-            else
+            else if( ( *it )->CanMove() )
                 ( *it )->Follow( *this );
     }
     else
     {
         for( CRIT_PlatformVector it = childPlatforms_.rbegin(); it != childPlatforms_.rend(); ++it )
-            if( ( *it )->MustBeDisaggregated() )
+            if( ( *it )->MustBeDisaggregated() && ( *it )->CanMove() )
                 formation.ApplyTo( **it );
-            else
+            else if( ( *it )->CanMove() )
                 ( *it )->Follow( *this );
     }
 

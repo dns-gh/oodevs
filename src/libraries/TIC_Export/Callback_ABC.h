@@ -19,6 +19,8 @@
 #ifndef __TICExport_Callback_ABC_h_
 #define __TICExport_Callback_ABC_h_
 
+#include "TIC_Export.h"
+
 namespace TICExport
 {
 
@@ -32,7 +34,7 @@ namespace TICExport
 */
 // Created: SBO 2005-05-18
 // =============================================================================
-class Callback_ABC
+class ENGINE_API Callback_ABC
 {
 public:
 	//! @name Constructors/Destructor

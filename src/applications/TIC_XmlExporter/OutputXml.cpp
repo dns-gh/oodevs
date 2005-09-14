@@ -314,6 +314,29 @@ void OutputXml::OutputPlatform( const Platform& platform )
     archive_.WriteField( "Hauteur" , platform.GetHeight()  );
     archive_.EndSection(); // Position
 
+    std::string strState;
+    switch( platform.GetState() )
+    {
+    case Platform::ePlatformStatePrisoner:
+        strState = "Prisonnier";
+        break;
+    case Platform::ePlatformStateDestroyed:
+        strState = "Detruit";
+        break;
+    case Platform::ePlatformStateFixing:
+        strState = "EnReparation";
+        break;
+    case Platform::ePlatformStateFixable:
+        strState = "Reparable";
+        break;
+    case Platform::ePlatformStateOk:
+        strState = "Operationnel";
+        break;
+    default:
+        break;
+    }
+    archive_.WriteField( "Etat", strState );
+
     archive_.Section   ( "NatureEquipement" );
     std::string toto = platform.GetDevice();
     archive_.WriteAttribute( "type" , platform.GetDevice() );

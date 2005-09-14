@@ -19,6 +19,7 @@
 #ifndef __Workspace_h_
 #define __Workspace_h_
 
+#include "TIC_Export.h"
 #include <string>
 #include <vector>
 
@@ -43,7 +44,7 @@ namespace TICExport
 */
 // Created: SBO 2005-05-18
 // =============================================================================
-class Workspace
+class ENGINE_API Workspace
 {
 public:
     //! @name enum

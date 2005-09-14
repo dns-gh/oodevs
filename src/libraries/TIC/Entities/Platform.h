@@ -48,6 +48,19 @@ class Platform : public ConcreteEntity
     friend class Pawn;
 
 public:
+    //! @name Enums
+    //@{
+    enum EPlatformState
+    {
+        ePlatformStatePrisoner,
+        ePlatformStateDestroyed,
+        ePlatformStateFixable,
+        ePlatformStateFixing,
+        ePlatformStateOk,
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              Platform( const PawnPlatform& platformType, const Pawn& pawn );
@@ -58,6 +71,7 @@ public:
     //@{
           T_EntityId         GetId               () const;
     const std::string&       GetTypeName         () const;
+          EPlatformState     GetState            () const;
     const std::string&       GetEMAT6            () const;
     const std::string&       GetEMAT8            () const;
     const std::string&       GetLFRIL            () const;
@@ -75,6 +89,7 @@ public:
     //! @name Other Accessors
     //@{
     bool MustBeDisaggregated() const;
+    bool CanMove            () const;
     //@}
 
     //! @name Position management
@@ -96,6 +111,7 @@ private:
     //@{
     T_EntityId          nId_;
     const PawnPlatform* pType_;
+    EPlatformState      eState_;
     bool                bConfigDisaggreg_; // if disaggregation has been specified in config file
     const Pawn*         pPawn_;
     //@}

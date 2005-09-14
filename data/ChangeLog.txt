@@ -20,9 +20,9 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
-    - NLD - Envoi des comptes-rendus unité détecte / amie reconnue / ennemie reconnue / neutre reconnue / objet détecté par le moteur
 
 Version 0.119.1 [13/09/2005] - Codename 'formafion'
+    - NLD - Envoi des comptes-rendus unité détecte / amie reconnue / ennemie reconnue / neutre reconnue / objet détecté par le moteur
     - NLD - Nouvelles fonctions DEC :   
                 - DEC_FinMission() (=> comportement identique à l'ancien DEC_RC( eMissionTerminee )
                 - DEC_Automate_PionPeutValoriserObjet / DEC_Agent_PeutValoriserObjet

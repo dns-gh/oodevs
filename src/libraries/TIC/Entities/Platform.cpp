@@ -58,12 +58,22 @@ bool Platform::MustBeDisaggregated() const
     return bConfigDisaggreg_ && !( IsEmbarquable() && pPawn_->IsLoaded() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Platform::CanMove
+// Created: SBO 2005-09-14
+// -----------------------------------------------------------------------------
+bool Platform::CanMove() const
+{
+    return eState_ != ePlatformStateDestroyed;
+}
+
 //-----------------------------------------------------------------------------
 // Name: Platform::Follow
 // Created: SBO 2005-06-16
 //-----------------------------------------------------------------------------
 void Platform::Follow( const Pawn& pawn )
 {
+    assert( CanMove() );
     position_ = pawn.GetPosition();
     rSpeed_   = pPawn_->GetSpeed();
 }
@@ -74,6 +84,7 @@ void Platform::Follow( const Pawn& pawn )
 //-----------------------------------------------------------------------------
 void Platform::Follow( const Platform& platform )
 {
+    assert( CanMove() );
     position_ = platform.GetPosition();
     rSpeed_   = pPawn_->GetSpeed();
 }
@@ -84,6 +95,7 @@ void Platform::Follow( const Platform& platform )
 //-----------------------------------------------------------------------------
 void Platform::MoveTo( const Position& position )
 {
+    assert( CanMove() );
     double rDistanceToDestination = position_.GetDistanceTo( position );
     double rNeededSpeed           = rDistanceToDestination / TicManager::GetTicManager().GetTickDuration();
 

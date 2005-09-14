@@ -19,6 +19,7 @@
 #ifndef __TICExport_Automat_h_
 #define __TICExport_Automat_h_
 
+#include "TIC_Export.h"
 #include <string>
 
 namespace TIC
@@ -41,7 +42,7 @@ namespace TICExport
 */
 // Created: SBO 2005-05-18
 // =============================================================================
-class Automat
+class ENGINE_API Automat
 {
 public:
 	//! @name Constructors/Destructor

@@ -75,6 +75,16 @@ const std::string& Platform::GetTypeName() const
     return pPlatform_->GetTypeName();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Platform::GetState
+// Created: SBO 2005-09-14
+// -----------------------------------------------------------------------------
+Platform::EPlatformState Platform::GetState() const
+{
+    assert( pPlatform_ );
+    return ( EPlatformState )pPlatform_->GetState();
+}
+
 //-----------------------------------------------------------------------------
 // Name: Platform::GetTypeEMAT6
 // Created: SBO 2005-06-02

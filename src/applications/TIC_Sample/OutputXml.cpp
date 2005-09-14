@@ -216,6 +216,28 @@ void OutputXml::OutputPlatform( const Platform& platform )
     archive_ << strIndent << "    <Longitude>" << platform.GetLongitude()     << "</Longitude>" << std::endl;
     archive_ << strIndent << "    <Hauteur>"   << platform.GetHeight()        << "</Hauteur>"   << std::endl;
     archive_ << strIndent << "  </Position>"   << std::endl;
+    std::string strState;
+    switch( platform.GetState() )
+    {
+    case Platform::ePlatformStatePrisoner:
+        strState = "Prisonnier";
+        break;
+    case Platform::ePlatformStateDestroyed:
+        strState = "Detruit";
+        break;
+    case Platform::ePlatformStateFixing:
+        strState = "EnReparation";
+        break;
+    case Platform::ePlatformStateFixable:
+        strState = "Reparable";
+        break;
+    case Platform::ePlatformStateOk:
+        strState = "Operationnel";
+        break;
+    default:
+        break;
+    }
+    archive_ << strIndent << "  <Etat>"                    << strState                        << "</Etat>"          << std::endl;
     archive_ << strIndent << "  <NatureEquipement type=\"" << platform.GetDevice()            << "\">"              << std::endl;
     archive_ << strIndent << "    <Categorie>"             << platform.GetDeviceCategory()    << "</Categorie>"     << std::endl;
     archive_ << strIndent << "    <SousCategorie>"         << platform.GetDeviceSubCategory() << "</SousCategorie>" << std::endl;

@@ -31,7 +31,6 @@ ConcreteEntity::ConcreteEntity()
     , nDirection_ ( 0 )
     , nHeight_    ( 0 )
     , rSpeed_     ( 0. )
-    , eState_     ( EState::eStateOperational )
 {
 }
 

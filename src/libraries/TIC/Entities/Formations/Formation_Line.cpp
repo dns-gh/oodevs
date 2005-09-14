@@ -72,7 +72,7 @@ void Formation_Line::ApplyTo( Platform& platform )
     // update platform position and speed
     platform.MoveTo( pPawn_->GetPosition() + ptTmp );
 
-    rCurrentPos_ -= 1.0;
+    rCurrentPos_ = rCurrentPos_ - ( double )nPlatformNbr_ / ( double )( nPlatformNbr_ - 1 );
 }
 
 //-----------------------------------------------------------------------------

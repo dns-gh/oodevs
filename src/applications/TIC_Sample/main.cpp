@@ -53,7 +53,8 @@ void ExportXML()
     signal( SIGINT, ctrl_c_handler );
 
     OutputXml output( "tic.xml" );
-    Workspace workspace( output, "127.0.0.1", 10000, "D:/Dev/Build/Data/scipio.xml", "./data/plateformesTic.xml" );
+    //Workspace workspace( output, "127.0.0.1", 10000, "D:/Dev/Build/Data/scipio.xml", "./plateformesTic.xml" );
+    Workspace workspace( output, "127.0.0.1", 10000, "J:/scipio/Scripts_Release_Export_v0.113-2/scipio.xml", "./plateformesTic.xml" );
     output.SetWorkspace( workspace );  
 
     while( bRun )
@@ -75,6 +76,10 @@ int main( int /*nArgc*/, char** /*ppArgv*/ )
     {
         ExportXML();
 	}
+    catch( std::exception& e )
+    {
+        std::cerr << "Program terminated abnormally - " << e.what() << std::endl;
+    }
     catch( ... )
     {
         std::cerr << "Program terminated abnormally " << std::endl;

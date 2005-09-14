@@ -19,6 +19,7 @@
 #ifndef __TICExport_Pawn_h_
 #define __TICExport_Pawn_h_
 
+#include "TIC_Export.h"
 #include <string>
 
 namespace TIC
@@ -41,7 +42,7 @@ namespace TICExport
 */
 // Created: SBO 2005-05-18
 // =============================================================================
-class Pawn
+class ENGINE_API Pawn
 {
     friend class Automat;
 
