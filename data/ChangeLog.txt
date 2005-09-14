@@ -20,6 +20,7 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Bug fix : 'Vrai' random sur la composante choisie lors de l'application des dégats suite à une explosion
 
 Version 0.119.1 [13/09/2005] - Codename 'formafion'
     - NLD - Envoi des comptes-rendus unité détecte / amie reconnue / ennemie reconnue / neutre reconnue / objet détecté par le moteur

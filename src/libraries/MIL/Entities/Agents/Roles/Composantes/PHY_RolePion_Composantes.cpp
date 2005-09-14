@@ -931,9 +931,13 @@ void PHY_RolePion_Composantes::ApplyContamination( const MIL_NbcAgentType& nbcAg
 void PHY_RolePion_Composantes::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& fireResult )
 {
     assert( pPion_ );
+
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
     PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
 
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )

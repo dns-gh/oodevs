@@ -101,7 +101,10 @@ void PHY_RolePion_Composantes::HealAllHumans()
 inline
 void PHY_RolePion_Composantes::DestroyRandomComposante()
 {
-    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )

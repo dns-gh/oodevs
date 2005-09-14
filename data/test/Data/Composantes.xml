@@ -182,31 +182,31 @@
     <Protection>BlindeLeger</Protection>
     <Volume>Moyen</Volume>
     <Vitesses maximum="90">
-      <Terrain type="inconnu">0</Terrain>
+      <Terrain type="inconnu">30</Terrain>
       <Terrain type="foret">10</Terrain>
-      <Terrain type="plantation">0</Terrain>
-      <Terrain type="marais">0</Terrain>
-      <Terrain type="dune">0</Terrain>
-      <Terrain type="urbain">0</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">5</Terrain>
+      <Terrain type="dune">5</Terrain>
+      <Terrain type="urbain">20</Terrain>
       <Terrain type="etendue eau">0</Terrain>
-      <Terrain type="glace">0</Terrain>
+      <Terrain type="glace">1</Terrain>
       <Terrain type="lisiere">25</Terrain>
-      <Terrain type="banlieue">0</Terrain>
+      <Terrain type="banlieue">30</Terrain>
       <Terrain type="cote">0</Terrain>
-      <Terrain type="bord de plantation">0</Terrain>
-      <Terrain type="bord de marais">0</Terrain>
-      <Terrain type="bord de dune">0</Terrain>
-      <Terrain type="bord de glace">0</Terrain>
-      <Terrain type="chemin">0</Terrain>
-      <Terrain type="autoroute">0</Terrain>
-      <Terrain type="nationale">0</Terrain>
-      <Terrain type="departementale">0</Terrain>
-      <Terrain type="ruisseau">0</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">35</Terrain>
+      <Terrain type="autoroute">50</Terrain>
+      <Terrain type="nationale">40</Terrain>
+      <Terrain type="departementale">40</Terrain>
+      <Terrain type="ruisseau">2</Terrain>
       <Terrain type="riviere">0</Terrain>
       <Terrain type="riviere importante">0</Terrain>
-      <Terrain type="pont">0</Terrain>
+      <Terrain type="pont">60</Terrain>
       <Terrain type="falaise">0</Terrain>
-      <Terrain type="voie ferree">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
     </Vitesses>
     <Contenance>
