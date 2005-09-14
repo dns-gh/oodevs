@@ -59,7 +59,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
     , nID_                               ( nID )
     , pKnowledgeGroup_                   ( 0 )
     , pPionPC_                           ( 0 )
-    , pDecision_                         ( new DEC_AutomateDecision( *this ) )
+    , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
     , knowledgeBlackBoard_               ()
     , ksQuerier_                         ( knowledgeBlackBoard_, *this )
@@ -83,6 +83,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
     std::stringstream strTmp;
     strTmp << strName_ << " - [" << (uint)GetID() << "]";
     strName_ = strTmp.str();
+
+    pDecision_ = new DEC_AutomateDecision( *this );
 
     // Liens hiérarchiques
     archive.Section( "LiensHierarchiques" );
