@@ -117,3 +117,13 @@ std::string ADN_Weapons_ListView::GetToolTipFor( QListViewItem& item )
 
     return strToolTip;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_ListView::showEvent
+// Created: SBO 2005-09-15
+// -----------------------------------------------------------------------------
+void ADN_Weapons_ListView::showEvent( QShowEvent* pEvent )
+{
+    // update weapon names
+    ADN_Workspace::GetWorkspace().GetWeapons().GetData().UpdateNames();
+}

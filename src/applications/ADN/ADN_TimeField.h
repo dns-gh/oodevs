@@ -51,8 +51,10 @@ public:
 
     //! @name Operations
     //@{
-    QString text   () const;
-    void    setText( const QString& strText );
+    QString text         () const;
+    void    setText      ( const QString& strText );
+    void    focusInEvent ( QFocusEvent* pEvent );
+    void    focusOutEvent( QFocusEvent* pEvent );
     //@}
 
 public slots:

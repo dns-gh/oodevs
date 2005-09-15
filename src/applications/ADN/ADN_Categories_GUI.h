@@ -51,8 +51,6 @@ public:
     };
 
 public slots:
-    void IncSize();
-    void DecSize();
     void OnTypeChanged();
 
 public:

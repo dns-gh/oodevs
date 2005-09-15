@@ -110,43 +110,13 @@ void ADN_Categories_GUI::Build()
     ///////////////////
     // Sizes
     QGroupBox* pGroup=new QVGroupBox( tr( "Sizes" ),pMainWidget_);
-    QHBox     * pGroupSize=new QHBox(pGroup);      
-    pGroup->setInsideMargin(20);
-    pGroup->setInsideSpacing(20);
-    pGroupSize->setSpacing(5);
+    QHBox     * pGroupSize=new QHBox(pGroup);  
     
     // sizes list
     T_ConnectorVector    vSizeInfosConnectors(eNbrSizeGuiElements,(ADN_Connector_ABC*)0 );
     pListSize_=new ADN_ListView_Categories_Size(pGroupSize);
     static_cast<ADN_Connector_Vector_ABC*>( &pListSize_->GetConnector() )->Connect( &data_.GetSizesInfos() );
     QWhatsThis::add( pListSize_, "Les différentes catégories de volumes existants dans la simulation.\nCes catégories sont utilisées pour caractériser les composantes.\nElles influencent la perception des unités et les PHs des systèmes d'armes." );
-
-    // sizes infos + modify
-    QVGroupBox  *  pGroupOrderSize = new QVGroupBox( tr( "Order" ),pGroupSize);
-    
-    QFrame      *  pEmptySize      = new QFrame(pGroupOrderSize);
-    QVBoxLayout *  pBoxSize        = new QVBoxLayout( pEmptySize );
-    pBoxSize->addWidget(new QLabel( tr( "Biggest size" ),pEmptySize));    
-    pBoxSize->addStretch();
-    
-    QHBox* pBtnBox     =new QHBox(pEmptySize);
-    pBoxSize->addWidget(pBtnBox);
-
-    QPushButton* pBtnIncSize=new QPushButton("+",pBtnBox);
-    pBtnIncSize->setMaximumWidth(30);
-    connect(pBtnIncSize,SIGNAL(clicked()),this,SLOT(IncSize()));
-
-    pBoxSize->addSpacing(20);
-
-    pBtnBox     =new QHBox(pEmptySize);
-    pBoxSize->addWidget(pBtnBox);
-
-    QPushButton* pBtnDecSize=new QPushButton("-",pBtnBox);
-    pBtnDecSize->setMaximumWidth(30);
-    connect(pBtnDecSize,SIGNAL(clicked()),this,SLOT(DecSize()));
-    
-    pBoxSize->addStretch();
-    pBoxSize->addWidget(new QLabel( tr( "Smallest size" ),pEmptySize));
 
     // size
     pGroup  =new QVGroupBox( tr( "Size" ),pGroup);
@@ -158,36 +128,6 @@ void ADN_Categories_GUI::Build()
     // set auto connectors
     pListArmor_->SetItemConnectors(vArmorInfosConnectors);
     pListSize_->SetItemConnectors(vSizeInfosConnectors);
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Categories_GUI::IncSize
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void ADN_Categories_GUI::IncSize()
-{
-    void *curData=pListSize_->GetCurrentData();
-    if (curData)
-    {
-        int pos=pListSize_->FindNdx(curData);
-        static_cast<ADN_Connector_Vector_ABC*>(&pListSize_->GetConnector())->SwapItem(pos-1,pos);
-    }
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Categories_GUI::DecSize
-// Created: JDY 03-08-27
-//-----------------------------------------------------------------------------
-void ADN_Categories_GUI::DecSize()
-{
-    void *curData=pListSize_->GetCurrentData();
-    if (curData)
-    {
-        int pos=pListSize_->FindNdx(curData);
-        static_cast<ADN_Connector_Vector_ABC*>(&pListSize_->GetConnector())->SwapItem(pos,pos+1);
-    }
 }
 
 // -----------------------------------------------------------------------------

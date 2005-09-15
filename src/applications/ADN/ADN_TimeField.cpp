@@ -52,6 +52,8 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
     pLayout->setMargin( 0 );
 
     pLineEdit_ = new QLineEdit( this );
+    pLineEdit_->setAlignment( Qt::AlignRight );
+    pLineEdit_->setFrame( true );
     pLayout->addWidget( pLineEdit_ );
 
     pComboBox_ = new QComboBox( this );
@@ -158,4 +160,23 @@ void ADN_TimeField::UpdateEnableState()
 {
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_String<ADN_TimeField>* >( pConnector_ )->IsConnected() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::focusInEvent
+// Created: SBO 2005-09-13
+// -----------------------------------------------------------------------------
+void ADN_TimeField::focusInEvent( QFocusEvent* /*pEvent*/ )
+{
+    pLineEdit_->setFocus();
+    pLineEdit_->selectAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::focusOutEvent
+// Created: SBO 2005-09-13
+// -----------------------------------------------------------------------------
+void ADN_TimeField::focusOutEvent( QFocusEvent* /*pEvent*/ )
+{
+    pLineEdit_->deselect();
 }

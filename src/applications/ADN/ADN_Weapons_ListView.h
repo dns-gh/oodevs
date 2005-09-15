@@ -47,6 +47,11 @@ public:
 
     std::string GetToolTipFor( QListViewItem& item );
     //@}
+
+    //! @name Event Handler
+    //@{
+    void showEvent( QShowEvent* pEvent );
+    //@}
 };
 
 

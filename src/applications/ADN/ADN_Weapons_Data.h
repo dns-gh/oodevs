@@ -200,6 +200,7 @@ public:
     int                  GetIndex( WeaponInfos& weapon );
     std::string          GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher );
     std::string          GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition );
+    void                 UpdateNames();
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );

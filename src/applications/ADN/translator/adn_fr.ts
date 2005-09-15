@@ -323,7 +323,7 @@
     <name>ADN_Categories_GUI</name>
     <message>
         <source>Order</source>
-        <translation>Ordre</translation>
+        <translation type="obsolete">Ordre</translation>
     </message>
     <message>
         <source>Name</source>
@@ -391,11 +391,11 @@
     </message>
     <message>
         <source>Biggest size</source>
-        <translation>Plus grand</translation>
+        <translation type="obsolete">Plus grand</translation>
     </message>
     <message>
         <source>Smallest size</source>
-        <translation>Plus petit</translation>
+        <translation type="obsolete">Plus petit</translation>
     </message>
     <message>
         <source>s</source>

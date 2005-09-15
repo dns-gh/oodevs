@@ -484,3 +484,18 @@ std::string ADN_Weapons_Data::GetWeaponThatUse( ADN_Equipement_Data::AmmoCategor
     }
     return strResult;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::UpdateNames
+// Created: SBO 2005-09-15
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::UpdateNames()
+{
+    for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
+    {
+        WeaponInfos* pWeapon = *it;
+        pWeapon->strName_ = pWeapon->ptrLauncher_.GetData()->strName_.GetData() 
+                          + " & " 
+                          + pWeapon->ptrAmmunition_.GetData()->strName_.GetData();
+    }
+}
