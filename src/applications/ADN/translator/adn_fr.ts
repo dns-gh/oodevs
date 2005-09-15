@@ -133,11 +133,11 @@
     </message>
     <message>
         <source>%1 x %2 %3</source>
-        <translation>%1 x %2 %3</translation>
+        <translation type="obsolete">%1 x %2 %3</translation>
     </message>
     <message>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation type="obsolete">%1 x %2</translation>
     </message>
     <message>
         <source>Automata compositions</source>
@@ -149,7 +149,27 @@
     </message>
     <message>
         <source>%2 %3</source>
-        <translation>%2 %3</translation>
+        <translation type="obsolete">%2 %3</translation>
+    </message>
+    <message>
+        <source>%2 %3 %3</source>
+        <translation type="obsolete">%2 %3 %3</translation>
+    </message>
+    <message>
+        <source>%1 x %2 %3 [ %4 ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%2 %3 [ %3 ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 x %2 [ %3/%4/%5 ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [ %2/%3/%4 ]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

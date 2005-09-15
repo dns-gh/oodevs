@@ -251,18 +251,23 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
 
-    // Create the table header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
+    // Setup the header.
+    pTable->setNumCols( 5 );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Ammunition" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Target armor" ) );
+    pTable->horizontalHeader()->setLabel( 2, tr( "Repair no evac" ) );
+    pTable->horizontalHeader()->setLabel( 3, tr( "Repair evac" ) );
+    pTable->horizontalHeader()->setLabel( 4, tr( "Destroyed" ) );
+    pTable->horizontalHeader()->show();
 
     pTable->setNumRows( 1 );
-    pTable->setNumCols( 5 );
-
     builder.AddTableCell( pTable, 0, 0, tr( "Ammunition" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Target armor" ) );
     builder.AddTableCell( pTable, 0, 2, tr( "Repair no evac" ) );
     builder.AddTableCell( pTable, 0, 3, tr( "Repair evac" ) );
     builder.AddTableCell( pTable, 0, 4, tr( "Destroyed" ) );
+    pTable->hideRow( 0 );
+    pTable->AddBoldGridRow( 0 );
 
     // Fill the table.
     ADN_Equipement_Data::DotationInfos& ammo = data_.GetDotation( eFamilleDotation_Munition );

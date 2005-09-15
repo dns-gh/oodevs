@@ -106,6 +106,14 @@ void ADN_TableDialog::PrintTable()
     if ( !painter.device() )
         return;
 
+    // Hide headers, show first line (headers as "table cells")
+    bool bHeadersShown = !pTable_->horizontalHeader()->isHidden();
+    if( bHeadersShown )
+    {
+        pTable_->horizontalHeader()->hide();
+        pTable_->showRow( 0 );
+    }
+
     // Compute the printing rectangle.
     QPaintDeviceMetrics metrics( painter.device() );
 
@@ -128,5 +136,12 @@ void ADN_TableDialog::PrintTable()
         if( n != 0 )
             printer.newPage();
         pTable_->Print( n, painter, painterSize );
+    }
+
+    // Show headers if needed, hide first line (headers as "table cells")
+    if( bHeadersShown )
+    {
+        pTable_->horizontalHeader()->show();
+        pTable_->hideRow( 0 );
     }
 }

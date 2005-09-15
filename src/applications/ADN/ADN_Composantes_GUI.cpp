@@ -419,17 +419,20 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
 
-    // Create the table header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
+    // Setup the header.
+    pTable->setNumCols( eNbrLocation + 1 );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Composante" ) );
+    for( uint n = 0; n < eNbrLocation; ++n )
+        pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n ).c_str() );
+    pTable->horizontalHeader()->show();
 
     pTable->setNumRows( data_.vComposantes_.size() + 1 );
-    pTable->setNumCols( eNbrLocation + 1 );
     builder.AddTableCell( pTable, 0, 0, tr( "Composante" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
         builder.AddTableCell( pTable, 0, n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n ).c_str() );
     pTable->AddBoldGridCol( 1 );
     pTable->AddBoldGridRow( 1 );
+    pTable->hideRow( 0 );
 
     // Fill the table.
     int nRow = 1;

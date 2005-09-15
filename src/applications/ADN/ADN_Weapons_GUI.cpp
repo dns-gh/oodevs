@@ -295,18 +295,22 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
     ADN_Table* pTable = builder.CreateTable( 0 );
     ADN_Weapons_Data::T_WeaponInfosVector& weapons = data_.weapons_;
 
-    // Create the table header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
-
+    // Setup the header.
     pTable->setNumCols( 5 );
-    pTable->setNumRows( weapons.size() + 1 );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Rnd per burst" ) );
+    pTable->horizontalHeader()->setLabel( 2, tr( "Burst duration (s)" ) );
+    pTable->horizontalHeader()->setLabel( 3, tr( "Rnd per reload" ) );
+    pTable->horizontalHeader()->setLabel( 4, tr( "Reload duration (s)" ) );
+    pTable->horizontalHeader()->show();
 
+    pTable->setNumRows( weapons.size() + 1 );
     builder.AddTableCell( pTable, 0, 0, tr( "Weapon" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Rnd per burst" ) );
     builder.AddTableCell( pTable, 0, 2, tr( "Burst duration (s)" ) );
     builder.AddTableCell( pTable, 0, 3, tr( "Rnd per reload" ) );
     builder.AddTableCell( pTable, 0, 4, tr( "Reload duration (s)" ) );
+    pTable->hideRow( 0 );
     pTable->AddBoldGridRow( 1 );
 
     int nRow = 1;
@@ -351,19 +355,22 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
 
-    // Create the table header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
-
+    // Setup the header.
     pTable->setNumCols( distancesSet.size() + 2 );
-    pTable->setNumRows( 1 );
-
-    builder.AddTableCell( pTable, 0, 0, tr( "Weapon" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Target size" ) );
-
+    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Target size" ) );
     int n = 2;
     for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
+        pTable->horizontalHeader()->setLabel( n, QString::number( *it ) );
+    pTable->horizontalHeader()->show();
+
+    pTable->setNumRows( 1 );
+    builder.AddTableCell( pTable, 0, 0, tr( "Weapon" ) );
+    builder.AddTableCell( pTable, 0, 1, tr( "Target size" ) );
+    n = 2;
+    for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
         builder.AddTableCell( pTable, 0, n, QString::number( *it ) );
+    pTable->hideRow( 0 );
 
     // Fill the table.
     int nRow = 1;
