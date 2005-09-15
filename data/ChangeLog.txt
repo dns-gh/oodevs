@@ -22,6 +22,8 @@ TODO de merde
 Next Version - Codename ''
     - NLD - Bug fix : les noms des automates dans le dévermineur sont corrects
     - NLD - Bug fix : 'Vrai' random sur la composante choisie lors de l'application des dégats suite à une explosion
+    - NLD - Bug fix : Les 'on spontaneous end' n'étaient pas appelés correctement lors de l'arrêt des missions automates
+    - SBO - ADN : Divers bugs fixes 
 
 Version 0.119.1 [13/09/2005] - Codename 'formafion'
     - NLD - Envoi des comptes-rendus unité détecte / amie reconnue / ennemie reconnue / neutre reconnue / objet détecté par le moteur

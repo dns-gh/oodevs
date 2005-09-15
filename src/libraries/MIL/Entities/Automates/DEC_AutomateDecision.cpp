@@ -274,7 +274,7 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission_ABC& miss
     try
     {
         const std::string& strBehavior = mission.GetType().GetMrtBehaviorName();
-        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_ );
+        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
     }
     catch( ... )
@@ -305,7 +305,7 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission_ABC&
     try
     {
         const std::string& strBehavior = mission.GetType().GetConduiteBehaviorName();
-        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_ );
+        DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
         GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
     }
     catch( ... )

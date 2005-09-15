@@ -346,7 +346,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
 
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseDiaDebugServer() )
     {
-        DIA_Workspace::Instance().RegisterDebuger( DIA_CreateDebugServer( (uint16)nDebuggerPort ) );
+        DIA_Workspace::Instance().RegisterDebuger( DIA_CreateDebugServer( (uint16)nDebuggerPort, 10 ) );
         MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server at port %d", nDebuggerPort ) );
     }
 }

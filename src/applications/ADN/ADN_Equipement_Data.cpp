@@ -314,6 +314,12 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
 , rLifeTime_        ( 0.0 )
 , nMineNumber_      ( 0 )
 {
+    for( int i = 0; i < eNbrUnitPosture; ++i )
+    {
+        ModificatorPostureInfos* pNew = new ModificatorPostureInfos( ( E_UnitPosture )i );
+        std::auto_ptr< ModificatorPostureInfos > spNew( pNew );
+        vModifStance_.AddItem( spNew.release() );
+    }
 }
 
 
@@ -365,12 +371,15 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( ADN_XmlInput_Helper& i
             input.Section( "PHs" );
             input.Section( "PostureCible" );
             for( int i = 0; i < eNbrUnitPosture; ++i )
+                vModifStance_[i]->ReadArchive( input );
+
+            /*for( int i = 0; i < eNbrUnitPosture; ++i )
             {
                 ModificatorPostureInfos* pNew = new ModificatorPostureInfos( ( E_UnitPosture )i );
                 std::auto_ptr< ModificatorPostureInfos > spNew( pNew );
                 spNew->ReadArchive( input );
                 vModifStance_.AddItem( spNew.release() );
-            }
+            }*/
             input.EndSection(); // PostureCible
             input.EndSection(); // PHs
             break;
@@ -462,6 +471,11 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
+
+    pCopy->strCodeEMAT6_  = strCodeEMAT6_.GetData(); 
+    pCopy->strCodeEMAT8_  = strCodeEMAT8_.GetData();
+    pCopy->strCodeLFRIL_  = strCodeLFRIL_.GetData();
+    pCopy->strCodeNNO_    = strCodeNNO_.GetData();
 
     for( uint n = 0; n < attritions_.size(); ++n )
         pCopy->attritions_[n]->CopyFrom( * attritions_[n] );

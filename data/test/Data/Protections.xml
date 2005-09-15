@@ -57,10 +57,10 @@
 
   <Protection nom="Combattant" type="humain">
     <Neutralisation tempsMoyen="300s" variance="420s"/>
-    <ProbabilitePanneAleatoire EVA="1" NEVA="2"/>
+    <ProbabilitePanneAleatoire EVA="0" NEVA="0"/>
     <BlessureHumainsDansMateriel>
-      <MaterielReparableAvecEvacuation>75</MaterielReparableAvecEvacuation>
-      <MaterielReparableSansEvacuation>50</MaterielReparableSansEvacuation>
+      <MaterielReparableAvecEvacuation>100</MaterielReparableAvecEvacuation>
+      <MaterielReparableSansEvacuation>100</MaterielReparableSansEvacuation>
     </BlessureHumainsDansMateriel>
   </Protection>
 
