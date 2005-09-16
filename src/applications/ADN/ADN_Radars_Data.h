@@ -52,12 +52,12 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_Bool   bDetectTime_;
-        ADN_Type_Double rDetectTime_;
-        ADN_Type_Bool   bIdentTime_;
-        ADN_Type_Double rRecoTime_;
-        ADN_Type_Bool   bRecoTime_;
-        ADN_Type_Double rIdentTime_;
+        ADN_Type_Bool  bDetectTime_;
+        ADN_Type_Time  detectTime_;
+        ADN_Type_Bool  bIdentTime_;
+        ADN_Type_Time  recoTime_;
+        ADN_Type_Bool  bRecoTime_;
+        ADN_Type_Time  identTime_;
     };
 
 

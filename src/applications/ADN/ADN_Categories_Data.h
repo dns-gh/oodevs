@@ -47,8 +47,8 @@ public:
     public:
         ADN_Type_String strName_;
         ADN_Type_Enum< E_ProtectionType, eNbrProtectionType > nType_;
-        ADN_Type_Double rNeutralizationAverageTime_;
-        ADN_Type_Double rNeutralizationVariance_;
+        ADN_Type_Time   neutralizationAverageTime_;
+        ADN_Type_Time   neutralizationVariance_;
         ADN_Type_Double rBreakdownEVA_;
         ADN_Type_Double rBreakdownNEVA_;
         ADN_Type_Double rPercentageWoundedHumansEvac_;

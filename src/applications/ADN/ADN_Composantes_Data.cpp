@@ -30,8 +30,8 @@
 ADN_Composantes_Data::AmbulanceInfos::AmbulanceInfos()
 : ADN_DataTreeNode_ABC  ()
 , rCapacity_            ( 0 )
-, rLoadTimePerPerson_   ( 0 )
-, rUnloadTimePerPerson_ ( 0 )
+, loadTimePerPerson_    ( "0s" )
+, unloadTimePerPerson_  ( "0s" )
 {
 }
 
@@ -63,8 +63,8 @@ std::string ADN_Composantes_Data::AmbulanceInfos::GetItemName()
 void ADN_Composantes_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
 {
     rCapacity_ = src.rCapacity_.GetData();
-    rLoadTimePerPerson_ = src.rLoadTimePerPerson_.GetData();
-    rUnloadTimePerPerson_ = src.rUnloadTimePerPerson_.GetData();
+    loadTimePerPerson_ = src.loadTimePerPerson_.GetData();
+    unloadTimePerPerson_ = src.unloadTimePerPerson_.GetData();
 }
 
 
@@ -75,8 +75,8 @@ void ADN_Composantes_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
 void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.ReadField( "Capacite", rCapacity_ );
-    input.ReadTimeField( "TempsChargementParHumain", rLoadTimePerPerson_ );
-    input.ReadTimeField( "TempsDechargementParHumain", rUnloadTimePerPerson_ );
+    input.ReadField( "TempsChargementParHumain", loadTimePerPerson_ );
+    input.ReadField( "TempsDechargementParHumain", unloadTimePerPerson_ );
 }
 
 
@@ -87,8 +87,8 @@ void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( ADN_XmlInput_Helper& inp
 void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.WriteField( "Capacite", rCapacity_.GetData() );
-    output.WriteField( "TempsChargementParHumain", ADN_Tools::SecondToString( rLoadTimePerPerson_.GetData() ) );
-    output.WriteField( "TempsDechargementParHumain", ADN_Tools::SecondToString( rUnloadTimePerPerson_.GetData() ) );
+    output.WriteField( "TempsChargementParHumain", loadTimePerPerson_.GetData() );
+    output.WriteField( "TempsDechargementParHumain", unloadTimePerPerson_.GetData() );
 }
 
 
@@ -274,7 +274,7 @@ ADN_Composantes_Data::NTIInfos::NTIInfos( const std::string& strName )
 , strName_              ( strName )
 , bIsPresent_           ( false )
 , bHasMaxRepairTime_    ( false )
-, rMaxRepairTime_       ( 0 )
+, maxRepairTime_        ( "0s" )
 , bCanRepairEA_         ( false )
 , bCanRepairM_          ( false )
 {
@@ -309,7 +309,7 @@ void ADN_Composantes_Data::NTIInfos::CopyFrom( NTIInfos& src )
 {
     bIsPresent_ = src.bIsPresent_.GetData();
     bHasMaxRepairTime_ = src.bHasMaxRepairTime_.GetData();
-    rMaxRepairTime_ = src.rMaxRepairTime_.GetData();
+    maxRepairTime_ = src.maxRepairTime_.GetData();
     bCanRepairEA_ = src.bCanRepairEA_.GetData();
     bCanRepairM_ = src.bCanRepairM_.GetData();
 }
@@ -326,7 +326,7 @@ void ADN_Composantes_Data::NTIInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
     bIsPresent_ = true;
 
-    if( input.ReadTimeAttribute( "tempsMaxReparation", rMaxRepairTime_, ADN_XmlInput_Helper::eNothing ) )
+    if( input.ReadAttribute( "tempsMaxReparation", maxRepairTime_, ADN_XmlInput_Helper::eNothing ) )
         bHasMaxRepairTime_ = true;
 
     if( input.Section( "EA", ADN_XmlInput_Helper::eNothing ) )
@@ -356,7 +356,7 @@ void ADN_Composantes_Data::NTIInfos::WriteArchive( MT_OutputArchive_ABC& output 
     output.Section( strName_ );
 
     if( bHasMaxRepairTime_.GetData() )
-        output.WriteAttribute( "tempsMaxReparation", ADN_Tools::SecondToString( rMaxRepairTime_.GetData() ) );
+        output.WriteAttribute( "tempsMaxReparation", maxRepairTime_.GetData() );
 
     if( bCanRepairEA_.GetData() )
     {
@@ -381,8 +381,8 @@ ADN_Composantes_Data::LogMaintenanceInfos::LogMaintenanceInfos()
 : ADN_DataTreeNode_ABC()
 , bIsTower_           ( false )
 , rCapacity_          ( 0 )
-, rLoadTimePerTon_    ( 0 )
-, rUnloadTimePerTon_  ( 0 )
+, loadTimePerTon_     ( "0s" )
+, unloadTimePerTon_   ( "0s" )
 , NTI1Infos_          ( "NTI1" )
 , NTI2Infos_          ( "NTI2" )
 , NTI3Infos_          ( "NTI3" )
@@ -418,8 +418,8 @@ void ADN_Composantes_Data::LogMaintenanceInfos::CopyFrom( LogMaintenanceInfos& s
 {
     bIsTower_ = src.bIsTower_.GetData();
     rCapacity_ = src.rCapacity_.GetData();
-    rLoadTimePerTon_ = src.rLoadTimePerTon_.GetData();
-    rUnloadTimePerTon_ = src.rUnloadTimePerTon_.GetData();
+    loadTimePerTon_ = src.loadTimePerTon_.GetData();
+    unloadTimePerTon_ = src.unloadTimePerTon_.GetData();
 
     NTI1Infos_.CopyFrom( src.NTI1Infos_ );
     NTI2Infos_.CopyFrom( src.NTI2Infos_ );
@@ -437,8 +437,8 @@ void ADN_Composantes_Data::LogMaintenanceInfos::ReadArchive( ADN_XmlInput_Helper
     {
         bIsTower_ = true;
         input.ReadField( "Capacite", rCapacity_ );
-        input.ReadTimeField( "TempsChargementParTonne", rLoadTimePerTon_ );
-        input.ReadTimeField( "TempsDechargementParTonne", rUnloadTimePerTon_ );
+        input.ReadField( "TempsChargementParTonne", loadTimePerTon_ );
+        input.ReadField( "TempsDechargementParTonne", unloadTimePerTon_ );
         input.EndSection(); // Remorqueur
     }
     NTI1Infos_.ReadArchive( input );
@@ -457,8 +457,8 @@ void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( MT_OutputArchive_A
     {
         output.Section( "Remorqueur" );
         output.WriteField( "Capacite", rCapacity_.GetData() );
-        output.WriteField( "TempsChargementParTonne", ADN_Tools::SecondToString( rLoadTimePerTon_.GetData() ) );
-        output.WriteField( "TempsDechargementParTonne", ADN_Tools::SecondToString( rUnloadTimePerTon_.GetData() ) );
+        output.WriteField( "TempsChargementParTonne", loadTimePerTon_.GetData() );
+        output.WriteField( "TempsDechargementParTonne", unloadTimePerTon_.GetData() );
         output.EndSection();
     }
     NTI1Infos_.WriteArchive( output );
@@ -476,8 +476,8 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , bIsCarrier_         ( false )
 , rWeight_            ( 0 )
 , rVolume_            ( 0 )
-, rLoadTime_          ( 0 )
-, rUnloadTime_        ( 0 )
+, loadTime_           ( "0s" )
+, unloadTime_         ( "0s" )
 , bIsConvoyLeader_    ( false )
 {
 }
@@ -511,8 +511,8 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
     bIsCarrier_  = src.bIsCarrier_.GetData();
     rWeight_     = src.rWeight_.GetData();
     rVolume_     = src.rVolume_.GetData();
-    rLoadTime_   = src.rLoadTime_.GetData();
-    rUnloadTime_ = src.rUnloadTime_.GetData();
+    loadTime_   = src.loadTime_.GetData();
+    unloadTime_ = src.unloadTime_.GetData();
     bIsConvoyLeader_ = src.bIsConvoyLeader_.GetData();
 }
 
@@ -530,8 +530,8 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( ADN_XmlInput_Helper& inp
         input.ReadField( "Masse", rWeight_ );
         input.ReadField( "Volume", rVolume_ );
         input.EndSection(); // Capacite
-        input.ReadTimeField( "TempsChargementMoyen", rLoadTime_ );
-        input.ReadTimeField( "TempsDechargementMoyen", rUnloadTime_ );
+        input.ReadField( "TempsChargementMoyen", loadTime_ );
+        input.ReadField( "TempsDechargementMoyen", unloadTime_ );
         input.EndSection(); // Transporteur
     }
 
@@ -556,8 +556,8 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( MT_OutputArchive_ABC& o
         output.WriteField( "Masse" , rWeight_.GetData() );
         output.WriteField( "Volume", rVolume_.GetData() );
         output.EndSection();
-        output.WriteField( "TempsChargementMoyen", ADN_Tools::SecondToString( rLoadTime_.GetData() ) );
-        output.WriteField( "TempsDechargementMoyen", ADN_Tools::SecondToString( rUnloadTime_.GetData() ) );
+        output.WriteField( "TempsChargementMoyen", loadTime_.GetData() );
+        output.WriteField( "TempsDechargementMoyen", unloadTime_.GetData() );
         output.EndSection(); // Transporteur
     }
 
@@ -1384,12 +1384,12 @@ void ADN_Composantes_Data::DotationInfos::WriteArchive( const std::string& strLi
 ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 : ADN_Ref_ABC()
 , ptrObject_(ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
-, rInitialBuildTime_        ( 0 )
-, rInitialDestructionTime_  ( 0 )
-, rCoeffBuildTime_          ( 0 )
-, rCoeffDestructionTime_    ( 0 )
-, rValorizationTime_        ( 0 )
-, rDevalorizationTime_      ( 0 )
+, initialBuildTime_         ( "0s" )
+, initialDestructionTime_   ( "0s" )
+, coeffBuildTime_           ( "0s" )
+, coeffDestructionTime_     ( "0s" )
+, valorizationTime_         ( "0s" )
+, devalorizationTime_       ( "0s" )
 , rCoeffCirc_               ( 0 )
 , rSpeedCirc_               ( 0 )
 , rSpeedNotCirc_            ( 0 )
@@ -1405,18 +1405,18 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 {
     BindExistenceTo(&ptrObject_);
 
-    rInitialBuildTime_.SetDataName( "le temps initial de construction" );
-    rInitialBuildTime_.SetParentNode( *this );
-    rInitialDestructionTime_.SetDataName( "le temps initial de destruction" );
-    rInitialDestructionTime_.SetParentNode( *this );
-    rCoeffBuildTime_.SetDataName( "le coefficient de construction" );
-    rCoeffBuildTime_.SetParentNode( *this );
-    rCoeffDestructionTime_.SetDataName( "le coefficient de destruction" );
-    rCoeffDestructionTime_.SetParentNode( *this );
-    rValorizationTime_.SetDataName( "le temps de valorisation" );
-    rValorizationTime_.SetParentNode( *this );
-    rDevalorizationTime_.SetDataName( "le temps de dévalorisation" );
-    rDevalorizationTime_.SetParentNode( *this );
+    initialBuildTime_.SetDataName( "le temps initial de construction" );
+    initialBuildTime_.SetParentNode( *this );
+    initialDestructionTime_.SetDataName( "le temps initial de destruction" );
+    initialDestructionTime_.SetParentNode( *this );
+    coeffBuildTime_.SetDataName( "le coefficient de construction" );
+    coeffBuildTime_.SetParentNode( *this );
+    coeffDestructionTime_.SetDataName( "le coefficient de destruction" );
+    coeffDestructionTime_.SetParentNode( *this );
+    valorizationTime_.SetDataName( "le temps de valorisation" );
+    valorizationTime_.SetParentNode( *this );
+    devalorizationTime_.SetDataName( "le temps de dévalorisation" );
+    devalorizationTime_.SetParentNode( *this );
     rCoeffCirc_.SetDataName( "le temps de contournement" );
     rCoeffCirc_.SetParentNode( *this );
     rSpeedCirc_.SetDataName( "la vitesse d'une unité si contourné" );
@@ -1456,12 +1456,12 @@ ADN_Composantes_Data::ObjectInfos* ADN_Composantes_Data::ObjectInfos::CreateCopy
     ObjectInfos* pCopy = new ObjectInfos();
 
     pCopy->ptrObject_ = ptrObject_.GetData();
-    pCopy->rInitialBuildTime_ = rInitialBuildTime_.GetData();
-    pCopy->rInitialDestructionTime_ = rInitialDestructionTime_.GetData();
-    pCopy->rCoeffBuildTime_ = rCoeffBuildTime_.GetData();
-    pCopy->rCoeffDestructionTime_ = rCoeffDestructionTime_.GetData();
-    pCopy->rValorizationTime_ = rValorizationTime_.GetData();
-    pCopy->rDevalorizationTime_ = rDevalorizationTime_.GetData();
+    pCopy->initialBuildTime_ = initialBuildTime_.GetData();
+    pCopy->initialDestructionTime_ = initialDestructionTime_.GetData();
+    pCopy->coeffBuildTime_ = coeffBuildTime_.GetData();
+    pCopy->coeffDestructionTime_ = coeffDestructionTime_.GetData();
+    pCopy->valorizationTime_ = valorizationTime_.GetData();
+    pCopy->devalorizationTime_ = devalorizationTime_.GetData();
     pCopy->rCoeffCirc_ = rCoeffCirc_.GetData();
     pCopy->rSpeedCirc_ = rSpeedCirc_.GetData();
     pCopy->rSpeedNotCirc_ = rSpeedNotCirc_.GetData();
@@ -1497,12 +1497,12 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input 
 
     ptrObject_ = pObject;
 
-    bInitialBuildTime_       = input.ReadTimeField( "TempsInitialConstruction", rInitialBuildTime_, ADN_XmlInput_Helper::eNothing );
-    bInitialDestructionTime_ = input.ReadTimeField( "TempsInitialDestruction", rInitialDestructionTime_, ADN_XmlInput_Helper::eNothing );
-    bCoeffBuildTime_         = input.ReadTimeField( "TempsConstructionCoef", rCoeffBuildTime_, ADN_XmlInput_Helper::eNothing );
-    bCoeffDestructionTime_   = input.ReadTimeField( "TempsDestructionCoef", rCoeffDestructionTime_, ADN_XmlInput_Helper::eNothing );
-    bValorizationTime_       = input.ReadTimeField( "TempsValorisation", rValorizationTime_, ADN_XmlInput_Helper::eNothing );
-    bDevalorizationTime_     = input.ReadTimeField( "TempsDevalorisation", rDevalorizationTime_, ADN_XmlInput_Helper::eNothing );
+    bInitialBuildTime_       = input.ReadField( "TempsInitialConstruction", initialBuildTime_, ADN_XmlInput_Helper::eNothing );
+    bInitialDestructionTime_ = input.ReadField( "TempsInitialDestruction", initialDestructionTime_, ADN_XmlInput_Helper::eNothing );
+    bCoeffBuildTime_         = input.ReadField( "TempsConstructionCoef", coeffBuildTime_, ADN_XmlInput_Helper::eNothing );
+    bCoeffDestructionTime_   = input.ReadField( "TempsDestructionCoef", coeffDestructionTime_, ADN_XmlInput_Helper::eNothing );
+    bValorizationTime_       = input.ReadField( "TempsValorisation", valorizationTime_, ADN_XmlInput_Helper::eNothing );
+    bDevalorizationTime_     = input.ReadField( "TempsDevalorisation", devalorizationTime_, ADN_XmlInput_Helper::eNothing );
     bCoeffCircTime_          = input.ReadField( "CoefGainContournement", rCoeffCirc_, ADN_XmlInput_Helper::eNothing );
     bSpeedCirc_              = input.ReadField( "VitesseNonContourne", rSpeedCirc_, ADN_XmlInput_Helper::eNothing );
     bSpeedNotCirc_           = input.ReadField( "VitesseContourne", rSpeedNotCirc_, ADN_XmlInput_Helper::eNothing );
@@ -1521,17 +1521,17 @@ void ADN_Composantes_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& outp
     output.WriteAttribute( "type", ptrObject_.GetData()->strName_.GetData() );
 
     if( bInitialBuildTime_.GetData() )
-        output.WriteField( "TempsInitialConstruction", ADN_Tools::SecondToString( rInitialBuildTime_.GetData() ) );
+        output.WriteField( "TempsInitialConstruction", initialBuildTime_.GetData() );
     if( bInitialDestructionTime_.GetData() )
-        output.WriteField( "TempsInitialDestruction", ADN_Tools::SecondToString( rInitialDestructionTime_.GetData() ) );
+        output.WriteField( "TempsInitialDestruction", initialDestructionTime_.GetData() );
     if( bCoeffBuildTime_.GetData() )
-        output.WriteField( "TempsConstructionCoef", ADN_Tools::SecondToString( rCoeffBuildTime_.GetData() ) );
+        output.WriteField( "TempsConstructionCoef", coeffBuildTime_.GetData() );
     if( bCoeffDestructionTime_.GetData() )
-        output.WriteField( "TempsDestructionCoef", ADN_Tools::SecondToString( rCoeffDestructionTime_.GetData() ) );
+        output.WriteField( "TempsDestructionCoef", coeffDestructionTime_.GetData() );
     if( bValorizationTime_.GetData() )
-        output.WriteField( "TempsValorisation", ADN_Tools::SecondToString( rValorizationTime_.GetData() ) );
+        output.WriteField( "TempsValorisation", valorizationTime_.GetData() );
     if( bDevalorizationTime_.GetData() )
-        output.WriteField( "TempsDevalorisation", ADN_Tools::SecondToString( rDevalorizationTime_.GetData() ) );
+        output.WriteField( "TempsDevalorisation", devalorizationTime_.GetData() );
     if( bCoeffCircTime_.GetData() )
         output.WriteField( "CoefGainContournement", rCoeffCirc_.GetData() );
     if( bSpeedCirc_.GetData() )
@@ -1767,12 +1767,12 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , vObjects_()
 , nTroopTransportCapacity_(0)
 , bTroopEmbarkingTimes_( false )
-, rEmbarkingTimePerPerson_( 0 )
-, rDisembarkingTimePerPerson_( 0 )
+, embarkingTimePerPerson_( "0s" )
+, disembarkingTimePerPerson_( "0s" )
 , bCanCarryCargo_( false )
 , rWeightTransportCapacity_( 0 )
-, rEmbarkingTimePerTon_( 0 )
-, rDisembarkingTimePerTon_( 0 )
+, embarkingTimePerTon_( "0s" )
+, disembarkingTimePerTon_( "0s" )
 , rMaxSpeed_( 0 )
 , attritionBreakdowns_( "PannesAttritions" )
 , randomBreakdowns_   ( "PannesAleatoires" )
@@ -1896,12 +1896,12 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
 
     pCopy->nTroopTransportCapacity_ = nTroopTransportCapacity_.GetData();
     pCopy->bTroopEmbarkingTimes_ = bTroopEmbarkingTimes_.GetData();
-    pCopy->rEmbarkingTimePerPerson_ = rEmbarkingTimePerPerson_.GetData();
-    pCopy->rDisembarkingTimePerPerson_ = rDisembarkingTimePerPerson_.GetData();
+    pCopy->embarkingTimePerPerson_ = embarkingTimePerPerson_.GetData();
+    pCopy->disembarkingTimePerPerson_ = disembarkingTimePerPerson_.GetData();
     pCopy->bCanCarryCargo_ = bCanCarryCargo_.GetData();
     pCopy->rWeightTransportCapacity_ = rWeightTransportCapacity_.GetData();
-    pCopy->rEmbarkingTimePerTon_ = rEmbarkingTimePerTon_.GetData();
-    pCopy->rDisembarkingTimePerTon_ = rDisembarkingTimePerTon_.GetData();
+    pCopy->embarkingTimePerTon_ = embarkingTimePerTon_.GetData();
+    pCopy->disembarkingTimePerTon_ = disembarkingTimePerTon_.GetData();
 
     pCopy->logInfos_.CopyFrom( logInfos_ );
 
@@ -1988,8 +1988,8 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& in
     if( input.Section( "Temps", ADN_XmlInput_Helper::eNothing ) )
     {
         bTroopEmbarkingTimes_ = true;
-        input.ReadTimeField( "TempsEmbarquementParHomme", rEmbarkingTimePerPerson_ );
-        input.ReadTimeField( "TempsDebarquementParHomme", rDisembarkingTimePerPerson_ );
+        input.ReadField( "TempsEmbarquementParHomme", embarkingTimePerPerson_ );
+        input.ReadField( "TempsDebarquementParHomme", disembarkingTimePerPerson_ );
         input.EndSection(); // Temps
     }
     input.EndSection(); // Personnel
@@ -1999,8 +1999,8 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& in
         bCanCarryCargo_ = true;
         input.ReadField( "Capacite", rWeightTransportCapacity_ );
         input.Section( "Temps" );
-        input.ReadTimeField( "TempsChargementParTonne", rEmbarkingTimePerTon_ );
-        input.ReadTimeField( "TempsDechargementParTonne", rDisembarkingTimePerTon_ );
+        input.ReadField( "TempsChargementParTonne", embarkingTimePerTon_ );
+        input.ReadField( "TempsDechargementParTonne", disembarkingTimePerTon_ );
         input.EndSection(); // Temps
         input.EndSection(); // Pion
     }
@@ -2085,8 +2085,8 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& 
     if( bTroopEmbarkingTimes_.GetData() )
     {
         output.Section( "Temps" );
-        output.WriteField( "TempsEmbarquementParHomme", ADN_Tools::SecondToString( rEmbarkingTimePerPerson_.GetData() ) );
-        output.WriteField( "TempsDebarquementParHomme", ADN_Tools::SecondToString( rDisembarkingTimePerPerson_.GetData() ) );
+        output.WriteField( "TempsEmbarquementParHomme", embarkingTimePerPerson_.GetData() );
+        output.WriteField( "TempsDebarquementParHomme", disembarkingTimePerPerson_.GetData() );
         output.EndSection(); // Temps
     }
     output.EndSection(); // Personnel
@@ -2096,8 +2096,8 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& 
         output.Section( "Pion" );
         output.WriteField( "Capacite", rWeightTransportCapacity_.GetData() );
         output.Section( "Temps" );
-        output.WriteField( "TempsChargementParTonne", ADN_Tools::SecondToString( rEmbarkingTimePerTon_.GetData() ) );
-        output.WriteField( "TempsDechargementParTonne", ADN_Tools::SecondToString( rDisembarkingTimePerTon_.GetData() ) );
+        output.WriteField( "TempsChargementParTonne", embarkingTimePerTon_.GetData() );
+        output.WriteField( "TempsDechargementParTonne", disembarkingTimePerTon_.GetData() );
         output.EndSection(); // Temps
         output.EndSection(); // Pion
     }

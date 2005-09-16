@@ -25,6 +25,7 @@
 #include "ADN_Radars_ListView.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
+#include "ADN_TimeField.h"
 
 
 //-----------------------------------------------------------------------------
@@ -84,16 +85,16 @@ void ADN_Radars_GUI::Build()
     ADN_GroupBox* pDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Detection times" ), pGroup );
     vConnectors[eHasDetectionTimes] = &pDetectTimesGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pDetectTimesGroup );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Detect time" ), vConnectors[eHasDetectionTime], vConnectors[eDetectionTime], tr( "s" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Recognize time" ), vConnectors[eHasRecoTime], vConnectors[eRecoTime], tr( "s" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Identification time" ), vConnectors[eHasIdentificationTime], vConnectors[eIdentificationTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detect time" ), vConnectors[eHasDetectionTime], vConnectors[eDetectionTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognize time" ), vConnectors[eHasRecoTime], vConnectors[eRecoTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification time" ), vConnectors[eHasIdentificationTime], vConnectors[eIdentificationTime] );
 
     ADN_GroupBox* pHQDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "HQ detection times" ), pDetectTimesGroup );
     vConnectors[eHasHQDetectionTimes] = &pHQDetectTimesGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pHQDetectTimesGroup );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Detect time" ), vConnectors[eHasHQDetectionTime], vConnectors[eHQDetectionTime], tr( "s" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Recognize time" ), vConnectors[eHasHQRecoTime], vConnectors[eHQRecoTime], tr( "s" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Identification time" ), vConnectors[eHasHQIdentificationTime], vConnectors[eHQIdentificationTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detect time" ), vConnectors[eHasHQDetectionTime], vConnectors[eHQDetectionTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognize time" ), vConnectors[eHasHQRecoTime], vConnectors[eHQRecoTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification time" ), vConnectors[eHasHQIdentificationTime], vConnectors[eHQIdentificationTime] );
 
     QLabel* pLabel = new QLabel( pDetectTimesGroup );
     pLabel->setText( tr( "When 'Detection times' is unchecked, units are recognized instantly.\n"

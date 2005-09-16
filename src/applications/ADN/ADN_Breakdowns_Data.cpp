@@ -119,11 +119,11 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( MT_OutputArchive_ABC& ou
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
-: ADN_Ref_ABC                       ()
-, ADN_DataTreeNode_ABC              ()
-, nId_                              ( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetNextId() )
-, rRepairTime_                      ( 0.0 )
-, rRepairTimeVariance_              ( 0.0 )
+: ADN_Ref_ABC          ()
+, ADN_DataTreeNode_ABC ()
+, nId_                 ( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetNextId() )
+, repairTime_          ( "0s" )
+, repairTimeVariance_  ( "0s" )
 {
 }
 
@@ -168,8 +168,8 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
     pCopy->strName_ = tr( "New breakdown" ).ascii();
     pCopy->nType_ = nType_.GetData();
     pCopy->nNTI_  = nNTI_.GetData();
-    pCopy->rRepairTime_ = rRepairTime_.GetData();
-    pCopy->rRepairTimeVariance_ = rRepairTimeVariance_.GetData();
+    pCopy->repairTime_ = repairTime_.GetData();
+    pCopy->repairTimeVariance_ = repairTimeVariance_.GetData();
 
     for( IT_RepairPartInfoVector it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
         pCopy->vRepairParts_.AddItem( (*it)->CreateCopy() );
@@ -190,8 +190,8 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( ADN_XmlInput_Helper& input
     input.ReadAttribute( "type", nType_, ADN_Tr::ConvertToBreakdownType, ADN_XmlInput_Helper::eThrow );
 
     input.Section( "Reparation" );
-    input.ReadTimeAttribute( "tempsMoyen", rRepairTime_ );
-    input.ReadTimeAttribute( "variance", rRepairTimeVariance_ );
+    input.ReadAttribute( "tempsMoyen", repairTime_ );
+    input.ReadAttribute( "variance", repairTimeVariance_ );
     input.EndSection(); // Reparation
 
     input.BeginList( "Pieces" );
@@ -220,8 +220,8 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( MT_OutputArchive_ABC& out
     output.WriteField( "MosID", nId_.GetData() );
 
     output.Section( "Reparation" );
-    output.WriteAttribute( "tempsMoyen", ADN_Tools::SecondToString( rRepairTime_.GetData() ) );
-    output.WriteAttribute( "variance", ADN_Tools::SecondToString( rRepairTimeVariance_.GetData() ) );
+    output.WriteAttribute( "tempsMoyen", repairTime_.GetData() );
+    output.WriteAttribute( "variance", repairTimeVariance_.GetData() );
     output.EndSection(); // Reparation
 
     output.BeginList( "Pieces", vRepairParts_.size() );
@@ -303,7 +303,6 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const st
 void ADN_Breakdowns_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Pannes" );
-    //input.ReadTimeField( "TempsDiagnostique", rAverageDiagnosticTime_ );
     input.ReadField( "TempsDiagnostique", strAverageDiagnosticTime_ );
 
     input.Section( "Types" );
@@ -334,7 +333,6 @@ void ADN_Breakdowns_Data::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Breakdowns_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Pannes" );
-    //output.WriteField( "TempsDiagnostique", ADN_Tools::SecondToString( rAverageDiagnosticTime_.GetData() ) );
     output.WriteField( "TempsDiagnostique", strAverageDiagnosticTime_.GetData() );
 
     output.Section( "Types" );

@@ -78,12 +78,12 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
     for( int n = 0; n < eNbrConsumptionType; ++n )
         vItemConnectors_[ADN_Radars_GUI::eHasDetectableActivities + 1 + n]->Connect( &pInfos->detectableActivities_[n], bConnect );
 
-    vItemConnectors_[ADN_Radars_GUI::eDetectionTime]->Connect( &pInfos->detectTimes_.rDetectTime_, bConnect );
-    vItemConnectors_[ADN_Radars_GUI::eRecoTime]->Connect( &pInfos->detectTimes_.rRecoTime_, bConnect );
-    vItemConnectors_[ADN_Radars_GUI::eIdentificationTime]->Connect( &pInfos->detectTimes_.rIdentTime_, bConnect );
-    vItemConnectors_[ADN_Radars_GUI::eHQDetectionTime]->Connect( &pInfos->hqDetectTimes_.rDetectTime_, bConnect );
-    vItemConnectors_[ADN_Radars_GUI::eHQRecoTime]->Connect( &pInfos->hqDetectTimes_.rRecoTime_, bConnect );
-    vItemConnectors_[ADN_Radars_GUI::eHQIdentificationTime]->Connect( &pInfos->hqDetectTimes_.rIdentTime_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eDetectionTime]->Connect( &pInfos->detectTimes_.detectTime_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eRecoTime]->Connect( &pInfos->detectTimes_.recoTime_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eIdentificationTime]->Connect( &pInfos->detectTimes_.identTime_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eHQDetectionTime]->Connect( &pInfos->hqDetectTimes_.detectTime_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eHQRecoTime]->Connect( &pInfos->hqDetectTimes_.recoTime_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eHQIdentificationTime]->Connect( &pInfos->hqDetectTimes_.identTime_, bConnect );
 
     vItemConnectors_[ADN_Radars_GUI::eHasMinHeight]->Connect( &pInfos->bHasMinHeight_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasMaxHeight]->Connect( &pInfos->bHasMaxHeight_, bConnect );

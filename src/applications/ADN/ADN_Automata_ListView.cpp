@@ -74,7 +74,7 @@ void ADN_Automata_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Automata_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eUnit]->Connect( &pInfos->ptrUnit_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eSubUnit]->Connect( &pInfos->vSubUnits_, bConnect );
-    vItemConnectors_[ADN_Automata_GUI::eFeedbackTime]->Connect( &pInfos->rStrengthRatioFeedbackTime_, bConnect );
+    vItemConnectors_[ADN_Automata_GUI::eFeedbackTime]->Connect( &pInfos->strengthRatioFeedbackTime_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eHasFeedbackTime]->Connect( &pInfos->bStrengthRatioFeedbackTime_, bConnect );
 }
 

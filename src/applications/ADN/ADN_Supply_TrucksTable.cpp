@@ -24,6 +24,7 @@
 #include "ADN_Supply_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
+#include "ADN_TableItem_TimeField.h"
 #include "ADN_Validator.h"
 
 typedef ADN_Supply_Data::ConvoySetupInfo ConvoySetupInfo;
@@ -46,15 +47,14 @@ public:
 
         // Add a new row.
         ADN_TableItem_Int* pItemNbrTrucks = new ADN_TableItem_Int( &tab_, pObj );
-        ADN_TableItem_Double* pItemTime = new ADN_TableItem_Double( &tab_, pObj );
+        ADN_TableItem_TimeField* pItemTime = new ADN_TableItem_TimeField( &tab_, pObj );
         tab_.setItem( i, 0, pItemNbrTrucks );
         tab_.setItem( i, 1, pItemTime );
         pItemNbrTrucks->GetValidator().setBottom( 1 );
-        pItemTime->GetValidator().setRange( 0.001, INT_MAX, 3 );
 
         // Connect the items.
         pItemNbrTrucks->GetConnector().Connect( &static_cast<ConvoySetupInfo*>(pObj)->nNbrTrucks_ );
-        pItemTime->GetConnector().Connect( &static_cast<ConvoySetupInfo*>(pObj)->rSetupTime_ );
+        pItemTime->GetConnector().Connect( &static_cast<ConvoySetupInfo*>(pObj)->setupTime_ );
     }
 };
 

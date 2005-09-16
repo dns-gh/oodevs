@@ -65,12 +65,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    QWidget* BuildGraph( QWidget* pParent, ADN_ListView& listView, int nVarId, const QString& strCaption, const QString& strSuffix, double rMin, double rMax );
-    //@}
-
-private:
     ADN_NBC_Datas& data_;
 };
 

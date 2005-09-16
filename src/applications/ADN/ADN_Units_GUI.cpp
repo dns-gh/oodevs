@@ -26,6 +26,7 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_TimeField.h"
 
 #include <qcombo.h>
 #include <qframe.h>
@@ -99,7 +100,7 @@ void ADN_Units_GUI::Build()
     builder.SetToolTip( "Le modèle comportemental associé à l'unité." );
 
     // Decontamination delay
-    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay] );
 
     // Sensors reach
     builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Sensors reach" ), vInfosConnectors[eSensorsReach], tr( "m" ) );
@@ -108,7 +109,7 @@ void ADN_Units_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Weapons reach" ), vInfosConnectors[eWeaponsReach], tr( "m" ) );
 
     // Feedback time
-    builder.AddOptionnalField<ADN_EditLine_Double>( pParamGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasStrengthRatioFeedbackTime], vInfosConnectors[eStrengthRatioFeedbackTime], tr( "s" ) );
+    builder.AddOptionnalField<ADN_TimeField>( pParamGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasStrengthRatioFeedbackTime], vInfosConnectors[eStrengthRatioFeedbackTime] );
 
     // Can fly
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can fly" ), vInfosConnectors[eCanFly] );

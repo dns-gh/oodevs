@@ -194,9 +194,9 @@ ADN_Weapons_Data::WeaponInfos::WeaponInfos()
 , ptrLauncher_      ( ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos(), 0 )
 , ptrAmmunition_    ( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eFamilleDotation_Munition ).categories_, 0, "" )
 , nRoundsPerBurst_  ( 0 )
-, rBurstDuration_   ( 0 )
+, burstDuration_    ( "0s" )
 , nRoundsPerReload_ ( 0 )
-, rReloadDuration_  ( 0 )
+, reloadDuration_   ( "0s" )
 , bDirect_      ( false )
 , phs_          ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
 , bIndirect_    ( false )
@@ -240,9 +240,9 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
     pCopy->ptrLauncher_ = ptrLauncher_.GetData();
     pCopy->ptrAmmunition_ = ptrAmmunition_.GetData();
     pCopy->nRoundsPerBurst_ = nRoundsPerBurst_.GetData();
-    pCopy->rBurstDuration_ = rBurstDuration_.GetData();
+    pCopy->burstDuration_ = burstDuration_.GetData();
     pCopy->nRoundsPerReload_ = nRoundsPerReload_.GetData();
-    pCopy->rReloadDuration_ = rReloadDuration_.GetData();
+    pCopy->reloadDuration_ = reloadDuration_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
 
     for( uint n = 0; n < phs_.size(); ++n )
@@ -288,9 +288,9 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( ADN_XmlInput_Helper& input )
     strName_ = strLauncher + " & " + strAmmunition;
 
     input.ReadField( "NbrMunitionParRafale", nRoundsPerBurst_ );
-    input.ReadTimeField( "DureeRafale", rBurstDuration_ );
+    input.ReadField( "DureeRafale", burstDuration_ );
     input.ReadField( "NbrMunitionsParRechargement", nRoundsPerReload_ );
-    input.ReadTimeField( "DureeRechargement", rReloadDuration_ );
+    input.ReadField( "DureeRechargement", reloadDuration_ );
 
     if( input.Section( "Direct", ADN_XmlInput_Helper::eNothing ) )
     {
@@ -335,9 +335,9 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( MT_OutputArchive_ABC& output )
     //$$$$$
 
     output.WriteField( "NbrMunitionParRafale", nRoundsPerBurst_.GetData() );
-    output.WriteField( "DureeRafale", ADN_Tools::SecondToString( rBurstDuration_.GetData() ) );
+    output.WriteField( "DureeRafale", burstDuration_.GetData() );
     output.WriteField( "NbrMunitionsParRechargement", nRoundsPerReload_.GetData() );
-    output.WriteField( "DureeRechargement", ADN_Tools::SecondToString( rReloadDuration_.GetData() ) );
+    output.WriteField( "DureeRechargement", reloadDuration_.GetData() );
 
     if( bDirect_.GetData() )
     {

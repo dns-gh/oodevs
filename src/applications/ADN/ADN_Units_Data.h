@@ -91,8 +91,8 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        E_UnitPosture                                        nPosture_;
-        ADN_Type_Double                                      rTimeToActivate_;
+        E_UnitPosture  nPosture_;
+        ADN_Type_Time  timeToActivate_;
 
     public:
         class Cmp : public std::unary_function< PostureInfos* , bool >
@@ -187,7 +187,7 @@ public:
         ADN_Type_Enum<E_CapacityMission,eNbrCapacityMission>        eMissionCapacity_;    
         ADN_Type_Int                                                nNbOfficer_;        // officer
         ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer
-        ADN_Type_Double                                             rDecontaminationDelay_;
+        ADN_Type_Time                                               decontaminationDelay_;
         ADN_Type_Double                                             rWeaponsReach_;
         ADN_Type_Double                                             rSensorsReach_;
         ADN_Type_Bool                                               bCanFly_;
@@ -207,7 +207,7 @@ public:
         ADN_Type_Double                                             rProbeLength_;
 
         ADN_Type_Bool                                               bStrengthRatioFeedbackTime_;
-        ADN_Type_Double                                             rStrengthRatioFeedbackTime_;
+        ADN_Type_Time                                               strengthRatioFeedbackTime_;
     };
 
     typedef ADN_Type_Vector_ABC<UnitInfos>    T_UnitInfos_Vector;

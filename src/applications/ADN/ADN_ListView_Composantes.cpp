@@ -78,12 +78,12 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eTroopCapacity]->Connect( &pInfos->nTroopTransportCapacity_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasEmbarkTimes]->Connect( &pInfos->bTroopEmbarkingTimes_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eEmbarkingTimePerPerson]->Connect( &pInfos->rEmbarkingTimePerPerson_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eDisembarkingTimePerPerson]->Connect( &pInfos->rDisembarkingTimePerPerson_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eEmbarkingTimePerPerson]->Connect( &pInfos->embarkingTimePerPerson_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eDisembarkingTimePerPerson]->Connect( &pInfos->disembarkingTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eCanCarryCargo]->Connect( &pInfos->bCanCarryCargo_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeightCapacity]->Connect( &pInfos->rWeightTransportCapacity_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eEmbarkingTimePerTon]->Connect( &pInfos->rEmbarkingTimePerTon_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eDisembarkingTimePerTon]->Connect( &pInfos->rDisembarkingTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eEmbarkingTimePerTon]->Connect( &pInfos->embarkingTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eDisembarkingTimePerTon]->Connect( &pInfos->disembarkingTimePerTon_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSpeeds]->Connect( &pInfos->vSpeeds_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSensors]->Connect( &pInfos->vSensors_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRadars]->Connect( &pInfos->vRadars_, bConnect );
@@ -95,12 +95,12 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eRandomBreakdowns]->Connect( &pInfos->randomBreakdowns_.vBreakdowns_, bConnect );
 
     vItemConnectors_[ADN_Composantes_GUI::eAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.rCapacity_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.rLoadTimePerPerson_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.rUnloadTimePerPerson_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.loadTimePerPerson_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.unloadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulance_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.rCapacity_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.rLoadTimePerPerson_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.rUnloadTimePerPerson_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.loadTimePerPerson_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.unloadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasRAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulanceReleve_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsDoctor]->Connect( &pInfos->logInfos_.healthInfos_.bIsDoctor_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsSortingDoctor]->Connect( &pInfos->logInfos_.healthInfos_.bIsSortingDoctor_, bConnect );
@@ -112,31 +112,31 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rVolume_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eLogLoadTime]->Connect( &pInfos->logInfos_.supplyInfos_.rLoadTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eLogUnloadTime]->Connect( &pInfos->logInfos_.supplyInfos_.rUnloadTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogLoadTime]->Connect( &pInfos->logInfos_.supplyInfos_.loadTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogUnloadTime]->Connect( &pInfos->logInfos_.supplyInfos_.unloadTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsConvoyLeader]->Connect( &pInfos->logInfos_.supplyInfos_.bIsConvoyLeader_, bConnect );
     
-    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTimePerTon]->Connect( &pInfos->logInfos_.maintenanceInfos_.rLoadTimePerTon_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceUnloadTimePerTon]->Connect( &pInfos->logInfos_.maintenanceInfos_.rUnloadTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTimePerTon]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTimePerTon_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eMaintenanceUnloadTimePerTon]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTimePerTon_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eTowerCapacity]->Connect( &pInfos->logInfos_.maintenanceInfos_.rCapacity_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsTower]->Connect( &pInfos->logInfos_.maintenanceInfos_.bIsTower_, bConnect );
 
     vItemConnectors_[ADN_Composantes_GUI::eMaxSlope]->Connect( &pInfos->rMaxSlope_, bConnect );
 
-    vItemConnectors_[ADN_Composantes_GUI::eNTI1 + ADN_Composantes_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.rMaxRepairTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eNTI1 + ADN_Composantes_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.maxRepairTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI1 + ADN_Composantes_GUI::eHasMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.bHasMaxRepairTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI1 + ADN_Composantes_GUI::eCanRepairEA]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.bCanRepairEA_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI1 + ADN_Composantes_GUI::eCanRepairM]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.bCanRepairM_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI1 + ADN_Composantes_GUI::eNTIIsPresent]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.bIsPresent_, bConnect );
 
-    vItemConnectors_[ADN_Composantes_GUI::eNTI2 + ADN_Composantes_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI2Infos_.rMaxRepairTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eNTI2 + ADN_Composantes_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI2Infos_.maxRepairTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI2 + ADN_Composantes_GUI::eHasMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI2Infos_.bHasMaxRepairTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI2 + ADN_Composantes_GUI::eCanRepairEA]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI2Infos_.bCanRepairEA_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI2 + ADN_Composantes_GUI::eCanRepairM]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI2Infos_.bCanRepairM_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI2 + ADN_Composantes_GUI::eNTIIsPresent]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI2Infos_.bIsPresent_, bConnect );
 
-    vItemConnectors_[ADN_Composantes_GUI::eNTI3 + ADN_Composantes_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI3Infos_.rMaxRepairTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eNTI3 + ADN_Composantes_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI3Infos_.maxRepairTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI3 + ADN_Composantes_GUI::eHasMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI3Infos_.bHasMaxRepairTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI3 + ADN_Composantes_GUI::eCanRepairEA]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI3Infos_.bCanRepairEA_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNTI3 + ADN_Composantes_GUI::eCanRepairM]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI3Infos_.bCanRepairM_, bConnect );

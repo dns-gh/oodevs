@@ -88,8 +88,8 @@ public:
         ADN_Type_Enum<E_BreakdownNTI, eNbrBreakdownNTI>    nNTI_;
         ADN_Type_Enum<E_BreakdownType, eNbrBreakdownType>  nType_;
         ADN_Type_Int      nId_;
-        ADN_Type_Double   rRepairTime_;
-        ADN_Type_Double   rRepairTimeVariance_;
+        ADN_Type_Time     repairTime_;
+        ADN_Type_Time     repairTimeVariance_;
 
         T_RepairPartInfoVector vRepairParts_;
     };
@@ -124,7 +124,6 @@ private:
 public:
     int nNextId_;
     ADN_Type_String       strAverageDiagnosticTime_;
-    //ADN_Type_Double       rAverageDiagnosticTime_;
     T_BreakdownInfoVector vBreakdowns_;
 };
 

@@ -104,7 +104,7 @@ public:
 
     template< class T >
         T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, QTableItem::EditType nEditType = QTableItem::OnTyping );
-    
+
     QTableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText = 0, QTableItem::EditType nEditType = QTableItem::Never );
     QTableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText = 0, QTableItem::EditType nEditType = QTableItem::Never );
     //@}
@@ -320,7 +320,6 @@ T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int 
     this->SetValidator( pItem->GetValidator(), nValidator );
     return pItem;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddTableCell

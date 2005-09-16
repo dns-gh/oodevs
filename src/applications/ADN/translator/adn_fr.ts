@@ -121,7 +121,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Sub-units</source>
@@ -157,19 +157,19 @@
     </message>
     <message>
         <source>%1 x %2 %3 [ %4 ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%2 %3 [ %3 ]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2 %3 [ %4 ]</translation>
     </message>
     <message>
         <source>%1 x %2 [ %3/%4/%5 ]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2 [ %3/%4/%5 ]</translation>
     </message>
     <message>
         <source>%1 [ %2/%3/%4 ]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 [ %2/%3/%4 ]</translation>
+    </message>
+    <message>
+        <source>%1 %2 [ %3 ]</source>
+        <translation>%1 %2 [ %3 ]</translation>
     </message>
 </context>
 <context>
@@ -286,7 +286,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Repair time variance</source>
@@ -419,7 +419,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>%</source>
@@ -672,7 +672,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Disembark time per person</source>
@@ -2564,7 +2564,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Attritions</source>
@@ -2668,7 +2668,7 @@
     </message>
     <message>
         <source>Treating time</source>
-        <translation type="obsolete">Temps de soin</translation>
+        <translation>Temps de soin</translation>
     </message>
     <message>
         <source>Percentage</source>
@@ -2684,7 +2684,7 @@
     </message>
     <message>
         <source>Life expectency</source>
-        <translation type="obsolete">Espérance de vie</translation>
+        <translation>Espérance de vie</translation>
     </message>
     <message>
         <source>Health</source>
@@ -2692,7 +2692,7 @@
     </message>
     <message>
         <source>Treating time (s)</source>
-        <translation>Temps de traitement (s)</translation>
+        <translation type="obsolete">Temps de traitement (s)</translation>
     </message>
     <message>
         <source>Repartition (%)</source>
@@ -2700,7 +2700,7 @@
     </message>
     <message>
         <source>Life expectency (s)</source>
-        <translation>Espérance de vie (s)</translation>
+        <translation type="obsolete">Espérance de vie (s)</translation>
     </message>
 </context>
 <context>
@@ -2774,7 +2774,7 @@
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Maximum distance between knowledge and real unit</source>
@@ -3194,7 +3194,7 @@ du tireur</translation>
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Spread angle</source>
@@ -3350,7 +3350,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Location weights</source>
-        <translation>Podération de positionnement</translation>
+        <translation>Pondération de positionnement</translation>
     </message>
     <message>
         <source>Attrition</source>
@@ -3675,7 +3675,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Recognize time</source>
@@ -3866,7 +3866,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>s/ha</source>
-        <translation>s/ha</translation>
+        <translation type="obsolete">s/ha</translation>
     </message>
     <message>
         <source>Listening</source>
@@ -3999,6 +3999,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Special sensors</source>
         <translation>Capteurs spéciaux</translation>
+    </message>
+    <message>
+        <source>/ha</source>
+        <translation>/ha</translation>
     </message>
 </context>
 <context>
@@ -5375,7 +5379,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Is autonomous (UAV)</source>
@@ -5390,7 +5394,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Time to activate (s)</source>
-        <translation>Temps de mise en place (s)</translation>
+        <translation type="obsolete">Temps de mise en place (s)</translation>
+    </message>
+    <message>
+        <source>Time to activate</source>
+        <translation>Temps de mise en place</translation>
     </message>
 </context>
 <context>
@@ -5470,7 +5478,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Rounds per reload</source>

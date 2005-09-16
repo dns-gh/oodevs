@@ -36,6 +36,7 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
+#include "ADN_TimeField.h"
 
 
 // -----------------------------------------------------------------------------
@@ -93,7 +94,7 @@ void ADN_Automata_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector<ADN_Units_Data::UnitInfos> >( pPropertiesGroup, tr( "Command post" ), vInfosConnectors[eUnit] );
 
     // Feedback time
-    builder.AddOptionnalField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime], tr( "s" ) );
+    builder.AddOptionnalField<ADN_TimeField>( pPropertiesGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
     QGroupBox* pSubUnitsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Sub-units" ), pGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
@@ -190,7 +191,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 }
                 else
                 {
-                    strText = tr( "%2 %3 [ %3 ]" );
+                    strText = tr( "%1 %2 [ %3 ]" );
                     strText = strText.arg( (*it3)->nNb_.GetData() )
                                      .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
                                      .arg( (*it3)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData() );

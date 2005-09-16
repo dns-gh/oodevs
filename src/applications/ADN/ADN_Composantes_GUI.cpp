@@ -44,6 +44,7 @@
 #include "ADN_Tr.h"
 #include "ADN_MainWindow.h"
 #include "ADN_HtmlBuilder.h"
+#include "ADN_TimeField.h"
 
 
 //-----------------------------------------------------------------------------
@@ -122,8 +123,8 @@ void ADN_Composantes_GUI::Build()
     ADN_GroupBox* pEmbarkTimesGroupBox = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Troop transport" ), pTroopGroupBox );
     vInfosConnectors[eHasEmbarkTimes] = &pEmbarkTimesGroupBox->GetConnector();
 
-    builder.AddField<ADN_EditLine_Double>( pEmbarkTimesGroupBox, tr( "Embark time per person" ), vInfosConnectors[eEmbarkingTimePerPerson], tr( "s" ), eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pEmbarkTimesGroupBox, tr( "Disembark time per person" ), vInfosConnectors[eDisembarkingTimePerPerson], tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pEmbarkTimesGroupBox, tr( "Embark time per person" ), vInfosConnectors[eEmbarkingTimePerPerson] );
+    builder.AddField<ADN_TimeField>( pEmbarkTimesGroupBox, tr( "Disembark time per person" ), vInfosConnectors[eDisembarkingTimePerPerson] );
 
     // ID groupbox
     QGroupBox* pIdGroupBox = new QGroupBox( 3, Qt::Horizontal, tr( "Military codes" ), pDataPage );
@@ -138,8 +139,8 @@ void ADN_Composantes_GUI::Build()
     vInfosConnectors[eCanCarryCargo] = &pCargoGroupBox->GetConnector();
 
     builder.AddField<ADN_EditLine_Double>( pCargoGroupBox, tr( "Weight capacity" ), vInfosConnectors[eWeightCapacity], tr( "T" ), eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pCargoGroupBox, tr( "Loading time per ton" ), vInfosConnectors[eEmbarkingTimePerTon], tr( "s" ), eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon], tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Loading time per ton" ), vInfosConnectors[eEmbarkingTimePerTon] );
+    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon] );
 
     // Breakdowns
     pBreakdownsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ), pDataPage );
@@ -195,22 +196,22 @@ void ADN_Composantes_GUI::Build()
     QWidget* pObjectGrid = builder.AddFieldHolder( pObjectsGroup );
 
     // InitialBuildTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Initial Construction Time" ), vInfoObjectsConnectors[eHasInitialBuildTime], vInfoObjectsConnectors[eInitialBuildTime], tr( "s" ), eGreaterEqualZero ) ;
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Initial Construction Time" ), vInfoObjectsConnectors[eHasInitialBuildTime], vInfoObjectsConnectors[eInitialBuildTime] ) ;
 
     // InitialDestructionTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Initial Destruction Time" ), vInfoObjectsConnectors[eHasInitialDestructionTime], vInfoObjectsConnectors[eInitialDestructionTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Initial Destruction Time" ), vInfoObjectsConnectors[eHasInitialDestructionTime], vInfoObjectsConnectors[eInitialDestructionTime] );
 
     // CoeffBuildTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Time Construction Coefficient" ), vInfoObjectsConnectors[eHasCoeffBuildTime], vInfoObjectsConnectors[eCoeffBuildTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Time Construction Coefficient" ), vInfoObjectsConnectors[eHasCoeffBuildTime], vInfoObjectsConnectors[eCoeffBuildTime] );
 
     // CoeffDestructionTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Time Destruction Coefficient" ), vInfoObjectsConnectors[eHasCoeffDestructionTime], vInfoObjectsConnectors[eCoeffDestructionTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Time Destruction Coefficient" ), vInfoObjectsConnectors[eHasCoeffDestructionTime], vInfoObjectsConnectors[eCoeffDestructionTime] );
 
     // ValorizationTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Mining time" ), vInfoObjectsConnectors[eHasValorizationTime], vInfoObjectsConnectors[eValorizationTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Mining time" ), vInfoObjectsConnectors[eHasValorizationTime], vInfoObjectsConnectors[eValorizationTime] );
 
     // DevalorizationTime
-    builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Demining time" ), vInfoObjectsConnectors[eHasDevalorizationTime], vInfoObjectsConnectors[eDevalorizationTime], tr( "s" ), eGreaterEqualZero );
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Demining time" ), vInfoObjectsConnectors[eHasDevalorizationTime], vInfoObjectsConnectors[eDevalorizationTime] );
 
     // CoeffCircTime
     builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Bypass coefficient" ), vInfoObjectsConnectors[eHasCoeffCircTime], vInfoObjectsConnectors[eCoeffCircTime], 0, eGreaterEqualZero );
@@ -333,8 +334,8 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
     vInfosConnectors[nIndex] = & pAmbulanceGroup->GetConnector();
 
     builder.AddField<ADN_EditLine_Double>( pAmbulanceGroup, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pAmbulanceGroup, tr( "Load time per person" ), vInfosConnectors[nIndex+2], tr( "s" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pAmbulanceGroup, tr( "Unload time per person" ), vInfosConnectors[nIndex+3], tr( "s" ), eGreaterZero ); 
+    builder.AddField<ADN_TimeField>( pAmbulanceGroup, tr( "Load time per person" ), vInfosConnectors[nIndex+2] ); 
+    builder.AddField<ADN_TimeField>( pAmbulanceGroup, tr( "Unload time per person" ), vInfosConnectors[nIndex+3] ); 
 
     return pAmbulanceGroup;
 }
@@ -360,8 +361,8 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[eLogCarryWeightCapacity], tr( "T" ), eGreaterZero ); 
     builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[eLogCarryVolumeCapacity], tr( "m3" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Average load time"   ), vInfosConnectors[eLogLoadTime], tr( "s" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pCarrierGroup , tr( "Average unload time" ), vInfosConnectors[eLogUnloadTime], tr( "s" ), eGreaterZero ); 
+    builder.AddField<ADN_TimeField>( pCarrierGroup , tr( "Average load time"   ), vInfosConnectors[eLogLoadTime] ); 
+    builder.AddField<ADN_TimeField>( pCarrierGroup , tr( "Average unload time" ), vInfosConnectors[eLogUnloadTime] ); 
     return pSupplyGroup;
 }
 
@@ -379,8 +380,8 @@ QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVec
     ADN_GroupBox* pTowerGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Tower" ), pMaintenanceGroup );
     vInfosConnectors[eIsTower] = & pTowerGroup->GetConnector();
     builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Capacity" ), vInfosConnectors[eTowerCapacity], tr( "T" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Load time per ton" ), vInfosConnectors[eMaintenanceLoadTimePerTon], tr( "s" ), eGreaterZero ); 
-    builder.AddField<ADN_EditLine_Double>( pTowerGroup, tr( "Unload time per ton" ), vInfosConnectors[eMaintenanceUnloadTimePerTon], tr( "s" ), eGreaterZero ); 
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Load time per ton" ), vInfosConnectors[eMaintenanceLoadTimePerTon] ); 
+    builder.AddField<ADN_TimeField>( pTowerGroup, tr( "Unload time per ton" ), vInfosConnectors[eMaintenanceUnloadTimePerTon] ); 
 
     QHBox* pNTIHolder = new QHBox( pMaintenanceGroup );
 
@@ -402,7 +403,7 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
     ADN_GroupBox* pNTIGroup = new ADN_GroupBox( 3, Qt::Horizontal, szName, pParent );
     vInfosConnectors[nIndex + eNTIIsPresent] = & pNTIGroup->GetConnector();
 
-    builder.AddOptionnalField<ADN_EditLine_Double>( pNTIGroup, tr( "Max repair time" ), vInfosConnectors[nIndex + eHasMaxRepairTime], vInfosConnectors[nIndex + eMaxRepairTime], tr( "s" ), eGreaterZero ); 
+    builder.AddOptionnalField<ADN_TimeField>( pNTIGroup, tr( "Max repair time" ), vInfosConnectors[nIndex + eHasMaxRepairTime], vInfosConnectors[nIndex + eMaxRepairTime] ); 
     builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can repair electronic breakdowns" ), vInfosConnectors[nIndex + eCanRepairEA] ); 
     builder.AddField<ADN_CheckBox>( pNTIGroup, tr( "Can repair mobility breakdowns" ), vInfosConnectors[nIndex + eCanRepairM] ); 
 
@@ -433,6 +434,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
     pTable->AddBoldGridCol( 1 );
     pTable->AddBoldGridRow( 1 );
     pTable->hideRow( 0 );
+    pTable->setSorting( false );
 
     // Fill the table.
     int nRow = 1;
@@ -497,14 +499,14 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
             builder.ListItem( tr( "Max slope" ), composante.rMaxSlope_.GetData() );
         if( composante.bTroopEmbarkingTimes_.GetData() )
         {
-            builder.ListItem( tr( "Embark time per person" ), composante.rEmbarkingTimePerPerson_.GetData(), tr( "s" ) );
-            builder.ListItem( tr( "Disembarking time per person" ), composante.rDisembarkingTimePerPerson_.GetData(), tr( "s" ) );
+            builder.ListItem( tr( "Embark time per person" ), composante.embarkingTimePerPerson_.GetData().c_str() );
+            builder.ListItem( tr( "Disembarking time per person" ), composante.disembarkingTimePerPerson_.GetData().c_str() );
         }
         if( composante.bCanCarryCargo_.GetData() )
         {
             builder.ListItem( tr( "Weight capacity" ), composante.rWeightTransportCapacity_.GetData(), tr( "T" ) );
-            builder.ListItem( tr( "Loading time per ton" ), composante.rEmbarkingTimePerTon_.GetData(), tr( "s" ) );
-            builder.ListItem( tr( "Unloading time per ton" ), composante.rDisembarkingTimePerTon_.GetData(), tr( "s" ) );
+            builder.ListItem( tr( "Loading time per ton" ), composante.embarkingTimePerTon_.GetData().c_str() );
+            builder.ListItem( tr( "Unloading time per ton" ), composante.disembarkingTimePerTon_.GetData().c_str() );
         }
         builder.EndList();
 
@@ -530,17 +532,17 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
             builder.SubSection( object.ptrObject_.GetData()->strName_.GetData().c_str() );
             builder.BeginList();
             if( object.bInitialBuildTime_.GetData() )
-                builder.ListItem( tr( "Initial Construction Time" ), object.rInitialBuildTime_.GetData(), tr( "s" ) );
+                builder.ListItem( tr( "Initial Construction Time" ), object.initialBuildTime_.GetData().c_str() );
             if( object.bInitialDestructionTime_.GetData() )
-                builder.ListItem( tr( "Initial Destruction Time" ), object.rInitialDestructionTime_.GetData(), tr( "s" ) );
+                builder.ListItem( tr( "Initial Destruction Time" ), object.initialDestructionTime_.GetData().c_str() );
             if( object.bCoeffBuildTime_.GetData() )
-                builder.ListItem( tr( "Time Construction Coefficient" ), object.rCoeffBuildTime_.GetData(), tr( "s" ) );
+                builder.ListItem( tr( "Time Construction Coefficient" ), object.coeffBuildTime_.GetData().c_str() );
             if( object.bCoeffDestructionTime_.GetData() )
-                builder.ListItem( tr( "Time Destruction Coefficient" ), object.rCoeffDestructionTime_.GetData(), tr( "s" ) );
+                builder.ListItem( tr( "Time Destruction Coefficient" ), object.coeffDestructionTime_.GetData().c_str() );
             if( object.bValorizationTime_.GetData() )
-                builder.ListItem( tr( "Mining time" ), object.rValorizationTime_.GetData(), tr( "s" ) );
+                builder.ListItem( tr( "Mining time" ), object.valorizationTime_.GetData().c_str() );
             if( object.bDevalorizationTime_.GetData() )
-                builder.ListItem( tr( "Demining time" ), object.rDevalorizationTime_.GetData(), tr( "s" ) );
+                builder.ListItem( tr( "Demining time" ), object.devalorizationTime_.GetData().c_str() );
             if( object.bCoeffCircTime_.GetData() )
                 builder.ListItem( tr( "Bypass coefficient" ), object.rCoeffCirc_.GetData() );
             if( object.bSpeedCirc_.GetData() )

@@ -91,7 +91,7 @@ public:
         T_UnitInfosVector                                     vSubUnits_;
         ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>   ptrUnit_;
         ADN_Type_Bool                                         bStrengthRatioFeedbackTime_;
-        ADN_Type_Double                                       rStrengthRatioFeedbackTime_;
+        ADN_Type_Time                                         strengthRatioFeedbackTime_;
     };
 
     typedef ADN_Type_Vector_ABC<AutomatonInfos>  T_AutomatonInfosVector;

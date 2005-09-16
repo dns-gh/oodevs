@@ -70,10 +70,10 @@ void ADN_KnowledgeGroups_ListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_KnowledgeGroups_GUI::eNbrGuiElements );
 
     vItemConnectors_[ADN_KnowledgeGroups_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_KnowledgeGroups_GUI::eMaxLifetime]->Connect( &pInfos->rMaxLifetime_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::eMaxLifetime]->Connect( &pInfos->maxLifetime_, bConnect );
     vItemConnectors_[ADN_KnowledgeGroups_GUI::eMaxDistance]->Connect( &pInfos->rMaxDistance_, bConnect );
     vItemConnectors_[ADN_KnowledgeGroups_GUI::eHasInterpolationTime]->Connect( &pInfos->bInterpolationTime_, bConnect );
-    vItemConnectors_[ADN_KnowledgeGroups_GUI::eInterpolationTime]->Connect( &pInfos->rInterpolationTime_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::eInterpolationTime]->Connect( &pInfos->interpolationTime_, bConnect );
 }
 
 

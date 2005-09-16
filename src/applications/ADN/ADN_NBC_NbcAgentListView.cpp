@@ -80,7 +80,7 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_NBC_GUI::eNbrHurt3]->Connect( &pInfos->rNbHurtedHumans3_, bConnect );
     vItemConnectors_[ADN_NBC_GUI::eNbrHurt4]->Connect( &pInfos->rNbHurtedHumansE_, bConnect );
     vItemConnectors_[ADN_NBC_GUI::eNbrDead]->Connect( &pInfos->rNbDeadHumans_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eLifetime]->Connect( &pInfos->rLifeTime_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eLifetime]->Connect( &pInfos->lifeTime_, bConnect );
     vItemConnectors_[ADN_NBC_GUI::eSpreadAngle]->Connect( &pInfos->rSpreadAngle_, bConnect );
 }
 

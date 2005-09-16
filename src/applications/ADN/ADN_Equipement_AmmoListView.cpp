@@ -85,8 +85,8 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eDispersionX]->Connect( &pInfos->indirectAmmoInfos_.rDispersionX_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eDispersionY]->Connect( &pInfos->indirectAmmoInfos_.rDispersionY_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eNeutralizationRatio]->Connect( &pInfos->indirectAmmoInfos_.rNeutralizationRatio_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eDeployTime]->Connect( &pInfos->indirectAmmoInfos_.rDeployTime_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eLifetime]->Connect( &pInfos->indirectAmmoInfos_.rLifeTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eDeployTime]->Connect( &pInfos->indirectAmmoInfos_.deployTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eLifetime]->Connect( &pInfos->indirectAmmoInfos_.lifeTime_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
 
     // Connect those at the end so that the items in the associated group boxes

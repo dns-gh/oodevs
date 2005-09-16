@@ -187,8 +187,8 @@ public:
         T_ModificatorPostureInfos_Vector                                      vModifStance_;
 
         // For flares
-        ADN_Type_Double                                                       rDeployTime_;
-        ADN_Type_Double                                                       rLifeTime_;
+        ADN_Type_Time                                                         deployTime_;
+        ADN_Type_Time                                                         lifeTime_;
 
         // For smoke
         ADN_Type_Int                                                          nMineNumber_;

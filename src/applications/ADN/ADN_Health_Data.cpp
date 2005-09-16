@@ -42,8 +42,8 @@ ADN_Health_Data::WoundInfo::WoundInfo()
 void ADN_Health_Data::WoundInfo::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( ADN_Tr::ConvertFromDoctorSkills( nType_) );
-    input.ReadTimeAttribute( "esperanceVie", rLifeExpectancy_ );
-    input.ReadTimeAttribute( "tempsSoin", rTreatTime_ );
+    input.ReadAttribute( "esperanceVie", lifeExpectancy_ );
+    input.ReadAttribute( "tempsSoin", treatTime_ );
     input.ReadAttribute( "pourcentage", rPercentage_ );
     input.EndSection();
 }
@@ -56,8 +56,8 @@ void ADN_Health_Data::WoundInfo::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Health_Data::WoundInfo::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( ADN_Tr::ConvertFromDoctorSkills( nType_) );
-    output.WriteAttribute( "esperanceVie", ADN_Tools::SecondToString( rLifeExpectancy_.GetData() ) );
-    output.WriteAttribute( "tempsSoin", ADN_Tools::SecondToString( rTreatTime_.GetData() ) ) ;
+    output.WriteAttribute( "esperanceVie", lifeExpectancy_.GetData() ) ;
+    output.WriteAttribute( "tempsSoin", treatTime_.GetData() ) ;
     output.WriteAttribute( "pourcentage", rPercentage_.GetData() );
     output.EndSection();
 }
@@ -119,12 +119,12 @@ void ADN_Health_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.EndSection(); // CategoriesBlesse
 
     input.Section( "ReacMental" );
-    input.ReadTimeAttribute( "tempsSoin", rShockTreatTime_ );
+    input.ReadAttribute( "tempsSoin", shockTreatTime_ );
     input.ReadAttribute( "pourcentage", rShockPercentage_ );
     input.EndSection(); // ReacMental 
 
     input.Section( "Contamines" );
-    input.ReadTimeAttribute( "tempsSoin", rContaminationTreatTime_ );
+    input.ReadAttribute( "tempsSoin", contaminationTreatTime_ );
     input.EndSection(); // Contamines 
 
     input.EndSection(); // Sante
@@ -147,16 +147,13 @@ void ADN_Health_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.EndSection(); // CategoriesBlesse
 
     output.Section( "ReacMental" );
-    output.WriteAttribute( "tempsSoin", ADN_Tools::SecondToString( rShockTreatTime_.GetData() ) );
+    output.WriteAttribute( "tempsSoin", shockTreatTime_.GetData() );
     output.WriteAttribute( "pourcentage", rShockPercentage_.GetData() );
     output.EndSection(); // ReacMental 
 
     output.Section( "Contamines" );
-    output.WriteAttribute( "tempsSoin", ADN_Tools::SecondToString( rContaminationTreatTime_.GetData() ) );
+    output.WriteAttribute( "tempsSoin", contaminationTreatTime_.GetData() );
     output.EndSection(); // Contamines 
 
     output.EndSection(); // Sante
 }
-
-
-

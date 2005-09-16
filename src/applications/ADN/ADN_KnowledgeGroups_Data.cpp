@@ -32,10 +32,10 @@
 ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
-, rMaxLifetime_       ( 0.0 )
+, maxLifetime_        ( "0s" )
 , rMaxDistance_       ( 0.0 )
 , bInterpolationTime_ ( false )
-, rInterpolationTime_ ( 0.0 )
+, interpolationTime_  ( "0s" )
 {
 }
 
@@ -70,9 +70,9 @@ void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( ADN_XmlInput_Helper& inpu
     input.ReadAttribute( "nom", strName_ );
 
     input.Section( "Connaissance" );
-    input.ReadTimeField( "DureeDeVieMax", rMaxLifetime_ );
+    input.ReadField( "DureeDeVieMax", maxLifetime_ );
     input.ReadField( "DistanceMaxEntreUniteReelleEtUniteConnue", rMaxDistance_ );
-    if( input.ReadTimeField( "TempsInterpolation", rInterpolationTime_, ADN_XmlInput_Helper::eNothing ) )
+    if( input.ReadField( "TempsInterpolation", interpolationTime_, ADN_XmlInput_Helper::eNothing ) )
         bInterpolationTime_ = true;
     input.EndSection(); // Connaissance
 
@@ -90,10 +90,10 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( MT_OutputArchive_ABC& ou
     output.WriteAttribute( "nom", strName_.GetData() );
 
     output.Section( "Connaissance" );
-    output.WriteField( "DureeDeVieMax", ADN_Tools::SecondToString( rMaxLifetime_.GetData() ) );
+    output.WriteField( "DureeDeVieMax", maxLifetime_.GetData() );
     output.WriteField( "DistanceMaxEntreUniteReelleEtUniteConnue", rMaxDistance_.GetData() );
     if( bInterpolationTime_.GetData() )
-        output.WriteField( "TempsInterpolation", ADN_Tools::SecondToString( rInterpolationTime_.GetData() ) );
+        output.WriteField( "TempsInterpolation", interpolationTime_.GetData() );
     output.EndSection(); // Connaissance
 
     output.EndSection(); // GroupeConnaissance

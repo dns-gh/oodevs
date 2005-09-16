@@ -29,8 +29,8 @@
 // -----------------------------------------------------------------------------
 ADN_Categories_Data::ArmorInfos::ArmorInfos()
 : strName_      ()
-, rNeutralizationAverageTime_ ( 0 )
-, rNeutralizationVariance_    ( 0 )
+, neutralizationAverageTime_ ( "0s" )
+, neutralizationVariance_    ( "0s" )
 , rBreakdownEVA_  ( 0 )
 , rBreakdownNEVA_ ( 0 )
 , rPercentageWoundedHumansEvac_( 0 )
@@ -51,8 +51,8 @@ void ADN_Categories_Data::ArmorInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadAttribute( "type", nType_, ADN_Tr::ConvertToProtectionType, ADN_XmlInput_Helper::eThrow );
 
     input.Section( "Neutralisation" );
-    input.ReadTimeAttribute( "tempsMoyen", rNeutralizationAverageTime_ );
-    input.ReadTimeAttribute( "variance", rNeutralizationVariance_ );
+    input.ReadAttribute( "tempsMoyen", neutralizationAverageTime_ );
+    input.ReadAttribute( "variance", neutralizationVariance_ );
     input.EndSection(); // Neutralisation
 
     input.Section( "ProbabilitePanneAleatoire" );
@@ -94,8 +94,8 @@ void ADN_Categories_Data::ArmorInfos::WriteArchive( MT_OutputArchive_ABC& output
     }
 
     output.Section( "Neutralisation" );
-    output.WriteAttribute( "tempsMoyen", ADN_Tools::SecondToString( rNeutralizationAverageTime_.GetData() ) );
-    output.WriteAttribute( "variance",   ADN_Tools::SecondToString( rNeutralizationVariance_.GetData() ) );
+    output.WriteAttribute( "tempsMoyen", neutralizationAverageTime_.GetData() );
+    output.WriteAttribute( "variance",   neutralizationVariance_.GetData() );
     output.EndSection(); // Neutralisation
 
     output.Section( "ProbabilitePanneAleatoire" );

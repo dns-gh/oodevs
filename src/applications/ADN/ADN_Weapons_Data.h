@@ -149,9 +149,9 @@ public:
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::AmmoCategoryInfo>     ptrAmmunition_;
 
         ADN_Type_Int       nRoundsPerBurst_;
-        ADN_Type_Double    rBurstDuration_;
+        ADN_Type_Time      burstDuration_;
         ADN_Type_Int       nRoundsPerReload_;
-        ADN_Type_Double    rReloadDuration_;
+        ADN_Type_Time      reloadDuration_;
 
         ADN_Type_Bool       bDirect_;
         T_PhSizeInfosVector phs_;

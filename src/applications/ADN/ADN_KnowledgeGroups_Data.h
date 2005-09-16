@@ -57,10 +57,10 @@ public:
     public:
         ADN_Type_String strName_;
 
-        ADN_Type_Double rMaxLifetime_;
+        ADN_Type_Time   maxLifetime_;
         ADN_Type_Double rMaxDistance_;
         ADN_Type_Bool   bInterpolationTime_;
-        ADN_Type_Double rInterpolationTime_;
+        ADN_Type_Time   interpolationTime_;
     };
 
     typedef ADN_Type_Vector_ABC< GroupInfo > T_GroupInfoVector;

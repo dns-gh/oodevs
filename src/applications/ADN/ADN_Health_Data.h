@@ -50,8 +50,8 @@ public:
 
     public:
         E_DoctorSkills  nType_;
-        ADN_Type_Double rLifeExpectancy_;
-        ADN_Type_Double rTreatTime_;
+        ADN_Type_Time   lifeExpectancy_;
+        ADN_Type_Time   treatTime_;
         ADN_Type_Double rPercentage_;
     };
 
@@ -80,10 +80,10 @@ public:
 
     WoundInfo wounds[eNbrDoctorSkills];
 
-    ADN_Type_Double rShockTreatTime_;
+    ADN_Type_Time   shockTreatTime_;
     ADN_Type_Double rShockPercentage_;
 
-    ADN_Type_Double rContaminationTreatTime_;
+    ADN_Type_Time   contaminationTreatTime_;
 };
 
 

@@ -343,7 +343,7 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_Double surveyTimes_[eNbrVisionObjects-1];
+        ADN_Type_Time surveyTimes_[eNbrVisionObjects-1];
     };
 
 

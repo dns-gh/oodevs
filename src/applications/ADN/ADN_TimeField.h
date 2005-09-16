@@ -23,8 +23,8 @@
 #include "ADN_Gfx_ABC.h"
 #include <qwidget.h>
 
-class QLineEdit;
 class QComboBox;
+class ADN_TimeField_EditLine;
 
 // =============================================================================
 /** @class  ADN_TimeField
@@ -51,29 +51,31 @@ public:
 
     //! @name Operations
     //@{
-    QString text         () const;
-    void    setText      ( const QString& strText );
-    void    focusInEvent ( QFocusEvent* pEvent );
-    void    focusOutEvent( QFocusEvent* pEvent );
+    QString text   () const;
+    void    setText( const QString& strText );
     //@}
 
-public slots:
-    //! @name Internal events
+signals:
+    //! @name Signals
     //@{
-    void OnValueChanged   ( const QString& strValue );
-    void OnUnitChanged    ( const QString& strUnit  );
+    void ValueChanged();
+    //@}
 
 private slots:
+    //! @name Internal events
+    //@{
+    void OnValueChanged( const QString& strValue );
+    void OnUnitChanged ( const QString& strUnit  );
     void UpdateEnableState();
     //@}
 
 private:
     //! @name Member data
     //@{
-    QLineEdit*         pLineEdit_;
-    QComboBox*         pComboBox_;
-    uint               nSecondsValue_;
-    bool               bFreezeSlot_;
+    ADN_TimeField_EditLine* pLineEdit_;
+    QComboBox* pComboBox_;
+    uint       nSecondsValue_;
+    bool       bFreezeSlot_;
     //@}
 };
 

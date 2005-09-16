@@ -74,9 +74,9 @@ void ADN_Weapons_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Weapons_GUI::eLauncher]->Connect( &pInfos->ptrLauncher_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eAmmo]->Connect( &pInfos->ptrAmmunition_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eRoundsPerBurst]->Connect( &pInfos->nRoundsPerBurst_, bConnect );
-    vItemConnectors_[ADN_Weapons_GUI::eBurstDuration]->Connect( &pInfos->rBurstDuration_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eBurstDuration]->Connect( &pInfos->burstDuration_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eRoundsPerReload]->Connect( &pInfos->nRoundsPerReload_, bConnect );
-    vItemConnectors_[ADN_Weapons_GUI::eReloadDuration]->Connect( &pInfos->rReloadDuration_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eReloadDuration]->Connect( &pInfos->reloadDuration_, bConnect );
 
     // Order is important here.
     vItemConnectors_[ADN_Weapons_GUI::ePhsGraph]->Connect( &pInfos->phs_, bConnect );

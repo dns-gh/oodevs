@@ -226,11 +226,11 @@ void ADN_Units_Data::PointInfos::WriteArchive( MT_OutputArchive_ABC& output )
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::PostureInfos::PostureInfos(const E_UnitPosture& nPosture)
-:   nPosture_(nPosture)
-,   rTimeToActivate_(0)
+:   nPosture_       ( nPosture )
+,   timeToActivate_ ( "0s" )
 {
-    rTimeToActivate_.SetParentNode( *this );
-    rTimeToActivate_.SetDataName( "le délai de mise en posture" );
+    timeToActivate_.SetParentNode( *this );
+    timeToActivate_.SetDataName( "le délai de mise en posture" );
 }
 
 
@@ -263,7 +263,9 @@ void ADN_Units_Data::PostureInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( ADN_Tools::ComputePostureScriptName( nPosture_ ) );
 
-    input.ReadTime( rTimeToActivate_ );
+    std::string strTmp;
+    input.Read( strTmp );
+    timeToActivate_ = strTmp;
 
     input.EndSection();
 }
@@ -276,7 +278,7 @@ void ADN_Units_Data::PostureInfos::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Units_Data::PostureInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( ADN_Tools::ComputePostureScriptName( nPosture_ ) );
-    output << ADN_Tools::SecondToString( rTimeToActivate_.GetData() );
+    output << timeToActivate_.GetData();
     output.EndSection();
 }
 
@@ -303,14 +305,14 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 , eNatureMobility_((E_UnitNatureMobility)0)
 , nNbOfficer_(0)
 , nNbNCOfficer_(0)
-, rDecontaminationDelay_(0)
+, decontaminationDelay_( "0s" )
 , vComposantes_()
 , vPostures_( false )
 , vPointInfos_( false )
 , bProbe_(false)
 , bStock_( false )
 , bStrengthRatioFeedbackTime_( false )
-, rStrengthRatioFeedbackTime_( 0 )
+, strengthRatioFeedbackTime_( "0s" )
 , rProbeWidth_(0)
 , rProbeLength_(0)
 , bCanFly_( false )
@@ -429,7 +431,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->eMissionCapacity_ = eMissionCapacity_.GetData();
     pCopy->nNbOfficer_ = nNbOfficer_.GetData();
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
-    pCopy->rDecontaminationDelay_ = rDecontaminationDelay_.GetData();
+    pCopy->decontaminationDelay_ = decontaminationDelay_.GetData();
     pCopy->bCanFly_ = bCanFly_.GetData();
     pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
     pCopy->rWeaponsReach_ = rWeaponsReach_.GetData();
@@ -439,7 +441,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
         pCopy->vComposantes_.AddItem( (*itComposante)->CreateCopy() );
 
     for( uint i = 0; i < vPostures_.size(); ++i )
-        pCopy->vPostures_[ i ]->rTimeToActivate_ = vPostures_[ i ]->rTimeToActivate_.GetData();
+        pCopy->vPostures_[ i ]->timeToActivate_ = vPostures_[ i ]->timeToActivate_.GetData();
 
     for( T_PointInfos_Vector::iterator itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
         pCopy->vPointInfos_.AddItem( (*itPoint)->CreateCopy() );
@@ -454,7 +456,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->rProbeWidth_ = rProbeWidth_.GetData();
 
     pCopy->bStrengthRatioFeedbackTime_ = bStrengthRatioFeedbackTime_.GetData();
-    pCopy->rStrengthRatioFeedbackTime_ = rStrengthRatioFeedbackTime_.GetData();
+    pCopy->strengthRatioFeedbackTime_  = strengthRatioFeedbackTime_.GetData();
 
     return pCopy;
 }
@@ -593,7 +595,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     }
     input.EndSection(); // TempsMiseEnPosture
 
-    input.ReadTimeField( "DelaiDecontaminationNBC", rDecontaminationDelay_ );
+    input.ReadField( "DelaiDecontaminationNBC", decontaminationDelay_ );
 
 
     if( input.BeginList( "DistancesAvantPoints", ADN_XmlInput_Helper::eNothing ) )
@@ -618,7 +620,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     if( input.Section( "RapportDeForce", ADN_XmlInput_Helper::eNothing ) )
     {
         bStrengthRatioFeedbackTime_ = true;
-        input.ReadTimeField( "TempsDeRemontee", rStrengthRatioFeedbackTime_ );
+        input.ReadField( "TempsDeRemontee", strengthRatioFeedbackTime_ );
         input.EndSection(); // RapportDeForce
     }
 
@@ -724,7 +726,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
     }
     output.EndSection(); // TempsMiseEnPosture
 
-    output.WriteField( "DelaiDecontaminationNBC", ADN_Tools::SecondToString( rDecontaminationDelay_.GetData() ) );
+    output.WriteField( "DelaiDecontaminationNBC", decontaminationDelay_.GetData() );
 
     if( ! vPointInfos_.empty() )
     {
@@ -745,7 +747,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
     if( bStrengthRatioFeedbackTime_.GetData() )
     {
         output.Section( "RapportDeForce" );
-        output.WriteField( "TempsDeRemontee", ADN_Tools::SecondToString( rStrengthRatioFeedbackTime_.GetData() ) );
+        output.WriteField( "TempsDeRemontee", strengthRatioFeedbackTime_.GetData() );
         output.EndSection(); // RapportDeForce
     }
 

@@ -56,8 +56,8 @@ public:
 
     public:
         ADN_Type_Double rCapacity_;
-        ADN_Type_Double rLoadTimePerPerson_;
-        ADN_Type_Double rUnloadTimePerPerson_;
+        ADN_Type_Time   loadTimePerPerson_;
+        ADN_Type_Time   unloadTimePerPerson_;
     };
 
 
@@ -114,7 +114,7 @@ public:
         std::string strName_;
         ADN_Type_Bool bIsPresent_;
         ADN_Type_Bool bHasMaxRepairTime_;
-        ADN_Type_Double rMaxRepairTime_;
+        ADN_Type_Time maxRepairTime_;
         ADN_Type_Bool bCanRepairEA_;
         ADN_Type_Bool bCanRepairM_;
     };
@@ -140,8 +140,8 @@ public:
     public:
         ADN_Type_Bool bIsTower_;
         ADN_Type_Double rCapacity_;
-        ADN_Type_Double rLoadTimePerTon_;
-        ADN_Type_Double rUnloadTimePerTon_;
+        ADN_Type_Time loadTimePerTon_;
+        ADN_Type_Time unloadTimePerTon_;
 
         NTIInfos NTI1Infos_;
         NTIInfos NTI2Infos_;
@@ -170,8 +170,8 @@ public:
         ADN_Type_Bool bIsCarrier_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rVolume_;
-        ADN_Type_Double rLoadTime_;
-        ADN_Type_Double rUnloadTime_;
+        ADN_Type_Time loadTime_;
+        ADN_Type_Time unloadTime_;
 
         ADN_Type_Bool bIsConvoyLeader_;
     };
@@ -487,12 +487,12 @@ public:
         ADN_Type_Bool                                               bSpeedCirc_;
         ADN_Type_Bool                                               bSpeedNotCirc_;
 
-        ADN_Type_Double                                             rInitialBuildTime_;
-        ADN_Type_Double                                             rInitialDestructionTime_;
-        ADN_Type_Double                                             rCoeffBuildTime_;
-        ADN_Type_Double                                             rCoeffDestructionTime_;
-        ADN_Type_Double                                             rValorizationTime_;
-        ADN_Type_Double                                             rDevalorizationTime_;
+        ADN_Type_Time                                               initialBuildTime_;
+        ADN_Type_Time                                               initialDestructionTime_;
+        ADN_Type_Time                                               coeffBuildTime_;
+        ADN_Type_Time                                               coeffDestructionTime_;
+        ADN_Type_Time                                               valorizationTime_;
+        ADN_Type_Time                                               devalorizationTime_;
         ADN_Type_Double                                             rCoeffCirc_;
         ADN_Type_Double                                             rSpeedCirc_;
         ADN_Type_Double                                             rSpeedNotCirc_;
@@ -615,13 +615,13 @@ public:
 
         ADN_Type_Int                                                              nTroopTransportCapacity_;
         ADN_Type_Bool                                                             bTroopEmbarkingTimes_;
-        ADN_Type_Double                                                           rEmbarkingTimePerPerson_;
-        ADN_Type_Double                                                           rDisembarkingTimePerPerson_;
+        ADN_Type_Time                                                             embarkingTimePerPerson_;
+        ADN_Type_Time                                                             disembarkingTimePerPerson_;
 
         ADN_Type_Bool                                                             bCanCarryCargo_;
         ADN_Type_Double                                                           rWeightTransportCapacity_;
-        ADN_Type_Double                                                           rEmbarkingTimePerTon_;
-        ADN_Type_Double                                                           rDisembarkingTimePerTon_;
+        ADN_Type_Time                                                             embarkingTimePerTon_;
+        ADN_Type_Time                                                             disembarkingTimePerTon_;
 
         ADN_Type_Bool                                                             bMaxSlope_;
         ADN_Type_Double                                                           rMaxSlope_;

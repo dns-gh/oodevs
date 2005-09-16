@@ -35,6 +35,43 @@
 #include <qlineedit.h>
 #include <qcombobox.h>
 
+
+class ADN_TimeField_EditLine : public QLineEdit
+{
+public:
+    ADN_TimeField_EditLine( QWidget* pParent )
+        : QLineEdit( pParent )
+        , bIsFocusing_( false )
+    {
+        setAlignment( Qt::AlignRight );
+        setFrame( true );
+    }
+
+    ~ADN_TimeField_EditLine()
+    {}
+
+protected:
+    void focusInEvent( QFocusEvent* pEvent )
+    {
+        QLineEdit::focusInEvent( pEvent );
+        bIsFocusing_ = true;
+        selectAll();
+    }
+
+    void mouseReleaseEvent( QMouseEvent* e )
+    {
+        QLineEdit::mouseReleaseEvent( e );
+        if( bIsFocusing_ )
+        {
+            selectAll();
+            bIsFocusing_ = false;
+        }
+    }
+
+private:
+    bool bIsFocusing_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_TimeField constructor
 // Created: SBO 2005-09-09
@@ -51,10 +88,10 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
     QHBoxLayout *pLayout = new QHBoxLayout( this );
     pLayout->setMargin( 0 );
 
-    pLineEdit_ = new QLineEdit( this );
-    pLineEdit_->setAlignment( Qt::AlignRight );
-    pLineEdit_->setFrame( true );
+    pLineEdit_ = new ADN_TimeField_EditLine( this );
     pLayout->addWidget( pLineEdit_ );
+
+    setFocusProxy( pLineEdit_ );
 
     pComboBox_ = new QComboBox( this );
     pComboBox_->insertItem( "s" );
@@ -92,6 +129,7 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
     else if( pComboBox_->currentText() == "h" )
         nSecondsValue_ = strValue.toUInt() * 3600;
     static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( strValue + pComboBox_->currentText() );
+    emit ValueChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -109,6 +147,8 @@ void ADN_TimeField::OnUnitChanged( const QString& strUnit )
         pLineEdit_->setText( QString::number( nSecondsValue_ / 3600 ) );
     static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( pLineEdit_->text() + strUnit );
     bFreezeSlot_ = false;
+    pLineEdit_->setFocus();
+    emit ValueChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -150,6 +190,7 @@ void ADN_TimeField::setText( const QString& strText )
     strUnit << cUnit;
     pComboBox_->setCurrentText( strUnit.str().c_str() );
     pLineEdit_->setText( strTimeValue.c_str() );
+    emit ValueChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,21 +203,3 @@ void ADN_TimeField::UpdateEnableState()
         setEnabled( static_cast< ADN_Connector_String<ADN_TimeField>* >( pConnector_ )->IsConnected() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_TimeField::focusInEvent
-// Created: SBO 2005-09-13
-// -----------------------------------------------------------------------------
-void ADN_TimeField::focusInEvent( QFocusEvent* /*pEvent*/ )
-{
-    pLineEdit_->setFocus();
-    pLineEdit_->selectAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TimeField::focusOutEvent
-// Created: SBO 2005-09-13
-// -----------------------------------------------------------------------------
-void ADN_TimeField::focusOutEvent( QFocusEvent* /*pEvent*/ )
-{
-    pLineEdit_->deselect();
-}

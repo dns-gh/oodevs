@@ -836,7 +836,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( MT_OutputArchive_ABC& output )
 ADN_Sensors_Data::ALATInfos::ALATInfos()
 {
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        surveyTimes_[n-1] = 0.0;
+        surveyTimes_[n-1] = "0s";
 }
 
 
@@ -859,7 +859,7 @@ void ADN_Sensors_Data::ALATInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.Section( "TempsSurveillance" );
 
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        input.ReadTimeField( ADN_Tr::ConvertFromVisionObject( E_VisionObject(n) ), surveyTimes_[n-1] );
+        input.ReadField( ADN_Tr::ConvertFromVisionObject( E_VisionObject(n) ), surveyTimes_[n-1] );
 
     input.EndSection(); // TempsSurveillance
     input.EndSection(); // SurveillanceALAT
@@ -876,7 +876,7 @@ void ADN_Sensors_Data::ALATInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.Section( "TempsSurveillance" );
 
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        output.WriteField( ADN_Tr::ConvertFromVisionObject( E_VisionObject(n) ), ADN_Tools::SecondToString( (surveyTimes_[n-1]).GetData() ) );
+        output.WriteField( ADN_Tr::ConvertFromVisionObject( E_VisionObject(n) ), (surveyTimes_[n-1]).GetData() );
 
     output.EndSection(); // TempsSurveillance
     output.EndSection(); // SurveillanceALAT

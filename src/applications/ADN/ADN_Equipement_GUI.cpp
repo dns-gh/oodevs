@@ -44,6 +44,7 @@
 #include "ENT/ENT_Tr.h"
 #include "ADN_Tr.h"
 #include "ADN_HtmlBuilder.h"
+#include "ADN_TimeField.h"
 
 
 // -----------------------------------------------------------------------------
@@ -199,8 +200,8 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pFlareParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
     pFlareParametersGroup_->hide();
 
-    builder.AddField<ADN_EditLine_Double>( pFlareParametersGroup_, tr( "Deploy time" ), vConnectors[eDeployTime], tr( "s" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pFlareParametersGroup_, tr( "Lifetime" ), vConnectors[eLifetime], tr( "s" ), eGreaterEqualZero );
+    builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Deploy time" ), vConnectors[eDeployTime] );
+    builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Lifetime" ), vConnectors[eLifetime] );
 
     // Mine parameters
     pMineParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
@@ -268,6 +269,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
     builder.AddTableCell( pTable, 0, 4, tr( "Destroyed" ) );
     pTable->hideRow( 0 );
     pTable->AddBoldGridRow( 0 );
+    pTable->setSorting( false );
 
     // Fill the table.
     ADN_Equipement_Data::DotationInfos& ammo = data_.GetDotation( eFamilleDotation_Munition );

@@ -122,7 +122,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
 , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
 , bStrengthRatioFeedbackTime_( false )
-, rStrengthRatioFeedbackTime_( 0.0 )
+, strengthRatioFeedbackTime_( "0s" )
 {
     this->BindExistenceTo( &ptrUnit_ );
     this->BindExistenceTo( &ptrModel_ );
@@ -171,7 +171,7 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::AutomatonInfos::CreateCopy
     pCopy->ptrModel_ = ptrModel_.GetData();
     pCopy->ptrUnit_ = ptrUnit_.GetData();
     pCopy->bStrengthRatioFeedbackTime_ = bStrengthRatioFeedbackTime_.GetData();
-    pCopy->rStrengthRatioFeedbackTime_ = rStrengthRatioFeedbackTime_.GetData();
+    pCopy->strengthRatioFeedbackTime_ = strengthRatioFeedbackTime_.GetData();
 
     for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
         pCopy->vSubUnits_.AddItem( (*it)->CreateCopy() );
@@ -212,7 +212,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( ADN_XmlInput_Helper& input 
     if( input.Section( "RapportDeForce", ADN_XmlInput_Helper::eNothing ) )
     {
         bStrengthRatioFeedbackTime_ = true;
-        input.ReadTimeField( "TempsDeRemontee", rStrengthRatioFeedbackTime_ );
+        input.ReadField( "TempsDeRemontee", strengthRatioFeedbackTime_ );
         input.EndSection(); // RapportDeForce
     }
 
@@ -255,7 +255,7 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( MT_OutputArchive_ABC& outp
     if( bStrengthRatioFeedbackTime_.GetData() )
     {
         output.Section( "RapportDeForce" );
-        output.WriteField( "TempsDeRemontee", ADN_Tools::SecondToString( rStrengthRatioFeedbackTime_.GetData() ) );
+        output.WriteField( "TempsDeRemontee", strengthRatioFeedbackTime_.GetData() );
         output.EndSection(); // RapportDeForce
     }
 

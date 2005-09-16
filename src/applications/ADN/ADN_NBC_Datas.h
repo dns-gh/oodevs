@@ -67,7 +67,7 @@ public:
         ADN_Type_Double rNbHurtedHumansE_;
         ADN_Type_Double rNbDeadHumans_;
         
-        ADN_Type_Double rLifeTime_;
+        ADN_Type_Time   lifeTime_;
         ADN_Type_Double rSpreadAngle_;
     };
 

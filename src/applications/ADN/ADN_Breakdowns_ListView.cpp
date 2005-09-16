@@ -71,8 +71,8 @@ void ADN_Breakdowns_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Breakdowns_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Breakdowns_GUI::eType]->Connect( &pInfos->nType_, bConnect );
     vItemConnectors_[ADN_Breakdowns_GUI::eNTI]->Connect( &pInfos->nNTI_, bConnect );
-    vItemConnectors_[ADN_Breakdowns_GUI::eRepairTime]->Connect( &pInfos->rRepairTime_, bConnect );
-    vItemConnectors_[ADN_Breakdowns_GUI::eRepairTimeVariance]->Connect( &pInfos->rRepairTimeVariance_, bConnect );
+    vItemConnectors_[ADN_Breakdowns_GUI::eRepairTime]->Connect( &pInfos->repairTime_, bConnect );
+    vItemConnectors_[ADN_Breakdowns_GUI::eRepairTimeVariance]->Connect( &pInfos->repairTimeVariance_, bConnect );
     vItemConnectors_[ADN_Breakdowns_GUI::eParts]->Connect( &pInfos->vRepairParts_, bConnect );
 }
 

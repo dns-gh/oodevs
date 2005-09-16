@@ -26,6 +26,8 @@
 #include "ADN_Table.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_TimeField.h"
+#include "ADN_TableItem_TimeField.h"
+
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -83,6 +85,7 @@ void ADN_Health_GUI::Build()
     pWoundTable->setNumRows( 3 );
     pWoundTable->verticalHeader()->show();
     pWoundTable->setLeftMargin( 5 );
+    pWoundTable->setSorting( false );
 
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
@@ -94,22 +97,22 @@ void ADN_Health_GUI::Build()
     pWoundTable->horizontalHeader()->setLabel( n + 1, tr( "Contamination" ) );
     pWoundTable->setColumnStretchable( n + 1, true );
 
-    pWoundTable->verticalHeader()->setLabel( 0, tr( "Treating time (s)" ) );
+    pWoundTable->verticalHeader()->setLabel( 0, tr( "Treating time" ) );
     pWoundTable->verticalHeader()->setLabel( 1, tr( "Repartition (%)" ) );
-    pWoundTable->verticalHeader()->setLabel( 2, tr( "Life expectency (s)" ) );
+    pWoundTable->verticalHeader()->setLabel( 2, tr( "Life expectency" ) );
 
     for( int n = 0; n < eNbrDoctorSkills; ++n )
     {
         ADN_Health_Data::WoundInfo& wound = data_.wounds[n];
-        builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &wound, 0, n, wound.rTreatTime_, eGreaterZero );
+        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 0, n, wound.treatTime_ );
         builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &wound, 1, n, wound.rPercentage_, ePercentage );
-        builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &wound, 2, n, wound.rLifeExpectancy_, eGreaterZero );
+        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 2, n, wound.lifeExpectancy_ );
     }
-    builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &data_, 0, n, data_.rShockTreatTime_, eGreaterZero );
+    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n, data_.shockTreatTime_ );
     builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &data_, 1, n, data_.rShockPercentage_, ePercentage );
     pWoundTable->setItem( 2, n, new QTableItem( pWoundTable, QTableItem::Never ) );
 
-    builder.AddTableCell< ADN_TableItem_Double >( pWoundTable, &data_, 0, n + 1, data_.rContaminationTreatTime_, eGreaterZero );
+    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n + 1, data_.contaminationTreatTime_ );
     pWoundTable->setItem( 1, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
     pWoundTable->setItem( 2, n + 1, new QTableItem( pWoundTable, QTableItem::Never ) );
 

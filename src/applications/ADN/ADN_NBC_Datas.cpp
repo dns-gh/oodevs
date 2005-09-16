@@ -45,7 +45,7 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
 , rNbHurtedHumans3_( 0.0 )
 , rNbHurtedHumansE_( 0.0 )
 , rNbDeadHumans_( 0.0 )
-, rLifeTime_( 0.0 )
+, lifeTime_( "0s" )
 , rSpreadAngle_( 0.0 )
 {
     strName_.SetDataName( "le nom d'" );
@@ -62,8 +62,8 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     rNbHurtedHumansE_.SetParentNode( *this );
     rNbDeadHumans_.SetDataName( "le pourcentage d'humains décédés dans" );
     rNbDeadHumans_.SetParentNode( *this );
-    rLifeTime_.SetDataName( "la durée de vie d'" );
-    rLifeTime_.SetParentNode( *this );
+    lifeTime_.SetDataName( "la durée de vie d'" );
+    lifeTime_.SetParentNode( *this );
     rSpreadAngle_.SetDataName( "l'angle de propagation dû au vent d'" );
     rSpreadAngle_.SetParentNode( *this );
 }
@@ -105,7 +105,7 @@ ADN_NBC_Datas::NbcAgentInfos* ADN_NBC_Datas::NbcAgentInfos::CreateCopy()
     pCopy->rNbHurtedHumansE_ = rNbHurtedHumansE_.GetData();
     pCopy->rNbDeadHumans_ = rNbDeadHumans_.GetData();
 
-    pCopy->rLifeTime_ = rLifeTime_.GetData();
+    pCopy->lifeTime_ = lifeTime_.GetData();
     pCopy->rSpreadAngle_ = rSpreadAngle_.GetData();
 
     return pCopy;
@@ -184,7 +184,7 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
     input.EndSection(); // Attrition
 
-    input.ReadTimeField( "DureeDeVie", rLifeTime_ );
+    input.ReadField( "DureeDeVie", lifeTime_ );
 
     /*
     if( rTmp < 0.0 )
@@ -251,7 +251,7 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "Humains_Mort", rNbDeadHumans_.GetData() / 100.0 );
     output.EndSection(); // Attritions
 
-    output.WriteField( "DureeDeVie", ADN_Tools::SecondToString( rLifeTime_.GetData() ) );
+    output.WriteField( "DureeDeVie", lifeTime_.GetData() );
     output.Section( "AngleDePropagation" );
     output.WriteAttribute( "unite", "degre" );
     output << rSpreadAngle_.GetData();

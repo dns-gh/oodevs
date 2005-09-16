@@ -41,7 +41,9 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_Launchers_GUI.h"
-#include "ADN_Equipement_Gui.h"
+#include "ADN_Equipement_GUI.h"
+#include "ADN_TableItem_TimeField.h"
+#include "ADN_TimeField.h"
 
 #include "ADN_Graph.h"
 #include "ADN_GraphData.h"
@@ -49,7 +51,6 @@
 #include "ADN_Connector_Graph_ABC.h"
 #include "GQ_PlotAxis.h"
 #include "GQ_PlotCaption.h"
-
 
 //-----------------------------------------------------------------------------
 // Internal Canvas connector 
@@ -222,9 +223,9 @@ void ADN_Weapons_GUI::Build()
     builder.SetEnabled( false );
 
     builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pParamHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration] );
     builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per reload" ), vInfosConnectors[eRoundsPerReload], 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration], tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pParamHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration] );
 
 
     // Direct group
@@ -320,9 +321,9 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
 
         builder.AddTableCell<ADN_TableItem_String>( pTable, &weapon, nRow, 0, weapon.strName_, eNone, QTableItem::Never );
         builder.AddTableCell<ADN_TableItem_Int>(    pTable, &weapon, nRow, 1, weapon.nRoundsPerBurst_, eGreaterEqualZero );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &weapon, nRow, 2, weapon.rBurstDuration_, eGreaterZero );
+        builder.AddTableCell<ADN_TableItem_TimeField>( pTable, &weapon, nRow, 2, weapon.burstDuration_ );
         builder.AddTableCell<ADN_TableItem_Int>(    pTable, &weapon, nRow, 3, weapon.nRoundsPerReload_, eGreaterZero );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &weapon, nRow, 4, weapon.rReloadDuration_, eGreaterZero );
+        builder.AddTableCell<ADN_TableItem_TimeField>( pTable, &weapon, nRow, 4, weapon.reloadDuration_ );
     }
 
     pTable->AdjustColumns( 20 );
@@ -371,6 +372,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
     for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
         builder.AddTableCell( pTable, 0, n, QString::number( *it ) );
     pTable->hideRow( 0 );
+    pTable->setSorting( false );
 
     // Fill the table.
     int nRow = 1;
@@ -457,9 +459,9 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         builder.ListItem( tr( "Launcher" ), weapon.ptrLauncher_.GetData()->strName_.GetData().c_str() );
         builder.ListItem( tr( "Ammo" ), weapon.ptrAmmunition_.GetData()->strName_.GetData().c_str() );
         builder.ListItem( tr( "Rounds per burst" ), weapon.nRoundsPerBurst_.GetData() );
-        builder.ListItem( tr( "Burst duration" ), weapon.rBurstDuration_.GetData(), tr( "s" ) );
+        builder.ListItem( tr( "Burst duration" ), weapon.burstDuration_.GetData().c_str() );
         builder.ListItem( tr( "Rounds per reload" ), weapon.nRoundsPerReload_.GetData() );
-        builder.ListItem( tr( "Reload duration" ), weapon.rReloadDuration_.GetData(), tr( "s" ) );
+        builder.ListItem( tr( "Reload duration" ), weapon.reloadDuration_.GetData().c_str() );
         builder.EndList();
 
 

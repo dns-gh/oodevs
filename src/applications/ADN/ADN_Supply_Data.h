@@ -54,8 +54,8 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_Int    nNbrTrucks_;
-        ADN_Type_Double rSetupTime_;
+        ADN_Type_Int  nNbrTrucks_;
+        ADN_Type_Time setupTime_;
     };
 
     typedef ADN_Type_Vector_ABC<ConvoySetupInfo>  T_ConvoySetupInfoVector;

@@ -21,6 +21,7 @@
 #include "ADN_ListView_Categories_Size.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
+#include "ADN_TimeField.h"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -96,8 +97,8 @@ void ADN_Categories_GUI::Build()
     connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
     QGroupBox* pArmorNeutralizationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Neutralization" ), pArmorInfoGroup );
-    builder.AddField<ADN_EditLine_Double>( pArmorNeutralizationGroup, tr( "Average time" ), vArmorInfosConnectors[eNeutralizationAverage], tr( "s" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pArmorNeutralizationGroup, tr( "Variance" ), vArmorInfosConnectors[eNeutralizationVariance], tr( "s" ), eGreaterEqualZero );
+    builder.AddField<ADN_TimeField>( pArmorNeutralizationGroup, tr( "Average time" ), vArmorInfosConnectors[eNeutralizationAverage] );
+    builder.AddField<ADN_TimeField>( pArmorNeutralizationGroup, tr( "Variance" ), vArmorInfosConnectors[eNeutralizationVariance] );
 
     pArmorBreakdownGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Breakdowns" ), pArmorInfoGroup );
     builder.AddField<ADN_EditLine_Double>( pArmorBreakdownGroup_, tr( "EVA" ), vArmorInfosConnectors[eBreakdownEVA], tr( "%" ), ePercentage );

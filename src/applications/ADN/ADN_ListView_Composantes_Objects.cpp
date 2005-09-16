@@ -88,12 +88,12 @@ void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
     ObjectInfos* pInfos = (ObjectInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Composantes_GUI::eNbrObjGuiElements );
     
-    vItemConnectors_[ADN_Composantes_GUI::eInitialBuildTime]->Connect( &pInfos->rInitialBuildTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eInitialDestructionTime]->Connect( &pInfos->rInitialDestructionTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eCoeffBuildTime]->Connect( &pInfos->rCoeffBuildTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eCoeffDestructionTime]->Connect( &pInfos->rCoeffDestructionTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eValorizationTime]->Connect( &pInfos->rValorizationTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eDevalorizationTime]->Connect( &pInfos->rDevalorizationTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eInitialBuildTime]->Connect( &pInfos->initialBuildTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eInitialDestructionTime]->Connect( &pInfos->initialDestructionTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eCoeffBuildTime]->Connect( &pInfos->coeffBuildTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eCoeffDestructionTime]->Connect( &pInfos->coeffDestructionTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eValorizationTime]->Connect( &pInfos->valorizationTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eDevalorizationTime]->Connect( &pInfos->devalorizationTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eCoeffCircTime]->Connect( &pInfos->rCoeffCirc_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSpeedCirc]->Connect( &pInfos->rSpeedCirc_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSpeedNotCirc]->Connect( &pInfos->rSpeedNotCirc_, bConnect );

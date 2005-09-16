@@ -310,8 +310,8 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
 , rDispersionY_     ( 0.0 )
 , rNeutralizationRatio_ ( 0 )
 , vModifStance_     ()
-, rDeployTime_      ( 0.0 )
-, rLifeTime_        ( 0.0 )
+, deployTime_      ( "0s" )
+, lifeTime_        ( "0s" )
 , nMineNumber_      ( 0 )
 {
     for( int i = 0; i < eNbrUnitPosture; ++i )
@@ -338,8 +338,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     for( uint i=0 ; i< eNbrUnitPosture ; ++i)
         vModifStance_[i]->rCoeff_ = ammoInfos.vModifStance_[ i ]->rCoeff_.GetData();
 
-    rDeployTime_ = ammoInfos.rDeployTime_.GetData();
-    rLifeTime_ = ammoInfos.rLifeTime_.GetData();
+    deployTime_ = ammoInfos.deployTime_.GetData();
+    lifeTime_ = ammoInfos.lifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
 }
 
@@ -386,8 +386,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( ADN_XmlInput_Helper& i
 
         case eTypeMunitionTirIndirect_Fumigene:
         case eTypeMunitionTirIndirect_Eclairant:
-            input.ReadTimeField( "DureeDeploiement", rDeployTime_ );
-            input.ReadTimeField( "DureeVie", rLifeTime_ );
+            input.ReadField( "DureeDeploiement", deployTime_ );
+            input.ReadField( "DureeVie", lifeTime_ );
             break;
 
         case eTypeMunitionTirIndirect_Mine:
@@ -428,8 +428,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( MT_OutputArchive_ABC&
 
     case eTypeMunitionTirIndirect_Fumigene:
     case eTypeMunitionTirIndirect_Eclairant:
-        output.WriteField( "DureeDeploiement", ADN_Tools::SecondToString( rDeployTime_.GetData() ) );
-        output.WriteField( "DureeVie", ADN_Tools::SecondToString( rLifeTime_.GetData() ) );
+        output.WriteField( "DureeDeploiement", deployTime_.GetData() );
+        output.WriteField( "DureeVie", lifeTime_.GetData() );
         break;
 
     case eTypeMunitionTirIndirect_Mine:

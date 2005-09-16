@@ -68,8 +68,8 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
     
     vItemConnectors_[ADN_Categories_GUI::eArmorName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eArmorType]->Connect( &pInfos->nType_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eNeutralizationAverage]->Connect( &pInfos->rNeutralizationAverageTime_, bConnect );
-    vItemConnectors_[ADN_Categories_GUI::eNeutralizationVariance]->Connect( &pInfos->rNeutralizationVariance_, bConnect );
+    vItemConnectors_[ADN_Categories_GUI::eNeutralizationAverage]->Connect( &pInfos->neutralizationAverageTime_, bConnect );
+    vItemConnectors_[ADN_Categories_GUI::eNeutralizationVariance]->Connect( &pInfos->neutralizationVariance_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eBreakdownEVA]->Connect( &pInfos->rBreakdownEVA_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eBreakdownNEVA]->Connect( &pInfos->rBreakdownNEVA_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eWoundedEvac]->Connect( &pInfos->rPercentageWoundedHumansEvac_, bConnect );

@@ -36,12 +36,12 @@
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::DetectTimes::DetectTimes()
-: bDetectTime_      ( false )
-, rDetectTime_      ( 0 )
-, bIdentTime_       ( false )
-, rRecoTime_        ( 0 )
-, bRecoTime_        ( false )
-, rIdentTime_       ( 0 )
+: bDetectTime_  ( false )
+, detectTime_   ( "0s" )
+, bIdentTime_   ( false )
+, recoTime_     ( "0s" )
+, bRecoTime_    ( false )
+, identTime_    ( "0s" )
 {
 }
 
@@ -61,9 +61,9 @@ ADN_Radars_Data::DetectTimes::~DetectTimes()
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::DetectTimes::ReadArchive( ADN_XmlInput_Helper& input )
 {
-    bDetectTime_ = input.ReadTimeField( "DureeDetection", rDetectTime_, ADN_XmlInput_Helper::eNothing );
-    bRecoTime_ = input.ReadTimeField( "DureeReconnaissance", rRecoTime_, ADN_XmlInput_Helper::eNothing );
-    bIdentTime_ = input.ReadTimeField( "DureeIdentification", rIdentTime_, ADN_XmlInput_Helper::eNothing );
+    bDetectTime_ = input.ReadField( "DureeDetection", detectTime_, ADN_XmlInput_Helper::eNothing );
+    bRecoTime_ = input.ReadField( "DureeReconnaissance", recoTime_, ADN_XmlInput_Helper::eNothing );
+    bIdentTime_ = input.ReadField( "DureeIdentification", identTime_, ADN_XmlInput_Helper::eNothing );
 }
 
 
@@ -74,11 +74,11 @@ void ADN_Radars_Data::DetectTimes::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Radars_Data::DetectTimes::WriteArchive( MT_OutputArchive_ABC& output )
 {
     if( bDetectTime_.GetData() )
-        output.WriteField( "DureeDetection", ADN_Tools::SecondToString( rDetectTime_.GetData() ) );
+        output.WriteField( "DureeDetection", detectTime_.GetData() );
     if( bRecoTime_.GetData() )
-        output.WriteField( "DureeReconnaissance", ADN_Tools::SecondToString( rRecoTime_.GetData() ) );
+        output.WriteField( "DureeReconnaissance", recoTime_.GetData() );
     if( bIdentTime_.GetData() )
-        output.WriteField( "DureeIdentification", ADN_Tools::SecondToString( rIdentTime_.GetData() ) );
+        output.WriteField( "DureeIdentification", identTime_.GetData() );
 }
 
 

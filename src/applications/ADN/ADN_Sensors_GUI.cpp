@@ -41,6 +41,7 @@
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
 #include "ENT/ENT_Tr.h"
+#include "ADN_TimeField.h"
 
 
 //-----------------------------------------------------------------------------
@@ -221,7 +222,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     QGroupBox* pAlatGroup = new QGroupBox( 1, Qt::Horizontal, tr( "ALAT" ), pPage );
     QGroupBox* pAlatGroup1 = new QGroupBox( 3, Qt::Horizontal, tr( "Survey times" ), pAlatGroup );
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        builder.AddField<ADN_EditLine_Double>( pAlatGroup1, ADN_Tr::ConvertFromVisionObject( (E_VisionObject)n ).c_str(), data_.GetAlatInfos().surveyTimes_[n-1], tr( "s/ha" ) );
+        builder.AddField<ADN_TimeField>( pAlatGroup1, ADN_Tr::ConvertFromVisionObject( (E_VisionObject)n ).c_str(), data_.GetAlatInfos().surveyTimes_[n-1], tr( "/ha" ) );
 
     radarGui_.Build();
     QWidget* pRadarWidget = radarGui_.GetMainWidget();

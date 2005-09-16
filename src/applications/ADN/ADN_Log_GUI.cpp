@@ -74,6 +74,7 @@ void ADN_Log_GUI::Build()
     pTable->setNumRows( 3 );
     pTable->verticalHeader()->show();
     pTable->setLeftMargin( 5 );
+    pTable->setSorting( false );
 
     uint n = 0;
     for( ADN_Log_Data::IT_WorkTimeModifiersInfo_Vector it = data_.vWorkTimeModifiers_.begin(); it != data_.vWorkTimeModifiers_.end(); ++it )

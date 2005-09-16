@@ -37,7 +37,7 @@ ADN_Supply_Data::ConvoySetupInfo::ConvoySetupInfo()
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nNbrTrucks_         ( 1 )
-, rSetupTime_         ( 1.0 )
+, setupTime_          ( "1s" )
 {
 }
 
@@ -70,9 +70,9 @@ void ADN_Supply_Data::ConvoySetupInfo::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Temps" );
     input.ReadAttribute( "nbCamions", nNbrTrucks_ );
-//    std::string strTime;
-//    input.Read( strTime );
-    input.ReadTime( rSetupTime_ );
+    std::string strTmp;
+    input.Read( strTmp );
+    setupTime_ = strTmp;
     input.EndSection(); // Temps
 }
 
@@ -85,7 +85,7 @@ void ADN_Supply_Data::ConvoySetupInfo::WriteArchive( MT_OutputArchive_ABC& outpu
 {
     output.Section( "Temps" );
     output.WriteAttribute( "nbCamions", nNbrTrucks_.GetData() );
-    output << ADN_Tools::SecondToString( rSetupTime_.GetData() );
+    output << setupTime_.GetData();
     output.EndSection(); // Temps
 }
 

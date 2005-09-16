@@ -23,6 +23,7 @@
 #include "ADN_KnowledgeGroups_ListView.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
+#include "ADN_TimeField.h"
 
 #include <qgroupbox.h>
 #include <qhbox.h>
@@ -73,9 +74,9 @@ void ADN_KnowledgeGroups_GUI::Build()
     QGroupBox* pGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Knowledge group" ), pMainWidget_ );
 
     builder.AddField<ADN_EditLine_String>( pGroup, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField<ADN_EditLine_Double>( pGroup, tr( "Maximum lifetime" ), vInfosConnectors[eMaxLifetime], tr( "s" ), eGreaterZero );
+    builder.AddField<ADN_TimeField>( pGroup, tr( "Maximum lifetime" ), vInfosConnectors[eMaxLifetime] );
     builder.AddField<ADN_EditLine_Double>( pGroup, tr( "Maximum distance between knowledge and real unit" ), vInfosConnectors[eMaxDistance], 0, eGreaterZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pGroup, tr( "Interpolation time" ), vInfosConnectors[eHasInterpolationTime], vInfosConnectors[eInterpolationTime], tr( "s" ), eGreaterZero );
+    builder.AddOptionnalField<ADN_TimeField>( pGroup, tr( "Interpolation time" ), vInfosConnectors[eHasInterpolationTime], vInfosConnectors[eInterpolationTime] );
 
     pGroupsList->SetItemConnectors( vInfosConnectors );
 
