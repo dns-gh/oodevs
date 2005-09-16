@@ -247,7 +247,7 @@ signatures
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionEmbuscade                ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionSurete                   ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionSureteAvecObjectif       ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionObstacle                 ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/, B /*return code*/ );    
+    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionObstacle                 ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
     B                                A::DEC_Geometrie_CalculePointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeLocalisation                      ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
     S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeLocalisationSurface               ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );

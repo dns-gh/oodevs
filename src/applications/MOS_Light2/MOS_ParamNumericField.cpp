@@ -46,6 +46,10 @@ MOS_ParamNumericField::MOS_ParamNumericField( ASN1INT& asnInt, int nMin, int nMa
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 MOS_ParamNumericField::MOS_ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent )
+: QHBox         ( pParent )
+, MOS_Param_ABC ()
+, pAsnInt_      ( 0 )
+, pAsnReal_     ( &asnReal )
 {
     assert( rDefault >= rMin && rDefault <= rMax );
 

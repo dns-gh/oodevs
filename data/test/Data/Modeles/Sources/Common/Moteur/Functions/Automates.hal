@@ -85,7 +85,7 @@ signatures
                                      
     // Geometrie                     
     S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeFuseauEnTroncons                 ( R /*profondeur des segments en m*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionObstacle                ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/, B /*return code*/ );    
+    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionObstacle                ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
     S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeLocalisation                     ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
     U /*T_Point*/                    A::DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
     B                                A::DEC_Geometrie_EstPointDansFuseau                      ( U /*T_Point*/ );

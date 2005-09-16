@@ -227,25 +227,25 @@ void DEC_GeometryFunctions::ComputeObstaclePosition( DIA_Call_ABC& call, const T
 {
     assert( DEC_Tools::CheckTypePoint( call.GetParameter( 1 ) ) );
 
-    MT_Vector2D*        pCenter       = call.GetParameter( 1 ).ToUserPtr( pCenter );
-    MT_Float            rRadius       = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
-    DIA_Variable_ABC&   diaReturnCode = call.GetParameter( 3 );
+    MT_Vector2D*        pCenter = call.GetParameter( 1 ).ToUserPtr( pCenter );
+    MT_Float            rRadius = MIL_Tools::ConvertMeterToSim( call.GetParameter( 2 ).ToFloat() );
+
+    assert( pCenter );
 
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
 
+    MT_Vector2D* pResultPos = new MT_Vector2D();
+    call.GetResult().SetValue( (void*)pResultPos, &DEC_Tools::GetTypePoint() );
+
     sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pObjectType, *pCenter, rRadius );
     TER_World::GetWorld().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
     const bool bOut = costEvaluationFunctor.FoundAPoint();
-    if( bOut )
-    {
-        MT_Vector2D* pResultPos = new MT_Vector2D( costEvaluationFunctor.BestPosition() );
-        call.GetResult().SetValue( (void*)pResultPos, &DEC_Tools::GetTypePoint() );
-    }
-    else
-        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
 
-    diaReturnCode.SetValue( bOut );    
+    if( bOut )
+        *pResultPos = costEvaluationFunctor.BestPosition();
+    else
+        *pResultPos = *pCenter;
 }
 
 //-----------------------------------------------------------------------------

@@ -53,10 +53,7 @@ void DEC_ActionFunctions::SuspendAction( DIA_Call_ABC& call, MIL_AgentPion& call
 
     PHY_Action_ABC* pAction = call.GetParameter( 0 ).ToUserPtr( pAction );
     if( !pAction )
-    {
-        assert( false );
         return;
-    }
     assert( callerAgent.HasAction( *pAction ) );
     pAction->Suspend();
 }
@@ -71,10 +68,7 @@ void DEC_ActionFunctions::ResumeAction( DIA_Call_ABC& call, MIL_AgentPion& calle
 
     PHY_Action_ABC* pAction = call.GetParameter( 0 ).ToUserPtr( pAction );
     if( !pAction )
-    {
-        assert( false );
         return;
-    }
     assert( callerAgent.HasAction( *pAction ) );
     pAction->Resume();
 }
@@ -173,7 +167,7 @@ void DEC_ActionFunctions::Transport_MagicLoadPion( DIA_Call_ABC& call, MIL_Agent
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicLoadPions( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
-   assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeListePions( call.GetParameter( 0 ) ) );
     const bool bTransportOnlyLoadable = call.GetParameter( 1 ).ToBool();
 
     T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();

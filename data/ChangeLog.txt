@@ -20,6 +20,11 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Suppression des assert() dans PauseAction() / ResumeAction()
+    - NLD - La fonction DEC_Geometrie_CalculerPositionObstacle() retourne toujours une position (=> le booléen de retour est supprimé)
+    - NLD - Mos_Light2 - Bug fix : crash avec les paramètres REAL (creer zone minée linéaire/par dispersion ...)
+
+Version 0.119.2 [15/09/2005] - Codename 'bPropagateEndFusse = false'
     - NLD - Bug fix : les noms des automates dans le dévermineur sont corrects
     - NLD - Bug fix : 'Vrai' random sur la composante choisie lors de l'application des dégats suite à une explosion
     - NLD - Bug fix : Les 'on spontaneous end' n'étaient pas appelés correctement lors de l'arrêt des missions automates
