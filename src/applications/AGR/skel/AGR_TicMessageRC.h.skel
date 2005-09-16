@@ -1,0 +1,92 @@
+// *****************************************************************************
+//
+// $Created: SBO 2005-05-13 $
+// $Archive: /MVW_v10/Build/SDK/TIC/src/Communications/MessageReport.h $
+// $Author: Sbo $
+// $Modtime: 20/07/05 18:10 $
+// $Revision: 1 $
+// $Workfile: MessageReport.h $
+//
+// *****************************************************************************
+
+#ifndef __MessageReport_h_
+#define __MessageReport_h_
+
+#include "Types.h"
+#include "CommunicationType.h"
+
+namespace TIC
+{
+
+// =============================================================================
+// @class  MessageReport
+// Created: SBO 2005-06-30
+// =============================================================================
+class MessageReport
+{
+    MT_COPYNOTALLOWED( MessageReport )
+
+public:
+    //! @name constant
+    //@{
+    static const MessageReport notDefined;
+    //@}
+
+public:
+    //! @name Manager
+    //@{
+    static void Initialize();
+    static void Terminate ();
+
+    static const MessageReport& Find( const std::string& strName );
+    static const MessageReport& Find( uint               asnId   );
+    //@}
+
+    //! @name Accessors
+    //@{
+    const std::string&                GetName   () const;
+          uint                        GetID     () const;
+          uint                        GetAsnID  () const;
+    const CommunicationType::ESubType GetSubType() const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    enum E_Type
+    {
+		$AGR_TIC_EnumRcs$
+        eNone
+    };
+
+    typedef std::map< std::string, const MessageReport*, sCaseInsensitiveLess > T_MessageReportMap;
+    typedef T_MessageReportMap::const_iterator                                  CIT_MessageReportMap;
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+     MessageReport( const std::string& strName, E_Type nType, uint nAsnID, CommunicationType::ESubType eSubType );
+    ~MessageReport();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string                 strName_;
+    const E_Type                      nType_;
+    const uint                        nAsnID_;
+    const CommunicationType::ESubType eSubType_;
+    //@}
+
+    //! @name Static member
+    //@{
+    static T_MessageReportMap messages_;
+    //@}
+};
+
+} // end namespace TIC
+
+#include "MessageReport.inl"
+
+#endif // __MessageReport_h_

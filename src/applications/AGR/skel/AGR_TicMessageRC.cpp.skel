@@ -1,0 +1,67 @@
+// *****************************************************************************
+//
+// $Created: SBO 2005-05-13 $
+// $Archive: /MVW_v10/Build/SDK/TIC/src/Communications/MessageReport.cpp $
+// $Author: Sbo $
+// $Modtime: 20/07/05 18:06 $
+// $Revision: 1 $
+// $Workfile: MessageReport.cpp $
+//
+// *****************************************************************************
+
+#include "TIC_pch.h"
+
+#include "MessageReport.h"
+
+using namespace TIC;
+
+MessageReport::T_MessageReportMap MessageReport::messages_;
+const MessageReport               MessageReport::notDefined( "None", eNone, 0, CommunicationType::eNoSubType );
+
+// =============================================================================
+// MANAGER
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MessageReport::Initialize
+// Created: SBO 2005-06-30
+// -----------------------------------------------------------------------------
+void MessageReport::Initialize()
+{
+	$AGR_TIC_InitializeRcs$
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageReport::Terminate
+// Created: SBO 2005-06-30
+// -----------------------------------------------------------------------------
+void MessageReport::Terminate()
+{
+    for( CIT_MessageReportMap it = messages_.begin(); it != messages_.end(); ++it )
+        delete it->second;
+    messages_.clear();
+}
+
+// =============================================================================
+// INSTANCIATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MessageReport constructor
+// Created: SBO 2005-06-30
+// -----------------------------------------------------------------------------
+MessageReport::MessageReport( const std::string& strName, E_Type nType, uint nAsnID, CommunicationType::ESubType eSubType )
+    : strName_  ( strName )
+    , nType_    ( nType   )
+    , nAsnID_   ( nAsnID  )
+    , eSubType_ ( eSubType )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageReport destructor
+// Created: SBO 2005-06-30
+// -----------------------------------------------------------------------------
+MessageReport::~MessageReport()
+{
+}
