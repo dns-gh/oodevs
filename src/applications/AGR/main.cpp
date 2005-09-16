@@ -13,6 +13,7 @@
 #include "AGR_TesterMissionGenerator.h"
 #include "AGR_TesterProjectGenerator.h"
 #include "AGR_MilRCGenerator.h"
+#include "AGR_TicRCGenerator.h"
 
 #include "MT_Tools/MT_Version.h"
 #include <windows.h>
@@ -78,6 +79,7 @@ int main( int /*argc*/, char** /*argv*/ )
         generators.push_back( new AGR_FichesMissionsGenerator() );
         generators.push_back( new AGR_TesterMissionGenerator() );
         generators.push_back( new AGR_TesterProjectGenerator() );
+        generators.push_back( new AGR_TicRCGenerator() );
         
 
         MT_MakeDir( strOutputPath );        

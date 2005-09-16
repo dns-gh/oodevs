@@ -108,3 +108,13 @@ std::string AGR_RC::GenerateMOS() const
     assert( pType_ );
     return pType_->GenerateMOS( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_RC::GenerateTICRCClassBodyInitialize
+// Created: SBO 2005-09-14
+// -----------------------------------------------------------------------------
+std::string AGR_RC::GenerateTICRCClassBodyInitialize() const
+{
+    assert( pType_ );
+    return pType_->GenerateTIC( *this );
+}

@@ -29,6 +29,12 @@ class AGR_RC;
 class AGR_TypeRC
 {
 public:
+    //! @name Static Operations
+    //@{
+    static void Initialize();
+    static void Terminate ();
+    //@}
+
     //! @name Constructors/Destructor
     //@{
      AGR_TypeRC( const std::string& strName, MT_XXmlInputArchive& input, const AGR_Workspace& workspace );
@@ -43,6 +49,7 @@ public:
     std::string GenerateMILRCClassBodyIncludes  ( const AGR_RC& rcInstance ) const;
     std::string GenerateMOS2                    ( const AGR_RC& rcInstance ) const;
     std::string GenerateMOS                     ( const AGR_RC& rcInstance ) const;
+    std::string GenerateTIC                     ( const AGR_RC& rcInstance ) const;
     //@}
 
 private:
@@ -72,6 +79,9 @@ private:
 
     typedef std::vector< const Param* >     T_ParamVector;
     typedef T_ParamVector::const_iterator   CIT_ParamVector;
+
+    typedef std::map< std::string, std::string > T_RCTypesMap;
+    typedef T_RCTypesMap::const_iterator         CIT_RCTypesMap;
     //@}
 
 private:
@@ -81,6 +91,9 @@ private:
           std::string   strHumanName_;
     const AGR_Type_ABC* pType_;     // Type pour CR de type "CR-EnPosteFaceAObstacle ::= KnowledgeObject"
     T_ParamVector       params_; // Type pour CR de type CR-PreparationMission ::= SEQUENCE 
+
+    // TIC RC Types
+    static T_RCTypesMap rcTypes_;
 };
 
 #include "AGR_TypeRC.inl"
