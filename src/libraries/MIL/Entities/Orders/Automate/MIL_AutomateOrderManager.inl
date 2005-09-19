@@ -28,3 +28,13 @@ const MIL_AutomateMission_ABC* MIL_AutomateOrderManager::GetMission() const
 {
     return pMission_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::IsNewMissionStarted
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+inline
+bool MIL_AutomateOrderManager::IsNewMissionStarted() const
+{
+    return bNewMissionStarted_;
+}

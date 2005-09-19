@@ -182,6 +182,7 @@ MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, DIA_Paramet
     MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
     if( !object.Initialize( army, diaParameters, nCurrentParamIdx ) )
     {
+        object.MarkForDestruction(); //$$$ naze, mais nécessaire
         delete &object;
         return 0;
     }
@@ -203,6 +204,7 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( uint nID, const ASN1T
     ASN1T_EnumObjectErrorCode nErrorCode = object.Initialize( nID, asn );
     if( nErrorCode != EnumObjectErrorCode::no_error )
     {
+        object.MarkForDestruction(); //$$$ naze, mais nécessaire
         delete &object;
         return nErrorCode;
     }

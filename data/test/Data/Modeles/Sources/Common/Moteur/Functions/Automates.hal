@@ -7,9 +7,7 @@ signatures
     V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
-    
-    V                                A::DEC_FinMission();
-                                      
+                                            
     // Accesseurs                     
     S /*T_ListePions*/               A::DEC_Automate_PionsAvecPC  ();
     S /*T_ListePions*/               A::DEC_Automate_PionsSansPC  ();
@@ -38,7 +36,9 @@ signatures
     S /*T_ListePions*/               A::DEC_CDT_ObtenirListePionsEnAttenteOC ();
     V                                A::DEC_CDT_ObtenirListeOCAttendusParPion( A /*T_Pion*/, S /*&T_OrdreConduiteDemandeCont*/, X /*&strHint*/ );    
                                      
-    // Limas                         
+    // Limas / Missions
+    B                                A::DEC_NouvelleMission   ();
+    V                                A::DEC_FinMission        ();
     B                                A::DEC_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
     B                                A::DEC_GetMissionLimaFlag( U /*T_Lima*/ );
     U /*T_Lima*/                     A::DEC_GetLima           ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé    

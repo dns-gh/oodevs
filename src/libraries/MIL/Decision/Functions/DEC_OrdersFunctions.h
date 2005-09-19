@@ -28,6 +28,11 @@ public:
     template< typename T > static void WaitForOrder       ( DIA_Call_ABC& call, T& caller );            
     template< typename T > static void StopWaitingForOrder( DIA_Call_ABC& call, T& caller );            
 
+    // Mission
+    template< typename T > static void FinishMission      ( DIA_Call_ABC& call, T& caller );
+    template< typename T > static void IsNewMissionStarted( DIA_Call_ABC& call, T& caller );
+
+
     // Limas
     template< typename T > static void SetMissionLimaFlag ( DIA_Call_ABC& call,       T& caller );
     template< typename T > static void GetMissionLimaFlag ( DIA_Call_ABC& call, const T& caller );

@@ -49,12 +49,3 @@ void DEC_MiscFunctions::RC_Warning( DIA_Call_ABC& call, T& caller )
     pRC->Send( caller, MIL_RC::eRcTypeWarning, call.GetParameters() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_MiscFunctions::FinishMission
-// Created: NLD 2005-09-13
-// -----------------------------------------------------------------------------
-template< typename T >
-void DEC_MiscFunctions::FinishMission( DIA_Call_ABC& call, T& caller )
-{
-    caller.GetOrderManager().OnReceiveRCMissionFinished();
-}

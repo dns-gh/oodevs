@@ -36,6 +36,7 @@ MIL_PionOrderManager::MIL_PionOrderManager( MIL_AgentPion& pion )
     , pMission_                  ( 0 )
     , pReplacementMission_       ( 0 )
     , bRCMissionFinishedReceived_( false )
+    , bNewMissionStarted_        ( false )
 {
 
 }
@@ -59,6 +60,8 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 // -----------------------------------------------------------------------------
 void MIL_PionOrderManager::Update( bool bIsDead )
 {
+    bNewMissionStarted_ = false;
+
     if( bIsDead )
     {
         StopAllOrders();
@@ -83,6 +86,7 @@ void MIL_PionOrderManager::Update( bool bIsDead )
 
         pMission_->Start();
         SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+        bNewMissionStarted_ = true;
     } 
 
     if( bRCMissionFinishedReceived_ )
@@ -211,6 +215,7 @@ void MIL_PionOrderManager::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnM
     pMission_ = &mission;
     pMission_->Start();
     SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+    bNewMissionStarted_ = true;
 }
 
 // -----------------------------------------------------------------------------

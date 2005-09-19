@@ -38,3 +38,13 @@ const MIL_PionMission_ABC* MIL_PionOrderManager::GetMission() const
 {
     return pMission_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionOrderManager::IsNewMissionStarted
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PionOrderManager::IsNewMissionStarted() const
+{
+    return bNewMissionStarted_;
+}

@@ -37,6 +37,7 @@ MIL_AutomateOrderManager::MIL_AutomateOrderManager( MIL_Automate& automate )
     , pMission_                  ( 0 )
     , bRCMissionFinishedReceived_( false )
     , pReplacementMission_       ( 0 )
+    , bNewMissionStarted_        ( false )
 {
     
 }
@@ -62,6 +63,7 @@ MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::Update()
 {
+    bNewMissionStarted_ = false;
     if( pReplacementMission_ )
     {
         MIL_AutomateMission_ABC* pMissionTmp = pReplacementMission_;
@@ -77,6 +79,7 @@ void MIL_AutomateOrderManager::Update()
 
         pMission_->StartMRT();
         SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+        bNewMissionStarted_ = true;
     } 
 
     if( bRCMissionFinishedReceived_ )
@@ -271,6 +274,7 @@ void MIL_AutomateOrderManager::OnReceiveMsgAutomateOrder( const ASN1T_MsgAutomat
     pMission_ = &mission;
     pMission_->StartMRT();
     SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+    bNewMissionStarted_ = true;
 }
 
 //-----------------------------------------------------------------------------
@@ -661,6 +665,13 @@ const T_LimaFlagedPtrMap& MIL_AutomateOrderManager::GetLimas() const
 // -----------------------------------------------------------------------------
 bool MIL_AutomateOrderManager::SetMissionLimaFlag( const MIL_Lima& lima, bool bValue )
 {
+    if( automate_.IsEmbraye() )
+    {
+        const MIL_Automate::T_PionVector& pions = automate_.GetPions();
+        for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            (**itPion).GetOrderManager().SetMissionLimaFlag( lima, bValue );
+    }
+
     if( !pMission_ )
         return false;
     return pMission_->SetLimaFlag( lima, bValue );

@@ -20,6 +20,16 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Nouvelle fonction DEC : DEC_NouvelleMission(), qui renvoit 'true' quand le pion ou l'automate vient de recevoir une nouvelle mission
+    - NLD - Bug fix : assert() et crash potentiel qd un objet ne peut pas être créé à cause de paramètres foireux
+    - NLD - La fonction SetMissionLimaFlag() appelée niveau automate quand automate embrayé affecte aussi les flags des pions
+    - NLD - assert() dans DEC_Path() commentée temporairement
+
+Version 0.119.4 [16/09/2005] - Codename 'no comment'
+    - NLD - Bug fix DIA : mauvaise propagation et appel des 'on spontaneous end' après DIA_DeactivateOrder() sur les actions : le 'on spontaneous end' était appelé sur les actions en état 'beginning' et 'not selected'
+                (actions instanciées mais jamais selectionnées)
+
+Version 0.119.3 [16/09/2005] - Codename 'BEH_INF_Pion_Milice_GererObstacleAvecContournementSaufSiDeManoeuvreEtPasbInitOrAttaqueNBC'
     - NLD - Suppression des assert() dans PauseAction() / ResumeAction()
     - NLD - La fonction DEC_Geometrie_CalculerPositionObstacle() retourne toujours une position (=> le booléen de retour est supprimé)
     - NLD - Mos_Light2 - Bug fix : crash avec les paramètres REAL (creer zone minée linéaire/par dispersion ...)

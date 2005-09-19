@@ -76,6 +76,7 @@ public:
           uint                 GetCurrentOrderID        () const;
           bool                 IsWaitingForOrderConduite() const;
     const MIL_PionMission_ABC* GetMission               () const;
+          bool                 IsNewMissionStarted      () const;
     //@}
 
 private:
@@ -91,6 +92,7 @@ private:
     MIL_PionMission_ABC* pMission_;
     MIL_PionMission_ABC* pReplacementMission_;
     bool                 bRCMissionFinishedReceived_;
+    bool                 bNewMissionStarted_;
 
     // Conduite
     T_ObjectVector orderConduiteRequestVector_; //$$$ merci dia pour le type ....

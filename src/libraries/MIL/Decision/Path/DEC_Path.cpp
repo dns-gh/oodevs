@@ -764,8 +764,8 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
     {
         DEC_PathPoint& point = **itPoint;
 
-        if( itPoint != resultList_.begin() )
-            assert( unitSpeeds_.IsPassable( point.GetObjectTypes() ) );
+//        if( itPoint != resultList_.begin() )
+//            assert( unitSpeeds_.IsPassable( point.GetObjectTypes() ) );
         ++itPoint;
         if( itPoint != resultList_.end() )
             assert( unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) > 0 );
@@ -801,7 +801,7 @@ void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObje
         bSectionJustEnded_ = false;
     }
     
-    assert( resultList_.empty() || unitSpeeds_.IsPassable ( nObjectTypes ) );
+//    assert( resultList_.empty() || unitSpeeds_.IsPassable ( nObjectTypes ) );
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
 }
 

@@ -6,9 +6,15 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+    if( DEC_NouvelleMission() )
+        DEC_Debug( "DEC_NouvelleMission" );
+
+    T_Lima lima = DEC_GetLima( eTypeLima_LC );
+    if( lima != 0 )
+        DEC_Debug( "Lima flag : " + BoolToString( DEC_GetMissionLimaFlag( lima ) ) );
+
     if( DEC_NecessiteEvacuationBlesses( myself ) )
         DEC_Debug( "-== Necessite Evacuation Blesses ==-" );
-
 
     /*
     selection carreux;
@@ -539,10 +545,65 @@ behavior MIS_Pion_Test_ChangePosture( T_Mission_Pion_Test_ChangePosture mission,
 //-----------------------------------------------------------------------------
 // REINFORCEMENT
 //-----------------------------------------------------------------------------
+action ACT_1( id nDummy ) using deplacement
+{
+    when selected:
+    {
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "ACT_1 DIA_ModuleBegins" );
+        DEC_Debug( "ACT_1 when selected" );        
+    }
+    on focus loss:
+    {
+        DEC_Debug( "ACT_1 on focus loss" );        
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "ACT_1 on spontaneous end" );        
+    }
+}
+
+action ACT_2( id nDummy ) using deplacement
+{
+    when selected:
+    {
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "ACT_2 DIA_ModuleBegins" );
+        DEC_Debug( "ACT_2 when selected" );        
+    }
+    on focus loss:
+    {
+        DEC_Debug( "ACT_2 on focus loss" );        
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "ACT_2 on spontaneous end" );        
+    }
+}
 
 behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDummy )
 {
-    DEC_Debug( "MIS_Pion_Test_Reinforcement" );
+    when updated:
+    {
+        persistent float toto=0;
+        
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "MIS_Pion_Test_Reinforce DIA_ModuleBegins" );
+        DEC_Debug( "MIS_Pion_Test_Reinforce when updated" );    
+                
+        action ACT_1( nDummy ) : strength = 4;
+        
+        action ACT_2( nDummy ) : strength = toto;
+        ++ toto;
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Pion_Test_Reinforce on spontaneous end" );        
+    }
+    
+    
+
+    /*DEC_Debug( "MIS_Pion_Test_Reinforcement" );
     if( mission.renforce_ )
     {
         if( DEC_Renforce( mission.unite_ ) )
@@ -552,6 +613,7 @@ behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDum
     }
     else
         DEC_AnnuleRenforcement();
+    */        
 }
 
 action ACT_TirDirect( T_ConnaissanceAgent target, bool bOnlyTransporteurs )

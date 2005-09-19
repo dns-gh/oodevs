@@ -400,9 +400,6 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_Automate >, "DEC_Message" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Automate >, "DEC_Warning" );
 
-    // Mission
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::FinishMission < MIL_Automate >, "DEC_FinMission" );
-
     // Geometry       
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_Automate >, "DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInParts               < MIL_Automate >, "DEC_Geometrie_DecoupeLocalisation"                       );
@@ -424,6 +421,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_Automate >, "DEC_Geometrie_PionDerriere"                              );
 
     // Orders
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted< MIL_Automate >, "DEC_NouvelleMission"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission      < MIL_Automate >, "DEC_FinMission"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SetMissionLimaFlag < MIL_Automate >, "DEC_SetMissionLimaFlag" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, "DEC_GetMissionLimaFlag" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima            < MIL_Automate >, "DEC_GetLima"            );    

@@ -1774,8 +1774,8 @@
       <Sante>
         <Medecin>
           <SoinBlessures>
-            <U1/>
             <UE/>
+            <U1/>
           </SoinBlessures>
         </Medecin>
       </Sante>

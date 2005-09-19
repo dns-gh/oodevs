@@ -7,9 +7,7 @@ signatures
     V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
     V                                A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
-    
-    V                                A::DEC_FinMission();
-        
+           
     // Actions
     V                                A::DEC_StopAction   ( U /*T_Action*/ );
     V                                A::DEC_PauseAction  ( U /*T_Action*/ );
@@ -237,7 +235,9 @@ signatures
     B                                A::DEC_ReleverPion       ( A /*T_Pion*/ );        
     B                                A::DEC_PeutReleverPion   ( A /*T_Pion*/ );        
     
-    // Limas
+    // Limas / Missions
+    B                                A::DEC_NouvelleMission   ();    
+    V                                A::DEC_FinMission        ();    
     B                                A::DEC_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
     B                                A::DEC_GetMissionLimaFlag( U /*T_Lima*/ );
     U /*T_Lima*/                     A::DEC_GetLima           ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé

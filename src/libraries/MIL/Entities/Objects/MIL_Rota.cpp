@@ -99,7 +99,7 @@ void MIL_Rota::save( MIL_CheckPointOutArchive& file, const uint ) const
 bool MIL_Rota::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
-    return false;
+    return false; // Creation des Rotas depuis les scripts interdite
 }
 
 //-----------------------------------------------------------------------------

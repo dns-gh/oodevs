@@ -44,11 +44,12 @@ public:
 
     //! @name Accessors
     //@{
-          MIL_AutomateMRT*          GetMRT           () const;
-    const MT_Vector2D&              GetDirDanger     () const;
-    const MIL_Fuseau&               GetFuseau        () const;
-          uint                      GetCurrentOrderID() const;
-    const MIL_AutomateMission_ABC*  GetMission       () const;
+          MIL_AutomateMRT*          GetMRT             () const;
+    const MT_Vector2D&              GetDirDanger       () const;
+    const MIL_Fuseau&               GetFuseau          () const;
+          uint                      GetCurrentOrderID  () const;
+    const MIL_AutomateMission_ABC*  GetMission         () const;
+          bool                      IsNewMissionStarted() const;
     //@}
 
     //! @name Events
@@ -106,6 +107,7 @@ private:
     MIL_AutomateMission_ABC* pReplacementMission_;    
     bool                     bRCMissionFinishedReceived_;
     T_PionMissionSet         cdtPionMissionSet_; // Mission données par l'automate aux pions pendant la conduite
+    bool                     bNewMissionStarted_;
 
     // Conduite
     T_ObjectVector orderConduiteRequestVector_; //$$$ merci dia pour le type ....

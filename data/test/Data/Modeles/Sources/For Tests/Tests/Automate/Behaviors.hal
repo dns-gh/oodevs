@@ -12,12 +12,12 @@ behavior BEH_Defaut( id nDummy )
 }
 
 behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )
-{  
-           
+{           
+         
     if( DIA_ModuleBegins() )
-    {   
+    { 
         DEC_Debug( "MIS_Automate_MRT_Test_MoveTo" );
-        
+                       
         DEC_RC( eRC_Releve, DEC_Automate_PionPC() );
 
         T_ListePions selPions = DEC_Automate_PionsAvecPC();
@@ -50,6 +50,15 @@ behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
 {
     when updated:
     {   
+    
+        persistent bool bDummy = false;
+        T_Lima lima = DEC_GetLima( eTypeLima_LC );
+        if( lima != 0 )
+            DEC_SetMissionLimaFlag( lima, bDummy );
+            
+        bDummy = !bDummy;
+
+    
         persistent T_CalculLignesAvantArriere tacheTmp;
 
         if( DIA_ModuleBegins() )

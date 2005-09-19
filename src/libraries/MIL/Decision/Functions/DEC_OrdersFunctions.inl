@@ -82,3 +82,23 @@ void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
     }
     call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_OrdersFunctions::FinishMission
+// Created: NLD 2005-09-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_OrdersFunctions::FinishMission( DIA_Call_ABC& call, T& caller )
+{
+    caller.GetOrderManager().OnReceiveRCMissionFinished();
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_OrdersFunctions::IsNewMissionStarted
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_OrdersFunctions::IsNewMissionStarted( DIA_Call_ABC& call, T& caller )
+{
+    call.GetResult().SetValue( caller.GetOrderManager().IsNewMissionStarted() );
+}

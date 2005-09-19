@@ -463,10 +463,13 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::StopWaitingForOrder< MIL_AgentPion >, "DEC_AnnuleAttenteOrdre" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::RelievePion                          , "DEC_ReleverUnite"       );
 
-    // Limas
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SetMissionLimaFlag< MIL_AgentPion >, "DEC_SetMissionLimaFlag"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag< MIL_AgentPion >, "DEC_GetMissionLimaFlag"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima           < MIL_AgentPion >, "DEC_GetLima"             );
+    // Limas / Mission
+    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted< MIL_AgentPion >, "DEC_NouvelleMission"     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::FinishMission      < MIL_AgentPion >, "DEC_FinMission"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::SetMissionLimaFlag < MIL_AgentPion >, "DEC_SetMissionLimaFlag"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_AgentPion >, "DEC_GetMissionLimaFlag"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::GetLima            < MIL_AgentPion >, "DEC_GetLima"             );
 
     // Etat décisionnel
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged       , "DEC_Agent_ChangeEtatRapportDeForce"    );
@@ -516,9 +519,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_AgentPion >, "DEC_Message" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_AgentPion >, "DEC_Warning" );
     
-    // Mission
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::FinishMission < MIL_AgentPion >, "DEC_FinMission" );
-
     // Hiérarchie
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPionsWithPC             , "DEC_Pion_PionsAvecPC"           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPionsWithoutPC          , "DEC_Pion_PionsSansPC"           );

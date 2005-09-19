@@ -27,10 +27,7 @@ public:
     template< typename T > static void RC_Operational( DIA_Call_ABC& call, T& caller );
     template< typename T > static void RC_Message    ( DIA_Call_ABC& call, T& caller );
     template< typename T > static void RC_Warning    ( DIA_Call_ABC& call, T& caller );    
-
-    // Mission
-    template< typename T > static void FinishMission ( DIA_Call_ABC& call, T& caller );
-   
+  
     // Reinforcement
     static void Reinforce          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );            
     static void CancelReinforcement( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );            
