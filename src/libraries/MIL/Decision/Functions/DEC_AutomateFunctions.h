@@ -58,6 +58,7 @@ public:
     static void PionChangeAutomate( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     
     // Accesseurs sur les fonctions Pion
+    static void IsPionFlying                                ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void IsPionTransported                           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void IsPionContaminated                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
     static void IsPionNBCProtected                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 

@@ -23,6 +23,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
@@ -430,6 +431,20 @@ void DEC_AutomateFunctions::IsPionContaminated( DIA_Call_ABC& call, const MIL_Au
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
     
     call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RolePion_NBC >().IsContaminated() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::IsPionFlying
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::IsPionFlying( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+    
+    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );  
+    assert( pPion );
+    
+    call.GetResult().SetValue( pPion->GetPion().GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() );
 }
 
 // -----------------------------------------------------------------------------

@@ -124,6 +124,7 @@ signatures
     B                                A::DEC_Automate_PionPeutTransporterPion                         ( A /*T_Pion transporteur*/, A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
     R /* temps en minutes */         A::DEC_Automate_PionAutonomieEnDeplacement                      ( A /*T_Pion*/ );    
     R /* temps en minutes */         A::DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite     ( A /*T_Pion*/, R /*distance en m*/ );    
+    B                                A::DEC_Automate_PionEstEnVol                                    ( A /*T_Pion*/ );
     
     // Objets
     B                                A::DEC_Automate_ProchainObjetSurItinerairePion      ( A /*T_Pion*/, U /*OUT T_ConnaissanceObjet*/, R /*OUT Distance*/, * /*Liste de E_TypeObject à prendre en compte*/ );    

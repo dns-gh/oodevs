@@ -307,7 +307,7 @@ void DEC_AgentFunctions::CanMineObject( DIA_Call_ABC& call, const MIL_AgentPion&
 // Name: DEC_AgentFunctions::CanActivateObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::CanActivateObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::CanActivateObject( DIA_Call_ABC& call, const MIL_AgentPion& /*callerAgent*/ )
 {
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
@@ -476,7 +476,7 @@ void DEC_AgentFunctions::GetHumanTransportersRecoveringTime( DIA_Call_ABC& call,
 // Name: DEC_AgentFunctions::DisableHumanTransportersNow
 // Created: JVT 2005-05-04
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableHumanTransportersNow( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::DisableHumanTransportersNow( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition() );
 }
@@ -485,7 +485,7 @@ void DEC_AgentFunctions::DisableHumanTransportersNow( DIA_Call_ABC& call, MIL_Ag
 // Name: DEC_AgentFunctions::EnableHumanTransportersNow
 // Created: JVT 2005-05-04
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableHumanTransportersNow( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::EnableHumanTransportersNow( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Transported >().RecoverHumanTransporters();
 }

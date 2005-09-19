@@ -446,6 +446,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionChangeAutomate , "DEC_Pion_ChangeAutomate" );
     
     // Accesseurs sur les pions
+    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionFlying                               , "DEC_Automate_PionEstEnVol"                                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionTransported                          , "DEC_Automate_PionEstTransporte"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionContaminated                         , "DEC_Automate_PionEstContamine"                                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionNBCProtected                         , "DEC_Automate_PionEstEnTenueProtectionNBC"                      );
