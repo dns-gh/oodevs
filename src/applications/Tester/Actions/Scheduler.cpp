@@ -86,11 +86,11 @@ bool Scheduler::Run( uint nCurrentTick )
     if( itCurrentAction_ == actions_.end() )
     {
         itCurrentAction_ = actions_.begin();
-        nCurrentTick_    = ( -1 ) * nExecutionPeriod_;
+        nCurrentTick_    = ( -1 ) * ( int )nExecutionPeriod_;
     }
     ++nCurrentTick_;
     while( itCurrentAction_ != actions_.end()  && 
-           itCurrentAction_->first < nCurrentTick_ &&
+           (int)itCurrentAction_->first < nCurrentTick_ &&
            itCurrentAction_->second->IsReady() )
     {
         MT_LOG_INFO_MSG( "[" << nTestRun_ / nTestTotal_ << "][" << nTestRun_ % nTestTotal_ << "/" << nTestTotal_ 
