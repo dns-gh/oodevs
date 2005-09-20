@@ -403,7 +403,7 @@ using namespace missions;
 
 //-----------------------------------------------------------------------------
 // Name: RegisterAutomateMissions
-// Created: AGR $TIME$
+// Created: AGR 
 //-----------------------------------------------------------------------------
 void missions::RegisterAutomateMissions()
 {
@@ -553,7 +553,7 @@ void missions::RegisterAutomateMissions()
 
 // -----------------------------------------------------------------------------
 // Name: RegisterPionMissions
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void missions::RegisterPionMissions()
 {
@@ -761,7 +761,7 @@ void missions::RegisterPionMissions()
 
 // -----------------------------------------------------------------------------
 // Name: RegisterOrderConduites
-// Created: AGR $TIME$
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void missions::RegisterOrderConduites()
 {
@@ -771,7 +771,7 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ArreterSilenceRadio>( "ArreterSilenceRadio", eOrdreConduite_ArreterSilenceRadio, T_MsgOrderConduite_order_conduite_order_conduite_arreter_silence_radio, "Rep_OrderConduite_ArreterSilenceRadio", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_PasserEnSilenceRadar>( "PasserEnSilenceRadar", eOrdreConduite_PasserEnSilenceRadar, T_MsgOrderConduite_order_conduite_order_conduite_passer_en_silence_radar, "Rep_OrderConduite_PasserEnSilenceRadar", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ArreterSilenceRadar>( "ArreterSilenceRadar", eOrdreConduite_ArreterSilenceRadar, T_MsgOrderConduite_order_conduite_order_conduite_arreter_silence_radar, "Rep_OrderConduite_ArreterSilenceRadar", true, true );
-    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_RecupererTransporteurs>( "RecupererTransporteurs", eOrdreConduite_RecupererTransporteurs, T_MsgOrderConduite_order_conduite_order_conduite_recuperer_transporteurs, "Rep_OrderConduite_RecupererTransporteurs", false, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_RecupererTransporteurs>( "RecupererTransporteurs", eOrdreConduite_RecupererTransporteurs, T_MsgOrderConduite_order_conduite_order_conduite_recuperer_transporteurs, "Rep_OrderConduite_RecupererTransporteurs", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_AttendreSePoster>( "AttendreSePoster", eOrdreConduite_AttendreSePoster, T_MsgOrderConduite_order_conduite_order_conduite_attendre_se_poster, "Rep_OrderConduite_AttendreSePoster", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_attendre_se_poster );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Poursuivre>( "Poursuivre", eOrdreConduite_Poursuivre, T_MsgOrderConduite_order_conduite_order_conduite_poursuivre, "Rep_OrderConduite_Poursuivre", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_poursuivre );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Interrompre>( "Interrompre", eOrdreConduite_Interrompre, T_MsgOrderConduite_order_conduite_order_conduite_interrompre, "Rep_OrderConduite_Interrompre", true, false );
