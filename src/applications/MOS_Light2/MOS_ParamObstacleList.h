@@ -55,41 +55,41 @@ public:
 
     //! @name Operations
     //@{
-    void Draw();
+    void Draw               ();
     void FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
+    bool CheckValidity      ();
+    void WriteMsg           ( std::stringstream& strMsg );
     //@}
     
 private:
     void Copy( ASN1T_MissionGenObject& src, ASN1T_MissionGenObject& dest );
 
 private slots:
-    void OnSelectionChanged( QListViewItem* pItem );
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
-    void OnNewObstacle();
+    void OnSelectionChanged  ( QListViewItem* pItem );
+    void OnRequestPopup      ( QListViewItem* pItem, const QPoint& pos );
+    void OnNewObstacle       ();
     void OnDeleteSelectedItem();
-    void OnClearList();
+    void OnClearList         ();
 
 private:
-    typedef std::vector< ASN1T_CoordUTM* > T_ASNUMTCoordPrtVector;
-    typedef T_ASNUMTCoordPrtVector::iterator IT_ASNUMTCoordPrtVector;
+    typedef std::vector< ASN1T_CoordUTM* >                      T_ASNUMTCoordPrtVector;
+    typedef T_ASNUMTCoordPrtVector::iterator                    IT_ASNUMTCoordPrtVector;
     typedef std::pair< ASN1T_MissionGenObject*, T_PointVector > T_Item;
-    typedef MT_ValuedListViewItem< T_Item > T_ListItem;
+    typedef MT_ValuedListViewItem< T_Item >                     T_ListItem;
 
 private:
     //! @name Member data
     //@{
     ASN1T_ListMissionGenObject& asnObjectList_;
-    ASN1T_MissionGenObject* pObstacles_;
-    T_ASNUMTCoordPrtVector asnUMTCoordPtrList_;
+    ASN1T_MissionGenObject*     pObstacles_;
+    T_ASNUMTCoordPrtVector      asnUMTCoordPtrList_;
     
-    MOS_ParamListView* pListView_;
-    QListViewItem* pSelectedItem_;
+    MOS_ParamListView*          pListView_;
+    QListViewItem*              pSelectedItem_;
 
-    MOS_ParamObstacle* pObstacleEditor_;
+    MOS_ParamObstacle*          pObstacleEditor_;
 
-    QPopupMenu* pPopupMenu_;
+    QPopupMenu*                 pPopupMenu_;
     //@}
 };
 

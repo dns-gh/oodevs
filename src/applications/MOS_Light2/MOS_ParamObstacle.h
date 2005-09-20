@@ -53,17 +53,15 @@ public:
 
     //! @name Operations
     //@{
-    void Draw();
+    void Draw               ();
     void FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
-    bool CheckValidity();
-    void WriteMsg( std::stringstream& strMsg );
+    bool CheckValidity      ();
+    void WriteMsg           ( std::stringstream& strMsg );
     //@}
 
-    const T_PointVector& GetPointList();
-
-private:
-    //! @name Helpers
+    //! @name Accessors
     //@{
+    const T_PointVector& GetPointList();
     //@}
 
 private:
@@ -72,19 +70,13 @@ private:
     std::string             strMenuText_;
     ASN1T_MissionGenObject& asnObject_;
 
-    QComboBox* pTypeCombo_;
-    QComboBox* pUrgencyCombo_;
-    QComboBox* pPreliminaryCombo_;
-    QComboBox* pPriorityCombo_;
+    QComboBox*              pTypeCombo_;
+    QComboBox*              pUrgencyCombo_;
+    QComboBox*              pPreliminaryCombo_;
+    QComboBox*              pPriorityCombo_;
 
-    MOS_ParamLocation* pLocation_;
+    MOS_ParamLocation*      pLocation_;
     //@}
-
-private:
-    static const int nNbrObjType_;
-    static const int nNbrUrgencyType_;
-    static const int nNbrPreliminaryType_;
-    static const int nNbrPriorityType_;
 };
 
 

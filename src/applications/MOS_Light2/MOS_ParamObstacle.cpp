@@ -29,10 +29,6 @@
 #include "MOS_Tools.h"
 #include "MOS_ParamLocation.h"
 
-const int MOS_ParamObstacle::nNbrObjType_            = 19;
-const int MOS_ParamObstacle::nNbrUrgencyType_        = 2;
-const int MOS_ParamObstacle::nNbrPreliminaryType_    = 2;
-const int MOS_ParamObstacle::nNbrPriorityType_       = 3;
 
 #ifndef MOS_USE_INLINE
 #   include "MOS_ParamObstacle.inl"
@@ -56,23 +52,23 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
 {
     new QLabel( tr( "Type:" ), this );
     pTypeCombo_ = new QComboBox( this );
-    for( int n1 = 0; n1 < nNbrObjType_; ++n1 )
+    for( int n1 = 0; n1 < eNbrObjectType; ++n1 )
         pTypeCombo_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n1 ).c_str(), n1 );
 
     new QLabel( tr( "Urgence:" ), this );
     pUrgencyCombo_ = new QComboBox( this );
-    for( int n2 = 0; n2 < nNbrUrgencyType_; ++n2 )
-        pUrgencyCombo_->insertItem( MOS_Tools::ToString( (ASN1T_EnumMissionGenUrgence)n2 ), n2 );
+    for( int n2 = 0; n2 < eNbrMissionGenUrgence; ++n2 )
+        pUrgencyCombo_->insertItem( ENT_Tr::ConvertFromMissionGenUrgence( ( E_MissionGenUrgence )n2 ).c_str(), n2 );
 
     new QLabel( tr( "Sous type:" ), this );
     pPreliminaryCombo_ = new QComboBox( this );
-    for( int n3 = 0; n3 < nNbrPreliminaryType_; ++n3 )
-        pPreliminaryCombo_->insertItem( MOS_Tools::ToString( (ASN1T_EnumMissionGenSousTypeObstacle)n3 ), n3 );
+    for( int n3 = 0; n3 < eNbrMissionGenSousTypeObstacle; ++n3 )
+        pPreliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )n3 ).c_str(), n3 );
 
     new QLabel( tr( "Priorité:" ), this );
     pPriorityCombo_ = new QComboBox( this );
-    for( int n4 = 0; n4 < nNbrPriorityType_; ++n4 )
-        pPriorityCombo_->insertItem( MOS_Tools::ToString( (ASN1T_EnumMissionGenPriorite)n4 ), n4 );
+    for( int n4 = 0; n4 < eNbrMissionGenPriorite; ++n4 )
+        pPriorityCombo_->insertItem( ENT_Tr::ConvertFromMissionGenPriorite( ( E_MissionGenPriorite )n4 ).c_str(), n4 );
 
     if( bOutsideData )
     {

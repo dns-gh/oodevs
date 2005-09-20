@@ -35,10 +35,11 @@
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
 MOS_World::MOS_World( const std::string& strArchive )
-    : planar_( parameters_ )
-    , strArchiveName_( strArchive )
-    , pDetection_( 0 )
-    , isInitialized_( false )
+    : planar_              ( parameters_ )
+    , strArchiveName_      ( strArchive )
+    , pDetection_          ( 0 )
+    , isInitialized_       ( false )
+    , strTerrainDirectory_ ( "" )
 {
     Read( strArchiveName_, true );
 }

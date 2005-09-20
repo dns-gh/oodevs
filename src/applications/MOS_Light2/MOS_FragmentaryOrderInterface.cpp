@@ -51,7 +51,7 @@ MOS_FragmentaryOrderInterface::MOS_FragmentaryOrderInterface( MOS_Agent& agent, 
     pASNMsgOrder_->GetAsnMsg().unit_id = agent.GetAgentID();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = nMissionId_;
 
-    QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromFragOrder( E_FragOrder( nMissionId_ ) ).c_str(), this );
+    QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromFragOrder( ( E_FragOrder )nMissionId_ ).c_str(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
     pLabel->setAlignment( Qt::AlignCenter );
     QFont font = pLabel->font();
@@ -84,7 +84,7 @@ void MOS_FragmentaryOrderInterface::OnOk()
     }
 
     std::stringstream strMsgTitle;
-    strMsgTitle << "Ordre de conduite " << ENT_Tr::ConvertFromFragOrder( E_FragOrder( nMissionId_ ) ) << " pour agent " << agent_.GetName();
+    strMsgTitle << "Ordre de conduite " << ENT_Tr::ConvertFromFragOrder( ( E_FragOrder )nMissionId_ ) << " pour agent " << agent_.GetName();
     MT_LOG_INFO( strMsgTitle.str().c_str(), eSent, strMsg.str().c_str() );
 
     pASNMsgOrder_->GetAsnMsg().order_id = 43;

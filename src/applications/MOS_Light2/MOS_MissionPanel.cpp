@@ -160,7 +160,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     
     // Commun orders.
     //$$$$ Hard coded value!
-    for( uint i = 0; i <= eOrdreConduite_AcquerirObjectif; ++i )
+    for( uint i = 0; i <= eOrdreConduite_ChangerReglesEngagement; ++i )
     {
         int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( i ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         pFragOrdersMenu->setItemParameter( nId, i );
@@ -177,7 +177,9 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     // Specific automata frag orders.
     if( agent.IsAutomate() )
     {
-        const MOS_AgentModel::T_FragOrderSet& fragOrders2 = agent.GetModelPion()->GetAvailableFragOrders();
+        const MOS_AgentModel::T_FragOrderSet& fragOrders2 = agent.GetModelAutomate()->GetAvailableFragOrders();
+        if( fragOrders2.size() > 0 )
+            pFragOrdersMenu->insertSeparator();
         for( MOS_AgentModel::CIT_FragOrderSet itFrag2 = fragOrders2.begin(); itFrag2 != fragOrders2.end(); ++itFrag2 )
         {
             int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *itFrag2 ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
@@ -195,11 +197,11 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
         int nId;
 
-        nId = pMagicOrdersMenu->insertItem( tr( "Téléportation" ),             this, SLOT( MagicMove() ) );
+        nId = pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( MagicMove() ) );
         if( agent.GetParent() != 0 && agent.GetParent()->IsEmbraye() )
             pMagicOrdersMenu->setItemEnabled( nId, false );
 
-        nId = pMagicOrdersMenu->insertItem( tr( "Recompletement personnel" ),  this, SLOT( MagicRestore( int ) ) );
+        nId = pMagicOrdersMenu->insertItem( tr( "Recompletement personnel" ), this, SLOT( MagicRestore( int ) ) );
         pMagicOrdersMenu->setItemParameter( nId, T_MsgUnitMagicAction_action_recompletement_personnel );
      
         nId = pMagicOrdersMenu->insertItem( tr( "Recompletement équipement" ), this, SLOT( MagicRestore( int ) ) );
@@ -208,16 +210,16 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         nId = pMagicOrdersMenu->insertItem( tr( "Recompletement ressources" ), this, SLOT( MagicRestore( int ) ) );
         pMagicOrdersMenu->setItemParameter( nId, T_MsgUnitMagicAction_action_recompletement_ressources );
         
-        nId = pMagicOrdersMenu->insertItem( tr( "Recompletement total" ),      this, SLOT( MagicRestore( int ) ) );
+        nId = pMagicOrdersMenu->insertItem( tr( "Recompletement total" ), this, SLOT( MagicRestore( int ) ) );
         pMagicOrdersMenu->setItemParameter( nId, T_MsgUnitMagicAction_action_recompletement_total );
         
         pMagicOrdersMenu->insertItem( tr( "Recompletement partiel" ), this, SLOT( MagicRecompletion() ) );
 
-        pMagicOrdersMenu->insertItem( tr( "Détruire composante" ),             this, SLOT( MagicDestroyComponent() ) );
-        pMagicOrdersMenu->insertItem( tr( "Destruction totale" ),              this, SLOT( MagicDestroyAll() ) );
+        pMagicOrdersMenu->insertItem( tr( "Détruire composante" ), this, SLOT( MagicDestroyComponent() ) );
+        pMagicOrdersMenu->insertItem( tr( "Destruction totale" ), this, SLOT( MagicDestroyAll() ) );
 
         if( agent.IsAutomate() )
-            pMagicOrdersMenu->insertItem( tr( "Se rendre" ),                      this, SLOT( MagicSurrender() ) );
+            pMagicOrdersMenu->insertItem( tr( "Se rendre" ), this, SLOT( MagicSurrender() ) );
 
         popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
     }

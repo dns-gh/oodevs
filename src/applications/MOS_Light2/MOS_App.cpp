@@ -202,6 +202,7 @@ void MOS_App::InitializeData( const std::string& strFilename )
 
         QMessageBox::warning( 0, "MOSLight 2", strMsg.str().c_str() );
         quit();
+        throw;
     }
 
     // Limas and limits (if the file exists)
@@ -506,7 +507,6 @@ void MOS_App::ReadODB( std::string strFilename )
         strMsg << tr("Le fichier ODB ") << strFilename << tr(" contient des erreurs, et n'a pu être chargé.") << std::endl;
         strMsg << tr("Descriptif de l'erreur:") << std::endl << e.GetWholeMessage();
         QMessageBox::critical( 0, "MOSLight 2", strMsg.str().c_str() );
-        exit();
     }
 
     MT_ChangeDir( strCurrentDir );
