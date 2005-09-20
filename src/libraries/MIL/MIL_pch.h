@@ -50,6 +50,7 @@
 #include "DIA/DIA_DebugInfo_Generator_lib.h"
 #include "DIA/DIA_Debuger_lib.h"
 
+#include "MT_Tools/MT_Assert.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
@@ -57,7 +58,6 @@
 #include "MT_Tools/MT_Line.h"
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_ScipioException.h"
-
 #include "MT_Tools/MT_Random.h"
 #include "MT_Tools/MT_GaussianRandom.h"
 

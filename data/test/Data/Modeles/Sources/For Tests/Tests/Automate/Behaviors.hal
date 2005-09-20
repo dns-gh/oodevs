@@ -9,6 +9,17 @@ behavior BEH_Defaut( id nDummy )
     
     //T_ConnaissanceObjet cock;
     //DEC_ActiverObjet( cock );
+    
+    
+    /*
+    T_ListePions selPions = DEC_Automate_PionsAvecPC();    
+    with( y in selPions )
+    {
+        T_Pion pion = y;    
+        
+        DEC_Debug( "En vol : " + BoolToString( DEC_Automate_PionEstEnVol( pion ) ) );
+    }        
+    */
 }
 
 behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )

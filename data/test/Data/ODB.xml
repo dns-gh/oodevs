@@ -586,7 +586,7 @@
             <Position>31TCN0037279175</Position>
         </Pion>
         
-        <Pion id="6000042" type="Section Combat NBC" >
+        <!--<Pion id="6000042" type="Section Combat NBC" >
             <LiensHierarchiques>
                 <Automate>5000000</Automate>
             </LiensHierarchiques>
@@ -598,7 +598,7 @@
                 <Automate>5000000</Automate>
             </LiensHierarchiques>
             <Position>31TBN7989872349</Position>
-        </Pion>
+        </Pion>-->
         
         <Pion id="6000044" type="Escadrille ALAT" >
             <LiensHierarchiques>
@@ -631,7 +631,6 @@
     </Pions>
     
     <Objets>
-  
   
         <Objet id="3" type="itineraire logistique">
             <Armee>bleu</Armee>

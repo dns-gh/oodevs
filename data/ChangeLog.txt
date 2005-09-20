@@ -20,6 +20,12 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - Bug fix : ordre de conduite 'RecupererTransporteurs' disponible tout le temps, même sans mission
+assert()
+
+- crash quand zone nbc sur bord terrain
+- vérifier msg erreur qd automate peut pas donner mission à pion
+
 
 Version 1.0.1 [20/09/2005] - Codename 'tourbe'
     - AGE - Les désenrichissement de pathfind sont faits dans l'ordre inverse de création

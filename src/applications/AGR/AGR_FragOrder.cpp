@@ -52,7 +52,8 @@ AGR_FragOrder::AGR_FragOrder( const std::string& strAsnName, const std::string& 
              || strAsnName == "OrderConduite_ArreterSilenceRadio" 
              || strAsnName == "OrderConduite_PasserEnSilenceRadar"
              || strAsnName == "OrderConduite_ArreterSilenceRadar" 
-             || strAsnName == "OrderConduite_ChangerReglesEngagement" )
+             || strAsnName == "OrderConduite_ChangerReglesEngagement" 
+             || strAsnName == "OrderConduite_RecupererTransporteurs" )
     {
         bAvailableForAllMissions_  = true;
         bAvailableWithoutMissions_ = true;
