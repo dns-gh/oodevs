@@ -20,9 +20,13 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+
+Version 1.0.1 [20/09/2005] - Codename 'tourbe'
     - AGE - Les désenrichissement de pathfind sont faits dans l'ordre inverse de création
     - AGE - Les DEC_Path ne sont détruits que dans le thread principal. Bug fix probable du freeze d'Intel2
     - AGE - Les camps Glaise, Tourbe et Humus sont maintenant représentés en rouge dans MOS_Light2
+
+Version 1.0 [19/09/2005] - Codename 'yooooooooouuuuuuuuuuhhhhhhhhhhhhhhooooooooooooouuuuuuuuuuuu'
     - NLD - Nouvelle fonction DEC : DEC_NouvelleMission(), qui renvoit 'true' quand le pion ou l'automate vient de recevoir une nouvelle mission
     - NLD - Bug fix : assert() et crash potentiel qd un objet ne peut pas être créé à cause de paramètres foireux
     - NLD - La fonction SetMissionLimaFlag() appelée niveau automate quand automate embrayé affecte aussi les flags des pions
