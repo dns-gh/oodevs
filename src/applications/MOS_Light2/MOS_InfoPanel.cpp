@@ -118,7 +118,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowLogisticPanels( true );
         ShowObjectPanel( false );
 
-        pTabWidget_->setCurrentPage( 0 );
+        //pTabWidget_->setCurrentPage( 0 );
     }
 
     else if( selectedElement.pGtia_ != 0 )
@@ -172,7 +172,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( false );
         ShowObjectPanel( true );
         ShowLogisticPanels( false );
-        pTabWidget_->setCurrentPage( 0 );
+        //pTabWidget_->setCurrentPage( 0 );
     }
 
     else
@@ -181,7 +181,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowAgentKnowledgePanel( true );
         ShowObjectKnowledgePanel( true );
         ShowObjectPanel( false );
-        pTabWidget_->setCurrentPage( 0 );
+        //pTabWidget_->setCurrentPage( 0 );
     }
 
     pStatePanel_           ->SetSelection( selectedElement );

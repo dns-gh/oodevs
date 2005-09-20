@@ -84,7 +84,6 @@ MOS_LogisticSupplyChangeQuotasDialog::~MOS_LogisticSupplyChangeQuotasDialog()
 // -----------------------------------------------------------------------------
 void MOS_LogisticSupplyChangeQuotasDialog::SetAgent( const MOS_Agent& agent )
 {
-    assert( !pAgent_ );
     pAgent_ = &agent;
 
     pQuotas_->clear();
@@ -95,8 +94,6 @@ void MOS_LogisticSupplyChangeQuotasDialog::SetAgent( const MOS_Agent& agent )
     const T_ResourceQty_Map& ressources = agent.pSupplyData_->stocks_;
     for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
     {
-        if( ! it->second )
-            continue;
         const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
         pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
     }
