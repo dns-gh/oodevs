@@ -63,7 +63,7 @@ MOS_Object_NBC::~MOS_Object_NBC()
 // Name: MOS_Object_NBC::ReadODB
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_Object_NBC::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_NBC::ReadODB( MOS_InputArchive& archive )
 {
     MOS_Object_ABC::ReadODB( archive );
 

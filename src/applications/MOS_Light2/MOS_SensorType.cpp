@@ -20,7 +20,7 @@
 // Created: NLD 2004-09-10
 // Modified: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-MOS_SensorType::MOS_SensorType( const std::string& strName, MT_InputArchive_ABC& archive )
+MOS_SensorType::MOS_SensorType( const std::string& strName, MOS_InputArchive& archive )
     : strName_             ( strName )
     , postureSourceFactors_( eNbrUnitPosture, 0. )
     , weatherFactors_      ( eNbrWeatherType, 0. )
@@ -30,8 +30,7 @@ MOS_SensorType::MOS_SensorType( const std::string& strName, MT_InputArchive_ABC&
     InitializeAngle    ( archive );
     InitializeDistances( archive );
 
-    if( !archive.Section( "ModificateursDeDistance" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.Section( "ModificateursDeDistance" );
 
     InitializePostureSourceFactors( archive );
     InitializeWeatherFactors      ( archive );
@@ -53,11 +52,9 @@ MOS_SensorType::~MOS_SensorType()
 // Name: MOS_SensorType::InitializeEnvironnementFactors
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-void MOS_SensorType::InitializeEnvironnementFactors( MT_InputArchive_ABC& archive )
+void MOS_SensorType::InitializeEnvironnementFactors( MOS_InputArchive& archive )
 {
-    if ( !archive.Section( "Environnements" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.Section( "Environnements" );
     for ( uint idx = 0; idx < MOS_RawVisionData::eNbrVisionObjects; ++idx )
     {
         assert( environementFactors_.size() > idx );
@@ -78,19 +75,16 @@ void MOS_SensorType::InitializeEnvironnementFactors( MT_InputArchive_ABC& archiv
 // Name: MOS_SensorType::InitializeWeatherFactors
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-void MOS_SensorType::InitializeWeatherFactors( MT_InputArchive_ABC& archive )
+void MOS_SensorType::InitializeWeatherFactors( MOS_InputArchive& archive )
 {
-    if( !archive.Section( "Precipitations" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.Section( "Precipitations" );
 
     for( uint i = 0; i < eNbrWeatherType; ++i )
     {
         assert( weatherFactors_.size() > i );
         MT_Float& rFactor = weatherFactors_[ i ];
 
-        if ( !archive.ReadField( MOS_Tools::ConvertWeatherType( (E_WeatherType)i ), rFactor ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.ReadField( MOS_Tools::ConvertWeatherType( (E_WeatherType)i ), rFactor );
         if ( rFactor < 0. || rFactor > 1. )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
     }
@@ -102,19 +96,15 @@ void MOS_SensorType::InitializeWeatherFactors( MT_InputArchive_ABC& archive )
 // Name: MOS_SensorType::InitializeLightingFactors
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-void MOS_SensorType::InitializeLightingFactors( MT_InputArchive_ABC& archive )
+void MOS_SensorType::InitializeLightingFactors( MOS_InputArchive& archive )
 {
-    if( !archive.Section( "Eclairements" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.Section( "Eclairements" );
     for( uint i = 0; i < eNbrLightingType; ++i )
     {
         assert( lightingFactors_.size() > i );
         MT_Float& rFactor = lightingFactors_[ i ];
 
-        if ( !archive.ReadField( MOS_Tools::ConvertLightingType( (E_LightingType)i ), rFactor ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.ReadField( MOS_Tools::ConvertLightingType( (E_LightingType)i ), rFactor );
         if ( rFactor < 0. || rFactor > 1. )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
     }
@@ -127,21 +117,18 @@ void MOS_SensorType::InitializeLightingFactors( MT_InputArchive_ABC& archive )
 // Name: MOS_SensorType::InitializeAngle
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void MOS_SensorType::InitializeAngle( MT_InputArchive_ABC& archive )
+void MOS_SensorType::InitializeAngle( MOS_InputArchive& archive )
 {
-    if ( !archive.Section( "Angle" ) || !archive.Read( rAngle_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.Section( "Angle" );
+    archive.Read( rAngle_ );
     std::string strUnit;
-    if ( !archive.ReadAttribute( "unite", strUnit ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.ReadAttribute( "unite", strUnit );
     if ( sCaseInsensitiveEqual()( strUnit, "degre" ) )
         rAngle_ *= ( MT_PI / 180. );
     else if ( !sCaseInsensitiveEqual()( strUnit, "radian" ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
 
-    if ( !archive.ReadAttribute( "balayage", bScanningAllowed_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.ReadAttribute( "balayage", bScanningAllowed_ );
     archive.EndSection(); // Angle
 }
 
@@ -149,23 +136,15 @@ void MOS_SensorType::InitializeAngle( MT_InputArchive_ABC& archive )
 // Name: PHY2_SensorTypeAgent::InitializeDistances
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-void MOS_SensorType::InitializeDistances( MT_InputArchive_ABC& archive )
+void MOS_SensorType::InitializeDistances( MOS_InputArchive& archive )
 {
-    if( !archive.ReadField( "DistanceDeProximite", rSquareProximityDist_ ) ) 
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.ReadField( "DistanceDeProximite", rSquareProximityDist_ );
     rSquareProximityDist_ *= rSquareProximityDist_;
 
-    if ( !archive.Section( "DistancesDeBase" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    if ( !archive.ReadField( "DD", rDetectionDist_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    if ( !archive.ReadField( "DR", rRecognitionDist_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    if ( !archive.ReadField( "DI", rIdentificationDist_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.Section( "DistancesDeBase" );
+    archive.ReadField( "DD", rDetectionDist_ );
+    archive.ReadField( "DR", rRecognitionDist_ );
+    archive.ReadField( "DI", rIdentificationDist_ );
 
     if ( rDetectionDist_ < rRecognitionDist_ || rRecognitionDist_ < rIdentificationDist_ || rIdentificationDist_ < 0. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
@@ -177,20 +156,16 @@ void MOS_SensorType::InitializeDistances( MT_InputArchive_ABC& archive )
 // Name: MOS_SensorType::InitializePostureSourceFactors
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void MOS_SensorType::InitializePostureSourceFactors( MT_InputArchive_ABC& archive )
+void MOS_SensorType::InitializePostureSourceFactors( MOS_InputArchive& archive )
 {
-    if( !archive.Section( "PosturesSource" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.Section( "PosturesSource" );
     for( uint i = 0; i < eNbrUnitPosture; ++i )
     {
         assert( postureSourceFactors_.size() > i );
         MT_Float& rFactor = postureSourceFactors_[ i ];
         const std::string strPosture = MOS_Tools::ToString( (E_UnitPosture)i ).ascii();
 
-        if ( !archive.ReadField( strPosture, rFactor ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.ReadField( strPosture, rFactor );
         if ( rFactor < 0. || rFactor > 1. )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
     }

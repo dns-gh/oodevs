@@ -53,7 +53,7 @@ public:
     /** @name Creation / destruction */
     //-------------------------------------------------------------------------
     //@{
-    static MOS_Meteo* Create( MT_InputArchive_ABC& );
+    static MOS_Meteo* Create( MOS_InputArchive& );
     static MOS_Meteo* Create( const ASN1T_MeteoAttributs& );
     bool              Destroy();
 
@@ -90,7 +90,7 @@ private:
 
     friend class MOS_RawVisionData;
 
-    void Initialize( MT_InputArchive_ABC& );
+    void Initialize( MOS_InputArchive& );
     bool Initialize( const ASN1T_MeteoAttributs& );
     void Terminate();
     //@}

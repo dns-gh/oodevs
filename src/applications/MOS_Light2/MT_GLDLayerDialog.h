@@ -56,18 +56,6 @@ public:
     void SetLayer( MT_GLDLayer* pLayer );
     //@}
 
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 private slots:
     //! @name Helpers
     //@{

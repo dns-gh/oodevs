@@ -50,7 +50,7 @@ public:
 
     //! @name Static Operations
     //@{
-    static void           InitializeObjectIds      ( MT_XXmlInputArchive& classeIds );
+    static void           InitializeObjectIds      ( MOS_InputArchive& classeIds );
     static MOS_IDManager& GetIDManagerForObjectType( ASN1T_EnumObjectType nType );
     //@}
 
@@ -86,7 +86,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update  ( const ASN1T_MsgObjectUpdate& asnMsg  );
-    virtual void ReadODB (       MT_XXmlInputArchive&   archive );
+    virtual void ReadODB (       MOS_InputArchive&   archive );
     virtual void WriteODB(       MT_XXmlOutputArchive&  archive ) const;
 
     // explosion results

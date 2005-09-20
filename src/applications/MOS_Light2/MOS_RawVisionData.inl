@@ -58,7 +58,7 @@ void MOS_RawVisionData::InitializeHeight( const std::string& strFile )
 inline
 void MOS_RawVisionData::InitializeMeteo( const std::string& strFile )
 {
-    MT_XXmlInputArchive archive;
+    MOS_InputArchive archive;
     if ( !archive.Open( strFile ) || !archive.Section( "Meteo" ) )
         throw MT_ScipioException( "MOS_RawVisionData::Initialize", __FILE__, __LINE__, MT_FormatString( "Can't read xml file '%s'", strFile.c_str() ) );
     InitializeMeteo( archive );

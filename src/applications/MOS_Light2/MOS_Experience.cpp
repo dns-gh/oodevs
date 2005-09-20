@@ -27,7 +27,7 @@ const MOS_Experience MOS_Experience::veteran_    ( "Veteran"    , eVeteran    , 
 // Name: MOS_Experience::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_Experience::Initialize( MT_InputArchive_ABC& archive )
+void MOS_Experience::Initialize( MOS_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing experiences" );
     experiences_[ conscrit_    .GetName() ] = &conscrit_;
@@ -91,7 +91,7 @@ MOS_Experience::~MOS_Experience()
 // Name: MOS_Experience::Read
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void MOS_Experience::Read( MT_InputArchive_ABC& archive )
+void MOS_Experience::Read( MOS_InputArchive& archive )
 {
     archive.ReadField( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_       );
     archive.ReadField( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_  );

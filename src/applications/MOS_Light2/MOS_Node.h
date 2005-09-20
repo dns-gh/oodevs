@@ -6,7 +6,6 @@
 #ifndef __MOS_Node_h_
 #define __MOS_Node_h_
 
-
 // =============================================================================
 /** @class  MOS_Node
     @brief  Geometry element of a map object.

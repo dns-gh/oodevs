@@ -18,7 +18,6 @@
 #include "MT/MT_IO/MT_DirEntry.h"
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
-#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
 #include "geocoord/Geoid.h"
 #include "graphics/GraphicShape.h"
@@ -164,8 +163,7 @@ void MOS_World::Read( const std::string& strArchive, bool bWorldOnly )
         strTerrainDirectory_ = strInitialDir + "\\" + strDir;
     MT_ChangeDir( strTerrainDirectory_ );
     
-    MT_XXmlInputArchive archive;
-    archive.EnableExceptions( true );
+    MOS_InputArchive archive;
     archive.Open( strFile );
 
     archive.Section( "Terrain" );
@@ -197,8 +195,7 @@ void MOS_World::Read( const std::string& strArchive, bool bWorldOnly )
 // -----------------------------------------------------------------------------
 void MOS_World::ReadWorld( const std::string& strArchive )
 {
-    MT_XXmlInputArchive archive;
-    archive.EnableExceptions( true );
+    MOS_InputArchive archive;
     archive.Open( strArchive );
     archive.Section( "World" );
     double rLatitude, rLongitude;

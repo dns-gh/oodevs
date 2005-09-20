@@ -84,7 +84,7 @@ public:
     void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
     //@}
 
-    void ReadODB( MT_InputArchive_ABC& archive );
+    void ReadODB( MOS_InputArchive& archive );
     void WriteODB( MT_OutputArchive_ABC& archive );
 
 private:

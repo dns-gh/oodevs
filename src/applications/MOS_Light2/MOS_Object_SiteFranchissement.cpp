@@ -64,7 +64,7 @@ MOS_Object_SiteFranchissement::~MOS_Object_SiteFranchissement()
 // Name: MOS_Object_SiteFranchissement::ReadODB
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_Object_SiteFranchissement::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_SiteFranchissement::ReadODB( MOS_InputArchive& archive )
 {
     MOS_Object_ABC::ReadODB( archive );
 

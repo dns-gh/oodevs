@@ -18,7 +18,6 @@
 
 #include "MT_Tools/MT_Ellipse.h"
 
-class MT_InputArchive_ABC;
 class MT_Sector;
 class MOS_SensorType;
 class MOS_Agent;
@@ -228,7 +227,7 @@ public:
     //@}
 
 private:
-    void               InitializeMeteo( MT_InputArchive_ABC& );
+    void               InitializeMeteo( MOS_InputArchive& );
     E_PerceptionResult FindPerception( const MOS_Agent& agent, const MOS_SensorType&, const MT_Vector2D& target, MT_Float rHeight ) const;
 
 private:

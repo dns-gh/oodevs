@@ -144,7 +144,7 @@ void MOS_Gtia::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledg
 */
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
-void MOS_Gtia::ReadODB( MT_InputArchive_ABC& archive )
+void MOS_Gtia::ReadODB( MOS_InputArchive& archive )
 {
     archive.Section( "GroupeConnaissance" );
     archive.ReadAttribute( "id", nID_ );

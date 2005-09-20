@@ -41,7 +41,7 @@ public:
 public:
     //! @name Manager
     //@{
-    static       void             Initialize( MT_InputArchive_ABC& archive );
+    static       void             Initialize( MOS_InputArchive& archive );
     static       void             Terminate ();
     static const MOS_Experience*  Find      ( const std::string& strName );
     static const MOS_Experience*  Find      ( ASN1T_EnumUnitExperience nAsnID );    
@@ -83,7 +83,7 @@ private:
 
     //! @name Init
     //@{
-    void Read( MT_InputArchive_ABC& archive );
+    void Read( MOS_InputArchive& archive );
     //@}
 
 private:

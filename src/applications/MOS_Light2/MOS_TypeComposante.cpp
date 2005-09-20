@@ -20,48 +20,35 @@
 // Name: MOS_TypeComposante constructor
 // Created: SBO 2005-08-03
 // -----------------------------------------------------------------------------
-MOS_TypeComposante::MOS_TypeComposante( const std::string& strName, MT_InputArchive_ABC& archive )
+MOS_TypeComposante::MOS_TypeComposante( const std::string& strName, MOS_InputArchive& archive )
     : strName_         ( strName )
     , bHasMaintenance_ ( false )
     , bHasMedical_     ( false )
     , bHasSupply_      ( false )
 {
-    if( !archive.ReadField( "MosID", nID_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    //archive.EnableExceptions( false );
-    if( !archive.Section( "FonctionsLogistiques" ) )
-    {
-        archive.ClearLastError();
+    archive.ReadField( "MosID", nID_ );
+    if( !archive.Section( "FonctionsLogistiques", MOS_InputArchive::eNothing ) )
         return;
-    }
 
-    if( archive.Section( "Maintenance" ) )
+    if( archive.Section( "Maintenance", MOS_InputArchive::eNothing ) )
     {
         bHasMaintenance_ = true;
         archive.EndSection(); // Maintenance
     }
-    else
-        archive.ClearLastError();
 
-    if( archive.Section( "Sante" ) )
+    if( archive.Section( "Sante", MOS_InputArchive::eNothing ) )
     {
         bHasMedical_ = true;
         archive.EndSection(); // Sante
     }
-    else
-        archive.ClearLastError();
 
-    if( archive.Section( "Ravitaillement" ) )
+    if( archive.Section( "Ravitaillement", MOS_InputArchive::eNothing ) )
     {
         bHasSupply_ = true;
         archive.EndSection(); // Ravitaillement
     }
-    else
-        archive.ClearLastError();
 
     archive.EndSection(); // FonctionsLogistiques
-    //archive.EnableExceptions( true );
 }
 
 // -----------------------------------------------------------------------------

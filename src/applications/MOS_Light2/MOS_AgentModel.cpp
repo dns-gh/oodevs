@@ -58,25 +58,17 @@ MOS_AgentModel::~MOS_AgentModel()
 */
 // Created: AGN 2003-12-22
 // -----------------------------------------------------------------------------
-void MOS_AgentModel::Initialize( MT_InputArchive_ABC& input )
+void MOS_AgentModel::Initialize( MOS_InputArchive& input )
 {
-    if( !input.BeginList( "Missions" ) )
-    {
-        input.ClearErrors();
+    if( !input.BeginList( "Missions", MOS_InputArchive::eNothing ) )
         return;
-    }
 
     while( input.NextListElement() )
     {
-        if( !input.Section( "Mission" ) )
-        {
-            input.ClearErrors();
+        if( !input.Section( "Mission", MOS_InputArchive::eNothing ) )
             break;
-        }
         std::string strMission;
-        if( !input.ReadAttribute( "nom", strMission ) )
-            throw MT_ScipioException( "DEC_Model::InitializeMissions", __FILE__, __LINE__, "" );
-
+        input.ReadAttribute( "nom", strMission );
         uint nMissionID;
         if( bAutomataModel_ )
             nMissionID = ENT_Tr::ConvertToAutomataMission( strMission );
@@ -86,37 +78,26 @@ void MOS_AgentModel::Initialize( MT_InputArchive_ABC& input )
             throw MT_ScipioException( "DEC_Model::InitializeMissions", __FILE__, __LINE__, "" );
 
         vAvailableMissions_.push_back( nMissionID );
-        
         ReadFragOrders( input );
-
-
         input.EndSection(); // Mission
     }
     input.EndList(); // Missions    
-
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentModel::ReadFragOrders
 // Created: AGE 2005-04-13
 // -----------------------------------------------------------------------------
-void MOS_AgentModel::ReadFragOrders( MT_InputArchive_ABC& input )
+void MOS_AgentModel::ReadFragOrders( MOS_InputArchive& input )
 {
-    if( !input.BeginList( "OrdresConduite" ) )
-    {
-        input.ClearErrors();
+    if( !input.BeginList( "OrdresConduite", MOS_InputArchive::eNothing ) )
         return;
-    }
     while( input.NextListElement() )
     {
-        if( !input.Section( "OrdreConduite" ) )
-        {
-            input.ClearErrors();
+        if( !input.Section( "OrdreConduite", MOS_InputArchive::eNothing ) )
             break;
-        }
         std::string strFragOrderName;
-        if( !input.ReadAttribute( "nom", strFragOrderName ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, strFragOrderName );
+        input.ReadAttribute( "nom", strFragOrderName );
 
         uint nFragOrderID = ENT_Tr::ConvertToFragOrder( strFragOrderName );
         if( nFragOrderID != (uint)( -1 ) )

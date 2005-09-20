@@ -69,7 +69,7 @@ void MOS_Meteo::sEphemeride::Initialize( int sunriseHour, int sunriseMinute, int
 // Name: MOS_Meteo::Create
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-MOS_Meteo* MOS_Meteo::Create( MT_InputArchive_ABC& archive )
+MOS_Meteo* MOS_Meteo::Create( MOS_InputArchive& archive )
 {
     MOS_Meteo *pElt = recycler_.GetElement();
     if ( !pElt )
@@ -141,7 +141,7 @@ MOS_Meteo::~MOS_Meteo()
 // Name: MOS_Meteo::Initialize
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-void MOS_Meteo::Initialize( MT_InputArchive_ABC& archive )
+void MOS_Meteo::Initialize( MOS_InputArchive& archive )
 {
     assert( !nRefCount_  );
 
@@ -158,24 +158,17 @@ void MOS_Meteo::Initialize( MT_InputArchive_ABC& archive )
     // non utilisé
 
     // Plancher de couverture nuageuse
-    if ( !archive.ReadField( "PlancherCouvertureNuageuse", nPlancherCouvertureNuageuse_ ) )
-        throw MT_ScipioException( "MOS_Meteo::Initialize", __FILE__, __LINE__, "Can't read section 'Meteo::PlancherCouvertureNuageuse'", archive.RetrieveLastError()->GetWholeMessage() );
-
+    archive.ReadField( "PlancherCouvertureNuageuse", nPlancherCouvertureNuageuse_ );
     // Plafond de couverture nuageuse
-    if ( !archive.ReadField( "PlafondCouvertureNuageuse", nPlafondCouvertureNuageuse_ ) )
-        throw MT_ScipioException( "MOS_Meteo::Initialize", __FILE__, __LINE__, "Can't read section 'Meteo::PlafondCouvertureNuageuse'", archive.RetrieveLastError()->GetWholeMessage() );
-
+    archive.ReadField( "PlafondCouvertureNuageuse", nPlafondCouvertureNuageuse_ );
     // Densite moyenne de couverture nuageuse
     uint nVal;
-    if ( !archive.ReadField( "DensiteMoyenneCouvertureNuageuse", nVal ) )
-        throw MT_ScipioException( "MOS_Meteo::Initialize", __FILE__, __LINE__, "Can't read section 'Meteo::DensiteMoyenneCouvertureNuageuse'", archive.RetrieveLastError()->GetWholeMessage() );
+    archive.ReadField( "DensiteMoyenneCouvertureNuageuse", nVal );
     rDensiteCouvertureNuageuse_ = min( nVal, (uint)100 ) / 100.;
 
     // Précipitation
     std::string strVal;
-    if ( !archive.ReadField( "Precipitation", strVal ) )
-        throw MT_ScipioException( "MOS_Meteo::Initialize", __FILE__, __LINE__, "Can't read section 'Meteo::Precipitation'", archive.RetrieveLastError()->GetWholeMessage() );
-    
+    archive.ReadField( "Precipitation", strVal );
     if ( strVal == "PasDePrecipitation" )
         nPrecipitation_ = eWeatherTypeNone            ;
     else if ( strVal == "TempeteDeNeigeOuPluie" )

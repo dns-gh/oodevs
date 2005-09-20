@@ -66,7 +66,7 @@ MOS_Object_ItineraireLogistique::~MOS_Object_ItineraireLogistique()
 // Name: MOS_Object_ItineraireLogistique::ReadODB
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_Object_ItineraireLogistique::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_ItineraireLogistique::ReadODB( MOS_InputArchive& archive )
 {
     MOS_Object_ABC::ReadODB( archive );
 

@@ -78,14 +78,11 @@ MOS_AgentManager::~MOS_AgentManager()
 //-----------------------------------------------------------------------------
 void MOS_AgentManager::Initialize()
 {
-    MT_XXmlInputArchive scipioArchive;
+    MOS_InputArchive scipioArchive;
 
-    if( ! scipioArchive.Open( "scipio.xml" ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Can not open file scipio.xml" , scipioArchive.RetrieveLastError()->GetWholeMessage() );
-    if( ! scipioArchive.Section( "Scipio" ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Section SCIPIO does not exist", scipioArchive.RetrieveLastError()->GetWholeMessage() );
-    if( ! scipioArchive.Section( "Donnees" ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Section SCIPIO does not exist", scipioArchive.RetrieveLastError()->GetWholeMessage() );
+    scipioArchive.Open( "scipio.xml" );
+    scipioArchive.Section( "Scipio" );
+    scipioArchive.Section( "Donnees" );
 
     InitializeModels         ( scipioArchive );
     InitializeTypesComposante( scipioArchive );
@@ -103,27 +100,20 @@ void MOS_AgentManager::Initialize()
 // Name: MOS_AgentManager::InitializeTypesPion
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void MOS_AgentManager::InitializeTypesPion( MT_InputArchive_ABC& scipioArchive )
+void MOS_AgentManager::InitializeTypesPion( MOS_InputArchive& scipioArchive )
 {
     std::string strTypesPionFile;
-    if( !scipioArchive.ReadField( "Pions", strTypesPionFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    scipioArchive.ReadField( "Pions", strTypesPionFile );
 
-    MT_XXmlInputArchive archive;
-    if( !archive.Open( strTypesPionFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    MOS_InputArchive archive;
+    archive.Open( strTypesPionFile );
 
-    if( !archive.BeginList( "Pions" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.BeginList( "Pions" );
     while( archive.NextListElement() )
     {
-        if( !archive.Section( "Unite" ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.Section( "Unite" );
         std::string strName;
-        if( !archive.ReadAttribute( "nom", strName ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.ReadAttribute( "nom", strName );
         MOS_TypePion* pTypePion = new MOS_TypePion( strName, archive );
         bool bOut = typesPion_.insert( std::make_pair( pTypePion->GetID(), pTypePion ) ).second;
         if( !bOut )
@@ -146,26 +136,19 @@ void MOS_AgentManager::InitializeTypesPion( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_AgentManager::InitializeTypesAutomate
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void MOS_AgentManager::InitializeTypesAutomate( MT_InputArchive_ABC& scipioArchive )
+void MOS_AgentManager::InitializeTypesAutomate( MOS_InputArchive& scipioArchive )
 {
     std::string strTypesAutomateFile;
-    if( !scipioArchive.ReadField( "Automates", strTypesAutomateFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    scipioArchive.ReadField( "Automates", strTypesAutomateFile );
 
-    MT_XXmlInputArchive archive;
-    if( !archive.Open( strTypesAutomateFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    if( !archive.BeginList( "Automates" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    MOS_InputArchive archive;
+    archive.Open( strTypesAutomateFile );
+    archive.BeginList( "Automates" );
     while( archive.NextListElement() )
     {
-        if( !archive.Section( "Unite" ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.Section( "Unite" );
         std::string strName;
-        if( !archive.ReadAttribute( "nom", strName ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+        archive.ReadAttribute( "nom", strName );
 
         MOS_TypeAutomate* pTypeAutomate = new MOS_TypeAutomate( strName, archive );
         bool bOut = typesAutomate_.insert( std::make_pair( pTypeAutomate->GetID(), pTypeAutomate ) ).second;
@@ -186,24 +169,38 @@ void MOS_AgentManager::InitializeTypesAutomate( MT_InputArchive_ABC& scipioArchi
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::InitializeModels
+// Created: AGE 2012-12-22
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata )
+{
+    modelArchive.Section( "Modele" );
+    std::string strModelName;
+    modelArchive.ReadAttribute( "nom", strModelName );
+    IT_ModelVector found = std::find_if( vAvailableModels_.begin(), vAvailableModels_.end(), MOS_AgentModel::Cmp( strModelName ) );
+    if( found != vAvailableModels_.end() )
+        throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, MT_FormatString( "Le modèle %s existe déjà.", strModelName.c_str() ).c_str() );
+
+    MOS_AgentModel* pModel = new MOS_AgentModel( bAutomata, strModelName );
+    vAvailableModels_.push_back( pModel );
+    pModel->Initialize( modelArchive );
+    modelArchive.EndSection(); // Modele
+};
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::InitializeModels
 // Created: AGN 2003-12-22
 // -----------------------------------------------------------------------------
-void MOS_AgentManager::InitializeModels( MT_InputArchive_ABC& scipioArchive )
+void MOS_AgentManager::InitializeModels( MOS_InputArchive& scipioArchive )
 {    
     // Modeles
     std::string strDecFile;
-    if( !scipioArchive.ReadField( "Decisionnel", strDecFile ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Field SCIPIO::DIA::Camps does not exist", scipioArchive.RetrieveLastError()->GetWholeMessage() );
-    MT_XXmlInputArchive decArchive;
-    if( !decArchive.Open( strDecFile ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Field SCIPIO::DIA::Camps does not exist", decArchive.RetrieveLastError()->GetWholeMessage() );
-    if( !decArchive.Section( "Decisionnel" ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Field SCIPIO::DIA::Camps does not exist", decArchive.RetrieveLastError()->GetWholeMessage() );
-    if( !decArchive.Section( "DirectIA" ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Field SCIPIO::DIA::Camps does not exist", decArchive.RetrieveLastError()->GetWholeMessage() );
+    scipioArchive.ReadField( "Decisionnel", strDecFile );
+    MOS_InputArchive decArchive;
+    decArchive.Open( strDecFile );
+    decArchive.Section( "Decisionnel" );
+    decArchive.Section( "DirectIA" );
     std::string strModelFile;
-    if( !decArchive.ReadField( "Modeles", strModelFile ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "Field SCIPIO::DIA::Camps does not exist", decArchive.RetrieveLastError()->GetWholeMessage() );
+    decArchive.ReadField( "Modeles", strModelFile );
     decArchive.EndSection(); // Decisionnel
     decArchive.EndSection(); // DirectIA
     decArchive.Close();
@@ -211,61 +208,21 @@ void MOS_AgentManager::InitializeModels( MT_InputArchive_ABC& scipioArchive )
     std::string strModelsDir;
     MT_ExtractFilePath( strDecFile, strModelsDir );    
 
-    MT_XXmlInputArchive modelArchive;
-    if( !modelArchive.Open( strModelsDir + strModelFile ) )
-        throw MT_ScipioException( "MOS_AgentManager::Initialize", __FILE__, __LINE__, "" );
-
-    if( !modelArchive.Section( "Modeles" ) )
-        throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
-
-    if( !modelArchive.BeginList( "Pions" ) )
-        throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
+    MOS_InputArchive modelArchive;
+    modelArchive.Open( strModelsDir + strModelFile );
+    modelArchive.Section( "Modeles" );
+    modelArchive.BeginList( "Pions" );
 
     while( modelArchive.NextListElement() )
-    {
-        if( ! modelArchive.Section( "Modele" ) )
-            throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "Section 'Models::Model' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
-
-        std::string strModelName;
-        if( ! modelArchive.ReadAttribute( "nom", strModelName ) )
-            throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "Section 'Models::Model' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
-
-        IT_ModelVector found = std::find_if( vAvailableModels_.begin(), vAvailableModels_.end(), MOS_AgentModel::Cmp( strModelName ) );
-        if( found != vAvailableModels_.end() )
-            throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, MT_FormatString( "Le modèle %s existe déjà.", strModelName.c_str() ).c_str() );
-
-        MOS_AgentModel* pModel = new MOS_AgentModel( false, strModelName );
-        vAvailableModels_.push_back( pModel );
-        pModel->Initialize( modelArchive );
-        modelArchive.EndSection(); // Model
-    }
+        ReadModelList( modelArchive, false );
     modelArchive.EndList();     // Pions
 
-    if( !modelArchive.BeginList( "Automates" ) )
-        throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
-
+    modelArchive.BeginList( "Automates" );
     while( modelArchive.NextListElement() )
-    {
-        if( ! modelArchive.Section( "Modele" ) )
-            throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "Section 'Models::Model' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
+        ReadModelList( modelArchive, true );
 
-        std::string strModelName;
-        if( ! modelArchive.ReadAttribute( "nom", strModelName ) )
-            throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, "Section 'Models::Model' doesn't exist", modelArchive.RetrieveLastError()->GetWholeMessage() );
-
-        IT_ModelVector found = std::find_if( vAvailableModels_.begin(), vAvailableModels_.end(), MOS_AgentModel::Cmp( strModelName ) );
-        if( found != vAvailableModels_.end() )
-            throw MT_ScipioException( "DEC_Workspace::Initialize", __FILE__, __LINE__, MT_FormatString( "Le modèle %s existe déjà.", strModelName.c_str() ).c_str() );
-
-        MOS_AgentModel* pModel = new MOS_AgentModel( true, strModelName );
-        vAvailableModels_.push_back( pModel );
-        pModel->Initialize( modelArchive );
-        modelArchive.EndSection(); // Model
-    }
     modelArchive.EndList();     // Automates
-
     modelArchive.EndSection(); // Modeles
-
     modelArchive.Close();    
 }
 
@@ -274,26 +231,21 @@ void MOS_AgentManager::InitializeModels( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_AgentManager::InitializeTypesComposantes
 // Created: SBO 2005-08-03
 // -----------------------------------------------------------------------------
-void MOS_AgentManager::InitializeTypesComposante( MT_InputArchive_ABC& scipioArchive )
+void MOS_AgentManager::InitializeTypesComposante( MOS_InputArchive& scipioArchive )
 {
     std::string strTypesComposantesFile;
-    if( !scipioArchive.ReadField( "Composantes", strTypesComposantesFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    scipioArchive.ReadField( "Composantes", strTypesComposantesFile );
 
-    MT_XXmlInputArchive archive;
-    if( !archive.Open( strTypesComposantesFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    if( !archive.BeginList( "Composantes" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    MOS_InputArchive archive;
+    archive.Open( strTypesComposantesFile );
+    archive.BeginList( "Composantes" );
+    
     while( archive.NextListElement() )
     {
-        if( !archive.Section( "Composante" ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+        archive.Section( "Composante" );
 
         std::string strName;
-        if( !archive.ReadAttribute( "nom", strName ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+        archive.ReadAttribute( "nom", strName );
 
         MOS_TypeComposante* pTypeComposante = new MOS_TypeComposante( strName, archive );
         bool bOut = typesComposante_.insert( std::make_pair( pTypeComposante->GetID(), pTypeComposante ) ).second;
@@ -499,7 +451,7 @@ const MOS_TypeComposante* MOS_AgentManager::FindTypeComposante( uint nID ) const
 */
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
-void MOS_AgentManager::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_AgentManager::ReadODB( MOS_InputArchive& archive )
 {
     // Clear the teams that were created during initialization.
     teamMap_.clear();

@@ -233,8 +233,7 @@ void MOS_AgentCreationPanel::Initialize()
 
     MT_ChangeDir      ( strDir );
 
-    MT_XXmlInputArchive scipioArchive;
-    scipioArchive.EnableExceptions( true );
+    MOS_InputArchive scipioArchive;
     try
     {
         scipioArchive.Open( strFile );
@@ -248,8 +247,7 @@ void MOS_AgentCreationPanel::Initialize()
         scipioArchive.ReadField( "Automates", strAutomataFilename );
         scipioArchive.ReadField( "GroupesConnaissance", strGtiaFilename );
 
-        MT_XXmlInputArchive unitArchive;
-        unitArchive.EnableExceptions( true );
+        MOS_InputArchive unitArchive;
         unitArchive.Open( strUnitFilename );
 
         unitArchive.BeginList( "Pions" );
@@ -270,8 +268,7 @@ void MOS_AgentCreationPanel::Initialize()
         unitArchive.EndList();
         unitArchive.Close();
 
-        MT_XXmlInputArchive automataArchive;
-        automataArchive.EnableExceptions( true );
+        MOS_InputArchive automataArchive;
         automataArchive.Open( strAutomataFilename );
 
         automataArchive.BeginList( "Automates" );
@@ -294,7 +291,7 @@ void MOS_AgentCreationPanel::Initialize()
                 std::string strRegExp;
                 automataArchive.Section( "Pion" );
                 automataArchive.ReadAttribute( "nom", strElement );
-                automataArchive >> strRegExp;
+                automataArchive.Read( strRegExp );
                 automataArchive.EndSection();
 
                 // We are given either a number of units, or a reg exp for that number.
@@ -326,8 +323,7 @@ void MOS_AgentCreationPanel::Initialize()
         automataArchive.EndList();    
         automataArchive.Close();
 
-        MT_XXmlInputArchive gtiaArchive;
-        gtiaArchive.EnableExceptions( true );
+        MOS_InputArchive gtiaArchive;
         gtiaArchive.Open( strGtiaFilename );
 
         gtiaArchive.BeginList( "GroupesConnaissance" );

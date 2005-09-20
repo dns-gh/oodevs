@@ -32,7 +32,7 @@ class MOS_TypeAutomate
     MT_COPYNOTALLOWED( MOS_TypeAutomate );
 
 public:
-     MOS_TypeAutomate( const std::string& strName, MT_InputArchive_ABC& archive );
+     MOS_TypeAutomate( const std::string& strName, MOS_InputArchive& archive );
     ~MOS_TypeAutomate();
 
     //! @name Accessors

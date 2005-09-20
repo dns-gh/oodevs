@@ -79,7 +79,7 @@ void MOS_ObjectManager::DeleteAllObjects()
     */
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
-void MOS_ObjectManager::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_ObjectManager::ReadODB( MOS_InputArchive& archive )
 {
     archive.BeginList( "Objets" );
     while( archive.NextListElement())

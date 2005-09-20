@@ -197,15 +197,15 @@ private slots:
     void UpdateDisplay();
 
 private:
-    void InitializeRawVisionData( MT_InputArchive_ABC& scipioArchive );
-    void InitializeTerrainData  ( MT_InputArchive_ABC& scipioArchive );
-    void InitializeRessourceIDs ( MT_InputArchive_ABC& scipioArchive );
-    void InitializeEquipementIDs( MT_InputArchive_ABC& scipioArchive );
-    void InitializeAgentNBCIDs  ( MT_InputArchive_ABC& scipioArchive );
-    void InitializeMeteo        ( MT_InputArchive_ABC& scipioArchive );
-    void InitializeSensors      ( MT_InputArchive_ABC& scipioArchive );
-    void InitializeHumanFactors ( MT_InputArchive_ABC& scipioArchive );
-    void InitializeObjectIds    ( MT_InputArchive_ABC& scipioArchive );
+    void InitializeRawVisionData( MOS_InputArchive& scipioArchive );
+    void InitializeTerrainData  ( MOS_InputArchive& scipioArchive );
+    void InitializeRessourceIDs ( MOS_InputArchive& scipioArchive );
+    void InitializeEquipementIDs( MOS_InputArchive& scipioArchive );
+    void InitializeAgentNBCIDs  ( MOS_InputArchive& scipioArchive );
+    void InitializeMeteo        ( MOS_InputArchive& scipioArchive );
+    void InitializeSensors      ( MOS_InputArchive& scipioArchive );
+    void InitializeHumanFactors ( MOS_InputArchive& scipioArchive );
+    void InitializeObjectIds    ( MOS_InputArchive& scipioArchive );
 
     friend class MOS_GLTool;
 private:

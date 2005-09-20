@@ -19,6 +19,7 @@
 #ifndef __MOS_AgentModel_h_
 #define __MOS_AgentModel_h_
 
+#include "MOS_Types.h"
 
 // =============================================================================
 /** @class  MOS_AgentModel
@@ -63,8 +64,8 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( MT_InputArchive_ABC& input );
-    void ReadFragOrders( MT_InputArchive_ABC& input );
+    void Initialize( MOS_InputArchive& input );
+    void ReadFragOrders( MOS_InputArchive& input );
     //@}
 
     //! @name Accessors

@@ -61,7 +61,7 @@ MOS_Object_Camp::~MOS_Object_Camp()
 // Name: MOS_Object_Camp::ReadODB
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_Object_Camp::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_Camp::ReadODB( MOS_InputArchive& archive )
 {
     MOS_Object_ABC::ReadODB( archive );
 

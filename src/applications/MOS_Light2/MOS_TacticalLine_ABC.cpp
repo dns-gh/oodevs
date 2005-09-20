@@ -147,7 +147,8 @@ void MOS_TacticalLine_ABC::Read( MT_InputArchive_ABC& archive )
     {
         archive.Section( "Point" );
         MT_Vector2D point;
-        point.Read( archive );
+        archive.ReadField( "X", point.rX_ );
+        archive.ReadField( "Y", point.rY_ );
         pointList_.push_back( point );
         archive.EndSection();
     }

@@ -68,7 +68,7 @@ MOS_Team::~MOS_Team()
 // Name: MOS_Team::ReadODB
 // Created: APE 2004-09-06
 // -----------------------------------------------------------------------------
-void MOS_Team::ReadODB( MT_InputArchive_ABC& archive, bool bReadGtias )
+void MOS_Team::ReadODB( MOS_InputArchive& archive, bool bReadGtias )
 {
     archive.Section( "Armee" );
 

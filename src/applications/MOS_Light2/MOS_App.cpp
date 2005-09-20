@@ -168,9 +168,7 @@ void MOS_App::InitializeData( const std::string& strFilename )
 
     MT_ChangeDir      ( strDir );
 
-    MT_XXmlInputArchive scipioArchive;
-    scipioArchive.EnableExceptions( true );
-
+    MOS_InputArchive scipioArchive;
     try
     {
         scipioArchive.Open( strFile );
@@ -207,12 +205,11 @@ void MOS_App::InitializeData( const std::string& strFilename )
 
     // Limas and limits (if the file exists)
     MT_XXmlInputArchive archive;
-    bool b = archive.Open( "TacticalLines.xml" );
-    if( b )
+    if( archive.Open( "TacticalLines.xml" ) )
     {
+        archive.EnableExceptions( true );
         try
         {
-            archive.EnableExceptions( true );
             pLineManager_->Read( archive );
         }
         catch( MT_Exception& e )
@@ -233,7 +230,7 @@ void MOS_App::InitializeData( const std::string& strFilename )
 // Name: MOS_App::InitializeRawVisionData
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeRawVisionData( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeRawVisionData( MOS_InputArchive& scipioArchive )
 {
     std::string strTerFile;
     scipioArchive.ReadField( "Terrain", strTerFile );
@@ -241,8 +238,7 @@ void MOS_App::InitializeRawVisionData( MT_InputArchive_ABC& scipioArchive )
     std::string strTerrainDataPath;
     MT_ExtractFilePath( strTerFile, strTerrainDataPath );
 
-    MT_XXmlInputArchive terrainArchive;
-    terrainArchive.EnableExceptions( true );
+    MOS_InputArchive terrainArchive;
     terrainArchive.Open( strTerFile );
     terrainArchive.Section( "Terrain" );
 
@@ -259,7 +255,7 @@ void MOS_App::InitializeRawVisionData( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeMeteo
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeMeteo( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeMeteo( MOS_InputArchive& scipioArchive )
 {
     // Meteo
     std::string strMeteoFile;
@@ -272,7 +268,7 @@ void MOS_App::InitializeMeteo( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeTerrainData
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeTerrainData( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeTerrainData( MOS_InputArchive& scipioArchive )
 {
     std::string strTerFile;
     scipioArchive.ReadField( "Terrain", strTerFile );
@@ -283,13 +279,12 @@ void MOS_App::InitializeTerrainData( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeRessourceIDs
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeRessourceIDs( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeRessourceIDs( MOS_InputArchive& scipioArchive )
 {
     std::string strDotationFile;
     scipioArchive.ReadField( "Dotations", strDotationFile );
 
-    MT_XXmlInputArchive dotArchive;
-    dotArchive.EnableExceptions( true );
+    MOS_InputArchive dotArchive;
     dotArchive.Open( strDotationFile );
     dotArchive.BeginList( "Dotations" );
 
@@ -321,13 +316,12 @@ void MOS_App::InitializeRessourceIDs( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeEquipementIDs
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeEquipementIDs( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeEquipementIDs( MOS_InputArchive& scipioArchive )
 {
     std::string strCompFile;
     scipioArchive.ReadField( "Composantes", strCompFile );
 
-    MT_XXmlInputArchive compArchive;
-    compArchive.EnableExceptions( true );
+    MOS_InputArchive compArchive;
     compArchive.Open( strCompFile );
 
     compArchive.BeginList( "Composantes" );
@@ -353,13 +347,12 @@ void MOS_App::InitializeEquipementIDs( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeAgentNBCIDs
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeAgentNBCIDs( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeAgentNBCIDs( MOS_InputArchive& scipioArchive )
 {
     std::string strNBCFile;
     scipioArchive.ReadField( "NBC", strNBCFile );
 
-    MT_XXmlInputArchive nbcArchive;
-    nbcArchive.EnableExceptions( true );
+    MOS_InputArchive nbcArchive;
     nbcArchive.Open( strNBCFile );
     nbcArchive.Section( "NBC" );
 
@@ -387,12 +380,12 @@ void MOS_App::InitializeAgentNBCIDs( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeSensors
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeSensors( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeSensors( MOS_InputArchive& scipioArchive )
 {
     std::string strSensorFile;
     scipioArchive.ReadField( "Capteurs", strSensorFile );
 
-    MT_XXmlInputArchive sensorArchive;
+    MOS_InputArchive sensorArchive;
     sensorArchive.Open( strSensorFile );
     sensorArchive.Section( "Capteurs" );
 
@@ -404,8 +397,7 @@ void MOS_App::InitializeSensors( MT_InputArchive_ABC& scipioArchive )
         std::string strName;
         sensorArchive.ReadAttribute( "nom", strName );
 
-        sensorArchive.EnableExceptions( false );
-        if( sensorArchive.Section( "DetectionAgents" ) )
+        if( sensorArchive.Section( "DetectionAgents", MOS_InputArchive::eNothing ) )
         {
             MOS_SensorType& sensor = *new MOS_SensorType( strName, sensorArchive );
             const MOS_SensorType*& pSensor = sensorTypes_[ sensor.GetName() ];
@@ -413,9 +405,6 @@ void MOS_App::InitializeSensors( MT_InputArchive_ABC& scipioArchive )
             pSensor = &sensor; 
             sensorArchive.EndSection();
         }
-        else
-            sensorArchive.ClearErrors();
-        sensorArchive.EnableExceptions( true );
         sensorArchive.EndSection(); // Senseur
     }
 
@@ -428,15 +417,13 @@ void MOS_App::InitializeSensors( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeHumanFactors
 // Created: NLD 2004-11-30
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeHumanFactors( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeHumanFactors( MOS_InputArchive& scipioArchive )
 {
     std::string strHumanFactorsFile;
-    if( !scipioArchive.ReadField( "FacteursHumains", strHumanFactorsFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    scipioArchive.ReadField( "FacteursHumains", strHumanFactorsFile );
 
-    MT_XXmlInputArchive humanFactorsArchive;
-    if( !humanFactorsArchive.Open( strHumanFactorsFile ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    MOS_InputArchive humanFactorsArchive;
+    humanFactorsArchive.Open( strHumanFactorsFile );
 
     MOS_Tiredness ::Initialize( humanFactorsArchive );
     MOS_Experience::Initialize( humanFactorsArchive );
@@ -449,14 +436,11 @@ void MOS_App::InitializeHumanFactors( MT_InputArchive_ABC& scipioArchive )
 // Name: MOS_App::InitializeObjectIds
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-void MOS_App::InitializeObjectIds( MT_InputArchive_ABC& scipioArchive )
+void MOS_App::InitializeObjectIds( MOS_InputArchive& scipioArchive )
 {
     std::string strClassId;
-    if( !scipioArchive.ReadField( "ClasseIDs", strClassId ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    MT_XXmlInputArchive classeIds;
-    classeIds.EnableExceptions( true );
+    scipioArchive.ReadField( "ClasseIDs", strClassId );
+    MOS_InputArchive classeIds;
     classeIds.Open( strClassId );
     MOS_Object_ABC::InitializeObjectIds( classeIds );
 }
@@ -478,17 +462,14 @@ void MOS_App::ReadODB( std::string strFilename )
 
     MT_ChangeDir      ( strDir );
 
-    MT_XXmlInputArchive archive;
-    bool b = archive.Open( strFile );
-    if( !b )
+    MOS_InputArchive archive;
+    if( ! archive.Open( strFile, MOS_InputArchive::eNothing ) )
     {
         strODBFilename_ = "";
         return;
     }
 
     strODBFilename_ = strFilename;
-    archive.EnableExceptions( true );
-
     try
     {
         archive.Section( "ODB" );

@@ -60,7 +60,7 @@ MOS_Object_ABC* MOS_Object_Factory::Create( ASN1T_EnumObjectType eType )
 // Name: MOS_Object_Factory::Create
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-MOS_Object_ABC* MOS_Object_Factory::Create( MT_XXmlInputArchive& archive )
+MOS_Object_ABC* MOS_Object_Factory::Create( MOS_InputArchive& archive )
 {
     // read type field to determine what kind of object to create
     archive.Section( "Objet" );

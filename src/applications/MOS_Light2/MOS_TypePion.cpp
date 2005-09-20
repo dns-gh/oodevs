@@ -21,30 +21,23 @@
 // Name: MOS_TypePion constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-MOS_TypePion::MOS_TypePion( const std::string& strName, MT_InputArchive_ABC& archive )
+MOS_TypePion::MOS_TypePion( const std::string& strName, MOS_InputArchive& archive )
     : strName_( strName )
     , pModel_ ( 0 )
     , pNature_( 0 )
 {
-    if( !archive.ReadField( "MosID", nID_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.ReadField( "MosID", nID_ );
     std::string strModel;
-    if( !archive.ReadField( "ModeleDecisionnel", strModel ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.ReadField( "ModeleDecisionnel", strModel );
 
     pNature_ = new MOS_Nature( archive );
 
-    if( !archive.BeginList( "Equipements" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.BeginList( "Equipements" );
     while( archive.NextListElement() )
     {
-        if( !archive.Section( "Equipement" ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+        archive.Section( "Equipement" );
         std::string strName;
-        if( !archive.ReadAttribute( "nom", strName ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+        archive.ReadAttribute( "nom", strName );
 
         const MOS_TypeComposante* pTypeComposante = MOS_App::GetApp().GetAgentManager().FindTypeComposante( strName );
         if( pTypeComposante )

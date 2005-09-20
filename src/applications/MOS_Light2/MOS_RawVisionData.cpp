@@ -83,15 +83,12 @@ void MOS_RawVisionData::Terminate()
 // Created: JVT 03-08-08
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-void MOS_RawVisionData::InitializeMeteo( MT_InputArchive_ABC& archive )
+void MOS_RawVisionData::InitializeMeteo( MOS_InputArchive& archive )
 {
     // Initialisation de l'éphéméride
-    if ( !archive.Section( "Ephemeride" ) )
-        throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Section 'Meteo::Ephemeride' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
-    
+    archive.Section( "Ephemeride" );
     std::string strVal;
-    if ( !archive.ReadField( "HeureLeverSoleil", strVal ) )
-        throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Section 'Meteo::Ephemeride::HeureLeverSoleil' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+    archive.ReadField( "HeureLeverSoleil", strVal );
     
     int hls = 0, mls = 0;
     char tmp = 0;
@@ -102,8 +99,7 @@ void MOS_RawVisionData::InitializeMeteo( MT_InputArchive_ABC& archive )
     if ( tmp != 'h' || hls < 0 || hls > 23 || mls < 0 || mls > 59 )
         throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, MT_FormatString( "Can't decode time (%d%c%d)", hls, tmp, mls ) );
 
-    if ( !archive.ReadField( "HeureCoucherSoleil", strVal ) )
-        throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Section 'Meteo::Ephemeride::HeureCoucherSoleil' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+    archive.ReadField( "HeureCoucherSoleil", strVal );
 
     int hcs = 0, mcs = 0;
     tmp = 0;
@@ -114,8 +110,7 @@ void MOS_RawVisionData::InitializeMeteo( MT_InputArchive_ABC& archive )
     if ( tmp != 'h' || hcs < 0 || hcs > 23 || mcs < 0 || mcs > 59 )
         throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, MT_FormatString( "Can't decode time (%d%c%d)", hls, tmp, mls ) );
 
-    if ( !archive.ReadField( "Lune", strVal ) )
-        throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Section 'Meteo::Ephemeride::Lune' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+    archive.ReadField( "Lune", strVal );
 
     E_LightingType nMoon = MOS_Tools::GetLightingFromName( strVal );
 
@@ -126,32 +121,26 @@ void MOS_RawVisionData::InitializeMeteo( MT_InputArchive_ABC& archive )
     archive.EndSection();
     
     // Initialisation de la météo globale
-    if ( !archive.Section( "MeteoGlobale" ) )
-        throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Section 'Meteo::MeteoGlobale' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+    archive.Section( "MeteoGlobale" );
     if ( pGlobalMeteo_ ) pGlobalMeteo_->Destroy();
     pGlobalMeteo_ = MOS_Meteo::Create( archive );
     archive.EndSection();
 
     // Initialisation des météos locales
-    if ( !archive.BeginList( "PatchsLocaux" ) )
-        archive.ClearErrors();
-    else
+    if ( archive.BeginList( "PatchsLocaux", MOS_InputArchive::eNothing ) )
     {
         while ( archive.NextListElement() )
         {
-            if ( !archive.Section( "PatchLocal" ) )
-                throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Section 'Meteo::PatchsLocaux::PatchLocal' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+            archive.Section( "PatchLocal" );
 
             std::string strPos;
             MT_Vector2D vUpLeft;
             MT_Vector2D vDownRight;
 
-            if ( !archive.ReadAttribute( "hautGauche", strPos ) )
-                throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Attribute 'Meteo::PatchsLocaux::PatchLocal::hautGauche' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+            archive.ReadAttribute( "hautGauche", strPos );
             MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vUpLeft );
 
-            if ( !archive.ReadAttribute( "basDroit", strPos ) )
-                throw MT_ScipioException( "PHY_PerceptionManager::InitializeMeteo", __FILE__, __LINE__, "Attribute 'Meteo::PatchsLocaux::PatchLocal::basDroit' doesn't exist", archive.RetrieveLastError()->GetWholeMessage() );
+            archive.ReadAttribute( "basDroit", strPos );
             MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vDownRight );
 
             MOS_Meteo* pTmp = MOS_Meteo::Create( archive );

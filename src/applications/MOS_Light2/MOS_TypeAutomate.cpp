@@ -19,37 +19,26 @@
 // Name: MOS_TypeAutomate constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-MOS_TypeAutomate::MOS_TypeAutomate( const std::string& strName, MT_InputArchive_ABC& archive )
+MOS_TypeAutomate::MOS_TypeAutomate( const std::string& strName, MOS_InputArchive& archive )
     : strName_( strName )
 	, strType_( std::string("") )
     , pModel_ ( 0 )
     , pTypePC_( 0 )
 {
 	
-	if( !archive.ReadAttribute( "type", strType_ ) )
-		throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-	
-	if( !archive.ReadField( "MosID", nID_ ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
-    if( !archive.Section( "Automate" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+	archive.ReadAttribute( "type", strType_ );
+	archive.ReadField( "MosID", nID_ );
+    archive.Section( "Automate" );
     std::string strModel;
-    if( !archive.ReadField( "ModeleDecisionnel", strModel ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.ReadField( "ModeleDecisionnel", strModel );
     pModel_ = MOS_App::GetApp().GetAgentManager().FindModel( strModel );
     if( !pModel_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
     archive.EndSection(); // Automate
 
-    if( !archive.Section( "PionPC" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    archive.Section( "PionPC" );
     std::string strPCType;
-    if( !archive.ReadAttribute( "type", strPCType ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
-
+    archive.ReadAttribute( "type", strPCType );
     pTypePC_ = MOS_App::GetApp().GetAgentManager().FindTypePion( strPCType );
     if( !pTypePC_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );

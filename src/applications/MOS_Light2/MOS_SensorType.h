@@ -20,7 +20,7 @@ class MOS_SensorType
     MT_COPYNOTALLOWED( MOS_SensorType )
 
 public:
-    MOS_SensorType( const std::string& strName, MT_InputArchive_ABC& archive );
+    MOS_SensorType( const std::string& strName, MOS_InputArchive& archive );
     ~MOS_SensorType();
 
     //! @name Accessors
@@ -49,12 +49,12 @@ private:
 private:
     //! @name 
     //@{
-    void InitializeDistances           ( MT_InputArchive_ABC& archive );
-    void InitializePostureSourceFactors( MT_InputArchive_ABC& archive );
-    void InitializeWeatherFactors      ( MT_InputArchive_ABC& archive );
-    void InitializeLightingFactors     ( MT_InputArchive_ABC& archive );
-    void InitializeEnvironnementFactors( MT_InputArchive_ABC& archive );
-    void InitializeAngle               ( MT_InputArchive_ABC& archive );
+    void InitializeDistances           ( MOS_InputArchive& archive );
+    void InitializePostureSourceFactors( MOS_InputArchive& archive );
+    void InitializeWeatherFactors      ( MOS_InputArchive& archive );
+    void InitializeLightingFactors     ( MOS_InputArchive& archive );
+    void InitializeEnvironnementFactors( MOS_InputArchive& archive );
+    void InitializeAngle               ( MOS_InputArchive& archive );
 
     MT_Float GetPostureSourceFactor    ( const MOS_Agent& agent ) const;
     MT_Float ComputeEnvironementFactor ( MOS_RawVisionData::envBits nEnv ) const;

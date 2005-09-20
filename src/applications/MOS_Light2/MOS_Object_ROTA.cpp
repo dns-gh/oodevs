@@ -63,7 +63,7 @@ MOS_Object_ROTA::~MOS_Object_ROTA()
 // Name: MOS_Object_ROTA::ReadODB
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_Object_ROTA::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_ROTA::ReadODB( MOS_InputArchive& archive )
 {
     MOS_Object_ABC::ReadODB( archive );
 

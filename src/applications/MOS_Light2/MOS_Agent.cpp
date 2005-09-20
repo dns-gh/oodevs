@@ -822,7 +822,7 @@ void MOS_Agent::OnSuperiorChanged( MOS_Gtia& superior )
 */
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
-void MOS_Agent::ReadODB( MT_XXmlInputArchive& archive, bool bAutomata )
+void MOS_Agent::ReadODB( MOS_InputArchive& archive, bool bAutomata )
 {
 
     if( bAutomata )
@@ -850,18 +850,10 @@ void MOS_Agent::ReadODB( MT_XXmlInputArchive& archive, bool bAutomata )
     if( nAgentID_ > nMaxId_ )
         nMaxId_ = nAgentID_;
 
-    //$$$$ Ugly and dangerous!
-    archive.EnableExceptions( false );
-    if( ! archive.ReadField( "Nom", sName_ ) )
-    {
+    if( ! archive.ReadField( "Nom", sName_, MOS_InputArchive::eNothing ) )
         sName_ = strCategory_;
-        archive.ClearLastError();
-    }
 
-    if( ! archive.ReadField( "Embraye", bEmbraye_ ) )
-        archive.ClearLastError();
-
-
+    archive.ReadField( "Embraye", bEmbraye_, MOS_InputArchive::eNothing );
 
     std::string strPos;
     archive.ReadField( "Position", strPos );
@@ -876,40 +868,30 @@ void MOS_Agent::ReadODB( MT_XXmlInputArchive& archive, bool bAutomata )
         archive.ReadField( "GroupeConnaissance", nGtia );
         pGtia_ = MOS_App::GetApp().GetAgentManager().FindGtia( nGtia );
         assert( pGtia_ != 0 );
-        if( archive.Section( "TC2" ) )
+        if( archive.Section( "TC2", MOS_InputArchive::eNothing ) )
         {
 			archive.ReadAttribute( "automate", nTC2_ );
             archive.EndSection();
         }
-        else
-            archive.ClearLastError();
-        if( archive.Section( "Logistique" ) )
+        if( archive.Section( "Logistique", MOS_InputArchive::eNothing ) )
         {
-			if( archive.Section( "Maintenance" ) )
+			if( archive.Section( "Maintenance", MOS_InputArchive::eNothing ) )
 			{
 				archive.ReadAttribute( "automate", nLogMaintenanceSuperior_ );
 				archive.EndSection();
 			}
-			else
-				archive.ClearLastError();
-			if( archive.Section( "Sante" ) )
+			if( archive.Section( "Sante", MOS_InputArchive::eNothing ) )
 			{
 				archive.ReadAttribute( "automate", nLogMedicalSuperior_ );
 				archive.EndSection();
 			}
-			else
-				archive.ClearLastError();
-			if( archive.Section( "Ravitaillement" ) )
+			if( archive.Section( "Ravitaillement", MOS_InputArchive::eNothing ) )
 			{
 				archive.ReadAttribute( "automate", nLogSupplySuperior_ );
 				archive.EndSection();
 			}
-			else
-				archive.ClearLastError();
             archive.EndSection();
         }
-        else
-            archive.ClearLastError();
     }
     else
     {
@@ -920,7 +902,6 @@ void MOS_Agent::ReadODB( MT_XXmlInputArchive& archive, bool bAutomata )
         pParent_->AddChild( *this );
         pGtia_ = & pParent_->GetGtia();
     }
-    archive.EnableExceptions( true );
     archive.EndSection();
 
     archive.EndSection();

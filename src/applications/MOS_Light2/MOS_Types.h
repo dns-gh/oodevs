@@ -12,6 +12,9 @@
 #ifndef __MOS_Types_h_
 #define __MOS_Types_h_
 
+class MT_XXmlInputArchive;
+template< typename Archive > class MT_InputArchive_Logger;
+typedef MT_InputArchive_Logger< MT_XXmlInputArchive > MOS_InputArchive;
 
 //-----------------------------------------------------------------------------
 // Machine type: simple client-server structure

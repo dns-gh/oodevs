@@ -24,7 +24,7 @@
 // Name: MOS_Nature constructor
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-MOS_Nature::MOS_Nature( MT_InputArchive_ABC& archive )
+MOS_Nature::MOS_Nature( MOS_InputArchive& archive )
     : level_( eNatureLevel_None )
     , weapon_( eUnitNatureWeapon_None )
     , specialization_( eUnitNatureSpecialization_None )
@@ -33,7 +33,7 @@ MOS_Nature::MOS_Nature( MT_InputArchive_ABC& archive )
     , mobility_( eUnitNatureMobility_None )
     , capacity_( eUnitCapaciteMission_CivilianLawEnforcement )
 {
-    if( ! archive.Section( "Nature" ) )
+    if( ! archive.Section( "Nature", MOS_InputArchive::eNothing ) )
         return;
     Read( archive, "Niveau",          std::ptr_fun( ConvertToNatureLevel ),              level_ );
     Read( archive, "Arme",            std::ptr_fun( ConvertToUnitNatureWeapon ),         weapon_ );
@@ -64,10 +64,10 @@ MOS_Nature::~MOS_Nature()
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
 template< typename Enum, typename Solver >
-void MOS_Nature::Read( MT_InputArchive_ABC& archive, const std::string& field, const Solver& solver, Enum& result )
+void MOS_Nature::Read( MOS_InputArchive& archive, const std::string& field, const Solver& solver, Enum& result )
 {
     std::string strValue;
-    if( ! archive.Section( field ) )
+    if( ! archive.Section( field, MOS_InputArchive::eNothing ) )
         return;
     archive.ReadAttribute( "type", strValue );
     archive.EndSection(); // field

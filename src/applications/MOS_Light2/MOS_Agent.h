@@ -244,7 +244,7 @@ public:
     void OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogRavitaillementQuotas& asnMsg );
     //@}
 
-    void ReadODB( MT_XXmlInputArchive& archive, bool bAutomate );
+    void ReadODB( MOS_InputArchive& archive, bool bAutomate );
     void WriteODB( MT_XXmlOutputArchive& archive );
 
 public:

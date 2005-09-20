@@ -12,8 +12,8 @@
 #ifndef __MOS_ObjectManager_h_
 #define __MOS_ObjectManager_h_
 
+#include "MOS_Types.h"
 class MOS_Object_ABC;
-
 
 // =============================================================================
 /** @class  MOS_ObjectManager
@@ -53,7 +53,7 @@ public:
     const T_ObjectMap& GetObjects() const;
     //@}
 
-    void ReadODB( MT_XXmlInputArchive& archive );
+    void ReadODB( MOS_InputArchive& archive );
     void WriteODB( MT_XXmlOutputArchive& archive );
 
 private:

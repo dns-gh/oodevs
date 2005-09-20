@@ -27,7 +27,7 @@ const MOS_Tiredness MOS_Tiredness::epuise_ ( "Epuise" , eEpuise , EnumUnitFatigu
 // Name: MOS_Tiredness::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_Tiredness::Initialize( MT_InputArchive_ABC& archive )
+void MOS_Tiredness::Initialize( MOS_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing tirenesses" );
     tirednesses_[ normal_  .GetName() ] = &normal_;
@@ -90,7 +90,7 @@ MOS_Tiredness::~MOS_Tiredness()
 // Name: MOS_Tiredness::Read
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void MOS_Tiredness::Read( MT_InputArchive_ABC& archive )
+void MOS_Tiredness::Read( MOS_InputArchive& archive )
 {
     archive.ReadField( "CoefModificationVitesseMax"        , rCoefMaxSpeedModificator_      );
     archive.ReadField( "CoefModificationTempsRechargement" , rCoefReloadingTimeModificator_ );

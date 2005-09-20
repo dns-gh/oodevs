@@ -75,7 +75,7 @@ public:
     ~MOS_Team();
     //@}
 
-    void ReadODB( MT_InputArchive_ABC& archive, bool bReadGtias );
+    void ReadODB( MOS_InputArchive& archive, bool bReadGtias );
     void WriteODB( MT_OutputArchive_ABC& archive );
 
     void RegisterGtia   ( MOS_Gtia& gtia );

@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     static MOS_Object_ABC* Create(       ASN1T_EnumObjectType     eType   );
-    static MOS_Object_ABC* Create(       MT_XXmlInputArchive&     archive );
+    static MOS_Object_ABC* Create(       MOS_InputArchive&     archive );
     static MOS_Object_ABC* Create( const ASN1T_MsgObjectCreation& asnMsg  );
     //@}
 

@@ -30,7 +30,7 @@ class MOS_TypeComposante
     MT_COPYNOTALLOWED( MOS_TypeComposante );
 
 public:
-     MOS_TypeComposante( const std::string& strName, MT_InputArchive_ABC& archive );
+     MOS_TypeComposante( const std::string& strName, MOS_InputArchive& archive );
     ~MOS_TypeComposante();
 
     //! @name Accessors

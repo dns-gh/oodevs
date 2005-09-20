@@ -23,6 +23,8 @@
 #   pragma interface
 #endif
 
+#include "MOS_Types.h"
+
 class MT_GLDShapeProperties;
 class MT_GLDrawer;
 

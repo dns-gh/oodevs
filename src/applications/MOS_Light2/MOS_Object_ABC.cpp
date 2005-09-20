@@ -166,7 +166,7 @@ void MOS_Object_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
 // Name: MOS_Object_ABC::ReadODB
 // Created: APE 2004-08-31
 // -----------------------------------------------------------------------------
-void MOS_Object_ABC::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_ABC::ReadODB( MOS_InputArchive& archive )
 {
     std::string strType;
     archive.ReadAttribute( "type", strType );
@@ -192,9 +192,7 @@ void MOS_Object_ABC::ReadODB( MT_XXmlInputArchive& archive )
     while( archive.NextListElement() )
     {
         std::string strPos;
-        archive.Section( "Point" );
-        archive >> strPos;
-        archive.EndSection(); // Point
+        archive.ReadField( "Point", strPos );
         MT_Vector2D vPos;
         MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vPos );
         pointVector_.push_back( vPos );
@@ -255,7 +253,7 @@ MOS_IDManager& MOS_Object_ABC::GetIDManagerForObjectType( ASN1T_EnumObjectType n
 // Name: MOS_Object_ABC::InitializeObjectIds
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-void MOS_Object_ABC::InitializeObjectIds( MT_XXmlInputArchive& archive )
+void MOS_Object_ABC::InitializeObjectIds( MOS_InputArchive& archive )
 {
     archive.BeginList( "Classes" );
     while( archive.NextListElement() )

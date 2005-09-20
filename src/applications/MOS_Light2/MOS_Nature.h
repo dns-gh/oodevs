@@ -19,6 +19,8 @@
 #ifndef __MOS_Nature_h_
 #define __MOS_Nature_h_
 
+#include "MOS_Types.h"
+
 // =============================================================================
 /** @class  MOS_Nature
     @brief  MOS_Nature
@@ -31,14 +33,14 @@ class MOS_Nature
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_Nature( MT_InputArchive_ABC& archive );
+             MOS_Nature( MOS_InputArchive& archive );
     virtual ~MOS_Nature();
     //@}
 private:
     //! @name Helpers
     //@{
     template< typename Enum, typename Solver >
-    void Read( MT_InputArchive_ABC& archive, const std::string& field, const Solver& solver, Enum& result );
+    void Read( MOS_InputArchive& archive, const std::string& field, const Solver& solver, Enum& result );
 
     static char Symbol( const MOS_Nature& n );
     static char LevelSymbol( const MOS_Nature& n );

@@ -161,7 +161,7 @@ public:
     //@}
 
 
-    void ReadODB( MT_XXmlInputArchive& archive );
+    void ReadODB( MOS_InputArchive& archive );
     void WriteODB( MT_XXmlOutputArchive& archive );
 
           MOS_AgentModel*     FindModel         ( const std::string& strModelName ) const;
@@ -173,10 +173,11 @@ public:
     const MOS_TypeComposante* FindTypeComposante( uint nID ) const;
 
 private:
-    void InitializeModels         ( MT_InputArchive_ABC& input );
-    void InitializeTypesComposante( MT_InputArchive_ABC& input );
-    void InitializeTypesPion      ( MT_InputArchive_ABC& input );
-    void InitializeTypesAutomate  ( MT_InputArchive_ABC& input );
+    void InitializeModels         ( MOS_InputArchive& input );
+    void InitializeTypesComposante( MOS_InputArchive& input );
+    void InitializeTypesPion      ( MOS_InputArchive& input );
+    void InitializeTypesAutomate  ( MOS_InputArchive& input );
+    void ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata );
 
     template< typename T >
     void AddConsign( std::map< ASN1T_OID, T* >& cont, T& consign );

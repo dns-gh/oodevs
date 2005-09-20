@@ -30,6 +30,7 @@
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Line.h"
 #include "MT_Tools/MT_Rect.h"
+#include "MT_Tools/MT_InputArchive_Logger.h"
 
 #include <qlayout.h>
 #include <qlabel.h>

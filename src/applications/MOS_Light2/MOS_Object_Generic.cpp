@@ -56,7 +56,7 @@ MOS_Object_Generic::~MOS_Object_Generic()
 // Name: MOS_Object_Generic::ReadODB
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_Object_Generic::ReadODB( MT_XXmlInputArchive& archive )
+void MOS_Object_Generic::ReadODB( MOS_InputArchive& archive )
 {
     MOS_Object_ABC::ReadODB( archive );
 }

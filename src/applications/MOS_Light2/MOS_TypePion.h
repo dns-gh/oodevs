@@ -33,7 +33,7 @@ class MOS_TypePion
 
 public:
               MOS_TypePion( const std::string& strName, const MOS_Nature& nature );
-              MOS_TypePion( const std::string& strName, MT_InputArchive_ABC& archive );
+              MOS_TypePion( const std::string& strName, MOS_InputArchive& archive );
              ~MOS_TypePion();
 
     //! @name Accessors

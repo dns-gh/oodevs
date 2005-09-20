@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void ReadODB ( MT_XXmlInputArchive&  archive );
+    void ReadODB ( MOS_InputArchive&  archive );
     void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 };
