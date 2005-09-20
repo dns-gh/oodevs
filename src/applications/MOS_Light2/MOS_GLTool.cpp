@@ -1918,6 +1918,10 @@ namespace
         synonyms[ "enemies" ] = "rouge";
         synonyms[ "eni"    ] = "rouge";
         synonyms[ "enis"    ] = "rouge";
+        synonyms[ "glaise" ] = "rouge";
+        synonyms[ "humus" ] = "rouge";
+        synonyms[ "tourbe" ] = "rouge";
+
         synonyms[ "bleu"   ] = "bleu";
         synonyms[ "bleus"   ] = "bleu";
         synonyms[ "blue"   ] = "bleu";
@@ -1925,6 +1929,7 @@ namespace
         synonyms[ "amis"    ] = "bleu";
         synonyms[ "friend"    ] = "bleu";
         synonyms[ "friends"    ] = "bleu";
+
         synonyms[ "gris"   ] = "gris";
         synonyms[ "blanc"   ] = "gris";
         synonyms[ "blancs"   ] = "gris";

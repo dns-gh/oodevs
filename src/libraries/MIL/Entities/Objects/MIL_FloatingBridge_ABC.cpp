@@ -121,7 +121,7 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
 //-----------------------------------------------------------------------------
 void MIL_FloatingBridge_ABC::UnlinkFromPathFinder()
 {
-    delete pPathfindData_;
+    delete pPathfindData_; // Immediate deletion
     pPathfindData_ = 0;
 }
 

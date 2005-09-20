@@ -97,7 +97,41 @@ TER_DynamicData& TER_PathFindManager::CreateDynamicData()
         TER_PathFinderThread& thread = **it;
         pData->AddRetractationHandle( thread.CreateRetractationHandle(), thread.GetMutex() );
     }
+    datas_.push_back( T_FlagedData( pData, false ) );
     return *pData;
+}
+
+
+namespace
+{
+    class DataFinder
+    {
+    public:
+        DataFinder( TER_DynamicData& data ) : data_( data ) {};
+        bool operator()( const std::pair< TER_DynamicData*, bool >& item ) const
+        {
+            return item.first == &data_;
+        };
+    private:
+        TER_DynamicData& data_;
+        DataFinder& operator=( const DataFinder& );
+    };
+};
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFindManager::DeleteDynamicData
+// Created: AGE 2005-09-20
+// -----------------------------------------------------------------------------
+void TER_PathFindManager::DeleteDynamicData( TER_DynamicData& data )
+{
+    IT_DynamicDatas it = std::find_if( datas_.begin(), datas_.end(), DataFinder( data ) );
+    assert( it != datas_.end );
+    it->second = true;
+    while( ! datas_.empty() && datas_.back().second )
+    {
+        delete datas_.back().first;
+        datas_.pop_back();
+    }
 }
 
 // -----------------------------------------------------------------------------

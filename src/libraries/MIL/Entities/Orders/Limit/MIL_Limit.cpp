@@ -269,7 +269,8 @@ bool MIL_Limit::DecreaseReference( const MIL_Limit& other ) const
         T_ReferencedData& data = itOther->second;
         if( --data.second == 0 )
         {
-            delete data.first;
+            if( data.first )
+                TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *data.first );
             fuseauDatas_.erase( itOther );
         }
         return true;

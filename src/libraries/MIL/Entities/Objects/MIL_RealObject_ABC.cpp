@@ -117,7 +117,8 @@ MIL_RealObject_ABC::~MIL_RealObject_ABC()
     else if( idManager.IsSimIDValid( nID_ ) )
         idManager.ReleaseSimID( nID_ );
 
-    delete pPathfindData_;
+    if( pPathfindData_ )
+        TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *pPathfindData_ );
 }
 
 
@@ -201,7 +202,8 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
         avoidanceLocalisation_.Reset();
     else
     {
-        delete pPathfindData_;
+        if( pPathfindData_ )
+            TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *pPathfindData_ );
         pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateDynamicData();
         avoidanceLocalisation_.Reset( GetLocalisation() );
         avoidanceLocalisation_.Scale( pType_->GetAvoidanceDistance() );

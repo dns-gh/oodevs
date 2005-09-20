@@ -70,6 +70,7 @@ void DEC_PathFind_Manager::StartCompute( DEC_Path_ABC& path )
     MT_LOG_MESSAGE_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", &path ).c_str() );
 #endif
     AddPendingJob( path );
+    FlushDestroyedRequests();
 }
 
 // -----------------------------------------------------------------------------
@@ -201,4 +202,28 @@ int DEC_PathFind_Manager::GetCurrentThread() const
         if( pathFindThreadVector_[ nIndex ]->IsCurrent() )
             return nIndex;
     return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::DeletePath
+// Created: AGE 2005-09-20
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::DeletePath( DEC_Path_ABC& path )
+{
+    boost::mutex::scoped_lock locker( destroyedMutex_ );
+    destroyedRequests_.push_back( &path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::FlushDestroyedRequests
+// Created: AGE 2005-09-20
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::FlushDestroyedRequests()
+{
+    boost::mutex::scoped_lock locker( destroyedMutex_ );
+    while( ! destroyedRequests_.empty() )
+    {
+        delete destroyedRequests_.back();
+        destroyedRequests_.pop_back();
+    };
 }

@@ -15,8 +15,6 @@
 #include "MIL.h"
 #include "MIL_RealObject_ABC.h"
 
-class TER_DynamicData;
-
 //=============================================================================
 // Created: NLD 2002-12-12
 // Last modified: JVT 03-07-31

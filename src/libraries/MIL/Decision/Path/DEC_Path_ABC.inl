@@ -26,23 +26,6 @@ void DEC_Path_ABC::IncDIARef()
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path_ABC::DecDIARef
-// Created: FBD 02-11-21
-//-----------------------------------------------------------------------------
-inline
-void DEC_Path_ABC::DecDIARef()
-{
-    if( nNbrDIARefs_ != 1 ) //$$$ TMP pour corriger les scripts
-    {
-        assert( !"DEC_DetruireItineraire appele plusieurs fois de suite sur le meme itineraire" );
-        return;
-    }
-    --nNbrDIARefs_;
-    if( nNbrDIARefs_ == 0 && nNbrRefs_ == 0 )
-        delete this; //$$$ !!!
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::IncRef
 // Created: FBD 02-11-21
 //-----------------------------------------------------------------------------
@@ -50,19 +33,6 @@ inline
 void DEC_Path_ABC::IncRef()
 {
     ++nNbrRefs_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Path_ABC::DecRef
-// Created: FBD 02-11-21
-//-----------------------------------------------------------------------------
-inline
-void DEC_Path_ABC::DecRef()
-{
-    assert( nNbrRefs_ > 0 );
-    --nNbrRefs_;
-    if( nNbrRefs_ == 0 && nNbrDIARefs_ == 0 )
-        delete this; //$$$ !!!
 }
 
 // =============================================================================
