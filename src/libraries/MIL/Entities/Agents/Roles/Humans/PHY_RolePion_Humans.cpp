@@ -140,6 +140,7 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::IsUsable() const
 {
+    assert( pPion_ );
     return nNbrUsableHumans_ > 0 || pPion_->IsAutonomous();
 }
 
