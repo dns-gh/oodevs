@@ -125,7 +125,7 @@ namespace
 void TER_PathFindManager::DeleteDynamicData( TER_DynamicData& data )
 {
     IT_DynamicDatas it = std::find_if( datas_.begin(), datas_.end(), DataFinder( data ) );
-    assert( it != datas_.end );
+    assert( it != datas_.end() );
     it->second = true;
     while( ! datas_.empty() && datas_.back().second )
     {
