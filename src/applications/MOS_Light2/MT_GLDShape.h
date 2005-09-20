@@ -123,9 +123,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDShape.inl"
-#endif
 
 #endif // __MT_GLDShape_h_

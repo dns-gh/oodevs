@@ -79,9 +79,6 @@ private:
     MOS_Agent* pPopupAgent_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamAgent.inl"
-#endif
 
 #endif // __MOS_ParamAgent_h_

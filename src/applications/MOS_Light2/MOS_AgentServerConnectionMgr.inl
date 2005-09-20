@@ -24,7 +24,7 @@
 // Name: MOS_AgentServerConnectionMgr::GetAgentServer
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentServer& MOS_AgentServerConnectionMgr::GetAgentServer() const
 {
     assert( pAgentServer_ );
@@ -35,7 +35,7 @@ MOS_AgentServer& MOS_AgentServerConnectionMgr::GetAgentServer() const
 // Name: MOS_AgentServerConnectionMgr::IsConnectedToAgentServer
 // Created: NLD 2002-09-05
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_AgentServerConnectionMgr::IsConnectedToAgentServer() const
 {
     return pAgentServer_ != 0;

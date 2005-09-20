@@ -98,9 +98,6 @@ private:
     QPopupMenu* pPopupMenu_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentListView.inl"
-#endif
 
 #endif // __MOS_AgentListView_h_

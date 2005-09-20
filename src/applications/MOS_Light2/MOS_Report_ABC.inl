@@ -21,7 +21,7 @@
 // Name: MOS_Report_ABC::GetPos
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MT_Vector2D& MOS_Report_ABC::GetPos() const
 {
     return vPos_;
@@ -32,7 +32,7 @@ const MT_Vector2D& MOS_Report_ABC::GetPos() const
 // Name: MOS_Report_ABC::GetTitle
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string& MOS_Report_ABC::GetTitle() const
 {
     return strTitle_;
@@ -43,7 +43,7 @@ const std::string& MOS_Report_ABC::GetTitle() const
 // Name: MOS_Report_ABC::GetTime
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Report_ABC::GetTime() const
 {
     return nTime_;
@@ -54,7 +54,7 @@ int MOS_Report_ABC::GetTime() const
 // Name: MOS_Report_ABC::IsNew
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Report_ABC::IsNew() const
 {
     return bNew_;
@@ -65,7 +65,7 @@ bool MOS_Report_ABC::IsNew() const
 // Name: MOS_Report_ABC::SetNew
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Report_ABC::SetNew( bool bNew )
 {
     bNew_ = bNew;
@@ -75,7 +75,7 @@ void MOS_Report_ABC::SetNew( bool bNew )
 // Name: MOS_Report_ABC::GetType
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Report_ABC::E_Type MOS_Report_ABC::GetType() const
 {
     return eType_;
@@ -85,7 +85,7 @@ MOS_Report_ABC::E_Type MOS_Report_ABC::GetType() const
 // Name: MOS_Report_ABC::IsRCType
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Report_ABC::IsRCType() const
 {
     return eType_ == eRC || eType_ == eMessage || eType_ == eEvent || eType_ == eWarning;

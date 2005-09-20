@@ -42,11 +42,6 @@
 #include "MOS_Gtia.h"
 #include "MOS_Agent.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_InfoPanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel constructor
 /** @param  pParent 

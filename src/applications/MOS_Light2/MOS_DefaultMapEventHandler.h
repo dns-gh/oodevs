@@ -134,9 +134,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_DefaultMapEventHandler.inl"
-#endif
 
 #endif // __MOS_DefaultMapEventHandler_h_

@@ -111,9 +111,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentKnowledgePanel.inl"
-#endif
 
 #endif // __MOS_AgentKnowledgePanel_h_

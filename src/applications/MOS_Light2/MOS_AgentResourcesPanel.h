@@ -70,9 +70,6 @@ private:
     T_ItemPtrVector lends_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentResourcesPanel.inl"
-#endif
 
 #endif // __MOS_AgentResourcesPanel_h_

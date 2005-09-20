@@ -18,7 +18,7 @@
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string MOS_Agent::GetCategory() const
 {
     return strCategory_;
@@ -29,7 +29,7 @@ const std::string MOS_Agent::GetCategory() const
 // Name: MOS_Agent::GetAgentID
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MIL_AgentID MOS_Agent::GetAgentID() const
 {
     return nAgentID_;
@@ -40,7 +40,7 @@ MIL_AgentID MOS_Agent::GetAgentID() const
 // Name: MOS_Agent::GetPosition
 // Created: NLD 2002-11-28
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MT_Vector2D& MOS_Agent::GetPos() const
 {
     return vPos_;
@@ -51,7 +51,7 @@ const MT_Vector2D& MOS_Agent::GetPos() const
 // Name: MOS_Agent::GetName 
 // Created: FBD 02-12-17
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string MOS_Agent::GetName() const
 {
     return sName_;
@@ -62,7 +62,7 @@ const std::string MOS_Agent::GetName() const
 // Name: MOS_Agent::IsAutomate
 // Created: FBD 03-01-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsAutomate() const
 {
     return bAutomate_;
@@ -73,7 +73,7 @@ bool MOS_Agent::IsAutomate() const
 // Name: MOS_Agent::GetParent
 // Created: FBD 03-01-07
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Agent* MOS_Agent::GetParent() const
 {
     return pParent_;
@@ -84,7 +84,7 @@ MOS_Agent* MOS_Agent::GetParent() const
 // Name: MOS_Agent::GetSymbol
 // Created: AGN 03-03-18
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string& MOS_Agent::GetSymbol() const
 {
     return symbolName_;
@@ -97,7 +97,7 @@ const std::string& MOS_Agent::GetSymbol() const
 */
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Agent::T_ReportVector& MOS_Agent::GetReports()
 {
     return reportVector_;
@@ -108,7 +108,7 @@ MOS_Agent::T_ReportVector& MOS_Agent::GetReports()
 // Name: MOS_Agent::IsEmbraye
 // Created: NLD 2003-10-20
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsEmbraye() const
 {
     return bEmbraye_;
@@ -121,7 +121,7 @@ bool MOS_Agent::IsEmbraye() const
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Agent::GetSpeed() const
 {
     return nSpeed_;
@@ -134,7 +134,7 @@ int MOS_Agent::GetSpeed() const
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 E_UnitPosture MOS_Agent::GetOldStance() const
 {
     return nOldPosture_;
@@ -147,7 +147,7 @@ E_UnitPosture MOS_Agent::GetOldStance() const
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 E_UnitPosture MOS_Agent::GetStance() const
 {
     return nCurrentPosture_;
@@ -160,7 +160,7 @@ E_UnitPosture MOS_Agent::GetStance() const
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Agent::GetStanceCompletion() const
 {
     return nPostureCompletionPourcentage_;
@@ -170,7 +170,7 @@ int MOS_Agent::GetStanceCompletion() const
 // Name: MOS_Agent::IsDead
 // Created: NLD 2005-07-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsDead() const
 {
     return bDead_;
@@ -180,7 +180,7 @@ bool MOS_Agent::IsDead() const
 // Name: MOS_Agent::IsNeutralized
 // Created: NLD 2005-07-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsNeutralized() const
 {
     return bNeutralized_;
@@ -190,7 +190,7 @@ bool MOS_Agent::IsNeutralized() const
 // Name: MOS_Agent::GetRawOpState
 // Created: AGE 2005-03-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Agent::GetRawOpState() const
 {
     return nRawOpState_;
@@ -202,7 +202,7 @@ uint MOS_Agent::GetRawOpState() const
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 E_ForceRatioState MOS_Agent::GetRapFor() const
 {
     return nFightRateState_;
@@ -215,7 +215,7 @@ E_ForceRatioState MOS_Agent::GetRapFor() const
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsLoaded() const
 {
     return bLoadingState_;
@@ -225,7 +225,7 @@ bool MOS_Agent::IsLoaded() const
 // Name: MOS_Agent::AreHumanTransportersReady
 // Created: NLD 2005-07-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::AreHumanTransportersReady() const
 {
     return bHumanTransportersReady_;
@@ -235,7 +235,7 @@ bool MOS_Agent::AreHumanTransportersReady() const
 // Name: MOS_Agent::GetComposition
 // Created: APE 2004-03-11
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_AgentComposition& MOS_Agent::GetComposition() const
 {
     return composition_;
@@ -248,7 +248,7 @@ const MOS_AgentComposition& MOS_Agent::GetComposition() const
 */
 // Created: APE 2004-04-29
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team& MOS_Agent::GetTeam() const
 {
     return GetGtia().GetTeam();
@@ -261,7 +261,7 @@ MOS_Team& MOS_Agent::GetTeam() const
 */
 // Created: APE 2004-04-29
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Gtia& MOS_Agent::GetGtia() const
 {
     if( pGtia_ )
@@ -280,7 +280,7 @@ MOS_Gtia& MOS_Agent::GetGtia() const
 */
 // Created: APE 2004-06-09
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsNBSSuitOn() const
 {
     return bNbcProtectionSuitWorn_;
@@ -291,7 +291,7 @@ bool MOS_Agent::IsNBSSuitOn() const
 // Name: MOS_Agent::GetContaminatingNBCAgents
 // Created: APE 2004-06-09
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Agent::T_NbcAgentVector& MOS_Agent::GetContaminatingNBCAgents() const
 {
     return contaminatingNbcAgents_;
@@ -302,7 +302,7 @@ const MOS_Agent::T_NbcAgentVector& MOS_Agent::GetContaminatingNBCAgents() const
 // Name: MOS_Agent::GetDirection
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Agent::GetDirection() const
 {
     return nDirection_;
@@ -313,7 +313,7 @@ int MOS_Agent::GetDirection() const
 // Name: MOS_Agent::GetAltitude
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Agent::GetAltitude() const
 {
     return nAltitude_;
@@ -326,7 +326,7 @@ int MOS_Agent::GetAltitude() const
 */
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 E_RulesOfEngagementState MOS_Agent::GetROE() const
 {
     return nRulesOfEngagementState_;
@@ -339,7 +339,7 @@ E_RulesOfEngagementState MOS_Agent::GetROE() const
 */
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 E_CloseCombatState MOS_Agent::GetCloseCombatState() const
 {
     return nCloseCombatState_;
@@ -352,7 +352,7 @@ E_CloseCombatState MOS_Agent::GetCloseCombatState() const
 */
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Agent::T_AgentIdVector& MOS_Agent::GetReinforcements() const
 {
     return renforts_;
@@ -362,7 +362,7 @@ const MOS_Agent::T_AgentIdVector& MOS_Agent::GetReinforcements() const
 // Name: MOS_Agent::GetReinforced
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Agent::GetReinforced() const
 {
     return nPionRenforce_;
@@ -372,7 +372,7 @@ uint MOS_Agent::GetReinforced() const
 // Name: MOS_Agent::GetTransportees
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Agent::T_AgentIdVector& MOS_Agent::GetTransportees() const
 {
     return pionTransportes_;
@@ -382,7 +382,7 @@ const MOS_Agent::T_AgentIdVector& MOS_Agent::GetTransportees() const
 // Name: MOS_Agent::GetTransporter
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Agent::GetTransporter() const
 {
     return nTransporteur_;
@@ -394,7 +394,7 @@ uint MOS_Agent::GetTransporter() const
 */
 // Created: APE 2004-09-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Agent::IsOutOfGas() const
 {
     return composition_.bEmptyGasTank_;
@@ -404,7 +404,7 @@ bool MOS_Agent::IsOutOfGas() const
 // Name: MOS_Agent::GetExperience
 // Created: AGE 2005-03-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Experience& MOS_Agent::GetExperience() const
 {
     assert( pExperience_ );
@@ -415,7 +415,7 @@ const MOS_Experience& MOS_Agent::GetExperience() const
 // Name: MOS_Agent::GetTiredness
 // Created: AGE 2005-03-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Tiredness& MOS_Agent::GetTiredness() const
 {
     assert( pTiredness_ );
@@ -426,7 +426,7 @@ const MOS_Tiredness& MOS_Agent::GetTiredness() const
 // Name: MOS_Agent::GetMorale
 // Created: AGE 2005-03-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Morale& MOS_Agent::GetMorale() const
 {
     assert( pMorale_ );
@@ -437,7 +437,7 @@ const MOS_Morale& MOS_Agent::GetMorale() const
 // Name: MOS_Agent::ClearPath
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::ClearPath()
 {
     pathFindVector_.clear();
@@ -451,7 +451,7 @@ void MOS_Agent::ClearPath()
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetName( const std::string& strName )
 {
     sName_ = strName;
@@ -464,7 +464,7 @@ void MOS_Agent::SetName( const std::string& strName )
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetAgentID( MIL_AgentID nID )
 {
     assert( nAgentID_ == 0 );
@@ -480,7 +480,7 @@ void MOS_Agent::SetAgentID( MIL_AgentID nID )
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetGtia( MOS_Gtia& gtia )
 {
     pGtia_ = &gtia;
@@ -493,7 +493,7 @@ void MOS_Agent::SetGtia( MOS_Gtia& gtia )
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetParent( MOS_Agent* pParent )
 {
     pParent_ = pParent;
@@ -506,7 +506,7 @@ void MOS_Agent::SetParent( MOS_Agent* pParent )
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetCategory( const std::string& strCategory )
 {
     strCategory_ = strCategory;
@@ -519,7 +519,7 @@ void MOS_Agent::SetCategory( const std::string& strCategory )
 */
 // Created: APE 2004-09-03
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetSymbol( const std::string& strSymbol )
 {
     symbolName_ = strSymbol;
@@ -532,7 +532,7 @@ void MOS_Agent::SetSymbol( const std::string& strSymbol )
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetPos( const MT_Vector2D& vPos )
 {
     vPos_ = vPos;
@@ -545,7 +545,7 @@ void MOS_Agent::SetPos( const MT_Vector2D& vPos )
 */
 // Created: APE 2004-08-27
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetIsAutomate( bool b )
 {
     bAutomate_ = b;
@@ -558,7 +558,7 @@ void MOS_Agent::SetIsAutomate( bool b )
 */
 // Created: APE 2004-09-20
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::SetEmbraye( bool b )
 {
     bEmbraye_ = b;
@@ -571,7 +571,7 @@ void MOS_Agent::SetEmbraye( bool b )
 */
 // Created: APE 2004-11-03
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Agent::GetContamination() const
 {
     return nContamination_;
@@ -584,7 +584,7 @@ int MOS_Agent::GetContamination() const
 */
 // Created: APE 2004-11-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Agent::AddChild( MOS_Agent& agent )
 {
     children_.push_back( &agent );
@@ -596,7 +596,7 @@ void MOS_Agent::AddChild( MOS_Agent& agent )
 */
 // Created: APE 2004-11-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Agent::T_AgentVector& MOS_Agent::GetChildren()
 {
     return children_;
@@ -606,7 +606,7 @@ MOS_Agent::T_AgentVector& MOS_Agent::GetChildren()
 // Name: mos_agent::GetTypePion
 // Created: SBO 2005-08-03
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_TypePion* MOS_Agent::GetTypePion() const
 {
     return pTypePion_;
@@ -616,7 +616,7 @@ const MOS_TypePion* MOS_Agent::GetTypePion() const
 // Name: mos_agent::GetTypeAutomate
 // Created: HME 2005-08-08
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_TypeAutomate* MOS_Agent::GetTypeAutomate() const
 {
     return pTypeAutomate_;

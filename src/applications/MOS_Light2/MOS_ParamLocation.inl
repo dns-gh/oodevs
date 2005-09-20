@@ -23,7 +23,7 @@
 // Name: MOS_ParamLocation::Draw
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamLocation::Draw()
 {
     MOS_GLTool::Draw( *this );
@@ -34,7 +34,7 @@ void MOS_ParamLocation::Draw()
 // Name: MOS_ParamLocation::Clear
 // Created: APE 2004-06-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamLocation::Clear()
 {
     pShapeLabel_->setText( tr( "---" ) );
@@ -48,7 +48,7 @@ void MOS_ParamLocation::Clear()
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const T_PointVector& MOS_ParamLocation::GetPointList()
 {
     return pointList_;
@@ -61,7 +61,7 @@ const T_PointVector& MOS_ParamLocation::GetPointList()
 */
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 ASN1T_EnumTypeLocalisation MOS_ParamLocation::GetType()
 {
     return nType_;

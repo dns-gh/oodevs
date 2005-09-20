@@ -26,11 +26,6 @@
 #include "MT_Settings.h"
 #include "MT/MT_IO/MT_CommandLine.h"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_Options.inl"
-#endif
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Options constructor
 // Created: APE 2004-03-16

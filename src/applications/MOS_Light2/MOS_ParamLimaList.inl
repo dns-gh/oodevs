@@ -23,7 +23,7 @@
 // Name: MOS_ParamLimaList::Draw
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamLimaList::Draw()
 {
     MOS_GLTool::Draw( *this );

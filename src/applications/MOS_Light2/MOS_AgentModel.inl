@@ -21,7 +21,7 @@
 // Name: MOS_AgentModel::GetName
 // Created: AGN 2003-12-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string& MOS_AgentModel::GetName() const
 {
     return strName_;
@@ -32,7 +32,7 @@ const std::string& MOS_AgentModel::GetName() const
 // Name: MOS_AgentModel::GetDIAType
 // Created: APE 2004-09-06
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string& MOS_AgentModel::GetDIAType() const
 {
     return strDIAType_;
@@ -43,7 +43,7 @@ const std::string& MOS_AgentModel::GetDIAType() const
 // Name: MOS_AgentModel::GetAvailableMissions
 // Created: AGN 2003-12-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_AgentModel::T_MissionVector& MOS_AgentModel::GetAvailableMissions() const
 {
     return vAvailableMissions_;
@@ -54,7 +54,7 @@ const MOS_AgentModel::T_MissionVector& MOS_AgentModel::GetAvailableMissions() co
 // Name: MOS_AgentModel::GetAvailableFragOrders
 // Created: APE 2004-07-29
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_AgentModel::T_FragOrderSet& MOS_AgentModel::GetAvailableFragOrders() const
 {
     return fragmentaryOrders_;

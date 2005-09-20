@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 const MT_GLDShapeProperties& MT_GLDShape::GetProperties() const
 {
     return properties_;
@@ -36,7 +36,7 @@ const MT_GLDShapeProperties& MT_GLDShape::GetProperties() const
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDShape::SetProperties( const MT_GLDShapeProperties& properties )
 {
     properties_ = properties;
@@ -49,7 +49,7 @@ void MT_GLDShape::SetProperties( const MT_GLDShapeProperties& properties )
 */
 // Created: APE 2004-07-01
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDShape::Translate( const MT_Vector2D& vPos )
 {
     for( IT_PointVector it = points_.begin(); it != points_.end(); ++it )
@@ -63,7 +63,7 @@ void MT_GLDShape::Translate( const MT_Vector2D& vPos )
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDShape::SetColor( QRgb color ) const
 {
     glColor4ub( qRed(color), qGreen(color), qBlue(color), qAlpha(color) );

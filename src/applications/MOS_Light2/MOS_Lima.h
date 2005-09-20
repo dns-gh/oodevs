@@ -63,8 +63,6 @@ private:
     E_FuncLimaType        nFuncType_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Lima.inl"
-#endif
 
 #endif // __MOS_Lima_h_

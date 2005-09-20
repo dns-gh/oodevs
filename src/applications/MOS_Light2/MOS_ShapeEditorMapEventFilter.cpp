@@ -29,11 +29,6 @@
 #include "MOS_GLTool.h"
 #include "MOS_MapMouseEvent.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ShapeEditorMapEventFilter.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ShapeEditorMapEventFilter constructor
 // Created: APE 2004-04-14

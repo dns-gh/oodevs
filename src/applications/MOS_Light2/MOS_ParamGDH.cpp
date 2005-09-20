@@ -24,12 +24,6 @@
 #include "MOS_ParamGDH.h"
 #include "moc_MOS_ParamGDH.cpp"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamGDH.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamGDH constructor
 /** @param  asnGDH 

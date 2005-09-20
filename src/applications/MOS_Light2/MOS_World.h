@@ -101,9 +101,6 @@ private:
     mutable geocoord::Geodetic                    geodetic_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #	include "MOS_World.inl"
-#endif
 
 #endif // __MOS_World_h_

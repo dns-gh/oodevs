@@ -132,8 +132,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_ObjectKnowledgePanel.inl"
-#endif
 
 #endif // __MOS_ObjectKnowledgePanel_h_

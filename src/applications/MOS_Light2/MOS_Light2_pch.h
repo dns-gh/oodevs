@@ -12,6 +12,8 @@
 #ifndef __MOS_Pch_h_
 #define __MOS_Pch_h_
 
+#pragma warning( disable : 4290 )
+#pragma warning( disable : 4702 )
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"
@@ -91,6 +93,7 @@
 #include <qmainwindow.h>
 #include <qdockwindow.h>
 #include <qsound.h>
+#include <stdexcept>
 
 #include "GFX/GFX_Tools.h"
 #include "GFX/GFX_Text.h"
@@ -100,26 +103,6 @@
 
 #include "ENT/ENT_Tr.h"
 
-
-//-------------------------------------------------------------------------
-/** @name Inline mode*/
-//-------------------------------------------------------------------------
-//@{
-#define MOS_USE_INLINE
-#define MOS_INLINE inline
-//@}
-
-
-//-------------------------------------------------------------------------
-/** @name Debug mode*/
-//-------------------------------------------------------------------------
-//@{
-#ifdef _DEBUG
-#   ifndef MOS_DEBUG
-#       define MOS_DEBUG
-#   endif 
-#endif 
-//@}
-
+#define RUNTIME_ERROR { std::stringstream str; str << "Runtime error in function " __FUNCTION__ ", file : " __FILE__ ", line : " << __LINE__ << "."; throw std::runtime_error( str.str().c_str() ); }
 
 #endif // __MOS_Pch_h_

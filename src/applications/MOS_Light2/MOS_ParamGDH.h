@@ -82,9 +82,6 @@ private:
     QCheckBox*     pCheckbox_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamGDH.inl"
-#endif
 
 #endif // __MOS_ParamGDH_h_

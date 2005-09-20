@@ -20,7 +20,7 @@
 // Name: MOS_ParamAgent::Clear
 // Created: HME 2005-08-02
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamAgent::Clear()
 {
     pAgentLabel_->setText( tr( "---" ) );
@@ -30,7 +30,7 @@ void MOS_ParamAgent::Clear()
 // Name: MOS_ParamAgent::GetAgent
 // Created: HME 2005-08-04
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Agent* MOS_ParamAgent::GetAgent()
 {
     return pAgent_;

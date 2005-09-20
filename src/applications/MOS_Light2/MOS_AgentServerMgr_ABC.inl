@@ -15,7 +15,7 @@
 // Name: MOS_AgentServerMgr_ABC::GetAgentServerFromSession
 // Created: NLD 2002-07-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentServer& MOS_AgentServerMgr_ABC::GetAgentServerFromSession( DIN::DIN_Link& link )
 {
     assert( link.GetUserData() );

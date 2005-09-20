@@ -127,7 +127,7 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
 // Name: MOS_LogisticSupplyRecompletionDialog::closeEvent
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-void MOS_LogisticSupplyRecompletionDialog::closeEvent( QCloseEvent * e )
+void MOS_LogisticSupplyRecompletionDialog::closeEvent( QCloseEvent * )
 {
     Reject();
 }
@@ -256,8 +256,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
     // Personnels
     {
     uint nNbrPersonals = 0;
-    uint nRow;
-    for( nRow = 0; nRow < pPersonalsTable_->numRows(); ++nRow )
+    for( int nRow = 0; nRow < pPersonalsTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pPersonalsTable_->item( nRow, 0 ) );
         assert( pCheckTableItem );
@@ -272,7 +271,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         ASN1T_RecompletementPersonnel* pAsnPersonnel = new ASN1T_RecompletementPersonnel[ nNbrPersonals ];
         asnMagicAction.personnels.elem = pAsnPersonnel;
         uint nAsnIdx = 0;
-        for( uint nRow = 0; nRow < pPersonalsTable_->numRows(); ++nRow )
+        for( int nRow = 0; nRow < pPersonalsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pPersonnelItemCheckBox = static_cast< QCheckTableItem* >( pPersonalsTable_->item( nRow, 0 ) );
             QTableItem*      pRangItem              = pPersonalsTable_->item( nRow, 1 );
@@ -298,7 +297,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         asnMagicAction.m.equipementsPresent = 1;
         uint nAsnIdx = 0;
         ASN1T_RecompletementEquipement* pAsnEquipement = new ASN1T_RecompletementEquipement[ pEquipmentsTable_->numRows() - 1 ];
-        for( uint nRow = 0; nRow < pEquipmentsTable_->numRows() - 1; ++nRow )
+        for( int nRow = 0; nRow < pEquipmentsTable_->numRows() - 1; ++nRow )
         {
             QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( pEquipmentsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem         = pEquipmentsTable_->item( nRow, 1 );
@@ -318,8 +317,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
     // Dotations
     {
     uint nNbrDotations = 0;
-    uint nRow;
-    for( nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
+    for( int nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pDotationsTable_->item( nRow, 0 ) );
         assert( pCheckTableItem );
@@ -334,7 +332,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         ASN1T_RecompletementDotation* pAsnDotations = new ASN1T_RecompletementDotation[ nNbrDotations ];
         asnMagicAction.dotations.elem = pAsnDotations;
         uint nAsnIdx = 0;
-        for( uint nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
+        for( int nRow = 0; nRow < pDotationsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pDotationItemCheckBox = static_cast< QCheckTableItem* >( pDotationsTable_->item( nRow, 0 ) );
             QTableItem*      pDotationItem         = pDotationsTable_->item( nRow, 1 );
@@ -357,8 +355,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
     // Munitions
     {
     uint nNbrMunitions = 0;
-    uint nRow;
-    for( nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
+    for( int nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pMunitionsFamilyTable_->item( nRow, 0 ) );
         assert( pCheckTableItem );
@@ -373,7 +370,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         ASN1T_RecompletementDotationMunition* pAsnMunitions = new ASN1T_RecompletementDotationMunition[ nNbrMunitions ];
         asnMagicAction.munitions.elem = pAsnMunitions;
         uint nAsnIdx = 0;
-        for( uint nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
+        for( int nRow = 0; nRow < pMunitionsFamilyTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pMunitionItemCheckBox = static_cast< QCheckTableItem* >( pMunitionsFamilyTable_->item( nRow, 0 ) );
             QTableItem*      pMunitionItem         = pMunitionsFamilyTable_->item( nRow, 1 );
@@ -505,7 +502,7 @@ void MOS_LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCo
     // update quantity colum to bound it to max value
     QTableItem* pTableItem = static_cast< QTableItem* >( pEquipmentsTable_->item( nRow, 1 ) );
     assert( pTableItem );
-    uint nMax = 0;
+    int nMax = 0;
     if( pComboTableItem->currentItem() > 0 )
         nMax = equipmentsMax_[ pComboTableItem->currentItem() - 1 ];
     if( pTableItem->text().toInt() > nMax )

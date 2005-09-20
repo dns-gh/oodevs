@@ -26,11 +26,6 @@
 #include "MT_GLDShape.h"
 #include "MT_GLDShapeGroup.h"
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDShape_ABC.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDShape_ABC constructor
 // Created: APE 2004-06-24

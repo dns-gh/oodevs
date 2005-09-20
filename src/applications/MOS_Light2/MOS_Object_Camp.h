@@ -66,8 +66,6 @@ private:
     //@}
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Object_Camp.inl"
-#endif
 
 #endif // __MOS_Object_Camp_h_

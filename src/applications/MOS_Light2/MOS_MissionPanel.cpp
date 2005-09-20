@@ -45,11 +45,6 @@
 #include "MOS_LogisticSupplyChangeQuotasDialog.h"
 #include "MOS_LogisticSupplyRecompletionDialog.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_MissionPanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel constructor
 /** @param  pParent 

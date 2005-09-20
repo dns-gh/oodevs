@@ -85,9 +85,6 @@ private:
     MT_Vector2D popupMenuPoint_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamPoint.inl"
-#endif
 
 #endif // __MOS_ParamPoint_h_

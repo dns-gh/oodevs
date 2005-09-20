@@ -70,8 +70,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_FragmentaryOrderInterface.inl"
-#endif
 
 #endif // __MOS_FragmentaryOrderInterface_h_

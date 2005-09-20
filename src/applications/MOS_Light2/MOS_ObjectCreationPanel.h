@@ -135,8 +135,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_ObjectCreationPanel.inl"
-#endif
 
 #endif // __MOS_ObjectCreationPanel_h_

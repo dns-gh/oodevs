@@ -51,8 +51,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #	include "MOS_Line.inl"
-#endif
 
 #endif // __MOS_Line_h_

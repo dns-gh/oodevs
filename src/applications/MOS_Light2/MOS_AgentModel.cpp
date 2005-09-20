@@ -18,11 +18,6 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_AgentModel.h"
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentModel.inl"
-#endif
-
 #include "MT_Tools/MT_ScipioException.h"
 #include "MOS_MainWindow.h"
 #include "MOS_App.h"

@@ -189,7 +189,8 @@ void MOS_AgentCreationPanel::CreateGtia()
     selectedElement_.pTeam_->RegisterGtia( *pNewGtia );
 
     MOS_App::GetApp().NotifyGtiaCreated( *pNewGtia );
-    emit ElementSelected( MOS_SelectedElement( *pNewGtia ) );
+    MOS_SelectedElement message( *pNewGtia );
+    emit ElementSelected( message );
 }
 
 

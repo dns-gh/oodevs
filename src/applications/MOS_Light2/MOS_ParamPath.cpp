@@ -30,11 +30,6 @@
 #include "MOS_ShapeEditorMapEventFilter.h"
 #include "MOS_Agent.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamPath.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPath constructor
 /** @param  asnListPoint 

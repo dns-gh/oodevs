@@ -51,11 +51,6 @@
 
 MOS_MainWindow* MOS_MainWindow::pInstance_ = 0;
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_MainWindow.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_MainWindow constructor
 // Created: APE 2004-03-01

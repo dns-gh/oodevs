@@ -28,11 +28,6 @@
 #include "MOS_App.h"
 #include "MOS_Tools.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentResourcesPanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentResourcesPanel constructor
 /** @param  pParent 

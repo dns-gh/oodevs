@@ -13,11 +13,6 @@
 
 #include "MOS_ConnectDialog.h"
 #include "moc_MOS_ConnectDialog.cpp"
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_ConnectDialog.inl"
-#endif
-
 #include "MOS_App.h"
 #include "MOS_MOSServer.h"
 

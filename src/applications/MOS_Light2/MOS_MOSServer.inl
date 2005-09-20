@@ -25,7 +25,7 @@
 // Name: MOS_MOSServer::GetDINEngine
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 DIN::DIN_Engine& MOS_MOSServer::GetDINEngine()
 {
     return dinEngine_;
@@ -36,7 +36,7 @@ DIN::DIN_Engine& MOS_MOSServer::GetDINEngine()
 // Name: MOS_MOSServer::GetController
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentServerController& MOS_MOSServer::GetController() const
 {
     assert( pASController_ );

@@ -26,10 +26,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_Config.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Config.inl"
-#endif
-
 using namespace NEK;
 
 //-----------------------------------------------------------------------------

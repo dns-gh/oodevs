@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_TacticalLine_ABC.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_TacticalLine_ABC.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_TacticalLine_ABC constructor
 // Created: APE 2004-04-14

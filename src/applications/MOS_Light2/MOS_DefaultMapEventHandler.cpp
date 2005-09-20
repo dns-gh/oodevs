@@ -42,11 +42,6 @@
 #include "MOS_MapMouseEvent.h"
 #include "MOS_ASN_Messages.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_DefaultMapEventHandler.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler constructor
 // Created: APE 2004-03-26

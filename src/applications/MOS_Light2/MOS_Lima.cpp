@@ -24,11 +24,6 @@
 
 MOS_IDManager MOS_Lima::idManager_( 137 );
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Lima.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Lima constructor
 // Created: NLD 2002-08-08

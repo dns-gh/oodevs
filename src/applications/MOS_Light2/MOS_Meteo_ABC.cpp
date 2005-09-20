@@ -14,11 +14,6 @@
 
 #include "MOS_ASN_Messages.h"
 
-#ifndef MOS_USE_INLINE
-#	include "MOS_Meteo_ABC.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Meteo_ABC constructor
 // Created: AGN 03-08-06

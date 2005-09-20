@@ -27,11 +27,6 @@
 #include "MOS_ParamListView.h"
 #include "MOS_ParamObstacle.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamObstacleList.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacleList constructor
 /** @param  asnObjectList 

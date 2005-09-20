@@ -65,8 +65,6 @@ protected:
     MOS_MOSServer&              mosServer_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentServerMgr_ABC.inl"
-#endif
 
 #endif // __MOS_AgentServerMgr_ABC_h_

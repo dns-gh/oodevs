@@ -25,9 +25,7 @@ public:
     static void BuildAsnGDH( ASN1T_GDH& asnGDH );
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_ASN_Tools.inl"
-#endif
 
 
 #endif // __MOS_ASN_Tools_h_

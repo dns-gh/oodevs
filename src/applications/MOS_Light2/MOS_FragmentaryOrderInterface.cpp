@@ -30,11 +30,6 @@
 #include "MOS_Agent.h"
 #include "MOS_Tools.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_FragmentaryOrderInterface.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface constructor
 /** @param  agent 

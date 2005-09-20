@@ -24,11 +24,6 @@
 #include "MOS_ParamListView.h"
 #include "moc_MOS_ParamListView.cpp"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamListView.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamListView constructor
 /** @param  bRequired 

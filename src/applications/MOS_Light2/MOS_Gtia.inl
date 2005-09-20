@@ -22,7 +22,7 @@
 // Name: MOS_Gtia::GetID
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Gtia::GetID() const
 {
     return nID_;
@@ -33,7 +33,7 @@ uint MOS_Gtia::GetID() const
 // Name: MOS_Gtia::GetAgentKnowledges
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Gtia::T_AgentKnowledgeMap& MOS_Gtia::GetAgentKnowledges() const
 {
     return agentKnowledges_;    
@@ -46,7 +46,7 @@ const MOS_Gtia::T_AgentKnowledgeMap& MOS_Gtia::GetAgentKnowledges() const
 */
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Gtia::SetTeam( MOS_Team& team )
 {
     if( pTeam_ != 0 )
@@ -63,7 +63,7 @@ void MOS_Gtia::SetTeam( MOS_Team& team )
 // Name: MOS_Gtia::SetType
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Gtia::SetType( const std::string& strType )
 {
     strType_ = strType;
@@ -76,7 +76,7 @@ void MOS_Gtia::SetType( const std::string& strType )
 */
 // Created: APE 2004-05-27
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team& MOS_Gtia::GetTeam() const
 {
 //$$$$ en attendant un refactoring des données coté SIM et de leur reception.
@@ -91,7 +91,7 @@ MOS_Team& MOS_Gtia::GetTeam() const
 */
 // Created: APE 2004-09-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentKnowledge* MOS_Gtia::FindAgentKnowledge( int nId )
 {
     IT_AgentKnowledgeMap it = agentKnowledges_.find( nId );    
@@ -108,7 +108,7 @@ MOS_AgentKnowledge* MOS_Gtia::FindAgentKnowledge( int nId )
 */
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentKnowledge* MOS_Gtia::FindKnowledgeOnAgent( const MOS_Agent& agent )
 {
     for( IT_AgentKnowledgeMap it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )

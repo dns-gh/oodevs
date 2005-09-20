@@ -90,9 +90,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamLocation.inl"
-#endif
 
 #endif // __MOS_ParamLocation_h_

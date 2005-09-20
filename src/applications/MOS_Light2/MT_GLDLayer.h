@@ -96,9 +96,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDLayer.inl"
-#endif
 
 #endif // __MT_GLDLayer_h_

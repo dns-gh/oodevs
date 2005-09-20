@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MT_GLDShapeGroup.h"
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDShapeGroup.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDShapeGroup constructor
 // Created: APE 2004-07-07

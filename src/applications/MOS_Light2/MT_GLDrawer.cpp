@@ -46,12 +46,6 @@
 #include "res/save.xpm"
 #include "res/saveall.xpm"
 
-
-#ifndef MT_USE_INLINE
-#   include "MT_GLDrawer.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDrawer constructor
 /** @param  glWidget 

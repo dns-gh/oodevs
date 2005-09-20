@@ -202,9 +202,6 @@ private:
     T_MedicalConsigns     medicalConsigns_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentManager.inl"
-#endif
 
 #endif // __MOS_AgentManager_h_

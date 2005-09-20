@@ -78,9 +78,6 @@ private:
     MOS_ShapeEditorMapEventFilter* pLineEditor_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamPath.inl"
-#endif
 
 #endif // __MOS_ParamPath_h_

@@ -449,7 +449,7 @@ char MOS_Nature::SupportSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::CombatAirDefenseSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::CombatAirDefenseSymbol( const MOS_Nature& n )
+char MOS_Nature::CombatAirDefenseSymbol( const MOS_Nature&  )
 {
     return 'd';
 }
@@ -458,7 +458,7 @@ char MOS_Nature::CombatAirDefenseSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::CombatSecuritySymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::CombatSecuritySymbol( const MOS_Nature& n )
+char MOS_Nature::CombatSecuritySymbol( const MOS_Nature& )
 {
     return 'a';
 }
@@ -548,7 +548,7 @@ char MOS_Nature::CombatGenieCombatSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::CombatGenieConstructionSymbol
 // Created: AGE 2005-04-14
 // -----------------------------------------------------------------------------
-char MOS_Nature::CombatGenieConstructionSymbol( const MOS_Nature& n )
+char MOS_Nature::CombatGenieConstructionSymbol( const MOS_Nature& )
 {
     return 'Q'; // $$$$ AGE 2005-04-14:
 }
@@ -578,7 +578,7 @@ char MOS_Nature::CombatArtillerySymbol( const MOS_Nature& n )
 // Name: MOS_Nature::CombatReconSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::CombatReconSymbol( const MOS_Nature& n )
+char MOS_Nature::CombatReconSymbol( const MOS_Nature& )
 {
     return 'w';
 }
@@ -587,7 +587,7 @@ char MOS_Nature::CombatReconSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::CombatMissileSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::CombatMissileSymbol( const MOS_Nature& n )
+char MOS_Nature::CombatMissileSymbol( const MOS_Nature& )
 {
     return 'y';
 }
@@ -596,7 +596,7 @@ char MOS_Nature::CombatMissileSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::LogAdministrativeSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::LogAdministrativeSymbol( const MOS_Nature& n )
+char MOS_Nature::LogAdministrativeSymbol( const MOS_Nature& )
 {
     return '2';
 }
@@ -633,7 +633,7 @@ char MOS_Nature::LogSupplySymbol( const MOS_Nature& n )
 // Name: MOS_Nature::LogTransportSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::LogTransportSymbol( const MOS_Nature& n )
+char MOS_Nature::LogTransportSymbol( const MOS_Nature& )
 {
     return 'G';
 }
@@ -642,7 +642,7 @@ char MOS_Nature::LogTransportSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::LogReparationSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::LogReparationSymbol( const MOS_Nature& n )
+char MOS_Nature::LogReparationSymbol( const MOS_Nature& )
 {
     return 'H';
 }
@@ -680,7 +680,7 @@ char MOS_Nature::SupportRensSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::SupportLawSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::SupportLawSymbol( const MOS_Nature& n )
+char MOS_Nature::SupportLawSymbol( const MOS_Nature& )
 {
     return 'a';
 }
@@ -689,7 +689,7 @@ char MOS_Nature::SupportLawSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::SupportTransSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::SupportTransSymbol( const MOS_Nature& n )
+char MOS_Nature::SupportTransSymbol( const MOS_Nature& )
 {
     return '3';
 }
@@ -698,7 +698,7 @@ char MOS_Nature::SupportTransSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::SupportInfWarSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::SupportInfWarSymbol( const MOS_Nature& n )
+char MOS_Nature::SupportInfWarSymbol( const MOS_Nature& )
 {
     return '4';
 }
@@ -707,7 +707,7 @@ char MOS_Nature::SupportInfWarSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::SupportLandingSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::SupportLandingSymbol( const MOS_Nature& n )
+char MOS_Nature::SupportLandingSymbol( const MOS_Nature& )
 {
     return 'a';
 }
@@ -716,7 +716,7 @@ char MOS_Nature::SupportLandingSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::SupportMineSweepSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::SupportMineSweepSymbol( const MOS_Nature& n )
+char MOS_Nature::SupportMineSweepSymbol( const MOS_Nature& )
 {
     return 'a';
 }
@@ -725,7 +725,7 @@ char MOS_Nature::SupportMineSweepSymbol( const MOS_Nature& n )
 // Name: MOS_Nature::SupportManoeuvreSymbol
 // Created: AGE 2005-04-07
 // -----------------------------------------------------------------------------
-char MOS_Nature::SupportManoeuvreSymbol( const MOS_Nature& n )
+char MOS_Nature::SupportManoeuvreSymbol( const MOS_Nature& )
 {
     return 'N';
 }

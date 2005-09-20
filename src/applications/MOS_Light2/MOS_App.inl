@@ -23,7 +23,7 @@
 // Name: MOS_App::GetApp
 // Created: DFT 02-03-13
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_App& MOS_App::GetApp()
 {
     assert( pInstance_ != 0 );
@@ -35,7 +35,7 @@ MOS_App& MOS_App::GetApp()
 // Name: MOS_App::GetMOSServer
 // Created: NLD 2002-07-15
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_MOSServer& MOS_App::GetMOSServer() const
 {
     assert( pMOSServer_ );
@@ -47,7 +47,7 @@ MOS_MOSServer& MOS_App::GetMOSServer() const
 // Name: MOS_App::GetAgentManager
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentManager& MOS_App::GetAgentManager() const
 {
     assert( pAgentManager_ );
@@ -59,7 +59,7 @@ MOS_AgentManager& MOS_App::GetAgentManager() const
 // Name: MOS_App::GetLineManager
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_LineManager& MOS_App::GetLineManager() const
 {
     assert( pLineManager_ );
@@ -70,7 +70,7 @@ MOS_LineManager& MOS_App::GetLineManager() const
 // Name: MOS_App::GetObjectManager
 // Created: NLD 2002-11-28
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_ObjectManager& MOS_App::GetObjectManager() const
 {
     assert( pObjectManager_ );
@@ -82,7 +82,7 @@ MOS_ObjectManager& MOS_App::GetObjectManager() const
 // Name: MOS_App::GetRawVisionData
 // Created: FBD 03-02-11
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_RawVisionData& MOS_App::GetRawVisionData()
 {
     return rawData_;
@@ -93,7 +93,7 @@ MOS_RawVisionData& MOS_App::GetRawVisionData()
 // Name: MOS_App::GetWeatherManager
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Meteo_Manager& MOS_App::GetWeatherManager() const
 {
     assert( pWeatherManager_ != 0 );
@@ -105,7 +105,7 @@ MOS_Meteo_Manager& MOS_App::GetWeatherManager() const
 // Name: MOS_App::GetWorld
 // Created: FBD 03-02-11
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_World& MOS_App::GetWorld() const
 {
     assert( pWorld_ != 0 );
@@ -119,7 +119,7 @@ MOS_World& MOS_App::GetWorld() const
 */
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_MainWindow& MOS_App::GetMainWindow() const
 {
     assert( pMainWindow_ != 0 );
@@ -130,7 +130,7 @@ MOS_MainWindow& MOS_App::GetMainWindow() const
 // Name: MOS_App::GetTime
 // Created: FBD 03-01-27
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_App::GetTime() const
 {
     return nTimeSeconds_;
@@ -141,7 +141,7 @@ uint MOS_App::GetTime() const
 // Name: std::string 
 // Created: JVT 04-04-01
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 std::string MOS_App::GetTransportDotationName( MIL_AgentID nID ) const
 {
     switch ( nID )
@@ -163,7 +163,7 @@ std::string MOS_App::GetTransportDotationName( MIL_AgentID nID ) const
 // Name: MOS_App::GetNBCName
 // Created: APE 2004-07-29
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 std::string MOS_App::GetNBCName( uint nId ) const
 {
     CIT_MosId_String_Map found = nbcNamesMap_.find( nId );
@@ -178,7 +178,7 @@ std::string MOS_App::GetNBCName( uint nId ) const
 // Name: MOS_App::GetNBCNames
 // Created: APE 2004-07-29
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const T_MosId_String_Map& MOS_App::GetNBCNames() const
 {
     return nbcNamesMap_;
@@ -188,7 +188,7 @@ const T_MosId_String_Map& MOS_App::GetNBCNames() const
 // Name: MOS_App::GetResourceNames
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const T_MosId_String_Map& MOS_App::GetResourceNames() const
 {
     return resourcesNameMap_;
@@ -198,7 +198,7 @@ const T_MosId_String_Map& MOS_App::GetResourceNames() const
 // Name: MOS_App::GetNBCID
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_App::GetNBCID( const std::string& strName ) const
 {
     for( CIT_MosId_String_Map it = nbcNamesMap_.begin(); it != nbcNamesMap_.end(); ++it )
@@ -211,7 +211,7 @@ uint MOS_App::GetNBCID( const std::string& strName ) const
 // Name: MOS_App::FindSensorType
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_SensorType* MOS_App::FindSensorType( const std::string& strName ) const
 {
     CIT_SensorTypeMap it = sensorTypes_.find( strName );
@@ -225,7 +225,7 @@ const MOS_SensorType* MOS_App::FindSensorType( const std::string& strName ) cons
 // Name: MOS_App::IsODBEdition
 // Created: APE 2004-07-29
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_App::IsODBEdition()
 {
     return bODBEditor_;
@@ -235,7 +235,7 @@ bool MOS_App::IsODBEdition()
 // Name: MOS_App::GetRootConfigFile
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string& MOS_App::GetRootConfigFile() const
 {
     return strRootConfigFile_;

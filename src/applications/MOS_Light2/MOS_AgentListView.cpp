@@ -36,11 +36,6 @@
 #include "MOS_ObjectKnowledge.h"
 #include "MOS_ASN_Messages.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentListView.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentListView constructor
 /** @param  pParent 
@@ -106,7 +101,7 @@ void MOS_AgentListView::AddAgent( MOS_Agent& agent )
         return;
 
     // Check if the agent is not already inserted.
-#ifdef MOS_DEBUG
+#ifdef _DEBUG
     QListViewItemIterator it( this->firstChild() );
     while( it.current() )
     {
@@ -203,7 +198,7 @@ void MOS_AgentListView::AddGtia( MOS_Gtia& gtia )
         return;
 
     // Check if the gtia is not already inserted.
-#ifdef MOS_DEBUG
+#ifdef _DEBUG
     QListViewItemIterator it( this->firstChild() );
     while( it.current() )
     {

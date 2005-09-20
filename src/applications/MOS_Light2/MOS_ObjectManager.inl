@@ -14,7 +14,7 @@
 // Name: MOS_ObjectManager::FindObject
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Object_ABC* MOS_ObjectManager::FindObject( uint nID ) const
 {
     CIT_ObjectMap itObject = ObjectMap_.find( nID );
@@ -30,7 +30,7 @@ MOS_Object_ABC* MOS_ObjectManager::FindObject( uint nID ) const
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_ObjectManager::T_ObjectMap& MOS_ObjectManager::GetObjects() const
 {
     return ObjectMap_;

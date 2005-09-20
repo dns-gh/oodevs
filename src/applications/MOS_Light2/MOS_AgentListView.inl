@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 QSize MOS_AgentListView::sizeHint() const
 {
     return QSize( 230, 340 );
@@ -36,7 +36,7 @@ QSize MOS_AgentListView::sizeHint() const
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team* MOS_AgentListView::ToTeam( QListViewItem* pItem )
 {
     if( pItem == 0 || pItem->rtti() != eTeam )
@@ -52,7 +52,7 @@ MOS_Team* MOS_AgentListView::ToTeam( QListViewItem* pItem )
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Gtia* MOS_AgentListView::ToGtia( QListViewItem* pItem )
 {
     if( pItem == 0 || pItem->rtti() != eGtia )
@@ -68,7 +68,7 @@ MOS_Gtia* MOS_AgentListView::ToGtia( QListViewItem* pItem )
 */
 // Created: APE 2004-03-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Agent* MOS_AgentListView::ToAgent( QListViewItem* pItem )
 {
     if( pItem == 0 || pItem->rtti() != eAgent )

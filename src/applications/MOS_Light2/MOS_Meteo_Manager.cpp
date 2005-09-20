@@ -17,11 +17,6 @@
 
 MT_IdentifierManager MOS_Meteo_Manager::idManager_;
 
-#ifndef MOS_USE_INLINE
-#	include "MOS_Meteo_Manager.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Meteo_Manager constructor
 // Created: AGN 03-08-06

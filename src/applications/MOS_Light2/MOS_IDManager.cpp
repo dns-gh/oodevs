@@ -13,10 +13,6 @@
 
 #include "MOS_IDManager.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_IDManager.inl"
-#endif
-
 //-----------------------------------------------------------------------------
 // Name: MOS_IDManager constructor
 // Created: NLD 2003-02-28

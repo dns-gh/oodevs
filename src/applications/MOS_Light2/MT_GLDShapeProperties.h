@@ -107,9 +107,6 @@ public:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDShapeProperties.inl"
-#endif
 
 #endif // __MT_GLDShapeProperties_h_

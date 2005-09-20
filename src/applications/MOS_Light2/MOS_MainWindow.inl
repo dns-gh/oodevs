@@ -25,7 +25,7 @@
 */
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_MainWindow& MOS_MainWindow::GetMainWindow()
 {
     assert( pInstance_ != 0 );
@@ -38,7 +38,7 @@ MOS_MainWindow& MOS_MainWindow::GetMainWindow()
 */
 // Created: APE 2004-06-03
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Options& MOS_MainWindow::GetOptions() const
 {
     return *pOptions_;

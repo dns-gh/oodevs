@@ -18,12 +18,7 @@
 #include "MOS_AgentManager.h"
 #include "MOS_ObjectManager.h"
 
-#ifndef MOS_USE_INLINE
-#	include "MOS_ObjectKnowledge.inl"
-#endif
-
 //$$$$ mise a jour de pRealObject_ suite a un delete de l'objet réel non fait.
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledge constructor

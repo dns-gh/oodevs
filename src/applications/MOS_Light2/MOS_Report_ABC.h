@@ -78,8 +78,6 @@ protected:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Report_ABC.inl"
-#endif
 
 #endif // __MOS_Report_ABC_h_

@@ -34,10 +34,6 @@
 #include "MT_GLDrawer.h"
 #include "MT_GLFont.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_GLWidget.inl"
-#endif
-
 // $$$$ AGE 2005-03-16: ...
 // Helper function used for the MT_GLDrawer
 MT_Vector2D ScreenToGL( const MT_Vector2D& screenPos, QGLWidget& glWidget )

@@ -24,11 +24,6 @@
 #include "MOS_ParamSlider.h"
 #include "moc_MOS_ParamSlider.cpp"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamSlider.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamSlider constructor
 /** @param  asnInt 

@@ -68,9 +68,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_OptionsPanel.inl"
-#endif
 
 #endif // __MOS_OptionsPanel_h_

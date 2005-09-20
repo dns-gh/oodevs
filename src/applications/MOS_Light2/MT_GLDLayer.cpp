@@ -29,11 +29,6 @@
 
 #include <memory.h>
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDLayer.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDLayer constructor
 /** @param  strName 

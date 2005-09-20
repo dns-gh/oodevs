@@ -28,11 +28,6 @@
 #include "MOS_World.h"
 #include "MOS_ActionContext.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamPathList.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPathList constructor
 /** @param  asnPathList 

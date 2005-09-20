@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-07-13
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 bool MT_GLFont::IsValid() const
 {
     return bValid_;

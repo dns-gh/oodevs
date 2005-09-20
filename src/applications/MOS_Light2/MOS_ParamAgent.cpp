@@ -27,11 +27,6 @@
 #include "MOS_Agent.h"
 #include "MOS_ActionContext.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamAgent.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgent constructor
 /** @param  asnAgent 

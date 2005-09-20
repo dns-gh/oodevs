@@ -6,11 +6,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_Node.h"
 
-#ifndef  MOS_USE_INLINE
-#   include "MOS_Node.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 //  Name  :  MOS_Node constructor
 // Created: FBD 02-09-19

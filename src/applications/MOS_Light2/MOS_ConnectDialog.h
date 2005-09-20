@@ -75,8 +75,6 @@ private:
     QSpinBox*    pPortSpinBox_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_ConnectDialog.inl"
-#endif
 
 #endif // __MOS_ConnectDialog_h_

@@ -28,10 +28,6 @@
 #include "MOS_Agent.h"
 #include "MOS_TypeComposante.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_FireResult.inl"
-#endif
-
 // -----------------------------------------------------------------------------
 // Name: MOS_FireResult constructor
 // Created: SBO 2005-08-30

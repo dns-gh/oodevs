@@ -15,7 +15,7 @@
 // Name: MOS_AgentServerController::GetDINEngine
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 DIN::DIN_Engine& MOS_AgentServerController::GetDINEngine()
 {
     return mosServer_.GetDINEngine();
@@ -25,7 +25,7 @@ DIN::DIN_Engine& MOS_AgentServerController::GetDINEngine()
 // Name: MOS_AgentServerController::GetMOSServer
 // Created: NLD 2002-07-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_MOSServer& MOS_AgentServerController::GetMOSServer() const
 {
     return mosServer_;
@@ -35,7 +35,7 @@ MOS_MOSServer& MOS_AgentServerController::GetMOSServer() const
 // Name: MOS_AgentServerController::GetConnectionMgr
 // Created: NLD 2002-07-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentServerConnectionMgr& MOS_AgentServerController::GetConnectionMgr() const
 {
     assert( pConnectionMgr_ );
@@ -46,7 +46,7 @@ MOS_AgentServerConnectionMgr& MOS_AgentServerController::GetConnectionMgr() cons
 // Name: MOS_AgentServerController::GetMessageMgr
 // Created: NLD 2002-07-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentServerMsgMgr& MOS_AgentServerController::GetMessageMgr() const
 {
     assert( pMsgMgr_ );

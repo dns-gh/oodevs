@@ -21,7 +21,7 @@
 // Name: MOS_TacticalLine_ABC::GetID
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MIL_LineID MOS_TacticalLine_ABC::GetID() const
 {
     return nID_;
@@ -32,7 +32,7 @@ MIL_LineID MOS_TacticalLine_ABC::GetID() const
 // Name: MOS_TacticalLine_ABC::GetPointList
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 CT_PointVector& MOS_TacticalLine_ABC::GetPointList() const
 {
     return pointList_;
@@ -43,7 +43,7 @@ CT_PointVector& MOS_TacticalLine_ABC::GetPointList() const
 // Name: MOS_TacticalLine_ABC::GetName
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string MOS_TacticalLine_ABC::GetName() const
 {
     return strName_;
@@ -54,7 +54,7 @@ const std::string MOS_TacticalLine_ABC::GetName() const
 // Name: MOS_TacticalLine_ABC::SetName
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_TacticalLine_ABC::SetName( const std::string strName )
 {
     strName_ = strName;
@@ -65,7 +65,7 @@ void MOS_TacticalLine_ABC::SetName( const std::string strName )
 // Name: MOS_TacticalLine_ABC::SetState
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_TacticalLine_ABC::SetState( MOS_TacticalLine_ABC::E_State nState )
 {
     nState_ = nState;
@@ -76,7 +76,7 @@ void MOS_TacticalLine_ABC::SetState( MOS_TacticalLine_ABC::E_State nState )
 // Name: MOS_TacticalLine_ABC::SetNetworkState
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_TacticalLine_ABC::SetNetworkState( MOS_TacticalLine_ABC::E_NetworkState nNetworkState )
 {
     nNetworkState_ = nNetworkState;
@@ -87,7 +87,7 @@ void MOS_TacticalLine_ABC::SetNetworkState( MOS_TacticalLine_ABC::E_NetworkState
 // Name: MOS_TacticalLine_ABC::IsUpdatingToSim
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_TacticalLine_ABC::IsUpdatingToSim() const
 {
     return nNetworkState_ != eNetworkStateRegistered;
@@ -100,7 +100,7 @@ bool MOS_TacticalLine_ABC::IsUpdatingToSim() const
 */
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_TacticalLine_ABC::IsCreatedByMos() const
 {
     return bCreatedByMOS_;

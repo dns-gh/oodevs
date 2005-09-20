@@ -67,9 +67,6 @@ private:
     T_TacticalLineSet lineSet_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_LineManager.inl"
-#endif
 
 #endif // __MOS_LineManager_h_

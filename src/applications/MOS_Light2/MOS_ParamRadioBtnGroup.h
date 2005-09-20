@@ -100,9 +100,6 @@ void MOS_ParamRadioBtnGroup<T>::WriteMsg( std::stringstream& strMsg )
     strMsg << this->title().latin1() << ": " << this->GetValue();
 }
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamRadioBtnGroup.inl"
-#endif
 
 #endif // __MOS_ParamRadioBtnGroup_h_

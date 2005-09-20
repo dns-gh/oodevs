@@ -251,8 +251,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_App.inl"
-#endif
 
 #endif // __App_h_

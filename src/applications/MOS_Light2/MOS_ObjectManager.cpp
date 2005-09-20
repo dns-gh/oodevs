@@ -15,11 +15,6 @@
 #include "MOS_Object_ABC.h"
 #include "MOS_Object_Factory.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ObjectManager.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_ObjectManager constructor
 // Created: NLD 2003-01-29
@@ -44,8 +39,8 @@ MOS_ObjectManager::~MOS_ObjectManager()
 //-----------------------------------------------------------------------------
 void MOS_ObjectManager::RegisterObject( MOS_Object_ABC& object )
 {
-    bool bOut = ObjectMap_.insert( std::make_pair( object.GetID(), &object ) ).second;
-    assert( bOut );
+    if( ! ObjectMap_.insert( std::make_pair( object.GetID(), &object ) ).second )
+        RUNTIME_ERROR;
 }
 
 
@@ -55,8 +50,8 @@ void MOS_ObjectManager::RegisterObject( MOS_Object_ABC& object )
 //-----------------------------------------------------------------------------
 void MOS_ObjectManager::UnregisterObject( MOS_Object_ABC& object )
 {
-    uint nOut = ObjectMap_.erase( object.GetID() );
-    assert( nOut == 1 );
+    if( ObjectMap_.erase( object.GetID() != 1 ) )
+        RUNTIME_ERROR;
 }
 
 

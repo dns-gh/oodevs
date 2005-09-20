@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ActionContext.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ActionContext.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ActionContext constructor
 /** @param  pPoint 

@@ -79,9 +79,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDLayerDialog.inl"
-#endif
 
 #endif // __MT_GLDLayerDialog_h_

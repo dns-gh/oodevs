@@ -82,9 +82,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDShapeGroup.inl"
-#endif
 
 #endif // __MT_GLDShapeGroup_h_

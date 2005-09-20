@@ -101,12 +101,6 @@ GLushort MOS_GLTool::stipplePattern_[] = {
 int MOS_GLTool::iconIds_[eNbrIcons];
 MT_Vector2D MOS_GLTool::iconLocations_[eNbrIcons];
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_GLTool.inl"
-#endif
-
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
 /** @param  glWidget 
@@ -641,7 +635,7 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
 
 	if( nState == eSelected )
 	{
-		glColor4f( MOS_COLOR_SEL_Object );
+		glColor4d( MOS_COLOR_SEL_Object );
 	}
 	else
 	{
@@ -1667,7 +1661,7 @@ void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
 */
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
-void MOS_GLTool::DrawLines( T_MOSLinePtrVector& lines, float rZ )
+void MOS_GLTool::DrawLines( T_MOSLinePtrVector& lines, float /*rZ */)
 {
     glBegin( GL_LINES );
     T_PointVector points( 2 );

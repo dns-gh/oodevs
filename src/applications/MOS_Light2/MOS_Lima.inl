@@ -16,7 +16,7 @@
 */
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_TacticalLine_ABC::E_LineType MOS_Lima::GetLineType() const
 {
     return MOS_TacticalLine_ABC::eLima;
@@ -27,7 +27,7 @@ MOS_TacticalLine_ABC::E_LineType MOS_Lima::GetLineType() const
 // Name: MOS_Lima::GetTypeFunc
 // Created: APE 2004-04-14
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 E_FuncLimaType MOS_Lima::GetTypeFunc() const
 {
     return nFuncType_;
@@ -38,7 +38,7 @@ E_FuncLimaType MOS_Lima::GetTypeFunc() const
 // Name: MOS_Lima::SetTypeFunc
 // Created: APE 2004-04-14
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Lima::SetTypeFunc( E_FuncLimaType nTypeFunc )
 {
     nFuncType_ = nTypeFunc;

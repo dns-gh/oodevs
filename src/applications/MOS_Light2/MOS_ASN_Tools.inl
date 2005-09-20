@@ -15,9 +15,9 @@
 // Name: MOS_ASN_Tools::BuildAsnGDH
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ASN_Tools::BuildAsnGDH( ASN1T_GDH& asnGDH )
 {
     asnGDH.datation     = MOS_App::GetApp().GetTime();
-    asnGDH.qualificatif = EnumGDH_Qualificatif.at;
+    asnGDH.qualificatif = EnumGDH_Qualificatif::at;
 }

@@ -145,9 +145,6 @@ private:
     static MOS_MainWindow* pInstance_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_MainWindow.inl"
-#endif
 
 #endif // __MOS_MainWindow_h_

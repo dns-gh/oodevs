@@ -72,9 +72,6 @@ private:
     T_FragOrderVector      fragOrderVector_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_RC.inl"
-#endif
 
 #endif // __MOS_RC_h_

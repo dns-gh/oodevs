@@ -44,11 +44,6 @@
 #include "MOS_Agent.h"
 #include <qtable.h>
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ObjectCreationPanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectCreationPanel constructor
 /** @param  pParent 
@@ -311,7 +306,7 @@ void MOS_ObjectCreationPanel::OnOk()
         if( nType == EnumObjectType::rota )
         {
             static_cast< MOS_Object_ROTA* >( pObject )->SetDanger( pROTADangerEdit_->value() );
-            for( uint i = 0; i < pROTANBCAgentsTable_->numRows() - 1; ++i )
+            for( int i = 0; i < pROTANBCAgentsTable_->numRows() - 1; ++i )
             {
                 QComboTableItem* pROTAItem  = static_cast< QComboTableItem* >( pROTANBCAgentsTable_->item( i, 0 ) );
                 assert( pROTAItem );
@@ -381,7 +376,7 @@ void MOS_ObjectCreationPanel::OnOk()
     {
         attributsRota.agents_nbc.n = pROTANBCAgentsTable_->numRows() - 1;
         attributsRota.agents_nbc.elem  = new uint[ attributsRota.agents_nbc.n ];
-        for( uint i = 0; i < pROTANBCAgentsTable_->numRows() - 1; ++i )
+        for( int i = 0; i < pROTANBCAgentsTable_->numRows() - 1; ++i )
         {
             QComboTableItem* pROTAItem  = static_cast< QComboTableItem* >( pROTANBCAgentsTable_->item( i, 0 ) );
             assert( pROTAItem );
@@ -457,7 +452,7 @@ void MOS_ObjectCreationPanel::OnOk()
 */
 // Created: APE 2004-10-05
 // -----------------------------------------------------------------------------
-bool MOS_ObjectCreationPanel::eventFilter( QObject* pSender, QEvent* pEvent )
+bool MOS_ObjectCreationPanel::eventFilter( QObject*, QEvent* pEvent )
 {
     switch( pEvent->type() )
     {
@@ -556,7 +551,7 @@ void MOS_ObjectCreationPanel::OnConnexionStatusChanged( bool bConnected )
 // Name: MOS_ObjectCreationPanel::OnROTANBCAgentChanged
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-void MOS_ObjectCreationPanel::OnROTANBCAgentChanged( int nRow, int nCol )
+void MOS_ObjectCreationPanel::OnROTANBCAgentChanged( int nRow, int )
 {
     QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( pROTANBCAgentsTable_->item( nRow, 0 ) );
     assert( pComboTableItem );

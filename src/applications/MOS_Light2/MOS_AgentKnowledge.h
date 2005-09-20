@@ -124,9 +124,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #	include "MOS_AgentKnowledge.inl"
-#endif
-
 
 #endif // __MOS_AgentKnowledge_h_

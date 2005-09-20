@@ -28,7 +28,7 @@
 // Name: MOS_AgentManager::GetAgentList
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentManager::CT_AgentMap& MOS_AgentManager::GetAgentList()
 {
     return agentMap_;
@@ -39,7 +39,7 @@ MOS_AgentManager::CT_AgentMap& MOS_AgentManager::GetAgentList()
 // Name: MOS_AgentManager::FindGtia
 // Created: NLD 2004-03-18
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Gtia* MOS_AgentManager::FindGtia( uint nID )
 {
     for( IT_TeamMap it = teamMap_.begin(); it != teamMap_.end(); ++it )
@@ -57,7 +57,7 @@ MOS_Gtia* MOS_AgentManager::FindGtia( uint nID )
 // Name: MOS_AgentManager::DeleteAllGtias
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_AgentManager::DeleteAllGtias()
 {
     for( IT_TeamMap it = teamMap_.begin(); it != teamMap_.end(); ++it )
@@ -69,7 +69,7 @@ void MOS_AgentManager::DeleteAllGtias()
 // Name: MOS_AgentManager::FindTeamFromIdx
 // Created: NLD 2004-03-25
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team* MOS_AgentManager::FindTeamFromIdx( uint nIdx ) const
 {
     for( CIT_TeamMap itTeam = teamMap_.begin(); itTeam != teamMap_.end(); ++itTeam )
@@ -85,7 +85,7 @@ MOS_Team* MOS_AgentManager::FindTeamFromIdx( uint nIdx ) const
 // Name: MOS_AgentManager::GetTeams
 // Created: NLD 2004-03-25
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_AgentManager::T_TeamMap& MOS_AgentManager::GetTeams() const
 {
     return teamMap_;    
@@ -96,7 +96,7 @@ const MOS_AgentManager::T_TeamMap& MOS_AgentManager::GetTeams() const
 // Name: MOS_AgentManager::FindTeam
 // Created: NLD 2004-03-25
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team* MOS_AgentManager::FindTeam( uint nID ) const
 {
     CIT_TeamMap itTeam = teamMap_.find( nID );
@@ -111,7 +111,7 @@ MOS_Team* MOS_AgentManager::FindTeam( uint nID ) const
     */
 // Created: APE 2004-08-31
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team* MOS_AgentManager::FindTeam( const std::string& strName ) const
 {
     for( MOS_AgentManager::CIT_TeamMap it = teamMap_.begin(); it != teamMap_.end(); ++it )
@@ -131,16 +131,16 @@ MOS_Team* MOS_AgentManager::FindTeam( const std::string& strName ) const
 */
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent& target )
 {
     T_Conflict conflict;
     conflict.pOrigin_ = &origin;
     conflict.pDirectFireTarget_ = &target;
 
-    bool bOk = conflictMap_.insert( std::make_pair( nConflictID, conflict ) ).second;
+    if( ! conflictMap_.insert( std::make_pair( nConflictID, conflict ) ).second )
+        RUNTIME_ERROR;
     MOS_App::GetApp().NotifyAgentConflictStarted( origin );
-    assert( bOk );
 }
 
 
@@ -152,7 +152,7 @@ void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& orig
 */
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_AgentManager::AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, const MT_Vector2D& vTarget )
 {
     T_Conflict conflict;
@@ -160,9 +160,9 @@ void MOS_AgentManager::AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& or
     conflict.pDirectFireTarget_ = 0;
     conflict.vIndirectFireTarget_ = vTarget;
 
-    bool bOk = conflictMap_.insert( std::make_pair( nConflictID, conflict ) ).second;
+    if( ! conflictMap_.insert( std::make_pair( nConflictID, conflict ) ).second )
+        RUNTIME_ERROR;
     MOS_App::GetApp().NotifyAgentConflictStarted( origin );
-    assert( bOk );
 }
 
 
@@ -172,7 +172,7 @@ void MOS_AgentManager::AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& or
 */
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_AgentManager::DeleteConflict( ASN1T_OID nConflictID )
 {
     IT_ConflictMap it = conflictMap_.find( nConflictID );
@@ -190,7 +190,7 @@ void MOS_AgentManager::DeleteConflict( ASN1T_OID nConflictID )
 */
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Agent* MOS_AgentManager::FindConflictOrigin( ASN1T_OID nConflictID )
 {
     IT_ConflictMap it = conflictMap_.find( nConflictID );

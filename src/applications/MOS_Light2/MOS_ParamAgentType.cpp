@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ParamAgentType.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamAgentType.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentType constructor
 /** @param  asnNatureAtlas 

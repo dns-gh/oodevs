@@ -31,13 +31,8 @@
 #include "MOS_Team.h"
 #include "MOS_FireResult.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Object_ABC.inl"
-#endif
-
 MOS_Object_ABC::T_ObjectIDs MOS_Object_ABC::objectIds_;
 MOS_Object_ABC::T_Managers  MOS_Object_ABC::managers_;
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Object_ABC constructor

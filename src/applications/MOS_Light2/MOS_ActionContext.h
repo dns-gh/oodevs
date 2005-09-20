@@ -55,9 +55,6 @@ public:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ActionContext.inl"
-#endif
 
 #endif // __MOS_ActionContext_h_

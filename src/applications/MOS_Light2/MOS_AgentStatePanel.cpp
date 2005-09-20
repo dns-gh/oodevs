@@ -31,11 +31,6 @@
 #include "MOS_Tiredness.h"
 #include "MOS_Morale.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentStatePanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentStatePanel constructor
 /** @param  pParent 

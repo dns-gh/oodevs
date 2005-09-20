@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-07-08
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 const MT_GLDShape_ABC::T_ShapeVector MT_GLDShapeGroup::GetShapes() const
 {
     return shapes_;
@@ -34,7 +34,7 @@ const MT_GLDShape_ABC::T_ShapeVector MT_GLDShapeGroup::GetShapes() const
 // Name: MT_GLDShapeGroup::ClearShapes
 // Created: APE 2004-07-08
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDShapeGroup::ClearShapes()
 {
     shapes_.clear();

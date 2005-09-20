@@ -70,9 +70,6 @@ protected:
     E_WeatherType nWeatherType_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #	include "MOS_Meteo_ABC.inl"
-#endif
 
 #endif // __MOS_Meteo_ABC_h_

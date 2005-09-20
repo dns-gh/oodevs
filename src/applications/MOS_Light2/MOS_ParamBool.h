@@ -60,9 +60,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamBool.inl"
-#endif
 
 #endif // __MOS_ParamBool_h_

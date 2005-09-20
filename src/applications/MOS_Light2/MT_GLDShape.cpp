@@ -30,11 +30,6 @@
 #include <qimage.h>
 #include <qfiledialog.h>
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDShape.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDShape constructor
 /** @param  nType 

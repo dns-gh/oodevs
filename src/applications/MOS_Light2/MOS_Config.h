@@ -45,8 +45,6 @@ private:
     DIN::DIN_ConnectionProtocols connectionProtocols_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Config.inl"
-#endif
 
 #endif // __MOS_Config_h_

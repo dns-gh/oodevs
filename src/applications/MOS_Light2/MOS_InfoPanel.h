@@ -101,10 +101,6 @@ private:
     QTabWidget* pTabWidget_;
 };
 
-
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_InfoPanel.inl"
-#endif
 
 #endif // __MOS_InfoPanel_h_

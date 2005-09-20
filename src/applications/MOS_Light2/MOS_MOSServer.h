@@ -55,8 +55,6 @@ private:
     MOS_AgentServerController* pASController_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_MOSServer.inl"
-#endif
 
 #endif // __MOS_MOSServer_h_

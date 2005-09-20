@@ -22,7 +22,7 @@
 // Name: MOS_ParamPath::Draw
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamPath::Draw()
 {
     MOS_GLTool::Draw( *this );

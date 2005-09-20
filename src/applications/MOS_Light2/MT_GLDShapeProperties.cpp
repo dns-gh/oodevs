@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MT_GLDShapeProperties.h"
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDShapeProperties.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDShapeProperties constructor
 // Created: APE 2004-07-02

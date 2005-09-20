@@ -44,9 +44,6 @@ public:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_Trace.inl"
-#endif
 
 #endif // __MOS_Trace_h_

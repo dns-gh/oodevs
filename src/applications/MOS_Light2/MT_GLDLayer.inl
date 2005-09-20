@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 const QString& MT_GLDLayer::GetName() const
 {
     return strName_;
@@ -36,7 +36,7 @@ const QString& MT_GLDLayer::GetName() const
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 float MT_GLDLayer::GetOpacity() const
 {
     return rOpacity_;
@@ -49,7 +49,7 @@ float MT_GLDLayer::GetOpacity() const
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 bool MT_GLDLayer::IsVisible() const
 {
     return bVisible_;
@@ -62,7 +62,7 @@ bool MT_GLDLayer::IsVisible() const
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDLayer::SetName( const QString& strName )
 {
     strName_ = strName;
@@ -75,7 +75,7 @@ void MT_GLDLayer::SetName( const QString& strName )
 */
 // Created: APE 2004-06-23
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDLayer::SetOpacity( float rOpacity )
 {
     rOpacity_ = rOpacity;
@@ -88,7 +88,7 @@ void MT_GLDLayer::SetOpacity( float rOpacity )
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDLayer::SetVisible( bool bVisible )
 {
     bVisible_ = bVisible;

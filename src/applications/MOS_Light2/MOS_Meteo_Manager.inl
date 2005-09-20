@@ -14,7 +14,7 @@
 // Name: MOS_Meteo_Manager::GetGlobalWeather
 // Created: AGN 03-08-07
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Meteo_ABC& MOS_Meteo_Manager::GetGlobalWeather()
 {
     return globalWeather_;
@@ -27,7 +27,7 @@ MOS_Meteo_ABC& MOS_Meteo_Manager::GetGlobalWeather()
 */
 // Created: APE 2004-05-17
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Meteo_Manager::T_Meteo_Vector& MOS_Meteo_Manager::GetLocalWeatherList()
 {
     return localWeatherVector_;

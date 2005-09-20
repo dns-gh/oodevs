@@ -128,9 +128,6 @@ private:
     uint nIdx_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_Team.inl"
-#endif
 
 #endif // __MOS_Team_h_

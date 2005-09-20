@@ -52,8 +52,6 @@ public:
     //@}
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Limit.inl"
-#endif
 
 #endif // __MOS_Limit_h_

@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ParamBool.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamBool.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamBool constructor
 /** @param  asnBool 

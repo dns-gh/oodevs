@@ -27,10 +27,6 @@
 
 #include "MOS_AgentServer.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentServer.inl"
-#endif
-
 using namespace DIN;
 
 //-----------------------------------------------------------------------------

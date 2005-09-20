@@ -30,10 +30,6 @@
 #include "MOS_Object_ABC.h"
 #include "MOS_FireResult.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_FireResultListView.inl"
-#endif
-
 // -----------------------------------------------------------------------------
 // Name: MOS_FireResultListView constructor
 // Created: SBO 2005-08-30

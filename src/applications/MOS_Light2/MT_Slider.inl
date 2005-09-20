@@ -25,7 +25,7 @@
 */
 // Created: APE 2004-06-29
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 QSlider& MT_Slider::GetSlider()
 {
     return *pSlider_;
@@ -38,7 +38,7 @@ QSlider& MT_Slider::GetSlider()
 */
 // Created: APE 2004-06-29
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 QLabel& MT_Slider::GetLabel()
 {
     return *pLabel_;
@@ -51,7 +51,7 @@ QLabel& MT_Slider::GetLabel()
 */
 // Created: APE 2004-06-29
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_Slider::SetValue( int nValue )
 {
     assert( ! bFloat_ );
@@ -65,7 +65,7 @@ void MT_Slider::SetValue( int nValue )
 */
 // Created: APE 2004-06-29
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_Slider::SetValue( float rValue )
 {
     assert( bFloat_ );
@@ -80,7 +80,7 @@ void MT_Slider::SetValue( float rValue )
 */
 // Created: APE 2004-06-29
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 float MT_Slider::GetValue()
 {
     if( bFloat_ )

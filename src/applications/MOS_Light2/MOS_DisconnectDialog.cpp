@@ -14,10 +14,6 @@
 #include "MOS_DisconnectDialog.h"
 #include "moc_MOS_DisconnectDialog.cpp"
 
-#ifndef USE_INLINE
-#   include "MOS_DisconnectDialog.inl"
-#endif
-
 #include "MOS_App.h"
 #include "MOS_MOSServer.h"
 #include "MOS_Config.h"

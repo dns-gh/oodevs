@@ -13,10 +13,6 @@
 
 #include "MOS_AgentServerConnectionMgr.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentServerConnectionMgr.inl"
-#endif
-
 #include "MOS_Config.h"
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServer.h"

@@ -53,9 +53,6 @@ private:
     MOS_DisconnectDialog*   pDisconnectDlg_;
 };
 
-#ifdef MOS_USE_INLINE
 #	include "MOS_SIMControlToolbar.inl"
-#endif
-
 
 #endif // __MOS_SIMControlToolbar_h_

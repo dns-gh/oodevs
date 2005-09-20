@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ParamDirection.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamDirection.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamDirection constructor
 /** @param  asnDirection 

@@ -16,11 +16,6 @@
 #include "MOS_App.h"
 #include "MOS_World.h"
 
-#ifndef MOS_USE_INLINE
-#	include "MOS_Meteo_Local.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Meteo_Local constructor
 // Created: AGN 03-08-06

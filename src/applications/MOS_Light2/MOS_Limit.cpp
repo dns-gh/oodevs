@@ -23,11 +23,6 @@
 
 MOS_IDManager MOS_Limit::idManager_( 138 );
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Limit.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Limit constructor
 // Created: NLD 2002-08-08

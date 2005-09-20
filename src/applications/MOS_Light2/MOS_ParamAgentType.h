@@ -72,9 +72,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamAgentType.inl"
-#endif
 
 #endif // __MOS_ParamAgentType_h_

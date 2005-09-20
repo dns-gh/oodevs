@@ -277,7 +277,7 @@ void MOS_MsgRecorder::Clear()
 */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MOS_MsgRecorder::OnTimeTick( int nTime )
+void MOS_MsgRecorder::OnTimeTick( int )
 {
     /*
     This is disabled since the users find it more useful to have all the recorded

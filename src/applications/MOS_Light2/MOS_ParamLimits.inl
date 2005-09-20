@@ -23,7 +23,7 @@
 // Name: MOS_ParamLimits::Draw
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamLimits::Draw()
 {
     MOS_GLTool::Draw( *this );

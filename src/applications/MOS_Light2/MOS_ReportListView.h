@@ -95,8 +95,6 @@ private:
 //$$$$$ Remarque générale: Attacher les popupmenus à leur listitem pour éviter les
 // pb en cas d'effacement de l'item, ou gérer ca autrement.
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_ReportListView.inl"
-#endif
 
 #endif // __MOS_ReportListView_h_

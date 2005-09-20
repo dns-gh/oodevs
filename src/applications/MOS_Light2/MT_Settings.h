@@ -57,9 +57,6 @@ public:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_Settings.inl"
-#endif
 
 #endif // __MT_Settings_h_

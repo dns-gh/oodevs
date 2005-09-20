@@ -90,9 +90,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamLimits.inl"
-#endif
 
 #endif // __MOS_ParamLimits_h_

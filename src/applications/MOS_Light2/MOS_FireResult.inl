@@ -20,7 +20,7 @@
 // Name: MOS_FireResult::GetTarget
 // Created: SBO 2005-08-31
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Agent& MOS_FireResult::GetTarget() const
 {
     assert( pTarget_ );
@@ -31,7 +31,7 @@ const MOS_Agent& MOS_FireResult::GetTarget() const
 // Name: MOS_FireResult::GetEquipments
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_FireResult::T_FireResultEquipments& MOS_FireResult::GetEquipments() const
 {
     return equipments_;
@@ -41,7 +41,7 @@ const MOS_FireResult::T_FireResultEquipments& MOS_FireResult::GetEquipments() co
 // Name: MOS_FireResult::GetHumans
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_FireResult::T_FireResultHumans& MOS_FireResult::GetHumans() const
 {
     return humans_;

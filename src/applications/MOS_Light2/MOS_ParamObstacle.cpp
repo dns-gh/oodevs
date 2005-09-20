@@ -29,12 +29,6 @@
 #include "MOS_Tools.h"
 #include "MOS_ParamLocation.h"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamObstacle.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacle constructor
 /** @param  asnObject 

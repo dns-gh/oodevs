@@ -31,11 +31,6 @@
 #include "MOS_Agent.h"
 #include "MOS_Team.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamObjectKnowledgeList.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObjectKnowledgeList constructor
 /** @param  asnListKnowledge 

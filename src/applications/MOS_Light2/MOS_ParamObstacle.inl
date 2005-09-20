@@ -24,7 +24,7 @@
 // Name: MOS_ParamObstacle::Draw
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamObstacle::Draw()
 {
     MOS_GLTool::Draw( *this );
@@ -37,7 +37,7 @@ void MOS_ParamObstacle::Draw()
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const T_PointVector& MOS_ParamObstacle::GetPointList()
 {
     return pLocation_->GetPointList();

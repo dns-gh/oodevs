@@ -18,7 +18,7 @@
 // Name: MOS_AgentServer::GetSession
 // Created: NLD 2002-07-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 DIN::DIN_Link& MOS_AgentServer::GetSession() const
 {
     assert( pSession_ );
@@ -29,7 +29,7 @@ DIN::DIN_Link& MOS_AgentServer::GetSession() const
 // Name: MOS_AgentServer::GetStationID
 // Created: NLD 2002-07-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 DIN::DIN_StationID MOS_AgentServer::GetStationID() const
 {
     assert( pSession_ );

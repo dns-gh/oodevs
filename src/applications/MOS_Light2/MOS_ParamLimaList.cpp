@@ -30,11 +30,6 @@
 
 #include "qheader.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamLimaList.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimaList constructor
 /** @param  asnListLima 

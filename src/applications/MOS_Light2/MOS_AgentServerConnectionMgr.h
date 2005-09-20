@@ -80,8 +80,6 @@ private:
     MT_ObjectRecycler< MOS_AgentServer > agentServerRecycler_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentServerConnectionMgr.inl"
-#endif
 
 #endif // __MOS_AgentServerConnectionMgr_h_

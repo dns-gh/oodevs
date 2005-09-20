@@ -38,11 +38,7 @@
 
 using namespace DIN;
 
-int MOS_Agent::nMaxId_ = 5000000;
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_Agent.inl"
-#endif
+MIL_AgentID MOS_Agent::nMaxId_ = 5000000;
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent constructor

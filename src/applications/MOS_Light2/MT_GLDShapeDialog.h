@@ -110,9 +110,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDShapeDialog.inl"
-#endif
 
 #endif // __MT_GLDShapeDialog_h_

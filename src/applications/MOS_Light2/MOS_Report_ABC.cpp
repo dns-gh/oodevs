@@ -25,11 +25,6 @@
 
 #include "MOS_App.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Report_ABC.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Report_ABC constructor
 // Created: APE 2004-08-04

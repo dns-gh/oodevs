@@ -15,7 +15,7 @@
 // Name: MOS_ObjectKnowledge::GetID
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetID() const
 {
     return nID_;    
@@ -26,7 +26,7 @@ uint MOS_ObjectKnowledge::GetID() const
 // Name: MOS_ObjectKnowledge::IsUpdated
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_ObjectKnowledge::IsValid( E_AttributeUpdated nAttr ) const
 {
     return nAttrUpdated_ & nAttr;
@@ -37,7 +37,7 @@ bool MOS_ObjectKnowledge::IsValid( E_AttributeUpdated nAttr ) const
 // Name: MOS_ObjectKnowledge::GetCenter
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MT_Vector2D& MOS_ObjectKnowledge::GetCenter() const
 {
     return vCenter_;    
@@ -48,7 +48,7 @@ const MT_Vector2D& MOS_ObjectKnowledge::GetCenter() const
 // Name: MOS_ObjectKnowledge::GetPointList
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const T_PointVector& MOS_ObjectKnowledge::GetPointList() const
 {
     return points_;
@@ -59,7 +59,7 @@ const T_PointVector& MOS_ObjectKnowledge::GetPointList() const
 // Name: MOS_ObjectKnowledge::GetRealObject
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Object_ABC* MOS_ObjectKnowledge::GetRealObject() const
 {
     return pRealObject_;    
@@ -70,7 +70,7 @@ MOS_Object_ABC* MOS_ObjectKnowledge::GetRealObject() const
 // Name: MOS_ObjectKnowledge::GetOwner
 // Created: APE 2004-06-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Team& MOS_ObjectKnowledge::GetOwner() const
 {
     return owner_;
@@ -81,7 +81,7 @@ MOS_Team& MOS_ObjectKnowledge::GetOwner() const
 // Name: MOS_ObjectKnowledge::GetSiteFranchissementLargeur
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetSiteFranchissementLargeur() const
 {
     return nSiteFranchissementLargeur_;
@@ -92,7 +92,7 @@ uint MOS_ObjectKnowledge::GetSiteFranchissementLargeur() const
 // Name: MOS_ObjectKnowledge::GetSiteFranchissementProfondeur
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetSiteFranchissementProfondeur() const
 {
     return nSiteFranchissementProfondeur_;
@@ -103,7 +103,7 @@ uint MOS_ObjectKnowledge::GetSiteFranchissementProfondeur() const
 // Name: MOS_ObjectKnowledge::GetSiteFranchissementVitesseCourant
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetSiteFranchissementVitesseCourant() const
 {
     return nSiteFranchissementVitesseCourant_;
@@ -114,7 +114,7 @@ uint MOS_ObjectKnowledge::GetSiteFranchissementVitesseCourant() const
 // Name: MOS_ObjectKnowledge::GetSiteFranchissementBergesAAmenager
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_ObjectKnowledge::GetSiteFranchissementBergesAAmenager() const
 {
     return nSiteFranchissementBergesAAmenager_;
@@ -125,7 +125,7 @@ bool MOS_ObjectKnowledge::GetSiteFranchissementBergesAAmenager() const
 // Name: MOS_ObjectKnowledge::GetNuageNBCAgentNbcId
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetNuageNBCAgentNbcId() const
 {
     return nNuageNBCAgentNbcID_;
@@ -135,7 +135,7 @@ uint MOS_ObjectKnowledge::GetNuageNBCAgentNbcId() const
 // Name: MOS_ObjectKnowledge::GetROTADanger
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetROTADanger() const
 {
     return nROTADanger_;
@@ -145,7 +145,7 @@ uint MOS_ObjectKnowledge::GetROTADanger() const
 // Name: std::vector< uint >& MOS_ObjectKnowledge::GetROTANBCAgents
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::vector< uint >& MOS_ObjectKnowledge::GetROTANBCAgents() const
 {
     return rotaNBCAgents_;
@@ -155,7 +155,7 @@ const std::vector< uint >& MOS_ObjectKnowledge::GetROTANBCAgents() const
 // Name: MOS_ObjectKnowledge::GetLogRouteFlow
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetLogRouteFlow() const
 {
     return nLogRouteFlow_;
@@ -165,7 +165,7 @@ uint MOS_ObjectKnowledge::GetLogRouteFlow() const
 // Name: MOS_ObjectKnowledge::GetLogRouteWidth
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetLogRouteWidth() const
 {
     return nLogRouteWidth_;
@@ -175,7 +175,7 @@ uint MOS_ObjectKnowledge::GetLogRouteWidth() const
 // Name: MOS_ObjectKnowledge::GetLogRouteLength
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetLogRouteLength() const
 {
     return nLogRouteLength_;
@@ -185,7 +185,7 @@ uint MOS_ObjectKnowledge::GetLogRouteLength() const
 // Name: MOS_ObjectKnowledge::GetLogRouteMaxWeight
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetLogRouteMaxWeight() const
 {
     return nLogRouteMaxWeight_;
@@ -195,7 +195,7 @@ uint MOS_ObjectKnowledge::GetLogRouteMaxWeight() const
 // Name: MOS_ObjectKnowledge::GetLogRouteEquipped
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_ObjectKnowledge::GetLogRouteEquipped() const
 {
     return bLogRouteEquipped_;
@@ -205,7 +205,7 @@ bool MOS_ObjectKnowledge::GetLogRouteEquipped() const
 // Name: MOS_ObjectKnowledge::GetCampTC2ID
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_ObjectKnowledge::GetCampTC2ID() const
 {
     return nCampTC2ID_;

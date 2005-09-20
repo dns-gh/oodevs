@@ -116,9 +116,6 @@ protected:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_TacticalLine_ABC.inl"
-#endif
 
 #endif // __MOS_TacticalLine_ABC_h_

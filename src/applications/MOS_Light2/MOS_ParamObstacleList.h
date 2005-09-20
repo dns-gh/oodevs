@@ -93,9 +93,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamObstacleList.inl"
-#endif
 
 #endif // __MOS_ParamObstacleList_h_

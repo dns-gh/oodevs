@@ -34,11 +34,6 @@
 #include "MOS_AgentKnowledge.h"
 #include "MOS_ActionContext.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentKnowledgePanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel constructor
 /** @param  pParent 
@@ -461,7 +456,7 @@ void MOS_AgentKnowledgePanel::ToggleDisplayOwnTeam()
 // Name: MOS_AgentKnowledgePanel::GetSelectedGtia
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-MOS_Gtia* MOS_AgentKnowledgePanel::GetSelectedGtia( const MOS_SelectedElement& item )
+MOS_Gtia* MOS_AgentKnowledgePanel::GetSelectedGtia( const MOS_SelectedElement& /*item*/ )
 {
     if( selectedItem_.pAgent_ )
         return & selectedItem_.pAgent_->GetGtia();

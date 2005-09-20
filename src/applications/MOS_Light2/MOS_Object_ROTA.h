@@ -69,8 +69,6 @@ private:
     //@}
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Object_ROTA.inl"
-#endif
 
 #endif // __MOS_Object_ROTA_h_

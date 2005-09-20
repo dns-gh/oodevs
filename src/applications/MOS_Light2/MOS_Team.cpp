@@ -28,11 +28,6 @@
 #include "MOS_Tools.h"
 #include "MOS_ObjectKnowledge.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Team.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Team constructor
 // Created: NLD 2004-03-18

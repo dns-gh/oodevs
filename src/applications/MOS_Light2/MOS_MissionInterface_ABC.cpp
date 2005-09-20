@@ -46,12 +46,6 @@
 #include "MOS_ParamDirection.h"
 #include "MOS_ParamNumericField.h"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_MissionInterface_ABC.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionInterface_ABC constructor
 /** @param  mission 

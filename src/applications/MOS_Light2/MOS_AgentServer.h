@@ -52,8 +52,6 @@ private:
     DIN::DIN_Link* pSession_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentServer.inl"
-#endif
 
 #endif // __MOS_AgentServer_h_

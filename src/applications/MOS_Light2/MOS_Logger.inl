@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 QSize MOS_Logger::sizeHint() const
 {
     return QSize( 400, 250 );

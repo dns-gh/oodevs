@@ -20,7 +20,7 @@
 // Name: MOS_Object_ABC::GetID
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Object_ABC::GetID() const
 {
     return nID_;
@@ -31,7 +31,7 @@ uint MOS_Object_ABC::GetID() const
 // Name: MOS_Object_ABC::GetType
 // Created: AGN 03-07-18
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 ASN1T_EnumObjectType MOS_Object_ABC::GetType() const
 {
     return nType_;
@@ -44,7 +44,7 @@ ASN1T_EnumObjectType MOS_Object_ABC::GetType() const
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Team& MOS_Object_ABC::GetTeam() const
 {
     assert( pTeam_ != 0 );
@@ -56,7 +56,7 @@ const MOS_Team& MOS_Object_ABC::GetTeam() const
 // Name: MOS_Object_ABC::IsPrepared
 // Created: AGN 03-07-18
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Object_ABC::IsPrepared() const
 {
     return bPrepared_;

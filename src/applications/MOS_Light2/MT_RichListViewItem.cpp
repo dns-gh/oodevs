@@ -282,13 +282,15 @@ void MT_RichListViewItem::paintCell( QPainter* pPainter, const QColorGroup& cg, 
 
             cg2.setColor(QColorGroup::Text, parentCg.highlightedText() );
             cg2.setColor(QColorGroup::Link, parentCg.highlightedText() );
-            pRichText->draw( pPainter, 0, 0, rect, cg2, &QBrush( parentCg.highlight() ) );
+            QBrush brush( parentCg.highlight() );
+            pRichText->draw( pPainter, 0, 0, rect, cg2, &brush );
         }
         else
         {
             cg2.setColor(QColorGroup::Text, Qt::black );
             cg2.setColor(QColorGroup::Link, Qt::black );
-            pRichText->draw( pPainter, 0, 0, rect, cg2, &QBrush( Qt::lightGray ) );
+            QBrush brush( Qt::lightGray );
+            pRichText->draw( pPainter, 0, 0, rect, cg2, &brush );
         }
     }
     else

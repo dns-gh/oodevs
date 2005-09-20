@@ -83,9 +83,6 @@ public:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_SelectedElement.inl"
-#endif
 
 #endif // __MOS_SelectedElement_h_

@@ -30,11 +30,6 @@
 #include "MOS_ActionContext.h"
 #include "MOS_ObjectKnowledge.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamObjectKnowledge.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObjectKnowledge constructor
 /** @param  asnKnowledge 

@@ -26,7 +26,7 @@
 // Name: MOS_Team::GetID
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Team::GetID() const
 {
     return nID_;
@@ -37,7 +37,7 @@ uint MOS_Team::GetID() const
 // Name: MOS_Team::GetName
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const std::string& MOS_Team::GetName() const
 {
     return strName_;
@@ -48,7 +48,7 @@ const std::string& MOS_Team::GetName() const
 // Name: MOS_Team::SetIdx
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Team::SetIdx( uint nIdx )
 {
     nIdx_ = nIdx;    
@@ -59,7 +59,7 @@ void MOS_Team::SetIdx( uint nIdx )
 // Name: MOS_Team::GetIdx
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint MOS_Team::GetIdx() const
 {
     return nIdx_;    
@@ -70,7 +70,7 @@ uint MOS_Team::GetIdx() const
 // Name: MOS_Team::GetObjectKnowledges
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Team::T_ObjectKnowledgeMap& MOS_Team::GetObjectKnowledges() const
 {
     return objectKnowledges_;    
@@ -84,7 +84,7 @@ const MOS_Team::T_ObjectKnowledgeMap& MOS_Team::GetObjectKnowledges() const
 */
 // Created: APE 2004-09-10
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_ObjectKnowledge* MOS_Team::FindObjectKnowledge( int nId )
 {
     IT_ObjectKnowledgeMap it = objectKnowledges_.find( nId );    
@@ -98,7 +98,7 @@ MOS_ObjectKnowledge* MOS_Team::FindObjectKnowledge( int nId )
 // Name: MOS_Team::FindKnowledgeOnObject
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_ObjectKnowledge* MOS_Team::FindKnowledgeOnObject( const MOS_Object_ABC& object )
 {
     for( IT_ObjectKnowledgeMap it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
@@ -115,7 +115,7 @@ MOS_ObjectKnowledge* MOS_Team::FindKnowledgeOnObject( const MOS_Object_ABC& obje
 */
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Team::T_AgentKnowledgeMap& MOS_Team::GetAgentKnowledges() const
 {
     return agentKnowledges_;
@@ -129,7 +129,7 @@ const MOS_Team::T_AgentKnowledgeMap& MOS_Team::GetAgentKnowledges() const
 */
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Team::RegisterAgentKnowledge( MOS_AgentKnowledge& knowledge )
 {
     assert( agentKnowledges_.find( knowledge.GetID() ) == agentKnowledges_.end() );
@@ -143,7 +143,7 @@ void MOS_Team::RegisterAgentKnowledge( MOS_AgentKnowledge& knowledge )
 */
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Team::RemoveAgentKnowledge( MOS_AgentKnowledge& knowledge )
 {
     IT_AgentKnowledgeMap itAgentKnowledge = agentKnowledges_.find( knowledge.GetID() );
@@ -151,19 +151,18 @@ void MOS_Team::RemoveAgentKnowledge( MOS_AgentKnowledge& knowledge )
     agentKnowledges_.erase( itAgentKnowledge );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Team::RegisterGtia
 /** @param  gtia 
 */
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Team::RegisterGtia( MOS_Gtia& gtia )
 {
     gtia.SetTeam( *this );
-    bool bOut = gtias_.insert( std::make_pair( gtia.GetID(), &gtia ) ).second;
-    assert( bOut );
+    if( ! gtias_.insert( std::make_pair( gtia.GetID(), &gtia ) ).second )
+        RUNTIME_ERROR;
 }
 
 
@@ -173,7 +172,7 @@ void MOS_Team::RegisterGtia( MOS_Gtia& gtia )
 */
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Team::RemoveGtia( MOS_Gtia& gtia )
 {
     IT_GtiaMap it = gtias_.find( gtia.GetID() );
@@ -186,7 +185,7 @@ void MOS_Team::RemoveGtia( MOS_Gtia& gtia )
 // Name: MOS_Team::DeleteAllGtias
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Team::DeleteAllGtias()
 {
     for( IT_GtiaMap itGtia = gtias_.begin(); itGtia != gtias_.end(); ++itGtia )
@@ -202,7 +201,7 @@ void MOS_Team::DeleteAllGtias()
     */
 // Created: APE 2004-10-26
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Gtia* MOS_Team::FindGtia( uint nID )
 {
     IT_GtiaMap itGtia = gtias_.find( nID );    
@@ -217,7 +216,7 @@ MOS_Gtia* MOS_Team::FindGtia( uint nID )
 */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Team::T_GtiaMap& MOS_Team::GetGtias() const
 {
     return gtias_;

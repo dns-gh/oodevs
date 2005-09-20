@@ -24,7 +24,7 @@
 // Name: MOS_LineManager::GetLineList
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_LineManager::CT_TacticalLineSet& MOS_LineManager::GetLineList()
 {
     return lineSet_;
@@ -35,7 +35,7 @@ MOS_LineManager::CT_TacticalLineSet& MOS_LineManager::GetLineList()
 // Name: MOS_LineManager::DeleteAll
 // Created: NLD 2002-08-22
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_LineManager::DeleteAll()
 {
     for( IT_TacticalLineSet it = lineSet_.begin(); it != lineSet_.end() ; ++it )

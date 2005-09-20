@@ -12,10 +12,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_AgentServerMsgMgr.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentServerMsgMgr.inl"
-#endif
-
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_Agent.h"
@@ -264,7 +260,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPion( DIN::DIN_Link& linkFrom, DIN::DIN_
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
+void MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
     MOS_Gtia* pGtia = new MOS_Gtia();
     pGtia->Initialize( input );
@@ -745,7 +741,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_Msg
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const ASN1T_MsgLogRavitaillementChangeQuotasAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "MSG Received : MsgLogRavitaillementChangeQuotaAck - Code ";
@@ -764,7 +760,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const A
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "MSG Received : MsgLogRavitaillementPousserFlux - Code ";
@@ -932,7 +928,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLimitCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "LimitCreationAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
@@ -957,7 +953,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCr
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "LimitUpdateAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
@@ -1004,7 +1000,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimi
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "LimaCreationAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
@@ -1031,7 +1027,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCrea
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "LimaUpdateAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
@@ -1297,7 +1293,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAu
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "ChangeAutomateAck - Etat: ";
@@ -1354,7 +1350,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAut
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "ChangeDiplomacyAck( - Etat: ";
@@ -1385,7 +1381,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChang
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "ChangeGroupeConnaissanceAck - Etat: ";
@@ -1415,7 +1411,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, MIL_MOSContextID )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "MSG Received : ChangeLiensLogistiquesAck - Etat: ";
@@ -1920,7 +1916,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
 // Name: MOS_AgentServerMsgMgr::OnError
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-bool MOS_AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& info )
+bool MOS_AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& /*info*/ )
 {
     //MT_LOG_INFO_MSG( "MOS -> AS - Message service error : " << info.GetInfo().c_str() );
     return false;

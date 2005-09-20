@@ -14,7 +14,7 @@
 // Name: MOS_Line::GetLine
 // Created: FBD 03-04-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MT_Line MOS_Line::GetLine()
 {
     assert( pNode1_ != 0 && pNode2_ != 0 );
@@ -26,7 +26,7 @@ MT_Line MOS_Line::GetLine()
 // Name: MOS_Line::GetPosStart
 // Created: FBD 03-04-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Node& MOS_Line::GetPosStart() const
 {
     assert( pNode1_ != 0 );
@@ -38,7 +38,7 @@ const MOS_Node& MOS_Line::GetPosStart() const
 // Name: MOS_Line::GetPosEnd
 // Created: FBD 03-04-08
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MOS_Node& MOS_Line::GetPosEnd() const
 {
     assert( pNode2_ != 0 );

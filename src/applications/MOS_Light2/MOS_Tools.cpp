@@ -16,11 +16,6 @@
 #include "MOS_RawVisionData.h"
 #include "MT_Tools/MT_Tools_Types.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Tools.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Tools::ToString
 // Created: AGE 2005-03-31

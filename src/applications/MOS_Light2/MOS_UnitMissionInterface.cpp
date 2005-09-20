@@ -41,12 +41,6 @@
 #include "MOS_Agent.h"
 #include "MOS_Tools.h"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_UnitMissionInterface.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_UnitMissionInterface constructor
 /** @param  mission 

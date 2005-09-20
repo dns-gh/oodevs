@@ -75,9 +75,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamSlider.inl"
-#endif
 
 #endif // __MOS_ParamSlider_h_

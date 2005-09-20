@@ -21,7 +21,7 @@
 // Name: MOS_Param_ABC::Draw
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Param_ABC::Draw()
 {
 }
@@ -34,7 +34,7 @@ void MOS_Param_ABC::Draw()
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Param_ABC::FillRemotePopupMenu( QPopupMenu& /*popupMenu*/, const MOS_ActionContext& /*context*/ )
 {
 }
@@ -46,7 +46,7 @@ void MOS_Param_ABC::FillRemotePopupMenu( QPopupMenu& /*popupMenu*/, const MOS_Ac
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_Param_ABC::CheckValidity()
 {
     return true;

@@ -120,9 +120,6 @@ private:
     T_MapEventFilterVector eventFilterStack_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_GLWidget.inl"
-#endif
 
 #endif // __MOS_GLWidget_h_

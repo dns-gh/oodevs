@@ -23,8 +23,4 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ParamRadioBtnGroup.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamRadioBtnGroup.inl"
-#endif
-
 

@@ -96,9 +96,6 @@ private:
     E_LineType nLineType_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ShapeEditorMapEventFilter.inl"
-#endif
 
 #endif // __MOS_ShapeEditorMapEventFilter_h_

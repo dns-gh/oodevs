@@ -43,9 +43,6 @@ private:
     MT_Vector2D vLowerRightCorner_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #	include "MOS_Meteo_Local.inl"
-#endif
 
 #endif // __MOS_Meteo_Local_h_

@@ -25,11 +25,6 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_MOSServer.h"
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_MOSServer.inl"
-#endif
-
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServerConnectionMgr.h"
 

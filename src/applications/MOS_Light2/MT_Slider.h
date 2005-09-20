@@ -81,9 +81,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_Slider.inl"
-#endif
 
 #endif // __MT_Slider_h_

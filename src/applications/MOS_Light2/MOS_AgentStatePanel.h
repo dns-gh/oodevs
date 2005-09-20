@@ -101,9 +101,6 @@ private:
     QLabel*    pLogSupplySuperior_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentStatePanel.inl"
-#endif
 
 #endif // __MOS_AgentStatePanel_h_

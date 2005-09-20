@@ -21,11 +21,6 @@
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServerMsgMgr.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_LineManager.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_LineManager constructor
 // Created: NLD 2002-07-16

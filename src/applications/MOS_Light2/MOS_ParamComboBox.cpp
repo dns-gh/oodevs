@@ -23,9 +23,5 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_ParamComboBox.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamComboBox.inl"
-#endif
-
 
 

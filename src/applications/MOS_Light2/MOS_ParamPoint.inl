@@ -24,7 +24,7 @@
 // Name: MOS_ParamPoint::Draw
 // Created: APE 2004-06-03
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamPoint::Draw()
 {
     MOS_GLTool::Draw( *this );
@@ -37,7 +37,7 @@ void MOS_ParamPoint::Draw()
 */
 // Created: APE 2004-08-27
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 const MT_Vector2D& MOS_ParamPoint::GetPoint()
 {
     return point_;

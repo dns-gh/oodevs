@@ -74,9 +74,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_UnitMissionInterface.inl"
-#endif
 
 #endif // __MOS_UnitMissionInterface_h_

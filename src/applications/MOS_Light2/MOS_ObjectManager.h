@@ -60,9 +60,6 @@ private:
     T_ObjectMap ObjectMap_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ObjectManager.inl"
-#endif
 
 #endif // __MOS_ObjectManager_h_

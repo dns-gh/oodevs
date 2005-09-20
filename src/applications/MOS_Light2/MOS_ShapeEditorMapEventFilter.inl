@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ShapeEditorMapEventFilter::PrepareNewLine( E_LineType nType )
 {
     nLineType_ = nType;
@@ -37,7 +37,7 @@ void MOS_ShapeEditorMapEventFilter::PrepareNewLine( E_LineType nType )
 */
 // Created: APE 2004-10-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 QObject* MOS_ShapeEditorMapEventFilter::GetObject()
 {
     return this;
@@ -50,7 +50,7 @@ QObject* MOS_ShapeEditorMapEventFilter::GetObject()
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 T_PointVector& MOS_ShapeEditorMapEventFilter::GetPointList()
 {
     return pointList_;

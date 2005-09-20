@@ -40,11 +40,6 @@
 #include "MOS_ParamDirection.h"
 #include "MOS_Agent.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AutomateMissionInterface.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AutomateMissionInterface constructor
 /** @param  agent 

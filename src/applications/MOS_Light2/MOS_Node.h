@@ -41,8 +41,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Node.inl"
-#endif
 
 #endif // __MOS_Node_h_

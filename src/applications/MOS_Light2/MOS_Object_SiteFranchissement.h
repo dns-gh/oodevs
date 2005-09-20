@@ -75,8 +75,6 @@ private:
     //@}
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Object_SiteFranchissement.inl"
-#endif
 
 #endif // __MOS_Object_SiteFranchissement_h_

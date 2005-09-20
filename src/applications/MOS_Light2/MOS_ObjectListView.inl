@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 QSize MOS_ObjectListView::sizeHint() const
 {
     return QSize( 230, 340 );
@@ -37,7 +37,7 @@ QSize MOS_ObjectListView::sizeHint() const
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Object_ABC* MOS_ObjectListView::ToObject( QListViewItem* pItem )
 {
     if( pItem == 0 || pItem->rtti() != eObject )

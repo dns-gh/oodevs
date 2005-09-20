@@ -24,11 +24,6 @@
 #include "MT_Slider.h"
 #include "moc_MT_Slider.cpp"
 
-#ifndef MT_USE_INLINE
-#   include "MT_Slider.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_Slider constructor
 /** @param  nMinValue 

@@ -29,11 +29,6 @@
 
 #include <qlineedit.h>
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDLayerDialog.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDLayerDialog constructor
 /** @param  pParent 

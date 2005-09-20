@@ -35,11 +35,6 @@
 
 #include "resources.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_MapToolbar.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_MapToolbar constructor
 /** @param  pParent 

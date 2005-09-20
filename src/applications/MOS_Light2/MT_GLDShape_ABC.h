@@ -100,9 +100,6 @@ protected:
     E_State nState_;
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDShape_ABC.inl"
-#endif
 
 #endif // __MT_GLDShape_ABC_h_

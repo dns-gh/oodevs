@@ -26,11 +26,6 @@
 
 #include "MOS_Types.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Logger.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Logger constructor
 // Created: APE 2004-06-02

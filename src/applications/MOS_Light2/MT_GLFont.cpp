@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MT_GLFont.h"
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLFont.inl"
-#endif
-
-
 class MT_GLFontManager
 {
 public:

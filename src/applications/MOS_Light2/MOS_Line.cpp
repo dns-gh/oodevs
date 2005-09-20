@@ -14,11 +14,6 @@
 
 #include "MOS_App.h"
 
-#ifndef MOS_USE_INLINE
-#	include "MOS_Line.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Line constructor
 // Created: FBD 03-04-08

@@ -223,8 +223,6 @@ private:
     static bool      bSimpleMode_;
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_GLTool.inl"
-#endif
 
 #endif // __MOS_GLTool_h_

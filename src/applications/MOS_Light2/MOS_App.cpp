@@ -37,11 +37,6 @@
 
 MOS_App* MOS_App::pInstance_ = 0;
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_App.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_App constructor
 // Created: NLD 2002-07-15
@@ -126,21 +121,16 @@ MOS_App::~MOS_App()
     MT_ChangeDir( strRootDirectory_ );
     MT_XXmlOutputArchive archive;
     pLineManager_->Write( archive );
-    while( true )
+    while( ! archive.WriteToFile( "TacticalLines.xml" ) )
     {
-        if( archive.WriteToFile( "TacticalLines.xml" ) )
+        int nResult = QMessageBox::warning( 0, 
+            tr("Erreur d'écriture fichier"),
+            tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
+            "Vérifiez qu'il ne soit pas portegé en écriture"),
+            QMessageBox::Retry,
+            QMessageBox::Abort );
+        if( nResult == QMessageBox::Abort )
             break;
-        else
-        {
-            int nResult = QMessageBox::warning( 0, 
-                tr("Erreur d'écriture fichier"),
-                tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
-                "Vérifiez qu'il ne soit pas portegé en écriture"),
-                QMessageBox::Retry,
-                QMessageBox::Abort );
-            if( nResult == QMessageBox::Abort )
-                break;
-        }
     }
     MT_ChangeDir( strInitialDir );
 
@@ -511,23 +501,18 @@ void MOS_App::WriteODB( std::string strFilename )
     pObjectManager_->WriteODB( archive );
     archive.EndSection();
 
-    while( true )
+    while( ! archive.WriteToFile( strFilename ) )
     {
-        if( archive.WriteToFile( strFilename ) )
+        std::stringstream strMsg;
+        strMsg << tr("Le fichier ODB ") << strFilename << tr(" n'a pas pu etre sauvegardé.") << std::endl;
+        strMsg << tr("Vérifiez qu'il ne soit pas portégé en écriture");
+        int nResult = QMessageBox::warning( 0, 
+            tr("Erreur d'écriture fichier"),
+            strMsg.str().c_str(),
+            QMessageBox::Retry,
+            QMessageBox::Abort );
+        if( nResult == QMessageBox::Abort )
             break;
-        else
-        {
-            std::stringstream strMsg;
-            strMsg << tr("Le fichier ODB ") << strFilename << tr(" n'a pas pu etre sauvegardé.") << std::endl;
-            strMsg << tr("Vérifiez qu'il ne soit pas portégé en écriture");
-            int nResult = QMessageBox::warning( 0, 
-                tr("Erreur d'écriture fichier"),
-                strMsg.str().c_str(),
-                QMessageBox::Retry,
-                QMessageBox::Abort );
-            if( nResult == QMessageBox::Abort )
-                break;
-        }
     }
 }
 

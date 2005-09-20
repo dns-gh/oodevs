@@ -30,11 +30,6 @@
 #include "MOS_Tools.h"
 #include "MOS_ShapeEditorMapEventFilter.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamLocationList.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList constructor
 /** @param  asnListLoc 

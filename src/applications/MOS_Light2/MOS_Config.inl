@@ -23,7 +23,7 @@
 // Name: MOS_Config::GetPortAgentServerMOSServer
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 uint16 MOS_Config::GetPortAgentServerMOSServer() const
 {
     return nPortAgentServerMOSServer_;
@@ -33,7 +33,7 @@ uint16 MOS_Config::GetPortAgentServerMOSServer() const
 // Name: MOS_Config::GetConnectionProtocols
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 DIN::DIN_ConnectionProtocols& MOS_Config::GetConnectionProtocols()
 {
     return connectionProtocols_;

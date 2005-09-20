@@ -60,9 +60,6 @@ private:
     static MT_IdentifierManager idManager_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #	include "MOS_Meteo_Manager.inl"
-#endif
 
 #endif // __MOS_Meteo_Manager_h_

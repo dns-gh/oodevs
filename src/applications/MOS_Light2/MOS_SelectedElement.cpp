@@ -22,11 +22,6 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_SelectedElement.h"
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_SelectedElement.inl"
-#endif
-
 #include "MOS_Agent.h"
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"

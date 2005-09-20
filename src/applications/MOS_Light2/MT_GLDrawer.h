@@ -170,9 +170,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLDrawer.inl"
-#endif
 
 #endif // __MT_GLDrawer_h_

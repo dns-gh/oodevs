@@ -32,11 +32,6 @@
 #include "MOS_ShapeEditorMapEventFilter.h"
 #include "MOS_World.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_WeatherPanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_WeatherPanel constructor
 /** @param  pParent 

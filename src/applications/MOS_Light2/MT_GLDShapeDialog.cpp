@@ -46,11 +46,6 @@
 #include "res/arrow2e.xpm"
 #include "res/arrow3e.xpm"
 
-#ifndef MT_USE_INLINE
-#   include "MT_GLDShapeDialog.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_GLDShapeDialog constructor
 /** @param  pParent 

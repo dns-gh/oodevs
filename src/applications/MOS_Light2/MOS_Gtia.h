@@ -100,9 +100,6 @@ private:
 };
 
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Gtia.inl"
-#endif
-
 
 #endif // __MOS_Gtia_h_

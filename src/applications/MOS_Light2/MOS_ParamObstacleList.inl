@@ -26,7 +26,7 @@
 */
 // Created: APE 2004-05-24
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamObstacleList::Copy( ASN1T_MissionGenObject& src, ASN1T_MissionGenObject& dest )
 {
     dest.oid_obstacle_planifie = src.oid_obstacle_planifie;
@@ -50,7 +50,7 @@ void MOS_ParamObstacleList::Copy( ASN1T_MissionGenObject& src, ASN1T_MissionGenO
 // Name: MOS_ParamObstacleList::Draw
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamObstacleList::Draw()
 {
     MOS_GLTool::Draw( *this );

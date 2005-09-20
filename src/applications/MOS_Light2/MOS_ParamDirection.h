@@ -64,8 +64,6 @@ private:
     //@}
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_ParamDirection.inl"
-#endif
 
 #endif // __MOS_ParamDirection_h_

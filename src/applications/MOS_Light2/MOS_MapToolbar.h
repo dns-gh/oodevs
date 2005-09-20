@@ -79,10 +79,6 @@ private:
     QToolButton* p3DButton_;
 };
 
-
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_MapToolbar.inl"
-#endif
 
 #endif // __MOS_MapToolbar_h_

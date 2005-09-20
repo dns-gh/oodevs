@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDShape_ABC::SetState( MT_GLDShape_ABC::E_State nState )
 {
     nState_ = nState;
@@ -36,7 +36,7 @@ void MT_GLDShape_ABC::SetState( MT_GLDShape_ABC::E_State nState )
 */
 // Created: APE 2004-07-08
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 const MT_GLDShape_ABC::T_ShapeVector MT_GLDShape_ABC::GetShapes() const
 {
     return T_ShapeVector();
@@ -47,7 +47,7 @@ const MT_GLDShape_ABC::T_ShapeVector MT_GLDShape_ABC::GetShapes() const
 // Name: MT_GLDShape_ABC::ClearShapes
 // Created: APE 2004-07-08
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDShape_ABC::ClearShapes()
 {
 }

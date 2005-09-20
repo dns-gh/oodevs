@@ -28,13 +28,6 @@
 #include "MOS_World.h"
 #include "MOS_ActionContext.h"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamPoint.inl"
-#endif
-
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPoint constructor
 /** @param  asnListPoint 

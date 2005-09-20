@@ -146,10 +146,6 @@ private:
     uint nCampTC2ID_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #	include "MOS_ObjectKnowledge.inl"
-#endif
-
 
 #endif // __MOS_ObjectKnowledge_h_

@@ -259,7 +259,8 @@ void MOS_EventToolbar::FocusOnAgent( int nId, bool bCenter )
 {
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
     assert( pAgent != 0 );
-    emit ElementSelected( MOS_SelectedElement( *pAgent ) );
+    MOS_SelectedElement message( *pAgent );
+    emit ElementSelected( message );
     if( bCenter )
         emit CenterOnPoint( pAgent->GetPos() );
 }

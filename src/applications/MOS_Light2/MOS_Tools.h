@@ -166,8 +166,6 @@ private:
     static converter< ASN1T_EnumDiplomatie >              diplomatyConverter_[];
 };
 
-#ifdef MOS_USE_INLINE
 #   include "MOS_Tools.inl"
-#endif
 
 #endif // __MOS_Tools_h_

@@ -31,11 +31,6 @@
 
 using namespace DIN;
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Trace.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Trace constructor
 // Created: NLD 2002-07-16

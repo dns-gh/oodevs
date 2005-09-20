@@ -16,7 +16,7 @@
 */
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_TacticalLine_ABC::E_LineType MOS_Limit::GetLineType() const
 {
     return MOS_TacticalLine_ABC::eLimit;

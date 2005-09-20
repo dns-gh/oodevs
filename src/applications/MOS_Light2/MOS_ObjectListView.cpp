@@ -34,11 +34,6 @@
 #include "MOS_SelectedElement.h"
 #include "MOS_ASN_Messages.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ObjectListView.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectListView constructor
 /** @param  pParent 
@@ -100,7 +95,7 @@ void MOS_ObjectListView::AddObject( MOS_Object_ABC& object )
         return;
 
     // Check if the agent is not already inserted.
-#ifdef MOS_DEBUG
+#ifdef _DEBUG
     QListViewItemIterator it( this->firstChild() );
     while( it.current() )
     {
@@ -215,7 +210,7 @@ void MOS_ObjectListView::SetSelectedElement( MOS_SelectedElement& selectedElemen
 */
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-void MOS_ObjectListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol )
+void MOS_ObjectListView::OnRequestPopup( QListViewItem* , const QPoint& , int )
 {
 }
 

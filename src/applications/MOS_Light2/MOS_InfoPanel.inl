@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_AgentKnowledgePanel& MOS_InfoPanel::GetAgentKnowledgePanel()
 {
     assert( pAgentKnowledgePanel_ != 0 );
@@ -37,7 +37,7 @@ MOS_AgentKnowledgePanel& MOS_InfoPanel::GetAgentKnowledgePanel()
 */
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_ObjectKnowledgePanel& MOS_InfoPanel::GetObjectKnowledgePanel()
 {
     assert( pObjectKnowledgePanel_ != 0 );
@@ -50,7 +50,7 @@ MOS_ObjectKnowledgePanel& MOS_InfoPanel::GetObjectKnowledgePanel()
 */
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 QSize MOS_InfoPanel::sizeHint() const
 {
     return QSize( 230, 340 );

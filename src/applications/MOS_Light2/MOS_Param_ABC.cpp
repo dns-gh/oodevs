@@ -23,11 +23,6 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_Param_ABC.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Param_ABC.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Param_ABC constructor
 // Created: APE 2004-03-18

@@ -26,7 +26,7 @@
 */
 // Created: APE 2004-06-30
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDrawer::SetDefaults( float rMinFontSize, float rMaxFontSize, const MT_GLDShapeProperties& properties )
 {
     assert( rMinFontSize > 0 && rMaxFontSize );
@@ -44,7 +44,7 @@ void MT_GLDrawer::SetDefaults( float rMinFontSize, float rMaxFontSize, const MT_
 */
 // Created: APE 2004-06-24
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 MT_Vector2D MT_GLDrawer::ScreenToGL( const MT_Vector2D& vScreenPos )
 {
     return pScreenToGLFunc_( vScreenPos, glWidget_ );
@@ -57,7 +57,7 @@ MT_Vector2D MT_GLDrawer::ScreenToGL( const MT_Vector2D& vScreenPos )
 */
 // Created: APE 2004-06-24
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 QGLWidget& MT_GLDrawer::GetGLWidget()
 {
     return glWidget_;
@@ -70,7 +70,7 @@ QGLWidget& MT_GLDrawer::GetGLWidget()
 */
 // Created: APE 2004-06-30
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 MT_GLFont& MT_GLDrawer::GetFont()
 {
     return *pGLFont_;
@@ -83,7 +83,7 @@ MT_GLFont& MT_GLDrawer::GetFont()
 */
 // Created: APE 2004-07-01
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 float MT_GLDrawer::GetMinFontSize()
 {
     return rMinFontSize_;
@@ -96,7 +96,7 @@ float MT_GLDrawer::GetMinFontSize()
 */
 // Created: APE 2004-07-01
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 float MT_GLDrawer::GetMaxFontSize()
 {
     return rMaxFontSize_;
@@ -109,7 +109,7 @@ float MT_GLDrawer::GetMaxFontSize()
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 const MT_GLDShapeProperties& MT_GLDrawer::GetDefautShapeProperties() const
 {
     return defaultShapeProperties_;
@@ -122,7 +122,7 @@ const MT_GLDShapeProperties& MT_GLDrawer::GetDefautShapeProperties() const
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDrawer::SetSelection( MT_GLDShape_ABC& shape )
 {
     for( MT_GLDShape_ABC::IT_ShapeVector it = selection_.begin(); it != selection_.end(); ++it )
@@ -140,7 +140,7 @@ void MT_GLDrawer::SetSelection( MT_GLDShape_ABC& shape )
 */
 // Created: APE 2004-07-08
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDrawer::SetSelection( MT_GLDShape_ABC::T_ShapeVector& shapes )
 {
     MT_GLDShape_ABC::IT_ShapeVector it;
@@ -160,7 +160,7 @@ void MT_GLDrawer::SetSelection( MT_GLDShape_ABC::T_ShapeVector& shapes )
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDrawer::AddToSelection( MT_GLDShape_ABC& shape )
 {
     shape.SetState( MT_GLDShape_ABC::eSelected );
@@ -175,7 +175,7 @@ void MT_GLDrawer::AddToSelection( MT_GLDShape_ABC& shape )
 */
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDrawer::RemoveFromSelection( MT_GLDShape_ABC& shape )
 {
     MT_GLDShape_ABC::IT_ShapeVector it = std::find( selection_.begin(), selection_.end(), &shape );
@@ -190,7 +190,7 @@ void MT_GLDrawer::RemoveFromSelection( MT_GLDShape_ABC& shape )
 // Name: MT_GLDrawer::ClearSelection
 // Created: APE 2004-07-02
 // -----------------------------------------------------------------------------
-MT_INLINE
+inline
 void MT_GLDrawer::ClearSelection()
 {
     for( MT_GLDShape_ABC::IT_ShapeVector it = selection_.begin(); it != selection_.end(); ++it )

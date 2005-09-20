@@ -92,9 +92,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_AgentModel.inl"
-#endif
 
 #endif // __MOS_AgentModel_h_

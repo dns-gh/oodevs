@@ -98,10 +98,6 @@ public:
     //@}
 };
 
-
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_Options.inl"
-#endif
 
 #endif // __MOS_Options_h_

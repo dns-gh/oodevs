@@ -399,12 +399,9 @@ public:
     uint nLogSupplySuperior_;
 
 private:
-    static int nMaxId_;
+    static MIL_AgentID nMaxId_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_Agent.inl"
-#endif
 
 #endif // __MOS_Agent_h_

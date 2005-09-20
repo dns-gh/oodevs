@@ -29,11 +29,6 @@
 #include "MOS_ASN_Messages.h"
 #include "MOS_ASN_Types.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_OptionsPanel.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_OptionsPanel constructor
 /** @param  pParent 

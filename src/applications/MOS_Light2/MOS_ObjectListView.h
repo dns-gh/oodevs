@@ -95,9 +95,6 @@ private:
     //@}
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_ObjectListView.inl"
-#endif
 
 #endif // __MOS_ObjectListView_h_

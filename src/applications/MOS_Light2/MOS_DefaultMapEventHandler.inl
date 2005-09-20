@@ -27,7 +27,7 @@
 */
 // Created: APE 2004-10-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 QObject* MOS_DefaultMapEventHandler::GetObject()
 {
     return this;
@@ -40,7 +40,7 @@ QObject* MOS_DefaultMapEventHandler::GetObject()
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_DefaultMapEventHandler::SetSelectedElement( MOS_SelectedElement& selectedElement )
 {
     selectedElement_ = selectedElement;
@@ -54,7 +54,7 @@ void MOS_DefaultMapEventHandler::SetSelectedElement( MOS_SelectedElement& select
 */
 // Created: APE 2004-03-12
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_DefaultMapEventHandler::IsAgentAtPos( const MOS_Agent& agent, const MT_Vector2D& vGLPos )
 {
     //$$$ evil hard coded values! Sure thing they are evil ! Naughty evil values !
@@ -72,7 +72,7 @@ bool MOS_DefaultMapEventHandler::IsAgentAtPos( const MOS_Agent& agent, const MT_
 */
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_DefaultMapEventHandler::IsAgentKnowledgeAtPos( const MOS_AgentKnowledge& agent, const MT_Vector2D& vGLPos )
 {
     //$$$ evil hard coded values!

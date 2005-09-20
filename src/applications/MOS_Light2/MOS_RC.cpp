@@ -20,11 +20,6 @@
 #include "MOS_AgentManager.h"
 #include "MOS_Agent.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_RC.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_RC constructor
 // Created: NLD 2002-07-16

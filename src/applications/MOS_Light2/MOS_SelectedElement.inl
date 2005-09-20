@@ -23,7 +23,7 @@
 */
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_SelectedElement::IsAMapElementSelected() const
 {
     return pAgent_ != 0 || pObject_ != 0 || pLine_ != 0 || pAgentKnowledge_ != 0;

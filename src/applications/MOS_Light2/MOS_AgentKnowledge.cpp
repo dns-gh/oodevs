@@ -17,12 +17,7 @@
 #include "MOS_ASN_Messages.h"
 #include "MOS_AgentManager.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentKnowledge.inl"
-#endif
-
 MOS_IDManager MOS_AgentKnowledge::idManager_( 158 );
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledge constructor

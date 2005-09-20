@@ -30,11 +30,6 @@
 
 MOS_IDManager MOS_Gtia::idManager_( 0 );
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_Gtia.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Gtia constructor
 // Created: NLD 2004-03-18

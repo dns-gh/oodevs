@@ -26,11 +26,6 @@
 #include <qmainwindow.h>
 #include <qdockwindow.h>
 
-#ifndef MT_USE_INLINE
-#   include "MT_Settings.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_Settings constructor
 // Created: APE 2004-06-01

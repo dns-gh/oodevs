@@ -14,7 +14,7 @@
 // Name: MOS_Meteo_ABC::SetTemperature
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetTemperature( int nTemperature )
 {
     nTemperature_ = nTemperature;
@@ -25,7 +25,7 @@ void MOS_Meteo_ABC::SetTemperature( int nTemperature )
 // Name: MOS_Meteo_ABC::SetWindSpeed
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetWindSpeed( int nWindSpeed )
 {
     nWindSpeed_ = nWindSpeed;
@@ -36,7 +36,7 @@ void MOS_Meteo_ABC::SetWindSpeed( int nWindSpeed )
 // Name: MOS_Meteo_ABC::SetWindDirection
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetWindDirection( int nWindDirection )
 {
     nWindDirection_ = nWindDirection;
@@ -47,7 +47,7 @@ void MOS_Meteo_ABC::SetWindDirection( int nWindDirection )
 // Name: MOS_Meteo_ABC::SetCloudCoverFloor
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetCloudCoverFloor( int nFloor )
 {
     nCloudCoverFloor_ = nFloor;
@@ -58,7 +58,7 @@ void MOS_Meteo_ABC::SetCloudCoverFloor( int nFloor )
 // Name: MOS_Meteo_ABC::SetCloudCoverCeiling
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetCloudCoverCeiling( int nCeiling )
 {
     nCloudCoverCeiling_ = nCeiling;
@@ -69,7 +69,7 @@ void MOS_Meteo_ABC::SetCloudCoverCeiling( int nCeiling )
 // Name: MOS_Meteo_ABC::SetCloudDensity
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetCloudDensity( int nDensity )
 {
     nCloudCoverAverageDensity_ = nDensity;
@@ -80,7 +80,7 @@ void MOS_Meteo_ABC::SetCloudDensity( int nDensity )
 // Name: MOS_Meteo_ABC::SetWeatherType
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_Meteo_ABC::SetWeatherType( MOS_Meteo_ABC::E_WeatherType nType )
 {
     nWeatherType_ = nType;
@@ -91,7 +91,7 @@ void MOS_Meteo_ABC::SetWeatherType( MOS_Meteo_ABC::E_WeatherType nType )
 // Name: MOS_Meteo_ABC::GetTemperature
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Meteo_ABC::GetTemperature() const
 {
     return nTemperature_;
@@ -102,7 +102,7 @@ int MOS_Meteo_ABC::GetTemperature() const
 // Name: MOS_Meteo_ABC::GetWindSpeed
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Meteo_ABC::GetWindSpeed() const
 {
     return nWindSpeed_;
@@ -113,7 +113,7 @@ int MOS_Meteo_ABC::GetWindSpeed() const
 // Name: MOS_Meteo_ABC::GetWindDirection
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Meteo_ABC::GetWindDirection() const
 {
     return nWindDirection_;
@@ -124,7 +124,7 @@ int MOS_Meteo_ABC::GetWindDirection() const
 // Name: MOS_Meteo_ABC::GetCloudCoverFloor
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Meteo_ABC::GetCloudCoverFloor() const
 {
     return nCloudCoverFloor_;
@@ -135,7 +135,7 @@ int MOS_Meteo_ABC::GetCloudCoverFloor() const
 // Name: MOS_Meteo_ABC::GetCloudCoverCeiling
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Meteo_ABC::GetCloudCoverCeiling() const
 {
     return nCloudCoverCeiling_;
@@ -146,7 +146,7 @@ int MOS_Meteo_ABC::GetCloudCoverCeiling() const
 // Name: MOS_Meteo_ABC::GetCloudDensity
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 int MOS_Meteo_ABC::GetCloudDensity() const
 {
     return nCloudCoverAverageDensity_;
@@ -157,7 +157,7 @@ int MOS_Meteo_ABC::GetCloudDensity() const
 // Name: MOS_Meteo_ABC::GetWeatherType
 // Created: AGN 03-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_Meteo_ABC::E_WeatherType MOS_Meteo_ABC::GetWeatherType() const
 {
     return nWeatherType_;

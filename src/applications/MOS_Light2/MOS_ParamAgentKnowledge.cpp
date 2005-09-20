@@ -31,11 +31,6 @@
 #include "MOS_ActionContext.h"
 #include "MOS_AgentKnowledge.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamAgentKnowledge.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledge constructor
 /** @param  asnKnowledge 

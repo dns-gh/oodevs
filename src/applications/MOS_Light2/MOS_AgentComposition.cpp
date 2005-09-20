@@ -25,11 +25,6 @@
 
 #include "MOS_App.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentComposition.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentComposition constructor
 // Created: APE 2004-03-10

@@ -29,12 +29,6 @@
 #include "MOS_TacticalLine_ABC.h"
 #include "MOS_LineManager.h"
 
-
-#ifndef MOS_USE_INLINE
-#   include "MOS_ParamLimits.inl"
-#endif
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits constructor
 /** @param  asnLimit1ID 

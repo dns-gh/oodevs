@@ -27,10 +27,6 @@
 
 #include "MOS_AgentServerMgr_ABC.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentServerMgr_ABC.inl"
-#endif
-
 #include "MOS_AgentServerController.h"
 #include "MOS_App.h"
 

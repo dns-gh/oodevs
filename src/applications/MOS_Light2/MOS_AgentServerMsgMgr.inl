@@ -14,7 +14,7 @@
 // Name: MOS_AgentServerMsgMgr::GetMsgRecorder
 // Created: APE 2004-10-21
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 MOS_MsgRecorder& MOS_AgentServerMsgMgr::GetMsgRecorder()
 {
     return msgRecorder_;
@@ -25,7 +25,7 @@ MOS_MsgRecorder& MOS_AgentServerMsgMgr::GetMsgRecorder()
 // Name: MOS_AgentServerMsgMgr::BuildMessage
 // Created: NLD 2002-08-06
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 DIN::DIN_BufferedMessage MOS_AgentServerMsgMgr::BuildMessage()
 {
     assert( pMessageService_ );
@@ -37,7 +37,7 @@ DIN::DIN_BufferedMessage MOS_AgentServerMsgMgr::BuildMessage()
 // Name: MOS_AgentServerMsgMgr::IsPaused
 // Created: FBD 03-01-22
 //-----------------------------------------------------------------------------
-MOS_INLINE
+inline
 bool MOS_AgentServerMsgMgr::IsPaused() const
 {
     return bPaused_;

@@ -24,11 +24,6 @@
 #include "MOS_ConnectDialog.h"
 #include "MOS_DisconnectDialog.h"
 
-#ifndef MOS_USE_INLINE
-#	include "MOS_SIMControlToolbar.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_SIMControlToolbar constructor
 // Created: FBD 03-01-14

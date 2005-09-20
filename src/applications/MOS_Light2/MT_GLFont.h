@@ -95,9 +95,6 @@ private:
     //@}
 };
 
-
-#ifdef MT_USE_INLINE
 #   include "MT_GLFont.inl"
-#endif
 
 #endif // __MT_GLFont_h_

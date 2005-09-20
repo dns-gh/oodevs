@@ -57,9 +57,6 @@ private:
     QPopupMenu popupMenu_;
 };
 
-
-#ifdef MOS_USE_INLINE
 #   include "MOS_Logger.inl"
-#endif
 
 #endif // __MOS_Logger_h_

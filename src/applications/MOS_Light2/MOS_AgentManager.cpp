@@ -41,11 +41,6 @@
 
 #include "MT_Tools/MT_ScipioException.h"
 
-#ifndef MOS_USE_INLINE
-#   include "MOS_AgentManager.inl"
-#endif
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentManager constructor
 // Created: NLD 2002-07-16
@@ -275,8 +270,8 @@ void MOS_AgentManager::InitializeTypesComposante( MOS_InputArchive& scipioArchiv
 void MOS_AgentManager::RegisterTeam( MOS_Team& team )
 {
     team.SetIdx( teamMap_.size() );
-    bool bOut = teamMap_.insert( std::make_pair( team.GetID(), &team ) ).second;
-    assert( bOut );
+    if( ! teamMap_.insert( std::make_pair( team.GetID(), &team ) ).second )
+        RUNTIME_ERROR;
 }
 
 
@@ -301,8 +296,8 @@ void MOS_AgentManager::DeleteAllTeams()
 //-----------------------------------------------------------------------------
 void MOS_AgentManager::AddAgent( MOS_Agent& agent )
 {
-    bool bOut = agentMap_.insert( std::make_pair( agent.GetAgentID(), &agent ) ).second;
-    assert( bOut );
+    if( ! agentMap_.insert( std::make_pair( agent.GetAgentID(), &agent ) ).second )
+        RUNTIME_ERROR;
 }
 
 

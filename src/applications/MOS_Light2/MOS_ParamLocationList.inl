@@ -23,7 +23,7 @@
 // Name: MOS_ParamLocationList::Draw
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-MOS_INLINE
+inline
 void MOS_ParamLocationList::Draw()
 {
     MOS_GLTool::Draw( *this );
