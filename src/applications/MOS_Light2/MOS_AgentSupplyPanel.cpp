@@ -124,7 +124,6 @@ void MOS_AgentSupplyPanel::OnAgentUpdated( MOS_Agent& agent )
 
     if( ! agent.pSupplyData_ )
     {
-        pConsignHandledListView_->hide();
         pState_->hide();
         pStocks_->hide();
         pQuotas_->hide();

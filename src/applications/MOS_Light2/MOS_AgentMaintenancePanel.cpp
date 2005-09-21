@@ -101,7 +101,6 @@ void MOS_AgentMaintenancePanel::OnAgentUpdated( MOS_Agent& agent )
 
     if( ! agent.pMaintenanceData_ )
     {
-        pConsignHandledListView_->hide();
         pState_->hide();
         pDispoHaulers_->hide();
         pDispoRepairers_->hide();

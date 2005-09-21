@@ -130,7 +130,6 @@ void MOS_AgentMedicalPanel::OnAgentUpdated( MOS_Agent& agent )
     
     if( ! agent.pMedicalData_ )
     {
-        pConsignHandledListView_->hide();
         pState_->hide();
         pDispoReleveAmbulances_->hide();
         pDispoRamassageAmbulances_->hide();
