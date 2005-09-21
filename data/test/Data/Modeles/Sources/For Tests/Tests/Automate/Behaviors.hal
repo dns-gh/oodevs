@@ -20,6 +20,19 @@ behavior BEH_Defaut( id nDummy )
         DEC_Debug( "En vol : " + BoolToString( DEC_Automate_PionEstEnVol( pion ) ) );
     }        
     */
+    /*
+    DEC_Debug( "DEC_TypeObjet_PeutEtreContourne( eTypeObjectBouchonMines ) : " + BoolToString( DEC_TypeObjet_PeutEtreContourne( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtreValorise ( eTypeObjectBouchonMines ) : " + BoolToString( DEC_TypeObjet_PeutEtreValorise ( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectBouchonMines ) : " + BoolToString( DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectBouchonMines ) ) );
+
+    DEC_Debug( "DEC_TypeObjet_PeutEtreContourne( eTypeObjectEboulement ) : " + BoolToString( DEC_TypeObjet_PeutEtreContourne( eTypeObjectEboulement ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtreValorise ( eTypeObjectEboulement ) : " + BoolToString( DEC_TypeObjet_PeutEtreValorise ( eTypeObjectEboulement ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectEboulement ) : " + BoolToString( DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectEboulement ) ) );
+    
+    DEC_Debug( "DEC_TypeObjet_PeutEtreContourne( eTypeObjectRota ) : " + BoolToString( DEC_TypeObjet_PeutEtreContourne( eTypeObjectRota ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtreValorise ( eTypeObjectRota ) : " + BoolToString( DEC_TypeObjet_PeutEtreValorise ( eTypeObjectRota ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectRota ) : " + BoolToString( DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectRota ) ) );    
+    */
 }
 
 behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )

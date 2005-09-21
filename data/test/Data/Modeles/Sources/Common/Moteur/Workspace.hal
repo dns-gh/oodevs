@@ -75,6 +75,11 @@ signatures
     V                    DEC_InterdireEvacuationAutomatiqueBlesses( A /*T_Pion*/ );
     V                    DEC_AutoriserEvacuationAutomatiqueBlesses( A /*T_Pion*/ );   
     
+    // Objets
+    B                    DEC_TypeObjet_PeutEtreContourne( I /*E_TypeObject*/ );
+    B                    DEC_TypeObjet_PeutEtreValorise ( I /*E_TypeObject*/ );
+    B                    DEC_TypeObjet_PeutEtrePrepare  ( I /*E_TypeObject*/ );
+    
     // Manipulation DIA Thing 
     A                    DEC_CreerDIAThing( I /*Type*/ );
     V                    DEC_DetruireDIAThing( A /*Thing*/ );

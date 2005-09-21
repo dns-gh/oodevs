@@ -27,7 +27,11 @@ Next Version - Codename ''
     - NLD - Bug fix : ordre de conduite 'RecupererTransporteurs' disponible tout le temps, même sans mission
     - NLD - Changement message d'erreur quand un automate ne peut pas donner une mission à un pion (affichage du nom du pion + nom du modèle)
     - NLD - Destruction des DEC_Path en 'dehors' du pas de temps
-    - NLD - assert() => exception dans ADN quand armement référencant une dotation invalide
+    - NLD - ADN - assert() => exception dans quand un armement référence une dotation ou un lanceur invalide
+    - NLD - Nouvelles fonctions DEC : 
+                 B DEC_TypeObjet_PeutEtreContourne( I /*E_TypeObject*/ );
+                 B DEC_TypeObjet_PeutEtreValorise ( I /*E_TypeObject*/ );
+                 B DEC_TypeObjet_PeutEtrePrepare  ( I /*E_TypeObject*/ );
         
 Version 1.0.1 [20/09/2005] - Codename 'tourbe'
     - AGE - Les désenrichissement de pathfind sont faits dans l'ordre inverse de création

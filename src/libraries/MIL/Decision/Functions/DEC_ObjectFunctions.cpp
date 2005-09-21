@@ -16,6 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Objects/MIL_CampRefugies.h"
+#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -50,4 +51,46 @@ void DEC_ObjectFunctions::GetRefugeeCampPosition( DIA_Call_ABC& call, MIL_Automa
 
     MT_Vector2D* pPos = new MT_Vector2D( pCamp->GetLocalisation().ComputeBarycenter() );
     call.GetResult().SetValue( pPos, &DEC_Tools::GetTypePoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::CanObjectTypeBeBypassed
+// Created: NLD 2005-09-21
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::CanObjectTypeBeBypassed( DIA_Call_ABC& call )
+{
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    assert( pObjectType );
+    if( pObjectType )
+        call.GetResult().SetValue( pObjectType->CanBeBypassed() );
+    else
+        call.GetResult().SetValue( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::CanObjectTypeBeMined
+// Created: NLD 2005-09-21
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::CanObjectTypeBeMined( DIA_Call_ABC& call )
+{
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    assert( pObjectType );
+    if( pObjectType )
+        call.GetResult().SetValue( pObjectType->CanBeMined() );
+    else
+        call.GetResult().SetValue( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::CanObjectTypeBePrepared
+// Created: NLD 2005-09-21
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::CanObjectTypeBePrepared( DIA_Call_ABC& call )
+{
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    assert( pObjectType );
+    if( pObjectType )
+        call.GetResult().SetValue( pObjectType->CanBePrepared() );
+    else
+        call.GetResult().SetValue( false );
 }

@@ -23,6 +23,7 @@
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/Functions/DEC_DIAFunctions.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
+#include "Decision/Functions/DEC_ObjectFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
@@ -160,6 +161,11 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_LogisticFunctions::EvacuateWoundedHumansToTC2       , "DEC_EvacuerBlessesVersTC2"                 );
     pFuncTable->RegisterFunction( DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation, "DEC_InterdireEvacuationAutomatiqueBlesses" );
     pFuncTable->RegisterFunction( DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation , "DEC_AutoriserEvacuationAutomatiqueBlesses" );
+
+    // Objets
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeBypassed, "DEC_TypeObjet_PeutEtreContourne" );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeMined   , "DEC_TypeObjet_PeutEtreValorise"  );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBePrepared, "DEC_TypeObjet_PeutEtrePrepare"   );
 
     // Debug
     pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );
