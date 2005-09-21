@@ -29,11 +29,11 @@
 #include "MOS_MOSServer.h"
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServerMsgMgr.h"
+#include "resources.h"
 
 //#include "res/recrec.xpm"
 //#include "res/recstop.xpm"
 //#include "res/recplay.xpm"
-#include "res/circle.xpm"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_RecorderToolbar constructor

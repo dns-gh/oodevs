@@ -939,7 +939,6 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCr
         MOS_TacticalLine_ABC* pLimit = MOS_App::GetApp().GetLineManager().FindLine( asnMsg.oid );
         if( pLimit )
         {
-            assert( pLimit == (MOS_TacticalLine_ABC*)nCtx );
             pLimit->SetNetworkState( MOS_TacticalLine_ABC::eNetworkStateRegistered );
             pLimit->SetState( MOS_TacticalLine_ABC::eStateOk );
         }
@@ -964,7 +963,6 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpda
         MOS_TacticalLine_ABC* pLimit = MOS_App::GetApp().GetLineManager().FindLine( asnMsg.oid );
         if( pLimit )
         {
-            assert( pLimit == (MOS_TacticalLine_ABC*)nCtx );
             pLimit->SetNetworkState( MOS_TacticalLine_ABC::eNetworkStateRegistered );
             pLimit->SetState( MOS_TacticalLine_ABC::eStateOk );
         }
@@ -1011,7 +1009,6 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCrea
         MOS_TacticalLine_ABC* pLima = MOS_App::GetApp().GetLineManager().FindLine( asnMsg.oid );
         if( pLima )
         {
-            assert( pLima == (MOS_TacticalLine_ABC*)nCtx );
             pLima->SetNetworkState( MOS_TacticalLine_ABC::eNetworkStateRegistered );
             pLima->SetState( MOS_TacticalLine_ABC::eStateOk );
         }
@@ -1038,7 +1035,6 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdate
         MOS_TacticalLine_ABC* pLima = MOS_App::GetApp().GetLineManager().FindLine( asnMsg.oid );
         if( pLima )
         {
-            assert( pLima == (MOS_TacticalLine_ABC*)nCtx );
             pLima->SetNetworkState( MOS_TacticalLine_ABC::eNetworkStateRegistered );
             pLima->SetState( MOS_TacticalLine_ABC::eStateOk );
         }

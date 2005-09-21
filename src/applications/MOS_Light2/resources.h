@@ -52,5 +52,17 @@ DECLARE_ICON( construction );
 DECLARE_ICON( observe );
 DECLARE_ICON( tacticallines );
 DECLARE_ICON( threed );
+DECLARE_ICON( visible );
+DECLARE_ICON( select );
+DECLARE_ICON( point );
+DECLARE_ICON( line );
+DECLARE_ICON( circle );
+DECLARE_ICON( rectangle );
+DECLARE_ICON( polygon );
+DECLARE_ICON( text );
+DECLARE_ICON( image );
+DECLARE_ICON( empty );
+DECLARE_ICON( cross );
+DECLARE_ICON( saveall );
 
 #endif // __demo_resources_h_

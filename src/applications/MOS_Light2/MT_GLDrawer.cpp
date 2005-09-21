@@ -28,23 +28,9 @@
 #include "MT_GLDLayerDialog.h"
 #include "MT_GLDShapeDialog.h"
 #include "MT_GLFont.h"
+#include "resources.h"
 
 #include <memory.h>
-
-#include "res/visible.xpm"
-#include "res/select.xpm"
-#include "res/point.xpm"
-#include "res/line.xpm"
-#include "res/circle.xpm"
-#include "res/rectangle.xpm"
-#include "res/polygon.xpm"
-#include "res/text.xpm"
-#include "res/image.xpm"
-#include "res/empty.xpm"
-#include "res/cross.xpm"
-#include "res/open.xpm"
-#include "res/save.xpm"
-#include "res/saveall.xpm"
 
 // -----------------------------------------------------------------------------
 // Name: MT_GLDrawer constructor

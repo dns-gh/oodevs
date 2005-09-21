@@ -62,6 +62,18 @@
 #include "res/messageoptions.xpm"
 #include "res/conflict.xpm"
 #include "res/threed.xpm"
+#include "res/visible.xpm"
+#include "res/select.xpm"
+#include "res/point.xpm"
+#include "res/line.xpm"
+#include "res/circle.xpm"
+#include "res/rectangle.xpm"
+#include "res/polygon.xpm"
+#include "res/text.xpm"
+#include "res/image.xpm"
+#include "res/empty.xpm"
+#include "res/cross.xpm"
+#include "res/saveall.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {
