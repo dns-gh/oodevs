@@ -39,6 +39,7 @@
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"
 #include "MT_RichListViewItem.h"
+#include "MOS_ReportFilterOptions.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView constructor
@@ -46,20 +47,21 @@
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-MOS_ReportListView::MOS_ReportListView( QWidget* pParent )
+MOS_ReportListView::MOS_ReportListView( QWidget* pParent, const MOS_ReportFilterOptions& filter )
     : QListView  ( pParent )
+    , filter_    ( filter )
     , pAgent_    ( 0 )
     , pPopupMenu_( new QPopupMenu( this ) )
 {
-    this->addColumn( tr( "Reçu" ) );
-    this->addColumn( tr( "Compte-rendu" ) );
+    addColumn( tr( "Reçu" ) );
+    addColumn( tr( "Compte-rendu" ) );
 
     // Set a descending sorting order, then disable user sorting.
-    this->setSorting( 0, false );
-    this->setSorting( -1, false );
+    setSorting( 0, false );
+    setSorting( -1, false );
 
-    this->setResizeMode( QListView::LastColumn );
-    this->setAllColumnsShowFocus ( true );
+    setResizeMode( QListView::LastColumn );
+    setAllColumnsShowFocus ( true );
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnClick( QListViewItem*, const QPoint&, int ) ) );
@@ -95,15 +97,15 @@ void MOS_ReportListView::SetAgent( MOS_Agent* pAgent )
         return;
 
     // Before we change the displayed reports, mark the old ones as read.
-    QListViewItem* pItem = this->firstChild();
+    QListViewItem* pItem = firstChild();
     while( pItem != 0 )
     {
-        MOS_Report_ABC& report = this->GetItemValue( *pItem );
+        MOS_Report_ABC& report = GetItemValue( *pItem );
         report.SetNew( false );
         pItem = pItem->nextSibling();
     }
 
-    this->clear();
+    clear();
     pPopupMenu_->hide();
 
     pAgent_ = pAgent;
@@ -114,7 +116,21 @@ void MOS_ReportListView::SetAgent( MOS_Agent* pAgent )
 
     MOS_Agent::T_ReportVector& reports = pAgent_->GetReports();
     for( MOS_Agent::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
-        this->OnReportCreated( *pAgent_, **it );
+        OnReportCreated( *pAgent_, **it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ReportListView::OnOptionsChanged
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_ReportListView::OnOptionsChanged()
+{
+    if( ! pAgent_ )
+        return;
+    clear();
+    MOS_Agent::T_ReportVector& reports = pAgent_->GetReports();
+    for( MOS_Agent::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
+        OnReportCreated( *pAgent_, **it );
 }
 
 
@@ -128,6 +144,8 @@ void MOS_ReportListView::SetAgent( MOS_Agent* pAgent )
 void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& report )
 {
     if( pAgent_ != &agent )
+        return;
+    if( ! filter_.ShouldDisplay( report ) )
         return;
 
     std::string strTime = MT_FormatString( "%02d:%02d:%02d", ( report.GetTime() / 3600 ) % 24, ( report.GetTime() / 60 ) % 60 , report.GetTime() % 60  ).c_str();
@@ -147,6 +165,7 @@ void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& repo
             pItem->SetFontColor( QColor( 255, 128, 64 ) );
         else if( rc.GetType() == MOS_Report_ABC::eEvent ) // green
             pItem->SetFontColor( QColor( 32, 200, 64 ) );
+
     }
     else
     {
@@ -157,7 +176,7 @@ void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& repo
         pItem->SetFont( font );
         pItem->SetFontColor( QColor( 150, 150, 150 ) );
     }
-
+    
     // Trick for making sure the MOS_EventToolButton gets the ReadingReports event
     // after receiving the ReportCreated event.
     QTimer::singleShot( 0, this, SLOT( NotifyReadingReports() ) );
@@ -170,7 +189,7 @@ void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& repo
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::NotifyReadingReports()
 {
-    if( this->isVisible() && pAgent_ != 0 )
+    if( isVisible() && pAgent_ != 0 )
         emit ReadingReports( *pAgent_ );
 }
 
@@ -189,7 +208,7 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
         return;
 
     int nId;
-    if( this->InterpretLink( str, "Agent:", nId ) )
+    if( InterpretLink( str, "Agent:", nId ) )
     {
         MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
         assert( pAgent != 0 );
@@ -199,7 +218,7 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
         return;
     }
 
-    if( this->InterpretLink( str, "AgentKnowledge:", nId ) )
+    if( InterpretLink( str, "AgentKnowledge:", nId ) )
     {
         MOS_AgentKnowledge* pKnowledge = pAgent_->GetGtia().FindAgentKnowledge( nId );
         if( pKnowledge != 0 )
@@ -211,7 +230,7 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
         return;
     }
 
-    if( this->InterpretLink( str, "ObjectKnowledge:", nId ) )
+    if( InterpretLink( str, "ObjectKnowledge:", nId ) )
     {
         MOS_ObjectKnowledge* pKnowledge = pAgent_->GetTeam().FindObjectKnowledge( nId );
         if( pKnowledge != 0 )
@@ -235,11 +254,11 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnRequestCenter()
 {
-    QListViewItem* pItem = this->selectedItem();
+    QListViewItem* pItem = selectedItem();
     if( pItem == 0 )
         return;
 
-    MT_Vector2D vPos = this->GetItemValue( *pItem ).GetPos();
+    MT_Vector2D vPos = GetItemValue( *pItem ).GetPos();
 
     emit CenterOnPoint( vPos );
 }
@@ -267,7 +286,7 @@ void MOS_ReportListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos
     {
         pPopupMenu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
 
-        MOS_Report_ABC& report = this->GetItemValue( *pItem );
+        MOS_Report_ABC& report = GetItemValue( *pItem );
         if( report.IsRCType() )
         {
             MOS_RC& rc = (MOS_RC&)report;
@@ -294,7 +313,7 @@ void MOS_ReportListView::OnClearAll()
     assert( pAgent_ != 0 );
     pAgent_->DeleteAllRCs();
     pAgent_->DeleteAllTraces();
-    this->clear();
+    clear();
 }
 
 
@@ -306,9 +325,9 @@ void MOS_ReportListView::OnClearTrace()
 {
     assert( pAgent_ != 0 );
 
-    this->clear();
+    clear();
     pAgent_->DeleteAllTraces();
-    this->SetAgent( pAgent_ );
+    SetAgent( pAgent_ );
 }
 
 
@@ -326,12 +345,12 @@ void MOS_ReportListView::OnClearUpTo()
     QListViewItem* pItem = pPopupItem_;
     while( pItem != 0 )
     {
-        pAgent_->DeleteReport( this->GetItemValue( *pItem ) );
+        pAgent_->DeleteReport( GetItemValue( *pItem ) );
         pItem = pItem->nextSibling();
     }
 
-    this->clear();
-    this->SetAgent( pAgent_ );
+    clear();
+    SetAgent( pAgent_ );
 }
 
 
@@ -349,7 +368,7 @@ void MOS_ReportListView::hideEvent( QHideEvent* pEvent )
     if( pEvent->spontaneous() )
         return;
 
-    QListViewItem* pItem = this->firstChild();
+    QListViewItem* pItem = firstChild();
     while( pItem != 0 )
     {
         if( pItem->rtti() == eRichItem )
@@ -359,7 +378,7 @@ void MOS_ReportListView::hideEvent( QHideEvent* pEvent )
             QFont font = this->font();
             ((T_ReportItem*)pItem)->SetFont( font );
         }
-        this->GetItemValue( *pItem ).SetNew( false );
+        GetItemValue( *pItem ).SetNew( false );
 
         pItem = pItem->nextSibling();
     }

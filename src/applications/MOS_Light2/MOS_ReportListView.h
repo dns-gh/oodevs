@@ -31,7 +31,7 @@ class MOS_RC;
 class MOS_Trace;
 class MOS_ActionContext;
 class MOS_SelectedElement;
-
+class MOS_ReportFilterOptions;
 
 // =============================================================================
 /** @class  MOS_ReportListView
@@ -48,7 +48,7 @@ class MOS_ReportListView : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ReportListView( QWidget* pParent );
+     MOS_ReportListView( QWidget* pParent, const MOS_ReportFilterOptions& filter );
     ~MOS_ReportListView();
     //@}
 
@@ -58,6 +58,8 @@ public:
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& report );
 
     void OnClick( QListViewItem*, const QPoint&, int );
@@ -68,28 +70,43 @@ private slots:
     void OnClearUpTo();
 
     void NotifyReadingReports();
+    void OnOptionsChanged();
+    //@}
 
 private:
+    //! @name Helpers
+    //@{
     void hideEvent( QHideEvent* pEvent );
     void showEvent( QShowEvent* pEvent );
 
     MOS_Report_ABC& GetItemValue( QListViewItem& item );
     bool InterpretLink( const QString& strLink, const QString& strKeyword, int& nResultId );
+    //@}
 
 signals:
+    //! @name Signals
+    //@{
     void ElementSelected( MOS_SelectedElement& selectedElement );
     void CenterOnPoint( const MT_Vector2D& vPoint );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
     void ReadingReports( MOS_Agent& agent );
+    //@}
 
 private:
+    //! @name Types
+    //@{
     enum { eRichItem = 1000, eItem = 1001 };
     typedef MT_ValuedListViewItem< MOS_Report_ABC*, eItem > T_ReportItem;
     typedef MT_ValuedRichListViewItem< MOS_Report_ABC*, eRichItem > T_RichReportItem;
-
+    //@}
+    
+    //! @name Member data
+    //@{
+    const MOS_ReportFilterOptions& filter_;
     MOS_Agent* pAgent_;
     QPopupMenu* pPopupMenu_;
     QListViewItem* pPopupItem_;
+    //@}
 };
 
 //$$$$$ Remarque générale: Attacher les popupmenus à leur listitem pour éviter les

@@ -20,6 +20,7 @@
 #include "MOS_ReportPanel.h"
 #include "MOS_ReportListView.h"
 #include "MOS_FireResultListView.h"
+#include "MOS_ReportFilterOptions.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportPanel constructor
@@ -27,11 +28,14 @@
 // -----------------------------------------------------------------------------
 MOS_ReportPanel::MOS_ReportPanel( QWidget* pParent )
     : MOS_InfoPanel_ABC    ( pParent )
+    , pFilterOptions_      ( 0 )
     , pReportListView_     ( 0 )
     , pFireResultListView_ ( 0 )
 {
-    pReportListView_     = new MOS_ReportListView( this );
+    pFilterOptions_      = new MOS_ReportFilterOptions( this );
+    pReportListView_     = new MOS_ReportListView( this, *pFilterOptions_ );
     pFireResultListView_ = new MOS_FireResultListView( this );
+    connect( pFilterOptions_, SIGNAL( OptionsChanged() ), pReportListView_, SLOT( OnOptionsChanged() ) );
 }
 
 // -----------------------------------------------------------------------------

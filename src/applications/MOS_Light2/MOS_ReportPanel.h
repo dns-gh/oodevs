@@ -23,6 +23,7 @@
 
 class MOS_ReportListView;
 class MOS_FireResultListView;
+class MOS_ReportFilterOptions;
 
 // =============================================================================
 /** @class  MOS_ReportPanel
@@ -53,8 +54,9 @@ private:
 private:
     //! @name Member data
     //@{
-    MOS_ReportListView*     pReportListView_;
-    MOS_FireResultListView* pFireResultListView_;
+    MOS_ReportFilterOptions* pFilterOptions_;
+    MOS_ReportListView*      pReportListView_;
+    MOS_FireResultListView*  pFireResultListView_;
     //@}
 };
 
