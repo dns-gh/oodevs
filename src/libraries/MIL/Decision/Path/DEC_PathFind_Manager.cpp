@@ -44,7 +44,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", nPathfindThreads ) );
 
     for( int i = 0; i < nPathfindThreads; ++i )
-        pathFindThreadVector_.push_back( & TER_World::GetWorld().CreatePathFinderThread( *this ) );
+        pathFindThreads_.push_back( & TER_World::GetWorld().CreatePathFinderThread( *this ) );
 }   
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,6 @@ void DEC_PathFind_Manager::StartCompute( DEC_Path_ABC& path )
     MT_LOG_MESSAGE_MSG( MT_FormatString( "DEC_PathFind_Manager: New job pending : path 0x%p", &path ).c_str() );
 #endif
     AddPendingJob( path );
-    FlushDestroyedRequests();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +124,8 @@ void DEC_PathFind_Manager::AddPendingJob( DEC_Path_ABC& path )
 TER_PathFindRequest_ABC* DEC_PathFind_Manager::GetMessage()
 {
     unsigned int nIndex = 0;
-    for( ; nIndex < pathFindThreadVector_.size(); ++nIndex )
-        if( pathFindThreadVector_[ nIndex ]->IsCurrent() )
+    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
+        if( pathFindThreads_[ nIndex ]->IsCurrent() )
             break;
 
     return GetMessage( nIndex );
@@ -198,8 +197,8 @@ TER_PathFindRequest_ABC* DEC_PathFind_Manager::GetMessage( unsigned int nThread 
 int DEC_PathFind_Manager::GetCurrentThread() const
 {
     unsigned int nIndex = 0;
-    for( ; nIndex < pathFindThreadVector_.size(); ++nIndex )
-        if( pathFindThreadVector_[ nIndex ]->IsCurrent() )
+    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
+        if( pathFindThreads_[ nIndex ]->IsCurrent() )
             return nIndex;
     return -1;
 }
@@ -221,9 +220,25 @@ void DEC_PathFind_Manager::DeletePath( DEC_Path_ABC& path )
 void DEC_PathFind_Manager::FlushDestroyedRequests()
 {
     boost::mutex::scoped_lock locker( destroyedMutex_ );
+
+#ifdef _DEBUG
+    if( !destroyedRequests_.empty() )
+        MT_LOG_DEBUG_MSG( "Flushing " << destroyedRequests_.size() << " path requests" );
+#endif
+
     while( ! destroyedRequests_.empty() )
     {
         delete destroyedRequests_.back();
         destroyedRequests_.pop_back();
-    };
+    }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::Update
+// Created: NLD 2005-09-20
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::Update()
+{
+    FlushDestroyedRequests();
+}
+

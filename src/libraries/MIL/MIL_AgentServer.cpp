@@ -374,7 +374,8 @@ MIL_AgentServer::E_SimState MIL_AgentServer::Update()
 void MIL_AgentServer::WaitForNextStep()
 {
     assert( pAgentServer_ );
-    pAgentServer_->Update();
+    pAgentServer_    ->Update();
+    pPathFindManager_->Update();
     if( pFederate_ )
         pFederate_->Tick();
     DIA_Workspace::Instance().UpdateWorkspace();

@@ -34,8 +34,9 @@ public:
 
     //! @name Main
     //@{
+    void Update      ();
     void StartCompute( DEC_Path_ABC& path );
-    void DeletePath( DEC_Path_ABC& path );
+    void DeletePath  ( DEC_Path_ABC& path );
     //@}
 
     //! @name Accessors
@@ -59,23 +60,24 @@ private:
 private:
     //! @name Tools
     //@{
-    void AddPendingJob( DEC_Path_ABC& path );
-    virtual TER_PathFindRequest_ABC* GetMessage();
-    TER_PathFindRequest_ABC* GetMessage( unsigned int nThread );
-    void FlushDestroyedRequests();
+    void                             AddPendingJob         ( DEC_Path_ABC& path );
+    virtual TER_PathFindRequest_ABC* GetMessage            ();
+            TER_PathFindRequest_ABC* GetMessage            ( unsigned int nThread );
+            void                     FlushDestroyedRequests();
     //@}
 
 private:
     mutable boost::mutex mutex_;
-    boost::condition condition_;
+    boost::condition     condition_;
 
     T_Requests shortRequests_;
     T_Requests longRequests_;
-    MT_Float rDistanceThreshold_;
+    MT_Float   rDistanceThreshold_;
 
-    T_PathFindThreadPtrVector  pathFindThreadVector_;
+    T_PathFindThreadPtrVector  pathFindThreads_;
+
     boost::mutex destroyedMutex_;
-    T_Requests destroyedRequests_;
+    T_Requests   destroyedRequests_;
 };
 
 #include "DEC_PathFind_Manager.inl"

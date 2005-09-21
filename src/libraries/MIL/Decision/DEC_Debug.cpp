@@ -18,10 +18,6 @@
 #include "DIA/DIA_Instance.h"
 #include "DIA/DIA_BasicBehavior_ABC.h"
 
-#ifdef _DEBUG
-#   define DECDEBUG
-#endif
-
 DEC_Debug::T_RecoPerInstanceMap   DEC_Debug::recoPerInstanceMap_;
 DEC_Debug::T_ActionPerInstanceMap DEC_Debug::actionPerInstanceMap_;
 
@@ -50,7 +46,7 @@ DEC_Debug::~DEC_Debug()
 // -----------------------------------------------------------------------------
 void DEC_Debug::HandlesEnd( const DIA_Instance* pInstance )
 {
-#ifdef DECDEBUG
+#ifdef _DEBUG
     DIA_Instance* pInstanceTmp = const_cast< DIA_Instance* >( pInstance );
     int nNbElements = recoPerInstanceMap_.count( (void*)pInstance );
     if( nNbElements != 0 )
@@ -74,7 +70,7 @@ void DEC_Debug::HandlesEnd( const DIA_Instance* pInstance )
 // -----------------------------------------------------------------------------
 void DEC_Debug::NotifyRecoAdded( DIA_Call_ABC& call, const MT_Vector2D& vCenter )
 {
-#ifdef DECDEBUG
+#ifdef _DEBUG
     void* pInstance = call.GetCallingLocation().GetCallingAdress();
     T_RangeRecoPerInstanceMap foundRange = recoPerInstanceMap_.equal_range( pInstance );
     for( IT_RecoPerInstanceMap itReco = foundRange.first; itReco != foundRange.second; ++itReco )
@@ -95,7 +91,7 @@ void DEC_Debug::NotifyRecoAdded( DIA_Call_ABC& call, const MT_Vector2D& vCenter 
 // -----------------------------------------------------------------------------
 void DEC_Debug::NotifyRecoRemoved( DIA_Call_ABC& call, const MT_Vector2D& vCenter )
 {
-#ifdef DECDEBUG
+#ifdef _DEBUG
     T_RangeRecoPerInstanceMap foundRange = recoPerInstanceMap_.equal_range( call.GetCallingLocation().GetCallingAdress() );
     for( IT_RecoPerInstanceMap itReco = foundRange.first; itReco != foundRange.second; ++itReco )
     {
@@ -115,7 +111,7 @@ void DEC_Debug::NotifyRecoRemoved( DIA_Call_ABC& call, const MT_Vector2D& vCente
 // -----------------------------------------------------------------------------
 void DEC_Debug::NotifyActionStarted( DIA_Call_ABC& call, const MIL_AgentPion& pion, const PHY_Action_ABC& action )
 {
-#ifdef DECDEBUG
+#ifdef _DEBUG
     DIA_Instance* pInstance = static_cast< DIA_Instance* >( call.GetCallingLocation().GetCallingAdress() );
     const std::string& strInstance  = pInstance->GetParent().GetName();
 
@@ -139,7 +135,7 @@ void DEC_Debug::NotifyActionStarted( DIA_Call_ABC& call, const MIL_AgentPion& pi
 // -----------------------------------------------------------------------------
 void DEC_Debug::NotifyActionStopped( DIA_Call_ABC& call, const MIL_AgentPion& pion, const PHY_Action_ABC& action )
 {
-#ifdef DECDEBUG         
+#ifdef _DEBUG         
     DIA_Instance* pInstance = static_cast< DIA_Instance* >( call.GetCallingLocation().GetCallingAdress() );
     const std::string& strInstance = pInstance ->GetParent().GetName();
 
@@ -165,12 +161,12 @@ void DEC_Debug::NotifyActionStopped( DIA_Call_ABC& call, const MIL_AgentPion& pi
 void DEC_Debug::DIAAssert( const std::string& strTestExpression, const std::string& strFileName, int nLine, const std::string& strMore )
 {
     //!< Assert function used by the DirectIA scripts when an expression is asserted
-#ifdef DECDEBUG
+#ifdef _DEBUG
     std::stringstream strAssertMsg;
     strAssertMsg << "Assert in DirectIA : '" << strTestExpression << "' in file " << strFileName << " at line " << nLine << std::endl << "More: " << strMore << std::endl;
     MT_LOG_MESSAGE_MSG( strAssertMsg.str().c_str() )
 
     assert( false );
-#endif // DECDEBUG
+#endif // _DEBUG
 }
 

@@ -16,8 +16,8 @@ default Default()
     if( DEC_NecessiteEvacuationBlesses( myself ) )
         DEC_Debug( "-== Necessite Evacuation Blesses ==-" );
         
-    DEC_RC( eRC_PreparationMission );
-    DEC_Message( eRC_PreparationMission, 654 );
+//    DEC_RC( eRC_PreparationMission );
+//    DEC_Message( eRC_PreparationMission, 654 );
 
     /*
     selection carreux;

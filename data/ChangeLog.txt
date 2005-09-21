@@ -21,12 +21,9 @@ TODO de merde
 
 Next Version - Codename ''
     - NLD - Bug fix : ordre de conduite 'RecupererTransporteurs' disponible tout le temps, même sans mission
-assert()
-
-- crash quand zone nbc sur bord terrain
-- vérifier msg erreur qd automate peut pas donner mission à pion
-
-
+    - NLD - Changement message d'erreur quand un automate ne peut pas donner une mission à un pion (affichage du nom du pion + nom du modèle)
+    - NLD - Destruction des DEC_Path en 'dehors' du pas de temps
+        
 Version 1.0.1 [20/09/2005] - Codename 'tourbe'
     - AGE - Les désenrichissement de pathfind sont faits dans l'ordre inverse de création
     - AGE - Les DEC_Path ne sont détruits que dans le thread principal. Bug fix probable du freeze d'Intel2
