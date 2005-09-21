@@ -48,7 +48,7 @@ const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& autom
 template< typename T >
 void DEC_GeometryFunctions::SplitLocalisationInParts( DIA_Call_ABC& diaCall, const T& caller )
 {
-    assert( DEC_Tools::CheckTypeLocalisation      ( diaCall.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypeLocalisation( diaCall.GetParameter( 0 ) ) );
 
     DIA_Parameters& diaParams = diaCall.GetParameters();
 
@@ -124,6 +124,8 @@ void DEC_GeometryFunctions::SplitLocalisationInSections( DIA_Call_ABC& call, con
 template< typename T >
 void DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau( DIA_Call_ABC& diaCall, const T& caller )
 {
+    assert( DEC_Tools::CheckTypeLocalisation( diaCall.GetParameter( 0 ) ) );
+
     DIA_Parameters& diaParams = diaCall.GetParameters();
 
     TER_Localisation*   pLocalisation = diaParams[0].ToUserPtr( pLocalisation );

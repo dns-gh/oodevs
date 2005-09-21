@@ -32,6 +32,8 @@ Next Version - Codename ''
                  B DEC_TypeObjet_PeutEtreContourne( I /*E_TypeObject*/ );
                  B DEC_TypeObjet_PeutEtreValorise ( I /*E_TypeObject*/ );
                  B DEC_TypeObjet_PeutEtrePrepare  ( I /*E_TypeObject*/ );
+    - NLD - Bug fix : minibug dans envoi de l'état 'refugié pris en compte' dans les connaissances (valeur 'false' jamais envoyée ...)
+    - NLD - Ajout d'un check sur le type de paramètre (localisation) dans fonction ComputeLocalisationBarycenterInFuseau
         
 Version 1.0.1 [20/09/2005] - Codename 'tourbe'
     - AGE - Les désenrichissement de pathfind sont faits dans l'ordre inverse de création

@@ -306,7 +306,7 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( ASN1T_MsgUnitKnowledgeU
         asnMsg.prisonnier          = bPrisoner_;
     }
     
-    if( bRefugeeManaged_ )
+    if( bRefugeeManagedUpdated_ )
     {
         asnMsg.m.refugie_pris_en_comptePresent = 1;
         asnMsg.refugie_pris_en_compte = bRefugeeManaged_;
