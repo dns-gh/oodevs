@@ -62,7 +62,7 @@ void MOS_ObjectManager::RegisterObject( MOS_Object_ABC& object )
 //-----------------------------------------------------------------------------
 void MOS_ObjectManager::UnregisterObject( MOS_Object_ABC& object )
 {
-    if( ObjectMap_.erase( object.GetID() != 1 ) )
+    if( ObjectMap_.erase( object.GetID() ) != 1 )
         RUNTIME_ERROR;
 }
 

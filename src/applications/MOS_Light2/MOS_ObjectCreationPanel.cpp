@@ -42,6 +42,7 @@
 #include "MOS_Object_ROTA.h"
 #include "MOS_Object_ItineraireLogistique.h"
 #include "MOS_Agent.h"
+#include "MOS_ActionContext.h"
 #include <qtable.h>
 
 // -----------------------------------------------------------------------------
@@ -231,6 +232,12 @@ void MOS_ObjectCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const 
 	ASN1T_EnumObjectType nType = (ASN1T_EnumObjectType)pObjectTypeCombo_->GetValue();
     if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
         pAgent_->FillRemotePopupMenu( popupMenu, context );
+    if( context.selectedElement_.pObject_ )
+    {
+        if( popupMenu.count() > 0 )
+            popupMenu.insertSeparator();
+        popupMenu.insertItem( tr( "Destruction Magique" ), this, SLOT( OnDeleteObject() ) );
+    }
 }
 
 
@@ -472,38 +479,49 @@ bool MOS_ObjectCreationPanel::eventFilter( QObject*, QEvent* pEvent )
 // -----------------------------------------------------------------------------
 bool MOS_ObjectCreationPanel::OnKeyPress( const QKeyEvent& keyEvent )
 {
+    bool bDummy;
     switch( keyEvent.key() )
     {
         case Qt::Key_BackSpace:
         case Qt::Key_Delete:
-        {
-            // If we're trying to delete a dynamic object...
-            if( selectedElement_.pObject_ != 0 )
-            {
-                // while editing an odb, we can delete it immediatly.
-                if( MOS_App::GetApp().IsODBEdition() )
-                {
-                    MOS_Object_ABC* pObject = selectedElement_.pObject_;
-                    MOS_App::GetApp().GetObjectManager().UnregisterObject( *pObject );
-                    MOS_App::GetApp().NotifyObjectDeleted( *pObject );
-                    delete pObject;
-                }
-                else  // otherwise, request its deletion.
-                {
-                    MOS_ASN_MsgObjectMagicAction asnMsg;
-                    asnMsg.GetAsnMsg().oid_objet = selectedElement_.pObject_->GetID();
-                    asnMsg.GetAsnMsg().action.t  = T_MsgObjectMagicAction_action_destroy_object;
-                    asnMsg.Send( 546 );
+            bDummy = selectedElement_.pObject_;
+            OnDeleteObject();
+            return bDummy;
+    };
+    return false;
+}
 
-                    std::stringstream strMsg;
-                    strMsg << "Demande destruction objet " << selectedElement_.pObject_->GetID();
-                    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
-                }
-                return true;
-            }
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectCreationPanel::OnDeleteObject
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_ObjectCreationPanel::OnDeleteObject()
+{
+    // If we're trying to delete a dynamic object...
+    if( selectedElement_.pObject_ != 0 )
+    {
+        // while editing an odb, we can delete it immediatly.
+        if( MOS_App::GetApp().IsODBEdition() )
+        {
+            MOS_Object_ABC* pObject = selectedElement_.pObject_;
+            MOS_App::GetApp().GetObjectManager().UnregisterObject( *pObject );
+            MOS_App::GetApp().NotifyObjectDeleted( *pObject );
+            delete pObject;
+            selectedElement_.pObject_ = 0;
+        }
+        else  // otherwise, request its deletion.
+        {
+            MOS_ASN_MsgObjectMagicAction asnMsg;
+            asnMsg.GetAsnMsg().oid_objet = selectedElement_.pObject_->GetID();
+            asnMsg.GetAsnMsg().action.t  = T_MsgObjectMagicAction_action_destroy_object;
+            asnMsg.Send( 546 );
+
+            std::stringstream strMsg;
+            strMsg << "Demande destruction objet " << selectedElement_.pObject_->GetID();
+            MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+            selectedElement_.pObject_ = 0;
         }
     }
-    return false;
 }
 
 

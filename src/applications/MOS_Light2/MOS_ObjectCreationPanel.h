@@ -70,6 +70,7 @@ private slots:
     void OnTeamCreated           ( MOS_Team& team );
     void OnConnexionStatusChanged( bool bConnected );
     void OnROTANBCAgentChanged   ( int nRow, int nCol );
+    void OnDeleteObject();
     //@}
 
 private:
