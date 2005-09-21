@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="scipio" default="all">
 
-    <import file="tools.xml"/>
+    <import file="\\install\masa\common\dev\common\tools.xml"/>
 
     <property name="platform" value="vc71"/>
     <property name="compiler" value="msvc"/>
