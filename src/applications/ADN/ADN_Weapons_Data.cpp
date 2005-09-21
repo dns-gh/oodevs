@@ -278,10 +278,15 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadAttribute( "munition", strAmmunition );
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
-    assert( pLauncher != 0 );
+    if( !pLauncher )
+        input.ThrowError( MT_FormatString( "Armement lanceur '%s' / dotation '%s' : type de lanceur invalide", strLauncher.c_str(), strAmmunition.c_str() ) );
+
     ptrLauncher_ = pLauncher;
 
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
+    if( !pAmmo )
+        input.ThrowError( MT_FormatString( "Armement lanceur '%s' / dotation '%s' : type de dotation invalide", strLauncher.c_str(), strAmmunition.c_str() ) );
+
     assert( pAmmo != 0 );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 
