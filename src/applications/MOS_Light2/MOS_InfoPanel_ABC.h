@@ -29,20 +29,21 @@ class MOS_Agent;
 */
 // Created: AGE 2005-04-05
 // =============================================================================
-class MOS_InfoPanel_ABC : public QVBox
+class MOS_InfoPanel_ABC : public QScrollView
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_InfoPanel_ABC( QWidget* pParent );
+    explicit MOS_InfoPanel_ABC( QWidget* pParent );
     virtual ~MOS_InfoPanel_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual void SetSelection( MOS_SelectedElement& item );
+    virtual void insertChild( QObject* pObj );
     //@}
 
 protected slots:
@@ -93,6 +94,7 @@ private:
 protected:
     //! @name Member data
     //@{
+    QVBox* pBox_;
     MOS_SelectedElement selectedItem_;
     bool bVisible_;
     //@}

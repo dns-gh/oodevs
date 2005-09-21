@@ -40,9 +40,6 @@
 MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
     : MOS_InfoPanel_ABC     ( pParent )
 {
-    this->setMargin( 5 );
-    this->setSpacing( 5 );
-
     QFont boldFont = this->font();
     boldFont.setBold( true );
 

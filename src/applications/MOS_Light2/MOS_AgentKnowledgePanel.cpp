@@ -46,9 +46,6 @@ MOS_AgentKnowledgePanel::MOS_AgentKnowledgePanel( QWidget* pParent )
     , pSelectedKnowledge_   ( 0 )
     , pGtia_                ( 0 )
 {
-    this->setMargin( 5 );
-    this->setSpacing( 5 );
-
     pKnowledgeListView_ = new QListView( this );
     pKnowledgeListView_->addColumn( tr( "Agents connus" ) );
     pKnowledgeListView_->setResizeMode( QListView::LastColumn );

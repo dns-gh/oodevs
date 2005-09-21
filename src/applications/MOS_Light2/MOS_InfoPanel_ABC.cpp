@@ -20,15 +20,23 @@
 #include "MOS_InfoPanel_ABC.h"
 #include "moc_MOS_InfoPanel_ABC.cpp"
 #include "MOS_App.h"
+#include <qobjectlist.h>
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel_ABC constructor
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
 MOS_InfoPanel_ABC::MOS_InfoPanel_ABC( QWidget* pParent )
-    : QVBox( pParent )
+    : QScrollView( pParent )
+    , pBox_( new QVBox( viewport() ) )
     , bVisible_( false )
 {
+    setHScrollBarMode( QScrollView::AlwaysOff );
+    pBox_->setMargin( 5 );
+    pBox_->setSpacing( 5 );
+    addChild( pBox_ );
+    setResizePolicy( AutoOneFit );
+    setFrameStyle( QFrame::Box | QFrame::Sunken );
     connect( &MOS_App::GetApp(), SIGNAL( AgentUpdated( MOS_Agent& ) ),           this, SLOT( OnAgentUpdated( MOS_Agent& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectUpdated( MOS_Object_ABC& ) ), this, SLOT( OnObjectUpdated( MOS_Object_ABC& ) ) );
 }
@@ -53,6 +61,15 @@ void MOS_InfoPanel_ABC::SetSelection( MOS_SelectedElement& item )
 
     selectedItem_ = item;
     OnUpdate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_InfoPanel_ABC::insertChild
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_InfoPanel_ABC::insertChild( QObject* pObj )
+{
+    pBox_->insertChild( pObj );
 }
 
 // -----------------------------------------------------------------------------

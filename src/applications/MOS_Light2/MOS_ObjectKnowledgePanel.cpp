@@ -49,9 +49,6 @@ MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
     , pPopupMenu_           ( new QPopupMenu( this ) )
     , pTeam_( 0 )
 {
-    this->setMargin( 5 );
-    this->setSpacing( 5 );
-
     pKnowledgeListView_ = new QListView( this );
     pKnowledgeListView_->addColumn( tr( "Objets connus" ) );
     pKnowledgeListView_->setResizeMode( QListView::LastColumn );

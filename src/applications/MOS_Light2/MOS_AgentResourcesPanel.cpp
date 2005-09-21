@@ -38,9 +38,6 @@
 MOS_AgentResourcesPanel::MOS_AgentResourcesPanel( QWidget* pParent )
     : MOS_InfoPanel_ABC( pParent )
 {
-    this->setMargin( 5 );
-    this->setSpacing( 5 );
-
     pEquipment_ = new QListView( this );
     pEquipment_->setSorting( -1 );
     pEquipment_->addColumn( tr( "Equipement" ) );
