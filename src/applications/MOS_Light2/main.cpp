@@ -24,10 +24,10 @@ int main( int argc, char** argv )
         a.processEvents();
         a.exec();
     }
-    catch ( MT_Exception& e )
+    catch ( std::exception& e )
     {
         QApplication a( argc, argv );
-        QMessageBox::critical( 0, "MOSLight 2", e.GetWholeMessage() );
+        QMessageBox::critical( 0, "MOSLight 2", e.what() );
     }
 
     return 0;

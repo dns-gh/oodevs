@@ -93,12 +93,12 @@ void MOS_ConnectDialog::Validate()
     {
         MOS_App::GetApp().GetMOSServer().Connect( std::string( pHostNameComboBox_->currentText() ), pPortSpinBox_->value() );
     }
-    catch ( MT_Exception& e )
+    catch ( std::exception& e )
     {
         std::stringstream strMsgTitle;
         std::stringstream strMsg;
         strMsgTitle << "Non connecté à " << pHostNameComboBox_->currentText().ascii() << ":" << pPortSpinBox_->value();
-        strMsg << "Raison :" << std::endl << e.GetWholeMessage();
+        strMsg << "Raison :" << std::endl << e.what();
         MT_LOG_INFO( strMsgTitle.str().c_str(), eDefault, strMsg.str().c_str() );
 //        MT_LOG_INFO_MSG(  );   
 

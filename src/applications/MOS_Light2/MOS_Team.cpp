@@ -166,6 +166,16 @@ void MOS_Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowled
     MOS_App::GetApp().NotifyObjectKnowledgeCreated( *this, *pObjectKnowledge );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Team::CreateGtia
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_Team::CreateGtia( uint32 nId )
+{
+    if( FindGtia( nId ) )
+        return;
+    RegisterGtia( *new MOS_Gtia( nId  ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Team::OnReceiveMsgObjectKnowledgeUpdate

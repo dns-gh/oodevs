@@ -38,8 +38,19 @@ MOS_Gtia::MOS_Gtia( bool bGenerateId )
     : pTeam_    ( 0 )
     , nID_      ( bGenerateId ? idManager_.GetFreeIdentifier() : 0 )
 {
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia constructor
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+MOS_Gtia::MOS_Gtia( uint32 nId )
+    : pTeam_    ( 0 )
+    , nID_      ( nId )
+{
+    idManager_.LockIdentifier( nID_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Gtia destructor
@@ -55,24 +66,6 @@ MOS_Gtia::~MOS_Gtia()
 
     idManager_.ReleaseIdentifier( nID_ );
 }
-
- 
-// -----------------------------------------------------------------------------
-// Name: MOS_Gtia::Initialize
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-void MOS_Gtia::Initialize( DIN::DIN_Input& input )
-{
-    input >> nID_;
-    idManager_.LockIdentifier( nID_ );
-
-    uint32 nTeamID;
-    input >> nTeamID;
-    pTeam_ = MOS_App::GetApp().GetAgentManager().FindTeam( nTeamID );
-    assert( pTeam_ != 0 );
-    pTeam_->RegisterGtia( *this );
-}
-
 
 // =============================================================================
 // NETWORK EVENTS

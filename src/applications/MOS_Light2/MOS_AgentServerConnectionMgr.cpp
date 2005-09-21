@@ -161,10 +161,6 @@ void MOS_AgentServerConnectionMgr::OnConnectionLost( DIN_Link& link, const DIN_E
     MOS_App::GetApp().GetAgentManager().DeleteAllTeams();
     MOS_App::GetApp().GetLineManager ().OnDeconnexion();
     MOS_App::GetApp().GetObjectManager().DeleteAllObjects();
-
-    const MOS_AgentManager::T_TeamMap& teams = MOS_App::GetApp().GetAgentManager().GetTeams();
-    for( MOS_AgentManager::CIT_TeamMap itTeam = teams.begin(); itTeam != teams.end(); ++itTeam )
-        itTeam->second->DestroyAllObjectKnowledges();
 }
 
 //=============================================================================

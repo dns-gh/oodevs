@@ -106,6 +106,7 @@ public:
     /** @name Teams */
     //-------------------------------------------------------------------------
     //@{
+    void               CreateTeam     ( uint32 nId, DIN::DIN_Input& input );
     void               RegisterTeam   ( MOS_Team& team );
     void               DeleteAllTeams ();
     MOS_Team*          FindTeam       ( uint nID ) const;
@@ -126,6 +127,8 @@ public:
     /** @name Agents */
     //-------------------------------------------------------------------------
     //@{
+    void         CreateAgent    ( const ASN1T_MsgAutomateCreation& asnMsg );
+    void         CreateAgent    ( const ASN1T_MsgPionCreation& asnMsg );
     void         AddAgent       ( MOS_Agent& agent );
     void         RemoveAgent    ( MOS_Agent& agent );
     void         DeleteAllAgents();

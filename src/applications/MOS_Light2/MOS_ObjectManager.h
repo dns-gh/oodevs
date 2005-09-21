@@ -13,6 +13,8 @@
 #define __MOS_ObjectManager_h_
 
 #include "MOS_Types.h"
+#include "MOS_ASN_Types.h"
+
 class MOS_Object_ABC;
 
 // =============================================================================
@@ -45,6 +47,7 @@ public:
     /** @name Main */
     //-------------------------------------------------------------------------
     //@{
+    void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
     void RegisterObject  ( MOS_Object_ABC& object );
     void UnregisterObject( MOS_Object_ABC& object );
     void DeleteAllObjects();

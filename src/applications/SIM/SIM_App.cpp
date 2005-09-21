@@ -145,7 +145,7 @@ int SIM_App::Execute()
     }
     catch( MT_ArchiveLogger_Exception& exception )
     {
-        MessageBox ( 0, exception.what().c_str(), "Scipio - Parse error", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        MessageBox ( 0, exception.what(), "Scipio - Parse error", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
     catch( std::bad_alloc& /*exception*/ )
     {

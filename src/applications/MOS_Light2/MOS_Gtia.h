@@ -54,13 +54,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_Gtia( bool bGenerateId = false );
-    ~MOS_Gtia();
-    //@}
-
-    //! @name Init
-    //@{
-    void Initialize( DIN::DIN_Input& input );
+             MOS_Gtia( bool bGenerateId = false );
+             MOS_Gtia( uint32 nId );
+    virtual ~MOS_Gtia();
     //@}
 
     //! @name Accessors & Modifiers

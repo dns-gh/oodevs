@@ -53,6 +53,7 @@ private slots:
     //! @name Slots
     //@{
     void OnTeamChanged( int nValue );
+    void OnTeamDeleted( MOS_Team& team );
     void OnTeamCreated( MOS_Team& team );
     void LaunchScipio();
     void LaunchScipioDbg();

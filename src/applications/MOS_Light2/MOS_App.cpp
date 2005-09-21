@@ -133,12 +133,6 @@ MOS_App::~MOS_App()
             break;
     }
     MT_ChangeDir( strInitialDir );
-
-    delete pObjectManager_;
-    delete pAgentManager_;
-    delete pLineManager_;
-    delete pWorld_;
-    delete pMOSServer_;
 }
 
 
@@ -182,11 +176,11 @@ void MOS_App::InitializeData( const std::string& strFilename )
 
         pAgentManager_->Initialize();
     }
-    catch( MT_Exception& e )
+    catch( std::exception& e )
     {
         std::stringstream strMsg;
         strMsg << tr("L'un des fichiers SIM contient des erreurs, MOSLight 2 ne peut se lancer.") << std::endl;
-        strMsg << tr("Descriptif de l'erreur:") << std::endl << e.GetWholeMessage();
+        strMsg << tr("Descriptif de l'erreur:") << std::endl << e.what();
 
         QMessageBox::warning( 0, "MOSLight 2", strMsg.str().c_str() );
         quit();
@@ -202,11 +196,11 @@ void MOS_App::InitializeData( const std::string& strFilename )
         {
             pLineManager_->Read( archive );
         }
-        catch( MT_Exception& e )
+        catch( std::exception& e )
         {
             std::stringstream strMsg;
             strMsg << tr("Le fichier de description des limites et limas TacticalLines.xml contient des erreurs, et n'a été que partiellement chargé.") << std::endl;
-            strMsg << tr("Descriptif de l'erreur:") << std::endl << e.GetWholeMessage();
+            strMsg << tr("Descriptif de l'erreur:") << std::endl << e.what();
 
             QMessageBox::warning( 0, "MOSLight 2", strMsg.str().c_str() );
         }
@@ -467,7 +461,7 @@ void MOS_App::ReadODB( std::string strFilename )
         pObjectManager_->ReadODB( archive );
         archive.EndSection();
     }
-    catch( MT_Exception& e )
+    catch( std::exception& e )
     {
         // Clean up what has been partially read.
         pAgentManager_->DeleteAllAgents();
@@ -476,7 +470,7 @@ void MOS_App::ReadODB( std::string strFilename )
 
         std::stringstream strMsg;
         strMsg << tr("Le fichier ODB ") << strFilename << tr(" contient des erreurs, et n'a pu être chargé.") << std::endl;
-        strMsg << tr("Descriptif de l'erreur:") << std::endl << e.GetWholeMessage();
+        strMsg << tr("Descriptif de l'erreur:") << std::endl << e.what();
         QMessageBox::critical( 0, "MOSLight 2", strMsg.str().c_str() );
     }
 
@@ -732,6 +726,15 @@ void MOS_App::NotifyGtiaCreated( MOS_Gtia& gtia )
 void MOS_App::NotifyTeamCreated( MOS_Team& team )
 {
     emit TeamCreated( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyTeamDeleted
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyTeamDeleted( MOS_Team& team )
+{
+    emit TeamDeleted( team );
 }
 
 

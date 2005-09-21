@@ -339,7 +339,7 @@ void MOS_AgentCreationPanel::Initialize()
         gtiaArchive.EndList(); // GroupesConnaissance
         gtiaArchive.Close();
     }
-    catch( MT_Exception& /*e*/ )
+    catch( ... )
     {
         throw;
     }

@@ -264,6 +264,20 @@ void MOS_AgentManager::InitializeTypesComposante( MOS_InputArchive& scipioArchiv
 //=============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::CreateTeam
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::CreateTeam( uint32 nId, DIN::DIN_Input& input )
+{
+    if( !FindTeam( nId ) )
+    {
+        MOS_Team* pNewTeam = new MOS_Team( nId, input );
+        RegisterTeam( *pNewTeam );
+        MOS_App::GetApp().NotifyTeamCreated( *pNewTeam );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::RegisterTeam
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
@@ -282,13 +296,44 @@ void MOS_AgentManager::RegisterTeam( MOS_Team& team )
 void MOS_AgentManager::DeleteAllTeams()
 {
     for( IT_TeamMap itTeam = teamMap_.begin(); itTeam != teamMap_.end(); ++itTeam )
+    {
+        MOS_App::GetApp().NotifyTeamDeleted( *itTeam->second );
         delete itTeam->second;
+    }
     teamMap_.clear();
 }
 
 //=============================================================================
 // AGENTS
 //=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::CreateAgent
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
+{
+    if( !FindAgent( asnMsg.oid_automate ) )
+    {
+        MOS_Agent* pAgent = new MOS_Agent( asnMsg );
+        AddAgent( *pAgent );
+        MOS_App::GetApp().NotifyAgentCreated( *pAgent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::CreateAgent
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
+{
+    if( !FindAgent( asnMsg.oid_pion ) )
+    {
+        MOS_Agent* pAgent = new MOS_Agent( asnMsg );
+        AddAgent( *pAgent );
+        MOS_App::GetApp().NotifyAgentCreated( *pAgent );
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentManager::AddAgent
@@ -322,7 +367,6 @@ void MOS_AgentManager::DeleteAllAgents()
 {
     for( IT_AgentMap it = agentMap_.begin(); it != agentMap_.end(); ++it )
         delete it->second;
-
     agentMap_.clear();
 }
 

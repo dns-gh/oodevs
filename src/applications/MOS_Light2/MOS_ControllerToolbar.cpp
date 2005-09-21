@@ -61,6 +61,7 @@ MOS_ControllerToolbar::MOS_ControllerToolbar( QMainWindow* pParent )
     connect( pTeamCombo_, SIGNAL( activated( int ) ), this,                             SLOT( OnTeamChanged( int ) ) );
     connect( this,       SIGNAL( TeamChanged() ),    &MOS_MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ) );
     connect( &MOS_App::GetApp(), SIGNAL( TeamCreated( MOS_Team& ) ), this,   SLOT( OnTeamCreated( MOS_Team& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( TeamDeleted( MOS_Team& ) ), this,   SLOT( OnTeamDeleted( MOS_Team& ) ) );
 }
 
 
@@ -95,6 +96,18 @@ void MOS_ControllerToolbar::OnTeamChanged( int nValue )
 void MOS_ControllerToolbar::OnTeamCreated( MOS_Team& team )
 {
     pTeamCombo_->insertItem( team.GetName().c_str(), team.GetIdx() + 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ControllerToolbar::OnTeamDeleted
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_ControllerToolbar::OnTeamDeleted( MOS_Team& team )
+{
+    int nIndex = 0;
+    while( nIndex < pTeamCombo_->count() && pTeamCombo_->text( nIndex ) != team.GetName().c_str() )
+        ++nIndex;
+    pTeamCombo_->removeItem( nIndex );
 }
 
 

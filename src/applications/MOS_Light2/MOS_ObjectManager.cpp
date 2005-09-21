@@ -11,7 +11,7 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_ObjectManager.h"
-
+#include "MOS_App.h"
 #include "MOS_Object_ABC.h"
 #include "MOS_Object_Factory.h"
 
@@ -32,6 +32,18 @@ MOS_ObjectManager::~MOS_ObjectManager()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectManager::CreateObject
+// Created: AGE 2005-09-21
+// -----------------------------------------------------------------------------
+void MOS_ObjectManager::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
+{
+    if( FindObject( asnMsg.oid ) )
+        return;
+    MOS_Object_ABC* pObject = MOS_Object_Factory::Create( asnMsg );
+    RegisterObject( *pObject );
+    MOS_App::GetApp().NotifyObjectCreated( *pObject );
+}
 
 //-----------------------------------------------------------------------------
 // Name: MOS_ObjectManager::RegisterObject

@@ -78,6 +78,7 @@ public:
     void ReadODB( MOS_InputArchive& archive, bool bReadGtias );
     void WriteODB( MT_OutputArchive_ABC& archive );
 
+    void CreateGtia     ( uint32 nId );
     void RegisterGtia   ( MOS_Gtia& gtia );
     void RemoveGtia     ( MOS_Gtia& gtia );
     void DeleteAllGtias ();

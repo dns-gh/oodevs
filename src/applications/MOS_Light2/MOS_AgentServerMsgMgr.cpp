@@ -176,18 +176,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input&
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    if( !MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.oid_automate ) )
-    {
-        MOS_Agent* pAgent = new MOS_Agent( asnMsg );
-        MOS_App::GetApp().GetAgentManager().AddAgent( *pAgent );
-        MOS_App::GetApp().NotifyAgentCreated( *pAgent );
-    }
-    else
-    {
-        std::stringstream strOutputMsg;
-        strOutputMsg << "Cet id d'automate est utilisé plusieurs fois: " << asnMsg.oid_automate;
-        MT_LOG_INFO( strOutputMsg.str().c_str(), eDefault, 0 );
-    }
+    MOS_App::GetApp().GetAgentManager().CreateAgent( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,76 +185,23 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomat
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& asnMsg )
 {
-    if( !MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.oid_pion ) )
-    {
-        MOS_Agent* pAgent = new MOS_Agent( asnMsg );
-        MOS_App::GetApp().GetAgentManager().AddAgent( *pAgent );
-        MOS_App::GetApp().NotifyAgentCreated( *pAgent );
-    }
-    else
-    {
-        std::stringstream strOutputMsg;
-        strOutputMsg << "Cet id de pion est utilisé plusieurs fois: " << asnMsg.oid_pion;
-        MT_LOG_INFO( strOutputMsg.str().c_str(), eDefault, 0 );
-    }
+    MOS_App::GetApp().GetAgentManager().CreateAgent( asnMsg );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgAutomate
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-/*
-void MOS_AgentServerMsgMgr::OnReceiveMsgAutomate( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
-{
-    uint32 nID;
-    input >> nID;
-
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nID );
-    if( !pAgent )
-    {
-        pAgent = new MOS_Agent();
-        pAgent->SetAgentID( nID );
-        MOS_App::GetApp().GetAgentManager().AddAgent( *pAgent );
-        pAgent->InitializeAutomate( input );  
-        MOS_App::GetApp().NotifyAgentCreated( *pAgent );
-    }
-    else
-        pAgent->InitializeAutomate( input );  
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPion
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgPion( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )
-{
-    uint32 nID;
-    input >> nID;
-
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nID );
-    if( !pAgent )
-    {
-        pAgent = new MOS_Agent();
-        pAgent->SetAgentID( nID );
-        MOS_App::GetApp().GetAgentManager().AddAgent( *pAgent );
-        pAgent->InitializePion( input );  
-        MOS_App::GetApp().NotifyAgentCreated( *pAgent );
-    }
-    else
-        pAgent->InitializePion( input );   
-}
-*/
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup
 // Created: NLD 2004-09-09
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
 {
-    MOS_Gtia* pGtia = new MOS_Gtia();
-    pGtia->Initialize( input );
+    uint32 nId;
+    input >> nId;
+    uint32 nTeamID;
+    input >> nTeamID;
+    MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeam( nTeamID );
+    assert( pTeam != 0 );
+    pTeam->CreateGtia( nId );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgArmy
@@ -275,14 +211,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& i
 {
     uint32 nID;
     input >> nID;    
-    if( !MOS_App::GetApp().GetAgentManager().FindTeam( nID ) )
-    {
-        MOS_Team* pNewTeam = new MOS_Team( nID, input ); //$$ DEGUEU
-        MOS_App::GetApp().GetAgentManager().RegisterTeam( *pNewTeam );
-        MOS_App::GetApp().NotifyTeamCreated( *pNewTeam );
-    }
+    MOS_App::GetApp().GetAgentManager().CreateTeam( nID, input );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues
@@ -1513,14 +1443,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_
 void MOS_AgentServerMsgMgr::OnReceiveMsgObjectCreation( const ASN1T_MsgObjectCreation& asnMsg )
 {
     MOS_ObjectManager& objectManager = MOS_App::GetApp().GetObjectManager();
-    if( objectManager.FindObject( asnMsg.oid ) != 0 )
-        return;
-
-    MOS_Object_ABC* pObject = MOS_Object_Factory::Create( asnMsg );
-    assert( pObject );
-    objectManager.RegisterObject( *pObject );
-    MOS_App::GetApp().NotifyObjectCreated( *pObject );
-
+    objectManager.CreateObject( asnMsg );
     MT_LOG_INFO( "ObjectCreation - ID: " << asnMsg.oid, eReceived, 0 );
 }
 

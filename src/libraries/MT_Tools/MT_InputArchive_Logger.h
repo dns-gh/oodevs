@@ -12,18 +12,15 @@
 #ifndef __MT_InputArchive_Logger_h_
 #define __MT_InputArchive_Logger_h_
 
+#include <stdexcept>
+
 // =============================================================================
 // Created: JVT 2004-08-23
 // =============================================================================
-class MT_ArchiveLogger_Exception
+class MT_ArchiveLogger_Exception : public std::runtime_error
 {
 public:
-    MT_ArchiveLogger_Exception( const std::string& str ) : strMessage_( str ) {}
-    
-    const std::string& what() const { return strMessage_; }
-    
-private:
-    std::string strMessage_;        
+    MT_ArchiveLogger_Exception( const std::string& str ) : std::runtime_error( str.c_str() ) {}
 };
 
 

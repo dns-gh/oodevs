@@ -98,6 +98,7 @@ public:
     void NotifyGtiaDeleted( MOS_Gtia& gtia );
 
     void NotifyTeamCreated( MOS_Team& team );
+    void NotifyTeamDeleted( MOS_Team& team );
 
     void NotifyReportCreated( MOS_Agent& agent, MOS_Report_ABC& report );
 
@@ -172,6 +173,7 @@ signals:
     void GtiaDeleted( MOS_Gtia& gtia );
 
     void TeamCreated( MOS_Team& team );
+    void TeamDeleted( MOS_Team& team );
 
     void ReportCreated( MOS_Agent& agent, MOS_Report_ABC& report );
 
