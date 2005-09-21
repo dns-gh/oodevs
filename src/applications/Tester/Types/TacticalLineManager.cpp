@@ -87,7 +87,7 @@ void TacticalLineManager::LoadTacticalLines( const std::string& strConfigFile )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir    ( strCurrentDir );
-        MT_LOG_ERROR_MSG( exception.what().c_str() << "Parse error" );
+        MT_LOG_ERROR_MSG( exception.what() << "Parse error" );
         throw;
     }
 }

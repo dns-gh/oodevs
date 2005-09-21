@@ -157,7 +157,7 @@ void Workspace::LoadScipioConfigFile( const std::string& strScipioConfigFile )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir    ( strCurrentDir );
-        MT_LOG_ERROR_MSG( exception.what().c_str() << "Parse error" );
+        MT_LOG_ERROR_MSG( exception.what() << "Parse error" );
         throw;
     }
 }
@@ -192,7 +192,7 @@ void Workspace::InitializeRandomSeed( const std::string& strConfigFile )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir    ( strCurrentDir );
-        MT_LOG_WARNING_MSG( exception.what().c_str() );
+        MT_LOG_WARNING_MSG( exception.what() );
         uint nSeed = time( 0 );
         srand( nSeed );
         MT_LOG_INFO_MSG( "Using time as random seed: " << nSeed );
@@ -252,6 +252,6 @@ void Workspace::SaveRecoveryPoint()
     }
     catch( MT_ArchiveLogger_Exception& exception )
     {
-        MT_LOG_INFO_MSG( exception.what().c_str() );
+        MT_LOG_INFO_MSG( exception.what() );
     }
 }

@@ -115,7 +115,7 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir    ( strCurrentDir );
-        MT_LOG_ERROR_MSG( exception.what().c_str() << "Parse error" );
+        MT_LOG_ERROR_MSG( exception.what() << "Parse error" );
         throw;
     }
 }
@@ -147,7 +147,7 @@ void Config::LoadRecoveryFile( const std::string& strConfigFile )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir      ( strCurrentDir );
-        MT_LOG_WARNING_MSG( exception.what().c_str() );
+        MT_LOG_WARNING_MSG( exception.what() );
         MT_LOG_INFO_MSG   ( "Cannot load recover file, starting tests from beginning" );
     }
 }

@@ -41,30 +41,23 @@ PositionManager::PositionManager( const std::string& strWorldConfigFile )
     : rWorldWidth_  ( 0. )
     , rWorldHeight_ ( 0. )
 {
-    try
-    {
-        std::string         strCurrentDir = MT_GetCurrentDir();
-        std::string         strDir;
-        std::string         strFile;
-        MT_ExtractFilePath  ( strWorldConfigFile, strDir  );
-        MT_ExtractFileName  ( strWorldConfigFile, strFile );
-        MT_ChangeDir        ( strDir );
+    std::string         strCurrentDir = MT_GetCurrentDir();
+    std::string         strDir;
+    std::string         strFile;
+    MT_ExtractFilePath  ( strWorldConfigFile, strDir  );
+    MT_ExtractFileName  ( strWorldConfigFile, strFile );
+    MT_ChangeDir        ( strDir );
 
-        XmlInputArchive     archive;
+    XmlInputArchive     archive;
 
-        std::string         strTmp;
-        archive.Open        ( strFile );
-        archive.ReadField   ( "World", strTmp );
-        archive.Close       ();
+    std::string         strTmp;
+    archive.Open        ( strFile );
+    archive.ReadField   ( "World", strTmp );
+    archive.Close       ();
 
-        InitializeCoordinateConverter( strTmp );
+    InitializeCoordinateConverter( strTmp );
 
-        MT_ChangeDir        ( strCurrentDir );
-    }
-    catch( MT_ArchiveLogger_Exception& exception )
-    {
-        throw exception;
-    }
+    MT_ChangeDir        ( strCurrentDir );
 
     Position::SetPositionManager( *this );
 }
@@ -88,42 +81,35 @@ PositionManager::~PositionManager()
 // -----------------------------------------------------------------------------
 void PositionManager::InitializeCoordinateConverter( const std::string& strWorldConfigFile )
 {
-    try
-    {
-        std::string       strCurrentDir = MT_GetCurrentDir();
-        std::string       strDir;
-        std::string       strFile;
-        MT_ExtractFilePath( strWorldConfigFile, strDir  );
-        MT_ExtractFileName( strWorldConfigFile, strFile );
-        MT_ChangeDir      ( strDir );
+    std::string       strCurrentDir = MT_GetCurrentDir();
+    std::string       strDir;
+    std::string       strFile;
+    MT_ExtractFilePath( strWorldConfigFile, strDir  );
+    MT_ExtractFileName( strWorldConfigFile, strFile );
+    MT_ChangeDir      ( strDir );
 
-        XmlInputArchive   archive;
+    XmlInputArchive   archive;
 
-        float             rMiddleLatitude;
-        float             rMiddleLongitude;
+    float             rMiddleLatitude;
+    float             rMiddleLongitude;
 
-        archive.Open      ( strWorldConfigFile            );
-        archive.ReadField ( "Latitude" , rMiddleLatitude  );
-        archive.ReadField ( "Longitude", rMiddleLongitude );
-        archive.ReadField ( "Width"    , rWorldWidth_     );
-        archive.ReadField ( "Height"   , rWorldHeight_    );
-        archive.Close     (                               );
+    archive.Open      ( strWorldConfigFile            );
+    archive.ReadField ( "Latitude" , rMiddleLatitude  );
+    archive.ReadField ( "Longitude", rMiddleLongitude );
+    archive.ReadField ( "Width"    , rWorldWidth_     );
+    archive.ReadField ( "Height"   , rWorldHeight_    );
+    archive.Close     (                               );
 
-        // mgrs conversion
-        pParameters_  = new PlanarCartesian::Parameters( rMiddleLatitude  * std::acos( -1. ) / 180., 
-                                                         rMiddleLongitude * std::acos( -1. ) / 180. );
-        pPlanar_      = new PlanarCartesian            ( *pParameters_ );
-        pTranslation_ = new Point2< double >( rWorldWidth_ * 0.5, rWorldHeight_ * 0.5 );
-        
-        // wgs84 conversion
-        pGeodetic_    = new Geodetic();
+    // mgrs conversion
+    pParameters_  = new PlanarCartesian::Parameters( rMiddleLatitude  * std::acos( -1. ) / 180., 
+                                                        rMiddleLongitude * std::acos( -1. ) / 180. );
+    pPlanar_      = new PlanarCartesian            ( *pParameters_ );
+    pTranslation_ = new Point2< double >( rWorldWidth_ * 0.5, rWorldHeight_ * 0.5 );
+    
+    // wgs84 conversion
+    pGeodetic_    = new Geodetic();
 
-        MT_ChangeDir     ( strCurrentDir );
-    }
-    catch( MT_ArchiveLogger_Exception& exception )
-    {
-        throw exception;
-    }
+    MT_ChangeDir     ( strCurrentDir );
 }
 
 // -----------------------------------------------------------------------------
