@@ -127,11 +127,11 @@ void DEC_PathSection::Handle( const TerrainPathPoint& point )
 // -----------------------------------------------------------------------------
 bool DEC_PathSection::ComputationTimedOut() const
 {
-    const MT_Float rLength = GetLength();
-    MT_Float rMaxComputationTime = rLength / 40000.; // Base computation time : 1s for 40km
+//    const MT_Float rLength = GetLength();
+//    MT_Float rMaxComputationTime = rLength / 40000.; // Base computation time : 1s for 40km
     // $$$$ AGE 2005-05-10: 
 //    rMaxComputationTime /= ( nPendingRequests_ + 1 );
-    const bool bTimeOut = clock() - nComputationStart_ > CLOCKS_PER_SEC * rMaxComputationTime;
+//    const bool bTimeOut = clock() - nComputationStart_ > CLOCKS_PER_SEC * rMaxComputationTime;
     return false; // $$$$ AGE 2005-05-12: 
 }
 
