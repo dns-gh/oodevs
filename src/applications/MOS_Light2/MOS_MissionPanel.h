@@ -86,6 +86,7 @@ private slots:
     void MagicChangeLogisticLinks();
     void MagicPushFlux();
     void MagicChangeQuotas();
+    void ChangeHumanFactors();
 
 private:
     MOS_Team*   pPopupTeam_;

@@ -44,6 +44,7 @@
 #include "MOS_LogisticSupplyPushFlowDialog.h"
 #include "MOS_LogisticSupplyChangeQuotasDialog.h"
 #include "MOS_LogisticSupplyRecompletionDialog.h"
+#include "MOS_ChangeHumanFactorsDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel constructor
@@ -213,8 +214,12 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         pMagicOrdersMenu->insertItem( tr( "Détruire composante" ), this, SLOT( MagicDestroyComponent() ) );
         pMagicOrdersMenu->insertItem( tr( "Destruction totale" ), this, SLOT( MagicDestroyAll() ) );
 
+        pMagicOrdersMenu->insertItem( tr( "Facteurs humains" ), this, SLOT( ChangeHumanFactors() ) );
+
         if( agent.IsAutomate() )
             pMagicOrdersMenu->insertItem( tr( "Se rendre" ), this, SLOT( MagicSurrender() ) );
+
+
 
         popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
     }
@@ -566,6 +571,17 @@ void MOS_MissionPanel::MagicPushFlux()
 void MOS_MissionPanel::MagicChangeQuotas()
 {
     static MOS_LogisticSupplyChangeQuotasDialog* pDialog = new MOS_LogisticSupplyChangeQuotasDialog( this );
+    pDialog->SetAgent( *pPopupAgent_ );
+    pDialog->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::ChangeHumanFactors
+// Created: AGE 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::ChangeHumanFactors()
+{
+    static MOS_ChangeHumanFactorsDialog* pDialog = new MOS_ChangeHumanFactorsDialog( this );
     pDialog->SetAgent( *pPopupAgent_ );
     pDialog->show();
 }
