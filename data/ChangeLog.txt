@@ -20,6 +20,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+
+Version 1.0.2 [22/09/2005] - Codename 'mucus'
     - AGE - Nettoyages dans AstecV2-3D
     - AGE/SBI - les consignes de ravitaillement sont affichées dans les informations des convois.
     - AGE/SBO - AstecV12 crash moins quand les fichiers de données sont pourris
