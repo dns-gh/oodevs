@@ -37,7 +37,7 @@ class MOS_AgentSupplyPanel : public MOS_AgentLogisticPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_AgentSupplyPanel( QWidget* pParent );
+    explicit MOS_AgentSupplyPanel( QWidget* pParent );
     virtual ~MOS_AgentSupplyPanel();
     //@}
 
@@ -45,6 +45,7 @@ private:
     //! @name Slots
     //@{
     virtual void OnUpdate();
+    virtual void OnClearSelection();
     virtual void OnAgentUpdated( MOS_Agent& agent );
     //@}
 

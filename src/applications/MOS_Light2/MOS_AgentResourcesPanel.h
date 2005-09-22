@@ -50,15 +50,21 @@ class MOS_AgentResourcesPanel : public MOS_InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_AgentResourcesPanel( QWidget* pParent );
-    ~MOS_AgentResourcesPanel();
+    explicit MOS_AgentResourcesPanel( QWidget* pParent );
+    virtual ~MOS_AgentResourcesPanel();
     //@}
 
 private:
-    virtual void OnUpdate();
-    void OnAgentUpdated( MOS_Agent& agent );
-
+    //! @name Operations
+    //@{
+    virtual void OnUpdate        ();
+    virtual void OnClearSelection();
+    virtual void OnAgentUpdated  ( MOS_Agent& agent );
+    //@}
+    
 private:
+    //! @name Member Data
+    //@{
     QListView* pEquipment_;
     QListView* pResources_;
     QListView* pTroops_;
@@ -68,8 +74,7 @@ private:
     T_ItemPtrVector resources_;
     T_ItemPtrVector troops_;
     T_ItemPtrVector lends_;
+    //@}
 };
-
-#   include "MOS_AgentResourcesPanel.inl"
 
 #endif // __MOS_AgentResourcesPanel_h_

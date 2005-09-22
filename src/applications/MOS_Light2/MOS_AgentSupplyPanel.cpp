@@ -108,7 +108,25 @@ namespace
 // -----------------------------------------------------------------------------
 void MOS_AgentSupplyPanel::OnUpdate()
 {
-    OnAgentUpdated( *selectedItem_.pAgent_ );    
+    if( selectedItem_.pAgent_ != 0 )
+        OnAgentUpdated( *selectedItem_.pAgent_ );
+    else
+        OnClearSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentSupplyPanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_AgentSupplyPanel::OnClearSelection()
+{
+    pConsignListView_       ->hide();
+    pConsignHandledListView_->hide();
+    pState_                 ->hide();
+    pStocks_                ->hide();
+    pQuotas_                ->hide();
+    pDispoTransporters_     ->hide();
+    pDispoCommanders_       ->hide();
 }
 
 // -----------------------------------------------------------------------------

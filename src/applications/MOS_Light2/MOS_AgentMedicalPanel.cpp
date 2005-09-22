@@ -113,7 +113,24 @@ namespace
 // -----------------------------------------------------------------------------
 void MOS_AgentMedicalPanel::OnUpdate()
 {
-    OnAgentUpdated( *selectedItem_.pAgent_ );
+    if( selectedItem_.pAgent_ != 0 )
+        OnAgentUpdated( *selectedItem_.pAgent_ );
+    else
+        OnClearSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentMedicalPanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_AgentMedicalPanel::OnClearSelection()
+{
+    pConsignListView_         ->hide();
+    pConsignHandledListView_  ->hide();
+    pState_                   ->hide();
+    pDispoReleveAmbulances_   ->hide();
+    pDispoRamassageAmbulances_->hide();
+    pDispoDoctors_            ->hide();
 }
 
 // -----------------------------------------------------------------------------

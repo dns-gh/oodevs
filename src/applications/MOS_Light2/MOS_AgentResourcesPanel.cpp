@@ -88,7 +88,10 @@ MOS_AgentResourcesPanel::~MOS_AgentResourcesPanel()
 // -----------------------------------------------------------------------------
 void MOS_AgentResourcesPanel::OnUpdate()
 {
-    OnAgentUpdated( *selectedItem_.pAgent_ );
+    if( selectedItem_.pAgent_ != 0 )
+        OnAgentUpdated( *selectedItem_.pAgent_ );
+    else
+        OnClearSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +105,7 @@ void MOS_AgentResourcesPanel::OnAgentUpdated( MOS_Agent& agent )
     if( ! ShouldDisplay( agent ) )
         return;
 
-    const MOS_AgentComposition& composition = selectedItem_.pAgent_->GetComposition();
+    const MOS_AgentComposition& composition = agent.GetComposition();
     Suit( equipement_, composition.equipment_.size(), pEquipment_ );
     Suit( resources_, composition.resources_.size(), pResources_ );
     Suit( troops_, (int)eTroopHealthStateNbrStates, pTroops_ );
@@ -144,4 +147,16 @@ void MOS_AgentResourcesPanel::OnAgentUpdated( MOS_Agent& agent )
         pItem->setText( 1, MOS_App::GetApp().GetResourceName( lend.nBorrowerId_ ).c_str() );
         pItem->setText( 2, QString::number( lend.nQuantity_ ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentResourcesPanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_AgentResourcesPanel::OnClearSelection()
+{
+    pEquipment_->hide();
+    pResources_->hide();
+    pTroops_   ->hide();
+    pLends_    ->hide();
 }

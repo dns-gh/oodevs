@@ -53,7 +53,10 @@ MOS_ReportPanel::~MOS_ReportPanel()
 // -----------------------------------------------------------------------------
 void MOS_ReportPanel::OnUpdate()
 {
-    OnAgentUpdated( *selectedItem_.pAgent_ );
+    if( selectedItem_.pAgent_ != 0 )
+        OnAgentUpdated( *selectedItem_.pAgent_ );
+    else
+        OnClearSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,4 +70,14 @@ void MOS_ReportPanel::OnAgentUpdated( MOS_Agent& agent )
         pReportListView_->SetAgent( selectedItem_.pAgent_ );
         pFireResultListView_->SetAgent( selectedItem_.pAgent_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ReportPanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_ReportPanel::OnClearSelection()
+{
+    pReportListView_->SetAgent( 0 );
+    pFireResultListView_->SetAgent( 0 );
 }

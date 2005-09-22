@@ -57,14 +57,10 @@ MOS_ObjectReportPanel::~MOS_ObjectReportPanel()
 // -----------------------------------------------------------------------------
 void MOS_ObjectReportPanel::OnObjectUpdated( MOS_Object_ABC& object )
 {
-    MOS_Object_ABC* pObject = selectedItem_.pObject_;
-    if( &object != pObject )
-        return;
-
     if( ! ShouldDisplay( object ) )
         return;
 
-    pFireResultListView_->SetObject( pObject );
+    pFireResultListView_->SetObject( &object );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,5 +69,17 @@ void MOS_ObjectReportPanel::OnObjectUpdated( MOS_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MOS_ObjectReportPanel::OnUpdate()
 {
-    OnObjectUpdated( *selectedItem_.pObject_ );
+    if( selectedItem_.pObject_ != 0 )
+        OnObjectUpdated( *selectedItem_.pObject_ );
+    else
+        OnClearSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectReportPanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_ObjectReportPanel::OnClearSelection()
+{
+    pFireResultListView_->SetAgent( 0 );
 }

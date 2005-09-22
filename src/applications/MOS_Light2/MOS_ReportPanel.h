@@ -33,22 +33,22 @@ class MOS_ReportFilterOptions;
 // =============================================================================
 class MOS_ReportPanel : public MOS_InfoPanel_ABC
 {
+    MT_COPYNOTALLOWED( MOS_ReportPanel );
     friend class MOS_GLTool; // $$$$ AGE 2005-04-21: whatever
+
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_ReportPanel( QWidget* pParent );
+    explicit MOS_ReportPanel( QWidget* pParent );
     virtual ~MOS_ReportPanel();
     //@}
 
 private:
-    virtual void OnUpdate();
-    void OnAgentUpdated( MOS_Agent& agent );
-
-    //! @name Copy/Assignement
+    //! @name Operations
     //@{
-    MOS_ReportPanel( const MOS_ReportPanel& );            //!< Copy constructor
-    MOS_ReportPanel& operator=( const MOS_ReportPanel& ); //!< Assignement operator
+    virtual void OnUpdate        ();
+    virtual void OnClearSelection();
+    virtual void OnAgentUpdated  ( MOS_Agent& agent );
     //@}
 
 private:

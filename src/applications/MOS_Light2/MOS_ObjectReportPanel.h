@@ -42,8 +42,14 @@ class MOS_ObjectReportPanel : public MOS_InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ObjectReportPanel( QWidget* pParent );
-    ~MOS_ObjectReportPanel();
+    explicit MOS_ObjectReportPanel( QWidget* pParent );
+    virtual ~MOS_ObjectReportPanel();
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void OnClearSelection();
     //@}
 
 private slots:

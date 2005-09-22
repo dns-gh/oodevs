@@ -84,7 +84,23 @@ MOS_AgentMaintenancePanel::~MOS_AgentMaintenancePanel()
 // -----------------------------------------------------------------------------
 void MOS_AgentMaintenancePanel::OnUpdate()
 {
-    OnAgentUpdated( *selectedItem_.pAgent_ );
+    if( selectedItem_.pAgent_ != 0 )
+        OnAgentUpdated( *selectedItem_.pAgent_ );
+    else
+        OnClearSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentMaintenancePanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_AgentMaintenancePanel::OnClearSelection()
+{
+    pConsignListView_       ->hide();
+    pConsignHandledListView_->hide();
+    pState_                 ->hide();
+    pDispoHaulers_          ->hide();
+    pDispoRepairers_        ->hide();
 }
 
 // -----------------------------------------------------------------------------

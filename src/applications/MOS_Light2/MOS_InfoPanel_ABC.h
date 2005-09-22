@@ -43,15 +43,16 @@ public:
     //! @name Operations
     //@{
     virtual void SetSelection( MOS_SelectedElement& item );
-    virtual void insertChild( QObject* pObj );
+    virtual void insertChild ( QObject*             pObj );
     //@}
 
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnUpdate();
-    virtual void OnAgentUpdated     ( MOS_Agent&          agent  );
-    virtual void OnObjectUpdated( MOS_Object_ABC& object );
+    virtual void OnUpdate        ();
+    virtual void OnClearSelection() = 0;
+    virtual void OnAgentUpdated  ( MOS_Agent&      agent  );
+    virtual void OnObjectUpdated ( MOS_Object_ABC& object );
 
     virtual void showEvent( QShowEvent* );
     //@}
@@ -67,6 +68,7 @@ protected:
             pView->hide();
             return;
         }
+        pView->show();
 
         while( destCont.size() < nSize )
         {

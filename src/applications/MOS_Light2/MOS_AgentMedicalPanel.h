@@ -38,7 +38,7 @@ class MOS_AgentMedicalPanel : public MOS_AgentLogisticPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_AgentMedicalPanel( QWidget* pParent );
+    explicit MOS_AgentMedicalPanel( QWidget* pParent );
     virtual ~MOS_AgentMedicalPanel();
     //@}
 
@@ -46,6 +46,7 @@ private:
     //! @name Slots
     //@{
     virtual void OnUpdate();
+    virtual void OnClearSelection();
     virtual void OnAgentUpdated( MOS_Agent& agent );
     //@}
 

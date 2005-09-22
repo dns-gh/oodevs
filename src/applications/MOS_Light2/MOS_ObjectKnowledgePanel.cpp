@@ -176,14 +176,21 @@ MOS_ObjectKnowledgePanel::~MOS_ObjectKnowledgePanel()
 void MOS_ObjectKnowledgePanel::OnUpdate()
 {
     if( GetSelectedTeam( selectedItem_ ) == 0 )
-    {
-        pTeam_ = 0;
-        pKnowledgeListView_->clear();
-        pSelectedKnowledge_ = 0;
-        UpdateSelected();
-    }
+        OnClearSelection();
     else
         UpdateList();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectKnowledgePanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_ObjectKnowledgePanel::OnClearSelection()
+{
+    pTeam_ = 0;
+    pKnowledgeListView_->clear();
+    pSelectedKnowledge_ = 0;
+    UpdateSelected();
 }
 
 // -----------------------------------------------------------------------------

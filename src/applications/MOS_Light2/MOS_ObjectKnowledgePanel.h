@@ -50,20 +50,23 @@ class MOS_ObjectKnowledgePanel : public MOS_InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ObjectKnowledgePanel( QWidget* pParent );
-    ~MOS_ObjectKnowledgePanel();
+    explicit MOS_ObjectKnowledgePanel( QWidget* pParent );
+    virtual ~MOS_ObjectKnowledgePanel();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void OnUpdate();
-    void UpdateList();
-    void UpdateSelected();
+    virtual void OnUpdate        ();
+    virtual void OnClearSelection();
+            void UpdateList      ();
+            void UpdateSelected  ();
     MOS_Team* GetSelectedTeam( const MOS_SelectedElement& item );
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void OnSelectionChanged( QListViewItem* pItem );
     void OnRequestCenter();
 
@@ -73,11 +76,15 @@ private slots:
     void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos );
 
     void ToggleDisplayOwnTeam();
+    //@}
 
 signals:
+    //! @name Signals
+    //@{
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& action );
     void ElementSelected( MOS_SelectedElement& selectedElement );
     void CenterOnPoint( const MT_Vector2D& vPoint );
+    //@}
 
 private:
     //! @name Member data
@@ -88,16 +95,16 @@ private:
 
     MOS_ObjectKnowledge* pSelectedKnowledge_;
 
-    QLabel* pIdLabel_;
-    QLabel* pAssociatedObjectLabel_;
-    QLabel* pPositionLabel_;
-    QLabel* pObjectTypeLabel_;
-    QLabel* pPercentBuiltLabel_;
-    QLabel* pPercentValueLabel_;
-    QLabel* pPercentAroundLabel_;
-    QLabel* pIsUnderPrepLabel_;
-    QLabel* pIsPreceivedLabel_;
-    QLabel* pRevelanceLabel_;
+    QLabel*    pIdLabel_;
+    QLabel*    pAssociatedObjectLabel_;
+    QLabel*    pPositionLabel_;
+    QLabel*    pObjectTypeLabel_;
+    QLabel*    pPercentBuiltLabel_;
+    QLabel*    pPercentValueLabel_;
+    QLabel*    pPercentAroundLabel_;
+    QLabel*    pIsUnderPrepLabel_;
+    QLabel*    pIsPreceivedLabel_;
+    QLabel*    pRevelanceLabel_;
 
     // Crossing
     QGroupBox* pCrossingGroup_;
@@ -129,9 +136,7 @@ private:
 
     QListView* pPerceptionListView_;
     QPopupMenu* pPopupMenu_;
+    //@}
 };
-
-
-#   include "MOS_ObjectKnowledgePanel.inl"
 
 #endif // __MOS_ObjectKnowledgePanel_h_

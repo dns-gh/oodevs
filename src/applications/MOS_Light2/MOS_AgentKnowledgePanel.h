@@ -46,17 +46,18 @@ class MOS_AgentKnowledgePanel : public MOS_InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_AgentKnowledgePanel( QWidget* pParent );
-    ~MOS_AgentKnowledgePanel();
+    explicit MOS_AgentKnowledgePanel( QWidget* pParent );
+    virtual ~MOS_AgentKnowledgePanel();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void OnUpdate();
-    void UpdateList();
-    void UpdateSelected();
-    MOS_Gtia* GetSelectedGtia( const MOS_SelectedElement& item );
+    virtual void      OnUpdate        ();
+    virtual void      OnClearSelection();
+            void      UpdateList      ();
+            void      UpdateSelected  ();
+            MOS_Gtia* GetSelectedGtia ( const MOS_SelectedElement& item );
     //@}
 
 private slots:
@@ -110,7 +111,5 @@ private:
     QPopupMenu* pPopupMenu_;
     //@}
 };
-
-#   include "MOS_AgentKnowledgePanel.inl"
 
 #endif // __MOS_AgentKnowledgePanel_h_

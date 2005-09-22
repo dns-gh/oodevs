@@ -31,6 +31,8 @@ class MOS_Agent;
 // =============================================================================
 class MOS_AgentLogisticPanel_ABC : public MOS_InfoPanel_ABC
 {
+    MT_COPYNOTALLOWED( MOS_AgentLogisticPanel_ABC )
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,11 +40,10 @@ public:
     virtual ~MOS_AgentLogisticPanel_ABC();
     //@}
 
-private:
-    //! @name Copy/Assignement
+protected:
+    //! @name Operations
     //@{
-    MOS_AgentLogisticPanel_ABC( const MOS_AgentLogisticPanel_ABC& );            //!< Copy constructor
-    MOS_AgentLogisticPanel_ABC& operator=( const MOS_AgentLogisticPanel_ABC& ); //!< Assignement operator
+    virtual void OnClearSelection() = 0;
     //@}
 
 protected:

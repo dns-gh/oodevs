@@ -86,64 +86,17 @@ MOS_ObjectPanel::~MOS_ObjectPanel()
 // -----------------------------------------------------------------------------
 void MOS_ObjectPanel::OnObjectUpdated( MOS_Object_ABC& object )
 {
-    MOS_Object_ABC* pObject = selectedItem_.pObject_;
-    if( &object != pObject )
-        return;
-
-    pIdLabel_            ->setText( "-" );
-    pObjectTypeLabel_    ->setText( "-" );
-    pPositionLabel_      ->setText( "-" );
-    pPercentBuiltEdit_   ->setValue( 0 );
-    pPercentValueEdit_   ->setValue( 0 );
-    pPercentAroundEdit_  ->setValue( 0 );
-    pIsUnderPrepCheckBox_->setChecked( false );
-    pDotationConstructionLabel_->setText( "-" );
-    pDotationValorisationLabel_->setText( "-" );
-
-    pCrossingWidthTitle_->hide();
-    pCrossingWidthLabel_->hide();
-
-    pCrossingDepthTitle_->hide();
-    pCrossingDepthLabel_->hide();
-
-    pCrossingRiverSpeedTitle_->hide();
-    pCrossingRiverSpeedLabel_->hide();
-
-    pCrossingBanksNeedWorkTitle_->hide();
-    pCrossingBanksNeedWorkLabel_->hide();
-
-    pNBCAgentTitle_->hide();
-    pNBCAgentLabel_->hide();
-
-	pTC2Title_->hide();
-	pTC2Label_->hide();
-
-    pROTADangerTitle_->hide();
-    pROTADangerLabel_->hide();
-    pROTAAgentsNbcTitle_->hide();
-    pROTAAgentsNbcLabel_->hide();
-
-    pItLogEquippedTitle_->hide();
-    pItLogEquippedLabel_->hide();
-    pItLogFlowTitle_->hide();
-    pItLogFlowLabel_->hide();
-    pItLogWidthTitle_->hide();
-    pItLogWidthLabel_->hide();
-    pItLogLengthTitle_->hide();
-    pItLogLengthLabel_->hide();
-    pItLogMaxWeightTitle_->hide();
-    pItLogMaxWeightLabel_->hide();
-
-
-    pApplyButton_->setEnabled( pObject != 0 );
-    pCancelButton_->setEnabled( pObject != 0 );
+    OnClearSelection();
 
     if( ! ShouldDisplay( object ) )
         return;
 
+    pApplyButton_ ->setEnabled( true );
+    pCancelButton_->setEnabled( true );
+
     UpdateGeneric( object );
 
-    switch( pObject->GetType() )
+    switch( object.GetType() )
     {
     case EnumObjectType::site_franchissement:
         UpdateSiteFranchissement( object );
@@ -206,7 +159,10 @@ void MOS_ObjectPanel::OnApply()
 // -----------------------------------------------------------------------------
 void MOS_ObjectPanel::OnCancel()
 {
-    OnObjectUpdated( *selectedItem_.pObject_ );
+    if( selectedItem_.pObject_ != 0 )
+        OnObjectUpdated( *selectedItem_.pObject_ );
+    else
+        OnClearSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +171,65 @@ void MOS_ObjectPanel::OnCancel()
 // -----------------------------------------------------------------------------
 void MOS_ObjectPanel::OnUpdate()
 {
-    OnObjectUpdated( *selectedItem_.pObject_ );
+    if( selectedItem_.pObject_ != 0 )
+        OnObjectUpdated( *selectedItem_.pObject_ );
+    else
+        OnClearSelection();
+    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectPanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_ObjectPanel::OnClearSelection()
+{
+    pIdLabel_                   ->setText( "-" );
+    pObjectTypeLabel_           ->setText( "-" );
+    pPositionLabel_             ->setText( "-" );
+    pPercentBuiltEdit_          ->setValue( 0 );
+    pPercentValueEdit_          ->setValue( 0 );
+    pPercentAroundEdit_         ->setValue( 0 );
+    pIsUnderPrepCheckBox_       ->setChecked( false );
+    pDotationConstructionLabel_ ->setText( "-" );
+    pDotationValorisationLabel_ ->setText( "-" );
+
+    pCrossingWidthTitle_        ->hide();
+    pCrossingWidthLabel_        ->hide();
+
+    pCrossingDepthTitle_        ->hide();
+    pCrossingDepthLabel_        ->hide();
+
+    pCrossingRiverSpeedTitle_   ->hide();
+    pCrossingRiverSpeedLabel_   ->hide();
+
+    pCrossingBanksNeedWorkTitle_->hide();
+    pCrossingBanksNeedWorkLabel_->hide();
+
+    pNBCAgentTitle_             ->hide();
+    pNBCAgentLabel_             ->hide();
+
+	pTC2Title_                  ->hide();
+	pTC2Label_                  ->hide();
+
+    pROTADangerTitle_           ->hide();
+    pROTADangerLabel_           ->hide();
+    pROTAAgentsNbcTitle_        ->hide();
+    pROTAAgentsNbcLabel_        ->hide();
+
+    pItLogEquippedTitle_        ->hide();
+    pItLogEquippedLabel_        ->hide();
+    pItLogFlowTitle_            ->hide();
+    pItLogFlowLabel_            ->hide();
+    pItLogWidthTitle_           ->hide();
+    pItLogWidthLabel_           ->hide();
+    pItLogLengthTitle_          ->hide();
+    pItLogLengthLabel_          ->hide();
+    pItLogMaxWeightTitle_       ->hide();
+    pItLogMaxWeightLabel_       ->hide();
+    
+    pApplyButton_ ->setEnabled( false );
+    pCancelButton_->setEnabled( false );
 }
 
 // -----------------------------------------------------------------------------

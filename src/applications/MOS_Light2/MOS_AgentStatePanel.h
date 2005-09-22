@@ -45,47 +45,53 @@ class MOS_AgentStatePanel : public MOS_InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_AgentStatePanel( QWidget* pParent );
+    explicit MOS_AgentStatePanel( QWidget* pParent );
     virtual ~MOS_AgentStatePanel();
     //@}
 
 private:
-    virtual void OnUpdate();
-    void OnAgentUpdated( MOS_Agent& agent );
+    //! @name Operations
+    //@{
+    virtual void OnUpdate        ();
+    virtual void OnClearSelection();
+    virtual void OnAgentUpdated  ( MOS_Agent& agent );
+    //@}
 
 private:
-    QLabel* pNameLabel_;
-    QLabel* pRawOpStateLabel_;
-    QLabel* pDeadLabel_;
-    QLabel* pNeutralizedLabel_;
-    QLabel* pSpeedLabel_;
-    QLabel* pDirectionLabel_;
-    QLabel* pAltitudeLabel_;
+    //! @name Member data
+    //@{
+    QLabel*    pNameLabel_;
+    QLabel*    pRawOpStateLabel_;
+    QLabel*    pDeadLabel_;
+    QLabel*    pNeutralizedLabel_;
+    QLabel*    pSpeedLabel_;
+    QLabel*    pDirectionLabel_;
+    QLabel*    pAltitudeLabel_;
     
-    QLabel* pOldStanceLabel_;
-    QLabel* pStanceLabel_;
+    QLabel*    pOldStanceLabel_;
+    QLabel*    pStanceLabel_;
 
-    QLabel* pROELabel_;
-    QLabel* pCloseCombatLabel_;
-    QLabel* pFightRateLabel_;
-    QLabel* pOpStateLabel_;
+    QLabel*    pROELabel_;
+    QLabel*    pCloseCombatLabel_;
+    QLabel*    pFightRateLabel_;
+    QLabel*    pOpStateLabel_;
 
     QGroupBox* pReinforcementsGroupBox_;
     QLabel*    pReinforcementsLabel_;
     QLabel*    pReinforcedLabel_;
 
-    QLabel* pBoardingStateLabel_;
-    QLabel* pHumanTransportersReadyLabel_;
-    QLabel* pNBCSuitLabel_;
-    QLabel* pNBCAgentsLabel_;
-    QLabel* pContaminationLabel_;
+    QLabel*    pBoardingStateLabel_;
+    QLabel*    pHumanTransportersReadyLabel_;
+    QLabel*    pNBCSuitLabel_;
+    QLabel*    pNBCAgentsLabel_;
+    QLabel*    pContaminationLabel_;
 
-    QLabel* pCommJammedLabel_;
-    QLabel* pRadioSilenceLabel_;
+    QLabel*    pCommJammedLabel_;
+    QLabel*    pRadioSilenceLabel_;
 
-    QLabel* pExperienceLabel_;
-    QLabel* pMoraleLabel_;
-    QLabel* pTirednessLabel_;
+    QLabel*    pExperienceLabel_;
+    QLabel*    pMoraleLabel_;
+    QLabel*    pTirednessLabel_;
      
     QGroupBox* pTransportedGroupBox_;
     QLabel*    pTransportedLabel_;
@@ -99,8 +105,7 @@ private:
     QLabel*    pLogMaintenanceSuperior_;
     QLabel*    pLogMedicalSuperior_;
     QLabel*    pLogSupplySuperior_;
+    //@}
 };
-
-#   include "MOS_AgentStatePanel.inl"
 
 #endif // __MOS_AgentStatePanel_h_

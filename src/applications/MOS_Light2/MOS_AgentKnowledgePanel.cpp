@@ -157,16 +157,22 @@ MOS_AgentKnowledgePanel::~MOS_AgentKnowledgePanel()
 void MOS_AgentKnowledgePanel::OnUpdate()
 {
     if( GetSelectedGtia( selectedItem_ ) == 0 )
-    {
-        pGtia_ = 0;
-        pKnowledgeListView_->clear();
-        pSelectedKnowledge_ = 0;
-        UpdateSelected();
-    }
+        OnClearSelection();
     else
         UpdateList();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentKnowledgePanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_AgentKnowledgePanel::OnClearSelection()
+{
+    pGtia_ = 0;
+    pKnowledgeListView_->clear();
+    pSelectedKnowledge_ = 0;
+    UpdateSelected();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel::UpdateList

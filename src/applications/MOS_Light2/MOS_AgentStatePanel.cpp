@@ -184,7 +184,10 @@ MOS_AgentStatePanel::~MOS_AgentStatePanel()
 // -----------------------------------------------------------------------------
 void MOS_AgentStatePanel::OnUpdate()
 {
-    OnAgentUpdated( *selectedItem_.pAgent_ );
+    if( selectedItem_.pAgent_ != 0 )
+        OnAgentUpdated( *selectedItem_.pAgent_ );
+    else
+        OnClearSelection();
 }
 
 
@@ -196,38 +199,11 @@ void MOS_AgentStatePanel::OnUpdate()
 // -----------------------------------------------------------------------------
 void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
 {
-    if( ! selectedItem_.pAgent_ )
-    {
-        pNameLabel_->setText( "" );
-        pDeadLabel_->setText( "" );
-        pNeutralizedLabel_->setText( "" );
-        pSpeedLabel_->setText( "" );
-        pDirectionLabel_->setText( "" );
-        pAltitudeLabel_->setText( "" );
-
-        pOldStanceLabel_->setText( "" );
-        pStanceLabel_->setText( "" );
-
-        pROELabel_->setText( "" );
-        pCloseCombatLabel_->setText( "" );
-        pFightRateLabel_->setText( "" );
-
-        pReinforcementsLabel_->setText( "" );
-
-        pBoardingStateLabel_->setText( "" );
-        pHumanTransportersReadyLabel_->setText( "" );
-        pNBCSuitLabel_->setText( "" );
-        pNBCAgentsLabel_->setText( "" );
-
-        pLogLinksGroupBox_->hide();    
-    }
-
     if( ! ShouldDisplay( agent ) )
         return;
 
     if( agent.IsAutomate() )
     {
-        pLogLinksGroupBox_->show();
         if( agent.nTC2_ == 0 )
             pTC2_->setText( tr( "aucun" ) );
         else
@@ -247,28 +223,29 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
             pLogSupplySuperior_->setText( tr( "aucun" ) );
         else
             pLogSupplySuperior_->setText( QString::number( agent.nLogSupplySuperior_ ) );
+        pLogLinksGroupBox_->show();
     }
 
-    pNameLabel_->setText( (agent.GetName()).c_str() );
+    pNameLabel_       ->setText( (agent.GetName()).c_str() );
 
-    pRawOpStateLabel_->setText( QString( "%1 %" ).arg( agent.GetRawOpState() ) );
+    pRawOpStateLabel_ ->setText( QString( "%1 %" ).arg( agent.GetRawOpState() ) );
 
     pDeadLabel_       ->setText( agent.IsDead() ? tr( "Oui" ) : tr( "Non" ) );
     pNeutralizedLabel_->setText( agent.IsNeutralized() ? tr( "Oui" ) : tr( "Non" ) );
 
-    pSpeedLabel_->setText( QString::number( agent.GetSpeed() ) );
-    pDirectionLabel_->setText( QString::number( agent.GetDirection() ) + "°" );
-    pAltitudeLabel_->setText( QString::number( agent.GetAltitude() ) + "m" );
+    pSpeedLabel_      ->setText( QString::number( agent.GetSpeed() ) );
+    pDirectionLabel_  ->setText( QString::number( agent.GetDirection() ) + "°" );
+    pAltitudeLabel_   ->setText( QString::number( agent.GetAltitude() ) + "m" );
 
     QString strStance = MOS_Tools::ToString( agent.GetStance() );
-    strStance = strStance + " (" + QString::number( agent.GetStanceCompletion() ) + "%)";
-    pOldStanceLabel_->setText( MOS_Tools::ToString( agent.GetOldStance() ) );
-    pStanceLabel_->setText( strStance );
+    strStance         = strStance + " (" + QString::number( agent.GetStanceCompletion() ) + "%)";
+    pOldStanceLabel_  ->setText( MOS_Tools::ToString( agent.GetOldStance() ) );
+    pStanceLabel_     ->setText( strStance );
 
-    pROELabel_->setText( MOS_Tools::ToString( agent.GetROE() ) );
+    pROELabel_        ->setText( MOS_Tools::ToString( agent.GetROE() ) );
     pCloseCombatLabel_->setText( MOS_Tools::ToString( agent.GetCloseCombatState() ) );
-    pFightRateLabel_->setText( MOS_Tools::ToString( agent.GetRapFor() ) );
-    pOpStateLabel_->setText( MOS_Tools::ToString( agent.nOpState_ ) );
+    pFightRateLabel_  ->setText( MOS_Tools::ToString( agent.GetRapFor() ) );
+    pOpStateLabel_    ->setText( MOS_Tools::ToString( agent.nOpState_ ) );
     
     uint nReinforced = agent.GetReinforced();
     if( nReinforced )
@@ -341,4 +318,50 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
         pNBCAgentsLabel_->setText( tr( "Aucun" ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentStatePanel::OnClearSelection
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+void MOS_AgentStatePanel::OnClearSelection()
+{
+    pNameLabel_                  ->setText( "" );
+    pRawOpStateLabel_            ->setText( "" );
+    pDeadLabel_                  ->setText( "" );
+    pNeutralizedLabel_           ->setText( "" );
+    pSpeedLabel_                 ->setText( "" );
+    pDirectionLabel_             ->setText( "" );
+    pAltitudeLabel_              ->setText( "" );
 
+    pOldStanceLabel_             ->setText( "" );
+    pStanceLabel_                ->setText( "" );
+
+    pROELabel_                   ->setText( "" );
+    pCloseCombatLabel_           ->setText( "" );
+    pFightRateLabel_             ->setText( "" );
+    pOpStateLabel_               ->setText( "" );
+
+    pReinforcedLabel_            ->setText( "" );
+    pReinforcementsGroupBox_     ->hide();
+
+    pTransportedGroupBox_        ->hide();
+
+    pPrisonnerLabel_             ->setText( "" );
+    pSurrenderedLabel_           ->setText( "" );
+    pRefugeeLabel_               ->setText( "" );
+
+    pBoardingStateLabel_         ->setText( "" );
+    pHumanTransportersReadyLabel_->setText( "" );
+    pNBCSuitLabel_               ->setText( "" );
+    pContaminationLabel_         ->setText( "" );
+
+    pCommJammedLabel_            ->setText( "" );
+    pRadioSilenceLabel_          ->setText( "" );
+
+    pExperienceLabel_            ->setText( "" );
+    pMoraleLabel_                ->setText( "" );
+    pTirednessLabel_             ->setText( "" );
+
+    pNBCAgentsLabel_             ->setText( "" );
+
+    pLogLinksGroupBox_           ->hide();
+}
