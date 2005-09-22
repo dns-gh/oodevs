@@ -165,7 +165,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( false );
         ShowObjectPanel( true );
         ShowLogisticPanels( false );
-        //pTabWidget_->setCurrentPage( 0 );
+        pTabWidget_->setCurrentPage( 0 );
     }
 
     else
