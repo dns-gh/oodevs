@@ -37,15 +37,16 @@ BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_InputArchive& archive )
-    : MIL_Automate         ( type, nID, archive )
-    , pMaintenanceSuperior_( 0 )
-    , pMedicalSuperior_    ( 0 )
-    , pSupplySuperior_     ( 0 )
-    , stockQuotas_         ()
-    , supplyConsigns_      ()
-    , bStockSupplyNeeded_  ( false )
-    , pStockSupplyState_   ( 0 )
-    , bQuotasHaveChanged_  ( false )
+    : MIL_Automate                ( type, nID, archive )
+    , pMaintenanceSuperior_       ( 0 )
+    , pMedicalSuperior_           ( 0 )
+    , pSupplySuperior_            ( 0 )
+    , stockQuotas_                ()
+    , supplyConsigns_             ()
+    , bStockSupplyNeeded_         ( false )
+    , pStockSupplyState_          ( 0 )
+    , bQuotasHaveChanged_         ( false )
+    , nTickRcStockSupplyQuerySent_( 0 )
 {
     
 }
@@ -55,15 +56,16 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG()
-    : MIL_Automate         ()
-    , pMaintenanceSuperior_( 0 )
-    , pMedicalSuperior_    ( 0 )
-    , pSupplySuperior_     ( 0 )
-    , stockQuotas_         ()
-    , supplyConsigns_      ()
-    , bStockSupplyNeeded_  ( false )
-    , pStockSupplyState_   ( 0 )
-    , bQuotasHaveChanged_  ( false )
+    : MIL_Automate                ()
+    , pMaintenanceSuperior_       ( 0 )
+    , pMedicalSuperior_           ( 0 )
+    , pSupplySuperior_            ( 0 )
+    , stockQuotas_                ()
+    , supplyConsigns_             ()
+    , bStockSupplyNeeded_         ( false )
+    , pStockSupplyState_          ( 0 )
+    , bQuotasHaveChanged_         ( false )
+    , nTickRcStockSupplyQuerySent_( 0 )
 {
 }
 
@@ -136,7 +138,8 @@ void MIL_AutomateLOG::serialize( Archive& file, const uint )
          & stockQuotas_
          & supplyConsigns_
          & bStockSupplyNeeded_
-         & pStockSupplyState_;
+         & pStockSupplyState_
+         & nTickRcStockSupplyQuerySent_;
 }
     
 // =============================================================================
@@ -667,6 +670,12 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
         return;
 
     bStockSupplyNeeded_ = true;
+
+    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
+    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    if( GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
+        MIL_RC::pRcDemandeRavitaillement_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
+    nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
 
 // -----------------------------------------------------------------------------

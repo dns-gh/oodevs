@@ -199,7 +199,8 @@ private:
     bool                     bDotationSupplyNeeded_;
     bool                     bDotationSupplyExplicitlyRequested_;
     T_SupplyDotationStateMap dotationSupplyStates_;
-    bool                     bRcSupplyQuerySent_;
+
+    uint                     nTickRcDotationSupplyQuerySent_;
 
     // Knowledge
     DEC_KnowledgeBlackBoard knowledgeBlackBoard_;

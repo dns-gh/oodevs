@@ -34,6 +34,8 @@ Next Version - Codename ''
                  B DEC_TypeObjet_PeutEtrePrepare  ( I /*E_TypeObject*/ );
     - NLD - Bug fix : minibug dans envoi de l'état 'refugié pris en compte' dans les connaissances (valeur 'false' jamais envoyée ...)
     - NLD - Ajout d'un check sur le type de paramètre (localisation) dans fonction ComputeLocalisationBarycenterInFuseau
+    - NLD - Ajout du CR 'demande de rav' pour les demandes de rav en stocks
+    - NLD - Les CRs 'demande de rav', 'demande de maintenance', 'demande de santé' ne devraient plus flooder MOS ...     
         
 Version 1.0.1 [20/09/2005] - Codename 'tourbe'
     - AGE - Les désenrichissement de pathfind sont faits dans l'ordre inverse de création

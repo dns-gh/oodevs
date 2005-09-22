@@ -309,7 +309,7 @@ private:
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
-    bool                            bRcMaintenanceQuerySent_;
+    uint                            nTickRcMaintenanceQuerySent_;
 
 public:
     static MT_Float rEtatOpsWeightNonMajorComposante_;

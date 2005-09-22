@@ -437,7 +437,7 @@ void DEC_AutomateFunctions::IsPionContaminated( DIA_Call_ABC& call, const MIL_Au
 // Name: DEC_AutomateFunctions::IsPionFlying
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsPionFlying( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+void DEC_AutomateFunctions::IsPionFlying( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
 {
     assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
     

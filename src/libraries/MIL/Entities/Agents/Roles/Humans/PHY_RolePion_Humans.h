@@ -149,7 +149,7 @@ private:
 
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;
-    bool                   bRcMedicalQuerySent_;
+    uint                   nTickRcMedicalQuerySent_;
     E_EvacuationMode       nEvacuationMode_;
 };
 

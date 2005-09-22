@@ -75,7 +75,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans( MT_RoleContainer& role, MIL_AgentPion&
     , nNbrFullyAliveHumans_   ( 0 ) // Not wounded nor contaminated nor mental diseased
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
-    , bRcMedicalQuerySent_    ( false )
+    , nTickRcMedicalQuerySent_( 0 )
     , nEvacuationMode_        ( eEvacuationMode_Auto )
 {
 }
@@ -95,7 +95,7 @@ PHY_RolePion_Humans::PHY_RolePion_Humans()
     , nNbrFullyAliveHumans_   ( 0 ) // Not wounded nor contaminated nor mental diseased
     , humansToUpdate_         ()
     , medicalHumanStates_     ()
-    , bRcMedicalQuerySent_    ( false )
+    , nTickRcMedicalQuerySent_( 0 )
     , nEvacuationMode_        ( eEvacuationMode_Auto )
 {
 }
@@ -127,7 +127,8 @@ void PHY_RolePion_Humans::serialize( Archive& file, const uint )
          & nNbrFullyAliveHumans_
          & humansToUpdate_
          & nNbrHumansDataChanged_
-         & medicalHumanStates_;
+         & medicalHumanStates_
+         & nTickRcMedicalQuerySent_;
 }
 
 // =============================================================================
@@ -197,7 +198,6 @@ void PHY_RolePion_Humans::Clean()
 
     for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
         (**it).Clean();
-    bRcMedicalQuerySent_ = false;
 }
 
 // =============================================================================
@@ -397,12 +397,11 @@ PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Hu
     if ( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
         return 0;
 
-    // Rcs uniquement quand la log est branchée
-    if( !bRcMedicalQuerySent_ )
-    {
-        bRcMedicalQuerySent_ = true;
+    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
+    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
         MIL_RC::pRcDemandeEvacuationSanitaire_->Send( *pPion_, MIL_RC::eRcTypeOperational );
-    }
+    nTickRcMedicalQuerySent_ = nCurrentTick;
 
     PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *pPion_, human );
     if( !pMedicalHumanState )

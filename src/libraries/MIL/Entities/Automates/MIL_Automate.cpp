@@ -74,7 +74,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
     , bPrisoner_                         ( false )
     , pPrisonerCamp_                     ( 0 )
     , pRefugeeCamp_                      ( false )
-    , bRcSupplyQuerySent_                ( false )
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
 {
     // Name
     if( !archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing ) )
@@ -134,7 +134,7 @@ MIL_Automate::MIL_Automate()
     , bPrisoner_                         ( false )
     , pPrisonerCamp_                     ( 0 )
     , pRefugeeCamp_                      ( 0 )
-    , bRcSupplyQuerySent_                ( false )
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
 {
 }
 
@@ -264,7 +264,8 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << bSurrendered_
          << bPrisoner_
          << pPrisonerCamp_
-         << pRefugeeCamp_;
+         << pRefugeeCamp_
+         << nTickRcDotationSupplyQuerySent_;
 }
 
 // -----------------------------------------------------------------------------
@@ -386,7 +387,6 @@ void MIL_Automate::Clean()
 {
     bDotationSupplyExplicitlyRequested_ = false;
     bAutomateModeChanged_               = false;
-    bRcSupplyQuerySent_                 = false;
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->Clean();
     pDecision_->Clean();
@@ -412,11 +412,11 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
     }
     bDotationSupplyNeeded_ = true;
 
-    if( GetTC2() && !bRcSupplyQuerySent_ )
-    {
+    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
+    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    if( GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
         MIL_RC::pRcDemandeRavitaillement_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
-        bRcSupplyQuerySent_ = true;
-    }
+    nTickRcDotationSupplyQuerySent_ = nCurrentTick;
 }
 
 // -----------------------------------------------------------------------------

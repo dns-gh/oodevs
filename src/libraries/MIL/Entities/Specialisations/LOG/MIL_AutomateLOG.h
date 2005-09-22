@@ -162,6 +162,8 @@ private:
     bool                  bQuotasHaveChanged_;
     bool                  bStockSupplyNeeded_;
     PHY_SupplyStockState* pStockSupplyState_;
+
+    uint                  nTickRcStockSupplyQuerySent_;
 };
 
 #include "MIL_AutomateLOG.inl"
