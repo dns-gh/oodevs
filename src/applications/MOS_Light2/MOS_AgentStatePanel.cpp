@@ -134,9 +134,8 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
 
     // Reinforcements
     QGroupBox* pGlobalReinforcementsGB = new QGroupBox( 2, Qt::Horizontal, tr( "Renforts" ), this );
-    QBoxLayout* pReinforcedBox = new QBoxLayout( pGlobalReinforcementsGB, QBoxLayout::LeftToRight );
-    pReinforcedBox->addWidget( new QLabel( tr( "Renforce:" ), pGlobalReinforcementsGB ) );
-    pReinforcedBox->addWidget( pReinforcedLabel_ = new QLabel( pGlobalReinforcementsGB ) );
+    new QLabel( tr( "Renforce:" ), pGlobalReinforcementsGB );
+    pReinforcedLabel_ = new QLabel( pGlobalReinforcementsGB );
 
     // Reinforcements groupbox (hidden when there are no reinforcements)
     pReinforcementsGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Renforts" ), this );
@@ -149,12 +148,16 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
     pTransportedLabel_ = new QLabel( pTransportedGroupBox_ );
 
     // Logistic links (shown only for automates)
-    pLogLinksGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Liens logistiques" ), this );
+    pLogLinksGroupBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Liens logistiques" ), this );
     pLogLinksGroupBox_->hide();
-    pTC2_                    = new QLabel( pLogLinksGroupBox_ );
+    new QLabel( tr( "TC2:" ), pLogLinksGroupBox_ );
+    pTC2_ = new QLabel( pLogLinksGroupBox_ );
+    new QLabel( tr( "Supérieur maintenance:" ), pLogLinksGroupBox_ );
     pLogMaintenanceSuperior_ = new QLabel( pLogLinksGroupBox_ );
-    pLogMedicalSuperior_     = new QLabel( pLogLinksGroupBox_ );
-    pLogSupplySuperior_      = new QLabel( pLogLinksGroupBox_ );
+    new QLabel( tr( "Supérieur santé:" ), pLogLinksGroupBox_ );
+    pLogMedicalSuperior_ = new QLabel( pLogLinksGroupBox_ );
+    new QLabel( tr( "Supérieur ravitaillement:" ), pLogLinksGroupBox_ );
+    pLogSupplySuperior_ = new QLabel( pLogLinksGroupBox_ );
 
     // Status
     QGroupBox* pWarStatus = new QGroupBox( 2, Qt::Horizontal, tr( "Etat martial" ), this ); // $$$$ AGE 2005-03-23: ?
@@ -226,24 +229,24 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     {
         pLogLinksGroupBox_->show();
         if( agent.nTC2_ == 0 )
-            pTC2_->setText( QString( "Pas de TC2" ) );
+            pTC2_->setText( tr( "aucun" ) );
         else
-            pTC2_->setText( QString( "TC2 : %1" ).arg( agent.nTC2_ ) );
+            pTC2_->setText( QString::number( agent.nTC2_ ) );
 
         if( agent.nLogMaintenanceSuperior_ == 0 )
-            pLogMaintenanceSuperior_->setText( "Pas de supérieur maintenance" );
+            pLogMaintenanceSuperior_->setText( tr( "aucun" ) );
         else
-            pLogMaintenanceSuperior_->setText( QString( "Supérieur maintenance : %1" ).arg( agent.nLogMaintenanceSuperior_ ) );
+            pLogMaintenanceSuperior_->setText( QString::number( agent.nLogMaintenanceSuperior_ ) );
 
         if( agent.nLogMedicalSuperior_ == 0 )
-            pLogMedicalSuperior_->setText( "Pas de supérieur santé" );
+            pLogMedicalSuperior_->setText( tr( "aucun" ) );
         else
-            pLogMedicalSuperior_->setText( QString( "Supérieur santé : %1" ).arg( agent.nLogMedicalSuperior_ ) );
+            pLogMedicalSuperior_->setText( QString::number( agent.nLogMedicalSuperior_ ) );
 
         if( agent.nLogSupplySuperior_ == 0 )
-            pLogSupplySuperior_->setText( "Pas de supérieur ravitaillement" );
+            pLogSupplySuperior_->setText( tr( "aucun" ) );
         else
-            pLogSupplySuperior_->setText( QString( "Supérieur ravitaillement : %1" ).arg( agent.nLogSupplySuperior_ ) );
+            pLogSupplySuperior_->setText( QString::number( agent.nLogSupplySuperior_ ) );
     }
 
     pNameLabel_->setText( (agent.GetName()).c_str() );

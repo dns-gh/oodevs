@@ -87,7 +87,6 @@ MOS_LogisticSupplyPushFlowDialog::~MOS_LogisticSupplyPushFlowDialog()
 // -----------------------------------------------------------------------------
 void MOS_LogisticSupplyPushFlowDialog::SetAgent( const MOS_Agent& agent )
 {
-    assert( !pAgent_ );
     pAgent_ = &agent;
     pStocks_->clear();
     pTypesMenu_->clear();

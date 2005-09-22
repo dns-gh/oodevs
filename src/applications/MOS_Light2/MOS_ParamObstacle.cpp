@@ -45,9 +45,18 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
     , strMenuText_  ( strMenuText )
 {
     new QLabel( tr( "Type:" ), this );
+    /*
     pTypeCombo_ = new QComboBox( this );
     for( int n1 = 0; n1 < eNbrObjectType; ++n1 )
         pTypeCombo_->insertItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n1 ).c_str(), n1 );
+    */
+
+    pTypeCombo_ = new MT_ValuedComboBox< ASN1T_EnumObjectType >( this );
+    // sorted obstacle type list
+    pTypeCombo_->setSorting( true );
+    for( uint n = 0; n < eNbrObjectType; ++n )
+        pTypeCombo_->AddItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n ).c_str(), (ASN1T_EnumObjectType)n );
+
 
     new QLabel( tr( "Urgence:" ), this );
     pUrgencyCombo_ = new QComboBox( this );
@@ -66,10 +75,10 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
 
     if( bOutsideData )
     {
-        pTypeCombo_->setCurrentItem( asnObject_.type_obstacle );
-        pUrgencyCombo_->setCurrentItem( asnObject_.urgence );
-        pPreliminaryCombo_->setCurrentItem( asnObject_.preliminaire );
-        pPriorityCombo_->setCurrentItem( asnObject_.priorite );
+        pTypeCombo_       ->setCurrentItem( asnObject_.type_obstacle );
+        pUrgencyCombo_    ->setCurrentItem( asnObject_.urgence       );
+        pPreliminaryCombo_->setCurrentItem( asnObject_.preliminaire  );
+        pPriorityCombo_   ->setCurrentItem( asnObject_.priorite      );
     }
     else // Make sure the localization type is initialized.
         asnObject.pos_obstacle.type = EnumTypeLocalisation::point;
@@ -122,7 +131,8 @@ bool MOS_ParamObstacle::CheckValidity()
 // -----------------------------------------------------------------------------
 void MOS_ParamObstacle::WriteMsg( std::stringstream& strMsg )
 {
-    asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->currentItem();
+    //asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->currentItem();
+    asnObject_.type_obstacle =  (ASN1T_EnumObjectType)pTypeCombo_->GetValue();
     asnObject_.urgence =        (ASN1T_EnumMissionGenUrgence)pUrgencyCombo_->currentItem();
     asnObject_.preliminaire =   (ASN1T_EnumMissionGenSousTypeObstacle)pPreliminaryCombo_->currentItem();
     asnObject_.priorite =       (ASN1T_EnumMissionGenPriorite)pPriorityCombo_->currentItem();

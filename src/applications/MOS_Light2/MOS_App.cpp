@@ -54,37 +54,43 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     
     // Prepare the splash screen displayed during the initialization.
     QPixmap splashImage( "Mos2.jpg" );
-    pSplashScreen_ = new QSplashScreen( splashImage );
-    pSplashScreen_->show();
+    if( !splashImage.isNull() )
+    {
+        pSplashScreen_ = new QSplashScreen( splashImage );
+        pSplashScreen_->show();
+    }
 
-    this->SetSplashText( tr("Démarrage...") );
+    SetSplashText( tr("Démarrage...") );
     pMOSServer_      = new MOS_MOSServer    ();
     pAgentManager_   = new MOS_AgentManager ();
     pLineManager_    = new MOS_LineManager  ();
     pObjectManager_  = new MOS_ObjectManager();
     pWeatherManager_ = new MOS_Meteo_Manager();
 
-    this->SetSplashText( tr("Chargement des données...") );
+    SetSplashText( tr("Chargement des données...") );
 
     MT_CommandLine cmdLine( argc(), argv() );
     strRootConfigFile_ = cmdLine.GetOptionStrValue( "-conffile", "./scipio.xml" );
     MT_ExtractFilePath( strRootConfigFile_, strRootDirectory_ );
-    this->InitializeData( strRootConfigFile_ );
+    InitializeData( strRootConfigFile_ );
 
     if( cmdLine.IsOptionSet( "-odb" ) )
     {
-        this->SetSplashText( tr("Lecture de l'ODB...") );
+        SetSplashText( tr("Lecture de l'ODB...") );
         bODBEditor_ = true;
-        this->ReadODB( cmdLine.GetOptionStrValue( "-odb", strODBFilename_ ) );
+        ReadODB( cmdLine.GetOptionStrValue( "-odb", strODBFilename_ ) );
     }
 
-    this->SetSplashText( tr("Initialisation de l'interface...") );
+    SetSplashText( tr("Initialisation de l'interface...") );
     pMainWindow_ = new MOS_MainWindow();
     pMainWindow_->show();
 
-    pSplashScreen_->finish( pMainWindow_ );
-    delete pSplashScreen_;
-    pSplashScreen_ = 0;
+    if( pSplashScreen_ )
+    {
+        pSplashScreen_->finish( pMainWindow_ );
+        delete pSplashScreen_;
+        pSplashScreen_ = 0;
+    }
 
     // Make sure the application exits when the main window is closed.
     connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
@@ -929,8 +935,8 @@ void MOS_App::NotifyTacticalLineDeleted( MOS_TacticalLine_ABC& line )
 // -----------------------------------------------------------------------------
 void MOS_App::SetSplashText( const QString& strText )
 {
-    assert( pSplashScreen_ != 0 );
-    pSplashScreen_->message( strText, Qt::AlignBottom | Qt::AlignHCenter, Qt::white );
+    if( pSplashScreen_ != 0 )
+        pSplashScreen_->message( strText, Qt::AlignBottom | Qt::AlignHCenter, Qt::white );
 }
 
 

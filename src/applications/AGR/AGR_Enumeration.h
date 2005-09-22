@@ -61,9 +61,15 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    std::string HumanName( const std::string& strValue ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    std::string strName_;
+    std::string     strName_;
     T_String_Vector valueList_;
     //@}
 };

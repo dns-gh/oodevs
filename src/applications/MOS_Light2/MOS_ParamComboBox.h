@@ -81,6 +81,7 @@ MOS_ParamComboBox<T>::MOS_ParamComboBox( T& output, const std::string strLabel, 
     pLabel_ = new QLabel( strLabel.c_str(), this );
     pLabel_->setAlignment( AlignVCenter | AlignLeft );
     pComboBox_ = new MT_ValuedComboBox<T>( this );
+    pComboBox_->setSorting( true );
 }
 
 

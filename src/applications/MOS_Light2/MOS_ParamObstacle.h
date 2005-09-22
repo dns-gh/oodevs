@@ -28,7 +28,6 @@
 
 class MOS_ParamLocation;
 
-
 // =============================================================================
 /** @class  MOS_ParamObstacle
     @brief  MOS_ParamObstacle
@@ -70,10 +69,10 @@ private:
     std::string             strMenuText_;
     ASN1T_MissionGenObject& asnObject_;
 
-    QComboBox*              pTypeCombo_;
-    QComboBox*              pUrgencyCombo_;
-    QComboBox*              pPreliminaryCombo_;
-    QComboBox*              pPriorityCombo_;
+    MT_ValuedComboBox< ASN1T_EnumObjectType >*  pTypeCombo_;
+    QComboBox*                                  pUrgencyCombo_;
+    QComboBox*                                  pPreliminaryCombo_;
+    QComboBox*                                  pPriorityCombo_;
 
     MOS_ParamLocation*      pLocation_;
     //@}

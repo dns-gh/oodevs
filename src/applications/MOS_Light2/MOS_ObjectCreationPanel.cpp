@@ -25,6 +25,8 @@
 #include "moc_MOS_ObjectCreationPanel.cpp"
 
 #include "MOS_App.h"
+#include "MOS_AgentServerController.h"
+#include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_MainWindow.h"
 #include "MOS_ParamLocation.h"
 #include "MOS_ParamAgent.h"
@@ -176,9 +178,11 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     for( MOS_AgentManager::CIT_TeamMap itTeam = teamMap.begin(); itTeam != teamMap.end(); ++itTeam )
         pTeamCombo_->AddItem( (*itTeam).second->GetName().c_str(), (*itTeam).first );
 
-    for( int n = 0; n < eNbrObjectType; ++n )
+    // sorted object list
+    pObjectTypeCombo_->setSorting( true );
+    for( uint n = 0; n < eNbrObjectType; ++n )
         pObjectTypeCombo_->AddItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n ).c_str(), (ASN1T_EnumObjectType)n );
-
+    
 
     MOS_App::GetApp().processEvents();
     pTeamCombo_->setMinimumWidth( pObjectTypeCombo_->width() );
@@ -281,7 +285,7 @@ void MOS_ObjectCreationPanel::OnObjectChanged()
 // -----------------------------------------------------------------------------
 void MOS_ObjectCreationPanel::OnOk()
 {
-    if( ! pLocation_->CheckValidity() )
+    if( ! pLocation_->CheckValidity() || ! MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
         return;
         
     if( MOS_App::GetApp().IsODBEdition() )

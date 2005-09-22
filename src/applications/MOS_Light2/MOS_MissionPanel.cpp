@@ -234,7 +234,8 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
             popupMenu.insertItem( tr( "Liens logistiques" ), this, SLOT( MagicChangeLogisticLinks() ) );
     }
 
-    if( agent.pSupplyData_ && ! agent.pSupplyData_->stocks_.empty() )
+    if(    ( agent.pSupplyData_     && ! agent.pSupplyData_->stocks_.empty() ) 
+        || ( agent.handledSupplies_.size() > 0 ) )
     {
         popupMenu.insertItem( tr( "Pousser flux" ), this, SLOT( MagicPushFlux() ) );
         popupMenu.insertItem( tr( "Changer quotas" ), this, SLOT( MagicChangeQuotas() ) );

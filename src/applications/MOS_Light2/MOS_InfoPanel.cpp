@@ -49,12 +49,12 @@
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 MOS_InfoPanel::MOS_InfoPanel( QWidget* pParent )
-    : QWidgetStack                  ( pParent )
-    , bAgentVisible_                ( false )
-    , bAgentKnowledgeVisible_       ( false )
+    : QWidgetStack              ( pParent )
+    , bAgentVisible_            ( false )
+    , bAgentKnowledgeVisible_   ( false )
     , bObjectKnowledgeVisible_  ( false )
     , bObjectVisible_           ( false )
-    , bLogisiticVisible_            ( false )
+    , bLogisiticVisible_        ( false )
 {
     this->setMinimumSize( 1, 1 );
 
@@ -112,8 +112,6 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( true );
         ShowLogisticPanels( true );
         ShowObjectPanel( false );
-
-        //pTabWidget_->setCurrentPage( 0 );
     }
 
     else if( selectedElement.pGtia_ != 0 )

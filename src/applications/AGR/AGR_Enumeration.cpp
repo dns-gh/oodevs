@@ -20,6 +20,8 @@
 #include "AGR_Enumeration.h"
 #include "AGR_Member.h"
 
+#include <boost/algorithm/string.hpp>
+#include <cstdio>
 #include <assert.h>
 
 // -----------------------------------------------------------------------------
@@ -64,6 +66,39 @@ void AGR_Enumeration::Read( MT_InputArchive_ABC& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_Enumeration::HumanName
+/** @param  strValue 
+    @return 
+*/
+// Created: SBO 2005-09-22
+// -----------------------------------------------------------------------------
+std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
+{
+    std::string strResult = strValue;
+
+    int nPos = strResult.find( '_' );
+    if( nPos != strResult.npos )
+        strResult.erase( 0, nPos + 1 );
+
+    boost::replace_all( strResult, "_", " " );
+
+    if( boost::is_lower()( strResult[ 0 ] ) )
+        strResult[ 0 ] = strResult[ 0 ] + 'A' - 'a';
+
+    std::string::iterator prevIt = strResult.begin();
+    for( std::string::iterator it = strResult.begin(); it != strResult.end(); )
+    {
+        if( boost::is_upper()( *it ) && boost::is_lower()( *prevIt ) )
+            it = strResult.insert( it, ' ' );
+
+        prevIt = it;
+        ++it;
+    }
+    boost::trim( strResult );
+    return strResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AGR_Enumeration::MosInitialisationCode
 // Created: AGE 2004-09-14
 // -----------------------------------------------------------------------------
@@ -86,9 +121,9 @@ std::string AGR_Enumeration::MosInitialisationCode( const AGR_Member& member ) c
 // -----------------------------------------------------------------------------
 std::string AGR_Enumeration::Mos2InitialisationCode( const AGR_Member& member ) const
 {
-    std::string strResult = "    MOS_ParamComboBox< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ",\"" + member.HumanName() + "\" );\n";
+    std::string strResult = "    MOS_ParamComboBox< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ", \"" + member.HumanName() + "\" );\n";
     for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues )
-        strResult += "    pSelector_" + member.ASNName() + "->AddItem( \"" + *itValues + "\", " + strName_ + "::" + *itValues + " );\n";
+        strResult += "    pSelector_" + member.ASNName() + "->AddItem( \"" + HumanName( *itValues ) + "\", " + strName_ + "::" + *itValues + " );\n";
     return strResult;
 }
 
