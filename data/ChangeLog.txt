@@ -20,6 +20,8 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+	- SBO - AstecV51 / MT_Qt les MT_ValuedComboBox sont maintenant triables et triées par défaut dans Astec
+    - SBO - AstecV69 crash encore moins lors de connections/deconnections, les panneaux d'infos sont nettoyés
 
 Version 1.0.2 [22/09/2005] - Codename 'mucus'
     - AGE - Nettoyages dans AstecV2-3D
