@@ -219,7 +219,8 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
          >> bSurrendered_
          >> bPrisoner_
          >> const_cast< MIL_CampPrisonniers*& >( pPrisonerCamp_ )
-         >> const_cast< MIL_CampRefugies*&    >( pRefugeeCamp_  );
+         >> const_cast< MIL_CampRefugies*&    >( pRefugeeCamp_  )
+         >> nTickRcDotationSupplyQuerySent_;
 
     if( pRefugeeCamp_ )
     {

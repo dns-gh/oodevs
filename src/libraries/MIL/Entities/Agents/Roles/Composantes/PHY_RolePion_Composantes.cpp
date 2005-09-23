@@ -270,7 +270,8 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
          & rEtatOps_
          & pMajorComposante_
          & nNeutralizationEndTimeStep_
-         & maintenanceComposanteStates_;
+         & maintenanceComposanteStates_
+         & nTickRcMaintenanceQuerySent_;
 }
 
 // =============================================================================
