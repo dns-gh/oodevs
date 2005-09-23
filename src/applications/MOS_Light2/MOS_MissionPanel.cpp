@@ -360,6 +360,7 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
     {
         case eOrdreConduite_ChangerReglesEngagement:
         case eOrdreConduite_ChangerPositionDebarquement:
+        case eOrdreConduite_AcquerirObjectif:
         case eOrdreConduite_Pion_ChangerDePosition:
         case eOrdreConduite_Pion_AppliquerFeux:
         case eOrdreConduite_Pion_RenforcerEnVSRAM:
@@ -369,11 +370,16 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
         case eOrdreConduite_ModifierTempsBordeeSante:
         case eOrdreConduite_ModifierPrioritesReparations:
         case eOrdreConduite_ModifierPrioritesBlesses:
-        case eOrdreConduite_Automate_ReconnaitreZoneImplantation:
+        case eOrdreConduite_ModifierPrioritesTactiquesBlesses:
+        case eOrdreConduite_ModifierPrioritesTactiquesReparations:
         case eOrdreConduite_Automate_RealiserVariantement:
         case eOrdreConduite_Automate_DesequiperSiteFranchissement:
         case eOrdreConduite_Automate_ReagirFaceAEni:
         case eOrdreConduite_Automate_AffecterPionAObstacle:
+        case eOrdreConduite_Automate_ReconnaitreZoneImplantation:
+        case eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement:
+        case eOrdreConduite_Automate_ActiverObstacle:
+        case eOrdreConduite_Automate_TransfererRenforts:
         {
             pMissionInterface_ = new MOS_FragmentaryOrderInterface( *pPopupAgent_, (uint)nOrderId, *this );
 
