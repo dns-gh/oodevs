@@ -53,7 +53,7 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
 
     pTypeCombo_ = new MT_ValuedComboBox< ASN1T_EnumObjectType >( this );
     // sorted obstacle type list
-    //pTypeCombo_->setSorting( true );
+    pTypeCombo_->setSorting( true );
     for( uint n = 0; n < eNbrObjectType; ++n )
         pTypeCombo_->AddItem( ENT_Tr::ConvertFromObjectType( (E_ObjectType)n ).c_str(), (ASN1T_EnumObjectType)n );
 
@@ -75,7 +75,7 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
 
     if( bOutsideData )
     {
-        pTypeCombo_       ->setCurrentItem( asnObject_.type_obstacle );
+        pTypeCombo_       ->SetCurrentItem( asnObject_.type_obstacle );
         pUrgencyCombo_    ->setCurrentItem( asnObject_.urgence       );
         pPreliminaryCombo_->setCurrentItem( asnObject_.preliminaire  );
         pPriorityCombo_   ->setCurrentItem( asnObject_.priorite      );
