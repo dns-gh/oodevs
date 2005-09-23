@@ -133,7 +133,13 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
 
     for( ADN_Composantes_Data::T_ComposanteInfos_Vector::iterator it = vAllComposantes.begin(); it != vAllComposantes.end(); ++it )
     {
-        new MT_ValuedListViewItem<int>( (int)(*it), &listView, (*it)->strName_.GetData().c_str() );
+        MT_ValuedListViewItem<int>* pItem = new MT_ValuedListViewItem<int>( (int)(*it), &listView, (*it)->strName_.GetData().c_str() );
+        for( uint i = 0; i < numRows(); ++i )
+            if( !strcmp( text( i, 0 ), (*it)->strName_.GetData().c_str() ) )
+            {
+                pItem->setEnabled( false );
+                break;
+            }
     }
     addMenu.insertItem( &listView );
 
