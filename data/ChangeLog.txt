@@ -23,6 +23,9 @@ Next Version - Codename ''
 	- SBO - AstecV51 / MT_Qt les MT_ValuedComboBox sont maintenant triables et triées par défaut dans Astec
     - SBO - AstecV69 crash encore moins lors de connections/deconnections, les panneaux d'infos sont nettoyés
 
+Version 1.0.3 [22/09/2005] - Codename 'humus'
+    - NLD/MCO - Bug fix dans ce putain de parser DIA
+
 Version 1.0.2 [22/09/2005] - Codename 'mucus'
     - AGE - Nettoyages dans AstecV2-3D
     - AGE/SBI - les consignes de ravitaillement sont affichées dans les informations des convois.
