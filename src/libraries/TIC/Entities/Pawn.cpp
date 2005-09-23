@@ -150,8 +150,8 @@ void Pawn::Aggregate()
 {
     if( !bIsAggregated_ )
     {
-    SendPlatformPositionToMos( true );
-    bIsAggregated_ = true;
+        SendPlatformPositionToMos( true );
+        bIsAggregated_ = true;
     }
 }
 
@@ -163,7 +163,7 @@ void Pawn::Disaggregate()
 {
     if(    ! bIsTransported_                                             // do not disaggreg when transported
         && !( pReinforcedPawn_  && pReinforcedPawn_->IsAggregated() ) )  // do not disaggreg when reinforcing an aggregated pawn
-    bIsAggregated_ = false;
+        bIsAggregated_ = false;
     else
         Aggregate();
 }
@@ -243,14 +243,18 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         rSpeed_ = asnMsg.vitesse;
         for( CIT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); ++it )
-            ( *it )->rSpeed_ = rSpeed_;
+            if( ( *it )->CanMove() )
+                ( *it )->rSpeed_ = rSpeed_;
+            else
+                ( *it )->rSpeed_ = 0.;
     }
 
     if( asnMsg.m.directionPresent )
     {
         nDirection_ = asnMsg.direction;
         for( CIT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); ++it )
-            ( *it )->nDirection_ = nDirection_;
+            if( ( *it )->CanMove() )
+                ( *it )->nDirection_ = nDirection_;
     }
 
     if( asnMsg.m.positionPresent )
@@ -260,7 +264,10 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
     {
         nHeight_ = asnMsg.hauteur;
         for( CIT_PlatformVector it = childPlatforms_.begin(); it != childPlatforms_.end(); it++ )
-            ( *it )->nHeight_ = nHeight_;
+            if( ( *it )->CanMove() )
+                ( *it )->nHeight_ = nHeight_;
+            else
+                ( *it )->nHeight_ = 0;
     }
 
     if( asnMsg.m.etat_operationnelPresent )
