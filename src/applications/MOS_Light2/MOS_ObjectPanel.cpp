@@ -35,6 +35,7 @@
 #include "MOS_Object_Camp.h"
 #include "MOS_Object_ROTA.h"
 #include "MOS_Object_ItineraireLogistique.h"
+#include <qgrid.h>
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel constructor
@@ -45,26 +46,21 @@
 MOS_ObjectPanel::MOS_ObjectPanel( QWidget* pParent )
     : MOS_InfoPanel_ABC ( pParent )
 {
-    delete layout(); // $$$$ AGE 2005-04-05: mouarf
+    InitializeGeneric             ( this );
+    InitializeSiteFranchissement  ( this );
+    InitializeCamp                ( this );
+    InitializeNBC                 ( this );
+    InitializeROTA                ( this );
+    InitializeItineraireLogistique( this );
 
-    QGridLayout* pLayout = new QGridLayout( this, 1, 2, 5 );
-    pLayout->setAutoAdd( true );
+    // $$$$ SBO 2005-09-23: QSpacerItem is insert as first element in layout...
+    //layout()->addItem( new QSpacerItem( 100, 50, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
+    QWidget* pSpacer = new QWidget( this );
+    pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
 
-    InitializeGeneric             ();
-    InitializeSiteFranchissement  ();
-    InitializeCamp                ();
-    InitializeNBC                 ();
-    InitializeROTA                ();
-    InitializeItineraireLogistique();
- 
-    new QWidget( this );
-    new QWidget( this );
-
-    pLayout->setRowStretch( 22, 100 );
-    pLayout->setRowSpacing( 22, 26 );
-
-    pApplyButton_ = new QPushButton( tr( "Appliquer" ), this );
-    pCancelButton_ = new QPushButton( tr( "Annuler" ), this );
+    QHBox* pHBox = new QHBox( this );
+    pApplyButton_  = new QPushButton( tr( "Appliquer" ), pHBox );
+    pCancelButton_ = new QPushButton( tr( "Annuler" )  , pHBox );
 
     connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
     connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
@@ -194,40 +190,12 @@ void MOS_ObjectPanel::OnClearSelection()
     pDotationConstructionLabel_ ->setText( "-" );
     pDotationValorisationLabel_ ->setText( "-" );
 
-    pCrossingWidthTitle_        ->hide();
-    pCrossingWidthLabel_        ->hide();
+    pCrossingGroup_->hide();
+    pNBCGroup_     ->hide();
+    pCampGroup_    ->hide();
+    pROTAGroup_    ->hide();
+    pItLogGroup_   ->hide();
 
-    pCrossingDepthTitle_        ->hide();
-    pCrossingDepthLabel_        ->hide();
-
-    pCrossingRiverSpeedTitle_   ->hide();
-    pCrossingRiverSpeedLabel_   ->hide();
-
-    pCrossingBanksNeedWorkTitle_->hide();
-    pCrossingBanksNeedWorkLabel_->hide();
-
-    pNBCAgentTitle_             ->hide();
-    pNBCAgentLabel_             ->hide();
-
-	pTC2Title_                  ->hide();
-	pTC2Label_                  ->hide();
-
-    pROTADangerTitle_           ->hide();
-    pROTADangerLabel_           ->hide();
-    pROTAAgentsNbcTitle_        ->hide();
-    pROTAAgentsNbcLabel_        ->hide();
-
-    pItLogEquippedTitle_        ->hide();
-    pItLogEquippedLabel_        ->hide();
-    pItLogFlowTitle_            ->hide();
-    pItLogFlowLabel_            ->hide();
-    pItLogWidthTitle_           ->hide();
-    pItLogWidthLabel_           ->hide();
-    pItLogLengthTitle_          ->hide();
-    pItLogLengthLabel_          ->hide();
-    pItLogMaxWeightTitle_       ->hide();
-    pItLogMaxWeightLabel_       ->hide();
-    
     pApplyButton_ ->setEnabled( false );
     pCancelButton_->setEnabled( false );
 }
@@ -236,135 +204,87 @@ void MOS_ObjectPanel::OnClearSelection()
 // Name: MOS_ObjectPanel::InitializeGeneric
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_ObjectPanel::InitializeGeneric()
+void MOS_ObjectPanel::InitializeGeneric( QWidget* pParent )
 {
-    new QLabel( tr( "Id:" ), this );
-    pIdLabel_ = new QLabel( this );
+    pGenericGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Informations" ), pParent );
 
-    new QLabel( tr( "Type:" ), this );
-    pObjectTypeLabel_ = new QLabel( this );
-
-    new QLabel( tr( "Position:" ), this );
-    pPositionLabel_ = new QLabel( this );
-
-    new QLabel( tr( "Construction:" ), this );
-    pPercentBuiltEdit_ = new QSpinBox( 0, 100, 1, this );
-    pPercentBuiltEdit_->setSuffix( "%" );
-
-    new QLabel( tr( "Valeur:" ), this );
-    pPercentValueEdit_ = new QSpinBox( 0, 100, 1, this );
-    pPercentValueEdit_->setSuffix( "%" );
-
-    new QLabel( tr( "Contournement:" ), this );
-    pPercentAroundEdit_ = new QSpinBox( 0, 100, 1, this );
-    pPercentAroundEdit_->setSuffix( "%" );
-
-    new QLabel( tr( "En préparation:" ), this );
-    pIsUnderPrepCheckBox_ = new QCheckBox( this );
-
-    new QLabel( tr( "Dotation construction:" ), this );
-    pDotationConstructionLabel_ = new QLabel( this );
-    new QLabel( tr( "Dotation valorisation:" ), this );
-    pDotationValorisationLabel_ = new QLabel( this );
+    AddRow( tr( "Id:" )                   , pIdLabel_                  , pGenericGroup_ );
+    AddRow( tr( "Type:" )                 , pObjectTypeLabel_          , pGenericGroup_ );
+    AddRow( tr( "Position:" )             , pPositionLabel_            , pGenericGroup_ );
+    AddRow( tr( "Construction:" )         , pPercentBuiltEdit_         , pGenericGroup_ );
+    AddRow( tr( "Valeur:" )               , pPercentValueEdit_         , pGenericGroup_ );
+    AddRow( tr( "Contournement:" )        , pPercentAroundEdit_        , pGenericGroup_ );
+    AddRow( tr( "En préparation:" )       , pIsUnderPrepCheckBox_      , pGenericGroup_ );
+    AddRow( tr( "Dotation construction:" ), pDotationConstructionLabel_, pGenericGroup_ );
+    AddRow( tr( "Dotation valorisation:" ), pDotationValorisationLabel_, pGenericGroup_ );
+    pGenericGroup_->show();
 }
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel::InitializeSiteFranchissement
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_ObjectPanel::InitializeSiteFranchissement()
+void MOS_ObjectPanel::InitializeSiteFranchissement( QWidget* pParent )
 {
-    pCrossingWidthTitle_ = new QLabel( tr( "Largeur:" ), this );
-    pCrossingWidthLabel_ = new QLabel( this );
-    pCrossingWidthTitle_->hide();
-    pCrossingWidthLabel_->hide();
+    pCrossingGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres spécifiques" ), pParent );
 
-    pCrossingDepthTitle_ = new QLabel( tr( "Profondeur:" ), this );
-    pCrossingDepthLabel_ = new QLabel( this );
-    pCrossingDepthTitle_->hide();
-    pCrossingDepthLabel_->hide();
-
-    pCrossingRiverSpeedTitle_ = new QLabel( tr( "Vitesse courant:" ), this );
-    pCrossingRiverSpeedLabel_ = new QLabel( this );
-    pCrossingRiverSpeedTitle_->hide();
-    pCrossingRiverSpeedLabel_->hide();
-
-    pCrossingBanksNeedWorkTitle_ = new QLabel( tr( "Berges à aménager:" ), this );
-    pCrossingBanksNeedWorkLabel_ = new QLabel( this );
-    pCrossingBanksNeedWorkTitle_->hide();
-    pCrossingBanksNeedWorkLabel_->hide();
+    AddRow( tr( "Largeur:" ), pCrossingWidthLabel_, pCrossingGroup_ );
+    AddRow( tr( "Profondeur:" ), pCrossingDepthLabel_, pCrossingGroup_ );
+    AddRow( tr( "Vitesse courant:" ), pCrossingRiverSpeedLabel_, pCrossingGroup_ );
+    AddRow( tr( "Berges à aménager:" ), pCrossingBanksNeedWorkLabel_, pCrossingGroup_ );
+    pCrossingGroup_->hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel::InitializeCamp
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_ObjectPanel::InitializeCamp()
+void MOS_ObjectPanel::InitializeCamp( QWidget* pParent )
 {
-    pTC2Title_ = new QLabel( tr( "TC2:" ), this );
-	pTC2Label_ = new QLabel( this );
-	pTC2Title_->hide();
-	pTC2Label_->hide();
+    pCampGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres spécifiques" ), pParent );
+
+    AddRow( tr( "TC2:" ), pTC2Label_, pCampGroup_ );
+    pCampGroup_->hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel::InitializeNBC
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_ObjectPanel::InitializeNBC()
+void MOS_ObjectPanel::InitializeNBC( QWidget* pParent )
 {
-    pNBCAgentTitle_ = new QLabel( tr( "Nuage/Zone Agent NBC:" ), this );
-    pNBCAgentLabel_ = new QLabel( this );
-    pNBCAgentTitle_->hide();
-    pNBCAgentLabel_->hide();
+    pNBCGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres spécifiques" ), pParent );
+
+    AddRow( tr( "Nuage/Zone Agent NBC:" ), pNBCAgentLabel_, pNBCGroup_ );
+    pNBCGroup_->hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel::InitializeROTA
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_ObjectPanel::InitializeROTA()
+void MOS_ObjectPanel::InitializeROTA( QWidget* pParent )
 {
-    pROTADangerTitle_ = new QLabel( tr( "Danger:" ), this );
-    pROTADangerLabel_ = new QLabel( this );
-    pROTADangerTitle_->hide();
-    pROTADangerLabel_->hide();
+    pROTAGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres spécifiques" ), pParent );
 
-    pROTAAgentsNbcTitle_ = new QLabel( tr( "Agents NBC:" ), this );
-    pROTAAgentsNbcLabel_ = new QLabel( this );
-    pROTAAgentsNbcTitle_->hide();
-    pROTAAgentsNbcLabel_->hide();
+    AddRow( tr( "Danger:" ), pROTADangerLabel_, pROTAGroup_ );
+    AddRow( tr( "Agents NBC:" ), pROTAAgentsNbcLabel_, pROTAGroup_ );
+    pROTAGroup_->hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectPanel::InitializeItineraireLogistique
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void MOS_ObjectPanel::InitializeItineraireLogistique()
+void MOS_ObjectPanel::InitializeItineraireLogistique( QWidget* pParent )
 {
-    pItLogEquippedTitle_ = new QLabel( tr( "Equipé:" ), this );
-    pItLogEquippedLabel_ = new QLabel( this );
-    pItLogEquippedTitle_->hide();
-    pItLogEquippedLabel_->hide();
+    pItLogGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Paramètres spécifiques" ), pParent );
 
-    pItLogFlowTitle_ = new QLabel( tr( "Débit:" ), this );
-    pItLogFlowLabel_ = new QLabel( this );
-    pItLogFlowTitle_->hide();
-    pItLogFlowLabel_->hide();
-
-    pItLogWidthTitle_ = new QLabel( tr( "Largeur:" ), this );
-    pItLogWidthLabel_ = new QLabel( this );
-    pItLogWidthTitle_->hide();
-    pItLogWidthLabel_->hide();
-
-    pItLogLengthTitle_ = new QLabel( tr( "Longueur:" ), this );
-    pItLogLengthLabel_ = new QLabel( this );
-    pItLogLengthTitle_->hide();
-    pItLogLengthLabel_->hide();
-
-    pItLogMaxWeightTitle_ = new QLabel( tr( "Poids supporté:" ), this );
-    pItLogMaxWeightLabel_ = new QLabel( this );
-    pItLogMaxWeightTitle_->hide();
-    pItLogMaxWeightLabel_->hide();
+    AddRow( tr( "Equipé:" ), pItLogEquippedLabel_, pItLogGroup_ );
+    AddRow( tr( "Débit:" ), pItLogFlowLabel_, pItLogGroup_ );
+    AddRow( tr( "Largeur:" ), pItLogWidthLabel_, pItLogGroup_ );
+    AddRow( tr( "Longueur:" ), pItLogLengthLabel_, pItLogGroup_ );
+    AddRow( tr( "Poids supporté:" ), pItLogMaxWeightLabel_, pItLogGroup_ );
+    pItLogGroup_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -398,20 +318,11 @@ void MOS_ObjectPanel::UpdateSiteFranchissement( MOS_Object_ABC& object )
 {
     MOS_Object_SiteFranchissement& obj = static_cast< MOS_Object_SiteFranchissement& >( object );
 
-    pCrossingWidthTitle_->show();
-    pCrossingWidthLabel_->show();
-    pCrossingWidthLabel_->setText( QString::number( obj.GetWidth() ) + " m" );
+    pCrossingGroup_->show();
 
-    pCrossingDepthTitle_->show();
-    pCrossingDepthLabel_->show();
-    pCrossingDepthLabel_->setText( QString::number( obj.GetDepth() ) + " m" );
-
-    pCrossingRiverSpeedTitle_->show();
-    pCrossingRiverSpeedLabel_->show();
-    pCrossingRiverSpeedLabel_->setText( QString::number( obj.GetSpeed() ) + " m/s" );
-
-    pCrossingBanksNeedWorkTitle_->show();
-    pCrossingBanksNeedWorkLabel_->show();
+    pCrossingWidthLabel_        ->setText( QString::number( obj.GetWidth() ) + " m" );
+    pCrossingDepthLabel_        ->setText( QString::number( obj.GetDepth() ) + " m" );
+    pCrossingRiverSpeedLabel_   ->setText( QString::number( obj.GetSpeed() ) + " m/s" );
     pCrossingBanksNeedWorkLabel_->setText( obj.MustConstruct() ? tr( "Oui" ) : tr( "Non" ) );
 }
 // -----------------------------------------------------------------------------
@@ -422,8 +333,7 @@ void MOS_ObjectPanel::UpdateCamp( MOS_Object_ABC& object )
 {
     MOS_Object_Camp& obj = static_cast< MOS_Object_Camp& >( object );
 
-	pTC2Title_->show();
-	pTC2Label_->show();
+    pCampGroup_->show();
 	pTC2Label_->setText( QString::number( obj.GetTC2ID() ) );
 }
 
@@ -435,8 +345,7 @@ void MOS_ObjectPanel::UpdateNBC( MOS_Object_ABC& object )
 {
     MOS_Object_NBC& obj = static_cast< MOS_Object_NBC& >( object );
 
-    pNBCAgentTitle_->show();
-    pNBCAgentLabel_->show();
+    pNBCGroup_->show();
     pNBCAgentLabel_->setText( (MOS_App::GetApp().GetNBCName( obj.GetAgentNbcId() )).c_str() );
 }
 // -----------------------------------------------------------------------------
@@ -447,12 +356,8 @@ void MOS_ObjectPanel::UpdateROTA( MOS_Object_ABC& object )
 {
     MOS_Object_ROTA& obj = static_cast< MOS_Object_ROTA& >( object );
 
-    pROTADangerTitle_->show();
-    pROTADangerLabel_->show();
+    pROTAGroup_->show();
     pROTADangerLabel_->setText( QString::number( obj.GetDanger() ) );
-
-    pROTAAgentsNbcTitle_->show();
-    pROTAAgentsNbcLabel_->show();
     const std::vector< uint >& agents = obj.GetNBCAgents();
     std::stringstream ss;
     for( uint i = 0; i < agents.size(); ++i )
@@ -461,7 +366,6 @@ void MOS_ObjectPanel::UpdateROTA( MOS_Object_ABC& object )
             ss << ", ";
         ss << MOS_App::GetApp().GetNBCName( agents[ i ] );
     }
-
     pROTAAgentsNbcLabel_->setText( ss.str().c_str() );
 }
 
@@ -473,23 +377,41 @@ void MOS_ObjectPanel::UpdateItineraireLogistique( MOS_Object_ABC& object )
 {
     MOS_Object_ItineraireLogistique& obj = static_cast< MOS_Object_ItineraireLogistique& >( object );
 
-    pItLogEquippedTitle_->show();
-    pItLogEquippedLabel_->show();
-    pItLogEquippedLabel_->setText( obj.IsEquipped() ? tr( "oui" ) : tr( "non" ) );
-
-    pItLogFlowTitle_->show();
-    pItLogFlowLabel_->show();
-    pItLogFlowLabel_->setText( QString::number( obj.GetFlow() ) + " veh/h" );
-
-    pItLogWidthTitle_->show();
-    pItLogWidthLabel_->show();
-    pItLogWidthLabel_->setText( QString::number( obj.GetWidth() ) + " m" );
-
-    pItLogLengthTitle_->show();
-    pItLogLengthLabel_->show();
-    pItLogLengthLabel_->setText( QString::number( obj.GetLength() ) + " m" );
-
-    pItLogMaxWeightTitle_->show();
-    pItLogMaxWeightLabel_->show();
+    pItLogGroup_->show();
+    pItLogEquippedLabel_ ->setText( obj.IsEquipped() ? tr( "oui" ) : tr( "non" ) );
+    pItLogFlowLabel_     ->setText( QString::number( obj.GetFlow() ) + " veh/h" );
+    pItLogWidthLabel_    ->setText( QString::number( obj.GetWidth() ) + " m" );
+    pItLogLengthLabel_   ->setText( QString::number( obj.GetLength() ) + " m" );
     pItLogMaxWeightLabel_->setText( QString::number( obj.GetMaxWeight() ) + " t" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectPanel::AddRow
+// Created: SBO 2005-09-23
+// -----------------------------------------------------------------------------
+void MOS_ObjectPanel::AddRow( const QString& strLabel, QLabel*& pValueLabel, QWidget* pParent )
+{
+    new QLabel( strLabel, pParent );
+    pValueLabel = new QLabel( pParent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectPanel::AddRow
+// Created: SBO 2005-09-23
+// -----------------------------------------------------------------------------
+void MOS_ObjectPanel::AddRow( const QString& strLabel, QSpinBox*& pValueSpinBox, QWidget* pParent )
+{
+    new QLabel( strLabel, pParent );
+    pValueSpinBox = new QSpinBox( 0, 100, 1, pParent );
+    pValueSpinBox->setSuffix( "%" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectPanel::AddRow
+// Created: SBO 2005-09-23
+// -----------------------------------------------------------------------------
+void MOS_ObjectPanel::AddRow( const QString& strLabel, QCheckBox*& pValueCheckBox, QWidget* pParent )
+{
+    new QLabel( strLabel, pParent );
+    pValueCheckBox = new QCheckBox( pParent );
 }

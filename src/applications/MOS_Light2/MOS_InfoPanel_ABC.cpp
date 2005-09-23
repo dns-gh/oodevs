@@ -37,7 +37,7 @@ MOS_InfoPanel_ABC::MOS_InfoPanel_ABC( QWidget* pParent )
     addChild( pBox_ );
     setResizePolicy( AutoOneFit );
     setFrameStyle( QFrame::Box | QFrame::Sunken );
-    connect( &MOS_App::GetApp(), SIGNAL( AgentUpdated( MOS_Agent& ) ),           this, SLOT( OnAgentUpdated( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( AgentUpdated( MOS_Agent& ) ),       this, SLOT( OnAgentUpdated( MOS_Agent& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectUpdated( MOS_Object_ABC& ) ), this, SLOT( OnObjectUpdated( MOS_Object_ABC& ) ) );
 }
 
@@ -97,6 +97,17 @@ void MOS_InfoPanel_ABC::OnObjectUpdated( MOS_Object_ABC& )
 void MOS_InfoPanel_ABC::OnUpdate()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_InfoPanel_ABC::layout
+// Created: SBO 2005-09-23
+// -----------------------------------------------------------------------------
+QLayout* MOS_InfoPanel_ABC::layout()
+{
+    if( !pBox_ )
+        return 0;
+    return pBox_->layout();
 }
 
 // -----------------------------------------------------------------------------
