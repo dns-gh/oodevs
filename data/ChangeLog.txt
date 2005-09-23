@@ -23,6 +23,7 @@ Next Version - Codename ''
 	- SBO - AstecV51 / MT_Qt les MT_ValuedComboBox sont maintenant triables et triées par défaut dans Astec
     - SBO - AstecV69 crash encore moins lors de connections/deconnections, les panneaux d'infos sont nettoyés
     - NLD - AstecV666 - bug fix : impossibilité de saisir les paramètres certains ordres de conduite
+    - NLD - Nouvelle fonction DEC pour les pions : DEC_Automate_SetMissionLimaFlag, permettant de flager tous toutes les limas d'une compagnie (ou equivalent) depuis un pion
 
 Version 1.0.3 [22/09/2005] - Codename 'humus'
     - NLD/MCO - Bug fix dans ce putain de parser DIA

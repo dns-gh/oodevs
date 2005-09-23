@@ -236,11 +236,12 @@ signatures
     B                                A::DEC_PeutReleverPion   ( A /*T_Pion*/ );        
     
     // Limas / Missions
-    B                                A::DEC_NouvelleMission   ();    
-    V                                A::DEC_FinMission        ();    
-    B                                A::DEC_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
-    B                                A::DEC_GetMissionLimaFlag( U /*T_Lima*/ );
-    U /*T_Lima*/                     A::DEC_GetLima           ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé
+    B                                A::DEC_NouvelleMission            ();    
+    V                                A::DEC_FinMission                 ();    
+    B                                A::DEC_SetMissionLimaFlag         ( U /*T_Lima*/, B /*bFlag*/ );
+    B                                A::DEC_GetMissionLimaFlag         ( U /*T_Lima*/ );
+    U /*T_Lima*/                     A::DEC_GetLima                    ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé
+    B                                A::DEC_Automate_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
 
     // Geometrie
     U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionAppui                    ( A /*T_Pion*/, R /*rDist*/ ); 

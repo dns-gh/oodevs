@@ -51,6 +51,19 @@ void DEC_OrdersFunctions::SetMissionLimaFlag( DIA_Call_ABC& call, T& caller )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::AutomateSetMissionLimaFlag
+// Created: NLD 2005-09-23
+// -----------------------------------------------------------------------------
+inline
+void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_AgentPion& caller )
+{
+    const MIL_Lima* pLima = call.GetParameter( 0 ).ToUserPtr( pLima );
+    assert( pLima );
+    const bool bOut = caller.GetAutomate().GetOrderManager().SetMissionLimaFlag( *pLima, call.GetParameter( 1 ).ToBool() );
+    call.GetResult().SetValue( bOut );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_ABC::GetMissionLimaFlag
 // Created: NLD 2003-12-23
 // -----------------------------------------------------------------------------

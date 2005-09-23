@@ -34,9 +34,11 @@ public:
 
 
     // Limas
-    template< typename T > static void SetMissionLimaFlag ( DIA_Call_ABC& call,       T& caller );
-    template< typename T > static void GetMissionLimaFlag ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetLima            ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void SetMissionLimaFlag        ( DIA_Call_ABC& call,       T& caller );
+    template< typename T > static void GetMissionLimaFlag        ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetLima                   ( DIA_Call_ABC& call, const T& caller );
+                           static void AutomateSetMissionLimaFlag( DIA_Call_ABC& call,       MIL_AgentPion& caller );
+
 
     // Automate
     static void MRT_CreatePionMission               ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );

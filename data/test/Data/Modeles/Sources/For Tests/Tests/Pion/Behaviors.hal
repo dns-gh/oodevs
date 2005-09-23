@@ -360,6 +360,10 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 
         if( DIA_ModuleBegins() )
         {
+            T_Lima lima = DEC_GetLima( eTypeLima_LC );
+            if( lima != 0 )
+                DEC_Automate_SetMissionLimaFlag( lima, true );
+                
             DEC_InterdireEvacuationAutomatiqueBlesses( myself );
                     
             T_ListePoints echantillon = DEC_Geometrie_DecouperListePoints( mission.itineraire_, 7 );
