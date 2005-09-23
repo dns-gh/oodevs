@@ -48,6 +48,7 @@
           <OrdresConduite>
             <OrdreConduite nom="AttendreSePoster"/>
             <OrdreConduite nom="ChangerPositionDebarquement"/>
+            <OrdreConduite nom="Automate ActiverObstacle"/>
           </OrdresConduite>
         </Mission>
         <Mission nom="Pion Test ChangePosture"/>
@@ -126,6 +127,7 @@
       <Missions>
         <Mission nom="Automate Test MoveTo"/>
         <Mission nom="Automate FaireMouvementVersCampRefugies"/>
+        <Mission nom="Automate GEN RealiserSystemeObstacles"/>        
       </Missions>
     </Modele>
   </Automates>

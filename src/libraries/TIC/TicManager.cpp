@@ -166,7 +166,7 @@ void TicManager::LoadScipioConfigFile( const std::string& strScipioConfigFile )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir    ( strCurrentDir );
-        MT_LOG_ERROR_MSG( exception.what().c_str() << "Tic - Parse error" );
+        MT_LOG_ERROR_MSG( exception.what() << "Tic - Parse error" );
         throw;
     }
 }

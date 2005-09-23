@@ -23,22 +23,11 @@
       libraries
     ============================================================================
     -->
-    <target name="libraries" description="build static library"
+    
+    <!-- SCIPIO -->
+    <target name="libraries.SCIPIO" description="build static library"
             depends="library.MT_Tools_Scipio,library.TER,library.ASN,library.MIL,library.Missions,library.GFX,library.ENT"/>
-
-    <target name="library.TIC" description="build TIC static library" depends="library.ASN,library.MT_Tools_Scipio">
-        <build-lib name="TIC">
-            <includepath path="${include.dir}/ASN"/>
-        </build-lib>
-    </target>
-
-    <target name="library.TIC_Export" description="build TIC_Export static library" depends="library.TIC">
-        <build-lib name="TIC_Export">
-            <includepath path="${libraries.dir}/TIC"/>
-            <includepath path="${include.dir}/ASN"/>
-        </build-lib>
-    </target>
-
+            
     <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
         <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
     </target>
@@ -74,47 +63,49 @@
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT"/>
     </target>
+    
+    <!-- TIC -->
+    <target name="libraries.TIC" description="build static library"
+            depends="library.TIC, library.TIC_Export"/>
+            
+    <target name="library.TIC" description="build TIC static library" depends="library.ASN,library.MT_Tools_Scipio">
+        <build-lib name="TIC">
+            <includepath path="${include.dir}/ASN"/>
+        </build-lib>
+    </target>
 
+    <target name="library.TIC_Export" description="build TIC_Export dynamic library" depends="library.TIC">
+        <build-lib name="TIC_Export" outtype="shared" debug="false">
+            <defineset define="ENGINE_EXPORT"/>
+            <libset dir="${lib.dir}/vc71" libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
+                                                MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,MT_Time,MT_Thread,MT_Memory,
+                                                pathfind,geocoord,
+                                                TIC,ASN,
+                                                boost_thread-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32,
+                                                asn1per,xerces-c_2"/>
+            <syslibset libs="user32,wsock32,winmm"/>
+            <includepath path="${libraries.dir}/TIC"/>
+            <includepath path="${include.dir}/ASN"/>
+        </build-lib>
+    </target>
+    
 
     <!--
     ============================================================================
      applications
     ============================================================================
     -->
-    <target name="applications" description="build executables" depends="applications.SCIPIO"/>
-
+    
+    <!-- SCIPIO -->
     <target name="applications.SCIPIO" description="build SCIPIO executables"
             depends="application.SIM,application.ADN,application.MOS_Light,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
-
-    <target name="applications.TIC" description="build TIC executables"
-            depends="application.TIC_Sample,application.TIC_XmlExporter"/>
-
-    <target name="application.TIC_Sample" description="build TIC_Sample executable" depends="library.TIC_Export">
-        <build-app name="TIC_Sample"
-                   subsystem="console"
-                   libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,MT_Time,MT_Thread,MT_Memory,
-                         pathfind,geocoord,
-                         TIC_Export,TIC,ASN,
-                         boost_thread-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32,
-                         asn1per,xerces-c_2">
-            <includepath path="${include.dir}/ASN"/>
-            <includepath path="${libraries.dir}/TIC_Export"/>
-            <syslibset libs="user32,wsock32,winmm"/>
-        </build-app>
-    </target>
 
     <target name="application.TIC_XmlExporter" description="build TIC_XmlExporter executable" depends="library.TIC_Export,library.MT_Tools_Scipio">
         <build-app name="TIC_XmlExporter"
                    subsystem="console"
-                   libs="NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools,MT_IO,MT_Logger,MT_Archive,MT_XmlTools,MT_Time,MT_Thread,MT_Memory,
-                         pathfind,geocoord,
-                         TIC_Export,TIC,ASN,
-                         boost_thread-vc71-mt-1_32,libboost_date_time-vc71-mt-1_32,
-                         asn1per,xerces-c_2">
-            <includepath path="${include.dir}/ASN"/>
-            <includepath path="${libraries.dir}/TIC_Export"/>
+                   libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,
+                         TIC_Export,
+                         xerces-c_2">
             <syslibset libs="user32,wsock32,winmm"/>
         </build-app>
     </target>
@@ -248,6 +239,19 @@
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
+   
+   
+    <!-- TIC -->
+    <target name="applications.TIC" description="build TIC executables"
+            depends="application.TIC_Sample,application.TIC_XmlExporter"/>
+
+    <target name="application.TIC_Sample" description="build TIC_Sample executable" depends="library.TIC_Export">
+        <build-app name="TIC_Sample"
+                   subsystem="console"
+                   libs="TIC_Export">
+            <syslibset libs="user32,wsock32,winmm"/>
+        </build-app>
+    </target>
 
     <!--
     ============================================================================
@@ -336,7 +340,11 @@
       main
     ============================================================================
     -->
-    <target name="build" depends="libraries,applications"/>
+    <target name="build.SCIPIO" depends="libraries.SCIPIO,applications.SCIPIO"/>
+    
+    <target name="build.TIC"    depends="libraries.TIC,applications.TIC"/>
+    
+    <target name="build" depends="build.SCIPIO,build.TIC"/>
 
     <target name="all" depends="configure,build,test" description="build and package distribution"/>
 

@@ -101,7 +101,7 @@ void Config::LoadParameters()
     }
     catch( MT_ArchiveLogger_Exception& exception )
     {
-        MT_LOG_ERROR_MSG( "Parse error " << exception.what().c_str() );
+        MT_LOG_ERROR_MSG( "Parse error " << exception.what() );
         MT_ChangeDir( strCurrentDir );
         throw;
     }
@@ -225,7 +225,7 @@ void Config::LoadDisaggregationParameters( Workspace& workspace )
     catch( MT_ArchiveLogger_Exception& exception )
     {
         MT_ChangeDir( strCurrentDir );
-        MT_LOG_ERROR_MSG( "Parse error " << exception.what().c_str() );
+        MT_LOG_ERROR_MSG( "Parse error " << exception.what() );
         throw;
     }
     catch( std::exception& exception )

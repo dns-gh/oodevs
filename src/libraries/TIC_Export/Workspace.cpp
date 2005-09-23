@@ -53,11 +53,11 @@ Workspace::Workspace( Callback_ABC&      callback,
 {
     try
     {
-    TIC::TicManager::Initialize( callback, strServer, nPort, strMainConfigFile, strPlatformNatureFile );
+        TIC::TicManager::Initialize( callback, strServer, nPort, strMainConfigFile, strPlatformNatureFile );
     }
     catch( MT_ArchiveLogger_Exception& e )
     {
-        throw std::exception( e.what().c_str() );
+        throw std::exception( e.what() );
     }
 }
 

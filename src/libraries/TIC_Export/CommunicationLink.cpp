@@ -16,9 +16,11 @@
 //
 // *****************************************************************************
 
-#include "TIC/Types.h"
 #include "CommunicationLink.h"
+
 #include "Communication.h"
+
+#include "TIC/Types.h"
 #include "TIC/Communications/CommunicationLink.h"
 #include "TIC/Communications/CommunicationManager.h"
 

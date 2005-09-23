@@ -196,3 +196,11 @@ behavior MIS_Automate_CDT_FaireMouvementVersCampRefugies( T_Mission_Automate_Fai
         DEC_Automate_ChangeEtatPriseEnCompteRefugies( false );
     }
 }
+
+behavior MIS_Automate_MRT_GEN_RealiserSystemeObstacles( T_Mission_Automate_GEN_RealiserSystemeObstacles mission, id nDummy )
+{
+}
+
+behavior MIS_Automate_CDT_GEN_RealiserSystemeObstacles( T_Mission_Automate_GEN_RealiserSystemeObstacles mission, id nDummy )
+{
+}
