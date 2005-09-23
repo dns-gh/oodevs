@@ -187,7 +187,9 @@ void MOS_Object_ABC::ReadODB( MOS_InputArchive& archive )
     while( archive.NextListElement() )
     {
         std::string strPos;
-        archive.ReadField( "Point", strPos );
+        archive.Section( "Point" );
+            archive.Read( strPos );
+        archive.EndSection(); // Point
         MT_Vector2D vPos;
         MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( strPos, vPos );
         pointVector_.push_back( vPos );
