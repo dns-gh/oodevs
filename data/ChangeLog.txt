@@ -24,6 +24,8 @@ Next Version - Codename ''
     - SBO - AstecV69 crash encore moins lors de connections/deconnections, les panneaux d'infos sont nettoyés
     - NLD - AstecV666 - bug fix : impossibilité de saisir les paramètres certains ordres de conduite
     - NLD - Nouvelle fonction DEC pour les pions : DEC_Automate_SetMissionLimaFlag, permettant de flager tous toutes les limas d'une compagnie (ou equivalent) depuis un pion
+    - NLD - Bug fix : Le passage d'ordre de conduite automate->pion ne fonctionne pas quand le pion n'a pas de mission (même qd ordre de conduite pouvant être spécifiquement donné sans mission ...)
+    - NLD - DEC_PeutReleverXX() renvoit 'false' si le pion à relever n'a pas de mission
 
 Version 1.0.3 [22/09/2005] - Codename 'humus'
     - NLD/MCO - Bug fix dans ce putain de parser DIA

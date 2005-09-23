@@ -229,7 +229,7 @@ bool MIL_PionOrderManager::CanRelievePion( const MIL_AgentPion& pion ) const
 
     MIL_PionMission_ABC* pCopyMission = pion.GetOrderManager().pMission_; //$$$ CRADE
     if( !pCopyMission )
-        return true;
+        return false;
 
     const MIL_PionMissionType& copyMissionType = pCopyMission->GetType();
     return pion_.GetType().GetModel().IsMissionAvailable( copyMissionType );
@@ -330,13 +330,7 @@ void MIL_PionOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrderCondui
 //-----------------------------------------------------------------------------
 void MIL_PionOrderManager::OnReceiveOrderConduite( DIA_Parameters& diaParams )
 {
-    if( !pMission_ )
-    {
-        MT_LOG_ERROR( "Agent has no initial order ", 1, "MIL_OrderManager_ABC::OnReceivePionOrderConduite" );
-        return;
-    }
-
-    if( pion_.GetAutomate().IsEmbraye() )
+    if( !pion_.GetAutomate().IsEmbraye() )
     {
         MT_LOG_ERROR( "Agent cannot receive order conduite from automate ", 2, "MIL_OrderManager_ABC::OnReceivePionOrderConduite" );
         return;
