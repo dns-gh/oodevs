@@ -20,6 +20,12 @@ TODO de merde
         -> + DIA   
 
 Next Version - Codename ''
+    - NLD - L'init de la SIM ne s'arrête plus si DIA ne peut pas écrire ses fichiers de debug (répertoires en lecture seul ...)
+
+Version 1.0.5 [24/09/2005] - Codename 'jusqu'au bout de la nuit ...'
+    - NLD - Bug fix : désynchronisation sauvegarde <-> reprise => SV/REP inutilisable (crash à la reprise ...)
+
+Version 1.0.4 [23/09/2005] - Codename 'coupe au bol'
 	- SBO - AstecV51 / MT_Qt les MT_ValuedComboBox sont maintenant triables et triées par défaut dans Astec
     - SBO - AstecV69 crash encore moins lors de connections/deconnections, les panneaux d'infos sont nettoyés
     - NLD - AstecV666 - bug fix : impossibilité de saisir les paramètres certains ordres de conduite
