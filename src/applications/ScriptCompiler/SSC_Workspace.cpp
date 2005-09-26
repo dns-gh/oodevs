@@ -285,7 +285,14 @@ void SSC_Workspace::Initialize( MT_InputArchive_ABC& initArchive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Field 'DIA::Models' doesn't exist", initArchive.RetrieveLastError()->GetInfo() );
     InitializeModels( strModelsFile, bNeedScriptParsing, strArchivePath, strSourcePath );
     
-    DIA_Workspace::Instance().WriteDebugFile( "." );
+    try
+    {
+        DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
+    }
+    catch( std::exception& e )
+    {
+        std::cerr << "Error when writing DIA debug files : DIA debugging won't work" << std::endl;
+    }
     initArchive.EndSection(); // Decisionnel
 }
 
