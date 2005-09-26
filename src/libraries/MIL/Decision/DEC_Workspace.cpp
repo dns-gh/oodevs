@@ -343,7 +343,14 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.GetExceptionMessage() );
     }
     
-    DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
+    try
+    {
+        DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error when writing DIA debug files : DIA debugging won't work" );
+    }
 
     // Debugger
     uint nDebuggerPort;
