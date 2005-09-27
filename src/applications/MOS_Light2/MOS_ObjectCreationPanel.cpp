@@ -285,7 +285,10 @@ void MOS_ObjectCreationPanel::OnObjectChanged()
 // -----------------------------------------------------------------------------
 void MOS_ObjectCreationPanel::OnOk()
 {
-    if( ! pLocation_->CheckValidity() || ! MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if( ! pLocation_->CheckValidity() )
+        return;
+    if( ! MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer()
+     && ! MOS_App::GetApp().IsODBEdition() )
         return;
         
     if( MOS_App::GetApp().IsODBEdition() )
