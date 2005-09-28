@@ -91,6 +91,9 @@ protected:
     void CreateNumeric            ( ASN1INT&  asn                  , const std::string& strName );
     void CreateNumeric            ( ASN1REAL& asn                  , const std::string& strName );
 
+    void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName );
+    void CreateMedicalPriorities    ( ASN1T_SantePriorites&       asn, const std::string& strName );
+
     template < class T >
     MOS_ParamComboBox< T >& CreateVarList( T& value, const std::string& strName )
     {

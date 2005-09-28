@@ -195,6 +195,16 @@ const T_MosId_String_Map& MOS_App::GetResourceNames() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_App::GetEquipmentNames
+// Created: SBO 2005-09-27
+// -----------------------------------------------------------------------------
+inline
+const T_MosId_String_Map& MOS_App::GetEquipmentNames() const
+{
+    return equipementNameMap_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_App::GetNBCID
 // Created: SBO 2005-09-05
 // -----------------------------------------------------------------------------

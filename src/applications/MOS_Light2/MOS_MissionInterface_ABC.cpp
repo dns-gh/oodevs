@@ -45,6 +45,8 @@
 #include "MOS_ParamObstacleList.h"
 #include "MOS_ParamDirection.h"
 #include "MOS_ParamNumericField.h"
+#include "MOS_ParamEquipmentList.h"
+#include "MOS_ParamHumanWoundList.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionInterface_ABC constructor
@@ -418,4 +420,28 @@ void MOS_MissionInterface_ABC::CreateNumeric( ASN1INT& asn, const std::string& s
 void MOS_MissionInterface_ABC::CreateNumeric( ASN1REAL& asn, const std::string& strName )
 {
     paramVector_.push_back( new MOS_ParamNumericField( asn, 0.0f, 9999.0f, 0.0f, strName, this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionInterface_ABC::CreateMaintenancePriorities
+/** @param  asn 
+    @param  strName 
+*/
+// Created: SBO 2005-09-27
+// -----------------------------------------------------------------------------
+void MOS_MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName )
+{
+    paramVector_.push_back( new MOS_ParamEquipmentList( asn, strName, this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionInterface_ABC::CreateMedicalPriorities
+/** @param  asn 
+    @param  strName 
+*/
+// Created: SBO 2005-09-27
+// -----------------------------------------------------------------------------
+void MOS_MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, const std::string& strName )
+{
+    paramVector_.push_back( new MOS_ParamHumanWoundList( asn, strName, this ) );
 }
