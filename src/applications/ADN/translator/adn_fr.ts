@@ -113,7 +113,7 @@
     </message>
     <message>
         <source>Unit</source>
-        <translation>Pions</translation>
+        <translation type="obsolete">Pions</translation>
     </message>
     <message>
         <source>Force ratio feedback time</source>
@@ -129,7 +129,7 @@
     </message>
     <message>
         <source>Composante</source>
-        <translation>Composantes</translation>
+        <translation type="obsolete">Composantes</translation>
     </message>
     <message>
         <source>%1 x %2 %3</source>
@@ -157,7 +157,7 @@
     </message>
     <message>
         <source>%1 x %2 %3 [ %4 ]</source>
-        <translation>%1 x %2 %3 [ %4 ]</translation>
+        <translation type="obsolete">%1 x %2 %3 [ %4 ]</translation>
     </message>
     <message>
         <source>%1 x %2 [ %3/%4/%5 ]</source>
@@ -169,7 +169,27 @@
     </message>
     <message>
         <source>%1 %2 [ %3 ]</source>
-        <translation>%1 %2 [ %3 ]</translation>
+        <translation type="obsolete">%1 %2 [ %3 ]</translation>
+    </message>
+    <message>
+        <source>Automata [ off/sic/troop ]</source>
+        <translation>Automate [ off/s.off/mdr ]</translation>
+    </message>
+    <message>
+        <source>Unit [ off/sic/troop ]</source>
+        <translation>Pion [ off/s.off/mdr ]</translation>
+    </message>
+    <message>
+        <source>Composante [ off/sic/troop ]</source>
+        <translation>Composante [ off/s.off/mdr ]</translation>
+    </message>
+    <message>
+        <source>%1 x %2 x %3 [ %4 ]</source>
+        <translation>%1 x %2 x %3 [ %4 ]</translation>
+    </message>
+    <message>
+        <source>%1 x %2 [ %3 ]</source>
+        <translation>%1 x %2 [ %3 ]</translation>
     </message>
 </context>
 <context>

@@ -125,15 +125,15 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 
     // Setup the header.
     pTable->setNumCols( 3 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Automata" ) );
-    pTable->horizontalHeader()->setLabel( 1, tr( "Unit" ) );
-    pTable->horizontalHeader()->setLabel( 2, tr( "Composante" ) );
+    pTable->horizontalHeader()->setLabel( 0, tr( "Automata [ off/sic/troop ]" ) );
+    pTable->horizontalHeader()->setLabel( 1, tr( "Unit [ off/sic/troop ]" ) );
+    pTable->horizontalHeader()->setLabel( 2, tr( "Composante [ off/sic/troop ]" ) );
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Automata" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Unit" ) );
-    builder.AddTableCell( pTable, 0, 2, tr( "Composante" ) );
+    builder.AddTableCell( pTable, 0, 0, tr( "Automata [ off/sic/troop ]" ) );
+    builder.AddTableCell( pTable, 0, 1, tr( "Unit [ off/sic/troop ]" ) );
+    builder.AddTableCell( pTable, 0, 2, tr( "Composante [ off/sic/troop ]" ) );
     pTable->hideRow( 0 );
     pTable->AddBoldGridRow( 0 );
     pTable->sortColumn( 0, true, true );
@@ -183,7 +183,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 QString strText;
                 if( pUnitInfos != 0 )
                 {
-                    strText = tr( "%1 x %2 %3 [ %4 ]" );
+                    strText = tr( "%1 x %2 x %3 [ %4 ]" );
                     strText = strText.arg( pUnitInfos->strNbrRegExp_.GetData().c_str() )
                                      .arg( (*it3)->nNb_.GetData() )
                                      .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
@@ -191,7 +191,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 }
                 else
                 {
-                    strText = tr( "%1 %2 [ %3 ]" );
+                    strText = tr( "%1 x %2 [ %3 ]" );
                     strText = strText.arg( (*it3)->nNb_.GetData() )
                                      .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
                                      .arg( (*it3)->ptrComposante_.GetData()->nTroopTransportCapacity_.GetData() );
