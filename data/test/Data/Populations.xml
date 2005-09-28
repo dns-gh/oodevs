@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Populations>
+    <Population nom="test1">
+        <MosID>1</MosID>
+        <DensiteConcentration>1</DensiteConcentration>
+        <DensiteNominaleDeplacement>1</DensiteNominaleDeplacement>
+    </Population>
+    
+    <Population nom="test2">
+        <MosID>2</MosID>
+        <DensiteConcentration>2</DensiteConcentration>
+        <DensiteNominaleDeplacement>2</DensiteNominaleDeplacement>
+    </Population>
+  
+</Populations>

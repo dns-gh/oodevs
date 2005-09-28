@@ -261,6 +261,16 @@ NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ChangeDiplomatie           , change_diploma
 NET_GENERATE_SEND_ASN_MSG_NOPTR_CTX  ( LogRavitaillementChangeQuotasAck, log_ravitaillement_change_quotas_ack )
 NET_GENERATE_SEND_ASN_MSG_NOPTR_CTX  ( LogRavitaillementPousserFluxAck , log_ravitaillement_pousser_flux_ack  )
 
+// Population
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationCreation                , population_creation                  )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationUpdate                  , population_update                    )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationCreation   , population_concentration_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationDestruction, population_concentration_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationUpdate     , population_concentration_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxCreation            , population_flux_creation             )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxDestruction         , population_flux_destruction          )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxUpdate              , population_flux_update               )
+
 #endif // __NET_ASN_Messages_h_
 
 

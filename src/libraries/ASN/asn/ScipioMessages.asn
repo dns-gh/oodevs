@@ -141,7 +141,16 @@ IMPORTS MsgLogRavitaillementTraitementCreation,
         MsgLogRavitaillementPousserFlux,
         MsgLogRavitaillementPousserFluxAck,
         MsgLogRavitaillementChangeQuotas,
-        MsgLogRavitaillementChangeQuotasAck FROM ScipioLogRavitaillement;
+        MsgLogRavitaillementChangeQuotasAck FROM ScipioLogRavitaillement
+        
+IMPORTS MsgPopulationCreation,
+        MsgPopulationUpdate,
+        MsgPopulationConcentrationCreation,
+        MsgPopulationConcentrationDestruction,
+        MsgPopulationConcentrationUpdate,
+        MsgPopulationFluxCreation,
+        MsgPopulationFluxDestruction,
+        MsgPopulationFluxUpdate FROM ScipioPopulation;              
 
 --
 -- Messages globaux
@@ -223,9 +232,18 @@ MsgsSimMos ::= CHOICE
     msg-log-ravitaillement-traitement-update                MsgLogRavitaillementTraitementUpdate,
     msg-log-ravitaillement-traitement-destruction           MsgLogRavitaillementTraitementDestruction,
     msg-log-ravitaillement-etat                             MsgLogRavitaillementEtat,
-    msg-log-ravitaillement-quotas                           MsgLogRavitaillementQuotas,   
+    msg-log-ravitaillement-quotas                           MsgLogRavitaillementQuotas,  
+    
+    msg-population-creation                                 MsgPopulationCreation,
+    msg-population-update                                   MsgPopulationUpdate,
+    msg-population-concentration-creation                   MsgPopulationConcentrationCreation,
+    msg-population-concentration-destruction                MsgPopulationConcentrationDestruction,
+    msg-population-concentration-update                     MsgPopulationConcentrationUpdate,
+    msg-population-flux-creation                            MsgPopulationFluxCreation,
+    msg-population-flux-destruction                         MsgPopulationFluxDestruction,
+    msg-population-flux-update                              MsgPopulationFluxUpdate,
 
-    nb-choice 	NbChoice
+    nb-choice 	                                            NbChoice
     
 }
 

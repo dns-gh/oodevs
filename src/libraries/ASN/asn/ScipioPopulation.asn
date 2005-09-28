@@ -1,0 +1,93 @@
+--
+-- file name : ScipioPopulation.asn
+--
+-- Messages de gestion des objets
+--
+
+ScipioPopulation DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, Localisation, TypePopulation, OID FROM ScipioBase;
+
+EnumPopulationAttitude ::= ENUMERATED
+{
+    calme     (0),
+    agitee    (1),
+    excitee   (2),
+    agressive (3)
+}
+
+-------------------
+-- Population
+-------------------
+
+MsgPopulationCreation ::= SEQUENCE
+{
+    oid-population  OID,
+    type-population TypePopulation,
+    nom             VisibleString,
+    oid-camp        OID    
+}
+
+MsgPopulationUpdate ::= SEQUENCE
+{
+    oid-population  OID
+}
+
+-------------------
+-- Concentration
+-------------------
+
+MsgPopulationConcentrationCreation ::= SEQUENCE
+{
+    oid-concentration OID,
+    oid-population    OID
+}
+
+MsgPopulationConcentrationUpdate ::= SEQUENCE
+{
+    oid-concentration   OID,
+    oid-population      OID,
+    forme               Localisation           OPTIONAL, 
+    nb-humains-vivants  INTEGER                OPTIONAL,
+    nb-humains-morts    INTEGER                OPTIONAL,
+    attitude            EnumPopulationAttitude OPTIONAL
+}
+
+MsgPopulationConcentrationDestruction ::= SEQUENCE
+{
+    oid-concentration OID,
+    oid-population    OID
+}
+
+-------------------
+-- Flux
+-------------------
+
+MsgPopulationFluxCreation ::= SEQUENCE
+{
+    oid-flux        OID,
+    oid-population  OID
+}
+
+MsgPopulationFluxUpdate ::= SEQUENCE
+{
+    oid-flux            OID,
+    oid-population      OID,
+    itineraire          Itineraire             OPTIONAL,
+    queue               CoordUTM               OPTIONAL,
+    tete                CoordUTM               OPTIONAL,
+    direction           Direction              OPTIONAL, -- en degres
+    vitesse             Vitesse                OPTIONAL, -- en km/h
+    nb-humains-vivants  INTEGER                OPTIONAL,
+    nb-humains-morts    INTEGER                OPTIONAL,
+    attitude            EnumPopulationAttitude OPTIONAL
+}
+
+MsgPopulationFluxDestruction ::= SEQUENCE
+{
+    oid-flux        OID,
+    oid-population  OID
+}
+
+
+END -- ScipioPopulation

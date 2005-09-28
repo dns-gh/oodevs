@@ -57,6 +57,9 @@
 #include "Objects/MIL_RealObjectType.h"
 #include "Objects/MIL_VirtualObjectType.h"
 #include "Objects/MIL_NbcAgentType.h"
+#include "Populations/MIL_PopulationType.h"
+#include "Populations/MIL_PopulationAttitude.h"
+#include "Populations/MIL_Population.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "RC/MIL_RC.h"
@@ -65,6 +68,7 @@
 #include "HLA/HLA_Federate.h"
 
 MIL_MOSIDManager MIL_EntityManager::unitsIDManager_;
+MIL_MOSIDManager MIL_EntityManager::populationIDManager_;
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
@@ -96,6 +100,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     PHY_MaintenanceLevel         ::Initialize();
     PHY_PerceptionLevel          ::Initialize();
     PHY_RadarClass               ::Initialize();
+    MIL_PopulationAttitude       ::Initialize();
 
     InitializeType< PHY_LogWorkTime             >( archive, "Logistique"          );
     InitializeType< PHY_Experience              >( archive, "FacteursHumains"     );
@@ -116,6 +121,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     InitializeType< MIL_NbcAgentType            >( archive, "NBC"                 );
     InitializeType< PHY_Convoy_ABC              >( archive, "Ravitaillement"      );   
     InitializeType< PHY_RolePion_Communications >( archive, "Communications"      );
+    InitializeType< MIL_PopulationType          >( archive, "Populations"         );
     InitializeMedical( archive );
 }
 
@@ -239,6 +245,7 @@ MIL_EntityManager::~MIL_EntityManager()
         delete itArmy->second;
 
     // Types
+    MIL_PopulationAttitude       ::Terminate();
     MIL_AutomateType             ::Terminate();
     MIL_AgentTypePion            ::Terminate();
     PHY_SensorType               ::Terminate();  
@@ -274,6 +281,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_LogWorkTime              ::Terminate();
     PHY_Convoy_ABC               ::Terminate();
     PHY_RadarType                ::Terminate();
+    MIL_PopulationType           ::Terminate();
 
     delete &effectManager_;
     delete pObjectManager_;
@@ -331,14 +339,16 @@ void MIL_EntityManager::ReadODB( MIL_InputArchive& archive )
     odbArchive.Open( strODB );
     odbArchive.Section( "ODB" );
 
-    InitializeArmies   ( odbArchive );
-    InitializeDiplomacy( odbArchive );
-    InitializeAutomates( odbArchive );
-    InitializePions    ( odbArchive );
-    pObjectManager_->ReadODB( odbArchive );
+    InitializeArmies     ( odbArchive );
+    InitializeDiplomacy  ( odbArchive );
+    InitializeAutomates  ( odbArchive );
+    InitializePions      ( odbArchive );
+    InitializePopulations( odbArchive );
+    pObjectManager_->ReadODB( odbArchive );    
 
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates", automates_.size() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"    , pions_    .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 
     odbArchive.EndSection(); // ODB
     odbArchive.Close();
@@ -484,6 +494,42 @@ void MIL_EntityManager::InitializePions( MIL_InputArchive& archive )
         archive.EndSection(); // Pion
     }
     archive.EndList(); // Pions
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::InitializePopulations
+// Created: NLD 2004-08-11
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::InitializePopulations( MIL_InputArchive& archive )
+{
+    MT_LOG_INFO_MSG( "Initializing populations" );
+
+    archive.BeginList( "Populations" );
+
+    while( archive.NextListElement() )
+    {
+        archive.Section( "Population" );
+
+        uint        nID;
+        std::string strType;
+
+        archive.ReadAttribute( "id"  , nID     );
+        archive.ReadAttribute( "type", strType );
+        nID = populationIDManager_.ConvertSimIDToMosID( nID );
+
+        const MIL_PopulationType* pPopulationType = MIL_PopulationType::Find( strType );
+        if( !pPopulationType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type", archive.GetContext() );
+
+        // Check if the ID is unique
+        MIL_Population*& pPopulation = populations_[ nID ];
+        if( pPopulation )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population of this id is already instanciated", archive.GetContext() );
+
+        pPopulation = &pPopulationType->InstanciatePopulation( nID, archive );        
+        archive.EndSection(); // Population
+    }
+    archive.EndList(); // Populations
 }
 
 // =============================================================================
@@ -761,17 +807,21 @@ void MIL_EntityManager::SendStateToNewClient()
     assert( pObjectManager_ );
     pObjectManager_->SendStateToNewClient();
 
-    // Automates / pions creation
+    // Automates / pions / populations creation
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->SendCreation();
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->SendCreation();
+    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        itPopulation->second->SendCreation();
 
     // Automates / pions state
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->SendFullState();
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->SendFullState();
+    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        itPopulation->second->SendFullState();
 
     // Knowledge
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )

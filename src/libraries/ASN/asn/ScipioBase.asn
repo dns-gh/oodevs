@@ -69,6 +69,7 @@ TypeDotation        ::= OID
 TypePanne           ::= OID
 TypePion            ::= OID
 TypeAutomate        ::= OID
+TypePopulation      ::= OID
 Pourcentage         ::= INTEGER(0..100)
 PourcentageLibre    ::= INTEGER(0..max-uint32)
 Hauteur             ::= INTEGER(0..max-uint32)

@@ -275,7 +275,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     assert( pKnowledgeBlackBoard_ );
 
     std::stringstream strTmp;
-    strTmp << strName_ << " - [" << (uint)GetID() << "]";
+    strTmp << strName_ << " - [" << GetID() << "]";
     strName_ = strTmp.str();
 
     RegisterRole< NET_RolePion_Dotations         >( *this );

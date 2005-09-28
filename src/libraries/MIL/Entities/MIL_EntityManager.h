@@ -27,6 +27,7 @@ class MIL_Effect_IndirectFire;
 class MIL_VirtualObject_ABC;
 class MIL_AgentTypePion;
 class MIL_RealObject_ABC;
+class MIL_Population;
 
 class NET_AS_MOSServer;
 
@@ -151,6 +152,9 @@ private:
 
     typedef std::map< uint, MIL_Automate* > T_AutomateMap;
     typedef T_AutomateMap::const_iterator   CIT_AutomateMap;
+
+    typedef std::map< uint, MIL_Population* > T_PopulationMap;
+    typedef T_PopulationMap::const_iterator   CIT_PopulationMap;
     
     typedef std::vector< MIL_AgentPion* >  T_PionVector;
     typedef T_PionVector::reverse_iterator RIT_PionVector;
@@ -166,11 +170,11 @@ private:
     static void InitializeSensors( MIL_InputArchive& archive );
 
     // ODB
-    void InitializeArmies   ( MIL_InputArchive& archive );
-    void InitializeDiplomacy( MIL_InputArchive& archive );
-    void InitializeAutomates( MIL_InputArchive& archive );
-    void InitializePions    ( MIL_InputArchive& archive );
-    void InitializeObjects  ( MIL_InputArchive& archive );
+    void InitializeArmies     ( MIL_InputArchive& archive );
+    void InitializeDiplomacy  ( MIL_InputArchive& archive );
+    void InitializeAutomates  ( MIL_InputArchive& archive );
+    void InitializePions      ( MIL_InputArchive& archive );
+    void InitializePopulations( MIL_InputArchive& archive );
     //@}
 
     //! @name Update
@@ -188,9 +192,10 @@ private:
     MIL_EffectManager& effectManager_;
     MIL_ObjectManager* pObjectManager_;
 
-    T_ArmyMap     armies_;
-    T_PionMap     pions_;   // Contient le pion PC
-    T_AutomateMap automates_;
+    T_ArmyMap       armies_;
+    T_PionMap       pions_;   // Contient le pion PC
+    T_AutomateMap   automates_;
+    T_PopulationMap populations_;
 
     T_PionVector  recycledPions_;
 
@@ -206,6 +211,7 @@ private:
 
 public:
     static MIL_MOSIDManager unitsIDManager_;
+    static MIL_MOSIDManager populationIDManager_;
 };
 
 #include "MIL_EntityManager.inl"

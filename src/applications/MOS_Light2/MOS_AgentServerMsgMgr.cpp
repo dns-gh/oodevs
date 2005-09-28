@@ -1763,8 +1763,25 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
         case T_MsgsSimMos_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *asnMsg.u.msg_log_sante_traitement_humain_update ); break;
         case T_MsgsSimMos_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *asnMsg.u.msg_log_sante_etat ); break;
 
+//        case T_MsgsSimMos_msg_population_creation                       : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_update                         : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_concentration_creation         : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_concentration_destruction      : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_concentration_update           : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_flux_creation                  : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_flux_destruction               : break; //$$$ TODO
+//        case T_MsgsSimMos_msg_population_flux_update                    : break; //$$$ TODO        
+
         default:
-            assert( false );
+            {
+#ifdef _DEBUG
+                std::cout << "BEGIN MSG DUMP =>" << std::endl;
+                asnPERDecodeBuffer.SetTrace( true );
+                asnMsgCtrl.Print( "MsgsSimMos" );
+                std::cout << "END MSG DUMP =>" << std::endl;
+#endif
+            }
+//            assert( false );
     }
 }
 
@@ -1825,7 +1842,15 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  asnMsg.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
 
         default:
-            assert( false );
+            {
+#ifdef _DEBUG
+                std::cout << "BEGIN MSG DUMP =>" << std::endl;
+                asnPERDecodeBuffer.SetTrace( true );
+                asnMsgCtrl.Print( "MsgsSimMos" );
+                std::cout << "END MSG DUMP =>" << std::endl;
+#endif
+                assert( false );
+            }
     }
 }
 

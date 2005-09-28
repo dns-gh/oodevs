@@ -744,5 +744,17 @@
             </Forme>
         </Objet> -->
     </Objets>
+    
+    <Populations>
+        
+        <Population id="654" type="test1">
+            <Nom>Parisiens</Nom>
+            <Camp>bleu</Camp>
+            <Position>31TBN9374781012</Position>
+            <NombreHumains>5465</NombreHumains>
+            <Attitude>agitee</Attitude>            
+        </Population>
+        
+    </Populations>
 </ODB>
 

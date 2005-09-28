@@ -12,6 +12,9 @@
 #include "Entities/Orders/Lima/MIL_LimaManager.h"
 #include "Entities/Orders/Limit/MIL_LimitManager.h"
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
+
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
@@ -308,6 +311,9 @@ void MIL_AgentServer::ReadIDClasses( MIL_InputArchive& archive )
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogMaintenance"    ) )  PHY_MaintenanceComposanteState::idManager_.SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogSante"          ) )  PHY_MedicalHumanState::idManager_         .SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogRavitaillement" ) )  PHY_SupplyState_ABC::idManager_           .SetClassID( nID );
+        else if( sCaseInsensitiveEqual()( strName, "Population"                  ) )  MIL_EntityManager::populationIDManager_   .SetClassID( nID );
+        else if( sCaseInsensitiveEqual()( strName, "PopulationConcentration"     ) )  MIL_PopulationConcentration::idManager_   .SetClassID( nID );
+        else if( sCaseInsensitiveEqual()( strName, "PopulationFlux"              ) )  MIL_PopulationFlow::idManager_            .SetClassID( nID );
         else
             MIL_RealObjectType::RegisterIDManager( strName, nID );
     }
