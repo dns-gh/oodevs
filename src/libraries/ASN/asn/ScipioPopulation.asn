@@ -6,7 +6,7 @@
 
 ScipioPopulation DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, Localisation, TypePopulation, OID FROM ScipioBase;
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, Point, GDH, Localisation, TypePopulation, OID FROM ScipioBase;
 
 EnumPopulationAttitude ::= ENUMERATED
 {

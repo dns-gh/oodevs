@@ -13,6 +13,10 @@
 
 #include "MIL_PopulationType.h"
 #include "MIL_Population.h"
+#include "Decision/DEC_Workspace.h"
+#include "Decision/DEC_Tools.h"
+#include "Decision/Functions/DEC_PopulationFunctions.h"
+#include "MIL_AgentServer.h"
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 
@@ -70,10 +74,20 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     : strName_              ( strName )
     , rConcentrationDensity_( 0. )
     , rDefaultFluxDensity_  ( 0. )
+    , pModel_               ( 0 )
+    , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     archive.ReadField( "MosID", nID_ );
     archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_ );
     archive.ReadField( "DensiteNominaleDeplacement", rDefaultFluxDensity_   );
+
+    std::string strModel;
+    archive.ReadField( "ModeleDecisionnel", strModel );
+    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );
+    if( !pModel_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population model", archive.GetContext() );
+
+    InitializeDiaFunctions();
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +96,16 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
 // -----------------------------------------------------------------------------
 MIL_PopulationType::~MIL_PopulationType()
 {
+    delete pDIAFunctionTable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::InitializeDiaFunctions
+// Created: NLD 2004-10-14
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::InitializeDiaFunctions()
+{
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug, "DEC_Debug" );
 }
 
 // =============================================================================

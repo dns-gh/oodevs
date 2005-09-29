@@ -233,6 +233,9 @@ NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( AutomateOrderAck  , automate_order_ack    )
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( AutomateMRT       , automate_mrt          )
 NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( SetAutomateModeAck, set_automate_mode_ack )
 
+// Orders population
+NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( PopulationOrderAck, population_order_ack )
+
 // CR
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( CR, cr )
 

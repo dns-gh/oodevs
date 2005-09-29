@@ -3,6 +3,11 @@
 // Created : 
 // *******************************************************************************************
 
+typedef enum E_TypeMissionPopulation
+{
+    eMission_Population_FaireMouvement 
+};
+
 typedef enum E_TypeMissionAutomate
 {
     eMission_Automate_ABC_ArmerPointDeControle,
@@ -402,3 +407,4 @@ typedef enum E_TypeOrdreConduite
 
     eNbrOrdreConduite
 };
+

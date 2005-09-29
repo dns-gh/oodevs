@@ -58,6 +58,7 @@ TirIndirect         ::= OID
 TirDirect           ::= OID
 Agent               ::= OID
 Automate            ::= OID
+Population          ::= OID
 KnowledgeAgent      ::= OID
 KnowledgeObject     ::= OID
 ListAutomate        ::= SEQUENCE OF Automate 

@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class MIL_Population;
+class DEC_ModelPopulation;
 
 // =============================================================================
 // @class  MIL_PopulationType
@@ -34,10 +35,12 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetName                () const;
-          uint         GetID                  () const;
-          MT_Float     GetConcentrationDensity() const;
-          MT_Float     GetDefaultFluxDensity  () const;
+    const std::string&                         GetName                () const;
+          uint                                 GetID                  () const;
+          MT_Float                             GetConcentrationDensity() const;
+          MT_Float                             GetDefaultFluxDensity  () const;
+    const DEC_ModelPopulation&                 GetModel               () const;
+          DIA_FunctionTable< MIL_Population >& GetFunctionTable       () const;
     //@}
 
     //! @name Operations
@@ -56,11 +59,18 @@ private:
      MIL_PopulationType( const std::string& strName, MIL_InputArchive& archive );
     ~MIL_PopulationType();
 
+    //! @name Tools
+    //@{
+    void InitializeDiaFunctions();
+    //@}
+
 private:
-    const std::string strName_;
-          uint        nID_;
-          MT_Float    rConcentrationDensity_;
-          MT_Float    rDefaultFluxDensity_;
+    const std::string                          strName_;
+          uint                                 nID_;
+          MT_Float                             rConcentrationDensity_;
+          MT_Float                             rDefaultFluxDensity_;
+    const DEC_ModelPopulation*                 pModel_;
+          DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;
 
 private:
     static T_PopulationMap populations_;

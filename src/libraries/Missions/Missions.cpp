@@ -14,8 +14,10 @@
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMissionType.h"
 #include "MIL/Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "MIL/Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 
+#include "Population\MIL_PopulationMission_FaireMouvement.cpp"
 #include "Automate\MIL_AutomateMission_ABC_ArmerPointDeControle.cpp"
 #include "Automate\MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies.cpp"
 #include "Automate\MIL_AutomateMission_ABC_ProtegerPC.cpp"
@@ -398,8 +400,16 @@
 #include "Conduite\MIL_OrderConduite_Automate_ActiverObstacle.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_TransfererRenforts.cpp"
 
-
 using namespace missions;
+
+// -----------------------------------------------------------------------------
+// Name: missions::RegisterPopulationMissions
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+void missions::RegisterPopulationMissions()
+{
+    MIL_PopulationMissionType::RegisterMission< MIL_PopulationMission_FaireMouvement >( "Population FaireMouvement", eMission_Population_FaireMouvement, T_Mission_Population_mission_population_faire_mouvement, "T_Mission_Population_FaireMouvement", "MIS_Population_FaireMouvement" );
+}
 
 //-----------------------------------------------------------------------------
 // Name: RegisterAutomateMissions
@@ -808,3 +818,16 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_TransfererRenforts>( "Automate TransfererRenforts", eOrdreConduite_Automate_TransfererRenforts, T_MsgOrderConduite_order_conduite_order_conduite_automate_transferer_renforts, "Rep_OrderConduite_Automate_TransfererRenforts", false, false );
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: missions::RegisterMissions
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+void missions::RegisterMissions()
+{
+    RegisterAutomateMissions  ();
+    RegisterPionMissions      ();
+    RegisterPopulationMissions();
+    RegisterOrderConduites    ();
+}
+ 

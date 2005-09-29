@@ -57,6 +57,14 @@ typedef struct T_Mission_Automate : Thing
     E_AutomateFormation     formation_;
 };
 
+// =============================================================================
+// MISSION POPULATION
+// =============================================================================
+typedef struct T_Mission_Population : Thing
+{
+    E_TypeMissionPopulation missionType_;
+};
+
 
 // =============================================================================
 // PARAMETRES DE MISSIONS SPECIFIQUES
@@ -93,6 +101,7 @@ typedef struct T_GenObjet : Thing
 typedef list< T_GenObjet > T_ListeGenObjets;
  
 
+include "Common/Moteur/Types_Missions_Population.hal";
 include "Common/Moteur/Types_Missions_Automate.hal";
 include "Common/Moteur/Types_Missions_Pion.hal";
 include "Common/Moteur/Types_OrdresConduite.hal";

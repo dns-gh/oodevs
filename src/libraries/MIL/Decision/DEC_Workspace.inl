@@ -29,6 +29,19 @@ const DEC_ModelAutomate* DEC_Workspace::FindModelAutomate( const std::string& st
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Workspace::FindModelPopulation
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+inline
+const DEC_ModelPopulation* DEC_Workspace::FindModelPopulation( const std::string& strModelName  ) const
+{
+    CIT_ModelPopulationMap it = populationModels_.find( strModelName );
+    if( it == populationModels_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Workspace::GetDebug
 // Created: NLD 2004-06-04
 // -----------------------------------------------------------------------------

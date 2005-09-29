@@ -25,6 +25,7 @@ class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_Army;
+class DEC_PopulationDecision;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -40,7 +41,15 @@ public:
 
     //! @name Accessors
     //@{
-    uint GetID() const;
+          uint                    GetID      () const;
+    const MIL_PopulationType&     GetType    () const;
+    const std::string&            GetName    () const;
+          DEC_PopulationDecision& GetDecision() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    void UpdateDecision();
     //@}
 
     //! @name Network 
@@ -74,13 +83,15 @@ private:
     //@}
 
 private:
-    const MIL_PopulationType& type_;
-    const uint                nID_;
-    const MIL_Army*           pArmy_;
-          std::string         strName_;
+    const MIL_PopulationType&     type_;
+    const uint                    nID_;
+    const MIL_Army*               pArmy_;
+          std::string             strName_;
 
-          T_ConcentrationSet  concentrations_;
-          T_FlowSet           flows_;
+          T_ConcentrationSet      concentrations_;
+          T_FlowSet               flows_;
+
+          DEC_PopulationDecision* pDecision_;
 };
 
 #include "MIL_Population.inl"

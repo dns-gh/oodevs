@@ -11,6 +11,7 @@
 
 class DEC_ModelPion;
 class DEC_ModelAutomate;
+class DEC_ModelPopulation;
 
 //*****************************************************************************
 // Created: JVT 02-06-28
@@ -31,9 +32,10 @@ public:
 
     //! @name Models management
     //@{
-          DIA_Model*         FindDIAModelFromScript( const std::string& strScriptName ) const;
-    const DEC_ModelPion*     FindModelPion         ( const std::string& strModelName ) const;
-    const DEC_ModelAutomate* FindModelAutomate     ( const std::string& strModelName ) const;
+          DIA_Model*           FindDIAModelFromScript( const std::string& strScriptName ) const;
+    const DEC_ModelPion*       FindModelPion         ( const std::string& strModelName  ) const;
+    const DEC_ModelAutomate*   FindModelAutomate     ( const std::string& strModelName  ) const;
+    const DEC_ModelPopulation* FindModelPopulation   ( const std::string& strModelName  ) const;    
     //@}
 
     //! @name Accessors
@@ -62,6 +64,9 @@ private:
 
     typedef std::map< std::string, const DEC_ModelAutomate*, sCaseInsensitiveLess > T_ModelAutomateMap;
     typedef T_ModelAutomateMap::const_iterator                                      CIT_ModelAutomateMap;
+
+    typedef std::map< std::string, const DEC_ModelPopulation*, sCaseInsensitiveLess > T_ModelPopulationMap;
+    typedef T_ModelPopulationMap::const_iterator                                      CIT_ModelPopulationMap;
     //@}
 
 private:
@@ -71,6 +76,7 @@ private:
 
     T_ModelPionMap                      pionModels_;
     T_ModelAutomateMap                  automateModels_;
+    T_ModelPopulationMap                populationModels_;
 };
 
 #include "DEC_Workspace.inl"

@@ -1,0 +1,9 @@
+// *******************************************************************************************
+// Automate mission types for DirectIA
+// Created : 
+// *******************************************************************************************
+
+typedef struct T_Mission_Population_FaireMouvement : T_Mission_Population
+{
+    T_Point destination_;
+};

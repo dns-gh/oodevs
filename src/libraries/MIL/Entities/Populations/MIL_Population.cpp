@@ -22,6 +22,7 @@
 #include "MIL_PopulationType.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"
+#include "DEC_PopulationDecision.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Network/NET_ASN_Messages.h"
@@ -32,10 +33,11 @@
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
-    : type_   ( type )
-    , nID_    ( nID )
-    , pArmy_  ( 0 )
-    , strName_( type.GetName() )
+    : type_     ( type )
+    , nID_      ( nID )
+    , pArmy_    ( 0 )
+    , strName_  ( type.GetName() )
+    , pDecision_( 0 )
 {
     archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
 
@@ -48,6 +50,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     pArmy_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
     if( !pArmy_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
+
+    pDecision_ = new DEC_PopulationDecision( *this );
     
     concentrations_.insert( new MIL_PopulationConcentration( *this, archive ) );    
 }
@@ -58,7 +62,21 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
 // -----------------------------------------------------------------------------
 MIL_Population::~MIL_Population()
 {
+    delete pDecision_;
+}
 
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateDecision
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateDecision()
+{
+    assert( pDecision_ );
+    pDecision_->UpdateDecision();
 }
 
 // =============================================================================

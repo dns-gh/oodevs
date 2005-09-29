@@ -95,3 +95,23 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, MT_Fl
         decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"None\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }
+
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_ProfilerMgr::NotifyDecisionUpdated
+// Created: NLD 2005-03-04
+// -----------------------------------------------------------------------------
+void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, MT_Float rTime )
+{
+    if( !bEnabled_ )
+        return;
+
+    assert( false );
+    return;
+//    const MIL_PopulationMission_ABC* pMission = population.GetOrderManager().GetMission();
+//    if( pMission )
+//        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << population.GetID() << " \"" << pMission->GetType().GetName() << "\" " << rTime << std::endl;
+//    else
+//        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << population.GetID() << " \"None\" " << rTime << std::endl;
+//    decisionUpdateFile_.flush();
+}

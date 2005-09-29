@@ -11,25 +11,34 @@
 
 typedef struct T_Mission_Automate;
 typedef struct T_Mission_Pion;
+typedef struct T_Mission_Population ;
 
 
+// Automates
 typedef struct T_Automate : Thing
 {
     T_Mission_Automate mission_;
 };
-
 typedef list<T_Automate> T_ListeAutomates;  
 
-
-
+// Pions
 typedef struct T_Pion : Thing
 {
     string         szName_;            
     T_Automate     automate_;          
     T_Mission_Pion mission_;           
 };
-
 typedef list<T_Pion> T_ListePions;  
+
+
+// Populations
+typedef struct T_Population : Thing
+{
+    string               szName_;
+    T_Mission_Population mission_;
+};
+typedef list<T_Population> T_ListePopulation;  
+
 
 
 

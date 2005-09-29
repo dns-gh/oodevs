@@ -32,12 +32,6 @@ class DEC_AutomateDecision : public DIA_Engine
     MT_COPYNOTALLOWED( DEC_AutomateDecision )
 
 public:
-    //! @name Types
-    //@{
-    typedef DEC_AutomateDecision RoleInterface;
-    //@}
-
-public:
              DEC_AutomateDecision( MIL_Automate& automate );
              DEC_AutomateDecision();
     virtual ~DEC_AutomateDecision();

@@ -8,12 +8,15 @@
 
 #include "DEC_ModelPion.h"
 #include "DEC_ModelAutomate.h"
+#include "DEC_ModelPopulation.h"
 
+#include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Orders/Pion/MIL_PionMissionType.h"
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
@@ -80,6 +83,8 @@ DEC_Workspace::~DEC_Workspace()
         delete itModelPion->second;
     for( CIT_ModelAutomateMap itModelAutomate = automateModels_.begin(); itModelAutomate != automateModels_.end(); ++itModelAutomate )
         delete itModelAutomate->second;
+    for( CIT_ModelPopulationMap itModelPopulation = populationModels_.begin(); itModelPopulation != populationModels_.end(); ++itModelPopulation )
+        delete itModelPopulation->second;
 }
 
 //-----------------------------------------------------------------------------
@@ -318,6 +323,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     InitializeModels      ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
 
     DEC_Tools                ::InitializeDIA();
+    DEC_PopulationDecision   ::InitializeDIA();
     DEC_AutomateDecision     ::InitializeDIA();
     DEC_RolePion_Decision    ::InitializeDIA();   
     DEC_Rep_PathPoint        ::InitializeDIA();
@@ -328,6 +334,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     MIL_PionMissionType      ::InitializeDIA();
     MIL_AutomateMissionType  ::InitializeDIA();
     MIL_OrderConduiteType    ::InitializeDIA();   
+    MIL_PopulationMissionType::InitializeDIA();   
             
     // Finish the initialiazation of the Workspace by linking function calls
     pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
@@ -347,7 +354,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     {
         DIA_Workspace::Instance().WriteDebugFile( "." ); //$$$$$$$ NLD ??
     }
-    catch( std::exception& e )
+    catch( std::exception& )
     {
         MT_LOG_ERROR_MSG( "Error when writing DIA debug files : DIA debugging won't work" );
     }
@@ -378,6 +385,8 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
     modelArchive.Open( strModelsFile );
 
     modelArchive.Section( "Modeles" );
+
+    // Pions
     modelArchive.BeginList( "Pions" );
     while( modelArchive.NextListElement() )
     {
@@ -396,8 +405,8 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
     }
     modelArchive.EndList(); // Pions
 
+    // Automates
     modelArchive.BeginList( "Automates" );
-
     while( modelArchive.NextListElement() )
     {
         modelArchive.Section( "Modele" );
@@ -414,6 +423,26 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         modelArchive.EndSection(); // Modele
     }
     modelArchive.EndList(); // Automates
+
+    // Populations
+    modelArchive.BeginList( "Populations" );
+    while( modelArchive.NextListElement() )
+    {
+        modelArchive.Section( "Modele" );
+
+        std::string strName;
+        modelArchive.ReadAttribute( "nom", strName );
+
+        const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
+        if( pModel )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
+        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+        static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
+
+        modelArchive.EndSection(); // Modele
+    }
+    modelArchive.EndList(); // Populations
+    
     modelArchive.EndSection(); // Modeles
     modelArchive.Close();
 }
@@ -500,6 +529,11 @@ DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptNa
     {
         if( itModelPion->second && itModelPion->second->GetScriptName() == strScriptName )
             return &itModelPion->second->GetDIAModel();
+    }
+    for( CIT_ModelPopulationMap itModelPopulation = populationModels_.begin(); itModelPopulation != populationModels_.end(); ++itModelPopulation )
+    {
+        if( itModelPopulation->second && itModelPopulation->second->GetScriptName() == strScriptName )
+            return &itModelPopulation->second->GetDIAModel();
     }
     return 0;
 }

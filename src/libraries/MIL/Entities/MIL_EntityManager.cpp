@@ -632,6 +632,12 @@ void MIL_EntityManager::UpdateDecisions()
             itPion->second->UpdateDecision();
             MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itPion->second, decisionUpdateProfiler.Stop() );
         }
+        for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        {
+            decisionUpdateProfiler.Start();
+            itPopulation->second->UpdateDecision();
+            MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( *itPopulation->second, decisionUpdateProfiler.Stop() );
+        }
     }
     else
     {
@@ -639,6 +645,8 @@ void MIL_EntityManager::UpdateDecisions()
             itAutomate->second->UpdateDecision();
         for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             itPion->second->UpdateDecision();
+        for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+            itPopulation->second->UpdateDecision();
     }
 
     rDecisionsTime_ = profiler_.Stop();

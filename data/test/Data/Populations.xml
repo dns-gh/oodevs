@@ -2,12 +2,14 @@
 <Populations>
     <Population nom="test1">
         <MosID>1</MosID>
+        <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>1</DensiteConcentration>
         <DensiteNominaleDeplacement>1</DensiteNominaleDeplacement>
     </Population>
     
     <Population nom="test2">
         <MosID>2</MosID>
+        <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>2</DensiteConcentration>
         <DensiteNominaleDeplacement>2</DensiteNominaleDeplacement>
     </Population>

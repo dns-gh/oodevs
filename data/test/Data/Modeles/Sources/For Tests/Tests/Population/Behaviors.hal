@@ -1,0 +1,23 @@
+use_priority        =   no;
+max_instances       =   10;
+max_activations     =   10;
+
+actuators = deplacement, ordre;
+
+default Default()
+{    
+
+}
+
+behavior BEH_Defaut( id nDummy )
+{         
+    DEC_Debug( "BEH_Defaut" );
+}
+
+behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement mission, id nDummy )
+{
+    when updated:
+    {
+        DEC_Debug( "MIS_Population_FaireMouvement" );
+    }
+}

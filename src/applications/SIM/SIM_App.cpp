@@ -76,9 +76,7 @@ void SIM_App::Initialize()
     MT_Profiler::Initialize();
     MT_MakeDir( "CheckPoints" );
 
-    missions::RegisterPionMissions();
-    missions::RegisterAutomateMissions();
-    missions::RegisterOrderConduites();
+    missions::RegisterMissions();
 
     MIL_AgentServer::CreateWorkspace( startupConfig_ );   
 }

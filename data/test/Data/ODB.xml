@@ -755,6 +755,14 @@
             <Attitude>agitee</Attitude>            
         </Population>
         
+        <Population id="655" type="test1">
+            <Nom>Dumbasses</Nom>
+            <Camp>rouge</Camp>
+            <Position>31TBN9374781012</Position>
+            <NombreHumains>5465</NombreHumains>
+            <Attitude>calme</Attitude>            
+        </Population>        
+        
     </Populations>
 </ODB>
 

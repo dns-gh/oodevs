@@ -10,6 +10,28 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DIA_FunctionTable< MIL_Population >& MIL_PopulationType::GetFunctionTable
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+inline
+DIA_FunctionTable< MIL_Population >& MIL_PopulationType::GetFunctionTable() const
+{
+    assert( pDIAFunctionTable_ );
+    return *pDIAFunctionTable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetModel
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+inline
+const DEC_ModelPopulation& MIL_PopulationType::GetModel() const
+{
+    assert( pModel_ );
+    return *pModel_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::GetConcentrationDensity
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------

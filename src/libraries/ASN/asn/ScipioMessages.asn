@@ -76,6 +76,9 @@ IMPORTS MsgPionOrder,
 IMPORTS MsgAutomateOrder,
         MsgAutomateOrderAck,
         MsgAutomateMRT FROM ScipioAutomateOrder
+        
+IMPORTS MsgPopulationOrder,
+        MsgPopulationOrderAck FROM ScipioPopulationOrder
 
 IMPORTS MsgOrderManagement FROM ScipioOrder
 
@@ -259,6 +262,7 @@ MsgsSimMosWithContext ::= CHOICE
     msg-pion-order-ack                          MsgPionOrderAck,
     msg-order-conduite-ack                      MsgOrderConduiteAck,
     msg-automate-order-ack                      MsgAutomateOrderAck,
+    msg-population-order-ack                    MsgPopulationOrderAck,
                                                 
     msg-set-automate-mode-ack                   MsgSetAutomateModeAck,
                                                 
@@ -302,6 +306,7 @@ MsgsMosSimWithContext ::= CHOICE
     msg-pion-order                          MsgPionOrder,
     msg-order-conduite                      MsgOrderConduite,
     msg-automate-order                      MsgAutomateOrder,
+    msg-population-order                    MsgPopulationOrder,
                                             
     msg-set-automate-mode                   MsgSetAutomateMode,
                                             

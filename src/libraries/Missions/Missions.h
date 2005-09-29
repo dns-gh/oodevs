@@ -19,6 +19,11 @@ class MIL_OrderConduiteType;
 namespace missions
 {
 
+    enum E_PopulationMission
+    {
+        eMission_Population_FaireMouvement
+    };
+
     enum E_AutomateMission
     {
         eMission_Automate_ABC_ArmerPointDeControle,
@@ -418,8 +423,11 @@ namespace missions
         eNbrOrderConduite
     };
 
+    void RegisterMissions();
+
     void RegisterAutomateMissions();
     void RegisterPionMissions();
+    void RegisterPopulationMissions();
     void RegisterOrderConduites();
 
 } // end namespace missions
