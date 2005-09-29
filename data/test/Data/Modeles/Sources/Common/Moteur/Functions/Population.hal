@@ -3,6 +3,15 @@
 // *****************************************************************************
 signatures
 {
+    // Actions
+    V              A::DEC_StopAction   ( U /*T_Action*/ );
+    V              A::DEC_PauseAction  ( U /*T_Action*/ );
+    V              A::DEC_ReprendAction( U /*T_Action*/ );        
+
+
+    // Déplacement
+    U /*T_Action*/ A::DEC_StartDeplacement( U /*T_Point*/ );
+
     // Test / debug 
     V  A::DEC_Debug( X );
 }

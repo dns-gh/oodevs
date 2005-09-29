@@ -16,6 +16,7 @@
 
 class PHY_Action_ABC;
 class MIL_AgentPion;
+class MIL_Population;
 
 // =============================================================================
 // Created: NLD 2004-06-04
@@ -38,8 +39,10 @@ public:
     //@{
     static void NotifyRecoAdded    ( DIA_Call_ABC& call, const MT_Vector2D& vCenter );
     static void NotifyRecoRemoved  ( DIA_Call_ABC& call, const MT_Vector2D& vCenter );
-    static void NotifyActionStarted( DIA_Call_ABC& call, const MIL_AgentPion& pion, const PHY_Action_ABC& action );
-    static void NotifyActionStopped( DIA_Call_ABC& call, const MIL_AgentPion& pion, const PHY_Action_ABC& action );
+    static void NotifyActionStarted( DIA_Call_ABC& call, const MIL_AgentPion&  pion      , const PHY_Action_ABC& action );
+    static void NotifyActionStarted( DIA_Call_ABC& call, const MIL_Population& population, const PHY_Action_ABC& action );
+    static void NotifyActionStopped( DIA_Call_ABC& call, const MIL_AgentPion&  pion      , const PHY_Action_ABC& action );
+    static void NotifyActionStopped( DIA_Call_ABC& call, const MIL_Population& population, const PHY_Action_ABC& action );
     //@}
 
 private:

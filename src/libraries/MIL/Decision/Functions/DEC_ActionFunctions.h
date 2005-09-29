@@ -24,11 +24,10 @@ class DEC_ActionFunctions
 public:
     //! @name Functions
     //@{
-    template< class ActionType >
-    static void StartAction  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void StopAction   ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void SuspendAction( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void ResumeAction ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    template< typename ActionType > static void StartAction  ( DIA_Call_ABC& call, typename ActionType::ActorType& caller );
+    template< typename T >          static void StopAction   ( DIA_Call_ABC& call, const T&                        caller );
+    template< typename T >          static void SuspendAction( DIA_Call_ABC& call, const T&                        caller );
+    template< typename T >          static void ResumeAction ( DIA_Call_ABC& call, const T&                        caller );
 
     static void Transport_AddPion         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        
     static void Transport_AddPions        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );        

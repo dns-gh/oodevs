@@ -17,11 +17,11 @@
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/Pion/MIL_PionOrderManager.h"
+#include "Entities/Actions/PHY_Actor.h"
 
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
-class PHY_Action_ABC;
 class DEC_KnowledgeBlackBoard;
 class DEC_KS_NetworkUpdater;
 class DEC_KS_ObjectInteraction;
@@ -35,6 +35,7 @@ class HLA_UpdateFunctor;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_AgentPion : public MIL_Agent_ABC
+                    , public PHY_Actor
 {
     MT_COPYNOTALLOWED( MIL_AgentPion )
 
@@ -95,7 +96,6 @@ public:
     void UpdateKnowledges           ();
     void CleanKnowledges            ();
     void UpdateDecision             ();
-    void UpdateActions              ();
     void UpdateState                ();
     void UpdateNetwork              ();
     void Clean                      ();
@@ -126,14 +126,6 @@ public:
     void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
-    //! @name Actions
-    //@{
-    void RegisterAction  ( PHY_Action_ABC& action );
-    void UnregisterAction( PHY_Action_ABC& action );
-    void CancelAllActions();
-    bool HasAction       ( PHY_Action_ABC& action ) const;
-    //@}
-
     //! @name Misc operations
     //@{
             void MagicMove       ( const MT_Vector2D& vNewPos );    
@@ -141,13 +133,6 @@ public:
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
             void ChangeAutomate  ( MIL_Automate& newAutomate );
             void Surrender       ();
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::set< PHY_Action_ABC* >  T_ActionSet;
-    typedef T_ActionSet::const_iterator  CIT_ActionSet;
     //@}
 
 private:
@@ -175,7 +160,6 @@ private:
     const bool                bIsPC_;
           std::string         strName_;
           MIL_Automate*       pAutomate_;
-          T_ActionSet         actions_;
 
     // Knowledge
     DEC_KnowledgeBlackBoard*  pKnowledgeBlackBoard_;

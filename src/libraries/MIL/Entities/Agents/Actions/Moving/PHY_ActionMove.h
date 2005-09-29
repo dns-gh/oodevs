@@ -14,8 +14,9 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
+class MIL_AgentPion;
 class PHY_RoleAction_Moving;
 class DEC_Path;
 
@@ -26,6 +27,9 @@ class DEC_Path;
 class PHY_ActionMove : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionMove )
+
+public:
+    typedef MIL_AgentPion ActorType;
 
 public:
     PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
@@ -52,6 +56,7 @@ private:
     //@}
 
 private:
+    MIL_AgentPion&         pion_;   
     PHY_RoleAction_Moving& role_;
     DIA_Variable_ABC&      diaReturnCode_;
     DEC_Path*              pMainPath_;

@@ -22,6 +22,7 @@
 #include "MIL.h"
 
 #include "Entities/Orders/Population/MIL_PopulationOrderManager.h"
+#include "Entities/Actions/PHY_Actor.h"
 
 class MIL_PopulationType;
 class MIL_PopulationFlow;
@@ -32,7 +33,7 @@ class DEC_PopulationDecision;
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
-class MIL_Population
+class MIL_Population : public PHY_Actor
 {
 public:
     //! @name Constructors/Destructor
@@ -54,6 +55,7 @@ public:
     //! @name Operations
     //@{
     void UpdateDecision();
+    void Move( const MT_Vector2D& destination );
     //@}
 
     //! @name Network 

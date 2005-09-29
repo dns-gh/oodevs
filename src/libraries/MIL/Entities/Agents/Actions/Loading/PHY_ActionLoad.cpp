@@ -22,8 +22,8 @@
 // -----------------------------------------------------------------------------
 PHY_ActionLoad::PHY_ActionLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     : PHY_Action_ABC( pion, diaCall )
-    , role_          ( pion.GetRole< PHY_RoleAction_Loading >() )
-    , diaReturnCode_ ( diaCall.GetParameter( 0 ) )
+    , role_         ( pion.GetRole< PHY_RoleAction_Loading >() )
+    , diaReturnCode_( diaCall.GetParameter( 0 ) )
 {    
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );
 }

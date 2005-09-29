@@ -14,9 +14,10 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_InterfaceFlying;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionFly
@@ -25,6 +26,9 @@ class PHY_RoleAction_InterfaceFlying;
 class PHY_ActionFly : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionFly )
+
+public:
+    typedef MIL_AgentPion ActorType;        
 
 public:
     PHY_ActionFly( MIL_AgentPion& pion );

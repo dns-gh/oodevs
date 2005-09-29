@@ -14,9 +14,10 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Transport;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionTransportUnload
@@ -25,6 +26,9 @@ class PHY_RoleAction_Transport;
 class PHY_ActionTransportUnload : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionTransportUnload )
+
+public:
+    typedef MIL_AgentPion ActorType;        
 
 public:
     PHY_ActionTransportUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );

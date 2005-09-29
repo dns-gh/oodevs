@@ -40,7 +40,7 @@ const uint DEC_Path::nInvalidID_ = 0;
 // Name: DEC_Path::Initialize
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
+DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( queryMaker )
     , fuseau_            () //$$$ Debile
@@ -65,7 +65,7 @@ DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points, cons
 // Name: DEC_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Path::DEC_Path( MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
+DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
     : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
     , queryMaker_        ( queryMaker )
     , fuseau_            () //$$$ Debile
@@ -118,7 +118,8 @@ DEC_Path::DEC_Path( const DEC_Path& rhs )
 //-----------------------------------------------------------------------------
 DEC_Path::~DEC_Path()
 {
-    DEC_RolePion_Decision& roleDecision = queryMaker_.GetRole< DEC_RolePion_Decision >();
+    // $$$$ NLD 2005-09-29: const_cast pour DIA
+    DEC_RolePion_Decision& roleDecision = const_cast< MIL_AgentPion& >( queryMaker_ ).GetRole< DEC_RolePion_Decision >();
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         (*itPoint)->RemoveFromDIA( roleDecision );

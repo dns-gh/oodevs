@@ -31,7 +31,8 @@
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     : PHY_Action_ABC    ( pion )
-    , role_             ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
+    , rolePerceiver_    ( pion.GetRole< PHY_RolePion_Perceiver      >() )
+    , roleDirectFiring_ ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pFireResult_      ( 0 )  
     , pZoneControlled_  ( 0 )
     , pPerceptionZoneID_( 0 )
@@ -41,7 +42,6 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC&
     const TER_Localisation* pLocalisation  = diaCall.GetParameter( 0 ).ToUserPtr( pLocalisation );
     const MT_Float          rRadius        = MIL_Tools::ConvertMeterToSim( diaCall.GetParameter( 1 ).ToFloat() );
 
-    
     // Fire
     if( diaCall.GetParameter( 2 ).ToBool() )
     {
@@ -51,9 +51,9 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC&
 
     // Detection
     if ( pLocalisation->GetArea() <= rRadius * rRadius * MT_PI ) 
-        pPerceptionZoneID_ = pion_.GetRole< PHY_RolePion_Perceiver >().EnableControlLocalisation( *pLocalisation );
+        pPerceptionZoneID_ = rolePerceiver_.EnableControlLocalisation( *pLocalisation );
     else
-        pPerceptionZoneID_ = pion_.GetRole< PHY_RolePion_Perceiver >().EnableRecoLocalisation   ( *pLocalisation, rRadius );
+        pPerceptionZoneID_ = rolePerceiver_.EnableRecoLocalisation   ( *pLocalisation, rRadius );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC&
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::~PHY_ActionControlZone()
 {
-    pion_.GetRole< PHY_RolePion_Perceiver >().DisableRecoLocalisation( pPerceptionZoneID_ );
+    rolePerceiver_.DisableRecoLocalisation( pPerceptionZoneID_ );
 
     if( pFireResult_ )
         pFireResult_->DecRef();
@@ -89,7 +89,7 @@ void PHY_ActionControlZone::Execute()
         return;
 
     const bool bMustRefResult = ( pFireResult_ == 0 );
-    role_.FireZone( *pZoneControlled_, pFireResult_ );
+    roleDirectFiring_.FireZone( *pZoneControlled_, pFireResult_ );
     if( pFireResult_ && bMustRefResult )
         pFireResult_->IncRef();
 }

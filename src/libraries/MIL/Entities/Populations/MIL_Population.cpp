@@ -33,7 +33,8 @@
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
-    : type_        ( type )
+    : PHY_Actor    ()
+    , type_        ( type )
     , nID_         ( nID )
     , pArmy_       ( 0 )
     , strName_     ( type.GetName() )
@@ -78,6 +79,15 @@ void MIL_Population::UpdateDecision()
 {
     assert( pDecision_ );
     pDecision_->UpdateDecision();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::Move
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+void MIL_Population::Move( const MT_Vector2D& destination )
+{
+     // $$$$ NLD 2005-09-29: TODO
 }
 
 // =============================================================================

@@ -14,10 +14,11 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_IndirectFiring;
 class PHY_IndirectFireDotationClass;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionIndirectFire_ABC
@@ -26,6 +27,9 @@ class PHY_IndirectFireDotationClass;
 class PHY_ActionIndirectFire_ABC : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionIndirectFire_ABC )
+
+public:
+    typedef MIL_AgentPion ActorType;        
 
 public:
              PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );

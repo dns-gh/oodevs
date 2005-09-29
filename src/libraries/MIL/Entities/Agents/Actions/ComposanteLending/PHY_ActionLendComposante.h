@@ -12,9 +12,10 @@
 #ifndef __PHY_ActionLendComposante_h_
 #define __PHY_ActionLendComposante_h_
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RolePion_Composantes;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionLendComposante
@@ -22,6 +23,9 @@ class PHY_RolePion_Composantes;
 // =============================================================================
 class PHY_ActionLendComposante : public PHY_Action_ABC
 {
+public:
+    typedef MIL_AgentPion ActorType;        
+
 public:
     //! @name Constructors/Destructor
     //@{

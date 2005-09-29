@@ -27,11 +27,12 @@
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC    ( pion, diaCall )
-    , role_              ( pion.GetRole< PHY_RoleAction_Moving >() )
-    , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
-    , pMainPath_         ( diaCall.GetParameter( 1 ).ToUserPtr( pMainPath_ ) )
-    , pJoiningPath_      ( 0 )
+    : PHY_Action_ABC      ( pion, diaCall )
+    , pion_               ( pion )
+    , role_               ( pion.GetRole< PHY_RoleAction_Moving >() )
+    , diaReturnCode_      ( diaCall.GetParameter( 0 ) )
+    , pMainPath_          ( diaCall.GetParameter( 1 ).ToUserPtr( pMainPath_ ) )
+    , pJoiningPath_       ( 0 )
     , objectAvoidAttempts_()
 {    
     assert( DEC_Tools::CheckTypeItineraire( diaCall.GetParameter( 1 ) ) );
@@ -155,7 +156,7 @@ void PHY_ActionMove::Execute()
     {
         role_.MoveSuspended( *pCurrentPath );
         DestroyJoiningPath();
-            CreateJoiningPath();
+        CreateJoiningPath ();
         pCurrentPath = pJoiningPath_;
         nReturn      = role_.Move( *pCurrentPath );
     }

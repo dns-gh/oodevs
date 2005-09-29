@@ -14,11 +14,13 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_DirectFiring;
-class MIL_ControlZone;
+class PHY_RolePion_Perceiver;
 class PHY_ControlZoneFireResults;
+class MIL_ControlZone;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionControlZone
@@ -27,6 +29,9 @@ class PHY_ControlZoneFireResults;
 class PHY_ActionControlZone : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionControlZone )
+
+public:
+    typedef MIL_AgentPion ActorType;        
 
 public:
     PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
@@ -39,7 +44,8 @@ public:
     //@}
 
 private:
-    PHY_RoleAction_DirectFiring& role_;
+    PHY_RolePion_Perceiver&      rolePerceiver_;
+    PHY_RoleAction_DirectFiring& roleDirectFiring_;
     MIL_ControlZone*             pZoneControlled_;
     PHY_ControlZoneFireResults*  pFireResult_;
     void*                        pPerceptionZoneID_;

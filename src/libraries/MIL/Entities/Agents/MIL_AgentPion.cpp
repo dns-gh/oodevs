@@ -32,7 +32,6 @@
 #include "Roles/Logistic/Medical/PHY_RolePion_Medical.h"
 #include "Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 
-#include "Actions/PHY_Action_ABC.h"
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Actions/Moving/PHY_RoleAction_Moving.h"
@@ -84,6 +83,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
     : MIL_Agent_ABC        ( nID )
+    , PHY_Actor            ()
     , pType_               ( &type )
     , bIsPC_               ( false )
     , strName_             ( pType_->GetName() )
@@ -114,6 +114,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Input
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive )
     : MIL_Agent_ABC        ( automate.GetID() )
+    , PHY_Actor            ()
     , pType_               ( &automate.GetType().GetTypePionPC() )
     , bIsPC_               ( true )
     , strName_             ( pType_->GetName() )
@@ -134,6 +135,7 @@ MIL_AgentPion::MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive 
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
     : MIL_Agent_ABC        ( nID )
+    , PHY_Actor            ()
     , pType_               ( &type )
     , bIsPC_               ( false )
     , strName_             ( pType_->GetName() )
@@ -154,6 +156,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion()
     : MIL_Agent_ABC         ()
+    , PHY_Actor             ()
     , pType_                ( 0 )
     , bIsPC_                ()
     , pKnowledgeBlackBoard_ ( 0 )
@@ -161,7 +164,6 @@ MIL_AgentPion::MIL_AgentPion()
     , pKsFire_              ( 0 )
     , pKsQuerier_           ( 0 )
     , pKsNetworkUpdater_    ( 0 )
-    , actions_              ()
     , orderManager_         ( *new MIL_PionOrderManager( *this ) )
 {
 }
@@ -349,10 +351,6 @@ void MIL_AgentPion::ReadOverloading( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 MIL_AgentPion::~MIL_AgentPion()
 {
-    for( CIT_ActionSet itAction = actions_.begin(); itAction != actions_.end(); ++itAction )
-        delete *itAction;
-    actions_.clear();
-
     pAutomate_->UnregisterPion( *this );
 
     delete &orderManager_;
@@ -417,16 +415,6 @@ void MIL_AgentPion::CleanKnowledges()
 void MIL_AgentPion::UpdateDecision()
 {
     GetRole< DEC_RolePion_Decision >().UpdateDecision();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::UpdateActions
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::UpdateActions()
-{
-    for( CIT_ActionSet itAction = actions_.begin(); itAction != actions_.end(); ++itAction )
-        (**itAction).Update();
 }
 
 // -----------------------------------------------------------------------------

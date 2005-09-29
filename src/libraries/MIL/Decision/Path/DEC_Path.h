@@ -62,8 +62,8 @@ public:
     //@}
 
 public:
-     DEC_Path( MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
-     DEC_Path( MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
+     DEC_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
+     DEC_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
      DEC_Path( const DEC_Path& rhs ); // Copy only query parameters, not the result !
     ~DEC_Path();
 
@@ -151,8 +151,8 @@ private:
     //@}
     
 private:   
-    uint           nID_;
-    MIL_AgentPion& queryMaker_;   
+          uint           nID_;
+    const MIL_AgentPion& queryMaker_;   
     
     // Path calculation parameters
     DEC_PathType                 pathType_;

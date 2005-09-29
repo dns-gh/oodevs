@@ -13,18 +13,18 @@
 
 #include "PHY_Action_ABC.h"
 
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "PHY_Actor.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_Action_ABC::PHY_Action_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
+PHY_Action_ABC::PHY_Action_ABC( PHY_Actor& actor, DIA_Call_ABC& diaCall )
     : bSuspended_( false )
-    , pion_      ( pion )
+    , actor_     ( actor )
 {
-    pion_.RegisterAction( *this );
+    actor_.RegisterAction( *this );
     diaCall.GetResult().SetValue( (void*)this, &DEC_Tools::GetTypeAction() );
 }
 
@@ -32,11 +32,11 @@ PHY_Action_ABC::PHY_Action_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 // Name: PHY_Action_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_Action_ABC::PHY_Action_ABC( MIL_AgentPion& pion )
+PHY_Action_ABC::PHY_Action_ABC( PHY_Actor& actor )
     : bSuspended_( false )
-    , pion_      ( pion )
+    , actor_     ( actor )
 {
-    pion_.RegisterAction( *this );
+    actor_.RegisterAction( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ PHY_Action_ABC::PHY_Action_ABC( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::~PHY_Action_ABC()
 {
-    pion_.UnregisterAction( *this );
+    actor_.UnregisterAction( *this );
 }
 
 

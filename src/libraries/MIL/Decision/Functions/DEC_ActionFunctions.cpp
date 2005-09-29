@@ -13,7 +13,7 @@
 
 #include "DEC_ActionFunctions.h"
 #include "DEC_FunctionsTools.h"
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -25,53 +25,6 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::StopAction
-// Created: NLD 2004-09-14
-// -----------------------------------------------------------------------------
-void DEC_ActionFunctions::StopAction( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeAction( call.GetParameter( 0 ) ) );
-
-    PHY_Action_ABC* pAction = call.GetParameter( 0 ).ToUserPtr( pAction );
-    if( !pAction )
-        return;
-    assert( callerAgent.HasAction( *pAction ) );
-    MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDebug().NotifyActionStopped( call, callerAgent, *pAction );
-    delete pAction;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::SuspendAction
-// Created: NLD 2004-09-14
-// -----------------------------------------------------------------------------
-void DEC_ActionFunctions::SuspendAction( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeAction( call.GetParameter( 0 ) ) );
-
-    PHY_Action_ABC* pAction = call.GetParameter( 0 ).ToUserPtr( pAction );
-    if( !pAction )
-        return;
-    assert( callerAgent.HasAction( *pAction ) );
-    pAction->Suspend();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::ResumeAction
-// Created: NLD 2004-09-14
-// -----------------------------------------------------------------------------
-void DEC_ActionFunctions::ResumeAction( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
-{
-    assert( DEC_Tools::CheckTypeAction( call.GetParameter( 0 ) ) );
-
-    PHY_Action_ABC* pAction = call.GetParameter( 0 ).ToUserPtr( pAction );
-    if( !pAction )
-        return;
-    assert( callerAgent.HasAction( *pAction ) );
-    pAction->Resume();
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::TakePrisoner

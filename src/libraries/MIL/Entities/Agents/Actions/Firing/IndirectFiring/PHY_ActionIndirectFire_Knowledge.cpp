@@ -29,7 +29,7 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
     assert( DEC_Tools::CheckTypeConnaissanceAgent( diaCall.GetParameter( 3 ) ) );
 
     uint nTargetKnowledgeID_ = (uint)diaCall.GetParameter( 3 ).ToPtr();
-    pEffect_ = new MIL_Effect_IndirectFire( pion_, nTargetKnowledgeID_, *pIndirectWeaponClass_, rNbInterventionType_ );
+    pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID_, *pIndirectWeaponClass_, rNbInterventionType_ );
     pEffect_->IncRef();
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
 }

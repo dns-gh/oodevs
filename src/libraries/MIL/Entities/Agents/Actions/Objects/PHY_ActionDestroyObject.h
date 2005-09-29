@@ -14,10 +14,11 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Objects;
 class MIL_RealObject_ABC;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionDestroyObject
@@ -26,6 +27,9 @@ class MIL_RealObject_ABC;
 class PHY_ActionDestroyObject : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionDestroyObject )
+
+public:
+    typedef MIL_AgentPion ActorType;
 
 public:
     PHY_ActionDestroyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );

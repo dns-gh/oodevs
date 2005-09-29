@@ -30,7 +30,7 @@ PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_AgentPion&
 
     MT_Vector2D* pTargetPosition = diaCall.GetParameter( 3 ).ToUserPtr( pTargetPosition );
     assert( pTargetPosition );
-    pEffect_ = new MIL_Effect_IndirectFire( pion_, *pTargetPosition, *pIndirectWeaponClass_, rNbInterventionType_ );
+    pEffect_ = new MIL_Effect_IndirectFire( pion, *pTargetPosition, *pIndirectWeaponClass_, rNbInterventionType_ );
     pEffect_->IncRef();
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
 }

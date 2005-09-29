@@ -14,6 +14,7 @@
 #include "DEC_Debug.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 
 #include "DIA/DIA_Instance.h"
 #include "DIA/DIA_BasicBehavior_ABC.h"
@@ -130,6 +131,30 @@ void DEC_Debug::NotifyActionStarted( DIA_Call_ABC& call, const MIL_AgentPion& pi
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Debug::NotifyActionStarted
+// Created: NLD 2004-06-04
+// -----------------------------------------------------------------------------
+void DEC_Debug::NotifyActionStarted( DIA_Call_ABC& call, const MIL_Population& population, const PHY_Action_ABC& action )
+{
+#ifdef _DEBUG
+    DIA_Instance* pInstance = static_cast< DIA_Instance* >( call.GetCallingLocation().GetCallingAdress() );
+    const std::string& strInstance  = pInstance->GetParent().GetName();
+
+    T_RangeActionPerInstanceMap foundRange = actionPerInstanceMap_.equal_range( pInstance );
+    for( IT_ActionPerInstanceMap itAction = foundRange.first; itAction != foundRange.second; ++itAction )
+    {
+        if( itAction->second == &action )
+        {
+            MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStarted - Population %d - Instance %s - ACTION ALREADY REGISTERED - Address %p", population.GetID(), strInstance.c_str(), &action ) );
+            return;
+        }
+    }
+    actionPerInstanceMap_.insert( std::make_pair( pInstance, &action ) );
+    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStarted - Population %d - Instance %s - Address %p", population.GetID(), strInstance.c_str(), &action ) );
+#endif
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Debug::NotifyActionStopped
 // Created: NLD 2004-06-04
 // -----------------------------------------------------------------------------
@@ -152,6 +177,31 @@ void DEC_Debug::NotifyActionStopped( DIA_Call_ABC& call, const MIL_AgentPion& pi
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Agent %d - Instance %s - Address %p - ACTION ALREADY UNREGISTERED", pion.GetID(), strInstance.c_str(), &action ) );
 #endif
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Debug::NotifyActionStopped
+// Created: NLD 2004-06-04
+// -----------------------------------------------------------------------------
+void DEC_Debug::NotifyActionStopped( DIA_Call_ABC& call, const MIL_Population& population, const PHY_Action_ABC& action )
+{
+#ifdef _DEBUG         
+    DIA_Instance* pInstance = static_cast< DIA_Instance* >( call.GetCallingLocation().GetCallingAdress() );
+    const std::string& strInstance = pInstance ->GetParent().GetName();
+
+    T_RangeActionPerInstanceMap foundRange = actionPerInstanceMap_.equal_range( pInstance );
+    for( IT_ActionPerInstanceMap itAction = foundRange.first; itAction != foundRange.second; ++itAction )
+    {
+        if( itAction->second == &action )
+        {
+            actionPerInstanceMap_.erase( itAction );
+            MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Population %d - Instance %s - Address %p", population.GetID(), strInstance.c_str(), &action ) );
+            return;
+        }
+    }
+    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Population %d - Instance %s - Address %p - ACTION ALREADY UNREGISTERED", population.GetID(), strInstance.c_str(), &action ) );
+#endif
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Debug::DIAAssert

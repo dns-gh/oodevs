@@ -101,7 +101,7 @@ void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
 // Created: NLD 2005-09-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_OrdersFunctions::FinishMission( DIA_Call_ABC& call, T& caller )
+void DEC_OrdersFunctions::FinishMission( DIA_Call_ABC& /*call*/, T& caller )
 {
     caller.GetOrderManager().OnReceiveRCMissionFinished();
 }

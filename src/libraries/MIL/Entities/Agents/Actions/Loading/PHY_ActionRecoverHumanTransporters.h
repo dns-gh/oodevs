@@ -14,17 +14,21 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/PHY_Action_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 
 class PHY_RoleAction_Loading;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  PHY_ActionRecoverHumanTransporters
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionRecoverHumanTransporters: public PHY_Action_ABC
+class PHY_ActionRecoverHumanTransporters : public PHY_Action_ABC
 {
     MT_COPYNOTALLOWED( PHY_ActionRecoverHumanTransporters)
+
+public:
+    typedef MIL_AgentPion ActorType;
 
 public:
              PHY_ActionRecoverHumanTransporters( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );

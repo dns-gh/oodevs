@@ -16,6 +16,8 @@
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_PopulationFunctions.h"
+#include "Decision/Functions/DEC_ActionFunctions.h"
+#include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "MIL_AgentServer.h"
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
@@ -105,8 +107,12 @@ MIL_PopulationType::~MIL_PopulationType()
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug, "DEC_Debug" );
-}
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population            >, "DEC_StopAction"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population            >, "DEC_PauseAction"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population            >, "DEC_ReprendAction"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove >, "DEC_StartDeplacement" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug                                 , "DEC_Debug"            );
+} 
 
 // =============================================================================
 // OPERATIONS

@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-class MIL_AgentPion;
+class PHY_Actor;
 
 // =============================================================================
 // @class  PHY_Action_ABC
@@ -25,8 +25,8 @@ class PHY_Action_ABC
     MT_COPYNOTALLOWED( PHY_Action_ABC )
 
 public:
-    PHY_Action_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
-    PHY_Action_ABC( MIL_AgentPion& pion );
+    PHY_Action_ABC( PHY_Actor& actor, DIA_Call_ABC& diaCall );
+    PHY_Action_ABC( PHY_Actor& actor );
     virtual ~PHY_Action_ABC();
 
     //! @name Operations
@@ -44,10 +44,10 @@ protected:
     //@}
 
 protected:
-    MIL_AgentPion& pion_;
+    PHY_Actor& actor_;
 
 private:
-    bool            bSuspended_;
+    bool bSuspended_;
 };
 
 #include "PHY_Action_ABC.inl"
