@@ -1,0 +1,34 @@
+--
+-- file name : ScipioAutomateOrder.asn
+--
+-- Messages de gestion des ordres niveau automate
+--
+
+ScipioPopulationOrder DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS OID, Point, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH, Localisation FROM ScipioBase
+IMPORTS Itineraire, Direction, Segment, ListAgent, ListOID FROM ScipioBase
+IMPORTS EnumOrderErrorCode FROM ScipioOrder
+
+IMPORTS Mission-Population-FaireMouvement FROM ScipioPopulationMission;
+
+Mission-Population ::= CHOICE
+{
+    mission-population-faire-mouvement Mission-Population-FaireMouvement
+}
+
+MsgPopulationOrder ::= SEQUENCE
+{
+    oid-unite-executante Population,
+    order-id			 OID,
+    mission              Mission-Population
+}
+
+MsgPopulationOrderAck ::= SEQUENCE
+{
+    oid-unite-executante Population,
+    order-id		     OID,
+    error-code		     EnumOrderErrorCode
+}
+
+END -- ScipioPopulationOrder

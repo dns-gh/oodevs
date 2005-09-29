@@ -1,0 +1,16 @@
+--
+-- file name : ScipioPopulationMission.asn
+--
+-- Messages des différentes missions automate blindé
+--
+
+ScipioPopulationMission DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS Point FROM ScipioBase;
+
+Mission-Population-FaireMouvement ::= SEQUENCE
+{
+    destination Point
+}
+
+END -- ScipioPopulationMission
