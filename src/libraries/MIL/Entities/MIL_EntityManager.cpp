@@ -918,6 +918,25 @@ void MIL_EntityManager::OnReceiveMsgAutomateOrder( ASN1T_MsgAutomateOrder& asnMs
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgPopulationOrder
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& asnMsg, MIL_MOSContextID nCtx )
+{
+    MIL_Population* pPopulation = FindPopulation( asnMsg.oid_unite_executante );
+    if( !pPopulation )
+    {
+        NET_ASN_MsgPopulationOrderAck asnReplyMsg;
+        asnReplyMsg.GetAsnMsg().oid_unite_executante = asnMsg.oid_unite_executante;
+        asnReplyMsg.GetAsnMsg().order_id             = asnMsg.order_id;
+        asnReplyMsg.GetAsnMsg().error_code           = EnumOrderErrorCode::error_invalid_unit;
+        asnReplyMsg.Send( nCtx );
+        return;
+    }
+    pPopulation->OnReceiveMsgPopulationOrder( asnMsg, nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------

@@ -21,6 +21,8 @@
 
 #include "MIL.h"
 
+#include "Entities/Orders/Population/MIL_PopulationOrderManager.h"
+
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
@@ -41,10 +43,12 @@ public:
 
     //! @name Accessors
     //@{
-          uint                    GetID      () const;
-    const MIL_PopulationType&     GetType    () const;
-    const std::string&            GetName    () const;
-          DEC_PopulationDecision& GetDecision() const;
+          uint                        GetID          () const;
+    const MIL_PopulationType&         GetType        () const;
+    const std::string&                GetName        () const;
+          DEC_PopulationDecision&     GetDecision    () const;
+    const MIL_PopulationOrderManager& GetOrderManager() const;
+          MIL_PopulationOrderManager& GetOrderManager();
     //@}
 
     //! @name Operations
@@ -54,9 +58,10 @@ public:
 
     //! @name Network 
     //@{
-    void SendCreation    () const;
-    void SendFullState   () const;
-    void SendChangedState() const;    
+    void OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg, MIL_MOSContextID nCtx );
+    void SendCreation               () const;
+    void SendFullState              () const;
+    void SendChangedState           () const;    
     //@}
 
 private:
@@ -83,15 +88,16 @@ private:
     //@}
 
 private:
-    const MIL_PopulationType&     type_;
-    const uint                    nID_;
-    const MIL_Army*               pArmy_;
-          std::string             strName_;
+    const MIL_PopulationType& type_;
+    const uint                nID_;
+    const MIL_Army*           pArmy_;
+          std::string         strName_;
 
-          T_ConcentrationSet      concentrations_;
-          T_FlowSet               flows_;
+          T_ConcentrationSet  concentrations_;
+          T_FlowSet           flows_;
 
-          DEC_PopulationDecision* pDecision_;
+          DEC_PopulationDecision*    pDecision_;
+          MIL_PopulationOrderManager orderManager_;
 };
 
 #include "MIL_Population.inl"

@@ -80,6 +80,7 @@ public:
           MIL_Army*          FindArmy        ( const std::string& strName ) const;
           MIL_Army*          FindArmy        ( uint nID ) const;
           MIL_Automate*      FindAutomate    ( uint nID ) const;
+          MIL_Population*    FindPopulation  ( uint nID ) const;
           MIL_AgentPion*     FindAgentPion   ( uint nID ) const;
     const T_ArmyMap&         GetArmies       () const;
     
@@ -111,6 +112,7 @@ public:
     void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgPionOrder            ( ASN1T_MsgPionOrder&                     msg, MIL_MOSContextID nCtx ); 
     void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgPopulationOrder      ( ASN1T_MsgPopulationOrder&               msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgOrderConduite        ( ASN1T_MsgOrderConduite&                 msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgObjectMagicAction    ( ASN1T_MsgObjectMagicAction&             msg, MIL_MOSContextID nCtx );

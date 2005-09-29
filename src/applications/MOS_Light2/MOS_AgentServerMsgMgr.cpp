@@ -1841,6 +1841,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  asnMsg.u.msg_log_ravitaillement_pousser_flux_ack , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  asnMsg.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
 
+//        case T_MsgsSimMosWithContext_msg_population_order_ack  : break; //$$$ TODO        
+
         default:
             {
 #ifdef _DEBUG
@@ -1849,7 +1851,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
                 asnMsgCtrl.Print( "MsgsSimMos" );
                 std::cout << "END MSG DUMP =>" << std::endl;
 #endif
-                assert( false );
+//                assert( false );
             }
     }
 }

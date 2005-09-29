@@ -33,11 +33,12 @@
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
-    : type_     ( type )
-    , nID_      ( nID )
-    , pArmy_    ( 0 )
-    , strName_  ( type.GetName() )
-    , pDecision_( 0 )
+    : type_        ( type )
+    , nID_         ( nID )
+    , pArmy_       ( 0 )
+    , strName_     ( type.GetName() )
+    , pDecision_   ( 0 )
+    , orderManager_( *this )
 {
     archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
 

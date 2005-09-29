@@ -227,9 +227,9 @@ void DEC_PopulationDecision::UpdateDecision()
 #endif    
     {
         assert( pPopulation_ );
-//        MT_LOG_ERROR_MSG( MT_FormatString( "Population %d ('%s') : Mission '%s' impossible", pPopulation_->GetID(), pPopulation_->GetName().c_str(), pPopulation_->GetOrderManager().GetMission() ? pPopulation_->GetOrderManager().GetMission()->GetName() : "Default" ) );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Population %d ('%s') : Mission '%s' impossible", pPopulation_->GetID(), pPopulation_->GetName().c_str(), pPopulation_->GetOrderManager().GetMission() ? pPopulation_->GetOrderManager().GetMission()->GetName() : "Default" ) );
 //        MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
-//        pPopulation_->GetOrderManager().CancelAllOrders();       
+        pPopulation_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();
     }
 }

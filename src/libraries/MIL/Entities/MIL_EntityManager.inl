@@ -23,6 +23,19 @@ MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindPopulation
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+inline
+MIL_Population* MIL_EntityManager::FindPopulation( uint nID ) const
+{
+    CIT_PopulationMap it = populations_.find( nID );
+    if( it == populations_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindAutomate
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------

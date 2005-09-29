@@ -544,27 +544,28 @@ void NET_AS_MOSServerMsgMgr::DoUpdateWithContext( const T_MessageWithCtxControll
         MIL_MOSContextID nCtx = msgCtrl.GetContext();
         switch( asnMsg.t )
         {
-        case T_MsgsMosSimWithContext_msg_limit_creation                     : workspace.GetLimitManager ().OnReceiveMsgCreateLimit          ( *asnMsg.u.msg_limit_creation                  , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_limit_destruction                  : workspace.GetLimitManager ().OnReceiveMsgDestroyLimit         (  asnMsg.u.msg_limit_destruction               , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_limit_update                       : workspace.GetLimitManager ().OnReceiveMsgUpdateLimit          ( *asnMsg.u.msg_limit_update                    , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_lima_creation                      : workspace.GetLimaManager  ().OnReceiveMsgCreateLima           ( *asnMsg.u.msg_lima_creation                   , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_lima_destruction                   : workspace.GetLimaManager  ().OnReceiveMsgDestroyLima          (  asnMsg.u.msg_lima_destruction                , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_lima_update                        : workspace.GetLimaManager  ().OnReceiveMsgUpdateLima           ( *asnMsg.u.msg_lima_update                     , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_pion_order                         : workspace.GetEntityManager().OnReceiveMsgPionOrder            ( *asnMsg.u.msg_pion_order                      , nCtx ); break;         
-        case T_MsgsMosSimWithContext_msg_order_conduite                     : workspace.GetEntityManager().OnReceiveMsgOrderConduite        ( *asnMsg.u.msg_order_conduite                  , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_automate_order                     : workspace.GetEntityManager().OnReceiveMsgAutomateOrder        ( *asnMsg.u.msg_automate_order                  , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_set_automate_mode                  : workspace.GetEntityManager().OnReceiveMsgSetAutomateMode      ( *asnMsg.u.msg_set_automate_mode               , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_unit_magic_action                  : workspace.GetEntityManager().OnReceiveMsgUnitMagicAction      ( *asnMsg.u.msg_unit_magic_action               , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_object_magic_action                : workspace.GetEntityManager().OnReceiveMsgObjectMagicAction    ( *asnMsg.u.msg_object_magic_action             , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_change_diplomatie                  : workspace.GetEntityManager().OnReceiveMsgChangeDiplomacy      ( *asnMsg.u.msg_change_diplomatie               , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_change_groupe_connaissance         : workspace.GetEntityManager().OnReceiveMsgChangeKnowledgeGroup ( *asnMsg.u.msg_change_groupe_connaissance      , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_change_automate                    : workspace.GetEntityManager().OnReceiveMsgChangeAutomate       ( *asnMsg.u.msg_change_automate                 , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_change_liens_logistiques           : workspace.GetEntityManager().OnReceiveMsgChangeLogisticLinks  ( *asnMsg.u.msg_change_liens_logistiques        , nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_log_ravitaillement_change_quotas   : workspace.GetEntityManager().OnReceiveMsgLogSupplyChangeQuotas( *asnMsg.u.msg_log_ravitaillement_change_quotas, nCtx ); break;
-        case T_MsgsMosSimWithContext_msg_log_ravitaillement_pousser_flux    : workspace.GetEntityManager().OnReceiveMsgLogSupplyPushFlow    ( *asnMsg.u.msg_log_ravitaillement_pousser_flux , nCtx ); break;
-            
-        default:
-            assert( false );
+            case T_MsgsMosSimWithContext_msg_limit_creation                     : workspace.GetLimitManager ().OnReceiveMsgCreateLimit          ( *asnMsg.u.msg_limit_creation                  , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_limit_destruction                  : workspace.GetLimitManager ().OnReceiveMsgDestroyLimit         (  asnMsg.u.msg_limit_destruction               , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_limit_update                       : workspace.GetLimitManager ().OnReceiveMsgUpdateLimit          ( *asnMsg.u.msg_limit_update                    , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_lima_creation                      : workspace.GetLimaManager  ().OnReceiveMsgCreateLima           ( *asnMsg.u.msg_lima_creation                   , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_lima_destruction                   : workspace.GetLimaManager  ().OnReceiveMsgDestroyLima          (  asnMsg.u.msg_lima_destruction                , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_lima_update                        : workspace.GetLimaManager  ().OnReceiveMsgUpdateLima           ( *asnMsg.u.msg_lima_update                     , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_pion_order                         : workspace.GetEntityManager().OnReceiveMsgPionOrder            ( *asnMsg.u.msg_pion_order                      , nCtx ); break;         
+            case T_MsgsMosSimWithContext_msg_order_conduite                     : workspace.GetEntityManager().OnReceiveMsgOrderConduite        ( *asnMsg.u.msg_order_conduite                  , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_automate_order                     : workspace.GetEntityManager().OnReceiveMsgAutomateOrder        ( *asnMsg.u.msg_automate_order                  , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_population_order                   : workspace.GetEntityManager().OnReceiveMsgPopulationOrder      ( *asnMsg.u.msg_population_order                , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_set_automate_mode                  : workspace.GetEntityManager().OnReceiveMsgSetAutomateMode      ( *asnMsg.u.msg_set_automate_mode               , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_unit_magic_action                  : workspace.GetEntityManager().OnReceiveMsgUnitMagicAction      ( *asnMsg.u.msg_unit_magic_action               , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_object_magic_action                : workspace.GetEntityManager().OnReceiveMsgObjectMagicAction    ( *asnMsg.u.msg_object_magic_action             , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_change_diplomatie                  : workspace.GetEntityManager().OnReceiveMsgChangeDiplomacy      ( *asnMsg.u.msg_change_diplomatie               , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_change_groupe_connaissance         : workspace.GetEntityManager().OnReceiveMsgChangeKnowledgeGroup ( *asnMsg.u.msg_change_groupe_connaissance      , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_change_automate                    : workspace.GetEntityManager().OnReceiveMsgChangeAutomate       ( *asnMsg.u.msg_change_automate                 , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_change_liens_logistiques           : workspace.GetEntityManager().OnReceiveMsgChangeLogisticLinks  ( *asnMsg.u.msg_change_liens_logistiques        , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_log_ravitaillement_change_quotas   : workspace.GetEntityManager().OnReceiveMsgLogSupplyChangeQuotas( *asnMsg.u.msg_log_ravitaillement_change_quotas, nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_log_ravitaillement_pousser_flux    : workspace.GetEntityManager().OnReceiveMsgLogSupplyPushFlow    ( *asnMsg.u.msg_log_ravitaillement_pousser_flux , nCtx ); break;
+                
+            default:
+                assert( false );
         }
         delete &msgCtrl;
     }

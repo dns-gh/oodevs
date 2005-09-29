@@ -56,3 +56,33 @@ DEC_PopulationDecision& MIL_Population::GetDecision() const
     assert( pDecision_ );
     return *pDecision_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetOrderManager
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+inline
+const MIL_PopulationOrderManager& MIL_Population::GetOrderManager() const
+{
+    return orderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetOrderManager
+// Created: NLD 2005-09-29
+// -----------------------------------------------------------------------------
+inline
+MIL_PopulationOrderManager& MIL_Population::GetOrderManager()
+{
+    return orderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgPopulationOrder
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+inline
+void MIL_Population::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg, MIL_MOSContextID nCtx )
+{
+    orderManager_.OnReceiveMsgPopulationOrder( msg, nCtx );
+}

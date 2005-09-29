@@ -1,40 +1,40 @@
 //*****************************************************************************
 //
 // $Created: NLD 2003-04-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Orders/Automate/MIL_AutomateOrderManager.inl $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Orders/Population/MIL_PopulationOrderManager.inl $
 // $Author: Nld $
 // $Modtime: 4/03/05 17:34 $
 // $Revision: 2 $
-// $Workfile: MIL_AutomateOrderManager.inl $
+// $Workfile: MIL_PopulationOrderManager.inl $
 //
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::OnReceiveRCMissionFinished
+// Name: MIL_PopulationOrderManager::OnReceiveRCMissionFinished
 // Created: NLD 2003-09-02
 // -----------------------------------------------------------------------------
 inline
-void MIL_AutomateOrderManager::OnReceiveRCMissionFinished()
+void MIL_PopulationOrderManager::OnReceiveRCMissionFinished()
 {
     bRCMissionFinishedReceived_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::GetMission
+// Name: MIL_PopulationOrderManager::GetMission
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateMission_ABC* MIL_AutomateOrderManager::GetMission() const
+const MIL_PopulationMission_ABC* MIL_PopulationOrderManager::GetMission() const
 {
     return pMission_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::IsNewMissionStarted
+// Name: MIL_PopulationOrderManager::IsNewMissionStarted
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------
 inline
-bool MIL_AutomateOrderManager::IsNewMissionStarted() const
+bool MIL_PopulationOrderManager::IsNewMissionStarted() const
 {
     return bNewMissionStarted_;
 }
