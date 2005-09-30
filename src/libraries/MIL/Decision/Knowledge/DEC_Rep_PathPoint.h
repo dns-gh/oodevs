@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "Decision/Path/DEC_PathPoint.h"
 
-class DEC_Path;
+class DEC_Agent_Path;
 class DEC_RolePion_Decision;
 
 //*****************************************************************************
@@ -42,7 +42,7 @@ public:
     //@}
 
 public:
-    DEC_Rep_PathPoint( DEC_Path& path, const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
+    DEC_Rep_PathPoint( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
     DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
     virtual ~DEC_Rep_PathPoint();
     

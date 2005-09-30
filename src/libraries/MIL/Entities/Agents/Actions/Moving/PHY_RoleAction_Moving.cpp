@@ -44,24 +44,24 @@ BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::PHY_RoleAction_Moving( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : MT_Role_ABC          ( role  )
-    , pPion_               ( &pion )
-    , pRoleLocation_       ( &GetRole< PHY_RolePion_Location >() )
-    , rSpeedModificator_   ( 1. )
-    , rMaxSpeedModificator_( 1. )
-    , itNextPathPoint_     ()
-    , itCurrentPathPoint_  ()
-    , effectMove_          ( *this )
-    , vNewPos_             ( 0., 0. )
-    , vNewDir_             ( 0., 0. )
-    , rCurrentSpeed_       ( 0. )
-    , bForcePathCheck_     ( true )
-    , bHasChanged_         ( true )
-    , bHasMoved_           ( false )  
+    : MT_Role_ABC            ( role  )
+    , pPion_                 ( &pion )
+    , pRoleLocation_         ( &GetRole< PHY_RolePion_Location >() )
+    , rSpeedModificator_     ( 1. )
+    , rMaxSpeedModificator_  ( 1. )
+    , itNextPathPoint_       ()
+    , itCurrentPathPoint_    ()
+    , effectMove_            ( *this )
+    , vNewPos_               ( 0., 0. )
+    , vNewDir_               ( 0., 0. )
+    , rCurrentSpeed_         ( 0. )
+    , bForcePathCheck_       ( true )
+    , bHasChanged_           ( true )
+    , bHasMoved_             ( false )  
     , bEnvironmentHasChanged_( true )
-    , pCurrentPath_        ( 0 )
-    , rCurrentMaxSpeed_    ( 0. ) // Cached data
-    , rCurrentEnvSpeed_    ( 0. ) // Cached data
+    , pCurrentPath_          ( 0 )
+    , rCurrentMaxSpeed_      ( 0. ) // Cached data
+    , rCurrentEnvSpeed_      ( 0. ) // Cached data
 {
 }
 
@@ -70,24 +70,24 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MT_RoleContainer& role, MIL_AgentP
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::PHY_RoleAction_Moving()
-    : MT_Role_ABC          ()
-    , pPion_               ( 0 )
-    , pRoleLocation_       ( 0 )
-    , effectMove_          ( *this )
-    , rSpeedModificator_   ( 1. )
-    , rMaxSpeedModificator_( 1. )
-    , itNextPathPoint_     ()
-    , itCurrentPathPoint_  ()
-    , vNewPos_             ( 0., 0. )
-    , vNewDir_             ( 0., 0. )
-    , rCurrentSpeed_       ( 0. )
-    , bForcePathCheck_     ( true )
-    , bHasChanged_         ( true )
-    , bHasMoved_           ( false )  
+    : MT_Role_ABC            ()
+    , pPion_                 ( 0 )
+    , pRoleLocation_         ( 0 )
+    , effectMove_            ( *this )
+    , rSpeedModificator_     ( 1. )
+    , rMaxSpeedModificator_  ( 1. )
+    , itNextPathPoint_       ()
+    , itCurrentPathPoint_    ()
+    , vNewPos_               ( 0., 0. )
+    , vNewDir_               ( 0., 0. )
+    , rCurrentSpeed_         ( 0. )
+    , bForcePathCheck_       ( true )
+    , bHasChanged_           ( true )
+    , bHasMoved_             ( false )  
     , bEnvironmentHasChanged_( true )
-    , pCurrentPath_        ( 0 )
-    , rCurrentMaxSpeed_    ( 0. ) // Cached data
-    , rCurrentEnvSpeed_    ( 0. ) // Cached data
+    , pCurrentPath_          ( 0 )
+    , rCurrentMaxSpeed_      ( 0. ) // Cached data
+    , rCurrentEnvSpeed_      ( 0. ) // Cached data
 {
 }
 
@@ -140,9 +140,9 @@ bool PHY_RoleAction_Moving::CanMove() const
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 inline
-void PHY_RoleAction_Moving::InitializeEnvironment( const DEC_Path& path )
+void PHY_RoleAction_Moving::InitializeEnvironment( const DEC_Agent_Path& path )
 {
-    DEC_Path::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
+    DEC_Agent_Path::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
     while( itPathPointTmp != path.GetResult().end() && (*itPathPointTmp)->GetType() != DEC_PathPoint::eTypePointPath )
         ++itPathPointTmp;
     assert( itPathPointTmp != path.GetResult().end() );
@@ -432,7 +432,6 @@ void PHY_RoleAction_Moving::ComputeCurrentSpeed()
             environment_            = tmpEnvironment;
         }    
     }
-
     rCurrentMaxSpeed_ = GetMaxSpeedWithReinforcement();
     rCurrentEnvSpeed_ = GetSpeedWithReinforcement( environment_ );    
     rCurrentSpeed_    = rCurrentEnvSpeed_;
@@ -444,7 +443,7 @@ void PHY_RoleAction_Moving::ComputeCurrentSpeed()
 // Last modified: JVT 03-02-04
 //-----------------------------------------------------------------------------
 inline
-bool PHY_RoleAction_Moving::GoToNextNavPoint( const DEC_Path& path )
+bool PHY_RoleAction_Moving::GoToNextNavPoint( const DEC_Agent_Path& path )
 {
     if ( (*itNextPathPoint_)->GetType() == DEC_PathPoint::eTypePointPath )
     {
@@ -469,7 +468,7 @@ bool PHY_RoleAction_Moving::GoToNextNavPoint( const DEC_Path& path )
 // Name: PHY_RoleAction_Moving::SetCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Moving::SetCurrentPath( DEC_Path& path )
+bool PHY_RoleAction_Moving::SetCurrentPath( DEC_Agent_Path& path )
 {
     if( pCurrentPath_ && path == *pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
         return true;
@@ -488,7 +487,7 @@ bool PHY_RoleAction_Moving::SetCurrentPath( DEC_Path& path )
     if( itCurrentPathPoint_ == path.GetResult().end() )
         return false;
 
-    if( pCurrentPath_->GetState() == DEC_Path::ePartial )
+    if( pCurrentPath_->GetState() == DEC_Agent_Path::ePartial )
         MIL_RC::pRcTerrainDifficile_->Send( *pPion_, MIL_RC::eRcTypeWarning );
 
     itNextPathPoint_ = itCurrentPathPoint_;   
@@ -651,7 +650,7 @@ bool PHY_RoleAction_Moving::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, 
 // Name: PHY_RoleAction_Moving::TryToMoveTo
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
-bool PHY_RoleAction_Moving::TryToMoveTo( const DEC_Path& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining )
+bool PHY_RoleAction_Moving::TryToMoveTo( const DEC_Agent_Path& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining )
 {
     // Deplacement de vNewPos_ vers vNewPosTmp
     if( vNewPosTmp == vNewPos_ )
@@ -688,16 +687,16 @@ bool PHY_RoleAction_Moving::TryToMoveTo( const DEC_Path& path, const MT_Vector2D
 // Created: NLD 2004-09-22
 // Modified: JVT 2004-10-20
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Moving::Move( DEC_Path& path )
+int PHY_RoleAction_Moving::Move( DEC_Agent_Path& path )
 {
     if( bHasMoved_ ) 
         return eAlreadyMoving;
 
-    DEC_Path::E_State nPathState = path.GetState();
-    if( nPathState == DEC_Path::eInvalid || nPathState == DEC_Path::eImpossible || nPathState == DEC_Path::eCanceled )
+    DEC_Agent_Path::E_State nPathState = path.GetState();
+    if( nPathState == DEC_Agent_Path::eInvalid || nPathState == DEC_Agent_Path::eImpossible || nPathState == DEC_Agent_Path::eCanceled )
         return eNotAllowed;
     
-    if( nPathState == DEC_Path::eComputing )
+    if( nPathState == DEC_Agent_Path::eComputing )
     {
         bHasMoved_ = true;
         return eRunning;
@@ -764,7 +763,7 @@ int PHY_RoleAction_Moving::Move( DEC_Path& path )
 // Name: PHY_RoleAction_Moving::MoveSuspended
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::MoveSuspended( DEC_Path& path )
+void PHY_RoleAction_Moving::MoveSuspended( DEC_Agent_Path& path )
 {
     assert( pCurrentPath_ || bForcePathCheck_ );
 
@@ -776,7 +775,7 @@ void PHY_RoleAction_Moving::MoveSuspended( DEC_Path& path )
 // Name: PHY_RoleAction_Moving::MoveCanceled
 // Created: NLD 2005-03-16
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::MoveCanceled( DEC_Path& path )
+void PHY_RoleAction_Moving::MoveCanceled( DEC_Agent_Path& path )
 {
     if( pCurrentPath_ == &path )
     {
@@ -821,7 +820,7 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( MT_Float rTime, bool bBo
 // Name: PHY_RoleAction_Moving::ComputeFutureObjectCollisions
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsToAvoid_, DEC_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const
+void PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsToAvoid_, DEC_Agent_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const
 {
     objectsOnPath.clear();
     if( !pCurrentPath_ )
@@ -839,7 +838,7 @@ void PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectT
 // Name: PHY_RoleAction_Moving::IsMovingOn
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Moving::IsMovingOn( const DEC_Path& path ) const
+bool PHY_RoleAction_Moving::IsMovingOn( const DEC_Agent_Path& path ) const
 {
     return pCurrentPath_ ? path == *pCurrentPath_ : false;
 }

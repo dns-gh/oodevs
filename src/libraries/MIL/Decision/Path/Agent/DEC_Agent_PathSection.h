@@ -16,6 +16,7 @@
 
 #include "Decision/Path/DEC_PathSection_ABC.h"
 
+class DEC_Agent_Path;
 class TerrainRule_ABC;
 
 // =============================================================================
@@ -27,7 +28,7 @@ class DEC_Agent_PathSection : public DEC_PathSection_ABC
     MT_COPYNOTALLOWED( DEC_Agent_PathSection );
 
 public:
-             DEC_Agent_PathSection( DEC_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
+             DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
     virtual ~DEC_Agent_PathSection();
 
 private:

@@ -12,7 +12,6 @@
 #include "MIL_pch.h"
 #include "DEC_Path_KnowledgeObject.h"
 
-#include "DEC_Path.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 

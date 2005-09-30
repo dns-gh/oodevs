@@ -1,16 +1,16 @@
 //*****************************************************************************
 //
 // $Created: JDY 03-02-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_Path.h $
 // $Author: Age $
 // $Modtime: 16/06/05 15:09 $
 // $Revision: 10 $
-// $Workfile: DEC_Path.h $
+// $Workfile: DEC_Agent_Path.h $
 //
 //*****************************************************************************
 
-#ifndef __DEC_Path_h_
-#define __DEC_Path_h_
+#ifndef __DEC_Agent_Path_h_
+#define __DEC_Agent_Path_h_
 
 #include "MIL.h"
 
@@ -37,7 +37,7 @@ class MIL_AgentPion;
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_Path : public DEC_Path_ABC
+class DEC_Agent_Path : public DEC_Path_ABC
 {
     friend class DEC_PathFind_ComputationThread;
 
@@ -62,10 +62,10 @@ public:
     //@}
 
 public:
-     DEC_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
-     DEC_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
-     DEC_Path( const DEC_Path& rhs ); // Copy only query parameters, not the result !
-    ~DEC_Path();
+     DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
+     DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
+     DEC_Agent_Path( const DEC_Agent_Path& rhs ); // Copy only query parameters, not the result !
+    ~DEC_Agent_Path();
 
     //! @name Path calculation
     //@{
@@ -75,13 +75,12 @@ public:
     
     //! @name Operations
     //@{
-    bool operator==( const DEC_Path& rhs ) const;
-    bool operator!=( const DEC_Path& rhs ) const;
+    bool operator==( const DEC_Agent_Path& rhs ) const;
+    bool operator!=( const DEC_Agent_Path& rhs ) const;
     //@}
 
     //! @name Accessors 
     //@{
-          uint                          GetID                  () const;    
     const MIL_AgentPion&                GetQueryMaker          () const;
     const T_PathPointList&              GetResult              () const;
     const MIL_Fuseau&                   GetFuseau              () const;
@@ -147,7 +146,7 @@ private:
 
     //! @name Operators
     //@{
-    DEC_Path& operator=( const DEC_Path& rhs );
+    DEC_Agent_Path& operator=( const DEC_Agent_Path& rhs );
     //@}
     
 private:   
@@ -173,14 +172,8 @@ private:
     bool bSectionJustEnded_;
     T_PathPointList resultList_;
     //@}
-
-private:
-    static uint nIDIdx_;    
-
-public:
-    static const uint nInvalidID_;   
 };
 
-#include "DEC_Path.inl"
+#include "DEC_Agent_Path.inl"
 
-#endif // __DEC_Path_h_
+#endif // __DEC_Agent_Path_h_

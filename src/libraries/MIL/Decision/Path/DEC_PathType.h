@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 class TerrainRule_ABC;
-class DEC_Path;
+class DEC_Agent_Path;
 class DEC_PathClass;
 
 //*****************************************************************************
@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    TerrainRule_ABC& CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    TerrainRule_ABC& CreateRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const;
 
     std::string ConvertPathTypeToString() const;
 

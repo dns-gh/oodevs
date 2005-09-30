@@ -30,7 +30,7 @@ void DEC_Rep_PathPoint_Special::InitializeDIA()
 // Name: DEC_Rep_PathPoint_Special constructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( DEC_Path& path, const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain )
+DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain )
     : DEC_Rep_PathPoint    ( path, vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
     , nTypePointParticulier_ ( nTypePoint )
 {

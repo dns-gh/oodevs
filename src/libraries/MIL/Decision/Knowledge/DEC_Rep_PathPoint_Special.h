@@ -34,7 +34,7 @@ public:
     };
 
 public:
-    DEC_Rep_PathPoint_Special( DEC_Path& path, const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
+    DEC_Rep_PathPoint_Special( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
     DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
     virtual ~DEC_Rep_PathPoint_Special();
 

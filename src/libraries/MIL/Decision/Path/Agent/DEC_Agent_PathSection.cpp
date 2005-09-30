@@ -13,7 +13,7 @@
 
 #include "DEC_Agent_PathSection.h"
 
-#include "DEC_Path.h"
+#include "DEC_Agent_Path.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "pathfind/TerrainRule_ABC.h"
 
@@ -21,7 +21,7 @@
 // Name: DEC_Agent_PathSection constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint )
+DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint )
     : DEC_PathSection_ABC( path, vStartPoint, vEndPoint )
     , rule_              ( path.GetPathType().CreateRule( path, vStartPoint, vEndPoint ) )
     , bNeedRefine_       ( path.GetQueryMaker().CanFly() && !path.GetQueryMaker().IsAutonomous() )

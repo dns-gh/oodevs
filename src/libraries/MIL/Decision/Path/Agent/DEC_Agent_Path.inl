@@ -1,112 +1,101 @@
 //*****************************************************************************
 //
 // $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path.inl $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_Path.inl $
 // $Author: Age $
 // $Modtime: 13/04/05 18:34 $
 // $Revision: 3 $
-// $Workfile: DEC_Path.inl $
+// $Workfile: DEC_Agent_Path.inl $
 //
 //*****************************************************************************
 
- 
-//-----------------------------------------------------------------------------
-// Name: DEC_Path::GetID
-// Created: JDY 03-02-12
-//-----------------------------------------------------------------------------    
-inline
-uint DEC_Path::GetID() const
-{
-    return nID_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Path::GetResult
+ //-----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetResult
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
 inline
-const DEC_Path::T_PathPointList& DEC_Path::GetResult() const
+const DEC_Agent_Path::T_PathPointList& DEC_Agent_Path::GetResult() const
 {
     assert( GetState() != eComputing );
     return resultList_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetUnitSpeeds
+// Name: DEC_Agent_Path::GetUnitSpeeds
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const PHY_Speeds& DEC_Path::GetUnitSpeeds() const
+const PHY_Speeds& DEC_Agent_Path::GetUnitSpeeds() const
 {
     return unitSpeeds_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetUnitMaxSlope
+// Name: DEC_Agent_Path::GetUnitMaxSlope
 // Created: AGE 2005-04-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Path::GetUnitMaxSlope() const
+MT_Float DEC_Agent_Path::GetUnitMaxSlope() const
 {
     return rMaxSlope_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetAutomataFuseau
+// Name: DEC_Agent_Path::GetAutomataFuseau
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
 inline
-const MIL_Fuseau& DEC_Path::GetAutomataFuseau() const
+const MIL_Fuseau& DEC_Agent_Path::GetAutomataFuseau() const
 {
     return automateFuseau_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetFuseau
+// Name: DEC_Agent_Path::GetFuseau
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const MIL_Fuseau& DEC_Path::GetFuseau() const
+const MIL_Fuseau& DEC_Agent_Path::GetFuseau() const
 {
     return fuseau_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetDirDanger
+// Name: DEC_Agent_Path::GetDirDanger
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const MT_Vector2D& DEC_Path::GetDirDanger() const
+const MT_Vector2D& DEC_Agent_Path::GetDirDanger() const
 {
     return vDirDanger_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetPathKnowledgeObjects
+// Name: DEC_Agent_Path::GetPathKnowledgeObjects
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const DEC_Path::T_PathKnowledgeObjectVector& DEC_Path::GetPathKnowledgeObjects() const
+const DEC_Agent_Path::T_PathKnowledgeObjectVector& DEC_Agent_Path::GetPathKnowledgeObjects() const
 {
     return pathKnowledgeObjectVector_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetPathKnowledgeAgents
+// Name: DEC_Agent_Path::GetPathKnowledgeAgents
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const DEC_Path::T_PathKnowledgeAgentVector& DEC_Path::GetPathKnowledgeAgents() const
+const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowledgeAgents() const
 {
     return pathKnowledgeAgentVector_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetPathType
+// Name: DEC_Agent_Path::GetPathType
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const DEC_PathType& DEC_Path::GetPathType() const
+const DEC_PathType& DEC_Agent_Path::GetPathType() const
 {
     return pathType_;
 }
@@ -116,31 +105,31 @@ const DEC_PathType& DEC_Path::GetPathType() const
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::GetQueryMaker
+// Name: DEC_Agent_Path::GetQueryMaker
 // Created: JDY 03-03-11
 //-----------------------------------------------------------------------------
 inline
-const MIL_AgentPion& DEC_Path::GetQueryMaker() const
+const MIL_AgentPion& DEC_Agent_Path::GetQueryMaker() const
 {
     return queryMaker_;   
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::operator==
+// Name: DEC_Agent_Path::operator==
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
 inline
-bool DEC_Path::operator==( const DEC_Path& rhs ) const
+bool DEC_Agent_Path::operator==( const DEC_Agent_Path& rhs ) const
 {
     return nID_ == rhs.nID_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::operator!=
+// Name: DEC_Agent_Path::operator!=
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
 inline
-bool DEC_Path::operator!=( const DEC_Path& rhs ) const
+bool DEC_Agent_Path::operator!=( const DEC_Agent_Path& rhs ) const
 {
     return nID_ != rhs.nID_;
 }

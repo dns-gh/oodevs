@@ -8,16 +8,16 @@
 // *****************************************************************************
 //
 // $Created: AGE 2005-03-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_PathfinderRule.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_PathfinderRule.h $
 // $Author: Age $
 // $Modtime: 24/06/05 11:42 $
 // $Revision: 5 $
-// $Workfile: DEC_PathfinderRule.h $
+// $Workfile: DEC_Agent_PathfinderRule.h $
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathfinderRule_h_
-#define __DEC_PathfinderRule_h_
+#ifndef __DEC_Agent_PathfinderRule_h_
+#define __DEC_Agent_PathfinderRule_h_
 
 #include "pathfind/TerrainRule_ABC.h"
 #include "DEC_Path_KnowledgeAgent.h"
@@ -29,19 +29,19 @@ class DEC_Path;
 class PHY_RawVisionData;
 
 // =============================================================================
-/** @class  DEC_PathfinderRule
-    @brief  DEC_PathfinderRule
+/** @class  DEC_Agent_PathfinderRule
+    @brief  DEC_Agent_PathfinderRule
 */
 // Created: AGE 2005-03-08
 // =============================================================================
-class DEC_PathfinderRule : public TerrainRule_ABC
+class DEC_Agent_PathfinderRule : public TerrainRule_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathfinderRule( const PHY_Speeds& speeds, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort );
-    virtual ~DEC_PathfinderRule();
+             DEC_Agent_PathfinderRule( const PHY_Speeds& speeds, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort );
+    virtual ~DEC_Agent_PathfinderRule();
     //@}
 
     //! @name Operations
@@ -67,8 +67,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    DEC_PathfinderRule( const DEC_PathfinderRule& );            //!< Copy constructor
-    DEC_PathfinderRule& operator=( const DEC_PathfinderRule& ); //!< Assignement operator
+    DEC_Agent_PathfinderRule( const DEC_Agent_PathfinderRule& );            //!< Copy constructor
+    DEC_Agent_PathfinderRule& operator=( const DEC_Agent_PathfinderRule& ); //!< Assignement operator
     //@}
 
     //! @name Types
@@ -124,4 +124,4 @@ private:
     //@}
 };
 
-#endif // __DEC_PathfinderRule_h_
+#endif // __DEC_Agent_PathfinderRule_h_

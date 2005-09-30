@@ -13,7 +13,7 @@
 
 #include "DEC_PathType.h"
 #include "DEC_PathClass.h"
-#include "Agent/DEC_Path.h"
+#include "Agent/DEC_Agent_Path.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 DEC_PathType::T_Rules DEC_PathType::rules_;
@@ -40,7 +40,7 @@ DEC_PathType::~DEC_PathType()
 // Name: DEC_PathType::CreateRule
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const
+TerrainRule_ABC& DEC_PathType::CreateRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     const bool           bCanFly     = path.GetQueryMaker().CanFly();
     const bool           bAutonomous = path.GetQueryMaker().IsAutonomous();

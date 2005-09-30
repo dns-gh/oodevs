@@ -21,7 +21,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Path/DEC_PathPoint.h"
-#include "Decision/Path/Agent/DEC_Path.h"
+#include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Tools/MIL_Tools.h"
 #include "TER/TER_Localisation.h"
 #include "MT_Tools/MT_Random.h"
@@ -1467,13 +1467,13 @@ void DEC_GeometryFunctions::SplitPath( DIA_Call_ABC& call )
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
     
-    DEC_Path*      pPath      = call.GetParameter( 0 ).ToUserPtr( pPath );
-    const MT_Float rNbrParts  = call.GetParameter( 1 ).ToFloat();
+    DEC_Agent_Path* pPath     = call.GetParameter( 0 ).ToUserPtr( pPath );
+    const MT_Float  rNbrParts = call.GetParameter( 1 ).ToFloat();
     assert( pPath );
 
     T_PointVector points;
-    const DEC_Path::T_PathPointList& pathPoints = pPath->GetResult();
-    for( DEC_Path::CIT_PathPointList it = pathPoints.begin(); it != pathPoints.end(); ++it )
+    const DEC_Agent_Path::T_PathPointList& pathPoints = pPath->GetResult();
+    for( DEC_Agent_Path::CIT_PathPointList it = pathPoints.begin(); it != pathPoints.end(); ++it )
         points.push_back( (**it).GetPos() );
 
     call.GetResult().SetValue( ::SplitListPoints( points, rNbrParts ), &DEC_Tools::GetTypeListePoints() );

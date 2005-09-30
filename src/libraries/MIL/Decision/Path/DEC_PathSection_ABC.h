@@ -13,9 +13,8 @@
 #define __DEC_PathSection_ABC_h_
 
 #include "MIL.h"
-#include "DEC_PathType.h"
+
 #include "pathfind/TerrainPathPoint.h"
-#include "pathfind/TerrainData.h"
 #include "pathfind/AStarManagementCallback_ABC.h"
 #include "tools/thread/Handler_ABC.h"
 

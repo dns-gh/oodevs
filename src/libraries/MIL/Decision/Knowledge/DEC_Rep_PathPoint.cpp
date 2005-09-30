@@ -40,7 +40,7 @@ void DEC_Rep_PathPoint::InitializeDIA()
 // Name: DEC_Rep_PathPoint constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint::DEC_Rep_PathPoint( DEC_Path& path, const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
+DEC_Rep_PathPoint::DEC_Rep_PathPoint( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
     : DEC_PathPoint     ( vPos )
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( szDIARepType ) )
     , nTypePoint_       ( nTypePoint )

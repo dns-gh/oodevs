@@ -1,16 +1,16 @@
 //*****************************************************************************
 // 
 // $Created: AGN 02-11-25 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Path.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_Path.cpp $
 // $Author: Age $
 // $Modtime: 16/06/05 15:23 $
 // $Revision: 28 $
-// $Workfile: DEC_Path.cpp $
+// $Workfile: DEC_Agent_Path.cpp $
 // 
 //*****************************************************************************
 
 #include "MIL_pch.h"
-#include "DEC_Path.h"
+#include "DEC_Agent_Path.h"
 
 #include "DEC_Agent_PathSection.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -33,16 +33,12 @@
 #include "Tools/MIL_Tools.h"
 #include "TER/TER_World.h"
 
-const uint DEC_Path::nInvalidID_ = 0;   
-      uint DEC_Path::nIDIdx_     = 0;
-
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::Initialize
+// Name: DEC_Agent_Path::Initialize
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
-    : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
-    , queryMaker_        ( queryMaker )
+DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
+    : queryMaker_        ( queryMaker )
     , fuseau_            () //$$$ Debile
     , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
@@ -62,12 +58,11 @@ DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path constructor
+// Name: DEC_Agent_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
-    : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
-    , queryMaker_        ( queryMaker )
+DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
+    : queryMaker_        ( queryMaker )
     , fuseau_            () //$$$ Debile
     , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( queryMaker.GetDirDanger() )
@@ -87,12 +82,11 @@ DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd,
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path constructor
+// Name: DEC_Agent_Path constructor
 // Created: NLD 2005-06-30
 // -----------------------------------------------------------------------------
-DEC_Path::DEC_Path( const DEC_Path& rhs )
-    : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
-    , queryMaker_        ( rhs.queryMaker_ )
+DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
+    : queryMaker_        ( rhs.queryMaker_ )
     , fuseau_            () //$$$ Debile
     , automateFuseau_    () //$$$ Debile
     , vDirDanger_        ( rhs.vDirDanger_ )
@@ -112,11 +106,11 @@ DEC_Path::DEC_Path( const DEC_Path& rhs )
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path destructor
+// Name: DEC_Agent_Path destructor
 // Created: DFT 02-03-04
 // Last modified: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Path::~DEC_Path()
+DEC_Agent_Path::~DEC_Agent_Path()
 {
     // $$$$ NLD 2005-09-29: const_cast pour DIA
     DEC_RolePion_Decision& roleDecision = const_cast< MIL_AgentPion& >( queryMaker_ ).GetRole< DEC_RolePion_Decision >();
@@ -135,10 +129,10 @@ DEC_Path::~DEC_Path()
 //=============================================================================
 
  // -----------------------------------------------------------------------------
-// Name: DEC_Path::Initialize
+// Name: DEC_Agent_Path::Initialize
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_Path::Initialize( const T_PointVector& points )
+void DEC_Agent_Path::Initialize( const T_PointVector& points )
 {
     InitializePathKnowledges( points );
 
@@ -179,10 +173,10 @@ bool IsObjectInsidePathPoint( const DEC_Knowledge_Object& knowledge, const T_Poi
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::InitializePathKnowledges
+// Name: DEC_Agent_Path::InitializePathKnowledges
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
+void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     // Agents
     T_KnowledgeAgentVector knowledgesAgent;
@@ -214,41 +208,41 @@ void DEC_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 // =============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::IsPointAvantIn
+// Name: DEC_Agent_Path::IsPointAvantIn
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
-bool DEC_Path::IsPointAvantIn( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const
+bool DEC_Agent_Path::IsPointAvantIn( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const
 {
     // Test : entrée dans environnement
     return !( nObjectTypesBefore.ContainsOne( nTypeTerrain ) ) && ( nObjectTypesToNextPoint.ContainsOne( nTypeTerrain ) );
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::IsPointAvantOut
+// Name: DEC_Agent_Path::IsPointAvantOut
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
-bool DEC_Path::IsPointAvantOut( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const
+bool DEC_Agent_Path::IsPointAvantOut( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const
 {
     // Test : sortie d'environnement
     return ( nObjectTypesBefore.ContainsOne( nTypeTerrain ) ) && !( nObjectTypesToNextPoint.ContainsOne(  nTypeTerrain ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::IsPointAvant
+// Name: DEC_Agent_Path::IsPointAvant
 // Created: AGE 2005-02-04
 // -----------------------------------------------------------------------------
-bool DEC_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const
+bool DEC_Agent_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const
 {
     return IsPointAvantIn ( nObjectTypesBefore, nObjectTypesToNextPoint, nTypeTerrain )
         || IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, nTypeTerrain );
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::GetPreviousPathPointOnDifferentLocation
+// Name: DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation
 // Created: JVT 2005-07-08
 // -----------------------------------------------------------------------------
 inline
-DEC_Path::IT_PathPointList DEC_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
+DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
 {
     assert( itCurrent != resultList_.end() );
 
@@ -261,10 +255,10 @@ DEC_Path::IT_PathPointList DEC_Path::GetPreviousPathPointOnDifferentLocation( IT
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::InsertPointAvant
+// Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
 // -----------------------------------------------------------------------------
-void DEC_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent )
+void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent )
 {
     MT_Float rDistanceLeft = spottedPathPoint.GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
@@ -324,10 +318,10 @@ void DEC_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPoi
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::InsertPointAvant
+// Name: DEC_Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void DEC_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
 {
     static MT_Float rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
@@ -338,10 +332,10 @@ void DEC_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPoi
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::InsertPoint
+// Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
+void DEC_Agent_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
 {
     static MT_Float rDist = 500.;
     if( rDistSinceLastPoint > rDist )
@@ -352,20 +346,20 @@ void DEC_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointLis
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::Shit
+// Name: DEC_Agent_Path::Shit
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Path::InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
 {
     InsertPoint     ( spottedPathPoint, itCurrent, rDistSinceLastPoint      );
     InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::InsertPointAvants
+// Name: DEC_Agent_Path::InsertPointAvants
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
-void DEC_Path::InsertPointAvants()
+void DEC_Agent_Path::InsertPointAvants()
 {
     MT_Float rDistSinceLastPointAvant = std::numeric_limits< MT_Float >::max();
     MT_Float rDistSinceLastPoint      = std::numeric_limits< MT_Float >::max();
@@ -430,10 +424,10 @@ void DEC_Path::InsertPointAvants()
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::InsertLimas
+// Name: DEC_Agent_Path::InsertLimas
 // Created: JVT 02-12-04
 //-----------------------------------------------------------------------------
-void DEC_Path::InsertLimas()
+void DEC_Agent_Path::InsertLimas()
 {
     const T_LimaFlagedPtrMap& limaMap = queryMaker_.GetLimas();
     if( limaMap.empty() )
@@ -445,10 +439,10 @@ void DEC_Path::InsertLimas()
 
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::InsertLima
+// Name: DEC_Agent_Path::InsertLima
 // Created: JVT 02-12-05
 //-----------------------------------------------------------------------------
-void DEC_Path::InsertLima( const MIL_Lima& lima )
+void DEC_Agent_Path::InsertLima( const MIL_Lima& lima )
 {
     DEC_PathPoint* pLastPoint = 0;
 
@@ -473,10 +467,10 @@ void DEC_Path::InsertLima( const MIL_Lima& lima )
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::InsertDecPoints
+// Name: DEC_Agent_Path::InsertDecPoints
 // Created: JDY 03-03-04
 //-----------------------------------------------------------------------------
-void DEC_Path::InsertDecPoints()
+void DEC_Agent_Path::InsertDecPoints()
 {
     if( bDecPointsInserted_ )
         return;
@@ -521,10 +515,10 @@ void DEC_Path::InsertDecPoints()
 // TOOLS
 //=============================================================================
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::GetClosestPointOnPath
+// Name: DEC_Agent_Path::GetClosestPointOnPath
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const
+MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const
 {
     assert( !resultList_.empty() );
     CIT_PathPointList itStart = resultList_.begin();
@@ -552,10 +546,10 @@ MT_Vector2D DEC_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::GetNextKeyOnPath
+// Name: DEC_Agent_Path::GetNextKeyOnPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-DEC_Path::CIT_PathPointList DEC_Path::GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const
+DEC_Agent_Path::CIT_PathPointList DEC_Agent_Path::GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const
 {
     if( resultList_.empty() )
         return resultList_.end();
@@ -583,10 +577,10 @@ DEC_Path::CIT_PathPointList DEC_Path::GetCurrentKeyOnPath( const MT_Vector2D& vP
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::ComputeFutureObjectCollisions
+// Name: DEC_Agent_Path::ComputeFutureObjectCollisions
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-void DEC_Path::ComputeFutureObjectCollisions( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, T_KnowledgeObjectMultimap& objectsOnPathMap ) const
+void DEC_Agent_Path::ComputeFutureObjectCollisions( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, T_KnowledgeObjectMultimap& objectsOnPathMap ) const
 {
     objectsOnPathMap.clear();
 
@@ -615,7 +609,7 @@ void DEC_Path::ComputeFutureObjectCollisions( const MT_Vector2D& vStartPos, cons
 
         const MT_Vector2D* pPrevPos = &vStartPos;
 
-        for( DEC_Path::CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
+        for( DEC_Agent_Path::CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {
 			MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
 
@@ -639,10 +633,10 @@ void DEC_Path::ComputeFutureObjectCollisions( const MT_Vector2D& vStartPos, cons
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::InternalGetFuturePosition
+// Name: DEC_Agent_Path::InternalGetFuturePosition
 // Created: JVT 03-09-25
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_Path::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const
+MT_Vector2D DEC_Agent_Path::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const
 {
     assert( itCurrentPos != resultList_.end() );
 
@@ -674,10 +668,10 @@ MT_Vector2D DEC_Path::InternalGetFuturePosition( const CIT_PathPointList& itCurr
 
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Path::GetFuturePosition
+// Name: DEC_Agent_Path::GetFuturePosition
 // Created: JVT 03-09-25
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_Path::GetFuturePosition( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const
+MT_Vector2D DEC_Agent_Path::GetFuturePosition( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const
 {
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
@@ -706,10 +700,10 @@ MT_Vector2D DEC_Path::GetFuturePosition( const MT_Vector2D& vStartPos, MT_Float 
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::Serialize
+// Name: DEC_Agent_Path::Serialize
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_Path::Serialize( ASN1T_Itineraire& asn ) const
+void DEC_Agent_Path::Serialize( ASN1T_Itineraire& asn ) const
 {
     assert( !resultList_.empty() );
 
@@ -730,14 +724,14 @@ void DEC_Path::Serialize( ASN1T_Itineraire& asn ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::Execute
+// Name: DEC_Agent_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-void DEC_Path::Execute( TerrainPathfinder& pathfind )
+void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 {    
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
-        MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << " : computation begin" );
+        MT_LOG_MESSAGE_MSG( "DEC_Agent_Path::Compute: " << this << " : computation begin" );
         MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
         MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
         MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.ConvertPathTypeToString() );
@@ -780,7 +774,7 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
         std::stringstream stream;
         if ( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
-        MT_LOG_MESSAGE_MSG( "DEC_Path::Compute: " << this << 
+        MT_LOG_MESSAGE_MSG( "DEC_Agent_Path::Compute: " << this << 
                             ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
                             ", Time : " << rComputationTime << 
                             ", State : " << GetStateAsString() <<
@@ -790,10 +784,10 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::AddResultPoint
+// Name: DEC_Agent_Path::AddResultPoint
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
+void DEC_Agent_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
 {
     if( bSectionJustEnded_ )
     {
@@ -807,10 +801,10 @@ void DEC_Path::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObje
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path::NotifySectionEnded
+// Name: DEC_Agent_Path::NotifySectionEnded
 // Created: AGE 2005-09-01
 // -----------------------------------------------------------------------------
-void DEC_Path::NotifySectionEnded()
+void DEC_Agent_Path::NotifySectionEnded()
 {
     bSectionJustEnded_ = true;
 }

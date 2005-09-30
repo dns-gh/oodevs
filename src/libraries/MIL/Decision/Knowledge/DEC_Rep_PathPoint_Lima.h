@@ -25,7 +25,7 @@ class DEC_Rep_PathPoint_Lima : public DEC_Rep_PathPoint
     MT_COPYNOTALLOWED( DEC_Rep_PathPoint_Lima )
 
 public:
-    DEC_Rep_PathPoint_Lima( DEC_Path& path, const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, const MIL_Lima& lima );
+    DEC_Rep_PathPoint_Lima( DEC_Agent_Path& path, const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, const MIL_Lima& lima );
     DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrai, const MIL_Lima& lima );
     virtual ~DEC_Rep_PathPoint_Lima();
 

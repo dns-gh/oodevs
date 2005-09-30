@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-#include "Decision/Path/Agent/DEC_Path.h"
+#include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
 
 class PHY_RolePion_Location;
@@ -74,9 +74,9 @@ public:
     MT_Float GetSpeedWithReinforcement   ( const TerrainData& nEnv ) const;
     void     SetSpeedModificator         ( MT_Float rFactor );
     void     SetMaxSpeedModificator      ( MT_Float rFactor );
-    int      Move                        ( DEC_Path& path );
-    void     MoveSuspended               ( DEC_Path& path );
-    void     MoveCanceled                ( DEC_Path& path );
+    int      Move                        ( DEC_Agent_Path& path );
+    void     MoveSuspended               ( DEC_Agent_Path& path );
+    void     MoveCanceled                ( DEC_Agent_Path& path );
 
     void Apply(); // Called by MIL_Effect_Move
     //@}
@@ -89,9 +89,9 @@ public:
 
     //! @name Path operations
     //@{
-        MT_Vector2D ExtrapolatePosition          ( MT_Float rTime, bool bBoundOnPath ) const;
-        void        ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsFilter, DEC_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const;
-    bool IsMovingOn( const DEC_Path& path ) const;
+    MT_Vector2D ExtrapolatePosition          ( MT_Float rTime, bool bBoundOnPath ) const;
+    void        ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsFilter, DEC_Agent_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const;
+    bool        IsMovingOn                   ( const DEC_Agent_Path& path ) const;
     //@}
                 
 private:
@@ -140,12 +140,12 @@ private:
     //! @name Tools
     //@{    
     bool TryToMoveToNextStep    ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove );
-    bool TryToMoveTo            ( const DEC_Path& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
+    bool TryToMoveTo            ( const DEC_Agent_Path& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
     void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
     void ComputeCurrentSpeed    ();
-    void InitializeEnvironment  ( const DEC_Path& path );
-    bool SetCurrentPath         (       DEC_Path& path );
-    bool GoToNextNavPoint       ( const DEC_Path& path );
+    void InitializeEnvironment  ( const DEC_Agent_Path& path );
+    bool SetCurrentPath         (       DEC_Agent_Path& path );
+    bool GoToNextNavPoint       ( const DEC_Agent_Path& path );
     bool CanMove                () const;
     bool ReserveConsumptionWithReinforcement();
     //@}
@@ -172,8 +172,8 @@ private:
     MT_Float                    rSpeedModificator_;
     MT_Float                    rMaxSpeedModificator_;
     TerrainData                 environment_;
-    DEC_Path::CIT_PathPointList itNextPathPoint_;
-    DEC_Path::CIT_PathPointList itCurrentPathPoint_;
+    DEC_Agent_Path::CIT_PathPointList itNextPathPoint_;
+    DEC_Agent_Path::CIT_PathPointList itCurrentPathPoint_;
 
     // Effect
     MIL_Effect_Move effectMove_;
@@ -189,7 +189,7 @@ private:
     bool            bHasMoved_; 
     bool            bEnvironmentHasChanged_;
 
-    DEC_Path*       pCurrentPath_; // Toujours valide : le role fait un IncRef() / DecRef() tant qu'il veut garder une reference dessus
+    DEC_Agent_Path*  pCurrentPath_; // Toujours valide : le role fait un IncRef() / DecRef() tant qu'il veut garder une reference dessus
 };
 
 #include "PHY_RoleAction_Moving.inl"

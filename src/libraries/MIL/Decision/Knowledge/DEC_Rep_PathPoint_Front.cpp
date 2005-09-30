@@ -26,16 +26,16 @@ int DEC_Rep_PathPoint_Front::nDIAItinerairedx_ = 0;
 // Name: DEC_Rep_PathPoint_Front constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( DEC_Path& path, const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
+DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( DEC_Agent_Path& path, const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
     : DEC_PathPoint     ( vPos )
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
     , bAlreadySent_     ( false )
     , destPoint_        ( dest )
 {
-    SetValue      ( nDIAPointIdx_  , (void*)&vPos_ );  
-    SetValue      ( nDIAClsIdx_    , eAvantPoint  );     
-    SetObjectValue( nDIADestIdx_   , &destPoint_ );
-    SetValue( nDIAItinerairedx_   , (void*)&path );  
+    SetValue      ( nDIAPointIdx_    , (void*)&vPos_ );  
+    SetValue      ( nDIAClsIdx_      , eAvantPoint   );     
+    SetObjectValue( nDIADestIdx_     , &destPoint_   );
+    SetValue      ( nDIAItinerairedx_, (void*)&path  );  
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );  //$$$$$ Gestion mémoire

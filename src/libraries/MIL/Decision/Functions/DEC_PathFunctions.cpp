@@ -15,7 +15,7 @@
 #include "Decision/Path/DEC_PathType.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
-#include "Decision/Path/Agent/DEC_Path.h"
+#include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -25,7 +25,6 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
@@ -43,7 +42,7 @@ void DEC_PathFunctions::CreatePathToPoint( DIA_Call_ABC& call, MIL_AgentPion& ca
     assert( !_isnan( pEnd->rX_ ) );
     assert( !_isnan( pEnd->rY_ ) );
 
-    DEC_Path* pPath = new DEC_Path( callerAgent, *pEnd, pathType );
+    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pEnd, pathType );
     pPath->IncDIARef();  
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
     call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );
@@ -57,14 +56,14 @@ void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion
 {
     assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
 
-    T_PointVector* pListPt   = call.GetParameter( 0 ).ToUserPtr( pListPt );
+    T_PointVector* pListPt = call.GetParameter( 0 ).ToUserPtr( pListPt );
 
     DEC_PathType pathType( (DEC_PathType::E_PathType)call.GetParameter( 1 ).ToId() );
 
     assert( pListPt );
     assert( !pListPt->empty() );
 
-    DEC_Path* pPath = new DEC_Path( callerAgent, *pListPt, pathType );
+    DEC_Agent_Path* pPath = new DEC_Agent_Path( callerAgent, *pListPt, pathType );
     pPath->IncDIARef();  
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pPath );
     call.GetResult().SetValue( pPath, &DEC_Tools::GetTypeItineraire() );
@@ -77,7 +76,7 @@ void DEC_PathFunctions::CreatePathToPointList( DIA_Call_ABC& call, MIL_AgentPion
 void DEC_PathFunctions::DeletePath( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-    DEC_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
+    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     assert( pPath );
     pPath->Cancel();
     pPath->DecDIARef();
@@ -90,7 +89,7 @@ void DEC_PathFunctions::DeletePath( DIA_Call_ABC& call, MIL_AgentPion& /*callerA
 void DEC_PathFunctions::GetPathState( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
-    DEC_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
+    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     assert( pPath );
     call.GetResult().SetValue( pPath->GetState() );
 }
@@ -116,7 +115,7 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
 {
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 2 );
 
-    DEC_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
+    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
     callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, objectsOnPathMap );
 
     if( objectsOnPathMap.empty() )
@@ -125,7 +124,7 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
         return;
     }
 
-    DEC_Path::CIT_KnowledgeObjectMultimap itElt = objectsOnPathMap.begin();
+    DEC_Agent_Path::CIT_KnowledgeObjectMultimap itElt = objectsOnPathMap.begin();
     call.GetParameter( 0 ).SetValue( (void*)itElt->second->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
     call.GetParameter( 1 ).SetValue( (float)itElt->first );
     call.GetResult().SetValue( true );
@@ -139,12 +138,12 @@ void DEC_PathFunctions::GetNextObjectsOnPath( DIA_Call_ABC& call, const MIL_Agen
 {
     MIL_RealObjectTypeFilter objectFilter( call.GetParameters(), 0 );
     
-    DEC_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
+    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
     callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectFilter, objectsOnPathMap );
     
     T_KnowledgeObjectDiaIDVector knowledges;
 
-    for ( DEC_Path::CIT_KnowledgeObjectMultimap it = objectsOnPathMap.begin(); it != objectsOnPathMap.end(); ++it )
+    for( DEC_Agent_Path::CIT_KnowledgeObjectMultimap it = objectsOnPathMap.begin(); it != objectsOnPathMap.end(); ++it )
         knowledges.push_back( (void*)it->second->GetDiaID() );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
@@ -167,16 +166,16 @@ void DEC_PathFunctions::GetNextObjectOnPionPath( DIA_Call_ABC& call, const MIL_A
 
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 3 );
     
-    DEC_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
+    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
     pPion->GetPion().GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, objectsOnPathMap );
     
-    if ( objectsOnPathMap.empty() )
+    if( objectsOnPathMap.empty() )
     {
         call.GetResult().SetValue( false );
         return;
     }
     
-    DEC_Path::CIT_KnowledgeObjectMultimap itElt = objectsOnPathMap.begin();
+    DEC_Agent_Path::CIT_KnowledgeObjectMultimap itElt = objectsOnPathMap.begin();
     call.GetParameter( 1 ).SetValue( (void*)itElt->second->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
     call.GetParameter( 2 ).SetValue( (float)itElt->first );
     call.GetResult().SetValue( true );
@@ -190,7 +189,7 @@ void DEC_PathFunctions::GetLastPointOfPath( DIA_Call_ABC& call, const MIL_AgentP
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
 
-    DEC_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
+    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     assert( pPath );
 
     MT_Vector2D* pPos = new MT_Vector2D( pPath->GetResult().back()->GetPos() );
@@ -205,7 +204,7 @@ void DEC_PathFunctions::IsMovingOnPath( DIA_Call_ABC& call, const MIL_AgentPion&
 {
     assert( DEC_Tools::CheckTypeItineraire( call.GetParameter( 0 ) ) );
 
-    DEC_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
+    DEC_Agent_Path* pPath = call.GetParameter( 0 ).ToUserPtr( pPath );
     
     call.GetResult().SetValue( pPath ? callerAgent.GetRole< PHY_RoleAction_Moving >().IsMovingOn( *pPath ) : false );    
 }

@@ -18,7 +18,7 @@
 
 class MIL_AgentPion;
 class PHY_RoleAction_Moving;
-class DEC_Path;
+class DEC_Agent_Path;
 
 // =============================================================================
 // @class  PHY_ActionMove
@@ -59,8 +59,8 @@ private:
     MIL_AgentPion&         pion_;   
     PHY_RoleAction_Moving& role_;
     DIA_Variable_ABC&      diaReturnCode_;
-    DEC_Path*              pMainPath_;
-    DEC_Path*              pJoiningPath_;
+    DEC_Agent_Path*        pMainPath_;
+    DEC_Agent_Path*        pJoiningPath_;
     T_ObjectKnowledgeSet   objectAvoidAttempts_;
 };
 

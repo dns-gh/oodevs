@@ -18,7 +18,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
-#include "Decision/Path/Agent/DEC_Path.h"
+#include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
@@ -74,10 +74,10 @@ inline
 void PHY_ActionMove::CreateJoiningPath()
 {
     assert( pMainPath_ );
-    assert( pMainPath_->GetState() != DEC_Path::eComputing );
+    assert( pMainPath_->GetState() != DEC_Agent_Path::eComputing );
     assert( !pJoiningPath_ );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RolePion_Location >().GetPosition();
-    pJoiningPath_ = new DEC_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() );
+    pJoiningPath_ = new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() );
     pJoiningPath_->IncRef();
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pJoiningPath_ );
 }
@@ -103,7 +103,7 @@ void PHY_ActionMove::DestroyJoiningPath()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::AvoidObstacles()
 {
-    DEC_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
+    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
     role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetObjectTypesToAvoid(), objectsOnPathMap );
     if( objectsOnPathMap.empty() )
         return;
@@ -121,9 +121,9 @@ void PHY_ActionMove::AvoidObstacles()
     }
     else
     {
-        DEC_Path* pNewMainPath = new DEC_Path( *pMainPath_ );
+        DEC_Agent_Path* pNewMainPath = new DEC_Agent_Path( *pMainPath_ );
         pNewMainPath->IncRef();
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pNewMainPath ); // $$$ à déplacer dans DEC_Path::Initialize()
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pNewMainPath ); // $$$ à déplacer dans DEC_Agent_Path::Initialize()
 
         role_.MoveCanceled( *pMainPath_ );
         pMainPath_->Cancel();
@@ -149,7 +149,7 @@ void PHY_ActionMove::Execute()
         return;
     }
 
-    DEC_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
+    DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
     int nReturn = role_.Move( *pCurrentPath );
 
     if( nReturn == PHY_RoleAction_Moving::eItineraireMustBeJoined )
@@ -178,7 +178,7 @@ void PHY_ActionMove::Execute()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::ExecuteSuspended()
 {
-    DEC_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
+    DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
     if( pCurrentPath )
         role_.MoveSuspended( *pCurrentPath );
     diaReturnCode_.SetValue( PHY_RoleAction_Moving::ePaused );

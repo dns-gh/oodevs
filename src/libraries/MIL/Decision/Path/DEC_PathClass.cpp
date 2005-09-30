@@ -18,8 +18,8 @@
 
 #include "MIL_pch.h"
 #include "DEC_PathClass.h"
-#include "Agent/DEC_Path.h"
-#include "Agent/DEC_PathfinderRule.h"
+#include "Agent/DEC_Agent_Path.h"
+#include "Agent/DEC_Agent_PathfinderRule.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
@@ -66,9 +66,9 @@ DEC_PathClass::~DEC_PathClass()
 // Name: DEC_PathClass::CreateRule
 // Created: AGE 2005-08-04
 // -----------------------------------------------------------------------------
-TerrainRule_ABC& DEC_PathClass::CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const
+TerrainRule_ABC& DEC_PathClass::CreateRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    DEC_PathfinderRule& rule = *new DEC_PathfinderRule( path.GetUnitSpeeds(), from, to, bShort_ );
+    DEC_Agent_PathfinderRule& rule = *new DEC_Agent_PathfinderRule( path.GetUnitSpeeds(), from, to, bShort_ );
 
     rule.SetAvoidedTerrain ( avoid_,  rAvoidCost_ );
     rule.SetPreferedTerrain( prefer_, rPreferCost_ );
@@ -100,13 +100,13 @@ TerrainRule_ABC& DEC_PathClass::CreateRule( const DEC_Path& path, const MT_Vecto
     {
         if( rCostOnContact_ || rCostAtSecurityRange_ )
         {
-            for( DEC_Path::CIT_PathKnowledgeAgentVector itAgent = path.GetPathKnowledgeAgents().begin(); itAgent != path.GetPathKnowledgeAgents().end(); ++itAgent )
+            for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector itAgent = path.GetPathKnowledgeAgents().begin(); itAgent != path.GetPathKnowledgeAgents().end(); ++itAgent )
                 rule.AddEnemyKnowledge( *itAgent, rCostOnContact_, rCostAtSecurityRange_ );
             rule.SetMaximumEnemyCost( rMaximumCost_ );
         }
     }
     if( bAvoidObjects_ )
-        for( DEC_Path::CIT_PathKnowledgeObjectVector itObject = path.GetPathKnowledgeObjects().begin(); itObject != path.GetPathKnowledgeObjects().end(); ++itObject )
+        for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector itObject = path.GetPathKnowledgeObjects().begin(); itObject != path.GetPathKnowledgeObjects().end(); ++itObject )
             rule.AddObjectKnowledge( *itObject, GetObjectCost( itObject->GetTypeID() ) );
 
     return rule;
