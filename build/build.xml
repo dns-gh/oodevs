@@ -23,11 +23,11 @@
       libraries
     ============================================================================
     -->
-    
+
     <!-- SCIPIO -->
     <target name="libraries.SCIPIO" description="build static library"
             depends="library.MT_Tools_Scipio,library.TER,library.ASN,library.MIL,library.Missions,library.GFX,library.ENT"/>
-            
+
     <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
         <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
     </target>
@@ -63,11 +63,11 @@
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT"/>
     </target>
-    
+
     <!-- TIC -->
     <target name="libraries.TIC" description="build static library"
             depends="library.TIC, library.TIC_Export"/>
-            
+
     <target name="library.TIC" description="build TIC static library" depends="library.ASN,library.MT_Tools_Scipio">
         <build-lib name="TIC">
             <includepath path="${include.dir}/ASN"/>
@@ -88,14 +88,14 @@
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
+
 
     <!--
     ============================================================================
      applications
     ============================================================================
     -->
-    
+
     <!-- SCIPIO -->
     <target name="applications.SCIPIO" description="build SCIPIO executables"
             depends="application.SIM,application.ADN,application.MOS_Light,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
@@ -239,8 +239,8 @@
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
-   
-   
+
+
     <!-- TIC -->
     <target name="applications.TIC" description="build TIC executables"
             depends="application.TIC_Sample,application.TIC_XmlExporter"/>
@@ -341,9 +341,9 @@
     ============================================================================
     -->
     <target name="build.SCIPIO" depends="libraries.SCIPIO,applications.SCIPIO"/>
-    
+
     <target name="build.TIC"    depends="libraries.TIC,applications.TIC"/>
-    
+
     <target name="build" depends="build.SCIPIO,build.TIC"/>
 
     <target name="all" depends="configure,build,test" description="build and package distribution"/>
