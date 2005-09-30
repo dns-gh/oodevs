@@ -12,10 +12,10 @@
 #include "MIL_pch.h"
 #include "DEC_PathFunctions.h"
 
-#include "Decision/Path/DEC_Path.h"
 #include "Decision/Path/DEC_PathType.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
+#include "Decision/Path/Agent/DEC_Path.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"

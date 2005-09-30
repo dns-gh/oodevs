@@ -14,11 +14,11 @@
 
 #include "MIL.h"
 
-#include "DEC_Path_ABC.h"
-
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
-#include "DEC_PathType.h"
+
+#include "Decision/Path/DEC_Path_ABC.h"
+#include "Decision/Path/DEC_PathType.h"
 
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Knowledge/DEC_Knowledge_Def.h"

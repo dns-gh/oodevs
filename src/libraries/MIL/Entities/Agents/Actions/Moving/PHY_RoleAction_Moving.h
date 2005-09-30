@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-#include "Decision/Path/DEC_Path.h"
+#include "Decision/Path/Agent/DEC_Path.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
 
 class PHY_RolePion_Location;

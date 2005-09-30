@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    TerrainRule_ABC& CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to );
+    TerrainRule_ABC& CreateRule( const DEC_Path& path, const MT_Vector2D& from, const MT_Vector2D& to ) const;
 
     std::string ConvertPathTypeToString() const;
 

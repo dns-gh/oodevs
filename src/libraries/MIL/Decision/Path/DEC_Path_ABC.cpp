@@ -11,7 +11,7 @@
 
 #include "MIL_pch.h"
 #include "DEC_Path_ABC.h"
-#include "DEC_PathSection.h"
+#include "DEC_PathSection_ABC.h"
 #include "MIL_AgentServer.h"
 #include "DEC_Pathfind_Manager.h"
 
@@ -67,10 +67,7 @@ void DEC_Path_ABC::Cancel()
 {
     bJobCanceled_ = true;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-    {
-        DEC_PathSection& pathSection = **itPathSection;
-        pathSection.Cancel();
-    }
+        (**itPathSection).Cancel();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,10 +78,7 @@ MT_Float DEC_Path_ABC::GetLength() const
 {
     MT_Float rLength = 0.;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-    {
-        const DEC_PathSection& pathSection = **itPathSection;
-        rLength += pathSection.GetLength();
-    }
+        rLength += (**itPathSection).GetLength();
     return rLength;
 }
 
@@ -102,8 +96,8 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
             nState_ = eCanceled;
             return;
         }
-        DEC_PathSection& pathSection = **itPathSection;
-        if( ! pathSection.Execute( pathfind ) )
+        DEC_PathSection_ABC& pathSection = **itPathSection;
+        if( !pathSection.Execute( pathfind ) )
         {
             if( bJobCanceled_ )
                 nState_ = eCanceled;

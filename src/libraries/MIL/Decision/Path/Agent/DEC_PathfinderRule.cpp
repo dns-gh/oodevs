@@ -18,8 +18,8 @@
 
 #include "MIL_pch.h"
 #include "DEC_PathfinderRule.h"
-#include "DEC_PathType.h"
 #include "DEC_Path.h"
+#include "Decision/Path/DEC_PathType.h"
 #include "TER/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"

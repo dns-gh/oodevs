@@ -22,9 +22,9 @@
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Knowledge_Object& knowledge )
     : localisation_( knowledge.GetLocalisation() )
-    , nObjectType_( knowledge.GetType().GetID() )
-    , rCostIn_( 0 )
-    , rCostOut_( 0 )
+    , nObjectType_ ( knowledge.GetType().GetID() )
+    , rCostIn_     ( 0 )
+    , rCostOut_    ( 0 )
 { 
     // NOTHING
 }

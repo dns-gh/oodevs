@@ -16,7 +16,7 @@
 #include "TER/TER_PathFindRequest_ABC.h"
 
 class TER_PathFindReplay;
-class DEC_PathSection;
+class DEC_PathSection_ABC;
 
 // =============================================================================
 // @class  DEC_Path_ABC
@@ -45,6 +45,7 @@ public:
     //@{
     virtual void Execute( TerrainPathfinder& pathfind );
             void Cancel ();
+
     MT_Float GetLength() const;
 
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
@@ -74,7 +75,7 @@ protected:
 
     //! @name Tools
     //@{
-    void        RegisterPathSection( DEC_PathSection& section );
+    void        RegisterPathSection( DEC_PathSection_ABC& section );
     std::string GetStateAsString   () const;
     std::string GetPathAsString    () const;
     virtual void NotifySectionEnded() = 0;
@@ -82,7 +83,7 @@ protected:
 
     //! @name Types
     //@{
-    typedef std::vector< DEC_PathSection* >       T_PathSectionVector; 
+    typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector; 
     typedef T_PathSectionVector::const_iterator CIT_PathSectionVector;
     //@}
 

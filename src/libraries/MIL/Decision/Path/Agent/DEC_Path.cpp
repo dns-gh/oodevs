@@ -12,9 +12,9 @@
 #include "MIL_pch.h"
 #include "DEC_Path.h"
 
-#include "DEC_PathSection.h"
-#include "DEC_PathPoint.h"
-#include "DEC_PathFind_Manager.h"
+#include "DEC_Agent_PathSection.h"
+#include "Decision/Path/DEC_PathPoint.h"
+#include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Special.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
@@ -155,7 +155,7 @@ void DEC_Path::Initialize( const T_PointVector& points )
     {
         if( pLastPoint )
         {
-            DEC_PathSection* pSection = new DEC_PathSection( *this, pathType_, *pLastPoint, *itPoint );
+            DEC_Agent_PathSection* pSection = new DEC_Agent_PathSection( *this, *pLastPoint, *itPoint );
             RegisterPathSection( *pSection );
         }
         pLastPoint = &*itPoint;

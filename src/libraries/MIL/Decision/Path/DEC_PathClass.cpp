@@ -17,9 +17,9 @@
 // *****************************************************************************
 
 #include "MIL_pch.h"
-#include "DEC_Path.h"
 #include "DEC_PathClass.h"
-#include "DEC_PathfinderRule.h"
+#include "Agent/DEC_Path.h"
+#include "Agent/DEC_PathfinderRule.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"

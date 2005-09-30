@@ -17,8 +17,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "Decision/Path/DEC_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
+#include "Decision/Path/Agent/DEC_Path.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 

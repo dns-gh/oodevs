@@ -58,7 +58,7 @@ DEC_Path_ABC::E_State DEC_Path_ABC::GetState() const
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-void DEC_Path_ABC::RegisterPathSection( DEC_PathSection& section )
+void DEC_Path_ABC::RegisterPathSection( DEC_PathSection_ABC& section )
 {
     pathSections_.push_back( &section );
 }

@@ -28,8 +28,8 @@
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
-    : vEnemyPosition_         ( knowledge.GetPosition() )
-    , rSecurityDistance_      ( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
+    : vEnemyPosition_   ( knowledge.GetPosition() )
+    , rSecurityDistance_( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
 { 
     if( rSecurityDistance_ < 1000. )
         rSecurityDistance_ = 1000.;
