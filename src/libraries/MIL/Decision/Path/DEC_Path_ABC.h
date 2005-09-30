@@ -62,8 +62,15 @@ public:
 
     //! @name Accessors
     //@{
+    uint    GetID        () const;
     E_State GetState     () const;
     void    GetPathPoints( T_PointVector& points ) const;
+    //@}
+
+    //! @name Operators
+    //@{
+    bool operator==( const DEC_Path_ABC& rhs ) const;
+    bool operator!=( const DEC_Path_ABC& rhs ) const;
     //@}
 
 protected:
@@ -88,11 +95,15 @@ protected:
     //@}
 
 private:
-    T_PathSectionVector pathSections_;
-    uint                nNbrRefs_;              // nb of references on path
-    uint                nNbrDIARefs_;           // nb of references by DIA on path
-    E_State             nState_;            
-    bool                bJobCanceled_;
+    const uint                nID_;
+          T_PathSectionVector pathSections_;
+          uint                nNbrRefs_;              // nb of references on path
+          uint                nNbrDIARefs_;           // nb of references by DIA on path
+          E_State             nState_;            
+          bool                bJobCanceled_;
+
+private:
+    static uint nIDIdx_;
 };
 
 #include "DEC_Path_ABC.inl"

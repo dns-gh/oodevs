@@ -30,33 +30,20 @@ void DEC_Rep_PathPoint_Special::InitializeDIA()
 // Name: DEC_Rep_PathPoint_Special constructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain )
-    : DEC_Rep_PathPoint    ( path, vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
-    , nTypePointParticulier_ ( nTypePoint )
-{
-    SetValue( nDIAIdxTypePart_, nTypePointParticulier_ ); 
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Special constructor
-// Created: AGN 03-01-29
-//-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain )
-    : DEC_Rep_PathPoint    ( vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
-    , nTypePointParticulier_ ( nTypePoint )
+    : DEC_Rep_PathPoint     ( vPos, DEC_Rep_PathPoint::eTypePointParticulier, nTypeTerrain, "Rep_PointParticulier" )
+    , nTypePointParticulier_( nTypePoint )
 {
     SetValue( nDIAIdxTypePart_, nTypePointParticulier_ ); 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Special constructor
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const DEC_Rep_PathPoint_Special& rhs )
-: DEC_Rep_PathPoint( rhs )
-, nTypePointParticulier_( rhs.nTypePointParticulier_ )
+    : DEC_Rep_PathPoint     ( rhs )
+    , nTypePointParticulier_( rhs.nTypePointParticulier_ )
 {
     SetValue( nDIAIdxTypePart_, nTypePointParticulier_ );     
 }
@@ -82,7 +69,3 @@ void DEC_Rep_PathPoint_Special::Dump() const
               << " - Type particulier " << (uint)nTypePointParticulier_
               << std::endl;
 }
-
-
-
-

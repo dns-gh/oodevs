@@ -15,12 +15,14 @@
 #include "MIL_AgentServer.h"
 #include "DEC_Pathfind_Manager.h"
 
+uint DEC_Path_ABC::nIDIdx_ = 0;
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 DEC_Path_ABC::DEC_Path_ABC()
-    : pathSections_()
+    : nID_         ( ++ nIDIdx_ )
     , nNbrRefs_    ( 0 )
     , nNbrDIARefs_ ( 0 )
     , nState_      ( eComputing )            

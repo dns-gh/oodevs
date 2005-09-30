@@ -114,24 +114,5 @@ const MIL_AgentPion& DEC_Agent_Path::GetQueryMaker() const
     return queryMaker_;   
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::operator==
-// Created: NLD 2004-10-18
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Agent_Path::operator==( const DEC_Agent_Path& rhs ) const
-{
-    return nID_ == rhs.nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::operator!=
-// Created: NLD 2004-10-18
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Agent_Path::operator!=( const DEC_Agent_Path& rhs ) const
-{
-    return nID_ != rhs.nID_;
-}
 
 

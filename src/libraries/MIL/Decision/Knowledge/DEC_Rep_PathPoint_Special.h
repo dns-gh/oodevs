@@ -26,15 +26,14 @@ class DEC_Rep_PathPoint_Special : public DEC_Rep_PathPoint
 public:
     enum E_TypePointParticulier
     {
-        eTypePointParticulierPont = 1,     
-        eTypePointParticulierCarrefour = 2,
-        eTypePointParticulierVillage = 4,  
+        eTypePointParticulierPont       = 1,     
+        eTypePointParticulierCarrefour  = 2,
+        eTypePointParticulierVillage    = 4,  
         eTypePointParticulierPointRoute = 8,
-        eTypePointParticulierForet = 16
+        eTypePointParticulierForet      = 16
     };
 
 public:
-    DEC_Rep_PathPoint_Special( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
     DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E_TypePointParticulier nTypePoint, const TerrainData& nTypeTerrain );
     virtual ~DEC_Rep_PathPoint_Special();
 

@@ -15,11 +15,10 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Decision/DEC_Tools.h"
 
-int DEC_Rep_PathPoint::nDIAPointIdx_     = 0;
-int DEC_Rep_PathPoint::nDIAClsIdx_       = 0;
-int DEC_Rep_PathPoint::nDIATypeIdx_      = 0;
-int DEC_Rep_PathPoint::nDIAavtIdx_       = 0;
-int DEC_Rep_PathPoint::nDIAItinerairedx_ = 0;
+int DEC_Rep_PathPoint::nDIAPointIdx_  = 0;
+int DEC_Rep_PathPoint::nDIAClsIdx_    = 0;
+int DEC_Rep_PathPoint::nDIATypeIdx_   = 0;
+int DEC_Rep_PathPoint::nDIAavtIdx_    = 0;
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::InitializeDIA
@@ -32,15 +31,13 @@ void DEC_Rep_PathPoint::InitializeDIA()
     nDIAClsIdx_       = DEC_Tools::InitializeDIAField( "cls_"       , diaType );
     nDIATypeIdx_      = DEC_Tools::InitializeDIAField( "eType_"     , diaType );
     nDIAavtIdx_       = DEC_Tools::InitializeDIAField( "avt_"       , diaType );
-    nDIAItinerairedx_ = DEC_Tools::InitializeDIAField( "itineraire_", diaType );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint::DEC_Rep_PathPoint( DEC_Agent_Path& path, const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
+DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
     : DEC_PathPoint     ( vPos )
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( szDIARepType ) )
     , nTypePoint_       ( nTypePoint )
@@ -49,15 +46,13 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( DEC_Agent_Path& path, const MT_Vector2D& v
 {
     assert( nType_ != eTypePointPath );
 
-    SetValue( nDIAPointIdx_    , (void*)&vPos_ );  
-    SetValue( nDIAClsIdx_      , ePoint        );     
-    SetValue( nDIATypeIdx_     , nTypePoint    );  
-    SetValue( nDIAItinerairedx_, (void*)&path  );  
+    SetValue( nDIAPointIdx_ , (void*)&vPos_ );  
+    SetValue( nDIAClsIdx_   , ePoint        );     
+    SetValue( nDIATypeIdx_  , nTypePoint    );  
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint constructor
@@ -80,30 +75,6 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const DEC_Rep_PathPoint& rhs )
     diaParameters_.AddParam( new DIA_Variable_Object() );
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint constructor
-// Created: AGN 03-01-29
-//-----------------------------------------------------------------------------
-DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
-    : DEC_PathPoint     ( vPos )
-    , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( szDIARepType ) )
-    , nTypePoint_       ( nTypePoint )
-    , nTypeTerrain_     ( nTypeTerrain )
-    , bAlreadySended_   ( false )
-{
-    assert( nType_ != eTypePointPath );
-
-    SetValue( nDIAPointIdx_    , (void*)&vPos_ );
-    SetValue( nDIAClsIdx_      , ePoint        );
-    SetValue( nDIATypeIdx_     , nTypePoint    );
-    SetValue( nDIAItinerairedx_, (void*)0      );
-
-    diaParameters_.SetOwnerShip( true );
-    diaParameters_.AddParam( new DIA_Variable_Object() );
-}
-
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint destructor
 // Created: JVT 02-12-09
@@ -112,7 +83,6 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::SendToDIA

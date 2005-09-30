@@ -12,76 +12,38 @@
 #include "MIL_pch.h"
 
 #if 0
+
 #include "DEC_Population_Path.h"
 
-#include "DEC_PathSection.h"
-#include "DEC_PathPoint.h"
-#include "DEC_PathFind_Manager.h"
-#include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
-#include "Decision/Knowledge/DEC_Rep_PathPoint_Special.h"
-#include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
-#include "Network/NET_ASN_Messages.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_Tools.h"
-#include "TER/TER_World.h"
-
-const uint DEC_Path::nInvalidID_ = 0;   
-      uint DEC_Path::nIDIdx_     = 0;
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Path::Initialize
-// Created: JDY 03-04-10
-//-----------------------------------------------------------------------------
-DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
-    : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
-    , queryMaker_        ( queryMaker )
-    , fuseau_            () //$$$ Debile
-    , automateFuseau_    () //$$$ Debile
-    , vDirDanger_        ( queryMaker.GetDirDanger() )
-    , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
-    , pathType_          ( pathType )
-    , bDecPointsInserted_( false )
-    , bSectionJustEnded_ ( false )
-{
-    fuseau_         = queryMaker.GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
-
-    T_PointVector pointsTmp;
-    pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
-    std::copy( points.begin(), points.end(), std::back_inserter( pointsTmp ) );
-    Initialize( pointsTmp );
-}
+//#include "DEC_PathSection.h"
+//#include "DEC_PathPoint.h"
+//#include "DEC_PathFind_Manager.h"
+//#include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
+//#include "Decision/Knowledge/DEC_Rep_PathPoint_Special.h"
+//#include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
+//#include "Entities/Agents/MIL_AgentPion.h"
+//#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+//#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+//#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+//#include "Entities/Automates/MIL_Automate.h"
+//#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
+//#include "Entities/Orders/Lima/MIL_Lima.h"
+//#include "Knowledge/DEC_Knowledge_Object.h"
+//#include "Knowledge/DEC_Knowledge_Agent.h"
+//#include "Knowledge/DEC_KS_AgentQuerier.h"
+//#include "Network/NET_ASN_Messages.h"
+//#include "Network/NET_ASN_Tools.h"
+//#include "Tools/MIL_Tools.h"
+//#include "TER/TER_World.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Path::DEC_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
-    : nID_               ( (++nIDIdx_) != nInvalidID_ ? nIDIdx_ : ++nIDIdx_ )
-    , queryMaker_        ( queryMaker )
-    , fuseau_            () //$$$ Debile
-    , automateFuseau_    () //$$$ Debile
-    , vDirDanger_        ( queryMaker.GetDirDanger() )
-    , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
-    , pathType_          ( pathType )
-    , bDecPointsInserted_( false )
+DEC_Path::DEC_Path( const MIL_Population& queryMaker, const MT_Vector2D& vPosEnd ) 
+    : queryMaker_        ( queryMaker )
     , bSectionJustEnded_ ( false )
 {
-    fuseau_         = queryMaker.GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
-
     T_PointVector pointsTmp;
     pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
     pointsTmp.push_back( vPosEnd );

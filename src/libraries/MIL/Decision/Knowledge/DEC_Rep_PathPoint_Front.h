@@ -15,7 +15,6 @@
 #include "MIL.h"
 #include "Decision/Path/DEC_PathPoint.h"
 
-class DEC_Agent_Path;
 class DEC_Rep_PathPoint;
 class DEC_RolePion_Decision;
 
@@ -29,7 +28,7 @@ class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
 
 public:
 
-    explicit DEC_Rep_PathPoint_Front( DEC_Agent_Path& path, const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
+    explicit DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
     virtual ~DEC_Rep_PathPoint_Front();
 
     //! @name Init
@@ -57,7 +56,6 @@ private:
     static int nDIAPointIdx_;
     static int nDIAClsIdx_;
     static int nDIADestIdx_;
-    static int nDIAItinerairedx_;
 };
 
 #include "DEC_Rep_PathPoint_Front.inl"

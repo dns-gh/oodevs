@@ -270,7 +270,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
 
         if( itCurrent == resultList_.begin() )
         {
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, vCurrentPos, spottedPathPoint );
+            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint );
             spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( ++itCurrent, pNewPoint );
             break;
@@ -292,7 +292,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
         if( rDistanceLeft == 0. )
         {
             // Positionnement du point avant au même endroit qu'un autre point
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, vPreviousPos, spottedPathPoint );
+            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint );
 
             spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( itPrev, pNewPoint );
@@ -305,7 +305,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
             vTmp *= rDistanceLeft;
             vTmp += vPreviousPos;
 
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( *this, vTmp, spottedPathPoint );
+            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint );
 
             spottedPathPoint.GetVariable( DEC_Rep_PathPoint::nDIAavtIdx_ ).SetValue( *pNewPoint );
             resultList_.insert( itCurrent, pNewPoint );
@@ -398,24 +398,24 @@ void DEC_Agent_Path::InsertPointAvants()
         
         // Village
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPoint( *new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ), itPoint, rDistSinceLastPoint );
+            InsertPoint( *new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ), itPoint, rDistSinceLastPoint );
 
         // Forest
         else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Forest() ) )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
         else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() ) 
                 || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
                 )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( *this, (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
 
@@ -457,7 +457,7 @@ void DEC_Agent_Path::InsertLima( const MIL_Lima& lima )
             MT_Vector2D posIntersect;
             if ( lima.Intersect2D( segment, posIntersect ) )
             {
-                DEC_Rep_PathPoint* pPoint = new DEC_Rep_PathPoint_Lima( *this, posIntersect, TerrainData(), lima );
+                DEC_Rep_PathPoint* pPoint = new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima );
                 IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );
                 InsertPointAvant( *pPoint, itTmp );
             }

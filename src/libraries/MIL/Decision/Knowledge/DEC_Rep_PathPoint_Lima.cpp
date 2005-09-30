@@ -28,23 +28,9 @@ void DEC_Rep_PathPoint_Lima::InitializeDIA()
     nDIAIdxLima_     = DEC_Tools::InitializeDIAField( "lima_"     , diaType );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima constructor
 // Created: JVT 02-12-10
-//-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( DEC_Agent_Path& path, const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, const MIL_Lima& lima )
-    : DEC_Rep_PathPoint( path, vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )
-    , lima_            ( lima )
-{
-    SetValue( nDIAIdxTypeLima_, (int)lima_.GetLimaFunction() );
-    SetValue( nDIAIdxLima_    , (void*)&lima_                );
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Lima constructor
-// Created: AGN 03-01-29
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, const MIL_Lima& lima )
     : DEC_Rep_PathPoint( vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )

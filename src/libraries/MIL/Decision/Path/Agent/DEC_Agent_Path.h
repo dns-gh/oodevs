@@ -42,9 +42,7 @@ class DEC_Agent_Path : public DEC_Path_ABC
     friend class DEC_PathFind_ComputationThread;
 
 public:
-    //-------------------------------------------------------------------------
-    /** @name Types */
-    //-------------------------------------------------------------------------
+    //! @name Types
     //@{   
     typedef std::list< DEC_PathPoint* >                 T_PathPointList;
     typedef T_PathPointList::iterator                   IT_PathPointList;
@@ -73,12 +71,6 @@ public:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     //@}
     
-    //! @name Operations
-    //@{
-    bool operator==( const DEC_Agent_Path& rhs ) const;
-    bool operator!=( const DEC_Agent_Path& rhs ) const;
-    //@}
-
     //! @name Accessors 
     //@{
     const MIL_AgentPion&                GetQueryMaker          () const;
@@ -150,7 +142,6 @@ private:
     //@}
     
 private:   
-          uint           nID_;
     const MIL_AgentPion& queryMaker_;   
     
     // Path calculation parameters

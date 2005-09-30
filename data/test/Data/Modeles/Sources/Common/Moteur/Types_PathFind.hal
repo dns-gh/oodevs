@@ -80,9 +80,8 @@ typedef enum E_TypePointParticulier
 
 typedef struct Rep_PointABC : Representation
 {
-    T_Point             point_;
-    E_Point             cls_;           // type du point: point ou avant point
-    T_Itineraire        itineraire_; // qui possède le point
+    T_Point point_;
+    E_Point cls_;           // type du point: point ou avant point
 };
 
 typedef struct Rep_AvantPoint;

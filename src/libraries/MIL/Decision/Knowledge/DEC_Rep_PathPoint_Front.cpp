@@ -17,16 +17,15 @@
 #include "Decision/Knowledge/DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Tools.h"
 
-int DEC_Rep_PathPoint_Front::nDIAPointIdx_   = 0;
-int DEC_Rep_PathPoint_Front::nDIAClsIdx_     = 0;
-int DEC_Rep_PathPoint_Front::nDIADestIdx_    = 0;
-int DEC_Rep_PathPoint_Front::nDIAItinerairedx_ = 0;
+int DEC_Rep_PathPoint_Front::nDIAPointIdx_ = 0;
+int DEC_Rep_PathPoint_Front::nDIAClsIdx_   = 0;
+int DEC_Rep_PathPoint_Front::nDIADestIdx_  = 0;
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( DEC_Agent_Path& path, const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
+DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
     : DEC_PathPoint     ( vPos )
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
     , bAlreadySent_     ( false )
@@ -35,7 +34,6 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( DEC_Agent_Path& path, const MT
     SetValue      ( nDIAPointIdx_    , (void*)&vPos_ );  
     SetValue      ( nDIAClsIdx_      , eAvantPoint   );     
     SetObjectValue( nDIADestIdx_     , &destPoint_   );
-    SetValue      ( nDIAItinerairedx_, (void*)&path  );  
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );  //$$$$$ Gestion mémoire
@@ -51,10 +49,9 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const DEC_Rep_PathPoint_Front&
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
     , destPoint_        ( rhs.destPoint_ )
 {
-    SetValue      ( nDIAPointIdx_  , (void*)&vPos_ );  
-    SetValue      ( nDIAClsIdx_    , eAvantPoint  );     
-    SetObjectValue( nDIADestIdx_   , &destPoint_ );
-    SetValue( nDIAItinerairedx_   , (const_cast< DEC_Rep_PathPoint_Front& >(rhs)).GetVariable( nDIAItinerairedx_ ).ToPtr() );  
+    SetValue      ( nDIAPointIdx_, (void*)&vPos_ );  
+    SetValue      ( nDIAClsIdx_  , eAvantPoint   );     
+    SetObjectValue( nDIADestIdx_ , &destPoint_   );
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );  //$$$$$ Gestion mémoire
@@ -80,7 +77,6 @@ void DEC_Rep_PathPoint_Front::InitializeDIA()
     nDIAPointIdx_     = DEC_Tools::InitializeDIAField( "point_"     , diaType );
     nDIAClsIdx_       = DEC_Tools::InitializeDIAField( "cls_"       , diaType );
     nDIADestIdx_      = DEC_Tools::InitializeDIAField( "dest_"      , diaType );
-    nDIAItinerairedx_ = DEC_Tools::InitializeDIAField( "itineraire_", diaType );
 }
 
 //-----------------------------------------------------------------------------
