@@ -70,6 +70,9 @@
 #include "MOS_RawVisionData.h"
 #include "MOS_TypePion.h"
 #include "MOS_ReportPanel.h"
+#include "MOS_Population.h"
+#include "MOS_PopulationFlux.h"
+#include "MOS_PopulationConcentration.h"
 
 #include "MT_GLFont.h"
 #undef min
@@ -384,6 +387,15 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         Draw( *(itAgent->second), eNormal );
     }
 
+	// Draw all populations. 
+    for( MOS_AgentManager::IT_PopulationMap itPop = manager.populationMap_.begin(); itPop != manager.populationMap_.end(); ++itPop )
+    {
+        // If not in controller view, avoid drawing the enemy units.
+        if( nPlayedTeam != MOS_Options::eController && nPlayedTeam != (int)(itAgent->second->GetTeam().GetIdx()) )
+            continue;
+        Draw( *(itPop->second), eNormal );
+    }
+
     // Draw  the conflicts.
     glLineWidth( 4 );
     glColor4d( MOS_COLOR_CONFLICT );
@@ -462,6 +474,19 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     if( options.nDrawVisionLines_ == MOS_Options::eOn
    || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal ) )
        DrawVisionLines( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw
+/** @param  pop 
+    @param  nState 
+*/
+// Created: HME 2005-09-30
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw( MOS_Population& pop, E_State nState )
+{
+    // Draw the unit.
+    DrawPopulation( pop, nState );
 }
 
 // -----------------------------------------------------------------------------
@@ -1596,6 +1621,46 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
         DrawCross( *it, MOS_GL_CROSSSIZE, 4.0 );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::DrawUnit
+/** @param  pop 
+    @param  nState 
+*/
+// Created: HME 2005-09-30
+// -----------------------------------------------------------------------------
+void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
+{
+    static const MOS_RawVisionData& data = MOS_App::GetApp().GetRawVisionData();
+    static MT_Float rAngle = 0;
+
+    MT_Float rSize = 600.;
+
+    GFX_Color color = MOS_GLTool::GetColorForTeam( pop.GetTeam() );
+    //if( nState == eSelected )
+    //    color.AddRGB( 50, 200, 50 );
+    //if( nState == eHighlighted )
+    //    color.AddRGB( 50, 100, 50 );
+    //$$$ Redo selection colors.
+	
+	//Draw the concentrations
+	for ( std::map< MIL_AgentID, MOS_PopulationConcentration* >::const_iterator itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
+	{
+		color.SetGLColor();
+		DrawCircle( itCon->second->center_, MOS_GL_CROSSSIZE * 2.0 , true );
+	}
+
+	//Draw the flux
+	for ( std::map< MIL_AgentID, MOS_PopulationFlux* >::const_iterator itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
+	{
+		color.SetGLColor();
+		DrawCircle( itFlux->second->queue_, MOS_GL_CROSSSIZE , true );
+		DrawCircle( itFlux->second->tete_, MOS_GL_CROSSSIZE , true );
+	}
+
+
+}
+
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawVisionCones
@@ -1709,9 +1774,9 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
     if( bFill )
     {
         glBegin( GL_TRIANGLE_FAN );
-        Vertex( center.rX_, center.rY_, -2 );
+        Vertex( center.rX_, center.rY_, -3 );
         for ( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-            Vertex( it->rX_, it->rY_, -2 );
+            Vertex( it->rX_, it->rY_, -3 );
 		glEnd();
 		DrawLine( points );
     }

@@ -71,6 +71,13 @@ enum E_LightingType
     eNbrLightingType
 };
 
+enum E_AttitudePopulation
+{
+    eCalme,
+    eAgitee,
+    eExcitee,
+    eAgressive
+};
 
 #define MOS_DEFAULT_PORT_AS_MOS 10000
 

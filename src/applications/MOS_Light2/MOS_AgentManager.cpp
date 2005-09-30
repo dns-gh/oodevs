@@ -38,6 +38,8 @@
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogSupplyConsign.h"
 #include "MOS_TypeComposante.h"
+#include "MOS_TypePopulation.h"
+#include "MOS_Population.h"
 
 #include "MT_Tools/MT_ScipioException.h"
 
@@ -83,6 +85,7 @@ void MOS_AgentManager::Initialize()
     InitializeTypesComposante( scipioArchive );
     InitializeTypesPion      ( scipioArchive );
     InitializeTypesAutomate  ( scipioArchive );
+	InitializeTypesPopulation( scipioArchive );
 
     scipioArchive.EndSection(); // Donnees
     scipioArchive.EndSection(); // Scipio
@@ -217,6 +220,12 @@ void MOS_AgentManager::InitializeModels( MOS_InputArchive& scipioArchive )
         ReadModelList( modelArchive, true );
 
     modelArchive.EndList();     // Automates
+
+    modelArchive.BeginList( "Populations" );
+    while( modelArchive.NextListElement() )
+        ReadModelList( modelArchive, false );
+    modelArchive.EndList();     // Populations
+
     modelArchive.EndSection(); // Modeles
     modelArchive.Close();    
 }
@@ -255,6 +264,42 @@ void MOS_AgentManager::InitializeTypesComposante( MOS_InputArchive& scipioArchiv
         archive.EndSection(); // Composante
     }
     archive.EndList(); // Composantes
+
+    archive.Close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::InitializeTypesPopulation
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::InitializeTypesPopulation( MOS_InputArchive& scipioArchive )
+{
+    std::string strTypesPopFile;
+    scipioArchive.ReadField( "Populations", strTypesPopFile );
+
+    MOS_InputArchive archive;
+    archive.Open( strTypesPopFile );
+    archive.BeginList( "Populations" );
+    
+    while( archive.NextListElement() )
+    {
+		archive.Section( "Population" );
+        std::string strName;
+        archive.ReadAttribute( "nom", strName );
+
+        MOS_TypePopulation* pTypePopulation = new MOS_TypePopulation( strName, archive );
+		bool bOut = typesPopulation_.insert( std::make_pair( pTypePopulation->GetID(), pTypePopulation ) ).second;
+        if( !bOut )
+        {
+            std::stringstream strOutputMsg;
+            strOutputMsg << "Cet id de type de population est utilisé plusieurs fois: " << pTypePopulation->GetID();
+            MT_LOG_INFO( strOutputMsg.str().c_str(), eDefault, 0 );
+            delete pTypePopulation;
+        }
+
+        archive.EndSection(); // Population
+    }
+    archive.EndList(); // Populations
 
     archive.Close();
 }
@@ -335,6 +380,20 @@ void MOS_AgentManager::CreateAgent( const ASN1T_MsgPionCreation& asnMsg )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::CreatePopulation
+// Created: HME 2005-09-29
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
+{
+    if( !FindPopulation( asnMsg.oid_population ) )
+    {
+        MOS_Population* pPopulation = new MOS_Population( asnMsg );
+        AddPopulation( *pPopulation );
+        //MOS_App::GetApp().NotifyAgentCreated( *pAgent );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentManager::AddAgent
 // Created: NLD 2002-07-16
@@ -345,6 +404,15 @@ void MOS_AgentManager::AddAgent( MOS_Agent& agent )
         RUNTIME_ERROR;
 }
 
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentManager::AddPopulation
+// Created: HME 2005-09-29
+//-----------------------------------------------------------------------------
+void MOS_AgentManager::AddPopulation( MOS_Population& popu )
+{
+    if( ! populationMap_.insert( std::make_pair( popu.GetPopulationID(), &popu ) ).second )
+        RUNTIME_ERROR;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::RemoveAgent
@@ -359,6 +427,17 @@ void MOS_AgentManager::RemoveAgent( MOS_Agent& agent )
     agentMap_.erase( it );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::RemovePopulation
+// Created: HME 2005-09-29
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::RemovePopulation( MOS_Population& popu )
+{
+    IT_PopulationMap it = populationMap_.find( popu.GetPopulationID() );
+    assert( it != populationMap_.end() );
+    populationMap_.erase( it );
+}
+
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentManager::DeleteAllAgents
 // Created: NLD 2002-07-17
@@ -368,6 +447,9 @@ void MOS_AgentManager::DeleteAllAgents()
     for( IT_AgentMap it = agentMap_.begin(); it != agentMap_.end(); ++it )
         delete it->second;
     agentMap_.clear();
+	for( IT_PopulationMap it = populationMap_.begin(); it != populationMap_.end(); ++it )
+        delete it->second;
+    populationMap_.clear();
 }
 
 
@@ -448,6 +530,21 @@ const MOS_TypeComposante* MOS_AgentManager::FindTypeComposante( const std::strin
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindTypePopulation
+// Created: HME 2005-09-29
+// -----------------------------------------------------------------------------
+const MOS_TypePopulation* MOS_AgentManager::FindTypePopulation( const std::string& strName ) const
+{
+    for( CIT_TypePopulationMap it = typesPopulation_.begin(); it != typesPopulation_.end(); ++it )
+    {
+        const MOS_TypePopulation& typePopulation = *it->second;
+        if( typePopulation.GetName() == strName )
+            return &typePopulation;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindTypePion
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
@@ -480,6 +577,18 @@ const MOS_TypeComposante* MOS_AgentManager::FindTypeComposante( uint nID ) const
 {
     CIT_TypeComposanteMap it = typesComposante_.find( nID );
     if( it == typesComposante_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindTypePopulation
+// Created: HME 2005-09-29
+// -----------------------------------------------------------------------------
+const MOS_TypePopulation* MOS_AgentManager::FindTypePopulation( uint nID ) const
+{
+    CIT_TypePopulationMap it = typesPopulation_.find( nID );
+    if( it == typesPopulation_.end() )
         return 0;
     return it->second;
 }
@@ -677,3 +786,18 @@ void MOS_AgentManager::DeleteSupplyConsign( ASN1T_OID nConsignId )
     DeleteConsign( supplyConsigns_, nConsignId );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindPopulation
+/** @param  nID 
+    @return 
+*/
+// Created: HME 2005-09-29
+// -----------------------------------------------------------------------------
+MOS_Population*		 MOS_AgentManager::FindPopulation( MIL_AgentID nID )
+{
+	IT_PopulationMap it = populationMap_.find( nID );
+	if ( it != populationMap_.end() )
+		return it->second;
+	else
+		return 0;
+}

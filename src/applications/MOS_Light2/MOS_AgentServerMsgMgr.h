@@ -240,6 +240,16 @@ private:
     void OnReceiveMsgExplosion             ( const ASN1T_MsgExplosion& asnMsg );
     void OnReceiveMsgStartFireEffect       ( const ASN1T_MsgStartFireEffect& asnMsg );
     void OnReceiveMsgStopFireEffect        ( const ASN1T_MsgStopFireEffect& asnMsg );
+	
+	// Population
+	void OnMsgPopulationCreation				( const ASN1T_MsgPopulationCreation& asnMsg );
+	void OnMsgPopulationUpdate					( const ASN1T_MsgPopulationUpdate& asnMsg ); 
+	void OnMsgPopulationConcentrationCreation	( const ASN1T_MsgPopulationConcentrationCreation& asnMsg ); 
+	void OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
+	void OnMsgPopulationConcentrationUpdate		( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
+	void OnMsgPopulationFluxCreation			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
+	void OnMsgPopulationFluxDestruction			( const ASN1T_MsgPopulationFluxDestruction& asnMsg ); 
+	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
     //@}
     
 private:

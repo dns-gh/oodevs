@@ -91,11 +91,12 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
 	, nLogSupplySuperior_ ( 0 )
 {
     Initialize();
-    sName_ = asnMsg.nom;
+	sName_ = asnMsg.nom;
 
     pTypeAutomate_ = 0;
     pTypePion_     = MOS_App::GetApp().GetAgentManager().FindTypePion( asnMsg.type_pion );
-    if( pTypePion_ )
+
+	if( pTypePion_ )
     {
         symbolName_      = pTypePion_->GetSymbol();
         levelSymbolName_ = pTypePion_->GetLevelSymbol();

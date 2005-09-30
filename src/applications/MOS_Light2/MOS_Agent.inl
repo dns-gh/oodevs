@@ -251,7 +251,7 @@ const MOS_AgentComposition& MOS_Agent::GetComposition() const
 inline
 MOS_Team& MOS_Agent::GetTeam() const
 {
-    return GetGtia().GetTeam();
+	return GetGtia().GetTeam();
 }
 
 

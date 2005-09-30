@@ -267,52 +267,52 @@ public:
 //$$$$$ Foutre tout ce binz en public ou utiliser des friend pour eviter d'avoir 34846 fonctions set/get
 //$$$$$ qui puent.
 public:
-    MIL_AgentID             nAgentID_;
-    std::string             sName_;
-    std::string             symbolName_;
-    std::string             levelSymbolName_;
-    std::string             strCategory_;
-    const MOS_TypePion*     pTypePion_;
-    const MOS_TypeAutomate* pTypeAutomate_;
-    MOS_Gtia*               pGtia_;
-    MOS_Agent*              pParent_;
-    T_AgentVector           children_;
-    MT_Vector2D             vPos_;
-    bool                    bAutomate_;
-    bool                    bEmbraye_;
-    int                     nAltitude_;
-    int                     nDirection_;
+    MIL_AgentID					nAgentID_;
+    std::string					sName_;
+    std::string					symbolName_;
+    std::string					levelSymbolName_;
+    std::string					strCategory_;
+    const MOS_TypePion*			pTypePion_;
+    const MOS_TypeAutomate*		pTypeAutomate_;
+    MOS_Gtia*					pGtia_;
+    MOS_Agent*					pParent_;
+    T_AgentVector				children_;
+    MT_Vector2D					vPos_;
+    bool						bAutomate_;
+    bool						bEmbraye_;
+    int							nAltitude_;
+    int							nDirection_;
 
-    T_ReportVector          reportVector_;
+    T_ReportVector				reportVector_;
 
-    T_PointVector           pathFindVector_;
-    T_PointVector           oldPathVector_;
+    T_PointVector				pathFindVector_;
+    T_PointVector				oldPathVector_;
 
-    T_AgentConstPtrSet      identifiedAgents_;
-    T_AgentConstPtrSet      recognizedAgents_;
-    T_AgentConstPtrSet      detectedAgents_;
+    T_AgentConstPtrSet			identifiedAgents_;
+    T_AgentConstPtrSet			recognizedAgents_;
+    T_AgentConstPtrSet			detectedAgents_;
 
-    T_ObjectConstPtrSet     objectsPerceived_;
-    T_ObjectConstPtrSet     objectsPerceptionInProgress_;
+    T_ObjectConstPtrSet			objectsPerceived_;
+    T_ObjectConstPtrSet			objectsPerceptionInProgress_;
 
-    std::vector< MT_Vector2D > reportPoints_;
-    T_FireResults           fireResults_;
+    std::vector< MT_Vector2D >	reportPoints_;
+    T_FireResults				fireResults_;
 
-    T_SurfaceVector         surfaces_;
-    T_VisionResultMap       surfaceVision_;
-    MT_Float                rElongationFactor_;
-    bool                    bVisionSurfacesNeedUpdating_;
+    T_SurfaceVector				surfaces_;
+    T_VisionResultMap			surfaceVision_;
+    MT_Float					rElongationFactor_;
+    bool						bVisionSurfacesNeedUpdating_;
 
-    unsigned int           nSpeed_;
+    unsigned int				nSpeed_;
 
-    E_UnitPosture           nOldPosture_;
-    E_UnitPosture           nCurrentPosture_;
-    uint                    nPostureCompletionPourcentage_;
+    E_UnitPosture				nOldPosture_;
+    E_UnitPosture				nCurrentPosture_;
+    uint						nPostureCompletionPourcentage_;
 
-    bool                    bLoadingState_;
-    bool                    bStealthModeEnabled_;
+    bool						bLoadingState_;
+    bool						bStealthModeEnabled_;
 
-    MOS_AgentComposition composition_;
+    MOS_AgentComposition		composition_;
 
     // State
     uint            nRawOpState_;

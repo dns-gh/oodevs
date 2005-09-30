@@ -60,6 +60,7 @@ class MOS_ParamObstacleList;
 class MOS_MapEventHandler_ABC;
 class MOS_DefaultMapEventHandler;
 class MOS_ShapeEditorMapEventFilter;
+class MOS_Population;
 
 
 // =============================================================================
@@ -117,6 +118,8 @@ public:
 
     static void Draw( MOS_AgentManager& agentManager );
     static void Draw( MOS_Agent& agent, E_State nState = eNormal );
+	static void Draw( MOS_Population& pop, E_State nState );
+	static void DrawPopulation( MOS_Population& pop, E_State nState );
     static void DrawPath( MOS_Agent& agent );
     static void DrawAutomataStatus( MOS_Agent& agent, E_State nState );
     static void DrawVisionLines( MOS_Agent& agent );

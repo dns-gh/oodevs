@@ -25,9 +25,11 @@ class MOS_Team;
 class MOS_TypePion;
 class MOS_TypeAutomate;
 class MOS_TypeComposante;
+class MOS_TypePopulation;
 class MOS_LogMaintenanceConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogSupplyConsign;
+class MOS_Population;
 
 // =============================================================================
 /** @class  MOS_AgentManager
@@ -52,6 +54,10 @@ public:
     typedef T_AgentMap::const_iterator          CIT_AgentMap;
     typedef T_AgentMap::reverse_iterator        RIT_AgentMap;
     typedef T_AgentMap::const_reverse_iterator  RCIT_AgentMap;
+
+	typedef std::map< MIL_AgentID, MOS_Population* > T_PopulationMap;
+	typedef T_PopulationMap::iterator				 IT_PopulationMap;
+	typedef T_PopulationMap::const_iterator			 CIT_PopulationMap;
 
     typedef std::vector< MOS_AgentModel* > T_ModelVector;
     typedef T_ModelVector::iterator       IT_ModelVector;
@@ -80,6 +86,9 @@ public:
 
     typedef std::map< uint, MOS_TypeComposante* > T_TypeComposanteMap;
     typedef T_TypeComposanteMap::const_iterator   CIT_TypeComposanteMap;
+
+	typedef std::map< uint, MOS_TypePopulation* >  T_TypePopulationMap;
+	typedef T_TypePopulationMap::const_iterator	   CIT_TypePopulationMap;
 
     typedef std::map< uint, MOS_LogMaintenanceConsign* > T_MaintenanceConsigns;
     typedef T_MaintenanceConsigns::iterator             IT_MaintenanceConsigns;
@@ -129,8 +138,11 @@ public:
     //@{
     void         CreateAgent    ( const ASN1T_MsgAutomateCreation& asnMsg );
     void         CreateAgent    ( const ASN1T_MsgPionCreation& asnMsg );
+	void         CreatePopulation    ( const ASN1T_MsgPopulationCreation& asnMsg );
     void         AddAgent       ( MOS_Agent& agent );
     void         RemoveAgent    ( MOS_Agent& agent );
+	void		 AddPopulation	( MOS_Population& popu );
+	void		 RemovePopulation( MOS_Population& popu );
     void         DeleteAllAgents();
     MOS_Agent*   FindAgent      ( MIL_AgentID nAgentID );
     CT_AgentMap& GetAgentList   ();
@@ -171,9 +183,12 @@ public:
     const MOS_TypePion*       FindTypePion      ( const std::string& strName ) const;
     const MOS_TypeAutomate*   FindTypeAutomate  ( const std::string& strName ) const;
     const MOS_TypeComposante* FindTypeComposante( const std::string& strName ) const;
+	const MOS_TypePopulation* FindTypePopulation( const std::string& strName ) const;
     const MOS_TypePion*       FindTypePion      ( uint nID ) const;
     const MOS_TypeAutomate*   FindTypeAutomate  ( uint nID ) const;
     const MOS_TypeComposante* FindTypeComposante( uint nID ) const;
+	const MOS_TypePopulation* FindTypePopulation( uint nID ) const;
+	MOS_Population*	  FindPopulation	( MIL_AgentID );
 
 private:
     void InitializeModels         ( MOS_InputArchive& input );
@@ -181,6 +196,7 @@ private:
     void InitializeTypesPion      ( MOS_InputArchive& input );
     void InitializeTypesAutomate  ( MOS_InputArchive& input );
     void ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata );
+	void InitializeTypesPopulation ( MOS_InputArchive& input );
 
     template< typename T >
     void AddConsign( std::map< ASN1T_OID, T* >& cont, T& consign );
@@ -193,12 +209,14 @@ private:
     T_TeamMap     teamMap_;
     T_AgentMap    agentMap_;
     T_ConflictMap conflictMap_;
+	T_PopulationMap	populationMap_;
 
     T_ModelVector vAvailableModels_;
 
     T_TypePionMap         typesPion_;
     T_TypeAutomateMap     typesAutomate_;
     T_TypeComposanteMap   typesComposante_;
+	T_TypePopulationMap	  typesPopulation_;
 
     T_MaintenanceConsigns maintenanceConsigns_;
     T_SupplyConsigns      supplyConsigns_;

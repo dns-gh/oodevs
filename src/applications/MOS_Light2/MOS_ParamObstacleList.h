@@ -72,7 +72,7 @@ private slots:
     void OnClearList         ();
 
 private:
-    typedef std::vector< ASN1T_CoordUTM* >                      T_ASNUMTCoordPrtVector;
+    typedef std::vector< ASN1T_CoordUTM* >                     T_ASNUMTCoordPrtVector;
     typedef T_ASNUMTCoordPrtVector::iterator                    IT_ASNUMTCoordPrtVector;
     typedef std::pair< ASN1T_MissionGenObject*, T_PointVector > T_Item;
     typedef MT_ValuedListViewItem< T_Item >                     T_ListItem;

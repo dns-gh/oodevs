@@ -1,12 +1,12 @@
 //*****************************************************************************
-// 
+//
 // $Created: NLD 2002-07-12 $
 // $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_AgentServerMsgMgr.cpp $
 // $Author: Nld $
 // $Modtime: 8/07/05 15:57 $
 // $Revision: 25 $
 // $Workfile: MOS_AgentServerMsgMgr.cpp $
-// 
+//
 //*****************************************************************************
 
 #include "MOS_Light2_pch.h"
@@ -35,6 +35,7 @@
 #include "MOS_LogMaintenanceConsign.h"
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogSupplyConsign.h"
+#include "MOS_Population.h"
 
 using namespace DIN;
 
@@ -144,7 +145,7 @@ void MOS_AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const MOS_A
 
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg << agent.GetAgentID();
-    dinMsg << (uint8)eUnitMagicActionDestroyComposante;   
+    dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     pMessageService_->Send( agentServer.GetSession(), eMsgUnitMagicAction, dinMsg );
 
@@ -210,7 +211,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFro
 void MOS_AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input )
 {
     uint32 nID;
-    input >> nID;    
+    input >> nID;
     MOS_App::GetApp().GetAgentManager().CreateTeam( nID, input );
 }
 
@@ -244,7 +245,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgUnitTrace( DIN_Link& /*linkFrom*/, DIN_I
     input >> nAgentID;
 
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
-    assert( pAgent );    
+    assert( pAgent );
     pAgent->OnReceiveTraceMsg( input );
 }
 
@@ -322,7 +323,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& /*
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 {
-    if ( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -352,7 +353,7 @@ void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, MIL_MOSContextID nCtx )
 {
-    if ( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
+    if( !MOS_App::GetApp().GetMOSServer().GetController().GetConnectionMgr().IsConnectedToAgentServer() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
@@ -382,8 +383,8 @@ void MOS_AgentServerMsgMgr::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContex
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::SendMsgMosSim
-/** @param  pMsg 
-    @param  nMsgLength 
+/** @param  pMsg
+    @param  nMsgLength
     */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
@@ -399,9 +400,9 @@ void MOS_AgentServerMsgMgr::SendMsgMosSim( ASN1OCTET* pMsg, int nMsgLength )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::SendMsgMosSimWithContext
-/** @param  pMsg 
-    @param  nMsgLength 
-    @param  nCtx 
+/** @param  pMsg
+    @param  nMsgLength
+    @param  nCtx
 */
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
@@ -468,7 +469,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_Msg
 void MOS_AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& asnMsg )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "CtrlInfo - Current Tick: " << asnMsg.current_tick 
+    strOutputMsg << "CtrlInfo - Current Tick: " << asnMsg.current_tick
                  << " - Tick duration : "       << asnMsg.tick_duration
                  << " - Time factor: "          << asnMsg.time_factor
                  << " - Exercice ID: "          << asnMsg.id_exercice
@@ -579,7 +580,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const 
 {
     MOS_App::GetApp().GetAgentManager().RegisterConsign( *new MOS_LogMedicalConsign( asnMsg ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction
 // Created: AGE 2005-04-01
@@ -600,7 +601,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainUpdate( const AS
     pConsign->OnReceiveMsgUpdate( asnMsg );
     MOS_App::GetApp().NotifyLogisticConsignUpdated( *pConsign );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogSanteEtat
 // Created: AGE 2005-04-01
@@ -630,7 +631,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( 
 {
     MOS_App::GetApp().GetAgentManager().DeleteSupplyConsign( asnMsg.oid_consigne );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate
 // Created: AGE 2005-04-01
@@ -642,7 +643,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementUpdate( const
     pConsign->OnReceiveMsgUpdate( asnMsg );
     MOS_App::GetApp().NotifyLogisticConsignUpdated( *pConsign );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat
 // Created: AGE 2005-04-01
@@ -654,7 +655,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLo
     pAgent->OnReceiveMsgLogSupplyEtat( asnMsg );
     MOS_App::GetApp().NotifyAgentUpdated( *pAgent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas
 // Created: AGE 2005-04-01
@@ -666,7 +667,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_Msg
     pAgent->OnReceiveMsgLogSupplyQuotas( asnMsg );
     MOS_App::GetApp().NotifyAgentUpdated( *pAgent );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck
 // Created: AGE 2005-04-01
@@ -683,9 +684,9 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const A
         default:
             assert( false );
     }
-    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );    
+    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck
 // Created: AGE 2005-04-01
@@ -703,7 +704,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementPousserFluxAck( const A
         default:
             assert( false );
     }
-    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );    
+    MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
 //-----------------------------------------------------------------------------
@@ -752,7 +753,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgCtrlMeteoGlobalAck()
     MT_LOG_INFO( "CtrlMeteoGlobaleAck", eReceived, 0 );
 }
 
-       
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgCtrlMeteoLocalAck
 // Created: NLD 2003-08-05
@@ -798,8 +799,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 {
     MT_LOG_INFO( "CtrlCheckPointSaveBegin", eReceived, 0 );
 }
-                              
-                                  
+
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd
 // Created: NLD 2003-08-05
@@ -944,7 +945,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCrea
         }
         else
         {
-            // If the limit was not found, it's a message for another MOS. Lock the identifier. 
+            // If the limit was not found, it's a message for another MOS. Lock the identifier.
             MOS_Lima::idManager_.LockIdentifier( asnMsg.oid );
         }
     }
@@ -1124,21 +1125,21 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderMan
     strOutputMsg << "OrderManagement - Etat: ";
     switch( asnMsg.etat )
     {
-        case EnumOrderState::started  : 
+        case EnumOrderState::started  :
         {
             strOutputMsg << "Démarré";
         }
         break;
 
-        case EnumOrderState::stopped  : 
+        case EnumOrderState::stopped  :
         {
             strOutputMsg << "Arrêté";
         }
         break;
 
-        case EnumOrderState::cancelled: 
+        case EnumOrderState::cancelled:
         {
-            strOutputMsg << "Annulé"; 
+            strOutputMsg << "Annulé";
         }
         break;
     }
@@ -1214,8 +1215,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAu
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck
-/** @param  asnMsg 
-    @param  nCtx 
+/** @param  asnMsg
+    @param  nCtx
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
@@ -1248,7 +1249,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChange
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomate
-/** @param  asnMsg 
+/** @param  asnMsg
 */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
@@ -1271,8 +1272,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAut
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck
-/** @param  asnMsg 
-    @param  nCtx 
+/** @param  asnMsg
+    @param  nCtx
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
@@ -1302,8 +1303,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChang
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck
-/** @param  asnMsg 
-    @param  nCtx 
+/** @param  asnMsg
+    @param  nCtx
     */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
@@ -1344,11 +1345,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_M
     switch( asnMsg.error_code )
     {
         case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate               : strOutputMsg << "error_invalid_automate"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance   : strOutputMsg << "error_invalid_automate_maintenance"; break; 
+        case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance   : strOutputMsg << "error_invalid_automate_maintenance"; break;
         case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement: strOutputMsg << "error_invalid_automate_ravitaillement"; break;
         case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante         : strOutputMsg << "error_invalid_automate_sante"; break;
         case EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2           : strOutputMsg << "error_invalid_automate_tc2"; break;
-        case EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered               : strOutputMsg << "error_unit_surrendered"; break; 
+        case EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered               : strOutputMsg << "error_unit_surrendered"; break;
         case EnumChangeLiensLogistiquesErrorCode::no_error                             : strOutputMsg << "no_error"; break;
     }
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
@@ -1380,7 +1381,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnit
 {
     MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
     assert( pGtia );
-    pGtia->OnReceiveMsgUnitKnowledgeUpdate( asnMsg );    
+    pGtia->OnReceiveMsgUnitKnowledgeUpdate( asnMsg );
 }
 
 
@@ -1392,7 +1393,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_Ms
 {
     MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
     assert( pGtia );
-    pGtia->OnReceiveMsgUnitKnowledgeDestruction( asnMsg );    
+    pGtia->OnReceiveMsgUnitKnowledgeDestruction( asnMsg );
 }
 
 
@@ -1512,10 +1513,10 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartDirectFire( const ASN1T_MsgStartDir
 void MOS_AgentServerMsgMgr::OnReceiveMsgStartIndirectFire( const ASN1T_MsgStartIndirectFire& asnMsg )
 {
     std::stringstream strOutputMsg;
-    
+
     strOutputMsg << "StartIndirectFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src;
     std::string strTmp( (const char*)asnMsg.position.data, asnMsg.position.numocts );
-    strOutputMsg << " - Pos dest " << strTmp;            
+    strOutputMsg << " - Pos dest " << strTmp;
     strOutputMsg << " - Munition : " << MOS_App::GetApp().GetResourceName( asnMsg.munition );
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
 
@@ -1545,7 +1546,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopDirectFire( const ASN1T_MsgStopDirec
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
     assert( pAgent );
     pAgent->OnReceiveMsgStopFire( asnMsg.resultat );
-    
+
     MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
 
@@ -1593,7 +1594,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireE
     std::stringstream strOutputMsg;
     strOutputMsg << "Stop ammunition meteo effect - ID: " << asnMsg;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-    
+
     MOS_App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( asnMsg );
 }
 
@@ -1615,7 +1616,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
         pObject->OnReceiveMsgExplosion( asnMsg.resultats.elem[ i ] );
 
     MOS_App::GetApp().NotifyObjectExplosion( *pObject );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );    
+    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1648,6 +1649,139 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeD
     MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationCreation
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreation& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Creation de Population"
+                 << " - ID  " << asnMsg.oid_population;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_App::GetApp().GetAgentManager().CreatePopulation( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationUpdate
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Population Update"
+                 << " - ID  " << asnMsg.oid_population;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->UpdatePopulation( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationCreation
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Creation d'une concentration"
+                 << " - ID  " << asnMsg.oid_concentration;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->CreatePopulationConcentration( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Destruction d'une concentration"
+                 << " - ID  " << asnMsg.oid_population;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->DeletePopulationConcentration( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Update d'une concentration"
+                 << " - ID  " << asnMsg.oid_concentration;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->UpdatePopulationConcentration( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Creation d'un flux"
+                 << " - ID  " << asnMsg.oid_flux;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->CreatePopulationFlux( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Destruction d'un flux"
+                 << " - ID  " << asnMsg.oid_flux;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->DeletePopulationFlux( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate
+/** @param  asnMsg 
+*/
+// Created: HME 2005-09-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+{
+	std::stringstream strOutputMsg;
+    strOutputMsg << "Update d'un flux"
+                 << " - ID  " << asnMsg.oid_flux;
+	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
+	if ( pop != 0 )
+		pop->UpdatePopulationFlux( asnMsg );
+}
 
 //=============================================================================
 // ASN
@@ -1694,10 +1828,10 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
         case T_MsgsSimMos_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( asnMsg.u.msg_ctrl_pause_ack                       ); break;
         case T_MsgsSimMos_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( asnMsg.u.msg_ctrl_resume_ack                      ); break;
         case T_MsgsSimMos_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *asnMsg.u.msg_ctrl_change_time_factor_ack         ); break;
-        case T_MsgsSimMos_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break; 
-        case T_MsgsSimMos_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break; 
-        case T_MsgsSimMos_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break; 
-        case T_MsgsSimMos_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break; 
+        case T_MsgsSimMos_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
+        case T_MsgsSimMos_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
+        case T_MsgsSimMos_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
+        case T_MsgsSimMos_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
         case T_MsgsSimMos_msg_ctrl_checkpoint_load_begin:           OnReceiveMsgCheckPointLoadBegin       (); break;
         case T_MsgsSimMos_msg_ctrl_checkpoint_load_end:             OnReceiveMsgCheckPointLoadEnd         (); break;
         case T_MsgsSimMos_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
@@ -1729,48 +1863,48 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
 
         case T_MsgsSimMos_msg_order_management:                     OnReceiveMsgOrderManagement           ( *asnMsg.u.msg_order_management                    ); break;
         case T_MsgsSimMos_msg_attente_ordre_conduite:               OnReceiveMsgWaitForOrderConduite      ( *asnMsg.u.msg_attente_ordre_conduite              ); break;
-        case T_MsgsSimMos_msg_annule_attente_ordre_conduite:        break; //$$$ TODO                                                                         
+        case T_MsgsSimMos_msg_annule_attente_ordre_conduite:        break; //$$$ TODO
         case T_MsgsSimMos_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *asnMsg.u.msg_automate_mrt                        ); break;
         case T_MsgsSimMos_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *asnMsg.u.msg_pion_order ); break;
 
         case T_MsgsSimMos_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *asnMsg.u.msg_object_creation                     ); break;
         case T_MsgsSimMos_msg_object_update:                        OnReceiveMsgObjectUpdate              ( *asnMsg.u.msg_object_update                       ); break;
         case T_MsgsSimMos_msg_object_destruction:                   OnReceiveMsgObjectDestruction         ( asnMsg.u.msg_object_destruction                   ); break;
-        case T_MsgsSimMos_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.u.msg_object_knowledge_creation           ); break; 
-        case T_MsgsSimMos_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.u.msg_object_knowledge_update             ); break; 
-        case T_MsgsSimMos_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.u.msg_object_knowledge_destruction        ); break; 
+        case T_MsgsSimMos_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.u.msg_object_knowledge_creation           ); break;
+        case T_MsgsSimMos_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.u.msg_object_knowledge_update             ); break;
+        case T_MsgsSimMos_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.u.msg_object_knowledge_destruction        ); break;
 
         case T_MsgsSimMos_msg_change_automate:                      OnReceiveMsgChangeAutomate            ( *asnMsg.u.msg_change_automate ); break;
 
         case T_MsgsSimMos_msg_pion_creation:                        OnReceiveMsgPionCreation              ( *asnMsg.u.msg_pion_creation                       ); break;
         case T_MsgsSimMos_msg_automate_creation:                    OnReceiveMsgAutomateCreation          ( *asnMsg.u.msg_automate_creation                   ); break;
-        case T_MsgsSimMos_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *asnMsg.u.msg_change_diplomatie                   ); break;  
+        case T_MsgsSimMos_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *asnMsg.u.msg_change_diplomatie                   ); break;
 
         case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *asnMsg.u.msg_log_maintenance_traitement_equipement_creation ); break;
         case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *asnMsg.u.msg_log_maintenance_traitement_equipement_destruction ); break;
         case T_MsgsSimMos_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *asnMsg.u.msg_log_maintenance_traitement_equipement_update ); break;
         case T_MsgsSimMos_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *asnMsg.u.msg_log_maintenance_etat ); break;
-        
+
         case T_MsgsSimMos_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *asnMsg.u.msg_log_ravitaillement_traitement_creation ); break;
         case T_MsgsSimMos_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *asnMsg.u.msg_log_ravitaillement_traitement_destruction ); break;
         case T_MsgsSimMos_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *asnMsg.u.msg_log_ravitaillement_traitement_update ); break;
         case T_MsgsSimMos_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *asnMsg.u.msg_log_ravitaillement_etat ); break;
         case T_MsgsSimMos_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *asnMsg.u.msg_log_ravitaillement_quotas ); break;
-            
+
 
         case T_MsgsSimMos_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *asnMsg.u.msg_log_sante_traitement_humain_creation ); break;
         case T_MsgsSimMos_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *asnMsg.u.msg_log_sante_traitement_humain_destruction ); break;
         case T_MsgsSimMos_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *asnMsg.u.msg_log_sante_traitement_humain_update ); break;
         case T_MsgsSimMos_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *asnMsg.u.msg_log_sante_etat ); break;
 
-//        case T_MsgsSimMos_msg_population_creation                       : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_update                         : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_concentration_creation         : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_concentration_destruction      : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_concentration_update           : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_flux_creation                  : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_flux_destruction               : break; //$$$ TODO
-//        case T_MsgsSimMos_msg_population_flux_update                    : break; //$$$ TODO        
+        case T_MsgsSimMos_msg_population_creation                       : OnMsgPopulationCreation( *asnMsg.u.msg_population_creation ); break;
+        case T_MsgsSimMos_msg_population_update                         : OnMsgPopulationUpdate( *asnMsg.u.msg_population_update ); break;
+        case T_MsgsSimMos_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation( *asnMsg.u.msg_population_concentration_creation ); break;
+        case T_MsgsSimMos_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *asnMsg.u.msg_population_concentration_destruction ); break;
+        case T_MsgsSimMos_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate( *asnMsg.u.msg_population_concentration_update ); break;
+        case T_MsgsSimMos_msg_population_flux_creation                  : OnMsgPopulationFluxCreation( *asnMsg.u.msg_population_flux_creation ); break;
+        case T_MsgsSimMos_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction( *asnMsg.u.msg_population_flux_destruction ); break;
+        case T_MsgsSimMos_msg_population_flux_update                    : OnMsgPopulationFluxUpdate( *asnMsg.u.msg_population_flux_update ); break;
 
         default:
             {
@@ -1813,6 +1947,10 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
         assert( false ); //$$$ TMP
     }
 
+
+
+
+
 #ifdef _DEBUG
 //    std::cout << "BEGIN MSG DUMP =>" << std::endl;
 //    asnPERDecodeBuffer.SetTrace( true );
@@ -1836,8 +1974,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
         case T_MsgsSimMosWithContext_msg_change_automate_ack:                    OnReceiveMsgChangeAutomateAck               ( *asnMsg.u.msg_change_automate_ack                 , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_change_diplomatie_ack:                  OnReceiveMsgChangeDiplomacyAck              ( *asnMsg.u.msg_change_diplomatie_ack               , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack:         OnReceiveMsgChangeGroupeConnaissanceAck     ( *asnMsg.u.msg_change_groupe_connaissance_ack      , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck            ( *asnMsg.u.msg_object_magic_action_ack             , nCtx ); break; 
-        case T_MsgsSimMosWithContext_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *asnMsg.u.msg_change_liens_logistiques_ack        , nCtx ); break; 
+        case T_MsgsSimMosWithContext_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck            ( *asnMsg.u.msg_object_magic_action_ack             , nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *asnMsg.u.msg_change_liens_logistiques_ack        , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  asnMsg.u.msg_log_ravitaillement_pousser_flux_ack , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  asnMsg.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
 
