@@ -14,10 +14,17 @@
 
 class MIL_PionMissionType;
 class MIL_AutomateMissionType;
+class MIL_PopulationMissionType;
 class MIL_OrderConduiteType;
 
 namespace missions
 {
+    enum E_PopulationMission
+    {
+$PopulationMissionEnumList$
+        eNbrPopulationMission
+    };
+
 
     enum E_AutomateMission
     {
@@ -37,8 +44,11 @@ $OrderConduiteEnumList$
         eNbrOrderConduite
     };
 
+    void RegisterMissions();
+
     void RegisterAutomateMissions();
     void RegisterPionMissions();
+    void RegisterPopulationMissions();
     void RegisterOrderConduites();
 
 } // end namespace missions

@@ -3,6 +3,12 @@
 // Created : 
 // *******************************************************************************************
 
+typedef enum E_TypeMissionPopulation
+{
+$MissionPopulationEnumeration$
+    eNbrMissionPopulation
+};
+
 typedef enum E_TypeMissionAutomate
 {
 $MissionAutomateEnumeration$

@@ -34,6 +34,17 @@ class AGR_Mission : public AGR_Class
 {
 
 public:
+    //! @name Enums
+    //@{
+    enum E_MissionType
+    {
+        eMissionPion,
+        eMissionAutomate,
+        eMissionPopulation
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              AGR_Mission( const std::string& strAsnMissionName, const std::string& strModuleName );
@@ -74,7 +85,7 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsMissionForAutomate() const;
+    bool IsOfMissionType( E_MissionType eType ) const;
     //@}
 
 private:
@@ -94,7 +105,7 @@ private:
 private:
     //! @name Member data
     //@{
-    bool bMissionForAutomata_;
+    E_MissionType         eMissionType_;
     T_Int_Enumeration_Map memberIdEnumMap_; // map of the enumeration names for member with an enumeration type
     //@}
 };

@@ -14,11 +14,33 @@
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMissionType.h"
 #include "MIL/Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "MIL/Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 
 $IncludeList$
 
 using namespace missions;
+
+//-----------------------------------------------------------------------------
+// Name: RegisterMissions
+// Created: AGR 
+//-----------------------------------------------------------------------------
+void missions::RegisterMissions()
+{
+    RegisterAutomateMissions  ();
+    RegisterPionMissions      ();
+    RegisterPopulationMissions();
+    RegisterOrderConduites    ();
+}
+
+//-----------------------------------------------------------------------------
+// Name: RegisterPopulationMissions
+// Created: AGR 
+//-----------------------------------------------------------------------------
+void missions::RegisterPopulationMissions()
+{
+$PopulationMissionsRegistration$
+}
 
 //-----------------------------------------------------------------------------
 // Name: RegisterAutomateMissions

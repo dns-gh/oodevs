@@ -7,17 +7,14 @@
 //
 // *****************************************************************************
 //
-// $Created: $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN_MissionConverter_Skeleton.cpp $
-// $Author: Agn $
-// $Modtime: 27/04/04 11:52 $
+// $Created: APE  $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MOS_AutomateMissionInterface_Gen_Skeleton.h $
+// $Author: Ape $
+// $Modtime: 28/04/04 15:11 $
 // $Revision: 1 $
-// $Workfile: AGR_ADN_MissionConverter_Skeleton.cpp $
+// $Workfile: AGR_MOS_AutomateMissionInterface_Gen_Skeleton.h $
 //
 // *****************************************************************************
 
-ADN_Tools::T_ConverterMission ADN_Tools::missionConverter_[] =
-{
-$MissionConverterList$
-    T_ConverterMission( ""           , ""                                           , (E_Mission)-1  )
-};
+
+$MissionCreatorDeclarations$

@@ -29,15 +29,18 @@
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission constructor
-/** @param  strAsnMissionName 
+/** @param  strAsnMissionName
 */
 // Created: AGN 2004-04-22
 // -----------------------------------------------------------------------------
 AGR_Mission::AGR_Mission( const std::string& strAsnMissionName, const std::string& strModuleName )
-    : AGR_Class( strAsnMissionName, strModuleName )
-    , bMissionForAutomata_      ( false )
+    : AGR_Class    ( strAsnMissionName, strModuleName )
+    , eMissionType_( eMissionPion )
 {
-    bMissionForAutomata_ = ( Name().substr( 8, 8 ) == "Automate" );
+    if( Name().substr( 8, 8 ) == "Automate" )
+        eMissionType_ = eMissionAutomate;
+    else if( Name().substr( 8, 10 ) == "Population" )
+        eMissionType_ = eMissionPopulation;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,15 +55,15 @@ AGR_Mission::~AGR_Mission()
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::Read
-/** @param  input 
-    @param  enumerationSet 
+/** @param  input
+    @param  enumerationSet
 */
 // Created: AGN 2004-04-22
 // -----------------------------------------------------------------------------
 void AGR_Mission::Read( MT_XXmlInputArchive& input, const AGR_Workspace& workspace )
 {
     std::string strSection = input.GetCurrentElementName();
-    
+ 
     if( strSection == "xsd:sequence" )
     {
         input.BeginList( "xsd:sequence" );
@@ -126,8 +129,10 @@ void AGR_Mission::GenerateMilClassHeader( const AGR_Workspace& workspace, const 
     std::string strMissionBaseName( BaseName() );
     std::string strBaseHeaderFile;
 
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strBaseHeaderFile = AGR_SKEL_DIR "AGR_MissionAutomate_Skeleton.h";
+    else if( eMissionType_ == eMissionPopulation )
+        strBaseHeaderFile = AGR_SKEL_DIR "AGR_MissionPopulation_Skeleton.h";
     else
         strBaseHeaderFile = AGR_SKEL_DIR "AGR_MissionPion_Skeleton.h";
 
@@ -174,10 +179,15 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
     std::string strBaseCppFile;
     std::string strUnitName;
 
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
     {
         strBaseCppFile = AGR_SKEL_DIR "/AGR_MissionAutomate_Skeleton.cpp";
         strUnitName = "Automate";
+    }
+    else if( eMissionType_ == eMissionPopulation )
+    {
+        strBaseCppFile = AGR_SKEL_DIR "/AGR_MissionPopulation_Skeleton.cpp";
+        strUnitName = "Population";
     }
     else
     {
@@ -189,7 +199,7 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
     std::string strBaseContent;
     workspace.ReadStringFile( strBaseCppFile, strBaseContent );
 
-    // replace the mission name    
+    // replace the mission name 
     workspace.ReplaceInString( strBaseContent, "$MissionName$", strMissionBaseName );
     workspace.ReplaceInString( strBaseContent, "$LowerMissionName$", LowName() );
 
@@ -207,10 +217,12 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
     if( ! MemberList().empty() )
     {
         strStaticMemberScriptInit += "    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );\n";
-        if( ! bMissionForAutomata_ )
-            strAsnMemberInit += "    const ASN1T_Mission_Pion_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
-        else
+        if( eMissionType_ == eMissionAutomate )
             strAsnMemberInit += "    const ASN1T_Mission_Automate_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
+        else if( eMissionType_ == eMissionPopulation )
+            strAsnMemberInit += "    const ASN1T_Mission_Population_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
+        else
+            strAsnMemberInit += "    const ASN1T_Mission_Pion_" + strMissionBaseName + "& asnMission = *asnMsg.mission.u." + LowName() + ";\n";
     }
     else
         strStaticMemberScriptInit += "    (void)DEC_Tools::GetDIAType( type.GetDIATypeName() );\n";
@@ -226,10 +238,10 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
         strAsnMemberInit += member.ASNInitialisationCode();
         strMemberSerialization      += member.SerializationCode();
         strMemberCleanSerialization += member.SerializationCleaningCode();
-        if( ! bMissionForAutomata_ )
+        if( eMissionType_ != eMissionAutomate )
         {
-            strMemberInit               += member.MemberInitialisationCode();
-            strMissionMemberInit        += member.MissionInitialisationCode();
+            strMemberInit        += member.MemberInitialisationCode();
+            strMissionMemberInit += member.MissionInitialisationCode();
         }
     }
 
@@ -244,7 +256,7 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     std::string strResultFileName =  "./Missions/" + MilFilePathName() + ".cpp";
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );    
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName ); 
 }
 
 
@@ -262,10 +274,15 @@ void AGR_Mission::GenerateTesterClassHeader( const AGR_Workspace& workspace, con
     std::string strBaseHeaderFile;
     std::string strUnitName;
 
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
     {
         strBaseHeaderFile = AGR_SKEL_DIR "AGR_TesterMissionAutomat_Skeleton.h";
         strUnitName = "Automat";
+    }
+    else if( eMissionType_ == eMissionPopulation )
+    {
+        strBaseHeaderFile = AGR_SKEL_DIR "AGR_TesterMissionPopulation_Skeleton.h";
+        strUnitName = "Population";
     }
     else
     {
@@ -297,10 +314,15 @@ void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const 
     std::string strBaseCppFile;
     std::string strUnitName;
 
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
     {
         strBaseCppFile = AGR_SKEL_DIR "/AGR_TesterMissionAutomat_Skeleton.cpp";
         strUnitName = "Automat";
+    }
+    else if( eMissionType_ == eMissionPopulation )
+    {
+        strBaseCppFile = AGR_SKEL_DIR "/AGR_TesterMissionPopulation_Skeleton.cpp";
+        strUnitName = "Population";
     }
     else
     {
@@ -339,7 +361,7 @@ void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const 
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     std::string strResultFileName =  "./TesterMissions/" + strUnitName + "/Mission_" + strUnitName + "_" + strMissionBaseName + ".cpp";
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );  
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );
 }
 
 
@@ -349,7 +371,7 @@ void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const 
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::GenerateDiaDefinition
-/** @return 
+/** @return
 */
 // Created: AGN 2004-04-23
 // -----------------------------------------------------------------------------
@@ -358,8 +380,10 @@ std::string AGR_Mission::GenerateDiaDefinition() const
     std::string strResult( "typedef struct T_" );
     strResult += Name();
 
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strResult += " : T_Mission_Automate\n{\n";
+    else if( eMissionType_ == eMissionPopulation )
+        strResult += " : T_Mission_Population\n{\n";
     else
         strResult += " : T_Mission_Pion\n{\n";
 
@@ -389,7 +413,7 @@ std::string AGR_Mission::GenerateDiaDefinition() const
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::GenerateMosImplementation
-/** @return 
+/** @return
 */
 // Created: AGN 2004-04-26
 // -----------------------------------------------------------------------------
@@ -399,8 +423,10 @@ std::string AGR_Mission::GenerateMosImplementation() const
 
     // model : void MOS_MissionPion::CreateMission_Test_DestroyObject()
     strResult += "void ";
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strResult += "MOS_MissionAutomate::CreateMission_" + BaseName() + "()\n";
+    else if( eMissionType_ == eMissionPopulation )
+        strResult += "MOS_MissionPopulation::CreateMission_" + BaseName() + "()\n";
     else
         strResult += "MOS_MissionPion::CreateMission_" + BaseName() + "()\n";
 
@@ -411,8 +437,10 @@ std::string AGR_Mission::GenerateMosImplementation() const
 
     // model : pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_destroy_object;
     strResult += "    pASNMsgOrder_->GetAsnMsg().mission.t = ";
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strResult += "T_Mission_Automate_" + LowName() + ";\n";
+    else if( eMissionType_ == eMissionPopulation )
+        strResult += "T_Mission_Population_" + LowName() + ";\n";
     else
         strResult += "T_Mission_Pion_" + LowName() + ";\n";
 
@@ -434,7 +462,7 @@ std::string AGR_Mission::GenerateMosImplementation() const
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::GenerateMos2Implementation
-/** @return 
+/** @return
 */
 // Created: APE 2004-04-28
 // -----------------------------------------------------------------------------
@@ -442,8 +470,10 @@ std::string AGR_Mission::GenerateMos2Implementation() const
 {
     std::stringstream strResult;
     std::string strFunctionName;
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strFunctionName = "MOS_AutomateMissionInterface::CreateMission_" + BaseName();
+    else if( eMissionType_ == eMissionPopulation )
+        strFunctionName = "MOS_PopulationMissionInterface::CreateMission_" + BaseName();
     else
         strFunctionName = "MOS_UnitMissionInterface::CreateMission_" + BaseName();
 
@@ -451,7 +481,7 @@ std::string AGR_Mission::GenerateMos2Implementation() const
               << "// Name: " << strFunctionName << "\n"
               << "// Created: AGR\n"
               << "// -----------------------------------------------------------------------------\n";
-    
+
 
     // model : void MOS_MissionPion::CreateMission_DestroyObject() {
     strResult << "void " << strFunctionName << "()\n"
@@ -462,8 +492,10 @@ std::string AGR_Mission::GenerateMos2Implementation() const
 
     // model : pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_destroy_object;
     strResult << "    pASNMsgOrder_->GetAsnMsg().mission.t = ";
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strResult << "T_Mission_Automate_" << LowName() << ";\n";
+    else if( eMissionType_ == eMissionPopulation )
+        strResult << "T_Mission_Population_" << LowName() << ";\n";
     else
         strResult << "T_Mission_Pion_" << LowName() << ";\n";
 
@@ -511,8 +543,10 @@ std::string AGR_Mission::GenerateFicheMission() const
 std::string AGR_Mission::KnowledgeAccessor() const
 {
     std::string strAccessor;
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strAccessor = "automate_";
+    else if( eMissionType_ == eMissionPopulation )
+        strAccessor = "population_";
     else
         strAccessor = "pion_";
     strAccessor += ".GetKnowledgeGroup().GetKSQuerier()";
@@ -526,8 +560,10 @@ std::string AGR_Mission::KnowledgeAccessor() const
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::MilFileName() const
 {
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         return "MIL_AutomateMission_" + BaseName();
+    else if( eMissionType_ == eMissionPopulation )
+        return "MIL_PopulationMission_" + BaseName();
     else
         return "MIL_PionMission_" + BaseName();
 }
@@ -538,7 +574,12 @@ std::string AGR_Mission::MilFileName() const
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::MilFilePathName() const
 {
-    return ( bMissionForAutomata_ ? "Automate\\" : "Pion\\" ) + MilFileName();
+    if( eMissionType_ == eMissionAutomate )
+        return "Automate\\" + MilFileName();
+    else if( eMissionType_ == eMissionPopulation )
+        return "Population\\" + MilFileName();
+    else
+        return "Pion\\" + MilFileName();
 }
 
 // -----------------------------------------------------------------------------
@@ -548,8 +589,10 @@ std::string AGR_Mission::MilFilePathName() const
 std::string AGR_Mission::HumanName() const
 {
     std::string strResult;
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         strResult = "Automate " + BaseName();
+    else if( eMissionType_ == eMissionPopulation )
+        strResult = "Population " + BaseName();
     else
         strResult = "Pion " + BaseName();
     for( unsigned int i = 0; i < strResult.size(); ++i )
@@ -557,15 +600,20 @@ std::string AGR_Mission::HumanName() const
             strResult.at(i) = ' ';
     return strResult;
 }
-    
-    
+
+
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::ASNTypeName
 // Created: AGE 2004-09-20
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::ASNTypeName() const
 {
-    return ( bMissionForAutomata_ ? "T_Mission_Automate_" : "T_Mission_Pion_" )+ LowName();
+    if( eMissionType_ == eMissionAutomate )
+        return "T_Mission_Automate_" + LowName();
+    else if( eMissionType_ == eMissionPopulation )
+        return "T_Mission_Population_" + LowName();
+    else
+        return "T_Mission_Pion_" + LowName();
 }
 
 // -----------------------------------------------------------------------------
@@ -574,8 +622,10 @@ std::string AGR_Mission::ASNTypeName() const
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::BaseName() const
 {
-    if( bMissionForAutomata_ )
+    if( eMissionType_ == eMissionAutomate )
         return Name().substr( std::string( "Mission_Automate_" ).size() );
+    else if( eMissionType_ == eMissionPopulation )
+        return Name().substr( std::string( "Mission_Population_" ).size() );
     else
         return Name().substr( std::string( "Mission_Pion_" ).size() );
 }
@@ -637,7 +687,12 @@ std::string AGR_Mission::DIATypeName() const
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::MRTBehavior() const
 {
-    return ( bMissionForAutomata_ ? "MIS_Automate_MRT_" : "MIS_Pion_" ) + BaseName();
+    if( eMissionType_ == eMissionAutomate )
+        return "MIS_Automate_MRT_" + BaseName();
+    else if( eMissionType_ == eMissionPopulation )
+        return "MIS_Population_" + BaseName();
+    else
+        return "MIS_Pion_" + BaseName();
 }
 
 // -----------------------------------------------------------------------------
@@ -646,14 +701,19 @@ std::string AGR_Mission::MRTBehavior() const
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::ConduiteBehavior() const
 {
-    return ( bMissionForAutomata_ ? "MIS_Automate_CDT_" : "MIS_Pion_" ) + BaseName();
+    if( eMissionType_ == eMissionAutomate )
+        return "MIS_Automate_CDT_" + BaseName();
+    else if( eMissionType_ == eMissionPopulation )
+        return "MIS_Population_" + BaseName();
+    else
+        return "MIS_Pion_" + BaseName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Mission::IsMissionForAutomate
-// Created: AGN 2004-04-23
+// Name: AGR_Mission::IsOfMissionType
+// Created: SBO 2005-09-29
 // -----------------------------------------------------------------------------
-bool AGR_Mission::IsMissionForAutomate() const
+bool AGR_Mission::IsOfMissionType( E_MissionType eType ) const
 {
-    return bMissionForAutomata_;
+    return eMissionType_ == eType;
 }

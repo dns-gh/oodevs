@@ -88,14 +88,18 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
 
     // Missions & frag orders enums
     std::string strAutomataMissionList;
+    std::string strPopulationMissionList;
     std::string strUnitMissionList;
     std::string strFragOrderList;
+
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         const std::string strEntry = "    " + mission.EnumName() + ",\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomataMissionList += strEntry;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationMissionList += strEntry;
         else
             strUnitMissionList += strEntry;
     }
@@ -111,6 +115,7 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ENT_Enums_Skeleton.h", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$Enums$", strEnumsDeclaration.str() );
     workspace.ReplaceInString( strBaseContent, "$AutomateMissionEnumList$", strAutomataMissionList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionEnumList$", strPopulationMissionList );
     workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strUnitMissionList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strFragOrderList );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "ENT/ENT_Enums_Gen.h" );
@@ -246,15 +251,19 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
 
     // Missions & frag orders converters
     std::string strAutomataMissionConverterList;
+    std::string strPopulationMissionConverterList;
     std::string strUnitMissionConverterList;
     std::string strFragOrderConverterList;
+
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
 
         std::string strEntry;
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strEntry += "    T_ConverterAutomataMission( \"";
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strEntry += "    T_ConverterPopulationMission( \"";
         else
             strEntry += "    T_ConverterUnitMission( \"";
 
@@ -264,8 +273,10 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
         strEntry += mission.HumanName();
         strEntry += "\" ), " + mission.EnumName() + " ),\n";
 
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomataMissionConverterList += strEntry;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationMissionConverterList += strEntry;
         else
             strUnitMissionConverterList += strEntry;
     }
@@ -290,6 +301,7 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$ConvertToFunctions$", strConvertToFunctions.str() );
     workspace.ReplaceInString( strBaseContent, "$Converters$", strConverters.str() );
     workspace.ReplaceInString( strBaseContent, "$AutomataMissionConverterList$", strAutomataMissionConverterList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionConverterList$", strPopulationMissionConverterList );
     workspace.ReplaceInString( strBaseContent, "$UnitMissionConverterList$", strUnitMissionConverterList );
     workspace.ReplaceInString( strBaseContent, "$FragOrderConverterList$", strFragOrderConverterList );
     workspace.ReplaceInString( strBaseContent, "$InitTr$", strInitTr.str() );

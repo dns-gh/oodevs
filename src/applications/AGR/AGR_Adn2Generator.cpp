@@ -85,6 +85,8 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     std::string strMiliceMissionAutomate( "\n" );
     std::string strJointMissionAutomate( "\n" );
 
+    std::string strCommomMissionPopulation( "\n" );
+
     std::string strMissionTest;
 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
@@ -97,7 +99,7 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
             continue;
         }
 
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
         {
             if( IsOfType( mission, "ABC" ) )
                 strAbcMissionAutomate += strMissionEnum;
@@ -127,6 +129,10 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
                 strJointMissionAutomate += strMissionEnum;
             else 
                 strCommomMissionAutomate += strMissionEnum;
+        }
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+        {
+            strCommomMissionPopulation += strMissionEnum;
         }
         else
         {
@@ -164,6 +170,7 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     std::string strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_ADN2_Enums_Gen_Skeleton.h", strBaseContent );
 
+    // pawn
     workspace.ReplaceInString( strBaseContent, "$CommonMissionPion$", strCommomMissionPion );
     workspace.ReplaceInString( strBaseContent, "$AbcMissionPion$", strAbcMissionPion );
     workspace.ReplaceInString( strBaseContent, "$InfMissionPion$", strInfMissionPion );
@@ -175,6 +182,7 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     workspace.ReplaceInString( strBaseContent, "$NbcMisssionPion$", strNbcMissionPion );
     workspace.ReplaceInString( strBaseContent, "$MiliceMisssionPion$", strMiliceMissionPion );
     workspace.ReplaceInString( strBaseContent, "$JointMisssionPion$", strJointMissionPion );
+    // automat
     workspace.ReplaceInString( strBaseContent, "$CommonMissionAutomate$", strCommomMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$AbcMissionAutomate$", strAbcMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$InfMissionAutomate$", strInfMissionAutomate );
@@ -186,6 +194,8 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     workspace.ReplaceInString( strBaseContent, "$NbcMisssionAutomate$", strNbcMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$MiliceMisssionAutomate$", strMiliceMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$JointMisssionAutomate$", strJointMissionAutomate );
+    // population
+    workspace.ReplaceInString( strBaseContent, "$CommonMissionPopulation$", strCommomMissionPopulation );
     workspace.ReplaceInString( strBaseContent, "$TestMission$", strMissionTest );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 

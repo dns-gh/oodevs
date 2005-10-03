@@ -52,6 +52,7 @@ void AGR_TesterProjectGenerator::Generate( const AGR_Workspace& workspace, const
     MT_MakeDir( strOutputPath + "/TesterMissions" );
     MT_MakeDir( strOutputPath + "/TesterMissions/Pawn" );
     MT_MakeDir( strOutputPath + "/TesterMissions/Automat" );
+    MT_MakeDir( strOutputPath + "/TesterMissions/Population" );
     MT_MakeDir( strOutputPath + "/TesterMissions/Order" );
 
     std::cout << "Generating TESTER project files" << std::endl;
@@ -67,14 +68,20 @@ void AGR_TesterProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& w
 {
     std::string strPawnIncludeList, strPawnRegistrationList;
     std::string strAutomatIncludeList, strAutomatRegistrationList;
+    std::string strPopulationIncludeList, strPopulationRegistrationList;
 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
         {
             strAutomatIncludeList      += "#include \"Automat/Mission_Automat_" + mission.BaseName() + ".cpp\"\n";
             strAutomatRegistrationList += "    Register< Mission_Automat_" + mission.BaseName() + " >( \"" + mission.HumanName() + "\" );\n";;
+        }
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+        {
+            strPopulationIncludeList      += "#include \"Population/Mission_Population_" + mission.BaseName() + ".cpp\"\n";
+            strPopulationRegistrationList += "    Register< Mission_Population_" + mission.BaseName() + " >( \"" + mission.HumanName() + "\" );\n";;
         }
         else
         {
@@ -99,6 +106,14 @@ void AGR_TesterProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$AutomateMissionsRegistration$", strAutomatRegistrationList );
 
     workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/TesterMissions/Mission_Automat_Type.cpp" );
+
+    // population types
+    workspace.ReadStringFile( AGR_SKEL_DIR "AGR_TesterMission_Population_Type_Skeleton.cpp", strBaseContent );
+
+    workspace.ReplaceInString( strBaseContent, "$IncludeList$", strPopulationIncludeList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionsRegistration$", strPopulationRegistrationList );
+
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/TesterMissions/Mission_Population_Type.cpp" );
 }
 
 // -----------------------------------------------------------------------------

@@ -65,13 +65,16 @@ void AGR_MosGenerator::Generate( const AGR_Workspace& workspace, const std::stri
 void AGR_MosGenerator::GenerateMosMissionHeaderFiles( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
 {
     std::string strPionFunctionDeclaration;
+    std::string strPopulationFunctionDeclaration;
     std::string strAutomateFunctionDeclaration;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         std::string strDeclaration = "    void CreateMission_" + mission.BaseName() + "();\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomateFunctionDeclaration += strDeclaration;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationFunctionDeclaration += strDeclaration;
         else
             strPionFunctionDeclaration += strDeclaration;
     }
@@ -91,6 +94,14 @@ void AGR_MosGenerator::GenerateMosMissionHeaderFiles( const AGR_Workspace& works
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent,  strOutputPath + "MOS_Light/MOS_MissionAutomate.h" );
+
+    strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_MissionPopulation_Skeleton.h", strBaseContent );
+
+    workspace.ReplaceInString( strBaseContent, "$MissionCreatorDeclarations$", strPopulationFunctionDeclaration );
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "MOS_Light/MOS_MissionPopulation.h" );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,10 +112,13 @@ void AGR_MosGenerator::GenerateMosMissionCppFiles( const AGR_Workspace& workspac
 {
     std::string strAsnDeletionPion;
     std::string strAsnDeletionAutomate;
+    std::string strAsnDeletionPopulation;
     std::string strMissionCreationPion;
     std::string strMissionCreationAutomate;
+    std::string strMissionCreationPopulation;
     std::string strMissionFunctionsPion;
     std::string strMissionFunctionsAutomate;
+    std::string strMissionFunctionsPopulation;
 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
@@ -114,11 +128,17 @@ void AGR_MosGenerator::GenerateMosMissionCppFiles( const AGR_Workspace& workspac
         std::string strAsnDeletion = "        case " + mission.ASNTypeName() + " : delete pASNMsgOrder_->GetAsnMsg().mission.u." + mission.LowName() + "; break;\n";
         std::string strCreation    = "        case " + mission.EnumName() + " : CreateMission_" + mission.BaseName() + "(); break;\n";
         std::string strFunctions   = mission.GenerateMosImplementation() + "\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
         {
             strAsnDeletionAutomate += strAsnDeletion;
             strMissionCreationAutomate += strCreation;
             strMissionFunctionsAutomate += strFunctions;
+        }
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+        {
+            strAsnDeletionPopulation += strAsnDeletion;
+            strMissionCreationPopulation += strCreation;
+            strMissionFunctionsPopulation += strFunctions;
         }
         else
         {
@@ -147,6 +167,16 @@ void AGR_MosGenerator::GenerateMosMissionCppFiles( const AGR_Workspace& workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light/MOS_MissionAutomate.cpp" );
+
+    strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_MissionPopulation_Skeleton.cpp", strBaseContent );
+
+    workspace.ReplaceInString( strBaseContent, "$AsnMissionDeletion$", strAsnDeletionPopulation );
+    workspace.ReplaceInString( strBaseContent, "$MosMissionCreation$", strMissionCreationPopulation );
+    workspace.ReplaceInString( strBaseContent, "$MissionCreatorImplementations$", strMissionFunctionsPopulation );
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light/MOS_MissionPopulation.cpp" );
 }
     
 // -----------------------------------------------------------------------------

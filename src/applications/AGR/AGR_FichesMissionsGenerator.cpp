@@ -76,8 +76,10 @@ void AGR_FichesMissionsGenerator::GenerateFichesMissions( const AGR_Workspace& w
         std::string strBaseContent = "";
         workspace.ReadStringFile( AGR_SKEL_DIR "FicheMission_skeleton.html", strBaseContent );
     
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             workspace.ReplaceInString( strBaseContent, "$AGR_NIVEAU$", "Automate" );
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            workspace.ReplaceInString( strBaseContent, "$AGR_NIVEAU$", "Population" );
         else
             workspace.ReplaceInString( strBaseContent, "$AGR_NIVEAU$", "Pion" );
 
@@ -114,8 +116,10 @@ void AGR_FichesMissionsGenerator::GenerateIndex( const AGR_Workspace& workspace,
     {
         const AGR_Mission& mission = **it;
 
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             missionByWeapons[ mission.WeaponName() ][ "Automate" ] [ mission.HumanMissionName() ] = &mission;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            missionByWeapons[ mission.WeaponName() ][ "Population" ] [ mission.HumanMissionName() ] = &mission;
         else
             missionByWeapons[ mission.WeaponName() ][ "Pion" ] [ mission.HumanMissionName() ] = &mission;
     }
@@ -137,8 +141,9 @@ void AGR_FichesMissionsGenerator::GenerateIndex( const AGR_Workspace& workspace,
         workspace.ReadStringFile( AGR_SKEL_DIR "FicheMission_index_arme_skeleton.html", strBaseContent );
         workspace.ReplaceInString( strBaseContent, "$AGR_ARME$", strWeapon );
 
-        const T_MissionMap& automateMissions = missionByWeapons[ strWeapon ][ "Automate" ];
-        const T_MissionMap& pionMissions     = missionByWeapons[ strWeapon ][ "Pion"     ];
+        const T_MissionMap& automateMissions   = missionByWeapons[ strWeapon ][ "Automate"   ];
+        const T_MissionMap& pionMissions       = missionByWeapons[ strWeapon ][ "Pion"       ];
+        const T_MissionMap& populationMissions = missionByWeapons[ strWeapon ][ "Population" ];
 
         std::stringstream strTmp;
         for( CIT_MissionMap itMission = automateMissions.begin(); itMission != automateMissions.end(); ++itMission )
@@ -149,6 +154,11 @@ void AGR_FichesMissionsGenerator::GenerateIndex( const AGR_Workspace& workspace,
         for( CIT_MissionMap itMission = pionMissions.begin(); itMission != pionMissions.end(); ++itMission )
             strTmp2 << "<a href=\"Missions/" << strWeapon << "/" << itMission->second->Name() << ".html\">" << (itMission->first) << "</a></br>" << std::endl;
         workspace.ReplaceInString( strBaseContent, "$AGR_MISSIONS_PION$", strTmp2.str() );
+
+        std::stringstream strTmp3;
+        for( CIT_MissionMap itMission = populationMissions.begin(); itMission != populationMissions.end(); ++itMission )
+            strTmp2 << "<a href=\"Missions/" << strWeapon << "/" << itMission->second->Name() << ".html\">" << (itMission->first) << "</a></br>" << std::endl;
+        workspace.ReplaceInString( strBaseContent, "$AGR_MISSIONS_POPULATION$", strTmp2.str() );
 
         workspace.WriteStringInFile( strBaseContent, strOutputPath + "/FichesMissions/index_missions_" + strWeapon + ".html" );
     }

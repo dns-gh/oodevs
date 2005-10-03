@@ -35,6 +35,11 @@ $UnitMissionConverterList$
     T_ConverterUnitMission( "", "", (E_UnitMission)-1  )
 };
 
+ENT_Tr::T_ConverterPopulationMission ENT_Tr::populationMissionConverter_[] =
+{
+$PopulationMissionConverterList$
+    T_ConverterPopulationMission( "", "", (E_PopulationMission)-1  )
+};
 
 ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
 {
@@ -50,8 +55,9 @@ $FragOrderConverterList$
 void ENT_Tr::InitTranslations()
 {
     $InitTr$
-        InitTr( automataMissionConverter_ );
+    InitTr( automataMissionConverter_ );
     InitTr( unitMissionConverter_ );
+    InitTr( populationMissionConverter_ );
     InitTr( fragOrderConverter_ );
 }
 
@@ -78,6 +84,14 @@ const std::string& ENT_Tr::ConvertFromUnitMission( E_UnitMission val, ENT_Tr_ABC
     return ENT_Tr::InverseFindInConverter( unitMissionConverter_, val ,e );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPopulationMission
+// Created: JDY 03-07-24
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPopulationMission( E_PopulationMission val, ENT_Tr_ABC::E_Conversion e )
+{
+    return ENT_Tr::InverseFindInConverter( populationMissionConverter_, val ,e );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromFragOrder
@@ -111,6 +125,14 @@ E_UnitMission ENT_Tr::ConvertToUnitMission( const std::string& strName )
     return ENT_Tr::FindInConverter( unitMissionConverter_, strName );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPopulationMission
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_PopulationMission ENT_Tr::ConvertToPopulationMission( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( populationMissionConverter_, strName );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToFragOrder

@@ -54,6 +54,7 @@ void AGR_MilProjectGenerator::Generate( const AGR_Workspace& workspace, const st
     MT_MakeDir( strOutputPath + "/Missions/Pion" );
     MT_MakeDir( strOutputPath + "/Missions/Automate" );
     MT_MakeDir( strOutputPath + "/Missions/Conduite" );
+    MT_MakeDir( strOutputPath + "/Missions/Population" );
 
     std::cout << "Generating MIL project files" << std::endl;
     GenerateMissionsProjectFile( workspace, strOutputPath );
@@ -67,7 +68,7 @@ void AGR_MilProjectGenerator::Generate( const AGR_Workspace& workspace, const st
 // -----------------------------------------------------------------------------
 void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    std::string strAutomateFileList, strPionFileList, strConduiteFileList, strBaseFileList;
+    std::string strAutomateFileList, strPionFileList, strPopulationFileList, strConduiteFileList, strBaseFileList;
     std::string strIncludeFileList;
     const std::string strSpacings( "                            " );
     const std::string strExcludeFromBuild = strSpacings + "    <FileConfiguration\n"
@@ -92,8 +93,10 @@ void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& 
                                  + strSpacings + "    RelativePath=\"..\\..\\src\\libraries\\Missions\\" + mission.MilFilePathName() + ".cpp\">\n"
                                  + strExcludeFromBuild
                                  + strSpacings + "</File>\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomateFileList += strFileEntry;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationFileList += strFileEntry;
         else
             strPionFileList += strFileEntry;
         strIncludeFileList += "#include \"" + mission.MilFilePathName() + ".cpp\"\n";
@@ -118,6 +121,7 @@ void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& 
     workspace.ReadStringFile( AGR_SKEL_DIR "Missions.vcproj", strBaseContent );
 
     workspace.ReplaceInString( strBaseContent, "$AutomateFileList$", strAutomateFileList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationFileList$", strPopulationFileList );
     workspace.ReplaceInString( strBaseContent, "$PionFileList$", strPionFileList );
     workspace.ReplaceInString( strBaseContent, "$ConduiteFileList$", strConduiteFileList );
 
@@ -130,22 +134,31 @@ void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& 
 // -----------------------------------------------------------------------------
 void AGR_MilProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    std::string strIncludeList, strPionRegistrationList, strAutomateRegistrationList, strOrderRegistrationList;
+    std::string strIncludeList, strPionRegistrationList, strAutomateRegistrationList, strPopulationRegistrationList, strOrderRegistrationList;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
-        std::string strType = mission.IsMissionForAutomate() ? "MIL_AutomateMissionType" : "MIL_PionMissionType";
+        std::string strType;
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
+            strType = "MIL_AutomateMissionType";
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strType = "MIL_PopulationMissionType";
+        else
+            strType = "MIL_PionMissionType";
         strIncludeList     += "#include \"" + mission.MilFilePathName() + ".cpp\"\n";
         std::string strRegistration = "    " + strType + "::RegisterMission< " + mission.MilFileName() + ">( \""
             + mission.HumanName() + "\", "
             + mission.EnumName() + ", "
             + mission.ASNTypeName() + ", "
             + "\"" + mission.DIATypeName() + "\", "
-            + "\"" + mission.MRTBehavior() + "\""
-            + ( mission.IsMissionForAutomate() ? ", \"" + mission.ConduiteBehavior() + "\"" : "" )
-            + ");\n";
-        if( mission.IsMissionForAutomate() )
+            + "\"" + mission.MRTBehavior() + "\"";
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
+            strRegistration += ", \"" + mission.ConduiteBehavior() + "\"";
+        strRegistration += ");\n";
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomateRegistrationList += strRegistration;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationRegistrationList += strRegistration;
         else
             strPionRegistrationList += strRegistration;
     }
@@ -170,6 +183,7 @@ void AGR_MilProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& work
 
     workspace.ReplaceInString( strBaseContent, "$IncludeList$", strIncludeList );
     workspace.ReplaceInString( strBaseContent, "$AutomateMissionsRegistration$", strAutomateRegistrationList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionsRegistration$", strPopulationRegistrationList );
     workspace.ReplaceInString( strBaseContent, "$PionMissionsRegistration$", strPionRegistrationList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteRegistration$", strOrderRegistrationList );
 
@@ -182,13 +196,15 @@ void AGR_MilProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& work
 // -----------------------------------------------------------------------------
 void AGR_MilProjectGenerator::GenerateMissionsHeaderFile( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    std::string strPionMissionEnumList, strAutomateMissionEnumList, strOrderEnumList;
+    std::string strPionMissionEnumList, strAutomateMissionEnumList, strPopulationMissionEnumList, strOrderEnumList;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         const std::string strEnum = "        e" + mission.Name() + ",\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomateMissionEnumList += strEnum;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationMissionEnumList += strEnum;
         else
             strPionMissionEnumList += strEnum;
     }
@@ -203,6 +219,7 @@ void AGR_MilProjectGenerator::GenerateMissionsHeaderFile( const AGR_Workspace& w
     workspace.ReadStringFile( AGR_SKEL_DIR "Missions_Skeleton.h", strBaseContent );
 
     workspace.ReplaceInString( strBaseContent, "$AutomateMissionEnumList$", strAutomateMissionEnumList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionEnumList$", strPopulationMissionEnumList );
     workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strPionMissionEnumList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strOrderEnumList );
 

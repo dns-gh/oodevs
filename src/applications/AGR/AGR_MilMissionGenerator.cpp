@@ -52,6 +52,7 @@ void AGR_MilMissionGenerator::Generate( const AGR_Workspace& workspace, const st
     MT_MakeDir( strOutputPath + "/Missions" );
     MT_MakeDir( strOutputPath + "/Missions/Pion" );
     MT_MakeDir( strOutputPath + "/Missions/Automate" );
+    MT_MakeDir( strOutputPath + "/Missions/Population" );
     MT_MakeDir( strOutputPath + "/Missions/Conduite" );
 
     std::cout << "Generating MIL mission files" << std::endl;

@@ -10,7 +10,7 @@
 // *****************************************************************************
 
 #include "Missions_pch.h"
-#include "MIL_PopulationMission_FaireMouvement.h"
+#include "MIL_PopulationMission_$MissionName$.h"
 
 #include "MIL/Entities/Orders/Population/MIL_PopulationOrderManager.h"
 #include "MIL/Entities/Orders/Population/MIL_PopulationMissionType.h"
@@ -19,27 +19,24 @@
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_PopulationMission_FaireMouvement::nDIADestinationIdx_ = 0 ;
-
+$StaticMemberInit$
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement::InitializeDIA
+// Name: MIL_PopulationMission_$MissionName$::InitializeDIA
 // Created: 
 //-----------------------------------------------------------------------------
 // static
-void MIL_PopulationMission_FaireMouvement::InitializeDIA( const MIL_PopulationMissionType& type )
+void MIL_PopulationMission_$MissionName$::InitializeDIA( const MIL_PopulationMissionType& type )
 {
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
-    nDIADestinationIdx_ = DEC_Tools::InitializeDIAField( "destination_", diaType );
-
+$StaticMemberScriptInit$
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement constructor
+// Name: MIL_PopulationMission_$MissionName$ constructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_PopulationMission_FaireMouvement::MIL_PopulationMission_FaireMouvement( MIL_Population& population, const MIL_PopulationMissionType& type )
+MIL_PopulationMission_$MissionName$::MIL_PopulationMission_$MissionName$( MIL_Population& population, const MIL_PopulationMissionType& type )
 : MIL_PopulationMission_ABC( population, type )
 {
     // NOTHING    
@@ -47,56 +44,51 @@ MIL_PopulationMission_FaireMouvement::MIL_PopulationMission_FaireMouvement( MIL_
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement destructor
+// Name: MIL_PopulationMission_$MissionName$ destructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_PopulationMission_FaireMouvement::~MIL_PopulationMission_FaireMouvement()
+MIL_PopulationMission_$MissionName$::~MIL_PopulationMission_$MissionName$()
 {
     // NOTHING
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement::Initialize
+// Name: MIL_PopulationMission_$MissionName$::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_PopulationMission_FaireMouvement::Initialize( const ASN1T_MsgPopulationOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_PopulationMission_$MissionName$::Initialize( const ASN1T_MsgPopulationOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_PopulationMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
-    const ASN1T_Mission_Population_FaireMouvement& asnMission = *asnMsg.mission.u.mission_population_faire_mouvement;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.destination, destination_, GetVariable( nDIADestinationIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-
+$InitMembersFromAsn$
     return EnumOrderErrorCode::no_error;
 }
 
 
 // ------------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement::Initialize
+// Name: MIL_PopulationMission_$MissionName$::Initialize
 // Created: 
 // -----------------------------------------------------------------------------
-bool MIL_PopulationMission_FaireMouvement::Initialize( MIL_PopulationMission_ABC& missionTmp )
+bool MIL_PopulationMission_$MissionName$::Initialize( MIL_PopulationMission_ABC& missionTmp )
 {
     if( !MIL_PopulationMission_ABC::Initialize( missionTmp ) )
         return false;
-    MIL_PopulationMission_FaireMouvement& mission = static_cast< MIL_PopulationMission_FaireMouvement& >( missionTmp );
+    MIL_PopulationMission_$MissionName$& mission = static_cast< MIL_PopulationMission_$MissionName$& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIADestinationIdx_ ), destination_, GetVariable( nDIADestinationIdx_ ) );
-
+$InitMemberFromMission$
     return true;
 }                                                                    
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement::Terminate
+// Name: MIL_PopulationMission_$MissionName$::Terminate
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PopulationMission_FaireMouvement::Terminate()
+void MIL_PopulationMission_$MissionName$::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( destination_, GetVariable( nDIADestinationIdx_ ) );
-
+$ResetMembers$
     MIL_PopulationMission_ABC::Terminate();    
 }
 
@@ -105,32 +97,30 @@ void MIL_PopulationMission_FaireMouvement::Terminate()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement::Serialize
+// Name: MIL_PopulationMission_$MissionName$::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PopulationMission_FaireMouvement::Serialize( ASN1T_MsgPopulationOrder& asnMsg )
+void MIL_PopulationMission_$MissionName$::Serialize( ASN1T_MsgPopulationOrder& asnMsg )
 {
     MIL_PopulationMission_ABC::Serialize( asnMsg );
     
-    ASN1T_Mission_Population_FaireMouvement& asnMission = *new ASN1T_Mission_Population_FaireMouvement();
-    asnMsg.mission.t                           = T_Mission_Population_mission_population_faire_mouvement;
-    asnMsg.mission.u.mission_population_faire_mouvement  = &asnMission;
+    ASN1T_Mission_Population_$MissionName$& asnMission = *new ASN1T_Mission_Population_$MissionName$();
+    asnMsg.mission.t                           = T_Mission_Population_$LowerMissionName$;
+    asnMsg.mission.u.$LowerMissionName$  = &asnMission;
 
-    NET_ASN_Tools::CopyPoint( GetVariable( nDIADestinationIdx_ ), asnMission.destination );
-
+$SerializeMembers$
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_FaireMouvement::CleanAfterSerialization
+// Name: MIL_PopulationMission_$MissionName$::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PopulationMission_FaireMouvement::CleanAfterSerialization( ASN1T_MsgPopulationOrder& asnMsg )
+void MIL_PopulationMission_$MissionName$::CleanAfterSerialization( ASN1T_MsgPopulationOrder& asnMsg )
 {
-    assert( asnMsg.mission.t == T_Mission_Population_mission_population_faire_mouvement );
-    ASN1T_Mission_Population_FaireMouvement& asnMission = *asnMsg.mission.u.mission_population_faire_mouvement;
+    assert( asnMsg.mission.t == T_Mission_Population_$LowerMissionName$ );
+    ASN1T_Mission_Population_$MissionName$& asnMission = *asnMsg.mission.u.$LowerMissionName$;
 
-    NET_ASN_Tools::Delete( asnMission.destination );
-
+$CleanSerializedMembers$
     delete &asnMission;
 
     MIL_PopulationMission_ABC::CleanAfterSerialization( asnMsg );

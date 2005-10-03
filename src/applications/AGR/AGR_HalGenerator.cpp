@@ -68,12 +68,15 @@ void AGR_HalGenerator::GenerateMissionEnumFile( const AGR_Workspace& workspace, 
 {
     std::string strMissionPionEnumeration;
     std::string strMissionAutomateEnumeration;
+    std::string strMissionPopulationEnumeration;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         std::string strEntry = "    " + mission.EnumName() + ",\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strMissionAutomateEnumeration += strEntry;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strMissionPopulationEnumeration += strEntry;
         else
             strMissionPionEnumeration += strEntry;
     }
@@ -88,6 +91,7 @@ void AGR_HalGenerator::GenerateMissionEnumFile( const AGR_Workspace& workspace, 
 
     workspace.ReplaceInString( strBaseContent, "$MissionAutomateEnumeration$", strMissionAutomateEnumeration );
     workspace.ReplaceInString( strBaseContent, "$MissionPionEnumeration$", strMissionPionEnumeration );
+    workspace.ReplaceInString( strBaseContent, "$MissionPopulationEnumeration$", strMissionPopulationEnumeration );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumeration$", strOrderEnumeration );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
@@ -102,12 +106,15 @@ void AGR_HalGenerator::GenerateMissionScriptFile( const AGR_Workspace& workspace
 {
     std::string strMissionPion;
     std::string strMissionAutomate;
+    std::string strMissionPopulation;
 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strMissionAutomate += mission.GenerateDiaDefinition() + "\n";
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strMissionPopulation += mission.GenerateDiaDefinition() + "\n";
         else
             strMissionPion += mission.GenerateDiaDefinition() + "\n";
     }
@@ -128,6 +135,13 @@ void AGR_HalGenerator::GenerateMissionScriptFile( const AGR_Workspace& workspace
 
     workspace.WriteStringInFile( strBaseContent,  strOutputPath + "Data_Moteur/Types_Missions_Automate.hal" );
 
+    strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "Types_Missions_Population_Skeleton.hal", strBaseContent );
+
+    workspace.ReplaceInString( strBaseContent, "$Missions$", strMissionPopulation );
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "Data_Moteur/Types_Missions_Population.hal" );
 }
 
 // -----------------------------------------------------------------------------

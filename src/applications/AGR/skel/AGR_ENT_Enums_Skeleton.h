@@ -36,6 +36,11 @@ $PionMissionEnumList$
     eNbrUnitMission
 };
 
+enum E_PopulationMission
+{
+$PopulationMissionEnumList$
+    eNbrPopulationMission
+};
 
 enum E_FragOrder
 {

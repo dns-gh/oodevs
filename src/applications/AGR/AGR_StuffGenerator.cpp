@@ -65,23 +65,33 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
 
     std::string strMissionPionInclude;
     std::string strMissionAutomateInclude;
+    std::string strMissionPopulationInclude;
     std::string strMissionPionCreation;
     std::string strMissionAutomateCreation;
+    std::string strMissionPopulationCreation;
     std::string strMissionDiaInit;
     std::string strMissionPionIdConversion;
     std::string strMissionAutomateIdConversion;
+    std::string strMissionPopulationIdConversion;
 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         std::string strClassName; 
 
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
         {
             strClassName = "MIL_AutomateMission_" + mission.BaseName();
             strMissionAutomateInclude += "#include \"Automate/" + strClassName + ".h\"\n";
             strMissionAutomateCreation += "        case " + mission.EnumName() + ": return new " + strClassName + "();\n";
             strMissionAutomateIdConversion += "        case T_Mission_Automate_" + mission.LowName() + ": return " + mission.EnumName() + ";\n";
+        }
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+        {
+            strClassName = "MIL_PopulationMission_" + mission.BaseName();
+            strMissionPopulationInclude += "#include \"Population/" + strClassName + ".h\"\n";
+            strMissionPopulationCreation += "        case " + mission.EnumName() + ": return new " + strClassName + "();\n";
+            strMissionPopulationIdConversion += "        case T_Mission_Population_" + mission.LowName() + ": return " + mission.EnumName() + ";\n";
         }
         else
         {
@@ -95,11 +105,14 @@ void AGR_StuffGenerator::GenerateMissionToolFile( const AGR_Workspace& workspace
 
     workspace.ReplaceInString( strBaseContent, "$IncludePionMissionHeaders$", strMissionPionInclude );
     workspace.ReplaceInString( strBaseContent, "$IncludeAutomateMissionHeaders$", strMissionAutomateInclude );
+    workspace.ReplaceInString( strBaseContent, "$IncludePopulationMissionHeaders$", strMissionPopulationInclude );
     workspace.ReplaceInString( strBaseContent, "$CreatePionMission$", strMissionPionCreation );
     workspace.ReplaceInString( strBaseContent, "$CreateAutomateMission$", strMissionAutomateCreation );
+    workspace.ReplaceInString( strBaseContent, "$CreatePopulationMission$", strMissionPopulationCreation );
     workspace.ReplaceInString( strBaseContent, "$InitMissionDiaIdx$", strMissionDiaInit );
     workspace.ReplaceInString( strBaseContent, "$ConvertPionIdAsnToSim$", strMissionPionIdConversion );
     workspace.ReplaceInString( strBaseContent, "$ConvertAutomateIdAsnToSim$", strMissionAutomateIdConversion );
+    workspace.ReplaceInString( strBaseContent, "$ConvertPopulationIdAsnToSim$", strMissionPopulationIdConversion );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent,  strOutputPath + "Missions/MIL_OrderTools.cpp" );

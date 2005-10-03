@@ -140,6 +140,15 @@ $MiliceMisssionAutomate$
 $JointMisssionAutomate$
     eSMission_Automate_JOINT_Fin,
 
+    // 
+    // MISSIONS AUTOMATE
+    // 
+
+    // Common
+    eSMission_Population_Common_Debut,
+$CommonMissionPopulation$
+    eSMission_Population_Common_Fin,
+
     eNbrSMission,
 
 $TestMission$

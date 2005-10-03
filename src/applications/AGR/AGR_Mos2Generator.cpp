@@ -67,12 +67,15 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
 {
     std::string strPionFunctionDeclaration;
     std::string strAutomateFunctionDeclaration;
+    std::string strPopulationFunctionDeclaration;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         std::string strDeclaration = "    void CreateMission_" + mission.BaseName() + "();\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomateFunctionDeclaration += strDeclaration;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationFunctionDeclaration += strDeclaration;
         else
             strPionFunctionDeclaration += strDeclaration;
     }
@@ -94,6 +97,15 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceHeaderFiles( const AGR_Works
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_AutomateMissionInterface_Gen.h" );
+
+    // Pour les populations:
+    strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_PopulationMissionInterface_Gen_Skeleton.h", strBaseContent );
+
+    workspace.ReplaceInString( strBaseContent, "$MissionCreatorDeclarations$", strPopulationFunctionDeclaration );
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_PopulationMissionInterface_Gen.h" );
 
     // For fragmentary orders
     std::string strFragOrderDeclaration;
@@ -122,10 +134,13 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
 {
     std::string strAsnDeletionPion;
     std::string strAsnDeletionAutomate;
+    std::string strAsnDeletionPopulation;
     std::string strMissionCreationPion;
     std::string strMissionCreationAutomate;
+    std::string strMissionCreationPopulation;
     std::string strMissionFunctionsPion;
     std::string strMissionFunctionsAutomate;
+    std::string strMissionFunctionsPopulation;
 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
@@ -136,11 +151,17 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
         std::string strCreation    = "        case " + mission.EnumName() + " : CreateMission_" + mission.BaseName() + "(); break;\n";
         std::string strFunctions   = mission.GenerateMos2Implementation() + "\n";
 
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
         {
             strAsnDeletionAutomate += strAsnDeletion;
             strMissionCreationAutomate += strCreation;
             strMissionFunctionsAutomate += strFunctions;
+        }
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+        {
+            strAsnDeletionPopulation += strAsnDeletion;
+            strMissionCreationPopulation += strCreation;
+            strMissionFunctionsPopulation += strFunctions;
         }
         else
         {
@@ -171,6 +192,17 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_AutomateMissionInterface_Gen.cpp" );
+
+    // Pour les populations:
+    strBaseContent = "";
+    workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_PopulationMissionInterface_Gen_Skeleton.cpp", strBaseContent );
+
+    workspace.ReplaceInString( strBaseContent, "$AsnMissionDeletion$", strAsnDeletionPopulation );
+    workspace.ReplaceInString( strBaseContent, "$MosMissionCreation$", strMissionCreationPopulation );
+    workspace.ReplaceInString( strBaseContent, "$MissionCreatorImplementations$", strMissionFunctionsPopulation );
+    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_PopulationMissionInterface_Gen.cpp" );
 
     // Fragmentary orders
     std::string strFODeletion;
@@ -204,14 +236,17 @@ void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& wor
 {
     // .h
     std::string strAutomataMissionList;
+    std::string strPopulationMissionList;
     std::string strUnitMissionList;
     std::string strFragOrderList;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
         const std::string strEntry = "    " + mission.EnumName() + ",\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
             strAutomataMissionList += strEntry;
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+            strPopulationMissionList += strEntry;
         else
             strUnitMissionList += strEntry;
     }
@@ -226,6 +261,7 @@ void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& wor
     workspace.ReadStringFile( AGR_SKEL_DIR "MOS_EnumConverter_Skeleton.h", strBaseContent );
 
     workspace.ReplaceInString( strBaseContent, "$AutomateMissionEnumList$", strAutomataMissionList );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionEnumList$", strPopulationMissionList );
     workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strUnitMissionList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strFragOrderList );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
@@ -236,6 +272,8 @@ void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& wor
     // .cpp
     std::string strAutomataMissionToString;
     std::string strAutomataMissionToId;
+    std::string strPopulationMissionToString;
+    std::string strPopulationMissionToId;
     std::string strUnitMissionToString;
     std::string strUnitMissionToId;
 
@@ -244,10 +282,15 @@ void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& wor
         const AGR_Mission& mission = **it;
         const std::string strToString = "        case " + mission.EnumName() + " : return a.tr( \"" + mission.HumanName() + "\" );\n";
         const std::string strToId     = "    if( strMission == \"" + mission.HumanName() + "\" ) return " + mission.EnumName() + ";\n";
-        if( mission.IsMissionForAutomate() )
+        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
         {
             strAutomataMissionToString += strToString;
             strAutomataMissionToId     += strToId;
+        }
+        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
+        {
+            strPopulationMissionToString += strToString;
+            strPopulationMissionToId     += strToId;
         }
         else
         {
@@ -270,6 +313,8 @@ void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& wor
 
     workspace.ReplaceInString( strBaseContent, "$AutomataMissionToString$", strAutomataMissionToString );
     workspace.ReplaceInString( strBaseContent, "$AutomataMissionToId$", strAutomataMissionToId );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionToString$", strPopulationMissionToString );
+    workspace.ReplaceInString( strBaseContent, "$PopulationMissionToId$", strPopulationMissionToId );
     workspace.ReplaceInString( strBaseContent, "$UnitMissionToString$", strUnitMissionToString );
     workspace.ReplaceInString( strBaseContent, "$UnitMissionToId$", strUnitMissionToId );
     workspace.ReplaceInString( strBaseContent, "$FragOrderToString$", strFragOrderToString );

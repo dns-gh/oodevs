@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PopulationMission_FaireMouvement_h_
-#define __MIL_PopulationMission_FaireMouvement_h_
+#ifndef __MIL_PopulationMission_$MissionName$_h_
+#define __MIL_PopulationMission_$MissionName$_h_
 
 #include "MIL/Entities/Orders/Population/MIL_PopulationMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PopulationMission_FaireMouvement: public MIL_PopulationMission_ABC
+class MIL_PopulationMission_$MissionName$: public MIL_PopulationMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PopulationMission_FaireMouvement )
+    MT_COPYNOTALLOWED( MIL_PopulationMission_$MissionName$ )
 
 public:
 
-             MIL_PopulationMission_FaireMouvement( MIL_Population& population, const MIL_PopulationMissionType& type );
-    virtual ~MIL_PopulationMission_FaireMouvement();
+             MIL_PopulationMission_$MissionName$( MIL_Population& population, const MIL_PopulationMissionType& type );
+    virtual ~MIL_PopulationMission_$MissionName$();
 
     //! @name Init
     //@{
@@ -42,13 +42,11 @@ public:
     //@}
 
 private:
-    static int nDIADestinationIdx_;
-
+$StaticMissionMember$
 
 private:
-    MT_Vector2D destination_;
-
+$MissionMember$
 };
 
 
-#endif // __MIL_PopulationMission_FaireMouvement_h_
+#endif // __MIL_PopulationMission_$MissionName$_h_

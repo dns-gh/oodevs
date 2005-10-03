@@ -52,6 +52,7 @@ void AGR_TesterMissionGenerator::Generate( const AGR_Workspace& workspace, const
     MT_MakeDir( strOutputPath + "/TesterMissions" );
     MT_MakeDir( strOutputPath + "/TesterMissions/Pawn" );
     MT_MakeDir( strOutputPath + "/TesterMissions/Automat" );
+    MT_MakeDir( strOutputPath + "/TesterMissions/Population" );
     MT_MakeDir( strOutputPath + "/TesterMissions/Order" );
 
     std::cout << "Generating TESTER mission files" << std::endl;
