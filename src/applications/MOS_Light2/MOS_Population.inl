@@ -30,3 +30,15 @@ const MOS_Team& MOS_Population::GetTeam()
 {
 	return *pTeam_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetName
+/** @return 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+const std::string& MOS_Population::GetName()
+{
+	return sName_;
+}

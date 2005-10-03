@@ -26,9 +26,11 @@ class MOS_ObjectManager;
 class MOS_Meteo_Manager;
 class MOS_MainWindow;
 class MOS_Agent;
+class MOS_Population;
 class MOS_Report_ABC;
 class MOS_Gtia;
 class MOS_Team;
+class MOS_Population;
 class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
 class MOS_Object_ABC;
@@ -89,6 +91,8 @@ public:
     void NotifyObjectCreated( MOS_Object_ABC& object );
     void NotifyObjectUpdated( MOS_Object_ABC& object );
     void NotifyObjectDeleted( MOS_Object_ABC& object );
+
+	void NotifyPopulationCreated( MOS_Population& population );
 
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );
@@ -165,6 +169,8 @@ signals:
     void AgentCreated( MOS_Agent& agent );
     void AgentUpdated( MOS_Agent& agent );
     void AgentReparented( MOS_Agent& agent );
+	
+	void PopulationCreated( MOS_Population& );
 
     void ObjectCreated( MOS_Object_ABC& object );
     void ObjectUpdated( MOS_Object_ABC& object );

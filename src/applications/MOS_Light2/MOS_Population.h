@@ -67,6 +67,7 @@ public:
     //@{
 	MIL_AgentID GetPopulationID();
 	const MOS_Team&	GetTeam();
+	const std::string& GetName();
     //@}
 
     //! @name Modifiers
@@ -96,6 +97,7 @@ private:
 	T_FluxMap					fluxMap_;
 	const MOS_TypePopulation*	pTypePopulation_;
 	MOS_Team*					pTeam_;
+	std::string					sName_;
 
     //@}
 };

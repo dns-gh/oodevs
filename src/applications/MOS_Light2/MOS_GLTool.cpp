@@ -1646,15 +1646,15 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
 	for ( std::map< MIL_AgentID, MOS_PopulationConcentration* >::const_iterator itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
 	{
 		color.SetGLColor();
-		DrawCircle( itCon->second->center_, MOS_GL_CROSSSIZE * 2.0 , true );
+		DrawCylinder( itCon->second->center_, MOS_GL_CROSSSIZE * 2.0 , 2.0, color );
 	}
 
 	//Draw the flux
 	for ( std::map< MIL_AgentID, MOS_PopulationFlux* >::const_iterator itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
 	{
 		color.SetGLColor();
-		DrawCircle( itFlux->second->queue_, MOS_GL_CROSSSIZE , true );
-		DrawCircle( itFlux->second->tete_, MOS_GL_CROSSSIZE , true );
+		DrawCylinder( itFlux->second->queue_, MOS_GL_CROSSSIZE , 2.0, color );
+		DrawCylinder( itFlux->second->tete_, MOS_GL_CROSSSIZE , 2.0, color );
 	}
 
 
@@ -2054,4 +2054,49 @@ GFX_Color MOS_GLTool::GetColorForTeam( const MOS_Team& team )
 void MOS_GLTool::SetAltitudeRatio( MT_Float r )
 {
     rZRatio_ = r;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::DrawCylinder
+/** @param  center 
+    @param  rRadius 
+    @param  rHeight 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+void MOS_GLTool::DrawCylinder( const MT_Vector2D& center, MT_Float rRadius, MT_Float rHeight, GFX_Color& color )
+{
+    T_Point3DVector points;
+    points.reserve( 24 );
+    for ( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
+        points.push_back( MT_Vector3D( center.rX_ + rRadius * cos( angle )
+                                     , center.rY_ + rRadius * sin( angle )
+									 , 0 ) );
+    points.push_back( MT_Vector3D( center.rX_ + rRadius, center.rY_, 0 ) );
+
+	MT_Vector3D height = MT_Vector3D( 0, 0, rHeight );
+	MT_Vector3D last = *points.begin();	
+	for( CIT_Point3DVector itPoint = ++points.begin(); itPoint != points.end(); ++itPoint )
+	{
+		GFX_Tools::CreateGLTriangle3D( last, *itPoint, *itPoint + height, color );
+		GFX_Tools::CreateGLTriangle3D( last + height, *itPoint + height, last, color );
+		GFX_Tools::CreateGLLine3D( last, *itPoint, 1.0, color);
+		GFX_Tools::CreateGLLine3D( last + height, *itPoint + height, 1.0, color);
+		last = *itPoint;
+	}
+	last = *points.begin();	
+	GFX_Tools::CreateGLTriangle3D( *itPoint, last, last + height, color );
+	GFX_Tools::CreateGLTriangle3D( *itPoint + height, last + height, *itPoint, color );
+
+	glBegin( GL_TRIANGLE_FAN );
+    Vertex( center.rX_, center.rY_, 0 );
+    for ( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
+            Vertex( it->rX_, it->rY_, 0 );
+	glEnd();
+	
+	glBegin( GL_TRIANGLE_FAN );
+    Vertex( center.rX_, center.rY_, rHeight );
+    for ( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
+            Vertex( it->rX_, it->rY_, rHeight );
+	glEnd();
 }

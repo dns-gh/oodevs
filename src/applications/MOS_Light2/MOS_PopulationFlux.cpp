@@ -51,5 +51,10 @@ void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 	direction_			= asnMsg.direction;
 	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.queue.data, queue_ );
 	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.tete.data, tete_  );
-	//itineraire_			= asnMsg.itineraire;
+	for( int i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
+	{
+		MT_Vector2D point;
+		MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, point  );
+		itineraire_.push_back( point );
+	}
 }

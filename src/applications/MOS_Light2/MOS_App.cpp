@@ -17,7 +17,7 @@
 #include "MOS_AgentManager.h"
 #include "MOS_LineManager.h"
 #include "MOS_World.h"
-#include "MOS_ObjectManager.h"
+#include "MOS_ObjectManager.h"s
 #include "MOS_Meteo_Manager.h"
 #include "MOS_MainWindow.h"
 #include "MOS_SensorType.h"
@@ -644,6 +644,17 @@ void MOS_App::NotifyAgentUpdated( MOS_Agent& agent )
 void MOS_App::NotifyAgentReparented( MOS_Agent& agent )
 {
     emit AgentReparented( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationCreated
+/** @param  population 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationCreated( MOS_Population& population )
+{
+    emit PopulationCreated( population );
 }
 
 // -----------------------------------------------------------------------------

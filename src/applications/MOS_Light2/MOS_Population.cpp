@@ -36,6 +36,7 @@ MOS_Population::MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg )
 {
 	pTypePopulation_	= MOS_App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population );
 	pTeam_				= MOS_App::GetApp().GetAgentManager().FindTeam( asnMsg.oid_camp );
+	sName_				= std::string( asnMsg.nom );
 }
 
 // -----------------------------------------------------------------------------

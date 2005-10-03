@@ -28,6 +28,7 @@ class MOS_GLWidget;
 class MOS_InfoPanel;
 class MOS_AgentListView;
 class MOS_ObjectListView;
+class MOS_PopulationListView;
 class MOS_MissionPanel;
 class MOS_MapEventHandler_ABC;
 class MOS_SelectedElement;
@@ -111,17 +112,18 @@ private:
 private:
     //! @name Member data
     //@{
-    MOS_GL3DWidget*     pGL3DWidget_;
-    MOS_GLWidget*       pGLWidget_;
+    MOS_GL3DWidget*	pGL3DWidget_;
+    MOS_GLWidget*	pGLWidget_;
 
-    MOS_InfoPanel*      pInfoPanel_;
-    MOS_AgentListView*  pAgentList_;
-    MOS_ObjectListView* pObjectList_;
-    MOS_MissionPanel*   pMissionPanel_;
-    MOS_Logger*         pLogPanel_;
-    MOS_WeatherPanel*   pWeatherPanel_;
-    MOS_ObjectCreationPanel* pObjCreationPanel_;
-    MOS_AgentCreationPanel* pAgentCreationPanel_;
+    MOS_InfoPanel*				pInfoPanel_;
+    MOS_AgentListView*			pAgentList_;
+    MOS_ObjectListView*			pObjectList_;
+	MOS_PopulationListView*		pPopulationList_;
+    MOS_MissionPanel*			pMissionPanel_;
+    MOS_Logger*					pLogPanel_;
+    MOS_WeatherPanel*			pWeatherPanel_;
+    MOS_ObjectCreationPanel*	pObjCreationPanel_;
+    MOS_AgentCreationPanel*		pAgentCreationPanel_;
 
     QDockWindow* pListDockWnd_;
     QDockWindow* pInfoDockWnd_;

@@ -390,7 +390,7 @@ void MOS_AgentManager::CreatePopulation( const ASN1T_MsgPopulationCreation& asnM
     {
         MOS_Population* pPopulation = new MOS_Population( asnMsg );
         AddPopulation( *pPopulation );
-        //MOS_App::GetApp().NotifyAgentCreated( *pAgent );
+        MOS_App::GetApp().NotifyPopulationCreated( *pPopulation );
     }
 }
 

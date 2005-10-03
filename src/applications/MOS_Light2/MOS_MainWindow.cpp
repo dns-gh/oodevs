@@ -31,6 +31,7 @@
 #include "MOS_SIMControlToolbar.h"
 #include "MOS_AgentListView.h"
 #include "MOS_ObjectListView.h"
+#include "MOS_PopulationListView.h"
 #include "MOS_InfoPanel.h"
 #include "MOS_AgentKnowledgePanel.h"
 #include "MOS_ObjectKnowledgePanel.h"
@@ -86,7 +87,10 @@ MOS_MainWindow::MOS_MainWindow()
     pObjectList_ = new MOS_ObjectListView( pListsTabWidget );
     pListsTabWidget->addTab( pObjectList_, tr( "Objets" ) );
     pObjectList_->header()->hide();
-    pListDockWnd_->setWidget( pListsTabWidget );
+    pPopulationList_ = new MOS_PopulationListView( pListsTabWidget );
+	pListsTabWidget->addTab( pPopulationList_, tr( "Populations" ) );
+	pPopulationList_->header()->hide();
+	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
     pListDockWnd_->setCaption( tr( "Unités" ) );
