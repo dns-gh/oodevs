@@ -93,6 +93,7 @@ public:
     void NotifyObjectDeleted( MOS_Object_ABC& object );
 
 	void NotifyPopulationCreated( MOS_Population& population );
+	void NotifyPopulationUpdated( MOS_Population& population );
 
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );
@@ -171,6 +172,7 @@ signals:
     void AgentReparented( MOS_Agent& agent );
 	
 	void PopulationCreated( MOS_Population& );
+	void PopulationUpdated( MOS_Population& );
 
     void ObjectCreated( MOS_Object_ABC& object );
     void ObjectUpdated( MOS_Object_ABC& object );

@@ -18,6 +18,7 @@ class MOS_Team;
 class MOS_Population;
 class MOS_SelectedElement;
 class MOS_ActionContext;
+class MOS_AgentManager;
 
 
 // =============================================================================
@@ -57,11 +58,18 @@ signals:
 public slots:
 	void AddPopulation( MOS_Population& population );
     void SetSelectedElement( MOS_SelectedElement& selectedElement );
-    void OnAgentUpdated( MOS_Population& population );
 
+
+private slots:
+	void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol );
+    void OnRequestCenter();
+
+    void OnSelectionChange( QListViewItem* pItem );
+    void OnTeamChanged();
 
 private:
-
+    MOS_Team*  ToTeam ( QListViewItem* pItem );
+	MOS_Population* ToPopulation( QListViewItem* pItem );
 
 private:
     QPopupMenu* pPopupMenu_;

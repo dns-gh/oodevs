@@ -25,6 +25,7 @@
 #include "MOS_Agent.h"
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"
+#include "MOS_Population.h"
 #include "MOS_Object_ABC.h"
 #include "MOS_AgentKnowledge.h"
 #include "MOS_ObjectKnowledge.h"
@@ -51,6 +52,17 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Agent& agent )
     pAgent_ = &agent;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_SelectedElement constructor
+/** @param  population 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+MOS_SelectedElement::MOS_SelectedElement( MOS_Population& population )
+{
+	this->Init();
+	pPopulation_ = &population;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement constructor

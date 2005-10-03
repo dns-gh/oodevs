@@ -129,6 +129,15 @@ bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_InfoPanel_ABC::ShouldDisplay
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Population& population )
+{
+    return isVisible() && selectedItem_.pPopulation_ != 0 && selectedItem_.pPopulation_ == &population;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel_ABC::showEvent
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------

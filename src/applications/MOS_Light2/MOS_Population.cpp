@@ -129,3 +129,52 @@ void	MOS_Population::DeletePopulationConcentration( const ASN1T_MsgPopulationCon
 void	MOS_Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
 } 
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::MT_Vector2D& GetPos
+/** @return 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MOS_Population::GetPos()
+{
+	if ( concentrationMap_.size() == 0 && fluxMap_.size() == 0 )
+		assert( false );
+	if( concentrationMap_.size() != 0 )
+		return concentrationMap_.begin()->second->GetPos();
+	else
+		return fluxMap_.begin()->second->GetPos();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetLivingHumans
+/** @return 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+uint MOS_Population::GetLivingHumans()
+{
+	uint sum = 0;
+	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
+		sum += itCon->second->GetLivingHumans();
+	for( CIT_FluxMap itFlux = fluxMap_.begin(); itFlux != fluxMap_.end(); ++itFlux )
+		sum += itFlux->second->GetLivingHumans();
+	return sum;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetDeadHumans
+/** @return 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+uint MOS_Population::GetDeadHumans()
+{
+	uint sum = 0;
+	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
+		sum += itCon->second->GetDeadHumans();
+	for( CIT_FluxMap itFlux = fluxMap_.begin(); itFlux != fluxMap_.end(); ++itFlux )
+		sum += itFlux->second->GetDeadHumans();
+	return sum;
+}

@@ -56,6 +56,7 @@ public:
     typedef T_AgentMap::const_reverse_iterator  RCIT_AgentMap;
 
 	typedef std::map< MIL_AgentID, MOS_Population* > T_PopulationMap;
+	typedef const T_PopulationMap					 CT_PopulationMap;
 	typedef T_PopulationMap::iterator				 IT_PopulationMap;
 	typedef T_PopulationMap::const_iterator			 CIT_PopulationMap;
 
@@ -136,16 +137,17 @@ public:
     /** @name Agents */
     //-------------------------------------------------------------------------
     //@{
-    void         CreateAgent    ( const ASN1T_MsgAutomateCreation& asnMsg );
-    void         CreateAgent    ( const ASN1T_MsgPionCreation& asnMsg );
-	void         CreatePopulation    ( const ASN1T_MsgPopulationCreation& asnMsg );
-    void         AddAgent       ( MOS_Agent& agent );
-    void         RemoveAgent    ( MOS_Agent& agent );
-	void		 AddPopulation	( MOS_Population& popu );
-	void		 RemovePopulation( MOS_Population& popu );
-    void         DeleteAllAgents();
-    MOS_Agent*   FindAgent      ( MIL_AgentID nAgentID );
-    CT_AgentMap& GetAgentList   ();
+    void				CreateAgent			( const ASN1T_MsgAutomateCreation& asnMsg );
+    void				CreateAgent			( const ASN1T_MsgPionCreation& asnMsg );
+	void				CreatePopulation    ( const ASN1T_MsgPopulationCreation& asnMsg );
+    void				AddAgent			( MOS_Agent& agent );
+    void				RemoveAgent			( MOS_Agent& agent );
+	void				AddPopulation		( MOS_Population& popu );
+	void				RemovePopulation	( MOS_Population& popu );
+    void				DeleteAllAgents		();
+    MOS_Agent*			FindAgent			( MIL_AgentID nAgentID );
+    CT_AgentMap&		GetAgentList		();
+	CT_PopulationMap&	GetPopulationList	();
     //@}
 
     //-------------------------------------------------------------------------

@@ -44,17 +44,23 @@ MOS_PopulationConcentration::~MOS_PopulationConcentration()
 // -----------------------------------------------------------------------------
 void MOS_PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	nLivingHumans_		= asnMsg.nb_humains_vivants;
-	nDeadHumans_		= asnMsg.nb_humains_morts;
-	attitude_			= asnMsg.attitude;
-	for( uint i = 0; i < asnMsg.forme.vecteur_point.n; ++i )
-    {
-        MT_Vector2D vTmp;
-        MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.forme.vecteur_point.elem[i].data, vTmp );
-        forme_.push_back( vTmp );
-        center_ += vTmp;
-    }
-	    if( forme_.size() > 1 )
-        center_ /= forme_.size();
+	if ( asnMsg.m.nb_humains_vivantsPresent )
+		nLivingHumans_		= asnMsg.nb_humains_vivants;
+	if ( asnMsg.m.nb_humains_mortsPresent )
+		nDeadHumans_		= asnMsg.nb_humains_morts;
+	if ( asnMsg.m.attitudePresent )
+		attitude_			= asnMsg.attitude;
+	if ( asnMsg.m.formePresent )
+	{
+		for( uint i = 0; i < asnMsg.forme.vecteur_point.n; ++i )
+		{
+			MT_Vector2D vTmp;
+			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.forme.vecteur_point.elem[i].data, vTmp );
+			forme_.push_back( vTmp );
+			center_ += vTmp;
+		}
+		if( forme_.size() > 1 )
+		center_ /= forme_.size();
+	}
 }
 

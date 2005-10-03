@@ -44,17 +44,25 @@ MOS_PopulationFlux::~MOS_PopulationFlux()
 // -----------------------------------------------------------------------------
 void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	nLivingHumans_		= asnMsg.nb_humains_vivants;
-	nDeadHumans_		= asnMsg.nb_humains_morts;
-	attitude_			= asnMsg.attitude;
-	vitesse_			= asnMsg.vitesse;
-	direction_			= asnMsg.direction;
-	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.queue.data, queue_ );
-	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.tete.data, tete_  );
-	for( int i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
-	{
-		MT_Vector2D point;
-		MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, point  );
-		itineraire_.push_back( point );
-	}
+	if ( asnMsg.m.nb_humains_vivantsPresent )
+		nLivingHumans_		= asnMsg.nb_humains_vivants;
+	if ( asnMsg.m.nb_humains_mortsPresent )
+		nDeadHumans_		= asnMsg.nb_humains_morts;
+	if ( asnMsg.m.attitudePresent )
+		attitude_			= asnMsg.attitude;
+	if ( asnMsg.m.vitessePresent )
+		vitesse_			= asnMsg.vitesse;
+	if ( asnMsg.m.directionPresent )
+		direction_			= asnMsg.direction;
+	if ( asnMsg.m.queuePresent )
+		MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.queue.data, queue_ );
+	if ( asnMsg.m.tetePresent )
+		MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.tete.data, tete_  );
+	if ( asnMsg.m.itinerairePresent )
+		for( int i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
+		{
+			MT_Vector2D point;
+			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, point  );
+			itineraire_.push_back( point );
+		}
 }

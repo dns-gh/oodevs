@@ -37,7 +37,7 @@ class MOS_Population
     friend class MOS_GLTool;
 public :
 
-	typedef std::map< MIL_AgentID , MOS_PopulationConcentration* >   T_ConcentrationMap;
+	typedef std::map< MIL_AgentID , MOS_PopulationConcentration* >  T_ConcentrationMap;
 	typedef T_ConcentrationMap::iterator							IT_ConcentrationMap;
 	typedef T_ConcentrationMap::const_iterator						CIT_ConcentrationMap;
 
@@ -46,14 +46,11 @@ public :
 	typedef T_FluxMap::const_iterator								CIT_FluxMap;
 
 public:
-    //! @name Constructors/Destructor
-    //@{
+
              MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg );
     virtual ~MOS_Population();
-    //@}
 
-    //! @name Operations
-    //@{
+
 	void	UpdatePopulationFlux			( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
 	void	UpdatePopulationConcentration	( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
 	void	CreatePopulationFlux			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
@@ -61,22 +58,14 @@ public:
 	void	DeletePopulationFlux			( const ASN1T_MsgPopulationFluxDestruction& asnMsg );
 	void	DeletePopulationConcentration	( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
-    //@}
 
-    //! @name Accessors
-    //@{
-	MIL_AgentID GetPopulationID();
-	const MOS_Team&	GetTeam();
-	const std::string& GetName();
-    //@}
+	MIL_AgentID			GetPopulationID();
+	const MOS_Team&		GetTeam();
+	const std::string&	GetName();
+	const MT_Vector2D&	GetPos();
+	uint				GetLivingHumans();
+	uint				GetDeadHumans();
 
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
 
 private:
     //! @name Copy/Assignement
@@ -85,9 +74,6 @@ private:
     MOS_Population& operator=( const MOS_Population& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
 
 private:
     //! @name Member data
@@ -98,7 +84,6 @@ private:
 	const MOS_TypePopulation*	pTypePopulation_;
 	MOS_Team*					pTeam_;
 	std::string					sName_;
-
     //@}
 };
 

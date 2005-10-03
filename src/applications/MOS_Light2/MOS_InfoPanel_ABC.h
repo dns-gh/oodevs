@@ -84,6 +84,7 @@ protected:
 
     bool     ShouldDisplay( MOS_Agent& agent );
     bool     ShouldDisplay( MOS_Object_ABC& object );
+	bool     ShouldDisplay( MOS_Population& population );
     QLayout* layout       ();
     //@}
 

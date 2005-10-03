@@ -46,6 +46,9 @@ public:
 
     //! @name Accessors
     //@{
+	const MT_Vector2D& GetPos();
+	uint				GetLivingHumans();
+	uint				GetDeadHumans();
     //@}
 
     //! @name Modifiers

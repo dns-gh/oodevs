@@ -41,6 +41,7 @@
 #include "MOS_App.h"
 #include "MOS_Gtia.h"
 #include "MOS_Agent.h"
+#include "MOS_PopulationPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel constructor
@@ -55,6 +56,7 @@ MOS_InfoPanel::MOS_InfoPanel( QWidget* pParent )
     , bObjectKnowledgeVisible_  ( false )
     , bObjectVisible_           ( false )
     , bLogisiticVisible_        ( false )
+	, bPopulationVisible_		( false )
 {
     this->setMinimumSize( 1, 1 );
 
@@ -68,6 +70,7 @@ MOS_InfoPanel::MOS_InfoPanel( QWidget* pParent )
     pAgentMedicalPanel_     = new MOS_AgentMedicalPanel( this );
     pAgentSupplyPanel_      = new MOS_AgentSupplyPanel( this );
     pReportPanel_           = new MOS_ReportPanel( this );
+	pPopulationPanel_		= new MOS_PopulationPanel( this );
 
     pTabWidget_ = new QTabWidget( this );
 
@@ -112,6 +115,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( true );
         ShowLogisticPanels( true );
         ShowObjectPanel( false );
+		ShowPopulationPanel( false );
     }
 
     else if( selectedElement.pGtia_ != 0 )
@@ -121,15 +125,27 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( true );
         ShowLogisticPanels( false );
         ShowObjectPanel( false );
+		ShowPopulationPanel( false );
     }
 
-    else if( selectedElement.pTeam_ != 0 )
+    else if( selectedElement.pTeam_ != 0 && selectedElement.pPopulation_ == 0 )
     {
         ShowAgentPanel( false );
         ShowAgentKnowledgePanel( false );
         ShowLogisticPanels( false );
         ShowObjectKnowledgePanel( true );
         ShowObjectPanel( false );
+		ShowPopulationPanel( false );
+    }
+
+	else if( selectedElement.pPopulation_ != 0 )
+    {
+        ShowAgentPanel( false );
+        ShowAgentKnowledgePanel( false );
+        ShowLogisticPanels( false );
+        ShowObjectKnowledgePanel( false );
+        ShowObjectPanel( false );
+		ShowPopulationPanel( true );
     }
 
     else if( selectedElement.pAgentKnowledge_ != 0 )
@@ -142,6 +158,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( true );
         ShowObjectPanel( false );
         ShowLogisticPanels( false );
+		ShowPopulationPanel( false );
     }
 
     else if( selectedElement.pObjectKnowledge_ != 0 )
@@ -165,6 +182,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( false );
         ShowObjectPanel( true );
         ShowLogisticPanels( false );
+		ShowPopulationPanel( false );
         pTabWidget_->setCurrentPage( 0 );
     }
 
@@ -174,6 +192,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowAgentKnowledgePanel( true );
         ShowObjectKnowledgePanel( true );
         ShowObjectPanel( false );
+		ShowPopulationPanel( false );
         //pTabWidget_->setCurrentPage( 0 );
     }
 
@@ -182,6 +201,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
     pResourcesPanel_       ->SetSelection( selectedElement );
     pAgentKnowledgePanel_  ->SetSelection( selectedElement );
     pObjectPanel_          ->SetSelection( selectedElement );
+	pPopulationPanel_	   ->SetSelection( selectedElement );
     pObjectReportPanel_    ->SetSelection( selectedElement );
     pObjectKnowledgePanel_ ->SetSelection( selectedElement );
     pAgentMaintenancePanel_->SetSelection( selectedElement );
@@ -203,6 +223,7 @@ void MOS_InfoPanel::ClearAll()
     pResourcesPanel_       ->SetSelection( nullSelection );
     pAgentKnowledgePanel_  ->SetSelection( nullSelection );
     pObjectPanel_          ->SetSelection( nullSelection );
+	pPopulationPanel_	   ->SetSelection( nullSelection );
     pObjectReportPanel_    ->SetSelection( nullSelection );
     pObjectKnowledgePanel_ ->SetSelection( nullSelection );
     pAgentMaintenancePanel_->SetSelection( nullSelection );
@@ -258,6 +279,25 @@ void MOS_InfoPanel::ShowAgentPanel( bool bShow )
     }
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MOS_InfoPanel::ShowPopulationPanel
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+void MOS_InfoPanel::ShowPopulationPanel( bool bShow )
+{
+    if( bShow && ! bPopulationVisible_ )
+    {
+        bPopulationVisible_ = true;
+        pTabWidget_->insertTab( pPopulationPanel_, tr( "Etat Population" ));
+    }
+
+    if( !bShow && bPopulationVisible_ )
+    {
+        bPopulationVisible_ = false;
+        pTabWidget_->removePage( pPopulationPanel_ );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel::ShowAgentKnowledgePanel

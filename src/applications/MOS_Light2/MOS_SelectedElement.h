@@ -28,6 +28,7 @@
 class MOS_Agent;
 class MOS_Gtia;
 class MOS_Team;
+class MOS_Population;
 class MOS_Object_ABC;
 class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
@@ -49,6 +50,7 @@ public:
     //@{
     MOS_SelectedElement();
     MOS_SelectedElement( MOS_Agent& agent );
+	MOS_SelectedElement( MOS_Population& population );
     MOS_SelectedElement( MOS_Gtia& gtia );
     MOS_SelectedElement( MOS_Team& team );
     MOS_SelectedElement( MOS_Object_ABC& object );
@@ -72,11 +74,12 @@ public:
     //! @name Public member data
     //@{
     MOS_Agent*               pAgent_;
+	MOS_Population*			 pPopulation_;
     MOS_Gtia*                pGtia_;
     MOS_Team*                pTeam_;
-    MOS_Object_ABC*      pObject_;
+    MOS_Object_ABC*			 pObject_;
     MOS_AgentKnowledge*      pAgentKnowledge_;
-    MOS_ObjectKnowledge* pObjectKnowledge_;
+    MOS_ObjectKnowledge*	 pObjectKnowledge_;
     MOS_RC*                  pRC_;
     MOS_TacticalLine_ABC*    pLine_;
     int                      nLinePoint_;

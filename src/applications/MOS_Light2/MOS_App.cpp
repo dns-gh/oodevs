@@ -658,6 +658,17 @@ void MOS_App::NotifyPopulationCreated( MOS_Population& population )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationUpdated
+/** @param  population 
+*/
+// Created: HME 2005-10-03
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationUpdated( MOS_Population& population )
+{
+	emit PopulationUpdated( population );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyLogisticConsignUpdated
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
