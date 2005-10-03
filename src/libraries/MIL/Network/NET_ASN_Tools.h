@@ -206,6 +206,7 @@ public:
     static void Delete( ASN1T_ListKnowledgeAgent&   asn );
     static void Delete( ASN1T_ListKnowledgeObject&  asn );
     static void Delete( ASN1T_ListMissionGenObject& asn );
+    static void Delete( ASN1T_MissionGenObject&     asn );
     //@}
 
     //! @name Decoding tools

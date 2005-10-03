@@ -747,6 +747,15 @@ void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
+{
+    NET_ASN_Tools::Delete( asn.pos_obstacle );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_ListAgent& asn )
