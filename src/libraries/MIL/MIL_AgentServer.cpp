@@ -435,7 +435,7 @@ void MIL_AgentServer::MainSimLoop()
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
 
-    if(  pFederate_ )
+    if( pFederate_ )
         pFederate_->Step();
 
     pEntityManager_->Clean();

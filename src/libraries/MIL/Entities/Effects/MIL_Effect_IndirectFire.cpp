@@ -183,7 +183,6 @@ bool MIL_Effect_IndirectFire::Execute()
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType
 // Created: NLD 2004-10-12

@@ -26,10 +26,9 @@ void PHY_RoleAction_Moving::Update( bool /*bIsDead*/ )
 inline
 void PHY_RoleAction_Moving::Clean()
 {
-    if( !bHasMoved_ )
-        bForcePathCheck_ = true;;
-    bHasChanged_ = false;
-    bHasMoved_   = false;
+    PHY_MovingEntity_ABC::Clean();
+
+    bCurrentPathHasChanged_ = false;
     bEnvironmentHasChanged_ = false;
 }
 
@@ -40,7 +39,27 @@ void PHY_RoleAction_Moving::Clean()
 inline
 bool PHY_RoleAction_Moving::HasChanged() const
 {
-    return bHasChanged_;
+    return bCurrentPathHasChanged_ || bEnvironmentHasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyEnvironmentChanged
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+void PHY_RoleAction_Moving::NotifyEnvironmentChanged()
+{
+    bEnvironmentHasChanged_ = true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyCurrentPathChanged
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+void PHY_RoleAction_Moving::NotifyCurrentPathChanged()
+{
+    bCurrentPathHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,4 +81,3 @@ void PHY_RoleAction_Moving::SetMaxSpeedModificator( MT_Float rFactor )
 {
     rMaxSpeedModificator_ = rFactor;
 }
-

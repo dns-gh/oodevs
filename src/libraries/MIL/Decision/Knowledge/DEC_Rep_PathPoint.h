@@ -63,8 +63,8 @@ public:
     /** @name DIA */
     //-------------------------------------------------------------------------
     //@{
-    void SendToDIA    ( DEC_RolePion_Decision& agent );   
-    void RemoveFromDIA( DEC_RolePion_Decision& agent );
+    void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
+    void RemoveFromDIA( DEC_RolePion_Decision& agent ) const;
     //@}
 
     //! @name Debug
@@ -80,9 +80,10 @@ private:
 
 private:
     E_TypePoint    nTypePoint_;
-    DIA_Parameters diaParameters_;
-    bool           bAlreadySended_;
     TerrainData    nTypeTerrain_;
+
+    mutable DIA_Parameters diaParameters_; //$$$
+    mutable bool           bAlreadySent_;
 
 public:
     static int nDIAPointIdx_;

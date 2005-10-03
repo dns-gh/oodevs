@@ -84,12 +84,12 @@ void DEC_Rep_PathPoint_Front::InitializeDIA()
 // Created: JVT 02-12-09
 // Last modified: JVT 02-12-16
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::SendToDIA( DEC_RolePion_Decision& agent )
+void DEC_Rep_PathPoint_Front::SendToDIA( DEC_RolePion_Decision& agent ) const
 {
     if ( bAlreadySent_ )
         return;
 
-    diaParameters_.GetParameter( 0 ).SetValue( *this );
+    diaParameters_.GetParameter( 0 ).SetValue( const_cast< DEC_Rep_PathPoint_Front& >( *this )  );
     DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
     if( pResult ) 
         delete pResult;
@@ -101,9 +101,9 @@ void DEC_Rep_PathPoint_Front::SendToDIA( DEC_RolePion_Decision& agent )
 // Name: DEC_Rep_PathPoint_Front::RemoveFromDIA
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::RemoveFromDIA( DEC_RolePion_Decision& agent )
+void DEC_Rep_PathPoint_Front::RemoveFromDIA( DEC_RolePion_Decision& agent ) const
 {
-    agent.GetKnowledgePart().RemoveFromCategory( "points_interressants", static_cast< DIA_Representation* >( this ) );
+    agent.GetKnowledgePart().RemoveFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
     agent.GetBehaviorPart ().RemoveAllReferencesOf( *this, agent.GetContext() );    
 }
 

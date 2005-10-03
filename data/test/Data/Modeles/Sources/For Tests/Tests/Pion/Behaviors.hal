@@ -242,13 +242,10 @@ behavior BEH_MoveTo( T_Mission_Pion_Test_MoveTo mission )
                     DEC_Debug( "PAS D'OBJET SUR L'ITINERAIRE" );                
                 
                 
-                T_ListeConnaissancesObjet listeObjets = DEC_Itineraire_ProchainsObjets( eTypeObjectPontFlottantContinu, eTypeObjectNuageNBC, eTypeObjectBouchonMines );
-                DEC_Debug( FloatToString( DIA_Size( listeObjets ) ) + " objets sur l'iti" );
-
                 break;
             }
         }
-        /*         
+        /*        
         persistent float rBMS = 0;
         rBMS = rBMS + 1;
         if( rBMS == 50 )

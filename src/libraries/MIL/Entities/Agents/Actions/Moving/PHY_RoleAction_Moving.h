@@ -16,20 +16,19 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-#include "Decision/Path/Agent/DEC_Agent_Path.h"
-#include "Entities/Effects/MIL_Effect_Move.h"
+#include "Entities/Actions/PHY_MovingEntity_ABC.h"
 
 class PHY_RolePion_Location;
 class MIL_AgentPion;
-class MIL_Object_ABC;
-class MIL_RealObject_ABC;
 class MIL_RealObjectTypeFilter;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 // @class  PHY_RoleAction_Moving
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Moving : public MT_Role_ABC
+                            , public PHY_MovingEntity_ABC
 {
     MT_COPYNOTALLOWED( PHY_RoleAction_Moving )
 
@@ -37,17 +36,6 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleAction_Moving RoleInterface;
-
-    enum E_ReturnCode
-    {
-        eRunning,
-        eFinished,
-        ePaused,
-        eNotEnoughFuel,
-        eNotAllowed, // Neutralized
-        eAlreadyMoving,
-        eItineraireMustBeJoined
-    };
     //@}
 
 public:
@@ -69,16 +57,11 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetMaxSlope() const;
+    MT_Float GetMaxSlope                 () const;
     MT_Float GetMaxSpeedWithReinforcement() const;
-    MT_Float GetSpeedWithReinforcement   ( const TerrainData& nEnv ) const;
+    virtual MT_Float GetSpeedWithReinforcement   ( const TerrainData& environment ) const;
     void     SetSpeedModificator         ( MT_Float rFactor );
     void     SetMaxSpeedModificator      ( MT_Float rFactor );
-    int      Move                        ( DEC_Agent_Path& path );
-    void     MoveSuspended               ( DEC_Agent_Path& path );
-    void     MoveCanceled                ( DEC_Agent_Path& path );
-
-    void Apply(); // Called by MIL_Effect_Move
     //@}
 
     //! @name Network
@@ -87,109 +70,63 @@ public:
     void SendFullState   ();
     //@}
 
-    //! @name Path operations
+    //! @name Tools
     //@{
-    MT_Vector2D ExtrapolatePosition          ( MT_Float rTime, bool bBoundOnPath ) const;
-    void        ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsFilter, DEC_Agent_Path::T_KnowledgeObjectMultimap& objectsOnPath ) const;
-    bool        IsMovingOn                   ( const DEC_Agent_Path& path ) const;
+    MT_Vector2D ExtrapolatePosition          ( const MT_Float rTime, const bool bBoundOnPath ) const;
+    bool        ComputeFutureObjectCollisions( const MIL_RealObjectTypeFilter& objectsToAvoid_, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
     //@}
                 
 private:
-    //! @name Types
+    //! @name 
     //@{
-    typedef std::set< MIL_Object_ABC* > T_ObjectSet;
-    typedef T_ObjectSet::const_iterator CIT_ObjectSet;
-
-    // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
-    struct T_MoveStep
-    {
-    public:
-        T_MoveStep() {}
-        T_MoveStep( const MT_Vector2D& vPos ) : vPos_( vPos ) {}
-
-    public:
-        MT_Vector2D vPos_;
-        T_ObjectSet objectsToNextPointSet_; // The path to the next point pass through these objects
-        T_ObjectSet objectsOutSet_;         // On this move step, we are out of these objets
-        T_ObjectSet ponctualObjectsOnSet_;  // Ponctual objets that are on this move step point (i.e. Objects that aren't on the path to the next point)
-    };
-
-    // STL comparison operator : use the SquareDistance between the start pos and the collision pos 
-    struct sMoveStepCmp : std::binary_function< const T_MoveStep& , const T_MoveStep&, bool >
-    {
-    public:
-        sMoveStepCmp( const MT_Vector2D& vPosStart )
-            : vPosStart_( vPosStart )
-        {
-        };
-
-        bool operator() ( const T_MoveStep& vPos1, const T_MoveStep& vPos2 ) const
-        {
-            return vPosStart_.SquareDistance( vPos1.vPos_ ) < vPosStart_.SquareDistance( vPos2.vPos_ );
-        };
-    private:
-        MT_Vector2D vPosStart_;    
-    };
-
-    typedef std::set< T_MoveStep, sMoveStepCmp > T_MoveStepSet;
-    typedef T_MoveStepSet::iterator              IT_MoveStepSet;
-    typedef T_MoveStepSet::const_iterator        CIT_MoveStepSet;
+    virtual const MT_Vector2D& GetPosition () const;
+    virtual const MT_Vector2D& GetDirection() const;
+    
+    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed );
     //@}
 
-private:
-    //! @name Tools
-    //@{    
-    bool TryToMoveToNextStep    ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove );
-    bool TryToMoveTo            ( const DEC_Agent_Path& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
-    void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
-    void ComputeCurrentSpeed    ();
-    void InitializeEnvironment  ( const DEC_Agent_Path& path );
-    bool SetCurrentPath         (       DEC_Agent_Path& path );
-    bool GoToNextNavPoint       ( const DEC_Agent_Path& path );
-    bool CanMove                () const;
-    bool ReserveConsumptionWithReinforcement();
+    //! @name Notifications
+    //@{
+    virtual void NotifySpecialPoint       ( const DEC_PathPoint& point );
+    virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
+    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
+    virtual void NotifyEnvironmentChanged ();
+    virtual void NotifyCurrentPathChanged ();
+    //@}
+
+    //! @name 
+    //@{
+    virtual bool CanMove              () const;
+    virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
+    virtual bool HasResources         ();
     //@}
 
     //! @name Speed management
     //@{
-    MT_Float GetMaxSpeed              () const;
-    MT_Float GetMaxSpeed              ( const TerrainData& nEnv ) const;
-    MT_Float GetMaxSpeed              ( const MIL_RealObject_ABC& object ) const;
-    MT_Float ApplyMaxSpeedModificators( MT_Float rSpeed ) const;
-    MT_Float ApplySpeedModificators   ( MT_Float rSpeed ) const;
+    virtual MT_Float GetMaxSpeed              () const;
+            MT_Float GetMaxSpeed              ( const TerrainData& environment ) const;
+            MT_Float GetMaxSpeed              ( const MIL_RealObject_ABC& object ) const;
+            MT_Float ApplyMaxSpeedModificators( MT_Float rSpeed ) const;
+            MT_Float ApplySpeedModificators   ( MT_Float rSpeed ) const;
 
-    MT_Float GetSpeedWithReinforcement( const MIL_Object_ABC& object ) const;
+    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Network
     //@{
+    void SendCurrentPath    () const;
     void SendEnvironmentType() const;
     //@}
 
 private:
-    MIL_AgentPion*              pPion_;
-    PHY_RolePion_Location*      pRoleLocation_;
-    MT_Float                    rSpeedModificator_;
-    MT_Float                    rMaxSpeedModificator_;
-    TerrainData                 environment_;
-    DEC_Agent_Path::CIT_PathPointList itNextPathPoint_;
-    DEC_Agent_Path::CIT_PathPointList itCurrentPathPoint_;
+    MIL_AgentPion*         pPion_;
+    PHY_RolePion_Location* pRoleLocation_;
+    MT_Float               rSpeedModificator_;
+    MT_Float               rMaxSpeedModificator_;
 
-    // Effect
-    MIL_Effect_Move effectMove_;
-    MT_Vector2D     vNewPos_;
-    MT_Vector2D     vNewDir_;
-    MT_Float        rCurrentSpeed_;
-
-    MT_Float        rCurrentMaxSpeed_;      // Cached data
-    MT_Float        rCurrentEnvSpeed_;
-
-    bool            bForcePathCheck_;
-    bool            bHasChanged_;
-    bool            bHasMoved_; 
-    bool            bEnvironmentHasChanged_;
-
-    DEC_Agent_Path*  pCurrentPath_; // Toujours valide : le role fait un IncRef() / DecRef() tant qu'il veut garder une reference dessus
+    // Network
+    bool bCurrentPathHasChanged_;
+    bool bEnvironmentHasChanged_;
 };
 
 #include "PHY_RoleAction_Moving.inl"

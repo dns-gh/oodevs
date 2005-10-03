@@ -9,17 +9,6 @@
 //
 //*****************************************************************************
 
- //-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetResult
-// Created: JVT 02-12-04
-//-----------------------------------------------------------------------------
-inline
-const DEC_Agent_Path::T_PathPointList& DEC_Agent_Path::GetResult() const
-{
-    assert( GetState() != eComputing );
-    return resultList_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetUnitSpeeds
 // Created: NLD 2005-02-22

@@ -83,17 +83,16 @@ bool DEC_PathPoint::WillBeInObject( const TerrainData& data ) const
 // Name: DEC_PathPoint::SendToDIA
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-void DEC_PathPoint::SendToDIA( DEC_RolePion_Decision& /*agent*/ )
+void DEC_PathPoint::SendToDIA( DEC_RolePion_Decision& /*agent*/ ) const
 {
-    assert( false && "You suck" );
+    assert( false );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PathPoint::RemoveFromDIA
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
-void DEC_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& /*agent*/ )
+void DEC_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& /*agent*/ ) const
 {
     
 }

@@ -21,6 +21,11 @@ TODO de merde
 
 Next Version - Codename ''
     - NLD - L'init de la SIM ne s'arrête plus si DIA ne peut pas écrire ses fichiers de debug (répertoires en lecture seul ...)
+    
+    
+    
+    - DEC_Itineraire_ProchainsObjets virée
+    
 
 Version 1.0.5 [24/09/2005] - Codename 'jusqu'au bout de la nuit ...'
     - NLD - Bug fix : désynchronisation sauvegarde <-> reprise => SV/REP inutilisable (crash à la reprise ...)

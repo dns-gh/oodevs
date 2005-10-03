@@ -88,7 +88,6 @@ signatures
     I /*E_EtatCalculItineraire*/     A::DEC_Itineraire_Etat              ( U /*T_Itineraire*/ ); 
     U /*T_Point*/                    A::DEC_Itineraire_ExtrapolerPosition( R /*Tps en minutes*/, B /* True = N'extrapole pas au dela du dernier point de l'itinéraire*/ );
     B                                A::DEC_Itineraire_ProchainObjet     ( U /*OUT T_ConnaissanceObjet*/, R /*OUT Distance*/, * /*Liste de E_TypeObject à prendre en compte*/ );    
-    S /*T_ListeConnaissancesObjet*/  A::DEC_Itineraire_ProchainsObjets   ( * /*Liste de E_TypeObject à prendre en compte*/ );    
     U /*T_Point*/                    A::DEC_Itineraire_DernierPoint      ( U /*T_Itineraire*/ );
     B                                A::DEC_Itineraire_EstEnMouvementSur ( U /*T_Itineraire*/ );
 

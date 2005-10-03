@@ -1,36 +1,39 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Effects/MIL_Effect_Move.cpp $
-// $Author: Nld $
-// $Modtime: 19/10/04 13:55 $
-// $Revision: 1 $
-// $Workfile: MIL_Effect_Move.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+//
+// $Created: NLD 2005-09-30 $
+// $Archive: $
+// $Author: $
+// $Modtime: $
+// $Revision: $
+// $Workfile: $
 //
 // *****************************************************************************
 
 #include "MIL_pch.h"
-
-#include "MIL_Effect_Move.h"
-
-#include "Decision/Path/DEC_PathWalker.h"
+#include "PHY_MovingEntity_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Effect_Move::MIL_Effect_Move
-// Created: NLD 2004-09-23
+// Name: PHY_MovingEntity_ABC constructor
+// Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-MIL_Effect_Move::MIL_Effect_Move( DEC_PathWalker& roleMoving )
-    : MIL_Effect_ABC()
-    , roleMoving_   ( roleMoving )
+PHY_MovingEntity_ABC::PHY_MovingEntity_ABC()
+    : pathWalker_( *this )
 {
 
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: MIL_Effect_Move::~MIL_Effect_Move
-// Created: NLD 2004-09-23
+// Name: PHY_MovingEntity_ABC destructor
+// Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-MIL_Effect_Move::~MIL_Effect_Move()
+PHY_MovingEntity_ABC::~PHY_MovingEntity_ABC()
 {
 
 }
@@ -40,11 +43,11 @@ MIL_Effect_Move::~MIL_Effect_Move()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Effect_Move::Execute
-// Created: NLD 2004-09-23
+// Name: PHY_MovingEntity_ABC::Clean
+// Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-bool MIL_Effect_Move::Execute()
+void PHY_MovingEntity_ABC::Clean()
 {
-    roleMoving_.Apply();
-    return false; // Effect must be stopped
+    pathWalker_.Clean();
 }
+

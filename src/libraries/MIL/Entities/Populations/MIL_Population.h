@@ -56,6 +56,8 @@ public:
     //@{
     void UpdateDecision();
     void Move( const MT_Vector2D& destination );
+
+    MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );
     //@}
 
     //! @name Network 

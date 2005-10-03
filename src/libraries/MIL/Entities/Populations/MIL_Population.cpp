@@ -87,8 +87,30 @@ void MIL_Population::UpdateDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::Move( const MT_Vector2D& destination )
 {
+    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        (**itConcentration).Move( destination );
+
+    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        (**itFlow).Move( destination );
+
      // $$$$ NLD 2005-09-29: TODO
 }
+
+// =============================================================================
+// FLOWS MANAGEMENT
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::CreateFlow
+// Created: NLD 2005-09-30
+// -----------------------------------------------------------------------------
+MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& concentration )
+{
+    MIL_PopulationFlow* pFlow = new MIL_PopulationFlow( *this, concentration );
+    flows_.insert( pFlow );
+    return *pFlow;
+}
+
 
 // =============================================================================
 // NETWORK

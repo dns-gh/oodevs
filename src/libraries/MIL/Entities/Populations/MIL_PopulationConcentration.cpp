@@ -20,6 +20,7 @@
 #include "MIL_PopulationConcentration.h"
 
 #include "MIL_PopulationAttitude.h"
+#include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
@@ -31,13 +32,14 @@ MIL_MOSIDManager MIL_PopulationConcentration::idManager_;
 // Name: MIL_PopulationConcentration constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationConcentration::MIL_PopulationConcentration( const MIL_Population& population, MIL_InputArchive& archive )
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive )
     : population_     ( population )
     , nID_            ( idManager_.GetFreeSimID() )
     , position_       ()
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
     , pAttitude_      ( 0 )
+    , pPullingFlow_   ( 0 )
 {
     // Position - $$$ DEGEU
     std::string strPosition;
@@ -62,7 +64,12 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( const MIL_Population& 
 MIL_PopulationConcentration::~MIL_PopulationConcentration()
 {
     idManager_.ReleaseSimID( nID_ );
-}
+
+    /*
+    if( pPullingFlow_ ) 
+    balbal pPullingFlow_->RemoveSourceCon();
+    */
+} 
 
 // =============================================================================
 // NETWORK
@@ -105,4 +112,21 @@ void MIL_PopulationConcentration::SendFullState() const
     asnMsg.Send();
 
     NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().forme );
+}
+
+// =============================================================================
+// MOVE
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::Move
+// Created: NLD 2005-09-30
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
+{
+    if( pPullingFlow_ )
+        return;
+
+    pPullingFlow_ = &population_.CreateFlow( *this );
+    pPullingFlow_->Move( destination );
 }

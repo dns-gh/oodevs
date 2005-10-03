@@ -123,6 +123,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) c
 // =============================================================================
 // ACCESSORS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::GetAgent
 // Created: NLD 2004-09-07
@@ -263,7 +264,6 @@ void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
     Move     ( roleLocation.GetPosition(), roleLocation.GetDirection(), roleLocation.GetCurrentSpeed() );    
     SetHeight( roleLocation.GetHeight() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::Hide

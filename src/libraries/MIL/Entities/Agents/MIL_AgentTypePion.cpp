@@ -315,7 +315,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::DeletePath           , "DEC_DetruireItineraire"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::GetPathState         , "DEC_Itineraire_Etat"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::GetNextObjectOnPath  , "DEC_Itineraire_ProchainObjet"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::GetNextObjectsOnPath , "DEC_Itineraire_ProchainsObjets"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::ExtrapolatePosition  , "DEC_Itineraire_ExtrapolerPosition" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::GetLastPointOfPath   , "DEC_Itineraire_DernierPoint"       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PathFunctions::IsMovingOnPath       , "DEC_Itineraire_EstEnMouvementSur"  );

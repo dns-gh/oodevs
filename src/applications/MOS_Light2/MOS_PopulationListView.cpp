@@ -13,9 +13,10 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationListView.h"
+#include "moc_MOS_PopulationListView.cpp"
+
 #include "MOS_App.h"
 #include "MOS_MainWindow.h"
-#include "moc_MOS_PopulationListView.cpp"
 #include "MOS_Population.h";
 #include "MOS_Team.h"
 

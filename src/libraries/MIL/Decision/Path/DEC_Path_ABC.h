@@ -82,12 +82,13 @@ protected:
 
     //! @name Tools
     //@{
-    void        RegisterPathSection( DEC_PathSection_ABC& section );
-    std::string GetStateAsString   () const;
-    std::string GetPathAsString    () const;
+    void         RegisterPathSection( DEC_PathSection_ABC& section );
+    std::string  GetStateAsString   () const;
+    std::string  GetPathAsString    () const;
     virtual void NotifySectionEnded() = 0;
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector; 

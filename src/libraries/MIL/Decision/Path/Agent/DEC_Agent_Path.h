@@ -17,7 +17,7 @@
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
 
-#include "Decision/Path/DEC_Path_ABC.h"
+#include "Decision/Path/DEC_PathResult.h"
 #include "Decision/Path/DEC_PathType.h"
 
 #include "Entities/Agents/Units/PHY_Speeds.h"
@@ -37,21 +37,13 @@ class MIL_AgentPion;
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_Agent_Path : public DEC_Path_ABC
+class DEC_Agent_Path : public DEC_PathResult
 {
     friend class DEC_PathFind_ComputationThread;
 
 public:
     //! @name Types
     //@{   
-    typedef std::list< DEC_PathPoint* >                 T_PathPointList;
-    typedef T_PathPointList::iterator                   IT_PathPointList;
-    typedef T_PathPointList::const_iterator             CIT_PathPointList;    
-
-    typedef std::multimap< MT_Float, DEC_Knowledge_Object* >  T_KnowledgeObjectMultimap;
-    typedef T_KnowledgeObjectMultimap::iterator               IT_KnowledgeObjectMultimap;
-    typedef T_KnowledgeObjectMultimap::const_iterator         CIT_KnowledgeObjectMultimap;
-
     typedef std::vector< DEC_Path_KnowledgeAgent >     T_PathKnowledgeAgentVector;
     typedef T_PathKnowledgeAgentVector::const_iterator CIT_PathKnowledgeAgentVector;
 
@@ -68,13 +60,11 @@ public:
     //! @name Path calculation
     //@{
     virtual void Execute( TerrainPathfinder& pathfind );
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     //@}
     
     //! @name Accessors 
     //@{
     const MIL_AgentPion&                GetQueryMaker          () const;
-    const T_PathPointList&              GetResult              () const;
     const MIL_Fuseau&                   GetFuseau              () const;
     const MIL_Fuseau&                   GetAutomataFuseau      () const;
     const PHY_Speeds&                   GetUnitSpeeds          () const;
@@ -87,20 +77,7 @@ public:
     
     //! @name Tools
     //@{
-    CIT_PathPointList GetCurrentKeyOnPath  ( const MT_Vector2D& vPos ) const;
-    MT_Vector2D       GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const;
-    void              InsertDecPoints      ();
-    //@}
-
-    //! @name Operations
-    //@{
-    MT_Vector2D GetFuturePosition            ( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const;
-    void        ComputeFutureObjectCollisions( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, T_KnowledgeObjectMultimap& objectsOnPathMap ) const;
-    //@}
-
-    //! @name Network
-    //@{
-    void Serialize( ASN1T_Itineraire& asn ) const;
+    virtual void InsertDecPoints();
     //@}
 
 private:
@@ -127,20 +104,9 @@ private:
 
     void InsertLima       ( const MIL_Lima& );
 
-    MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const;
     IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
     //@}
-
-    //! @name Tools
-    //@{
-    virtual void NotifySectionEnded();
-    //@}
-
-    //! @name Operators
-    //@{
-    DEC_Agent_Path& operator=( const DEC_Agent_Path& rhs );
-    //@}
-    
+   
 private:   
     const MIL_AgentPion& queryMaker_;   
     
@@ -160,8 +126,6 @@ private:
     //! @name
     //@{
     bool bDecPointsInserted_;
-    bool bSectionJustEnded_;
-    T_PathPointList resultList_;
     //@}
 };
 

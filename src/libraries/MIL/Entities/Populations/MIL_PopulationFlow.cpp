@@ -28,11 +28,15 @@ MIL_MOSIDManager MIL_PopulationFlow::idManager_;
 // Name: MIL_PopulationFlow constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population )
-    : population_( population )
-    , nID_       ( idManager_.GetFreeSimID() )
+MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
+    : population_          ( population )
+    , nID_                 ( idManager_.GetFreeSimID() )
+    , pSourceConcentration_( &sourceConcentration )
+    , pDestConcentration_  ( 0 )
+    , destination_         ( )
+    , pCurrentPath_        ( 0 )
+    , bHasMoved_           ( false )
 {
-
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +47,50 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
 {
     idManager_.ReleaseSimID( nID_ );
 }
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::Move
+// Created: NLD 2005-09-30
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
+{
+    /*if( bHasMoved_ ) 
+        return;
+
+    if( destination != destination_ )
+    {
+        destination_ = destination;
+
+        if( pCurrentPath_ )
+        {
+            pCurrentPath_->Cancel();
+            pCurrentPath_->DecRef();
+            pCurrentPath_ = 0;
+        }
+
+        pCurrentPath_ = new DEC_Population_Path( *this, destination_ );
+        pCurrentPath_->IncRef();
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pCurrentPath_ );
+    }
+
+    DEC_Agent_Path::E_State nPathState = path.GetState();
+    if( nPathState == DEC_Agent_Path::eInvalid || nPathState == DEC_Agent_Path::eImpossible || nPathState == DEC_Agent_Path::eCanceled )
+        return;
+    
+    bHasMoved_ = true;
+    if( nPathState == DEC_Agent_Path::eComputing )
+        return;
+
+
+
+    */
+
+}
+
 
 // =============================================================================
 // NETWORK
@@ -66,7 +114,9 @@ void MIL_PopulationFlow::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendFullState() const
 {
-    assert( false );
+    std::cout << "MIL_PopulationFlow::SendFullState TODO DUMBASS" << std::endl;
+    
+//    assert( false );
 
     NET_ASN_MsgPopulationFluxUpdate asnMsg;
     asnMsg.GetAsnMsg().oid_flux       = nID_;
@@ -76,3 +126,4 @@ void MIL_PopulationFlow::SendFullState() const
 
     asnMsg.Send();
 }
+

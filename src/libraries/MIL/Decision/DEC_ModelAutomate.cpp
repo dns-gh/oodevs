@@ -119,7 +119,7 @@ void DEC_ModelAutomate::InitializeMissions( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 bool DEC_ModelAutomate::IsMissionAvailable( const MIL_AutomateMissionType& missionType ) const
 {
-    if( missionType.GetID() > missionBitset_.size() || !missionBitset_[ missionType.GetID() ] )
+    if( missionType.GetID() >= missionBitset_.size() || !missionBitset_[ missionType.GetID() ] )
         return false;
 
     DIA_BehaviorPart& behaviorPart = static_cast< DIA_BehaviorPart& >( GetDIAModel().GetBehaviorTool() );

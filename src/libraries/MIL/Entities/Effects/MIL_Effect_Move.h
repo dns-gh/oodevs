@@ -16,7 +16,7 @@
 
 #include "MIL_Effect_ABC.h"
 
-class PHY_RoleAction_Moving;
+class DEC_PathWalker;
 
 // =============================================================================
 // @class  MIL_Effect_Move
@@ -27,7 +27,7 @@ class MIL_Effect_Move : public MIL_Effect_ABC
     MT_COPYNOTALLOWED( MIL_Effect_Move )
 
 public:
-             MIL_Effect_Move( PHY_RoleAction_Moving& roleMoving );
+             MIL_Effect_Move( DEC_PathWalker& roleMoving );
     virtual ~MIL_Effect_Move();
 
     //! @name Operations
@@ -36,7 +36,7 @@ public:
     //@}
 
 private:
-    PHY_RoleAction_Moving& roleMoving_;
+    DEC_PathWalker& roleMoving_;
 };
 
 #include "MIL_Effect_Move.inl"

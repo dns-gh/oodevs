@@ -24,6 +24,7 @@
 #include "Tools/MIL_MOSIDManager.h"
 
 class MIL_Population;
+class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 
 // =============================================================================
@@ -34,7 +35,7 @@ class MIL_PopulationConcentration
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationConcentration( const MIL_Population& population, MIL_InputArchive& archive );
+     MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive );
     ~MIL_PopulationConcentration();
     //@}
 
@@ -42,6 +43,8 @@ public:
     //@{
 //    void PushHumans( uint nNbr );
 //    void PullHumans( uint nNbr );
+
+    void Move( const MT_Vector2D& destination );
     //@}
 
     //! @name Network
@@ -58,12 +61,14 @@ private:
     //@}
 
 private:
-    const MIL_Population&         population_;
+          MIL_Population&         population_;
           uint                    nID_;
           MT_Vector2D             position_;
           uint                    nNbrAliveHumans_;
           uint                    nNbrDeadHumans_;
     const MIL_PopulationAttitude* pAttitude_;
+
+          MIL_PopulationFlow*     pPullingFlow_;
 
 public:
     static MIL_MOSIDManager idManager_;

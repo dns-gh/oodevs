@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
+#include "Decision/Path/DEC_PathWalker.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -39,11 +40,11 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 
     if( pMainPath_ )
     {
-        diaReturnCode_.SetValue( PHY_RoleAction_Moving::eRunning );
+        diaReturnCode_.SetValue( DEC_PathWalker::eRunning );
         pMainPath_->IncRef();
     }
     else
-        diaReturnCode_.SetValue( PHY_RoleAction_Moving::eNotAllowed );        
+        diaReturnCode_.SetValue( DEC_PathWalker::eNotAllowed );        
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
 // -----------------------------------------------------------------------------
 PHY_ActionMove::~PHY_ActionMove()
 {
-    diaReturnCode_.SetValue( PHY_RoleAction_Moving::eFinished );
+    diaReturnCode_.SetValue( DEC_PathWalker::eFinished );
     
     DestroyJoiningPath();
     if( pMainPath_ )
@@ -103,12 +104,14 @@ void PHY_ActionMove::DestroyJoiningPath()
 // -----------------------------------------------------------------------------
 void PHY_ActionMove::AvoidObstacles()
 {
-    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
-    role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetObjectTypesToAvoid(), objectsOnPathMap );
-    if( objectsOnPathMap.empty() )
+    const DEC_Knowledge_Object* pObjectColliding   = 0;
+          MT_Float              rDistanceCollision = 0.;
+
+    if( !role_.ComputeFutureObjectCollisions( MIL_RealObjectType::GetObjectTypesToAvoid(), rDistanceCollision, &pObjectColliding ) )
         return;
 
-    const uint nObjectToAvoidDiaID = objectsOnPathMap.begin()->second->GetDiaID();
+    assert( pObjectColliding );
+    const uint nObjectToAvoidDiaID = pObjectColliding->GetDiaID();
     // Le pion à déjà tenté d'éviter l'obstacle
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return; 
@@ -145,14 +148,14 @@ void PHY_ActionMove::Execute()
 {   
     if( !pMainPath_ )
     {
-        diaReturnCode_.SetValue( PHY_RoleAction_Moving::eNotAllowed );
+        diaReturnCode_.SetValue( DEC_PathWalker::eNotAllowed );
         return;
     }
 
     DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
     int nReturn = role_.Move( *pCurrentPath );
 
-    if( nReturn == PHY_RoleAction_Moving::eItineraireMustBeJoined )
+    if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
     {
         role_.MoveSuspended( *pCurrentPath );
         DestroyJoiningPath();
@@ -161,11 +164,11 @@ void PHY_ActionMove::Execute()
         nReturn      = role_.Move( *pCurrentPath );
     }
 
-    if( pCurrentPath == pJoiningPath_ && nReturn == PHY_RoleAction_Moving::eFinished )
+    if( pCurrentPath == pJoiningPath_ && nReturn == DEC_PathWalker::eFinished )
     {
         DestroyJoiningPath();
         pCurrentPath = pMainPath_;
-        nReturn      = PHY_RoleAction_Moving::eRunning;
+        nReturn      = DEC_PathWalker::eRunning;
     }
 
     AvoidObstacles();
@@ -181,5 +184,5 @@ void PHY_ActionMove::ExecuteSuspended()
     DEC_Agent_Path* pCurrentPath = pJoiningPath_ ? pJoiningPath_ : pMainPath_;
     if( pCurrentPath )
         role_.MoveSuspended( *pCurrentPath );
-    diaReturnCode_.SetValue( PHY_RoleAction_Moving::ePaused );
+    diaReturnCode_.SetValue( DEC_PathWalker::ePaused );
 }

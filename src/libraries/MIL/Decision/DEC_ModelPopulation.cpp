@@ -111,7 +111,7 @@ void DEC_ModelPopulation::InitializeMissions( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 bool DEC_ModelPopulation::IsMissionAvailable( const MIL_PopulationMissionType& missionType ) const
 {
-    if( missionType.GetID() > missionBitset_.size() || !missionBitset_[ missionType.GetID() ] )
+    if( missionType.GetID() >= missionBitset_.size() || !missionBitset_[ missionType.GetID() ] )
         return false;
 
     DIA_BehaviorPart& behaviorPart = static_cast< DIA_BehaviorPart& >( GetDIAModel().GetBehaviorTool() );

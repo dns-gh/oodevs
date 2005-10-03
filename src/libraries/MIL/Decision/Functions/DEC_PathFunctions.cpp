@@ -115,41 +115,20 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
 {
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 2 );
 
-    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
-    callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, objectsOnPathMap );
-
-    if( objectsOnPathMap.empty() )
+    const DEC_Knowledge_Object* pObjectColliding   = 0;
+          MT_Float              rDistanceCollision = 0.;
+    
+    if( !callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, rDistanceCollision, &pObjectColliding ) )
     {
         call.GetResult().SetValue( false );
         return;
     }
+    assert( pObjectColliding );
 
-    DEC_Agent_Path::CIT_KnowledgeObjectMultimap itElt = objectsOnPathMap.begin();
-    call.GetParameter( 0 ).SetValue( (void*)itElt->second->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
-    call.GetParameter( 1 ).SetValue( (float)itElt->first );
+    call.GetParameter( 0 ).SetValue( (void*)pObjectColliding->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
+    call.GetParameter( 1 ).SetValue( (float)rDistanceCollision );
     call.GetResult().SetValue( true );
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::GetNextObjectsOnPath
-// Created: JVT 2005-05-11
-// -----------------------------------------------------------------------------
-void DEC_PathFunctions::GetNextObjectsOnPath( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    MIL_RealObjectTypeFilter objectFilter( call.GetParameters(), 0 );
-    
-    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
-    callerAgent.GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectFilter, objectsOnPathMap );
-    
-    T_KnowledgeObjectDiaIDVector knowledges;
-
-    for( DEC_Agent_Path::CIT_KnowledgeObjectMultimap it = objectsOnPathMap.begin(); it != objectsOnPathMap.end(); ++it )
-        knowledges.push_back( (void*)it->second->GetDiaID() );
-
-    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
-    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeListeConnaissanceObjet() );
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetNextObjectOnPionPath
@@ -166,18 +145,17 @@ void DEC_PathFunctions::GetNextObjectOnPionPath( DIA_Call_ABC& call, const MIL_A
 
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 3 );
     
-    DEC_Agent_Path::T_KnowledgeObjectMultimap objectsOnPathMap;
-    pPion->GetPion().GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, objectsOnPathMap );
-    
-    if( objectsOnPathMap.empty() )
+    const DEC_Knowledge_Object* pObjectColliding   = 0;
+          MT_Float              rDistanceCollision = 0.;
+    if( !pPion->GetPion().GetRole< PHY_RoleAction_Moving >().ComputeFutureObjectCollisions( objectsFilter, rDistanceCollision, &pObjectColliding ) )
     {
         call.GetResult().SetValue( false );
         return;
     }
+    assert( pObjectColliding );
     
-    DEC_Agent_Path::CIT_KnowledgeObjectMultimap itElt = objectsOnPathMap.begin();
-    call.GetParameter( 1 ).SetValue( (void*)itElt->second->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
-    call.GetParameter( 2 ).SetValue( (float)itElt->first );
+    call.GetParameter( 1 ).SetValue( (void*)pObjectColliding->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
+    call.GetParameter( 2 ).SetValue( (float)rDistanceCollision );
     call.GetResult().SetValue( true );
 }
 

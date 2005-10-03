@@ -38,8 +38,8 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA    ( DEC_RolePion_Decision& agent );
-    virtual void RemoveFromDIA( DEC_RolePion_Decision& agent );
+    virtual void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
+    virtual void RemoveFromDIA( DEC_RolePion_Decision& agent ) const;
     //@}
 
     //! @name Debug
@@ -49,8 +49,9 @@ public:
 
 private:
     DEC_Rep_PathPoint& destPoint_;
-    DIA_Parameters     diaParameters_;
-    bool               bAlreadySent_;
+
+    mutable DIA_Parameters diaParameters_;
+    mutable bool           bAlreadySent_;
 
 private:
     static int nDIAPointIdx_;

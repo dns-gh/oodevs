@@ -64,8 +64,8 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA    ( DEC_RolePion_Decision& agent );
-    virtual void RemoveFromDIA( DEC_RolePion_Decision& agent );
+    virtual void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
+    virtual void RemoveFromDIA( DEC_RolePion_Decision& agent ) const;
     //@}
 
     //! @name Debug

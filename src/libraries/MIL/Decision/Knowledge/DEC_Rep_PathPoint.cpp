@@ -42,7 +42,7 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( szDIARepType ) )
     , nTypePoint_       ( nTypePoint )
     , nTypeTerrain_     ( nTypeTerrain )
-    , bAlreadySended_   ( false )
+    , bAlreadySent_   ( false )
 {
     assert( nType_ != eTypePointPath );
 
@@ -63,7 +63,7 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const DEC_Rep_PathPoint& rhs )
     , DIA_Representation( "$$$ nom tmp", rhs.DIA_TypedObject::GetType() )
     , nTypePoint_       ( rhs.nTypePoint_ )
     , nTypeTerrain_     ( rhs.nTypeTerrain_ )
-    , bAlreadySended_   ( false )
+    , bAlreadySent_   ( false )
 {
     assert( nType_ != eTypePointPath );
 
@@ -88,26 +88,26 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 // Name: DEC_Rep_PathPoint::SendToDIA
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::SendToDIA( DEC_RolePion_Decision& agent )
+void DEC_Rep_PathPoint::SendToDIA( DEC_RolePion_Decision& agent ) const
 {
-    if ( bAlreadySended_ )
+    if ( bAlreadySent_ )
         return;
         
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
-    diaParameters_.GetParameter( 0 ).SetValue( *this );
+    diaParameters_.GetParameter( 0 ).SetValue( const_cast< DEC_Rep_PathPoint& >( *this ) );
     DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
     if( pResult ) 
         delete pResult;
-    bAlreadySended_ = true;
+    bAlreadySent_ = true;
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::RemoveFromDIA
 // Created: AGN 03-01-13
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& agent )
+void DEC_Rep_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& agent ) const
 {
-    agent.GetKnowledgePart().RemoveFromCategory   ( "points_interressants", static_cast< DIA_Representation* >( this ) );
+    agent.GetKnowledgePart().RemoveFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
     agent.GetBehaviorPart ().RemoveAllReferencesOf( *this, agent.GetContext() );
 }
 

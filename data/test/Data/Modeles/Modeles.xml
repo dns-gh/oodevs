@@ -132,16 +132,15 @@
     </Modele>
   </Automates>
 
-  
+
   <Populations>
     <Modele nom="Population Test">
       <DIAType>T_Population</DIAType>
       <File>For Tests\Tests\Population\Files.hal</File>
       <Missions>
+        <!--<Mission nom="Population FaireMouvement"/>-->
       </Missions>
     </Modele>
   </Populations>
-  
-
 
 </Modeles>
