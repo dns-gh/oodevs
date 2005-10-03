@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -29,7 +29,7 @@ int MIL_AutomateMission_ALAT_Couvrir::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Couvrir constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Couvrir::MIL_AutomateMission_ALAT_Couvrir( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -40,7 +40,7 @@ MIL_AutomateMission_ALAT_Couvrir::MIL_AutomateMission_ALAT_Couvrir( MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Couvrir destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Couvrir::~MIL_AutomateMission_ALAT_Couvrir()
 {
@@ -71,7 +71,7 @@ void MIL_AutomateMission_ALAT_Couvrir::InitializeDIA( const MIL_AutomateMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Couvrir::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Couvrir::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Couvrir::Initialize( const ASN
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Couvrir::Terminate()
 {
@@ -115,7 +115,7 @@ void MIL_AutomateMission_ALAT_Couvrir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Couvrir::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Couvrir::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_AutomateMission_ALAT_Couvrir::Serialize( ASN1T_MsgAutomateOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Couvrir::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Couvrir::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_MenerDefenseUsure constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_MenerDefenseUsure::MIL_AutomateMission_INF_MenerDefenseUsure( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_INF_MenerDefenseUsure::MIL_AutomateMission_INF_MenerDefenseU
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_MenerDefenseUsure destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_MenerDefenseUsure::~MIL_AutomateMission_INF_MenerDefenseUsure()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_INF_MenerDefenseUsure::InitializeDIA( const MIL_Automat
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_MenerDefenseUsure::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_MenerDefenseUsure::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_MenerDefenseUsure::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_MenerDefenseUsure::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_INF_MenerDefenseUsure::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_MenerDefenseUsure::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_MenerDefenseUsure::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_INF_MenerDefenseUsure::Serialize( ASN1T_MsgAutomateOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_MenerDefenseUsure::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_MenerDefenseUsure::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

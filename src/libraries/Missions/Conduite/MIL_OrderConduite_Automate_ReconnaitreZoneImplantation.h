@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: AGR 2005-08-19 - 11:30:56
+// $Created: AGR $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderConduite_Automate_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 19/10/04 14:30 $
@@ -19,7 +19,7 @@
 /** @class  MIL_OrderConduite_Automate_ReconnaitreZoneImplantation
     @brief  MIL_OrderConduite_Automate_ReconnaitreZoneImplantation
 */
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // =============================================================================
 class MIL_OrderConduite_Automate_ReconnaitreZoneImplantation : public MIL_OrderConduite_ABC
 {

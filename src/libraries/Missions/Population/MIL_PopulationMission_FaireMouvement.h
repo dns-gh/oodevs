@@ -31,14 +31,14 @@ public:
     //@{
     static void InitializeDIA( const MIL_PopulationMissionType& type );
     /*final*/ ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgPopulationOrder& asnMsg );
-    /*final*/ bool                     Initialize( MIL_PopulationMission_ABC& mission );
+    /*final*/ //bool                     Initialize( MIL_PopulationMission_ABC& mission );
     /*final*/ void                     Terminate();
     //@}
 
     //! @name Network 
     //@{
-    /*final*/ void Serialize              ( ASN1T_MsgPopulationOrder& asnMsg );
-    /*final*/ void CleanAfterSerialization( ASN1T_MsgPopulationOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
+    /*final*/ //void Serialize              ( ASN1T_MsgPopulationOrder& asnMsg );
+    /*final*/ //void CleanAfterSerialization( ASN1T_MsgPopulationOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
     //@}
 
 private:

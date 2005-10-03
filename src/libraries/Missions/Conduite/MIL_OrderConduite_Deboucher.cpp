@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Deboucher::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Deboucher::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Deboucher::InitializeDIA( const MIL_OrderConduiteType& ty
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Deboucher constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Deboucher::MIL_OrderConduite_Deboucher( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Deboucher::MIL_OrderConduite_Deboucher( const MIL_KnowledgeGro
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Deboucher destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Deboucher::~MIL_OrderConduite_Deboucher()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Deboucher::~MIL_OrderConduite_Deboucher()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Deboucher::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Deboucher::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Deboucher::Initialize( const ASN1T_Ms
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Deboucher::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Deboucher::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

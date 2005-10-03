@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_INF_AppuyerUneAttaque::nDIACompagnieIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AppuyerUneAttaque constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_AppuyerUneAttaque::MIL_AutomateMission_INF_AppuyerUneAttaque( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_INF_AppuyerUneAttaque::MIL_AutomateMission_INF_AppuyerUneAtt
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AppuyerUneAttaque destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_AppuyerUneAttaque::~MIL_AutomateMission_INF_AppuyerUneAttaque()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_INF_AppuyerUneAttaque::InitializeDIA( const MIL_Automat
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AppuyerUneAttaque::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerUneAttaque::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerUneAttaque::Initialize( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AppuyerUneAttaque::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_INF_AppuyerUneAttaque::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AppuyerUneAttaque::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AppuyerUneAttaque::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_INF_AppuyerUneAttaque::Serialize( ASN1T_MsgAutomateOrde
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_AppuyerUneAttaque::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AppuyerUneAttaque::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

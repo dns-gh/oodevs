@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_PasserEnSilenceRadio::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_PasserEnSilenceRadio::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_PasserEnSilenceRadio::InitializeDIA( const MIL_OrderCondu
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_PasserEnSilenceRadio constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_PasserEnSilenceRadio::MIL_OrderConduite_PasserEnSilenceRadio( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_PasserEnSilenceRadio::MIL_OrderConduite_PasserEnSilenceRadio( 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_PasserEnSilenceRadio destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_PasserEnSilenceRadio::~MIL_OrderConduite_PasserEnSilenceRadio()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_PasserEnSilenceRadio::~MIL_OrderConduite_PasserEnSilenceRadio(
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_PasserEnSilenceRadio::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_PasserEnSilenceRadio::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_PasserEnSilenceRadio::Initialize( con
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_PasserEnSilenceRadio::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_PasserEnSilenceRadio::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

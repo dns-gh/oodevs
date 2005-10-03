@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Contourner::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Pion_Contourner::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_Pion_Contourner::InitializeDIA( const MIL_OrderConduiteTy
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Contourner constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_Contourner::MIL_OrderConduite_Pion_Contourner( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_Pion_Contourner::MIL_OrderConduite_Pion_Contourner( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Contourner destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_Contourner::~MIL_OrderConduite_Pion_Contourner()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_Pion_Contourner::~MIL_OrderConduite_Pion_Contourner()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Contourner::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_Contourner::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_Contourner::Initialize( const AS
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_Contourner::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Pion_Contourner::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

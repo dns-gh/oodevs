@@ -23,7 +23,7 @@ int MIL_OrderConduite_Automate_ActiverObstacle::nDIAOrderConduiteAutomateActiver
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ActiverObstacle::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Automate_ActiverObstacle::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_Automate_ActiverObstacle::InitializeDIA( const MIL_OrderC
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ActiverObstacle constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_ActiverObstacle::MIL_OrderConduite_Automate_ActiverObstacle( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_Automate_ActiverObstacle::MIL_OrderConduite_Automate_ActiverOb
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ActiverObstacle destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_ActiverObstacle::~MIL_OrderConduite_Automate_ActiverObstacle()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_Automate_ActiverObstacle::~MIL_OrderConduite_Automate_ActiverO
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ActiverObstacle::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ActiverObstacle::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ActiverObstacle::Initialize(
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ActiverObstacle::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Automate_ActiverObstacle::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

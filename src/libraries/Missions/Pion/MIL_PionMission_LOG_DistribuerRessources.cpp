@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,7 +24,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_DistribuerRessources::InitializeDIA( const MIL_PionMissionType& type )
@@ -36,7 +36,7 @@ void MIL_PionMission_LOG_DistribuerRessources::InitializeDIA( const MIL_PionMiss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_DistribuerRessources::MIL_PionMission_LOG_DistribuerRessources( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -47,7 +47,7 @@ MIL_PionMission_LOG_DistribuerRessources::MIL_PionMission_LOG_DistribuerRessourc
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_DistribuerRessources::~MIL_PionMission_LOG_DistribuerRessources()
 {
@@ -57,7 +57,7 @@ MIL_PionMission_LOG_DistribuerRessources::~MIL_PionMission_LOG_DistribuerRessour
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_DistribuerRessources::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_DistribuerRessources::Initialize( c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_DistribuerRessources::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -85,7 +85,7 @@ bool MIL_PionMission_LOG_DistribuerRessources::Initialize( const MIL_AutomateMis
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_DistribuerRessources::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -99,7 +99,7 @@ bool MIL_PionMission_LOG_DistribuerRessources::Initialize( MIL_PionMission_ABC& 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DistribuerRessources::Terminate()
 {
@@ -113,7 +113,7 @@ void MIL_PionMission_LOG_DistribuerRessources::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DistribuerRessources::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -128,7 +128,7 @@ void MIL_PionMission_LOG_DistribuerRessources::Serialize( ASN1T_MsgPionOrder& as
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DistribuerRessources::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DistribuerRessources::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

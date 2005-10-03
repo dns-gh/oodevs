@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -24,7 +24,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_LOG_DecontaminerBlesses::InitializeDIA( const MIL_PionMissionType& type )
@@ -36,7 +36,7 @@ void MIL_PionMission_LOG_DecontaminerBlesses::InitializeDIA( const MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_DecontaminerBlesses::MIL_PionMission_LOG_DecontaminerBlesses( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -47,7 +47,7 @@ MIL_PionMission_LOG_DecontaminerBlesses::MIL_PionMission_LOG_DecontaminerBlesses
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_LOG_DecontaminerBlesses::~MIL_PionMission_LOG_DecontaminerBlesses()
 {
@@ -57,7 +57,7 @@ MIL_PionMission_LOG_DecontaminerBlesses::~MIL_PionMission_LOG_DecontaminerBlesse
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_DecontaminerBlesses::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_DecontaminerBlesses::Initialize( co
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -85,7 +85,7 @@ bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( const MIL_AutomateMiss
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -99,7 +99,7 @@ bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( MIL_PionMission_ABC& m
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DecontaminerBlesses::Terminate()
 {
@@ -113,7 +113,7 @@ void MIL_PionMission_LOG_DecontaminerBlesses::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DecontaminerBlesses::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -128,7 +128,7 @@ void MIL_PionMission_LOG_DecontaminerBlesses::Serialize( ASN1T_MsgPionOrder& asn
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_LOG_DecontaminerBlesses::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_DecontaminerBlesses::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

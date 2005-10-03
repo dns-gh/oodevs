@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -29,7 +29,7 @@ int MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::nDIAPortee
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::InitializeDIA
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::InitializeDIA( const MIL_PionMissionType& type )
@@ -46,7 +46,7 @@ void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -57,7 +57,7 @@ MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::MIL_PionMissio
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::~MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement()
 {
@@ -67,7 +67,7 @@ MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::~MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -93,7 +93,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavit
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -111,7 +111,7 @@ bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -130,7 +130,7 @@ bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Terminate()
 {
@@ -145,7 +145,7 @@ void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Terminate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -165,7 +165,7 @@ void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Serialize
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

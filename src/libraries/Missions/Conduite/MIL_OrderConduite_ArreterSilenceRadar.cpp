@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ArreterSilenceRadar::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_ArreterSilenceRadar::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -34,7 +34,7 @@ void MIL_OrderConduite_ArreterSilenceRadar::InitializeDIA( const MIL_OrderCondui
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ArreterSilenceRadar constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ArreterSilenceRadar::MIL_OrderConduite_ArreterSilenceRadar( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -45,7 +45,7 @@ MIL_OrderConduite_ArreterSilenceRadar::MIL_OrderConduite_ArreterSilenceRadar( co
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ArreterSilenceRadar destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ArreterSilenceRadar::~MIL_OrderConduite_ArreterSilenceRadar()
 {
@@ -58,7 +58,7 @@ MIL_OrderConduite_ArreterSilenceRadar::~MIL_OrderConduite_ArreterSilenceRadar()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ArreterSilenceRadar::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_ArreterSilenceRadar::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ArreterSilenceRadar::Initialize( cons
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ArreterSilenceRadar::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_ArreterSilenceRadar::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

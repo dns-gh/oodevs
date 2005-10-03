@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Reconnaitre constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_Reconnaitre::MIL_AutomateMission_ABC_Reconnaitre( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_ABC_Reconnaitre::MIL_AutomateMission_ABC_Reconnaitre( MIL_Au
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Reconnaitre destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_Reconnaitre::~MIL_AutomateMission_ABC_Reconnaitre()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_ABC_Reconnaitre::InitializeDIA( const MIL_AutomateMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Reconnaitre::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Reconnaitre::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Reconnaitre::Initialize( const 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Reconnaitre::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_ABC_Reconnaitre::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Reconnaitre::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Reconnaitre::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_ABC_Reconnaitre::Serialize( ASN1T_MsgAutomateOrder& asn
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_Reconnaitre::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Reconnaitre::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -28,7 +28,7 @@ int MIL_AutomateMission_ALAT_Attaquer::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Attaquer constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Attaquer::MIL_AutomateMission_ALAT_Attaquer( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -39,7 +39,7 @@ MIL_AutomateMission_ALAT_Attaquer::MIL_AutomateMission_ALAT_Attaquer( MIL_Automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Attaquer destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Attaquer::~MIL_AutomateMission_ALAT_Attaquer()
 {
@@ -69,7 +69,7 @@ void MIL_AutomateMission_ALAT_Attaquer::InitializeDIA( const MIL_AutomateMission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Attaquer::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Attaquer::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -96,7 +96,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Attaquer::Initialize( const AS
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Attaquer::Terminate()
 {
@@ -111,7 +111,7 @@ void MIL_AutomateMission_ALAT_Attaquer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Attaquer::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Attaquer::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -132,7 +132,7 @@ void MIL_AutomateMission_ALAT_Attaquer::Serialize( ASN1T_MsgAutomateOrder& asnMs
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Attaquer::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Attaquer::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

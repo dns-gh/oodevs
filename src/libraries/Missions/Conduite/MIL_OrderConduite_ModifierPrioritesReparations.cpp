@@ -23,7 +23,7 @@ int MIL_OrderConduite_ModifierPrioritesReparations::nDIAOrderConduiteModifierPri
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierPrioritesReparations::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_ModifierPrioritesReparations::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_ModifierPrioritesReparations::InitializeDIA( const MIL_Or
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierPrioritesReparations constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ModifierPrioritesReparations::MIL_OrderConduite_ModifierPrioritesReparations( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_ModifierPrioritesReparations::MIL_OrderConduite_ModifierPriori
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierPrioritesReparations destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_ModifierPrioritesReparations::~MIL_OrderConduite_ModifierPrioritesReparations()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_ModifierPrioritesReparations::~MIL_OrderConduite_ModifierPrior
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierPrioritesReparations::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierPrioritesReparations::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierPrioritesReparations::Initial
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_ModifierPrioritesReparations::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_ModifierPrioritesReparations::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

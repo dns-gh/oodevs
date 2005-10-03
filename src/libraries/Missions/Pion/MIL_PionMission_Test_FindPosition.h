@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:34 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //*****************************************************************************
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //*****************************************************************************
 class MIL_PionMission_Test_FindPosition: public MIL_PionMission_ABC
 {

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:35 $
@@ -16,7 +16,7 @@
 #include "TER/TER_Localisation.h"
 
 //=============================================================================
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //=============================================================================
 class MIL_AutomateMission_ASA_DefendreSite : public MIL_AutomateMission_ABC
 {

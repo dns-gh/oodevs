@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_MILICE_PrendreEtTenir::nDIAPointAPrendreIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_MILICE_PrendreEtTenir::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_MILICE_PrendreEtTenir::InitializeDIA( const MIL_PionMission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_MILICE_PrendreEtTenir::MIL_PionMission_MILICE_PrendreEtTenir( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_MILICE_PrendreEtTenir::MIL_PionMission_MILICE_PrendreEtTenir( MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_MILICE_PrendreEtTenir::~MIL_PionMission_MILICE_PrendreEtTenir()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_MILICE_PrendreEtTenir::~MIL_PionMission_MILICE_PrendreEtTenir()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_MILICE_PrendreEtTenir::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_MILICE_PrendreEtTenir::Initialize( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( const MIL_AutomateMissio
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( MIL_PionMission_ABC& mis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_PrendreEtTenir::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_MILICE_PrendreEtTenir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_PrendreEtTenir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_MILICE_PrendreEtTenir::Serialize( ASN1T_MsgPionOrder& asnMs
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_MILICE_PrendreEtTenir::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_PrendreEtTenir::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

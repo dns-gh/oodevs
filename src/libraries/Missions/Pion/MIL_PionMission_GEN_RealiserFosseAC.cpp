@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -27,7 +27,7 @@ int MIL_PionMission_GEN_RealiserFosseAC::nDIATypeIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RealiserFosseAC::InitializeDIA( const MIL_PionMissionType& type )
@@ -42,7 +42,7 @@ void MIL_PionMission_GEN_RealiserFosseAC::InitializeDIA( const MIL_PionMissionTy
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserFosseAC::MIL_PionMission_GEN_RealiserFosseAC( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -53,7 +53,7 @@ MIL_PionMission_GEN_RealiserFosseAC::MIL_PionMission_GEN_RealiserFosseAC( MIL_Ag
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserFosseAC::~MIL_PionMission_GEN_RealiserFosseAC()
 {
@@ -63,7 +63,7 @@ MIL_PionMission_GEN_RealiserFosseAC::~MIL_PionMission_GEN_RealiserFosseAC()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserFosseAC::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -85,7 +85,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserFosseAC::Initialize( const 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserFosseAC::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -101,7 +101,7 @@ bool MIL_PionMission_GEN_RealiserFosseAC::Initialize( const MIL_AutomateMission_
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserFosseAC::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -118,7 +118,7 @@ bool MIL_PionMission_GEN_RealiserFosseAC::Initialize( MIL_PionMission_ABC& missi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserFosseAC::Terminate()
 {
@@ -133,7 +133,7 @@ void MIL_PionMission_GEN_RealiserFosseAC::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserFosseAC::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -151,7 +151,7 @@ void MIL_PionMission_GEN_RealiserFosseAC::Serialize( ASN1T_MsgPionOrder& asnMsg 
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserFosseAC::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserFosseAC::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

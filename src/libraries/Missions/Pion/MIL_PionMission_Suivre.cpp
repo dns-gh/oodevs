@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_Suivre::nDIAUniteASuivreIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_Suivre::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_Suivre::InitializeDIA( const MIL_PionMissionType& type )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_Suivre::MIL_PionMission_Suivre( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_Suivre::MIL_PionMission_Suivre( MIL_AgentPion& pion, const MIL_P
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_Suivre::~MIL_PionMission_Suivre()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_Suivre::~MIL_PionMission_Suivre()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_Suivre::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Suivre::Initialize( const ASN1T_MsgPion
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_Suivre::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_Suivre::Initialize( const MIL_AutomateMission_ABC& parentMi
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_Suivre::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_Suivre::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Suivre::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_Suivre::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Suivre::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_Suivre::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_Suivre::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Suivre::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

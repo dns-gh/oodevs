@@ -23,7 +23,7 @@ int MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::nDIAOrderConduiteAut
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -36,7 +36,7 @@ void MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::InitializeDIA( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ReconnaitreZoneImplantation constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::MIL_OrderConduite_Automate_ReconnaitreZoneImplantation( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -47,7 +47,7 @@ MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::MIL_OrderConduite_Automa
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ReconnaitreZoneImplantation destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::~MIL_OrderConduite_Automate_ReconnaitreZoneImplantation()
 {
@@ -60,7 +60,7 @@ MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::~MIL_OrderConduite_Autom
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ReconnaitreZoneImplantation:
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Automate_ReconnaitreZoneImplantation::Initialize( DIA_Parameters& /*diaParams*/, uint /*nCurDIAParamIdx*/ )
 {

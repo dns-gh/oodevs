@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_INF_Defendre::nDIAPreparerTerrainIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_INF_Defendre::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_INF_Defendre::InitializeDIA( const MIL_PionMissionType& typ
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_Defendre::MIL_PionMission_INF_Defendre( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_INF_Defendre::MIL_PionMission_INF_Defendre( MIL_AgentPion& pion,
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_INF_Defendre::~MIL_PionMission_INF_Defendre()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_INF_Defendre::~MIL_PionMission_INF_Defendre()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Defendre::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Defendre::Initialize( const ASN1T_M
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_INF_Defendre::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_INF_Defendre::Initialize( const MIL_AutomateMission_ABC& pa
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_INF_Defendre::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_INF_Defendre::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Defendre::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_INF_Defendre::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Defendre::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_INF_Defendre::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_INF_Defendre::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Defendre::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

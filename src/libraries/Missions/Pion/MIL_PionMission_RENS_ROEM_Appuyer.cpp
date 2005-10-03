@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_RENS_ROEM_Appuyer::nDIAPointRegroupementIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_RENS_ROEM_Appuyer::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_RENS_ROEM_Appuyer::InitializeDIA( const MIL_PionMissionType
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_RENS_ROEM_Appuyer::MIL_PionMission_RENS_ROEM_Appuyer( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_RENS_ROEM_Appuyer::MIL_PionMission_RENS_ROEM_Appuyer( MIL_AgentP
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_RENS_ROEM_Appuyer::~MIL_PionMission_RENS_ROEM_Appuyer()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_RENS_ROEM_Appuyer::~MIL_PionMission_RENS_ROEM_Appuyer()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const AS
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const MIL_AutomateMission_AB
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( MIL_PionMission_ABC& mission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROEM_Appuyer::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_RENS_ROEM_Appuyer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROEM_Appuyer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_RENS_ROEM_Appuyer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_RENS_ROEM_Appuyer::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROEM_Appuyer::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

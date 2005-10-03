@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -22,7 +22,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_EffectuerRaid constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_EffectuerRaid::MIL_AutomateMission_ABC_EffectuerRaid( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -33,7 +33,7 @@ MIL_AutomateMission_ABC_EffectuerRaid::MIL_AutomateMission_ABC_EffectuerRaid( MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_EffectuerRaid destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC_EffectuerRaid::~MIL_AutomateMission_ABC_EffectuerRaid()
 {
@@ -57,7 +57,7 @@ void MIL_AutomateMission_ABC_EffectuerRaid::InitializeDIA( const MIL_AutomateMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_EffectuerRaid::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_EffectuerRaid::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_EffectuerRaid::Initialize( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_EffectuerRaid::Terminate()
 {
@@ -85,7 +85,7 @@ void MIL_AutomateMission_ABC_EffectuerRaid::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_EffectuerRaid::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_EffectuerRaid::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -100,7 +100,7 @@ void MIL_AutomateMission_ABC_EffectuerRaid::Serialize( ASN1T_MsgAutomateOrder& a
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC_EffectuerRaid::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_EffectuerRaid::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

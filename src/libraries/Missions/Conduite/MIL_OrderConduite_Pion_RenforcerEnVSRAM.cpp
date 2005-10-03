@@ -24,7 +24,7 @@ int MIL_OrderConduite_Pion_RenforcerEnVSRAM::nDIANbrAmbulancesIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_RenforcerEnVSRAM::InitializeDIA
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 // static
 void MIL_OrderConduite_Pion_RenforcerEnVSRAM::InitializeDIA( const MIL_OrderConduiteType& type )
@@ -38,7 +38,7 @@ void MIL_OrderConduite_Pion_RenforcerEnVSRAM::InitializeDIA( const MIL_OrderCond
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_RenforcerEnVSRAM constructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_RenforcerEnVSRAM::MIL_OrderConduite_Pion_RenforcerEnVSRAM( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
     : MIL_OrderConduite_ABC( knowledgeGroup, type )
@@ -49,7 +49,7 @@ MIL_OrderConduite_Pion_RenforcerEnVSRAM::MIL_OrderConduite_Pion_RenforcerEnVSRAM
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_RenforcerEnVSRAM destructor
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 //-----------------------------------------------------------------------------
 MIL_OrderConduite_Pion_RenforcerEnVSRAM::~MIL_OrderConduite_Pion_RenforcerEnVSRAM()
 {
@@ -62,7 +62,7 @@ MIL_OrderConduite_Pion_RenforcerEnVSRAM::~MIL_OrderConduite_Pion_RenforcerEnVSRA
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_RenforcerEnVSRAM::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_RenforcerEnVSRAM::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_RenforcerEnVSRAM::Initialize( co
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderConduite_Pion_RenforcerEnVSRAM::Initialize
-// Created: AGR 2005-08-19 - 11:30:56
+// Created: AGR 
 // -----------------------------------------------------------------------------
 void MIL_OrderConduite_Pion_RenforcerEnVSRAM::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {

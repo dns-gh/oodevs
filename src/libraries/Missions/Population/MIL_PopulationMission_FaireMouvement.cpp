@@ -73,7 +73,7 @@ ASN1T_EnumOrderErrorCode MIL_PopulationMission_FaireMouvement::Initialize( const
     return EnumOrderErrorCode::no_error;
 }
 
-
+/*
 // ------------------------------------------------------------------------------
 // Name: MIL_PopulationMission_FaireMouvement::Initialize
 // Created: 
@@ -88,7 +88,7 @@ bool MIL_PopulationMission_FaireMouvement::Initialize( MIL_PopulationMission_ABC
 
     return true;
 }                                                                    
-
+*/
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMission_FaireMouvement::Terminate
 // Created: 
@@ -104,6 +104,7 @@ void MIL_PopulationMission_FaireMouvement::Terminate()
 // NETWORK
 //=============================================================================
 
+/*
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMission_FaireMouvement::Serialize
 // Created: 
@@ -135,3 +136,4 @@ void MIL_PopulationMission_FaireMouvement::CleanAfterSerialization( ASN1T_MsgPop
 
     MIL_PopulationMission_ABC::CleanAfterSerialization( asnMsg );
 }
+*/

@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -26,7 +26,7 @@ int MIL_PionMission_GEN_RealiserPostesTir::nDIAOidObjetPlanifieIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_GEN_RealiserPostesTir::InitializeDIA( const MIL_PionMissionType& type )
@@ -40,7 +40,7 @@ void MIL_PionMission_GEN_RealiserPostesTir::InitializeDIA( const MIL_PionMission
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserPostesTir::MIL_PionMission_GEN_RealiserPostesTir( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -51,7 +51,7 @@ MIL_PionMission_GEN_RealiserPostesTir::MIL_PionMission_GEN_RealiserPostesTir( MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_GEN_RealiserPostesTir::~MIL_PionMission_GEN_RealiserPostesTir()
 {
@@ -61,7 +61,7 @@ MIL_PionMission_GEN_RealiserPostesTir::~MIL_PionMission_GEN_RealiserPostesTir()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserPostesTir::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -81,7 +81,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserPostesTir::Initialize( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -96,7 +96,7 @@ bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( const MIL_AutomateMissio
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -112,7 +112,7 @@ bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( MIL_PionMission_ABC& mis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserPostesTir::Terminate()
 {
@@ -127,7 +127,7 @@ void MIL_PionMission_GEN_RealiserPostesTir::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserPostesTir::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -144,7 +144,7 @@ void MIL_PionMission_GEN_RealiserPostesTir::Serialize( ASN1T_MsgPionOrder& asnMs
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_GEN_RealiserPostesTir::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserPostesTir::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

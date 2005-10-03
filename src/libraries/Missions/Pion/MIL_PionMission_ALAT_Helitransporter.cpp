@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -32,7 +32,7 @@ int MIL_PionMission_ALAT_Helitransporter::nDIAAvecMaterielIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::InitializeDIA
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_Helitransporter::InitializeDIA( const MIL_PionMissionType& type )
@@ -52,7 +52,7 @@ void MIL_PionMission_ALAT_Helitransporter::InitializeDIA( const MIL_PionMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Helitransporter::MIL_PionMission_ALAT_Helitransporter( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -63,7 +63,7 @@ MIL_PionMission_ALAT_Helitransporter::MIL_PionMission_ALAT_Helitransporter( MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_Helitransporter::~MIL_PionMission_ALAT_Helitransporter()
 {
@@ -73,7 +73,7 @@ MIL_PionMission_ALAT_Helitransporter::~MIL_PionMission_ALAT_Helitransporter()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Helitransporter::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -105,7 +105,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Helitransporter::Initialize( const
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Helitransporter::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -126,7 +126,7 @@ bool MIL_PionMission_ALAT_Helitransporter::Initialize( const MIL_AutomateMission
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_Helitransporter::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -148,7 +148,7 @@ bool MIL_PionMission_ALAT_Helitransporter::Initialize( MIL_PionMission_ABC& miss
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Helitransporter::Terminate()
 {
@@ -163,7 +163,7 @@ void MIL_PionMission_ALAT_Helitransporter::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Helitransporter::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -186,7 +186,7 @@ void MIL_PionMission_ALAT_Helitransporter::Serialize( ASN1T_MsgPionOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_Helitransporter::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Helitransporter::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

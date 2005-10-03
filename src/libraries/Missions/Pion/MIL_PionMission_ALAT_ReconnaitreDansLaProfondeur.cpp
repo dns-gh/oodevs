@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -31,7 +31,7 @@ int MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::nDIAZoneIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA( const MIL_PionMissionType& type )
@@ -50,7 +50,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::InitializeDIA( const MIL_
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -61,7 +61,7 @@ MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::MIL_PionMission_ALAT_Reconnait
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::~MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur()
 {
@@ -71,7 +71,7 @@ MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::~MIL_PionMission_ALAT_Reconnai
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -101,7 +101,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -121,7 +121,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_Aut
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -142,7 +142,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
 {
@@ -157,7 +157,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -179,7 +179,7 @@ void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Serialize( ASN1T_MsgPionO
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

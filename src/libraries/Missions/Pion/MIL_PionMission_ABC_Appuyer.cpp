@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: 
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionPion_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 20/10/04 15:41 $
@@ -25,7 +25,7 @@ int MIL_PionMission_ABC_Appuyer::nDIAUniteAAppuyerIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::InitializeDIA
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 // static
 void MIL_PionMission_ABC_Appuyer::InitializeDIA( const MIL_PionMissionType& type )
@@ -38,7 +38,7 @@ void MIL_PionMission_ABC_Appuyer::InitializeDIA( const MIL_PionMissionType& type
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Appuyer::MIL_PionMission_ABC_Appuyer( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
@@ -49,7 +49,7 @@ MIL_PionMission_ABC_Appuyer::MIL_PionMission_ABC_Appuyer( MIL_AgentPion& pion, c
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_PionMission_ABC_Appuyer::~MIL_PionMission_ABC_Appuyer()
 {
@@ -59,7 +59,7 @@ MIL_PionMission_ABC_Appuyer::~MIL_PionMission_ABC_Appuyer()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Appuyer::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Appuyer::Initialize( const ASN1T_Ms
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Appuyer::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
@@ -91,7 +91,7 @@ bool MIL_PionMission_ABC_Appuyer::Initialize( const MIL_AutomateMission_ABC& par
 
 // ------------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 // -----------------------------------------------------------------------------
 bool MIL_PionMission_ABC_Appuyer::Initialize( MIL_PionMission_ABC& missionTmp )
 {
@@ -106,7 +106,7 @@ bool MIL_PionMission_ABC_Appuyer::Initialize( MIL_PionMission_ABC& missionTmp )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Appuyer::Terminate()
 {
@@ -121,7 +121,7 @@ void MIL_PionMission_ABC_Appuyer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Appuyer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
@@ -137,7 +137,7 @@ void MIL_PionMission_ABC_Appuyer::Serialize( ASN1T_MsgPionOrder& asnMsg )
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC_Appuyer::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Appuyer::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {

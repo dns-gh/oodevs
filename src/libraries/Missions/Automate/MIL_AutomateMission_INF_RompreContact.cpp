@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_INF_RompreContact::nDIAZoneRegroupementIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_RompreContact constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_RompreContact::MIL_AutomateMission_INF_RompreContact( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_INF_RompreContact::MIL_AutomateMission_INF_RompreContact( MI
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_RompreContact destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_INF_RompreContact::~MIL_AutomateMission_INF_RompreContact()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_INF_RompreContact::InitializeDIA( const MIL_AutomateMis
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_RompreContact::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RompreContact::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RompreContact::Initialize( cons
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RompreContact::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_INF_RompreContact::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_RompreContact::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RompreContact::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_INF_RompreContact::Serialize( ASN1T_MsgAutomateOrder& a
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_INF_RompreContact::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RompreContact::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

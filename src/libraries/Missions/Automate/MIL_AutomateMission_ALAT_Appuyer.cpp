@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:55 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -31,7 +31,7 @@ int MIL_AutomateMission_ALAT_Appuyer::nDIAAmbianceMissionIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Appuyer constructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Appuyer::MIL_AutomateMission_ALAT_Appuyer( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -42,7 +42,7 @@ MIL_AutomateMission_ALAT_Appuyer::MIL_AutomateMission_ALAT_Appuyer( MIL_Automate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Appuyer destructor
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ALAT_Appuyer::~MIL_AutomateMission_ALAT_Appuyer()
 {
@@ -75,7 +75,7 @@ void MIL_AutomateMission_ALAT_Appuyer::InitializeDIA( const MIL_AutomateMissionT
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Appuyer::Initialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Appuyer::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -108,7 +108,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Appuyer::Initialize( const ASN
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Appuyer::Terminate()
 {
@@ -123,7 +123,7 @@ void MIL_AutomateMission_ALAT_Appuyer::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Appuyer::Serialize
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Appuyer::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -147,7 +147,7 @@ void MIL_AutomateMission_ALAT_Appuyer::Serialize( ASN1T_MsgAutomateOrder& asnMsg
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ALAT_Appuyer::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:55
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Appuyer::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

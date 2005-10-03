@@ -181,6 +181,13 @@
 			<xs:enumeration value="unite contact perdu"/>
 			<xs:enumeration value="objet"/>
 			<xs:enumeration value="objet contact perdu"/>
+			<xs:enumeration value="cr ennemi"/>
+			<xs:enumeration value="cr obstacle"/>
+			<xs:enumeration value="cr NBC"/>
+			<xs:enumeration value="cr situation logistique"/>
+			<xs:enumeration value="cr artillerie"/>
+			<xs:enumeration value="cr mission"/>
+			<xs:enumeration value="cr scipio interne"/>
 			<xs:enumeration value="aucun sous-type"/>
 		</xs:restriction>
 	</xs:simpleType>

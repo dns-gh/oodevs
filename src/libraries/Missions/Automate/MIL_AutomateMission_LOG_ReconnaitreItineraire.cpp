@@ -1,6 +1,6 @@
 // *****************************************************************************
 //
-// $Created: 2005-08-19 - 11:30:56 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_MissionAutomate_Skeleton.cpp $
 // $Author: Nld $
 // $Modtime: 11/03/05 16:36 $
@@ -23,7 +23,7 @@ int MIL_AutomateMission_LOG_ReconnaitreItineraire::nDIAItineraireLogIdx_ = 0 ;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_ReconnaitreItineraire constructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_ReconnaitreItineraire::MIL_AutomateMission_LOG_ReconnaitreItineraire( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
@@ -34,7 +34,7 @@ MIL_AutomateMission_LOG_ReconnaitreItineraire::MIL_AutomateMission_LOG_Reconnait
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_ReconnaitreItineraire destructor
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_LOG_ReconnaitreItineraire::~MIL_AutomateMission_LOG_ReconnaitreItineraire()
 {
@@ -59,7 +59,7 @@ void MIL_AutomateMission_LOG_ReconnaitreItineraire::InitializeDIA( const MIL_Aut
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_ReconnaitreItineraire::Initialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_ReconnaitreItineraire::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_ReconnaitreItineraire::Initiali
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Terminate
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_ReconnaitreItineraire::Terminate()
 {
@@ -91,7 +91,7 @@ void MIL_AutomateMission_LOG_ReconnaitreItineraire::Terminate()
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_ReconnaitreItineraire::Serialize
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_ReconnaitreItineraire::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
@@ -107,7 +107,7 @@ void MIL_AutomateMission_LOG_ReconnaitreItineraire::Serialize( ASN1T_MsgAutomate
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_LOG_ReconnaitreItineraire::CleanAfterSerialization
-// Created: 2005-08-19 - 11:30:56
+// Created: 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_ReconnaitreItineraire::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {

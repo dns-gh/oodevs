@@ -540,6 +540,8 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
     when updated:
     {
         behavior Dumbass();
+        DEC_Debug( "Modifying Elongation factor" );
+        DEC_Elongation( 2.0 );
     
         if( DIA_ModuleBegins() )        
         {
