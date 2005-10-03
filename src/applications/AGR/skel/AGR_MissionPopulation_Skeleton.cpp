@@ -67,7 +67,7 @@ $InitMembersFromAsn$
     return EnumOrderErrorCode::no_error;
 }
 
-
+/*
 // ------------------------------------------------------------------------------
 // Name: MIL_PopulationMission_$MissionName$::Initialize
 // Created: 
@@ -81,7 +81,7 @@ bool MIL_PopulationMission_$MissionName$::Initialize( MIL_PopulationMission_ABC&
 $InitMemberFromMission$
     return true;
 }                                                                    
-
+*/
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMission_$MissionName$::Terminate
 // Created: 
@@ -96,6 +96,7 @@ $ResetMembers$
 // NETWORK
 //=============================================================================
 
+/*
 //-----------------------------------------------------------------------------
 // Name: MIL_PopulationMission_$MissionName$::Serialize
 // Created: 
@@ -125,3 +126,4 @@ $CleanSerializedMembers$
 
     MIL_PopulationMission_ABC::CleanAfterSerialization( asnMsg );
 }
+*/
