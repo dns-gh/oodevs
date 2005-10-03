@@ -85,7 +85,8 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( MIL_InputArchive& archive )
     if ( !archive.BeginList( "PatchsLocaux", MIL_InputArchive::eNothing ) )
         return;
 
-    while ( archive.NextListElement() )
+    assert( pRawData_ );
+    while( archive.NextListElement() )
     {
         archive.Section( "PatchLocal" );
 

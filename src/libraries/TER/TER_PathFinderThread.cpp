@@ -24,12 +24,13 @@
 #include "pathfind/TerrainRule_ABC.h"
 #include "pathfind/Node.h"
 #include "pathfind/SpatialContainerTraits.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT/MT_Archive/MT_FlatBinaryInputArchive.h"
 #include "MT/MT_Archive/MT_FlatBinaryOutputArchive.h"
 #include "MT/MT_Logger/MT_LogManager.h"
 #include "MT/MT_Logger/MT_LogDefines.h"
 #include "MT/MT_IO/MT_Dir.h"
-
+#include "MT/MT_IO/MT_FormatString.h"
 
 using namespace pathfind;
 
@@ -42,9 +43,12 @@ TER_PathFinderThread::TER_PathFinderThread( const std::string& strGraphArchive, 
     , pPathfinder_( 0 )
 {
     MT_FlatBinaryInputArchive graph, nodes, links;
-    graph.Open( strGraphArchive );
-    nodes.Open( strNodeArchive );
-    links.Open( strLinkArchive );
+    if( !graph.Open( strGraphArchive ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strGraphArchive.c_str() ) );
+    if( !nodes.Open( strNodeArchive ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strNodeArchive.c_str() ) );
+    if( !links.Open( strLinkArchive ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strLinkArchive.c_str() ) );
     pPathfinder_ = new TerrainPathfinder( graph, nodes, links );
     pPathfinder_->SetGraphConfiguration( 10, 1000, 10000 ); // precision, minpicking, maxpicking
     Start();

@@ -100,6 +100,7 @@ PHY_RawVisionData::~PHY_RawVisionData()
 //-----------------------------------------------------------------------------
 void PHY_RawVisionData::RegisterMeteoPatch( const MT_Vector2D& upLeft, const MT_Vector2D& downRight, PHY_Meteo* pMeteo )
 {
+    assert( ppCells_ );
     uint nXEnd = std::min( GetCol( downRight.rX_ ), nNbrCol_ - 1 );
     uint nYEnd = std::min( GetRow( upLeft.rY_ ),    nNbrRow_ - 1 );
     uint nXBeg = std::min( GetCol( upLeft.rX_ ),    nNbrCol_ - 1 );
@@ -212,13 +213,13 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 {
     MT_FlatBinaryInputArchive archive;
     if ( !archive.Open( strFile ) )
-        return false;
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
 
     if (   !archive.ReadField( "rCellSize_", rCellSize_ )
         || !archive.ReadField( "nNbrRow_"  , nNbrRow_ )
         || !archive.ReadField( "nNbrCol_"  , nNbrCol_ )
        )
-       return false;
+       throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
 
     assert( !ppCells_ );
     ppCells_ = new sCell*[ nNbrCol_ ];
@@ -233,7 +234,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
             pTmp->pMeteo   = 0;
             pTmp->pEffects = 0;
             if ( !archive.ReadData( 4, (char*)pTmp++ ) )
-                return false;
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
     }
 
