@@ -82,6 +82,19 @@ void MIL_Population::UpdateDecision()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::Clean
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_Population::Clean()
+{
+    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        (**itConcentration).Clean();
+
+    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        (**itFlow).Clean();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::Move
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------
@@ -111,6 +124,14 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& con
     return *pFlow;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetMaxSpeed
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetMaxSpeed() const
+{
+    return type_.GetMaxSpeed();
+}
 
 // =============================================================================
 // NETWORK
@@ -152,3 +173,6 @@ void MIL_Population::SendFullState() const
     for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).SendFullState();
 }
+
+
+

@@ -82,7 +82,7 @@ private:
 
     //! @name Helpers
     //@{
-    MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType );
+    MT_Float GetCost    ( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     MT_Float TerrainCost( const TerrainData& data ) const;
     //@}
 

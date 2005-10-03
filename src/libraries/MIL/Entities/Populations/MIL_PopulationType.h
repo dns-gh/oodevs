@@ -39,6 +39,7 @@ public:
           uint                                 GetID                  () const;
           MT_Float                             GetConcentrationDensity() const;
           MT_Float                             GetDefaultFluxDensity  () const;
+          MT_Float                             GetMaxSpeed            () const;
     const DEC_ModelPopulation&                 GetModel               () const;
           DIA_FunctionTable< MIL_Population >& GetFunctionTable       () const;
     //@}
@@ -69,6 +70,7 @@ private:
           uint                                 nID_;
           MT_Float                             rConcentrationDensity_;
           MT_Float                             rDefaultFluxDensity_;
+          MT_Float                             rMaxSpeed_;
     const DEC_ModelPopulation*                 pModel_;
           DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;
 

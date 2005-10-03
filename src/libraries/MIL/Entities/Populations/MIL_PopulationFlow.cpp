@@ -20,6 +20,9 @@
 #include "MIL_PopulationFlow.h"
 
 #include "MIL_Population.h"
+#include "MIL_PopulationConcentration.h"
+#include "Decision/Path/Population/DEC_Population_Path.h"
+#include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Network/NET_ASN_Messages.h"
 
 MIL_MOSIDManager MIL_PopulationFlow::idManager_;
@@ -35,7 +38,9 @@ MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_Po
     , pDestConcentration_  ( 0 )
     , destination_         ( )
     , pCurrentPath_        ( 0 )
-    , bHasMoved_           ( false )
+    , headPosition_        ( sourceConcentration.GetPosition() )
+    , tailPosition_        ( sourceConcentration.GetPosition() )
+    , direction_           ( 0., 1. )
 {
 }
 
@@ -58,9 +63,6 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
 {
-    /*if( bHasMoved_ ) 
-        return;
-
     if( destination != destination_ )
     {
         destination_ = destination;
@@ -77,20 +79,54 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pCurrentPath_ );
     }
 
-    DEC_Agent_Path::E_State nPathState = path.GetState();
+
+
+    assert( pCurrentPath_ );
+    PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
+
+  /*  DEC_Agent_Path::E_State nPathState = path.GetState();
     if( nPathState == DEC_Agent_Path::eInvalid || nPathState == DEC_Agent_Path::eImpossible || nPathState == DEC_Agent_Path::eCanceled )
         return;
     
     bHasMoved_ = true;
     if( nPathState == DEC_Agent_Path::eComputing )
         return;
-
-
-
-    */
-
+*/
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ApplyMove
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+#include "Network/NET_AS_MOSServerMsgMgr.h"
+void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed )
+{
+    headPosition_ = position;
+    direction_    = direction;
+
+//$$$$ DEBUG
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << (uint32)6000025;
+    dinMsg << (uint32)1;
+    dinMsg << position;
+    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+//$$$$ DEBUG
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetMaxSpeed
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetMaxSpeed() const
+{
+    return population_.GetMaxSpeed();
+}
 
 // =============================================================================
 // NETWORK

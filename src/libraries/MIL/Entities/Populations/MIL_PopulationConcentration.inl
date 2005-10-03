@@ -25,3 +25,23 @@
 //{
 //    nNbrHumans_ += nNbr;
 //}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetPosition
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MIL_PopulationConcentration::GetPosition() const
+{
+    return position_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::Clean
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationConcentration::Clean()
+{
+    // NOTHING
+}

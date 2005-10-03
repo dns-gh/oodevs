@@ -50,13 +50,23 @@ public:
           DEC_PopulationDecision&     GetDecision    () const;
     const MIL_PopulationOrderManager& GetOrderManager() const;
           MIL_PopulationOrderManager& GetOrderManager();
+          MT_Float                    GetMaxSpeed    () const;
     //@}
 
     //! @name Operations
     //@{
     void UpdateDecision();
-    void Move( const MT_Vector2D& destination );
 
+    void Clean();
+    //@}
+
+    //! @name Actions
+    //@{
+    void Move( const MT_Vector2D& destination );
+    //@}
+
+    //! @name Tools
+    //@{
     MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );
     //@}
 

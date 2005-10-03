@@ -41,10 +41,19 @@ public:
 
     //! @name Operations
     //@{
+    void Clean();
+    //@}
+
+    //! @name Actions
+    //@{
 //    void PushHumans( uint nNbr );
 //    void PullHumans( uint nNbr );
-
     void Move( const MT_Vector2D& destination );
+    //@}
+
+    //! @name Accessors
+    //@{
+    const MT_Vector2D& GetPosition() const;
     //@}
 
     //! @name Network

@@ -5,6 +5,7 @@
         <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>1</DensiteConcentration>
         <DensiteNominaleDeplacement>1</DensiteNominaleDeplacement>
+        <VitesseDeplacement>12</VitesseDeplacement>
     </Population>
     
     <Population nom="test2">
@@ -12,5 +13,6 @@
         <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>2</DensiteConcentration>
         <DensiteNominaleDeplacement>2</DensiteNominaleDeplacement>
+        <VitesseDeplacement>24</VitesseDeplacement>
     </Population>
 </Populations>

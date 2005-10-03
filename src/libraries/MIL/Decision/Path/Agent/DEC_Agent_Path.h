@@ -16,22 +16,16 @@
 
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
-
 #include "Decision/Path/DEC_PathResult.h"
 #include "Decision/Path/DEC_PathType.h"
-
 #include "Entities/Agents/Units/PHY_Speeds.h"
-#include "Knowledge/DEC_Knowledge_Def.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Network/NET_ASN_Types.h"
 #include "Tools/MT_Profiler.h"
 
 class DEC_Rep_PathPoint;
-class DEC_PathPoint;
 class MIL_Lima;
 class MIL_AgentPion;
-
-// $$$$ NLD 2004-01-28 - Cette classe est une $$JVT 2004-11-09 grosse$$ merde
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -39,8 +33,6 @@ class MIL_AgentPion;
 //*****************************************************************************
 class DEC_Agent_Path : public DEC_PathResult
 {
-    friend class DEC_PathFind_ComputationThread;
-
 public:
     //! @name Types
     //@{   

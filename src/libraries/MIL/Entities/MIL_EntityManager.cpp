@@ -778,6 +778,9 @@ void MIL_EntityManager::Clean()
 
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->Clean();
+
+    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        itPopulation->second->Clean();
 }
 
 // =============================================================================

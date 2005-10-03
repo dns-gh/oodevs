@@ -76,13 +76,15 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     : strName_              ( strName )
     , rConcentrationDensity_( 0. )
     , rDefaultFluxDensity_  ( 0. )
+    , rMaxSpeed_            ( 0. )
     , pModel_               ( 0 )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     archive.ReadField( "MosID", nID_ );
     archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_ );
     archive.ReadField( "DensiteNominaleDeplacement", rDefaultFluxDensity_   );
-
+    archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_             );
+    
     std::string strModel;
     archive.ReadField( "ModeleDecisionnel", strModel );
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );

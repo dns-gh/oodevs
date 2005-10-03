@@ -31,7 +31,8 @@
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
 DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const PHY_Speeds& speeds, const MT_Vector2D& from, const MT_Vector2D& to, bool bShort )
-    : world_                     ( TER_World::GetWorld() )
+    : TerrainRule_ABC            ()
+    , world_                     ( TER_World::GetWorld() )
     , altitudeData_              ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , speeds_                    ( speeds )
     , pFuseau_                   ( 0 ) 
@@ -191,7 +192,7 @@ float DEC_Agent_PathfinderRule::GetCost( const geometry::Point2f& from, const ge
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType )
+MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
     if( ! world_.IsValidPosition( to ) )
         return -1.;

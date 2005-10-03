@@ -14,22 +14,10 @@
 
 #include "MIL.h"
 
-//#include "DEC_Path_KnowledgeAgent.h"
-//#include "DEC_Path_KnowledgeObject.h"
-//
 #include "Decision/Path/DEC_Path_ABC.h"
-//#include "Decision/Path/DEC_PathType.h"
-//
-//#include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
-//#include "Entities/Orders/MIL_Fuseau.h"
-//#include "Network/NET_ASN_Types.h"
-//#include "Tools/MT_Profiler.h"
 
-//class DEC_Rep_PathPoint;
 class DEC_PathPoint;
-//class MIL_Lima;
-//class MIL_AgentPion;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -56,12 +44,11 @@ public:
     
     //! @name Tools
     //@{
-          CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
-          MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest ) const;
-          MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const;
-          bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
-
-    virtual void            InsertDecPoints              () = 0;
+            CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
+            MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest ) const;
+            MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const;
+            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
+    virtual void              InsertDecPoints             () = 0;
     //@}
 
     //! @name Network

@@ -14,58 +14,38 @@
 
 #include "MIL.h"
 
-#include "Decision/Path/DEC_Path_ABC.h"
+#include "Decision/Path/DEC_PathResult.h"
+#include "Tools/MT_Profiler.h"
 
-class DEC_PathPoint;
-class MIL_Population;
+class MIL_PopulationFlow;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
 //*****************************************************************************
-class DEC_Population_Path : public DEC_Path_ABC
+class DEC_Population_Path : public DEC_PathResult
 {
-    friend class DEC_PathFind_ComputationThread;
-
 public:
-    //! @name Types
-    //@{   
-    typedef std::list< DEC_PathPoint* >                 T_PathPointList;
-    typedef T_PathPointList::iterator                   IT_PathPointList;
-    typedef T_PathPointList::const_iterator             CIT_PathPointList;    
-    //@}
-
-public:
-     DEC_Population_Path( const MIL_Population& queryMaker, const MT_Vector2D& vPosEnd );
+     DEC_Population_Path( const MIL_PopulationFlow& flow, const MT_Vector2D& destination );
     ~DEC_Population_Path();
 
     //! @name Path calculation
     //@{
     virtual void Execute( TerrainPathfinder& pathfind );
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     //@}
 
 private:
-    //! @name Init
-    //@{
-    void Initialize( const T_PointVector& pathPoints );
-    //@}
+    DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
 
     //! @name Tools
     //@{
-    virtual void NotifySectionEnded();
+            void Initialize     ( const T_PointVector& pathPoints );
+    virtual void InsertDecPoints();
     //@}
-
-    //! @name Operators
-    //@{
-    DEC_Population_Path& operator=( const DEC_Population_Path& rhs );
-    //@}
-    
+   
 private:   
-    const MIL_Population& queryMaker_;
-          MT_Profiler     profiler_;   
-          bool            bSectionJustEnded_;
-          T_PathPointList resultList_;
+    const MIL_PopulationFlow& flow_;
+          MT_Profiler         profiler_;   
 };
 
 #include "DEC_Population_Path.inl"
