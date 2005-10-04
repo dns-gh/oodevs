@@ -43,3 +43,11 @@ uint MOS_PopulationFlux::GetDeadHumans()
 	return nDeadHumans_;
 }
 
+//// -----------------------------------------------------------------------------
+//// Name: std::string	MOS_PopulationFlux::GetStringAttitude
+//// Created: HME 2005-10-04
+//// -----------------------------------------------------------------------------
+//std::string	MOS_PopulationFlux::GetStringAttitude()
+//{
+//	return std::string("");
+//}

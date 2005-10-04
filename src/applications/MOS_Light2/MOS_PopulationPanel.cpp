@@ -44,6 +44,12 @@ MOS_PopulationPanel::MOS_PopulationPanel(  QWidget* pParent )
     new QLabel( tr( "Attitude:" ), pInfoGroupBox );
     pAttitudeLabel_ = new QLabel( pInfoGroupBox );
 
+	pPartsListView_ = new QListView( pInfoGroupBox );
+	pPartsListView_->addColumn( tr( "Morceau" ) );
+    pPartsListView_->addColumn( tr( "Hommes vivants" ) );
+	pPartsListView_->addColumn( tr( "Hommes morts" ) );
+    pPartsListView_->addColumn( tr( "attitude" ) );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -92,10 +98,18 @@ void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
 
     pNameLabel_->setText( (population.GetName()).c_str() );
 
-    pLivingLabel_->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
+	pLivingLabel_->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
 
     pDeadLabel_->setText( QString( "%1" ).arg( population.GetDeadHumans() )  );
 
     pAttitudeLabel_->setText( "" );
+
+	for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
+		new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
+			, QString( "morceau" )
+			, QString( "%1" ).arg( (*it)->GetLivingHumans() )
+			, QString( "%1" ).arg( (*it)->GetDeadHumans() ) 
+			, QString( "" ) );
+
 
 }

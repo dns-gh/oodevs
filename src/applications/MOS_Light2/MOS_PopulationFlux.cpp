@@ -14,6 +14,7 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationFlux.h"
 
+#include "MOS_PopulationPart_ABC.h"
 #include "MOS_App.h"
 #include "MOS_World.h"
 
@@ -23,7 +24,8 @@
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 MOS_PopulationFlux::MOS_PopulationFlux( uint id, MOS_Population* parent )
-:	parent_			( parent )
+: MOS_PopulationPart_ABC()	
+, parent_			( parent )
 ,	nID_			( id )
 , HasQueue			( false )
 , HasTete			( false )

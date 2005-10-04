@@ -42,3 +42,12 @@ uint MOS_PopulationConcentration::GetDeadHumans()
 {
 	return nDeadHumans_;
 }
+
+//// -----------------------------------------------------------------------------
+//// Name: std::string	MOS_PopulationConcentration::GetStringAttitude
+//// Created: HME 2005-10-04
+//// -----------------------------------------------------------------------------
+//std::string	MOS_PopulationConcentration::GetStringAttitude()
+//{
+//	return std::string("");
+//}

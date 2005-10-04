@@ -14,6 +14,7 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationConcentration.h"
 
+#include "MOS_PopulationPart_ABC.h"
 #include "MOS_App.h"
 #include "MOS_World.h"
 
@@ -22,7 +23,8 @@
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 MOS_PopulationConcentration::MOS_PopulationConcentration( uint id, MOS_Population* parent )
-: 	parent_			( parent )
+: 	MOS_PopulationPart_ABC()	
+,	parent_			( parent )
 ,	nID_			( id )
 ,	center_			( MT_Vector2D( 0, 0 ) )
 ,   HasAttitude		( false )

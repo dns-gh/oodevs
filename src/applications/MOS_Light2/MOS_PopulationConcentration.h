@@ -16,8 +16,10 @@
 
 #include "MOS_Types.h"
 #include "MOS_ASN_Types.h"
+#include "MOS_PopulationPart_ABC.h"
 
 class MOS_Population;
+
 
 // =============================================================================
 /** @class  MOS_PopulationConcentration
@@ -29,7 +31,7 @@ class MOS_Population;
 */
 // Created: HME 2005-09-29
 // =============================================================================
-class MOS_PopulationConcentration
+class MOS_PopulationConcentration : public MOS_PopulationPart_ABC
 {
     friend class MOS_GLTool;
 public:
@@ -49,6 +51,7 @@ public:
 	const MT_Vector2D&	GetPos();
 	uint				GetLivingHumans();
 	uint				GetDeadHumans();
+	//virtual std::string			GetStringAttitude();
     //@}
 
     bool HasAttitude;

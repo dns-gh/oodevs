@@ -50,6 +50,7 @@ private:
     QLabel*    pLivingLabel_;
     QLabel*    pDeadLabel_;
     QLabel*    pAttitudeLabel_;
+	QListView* pPartsListView_;
 };
 
 
