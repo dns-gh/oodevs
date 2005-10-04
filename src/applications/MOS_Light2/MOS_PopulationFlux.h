@@ -14,8 +14,6 @@
 #   pragma interface
 #endif
 
-#include "MOS_Types.h"
-#include "MOS_ASN_Types.h"
 #include "MOS_PopulationPart_ABC.h"
 
 class MOS_Population;
@@ -51,7 +49,9 @@ public:
 	const MT_Vector2D& GetPos();
 	uint				GetLivingHumans();
 	uint				GetDeadHumans();
-	//virtual std::string			GetStringAttitude();
+	uint				GetID();
+	std::string			GetName();
+	std::string GetStringAttitude();
     //@}
 
 	bool HasQueue;

@@ -43,11 +43,47 @@ uint MOS_PopulationConcentration::GetDeadHumans()
 	return nDeadHumans_;
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: std::string	MOS_PopulationConcentration::GetStringAttitude
-//// Created: HME 2005-10-04
-//// -----------------------------------------------------------------------------
-//std::string	MOS_PopulationConcentration::GetStringAttitude()
-//{
-//	return std::string("");
-//}
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationConcentration::GetID
+/** @return 
+*/
+// Created: HME 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+uint MOS_PopulationConcentration::GetID()
+{
+	return nID_;
+}
+
+
+
+// -----------------------------------------------------------------------------
+// Name: std::string	MOS_PopulationConcentration::GetName
+// Created: HME 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+std::string	MOS_PopulationConcentration::GetName()
+{
+	return std::string( "concentration" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::string	MOS_PopulationConcentration::GetStringAttitude
+// Created: HME 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+std::string	MOS_PopulationConcentration::GetStringAttitude()
+{
+	switch( attitude_ ) 
+	{
+	case eCalme:
+		return std::string("Calme");
+	case eAgitee:
+		return std::string("Agitée");
+	case eExcitee:
+		return std::string("Excitée");
+	case eAgressive:
+		return std::string("Agressive");
+	}
+
+}

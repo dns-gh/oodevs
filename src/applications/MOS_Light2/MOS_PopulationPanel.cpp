@@ -106,10 +106,10 @@ void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
 
 	for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
 		new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
-			, QString( "morceau" )
+			, QString( (*it)->GetName().c_str() )
 			, QString( "%1" ).arg( (*it)->GetLivingHumans() )
 			, QString( "%1" ).arg( (*it)->GetDeadHumans() ) 
-			, QString( "" ) );
+			, QString( (*it)->GetStringAttitude().c_str() ) );
 
 
 }
