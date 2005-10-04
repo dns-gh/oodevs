@@ -7,13 +7,3 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
-#include "MOS_Light2_pch.h"
-#include "MOS_PopulationPart.h"
-
-
-using namespace MOS;
-
