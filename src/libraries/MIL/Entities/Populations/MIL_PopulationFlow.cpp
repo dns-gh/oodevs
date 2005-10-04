@@ -21,9 +21,13 @@
 
 #include "MIL_Population.h"
 #include "MIL_PopulationConcentration.h"
+#include "MIL_PopulationAttitude.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
+#include "Decision/Path/DEC_PathPoint.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Tools/MIL_Tools.h"
 
 MIL_MOSIDManager MIL_PopulationFlow::idManager_;
 
@@ -36,12 +40,22 @@ MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_Po
     , nID_                 ( idManager_.GetFreeSimID() )
     , pSourceConcentration_( &sourceConcentration )
     , pDestConcentration_  ( 0 )
+    , pAttitude_           ( &sourceConcentration.GetAttitude() )
     , destination_         ( )
     , pCurrentPath_        ( 0 )
-    , headPosition_        ( sourceConcentration.GetPosition() )
-    , tailPosition_        ( sourceConcentration.GetPosition() )
+    , flowShape_           ( 2, sourceConcentration.GetPosition() )
     , direction_           ( 0., 1. )
+    , rSpeed_              ( 0. )
+    , rNbrAliveHumans_     ( 0. )
+    , rNbrDeadHumans_      ( 0. )
+    , bPathUpdated_        ( true )
+    , bFlowShapeUpdated_   ( true ) 
+    , bDirectionUpdated_   ( true )
+    , bSpeedUpdated_       ( true )
+    , bHumansUpdated_      ( true )
+    , bAttitudeUpdated_    ( true )
 {
+    assert( pAttitude_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,40 +93,122 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pCurrentPath_ );
     }
 
-
-
     assert( pCurrentPath_ );
     PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
+}
 
-  /*  DEC_Agent_Path::E_State nPathState = path.GetState();
-    if( nPathState == DEC_Agent_Path::eInvalid || nPathState == DEC_Agent_Path::eImpossible || nPathState == DEC_Agent_Path::eCanceled )
-        return;
-    
-    bHasMoved_ = true;
-    if( nPathState == DEC_Agent_Path::eComputing )
-        return;
-*/
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyMovingOnPathPoint
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
+{
+    // Head position
+    assert( !flowShape_.empty() );
+    IT_PointList itTmp = flowShape_.end();
+    -- itTmp;
+    flowShape_.insert( itTmp, point.GetPos() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ApplyMove
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-#include "Network/NET_AS_MOSServerMsgMgr.h"
-void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed )
+void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
 {
-    headPosition_ = position;
-    direction_    = direction;
+    direction_ = direction;
+    rSpeed_    = rSpeed;
 
-//$$$$ DEBUG
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)6000025;
-    dinMsg << (uint32)1;
-    dinMsg << position;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
-//$$$$ DEBUG
+    assert( !flowShape_.empty() );
+    flowShape_.back() = position; 
+
+    bFlowShapeUpdated_ = true;
+    bDirectionUpdated_ = true;
+    bSpeedUpdated_     = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UpdateTailPosition
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
+{
+    bFlowShapeUpdated_ =  true;
+
+    /////// $$ A NETTOYER
+    MT_Vector2D  vCur   = *flowShape_.begin();
+    IT_PointList itNext = flowShape_.begin();
+    ++itNext;
+
+    MT_Vector2D vNext = *itNext;
+    MT_Vector2D vDir  = vNext - vCur;
+    MT_Float    rDist = rWalkedDistance;
+
+    MT_Float rDirLength = vDir.Magnitude();
+    if( rDirLength )
+        vDir /= rDirLength;
+
+    while( 1 )
+    {
+        if( rDist < rDirLength )
+        {
+            vCur = vCur + ( vDir * rDist );
+
+            IT_PointList itStart = flowShape_.begin();
+            ++ itStart;
+            flowShape_.erase ( itStart, itNext );
+            flowShape_.front() = vCur;
+            break;
+        }
+        else
+        {
+            rDist -= rDirLength;
+            vCur   = vNext;
+            ++itNext;
+            if( itNext == flowShape_.end() )
+            {
+                IT_PointList itTmp = flowShape_.end();
+                --itTmp;
+                IT_PointList itStart = flowShape_.begin();
+                ++ itStart;
+                flowShape_.erase( itStart, itTmp );
+                flowShape_.front() = flowShape_.back();
+                break;
+            }
+            vNext = *itNext;
+            vDir = vNext - vCur;
+            rDirLength = vDir.Magnitude();
+            if( rDirLength )
+                vDir /= rDirLength;
+        }
+    }   
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::Update
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::Update()
+{
+    const MT_Float rWalkedDistance = population_.GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+
+    //MT_Float rNbrHumans = std::min( rWalkedDistance * population_.GetDefaultFlowDensity(), rNbrAliveHumans_ );
+    MT_Float rNbrHumans = rWalkedDistance * population_.GetDefaultFlowDensity();
+
+    if( pSourceConcentration_ )
+    {
+        rNbrAliveHumans_ += pSourceConcentration_->PullHumans( rNbrHumans );
+        bHumansUpdated_ = true;
+    }
+    else
+        UpdateTailPosition( rWalkedDistance );
+
+    rNbrHumans = std::min( rNbrHumans, rNbrAliveHumans_ );
+    if( pDestConcentration_ )
+    {
+        rNbrAliveHumans_ -= pDestConcentration_->PushHumans( rNbrHumans );
+        bHumansUpdated_ = true;
+    }
 }
 
 // =============================================================================
@@ -150,16 +246,103 @@ void MIL_PopulationFlow::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendFullState() const
 {
-    std::cout << "MIL_PopulationFlow::SendFullState TODO DUMBASS" << std::endl;
-    
-//    assert( false );
+    assert( pAttitude_ );
 
     NET_ASN_MsgPopulationFluxUpdate asnMsg;
+    
     asnMsg.GetAsnMsg().oid_flux       = nID_;
     asnMsg.GetAsnMsg().oid_population = population_.GetID();
 
-    //$$$
+    if( SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
+        asnMsg.GetAsnMsg().m.itinerairePresent = 1;
+
+    asnMsg.GetAsnMsg().m.fluxPresent               = 1;
+    asnMsg.GetAsnMsg().m.attitudePresent           = 1;
+    asnMsg.GetAsnMsg().m.directionPresent          = 1;
+    asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+    asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
+    asnMsg.GetAsnMsg().m.vitessePresent            = 1;
+
+    NET_ASN_Tools::WritePointList( flowShape_, asnMsg.GetAsnMsg().flux );
+    NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
+    asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
+    asnMsg.GetAsnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    asnMsg.GetAsnMsg().nb_humains_vivants = (uint)rNbrAliveHumans_; 
+    asnMsg.GetAsnMsg().nb_humains_morts   = (uint)rNbrDeadHumans_;
 
     asnMsg.Send();
+
+    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().flux );
+    if( asnMsg.GetAsnMsg().m.itinerairePresent )
+        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().itineraire );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SendChangedState
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+#include "Network/NET_AS_MOSServerMsgMgr.h"
+void MIL_PopulationFlow::SendChangedState() const
+{
+//$$$$ DEBUG
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << (uint32)6000025;
+    dinMsg << (uint32)flowShape_.size();    
+    for( CIT_PointList it = flowShape_.begin(); it != flowShape_.end(); ++it )
+        dinMsg << *it;
+    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+//$$$$ DEBUG
+
+    if( !HasChanged() )
+        return;
+
+    NET_ASN_MsgPopulationFluxUpdate asnMsg;
+    
+    asnMsg.GetAsnMsg().oid_flux       = nID_;
+    asnMsg.GetAsnMsg().oid_population = population_.GetID();
+
+    if( bPathUpdated_ && SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
+        asnMsg.GetAsnMsg().m.itinerairePresent = 1;
+
+    if( bFlowShapeUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.fluxPresent = 1;
+        NET_ASN_Tools::WritePointList( flowShape_, asnMsg.GetAsnMsg().flux );
+    }
+
+    if( bAttitudeUpdated_ )
+    {
+        assert( pAttitude_ );
+        asnMsg.GetAsnMsg().m.attitudePresent = 1;
+        asnMsg.GetAsnMsg().attitude          = pAttitude_->GetAsnID();
+    }
+
+    if( bDirectionUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.directionPresent = 1;
+        NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
+    }
+
+    if( bHumansUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1; 
+        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg.GetAsnMsg().nb_humains_vivants          = (uint)rNbrAliveHumans_; 
+        asnMsg.GetAsnMsg().nb_humains_morts            = (uint)rNbrDeadHumans_;
+    }
+
+    if( bSpeedUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.vitessePresent = 1;
+        asnMsg.GetAsnMsg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    }
+    
+    asnMsg.Send();
+
+    if( asnMsg.GetAsnMsg().m.fluxPresent )
+        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().flux );
+    if( asnMsg.GetAsnMsg().m.itinerairePresent )
+        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().itineraire );
+}

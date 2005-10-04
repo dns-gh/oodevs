@@ -44,18 +44,22 @@ public:
 
     //! @name Accessors
     //@{
-          uint                        GetID          () const;
-    const MIL_PopulationType&         GetType        () const;
-    const std::string&                GetName        () const;
-          DEC_PopulationDecision&     GetDecision    () const;
-    const MIL_PopulationOrderManager& GetOrderManager() const;
-          MIL_PopulationOrderManager& GetOrderManager();
-          MT_Float                    GetMaxSpeed    () const;
+          uint                        GetID                () const;
+    const MIL_PopulationType&         GetType              () const;
+    const std::string&                GetName              () const;
+          DEC_PopulationDecision&     GetDecision          () const;
+    const MIL_PopulationOrderManager& GetOrderManager      () const;
+          MIL_PopulationOrderManager& GetOrderManager      ();
+          MT_Float                    GetMaxSpeed          () const;
+          MT_Float                    GetDefaultFlowDensity() const;
+
     //@}
 
     //! @name Operations
     //@{
     void UpdateDecision();
+    void UpdateState   ();
+    void UpdateNetwork ();
 
     void Clean();
     //@}
@@ -75,7 +79,7 @@ public:
     void OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg, MIL_MOSContextID nCtx );
     void SendCreation               () const;
     void SendFullState              () const;
-    void SendChangedState           () const;    
+    void UpdateNetwork              () const;    
     //@}
 
 private:
@@ -89,9 +93,11 @@ private:
     //! @name Types
     //@{
     typedef std::set< MIL_PopulationConcentration* > T_ConcentrationSet;
+    typedef T_ConcentrationSet::iterator             IT_ConcentrationSet;
     typedef T_ConcentrationSet::const_iterator       CIT_ConcentrationSet;
-
+    
     typedef std::set< MIL_PopulationFlow* > T_FlowSet;
+    typedef T_FlowSet::iterator             IT_FlowSet;
     typedef T_FlowSet::const_iterator       CIT_FlowSet;
     //@}
 

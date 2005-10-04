@@ -223,6 +223,7 @@ public:
     static void WriteLocation ( const TER_Localisation& localisation, ASN1T_Localisation& asn );
     static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_Point&        asn );
     static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_CoordUTM&     asn );
+    static void WritePointList( const T_PointList& points, ASN1T_ListPoint& asn );
     static void WriteEllipse  ( const MT_Ellipse&       ellipse     , ASN1T_Localisation& asn );
     //@}
 
@@ -263,9 +264,9 @@ private:
     static void WritePath               ( const T_PointVector&    pointVector , ASN1T_Itineraire&   asn );
     static void WritePolygon            ( const TER_Localisation& localisation, ASN1T_Polygon&      asn );
 
-    static void WriteLocationList   ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );
+    static void WriteLocationList       ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );
     static void WritePolygonList        ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListPolygon&      asn );
-    static void WritePathList     ( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn );
+    static void WritePathList           ( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn );
     static void WritePointList          ( const T_PointVector& pointVector, ASN1T_ListPoint& asn );
 
     static void WriteAgent              ( const DEC_RolePion_Decision&        pion      , ASN1T_Agent&     asn );

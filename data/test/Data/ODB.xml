@@ -751,7 +751,7 @@
             <Nom>Parisiens</Nom>
             <Camp>bleu</Camp>
             <Position>31TBN9374781012</Position>
-            <NombreHumains>5465</NombreHumains>
+            <NombreHumains>30000</NombreHumains>
             <Attitude>agitee</Attitude>            
         </Population>
         
@@ -759,7 +759,7 @@
             <Nom>Dumbasses</Nom>
             <Camp>rouge</Camp>
             <Position>31TBN9374781012</Position>
-            <NombreHumains>5465</NombreHumains>
+            <NombreHumains>30000</NombreHumains>
             <Attitude>calme</Attitude>            
         </Population>        
         

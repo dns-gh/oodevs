@@ -82,6 +82,28 @@ void MIL_Population::UpdateDecision()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateState
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateState()
+{
+    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        (**itFlow).Update();
+
+    for( IT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
+    {
+        MIL_PopulationConcentration* pConcentration = *itConcentration;
+        if( !pConcentration->Update() )
+        {
+            itConcentration = concentrations_.erase( itConcentration );
+            delete pConcentration;
+        }
+        else 
+            ++ itConcentration;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::Clean
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
@@ -105,8 +127,6 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 
     for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).Move( destination );
-
-     // $$$$ NLD 2005-09-29: TODO
 }
 
 // =============================================================================
@@ -131,6 +151,15 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& con
 MT_Float MIL_Population::GetMaxSpeed() const
 {
     return type_.GetMaxSpeed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDefaultFlowDensity
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetDefaultFlowDensity() const
+{
+    return type_.GetDefaultFlowDensity();
 }
 
 // =============================================================================
@@ -174,5 +203,16 @@ void MIL_Population::SendFullState() const
         (**itFlow).SendFullState();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateNetwork
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateNetwork()
+{
+    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        (**itConcentration).SendChangedState();
 
+    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        (**itFlow).SendChangedState();
+}
 

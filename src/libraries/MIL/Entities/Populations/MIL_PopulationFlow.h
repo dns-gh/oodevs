@@ -26,6 +26,7 @@
 
 class MIL_Population;
 class MIL_PopulationConcentration;
+class MIL_PopulationAttitude;
 class DEC_Population_Path;
 
 // =============================================================================
@@ -42,7 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    void Clean();
+    void Update();
+    void Clean ();
     //@}
 
     //! @name Actions
@@ -57,39 +59,16 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     //@}
 
+    //! @name Concentration management
+    //@{
+    void UnregisterSourceConcentration( MIL_PopulationConcentration& concentration );
+    //@}
+
     //! @name Network
     //@{
-    void SendCreation () const;
-    void SendFullState() const;
-    //@}
-
-protected:
-    //! @name 
-    //@{
-    virtual MT_Float GetMaxSpeed              () const;
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment ) const;
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
-    //@}
-
-    //! @name 
-    //@{
-    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed );
-    //@}
-
-    //! @name Notifications
-    //@{
-    virtual void NotifySpecialPoint       ( const DEC_PathPoint& point );
-    virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
-    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
-    virtual void NotifyEnvironmentChanged ();
-    virtual void NotifyCurrentPathChanged ();
-    //@}
-
-    //! @name 
-    //@{
-    virtual bool CanMove              () const;
-    virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
-    virtual bool HasResources         ();
+    void SendCreation    () const;
+    void SendFullState   () const;
+    void SendChangedState() const;
     //@}
 
 private:
@@ -99,19 +78,65 @@ private:
     MIL_PopulationFlow& operator=( const MIL_PopulationFlow& ); //!< Assignement operator
     //@}
 
+    //! @name 
+    //@{
+    virtual MT_Float GetMaxSpeed              () const;
+    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment ) const;
+    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
+    //@}
+
+    //! @name 
+    //@{
+    virtual void ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
+            void UpdateTailPosition( const MT_Float rWalkedDistance );
+    //@}
+
+    //! @name Notifications
+    //@{
+    virtual void NotifyMovingOnPathPoint   ( const DEC_PathPoint& point );
+    virtual void NotifyMovingOnSpecialPoint( const DEC_PathPoint& point );
+    virtual void NotifyMovingInsideObject  ( MIL_Object_ABC& object );
+    virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object );
+    virtual void NotifyEnvironmentChanged  ();
+    virtual void NotifyCurrentPathChanged  ();
+    //@}
+
+    //! @name 
+    //@{
+    virtual bool CanMove              () const;
+    virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
+    virtual bool HasResources         ();
+    //@}
+
+    //! @name Network
+    //@{
+    bool HasChanged() const;
+    //@}
+
 private:
     const MIL_Population&              population_;
     const uint                         nID_;
 
-          MT_Vector2D                  headPosition_;
-          MT_Vector2D                  tailPosition_;
-          MT_Vector2D                  direction_;
-
-          MT_Vector2D                  destination_;
-          DEC_Population_Path*         pCurrentPath_;
-          
+    const MIL_PopulationAttitude*      pAttitude_;
           MIL_PopulationConcentration* pSourceConcentration_;
           MIL_PopulationConcentration* pDestConcentration_;
+         
+    MT_Vector2D          destination_;
+    DEC_Population_Path* pCurrentPath_;
+    MT_Vector2D          direction_;
+    MT_Float             rSpeed_;
+    T_PointList          flowShape_;
+
+    MT_Float             rNbrAliveHumans_;
+    MT_Float             rNbrDeadHumans_;
+          
+    // Network
+    bool bPathUpdated_;
+    bool bFlowShapeUpdated_;
+    bool bDirectionUpdated_;
+    bool bSpeedUpdated_;
+    bool bHumansUpdated_;
+    bool bAttitudeUpdated_;     
 
 public:
     static MIL_MOSIDManager idManager_;

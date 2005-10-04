@@ -525,6 +525,26 @@ void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, ASN1T_List
         WritePoint( *itPoint, pCoord[i++] );
 }
 
+
+//-----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WriteListPoint
+// Created: AGN 03-01-20
+//-----------------------------------------------------------------------------
+// static
+void NET_ASN_Tools::WritePointList( const T_PointList& points, ASN1T_ListPoint& asn )
+{
+    asn.n = points.size();
+    if( points.empty() )
+        return;
+
+    ASN1T_Localisation* pCoord = new ASN1T_Localisation[ points.size() ]; //$$$ RAM
+    asn.elem = pCoord;
+
+    uint i = 0;
+    for( CIT_PointList itPoint = points.begin(); itPoint != points.end(); ++itPoint )
+        WritePoint( *itPoint, pCoord[i++] );
+}
+
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteListLocalisation
 // Created: AGN 03-08-18

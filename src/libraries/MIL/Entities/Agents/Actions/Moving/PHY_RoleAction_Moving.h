@@ -82,16 +82,17 @@ private:
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;
     
-    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed );
+    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
     //@}
 
     //! @name Notifications
     //@{
-    virtual void NotifySpecialPoint       ( const DEC_PathPoint& point );
-    virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
-    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
-    virtual void NotifyEnvironmentChanged ();
-    virtual void NotifyCurrentPathChanged ();
+    virtual void NotifyMovingOnPathPoint   ( const DEC_PathPoint& point );
+    virtual void NotifyMovingOnSpecialPoint( const DEC_PathPoint& point );
+    virtual void NotifyMovingInsideObject  ( MIL_Object_ABC& object );
+    virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object );
+    virtual void NotifyEnvironmentChanged  ();
+    virtual void NotifyCurrentPathChanged  ();
     //@}
 
     //! @name 

@@ -4,15 +4,15 @@
         <MosID>1</MosID>
         <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>1</DensiteConcentration>
-        <DensiteNominaleDeplacement>1</DensiteNominaleDeplacement>
-        <VitesseDeplacement>12</VitesseDeplacement>
+        <DensiteNominaleDeplacement>10</DensiteNominaleDeplacement>
+        <VitesseDeplacement>60</VitesseDeplacement>
     </Population>
     
     <Population nom="test2">
         <MosID>2</MosID>
         <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>2</DensiteConcentration>
-        <DensiteNominaleDeplacement>2</DensiteNominaleDeplacement>
+        <DensiteNominaleDeplacement>20</DensiteNominaleDeplacement>
         <VitesseDeplacement>24</VitesseDeplacement>
     </Population>
 </Populations>

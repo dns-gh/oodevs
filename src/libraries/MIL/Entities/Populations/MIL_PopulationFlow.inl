@@ -33,7 +33,8 @@ uint MIL_PopulationFlow::GetID() const
 inline
 const MT_Vector2D& MIL_PopulationFlow::GetPosition() const
 {
-    return headPosition_;
+    assert( !flowShape_.empty() );
+    return flowShape_.back();
 }
     
 // -----------------------------------------------------------------------------
@@ -67,11 +68,11 @@ MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*env
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::NotifySpecialPoint
+// Name: MIL_PopulationFlow::NotifyMovingOnSpecialPoint
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 inline
-void MIL_PopulationFlow::NotifySpecialPoint( const DEC_PathPoint& /*point*/ )
+void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( const DEC_PathPoint& /*point*/ )
 {
     // NOTHING
 }
@@ -112,7 +113,7 @@ void MIL_PopulationFlow::NotifyEnvironmentChanged()
 inline
 void MIL_PopulationFlow::NotifyCurrentPathChanged()
 {
-
+    bPathUpdated_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,4 +154,36 @@ inline
 void MIL_PopulationFlow::Clean()
 {
     PHY_MovingEntity_ABC::Clean();
+    bPathUpdated_      = false;
+    bFlowShapeUpdated_ = false;
+    bDirectionUpdated_ = false;
+    bSpeedUpdated_     = false;
+    bHumansUpdated_    = false;
+    bAttitudeUpdated_  = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::HasChanged
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationFlow::HasChanged() const
+{
+    return    bPathUpdated_
+           || bFlowShapeUpdated_
+           || bDirectionUpdated_
+           || bSpeedUpdated_
+           || bHumansUpdated_
+           || bAttitudeUpdated_;  
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UnregisterSourceConcentration
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationFlow::UnregisterSourceConcentration( MIL_PopulationConcentration& concentration )
+{
+    assert( pSourceConcentration_ == &concentration );
+    pSourceConcentration_ = 0;
 }

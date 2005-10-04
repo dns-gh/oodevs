@@ -13,8 +13,6 @@
 
 #include "PHY_RoleAction_Moving.h"
 
-//#include "Entities/MIL_EntityManager.h"
-//#include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
@@ -30,14 +28,10 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
-//#include "Entities/RC/MIL_RC.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Messages.h"
-//#include "MIL_AgentServer.h"
-//#include "TER/TER_DynaObject_ABC.h"
-//#include "TER/TER_World.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_Moving, "PHY_RoleAction_Moving" )
 
@@ -452,17 +446,27 @@ const MT_Vector2D& PHY_RoleAction_Moving::GetDirection() const
 // Name: PHY_RoleAction_Moving::ApplyMove
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed )
+void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
 {
     assert( pRoleLocation_ );
     return pRoleLocation_->Move( position, direction, rSpeed );
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::NotifySpecialPoint
+// Name: PHY_RoleAction_Moving::NotifyMovingOnPathPoint
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*point*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifySpecialPoint( const DEC_PathPoint& point )
+void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( const DEC_PathPoint& point )
 {
     point.SendToDIA( GetRole< DEC_RolePion_Decision >() );
 }

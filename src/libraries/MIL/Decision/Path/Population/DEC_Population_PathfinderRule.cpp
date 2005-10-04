@@ -57,7 +57,13 @@ float DEC_Population_PathfinderRule::EvaluateCost( const geometry::Point2f& from
 // Name: DEC_Population_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& /*terrainTo*/, const TerrainData& /*terrainBetween*/ )
+float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& /*terrainTo*/, const TerrainData& terrainBetween )
 {
-    return from.Distance( to );
+    //$$$ Test
+    if(    terrainBetween.ContainsOne( TerrainData::SmallRoad() )
+        || terrainBetween.ContainsOne( TerrainData::MediumRoad() )
+        || terrainBetween.ContainsOne( TerrainData::LargeRoad() ) )
+        return from.Distance( to );
+
+    return from.Distance( to ) * 1000;
 }

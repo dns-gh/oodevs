@@ -41,25 +41,28 @@ public:
 
     //! @name Operations
     //@{
-    void Clean();
+    bool Update(); // Return false if the concentration must be deleted
+    void Clean ();
     //@}
 
     //! @name Actions
     //@{
-//    void PushHumans( uint nNbr );
-//    void PullHumans( uint nNbr );
-    void Move( const MT_Vector2D& destination );
+    MT_Float PushHumans( MT_Float rNbr );
+    MT_Float PullHumans( MT_Float rNbr );
+    void     Move      ( const MT_Vector2D& destination );
     //@}
 
     //! @name Accessors
     //@{
-    const MT_Vector2D& GetPosition() const;
+    const MT_Vector2D&            GetPosition() const;
+    const MIL_PopulationAttitude& GetAttitude() const;
     //@}
 
     //! @name Network
     //@{
-    void SendCreation () const;
-    void SendFullState() const;
+    void SendCreation    () const;
+    void SendFullState   () const;
+    void SendChangedState() const;
     //@}
 
 private:
@@ -69,15 +72,24 @@ private:
     MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignement operator
     //@}
 
+    //! @name Network
+    //@{
+    bool HasChanged() const;
+    //@}
+
 private:
           MIL_Population&         population_;
           uint                    nID_;
           MT_Vector2D             position_;
-          uint                    nNbrAliveHumans_;
-          uint                    nNbrDeadHumans_;
+          MT_Float                rNbrAliveHumans_;
+          MT_Float                rNbrDeadHumans_;
     const MIL_PopulationAttitude* pAttitude_;
 
           MIL_PopulationFlow*     pPullingFlow_;
+
+    // Network
+    bool bHumansUpdated_;
+    bool bAttitudeUpdated_;
 
 public:
     static MIL_MOSIDManager idManager_;

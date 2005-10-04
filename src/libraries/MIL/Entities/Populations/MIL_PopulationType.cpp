@@ -18,6 +18,7 @@
 #include "Decision/Functions/DEC_PopulationFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
+#include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
@@ -75,15 +76,17 @@ void MIL_PopulationType::Terminate()
 MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArchive& archive )
     : strName_              ( strName )
     , rConcentrationDensity_( 0. )
-    , rDefaultFluxDensity_  ( 0. )
+    , rDefaultFlowDensity_  ( 0. )
     , rMaxSpeed_            ( 0. )
     , pModel_               ( 0 )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
-    archive.ReadField( "MosID", nID_ );
+    archive.ReadField( "MosID"                     , nID_                   );
     archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_ );
-    archive.ReadField( "DensiteNominaleDeplacement", rDefaultFluxDensity_   );
+    archive.ReadField( "DensiteNominaleDeplacement", rDefaultFlowDensity_   );
     archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_             );
+
+    rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
     
     std::string strModel;
     archive.ReadField( "ModeleDecisionnel", strModel );

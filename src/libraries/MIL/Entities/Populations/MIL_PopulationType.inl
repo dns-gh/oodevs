@@ -42,13 +42,13 @@ MT_Float MIL_PopulationType::GetConcentrationDensity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::GetDefaultFluxDensity
+// Name: MIL_PopulationType::GetDefaultFlowDensity
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_PopulationType::GetDefaultFluxDensity() const
+MT_Float MIL_PopulationType::GetDefaultFlowDensity() const
 {
-    return rDefaultFluxDensity_;
+    return rDefaultFlowDensity_;
 }
 
 // -----------------------------------------------------------------------------

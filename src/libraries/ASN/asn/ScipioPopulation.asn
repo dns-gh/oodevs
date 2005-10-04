@@ -40,14 +40,15 @@ MsgPopulationUpdate ::= SEQUENCE
 MsgPopulationConcentrationCreation ::= SEQUENCE
 {
     oid-concentration OID,
-    oid-population    OID
+    oid-population    OID,
+    position          CoordUTM
 }
 
 MsgPopulationConcentrationUpdate ::= SEQUENCE
 {
     oid-concentration   OID,
     oid-population      OID,
-    forme               Localisation           OPTIONAL, 
+    
     nb-humains-vivants  INTEGER                OPTIONAL,
     nb-humains-morts    INTEGER                OPTIONAL,
     attitude            EnumPopulationAttitude OPTIONAL
@@ -73,9 +74,8 @@ MsgPopulationFluxUpdate ::= SEQUENCE
 {
     oid-flux            OID,
     oid-population      OID,
-    itineraire          Itineraire             OPTIONAL,
-    queue               CoordUTM               OPTIONAL,
-    tete                CoordUTM               OPTIONAL,
+    itineraire          Itineraire             OPTIONAL, -- Itineraire de la tête
+    flux                ListPoint              OPTIONAL,
     direction           Direction              OPTIONAL, -- en degres
     vitesse             Vitesse                OPTIONAL, -- en km/h
     nb-humains-vivants  INTEGER                OPTIONAL,

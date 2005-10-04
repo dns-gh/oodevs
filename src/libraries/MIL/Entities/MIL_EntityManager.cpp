@@ -696,11 +696,15 @@ void MIL_EntityManager::UpdateStates()
         itAutomate->second->UpdateState();
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->UpdateState();
+    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        itPopulation->second->UpdateState();
 
     for( itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->UpdateNetwork();
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->UpdateNetwork();
+    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        itPopulation->second->UpdateNetwork();
 
     assert( pObjectManager_ );
     pObjectManager_->UpdateStates();

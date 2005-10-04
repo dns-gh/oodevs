@@ -121,6 +121,10 @@ struct vector2DLessXY : public std::binary_function< MT_Vector2D, MT_Vector2D, b
     }
 };
 
+typedef std::list< MT_Vector2D >    T_PointList;
+typedef T_PointList::iterator       IT_PointList;
+typedef T_PointList::const_iterator CIT_PointList;
+
 typedef std::vector< MT_Vector2D >              T_PointVector;
 typedef const T_PointVector                     CT_PointVector;
 typedef T_PointVector::iterator                 IT_PointVector;

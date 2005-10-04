@@ -151,6 +151,7 @@ private:
     MT_Vector2D     vNewPos_;
     MT_Vector2D     vNewDir_;
     MT_Float        rCurrentSpeed_;
+    MT_Float        rWalkedDistance_;
 
     bool            bForcePathCheck_;
     bool            bHasMoved_; 

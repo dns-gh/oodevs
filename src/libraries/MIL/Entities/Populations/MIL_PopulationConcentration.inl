@@ -17,16 +17,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::PushHumans
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-//inline
-//void MIL_PopulationConcentration::PushHumans( uint nNbr )
-//{
-//    nNbrHumans_ += nNbr;
-//}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::GetPosition
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
@@ -37,11 +27,33 @@ const MT_Vector2D& MIL_PopulationConcentration::GetPosition() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetAttitude
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+const MIL_PopulationAttitude& MIL_PopulationConcentration::GetAttitude() const
+{
+    assert( pAttitude_ );
+    return *pAttitude_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::Clean
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 inline
 void MIL_PopulationConcentration::Clean()
 {
-    // NOTHING
+    bHumansUpdated_   = false;
+    bAttitudeUpdated_ = false;   
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::HasChanged
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationConcentration::HasChanged() const
+{
+    return bHumansUpdated_ || bAttitudeUpdated_;
 }

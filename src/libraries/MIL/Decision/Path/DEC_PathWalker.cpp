@@ -38,6 +38,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , vNewPos_           ( 0., 0. )
     , vNewDir_           ( 0., 0. )
     , rCurrentSpeed_     ( 0. )
+    , rWalkedDistance_   ( 0. )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )  
     , pCurrentPath_      ( 0 )
@@ -176,6 +177,7 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
 {
     if ( (*itNextPathPoint_)->GetType() == DEC_PathPoint::eTypePointPath )
     {
+        movingEntity_.NotifyMovingOnPathPoint( **itNextPathPoint_ );
         itCurrentPathPoint_ = itNextPathPoint_;
         ++itNextPathPoint_;
         return false;
@@ -184,8 +186,8 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
     // points particuliers -> EVT vers DEC
     do 
     {
+        movingEntity_.NotifyMovingOnSpecialPoint( **itNextPathPoint_ );
         itCurrentPathPoint_ = itNextPathPoint_;
-        movingEntity_.NotifySpecialPoint( **itCurrentPathPoint_ );
     }
     while      ( ++itNextPathPoint_ != path.GetResult().end()
             && ( *itNextPathPoint_ )->GetType() != DEC_PathPoint::eTypePointPath
@@ -423,10 +425,18 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
     if( (*itNextPathPoint_)->GetPos() != vNewPos_ )
         vNewDir_ = ( (*itNextPathPoint_)->GetPos() - vNewPos_ ).Normalize();
 
+    rWalkedDistance_ = 0;
     while( rTimeRemaining > 0. )
     {
+        const MT_Vector2D vPosBeforeMove( vNewPos_ );
+        
         if( !TryToMoveTo( path, (*itNextPathPoint_)->GetPos(), rTimeRemaining ) )
+        {
+            rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
             return eRunning;
+        }
+
+        rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
 
         bool bStopOnInterestingPoint = GoToNextNavPoint( path );
         if( bStopOnInterestingPoint )
@@ -478,7 +488,7 @@ void DEC_PathWalker::MoveCanceled( DEC_PathResult& path )
 void DEC_PathWalker::Apply()
 {
     if( movingEntity_.CanMove() )
-        movingEntity_.ApplyMove( vNewPos_, vNewDir_, rCurrentSpeed_ );
+        movingEntity_.ApplyMove( vNewPos_, vNewDir_, rCurrentSpeed_, rWalkedDistance_ );
 }
 
 // =============================================================================
