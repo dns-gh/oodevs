@@ -51,13 +51,11 @@ public:
 	uint				GetDeadHumans();
     //@}
 
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
+    bool HasAttitude;
+	bool HasForme;
+	bool HasLivingHumans;
+	bool HasDeadHumans;
+	bool HasDensity;
 
 private:
     //! @name Copy/Assignement

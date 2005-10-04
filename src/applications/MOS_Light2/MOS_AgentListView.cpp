@@ -246,7 +246,8 @@ void MOS_AgentListView::SetSelectedElement( MOS_SelectedElement& selectedElement
 {
     //$$$$ Pas terrible, à améliorer.
     if(    selectedElement.pObject_ != 0 
-        || selectedElement.pPopulation_ != 0 )
+        || selectedElement.pPopulation_ != 0 
+		|| ( selectedElement.pTeam_ == 0 && selectedElement.pAgent_ == 0 && selectedElement.pGtia_ == 0 ))
     {
         this->selectAll( false );
         return;

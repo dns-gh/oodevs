@@ -92,9 +92,9 @@ void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
 
     pNameLabel_->setText( (population.GetName()).c_str() );
 
-    pLivingLabel_->setText( QString( "%1 %" ).arg( population.GetLivingHumans() ) );
+    pLivingLabel_->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
 
-    pDeadLabel_->setText( QString( "%1 %" ).arg( population.GetDeadHumans() )  );
+    pDeadLabel_->setText( QString( "%1" ).arg( population.GetDeadHumans() )  );
 
     pAttitudeLabel_->setText( "" );
 

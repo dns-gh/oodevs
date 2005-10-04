@@ -42,3 +42,4 @@ uint MOS_PopulationFlux::GetDeadHumans()
 {
 	return nDeadHumans_;
 }
+

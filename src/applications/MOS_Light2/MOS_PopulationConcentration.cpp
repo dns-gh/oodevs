@@ -25,6 +25,11 @@ MOS_PopulationConcentration::MOS_PopulationConcentration( uint id, MOS_Populatio
 : 	parent_			( parent )
 ,	nID_			( id )
 ,	center_			( MT_Vector2D( 0, 0 ) )
+,   HasAttitude		( false )
+,   HasForme		( false )
+,   HasLivingHumans	( false )
+,   HasDeadHumans	( false )
+,   HasDensity		( false )
 {
 }
 
@@ -45,13 +50,23 @@ MOS_PopulationConcentration::~MOS_PopulationConcentration()
 void MOS_PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
 	if ( asnMsg.m.nb_humains_vivantsPresent )
+	{
 		nLivingHumans_		= asnMsg.nb_humains_vivants;
+		HasLivingHumans		= true;
+	}
 	if ( asnMsg.m.nb_humains_mortsPresent )
+	{
 		nDeadHumans_		= asnMsg.nb_humains_morts;
+		HasDeadHumans		= true;
+	}
 	if ( asnMsg.m.attitudePresent )
+	{
 		attitude_			= asnMsg.attitude;
+		HasAttitude			= true;
+	}
 	if ( asnMsg.m.formePresent )
 	{
+		HasForme			= true;
 		for( uint i = 0; i < asnMsg.forme.vecteur_point.n; ++i )
 		{
 			MT_Vector2D vTmp;

@@ -181,6 +181,7 @@ void MOS_SelectedElement::Init()
     pRC_                  = 0;
     pLine_                = 0;
     nLinePoint_           = -1;
+	pPopulation_		  = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -190,6 +191,7 @@ void MOS_SelectedElement::Init()
 bool MOS_SelectedElement::operator==( const MOS_SelectedElement& rhs ) const
 {
     return pAgent_               == rhs.pAgent_
+		&& pPopulation_			 == rhs.pPopulation_
         && pGtia_                == rhs.pGtia_
         && pTeam_                == rhs.pTeam_
         && pObject_          == rhs.pObject_
@@ -210,6 +212,8 @@ void MOS_SelectedElement::Dump()
     str << "Selected : ";
     if( pAgent_ )
         str << " agent : "            << pAgent_->GetAgentID()          << "; ";
+	if( pPopulation_ )
+        str << " population : "            << pPopulation_->GetPopulationID()  << "; ";
     if( pGtia_ )
         str << " gtia : "             << pGtia_->GetID()                << "; ";
     if( pTeam_ )

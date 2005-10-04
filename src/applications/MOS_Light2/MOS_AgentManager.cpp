@@ -169,7 +169,7 @@ void MOS_AgentManager::InitializeTypesAutomate( MOS_InputArchive& scipioArchive 
 // Name: MOS_AgentManager::InitializeModels
 // Created: AGE 2012-12-22
 // -----------------------------------------------------------------------------
-void MOS_AgentManager::ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata )
+void MOS_AgentManager::ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata , bool popu )
 {
     modelArchive.Section( "Modele" );
     std::string strModelName;
@@ -180,7 +180,7 @@ void MOS_AgentManager::ReadModelList( MOS_InputArchive& modelArchive, bool bAuto
 
     MOS_AgentModel* pModel = new MOS_AgentModel( bAutomata, strModelName );
     vAvailableModels_.push_back( pModel );
-    pModel->Initialize( modelArchive );
+    pModel->Initialize( modelArchive, popu );
     modelArchive.EndSection(); // Modele
 };
 
@@ -223,7 +223,7 @@ void MOS_AgentManager::InitializeModels( MOS_InputArchive& scipioArchive )
 
     modelArchive.BeginList( "Populations" );
     while( modelArchive.NextListElement() )
-        ReadModelList( modelArchive, false );
+        ReadModelList( modelArchive, false, true );
     modelArchive.EndList();     // Populations
 
     modelArchive.EndSection(); // Modeles

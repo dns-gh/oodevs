@@ -1438,6 +1438,34 @@ void MOS_GLTool::DrawLine( CT_PointVector& points, MT_Float rArrowSize, bool bDo
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_GLTool::DrawLine
+/** @param  pointList 
+*/
+// Created: APE 2004-04-21
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw3DLine( MT_Vector3D src, MT_Vector3D dst, float width, GFX_Color color )
+{
+	color.SetGLColor();
+	glLineWidth( width );
+
+    if( ! MOS_App::GetApp().Is3D() )
+    {
+        glBegin( GL_LINE_STRIP );
+		glVertex3f( src.rX_, src.rY_, src.rZ_ );
+		glVertex3f( dst.rX_, dst.rY_, dst.rZ_ );
+        glEnd();
+    }
+    else
+    {
+        glBegin( GL_LINE_STRIP );
+		Vertex( src.rX_, src.rY_, 1 );
+		Vertex( dst.rX_, dst.rY_, 1 );
+        glEnd();
+     }
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawArrow
 // Created: AGE 2005-05-09
 // -----------------------------------------------------------------------------
@@ -1471,6 +1499,7 @@ void MOS_GLTool::DrawLine( const MT_Vector2D& src, const MT_Vector2D& dest, MT_F
     points.push_back( src ); points.push_back( dest );
     DrawLine( points, rArrowSize, bDoubleArrow );
 }
+
 
 
 // -----------------------------------------------------------------------------
@@ -1636,12 +1665,11 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
     MT_Float rSize = 600.;
 
     GFX_Color color = MOS_GLTool::GetColorForTeam( pop.GetTeam() );
-    //if( nState == eSelected )
-    //    color.AddRGB( 50, 200, 50 );
-    //if( nState == eHighlighted )
-    //    color.AddRGB( 50, 100, 50 );
-    //$$$ Redo selection colors.
-	
+    if( nState == eSelected )
+        color.AddRGB( 50, 200, 50 );
+    if( nState == eHighlighted )
+        color.AddRGB( 50, 100, 50 );
+
 	//Draw the concentrations
 	for ( std::map< MIL_AgentID, MOS_PopulationConcentration* >::const_iterator itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
 	{
@@ -1653,8 +1681,13 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
 	for ( std::map< MIL_AgentID, MOS_PopulationFlux* >::const_iterator itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
 	{
 		color.SetGLColor();
-		DrawCylinder( itFlux->second->queue_, MOS_GL_CROSSSIZE , 2.0, color );
-		DrawCylinder( itFlux->second->tete_, MOS_GL_CROSSSIZE , 2.0, color );
+		if ( itFlux->second->HasQueue )
+			DrawCylinder( itFlux->second->queue_, MOS_GL_CROSSSIZE , 2.0, color );
+		if ( itFlux->second->HasTete )
+			DrawCylinder( itFlux->second->tete_, MOS_GL_CROSSSIZE , 2.0, color );
+		if ( itFlux->second->HasItineraire )
+			DrawLine( itFlux->second->itineraire_ );
+			//Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
 	}
 
 
@@ -1739,6 +1772,27 @@ void MOS_GLTool::DrawLines( T_MOSLinePtrVector& lines, float /*rZ */)
 	}		
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw3DLines
+/** @param  points 
+    @param  width 
+    @param  color 
+*/
+// Created: HME 2005-10-04
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw3DLines( T_Point3DVector& points, float width, GFX_Color color )
+{
+	if ( points.size() < 2 )
+		return;
+    glBegin( GL_LINES );
+	MT_Vector3D last = *points.begin();
+    for ( CIT_Point3DVector it = points.begin() ; it != points.end() ; ++it )
+    {
+        Draw3DLine( *it, last, width, color );
+		last = *it;
+	}
+	glEnd();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCircles

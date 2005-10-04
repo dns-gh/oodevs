@@ -197,7 +197,7 @@ private:
     void InitializeTypesComposante( MOS_InputArchive& input );
     void InitializeTypesPion      ( MOS_InputArchive& input );
     void InitializeTypesAutomate  ( MOS_InputArchive& input );
-    void ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata );
+    void ReadModelList( MOS_InputArchive& modelArchive, bool bAutomata, bool popu = false );
 	void InitializeTypesPopulation ( MOS_InputArchive& input );
 
     template< typename T >

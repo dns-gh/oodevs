@@ -57,7 +57,7 @@ class MOS_InfoPanel : public QWidgetStack
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_InfoPanel( QWidget* pParent );
+     explicit MOS_InfoPanel( QWidget* pParent );
     ~MOS_InfoPanel();
     //@}
 

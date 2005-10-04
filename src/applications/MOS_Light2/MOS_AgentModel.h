@@ -64,7 +64,7 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( MOS_InputArchive& input );
+    void Initialize( MOS_InputArchive& input,  bool popu = false );
     void ReadFragOrders( MOS_InputArchive& input );
     //@}
 

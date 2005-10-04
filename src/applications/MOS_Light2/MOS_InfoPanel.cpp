@@ -143,7 +143,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowAgentPanel( false );
         ShowAgentKnowledgePanel( false );
         ShowLogisticPanels( false );
-        ShowObjectKnowledgePanel( false );
+        ShowObjectKnowledgePanel( true );
         ShowObjectPanel( false );
 		ShowPopulationPanel( true );
     }
@@ -155,7 +155,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 //             && &(selectedElement.pAgent_->GetGtia()) == &(selectedElement.pAgentKnowledge_->GetOwner()) ) )
             ShowAgentPanel( false );
         ShowAgentKnowledgePanel( true );
-        ShowObjectKnowledgePanel( true );
+        ShowObjectKnowledgePanel( true ); 
         ShowObjectPanel( false );
         ShowLogisticPanels( false );
 		ShowPopulationPanel( false );
@@ -173,6 +173,8 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowObjectKnowledgePanel( true );
         ShowObjectPanel( false );
         ShowLogisticPanels( false );
+		ShowPopulationPanel( false );
+
     }
 
     else if( selectedElement.pObject_ != 0 )
@@ -195,18 +197,20 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 		ShowPopulationPanel( false );
         //pTabWidget_->setCurrentPage( 0 );
     }
-
+	pPopulationPanel_	   ->SetSelection( selectedElement );
     pStatePanel_           ->SetSelection( selectedElement );
     pReportPanel_          ->SetSelection( selectedElement );
     pResourcesPanel_       ->SetSelection( selectedElement );
     pAgentKnowledgePanel_  ->SetSelection( selectedElement );
     pObjectPanel_          ->SetSelection( selectedElement );
-	pPopulationPanel_	   ->SetSelection( selectedElement );
-    pObjectReportPanel_    ->SetSelection( selectedElement );
+
+
     pObjectKnowledgePanel_ ->SetSelection( selectedElement );
     pAgentMaintenancePanel_->SetSelection( selectedElement );
     pAgentMedicalPanel_    ->SetSelection( selectedElement );
     pAgentSupplyPanel_     ->SetSelection( selectedElement );
+
+    pObjectReportPanel_    ->SetSelection( selectedElement );
 
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this, SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
 }
@@ -268,7 +272,7 @@ void MOS_InfoPanel::ShowAgentPanel( bool bShow )
         pTabWidget_->insertTab( pStatePanel_, tr( "Etat" ), 0 );
         pTabWidget_->insertTab( pReportPanel_, tr( "Rapports" ), 0 );
         pTabWidget_->insertTab( pResourcesPanel_, tr( "Res." ), 1 );
-    }
+	}
 
     if( !bShow && bAgentVisible_ )
     {

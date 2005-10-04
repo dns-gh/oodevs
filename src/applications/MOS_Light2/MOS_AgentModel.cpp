@@ -53,9 +53,11 @@ MOS_AgentModel::~MOS_AgentModel()
 */
 // Created: AGN 2003-12-22
 // -----------------------------------------------------------------------------
-void MOS_AgentModel::Initialize( MOS_InputArchive& input )
+void MOS_AgentModel::Initialize( MOS_InputArchive& input, bool popu )
 {
-    if( !input.BeginList( "Missions", MOS_InputArchive::eNothing ) )
+    if ( popu )
+		return;
+	if( !input.BeginList( "Missions", MOS_InputArchive::eNothing ) )
         return;
 
     while( input.NextListElement() )

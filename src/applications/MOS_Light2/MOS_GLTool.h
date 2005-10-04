@@ -168,6 +168,8 @@ public:
     static void DrawPoint( const MT_Vector2D& p );
     static void DrawPolygon( CT_PointVector& pointList );
     static void DrawRect( const MT_Vector2D& point1, const MT_Vector2D& point2, bool bInside );
+	static void Draw3DLine( MT_Vector3D src, MT_Vector3D dst, float width, GFX_Color color );
+	static void Draw3DLines( T_Point3DVector& points, float width, GFX_Color color );
 
     static void DrawUnit( MOS_Agent& agent, E_State nState = eNormal );
     static void DrawVisionCones( MOS_Agent& agent );

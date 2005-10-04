@@ -21,6 +21,7 @@
 #include "MOS_Team.h"
 #include "MOS_AgentManager.h"
 #include "MOS_ActionContext.h"
+#include "MOS_Options.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationListView constructor
@@ -109,6 +110,33 @@ void MOS_PopulationListView::AddPopulation( MOS_Population& population )
 // -----------------------------------------------------------------------------
 void MOS_PopulationListView::SetSelectedElement( MOS_SelectedElement& selectedElement )
 {
+    if(    selectedElement.pPopulation_ == 0 )
+    {
+        this->selectAll( false );
+        return;
+    }
+
+    // Check if it's not already selected.
+    if(    ( selectedElement.pPopulation_ != 0 && this->ToPopulation( this->selectedItem() ) == selectedElement.pPopulation_ ) )
+        return;
+
+    QListViewItemIterator it( this->firstChild() );
+    while( it.current() )
+    {
+        if(    ( selectedElement.pPopulation_ != 0 && this->ToPopulation( it.current() ) == selectedElement.pPopulation_ ) )
+        {
+            disconnect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+            this->setSelected( it.current(), true );
+            connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+            if( MOS_MainWindow::GetMainWindow().GetOptions().bOpenTreeToItem_ )
+                this->ensureItemVisible( it.current() );
+            return;
+        }
+        ++it;
+    }
+
+    // Could not find the agent to select.
+    assert( false );
 }
 
 
