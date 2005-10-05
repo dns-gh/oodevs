@@ -1646,8 +1646,22 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
     color.SetGLColor();
     DrawCross( agent.vPos_, MOS_GL_CROSSSIZE, 4.0 );
 
-    for( std::vector< MT_Vector2D >::const_iterator it = agent.reportPoints_.begin(); it != agent.reportPoints_.end(); ++it )
-        DrawCross( *it, MOS_GL_CROSSSIZE, 4.0 );
+//    for( std::vector< MT_Vector2D >::const_iterator it = agent.reportPoints_.begin(); it != agent.reportPoints_.end(); ++it )
+//        DrawCross( *it, MOS_GL_CROSSSIZE, 4.0 );
+
+    if( !agent.reportPoints_.empty() )
+    {
+        GFX_Color color( 0, 255, 0, 1 ); 
+        color.SetGLColor();
+
+        std::vector< MT_Vector2D >::const_iterator itCur  = agent.reportPoints_.begin();
+        std::vector< MT_Vector2D >::const_iterator itNext = itCur;
+        ++ itNext;
+        for( ; itNext != agent.reportPoints_.end(); ++itCur, ++itNext )
+            DrawLine( *itCur, *itNext );
+
+        DrawCross( *itCur, MOS_GL_CROSSSIZE, 4.0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
