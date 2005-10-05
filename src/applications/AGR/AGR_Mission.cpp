@@ -187,7 +187,7 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
     else if( eMissionType_ == eMissionPopulation )
     {
         strBaseCppFile = AGR_SKEL_DIR "/AGR_MissionPopulation_Skeleton.cpp";
-        strUnitName = "Population";
+        strUnitName = "Population";	
     }
     else
     {

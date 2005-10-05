@@ -26,6 +26,7 @@
 
 #include "MOS_App.h"
 #include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Gtia.h"
 #include "MOS_ActionContext.h"
 #include "MOS_AgentKnowledge.h"
@@ -41,7 +42,7 @@
 */
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-MOS_ParamAgentKnowledgeList::MOS_ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent )
+MOS_ParamAgentKnowledgeList::MOS_ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent )
     : MOS_ParamListView( strLabel, true, pParent )
     , MOS_Param_ABC     ()
     , strMenuText_      ( strMenuText )
@@ -91,7 +92,7 @@ void MOS_ParamAgentKnowledgeList::FillRemotePopupMenu( QPopupMenu& popupMenu, co
 
     if( context.selectedElement_.pAgent_ != 0 )
     {
-        pPopupKnowledge_ = agent_.GetGtia().FindKnowledgeOnAgent( *(context.selectedElement_.pAgent_) );
+        pPopupKnowledge_ = dynamic_cast<MOS_Agent*>(&agent_)->GetGtia().FindKnowledgeOnAgent( *(context.selectedElement_.pAgent_) );
         if( pPopupKnowledge_ == 0 )
             return;
     }

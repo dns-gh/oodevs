@@ -29,7 +29,7 @@
 
 class MOS_Gtia;
 class MOS_AgentKnowledge;
-class MOS_Agent;
+class MOS_Agent_ABC;
 
 
 // =============================================================================
@@ -51,7 +51,7 @@ class MOS_ParamAgentKnowledgeList : public MOS_ParamListView, public MOS_Param_A
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent );
+    MOS_ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent );
     ~MOS_ParamAgentKnowledgeList();
     //@}
 
@@ -75,7 +75,7 @@ private:
     std::string strMenuText_;
     ASN1T_ListKnowledgeAgent& asnListKnowledge_;
     ASN1T_OID* pAsnOIDList_;
-    MOS_Agent& agent_;
+    MOS_Agent_ABC& agent_;
     int nMinItems_;
     int nMaxItems_;
 

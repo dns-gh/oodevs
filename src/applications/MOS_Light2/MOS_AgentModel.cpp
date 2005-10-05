@@ -55,8 +55,6 @@ MOS_AgentModel::~MOS_AgentModel()
 // -----------------------------------------------------------------------------
 void MOS_AgentModel::Initialize( MOS_InputArchive& input, bool popu )
 {
-    if ( popu )
-		return;
 	if( !input.BeginList( "Missions", MOS_InputArchive::eNothing ) )
         return;
 
@@ -67,10 +65,15 @@ void MOS_AgentModel::Initialize( MOS_InputArchive& input, bool popu )
         std::string strMission;
         input.ReadAttribute( "nom", strMission );
         uint nMissionID;
-        if( bAutomataModel_ )
-            nMissionID = ENT_Tr::ConvertToAutomataMission( strMission );
-        else
-            nMissionID = ENT_Tr::ConvertToUnitMission( strMission );
+		if ( popu )
+			nMissionID = ENT_Tr::ConvertToPopulationMission( strMission );
+		else
+		{
+			if( bAutomataModel_ )
+				nMissionID = ENT_Tr::ConvertToAutomataMission( strMission );
+			else
+				nMissionID = ENT_Tr::ConvertToUnitMission( strMission );
+		}
         if( nMissionID == (uint)-1 )
             throw MT_ScipioException( "DEC_Model::InitializeMissions", __FILE__, __LINE__, "" );
 

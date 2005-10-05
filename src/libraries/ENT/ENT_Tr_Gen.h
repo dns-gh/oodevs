@@ -72,7 +72,6 @@ public:
     static const std::string& ConvertFromPrecipitationType( E_PrecipitationType, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeLima( E_TypeLima, E_Conversion = eToSim );
     static const std::string& ConvertFromInfoContextErrorCode( E_InfoContextErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromTypeTerrain( E_TypeTerrain, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeCR( E_TypeCR, E_Conversion = eToSim );
     static const std::string& ConvertFromFireEffectType( E_FireEffectType, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
@@ -100,10 +99,12 @@ public:
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromActionReagirFaceAEni( E_ActionReagirFaceAEni, E_Conversion = eToSim );
     static const std::string& ConvertFromTC2GererMaterielAvantDeplacement( E_TC2GererMaterielAvantDeplacement, E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
 
-    static const std::string& ConvertFromAutomataMission( E_AutomataMission, E_Conversion = eToSim );
-    static const std::string& ConvertFromUnitMission    ( E_UnitMission, E_Conversion = eToSim );
-    static const std::string& ConvertFromFragOrder      ( E_FragOrder, E_Conversion = eToSim );
+    static const std::string& ConvertFromAutomataMission  ( E_AutomataMission  , E_Conversion = eToSim );
+    static const std::string& ConvertFromUnitMission      ( E_UnitMission      , E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationMission( E_PopulationMission, E_Conversion = eToSim );
+    static const std::string& ConvertFromFragOrder        ( E_FragOrder        , E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_TypeLocalisation ConvertToTypeLocalisation( const std::string& );
@@ -142,7 +143,6 @@ public:
     static E_PrecipitationType ConvertToPrecipitationType( const std::string& );
     static E_TypeLima ConvertToTypeLima( const std::string& );
     static E_InfoContextErrorCode ConvertToInfoContextErrorCode( const std::string& );
-    static E_TypeTerrain ConvertToTypeTerrain( const std::string& );
     static E_TypeCR ConvertToTypeCR( const std::string& );
     static E_FireEffectType ConvertToFireEffectType( const std::string& );
     static E_Diplomatie ConvertToDiplomatie( const std::string& );
@@ -170,10 +170,12 @@ public:
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_ActionReagirFaceAEni ConvertToActionReagirFaceAEni( const std::string& );
     static E_TC2GererMaterielAvantDeplacement ConvertToTC2GererMaterielAvantDeplacement( const std::string& );
+    static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
 
-    static E_AutomataMission ConvertToAutomataMission( const std::string& );
-    static E_UnitMission     ConvertToUnitMission    ( const std::string& );
-    static E_FragOrder       ConvertToFragOrder      ( const std::string& );
+    static E_AutomataMission   ConvertToAutomataMission  ( const std::string& );
+    static E_UnitMission       ConvertToUnitMission      ( const std::string& );
+    static E_PopulationMission ConvertToPopulationMission( const std::string& );
+    static E_FragOrder         ConvertToFragOrder        ( const std::string& );
 
 private:
     // Typedefs
@@ -213,7 +215,6 @@ private:
     typedef ENT_Tr::converter<E_PrecipitationType> T_ConverterPrecipitationType;
     typedef ENT_Tr::converter<E_TypeLima> T_ConverterTypeLima;
     typedef ENT_Tr::converter<E_InfoContextErrorCode> T_ConverterInfoContextErrorCode;
-    typedef ENT_Tr::converter<E_TypeTerrain> T_ConverterTypeTerrain;
     typedef ENT_Tr::converter<E_TypeCR> T_ConverterTypeCR;
     typedef ENT_Tr::converter<E_FireEffectType> T_ConverterFireEffectType;
     typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
@@ -241,10 +242,12 @@ private:
     typedef ENT_Tr::converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
     typedef ENT_Tr::converter<E_ActionReagirFaceAEni> T_ConverterActionReagirFaceAEni;
     typedef ENT_Tr::converter<E_TC2GererMaterielAvantDeplacement> T_ConverterTC2GererMaterielAvantDeplacement;
+    typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
 
-    typedef ENT_Tr::converter<E_AutomataMission> T_ConverterAutomataMission;
-    typedef ENT_Tr::converter<E_UnitMission>     T_ConverterUnitMission;
-    typedef ENT_Tr::converter<E_FragOrder>       T_ConverterFragOrder;
+    typedef ENT_Tr::converter<E_AutomataMission>   T_ConverterAutomataMission;
+    typedef ENT_Tr::converter<E_UnitMission>       T_ConverterUnitMission;
+    typedef ENT_Tr::converter<E_PopulationMission> T_ConverterPopulationMission;
+    typedef ENT_Tr::converter<E_FragOrder>         T_ConverterFragOrder;
 
     // Converters
     static T_ConverterTypeLocalisation TypeLocalisationConverter_ [];
@@ -283,7 +286,6 @@ private:
     static T_ConverterPrecipitationType PrecipitationTypeConverter_ [];
     static T_ConverterTypeLima TypeLimaConverter_ [];
     static T_ConverterInfoContextErrorCode InfoContextErrorCodeConverter_ [];
-    static T_ConverterTypeTerrain TypeTerrainConverter_ [];
     static T_ConverterTypeCR TypeCRConverter_ [];
     static T_ConverterFireEffectType FireEffectTypeConverter_ [];
     static T_ConverterDiplomatie DiplomatieConverter_ [];
@@ -311,10 +313,12 @@ private:
     static T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_ [];
     static T_ConverterActionReagirFaceAEni ActionReagirFaceAEniConverter_ [];
     static T_ConverterTC2GererMaterielAvantDeplacement TC2GererMaterielAvantDeplacementConverter_ [];
+    static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
 
-    static T_ConverterAutomataMission automataMissionConverter_[];
-    static T_ConverterUnitMission     unitMissionConverter_[];
-    static T_ConverterFragOrder       fragOrderConverter_[];
+    static T_ConverterAutomataMission   automataMissionConverter_[];
+    static T_ConverterUnitMission       unitMissionConverter_[];
+    static T_ConverterPopulationMission populationMissionConverter_[];
+    static T_ConverterFragOrder         fragOrderConverter_[];
 };
 
 

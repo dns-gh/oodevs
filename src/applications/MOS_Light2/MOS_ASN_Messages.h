@@ -175,6 +175,7 @@ MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( PionOrder, pion_order )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( OrderConduite, order_conduite )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( AutomateOrder, automate_order )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( SetAutomateMode, set_automate_mode )
+MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( PopulationOrder, population_order )
 
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( ChangeAutomate          , change_automate            )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( ChangeDiplomatie        , change_diplomatie          )

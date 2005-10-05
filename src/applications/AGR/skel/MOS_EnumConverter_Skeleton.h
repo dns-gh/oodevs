@@ -31,6 +31,12 @@ $PionMissionEnumList$
     eUnitMissionNbr
 };
 
+enum E_PopulationMission
+{
+$PopulationMissionEnumList$
+    ePopulationMissionNbr
+};
+
 enum E_FragOrder
 {
 $OrderConduiteEnumList$
@@ -54,6 +60,9 @@ public:
 
     static QString       UnitMissionToString( unsigned int nUnitMission );
     static unsigned int  UnitMissionToId    ( const std::string& strMission );
+
+    static QString       PopulationMissionToString( unsigned int nPopulationMission );
+    static unsigned int  PopulationMissionToId    ( const std::string& strMission );
 
     static QString       FragOrderToString( unsigned int nFragOrder );
     static unsigned int  FragOrderToId    ( const std::string& strFragOrder );

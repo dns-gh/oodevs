@@ -9,6 +9,8 @@
 //
 //*****************************************************************************
 
+// $$$$ HME 2005-10-05: ETRANGE: LE COMPILO PRETEND QUE CES FONCTIONS ONT DEJA ETE DEFINIES
+
 //-----------------------------------------------------------------------------
 // Name: MOS_RC::GetFragOrders
 // Created: NLD 2003-06-05

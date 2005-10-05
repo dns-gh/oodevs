@@ -28,7 +28,7 @@
 #include "MOS_World.h"
 #include "MOS_ActionContext.h"
 #include "MOS_ShapeEditorMapEventFilter.h"
-#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPath constructor
@@ -39,7 +39,7 @@
 */
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
-MOS_ParamPath::MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent)
+MOS_ParamPath::MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent)
     : MOS_ParamListView ( strLabel, false, pParent )
     , MOS_Param_ABC     ()
     , strMenuText_      ( strMenuText )

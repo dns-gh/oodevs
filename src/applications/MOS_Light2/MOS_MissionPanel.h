@@ -27,6 +27,7 @@
 
 class QPopupMenu;
 class MOS_Agent;
+class MOS_Population;
 class MOS_MissionInterface_ABC;
 class MOS_RC;
 class MOS_ShapeEditorMapEventFilter;
@@ -65,6 +66,7 @@ public slots:
 private:
     void FillDiplomacyPopupMenu( QPopupMenu& popumMenu, MOS_Team& team );
     void FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& agent );
+    void FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Population& population );
     void FillFragmentaryOrderPopup( QPopupMenu& popupMenu, MOS_RC& rc );
 
     void hideEvent( QHideEvent* pEvent );
@@ -89,8 +91,9 @@ private slots:
     void ChangeHumanFactors();
 
 private:
-    MOS_Team*   pPopupTeam_;
-    MOS_Agent*  pPopupAgent_;
+    MOS_Team*		pPopupTeam_;
+    MOS_Agent*		pPopupAgent_;
+	MOS_Population* pPopupPopulation_;
 
     MOS_MissionInterface_ABC* pMissionInterface_;
 

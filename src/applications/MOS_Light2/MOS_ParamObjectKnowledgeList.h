@@ -29,6 +29,7 @@
 
 class MOS_Team;
 class MOS_ObjectKnowledge;
+class MOS_Agent_ABC;
 class MOS_Agent;
 
 
@@ -51,7 +52,7 @@ class MOS_ParamObjectKnowledgeList : public MOS_ParamListView, public MOS_Param_
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent );
+    MOS_ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent );
     ~MOS_ParamObjectKnowledgeList();
     //@}
 
@@ -74,7 +75,7 @@ private:
     //@{
     std::string strMenuText_;
     ASN1T_ListKnowledgeObject& asnListKnowledge_;
-    MOS_Agent& agent_;
+    MOS_Agent_ABC& agent_;
     ASN1T_OID* pAsnOIDList_;
     int nMinItems_;
     int nMaxItems_;

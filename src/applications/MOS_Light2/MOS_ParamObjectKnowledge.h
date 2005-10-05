@@ -28,7 +28,7 @@
 
 class MOS_ObjectKnowledge;
 class MOS_Team;
-class MOS_Agent;
+class MOS_Agent_ABC;
 
 
 // =============================================================================
@@ -50,7 +50,7 @@ class MOS_ParamObjectKnowledge : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+    MOS_ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
     ~MOS_ParamObjectKnowledge();
     //@}
 
@@ -71,7 +71,7 @@ private slots:
 private:
     std::string strMenuText_;
     ASN1T_KnowledgeObject& asnKnowledge_;
-    MOS_Agent& agent_;
+    MOS_Agent_ABC& agent_;
     MOS_ObjectKnowledge* pKnowledge_;
 
     MT_ParameterLabel* pLabel_;

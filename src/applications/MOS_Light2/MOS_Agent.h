@@ -23,6 +23,8 @@
 #include "MOS_FireResult.h"
 #include "MT_Tools/MT_Quad.h"
 
+#include "MOS_Agent_ABC.h"
+
 class MOS_Report_ABC;
 class MOS_ObjectKnowledge;
 class MOS_AgentModel;
@@ -45,7 +47,7 @@ class MOS_LogMaintenanceConsign;
 */
 // Created: APE 2004-07-19
 // =============================================================================
-class MOS_Agent
+class MOS_Agent : public MOS_Agent_ABC
 {
     MT_COPYNOTALLOWED( MOS_Agent );
     friend class MOS_GLTool;
@@ -107,6 +109,7 @@ public:
     bool                    IsEmbraye   () const;
     const std::string       GetCategory () const;
     MIL_AgentID             GetAgentID  () const;
+	const uint				GetID		() ;
     const MT_Vector2D&      GetPos      () const;
     const std::string&      GetSymbol   () const;
     MOS_Agent*              GetParent   () const;

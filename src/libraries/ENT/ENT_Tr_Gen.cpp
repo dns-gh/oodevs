@@ -561,16 +561,6 @@ ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[]
     T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
 };
 
-ENT_Tr::T_ConverterTypeTerrain ENT_Tr::TypeTerrainConverter_[] =
-{
-    T_ConverterTypeTerrain( "vide", QT_TRANSLATE_NOOP( "ENT_Tr", "vide" ), eTypeTerrain_Vide ),
-    T_ConverterTypeTerrain( "route", QT_TRANSLATE_NOOP( "ENT_Tr", "route" ), eTypeTerrain_Route ),
-    T_ConverterTypeTerrain( "foret", QT_TRANSLATE_NOOP( "ENT_Tr", "foret" ), eTypeTerrain_Foret ),
-    T_ConverterTypeTerrain( "urbain", QT_TRANSLATE_NOOP( "ENT_Tr", "urbain" ), eTypeTerrain_Urbain ),
-    T_ConverterTypeTerrain( "pont", QT_TRANSLATE_NOOP( "ENT_Tr", "pont" ), eTypeTerrain_Pont ),
-    T_ConverterTypeTerrain( "", "", (E_TypeTerrain)-1 )
-};
-
 ENT_Tr::T_ConverterTypeCR ENT_Tr::TypeCRConverter_[] =
 {
     T_ConverterTypeCR( "message", QT_TRANSLATE_NOOP( "ENT_Tr", "message" ), eTypeCR_Message ),
@@ -848,6 +838,15 @@ ENT_Tr::T_ConverterTC2GererMaterielAvantDeplacement ENT_Tr::TC2GererMaterielAvan
     T_ConverterTC2GererMaterielAvantDeplacement( "detruire materiels en reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "detruire materiels en reparation" ), eTC2GererMaterielAvantDeplacement_DetruireMaterielsEnReparation ),
     T_ConverterTC2GererMaterielAvantDeplacement( "reparer materiels sur place", QT_TRANSLATE_NOOP( "ENT_Tr", "reparer materiels sur place" ), eTC2GererMaterielAvantDeplacement_ReparerMaterielsSurPlace ),
     T_ConverterTC2GererMaterielAvantDeplacement( "", "", (E_TC2GererMaterielAvantDeplacement)-1 )
+};
+
+ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
+{
+    T_ConverterPopulationAttitude( "calme", QT_TRANSLATE_NOOP( "ENT_Tr", "calme" ), ePopulationAttitude_Calme ),
+    T_ConverterPopulationAttitude( "agitee", QT_TRANSLATE_NOOP( "ENT_Tr", "agitee" ), ePopulationAttitude_Agitee ),
+    T_ConverterPopulationAttitude( "excitee", QT_TRANSLATE_NOOP( "ENT_Tr", "excitee" ), ePopulationAttitude_Excitee ),
+    T_ConverterPopulationAttitude( "agressive", QT_TRANSLATE_NOOP( "ENT_Tr", "agressive" ), ePopulationAttitude_Agressive ),
+    T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
 };
 
 
@@ -1206,6 +1205,12 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "", "", (E_UnitMission)-1  )
 };
 
+ENT_Tr::T_ConverterPopulationMission ENT_Tr::populationMissionConverter_[] =
+{
+    T_ConverterPopulationMission( "Population FaireMouvement", QT_TRANSLATE_NOOP( "ENT", "Population FaireMouvement" ), eMission_Population_FaireMouvement ),
+
+    T_ConverterPopulationMission( "", "", (E_PopulationMission)-1  )
+};
 
 ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
 {
@@ -1297,7 +1302,6 @@ void ENT_Tr::InitTranslations()
     InitTr( PrecipitationTypeConverter_, "ENT_Tr" );
     InitTr( TypeLimaConverter_, "ENT_Tr" );
     InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
-    InitTr( TypeTerrainConverter_, "ENT_Tr" );
     InitTr( TypeCRConverter_, "ENT_Tr" );
     InitTr( FireEffectTypeConverter_, "ENT_Tr" );
     InitTr( DiplomatieConverter_, "ENT_Tr" );
@@ -1325,9 +1329,11 @@ void ENT_Tr::InitTranslations()
     InitTr( TypeMunitionTirIndirectConverter_, "ENT_Tr" );
     InitTr( ActionReagirFaceAEniConverter_, "ENT_Tr" );
     InitTr( TC2GererMaterielAvantDeplacementConverter_, "ENT_Tr" );
+    InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
 
-        InitTr( automataMissionConverter_ );
+    InitTr( automataMissionConverter_ );
     InitTr( unitMissionConverter_ );
+    InitTr( populationMissionConverter_ );
     InitTr( fragOrderConverter_ );
 }
 
@@ -1657,15 +1663,6 @@ const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCo
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTypeTerrain
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTypeTerrain( E_TypeTerrain nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TypeTerrainConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromTypeCR
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1908,6 +1905,15 @@ const std::string& ENT_Tr::ConvertFromTC2GererMaterielAvantDeplacement( E_TC2Ger
     return ENT_Tr::InverseFindInConverter( TC2GererMaterielAvantDeplacementConverter_, nValue, nConverterType );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPopulationAttitude
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
+}
+
 
 
 
@@ -1930,6 +1936,14 @@ const std::string& ENT_Tr::ConvertFromUnitMission( E_UnitMission val, ENT_Tr_ABC
     return ENT_Tr::InverseFindInConverter( unitMissionConverter_, val ,e );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPopulationMission
+// Created: JDY 03-07-24
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPopulationMission( E_PopulationMission val, ENT_Tr_ABC::E_Conversion e )
+{
+    return ENT_Tr::InverseFindInConverter( populationMissionConverter_, val ,e );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromFragOrder
@@ -2266,15 +2280,6 @@ E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string&
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTypeTerrain
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TypeTerrain ENT_Tr::ConvertToTypeTerrain( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TypeTerrainConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToTypeCR
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2517,6 +2522,15 @@ E_TC2GererMaterielAvantDeplacement ENT_Tr::ConvertToTC2GererMaterielAvantDeplace
     return ENT_Tr::FindInConverter( TC2GererMaterielAvantDeplacementConverter_, strName );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPopulationAttitude
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
+}
+
 
 
 
@@ -2539,6 +2553,14 @@ E_UnitMission ENT_Tr::ConvertToUnitMission( const std::string& strName )
     return ENT_Tr::FindInConverter( unitMissionConverter_, strName );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPopulationMission
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_PopulationMission ENT_Tr::ConvertToPopulationMission( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( populationMissionConverter_, strName );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToFragOrder

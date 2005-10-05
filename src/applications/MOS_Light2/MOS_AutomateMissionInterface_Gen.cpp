@@ -698,15 +698,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Heliporter()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
     CreateBool( asnMission.attendre_unites, "Attendre unites" );
     CreateBool( asnMission.avec_materiel, "Avec materiel" );
 }
@@ -724,15 +724,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Jalonner()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -750,15 +750,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Helitransporter()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
     CreateBool( asnMission.avec_materiel, "Avec materiel" );
 }
 
@@ -777,15 +777,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_ExtrairePersonnel()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
     CreateBool( asnMission.avec_materiel, "Avec materiel" );
 }
 
@@ -805,15 +805,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Appuyer()
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     CreatePoint( asnMission.point_dislocation, "Point dislocation" );
     CreateLocation( asnMission.zone, "Zone" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -830,15 +830,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Couvrir()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -854,15 +854,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Surveiller()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
     CreatePoint( asnMission.point_logistique, "Point logistique" );
 }
 
@@ -878,15 +878,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Reconnaitre()
     CreatePoint( asnMission.pointRegroupement, "PointRegroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -902,15 +902,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Freiner()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -927,15 +927,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Escorter()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -951,15 +951,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_Attaquer()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -976,15 +976,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_RecueillirFormationAeromob
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1000,15 +1000,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_AttaquerFormationAeromobil
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1025,15 +1025,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_DonnerCoupArret()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1051,15 +1051,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansPro
     CreatePoint( asnMission.point_dislocation, "Point dislocation" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
     CreateBool( asnMission.neutraliser, "Neutraliser" );
 }
 
@@ -1078,15 +1078,15 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZon
     CreatePoint( asnMission.point_dislocation, "Point dislocation" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission,"Ambiance mission" );
-    pSelector_ambiance_mission->AddItem( "aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "as", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
     CreateBool( asnMission.neutraliser, "Neutraliser" );
 }
 
@@ -1103,11 +1103,11 @@ void MOS_AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvet
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
-    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action,"Portee action" );
-    pSelector_portee_action->AddItem( "courte_portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "moyenne_portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "longue_portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "sans_munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
 }
 
 // -----------------------------------------------------------------------------
@@ -1171,13 +1171,13 @@ void MOS_AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreZone()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_defendre_zone;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_zone = &asnMission;
     CreateLocation( asnMission.zone, "Zone" );
-    MOS_ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement,"Mode deploiement" );
-    pSelector_mode_deploiement->AddItem( "en_carre", EnumModeDeploiement::en_carre );
-    pSelector_mode_deploiement->AddItem( "en_triangle", EnumModeDeploiement::en_triangle );
-    pSelector_mode_deploiement->AddItem( "nasse_trois_sections", EnumModeDeploiement::nasse_trois_sections );
-    pSelector_mode_deploiement->AddItem( "nasse_quatre_sections", EnumModeDeploiement::nasse_quatre_sections );
-    pSelector_mode_deploiement->AddItem( "double_rideau", EnumModeDeploiement::double_rideau );
-    pSelector_mode_deploiement->AddItem( "simple_rideau", EnumModeDeploiement::simple_rideau );
+    MOS_ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement" );
+    pSelector_mode_deploiement->AddItem( "Carre", EnumModeDeploiement::en_carre );
+    pSelector_mode_deploiement->AddItem( "Triangle", EnumModeDeploiement::en_triangle );
+    pSelector_mode_deploiement->AddItem( "Trois sections", EnumModeDeploiement::nasse_trois_sections );
+    pSelector_mode_deploiement->AddItem( "Quatre sections", EnumModeDeploiement::nasse_quatre_sections );
+    pSelector_mode_deploiement->AddItem( "Rideau", EnumModeDeploiement::double_rideau );
+    pSelector_mode_deploiement->AddItem( "Rideau", EnumModeDeploiement::simple_rideau );
     CreateNumeric( asnMission.angle, "Angle" );
 }
 
@@ -1191,13 +1191,13 @@ void MOS_AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreSite()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_defendre_site;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_site = &asnMission;
     CreateLocation( asnMission.zone, "Zone" );
-    MOS_ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement,"Mode deploiement" );
-    pSelector_mode_deploiement->AddItem( "en_carre", EnumModeDeploiement::en_carre );
-    pSelector_mode_deploiement->AddItem( "en_triangle", EnumModeDeploiement::en_triangle );
-    pSelector_mode_deploiement->AddItem( "nasse_trois_sections", EnumModeDeploiement::nasse_trois_sections );
-    pSelector_mode_deploiement->AddItem( "nasse_quatre_sections", EnumModeDeploiement::nasse_quatre_sections );
-    pSelector_mode_deploiement->AddItem( "double_rideau", EnumModeDeploiement::double_rideau );
-    pSelector_mode_deploiement->AddItem( "simple_rideau", EnumModeDeploiement::simple_rideau );
+    MOS_ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement" );
+    pSelector_mode_deploiement->AddItem( "Carre", EnumModeDeploiement::en_carre );
+    pSelector_mode_deploiement->AddItem( "Triangle", EnumModeDeploiement::en_triangle );
+    pSelector_mode_deploiement->AddItem( "Trois sections", EnumModeDeploiement::nasse_trois_sections );
+    pSelector_mode_deploiement->AddItem( "Quatre sections", EnumModeDeploiement::nasse_quatre_sections );
+    pSelector_mode_deploiement->AddItem( "Rideau", EnumModeDeploiement::double_rideau );
+    pSelector_mode_deploiement->AddItem( "Rideau", EnumModeDeploiement::simple_rideau );
     CreateNumeric( asnMission.angle, "Angle" );
 }
 
@@ -1211,13 +1211,13 @@ void MOS_AutomateMissionInterface::CreateMission_ASA_MISTRAL_Surveiller()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_surveiller;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_surveiller = &asnMission;
     CreateLocation( asnMission.zone, "Zone" );
-    MOS_ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement,"Mode deploiement" );
-    pSelector_mode_deploiement->AddItem( "en_carre", EnumModeDeploiement::en_carre );
-    pSelector_mode_deploiement->AddItem( "en_triangle", EnumModeDeploiement::en_triangle );
-    pSelector_mode_deploiement->AddItem( "nasse_trois_sections", EnumModeDeploiement::nasse_trois_sections );
-    pSelector_mode_deploiement->AddItem( "nasse_quatre_sections", EnumModeDeploiement::nasse_quatre_sections );
-    pSelector_mode_deploiement->AddItem( "double_rideau", EnumModeDeploiement::double_rideau );
-    pSelector_mode_deploiement->AddItem( "simple_rideau", EnumModeDeploiement::simple_rideau );
+    MOS_ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement" );
+    pSelector_mode_deploiement->AddItem( "Carre", EnumModeDeploiement::en_carre );
+    pSelector_mode_deploiement->AddItem( "Triangle", EnumModeDeploiement::en_triangle );
+    pSelector_mode_deploiement->AddItem( "Trois sections", EnumModeDeploiement::nasse_trois_sections );
+    pSelector_mode_deploiement->AddItem( "Quatre sections", EnumModeDeploiement::nasse_quatre_sections );
+    pSelector_mode_deploiement->AddItem( "Rideau", EnumModeDeploiement::double_rideau );
+    pSelector_mode_deploiement->AddItem( "Rideau", EnumModeDeploiement::simple_rideau );
     CreateNumeric( asnMission.angle, "Angle" );
 }
 

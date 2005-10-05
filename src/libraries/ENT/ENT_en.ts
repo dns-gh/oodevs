@@ -1525,6 +1525,10 @@
         <source>ChangerPositionDebarquement</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Population FaireMouvement</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>
@@ -2777,26 +2781,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>foret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pont</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>urbain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>barbele</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3326,6 +3310,22 @@
     </message>
     <message>
         <source>pont flottant discontinu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>agitee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>excitee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>agressive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

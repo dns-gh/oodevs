@@ -38,7 +38,19 @@ const MOS_Team& MOS_Population::GetTeam()
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 inline
-const std::string& MOS_Population::GetName()
+const std::string MOS_Population::GetName() const
 {
 	return sName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetID
+/** @return 
+*/
+// Created: HME 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+const uint MOS_Population::GetID()
+{
+	return GetPopulationID();
 }

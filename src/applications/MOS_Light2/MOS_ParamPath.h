@@ -27,7 +27,7 @@
 #include "MOS_Param_ABC.h"
 #include "MOS_ParamListView.h"
 
-class MOS_Agent;
+class MOS_Agent_ABC;
 class MOS_ShapeEditorMapEventFilter;
 class QPopupMenu;
 
@@ -51,7 +51,7 @@ class MOS_ParamPath : public MOS_ParamListView, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent);
+    MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent);
     ~MOS_ParamPath();
     //@}
 
@@ -71,7 +71,7 @@ private:
     std::string strMenuText_;
     ASN1T_Itineraire& asnListPoint_;
     ASN1T_CoordUTM* pUMTCoords_;
-    MOS_Agent& agent_;
+    MOS_Agent_ABC& agent_;
 
     T_PointVector pointList_;
 

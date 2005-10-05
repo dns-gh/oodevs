@@ -622,3 +622,14 @@ const MOS_TypeAutomate* MOS_Agent::GetTypeAutomate() const
     return pTypeAutomate_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetID
+/** @return 
+*/
+// Created: HME 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+const uint MOS_Agent::GetID()
+{
+	return GetAgentID();
+}

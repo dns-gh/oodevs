@@ -3,21 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
-//
-// *****************************************************************************
-//
-// $Created: APE 2004-04-20 $
-// $Archive: /MVW_v10/Build/SDK/MOS_Light2/src/MOS_UnitMissionInterface.h $
-// $Author: Ape $
-// $Modtime: 25/10/04 10:14 $
-// $Revision: 3 $
-// $Workfile: MOS_UnitMissionInterface.h $
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __MOS_UnitMissionInterface_h_
-#define __MOS_UnitMissionInterface_h_
+#ifndef __MOS_PopulationMissionInterface_h_
+#define __MOS_PopulationMissionInterface_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -27,29 +18,31 @@
 
 class MOS_Mission;
 class MOS_ASN_MsgPionOrder;
-class MOS_Agent;
+class MOS_ASN_MsgPopulationOrder;
+class MOS_Population;
 
 // =============================================================================
-/** @class  MOS_UnitMissionInterface
-    @brief  MOS_UnitMissionInterface
+/** @class  MOS_PopulationMissionInterface
+    @brief  MOS_PopulationMissionInterface
     @par    Using example
     @code
-    MOS_UnitMissionInterface;
+    MOS_PopulationMissionInterface;
     @endcode
 */
 // Created: APE 2004-04-20
 // =============================================================================
-class MOS_UnitMissionInterface : public MOS_MissionInterface_ABC
+class MOS_PopulationMissionInterface : public MOS_MissionInterface_ABC
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( MOS_UnitMissionInterface );
+    MT_COPYNOTALLOWED( MOS_PopulationMissionInterface );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_UnitMissionInterface( MOS_Agent& agent, uint nMissionId, MOS_MissionPanel& parentPanel );
-    ~MOS_UnitMissionInterface();
+    MOS_PopulationMissionInterface( MOS_Population& population, uint nMissionId, MOS_MissionPanel& parentPanel );
+    ~MOS_PopulationMissionInterface();
     //@}
+   
 
 private:
     //! @name Helpers
@@ -61,7 +54,7 @@ private:
 
     //! @name Generated helpers
     //@{
-#include "MOS_UnitMissionInterface_Gen.h" 
+     #include "MOS_PopulationMissionInterface_Gen.h" 
     //@}
 
 private slots:
@@ -71,10 +64,11 @@ private:
     //! @name Member data
     //@{
     uint nMissionId_;
-    MOS_ASN_MsgPionOrder* pASNMsgOrder_;
+    MOS_ASN_MsgPopulationOrder* pASNMsgOrder_;
     //@}
 };
 
-#   include "MOS_UnitMissionInterface.inl"
 
-#endif // __MOS_UnitMissionInterface_h_
+#include "MOS_PopulationMissionInterface.inl"
+
+#endif // __MOS_PopulationMissionInterface_h_

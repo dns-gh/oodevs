@@ -598,17 +598,6 @@ enum E_InfoContextErrorCode
 };
 
 
-enum E_TypeTerrain
-{
-    eTypeTerrain_Vide,
-    eTypeTerrain_Route,
-    eTypeTerrain_Foret,
-    eTypeTerrain_Urbain,
-    eTypeTerrain_Pont,
-    eNbrTypeTerrain
-};
-
-
 enum E_TypeCR
 {
     eTypeCR_Message,
@@ -912,6 +901,16 @@ enum E_TC2GererMaterielAvantDeplacement
     eTC2GererMaterielAvantDeplacement_DetruireMaterielsEnReparation,
     eTC2GererMaterielAvantDeplacement_ReparerMaterielsSurPlace,
     eNbrTC2GererMaterielAvantDeplacement
+};
+
+
+enum E_PopulationAttitude
+{
+    ePopulationAttitude_Calme,
+    ePopulationAttitude_Agitee,
+    ePopulationAttitude_Excitee,
+    ePopulationAttitude_Agressive,
+    eNbrPopulationAttitude
 };
 
 
@@ -1271,6 +1270,12 @@ enum E_UnitMission
     eNbrUnitMission
 };
 
+enum E_PopulationMission
+{
+    eMission_Population_FaireMouvement,
+
+    eNbrPopulationMission
+};
 
 enum E_FragOrder
 {

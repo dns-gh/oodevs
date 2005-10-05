@@ -70,6 +70,31 @@ $UnitMissionToId$
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_EnumConverter_Skeleton::PopulationMissionToString
+// Created: HME 2005-10-05
+// -----------------------------------------------------------------------------
+QString MOS_EnumConverter_Skeleton::PopulationMissionToString( unsigned int nPopulationMission )
+{
+    QObject a;
+    switch( nPopulationMission )
+    {
+$PopulationMissionToString$
+        default:
+            return a.tr( "Unknown" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_EnumConverter_Skeleton::PopulationMissionToId
+// Created: HME 2005-10-05
+// -----------------------------------------------------------------------------
+unsigned int MOS_EnumConverter_Skeleton::PopulationMissionToId( const std::string& strMission )
+{
+$PopulationMissionToId$
+    return (unsigned int)( -1 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_EnumConverter::FragOrderToString
 // Created: AGR 
 // -----------------------------------------------------------------------------

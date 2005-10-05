@@ -28,8 +28,9 @@
 #include "MOS_ParamComboBox.h"
 
 class MOS_ActionContext;
-class MOS_Agent;
+class MOS_Agent_ABC;
 class MOS_MissionPanel;
+class MOS_Agent;
 
 
 
@@ -52,7 +53,7 @@ class MOS_MissionInterface_ABC : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_MissionInterface_ABC( MOS_Agent& agent, MOS_MissionPanel& parentPanel );
+             MOS_MissionInterface_ABC( MOS_Agent_ABC& agent, MOS_MissionPanel& parentPanel );
     virtual ~MOS_MissionInterface_ABC();
     //@}
 
@@ -109,7 +110,7 @@ protected slots:
 protected:
     //! @name Member data
     //@{
-    MOS_Agent& agent_;
+    MOS_Agent_ABC& agent_;
     MOS_MissionPanel& parentPanel_;
     T_ParamVector paramVector_;
     //@}

@@ -29,6 +29,7 @@
 #include "MOS_ActionContext.h"
 #include "MOS_ObjectKnowledge.h"
 #include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Team.h"
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@
 */
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-MOS_ParamObjectKnowledgeList::MOS_ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent )
+MOS_ParamObjectKnowledgeList::MOS_ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent )
     : MOS_ParamListView( strLabel, true, pParent )
     , MOS_Param_ABC     ()
     , strMenuText_      ( strMenuText )
@@ -92,7 +93,7 @@ void MOS_ParamObjectKnowledgeList::FillRemotePopupMenu( QPopupMenu& popupMenu, c
 
     if( context.selectedElement_.pObject_ != 0 )
     {
-        pPopupKnowledge_ = agent_.GetTeam().FindKnowledgeOnObject( *(context.selectedElement_.pObject_) );
+        pPopupKnowledge_ = dynamic_cast<MOS_Agent*>(&agent_)->GetTeam().FindKnowledgeOnObject( *(context.selectedElement_.pObject_) );
         if( pPopupKnowledge_ == 0 )
             return;
     }

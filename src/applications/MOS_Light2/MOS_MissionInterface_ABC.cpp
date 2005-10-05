@@ -55,7 +55,7 @@
 */
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MOS_MissionInterface_ABC::MOS_MissionInterface_ABC( MOS_Agent& agent, MOS_MissionPanel& parentPanel )
+MOS_MissionInterface_ABC::MOS_MissionInterface_ABC( MOS_Agent_ABC& agent, MOS_MissionPanel& parentPanel )
     : QVBox         ( &parentPanel )
     , agent_        ( agent )
     , parentPanel_  ( parentPanel )

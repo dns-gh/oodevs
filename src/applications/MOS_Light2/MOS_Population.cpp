@@ -137,7 +137,7 @@ void	MOS_Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& asnMsg )
 */
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-const MT_Vector2D& MOS_Population::GetPos()
+const MT_Vector2D& MOS_Population::GetPos() const
 {
 	if ( concentrationMap_.size() == 0 && fluxMap_.size() == 0 )
 		assert( false );

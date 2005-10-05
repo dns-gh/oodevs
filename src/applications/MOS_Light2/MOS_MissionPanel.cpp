@@ -25,12 +25,14 @@
 #include "moc_MOS_MissionPanel.cpp"
 
 #include "MOS_Agent.h"
+#include "MOS_Population.h"
 #include "MOS_MainWindow.h"
 #include "MOS_AgentModel.h"
 #include "MOS_ASN_Messages.h"
 #include "MOS_ActionContext.h"
 #include "MOS_UnitMissionInterface.h"
 #include "MOS_AutomateMissionInterface.h"
+#include "MOS_PopulationMissionInterface.h"
 #include "MOS_FragmentaryOrderInterface.h"
 #include "MOS_ShapeEditorMapEventFilter.h"
 #include "MOS_RC.h"
@@ -93,6 +95,8 @@ void MOS_MissionPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Act
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pAgent_ );
     if( context.selectedElement_.pTeam_ != 0 && MOS_MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
         FillDiplomacyPopupMenu( popupMenu, *context.selectedElement_.pTeam_ );
+    if( context.selectedElement_.pPopulation_ != 0 )
+        FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulation_ );
     else if( context.selectedElement_.pRC_ != 0 )
         FillFragmentaryOrderPopup( popupMenu, *context.selectedElement_.pRC_ );
 }
@@ -105,6 +109,15 @@ void MOS_MissionPanel::FillDiplomacyPopupMenu( QPopupMenu& popupMenu, MOS_Team& 
 {
     pPopupTeam_ = &team;
     popupMenu.insertItem( tr( "Diplomatie" ), this, SLOT( MagicChangeDiplomatie() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::FillDiplomacyPopupMenu
+// Created: AGE 2005-04-06
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Population& population )
+{
+    pPopupPopulation_ = &population;
 }
 
 // -----------------------------------------------------------------------------

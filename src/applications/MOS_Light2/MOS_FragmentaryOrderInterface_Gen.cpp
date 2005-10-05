@@ -285,11 +285,11 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumReglesEngagement >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement,"Order conduite changer regles engagement" );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "none", EnumReglesEngagement::none );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "tir_libre", EnumReglesEngagement::tir_libre );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "tir_sur_riposte", EnumReglesEngagement::tir_sur_riposte );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "tir_interdit", EnumReglesEngagement::tir_interdit );
+    MOS_ParamComboBox< ASN1T_EnumReglesEngagement >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement" );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "None", EnumReglesEngagement::none );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Libre", EnumReglesEngagement::tir_libre );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Sur riposte", EnumReglesEngagement::tir_sur_riposte );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Interdit", EnumReglesEngagement::tir_interdit );
 #undef asnMission
 }
 
@@ -386,13 +386,13 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Pion_AppliquerFeux()
     ASN1T_OrderConduite_Pion_AppliquerFeux& asnMission = *new ASN1T_OrderConduite_Pion_AppliquerFeux();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_appliquer_feux = &asnMission;
-    MOS_ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions,"Munitions" );
-    pSelector_munitions->AddItem( "explosif", EnumTypeMunitionTirIndirect::explosif );
-    pSelector_munitions->AddItem( "grenade", EnumTypeMunitionTirIndirect::grenade );
-    pSelector_munitions->AddItem( "aced", EnumTypeMunitionTirIndirect::aced );
-    pSelector_munitions->AddItem( "fumigene", EnumTypeMunitionTirIndirect::fumigene );
-    pSelector_munitions->AddItem( "eclairant", EnumTypeMunitionTirIndirect::eclairant );
-    pSelector_munitions->AddItem( "mine", EnumTypeMunitionTirIndirect::mine );
+    MOS_ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions" );
+    pSelector_munitions->AddItem( "Explosif", EnumTypeMunitionTirIndirect::explosif );
+    pSelector_munitions->AddItem( "Grenade", EnumTypeMunitionTirIndirect::grenade );
+    pSelector_munitions->AddItem( "Aced", EnumTypeMunitionTirIndirect::aced );
+    pSelector_munitions->AddItem( "Fumigene", EnumTypeMunitionTirIndirect::fumigene );
+    pSelector_munitions->AddItem( "Eclairant", EnumTypeMunitionTirIndirect::eclairant );
+    pSelector_munitions->AddItem( "Mine", EnumTypeMunitionTirIndirect::mine );
     CreateNumeric( asnMission.nb_IT, "Nb IT" );
     CreatePoint( asnMission.cible, "Cible" );
 }
@@ -469,12 +469,12 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance,"Order conduite modifier temps bordee maintenance" );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "temps_8_heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "temps_12_heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "temps_16_heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "temps_20_heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "temps_24_heures", EnumTempsBordee::temps_24_heures );
+    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance, "Order conduite modifier temps bordee maintenance" );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "8 heures", EnumTempsBordee::temps_8_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "12 heures", EnumTempsBordee::temps_12_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "16 heures", EnumTempsBordee::temps_16_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "20 heures", EnumTempsBordee::temps_20_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "24 heures", EnumTempsBordee::temps_24_heures );
 #undef asnMission
 }
 
@@ -486,12 +486,12 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_sante;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante,"Order conduite modifier temps bordee sante" );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "temps_8_heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "temps_12_heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "temps_16_heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "temps_20_heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "temps_24_heures", EnumTempsBordee::temps_24_heures );
+    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante, "Order conduite modifier temps bordee sante" );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "8 heures", EnumTempsBordee::temps_8_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "12 heures", EnumTempsBordee::temps_12_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "16 heures", EnumTempsBordee::temps_16_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "20 heures", EnumTempsBordee::temps_20_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "24 heures", EnumTempsBordee::temps_24_heures );
 #undef asnMission
 }
 
@@ -578,10 +578,10 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni()
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement" );
-    MOS_ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action,"Action" );
-    pSelector_action->AddItem( "detruire_moyens", EnumActionReagirFaceAEni::detruire_moyens );
-    pSelector_action->AddItem( "defendre", EnumActionReagirFaceAEni::defendre );
-    pSelector_action->AddItem( "demonter", EnumActionReagirFaceAEni::demonter );
+    MOS_ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action" );
+    pSelector_action->AddItem( "Moyens", EnumActionReagirFaceAEni::detruire_moyens );
+    pSelector_action->AddItem( "Defendre", EnumActionReagirFaceAEni::defendre );
+    pSelector_action->AddItem( "Demonter", EnumActionReagirFaceAEni::demonter );
 }
 
 // -----------------------------------------------------------------------------
@@ -617,10 +617,10 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_TC2_GererMaterielAvantD
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement,"Order conduite automate tc2 gerer materiel avant deplacement" );
-    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "deborder_materiels_vers_bld", EnumTC2GererMaterielAvantDeplacement::deborder_materiels_vers_bld );
-    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "detruire_materiels_en_reparation", EnumTC2GererMaterielAvantDeplacement::detruire_materiels_en_reparation );
-    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "reparer_materiels_sur_place", EnumTC2GererMaterielAvantDeplacement::reparer_materiels_sur_place );
+    MOS_ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Order conduite automate tc2 gerer materiel avant deplacement" );
+    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Materiels vers bld", EnumTC2GererMaterielAvantDeplacement::deborder_materiels_vers_bld );
+    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Materiels en reparation", EnumTC2GererMaterielAvantDeplacement::detruire_materiels_en_reparation );
+    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Materiels sur place", EnumTC2GererMaterielAvantDeplacement::reparer_materiels_sur_place );
 #undef asnMission
 }
 

@@ -67,10 +67,13 @@ public:
 	class iterator
 	{
 	public:
-		iterator( T_PointVector& flux )
+		iterator( T_PointVector& flux, bool debut )
 			: flux_			( flux )
 		{
-			it = flux_.begin();
+			if (debut)
+                it = flux_.begin();
+            else
+                it = flux_.end();
 		}
 		~iterator()
 		{
@@ -78,6 +81,11 @@ public:
 		iterator& operator++()
 		{
 			++it;
+			return *this;
+		}
+		iterator& operator--()
+		{
+			--it;
 			return *this;
 		}
 		MT_Vector2D&	operator*()
@@ -105,11 +113,12 @@ public:
 
 	iterator& begin()
 	{
-		return *new iterator( flux_ );
+		return *new iterator( flux_ , true );
 	};
 	iterator& end()
 	{
-		return *new iterator( flux_ );
+		iterator a = *new iterator( flux_, false );
+        return a;
 	};
 
 

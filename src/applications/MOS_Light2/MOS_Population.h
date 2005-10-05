@@ -19,6 +19,8 @@
 
 #include "MOS_PopulationPart_ABC.h"
 
+#include "MOS_Agent_ABC.h"
+
 class MOS_PopulationConcentration;
 class MOS_PopulationFlux;
 class MOS_Team;
@@ -35,7 +37,7 @@ class MOS_TypePopulation;
 */
 // Created: HME 2005-09-29
 // =============================================================================
-class MOS_Population
+class MOS_Population : public MOS_Agent_ABC
 {
     friend class MOS_GLTool;
 public :
@@ -63,9 +65,10 @@ public:
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
 
 	MIL_AgentID			GetPopulationID();
+	const uint			GetID();
 	const MOS_Team&		GetTeam();
-	const std::string&	GetName();
-	const MT_Vector2D&	GetPos();
+	const std::string	GetName() const;
+	const MT_Vector2D&	GetPos() const ;
 	uint				GetLivingHumans();
 	uint				GetDeadHumans();
 

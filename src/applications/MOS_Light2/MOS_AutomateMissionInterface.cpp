@@ -54,7 +54,7 @@ MOS_AutomateMissionInterface::MOS_AutomateMissionInterface( MOS_Agent& agent, ui
 {
     pASNMsgOrder_ = new MOS_ASN_MsgAutomateOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent_);
-    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetAgentID();
+    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetID();
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( nMissionId_ ) ).c_str(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );

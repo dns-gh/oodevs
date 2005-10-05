@@ -25,11 +25,12 @@
 #include "moc_MOS_ParamAgentKnowledge.cpp"
 
 #include "MOS_App.h"
-#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"
 #include "MOS_ActionContext.h"
 #include "MOS_AgentKnowledge.h"
+#include "MOS_Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledge constructor
@@ -40,7 +41,7 @@
 */
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-MOS_ParamAgentKnowledge::MOS_ParamAgentKnowledge( ASN1T_KnowledgeAgent& asnKnowledge, MOS_Agent& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamAgentKnowledge::MOS_ParamAgentKnowledge( ASN1T_KnowledgeAgent& asnKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
     : QHBox             ( pParent )
     , MOS_Param_ABC     ()
     , strMenuText_      ( strMenuText )
@@ -85,10 +86,10 @@ void MOS_ParamAgentKnowledge::FillRemotePopupMenu( QPopupMenu& popupMenu, const 
     if( context.selectedElement_.pAgent_ != 0 )
     {
         // Disallow using knowledges on agents from our own team.
-        if( context.selectedElement_.pAgent_->GetTeam().GetID() == agent_.GetTeam().GetID() )
+        if( context.selectedElement_.pAgent_->GetTeam().GetID() == dynamic_cast<MOS_Agent*>(&agent_)->GetTeam().GetID() )
             return;
 
-        pPopupKnowledge_ = agent_.GetGtia().FindKnowledgeOnAgent( *(context.selectedElement_.pAgent_) );
+        pPopupKnowledge_ = dynamic_cast<MOS_Agent*>(&agent_)->GetGtia().FindKnowledgeOnAgent( *(context.selectedElement_.pAgent_) );
         if( pPopupKnowledge_ == 0 )
             return;
     }
