@@ -16,7 +16,7 @@
 inline
 const MT_Vector2D& MOS_PopulationFlux::GetPos()
 {
-	return tete_;
+	return *flux_.begin();
 }
 
 // -----------------------------------------------------------------------------

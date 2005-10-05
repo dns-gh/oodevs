@@ -125,6 +125,7 @@ public:
 			itCon = it.itCon;
 			itFlux = it.itFlux;
 			onCon_ = it.onCon_;
+			fluxMap_ = it.fluxMap_;
 			return *this;
 		}
 	private:

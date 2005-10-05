@@ -27,8 +27,7 @@ MOS_PopulationFlux::MOS_PopulationFlux( uint id, MOS_Population* parent )
 : MOS_PopulationPart_ABC()	
 , parent_			( parent )
 ,	nID_			( id )
-, HasQueue			( false )
-, HasTete			( false )
+, HasFlux			( false )
 , HasItineraire		( false )
 , HasDirection		( false )
 , HasVitesse		( false )
@@ -79,16 +78,6 @@ void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 		direction_			= asnMsg.direction;
 		HasDirection		= true;
 	}
-	if ( asnMsg.m.queuePresent )
-	{
-		MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.queue.data, queue_ );
-		HasQueue			= true;
-	}
-	if ( asnMsg.m.tetePresent )
-	{
-		MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.tete.data, tete_  );
-		HasTete				= true;
-	}
 	if ( asnMsg.m.itinerairePresent )
 	{
 		HasItineraire		= true;
@@ -97,6 +86,16 @@ void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 			MT_Vector2D point;
 			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, point  );
 			itineraire_.push_back( point );
+		}
+	}
+	if ( asnMsg.m.fluxPresent )
+	{
+		HasFlux		= true;
+		for( int i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
+		{
+			MT_Vector2D point;
+			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.flux.vecteur_point.elem[i].data, point  );
+			flux_.push_back( point );
 		}
 	}
 }

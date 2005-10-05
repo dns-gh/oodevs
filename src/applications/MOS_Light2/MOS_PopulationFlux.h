@@ -54,14 +54,64 @@ public:
 	std::string GetStringAttitude();
     //@}
 
-	bool HasQueue;
-	bool HasTete;
+	bool HasFlux;
 	bool HasItineraire;
 	bool HasDirection;	
 	bool HasVitesse;		
 	bool HasLivingHumans;	
 	bool HasDeadHumans;	
 	bool HasAttitude;		
+
+public:
+
+	class iterator
+	{
+	public:
+		iterator( T_PointVector& flux )
+			: flux_			( flux )
+		{
+			it = flux_.begin();
+		}
+		~iterator()
+		{
+		}
+		iterator& operator++()
+		{
+			++it;
+			return *this;
+		}
+		MT_Vector2D&	operator*()
+		{
+			return *it;
+		}
+		bool operator==( iterator& it2 )
+		{
+			return ( it == it2.it && it == it2.it );
+		}
+		bool operator!=( iterator& it2 )
+		{
+			return ( it != it2.it || it != it2.it );
+		}
+		iterator& operator=( iterator& it2 )
+		{
+			it = it2.it;
+			flux_ = it2.flux_;
+			return *this;
+		}
+	private:
+		IT_PointVector					it;
+		T_PointVector&					flux_;
+	};
+
+	iterator& begin()
+	{
+		return *new iterator( flux_ );
+	};
+	iterator& end()
+	{
+		return *new iterator( flux_ );
+	};
+
 
 private:
     //! @name Copy/Assignement
@@ -80,8 +130,7 @@ private:
 	MOS_Population*					parent_;
 	uint							nID_;
 	T_PointVector					itineraire_;
-	MT_Vector2D						queue_;
-	MT_Vector2D						tete_;
+	T_PointVector					flux_;
 	int								direction_;
 	int								vitesse_;
 	int								nLivingHumans_;

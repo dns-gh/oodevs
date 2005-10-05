@@ -16,7 +16,7 @@
 inline
 const MT_Vector2D&	MOS_PopulationConcentration::GetPos()
 {
-	return center_;
+	return position_;
 }
 
 // -----------------------------------------------------------------------------

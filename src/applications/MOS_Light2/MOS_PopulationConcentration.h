@@ -36,7 +36,7 @@ class MOS_PopulationConcentration : public MOS_PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_PopulationConcentration( uint, MOS_Population* );
+             MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , MOS_Population* );
     virtual ~MOS_PopulationConcentration();
     //@}
 
@@ -56,7 +56,6 @@ public:
     //@}
 
     bool HasAttitude;
-	bool HasForme;
 	bool HasLivingHumans;
 	bool HasDeadHumans;
 	bool HasDensity;
@@ -81,8 +80,7 @@ private:
 	int								nLivingHumans_;
 	int								nDeadHumans_;
 	ASN1T_EnumPopulationAttitude	attitude_;
-	T_PointVector					forme_;
-	MT_Vector2D						center_;
+	MT_Vector2D						position_;
     //@}			
 };
 

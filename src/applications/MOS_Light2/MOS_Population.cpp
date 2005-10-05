@@ -96,7 +96,7 @@ void	MOS_Population::CreatePopulationFlux( const ASN1T_MsgPopulationFluxCreation
 // -----------------------------------------------------------------------------
 void	MOS_Population::CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-	MOS_PopulationConcentration* pCon = new MOS_PopulationConcentration( asnMsg.oid_concentration, this );
+	MOS_PopulationConcentration* pCon = new MOS_PopulationConcentration( asnMsg, this );
 	concentrationMap_[ asnMsg.oid_concentration ] = pCon ;
 }
 

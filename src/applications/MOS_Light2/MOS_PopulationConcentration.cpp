@@ -22,17 +22,18 @@
 // Name: MOS_PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-MOS_PopulationConcentration::MOS_PopulationConcentration( uint id, MOS_Population* parent )
+MOS_PopulationConcentration::MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , MOS_Population* parent )
 : 	MOS_PopulationPart_ABC()	
 ,	parent_			( parent )
-,	nID_			( id )
-,	center_			( MT_Vector2D( 0, 0 ) )
+,	nID_			( asnMsg.oid_concentration )
+,	position_		( MT_Vector2D( 0, 0 ) )
 ,   HasAttitude		( false )
-,   HasForme		( false )
 ,   HasLivingHumans	( false )
 ,   HasDeadHumans	( false )
 ,   HasDensity		( false )
 {
+
+	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,18 +67,6 @@ void MOS_PopulationConcentration::Update( const ASN1T_MsgPopulationConcentration
 		attitude_			= asnMsg.attitude;
 		HasAttitude			= true;
 	}
-	if ( asnMsg.m.formePresent )
-	{
-		HasForme			= true;
-		for( uint i = 0; i < asnMsg.forme.vecteur_point.n; ++i )
-		{
-			MT_Vector2D vTmp;
-			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.forme.vecteur_point.elem[i].data, vTmp );
-			forme_.push_back( vTmp );
-			center_ += vTmp;
-		}
-		if( forme_.size() > 1 )
-		center_ /= forme_.size();
-	}
+
 }
 
