@@ -25,7 +25,7 @@
 MOS_PopulationPanel::MOS_PopulationPanel(  QWidget* pParent )
     : MOS_InfoPanel_ABC ( pParent )
 {
-	QFont boldFont = this->font();
+    QFont boldFont = this->font();
     boldFont.setBold( true );
 
     // Info groupbox
@@ -44,10 +44,10 @@ MOS_PopulationPanel::MOS_PopulationPanel(  QWidget* pParent )
     new QLabel( tr( "Attitude:" ), pInfoGroupBox );
     pAttitudeLabel_ = new QLabel( pInfoGroupBox );
 
-	pPartsListView_ = new QListView( pInfoGroupBox );
-	pPartsListView_->addColumn( tr( "Morceau" ) );
+    pPartsListView_ = new QListView( pInfoGroupBox );
+    pPartsListView_->addColumn( tr( "Morceau" ) );
     pPartsListView_->addColumn( tr( "Hommes vivants" ) );
-	pPartsListView_->addColumn( tr( "Hommes morts" ) );
+    pPartsListView_->addColumn( tr( "Hommes morts" ) );
     pPartsListView_->addColumn( tr( "attitude" ) );
 
 }
@@ -66,10 +66,10 @@ MOS_PopulationPanel::~MOS_PopulationPanel()
 // -----------------------------------------------------------------------------
 void MOS_PopulationPanel::OnClearSelection()
 {
-	pNameLabel_                  ->setText( "" );
-    pLivingLabel_				 ->setText( "" );
-    pDeadLabel_                  ->setText( "" );
-    pAttitudeLabel_              ->setText( "" );
+    pNameLabel_    ->setText( "" );
+    pLivingLabel_  ->setText( "" );
+    pDeadLabel_    ->setText( "" );
+    pAttitudeLabel_->setText( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,23 +93,23 @@ void MOS_PopulationPanel::OnUpdate()
 // -----------------------------------------------------------------------------
 void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
 {
-	if( ! ShouldDisplay( population ) )
+    if( ! ShouldDisplay( population ) )
         return;
 
     pNameLabel_->setText( (population.GetName()).c_str() );
 
-	pLivingLabel_->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
+    pLivingLabel_->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
 
     pDeadLabel_->setText( QString( "%1" ).arg( population.GetDeadHumans() )  );
 
     pAttitudeLabel_->setText( "" );
 
-	for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
-		new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
-			, QString( (*it)->GetName().c_str() )
-			, QString( "%1" ).arg( (*it)->GetLivingHumans() )
-			, QString( "%1" ).arg( (*it)->GetDeadHumans() ) 
-			, QString( (*it)->GetStringAttitude().c_str() ) );
+    for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
+        new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
+            , QString( (*it)->GetName().c_str() )
+            , QString( "%1" ).arg( (*it)->GetLivingHumans() )
+            , QString( "%1" ).arg( (*it)->GetDeadHumans() ) 
+            , QString( (*it)->GetStringAttitude().c_str() ) );
 
 
 }

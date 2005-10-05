@@ -82,9 +82,9 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     archive.ReadField( "MosID"                     , nID_                   );
-    archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_ );
-    archive.ReadField( "DensiteNominaleDeplacement", rDefaultFlowDensity_   );
-    archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_             );
+    archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_, CheckValueGreater( 0. ) );
+    archive.ReadField( "DensiteNominaleDeplacement", rDefaultFlowDensity_  , CheckValueGreater( 0. ) );
+    archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_            , CheckValueGreater( 0. ) );
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
     

@@ -36,6 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive );
+     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
     ~MIL_PopulationConcentration();
     //@}
 
@@ -52,10 +53,17 @@ public:
     void     Move      ( const MT_Vector2D& destination );
     //@}
 
+    //! @name Flows management
+    //@{
+    void RegisterPushingFlow  ( MIL_PopulationFlow& flow );
+    void UnregisterPushingFlow( MIL_PopulationFlow& flow );
+    //@}
+
     //! @name Accessors
     //@{
-    const MT_Vector2D&            GetPosition() const;
-    const MIL_PopulationAttitude& GetAttitude() const;
+    const MT_Vector2D&            GetPosition   () const;
+    const MIL_PopulationAttitude& GetAttitude   () const;
+          bool                    IsNearPosition( const MT_Vector2D& position ) const;
     //@}
 
     //! @name Network
@@ -74,7 +82,15 @@ private:
 
     //! @name Network
     //@{
-    bool HasChanged() const;
+    void SendDestruction() const;
+    bool HasChanged     () const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::set< MIL_PopulationFlow* > T_FlowSet;
+    typedef T_FlowSet::const_iterator       CIT_FlowSet;
     //@}
 
 private:
@@ -86,6 +102,7 @@ private:
     const MIL_PopulationAttitude* pAttitude_;
 
           MIL_PopulationFlow*     pPullingFlow_;
+          T_FlowSet               pushingFlows_;
 
     // Network
     bool bHumansUpdated_;

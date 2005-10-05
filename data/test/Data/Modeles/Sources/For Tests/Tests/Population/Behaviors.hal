@@ -20,12 +20,22 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
     {
         persistent T_Action                actionMove;
         persistent E_EtatActionDeplacement nEtatDeplacement;
+        persistent float rDummy = 0;
         
         if( DIA_ModuleBegins() )
         {
             DEC_Debug( "MIS_Population_FaireMouvement - DIA_ModuleBegins" );
             actionMove = DEC_StartDeplacement( mission.destination_ );
         }
+        
+        if( rDummy == 53 )
+        {
+            DEC_StopAction( actionMove );
+            T_Point pointFusse = DEC_Geometrie_PositionAleatoireSurCercle( mission.destination_, 2000 );
+            actionMove = DEC_StartDeplacement( pointFusse );
+            
+        }
+        ++ rDummy;
     }
 
     on spontaneous end:
@@ -34,3 +44,4 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
             DEC_StopAction( actionMove );    
     }    
 }
+// 22 + 53 

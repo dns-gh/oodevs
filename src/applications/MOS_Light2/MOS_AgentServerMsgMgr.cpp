@@ -1651,8 +1651,6 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeD
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationCreation
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCreation& asnMsg )
@@ -1666,8 +1664,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCr
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationUpdate
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
@@ -1683,8 +1679,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpda
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationCreation
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
@@ -1700,8 +1694,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_Ms
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
@@ -1717,8 +1709,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
@@ -1734,8 +1724,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgP
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulationFluxCreation& asnMsg )
@@ -1751,8 +1739,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulati
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
@@ -1768,8 +1754,6 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPop
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
@@ -1897,14 +1881,14 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
         case T_MsgsSimMos_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *asnMsg.u.msg_log_sante_traitement_humain_update ); break;
         case T_MsgsSimMos_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *asnMsg.u.msg_log_sante_etat ); break;
 
-        case T_MsgsSimMos_msg_population_creation                       : OnMsgPopulationCreation( *asnMsg.u.msg_population_creation ); break;
-        case T_MsgsSimMos_msg_population_update                         : OnMsgPopulationUpdate( *asnMsg.u.msg_population_update ); break;
-        case T_MsgsSimMos_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation( *asnMsg.u.msg_population_concentration_creation ); break;
+        case T_MsgsSimMos_msg_population_creation                       : OnMsgPopulationCreation                ( *asnMsg.u.msg_population_creation ); break;
+        case T_MsgsSimMos_msg_population_update                         : OnMsgPopulationUpdate                  ( *asnMsg.u.msg_population_update ); break;
+        case T_MsgsSimMos_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *asnMsg.u.msg_population_concentration_creation ); break;
         case T_MsgsSimMos_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *asnMsg.u.msg_population_concentration_destruction ); break;
-        case T_MsgsSimMos_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate( *asnMsg.u.msg_population_concentration_update ); break;
-        case T_MsgsSimMos_msg_population_flux_creation                  : OnMsgPopulationFluxCreation( *asnMsg.u.msg_population_flux_creation ); break;
-        case T_MsgsSimMos_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction( *asnMsg.u.msg_population_flux_destruction ); break;
-        case T_MsgsSimMos_msg_population_flux_update                    : OnMsgPopulationFluxUpdate( *asnMsg.u.msg_population_flux_update ); break;
+        case T_MsgsSimMos_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *asnMsg.u.msg_population_concentration_update ); break;
+        case T_MsgsSimMos_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *asnMsg.u.msg_population_flux_creation ); break;
+        case T_MsgsSimMos_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *asnMsg.u.msg_population_flux_destruction ); break;
+        case T_MsgsSimMos_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *asnMsg.u.msg_population_flux_update ); break;
 
         default:
             {

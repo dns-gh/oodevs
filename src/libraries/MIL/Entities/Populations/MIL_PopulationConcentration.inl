@@ -57,3 +57,25 @@ bool MIL_PopulationConcentration::HasChanged() const
 {
     return bHumansUpdated_ || bAttitudeUpdated_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::RegisterPushingFlow
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
+{
+    bool bOut = pushingFlows_.insert( &flow ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::UnregisterPushingFlow
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flow )
+{
+    int nOut = pushingFlows_.erase( &flow );
+    assert( nOut );
+}

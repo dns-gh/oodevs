@@ -22,6 +22,7 @@
 #include "MIL_PopulationType.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"
+#include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationDecision.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
@@ -33,13 +34,14 @@
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
-    : PHY_Actor    ()
-    , type_        ( type )
-    , nID_         ( nID )
-    , pArmy_       ( 0 )
-    , strName_     ( type.GetName() )
-    , pDecision_   ( 0 )
-    , orderManager_( *this )
+    : PHY_Actor        ()
+    , type_            ( type )
+    , nID_             ( nID )
+    , pArmy_           ( 0 )
+    , strName_         ( type.GetName() )
+    , pDecision_       ( 0 )
+    , orderManager_    ( *this )
+    , pDefaultAttitude_( 0 )
 {
     archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
 
@@ -52,6 +54,12 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     pArmy_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
     if( !pArmy_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
+
+    std::string strAttitude;
+    archive.ReadField( "Attitude", strAttitude );
+    pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
+    if( !pDefaultAttitude_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude", archive.GetContext() );
 
     pDecision_ = new DEC_PopulationDecision( *this );
     
@@ -87,9 +95,20 @@ void MIL_Population::UpdateDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateState()
 {
-    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).Update();
+    // Flows    
+    for( IT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); )
+    {
+        MIL_PopulationFlow* pFlow = *itFlow;
+        if( !pFlow->Update() )
+        {
+            itFlow = flows_.erase( itFlow );
+            delete pFlow;
+        }
+        else 
+            ++ itFlow;
+    }
 
+    // Concentrations
     for( IT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
     {
         MIL_PopulationConcentration* pConcentration = *itConcentration;
@@ -130,7 +149,7 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 }
 
 // =============================================================================
-// FLOWS MANAGEMENT
+// FLOWS / CONCENTRATION MANAGEMENT
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -143,6 +162,27 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& con
     flows_.insert( pFlow );
     return *pFlow;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetConcentration
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D& position )
+{
+    for( CIT_ConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    {
+        if( (**it).IsNearPosition( position ) )
+            return **it;
+    }
+
+    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, position );
+    concentrations_.insert( pConcentration  );
+    return *pConcentration;
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetMaxSpeed

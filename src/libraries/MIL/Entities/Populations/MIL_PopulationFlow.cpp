@@ -35,7 +35,7 @@ MIL_MOSIDManager MIL_PopulationFlow::idManager_;
 // Name: MIL_PopulationFlow constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
+MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
     : population_          ( population )
     , nID_                 ( idManager_.GetFreeSimID() )
     , pSourceConcentration_( &sourceConcentration )
@@ -43,6 +43,8 @@ MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_Po
     , pAttitude_           ( &sourceConcentration.GetAttitude() )
     , destination_         ( )
     , pCurrentPath_        ( 0 )
+    , bMoving_             ( false )
+    , bHeadMoveFinished_   ( false )
     , flowShape_           ( 2, sourceConcentration.GetPosition() )
     , direction_           ( 0., 1. )
     , rSpeed_              ( 0. )
@@ -56,6 +58,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_Po
     , bAttitudeUpdated_    ( true )
 {
     assert( pAttitude_ );
+    SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +67,11 @@ MIL_PopulationFlow::MIL_PopulationFlow( const MIL_Population& population, MIL_Po
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::~MIL_PopulationFlow()
 {
+    assert( !pSourceConcentration_ );
+    assert( !pDestConcentration_   );    
+
+    SendDestruction();
+
     idManager_.ReleaseSimID( nID_ );
 }
 
@@ -91,10 +99,18 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         pCurrentPath_ = new DEC_Population_Path( *this, destination_ );
         pCurrentPath_->IncRef();
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pCurrentPath_ );
+
+        if( pDestConcentration_ )
+        {
+            pDestConcentration_->UnregisterPushingFlow( *this );
+            pDestConcentration_ = 0;
+        }
     }
 
     assert( pCurrentPath_ );
-    PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
+    int nOut = PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
+    if( nOut == DEC_PathWalker::eFinished )
+        bHeadMoveFinished_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,11 +132,11 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
 {
+    bMoving_   = true;
     direction_ = direction;
     rSpeed_    = rSpeed;
 
-    assert( !flowShape_.empty() );
-    flowShape_.back() = position; 
+    SetHeadPosition( position );
 
     bFlowShapeUpdated_ = true;
     bDirectionUpdated_ = true;
@@ -136,7 +152,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
     bFlowShapeUpdated_ =  true;
 
     /////// $$ A NETTOYER
-    MT_Vector2D  vCur   = *flowShape_.begin();
+    MT_Vector2D  vCur   = GetTailPosition();
     IT_PointList itNext = flowShape_.begin();
     ++itNext;
 
@@ -157,7 +173,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
             IT_PointList itStart = flowShape_.begin();
             ++ itStart;
             flowShape_.erase ( itStart, itNext );
-            flowShape_.front() = vCur;
+            SetTailPosition( vCur );
             break;
         }
         else
@@ -172,7 +188,7 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
                 IT_PointList itStart = flowShape_.begin();
                 ++ itStart;
                 flowShape_.erase( itStart, itTmp );
-                flowShape_.front() = flowShape_.back();
+                SetTailPosition( GetHeadPosition() );
                 break;
             }
             vNext = *itNext;
@@ -188,27 +204,46 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
 // Name: MIL_PopulationFlow::Update
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::Update()
+bool MIL_PopulationFlow::Update()
 {
-    const MT_Float rWalkedDistance = population_.GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
-
-    //MT_Float rNbrHumans = std::min( rWalkedDistance * population_.GetDefaultFlowDensity(), rNbrAliveHumans_ );
-    MT_Float rNbrHumans = rWalkedDistance * population_.GetDefaultFlowDensity();
-
-    if( pSourceConcentration_ )
+    if( bMoving_ )
     {
-        rNbrAliveHumans_ += pSourceConcentration_->PullHumans( rNbrHumans );
-        bHumansUpdated_ = true;
-    }
-    else
-        UpdateTailPosition( rWalkedDistance );
+        const MT_Float rWalkedDistance = population_.GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
 
-    rNbrHumans = std::min( rNbrHumans, rNbrAliveHumans_ );
-    if( pDestConcentration_ )
-    {
-        rNbrAliveHumans_ -= pDestConcentration_->PushHumans( rNbrHumans );
-        bHumansUpdated_ = true;
+        // Tail management
+        MT_Float rNbrHumans = rWalkedDistance * population_.GetDefaultFlowDensity();
+        if( pSourceConcentration_ )
+        {
+            rNbrAliveHumans_ += pSourceConcentration_->PullHumans( rNbrHumans );
+            bHumansUpdated_ = true;
+        }
+        else
+            UpdateTailPosition( rWalkedDistance );
+
+
+        // Head management
+        if( bHeadMoveFinished_ && !pDestConcentration_ )
+        {
+            pDestConcentration_ = &population_.GetConcentration( GetHeadPosition() );
+            pDestConcentration_->RegisterPushingFlow( *this );
+        }
+
+        rNbrHumans = std::min( rNbrHumans, rNbrAliveHumans_ );
+        if( pDestConcentration_ )
+        {
+            rNbrAliveHumans_ -= pDestConcentration_->PushHumans( rNbrHumans );
+            bHumansUpdated_ = true;
+        }
     }
+
+    // Destruction
+    if( pDestConcentration_ && !pSourceConcentration_ && GetHeadPosition() == GetTailPosition() )
+    {
+        pDestConcentration_->UnregisterPushingFlow( *this );
+        pDestConcentration_ = 0;
+        return false; // Must be destroyed
+    }
+    return true;
 }
 
 // =============================================================================
@@ -235,6 +270,18 @@ MT_Float MIL_PopulationFlow::GetMaxSpeed() const
 void MIL_PopulationFlow::SendCreation() const
 {
     NET_ASN_MsgPopulationFluxCreation asnMsg;
+    asnMsg.GetAsnMsg().oid_flux       = nID_;
+    asnMsg.GetAsnMsg().oid_population = population_.GetID();
+    asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SendDestruction
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SendDestruction() const
+{
+    NET_ASN_MsgPopulationFluxDestruction asnMsg;
     asnMsg.GetAsnMsg().oid_flux       = nID_;
     asnMsg.GetAsnMsg().oid_population = population_.GetID();
     asnMsg.Send();

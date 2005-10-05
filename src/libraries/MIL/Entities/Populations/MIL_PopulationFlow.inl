@@ -160,6 +160,8 @@ void MIL_PopulationFlow::Clean()
     bSpeedUpdated_     = false;
     bHumansUpdated_    = false;
     bAttitudeUpdated_  = false;
+    bMoving_           = false;
+    bHeadMoveFinished_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,3 +189,48 @@ void MIL_PopulationFlow::UnregisterSourceConcentration( MIL_PopulationConcentrat
     assert( pSourceConcentration_ == &concentration );
     pSourceConcentration_ = 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetHeadPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MIL_PopulationFlow::GetHeadPosition() const
+{
+    assert( flowShape_.size() >= 2 );
+    return flowShape_.back();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetTailPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MIL_PopulationFlow::GetTailPosition() const
+{
+    assert( flowShape_.size() >= 2 );
+    return flowShape_.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetHeadPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
+{
+    assert( flowShape_.size() >= 2 );
+    flowShape_.back() = position;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetTailPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationFlow::SetTailPosition( const MT_Vector2D& position )
+{
+    assert( flowShape_.size() >= 2 );
+    flowShape_.front() = position;
+}
+

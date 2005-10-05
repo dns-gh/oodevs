@@ -37,13 +37,13 @@ class MIL_PopulationFlow : public PHY_MovingEntity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationFlow( const MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
+     MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
     ~MIL_PopulationFlow();
     //@}
 
     //! @name Operations
     //@{
-    void Update();
+    bool Update();
     void Clean ();
     //@}
 
@@ -87,8 +87,13 @@ private:
 
     //! @name 
     //@{
-    virtual void ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
-            void UpdateTailPosition( const MT_Float rWalkedDistance );
+    virtual void               ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
+            void               UpdateTailPosition( const MT_Float rWalkedDistance );
+
+    const MT_Vector2D& GetHeadPosition   () const;
+    const MT_Vector2D& GetTailPosition   () const;
+          void         SetHeadPosition( const MT_Vector2D& position );
+          void         SetTailPosition( const MT_Vector2D& position );
     //@}
 
     //! @name Notifications
@@ -110,11 +115,12 @@ private:
 
     //! @name Network
     //@{
-    bool HasChanged() const;
+    void SendDestruction() const;
+    bool HasChanged     () const;
     //@}
 
 private:
-    const MIL_Population&              population_;
+          MIL_Population&              population_;
     const uint                         nID_;
 
     const MIL_PopulationAttitude*      pAttitude_;
@@ -123,6 +129,9 @@ private:
          
     MT_Vector2D          destination_;
     DEC_Population_Path* pCurrentPath_;
+    bool                 bMoving_;
+    bool                 bHeadMoveFinished_;
+
     MT_Vector2D          direction_;
     MT_Float             rSpeed_;
     T_PointList          flowShape_;

@@ -27,6 +27,7 @@
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
+class MIL_PopulationAttitude;
 class MIL_Army;
 class DEC_PopulationDecision;
 
@@ -52,7 +53,7 @@ public:
           MIL_PopulationOrderManager& GetOrderManager      ();
           MT_Float                    GetMaxSpeed          () const;
           MT_Float                    GetDefaultFlowDensity() const;
-
+    const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
     //@}
 
     //! @name Operations
@@ -71,7 +72,8 @@ public:
 
     //! @name Tools
     //@{
-    MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );
+    MIL_PopulationFlow&          CreateFlow      ( MIL_PopulationConcentration& concentration );
+    MIL_PopulationConcentration& GetConcentration( const MT_Vector2D& position );
     //@}
 
     //! @name Network 
@@ -108,13 +110,14 @@ private:
     //@}
 
 private:
-    const MIL_PopulationType& type_;
-    const uint                nID_;
-    const MIL_Army*           pArmy_;
-          std::string         strName_;
+    const MIL_PopulationType&     type_;
+    const uint                    nID_;
+    const MIL_Army*               pArmy_;
+          std::string             strName_;
+    const MIL_PopulationAttitude* pDefaultAttitude_;
 
-          T_ConcentrationSet  concentrations_;
-          T_FlowSet           flows_;
+          T_ConcentrationSet concentrations_;
+          T_FlowSet          flows_;
 
           DEC_PopulationDecision*    pDecision_;
           MIL_PopulationOrderManager orderManager_;

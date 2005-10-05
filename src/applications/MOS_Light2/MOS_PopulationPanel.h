@@ -10,20 +10,9 @@
 #ifndef __MOS_PopulationPanel_h_
 #define __MOS_PopulationPanel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MOS_InfoPanel_ABC.h"
 
 // =============================================================================
-/** @class  MOS_PopulationPanel
-    @brief  MOS_PopulationPanel
-    @par    Using example
-    @code
-    MOS_PopulationPanel;
-    @endcode
-*/
 // Created: HME 2005-10-03
 // =============================================================================
 class MOS_PopulationPanel : public MOS_InfoPanel_ABC
@@ -36,14 +25,12 @@ public:
     //@{
     explicit MOS_PopulationPanel(  QWidget* pParent );
     virtual ~MOS_PopulationPanel();
+    //@}
 
+private:
 	virtual void OnClearSelection();
-
-private slots:
-
     virtual void OnUpdate();
 	virtual void OnPopulationUpdated( MOS_Population& population );
-
 
 private:
     QLabel*    pNameLabel_;

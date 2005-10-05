@@ -38,25 +38,37 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , position_        ()
     , rNbrAliveHumans_ ( 0 )
     , rNbrDeadHumans_  ( 0 )
-    , pAttitude_       ( 0 )
+    , pAttitude_       ( &population.GetDefaultAttitude() )
     , pPullingFlow_    ( 0 )
-    , bHumansUpdated_  ( false )
-    , bAttitudeUpdated_( false )
+    , pushingFlows_    ()
+    , bHumansUpdated_  ( true )
+    , bAttitudeUpdated_( true )
 {
     // Position
     std::string strPosition;
     archive.ReadField( "Position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
-
     archive.ReadField( "NombreHumains", rNbrAliveHumans_ );
+    // SendCreation()
+}
 
-    std::string strAttitude;
-    archive.ReadField( "Attitude", strAttitude );
-    pAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
-    if( !pAttitude_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude", archive.GetContext() );
-
-//    SendCreation();
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration constructor
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
+    : population_      ( population )
+    , nID_             ( idManager_.GetFreeSimID() )
+    , position_        ( position )
+    , rNbrAliveHumans_ ( 0 )
+    , rNbrDeadHumans_  ( 0 )
+    , pAttitude_       ( &population.GetDefaultAttitude() )
+    , pPullingFlow_    ( 0 )
+    , pushingFlows_    ()
+    , bHumansUpdated_  ( true )
+    , bAttitudeUpdated_( true )
+{
+    SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,14 +77,12 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::~MIL_PopulationConcentration()
 {
-    idManager_.ReleaseSimID( nID_ );
-
     assert( !pPullingFlow_ );
+    assert( pushingFlows_.empty() );
 
-    NET_ASN_MsgPopulationConcentrationDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_population    = population_.GetID();
-    asnMsg.Send();
+    SendDestruction();
+
+    idManager_.ReleaseSimID( nID_ );
 } 
 
 // =============================================================================
@@ -85,7 +95,8 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::Update()
 {
-    if( rNbrAliveHumans_ <= 0. ) //$$$$ nNbrDeadHumans_ 
+    //$$$$ nNbrDeadHumans_ 
+    if( rNbrAliveHumans_ <= 0. && pushingFlows_.empty() )
     {
         pPullingFlow_->UnregisterSourceConcentration( *this );
         pPullingFlow_ = 0;
@@ -104,11 +115,21 @@ bool MIL_PopulationConcentration::Update()
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
 {
-    if( pPullingFlow_ )
+    if( pPullingFlow_ || IsNearPosition( destination ) )
         return;
 
     pPullingFlow_ = &population_.CreateFlow( *this );
     pPullingFlow_->Move( destination );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::IsNearPosition
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) const
+{
+    static MT_Float rPrecision = 100.;
+    return position_.Distance( position ) <= rPrecision;
 }
 
 // =============================================================================
@@ -152,6 +173,18 @@ void MIL_PopulationConcentration::SendCreation() const
     asnMsg.GetAsnMsg().oid_concentration = nID_;
     asnMsg.GetAsnMsg().oid_population    = population_.GetID();
     NET_ASN_Tools::WritePoint( position_, asnMsg.GetAsnMsg().position ); 
+    asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::SendDestruction
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::SendDestruction() const
+{
+    NET_ASN_MsgPopulationConcentrationDestruction asnMsg;
+    asnMsg.GetAsnMsg().oid_concentration = nID_;
+    asnMsg.GetAsnMsg().oid_population    = population_.GetID();
     asnMsg.Send();
 }
 
