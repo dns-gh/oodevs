@@ -75,7 +75,7 @@ MsgPopulationFluxUpdate ::= SEQUENCE
     oid-flux            OID,
     oid-population      OID,
     itineraire          Itineraire             OPTIONAL, -- Itineraire de la tête
-    flux                ListPoint              OPTIONAL,
+    flux                Itineraire             OPTIONAL,
     direction           Direction              OPTIONAL, -- en degres
     vitesse             Vitesse                OPTIONAL, -- en km/h
     nb-humains-vivants  INTEGER                OPTIONAL,

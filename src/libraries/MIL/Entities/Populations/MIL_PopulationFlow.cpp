@@ -263,7 +263,7 @@ void MIL_PopulationFlow::SendFullState() const
     asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
     asnMsg.GetAsnMsg().m.vitessePresent            = 1;
 
-    NET_ASN_Tools::WritePointList( flowShape_, asnMsg.GetAsnMsg().flux );
+    NET_ASN_Tools::WritePath     ( flowShape_, asnMsg.GetAsnMsg().flux      );
     NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
     asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
     asnMsg.GetAsnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
@@ -309,7 +309,7 @@ void MIL_PopulationFlow::SendChangedState() const
     if( bFlowShapeUpdated_ )
     {
         asnMsg.GetAsnMsg().m.fluxPresent = 1;
-        NET_ASN_Tools::WritePointList( flowShape_, asnMsg.GetAsnMsg().flux );
+        NET_ASN_Tools::WritePath( flowShape_, asnMsg.GetAsnMsg().flux );
     }
 
     if( bAttitudeUpdated_ )

@@ -329,7 +329,7 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const MIL_Limit& 
     printf( "MIL_Fuseau::Reset END\n" );*/
     // DEBUG 
 
-    pLeftLimit_->RegisterFuseau( *this );
+    pLeftLimit_ ->RegisterFuseau( *this );
     pRightLimit_->RegisterFuseau( *this );
 }
 

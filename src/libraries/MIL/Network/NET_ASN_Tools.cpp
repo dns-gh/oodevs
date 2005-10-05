@@ -483,6 +483,24 @@ void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, ASN1T_Itinerair
 }
 
 // -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WritePath
+// Created: NLD 2004-04-22
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::WritePath( const T_PointList& points, ASN1T_Itineraire& asn )
+{
+    asn.type            = EnumTypeLocalisation::line;
+    asn.vecteur_point.n = points.size(); 
+    if( points.empty() )
+        return;
+
+    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ points.size() ]; //$$$ RAM
+    asn.vecteur_point.elem = pCoord;
+    uint i = 0;
+    for( CIT_PointList itPoint = points.begin(); itPoint != points.end(); ++itPoint )
+        WritePoint( *itPoint, pCoord[i++] );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WritePolygon
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
