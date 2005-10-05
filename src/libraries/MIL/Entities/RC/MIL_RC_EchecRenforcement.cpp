@@ -17,6 +17,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Decision/DEC_Tools.h"
 
@@ -67,6 +68,26 @@ void MIL_RC_EchecRenforcement::Send( const MIL_AgentPion& sender, E_RcType nType
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 void MIL_RC_EchecRenforcement::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+{
+    assert( DEC_Tools::CheckTypePion    ( diaParams[ 1 ] ) );
+    assert( DEC_Tools::CheckTypeAutomate( diaParams[ 2 ] ) );
+
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );    
+    
+    ASN1T_CR_EchecRenforcement asnCR;    
+    NET_ASN_Tools::CopyAgent   ( diaParams[ 1 ], asnCR.pion_renforcant   );
+    NET_ASN_Tools::CopyAutomate( diaParams[ 2 ], asnCR.automate_renforce );
+    asnMsg.GetAsnMsg().cr.u.cr_echec_renforcement = &asnCR;
+    
+    asnMsg.Send();   
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_EchecRenforcement::Send
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_RC_EchecRenforcement::Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& diaParams ) const
 {
     assert( DEC_Tools::CheckTypePion    ( diaParams[ 1 ] ) );
     assert( DEC_Tools::CheckTypeAutomate( diaParams[ 2 ] ) );

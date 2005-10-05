@@ -81,3 +81,13 @@ void MIL_RC_TirSurCampNeutre::Send( const MIL_AgentPion& sender, E_RcType nType,
     asnMsg.GetAsnMsg().cr.u.cr_tir_sur_camp_neutre = param.GetID();
     asnMsg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_TirSurCampNeutre::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_TirSurCampNeutre::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}
+

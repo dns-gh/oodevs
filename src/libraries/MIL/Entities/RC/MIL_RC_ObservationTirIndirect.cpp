@@ -79,3 +79,12 @@ void MIL_RC_ObservationTirIndirect::Send( const MIL_AgentPion& sender, E_RcType 
     asnMsg.GetAsnMsg().cr.u.cr_observation_tir_indirect = fire.GetFireID();
     asnMsg.Send();    
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_ObservationTirIndirect destructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_ObservationTirIndirect::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}

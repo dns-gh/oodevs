@@ -46,11 +46,8 @@ MIL_RC_AllocationConsentieBientotEpuisee::~MIL_RC_AllocationConsentieBientotEpui
 // Name: MIL_RC_AllocationConsentieBientotEpuisee destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_AllocationConsentieBientotEpuisee::Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& /*diaParams*/ ) const
+void MIL_RC_AllocationConsentieBientotEpuisee::Send( const MIL_AgentPion& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
 {
-    NET_ASN_MsgCR asnMsg;
-    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    asnMsg.Send();  
     assert( false );
 }
 
@@ -58,11 +55,17 @@ void MIL_RC_AllocationConsentieBientotEpuisee::Send( const MIL_AgentPion& sender
 // Name: MIL_RC_AllocationConsentieBientotEpuisee destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_AllocationConsentieBientotEpuisee::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parameters& /*diaParams*/ ) const
+void MIL_RC_AllocationConsentieBientotEpuisee::Send( const MIL_Automate& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
 {
-    NET_ASN_MsgCR asnMsg;
-    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    asnMsg.Send();
+    assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_AllocationConsentieBientotEpuisee destructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_AllocationConsentieBientotEpuisee::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
     assert( false );
 }
 

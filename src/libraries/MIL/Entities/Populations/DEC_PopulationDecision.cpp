@@ -19,11 +19,8 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
-//#include "Entities/RC/MIL_RC.h"
-//#include "MIL_AgentServer.h"
-//
-//#include "CheckPoints/DIA_Serializer.h"
-//
+#include "Entities/RC/MIL_RC.h"
+
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
@@ -228,7 +225,7 @@ void DEC_PopulationDecision::UpdateDecision()
     {
         assert( pPopulation_ );
         MT_LOG_ERROR_MSG( MT_FormatString( "Population %d ('%s') : Mission '%s' impossible", pPopulation_->GetID(), pPopulation_->GetName().c_str(), pPopulation_->GetOrderManager().GetMission() ? pPopulation_->GetOrderManager().GetMission()->GetName() : "Default" ) );
-//        MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
+        MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
         pPopulation_->GetOrderManager().CancelAllOrders();       
         CleanStateAfterCrash();
     }

@@ -77,3 +77,13 @@ void MIL_RC_UniteNeutreReconnue::Send( const MIL_AgentPion& sender, E_RcType nTy
     asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_reconnue = param.GetMosID();
     asnMsg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_UniteNeutreReconnue::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_UniteNeutreReconnue::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}
+

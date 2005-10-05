@@ -255,7 +255,7 @@ EnumTypeCR ::= ENUMERATED
 
 MsgCR ::= SEQUENCE
 {
-    unit-id   OID, 
+    unit-id   OID, -- Automate, pion ou population
     order-id  OID,
     type-cr   EnumTypeCR,
     cr        CHOICE

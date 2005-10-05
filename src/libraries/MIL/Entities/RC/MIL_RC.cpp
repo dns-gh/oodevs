@@ -46,10 +46,9 @@
 #include "MIL_RC_Trace.h"
 #include "MIL_RC_TraceID.h"
 
-
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 
 MIL_RC::T_RCMap MIL_RC::rcs_;
 
@@ -380,6 +379,17 @@ void MIL_RC::Send( const MIL_AgentPion& sender, E_RcType nRcType, DIA_Parameters
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 void MIL_RC::Send( const MIL_Automate& sender, E_RcType nRcType, DIA_Parameters& /*parameters*/ ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nRcType );
+    asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC::Send
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_RC::Send( const MIL_Population& sender, E_RcType nRcType, DIA_Parameters& /*parameters*/ ) const
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nRcType );

@@ -70,3 +70,11 @@ void MIL_RC_EniSurObjectif::Send( const MIL_Automate& sender, E_RcType nType, DI
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_EniSurObjectif::Send
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_RC_EniSurObjectif::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*parameters*/ ) const
+{
+    assert( false );
+}

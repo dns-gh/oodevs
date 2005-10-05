@@ -70,3 +70,11 @@ void MIL_RC_ProgressionVersEni::Send( const MIL_Automate& sender, E_RcType nType
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_ProgressionVersEni::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_ProgressionVersEni::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}

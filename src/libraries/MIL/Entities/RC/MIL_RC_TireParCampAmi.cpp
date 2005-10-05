@@ -81,3 +81,12 @@ void MIL_RC_TireParCampAmi::Send( const MIL_AgentPion& sender, E_RcType nType, c
     asnMsg.GetAsnMsg().cr.u.cr_tir_sur_camp_ami = param.GetID();
     asnMsg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_TireParCampAmi::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_TireParCampAmi::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}

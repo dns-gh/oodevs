@@ -17,6 +17,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
@@ -81,4 +82,13 @@ void MIL_RC_ObjetDetecte::Send( const MIL_AgentPion& sender, E_RcType nType, con
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
     asnMsg.GetAsnMsg().cr.u.cr_objet_detecte = param.GetMosID();
     asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_ObjetDetecte destructor
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_ObjetDetecte::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
 }

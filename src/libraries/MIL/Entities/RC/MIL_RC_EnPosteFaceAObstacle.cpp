@@ -70,3 +70,11 @@ void MIL_RC_EnPosteFaceAObstacle::Send( const MIL_Automate& sender, E_RcType nTy
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_EnPosteFaceAObstacle::Send
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_RC_EnPosteFaceAObstacle::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*parameters*/ ) const
+{
+    assert( false );
+}

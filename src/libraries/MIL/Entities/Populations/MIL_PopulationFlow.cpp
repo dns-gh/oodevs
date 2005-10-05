@@ -22,6 +22,7 @@
 #include "MIL_Population.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -259,6 +260,15 @@ MT_Float MIL_PopulationFlow::GetMaxSpeed() const
     return population_.GetMaxSpeed();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SendRC
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SendRC( const MIL_RC& rc ) const
+{
+    rc.Send( population_, MIL_RC::eRcTypeWarning );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================
@@ -335,7 +345,8 @@ void MIL_PopulationFlow::SendChangedState() const
     NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
     DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
     
-    dinMsg << (uint32)6000025;
+    dinMsg << (uint32)( 6000025 + ( nID_ - 0x200000 ) );
+
     dinMsg << (uint32)flowShape_.size();    
     for( CIT_PointList it = flowShape_.begin(); it != flowShape_.end(); ++it )
         dinMsg << *it;

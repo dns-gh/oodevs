@@ -28,6 +28,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/RC/MIL_RC.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -547,4 +548,14 @@ bool PHY_RoleAction_Moving::HasResources()
     while( --nNbrPionToRollback )
         (**itReinforcement++).GetRole< PHY_RolePion_Dotations >().RollbackConsumptionMode();
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::SendRC
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::SendRC( const MIL_RC& rc ) const
+{
+    assert( pPion_ );
+    rc.Send( *pPion_, MIL_RC::eRcTypeWarning );
 }

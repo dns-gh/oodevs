@@ -70,3 +70,11 @@ void MIL_RC_SurPIA::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parame
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_SurPIA::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_SurPIA::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}

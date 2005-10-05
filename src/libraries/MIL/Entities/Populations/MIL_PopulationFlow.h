@@ -111,6 +111,7 @@ private:
     virtual bool CanMove              () const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasResources         ();
+    virtual void SendRC               ( const MIL_RC& rc ) const;
     //@}
 
     //! @name Network

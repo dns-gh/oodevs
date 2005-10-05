@@ -14,6 +14,7 @@
 #include "MIL_RC_TraceID.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC_TraceID constructor
@@ -54,6 +55,18 @@ void MIL_RC_TraceID::Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Para
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 void MIL_RC_TraceID::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    asnMsg.GetAsnMsg().cr.u.cr_trace_id = (uint)diaParams[ 1 ].ToFloat();
+    asnMsg.Send();       
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_TraceID::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_TraceID::Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& diaParams ) const
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );

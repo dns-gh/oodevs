@@ -32,9 +32,10 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& parameters ) const;
-    virtual void Send( const MIL_Automate&  sender, E_RcType nType, DIA_Parameters& parameters ) const;
-            void Send( const MIL_AgentPion& sender, E_RcType nType, const DEC_Knowledge_Object& param ) const;
+    virtual void Send( const MIL_AgentPion&  sender, E_RcType nType, DIA_Parameters& parameters ) const;
+    virtual void Send( const MIL_Automate&   sender, E_RcType nType, DIA_Parameters& parameters ) const;
+    virtual void Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& parameters ) const;
+            void Send( const MIL_AgentPion&  sender, E_RcType nType, const DEC_Knowledge_Object& param ) const;
     //@}
 };
 

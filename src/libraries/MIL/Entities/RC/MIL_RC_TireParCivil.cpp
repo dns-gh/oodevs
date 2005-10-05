@@ -81,3 +81,13 @@ void MIL_RC_TireParCivil::Send( const MIL_AgentPion& sender, E_RcType nType, con
     asnMsg.GetAsnMsg().cr.u.cr_tire_par_civil = param.GetID();
     asnMsg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_TireParCivil::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_TireParCivil::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}
+

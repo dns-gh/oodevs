@@ -17,6 +17,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
@@ -65,3 +66,14 @@ void MIL_RC_SurLima::Send( const MIL_Automate& sender, E_RcType nType, DIA_Param
     asnMsg.Send();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_SurLima::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_SurLima::Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    NET_ASN_Tools::CopyEnumeration( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_sur_lima );
+    asnMsg.Send();
+}

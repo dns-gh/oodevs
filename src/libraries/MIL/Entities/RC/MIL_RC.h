@@ -16,6 +16,7 @@
 
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_Population;
 class MIL_RC_ObservationTirIndirect;
 class MIL_RC_AllocationConsentieBientotEpuisee;
 class MIL_RC_TirSurCampAmi;   
@@ -108,8 +109,9 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& parameters ) const;
-    virtual void Send( const MIL_Automate&  sender, E_RcType nType, DIA_Parameters& parameters ) const;
+    virtual void Send( const MIL_AgentPion&  sender, E_RcType nType, DIA_Parameters& parameters ) const;
+    virtual void Send( const MIL_Automate&   sender, E_RcType nType, DIA_Parameters& parameters ) const;
+    virtual void Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& parameters ) const;
 
     template < typename T > void Send( const T& sender, E_RcType nType ) const;
     //@}

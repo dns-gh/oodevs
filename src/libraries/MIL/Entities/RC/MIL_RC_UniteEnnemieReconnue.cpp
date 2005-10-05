@@ -77,3 +77,13 @@ void MIL_RC_UniteEnnemieReconnue::Send( const MIL_AgentPion& sender, E_RcType nT
     asnMsg.GetAsnMsg().cr.u.cr_unite_ennemie_reconnue = param.GetMosID();
     asnMsg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_UniteEnnemieReconnue::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_UniteEnnemieReconnue::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}
+

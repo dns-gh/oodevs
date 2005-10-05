@@ -76,3 +76,13 @@ void MIL_RC_UniteDecontaminee::Send( const MIL_AgentPion& sender, E_RcType nType
     asnMsg.GetAsnMsg().cr.u.cr_unite_decontaminee = param.GetID();
     asnMsg.Send();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_UniteDecontaminee::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_UniteDecontaminee::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+{
+    assert( false );
+}
+

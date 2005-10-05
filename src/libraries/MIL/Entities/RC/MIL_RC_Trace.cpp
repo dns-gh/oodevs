@@ -14,6 +14,7 @@
 #include "MIL_RC_Trace.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC_Trace constructor
@@ -63,5 +64,19 @@ void MIL_RC_Trace::Send( const MIL_Automate& sender, E_RcType nType, DIA_Paramet
     std::string strTmp( diaParams[ 1 ].ToString() );
     asnMsg.GetAsnMsg().cr.u.cr_trace = strTmp.c_str();
     asnMsg.Send();       
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC_ObjetDetecte::Send
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void MIL_RC_Trace::Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    
+    std::string strTmp( diaParams[ 1 ].ToString() );
+    asnMsg.GetAsnMsg().cr.u.cr_trace = strTmp.c_str();
+    asnMsg.Send();      
 }
 
