@@ -29,16 +29,18 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Name: ADN_Model_Wizard constructor
 // Created: AGN 2003-11-03
 // -----------------------------------------------------------------------------
-ADN_Model_Wizard::ADN_Model_Wizard( bool bForAutomata, QWidget* pParent, const char* szName )
+ADN_Model_Wizard::ADN_Model_Wizard( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<ModelInfos>( pParent, szName )
 {
     setCaption( tr( "New model creation" ) );
 
     ADN_Models_Data::T_ModelInfos_Vector* pUnitsList;
-    if( bForAutomata )
+    if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
         pUnitsList = & ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
-    else
+    else if( eEntityType == ADN_Models_Data::ModelInfos::ePawn )
         pUnitsList = & ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
+    else
+        pUnitsList = & ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
 
     ADN_Wizard_FirstPage_Default<ModelInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<ModelInfos>( *pUnitsList, this );
     pFirstPage->SetCaptions( tr( "New model creation" ), tr( "Models" ) );

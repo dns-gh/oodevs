@@ -69,10 +69,10 @@ private:
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Missions::ADN_ListView_Missions( bool bForAutomata, ADN_ListView_Models* pList, QWidget * parent /*= 0*/, const char * name , WFlags f )
+ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent /*= 0*/, const char * name , WFlags f )
 : ADN_ListView  (parent,name,f)
 , pLVModels_    ( pList )
-, bForAutomata_ ( bForAutomata )
+, eEntityType_  ( eEntityType )
 {
     // add one column
     addColumn( tr( "Missions"));
@@ -128,7 +128,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     QListView* pMissionList = cfgDlg.GetMissionList();
 
     // Unit missions
-    if( ! bForAutomata_ )
+    if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
     {
         // first, the missions' pion
         QCheckListItem* pPion = new QCheckListItem( pMissionList, "Pion", QCheckListItem::CheckBoxController );
@@ -193,7 +193,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         ApplyModifications( pSubPion8 );
         ApplyModifications( pSubPion9 );
     }
-    else
+    else if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
     {
         // Automate missions
         QCheckListItem* pAutomate = new QCheckListItem( pMissionList, "Automate", QCheckListItem::CheckBoxController );
@@ -258,6 +258,23 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         ApplyModifications( pSubAutomate8 );
         ApplyModifications( pSubAutomate9 );
     }
+    // population
+    else
+    {
+        // first, the missions' population
+        QCheckListItem* pPopulation = new QCheckListItem( pMissionList, "Population", QCheckListItem::CheckBoxController );
+        pPopulation->setOpen( true );
+
+        FillList( pPopulation, eSMission_Population_Common_Debut, eSMission_Population_Common_Fin );
+
+        int nResult = cfgDlg.exec();
+
+        if( nResult != QDialog::Accepted )
+            return;
+
+        ApplyModifications( pPopulation );
+    }
+
 }
 
 

@@ -2431,6 +2431,10 @@
         <source>Pion Generique</source>
         <translation>Pion Generique</translation>
     </message>
+    <message>
+        <source>Population FaireMouvement</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -3193,6 +3197,10 @@ du tireur</translation>
         <source>Missions</source>
         <translation>Missions</translation>
     </message>
+    <message>
+        <source>Population models</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_NBC_GUI</name>
@@ -3649,6 +3657,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>min</source>
         <translation>min</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5747,6 +5759,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>ADN - Data export</source>
         <translation>ADN - Données</translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

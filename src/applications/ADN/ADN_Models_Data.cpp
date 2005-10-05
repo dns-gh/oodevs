@@ -325,6 +325,7 @@ ADN_Models_Data::ADN_Models_Data()
 {
     vUnitModels_.SetItemTypeName( "un modèle" );
     vAutomataModels_.SetItemTypeName( "un modèle" );
+    vPopulationModels_.SetItemTypeName( "un modèle" );
 }
 
 
@@ -346,6 +347,7 @@ void ADN_Models_Data::Reset()
 {
     vUnitModels_.Reset();
     vAutomataModels_.Reset();
+    vPopulationModels_.Reset();
 }
 
 
@@ -385,6 +387,15 @@ void ADN_Models_Data::ReadArchive( ADN_XmlInput_Helper& input )
     }
     input.EndList(); // Automates
 
+    input.BeginList( "Populations" );
+    while( input.NextListElement() )
+    {
+        std::auto_ptr<ModelInfos> spNew( new ModelInfos() );
+        spNew->ReadArchive( input );
+        vPopulationModels_.AddItem( spNew.release() );
+    }
+    input.EndList(); // Populations
+
     input.EndSection();
 }
 
@@ -410,6 +421,13 @@ void ADN_Models_Data::WriteArchive( MT_OutputArchive_ABC& output )
         (*it2)->WriteArchive( output );
     }
     output.EndList(); // Automates
+
+    output.BeginList( "Populations", vPopulationModels_.size() );
+    for( IT_ModelInfos_Vector it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
+    {
+        (*it2)->WriteArchive( output );
+    }
+    output.EndList(); // Populations
 
     output.EndSection();
 }

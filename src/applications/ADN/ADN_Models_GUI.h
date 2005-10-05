@@ -13,9 +13,9 @@
 #define __ADN_Models_GUI_h_
 
 #include "ADN_GUI_ABC.h"
+#include "ADN_Models_Data.h"
 
 class QWidget;
-class ADN_Models_Data;
 
 
 // =============================================================================
@@ -59,7 +59,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( QWidget* pParent, bool bAutomata );
+    QWidget* BuildPage( QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
     //@}
 
 private:

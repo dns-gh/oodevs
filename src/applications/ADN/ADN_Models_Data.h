@@ -62,8 +62,8 @@ public:
         };
     };
     
-    typedef ADN_Type_Vector_ABC<OrderInfos>         T_OrderInfos_Vector;
-    typedef T_OrderInfos_Vector::iterator           IT_OrderInfos_Vector;
+    typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
+    typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
 
 
 //*****************************************************************************
@@ -105,8 +105,8 @@ public:
         };
     };
 
-    typedef ADN_Type_Vector_ABC<MissionInfos>         T_MissionInfos_Vector;
-    typedef T_MissionInfos_Vector::iterator           IT_MissionInfos_Vector;
+    typedef ADN_Type_Vector_ABC<MissionInfos> T_MissionInfos_Vector;
+    typedef T_MissionInfos_Vector::iterator   IT_MissionInfos_Vector;
 
 
 //*****************************************************************************
@@ -115,6 +115,15 @@ public:
         , public ADN_DataTreeNode_ABC
     {
         MT_COPYNOTALLOWED( ModelInfos )
+
+    public:
+        enum E_ModelEntityType
+        {
+            ePawn,
+            eAutomat,
+            ePopulation,
+            eNbrModelEntityTypes
+        };
 
     public:
         ModelInfos();
@@ -129,15 +138,15 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_String                             strName_;
-        ADN_Type_String                             strDiaType_;
-        ADN_Type_String                             strFile_;
+        ADN_Type_String                     strName_;
+        ADN_Type_String                     strDiaType_;
+        ADN_Type_String                     strFile_;
 
-        T_MissionInfos_Vector                       vMissions_;
+        T_MissionInfos_Vector               vMissions_;
     };
 
-    typedef ADN_Type_Vector_ABC<ModelInfos>         T_ModelInfos_Vector;
-    typedef T_ModelInfos_Vector::iterator           IT_ModelInfos_Vector;
+    typedef ADN_Type_Vector_ABC<ModelInfos> T_ModelInfos_Vector;
+    typedef T_ModelInfos_Vector::iterator   IT_ModelInfos_Vector;
 
 
 //*****************************************************************************
@@ -154,6 +163,8 @@ public:
     T_ModelInfos_Vector&    GetAutomataModelsInfos();
     ModelInfos*             FindAutomataModel( const std::string& strName );
 
+    T_ModelInfos_Vector&    GetPopulationModelsInfos();
+    ModelInfos*             FindPopulationModel( const std::string& strName );
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );
@@ -164,6 +175,7 @@ private:
 private:
     T_ModelInfos_Vector     vUnitModels_;
     T_ModelInfos_Vector     vAutomataModels_;
+    T_ModelInfos_Vector     vPopulationModels_;
 };
 
 
@@ -216,6 +228,29 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::FindAutomataModel( const std::stri
     return *it;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::GetPopulationModelsInfos
+// Created: APE 2004-12-01
+// -----------------------------------------------------------------------------
+inline
+ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetPopulationModelsInfos()
+{
+    return vPopulationModels_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::FindPopulationModel
+// Created: APE 2004-12-01
+// -----------------------------------------------------------------------------
+inline
+ADN_Models_Data::ModelInfos* ADN_Models_Data::FindPopulationModel( const std::string& strName )
+{
+    IT_ModelInfos_Vector it = std::find_if( vPopulationModels_.begin(), vPopulationModels_.end(), ADN_Tools::NameCmp<ModelInfos>( strName ) );
+    if( it == vPopulationModels_.end() )
+        return 0;
+    return *it;
+}
 
 
 #endif // __ADN_Models_Data_h_

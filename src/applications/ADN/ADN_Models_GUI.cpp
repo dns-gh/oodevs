@@ -67,8 +67,9 @@ void ADN_Models_GUI::Build()
     pMainWidget_ = new QWidget( 0 );
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
 
-    pTabWidget->addTab( BuildPage( pTabWidget, false ), tr( "Unit models" ) );
-    pTabWidget->addTab( BuildPage( pTabWidget, true ),  tr( "Automata models" ) );
+    pTabWidget->addTab( BuildPage( pTabWidget, ADN_Models_Data::ModelInfos::ePawn       ), tr( "Unit models"       ) );
+    pTabWidget->addTab( BuildPage( pTabWidget, ADN_Models_Data::ModelInfos::eAutomat    ), tr( "Automata models"   ) );
+    pTabWidget->addTab( BuildPage( pTabWidget, ADN_Models_Data::ModelInfos::ePopulation ), tr( "Population models" ) );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
@@ -79,7 +80,7 @@ void ADN_Models_GUI::Build()
 // Name: ADN_Models_GUI::BuildPage
 // Created: APE 2005-02-09
 // -----------------------------------------------------------------------------
-QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, bool bAutomata )
+QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
 {
     ADN_GuiBuilder builder;
 
@@ -88,11 +89,13 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, bool bAutomata )
 
     // Model listview
     T_ConnectorVector vInfosConnectors( 4,(ADN_Connector_ABC*)0 );
-    ADN_ListView_Models* pListModels = new ADN_ListView_Models( bAutomata, pMainWidget);
-    if( bAutomata )
+    ADN_ListView_Models* pListModels = new ADN_ListView_Models( eEntityType, pMainWidget);
+    if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
         pListModels->GetConnector().Connect( &data_.GetAutomataModelsInfos() );
-    else
+    else if( eEntityType == ADN_Models_Data::ModelInfos::ePawn )
         pListModels->GetConnector().Connect( &data_.GetUnitModelsInfos() );
+    else
+        pListModels->GetConnector().Connect( &data_.GetPopulationModelsInfos() );
 
     // Model data
     QGroupBox* pGroup = new QVGroupBox( tr( "Model"), pMainWidget );
@@ -105,7 +108,7 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget* pParent, bool bAutomata )
     // Missions
     QGroupBox* pMissionsGroup = new QHGroupBox( tr( "Missions" ), pGroup );
 
-    ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( bAutomata, pListModels, pMissionsGroup );
+    ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pListModels, pMissionsGroup );
     vInfosConnectors[eMissions] = &pListMissions->GetConnector();
 
     ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( pMissionsGroup );

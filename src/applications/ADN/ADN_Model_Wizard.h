@@ -41,7 +41,7 @@ class ADN_Model_Wizard
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Model_Wizard( bool bForAutomata, QWidget* pParent = 0, const char* szName = 0 );
+             ADN_Model_Wizard( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Model_Wizard();
     //@}
 };

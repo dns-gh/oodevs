@@ -102,6 +102,7 @@ public:
         ADN_Type_String szPathfinder_;
         ADN_Type_String szMissions_;
         ADN_Type_String szHLA_;
+        ADN_Type_String szPopulation_;
     };
 
 

@@ -37,6 +37,8 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Automata_GUI.h"
 #include "ADN_Automata_Data.h"
+#include "ADN_Population_GUI.h"
+#include "ADN_Population_Data.h"
 #include "ADN_AiEngine_GUI.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Breakdowns_GUI.h"
@@ -79,9 +81,6 @@ ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 
 #define WAIT_RESET 2000
 
-
-#define NBRMAXELEM eHealth + 1
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetWorkspace
 // Created: JDY 03-07-09
@@ -117,20 +116,20 @@ ADN_Workspace::ADN_Workspace()
 {
     pWorkspace_ = this;
 
-    elements_[eProject]     = new ADN_WorkspaceElement< ADN_Project_Data, ADN_Project_GUI >( tr( "Project" ) );
-    elements_[eCategories]  = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
-    elements_[eNBC]         = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );
-    elements_[eLaunchers]   = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >( tr( "Launchers" ) );
-    elements_[eEquipement]  = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >( tr( "Equipements" ) );
-    elements_[eObjects]     = new ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>( tr( "Objects" ) );
-    elements_[eWeapons]     = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >( tr( "Weapons" ) );
-    elements_[eSensors]     = new ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI >( tr( "Sensors" ) );
-    elements_[eComposantes] = new ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >( tr( "Composantes" ) );
-    elements_[eAiEngine]    = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Ai" ) );   
-    elements_[eModels]      = new ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >( tr( "Models" ) );
-    elements_[eUnits]       = new ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >( tr( "Units" ) );
-    elements_[eAutomata]    = new ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >( tr( "Automata" ) );
-    elements_[eBreakdowns]  = new ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI >( tr( "Breakdowns" ) );
+    elements_[eProject]        = new ADN_WorkspaceElement< ADN_Project_Data, ADN_Project_GUI >( tr( "Project" ) );
+    elements_[eCategories]     = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
+    elements_[eNBC]            = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );
+    elements_[eLaunchers]      = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >( tr( "Launchers" ) );
+    elements_[eEquipement]     = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >( tr( "Equipements" ) );
+    elements_[eObjects]        = new ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>( tr( "Objects" ) );
+    elements_[eWeapons]        = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >( tr( "Weapons" ) );
+    elements_[eSensors]        = new ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI >( tr( "Sensors" ) );
+    elements_[eComposantes]    = new ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >( tr( "Composantes" ) );
+    elements_[eAiEngine]       = new ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI >( tr( "Ai" ) );   
+    elements_[eModels]         = new ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >( tr( "Models" ) );
+    elements_[eUnits]          = new ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >( tr( "Units" ) );
+    elements_[eAutomata]       = new ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >( tr( "Automata" ) );
+    elements_[eBreakdowns]     = new ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI >( tr( "Breakdowns" ) );
     elements_[eCommunications] = new ADN_WorkspaceElement< ADN_Communications_Data, ADN_Communications_GUI>( tr( "Communications" ) );
     elements_[eHumanFactors]   = new ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI>( tr( "Human factors" ) );
     elements_[eLog]            = new ADN_WorkspaceElement< ADN_Log_Data, ADN_Log_GUI>( tr( "Log" ) );
@@ -139,6 +138,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eHLA]            = new ADN_WorkspaceElement< ADN_HLA_Data, ADN_HLA_GUI>( tr( "HLA" ) );
     elements_[eHealth]         = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]         = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
+    elements_[ePopulation]     = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Population" ) );
 }
 
 
@@ -148,7 +148,7 @@ ADN_Workspace::ADN_Workspace()
 //-----------------------------------------------------------------------------
 ADN_Workspace::~ADN_Workspace()
 {
-    for( int n = 0; n < NBRMAXELEM; ++n )
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
         delete elements_[n];
 
     delete pUndoStack_;
@@ -163,9 +163,9 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
 {
     pUndoStack_ = new QtUndoStack( & mainWindow );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
-    pProgressIndicator_->SetNbrOfSteps( NBRMAXELEM );
+    pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
-    for( int n = 0; n < NBRMAXELEM; ++n )
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
         elements_[n]->GetGuiABC().Build();
         elements_[n]->GetGuiABC().RegisterTable( mainWindow );
@@ -183,6 +183,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
@@ -219,12 +220,12 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
     if( bVisible )
     {
         pProgressIndicator_->Reset( tr( "Reseting project..." ) );
-        pProgressIndicator_->SetNbrOfSteps( NBRMAXELEM );
+        pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
     }
 
     this->GetProject().GetData().SetFile( filename );
 
-    for( int n = NBRMAXELEM - 1; n >= 0; --n )
+    for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
     {
         elements_[n]->GetDataABC().Reset();
         if( bVisible )
@@ -249,13 +250,13 @@ void ADN_Workspace::Load(const std::string& filename)
     // load configuration file
     // Must load it first
     pProgressIndicator_->Reset( tr( "Loading project..." ) );
-    pProgressIndicator_->SetNbrOfSteps( NBRMAXELEM );
+    pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
     this->GetProject().GetData().SetFile( filename );
     this->GetProject().GetData().Load();
     pProgressIndicator_->Increment();
 
-    for( int n = 1; n < NBRMAXELEM; ++n )
+    for( int n = 1; n < eNbrWorkspaceElements; ++n )
     {
         elements_[n]->GetDataABC().Load();
         pProgressIndicator_->Increment( elements_[n]->GetName() );
@@ -289,7 +290,7 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
     T_StringList files;
     int n;
     files.push_back(  ADN_Project_Data::GetWorkDirInfos().GetPartPath(filename) );
-    for( n = 0; n < NBRMAXELEM; ++n )
+    for( n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetDataABC().FilesNeeded( files );
 
     /////////////////////////////////////
@@ -330,11 +331,11 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
         ADN_Project_Data::GetWorkDirInfos().UseTempDirectory(true);
 
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
-        pProgressIndicator_->SetNbrOfSteps( NBRMAXELEM );
+        pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
         this->GetProject().GetData().SetFile( filename );
         
-        for( n = 0; n < NBRMAXELEM; ++n )
+        for( n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
             pProgressIndicator_->Increment( elements_[n]->GetName() );
@@ -460,7 +461,7 @@ void ADN_Workspace::ExportHtml( const std::string& strPath )
     mainIndexBuilder.BeginHtml( tr( "ADN - Data export" ) );
     mainIndexBuilder.BeginList();
 
-    for( int n = 0; n < NBRMAXELEM; ++n )
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetGuiABC().ExportHtml( mainIndexBuilder, strPath.c_str() );
 
     mainIndexBuilder.EndList();

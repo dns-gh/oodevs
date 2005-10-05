@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-09-06 - 16:30:52 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_Enums_Gen_Skeleton.h $
 // $Author: Ape $
 // $Modtime: 18/02/05 16:06 $
@@ -490,6 +490,17 @@ enum E_SMission
 
 
     eSMission_Automate_JOINT_Fin,
+
+    // 
+    // MISSIONS AUTOMATE
+    // 
+
+    // Common
+    eSMission_Population_Common_Debut,
+
+    eSMission_Population_FaireMouvement,
+
+    eSMission_Population_Common_Fin,
 
     eNbrSMission,
 

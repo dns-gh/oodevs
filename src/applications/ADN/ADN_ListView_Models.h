@@ -14,6 +14,7 @@
 
 #include "ADN_Types.h"
 #include "ADN_ListView.h"
+#include "ADN_Models_Data.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-25
@@ -24,7 +25,7 @@ class ADN_ListView_Models
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ListView_Models( bool bForAutomata, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    ADN_ListView_Models( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     ~ADN_ListView_Models();
     //@}
 
@@ -36,7 +37,7 @@ private:
     //@}
 
 private:
-    bool bForAutomata_;
+    ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
 };
 
 

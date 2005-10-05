@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 //
-// $Created: 2005-09-06 - 16:30:52 $
+// $Created: $
 // $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_ADN2_Tr_Gen_Skeleton.cpp $
 // $Author: Ape $
 // $Modtime: 17/02/05 17:22 $
@@ -361,6 +361,7 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Pion RENS ROIM SDTI RenseignerSur", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion RENS ROIM SDTI RenseignerSur"), eSMission_Pion_RENS_ROIM_SDTI_RenseignerSur ),
     T_ConverterSMission("Pion RENS ROIM CL289 RenseignerSur", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion RENS ROIM CL289 RenseignerSur"), eSMission_Pion_RENS_ROIM_CL289_RenseignerSur ),
     T_ConverterSMission("Pion TRANS EtablirGererLiaison", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion TRANS EtablirGererLiaison"), eSMission_Pion_TRANS_EtablirGererLiaison ),
+    T_ConverterSMission("Population FaireMouvement", QT_TRANSLATE_NOOP( "ADN_Enums", "Population FaireMouvement"), eSMission_Population_FaireMouvement ),
 
     T_ConverterSMission( ""           , ""                                           , (E_SMission)-1  )
 };

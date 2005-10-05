@@ -36,5 +36,6 @@
     <Pathfind>Data/Pathfind.xml</Pathfind>
     <Missions>Data/Missions.xml</Missions>
     <HLA>Data/HLA.xml</HLA>
+    <Populations>Data/Populations.xml</Populations>
   </Donnees>
 </Scipio>

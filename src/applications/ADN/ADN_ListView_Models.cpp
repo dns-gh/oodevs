@@ -28,9 +28,9 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Name: ADN_ListView_Models constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Models::ADN_ListView_Models( bool bForAutomata, QWidget* pParent, const char* szName, WFlags f )
+ADN_ListView_Models::ADN_ListView_Models( ModelInfos::E_ModelEntityType eEntityType, QWidget* pParent, const char* szName, WFlags f )
 : ADN_ListView  ( pParent, szName, f )
-, bForAutomata_ ( bForAutomata )
+, eEntityType_  ( eEntityType )
 {
     // Add one column.
     addColumn( tr( "Models" ) );
@@ -79,7 +79,7 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
 void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popupMenu( this );
-    ADN_Model_Wizard wizard( bForAutomata_, this );
+    ADN_Model_Wizard wizard( eEntityType_, this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }
