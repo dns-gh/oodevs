@@ -302,8 +302,8 @@ void MIL_Fuseau::Reset( const MT_Vector2D& vOrientationRefPos, const MIL_Limit& 
     if( !pBeginMissionLima_ || !pEndMissionLima_ )
         pBeginMissionLima_ = pEndMissionLima_ = 0;
 
-    leftPointVector_  = leftLimit .GetPointVector();
-    rightPointVector_ = rightLimit.GetPointVector();
+    leftPointVector_  = leftLimit .GetPoints();
+    rightPointVector_ = rightLimit.GetPoints();
     assert( !leftPointVector_ .empty() );
     assert( !rightPointVector_.empty() );
 
@@ -522,10 +522,9 @@ bool MIL_Fuseau::Split( uint nNbrSubFuseau, T_LimitConstPtrVector& limitVector )
         return false;
 
     // Create the new limits
-    limitVector.push_back( pLeftLimit_ );
-    for( uint i = 1; i < nNbrSubFuseau; ++i )
-        limitVector.push_back( &MIL_AgentServer::GetWorkspace().GetLimitManager().CreateLimit() );
-    limitVector.push_back( pRightLimit_ );
+    typedef std::vector< T_PointVector >    T_PointsVector;
+    typedef T_PointsVector::iterator        IT_PointsVector;
+    typedef T_PointsVector::const_iterator  CIT_PointsVector;    
 
     T_PointVector leftPointVectorTmp  = leftPointVector_;
     T_PointVector rightPointVectorTmp = rightPointVector_;
@@ -534,17 +533,22 @@ bool MIL_Fuseau::Split( uint nNbrSubFuseau, T_LimitConstPtrVector& limitVector )
     InsertPointProjection( rightPointVector_, leftPointVectorTmp  );
     assert( leftPointVectorTmp.size() == rightPointVectorTmp.size() );
 
+    T_PointsVector limitsPoints( nNbrSubFuseau - 1, T_PointVector() );
     for( uint j = 0; j < leftPointVectorTmp.size(); ++j )
     {
         MT_Vector2D vTmp = rightPointVectorTmp[j] - leftPointVectorTmp[j];
         vTmp /= nNbrSubFuseau;
-        for( i = 1; i < nNbrSubFuseau; ++i )
-            const_cast< MIL_Limit&>( *limitVector[i] ).AddPoint( leftPointVectorTmp[j] + vTmp * (MT_Float)(i) );
+    
+        uint i = 1;
+        for( IT_PointsVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it, ++i )
+            (*it).push_back( leftPointVectorTmp[j] + vTmp * (MT_Float)(i) );
     }
 
-    // Limit validation (MOS sending)
-    for( i = 1; i < nNbrSubFuseau; ++i )
-        limitVector[i]->SendFullState();
+    // Limits creation
+    limitVector.push_back( pLeftLimit_ );
+    for( CIT_PointsVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
+        limitVector.push_back( &MIL_AgentServer::GetWorkspace().GetLimitManager().CreateLimit( *it ) );
+    limitVector.push_back( pRightLimit_ );
     return true;         
 }
 

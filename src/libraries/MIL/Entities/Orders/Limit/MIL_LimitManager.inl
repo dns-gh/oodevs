@@ -16,8 +16,8 @@
 inline
 const MIL_Limit* MIL_LimitManager::FindLimit( uint nID ) const
 {
-    CIT_LimitMap itLimit = limitMap_.find( nID );
-    if( itLimit == limitMap_.end() )
+    CIT_LimitMap itLimit = limits_.find( nID );
+    if( itLimit == limits_.end() )
         return 0;
     return itLimit->second;
 }
@@ -38,12 +38,14 @@ bool MIL_LimitManager::DestroyLimit( MIL_Limit& limit )
 // Created: NLD 2003-04-22
 //-----------------------------------------------------------------------------
 inline
-MIL_Limit& MIL_LimitManager::CreateLimit()
+MIL_Limit& MIL_LimitManager::CreateLimit( const T_PointVector& points )
 {
-    MIL_Limit* pLimit = new MIL_Limit();
-    pLimit->Initialize();
-
-    limitMap_.insert( std::make_pair( pLimit->GetID(), pLimit ) );
-    
+    MIL_Limit* pLimit = FindLimit( points );
+    if( !pLimit )
+    {
+        pLimit = new MIL_Limit();
+        pLimit->Initialize( points );
+        limits_.insert( std::make_pair( pLimit->GetID(), pLimit ) );   
+    }
     return *pLimit;
 }

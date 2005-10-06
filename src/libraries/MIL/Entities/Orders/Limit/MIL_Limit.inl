@@ -25,11 +25,10 @@ uint MIL_Limit::GetID() const
 // Created: NLD 2003-01-14
 //-----------------------------------------------------------------------------
 inline
-const T_PointVector& MIL_Limit::GetPointVector() const
+const T_PointVector& MIL_Limit::GetPoints() const
 {
-    return pointVector_;
+    return points_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Limit::GetLength
@@ -40,7 +39,7 @@ MT_Float MIL_Limit::GetLength() const
 {
     MT_Float rLength = 0.;
     const MT_Vector2D* pPrevPoint = 0;
-    for( CIT_PointVector itPoint = pointVector_.begin(); itPoint != pointVector_.end(); ++itPoint )
+    for( CIT_PointVector itPoint = points_.begin(); itPoint != points_.end(); ++itPoint )
     {
         const MT_Vector2D& curPoint = *itPoint;
 

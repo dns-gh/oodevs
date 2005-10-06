@@ -18,6 +18,7 @@
 #include "Tools/MIL_MOSIDManager.h"
 
 class MIL_Agent_ABC;
+class MIL_Fuseau;
 class NET_AS_MOSServer;
 class TER_DynamicData;
 
@@ -27,8 +28,6 @@ class TER_DynamicData;
 //=============================================================================
 class MIL_Limit
 {
-    friend class MIL_Fuseau; // For AddPoint()
-
     MT_COPYNOTALLOWED( MIL_Limit )
 
 public:
@@ -41,7 +40,7 @@ public:
     //! @name Init / Cleanup
     //@{
     bool Initialize( const ASN1T_MsgLimitCreation& asnMsg, MIL_MOSContextID nCtx );
-    void Initialize();
+    void Initialize( const T_PointVector& points );
     void Cleanup   ( MIL_MOSContextID nContext );
     void Cleanup   ();
     //@}
@@ -56,27 +55,23 @@ public:
     //@{
           uint              GetID         () const;
 	const NET_AS_MOSServer*	GetAckReceiver() const;
-    const T_PointVector&    GetPointVector() const;
+    const T_PointVector&    GetPoints     () const;
           MT_Float          GetLength     () const;
     //@}
 
     //! @name Operations
     //@{
     void RegisterFuseau( const MIL_Fuseau& fuseau ) const;
-    void RemoveFuseau( const MIL_Fuseau& fuseau ) const;
+    void RemoveFuseau  ( const MIL_Fuseau& fuseau ) const;
 
     MT_Float Distance( const MT_Vector2D& p ) const;
     //@}
 
 private:
-    //! @name Init
-    //@{
-    void AddPoint( const MT_Vector2D& vPos );
-    //@}
-
     //! @name Tools
     //@{
-    void ReadPoints( const ASN1T__SeqOfCoordUTM& listPoint );
+    void ReadPoints            ( const ASN1T__SeqOfCoordUTM& listPoint );
+    void InitializeDistanceData();
 
     void Destroy();
 
@@ -115,7 +110,7 @@ private:
     uint nID_;
     uint nLevel_;
        
-	T_PointVector   pointVector_;
+	T_PointVector   points_;
     T_DistanceDatas distanceDatas_;
 
     mutable T_DynamicDatas fuseauDatas_;

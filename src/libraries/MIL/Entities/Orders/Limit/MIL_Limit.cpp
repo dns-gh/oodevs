@@ -83,23 +83,42 @@ bool MIL_Limit::Initialize( const ASN1T_MsgLimitCreation& asnMsg, MIL_MOSContext
     }
 
     ReadPoints( asnMsg.geometrie.vecteur_point );
+    InitializeDistanceData();
 
     asnAckMsg.GetAsnMsg().error_code = EnumInfoContextErrorCode::no_error;
     asnAckMsg.Send( nCtx );
     return true;
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: MIL_Limit::Initialize
-// Created: NLD 2003-04-22
-//-----------------------------------------------------------------------------
-void MIL_Limit::Initialize()
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+void MIL_Limit::Initialize( const T_PointVector& points )
 {
+    assert( !points.empty() );
     bCreatedBySim_ = true;
-    pointVector_.clear();
-    distanceDatas_.clear();
+    points_        = points;
     nID_           = idManager_.GetFreeSimID();
     nLevel_        = EnumNatureLevel::ooo;
+
+    InitializeDistanceData();    
+    SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Limit::InitializeDistanceData
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+void MIL_Limit::InitializeDistanceData()
+{
+    distanceDatas_.clear(); 
+    distanceDatas_.reserve( points_.size() );
+    CIT_PointVector itCur  = points_.begin();
+    CIT_PointVector itNext = itCur;
+    ++ itNext;
+    for( ; itNext != points_.end(); ++itCur, ++itNext )
+        distanceDatas_.push_back( DistanceData( *itCur, *itNext ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -125,7 +144,7 @@ void MIL_Limit::Cleanup()
         idManager_.ReleaseSimID( nID_ );
     }
 
-    pointVector_.clear();
+    points_.clear();
     distanceDatas_.clear();
     nID_ = (uint)-1;
     Destroy();
@@ -157,7 +176,7 @@ void MIL_Limit::Cleanup( MIL_MOSContextID nCtx )
     asnAckMsg.GetAsnMsg().error_code = EnumInfoContextErrorCode::no_error;
     asnAckMsg.Send( nCtx );
 
-    pointVector_.clear();
+    points_.clear();
     distanceDatas_.clear();
     nID_ = (uint)-1;
     Destroy();
@@ -287,7 +306,7 @@ void MIL_Limit::CreateDynamicData( const MIL_Limit& other, const MIL_Fuseau& fus
     T_ReferencedData& data = fuseauDatas_[ &other ];
     if( &other == this )
         // The limit itself
-        data.first = CreateDynamicData( pointVector_ );
+        data.first = CreateDynamicData( points_ );
     else
         // Middle of the fuseau
         data.first = fuseau.CreateDynamicData();
@@ -377,28 +396,15 @@ MT_Float MIL_Limit::SquareDistance( const MT_Vector2D& p ) const
 //-----------------------------------------------------------------------------
 void MIL_Limit::ReadPoints( const ASN1T__SeqOfCoordUTM& listPoint )
 {
-    pointVector_.clear();   pointVector_.reserve( listPoint.n );
-    distanceDatas_.clear(); distanceDatas_.reserve( listPoint.n );
+    points_.clear();   
+    points_.reserve( listPoint.n );
     for( uint i = 0; i < listPoint.n; ++i )
     {
         MT_Vector2D vPosTmp;
         MIL_Tools::ConvertCoordMosToSim( listPoint.elem[i], vPosTmp );
-        if( i > 0 )
-            distanceDatas_.push_back( DistanceData( pointVector_.back(), vPosTmp ) );
-        pointVector_.push_back( vPosTmp );
+        points_.push_back( vPosTmp );
     }
-    assert( !pointVector_.empty() );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Limit::AddPoint
-// Created: NLD 2003-04-23
-//-----------------------------------------------------------------------------
-void MIL_Limit::AddPoint( const MT_Vector2D& vPos )
-{
-    if( ! pointVector_.empty() )
-        distanceDatas_.push_back( DistanceData( pointVector_.back(), vPos ) );
-    pointVector_.push_back( vPos );
+    assert( !points_.empty() );
 }
 
 // -----------------------------------------------------------------------------
@@ -407,17 +413,17 @@ void MIL_Limit::AddPoint( const MT_Vector2D& vPos )
 // -----------------------------------------------------------------------------
 void MIL_Limit::SendFullState() const
 {
-    assert( !pointVector_.empty() );
-    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ pointVector_.size() ];//$$$ RAM
+    assert( !points_.empty() );
+    ASN1T_CoordUTM* pCoord = new ASN1T_CoordUTM[ points_.size() ];//$$$ RAM
     uint i = 0; 
-    for( CIT_PointVector itPoint = pointVector_.begin(); itPoint != pointVector_.end(); ++itPoint )
+    for( CIT_PointVector itPoint = points_.begin(); itPoint != points_.end(); ++itPoint )
         NET_ASN_Tools::WritePoint( *itPoint, pCoord[i++] );
 
     NET_ASN_MsgLimitCreation asnMsg;
     asnMsg.GetAsnMsg().oid                          = nID_;
     asnMsg.GetAsnMsg().level                        = (ASN1T_EnumNatureLevel)nLevel_;
     asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
-    asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointVector_.size();
+    asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = points_.size();
     asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = pCoord;
     asnMsg.Send();
 

@@ -37,8 +37,8 @@ MIL_LimitManager::MIL_LimitManager()
 //-----------------------------------------------------------------------------
 MIL_LimitManager::~MIL_LimitManager()
 {
-    while( !limitMap_.empty() )
-        DestroyLimit( *limitMap_.begin()->second );
+    while( !limits_.empty() )
+        DestroyLimit( *limits_.begin()->second );
 }
 
 //=============================================================================
@@ -52,14 +52,29 @@ MIL_LimitManager::~MIL_LimitManager()
 //-----------------------------------------------------------------------------
 bool MIL_LimitManager::DestroyLimit( uint nID )
 {
-    IT_LimitMap itLimit = limitMap_.find( nID );
-    if( itLimit == limitMap_.end() )
+    IT_LimitMap itLimit = limits_.find( nID );
+    if( itLimit == limits_.end() )
         return false;
 
     MIL_Limit& limit = *itLimit->second;
 	limit.Cleanup();
-    limitMap_.erase( itLimit );
+    limits_.erase( itLimit );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimitManager::FindLimit
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+MIL_Limit* MIL_LimitManager::FindLimit( const T_PointVector& points ) const
+{
+    for( CIT_LimitMap it = limits_.begin(); it != limits_.end(); ++it )
+    {
+        MIL_Limit& limit = *it->second;
+        if( limit.GetPoints() == points ) 
+            return &limit;
+    }
+    return 0;
 }
 
 //=============================================================================
@@ -67,13 +82,13 @@ bool MIL_LimitManager::DestroyLimit( uint nID )
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_LimitManager::CreateLimit
+// Name: MIL_LimitManager::OnReceiveMsgCreateLimit
 // Created: NLD 2002-08-08
 // Last modified: JVT 03-02-27
 //-----------------------------------------------------------------------------
 MIL_Limit* MIL_LimitManager::OnReceiveMsgCreateLimit( const ASN1T_MsgLimitCreation& asnMsg, MIL_MOSContextID nCtx )
 {
-    if( limitMap_.find( asnMsg.oid ) != limitMap_.end() )
+    if( limits_.find( asnMsg.oid ) != limits_.end() )
     {
         NET_ASN_MsgLimitCreationAck asnAckMsg;
         asnAckMsg.GetAsnMsg().oid        = asnMsg.oid;
@@ -84,7 +99,7 @@ MIL_Limit* MIL_LimitManager::OnReceiveMsgCreateLimit( const ASN1T_MsgLimitCreati
    
     MIL_Limit* pLimit = new MIL_Limit();
     if( pLimit->Initialize( asnMsg, nCtx ) )
-        limitMap_.insert( std::make_pair( pLimit->GetID(), pLimit ) );
+        limits_.insert( std::make_pair( pLimit->GetID(), pLimit ) );
     else
     {
         delete pLimit;
@@ -101,8 +116,8 @@ MIL_Limit* MIL_LimitManager::OnReceiveMsgCreateLimit( const ASN1T_MsgLimitCreati
 //-----------------------------------------------------------------------------
 void MIL_LimitManager::OnReceiveMsgDestroyLimit( const ASN1T_MsgLimitDestruction& asnMsg, MIL_MOSContextID nCtx )
 {
-    IT_LimitMap itLimit = limitMap_.find( asnMsg );
-    if( itLimit == limitMap_.end() )
+    IT_LimitMap itLimit = limits_.find( asnMsg );
+    if( itLimit == limits_.end() )
     {
         NET_ASN_MsgLimitDestructionAck asnAckMsg;
         asnAckMsg.GetAsnMsg().oid        = asnMsg;
@@ -115,7 +130,7 @@ void MIL_LimitManager::OnReceiveMsgDestroyLimit( const ASN1T_MsgLimitDestruction
 
     // Destroy
     limit.Cleanup( nCtx );
-    limitMap_.erase( itLimit );
+    limits_.erase( itLimit );
 }
 
 //-----------------------------------------------------------------------------
@@ -124,8 +139,8 @@ void MIL_LimitManager::OnReceiveMsgDestroyLimit( const ASN1T_MsgLimitDestruction
 //-----------------------------------------------------------------------------
 void MIL_LimitManager::OnReceiveMsgUpdateLimit( const ASN1T_MsgLimitUpdate& asnMsg, MIL_MOSContextID nCtx )
 {
-    IT_LimitMap itLimit = limitMap_.find( asnMsg.oid );
-    if( itLimit == limitMap_.end() )
+    IT_LimitMap itLimit = limits_.find( asnMsg.oid );
+    if( itLimit == limits_.end() )
     {
         NET_ASN_MsgLimitUpdateAck asnAckMsg;
         asnAckMsg.GetAsnMsg().oid        = asnMsg.oid;
@@ -143,6 +158,7 @@ void MIL_LimitManager::OnReceiveMsgUpdateLimit( const ASN1T_MsgLimitUpdate& asnM
 // -----------------------------------------------------------------------------
 void MIL_LimitManager::SendStateToNewClient( NET_AS_MOSServer& /*connection*/ ) const
 {
-    for( CIT_LimitMap itLimit = limitMap_.begin(); itLimit != limitMap_.end(); ++itLimit )
+    for( CIT_LimitMap itLimit = limits_.begin(); itLimit != limits_.end(); ++itLimit )
         itLimit->second->SendFullState();
 }
+

@@ -24,14 +24,6 @@ class MIL_LimitManager
     MT_COPYNOTALLOWED( MIL_LimitManager );
 
 public:
-    //! @name Types 
-    //@{
-    typedef std::map< uint, MIL_Limit* > T_LimitMap;
-    typedef T_LimitMap::iterator         IT_LimitMap;
-    typedef T_LimitMap::const_iterator   CIT_LimitMap;
-    //@}
-
-public:
      MIL_LimitManager();
     ~MIL_LimitManager();
     
@@ -47,13 +39,28 @@ public:
     //@{
           bool       DestroyLimit( MIL_Limit& Limit );
           bool       DestroyLimit( uint nID );
-          MIL_Limit& CreateLimit ();
+          MIL_Limit& CreateLimit ( const T_PointVector& points );
     const MIL_Limit* FindLimit   ( uint nID ) const;
     //@}
 
 private:
-    T_LimitMap limitMap_;
+    //! @name Tools
+    //@{
+    MIL_Limit* FindLimit( const T_PointVector& points ) const;
+    //@}
+
+private:
+    //! @name Types 
+    //@{
+    typedef std::map< uint, MIL_Limit* > T_LimitMap;
+    typedef T_LimitMap::iterator         IT_LimitMap;
+    typedef T_LimitMap::const_iterator   CIT_LimitMap;
+    //@}
+
+private:
+    T_LimitMap limits_;
 };
 
-#   include "MIL_LimitManager.inl"
+#include "MIL_LimitManager.inl"
+
 #endif // __MIL_LimitManager_h_
