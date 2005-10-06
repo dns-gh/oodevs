@@ -32,6 +32,10 @@
 #include "MT/MT_IO/MT_Dir.h"
 #include "MT/MT_IO/MT_FormatString.h"
 
+#pragma warning( disable : 4275 )
+#pragma warning( disable : 4251 )
+#include "boost/thread/mutex.hpp"
+
 using namespace pathfind;
 
 // -----------------------------------------------------------------------------
@@ -114,6 +118,24 @@ namespace
 void TER_PathFinderThread::CreateLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData )
 {
     pPathfinder_->AddDynamicData( MakePoint( from ), MakePoint( to ), handle, terrainData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::CreateLinesTree
+// Created: AGE 2005-02-23
+// -----------------------------------------------------------------------------
+void TER_PathFinderThread::CreateLinesTree( const T_PointVector& points, TerrainRetractationHandle& handle, const TerrainData& terrainData )
+{
+    boost::mutex::scoped_lock locker( pPathfinder_->GetMutex() );
+
+    CIT_PointVector itPoint = points.begin();
+    const MT_Vector2D* pPrevPoint = &*itPoint;
+    for( ++itPoint ; itPoint != points.end(); ++itPoint )
+    {
+        const MT_Vector2D* pCurPoint = &*itPoint;
+        CreateLineTree( *pPrevPoint, *pCurPoint, handle, terrainData );
+        pPrevPoint = pCurPoint;
+    }
 }
 
 // -----------------------------------------------------------------------------

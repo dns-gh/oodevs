@@ -58,7 +58,9 @@ public:
 
     TER_DynamicData& CreateDynamicData();
     void DeleteDynamicData( TER_DynamicData& data );
-    void CreateLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
+    void CreateLineTree ( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
+    void CreateLinesTree( const T_PointVector& points, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
+
 
     TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
     //@}

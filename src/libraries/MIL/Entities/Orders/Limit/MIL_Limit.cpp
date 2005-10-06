@@ -321,14 +321,7 @@ TER_DynamicData* MIL_Limit::CreateDynamicData( const T_PointVector& points ) con
 {
     // $$$$ AGE 2005-03-25: Maybe also add around the data
     TER_DynamicData* pData = & TER_PathFindManager::GetPathFindManager().CreateDynamicData();
-    CIT_PointVector itPoint = points.begin();
-    const MT_Vector2D* pPrevPoint = &*itPoint;
-    for( ++itPoint ; itPoint != points.end(); ++itPoint )
-    {
-        const MT_Vector2D* pCurPoint = &*itPoint;
-        TER_PathFindManager::GetPathFindManager().CreateLineTree( *pPrevPoint, *pCurPoint, *pData );
-        pPrevPoint = pCurPoint;
-    }
+    TER_PathFindManager::GetPathFindManager().CreateLinesTree( points, *pData );
     return pData;
 }
 

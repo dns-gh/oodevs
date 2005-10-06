@@ -149,6 +149,20 @@ void TER_PathFindManager::CreateLineTree( const MT_Vector2D& from, const MT_Vect
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_PathFindManager::CreateLinesTree
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+void TER_PathFindManager::CreateLinesTree( const T_PointVector& points, TER_DynamicData& data, const TerrainData& terrainData /*= DefaultTerrainData()*/ )
+{
+    TER_DynamicData::IT_Handles itHandle = data.handles_.begin();
+    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it, ++itHandle )
+    {
+        TER_PathFinderThread& thread = **it;
+        thread.CreateLinesTree( points, *itHandle->first, terrainData );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::DefaultTerrainData
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------

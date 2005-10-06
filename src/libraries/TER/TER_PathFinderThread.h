@@ -48,7 +48,8 @@ public:
     //! @name Dynamic data
     //@{
     TerrainRetractationHandle& CreateRetractationHandle();
-    void CreateLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData );
+    void CreateLineTree ( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData );
+    void CreateLinesTree( const T_PointVector& points, TerrainRetractationHandle& handle, const TerrainData& terrainData );
     //@}
 
     //! @name Terrain analysis

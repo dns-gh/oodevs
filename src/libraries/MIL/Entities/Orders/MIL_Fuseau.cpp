@@ -915,13 +915,11 @@ TER_DynamicData* MIL_Fuseau::CreateDynamicData() const
     assert( leftPointVectorTmp.size() == rightPointVectorTmp.size() );
     assert( !leftPointVectorTmp.empty() );
 
-    MT_Vector2D vLastMiddlePoint = leftPointVectorTmp[0] + (rightPointVectorTmp[0] - leftPointVectorTmp[0]) / 2;
-    for( uint j = 1; j < leftPointVectorTmp.size(); ++j )
-    {
-        MT_Vector2D vMiddlePoint = leftPointVectorTmp[j] + (rightPointVectorTmp[j] - leftPointVectorTmp[j]) / 2;
-        TER_PathFindManager::GetPathFindManager().CreateLineTree( vLastMiddlePoint, vMiddlePoint, *pPathfindData );
-        vLastMiddlePoint = vMiddlePoint;
-    }
+    ///
+    T_PointVector pointsTmp;
+    for( uint j = 0; j < leftPointVectorTmp.size(); ++j )
+        pointsTmp.push_back( leftPointVectorTmp[0] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
+    TER_PathFindManager::GetPathFindManager().CreateLinesTree( pointsTmp, *pPathfindData );
     return pPathfindData;
 }
 

@@ -126,7 +126,7 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
     assert( pObjectColliding );
 
     call.GetParameter( 0 ).SetValue( (void*)pObjectColliding->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
-    call.GetParameter( 1 ).SetValue( (float)rDistanceCollision );
+    call.GetParameter( 1 ).SetValue( (float)MIL_Tools::ConvertSimToMeter( rDistanceCollision ) );
     call.GetResult().SetValue( true );
 }
 

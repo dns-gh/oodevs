@@ -211,14 +211,7 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
         const T_PointVector points = avoidanceLocalisation_.GetPoints();
         assert( points.size() > 3 );
 
-        CIT_PointVector itPoint = points.begin();
-        const MT_Vector2D* pLastPoint = &*itPoint;
-        for( ++itPoint; itPoint != points.end(); ++itPoint )
-        {
-            const MT_Vector2D* pCurPoint = &*itPoint;
-            TER_PathFindManager::GetPathFindManager().CreateLineTree( *pLastPoint, *pCurPoint, *pPathfindData_ );
-            pLastPoint = pCurPoint;
-        }
+        TER_PathFindManager::GetPathFindManager().CreateLinesTree( points, *pPathfindData_ );
     }
 }
 
