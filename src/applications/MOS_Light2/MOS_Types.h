@@ -79,6 +79,12 @@ enum E_AttitudePopulation
     eAgressive
 };
 
+enum E_TypeAgent
+{
+    eAgent,
+    ePopulation
+};
+
 #define MOS_DEFAULT_PORT_AS_MOS 10000
 
 typedef uint32  MIL_AgentID;

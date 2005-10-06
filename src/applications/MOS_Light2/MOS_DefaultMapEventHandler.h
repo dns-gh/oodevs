@@ -34,6 +34,8 @@ class MOS_TacticalLine_ABC;
 class MOS_Object_ABC;
 class MOS_MapMouseEvent;
 class QPopupMenu;
+class MOS_Agent_ABC;
+class MOS_Population;
 
 
 // =============================================================================
@@ -97,8 +99,9 @@ private:
     //@{
     void SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_Agent* GetAgentAtPos( const MT_Vector2D& vGLPos );
-    bool IsAgentAtPos( const MOS_Agent& agent, const MT_Vector2D& vGLPos );
+    MOS_Agent*      GetAgentAtPos( const MT_Vector2D& vGLPos );
+    MOS_Population* GetPopulationAtPos( const MT_Vector2D& vGLPos );
+    bool IsAgentAtPos( const MOS_Agent_ABC* agent, const MT_Vector2D& vGLPos );
 
     MOS_AgentKnowledge* GetAgentKnowledgeAtPos( const MT_Vector2D& vGLPos );
     bool IsAgentKnowledgeAtPos( const MOS_AgentKnowledge& agent, const MT_Vector2D& vGLPos );

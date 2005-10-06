@@ -24,6 +24,7 @@
 #endif
 
 #include "MOS_Param_ABC.h"
+#include "MOS_Types.h"
 
 class QPopupMenu;
 class MOS_Agent;
@@ -78,7 +79,7 @@ private slots:
     void ActivateAutomataMission( int nMissionId );
     void ActivateFragmentaryOrder( int nOrderId );
 
-    void MagicMove();
+    void MagicMove( );
     void MagicMoveDone();
     void MagicRestore( int nId );
     void MagicDestroyComponent();
@@ -92,6 +93,7 @@ private slots:
     void ChangeHumanFactors();
 
 private:
+    E_TypeAgent     typeAgent_;
     MOS_Team*		pPopupTeam_;
     MOS_Agent*		pPopupAgent_;
 	MOS_Population* pPopupPopulation_;

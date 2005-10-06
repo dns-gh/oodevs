@@ -44,6 +44,16 @@ MOS_AgentManager::CT_PopulationMap& MOS_AgentManager::GetPopulationList()
 	return populationMap_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::GetAllAgentList
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+MOS_AgentManager::CT_AllAgentMap& MOS_AgentManager::GetAllAgentList()
+{
+    return allMap_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindGtia
 // Created: NLD 2004-03-18

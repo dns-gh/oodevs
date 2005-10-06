@@ -402,6 +402,8 @@ void MOS_AgentManager::AddAgent( MOS_Agent& agent )
 {
     if( ! agentMap_.insert( std::make_pair( agent.GetAgentID(), &agent ) ).second )
         RUNTIME_ERROR;
+    if( ! allMap_.insert( std::make_pair( agent.GetID(), &agent ) ).second )
+        RUNTIME_ERROR; 
 }
 
 //-----------------------------------------------------------------------------
@@ -412,6 +414,8 @@ void MOS_AgentManager::AddPopulation( MOS_Population& popu )
 {
     if( ! populationMap_.insert( std::make_pair( popu.GetPopulationID(), &popu ) ).second )
         RUNTIME_ERROR;
+    if( ! allMap_.insert( std::make_pair( popu.GetID(), &popu ) ).second )
+        RUNTIME_ERROR; 
 }
 
 // -----------------------------------------------------------------------------
@@ -425,6 +429,9 @@ void MOS_AgentManager::RemoveAgent( MOS_Agent& agent )
     IT_AgentMap it = agentMap_.find( agent.GetAgentID() );
     assert( it != agentMap_.end() );
     agentMap_.erase( it );
+    IT_AllAgentMap it2 = allMap_.find( agent.GetID() );
+    assert( it2 != allMap_.end() );
+    allMap_.erase( it2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,6 +443,9 @@ void MOS_AgentManager::RemovePopulation( MOS_Population& popu )
     IT_PopulationMap it = populationMap_.find( popu.GetPopulationID() );
     assert( it != populationMap_.end() );
     populationMap_.erase( it );
+    IT_AllAgentMap it2 = allMap_.find( popu.GetID() );
+    assert( it2 != allMap_.end() );
+    allMap_.erase( it2 );
 }
 
 //-----------------------------------------------------------------------------

@@ -30,6 +30,7 @@ class MOS_LogMaintenanceConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogSupplyConsign;
 class MOS_Population;
+class MOS_Agent_ABC;
 
 // =============================================================================
 /** @class  MOS_AgentManager
@@ -55,10 +56,19 @@ public:
     typedef T_AgentMap::reverse_iterator        RIT_AgentMap;
     typedef T_AgentMap::const_reverse_iterator  RCIT_AgentMap;
 
+    typedef std::map< MIL_AgentID, MOS_Agent_ABC* >     T_AllAgentMap;
+    typedef const T_AllAgentMap                         CT_AllAgentMap;
+    typedef T_AllAgentMap::iterator                     IT_AllAgentMap;
+    typedef T_AllAgentMap::const_iterator               CIT_AllAgentMap;
+    typedef T_AllAgentMap::reverse_iterator             RIT_AllAgentMap;
+    typedef T_AllAgentMap::const_reverse_iterator       RCIT_AllAgentMap;
+
 	typedef std::map< MIL_AgentID, MOS_Population* > T_PopulationMap;
 	typedef const T_PopulationMap					 CT_PopulationMap;
 	typedef T_PopulationMap::iterator				 IT_PopulationMap;
 	typedef T_PopulationMap::const_iterator			 CIT_PopulationMap;
+    typedef T_PopulationMap::reverse_iterator        RIT_PopulationMap;
+    typedef T_PopulationMap::const_reverse_iterator  RCIT_PopulationMap;
 
     typedef std::vector< MOS_AgentModel* > T_ModelVector;
     typedef T_ModelVector::iterator       IT_ModelVector;
@@ -147,6 +157,7 @@ public:
     void				DeleteAllAgents		();
     MOS_Agent*			FindAgent			( MIL_AgentID nAgentID );
     CT_AgentMap&		GetAgentList		();
+    CT_AllAgentMap&     GetAllAgentList     ();
 	CT_PopulationMap&	GetPopulationList	();
     //@}
 
@@ -208,10 +219,11 @@ private:
     T* FindConsign( std::map< ASN1T_OID, T* >& cont, ASN1T_OID nConsign );
 
 private:
-    T_TeamMap     teamMap_;
-    T_AgentMap    agentMap_;
-    T_ConflictMap conflictMap_;
+    T_TeamMap       teamMap_;
+    T_AgentMap      agentMap_;
+    T_ConflictMap   conflictMap_;
 	T_PopulationMap	populationMap_;
+    T_AllAgentMap   allMap_;
 
     T_ModelVector vAvailableModels_;
 

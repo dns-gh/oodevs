@@ -1262,6 +1262,13 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         // Draw the selected agent on top of all that.
         Draw( *pSelectedAgent, eSelected );
     }
+    if( eventHandler.selectedElement_.pPopulation_ != 0 )
+    {
+        MOS_Population* pSelectedAgent = eventHandler.selectedElement_.pPopulation_;
+
+        // Draw the selected agent on top of all that.
+        Draw( *pSelectedAgent, eSelected );
+    }
 
     if( eventHandler.selectedElement_.pAgentKnowledge_ != 0 )
         Draw( *eventHandler.selectedElement_.pAgentKnowledge_, eSelected );
@@ -1726,8 +1733,7 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
 		glColor4d( MOS_COLOR_WHITE );
         DrawPath( flow );
         //DrawLine( flow.GetItineraire() );
-
-		DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
+		//DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 0.5, 2.0, color );
 		DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
         glLineWidth( 5.0 );
         DrawLine( flow.GetFlow() );

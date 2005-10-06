@@ -145,10 +145,11 @@ const MT_Vector2D& MOS_Population::GetPos() const
 {
 	if ( concentrationMap_.size() == 0 && fluxMap_.size() == 0 )
 		assert( false );
-	if( concentrationMap_.size() != 0 )
-		return concentrationMap_.begin()->second->GetPos();
+	if( fluxMap_.size() != 0 )
+        return fluxMap_.begin()->second->GetHeadPosition();
 	else
-		return fluxMap_.begin()->second->GetHeadPosition();
+        return concentrationMap_.begin()->second->GetPos();
+		
 }
 
 // -----------------------------------------------------------------------------

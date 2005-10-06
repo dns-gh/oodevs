@@ -58,6 +58,7 @@ MOS_MissionPanel::MOS_MissionPanel( QWidget* pParent )
     : QDockWindow       ( pParent )
     , pMissionInterface_( 0 )
     , pLineEditor_      ( new MOS_ShapeEditorMapEventFilter( this ) )
+    , typeAgent_        ( eAgent )
 {
     this->setResizeEnabled( true );
     this->setCaption( tr( "Mission" ) );
@@ -140,10 +141,12 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Populat
         QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
         int nId;
 
-        nId = pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( MagicMove() ) );
+        nId = pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( MagicMove( ePopulation ) ) );
 
         popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
     }
+
+    typeAgent_ = ePopulation;
 }
 
 // -----------------------------------------------------------------------------
@@ -281,6 +284,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         popupMenu.insertSeparator();
     }
 
+    typeAgent_ = eAgent;
 }
 
 
@@ -491,28 +495,45 @@ void MOS_MissionPanel::MagicMoveDone()
     ASN1T_CoordUTM  coordUTM;
     coordUTM = strPos.c_str();
 
-    MOS_ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetAgentID();
-    asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
-    asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
-    asnMsg.Send( 56 );
-
-    std::stringstream strMsg;
-    strMsg << "Demande déplacement magique pour agent #" << pPopupAgent_->GetAgentID();
-    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
-
-    //$$$ Temporary solution. Clearing the paths should be done when we receive confirmation
-    // that the magic move has gone through to the sim, but since we lack that confirmation
-    // message, we have to do this here.
-    pPopupAgent_->ClearPath();
-    
-    if( pPopupAgent_->IsAutomate() && pPopupAgent_->IsEmbraye() )
+    if ( typeAgent_ == eAgent )
     {
-        const MOS_AgentManager::T_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
-        for( MOS_AgentManager::CIT_AgentMap it = agents.begin(); it != agents.end(); ++it )
-            if( (it->second)->GetParent() == pPopupAgent_ )
-            (it->second)->ClearPath();
+        MOS_ASN_MsgUnitMagicAction asnMsg;
+        asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetAgentID();
+        asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
+        asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
+        asnMsg.Send( 56 );
+
+        std::stringstream strMsg;
+        strMsg << "Demande déplacement magique pour agent #" << pPopupAgent_->GetAgentID();
+        MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+
+        //$$$ Temporary solution. Clearing the paths should be done when we receive confirmation
+        // that the magic move has gone through to the sim, but since we lack that confirmation
+        // message, we have to do this here.
+        pPopupAgent_->ClearPath();
+        
+        if( pPopupAgent_->IsAutomate() && pPopupAgent_->IsEmbraye() )
+        {
+            const MOS_AgentManager::T_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
+            for( MOS_AgentManager::CIT_AgentMap it = agents.begin(); it != agents.end(); ++it )
+                if( (it->second)->GetParent() == pPopupAgent_ )
+                (it->second)->ClearPath();
+        }
     }
+    else if ( typeAgent_ == ePopulation  )
+    {
+        MOS_ASN_MsgUnitMagicAction asnMsg;
+        asnMsg.GetAsnMsg().oid              = pPopupPopulation_->GetID();
+        asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
+        asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
+        asnMsg.Send( 56 );
+
+        std::stringstream strMsg;
+        strMsg << "Demande déplacement magique pour population #" << pPopupPopulation_->GetID();
+        MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );        
+    }
+    else
+        assert( false );
 }
 
 

@@ -41,6 +41,8 @@
 #include "MOS_AgentKnowledge.h"
 #include "MOS_MapMouseEvent.h"
 #include "MOS_ASN_Messages.h"
+#include "MOS_Population.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler constructor
@@ -363,6 +365,13 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
         return;
     }
 
+    MOS_Population* pPopulation = GetPopulationAtPos( vGLPos );
+    if( pPopulation != 0 )
+    {
+        selectedElement_ = MOS_SelectedElement( *pPopulation );
+        return;
+    }
+
     if( selectedElement_.pLine_ != 0 )
     {
         int nPoint = GetPointAtPos( *selectedElement_.pLine_, vGLPos, rDistancePerPixel );
@@ -418,11 +427,49 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
 
 
 // -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::GetPopulationAtPos
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+MOS_Population* MOS_DefaultMapEventHandler::GetPopulationAtPos( const MT_Vector2D& vGLPos )
+{
+    int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+
+    MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
+    MOS_AgentManager::RCIT_PopulationMap rit;
+
+    if( selectedElement_.pPopulation_ == 0 )
+    {
+        rit = populationMap.rbegin();
+    }
+    else
+    {
+        MOS_AgentManager::CIT_PopulationMap it = populationMap.find( selectedElement_.pPopulation_->GetID() );
+        assert( it != populationMap.end() );
+        rit = MOS_AgentManager::RCIT_PopulationMap( ++it );
+        ++rit;
+    }
+
+    for( uint n = 0; n < populationMap.size(); ++n )
+    {
+        if( rit == populationMap.rend() )
+            rit = populationMap.rbegin();
+
+        MOS_Population* pPopulation = (*rit).second;
+        if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
+        {
+            if( IsAgentAtPos( pPopulation, vGLPos ) )
+                return pPopulation;
+        }
+
+        ++rit;
+    }
+
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetAgentAtPos
-/** @param  vPos 
-    @return 
-*/
-// Created: APE 2004-03-09
+// Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
 MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos )
 {
@@ -451,7 +498,7 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
         MOS_Agent* pAgent = (*rit).second;
         if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pAgent->GetTeam().GetIdx()) )
         {
-            if( IsAgentAtPos( *pAgent, vGLPos ) )
+            if( IsAgentAtPos( pAgent, vGLPos ) )
                 return pAgent;
         }
 
@@ -460,7 +507,6 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
 
     return 0;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos
@@ -717,7 +763,8 @@ void MOS_DefaultMapEventHandler::PopupMenu( const MT_Vector2D& vGLPos, float rDi
     // If something is selected, make sure we clicked on it, otherwise select what's under the click.
     // If nothing selected, try selecting what's under the click.
     if(   ( ! selectedElement_.IsAMapElementSelected() )
-       || ( selectedElement_.pAgent_          != 0 && ! IsAgentAtPos( *selectedElement_.pAgent_, vGLPos ) )
+       || ( selectedElement_.pAgent_          != 0 && ! IsAgentAtPos( selectedElement_.pAgent_, vGLPos ) )
+       || ( selectedElement_.pPopulation_     != 0 && ! IsAgentAtPos( selectedElement_.pPopulation_, vGLPos ) )
        || ( selectedElement_.pObject_     != 0 && ! IsObjectAtPos( *selectedElement_.pObject_, vGLPos, rDistancePerPixel ) )
        || ( selectedElement_.pLine_           != 0 && ! IsLineAtPos( *selectedElement_.pLine_, vGLPos, rDistancePerPixel ) )
        || ( selectedElement_.pAgentKnowledge_ != 0 && ! IsAgentKnowledgeAtPos( *selectedElement_.pAgentKnowledge_, vGLPos ) ) )
