@@ -310,6 +310,7 @@ void SSC_Workspace::InitializeModels( const std::string& strFile, bool bNeedScri
     if( ! modelArchive.Section( "Modeles" ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetInfo() );
 
+    // Pions
     if( ! modelArchive.BeginList( "Pions" ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetInfo() );   
     while( modelArchive.NextListElement() )
@@ -329,6 +330,7 @@ void SSC_Workspace::InitializeModels( const std::string& strFile, bool bNeedScri
     }
     modelArchive.EndList(); // Pions
 
+    // Automates
     if( ! modelArchive.BeginList( "Automates" ) )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetInfo() );   
     while( modelArchive.NextListElement() )
@@ -347,6 +349,27 @@ void SSC_Workspace::InitializeModels( const std::string& strFile, bool bNeedScri
         modelArchive.EndSection(); // Modele
     }
     modelArchive.EndList(); // Automates
+
+
+    // Populations
+    if( ! modelArchive.BeginList( "Populations" ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetInfo() );   
+    while( modelArchive.NextListElement() )
+    {
+        if( !modelArchive.Section( "Modele" ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetInfo() );   
+
+        std::string strName;
+        if( !modelArchive.ReadAttribute( "nom", strName ))
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "List 'Models' doesn't exist", modelArchive.RetrieveLastError()->GetInfo() );   
+    
+        std::string& strScriptName = models_[ strName ];
+        if( strScriptName != "" )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Model '%s' already exists", strName.c_str() ) );
+        strScriptName = InitializeModel( strName, modelArchive, bNeedScriptParsing, strArchivePath, strSourcePath );
+        modelArchive.EndSection(); // Modele
+    }
+    modelArchive.EndList(); // Populations
 
     modelArchive.EndSection(); // Modeles
 
