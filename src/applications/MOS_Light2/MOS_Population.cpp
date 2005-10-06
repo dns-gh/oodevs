@@ -84,7 +84,7 @@ void	MOS_Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationCon
 // -----------------------------------------------------------------------------
 void	MOS_Population::CreatePopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-	MOS_PopulationFlux* pFlux = new MOS_PopulationFlux( asnMsg.oid_flux, this );
+	MOS_PopulationFlux* pFlux = new MOS_PopulationFlux( asnMsg, *this );
 	fluxMap_[ asnMsg.oid_flux ] = pFlux;
 }
 
@@ -96,7 +96,7 @@ void	MOS_Population::CreatePopulationFlux( const ASN1T_MsgPopulationFluxCreation
 // -----------------------------------------------------------------------------
 void	MOS_Population::CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
-	MOS_PopulationConcentration* pCon = new MOS_PopulationConcentration( asnMsg, this );
+	MOS_PopulationConcentration* pCon = new MOS_PopulationConcentration( asnMsg, *this );
 	concentrationMap_[ asnMsg.oid_concentration ] = pCon ;
 }
 
@@ -144,7 +144,7 @@ const MT_Vector2D& MOS_Population::GetPos() const
 	if( concentrationMap_.size() != 0 )
 		return concentrationMap_.begin()->second->GetPos();
 	else
-		return fluxMap_.begin()->second->GetPos();
+		return fluxMap_.begin()->second->GetHeadPosition();
 }
 
 // -----------------------------------------------------------------------------

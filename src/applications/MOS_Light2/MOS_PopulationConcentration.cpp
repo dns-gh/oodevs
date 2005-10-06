@@ -22,17 +22,10 @@
 // Name: MOS_PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-MOS_PopulationConcentration::MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , MOS_Population* parent )
-: 	MOS_PopulationPart_ABC()	
-,	parent_			( parent )
-,	nID_			( asnMsg.oid_concentration )
-,	position_		( MT_Vector2D( 0, 0 ) )
-,   HasAttitude		( false )
-,   HasLivingHumans	( false )
-,   HasDeadHumans	( false )
-,   HasDensity		( false )
+MOS_PopulationConcentration::MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const MOS_Population& parent )
+    : MOS_PopulationPart_ABC( asnMsg.oid_concentration, parent )	
+    , position_		        ( 0, 0 )
 {
-
 	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
 }
 
@@ -46,27 +39,17 @@ MOS_PopulationConcentration::~MOS_PopulationConcentration()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationConcentration::Update
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 void MOS_PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
 	if ( asnMsg.m.nb_humains_vivantsPresent )
-	{
-		nLivingHumans_		= asnMsg.nb_humains_vivants;
-		HasLivingHumans		= true;
-	}
-	if ( asnMsg.m.nb_humains_mortsPresent )
-	{
-		nDeadHumans_		= asnMsg.nb_humains_morts;
-		HasDeadHumans		= true;
-	}
-	if ( asnMsg.m.attitudePresent )
-	{
-		attitude_			= asnMsg.attitude;
-		HasAttitude			= true;
-	}
+		nLivingHumans_ = asnMsg.nb_humains_vivants;
 
+	if ( asnMsg.m.nb_humains_mortsPresent )
+	    nDeadHumans_ = asnMsg.nb_humains_morts;
+
+	if ( asnMsg.m.attitudePresent )
+		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
 }
 

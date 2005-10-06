@@ -1685,33 +1685,28 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
         color.AddRGB( 50, 100, 50 );
 
 	//Draw the concentrations
-	for ( std::map< MIL_AgentID, MOS_PopulationConcentration* >::const_iterator itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
+    for ( MOS_Population::CIT_ConcentrationMap itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
 	{
 		color.SetGLColor();
-		DrawCylinder( itCon->second->position_, MOS_GL_CROSSSIZE * 2.0 , 2.0, color);
+		DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * 2.0 , 2.0, color);
 	}
 
 	//Draw the flux
-	for ( std::map< MIL_AgentID, MOS_PopulationFlux* >::const_iterator itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
+    for ( MOS_Population::CIT_FluxMap itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
 	{
+        const MOS_PopulationFlux& flow = *itFlux->second;
+
 		color.SetGLColor();
-        if ( itFlux->second->HasItineraire )
-		{
-			glColor4d( MOS_COLOR_WHITE );
-			DrawLine( itFlux->second->itineraire_ );
-		}
-		if ( itFlux->second->HasFlux )
-		{
-			DrawCylinder( (*(itFlux->second->begin())), MOS_GL_CROSSSIZE * 1.0 , 2.0, color );
-			DrawCylinder( (*(--(itFlux->second->end()))), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
-            glLineWidth( 5.0 );
-            DrawLine( itFlux->second->flux_ );
-            glLineWidth( 1.0 );
-		}
+		glColor4d( MOS_COLOR_WHITE );
+		DrawLine( flow.GetItineraire() );
+
+		DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
+		DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
+        glLineWidth( 5.0 );
+        DrawLine( flow.GetFlow() );
+        glLineWidth( 1.0 );
 			//Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
 	}
-
-
 }
 
 

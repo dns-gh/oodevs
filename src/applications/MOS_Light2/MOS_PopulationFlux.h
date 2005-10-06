@@ -10,32 +10,19 @@
 #ifndef __MOS_PopulationFlux_h_
 #define __MOS_PopulationFlux_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MOS_PopulationPart_ABC.h"
 
 class MOS_Population;
 
-
 // =============================================================================
-/** @class  MOS_PopulationFlux
-    @brief  MOS_PopulationFlux
-    @par    Using example
-    @code
-    MOS_PopulationFlux;
-    @endcode
-*/
 // Created: HME 2005-09-29
 // =============================================================================
 class MOS_PopulationFlux : public MOS_PopulationPart_ABC
 {
-    friend class MOS_GLTool;
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_PopulationFlux( uint , MOS_Population* );
+             MOS_PopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg, const MOS_Population& );
     virtual ~MOS_PopulationFlux();
     //@}
 
@@ -46,81 +33,12 @@ public:
 
     //! @name Accessors
     //@{
-	const MT_Vector2D& GetPos();
-	uint				GetLivingHumans();
-	uint				GetDeadHumans();
-	uint				GetID();
-	std::string			GetName();
-	std::string GetStringAttitude();
+            const T_PointVector& GetFlow        () const;
+            const T_PointVector& GetItineraire  () const;
+            const MT_Vector2D&   GetTailPosition() const;
+            const MT_Vector2D&   GetHeadPosition() const;
+	virtual const std::string&   GetName        () const;
     //@}
-
-	bool HasFlux;
-	bool HasItineraire;
-	bool HasDirection;	
-	bool HasVitesse;		
-	bool HasLivingHumans;	
-	bool HasDeadHumans;	
-	bool HasAttitude;		
-
-public:
-
-	class iterator
-	{
-	public:
-		iterator( T_PointVector& flux, bool debut )
-			: flux_			( flux )
-		{
-			if (debut)
-                it = flux_.begin();
-            else
-                it = flux_.end();
-		}
-		~iterator()
-		{
-		}
-		iterator& operator++()
-		{
-			++it;
-			return *this;
-		}
-		iterator& operator--()
-		{
-			--it;
-			return *this;
-		}
-		MT_Vector2D&	operator*()
-		{
-			return *it;
-		}
-		bool operator==( iterator& it2 )
-		{
-			return ( it == it2.it && it == it2.it );
-		}
-		bool operator!=( iterator& it2 )
-		{
-			return ( it != it2.it || it != it2.it );
-		}
-		iterator& operator=( iterator& it2 )
-		{
-			it = it2.it;
-			flux_ = it2.flux_;
-			return *this;
-		}
-	private:
-		IT_PointVector					it;
-		T_PointVector&					flux_;
-	};
-
-	iterator& begin()
-	{
-		return *new iterator( flux_ , true );
-	};
-	iterator& end()
-	{
-		iterator a = *new iterator( flux_, false );
-        return a;
-	};
-
 
 private:
     //! @name Copy/Assignement
@@ -129,26 +47,17 @@ private:
     MOS_PopulationFlux& operator=( const MOS_PopulationFlux& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-	MOS_Population*					parent_;
-	uint							nID_;
-	T_PointVector					itineraire_;
-	T_PointVector					flux_;
-	int								direction_;
-	int								vitesse_;
-	int								nLivingHumans_;
-	int								nDeadHumans_;
-	ASN1T_EnumPopulationAttitude	attitude_;
+    const std::string strName_;
+
+	T_PointVector	  itineraire_;
+	T_PointVector	  flow_;
+	int				  nDirection_;
+	int				  nSpeed_;
     //@}
 };
-
-
 
 #include "MOS_PopulationFlux.inl"
 

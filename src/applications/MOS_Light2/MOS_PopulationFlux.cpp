@@ -23,17 +23,13 @@
 // Name: MOS_PopulationFlux constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-MOS_PopulationFlux::MOS_PopulationFlux( uint id, MOS_Population* parent )
-: MOS_PopulationPart_ABC()	
-, parent_			( parent )
-,	nID_			( id )
-, HasFlux			( false )
-, HasItineraire		( false )
-, HasDirection		( false )
-, HasVitesse		( false )
-, HasLivingHumans	( false )
-, HasDeadHumans		( false )
-, HasAttitude		( false )
+MOS_PopulationFlux::MOS_PopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg, const MOS_Population& parent )
+    : MOS_PopulationPart_ABC( asnMsg.oid_flux, parent )	
+    , strName_              ( "Flux" )
+    , itineraire_           ( )
+    , flow_                 ( 2, MT_Vector2D( 0, 0 ) )
+    , nDirection_           ( 0 )
+    , nSpeed_               ( 0 )
 {
 }
 
@@ -47,40 +43,28 @@ MOS_PopulationFlux::~MOS_PopulationFlux()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationFlux::Update
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	if ( asnMsg.m.nb_humains_vivantsPresent )
-	{
-		nLivingHumans_		= asnMsg.nb_humains_vivants;
-		HasLivingHumans		= true;
-	}
+	if( asnMsg.m.nb_humains_vivantsPresent )
+		nLivingHumans_ = asnMsg.nb_humains_vivants;
+
 	if ( asnMsg.m.nb_humains_mortsPresent )
-	{
-		nDeadHumans_		= asnMsg.nb_humains_morts;
-		HasDeadHumans		= true;
-	}
+		nDeadHumans_ = asnMsg.nb_humains_morts;
+
 	if ( asnMsg.m.attitudePresent )
-	{
-		attitude_			= asnMsg.attitude;
-		HasAttitude			= true;
-	}
+		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
+
 	if ( asnMsg.m.vitessePresent )
-	{
-		vitesse_			= asnMsg.vitesse;
-		HasVitesse			= true;
-	}
+		nSpeed_ = asnMsg.vitesse;
+
 	if ( asnMsg.m.directionPresent )
-	{
-		direction_			= asnMsg.direction;
-		HasDirection		= true;
-	}
+		nDirection_	= asnMsg.direction;
+
 	if ( asnMsg.m.itinerairePresent )
 	{
-		HasItineraire		= true;
+        itineraire_.clear();
 		for( int i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
 		{
 			MT_Vector2D point;
@@ -88,14 +72,15 @@ void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 			itineraire_.push_back( point );
 		}
 	}
+
 	if ( asnMsg.m.fluxPresent )
 	{
-		HasFlux		= true;
+        flow_.clear();
 		for( int i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
 		{
 			MT_Vector2D point;
 			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.flux.vecteur_point.elem[i].data, point  );
-			flux_.push_back( point );
+			flow_.push_back( point );
 		}
 	}
 }

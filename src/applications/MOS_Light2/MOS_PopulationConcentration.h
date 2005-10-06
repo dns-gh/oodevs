@@ -10,33 +10,19 @@
 #ifndef __MOS_PopulationConcentration_h_
 #define __MOS_PopulationConcentration_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
-
 #include "MOS_PopulationPart_ABC.h"
 
 class MOS_Population;
 
-
 // =============================================================================
-/** @class  MOS_PopulationConcentration
-    @brief  MOS_PopulationConcentration
-    @par    Using example
-    @code
-    MOS_PopulationConcentration;
-    @endcode
-*/
 // Created: HME 2005-09-29
 // =============================================================================
 class MOS_PopulationConcentration : public MOS_PopulationPart_ABC
 {
-    friend class MOS_GLTool;
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , MOS_Population* );
+             MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , const MOS_Population& );
     virtual ~MOS_PopulationConcentration();
     //@}
 
@@ -47,18 +33,9 @@ public:
 
     //! @name Accessors
     //@{
-	const MT_Vector2D&	GetPos();
-	uint				GetLivingHumans();
-	uint				GetDeadHumans();
-	uint				GetID();
-	std::string			GetName();
-	std::string GetStringAttitude();
+	        const MT_Vector2D& GetPos () const;
+	virtual const std::string& GetName() const;
     //@}
-
-    bool HasAttitude;
-	bool HasLivingHumans;
-	bool HasDeadHumans;
-	bool HasDensity;
 
 private:
     //! @name Copy/Assignement
@@ -67,24 +44,14 @@ private:
     MOS_PopulationConcentration& operator=( const MOS_PopulationConcentration& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
-	MOS_Population*					parent_;
-	uint							nID_;
-	float							rDensity_;
-	int								nLivingHumans_;
-	int								nDeadHumans_;
-	ASN1T_EnumPopulationAttitude	attitude_;
-	MT_Vector2D						position_;
+    const std::string strName_;
+	      float		  rDensity_;
+	      MT_Vector2D position_;
     //@}			
 };
-
-
 
 #include "MOS_PopulationConcentration.inl"
 

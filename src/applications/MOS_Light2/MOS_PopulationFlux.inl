@@ -6,84 +6,54 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux::GetPos
-/** @return 
-*/
-// Created: HME 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& MOS_PopulationFlux::GetPos()
-{
-	return *flux_.begin();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux::GetLivingHumans
-/** @return 
-*/
-// Created: HME 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-uint MOS_PopulationFlux::GetLivingHumans()
-{
-	return nLivingHumans_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux::GetDeadHumans
-/** @return 
-*/
-// Created: HME 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-uint MOS_PopulationFlux::GetDeadHumans()
-{
-	return nDeadHumans_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux::GetID
-/** @return 
-*/
-// Created: HME 2005-10-04
-// -----------------------------------------------------------------------------
-inline
-uint MOS_PopulationFlux::GetID()
-{
-	return nID_;
-}
-
-
-
 // -----------------------------------------------------------------------------
 // Name: std::string	MOS_PopulationFlux::GetName
 // Created: HME 2005-10-04
 // -----------------------------------------------------------------------------
 inline
-std::string	MOS_PopulationFlux::GetName()
+const std::string& MOS_PopulationFlux::GetName() const
 {
-	return std::string( "flux" );
+	return strName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::string	MOS_PopulationFlux::GetStringAttitude
-// Created: HME 2005-10-04
+// Name: MOS_PopulationFlux::GetFlow
+// Created: NLD 2005-10-06
 // -----------------------------------------------------------------------------
 inline
-std::string	MOS_PopulationFlux::GetStringAttitude()
+const T_PointVector& MOS_PopulationFlux::GetFlow() const
 {
-	switch( attitude_ ) 
-	{
-	case eCalme:
-		return std::string("Calme");
-	case eAgitee:
-		return std::string("Agitée");
-	case eExcitee:
-		return std::string("Excitée");
-	case eAgressive:
-		return std::string("Agressive");
-	}
+    return flow_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlux::GetItineraire
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+const T_PointVector& MOS_PopulationFlux::GetItineraire() const
+{
+    return itineraire_;
+}
 
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlux::GetTailPosition
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MOS_PopulationFlux::GetTailPosition() const
+{
+    assert( flow_.size() >= 2 );
+    return flow_.front();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlux::GetHeadPosition
+// Created: NLD 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MOS_PopulationFlux::GetHeadPosition() const
+{
+    assert( flow_.size() >= 2 );
+    return flow_.back();
 }
