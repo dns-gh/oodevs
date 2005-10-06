@@ -103,7 +103,6 @@ enum E_KeyPoint
     eNbrKeyPoints
 };
 
-
 enum E_AgentTypePion
 {
     eAgentTypePionINF,

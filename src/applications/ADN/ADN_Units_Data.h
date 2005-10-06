@@ -133,20 +133,6 @@ public:
     public:
         E_KeyPoint   nTypeTerrain_;  //$$$$
         ADN_Type_Int nDistance_;
-
-    public:
-        class Cmp : public std::unary_function< PointInfos* , bool >
-        {
-        public:
-            Cmp(E_TypeTerrain& val) : val_(val) {}
-            ~Cmp() {}
-
-            bool operator()( PointInfos* tgtnfos ) const
-            { return tgtnfos->nTypeTerrain_==val_; }
-
-        private:
-            E_TypeTerrain val_;
-        };
     };
 
     typedef ADN_Type_Vector_ABC< PointInfos >    T_PointInfos_Vector;
