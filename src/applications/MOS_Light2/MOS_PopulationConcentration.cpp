@@ -25,6 +25,7 @@
 MOS_PopulationConcentration::MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const MOS_Population& parent )
     : MOS_PopulationPart_ABC( asnMsg.oid_concentration, parent )	
     , position_		        ( 0, 0 )
+    , strName_              ( "Concentration" )
 {
 	MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
 }

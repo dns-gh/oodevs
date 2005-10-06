@@ -104,6 +104,7 @@ void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
 
     pAttitudeLabel_->setText( "" );
 
+    pPartsListView_->clear();
     for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
         new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
             , QString( (*it)->GetName().c_str() )
