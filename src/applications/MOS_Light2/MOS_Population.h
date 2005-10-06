@@ -20,11 +20,13 @@
 #include "MOS_PopulationPart_ABC.h"
 
 #include "MOS_Agent_ABC.h"
+#include "MOS_TypePopulation.h"
 
 class MOS_PopulationConcentration;
 class MOS_PopulationFlux;
 class MOS_Team;
-class MOS_TypePopulation;
+
+class MOS_AgentModel;
 
 
 // =============================================================================
@@ -64,13 +66,14 @@ public:
 	void	DeletePopulationConcentration	( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
 
-	MIL_AgentID			GetPopulationID();
-	const uint			GetID();
-	const MOS_Team&		GetTeam();
-	const std::string	GetName() const;
-	const MT_Vector2D&	GetPos() const ;
-	uint				GetLivingHumans();
-	uint				GetDeadHumans();
+	MIL_AgentID			        GetPopulationID();
+	const uint			        GetID();
+	const MOS_Team&		        GetTeam();
+	const std::string	        GetName() const;
+	const MT_Vector2D&	        GetPos() const ;
+	uint				        GetLivingHumans();
+	uint				        GetDeadHumans();
+    const MOS_AgentModel&       GetModel() const ;
 
 public:
 

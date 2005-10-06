@@ -118,6 +118,32 @@ void MOS_MissionPanel::FillDiplomacyPopupMenu( QPopupMenu& popupMenu, MOS_Team& 
 void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Population& population )
 {
     pPopupPopulation_ = &population;
+
+   if( popupMenu.count() > 0 )
+        popupMenu.insertSeparator();
+
+    // Create and fill the unit menu.
+    QPopupMenu* pPopulationMenu = new QPopupMenu( &popupMenu );
+    const MOS_AgentModel::T_MissionVector& missions = population.GetModel().GetAvailableMissions();
+    for( MOS_AgentModel::CIT_MissionVector it = missions.begin(); it != missions.end(); ++it )
+    {
+        int nId = pPopulationMenu->insertItem( ENT_Tr::ConvertFromPopulationMission( E_PopulationMission( *it ) ).c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
+        pPopulationMenu->setItemParameter( nId, (int)*it );
+    }
+
+    // Add the unit mission menu.
+    int nPopulationMenuId = popupMenu.insertItem( tr( "Missions Population" ), pPopulationMenu  );
+
+    // Add the magic orders if playing as controller.
+    if( MOS_MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
+    {
+        QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
+        int nId;
+
+        nId = pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( MagicMove() ) );
+
+        popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -356,6 +382,25 @@ void MOS_MissionPanel::ActivateAutomataMission( int nMissionId )
     this->show();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::ActivatePopulationMission
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::ActivatePopulationMission( int nMissionId )
+{
+    this->hide();
+    delete pMissionInterface_;
+    pMissionInterface_ = 0;
+
+    pMissionInterface_ = new MOS_PopulationMissionInterface( *pPopupPopulation_, (uint)nMissionId, *this );
+
+    this->setWidget( pMissionInterface_ );
+
+    // For some magic reason, the following line resizes the widget
+    // to a nice size (but not the minimal one).
+    this->resize( 10, 10 );
+    this->show();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::ActivateFragmentaryOrder

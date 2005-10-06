@@ -74,6 +74,7 @@ private:
 private slots:
     void ToggleAutomate();
     void ActivateUnitMission( int nMissionId );
+    void ActivatePopulationMission( int nMissionId );
     void ActivateAutomataMission( int nMissionId );
     void ActivateFragmentaryOrder( int nOrderId );
 

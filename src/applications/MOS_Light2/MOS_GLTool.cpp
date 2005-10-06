@@ -2165,7 +2165,7 @@ void MOS_GLTool::DrawCylinder( const MT_Vector2D& center, MT_Float rRadius, MT_F
 	glEnd();
 	
 	glBegin( GL_TRIANGLE_FAN );
-    Vertex( center.rX_, center.rY_, rHeight );
+    Vertex( center.rX_, center.rY_, rHeight  );
     for ( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
             Vertex( it->rX_, it->rY_, rHeight );
 	glEnd();

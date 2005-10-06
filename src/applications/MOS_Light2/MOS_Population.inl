@@ -54,3 +54,14 @@ const uint MOS_Population::GetID()
 {
 	return GetPopulationID();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetModel
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+const MOS_AgentModel& MOS_Population::GetModel() const
+{
+    assert( pTypePopulation_ );
+    return pTypePopulation_->GetModel();
+}
