@@ -29,15 +29,17 @@ public:
     //! @name Operations
     //@{
 	void Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
+    void UpdatePathFind();
     //@}
 
     //! @name Accessors
     //@{
-            const T_PointVector& GetFlow        () const;
-            const T_PointVector& GetItineraire  () const;
-            const MT_Vector2D&   GetTailPosition() const;
-            const MT_Vector2D&   GetHeadPosition() const;
-	virtual const std::string&   GetName        () const;
+            const T_PointVector& GetFlow            () const;
+            const T_PointVector& GetItineraire      () const;
+            const MT_Vector2D&   GetTailPosition    () const;
+            const MT_Vector2D&   GetHeadPosition    () const;
+	virtual const std::string&   GetName            () const;
+    virtual const MT_Vector2D&   GetPos             () const;
     //@}
 
 private:

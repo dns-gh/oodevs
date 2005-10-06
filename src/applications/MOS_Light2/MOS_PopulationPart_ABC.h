@@ -38,6 +38,7 @@ public:
     const std::string& GetStringAttitude() const;
 
     virtual const std::string& GetName() const = 0;
+    virtual const MT_Vector2D& GetPos()  const = 0;
     //@}
 
 protected:

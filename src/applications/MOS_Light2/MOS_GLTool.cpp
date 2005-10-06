@@ -527,6 +527,32 @@ void MOS_GLTool::DrawPath( MOS_Agent& agent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_GLTool::DrawPath
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+void MOS_GLTool::DrawPath( MOS_PopulationFlux& flux )
+{
+    MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
+    // Update the path data.
+    flux.UpdatePathFind();
+
+        // Draw the path if it exists
+    T_PointVector vPath( flux.GetItineraire() );
+    if( vPath.size() > 1 )
+    {
+        // Replace the first point (which is the first point of the segment the agent is on)
+        // by the agent's position.
+        vPath[0] = flux.GetPos();
+        glColor4d( MOS_COLOR_PATH );
+        glLineWidth( 3 );
+        glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_ % 16) ] );
+        glEnable( GL_LINE_STIPPLE );
+        DrawLine( vPath );
+        glDisable( GL_LINE_STIPPLE );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawAutomataStatus
 // Created: AGE 2005-03-17
 // -----------------------------------------------------------------------------
@@ -1694,11 +1720,12 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
 	//Draw the flux
     for ( MOS_Population::CIT_FluxMap itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
 	{
-        const MOS_PopulationFlux& flow = *itFlux->second;
+        MOS_PopulationFlux& flow = *itFlux->second;
 
 		color.SetGLColor();
 		glColor4d( MOS_COLOR_WHITE );
-		DrawLine( flow.GetItineraire() );
+        DrawPath( flow );
+        //DrawLine( flow.GetItineraire() );
 
 		DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
 		DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );

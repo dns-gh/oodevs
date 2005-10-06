@@ -57,3 +57,14 @@ const MT_Vector2D& MOS_PopulationFlux::GetHeadPosition() const
     assert( flow_.size() >= 2 );
     return flow_.back();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlux::GetPos
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D& MOS_PopulationFlux::GetPos() const
+{
+    return GetTailPosition();
+}

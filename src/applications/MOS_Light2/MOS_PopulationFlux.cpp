@@ -84,3 +84,55 @@ void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 		}
 	}
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlux::UpdatePathFind
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+void MOS_PopulationFlux::UpdatePathFind()
+{
+    if( itineraire_.size() <= 1 )
+        return;
+
+    // We have to determine where along the path is located the unit. To do this, we
+    // compute the distance from the agent to each segment of the path, and take
+    // the closest segment. The path is then truncated to discard all the points
+    // before that segment (since we're supposed to have passed them).
+
+    MT_Float rMinDistance = 999999999.0;
+    IT_PointVector itLastValidPoint = itineraire_.end();
+
+    const MT_Vector2D& vPos = GetPos();
+
+    // Iterate on the path vector.
+    IT_PointVector itPreviousPoint = itineraire_.begin();
+    for( IT_PointVector it = itineraire_.begin() + 1; it != itineraire_.end() ; ++it )
+    {
+        MT_Line curLine( *itPreviousPoint, *it );
+        MT_Vector2D vNewPos = curLine.ClosestPointOnLine( vPos );
+        MT_Float rSqrDistance = vPos.SquareDistance( vNewPos );
+        if( rSqrDistance < rMinDistance )
+        {
+            itLastValidPoint = itPreviousPoint;
+            rMinDistance = rSqrDistance;
+        }
+
+        // If the distance is less than 0.1 km, we can consider that this is good enough.
+        if( rSqrDistance < (0.1 * 0.1) )
+            break;
+
+        itPreviousPoint = it;
+    }
+
+    // Check and handle an improbable result.
+    if( itLastValidPoint == itineraire_.end() )
+    {
+        itineraire_.clear();
+        return;
+    }
+
+    // Move the points we want to keep to the begining of the vector, and trucate the end.
+    std::copy( itLastValidPoint, itineraire_.end(), itineraire_.begin() );
+    itineraire_.resize( itineraire_.end() - itLastValidPoint );
+
+}

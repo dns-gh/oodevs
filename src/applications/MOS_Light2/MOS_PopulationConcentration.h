@@ -33,7 +33,7 @@ public:
 
     //! @name Accessors
     //@{
-	        const MT_Vector2D& GetPos () const;
+	virtual const MT_Vector2D& GetPos () const;
 	virtual const std::string& GetName() const;
     //@}
 

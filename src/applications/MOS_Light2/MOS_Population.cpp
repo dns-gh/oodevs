@@ -108,6 +108,8 @@ void	MOS_Population::CreatePopulationConcentration( const ASN1T_MsgPopulationCon
 // -----------------------------------------------------------------------------
 void	MOS_Population::DeletePopulationFlux( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
+    IT_FluxMap it = fluxMap_.find( asnMsg.oid_flux );
+    fluxMap_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,6 +120,8 @@ void	MOS_Population::DeletePopulationFlux( const ASN1T_MsgPopulationFluxDestruct
 // -----------------------------------------------------------------------------
 void	MOS_Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
+    IT_ConcentrationMap it = concentrationMap_.find( asnMsg.oid_concentration );
+    concentrationMap_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
