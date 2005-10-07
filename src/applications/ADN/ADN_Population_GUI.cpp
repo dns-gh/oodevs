@@ -85,13 +85,13 @@ void ADN_Population_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Model" ), vInfosConnectors[eModel] );
     
     // Concentration density
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Concentration density" ), vInfosConnectors[eConcentrationDensity], eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Concentration density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
 
     // Move nominal density
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move nominal density" ), vInfosConnectors[eMoveDensity], eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move nominal density" ), vInfosConnectors[eMoveDensity], tr( "people/m²" ), eGreaterZero );
 
     // Move speed
-    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move speed" ), vInfosConnectors[eMoveSpeed], eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
 
     pPopulationList->SetItemConnectors( vInfosConnectors );
 

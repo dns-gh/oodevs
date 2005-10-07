@@ -2433,7 +2433,7 @@
     </message>
     <message>
         <source>Population FaireMouvement</source>
-        <translation type="unfinished"></translation>
+        <translation>Population FaireMouvement</translation>
     </message>
 </context>
 <context>
@@ -3171,7 +3171,7 @@ du tireur</translation>
     <name>ADN_Models_GUI</name>
     <message>
         <source>Unit models</source>
-        <translation>Modèles de Pions</translation>
+        <translation>Modèles de pions</translation>
     </message>
     <message>
         <source>Automata models</source>
@@ -3199,7 +3199,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Population models</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèles de populations</translation>
     </message>
 </context>
 <context>
@@ -3457,6 +3457,67 @@ Assurez vous que le fichier existe.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Population_GUI</name>
+    <message>
+        <source>Population</source>
+        <translation>Population</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation>Modèle</translation>
+    </message>
+    <message>
+        <source>Concentration density</source>
+        <translation>Densité de la concentration</translation>
+    </message>
+    <message>
+        <source>people/m&#xb2;</source>
+        <translation>hommes/m²</translation>
+    </message>
+    <message>
+        <source>Move nominal density</source>
+        <translation>Densité nominale en mouvement</translation>
+    </message>
+    <message>
+        <source>Move speed</source>
+        <translation>Vitesse de déplacement</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Population_ListView</name>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Population_Wizard</name>
+    <message>
+        <source>New population creation</source>
+        <translation>Création d&apos;une nouvelle population</translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation>Population</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new population.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle population.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Project_GUI</name>
     <message>
         <source>Project</source>
@@ -3660,7 +3721,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>
@@ -5762,7 +5823,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Population</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Population</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>

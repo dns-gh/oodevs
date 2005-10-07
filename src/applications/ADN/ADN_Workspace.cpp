@@ -138,7 +138,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eHLA]            = new ADN_WorkspaceElement< ADN_HLA_Data, ADN_HLA_GUI>( tr( "HLA" ) );
     elements_[eHealth]         = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]         = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
-    elements_[ePopulation]     = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Population" ) );
+    elements_[ePopulation]     = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Populations" ) );
 }
 
 
