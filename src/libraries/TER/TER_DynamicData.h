@@ -60,14 +60,13 @@ private:
 
     //! @name Operations
     //@{
-    void AddRetractationHandle( TerrainRetractationHandle& handle, boost::mutex& mutex );
+    void AddRetractationHandle( TerrainRetractationHandle& handle );
     //@}
 
     //! @name Types
     //@{
     typedef boost::shared_ptr< TerrainRetractationHandle > T_Handle;
-    typedef std::pair< T_Handle, boost::mutex* >           T_MutexedHandle;
-    typedef std::vector< T_MutexedHandle >                 T_Handles;
+    typedef std::vector< T_Handle >                        T_Handles;
     typedef T_Handles::iterator                           IT_Handles;
     //@}
 

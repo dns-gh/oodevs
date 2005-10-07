@@ -47,12 +47,7 @@ TER_DynamicData::TER_DynamicData( const TER_DynamicData& rhs )
 // -----------------------------------------------------------------------------
 TER_DynamicData::~TER_DynamicData()
 {
-    while( ! handles_.empty() )
-    {
-        boost::mutex& mutex = *handles_.back().second;
-        boost::mutex::scoped_lock lock( mutex );
-        handles_.pop_back();
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +63,7 @@ TER_DynamicData& TER_DynamicData::Duplicate()
 // Name: TER_DynamicData::AddRetractationHandle
 // Created: AGE 2005-02-02
 // -----------------------------------------------------------------------------
-void TER_DynamicData::AddRetractationHandle( TerrainRetractationHandle& handle, boost::mutex& mutex )
+void TER_DynamicData::AddRetractationHandle( TerrainRetractationHandle& handle )
 {
-    handles_.push_back( T_MutexedHandle( T_Handle( &handle ), &mutex ) );
+    handles_.push_back( T_Handle( &handle ) );
 }

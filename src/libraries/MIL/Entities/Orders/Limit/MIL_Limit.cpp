@@ -21,6 +21,7 @@
 
 #include "TER/TER_PathFindManager.h"
 #include "TER/TER_DynamicData.h"
+#include "MT_Tools/MT_Assert.h"
 
 using namespace DIN;
 
@@ -320,9 +321,7 @@ void MIL_Limit::CreateDynamicData( const MIL_Limit& other, const MIL_Fuseau& fus
 TER_DynamicData* MIL_Limit::CreateDynamicData( const T_PointVector& points ) const
 {
     // $$$$ AGE 2005-03-25: Maybe also add around the data
-    TER_DynamicData* pData = & TER_PathFindManager::GetPathFindManager().CreateDynamicData();
-    TER_PathFindManager::GetPathFindManager().CreateLinesTree( points, *pData );
-    return pData;
+    return & TER_PathFindManager::GetPathFindManager().CreateLineTree( points );
 }
 
 // -----------------------------------------------------------------------------

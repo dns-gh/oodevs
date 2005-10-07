@@ -93,15 +93,6 @@ void TER_PathFinderThread::Process( TER_PathFindRequest_ABC* const& pRequest )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::CreateRetractationHandle
-// Created: AGE 2005-02-23
-// -----------------------------------------------------------------------------
-TerrainRetractationHandle& TER_PathFinderThread::CreateRetractationHandle()
-{
-    return pPathfinder_->CreateRetractationHandle();
-}
-
 namespace
 {
     inline
@@ -113,29 +104,24 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::CreateLineTree
-// Created: AGE 2005-02-23
+// Created: AGE 2005-10-07
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::CreateLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData )
+TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVector& points, const TerrainData& terrainData )
 {
-    pPathfinder_->AddDynamicData( MakePoint( from ), MakePoint( to ), handle, terrainData );
+    std::vector< geometry::Point2f > geometryPoints;
+    geometryPoints.reserve( points.size() );
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        geometryPoints.push_back( MakePoint( *it ) );
+    return pPathfinder_->CreateDynamicData( geometryPoints.begin(), geometryPoints.end(), terrainData );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::CreateLinesTree
-// Created: AGE 2005-02-23
+// Name: TER_PathFinderThread::AddLineTree
+// Created: AGE 2005-10-07
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::CreateLinesTree( const T_PointVector& points, TerrainRetractationHandle& handle, const TerrainData& terrainData )
+void TER_PathFinderThread::AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData )
 {
-    boost::mutex::scoped_lock locker( pPathfinder_->GetMutex() );
-
-    CIT_PointVector itPoint = points.begin();
-    const MT_Vector2D* pPrevPoint = &*itPoint;
-    for( ++itPoint ; itPoint != points.end(); ++itPoint )
-    {
-        const MT_Vector2D* pCurPoint = &*itPoint;
-        CreateLineTree( *pPrevPoint, *pCurPoint, handle, terrainData );
-        pPrevPoint = pCurPoint;
-    }
+    pPathfinder_->AddDynamicData( MakePoint( from ), MakePoint( to ), handle, terrainData );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,13 +216,4 @@ void TER_PathFinderThread::Dump( const std::string& strBaseArchiveName ) const
     nodes.OpenOutputFile( strBaseArchiveName + "Nodes.bin" );
     links.OpenOutputFile( strBaseArchiveName + "Links.bin" );
     pPathfinder_->Dump( graph, nodes, links );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::GetMutex
-// Created: AGE 2005-03-24
-// -----------------------------------------------------------------------------
-boost::mutex& TER_PathFinderThread::GetMutex()
-{
-    return pPathfinder_->GetMutex();
 }

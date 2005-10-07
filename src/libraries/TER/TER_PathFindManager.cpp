@@ -86,21 +86,34 @@ TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::CreateDynamicData
-// Created: AGE 2005-02-01
+// Name: TER_PathFindManager::CreateLineTree
+// Created: AGE 2005-10-07
 // -----------------------------------------------------------------------------
-TER_DynamicData& TER_PathFindManager::CreateDynamicData()
+TER_DynamicData& TER_PathFindManager::CreateLineTree( const T_PointVector& points, const TerrainData& terrainData /*= DefaultTerrainData()*/ )
 {
     TER_DynamicData* pData = new TER_DynamicData();
     for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
     {
         TER_PathFinderThread& thread = **it;
-        pData->AddRetractationHandle( thread.CreateRetractationHandle(), thread.GetMutex() );
+        pData->AddRetractationHandle( thread.CreateLineTree( points, terrainData )  );
     }
     datas_.push_back( T_FlagedData( pData, false ) );
     return *pData;
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_PathFindManager::AddLineTree
+// Created: AGE 2005-10-07
+// -----------------------------------------------------------------------------
+void TER_PathFindManager::AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData )
+{
+    TER_DynamicData::IT_Handles itHandle = data.handles_.begin();
+    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it, ++itHandle )
+    {
+        TER_PathFinderThread& thread = **it;
+        thread.AddLineTree( from, to, **itHandle, terrainData );
+    }
+}
 
 namespace
 {
@@ -129,36 +142,8 @@ void TER_PathFindManager::DeleteDynamicData( TER_DynamicData& data )
     it->second = true;
     while( ! datas_.empty() && datas_.back().second )
     {
-        delete datas_.back().first;
+        delete datas_.back().first; // $$$$ AGE 2005-10-07: Many successive mutex locks here
         datas_.pop_back();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::CreateLineTree
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-void TER_PathFindManager::CreateLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData /*= DefaultTerrainData()*/ )
-{
-    TER_DynamicData::IT_Handles itHandle = data.handles_.begin();
-    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it, ++itHandle )
-    {
-        TER_PathFinderThread& thread = **it;
-        thread.CreateLineTree( from, to, *itHandle->first, terrainData );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::CreateLinesTree
-// Created: NLD 2005-10-06
-// -----------------------------------------------------------------------------
-void TER_PathFindManager::CreateLinesTree( const T_PointVector& points, TER_DynamicData& data, const TerrainData& terrainData /*= DefaultTerrainData()*/ )
-{
-    TER_DynamicData::IT_Handles itHandle = data.handles_.begin();
-    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it, ++itHandle )
-    {
-        TER_PathFinderThread& thread = **it;
-        thread.CreateLinesTree( points, *itHandle->first, terrainData );
     }
 }
 

@@ -52,17 +52,14 @@ public:
     //! @name Operations
     //@{
     static TER_PathFindManager& GetPathFindManager();
+    TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
 
     TerrainData GetTerrainDataAt( const MT_Vector2D& pos ) const;
     void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
 
-    TER_DynamicData& CreateDynamicData();
     void DeleteDynamicData( TER_DynamicData& data );
-    void CreateLineTree ( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
-    void CreateLinesTree( const T_PointVector& points, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
-
-
-    TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
+    TER_DynamicData& CreateLineTree( const T_PointVector& points = T_PointVector(), const TerrainData& terrainData = DefaultTerrainData() );
+    void AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
     //@}
 
 private:

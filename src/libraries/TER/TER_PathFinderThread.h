@@ -47,9 +47,8 @@ public:
 
     //! @name Dynamic data
     //@{
-    TerrainRetractationHandle& CreateRetractationHandle();
-    void CreateLineTree ( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData );
-    void CreateLinesTree( const T_PointVector& points, TerrainRetractationHandle& handle, const TerrainData& terrainData );
+    TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData );
+    void AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData );
     //@}
 
     //! @name Terrain analysis
@@ -61,11 +60,6 @@ public:
     //! @name Debug
     //@{
     void Dump( const std::string& strBaseArchiveName ) const;
-    //@}
-
-    //! @name Threading
-    //@{
-    boost::mutex& GetMutex();
     //@}
 
 private:

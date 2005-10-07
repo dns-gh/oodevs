@@ -96,10 +96,10 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
     const T_PointVector points = GetLocalisation().GetPoints();
     assert( !points.empty() );
     delete pPathfindData_;
-    pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateDynamicData();
+    pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateLineTree();
 
     if( points.size() == 1 )
-        TER_PathFindManager::GetPathFindManager().CreateLineTree( points.front(), points.front(), *pPathfindData_, TerrainData::Bridge() );
+        TER_PathFindManager::GetPathFindManager().AddLineTree( points.front(), points.front(), *pPathfindData_, TerrainData::Bridge() ); // $$$$ AGE 2005-10-07: Probably does absolutely nix
     else
     {
         CIT_PointVector itPoint = points.begin();
@@ -109,7 +109,7 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
             const MT_Vector2D* pCurPoint = &*itPoint;
             MT_Vector2D direction( *pCurPoint - *pLastPoint );
             direction.Normalize() *= 150;
-            TER_PathFindManager::GetPathFindManager().CreateLineTree( *pLastPoint - direction, *pCurPoint + direction, *pPathfindData_, TerrainData::Bridge() );
+            TER_PathFindManager::GetPathFindManager().AddLineTree( *pLastPoint - direction, *pCurPoint + direction, *pPathfindData_, TerrainData::Bridge() );
             pLastPoint = pCurPoint;
         }
     }

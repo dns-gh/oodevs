@@ -905,8 +905,6 @@ MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Floa
 // -----------------------------------------------------------------------------
 TER_DynamicData* MIL_Fuseau::CreateDynamicData() const
 {
-    TER_DynamicData* pPathfindData = & TER_PathFindManager::GetPathFindManager().CreateDynamicData();
-
     T_PointVector leftPointVectorTmp  = leftPointVector_;
     T_PointVector rightPointVectorTmp = rightPointVector_;
 
@@ -914,13 +912,11 @@ TER_DynamicData* MIL_Fuseau::CreateDynamicData() const
     InsertPointProjection( rightPointVector_, leftPointVectorTmp  );
     assert( leftPointVectorTmp.size() == rightPointVectorTmp.size() );
     assert( !leftPointVectorTmp.empty() );
-
     ///
-    T_PointVector pointsTmp;
+    T_PointVector middle;
     for( uint j = 0; j < leftPointVectorTmp.size(); ++j )
-        pointsTmp.push_back( leftPointVectorTmp[0] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
-    TER_PathFindManager::GetPathFindManager().CreateLinesTree( pointsTmp, *pPathfindData );
-    return pPathfindData;
+        middle.push_back( leftPointVectorTmp[0] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
+    return & TER_PathFindManager::GetPathFindManager().CreateLineTree( middle );
 }
 
 // -----------------------------------------------------------------------------

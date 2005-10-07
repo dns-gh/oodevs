@@ -1,4 +1,4 @@
- //*****************************************************************************
+//*****************************************************************************
 //
 // $Created: NLD 2002-12-12 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Objects/MIL_RealObject_ABC.cpp $
@@ -204,14 +204,13 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
     {
         if( pPathfindData_ )
             TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *pPathfindData_ );
-        pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateDynamicData();
         avoidanceLocalisation_.Reset( GetLocalisation() );
         avoidanceLocalisation_.Scale( pType_->GetAvoidanceDistance() );
 
         const T_PointVector points = avoidanceLocalisation_.GetPoints();
         assert( points.size() > 3 );
 
-        TER_PathFindManager::GetPathFindManager().CreateLinesTree( points, *pPathfindData_ );
+        pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateLineTree( points );
     }
 }
 
