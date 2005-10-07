@@ -18,7 +18,7 @@
 
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
-#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 
 
 
@@ -26,7 +26,7 @@
 // Name: MOS_RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_RC::MOS_RC( MOS_Agent& agent )
+MOS_RC::MOS_RC( MOS_Agent_ABC& agent )
     : MOS_Report_ABC( agent.GetPos() )
     , agent_        ( agent )
 {
@@ -347,7 +347,7 @@ std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string MOS_RC::AgentLink( ASN1T_OID nId )
 {
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
+    MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAllAgent( nId );
     if( pAgent == 0 )
         return std::string( " !Agent non trouvé! " );
 

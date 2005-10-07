@@ -476,6 +476,19 @@ MOS_Agent* MOS_AgentManager::FindAgent( MIL_AgentID nAgentID )
     return itAgent->second;
 }
 
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentManager::FindAllAgent
+// Created: HME 2005-10-07
+//-----------------------------------------------------------------------------
+MOS_Agent_ABC* MOS_AgentManager::FindAllAgent( MIL_AgentID nAgentID )
+{
+    IT_AllAgentMap itAgent = allMap_.find( nAgentID );
+    if( itAgent == allMap_.end() )
+        return 0;
+
+    return itAgent->second;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindModel

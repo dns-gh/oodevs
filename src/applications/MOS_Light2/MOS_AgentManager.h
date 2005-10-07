@@ -156,6 +156,7 @@ public:
 	void				RemovePopulation	( MOS_Population& popu );
     void				DeleteAllAgents		();
     MOS_Agent*			FindAgent			( MIL_AgentID nAgentID );
+    MOS_Agent_ABC*      FindAllAgent        ( MIL_AgentID nAgentID );
     CT_AgentMap&		GetAgentList		();
     CT_AllAgentMap&     GetAllAgentList     ();
 	CT_PopulationMap&	GetPopulationList	();

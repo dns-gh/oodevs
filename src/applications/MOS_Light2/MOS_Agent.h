@@ -185,15 +185,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
-    void OnReceiveMsgCR                  ( const ASN1T_MsgCR& msg );
 
-    void OnReceiveTraceMsg( DIN::DIN_Input& input );
-    
-    void DeleteReport( MOS_Report_ABC& report );        // Warning: report is deleted.
-    void DeleteAllRCs();
-    void DeleteAllTraces();
-
-    T_ReportVector& GetReports();
 
     MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
 

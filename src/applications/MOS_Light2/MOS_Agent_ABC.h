@@ -56,6 +56,9 @@ public:
     virtual void            DeleteAllTraces();
     virtual void            DeleteReport( MOS_Report_ABC& );
 
+    virtual void            OnReceiveMsgCR       ( const ASN1T_MsgCR& msg );
+    virtual void            OnReceiveTraceMsg    ( DIN::DIN_Input& input );
+
     //Knowledge
 
     virtual MOS_AgentKnowledge* FindAgentKnowledge( uint nId );

@@ -26,6 +26,7 @@ class MOS_ObjectManager;
 class MOS_Meteo_Manager;
 class MOS_MainWindow;
 class MOS_Agent;
+class MOS_Agent_ABC;
 class MOS_Population;
 class MOS_Report_ABC;
 class MOS_Gtia;
@@ -105,7 +106,7 @@ public:
     void NotifyTeamCreated( MOS_Team& team );
     void NotifyTeamDeleted( MOS_Team& team );
 
-    void NotifyReportCreated( MOS_Agent& agent, MOS_Report_ABC& report );
+    void NotifyReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report );
 
     void NotifyAgentOutOfGas( MOS_Agent& agent );
     void NotifyAgentRefueled( MOS_Agent& agent );
@@ -184,7 +185,7 @@ signals:
     void TeamCreated( MOS_Team& team );
     void TeamDeleted( MOS_Team& team );
 
-    void ReportCreated( MOS_Agent& agent, MOS_Report_ABC& report );
+    void ReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report );
 
     void AgentOutOfGas( MOS_Agent& agent );
     void AgentRefueled( MOS_Agent& agent );

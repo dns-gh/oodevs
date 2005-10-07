@@ -185,6 +185,7 @@ public:
     static void DrawCross     ( const MT_Vector2D& vCenter, double rSize, int nLineWidth );
     static void Vertex        ( MT_Float rX, MT_Float rY, MT_Float rZSign = 1 );
 	static void DrawCylinder  ( const MT_Vector2D& center, MT_Float rRadius, MT_Float rHeight, GFX_Color& color );
+    static void DrawTriangle3D( const MT_Vector3D&, MT_Vector3D&, MT_Vector3D&, GFX_Color& );
 
     static T_PointVector Refine( const T_PointVector& points );
     //@}

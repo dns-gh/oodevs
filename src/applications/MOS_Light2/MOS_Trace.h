@@ -18,7 +18,7 @@
 
 #include "MOS_Report_ABC.h"
 
-class MOS_Agent;
+class MOS_Agent_ABC;
 
 
 // =============================================================================
@@ -33,7 +33,7 @@ class MOS_Trace : public MOS_Report_ABC
     MT_COPYNOTALLOWED( MOS_Trace );
 
 public:
-     MOS_Trace( MOS_Agent& agent );
+     MOS_Trace( MOS_Agent_ABC& agent );
     ~MOS_Trace();
 
     //-------------------------------------------------------------------------

@@ -90,20 +90,6 @@ const std::string& MOS_Agent::GetSymbol() const
     return symbolName_;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetReports
-/** @return 
-*/
-// Created: APE 2004-08-04
-// -----------------------------------------------------------------------------
-inline
-MOS_Agent::T_ReportVector& MOS_Agent::GetReports()
-{
-    return reportVector_;
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::IsEmbraye
 // Created: NLD 2003-10-20

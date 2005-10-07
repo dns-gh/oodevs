@@ -297,7 +297,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, MOS_RC& rc )
 {
-    pPopupAgent_ = &rc.GetAgent();
+    pPopupAgent_ = dynamic_cast< MOS_Agent* >( &rc.GetAgent() );
     
     const MOS_RC::T_FragOrderVector& orderList = rc.GetFragOrders();
     for( MOS_RC::CIT_FragOrderVector it = orderList.begin(); it != orderList.end(); ++it )

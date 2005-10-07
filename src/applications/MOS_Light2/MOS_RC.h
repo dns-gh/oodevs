@@ -17,7 +17,7 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_Report_ABC.h"
 
-class MOS_Agent;
+class MOS_Agent_ABC;
 enum E_OrderConduiteID;
 
 
@@ -43,7 +43,7 @@ public:
     //@}
 
 public:
-     MOS_RC( MOS_Agent& agent );
+     MOS_RC( MOS_Agent_ABC& agent );
     ~MOS_RC();
 
     //-------------------------------------------------------------------------
@@ -58,7 +58,7 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    MOS_Agent&               GetAgent     ();
+    MOS_Agent_ABC&               GetAgent     ();
     const T_FragOrderVector& GetFragOrders() const;
     //@}
 
@@ -68,7 +68,7 @@ private:
     std::string AgentLink( ASN1T_OID nId );
 
 private:
-    MOS_Agent&             agent_;
+    MOS_Agent_ABC&             agent_;
     T_FragOrderVector      fragOrderVector_;
 };
 

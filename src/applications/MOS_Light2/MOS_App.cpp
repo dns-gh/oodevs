@@ -785,7 +785,7 @@ void MOS_App::NotifyGtiaDeleted( MOS_Gtia& gtia )
 */
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyReportCreated( MOS_Agent& agent, MOS_Report_ABC& report )
+void MOS_App::NotifyReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report )
 {
     emit ReportCreated( agent, report );
 }

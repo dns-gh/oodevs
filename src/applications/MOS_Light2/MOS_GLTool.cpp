@@ -80,7 +80,7 @@
 #include "geometry/Types.h"
 #include "graphics/GraphicShape.h"
 #include "graphics/DrawDetection.h"
-#include "terrain/TesselatedShape.h" // $$$$ AGE 2005-06-24: 
+#include "terrain/TesselatedShape.h" // $$$$ AGE 2005-06-24:
 #include "graphics/GraphicSetup.h"
 
 DECLARE_ICON( flare );
@@ -106,7 +106,7 @@ MT_Vector2D MOS_GLTool::iconLocations_[eNbrIcons];
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  glWidget 
+/** @param  glWidget
 */
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void MOS_GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  world 
+/** @param  world
 */
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ void MOS_GLTool::Draw( MOS_World& world )
     }
 
     unsigned int nMaxLod = 3;
-    if( extent.Width() > 400000.f ) // $$$$ AGE 2005-02-28: 
+    if( extent.Width() > 400000.f ) // $$$$ AGE 2005-02-28:
         nMaxLod = 0; // draw nothing
     else if( extent.Width() > 200000.f )
         nMaxLod = 1;
@@ -347,7 +347,7 @@ void MOS_GLTool::DrawNameObjects( MOS_World& world )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  agentManager 
+/** @param  agentManager
 */
 // Created: APE 2004-03-05
 // -----------------------------------------------------------------------------
@@ -387,7 +387,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         Draw( *(itAgent->second), eNormal );
     }
 
-	// Draw all populations. 
+    // Draw all populations.
     for( MOS_AgentManager::IT_PopulationMap itPop = manager.populationMap_.begin(); itPop != manager.populationMap_.end(); ++itPop )
     {
         // If not in controller view, avoid drawing the enemy units.
@@ -400,14 +400,14 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     glLineWidth( 4 );
     glColor4d( MOS_COLOR_CONFLICT );
     for( MOS_AgentManager::IT_ConflictMap itC = manager.conflictMap_.begin(); itC != manager.conflictMap_.end(); ++itC )
-        DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_ != 0 ? (*itC).second.pDirectFireTarget_->vPos_ : (*itC).second.vIndirectFireTarget_, 300.0 ); // $$$$ AGE 2005-03-22: 
+        DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_ != 0 ? (*itC).second.pDirectFireTarget_->vPos_ : (*itC).second.vIndirectFireTarget_, 300.0 ); // $$$$ AGE 2005-03-22:
 
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  agent 
+/** @param  agent
 */
 // Created: APE 2004-03-05
 // -----------------------------------------------------------------------------
@@ -416,12 +416,12 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
 
     // Vision surfaces
-    if(     options.nDrawVisionSurfaces_ == MOS_Options::eOn 
+    if( options.nDrawVisionSurfaces_ == MOS_Options::eOn
        || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eSelected ) )
         DrawVisionSurfaces( agent );
 
     // Draw the path if necessary
-    if(     options.nDrawPaths_ == MOS_Options::eOn
+    if( options.nDrawPaths_ == MOS_Options::eOn
         || (options.nDrawPaths_ == MOS_Options::eAuto && nState != eNormal) )
         DrawPath( agent );
 
@@ -436,7 +436,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         glColor4d( MOS_COLOR_WHITE );
     else
         glColor4d( MOS_COLOR_RED );
-    
+
     if( ! MOS_App::GetApp().IsODBEdition() )
     {
         if( ! agent.GetContaminatingNBCAgents().empty() )
@@ -449,7 +449,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     // Draw the 'embrayé' button if necessary
     if( agent.IsEmbraye() || ( agent.pParent_ != 0 && agent.pParent_->IsEmbraye() ) )
         DrawAutomataStatus( agent, nState );
-    
+
 
     //// Draw specific NBC parameters
     if( agent.bNbcProtectionSuitWorn_ )
@@ -458,7 +458,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         DrawCircle( agent.vPos_, MOS_GL_CROSSSIZE * 0.8f , true );
     }
 
-    //Death 
+    //Death
     if( agent.IsDead() )
     {
         glColor4d( MOS_COLOR_WHITE );
@@ -466,7 +466,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     }
 
     // Vision cones
-    if(     options.nDrawVisionCones_ == MOS_Options::eOn 
+    if( options.nDrawVisionCones_ == MOS_Options::eOn
        || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eSelected ) )
        DrawVisionCones( agent );
 
@@ -478,8 +478,8 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  pop 
-    @param  nState 
+/** @param  pop
+    @param  nState
 */
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
@@ -607,7 +607,7 @@ void MOS_GLTool::DrawVisionLines( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  team 
+/** @param  team
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
@@ -620,7 +620,7 @@ void MOS_GLTool::Draw( MOS_Team& team )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  gtia 
+/** @param  gtia
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
@@ -633,7 +633,7 @@ void MOS_GLTool::Draw( MOS_Gtia& gtia )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  knowledge 
+/** @param  knowledge
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
@@ -658,7 +658,7 @@ void MOS_GLTool::Draw( MOS_AgentKnowledge& knowledge, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  manager 
+/** @param  manager
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
@@ -675,7 +675,7 @@ void MOS_GLTool::Draw( MOS_ObjectManager& manager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  object 
+/** @param  object
 */
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
@@ -684,23 +684,23 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
     glLineWidth( 2 );
 
 
-	if( nState == eSelected )
-	{
-		glColor4d( MOS_COLOR_SEL_Object );
-	}
-	else
-	{
-	    GFX_Color color = MOS_GLTool::GetColorForTeam( object.GetTeam() );
-		color.AddRGB( 100, 200, 100 );
-		color.SetGLColor();
-	}
-    
-	/*
+    if( nState == eSelected )
+    {
+        glColor4d( MOS_COLOR_SEL_Object );
+    }
+    else
+    {
+        GFX_Color color = MOS_GLTool::GetColorForTeam( object.GetTeam() );
+        color.AddRGB( 100, 200, 100 );
+        color.SetGLColor();
+    }
+
+    /*
     if( nState == eSelected )
         glColor4f( MOS_COLOR_SEL_Object );
     else
         glColor4f( MOS_COLOR_Object );
-	*/
+    */
     const T_PointVector& p = object.pointVector_;
     switch( object.nTypeLocalisation_ )
     {
@@ -710,8 +710,8 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
         case EnumTypeLocalisation::line:
             DrawLine( p );
             break;
-        case EnumTypeLocalisation::polygon: 
-            DrawPolygon( p ); 
+        case EnumTypeLocalisation::polygon:
+            DrawPolygon( p );
             break;
         case EnumTypeLocalisation::circle:
             DrawCircle( p.front(), p.front().Distance( p.back() ) );
@@ -724,7 +724,7 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  knowledge 
+/** @param  knowledge
 */
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
@@ -752,7 +752,7 @@ void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  lineManager 
+/** @param  lineManager
 */
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
@@ -766,8 +766,8 @@ void MOS_GLTool::Draw( MOS_LineManager& lineManager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  line 
-    @param  nState 
+/** @param  line
+    @param  nState
 */
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
@@ -839,7 +839,7 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  weatherManager 
+/** @param  weatherManager
 */
 // Created: APE 2004-06-03
 // -----------------------------------------------------------------------------
@@ -864,15 +864,15 @@ void MOS_GLTool::Draw( MOS_Meteo_Manager& weatherManager )
         const MT_Float yMin = floor( bb.GetBottom() / rCellSize ) * rCellSize;
         const MT_Float yMax = ceil ( bb.GetTop()    / rCellSize ) * rCellSize;
 
-        for ( ; x < xMax; x+=rCellSize )
+        for( ; x < xMax; x+=rCellSize )
         {
-            for ( MT_Float y = yMin; y < yMax; y+=rCellSize )
+            for( MT_Float y = yMin; y < yMax; y+=rCellSize )
             {
-                if ( ellipse.IsInside( MT_Vector2D( x, y ) ) )
+                if( ellipse.IsInside( MT_Vector2D( x, y ) ) )
                     DrawRect( MT_Vector2D( x, y + rCellSize ), MT_Vector2D( x+rCellSize, y ), true );
             }
         }
-        
+
         glColor4d( MOS_COLOR_WHITE  );
         if( it2->second.first == EnumFireEffectType::fumigene )
             DrawIcon( eSmokeIcon, ellipse.GetCenter(), 300.f );
@@ -890,7 +890,7 @@ void MOS_GLTool::Draw( MOS_Meteo_Manager& weatherManager )
     {
         glColor4d( MOS_COLOR_WEATHER_BLEND );
         DrawRect( (*it)->GetUpperLeftCorner(), (*it)->GetLowerRightCorner(), true );
-        glColor4d( MOS_COLOR_WEATHER );        
+        glColor4d( MOS_COLOR_WEATHER );
         DrawRect( (*it)->GetUpperLeftCorner(), (*it)->GetLowerRightCorner(), false );
     }
 }
@@ -898,7 +898,7 @@ void MOS_GLTool::Draw( MOS_Meteo_Manager& weatherManager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel 
+/** @param  panel
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
@@ -911,7 +911,7 @@ void MOS_GLTool::Draw( MOS_MissionPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  missionInterface 
+/** @param  missionInterface
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
@@ -924,7 +924,7 @@ void MOS_GLTool::Draw( MOS_MissionInterface_ABC& missionInterface )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel 
+/** @param  panel
 */
 // Created: APE 2004-06-04
 // -----------------------------------------------------------------------------
@@ -943,7 +943,7 @@ void MOS_GLTool::Draw( MOS_WeatherPanel& panel )
     }
 
     QListViewItem* pItem = panel.pWeatherListView_->currentItem();
-    if(    pItem == 0 
+    if( pItem == 0
         || pItem->rtti() != MOS_WeatherPanel::eLocal )
         return;
 
@@ -969,7 +969,7 @@ void MOS_GLTool::Draw( MOS_WeatherPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel 
+/** @param  panel
 */
 // Created: APE 2004-06-07
 // -----------------------------------------------------------------------------
@@ -978,19 +978,19 @@ void MOS_GLTool::Draw( MOS_ObjectCreationPanel& panel )
     if( ! panel.isVisible() )
         return;
 
-    panel.pLocation_->Draw();        
+    panel.pLocation_->Draw();
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel 
+/** @param  panel
 */
 // Created: APE 2004-06-22
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_InfoPanel& panel )
 {
-    if(    ! panel.isVisible()  
+    if( ! panel.isVisible()
         || panel.pTabWidget_->currentPage() != panel.pStatePanel_
         || panel.pReportPanel_->pReportListView_->selectedItem() == 0 )
         return;
@@ -1004,7 +1004,7 @@ void MOS_GLTool::Draw( MOS_InfoPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
@@ -1037,7 +1037,7 @@ void MOS_GLTool::Draw( MOS_ParamPath& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-05-17
 // -----------------------------------------------------------------------------
@@ -1059,7 +1059,7 @@ void MOS_GLTool::Draw( MOS_ParamPathList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
@@ -1081,7 +1081,7 @@ void MOS_GLTool::Draw( MOS_ParamLimaList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
@@ -1094,13 +1094,13 @@ void MOS_GLTool::Draw( MOS_ParamLimits& param )
         Draw( *param.pLimit1_, eHighlighted );
 
     if( param.pLimit2_ != 0 )
-        Draw( *param.pLimit2_, eHighlighted ); 
+        Draw( *param.pLimit2_, eHighlighted );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
@@ -1113,7 +1113,7 @@ void MOS_GLTool::Draw( MOS_ParamPoint& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
@@ -1126,7 +1126,7 @@ void MOS_GLTool::Draw( MOS_ParamAgent& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
@@ -1148,7 +1148,7 @@ void MOS_GLTool::Draw( MOS_ParamAgentList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
@@ -1157,7 +1157,7 @@ void MOS_GLTool::Draw( MOS_ParamLocation& param, bool bSelected )
     if( param.pointList_.empty() )
         return;
 
-    if( bSelected ) 
+    if( bSelected )
         glColor4d( MOS_COLOR_SEL_PARAM );
     else
         glColor4d( MOS_COLOR_PARAM );
@@ -1167,14 +1167,14 @@ void MOS_GLTool::Draw( MOS_ParamLocation& param, bool bSelected )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamLocationList& param )
 {
     QListViewItem* pItem = param.firstChild();
-    
+
     while( pItem != 0 )
     {
         MOS_ParamLocationList::T_LocationItem* pCastItem = (MOS_ParamLocationList::T_LocationItem*)pItem;
@@ -1190,7 +1190,7 @@ void MOS_GLTool::Draw( MOS_ParamLocationList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
@@ -1202,7 +1202,7 @@ void MOS_GLTool::Draw( MOS_ParamObstacle& param, bool bSelected )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param 
+/** @param  param
 */
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
@@ -1231,7 +1231,7 @@ void MOS_GLTool::Draw( MOS_ParamObstacleList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  eventHandler 
+/** @param  eventHandler
 */
 // Created: APE 2004-04-16
 // -----------------------------------------------------------------------------
@@ -1278,7 +1278,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
 
     if( eventHandler.selectedElement_.pObjectKnowledge_ != 0 )
         Draw( *eventHandler.selectedElement_.pObjectKnowledge_, eSelected );
-    
+
     if( eventHandler.selectedElement_.pLine_ != 0 )
         Draw( * eventHandler.selectedElement_.pLine_, eSelected, eventHandler.selectedElement_.nLinePoint_);
 }
@@ -1286,7 +1286,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  eventHandler 
+/** @param  eventHandler
 */
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
@@ -1299,8 +1299,8 @@ void MOS_GLTool::Draw( const MOS_ShapeEditorMapEventFilter& eventHandler )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLocation
-/** @param  nType 
-    @param  pointList 
+/** @param  nType
+    @param  pointList
 */
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
@@ -1413,7 +1413,7 @@ T_PointVector MOS_GLTool::Refine( const T_PointVector& points )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLine
-/** @param  pointList 
+/** @param  pointList
 */
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
@@ -1472,27 +1472,27 @@ void MOS_GLTool::DrawLine( CT_PointVector& points, MT_Float rArrowSize, bool bDo
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLine
-/** @param  pointList 
+/** @param  pointList
 */
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw3DLine( MT_Vector3D src, MT_Vector3D dst, float width, GFX_Color color )
 {
-	color.SetGLColor();
-	glLineWidth( width );
+    color.SetGLColor();
+    glLineWidth( width );
 
     if( ! MOS_App::GetApp().Is3D() )
     {
         glBegin( GL_LINE_STRIP );
-		glVertex3f( src.rX_, src.rY_, src.rZ_ );
-		glVertex3f( dst.rX_, dst.rY_, dst.rZ_ );
+        glVertex3f( src.rX_, src.rY_, src.rZ_ );
+        glVertex3f( dst.rX_, dst.rY_, dst.rZ_ );
         glEnd();
     }
     else
     {
         glBegin( GL_LINE_STRIP );
-		Vertex( src.rX_, src.rY_, 1 );
-		Vertex( dst.rX_, dst.rY_, 1 );
+        Vertex( src.rX_, src.rY_, 1 );
+        Vertex( dst.rX_, dst.rY_, 1 );
         glEnd();
      }
 }
@@ -1507,7 +1507,7 @@ void MOS_GLTool::DrawArrow( const MT_Vector2D& src, const MT_Vector2D& dest, MT_
     MT_Vector2D u( (src - dest).Normalized() * ( rArrowSize * 2.0 ) );
     MT_Vector2D v( 0.5 * u );
     v.Rotate90ClockWise();
-    
+
     T_PointVector points;
     points.reserve( 3 );
     points.push_back( dest + u + v ); points.push_back( dest ); points.push_back( dest + u - v );
@@ -1516,16 +1516,16 @@ void MOS_GLTool::DrawArrow( const MT_Vector2D& src, const MT_Vector2D& dest, MT_
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLine
-/** @param  from 
-    @param  to 
-    @param  rArrowHeadSize 
+/** @param  from
+    @param  to
+    @param  rArrowHeadSize
 */
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawLine( const MT_Vector2D& src, const MT_Vector2D& dest, MT_Float rArrowSize, bool bDoubleArrow )
 {
-    if ( src == dest )
-        return; 
+    if( src == dest )
+        return;
 
     T_PointVector points;
     points.reserve( 2 );
@@ -1537,7 +1537,7 @@ void MOS_GLTool::DrawLine( const MT_Vector2D& src, const MT_Vector2D& dest, MT_F
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawPoints
-/** @param  pointList 
+/** @param  pointList
 */
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
@@ -1575,7 +1575,7 @@ void MOS_GLTool::DrawPoint( const MT_Vector2D& p )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawPolygon
-/** @param  pointList 
+/** @param  pointList
 */
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
@@ -1591,9 +1591,9 @@ void MOS_GLTool::DrawPolygon( CT_PointVector& pointList )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawRect
-/** @param  point1 
-    @param  point2 
-    @param  rAlpha 
+/** @param  point1
+    @param  point2
+    @param  rAlpha
 */
 // Created: APE 2004-06-03
 // -----------------------------------------------------------------------------
@@ -1631,8 +1631,8 @@ void MOS_GLTool::DrawRect( const MT_Vector2D& point1, const MT_Vector2D& point2,
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawUnit
-/** @param  agent 
-    @param  nState 
+/** @param  agent
+    @param  nState
 */
 // Created: APE 2004-06-10
 // -----------------------------------------------------------------------------
@@ -1652,14 +1652,14 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
     glPushMatrix();
 
-    MT_Float rAltitude = 0; 
+    MT_Float rAltitude = 0;
     if( MOS_App::GetApp().Is3D() )
         rAltitude = ( data.GetHeight( agent.vPos_.rX_, agent.vPos_.rY_ ) + 10 ) * rZRatio_;
     glTranslatef( agent.vPos_.rX_, agent.vPos_.rY_, rAltitude );
 
     if( MOS_App::GetApp().Is3D() )
     {
-        // rotate according to view frustrum // $$$$ AGE 2005-05-10: 
+        // rotate according to view frustrum // $$$$ AGE 2005-05-10:
         glRotatef( 90, 1, 0, 0 );
         glRotatef( rAngle+=0.05, 0, 1, 0 );
     }
@@ -1684,7 +1684,7 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
     if( !agent.reportPoints_.empty() )
     {
-        GFX_Color color( 0, 255, 0, 1 ); 
+        GFX_Color color( 0, 255, 0, 1 );
         color.SetGLColor();
 
         std::vector< MT_Vector2D >::const_iterator itCur  = agent.reportPoints_.begin();
@@ -1699,8 +1699,8 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawUnit
-/** @param  pop 
-    @param  nState 
+/** @param  pop
+    @param  nState
 */
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
@@ -1717,36 +1717,36 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
     if( nState == eHighlighted )
         color.AddRGB( 50, 100, 50 );
 
-	//Draw the concentrations
-    for ( MOS_Population::CIT_ConcentrationMap itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
-	{
-		color.SetGLColor();
-		DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * 2.0 , 2.0, color);
-	}
+    //Draw the concentrations
+    for( MOS_Population::CIT_ConcentrationMap itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
+    {
+        color.SetGLColor();
+        DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * (itCon->second->GetLivingHumans() / 3000.0 ) , 2.0, color);
+    }
 
-	//Draw the flux
-    for ( MOS_Population::CIT_FluxMap itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
-	{
+    //Draw the flux
+    for( MOS_Population::CIT_FluxMap itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
+    {
         MOS_PopulationFlux& flow = *itFlux->second;
 
-		color.SetGLColor();
-		glColor4d( MOS_COLOR_WHITE );
+        color.SetGLColor();
+        glColor4d( MOS_COLOR_WHITE );
         DrawPath( flow );
         //DrawLine( flow.GetItineraire() );
-		//DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 0.5, 2.0, color );
-		DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
+        //DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 0.5, 2.0, color );
+        DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
         glLineWidth( 5.0 );
         DrawLine( flow.GetFlow() );
         glLineWidth( 1.0 );
-			//Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
-	}
+            //Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
+    }
 }
 
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawVisionCones
-/** @param  agent 
+/** @param  agent
 */
 // Created: APE 2004-06-15
 // -----------------------------------------------------------------------------
@@ -1762,7 +1762,7 @@ void MOS_GLTool::DrawVisionCones( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawVisionSurfaces
-/** @param  agent 
+/** @param  agent
 */
 // Created: APE 2004-06-16
 // -----------------------------------------------------------------------------
@@ -1780,7 +1780,7 @@ void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
     glLineWidth( 1 );
     for( CIT_VisionResultMap it = agent.surfaceVision_.begin(); it != agent.surfaceVision_.end(); ++it )
     {
-        if ( it->second == eNotSeen )
+        if( it->second == eNotSeen )
             continue;
 
         if( it->second == eIdentification )
@@ -1802,9 +1802,9 @@ void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLines
-/** @param  lines 
-    @param  color 
-    @param  nSize 
+/** @param  lines
+    @param  color
+    @param  nSize
 */
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
@@ -1812,42 +1812,42 @@ void MOS_GLTool::DrawLines( T_MOSLinePtrVector& lines, float /*rZ */)
 {
     glBegin( GL_LINES );
     T_PointVector points( 2 );
-    for ( CIT_MOSLinePtrVector it = lines.begin() ; it != lines.end() ; ++it )
+    for( CIT_MOSLinePtrVector it = lines.begin() ; it != lines.end() ; ++it )
     {
         const MT_Line& line = (**it).GetLine();
         points[0] = line.GetPosStart();
         points[1] = line.GetPosEnd  ();
         DrawLine( points );
-	}		
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw3DLines
-/** @param  points 
-    @param  width 
-    @param  color 
+/** @param  points
+    @param  width
+    @param  color
 */
 // Created: HME 2005-10-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw3DLines( T_Point3DVector& points, float width, GFX_Color color )
 {
-	if ( points.size() < 2 )
-		return;
+    if( points.size() < 2 )
+        return;
     glBegin( GL_LINES );
-	MT_Vector3D last = *points.begin();
-    for ( CIT_Point3DVector it = points.begin() ; it != points.end() ; ++it )
+    MT_Vector3D last = *points.begin();
+    for( CIT_Point3DVector it = points.begin() ; it != points.end() ; ++it )
     {
         Draw3DLine( *it, last, width, color );
-		last = *it;
-	}
-	glEnd();
+        last = *it;
+    }
+    glEnd();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCircles
-/** @param  nodes 
-    @param  color 
-    @param  rRadius 
+/** @param  nodes
+    @param  color
+    @param  rRadius
 */
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
@@ -1860,8 +1860,8 @@ void MOS_GLTool::DrawCircles( T_NodePtrVector& nodes, MT_Float rRadius )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCircle
-/** @param  center 
-    @param  radius 
+/** @param  center
+    @param  radius
 */
 // Created: APE 2004-03-17
 // -----------------------------------------------------------------------------
@@ -1869,7 +1869,7 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
 {
     T_PointVector points;
     points.reserve( 24 );
-    for ( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
+    for( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
         points.push_back( MT_Vector2D( center.rX_ + rRadius * cos( angle )
                                      , center.rY_ + rRadius * sin( angle ) ) );
     points.push_back( MT_Vector2D( center.rX_ + rRadius, center.rY_ ) );
@@ -1878,10 +1878,10 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
     {
         glBegin( GL_TRIANGLE_FAN );
         Vertex( center.rX_, center.rY_, -3 );
-        for ( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
             Vertex( it->rX_, it->rY_, -3 );
-		glEnd();
-		DrawLine( points );
+        glEnd();
+        DrawLine( points );
     }
     else
         DrawLine( points );
@@ -1890,10 +1890,10 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawArc
-/** @param  center 
-    @param  rRadius 
-    @param  rAngleStart 
-    @param  rAngleEnd 
+/** @param  center
+    @param  rRadius
+    @param  rAngleStart
+    @param  rAngleEnd
 */
 // Created: APE 2004-06-16
 // -----------------------------------------------------------------------------
@@ -1915,7 +1915,7 @@ void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawGrid
-/** @param  world 
+/** @param  world
 */
 // Created: APE 2004-03-22
 // -----------------------------------------------------------------------------
@@ -1926,7 +1926,7 @@ void MOS_GLTool::DrawGrid( MOS_World& world )
 
     glColor4d( 1.0, 1.0, 1.0, 0.3 );
     glLineWidth( 1.0 );
-    
+
     glBegin( GL_LINES );
     for( MT_Float rX = worldRect.GetLeft(); rX < worldRect.GetRight(); rX += rGridStep * 1000.0)
     {
@@ -1945,15 +1945,15 @@ void MOS_GLTool::DrawGrid( MOS_World& world )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCross
-/** @param  point 
-    @param  rSize 
-    @param  nLineWidth 
+/** @param  point
+    @param  rSize
+    @param  nLineWidth
 */
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawCross( const MT_Vector2D& vCenter, double rSize, int nLineWidth )
 {
-	glLineWidth( nLineWidth );
+    glLineWidth( nLineWidth );
     DrawLine( MT_Vector2D( vCenter.rX_ - rSize, vCenter.rY_ - rSize )
             , MT_Vector2D( vCenter.rX_ + rSize, vCenter.rY_ + rSize ) );
     DrawLine( MT_Vector2D( vCenter.rX_ + rSize, vCenter.rY_ - rSize )
@@ -1963,15 +1963,15 @@ void MOS_GLTool::DrawCross( const MT_Vector2D& vCenter, double rSize, int nLineW
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Overlaps
-/** @param  a 
-    @param  b 
-    @return 
+/** @param  a
+    @param  b
+    @return
 */
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
 bool MOS_GLTool::Overlaps( MT_Rect& a, MT_Rect& b )
 {
-    return(   a.GetTop()    >= b.GetBottom() 
+    return(   a.GetTop()    >= b.GetBottom()
            && a.GetBottom() <= b.GetTop()
            && a.GetLeft()   <= b.GetRight()
            && a.GetRight()  >= b.GetLeft() );
@@ -1980,8 +1980,8 @@ bool MOS_GLTool::Overlaps( MT_Rect& a, MT_Rect& b )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::InitializeIcon
-/** @param  icon 
-    @return 
+/** @param  icon
+    @return
     */
 // Created: APE 2004-09-13
 // -----------------------------------------------------------------------------
@@ -2009,7 +2009,7 @@ int MOS_GLTool::InitializeIcon( const QImage& icon )
     glGenTextures( 1, & nTexture );
     glBindTexture( GL_TEXTURE_2D, nTexture );
     glTexImage2D( GL_TEXTURE_2D, 0, 4, resizedImage.width(), resizedImage.height(), 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, resizedImage.bits() );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST ); 
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
     float rWidthRatio = (float)nTrueWidth / (float)nWidth;
@@ -2038,8 +2038,8 @@ int MOS_GLTool::InitializeIcon( const QImage& icon )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawIcon
-/** @param  nIcon 
-    @param  vAgentPos 
+/** @param  nIcon
+    @param  vAgentPos
     */
 // Created: APE 2004-09-14
 // -----------------------------------------------------------------------------
@@ -2111,7 +2111,7 @@ namespace
         return 63 + rand() % 192;
     };
 
-    GFX_Color RandomColor() 
+    GFX_Color RandomColor()
     {
         return GFX_Color( RandomChar(), RandomChar(), RandomChar() );
     }
@@ -2127,7 +2127,7 @@ GFX_Color MOS_GLTool::GetColorForTeam( const MOS_Team& team )
     static T_StringMap synonyms = InitializeSynonyms();
     typedef std::map< std::string, GFX_Color > T_ColorMap;
     static T_ColorMap colors = InitializeColors();
-    typedef std::map< std::string, GFX_Color > T_TeamColorMap; 
+    typedef std::map< std::string, GFX_Color > T_TeamColorMap;
 
     static T_TeamColorMap teamColors;
     T_TeamColorMap::iterator itTeam = teamColors.find( team.GetName() );
@@ -2161,9 +2161,9 @@ void MOS_GLTool::SetAltitudeRatio( MT_Float r )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCylinder
-/** @param  center 
-    @param  rRadius 
-    @param  rHeight 
+/** @param  center
+    @param  rRadius
+    @param  rHeight
 */
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
@@ -2171,35 +2171,52 @@ void MOS_GLTool::DrawCylinder( const MT_Vector2D& center, MT_Float rRadius, MT_F
 {
     T_Point3DVector points;
     points.reserve( 24 );
-    for ( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
+    for( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
         points.push_back( MT_Vector3D( center.rX_ + rRadius * cos( angle )
                                      , center.rY_ + rRadius * sin( angle )
-									 , 0 ) );
+                                     , 0 ) );
     points.push_back( MT_Vector3D( center.rX_ + rRadius, center.rY_, 0 ) );
 
-	MT_Vector3D height = MT_Vector3D( 0, 0, rHeight );
-	MT_Vector3D last = *points.begin();	
-	for( CIT_Point3DVector itPoint = ++points.begin(); itPoint != points.end(); ++itPoint )
-	{
-		GFX_Tools::CreateGLTriangle3D( last, *itPoint, *itPoint + height, color );
-		GFX_Tools::CreateGLTriangle3D( last + height, *itPoint + height, last, color );
-		GFX_Tools::CreateGLLine3D( last, *itPoint, 1.0, color);
-		GFX_Tools::CreateGLLine3D( last + height, *itPoint + height, 1.0, color);
-		last = *itPoint;
-	}
-	last = *points.begin();	
-	GFX_Tools::CreateGLTriangle3D( *itPoint, last, last + height, color );
-	GFX_Tools::CreateGLTriangle3D( *itPoint + height, last + height, *itPoint, color );
+    MT_Vector3D height = MT_Vector3D( 0, 0, rHeight );
+    MT_Vector3D base   = MT_Vector3D( 0, 0, 0 );
+    MT_Vector3D last = *points.begin();
+    for( CIT_Point3DVector itPoint = ++points.begin(); itPoint != points.end(); ++itPoint )
+    {
+        DrawTriangle3D( last + base, *itPoint + base, *itPoint + height, color );
+        DrawTriangle3D( last + height, *itPoint + height, last + base , color );
+        GFX_Tools::CreateGLLine3D( last, *itPoint, 1.0, color);
+        GFX_Tools::CreateGLLine3D( last + height, *itPoint + height, 1.0, color);
+        last = *itPoint;
+    }
+    last = *points.begin();
+    DrawTriangle3D( *itPoint + base , last + base , last + height, color );
+    DrawTriangle3D( *itPoint + height, last + height, *itPoint + base , color );
 
-	glBegin( GL_TRIANGLE_FAN );
+    glBegin( GL_TRIANGLE_FAN );
     Vertex( center.rX_, center.rY_, 0 );
-    for ( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
+    for( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
             Vertex( it->rX_, it->rY_, 0 );
-	glEnd();
-	
-	glBegin( GL_TRIANGLE_FAN );
+    glEnd();
+
+    glBegin( GL_TRIANGLE_FAN );
     Vertex( center.rX_, center.rY_, rHeight  );
-    for ( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
+    for( CIT_Point3DVector it = points.begin(); it != points.end(); ++it )
             Vertex( it->rX_, it->rY_, rHeight );
-	glEnd();
+    glEnd();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::DrawTriangle3D
+// Created: HME 2005-10-07
+// -----------------------------------------------------------------------------
+void MOS_GLTool::DrawTriangle3D( const MT_Vector3D& vPos1 , MT_Vector3D& vPos2 , MT_Vector3D& vPos3 , GFX_Color& color )
+{
+    color.SetGLColor();
+
+    glBegin( GL_TRIANGLES );
+    glVertex3f( vPos1.rX_, vPos1.rY_, vPos1.rZ_ );
+    glVertex3f( vPos2.rX_, vPos2.rY_, vPos2.rZ_ );
+    glVertex3f( vPos3.rX_, vPos3.rY_, vPos3.rZ_);
+    glEnd();
+
 }

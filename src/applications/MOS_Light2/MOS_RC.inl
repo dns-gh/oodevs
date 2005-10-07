@@ -27,7 +27,7 @@ const MOS_RC::T_FragOrderVector& MOS_RC::GetFragOrders()const
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
 inline
-MOS_Agent& MOS_RC::GetAgent()
+MOS_Agent_ABC& MOS_RC::GetAgent()
 {
     return agent_;
 }

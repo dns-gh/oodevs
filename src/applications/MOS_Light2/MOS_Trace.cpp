@@ -27,7 +27,7 @@
 #include "MOS_Trace.h"
 
 #include "MOS_App.h"
-#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 
 using namespace DIN;
 
@@ -35,7 +35,7 @@ using namespace DIN;
 // Name: MOS_Trace constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_Trace::MOS_Trace( MOS_Agent& agent )
+MOS_Trace::MOS_Trace( MOS_Agent_ABC& agent )
     : MOS_Report_ABC( agent.GetPos() )
 {
     eType_ = MOS_Report_ABC::eTrace;
