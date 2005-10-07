@@ -633,3 +633,13 @@ const uint MOS_Agent::GetID()
 {
 	return GetAgentID();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::FindAgentKnowledge
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+MOS_AgentKnowledge* MOS_Agent::FindAgentKnowledge( uint nId )
+{
+    return GetGtia().FindAgentKnowledge( nId );
+}

@@ -26,9 +26,10 @@
 
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
-#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Object_ABC.h"
 #include "MOS_FireResult.h"
+#include "MOS_Agent.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_FireResultListView constructor
@@ -40,7 +41,7 @@ MOS_FireResultListView::MOS_FireResultListView( QWidget* pParent )
 {
     this->addColumn( tr( "Cible" ) );
 
-    connect( &MOS_App::GetApp(), SIGNAL( AgentConflictEnded( MOS_Agent&      ) ), this, SLOT( OnAgentConflictEnded( MOS_Agent&      ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( AgentConflictEnded( MOS_Agent_ABC&      ) ), this, SLOT( OnAgentConflictEnded( MOS_Agent_ABC&      ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectExplosion   ( MOS_Object_ABC& ) ), this, SLOT( OnObjectExplosion   ( MOS_Object_ABC& ) ) );
 }
 
@@ -57,7 +58,7 @@ MOS_FireResultListView::~MOS_FireResultListView()
 // Name: MOS_FireResultListView::SetAgent
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-void MOS_FireResultListView::SetAgent( MOS_Agent* pAgent )
+void MOS_FireResultListView::SetAgent( MOS_Agent_ABC* pAgent )
 {
     if( pAgent_ == pAgent )
         return;
@@ -67,7 +68,7 @@ void MOS_FireResultListView::SetAgent( MOS_Agent* pAgent )
     if( pAgent_ == 0 )
         return;
 
-    OnFireResultCreated( pAgent_->fireResults_ );
+    OnFireResultCreated( pAgent_->GetFireResults() );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,9 +162,9 @@ void MOS_FireResultListView::OnFireResultCreated( const T_FireResults& fireResul
 // Name: MOS_FireResultListView::OnAgentConflictEnded
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
-void MOS_FireResultListView::OnAgentConflictEnded( MOS_Agent& agent )
+void MOS_FireResultListView::OnAgentConflictEnded( MOS_Agent_ABC& agent )
 {
-    OnFireResultCreated( agent.fireResults_ );
+    OnFireResultCreated( agent.GetFireResults() );
 }
 
 // -----------------------------------------------------------------------------

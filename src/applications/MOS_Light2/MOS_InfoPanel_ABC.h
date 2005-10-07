@@ -22,6 +22,8 @@
 #include "MOS_SelectedElement.h"
 
 class MOS_Agent;
+class MOS_Population;
+class MOS_Agent_ABC;
 
 // =============================================================================
 /** @class  MOS_InfoPanel_ABC
@@ -53,6 +55,7 @@ protected slots:
     virtual void OnClearSelection() = 0;
     virtual void OnAgentUpdated  ( MOS_Agent&      agent  );
     virtual void OnObjectUpdated ( MOS_Object_ABC& object );
+    virtual void OnAgentUpdated  ( MOS_Population& population );
 
     virtual void showEvent( QShowEvent* );
     //@}
@@ -83,8 +86,8 @@ protected:
     }
 
     bool     ShouldDisplay( MOS_Agent& agent );
+    bool     ShouldDisplay( MOS_Population& population );
     bool     ShouldDisplay( MOS_Object_ABC& object );
-	bool     ShouldDisplay( MOS_Population& population );
     QLayout* layout       ();
     //@}
 

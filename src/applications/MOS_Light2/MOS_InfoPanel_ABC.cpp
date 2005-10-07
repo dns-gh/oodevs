@@ -82,6 +82,15 @@ void MOS_InfoPanel_ABC::OnAgentUpdated( MOS_Agent& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_InfoPanel_ABC::OnAgentUpdated
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+void MOS_InfoPanel_ABC::OnAgentUpdated( MOS_Population& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel_ABC::OnObjectUpdated
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
@@ -130,12 +139,13 @@ bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Object_ABC& object )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel_ABC::ShouldDisplay
-// Created: HME 2005-10-03
+// Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
 bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Population& population )
 {
     return isVisible() && selectedItem_.pPopulation_ != 0 && selectedItem_.pPopulation_ == &population;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel_ABC::showEvent

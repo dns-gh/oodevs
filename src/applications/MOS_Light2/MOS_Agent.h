@@ -20,13 +20,14 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_AgentComposition.h"
 #include "MOS_IDManager.h"
-#include "MOS_FireResult.h"
+
 #include "MT_Tools/MT_Quad.h"
 
 #include "MOS_Agent_ABC.h"
 
 class MOS_Report_ABC;
 class MOS_ObjectKnowledge;
+class MOS_AgentKnowledge;
 class MOS_AgentModel;
 class MOS_Gtia;
 class MOS_Team;
@@ -193,6 +194,8 @@ public:
     void DeleteAllTraces();
 
     T_ReportVector& GetReports();
+
+    MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
 
     // fire results
     void OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg );

@@ -21,6 +21,9 @@
 #include "MOS_ReportListView.h"
 #include "MOS_FireResultListView.h"
 #include "MOS_ReportFilterOptions.h"
+#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
+#include "MOS_Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportPanel constructor
@@ -55,6 +58,8 @@ void MOS_ReportPanel::OnUpdate()
 {
     if( selectedItem_.pAgent_ != 0 )
         OnAgentUpdated( *selectedItem_.pAgent_ );
+    if( selectedItem_.pPopulation_ != 0 )
+        OnAgentUpdated( *selectedItem_.pPopulation_ );   
     else
         OnClearSelection();
 }
@@ -69,6 +74,19 @@ void MOS_ReportPanel::OnAgentUpdated( MOS_Agent& agent )
     {
         pReportListView_->SetAgent( selectedItem_.pAgent_ );
         pFireResultListView_->SetAgent( selectedItem_.pAgent_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ReportPanel::OnAgentUpdated
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+void MOS_ReportPanel::OnAgentUpdated( MOS_Population& population )
+{
+    if( ShouldDisplay( population ) )
+    {
+        pReportListView_->SetAgent( selectedItem_.pPopulation_ );
+        pFireResultListView_->SetAgent( selectedItem_.pPopulation_ );
     }
 }
 

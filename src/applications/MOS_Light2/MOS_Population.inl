@@ -26,7 +26,7 @@ MIL_AgentID MOS_Population::GetPopulationID()
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 inline
-const MOS_Team& MOS_Population::GetTeam()
+MOS_Team& MOS_Population::GetTeam() const
 {
 	return *pTeam_;
 }
@@ -64,4 +64,17 @@ const MOS_AgentModel& MOS_Population::GetModel() const
 {
     assert( pTypePopulation_ );
     return pTypePopulation_->GetModel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::FindAgentKnowledge
+// Created: HME 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+MOS_AgentKnowledge* MOS_Population::FindAgentKnowledge( uint nId )
+{
+    IT_AgentKnowledgeMap it = agentKnowledges_.find( nId );    
+    if( it != agentKnowledges_.end() )
+        return it->second;
+    return 0;
 }

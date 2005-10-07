@@ -14,6 +14,12 @@
 #   pragma interface
 #endif
 
+#include "MOS_FireResult.h"
+
+class MOS_Report_ABC;
+class MOS_AgentKnowledge;
+class MOS_Team;
+class MOS_Report_ABC;
 
 // =============================================================================
 /** @class  MOS_Agent_ABC
@@ -27,7 +33,10 @@
 // =============================================================================
 class MOS_Agent_ABC
 {
-
+public:
+    typedef std::vector< MOS_Report_ABC* >     T_ReportVector;
+    typedef T_ReportVector::iterator           IT_ReportVector;
+    typedef T_ReportVector::const_iterator     CIT_ReportVector;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -35,16 +44,29 @@ public:
     virtual ~MOS_Agent_ABC();
     //@}
 
-	virtual const uint GetID() =0;
-	virtual const std::string GetName() const  =0;
-    virtual const MT_Vector2D& GetPos() const = 0;
+	virtual const uint          GetID()         = 0;
+	virtual const std::string   GetName() const = 0;
+    virtual const MT_Vector2D&  GetPos()  const = 0;
+    virtual MOS_Team&           GetTeam() const = 0;
+
+    //Reports
+
+    virtual T_ReportVector& GetReports();
+    virtual void            DeleteAllRCs();
+    virtual void            DeleteAllTraces();
+    virtual void            DeleteReport( MOS_Report_ABC& );
+
+    //Knowledge
+
+    virtual MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
+    virtual T_FireResults&       GetFireResults();
 
 private:
-
-private:
-    //! @name Member data
-    //@{
-    //@}
+    T_FireResults				fireResults_;
+    T_ReportVector				reportVector_;
+    std::vector< MT_Vector2D >	reportPoints_;
+    MOS_AgentKnowledge* agentKnowledge_;
+    
 };
 
 

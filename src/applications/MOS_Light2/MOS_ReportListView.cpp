@@ -28,6 +28,7 @@
 #include "MOS_AgentManager.h"
 #include "MOS_ObjectManager.h"
 #include "MOS_MainWindow.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Agent.h"
 //#include "MOS_Object.h"
 #include "MOS_ObjectKnowledge.h"
@@ -40,6 +41,7 @@
 #include "MOS_Team.h"
 #include "MT_RichListViewItem.h"
 #include "MOS_ReportFilterOptions.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView constructor
@@ -70,9 +72,12 @@ MOS_ReportListView::MOS_ReportListView( QWidget* pParent, const MOS_ReportFilter
 
     connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ),                   &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
     connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
-    connect( this, SIGNAL( ReadingReports( MOS_Agent& ) ),                          &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports( MOS_Agent& ) ) );
+    connect( this, SIGNAL( ReadingReports( MOS_Agent_ABC& ) ),                          &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports( MOS_Agent_ABC& ) ) );
 
-    connect( &MOS_App::GetApp(), SIGNAL( ReportCreated( MOS_Agent&, MOS_Report_ABC& ) ), this, SLOT( OnReportCreated( MOS_Agent&, MOS_Report_ABC& ) ) );
+ 
+    connect( &MOS_App::GetApp(), SIGNAL( ReportCreated( MOS_Agent_ABC&, MOS_Report_ABC& ) ), this, SLOT( OnReportCreated( MOS_Agent_ABC&, MOS_Report_ABC& ) ) );
+
+
 }
 
 
@@ -91,7 +96,7 @@ MOS_ReportListView::~MOS_ReportListView()
 */
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
-void MOS_ReportListView::SetAgent( MOS_Agent* pAgent )
+void MOS_ReportListView::SetAgent( MOS_Agent_ABC* pAgent )
 {
     if( pAgent_ == pAgent )
         return;
@@ -114,10 +119,11 @@ void MOS_ReportListView::SetAgent( MOS_Agent* pAgent )
 
     emit ReadingReports( *pAgent_ );
 
-    MOS_Agent::T_ReportVector& reports = pAgent_->GetReports();
-    for( MOS_Agent::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
+    MOS_Agent_ABC::T_ReportVector& reports = pAgent_->GetReports();
+    for( MOS_Agent_ABC::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
         OnReportCreated( *pAgent_, **it );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::OnOptionsChanged
@@ -125,12 +131,13 @@ void MOS_ReportListView::SetAgent( MOS_Agent* pAgent )
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnOptionsChanged()
 {
-    if( ! pAgent_ )
-        return;
-    clear();
-    MOS_Agent::T_ReportVector& reports = pAgent_->GetReports();
-    for( MOS_Agent::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
-        OnReportCreated( *pAgent_, **it );
+    if( pAgent_ )
+    {
+        clear();
+        MOS_Agent_ABC::T_ReportVector& reports = pAgent_->GetReports();
+        for( MOS_Agent_ABC::IT_ReportVector it = reports.begin(); it != reports.end(); ++it )
+            OnReportCreated( *pAgent_, **it );
+    }
 }
 
 
@@ -141,7 +148,7 @@ void MOS_ReportListView::OnOptionsChanged()
 */
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
-void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& report )
+void MOS_ReportListView::OnReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report )
 {
     if( pAgent_ != &agent )
         return;
@@ -183,6 +190,7 @@ void MOS_ReportListView::OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& repo
 }
 
 
+
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::NotifyReadingReports
 // Created: APE 2004-09-30
@@ -210,7 +218,7 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
     int nId;
     if( InterpretLink( str, "Agent:", nId ) )
     {
-        MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
+        MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
         assert( pAgent != 0 );
         //$$$ can't do this here cauze it would destroy the listview item we clicked on...
         //$$$   emit ElementSelected( MOS_SelectedElement( *pAgent ) );
@@ -218,9 +226,10 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
         return;
     }
 
+
     if( InterpretLink( str, "AgentKnowledge:", nId ) )
     {
-        MOS_AgentKnowledge* pKnowledge = pAgent_->GetGtia().FindAgentKnowledge( nId );
+        MOS_AgentKnowledge* pKnowledge = pAgent_->FindAgentKnowledge( nId );
         if( pKnowledge != 0 )
         {
             //$$$ can't do this here cauze it would destroy the listview item we clicked on...
@@ -241,6 +250,7 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
         }
         return;
     }
+ 
 }
 
 
@@ -310,9 +320,11 @@ void MOS_ReportListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnClearAll()
 {
-    assert( pAgent_ != 0 );
-    pAgent_->DeleteAllRCs();
-    pAgent_->DeleteAllTraces();
+    if ( pAgent_ != 0 )
+    {
+        pAgent_->DeleteAllRCs();
+        pAgent_->DeleteAllTraces();
+    }
     clear();
 }
 
@@ -323,11 +335,12 @@ void MOS_ReportListView::OnClearAll()
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnClearTrace()
 {
-    assert( pAgent_ != 0 );
-
-    clear();
-    pAgent_->DeleteAllTraces();
-    SetAgent( pAgent_ );
+    if ( pAgent_ != 0 )
+    {
+        clear();
+        pAgent_->DeleteAllTraces();
+        SetAgent( pAgent_ );
+    }
 }
 
 
@@ -339,18 +352,20 @@ void MOS_ReportListView::OnClearTrace()
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnClearUpTo()
 {
-    assert( pAgent_ != 0 );
     assert( pPopupItem_ != 0 );
+    assert( pAgent_ != 0  );
 
     QListViewItem* pItem = pPopupItem_;
     while( pItem != 0 )
     {
-        pAgent_->DeleteReport( GetItemValue( *pItem ) );
+        if ( pAgent_ != 0 )
+            pAgent_->DeleteReport( GetItemValue( *pItem ) );
         pItem = pItem->nextSibling();
     }
 
     clear();
-    SetAgent( pAgent_ );
+    if ( pAgent_ != 0 )
+        SetAgent( pAgent_ );
 }
 
 
@@ -394,9 +409,7 @@ void MOS_ReportListView::hideEvent( QHideEvent* pEvent )
 void MOS_ReportListView::showEvent( QShowEvent* pEvent )
 {
     QListView::showEvent( pEvent );
-
-    if( pAgent_ != 0 )
-        emit ReadingReports( *pAgent_ );
+    emit ReadingReports( *pAgent_ );
 }
 
 

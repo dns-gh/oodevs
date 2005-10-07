@@ -190,9 +190,9 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 
     else
     {
-        ShowAgentPanel( true );
-        ShowAgentKnowledgePanel( true );
-        ShowObjectKnowledgePanel( true );
+        ShowAgentPanel( false );
+        ShowAgentKnowledgePanel( false );
+        ShowObjectKnowledgePanel( false );
         ShowObjectPanel( false );
 		ShowPopulationPanel( false );
         //pTabWidget_->setCurrentPage( 0 );
@@ -294,12 +294,14 @@ void MOS_InfoPanel::ShowPopulationPanel( bool bShow )
     {
         bPopulationVisible_ = true;
         pTabWidget_->insertTab( pPopulationPanel_, tr( "Etat Population" ));
+        pTabWidget_->insertTab( pReportPanel_, tr( "Rapports" ) );
     }
 
     if( !bShow && bPopulationVisible_ )
     {
         bPopulationVisible_ = false;
         pTabWidget_->removePage( pPopulationPanel_ );
+        pTabWidget_->removePage( pReportPanel_ );
     }
 }
 

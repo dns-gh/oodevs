@@ -21,12 +21,15 @@
 
 #include "MOS_Agent_ABC.h"
 #include "MOS_TypePopulation.h"
+#include "MOS_AgentKnowledge.h"
 
 class MOS_PopulationConcentration;
 class MOS_PopulationFlux;
 class MOS_Team;
 
 class MOS_AgentModel;
+
+class MOS_AgentKnowledge;
 
 
 // =============================================================================
@@ -52,6 +55,10 @@ public :
 	typedef T_FluxMap::iterator										IT_FluxMap;
 	typedef T_FluxMap::const_iterator								CIT_FluxMap;
 
+    typedef std::map< uint, MOS_AgentKnowledge* >   T_AgentKnowledgeMap;
+    typedef T_AgentKnowledgeMap::iterator           IT_AgentKnowledgeMap;
+    typedef T_AgentKnowledgeMap::const_iterator     CIT_AgentKnowledgeMap;
+
 public:
 
              MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg );
@@ -67,13 +74,16 @@ public:
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
 
 	MIL_AgentID			        GetPopulationID();
-	const uint			        GetID();
-	const MOS_Team&		        GetTeam();
-	const std::string	        GetName() const;
-	const MT_Vector2D&	        GetPos() const ;
+	virtual const uint			        GetID();
+	virtual MOS_Team&		            GetTeam() const;
+	virtual const std::string	        GetName() const;
+	virtual const MT_Vector2D&	        GetPos() const ;
+
 	uint				        GetLivingHumans();
 	uint				        GetDeadHumans();
     const MOS_AgentModel&       GetModel() const ;
+
+    virtual MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
 
 public:
 
@@ -87,8 +97,17 @@ public:
 			onCon_  = e;
 			if ( e )
 			{
-				itCon   = concentrationMap_.begin();
-				itFlux	= fluxMap_.begin();
+				if ( concentrationMap_.size() > 0 )
+                {
+                    itCon   = concentrationMap_.begin();
+				    itFlux	= fluxMap_.begin();
+                }
+                else
+                {
+                    onCon_ = false;
+                    itCon   = concentrationMap_.end();
+				    itFlux	= fluxMap_.begin();
+                }
 			}
 			else
 			{
@@ -160,6 +179,7 @@ private:
 	const MOS_TypePopulation*	pTypePopulation_;
 	MOS_Team*					pTeam_;
 	std::string					sName_;
+    T_AgentKnowledgeMap         agentKnowledges_;
     //@}
 };
 

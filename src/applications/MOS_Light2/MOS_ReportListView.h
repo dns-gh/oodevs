@@ -25,13 +25,14 @@
 
 #include "MT_ValuedRichListViewItem.h"
 
-class MOS_Agent;
+class MOS_Agent_ABC;
 class MOS_Report_ABC;
 class MOS_RC;
 class MOS_Trace;
 class MOS_ActionContext;
 class MOS_SelectedElement;
 class MOS_ReportFilterOptions;
+
 
 // =============================================================================
 /** @class  MOS_ReportListView
@@ -54,13 +55,13 @@ public:
 
     //! @name Operations
     //@{
-    void SetAgent( MOS_Agent* pAgent );
+    void SetAgent( MOS_Agent_ABC* pAgent );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnReportCreated( MOS_Agent& agent, MOS_Report_ABC& report );
+    void OnReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report );
 
     void OnClick( QListViewItem*, const QPoint&, int );
     void OnRequestCenter();
@@ -89,7 +90,7 @@ signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );
     void CenterOnPoint( const MT_Vector2D& vPoint );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
-    void ReadingReports( MOS_Agent& agent );
+    void ReadingReports( MOS_Agent_ABC& agent );
     //@}
 
 private:
@@ -103,7 +104,7 @@ private:
     //! @name Member data
     //@{
     const MOS_ReportFilterOptions& filter_;
-    MOS_Agent* pAgent_;
+    MOS_Agent_ABC* pAgent_;
     QPopupMenu* pPopupMenu_;
     QListViewItem* pPopupItem_;
     //@}

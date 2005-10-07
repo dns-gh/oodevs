@@ -49,6 +49,7 @@ private:
     virtual void OnUpdate        ();
     virtual void OnClearSelection();
     virtual void OnAgentUpdated  ( MOS_Agent& agent );
+    virtual void OnAgentUpdated  ( MOS_Population& population );
     //@}
 
 private:
