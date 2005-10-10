@@ -53,7 +53,7 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
 
-    virtual void                       Execute( const TER_DynaObject_ABC::T_DynaObjectVector& perceivableObjects );
+    virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const;
     //@}

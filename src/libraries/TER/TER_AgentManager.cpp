@@ -20,7 +20,6 @@
 #include "TER_AgentManager.h"
 #include "TER_Agent_ABC.h"
 #include "TER_Localisation.h"
-#include "TER_AgentPositionHint.h"
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "pathfind/SpatialContainerTraits.h"
@@ -79,72 +78,72 @@ namespace
 };
 
 // -----------------------------------------------------------------------------
-// Name: TER_AgentManager::GetListAgentWithinEllipse
+// Name: TER_AgentManager::GetListWithinEllipse
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_AgentManager::GetListAgentWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agentVector ) const
+void TER_AgentManager::GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agents ) const
 {
     const MT_Rect boundingBox = ellipse.GetBoundingBox();
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
-    AgentFinder< MT_Ellipse > finder( ellipse, agentVector );
+    AgentFinder< MT_Ellipse > finder( ellipse, agents );
     agents_.Apply( intersecter, finder );
 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AgentManager::GetListAgentWithinCircle
+// Name: TER_AgentManager::GetListWithinCircle
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_AgentManager::GetListAgentWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agentVector ) const
+void TER_AgentManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agents ) const
 {
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( vCenter.rX_ - rRadius, vCenter.rY_ - rRadius )
                                                         , geometry::Point2<MT_Float>( vCenter.rX_ + rRadius, vCenter.rY_ + rRadius ) );
-    AgentFinder< Circle > finder( Circle( vCenter, rRadius ), agentVector );
+    AgentFinder< Circle > finder( Circle( vCenter, rRadius ), agents );
     agents_.Apply( intersecter, finder );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AgentManager::GetListAgentWithinLocalisation
+// Name: TER_AgentManager::GetListWithinLocalisation
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_AgentManager::GetListAgentWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agentVector ) const
+void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
-    AgentFinder< TER_Localisation > finder( localisation, agentVector );
+    AgentFinder< TER_Localisation > finder( localisation, agents );
     agents_.Apply( intersecter, finder );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AgentManager::GetListAgentWithinPolygon
+// Name: TER_AgentManager::GetListWithinPolygon
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_AgentManager::GetListAgentWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agentVector ) const
+void TER_AgentManager::GetListWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agents ) const
 {
     const MT_Rect boundingBox = polygon.GetBoundingBox();
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
-    AgentFinder< TER_Polygon > finder( polygon, agentVector );
+    AgentFinder< TER_Polygon > finder( polygon, agents );
     agents_.Apply( intersecter, finder );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AgentManager::UpdateAgentPosition
+// Name: TER_AgentManager::UpdatePosition
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-TER_AgentPositionHint TER_AgentManager::UpdateAgentPosition( TER_Agent_ABC& agent, const TER_AgentPositionHint& hint )
+TER_Agent_ABC::T_Hint TER_AgentManager::UpdatePosition( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& hint )
 {
     agents_.ForceErase( &agent, hint );
     return agents_.Insert( &agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_AgentManager::RemoveAgent
+// Name: TER_AgentManager::Remove
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-bool TER_AgentManager::RemoveAgent( TER_Agent_ABC& agent, const TER_AgentPositionHint& hint )
+bool TER_AgentManager::Remove( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& hint )
 {
     return agents_.Erase( &agent, hint );
 }

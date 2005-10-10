@@ -198,11 +198,11 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_RealObject_ABC
 // Name: PHY_PerceptionView::Execute
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_PerceptionView::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& perceivableObjects )
+void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects )
 {
     if ( bIsEnabled_ )
     {
-        for( TER_DynaObject_ABC::CIT_DynaObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
+        for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
             if( !object.IsReal() )

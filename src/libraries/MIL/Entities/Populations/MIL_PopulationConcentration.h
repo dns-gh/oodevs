@@ -22,6 +22,7 @@
 #include "MIL.h"
 
 #include "Tools/MIL_MOSIDManager.h"
+#include "TER/TER_PopulationConcentration_ABC.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;
@@ -30,7 +31,7 @@ class MIL_PopulationAttitude;
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
-class MIL_PopulationConcentration
+class MIL_PopulationConcentration : public TER_PopulationConcentration_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -64,6 +65,8 @@ public:
     const MT_Vector2D&            GetPosition   () const;
     const MIL_PopulationAttitude& GetAttitude   () const;
           bool                    IsNearPosition( const MT_Vector2D& position ) const;
+
+    virtual const TER_Localisation& GetLocation () const;
     //@}
 
     //! @name Network
@@ -78,6 +81,11 @@ private:
     //@{
     MIL_PopulationConcentration( const MIL_PopulationConcentration& );            //!< Copy constructor
     MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void UpdateLocation();
     //@}
 
     //! @name Network
@@ -97,6 +105,7 @@ private:
           MIL_Population&         population_;
           uint                    nID_;
           MT_Vector2D             position_;
+          TER_Localisation        location_;
           MT_Float                rNbrAliveHumans_;
           MT_Float                rNbrDeadHumans_;
     const MIL_PopulationAttitude* pAttitude_;

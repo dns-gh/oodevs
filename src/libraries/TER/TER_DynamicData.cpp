@@ -17,28 +17,23 @@
 // *****************************************************************************
 
 #include "ter_pch.h"
+
 #include "TER_DynamicData.h"
+
+#include "TER_PathFinderThread.h"
 #include "pathfind/TerrainRetractationHandle.h"
-#pragma warning ( disable : 4275 )
-#include "boost/thread/mutex.hpp"
 
 // -----------------------------------------------------------------------------
 // Name: TER_DynamicData constructor
-// Created: AGE 2005-02-02
+// Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-TER_DynamicData::TER_DynamicData()
+TER_DynamicData::TER_DynamicData( const T_PointVector& points, const TerrainData& terrainData )
+    : handles_    ()
+    , nNbrRefs_   ( 0 )
+    , points_     ( points )
+    , terrainData_( terrainData )
 {
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData constructor
-// Created: AGE 2005-03-03
-// -----------------------------------------------------------------------------
-TER_DynamicData::TER_DynamicData( const TER_DynamicData& rhs )
-    : handles_( rhs.handles_ )
-{
-    //NOTHING
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -47,23 +42,57 @@ TER_DynamicData::TER_DynamicData( const TER_DynamicData& rhs )
 // -----------------------------------------------------------------------------
 TER_DynamicData::~TER_DynamicData()
 {
-    // NOTHING
+    assert( handles_.empty() );
+    assert( nNbrRefs_ == 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_DynamicData::Duplicate
-// Created: AGE 2005-02-02
+// Name: TER_DynamicData::AddForRegistration
+// Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-TER_DynamicData& TER_DynamicData::Duplicate()
+void TER_DynamicData::AddForRegistration( TER_PathFinderThread& thread )
 {
-    return *new TER_DynamicData( *this );
+    ++ nNbrRefs_;
+    thread.AddDynamicDataToRegister( *this );    
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_DynamicData::AddRetractationHandle
-// Created: AGE 2005-02-02
+// Name: TER_DynamicData::RegisterDynamicData
+// Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_DynamicData::AddRetractationHandle( TerrainRetractationHandle& handle )
+void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread )
 {
-    handles_.push_back( T_Handle( &handle ) );
+    bool bOut = handles_.insert( std::make_pair( &thread, &thread.CreateLineTree( points_, terrainData_ ) ) ).second;
+    assert( bOut );
+    assert( nNbrRefs_ > 0 );
+    -- nNbrRefs_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_DynamicData::AddForUnregistration
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_DynamicData::AddForUnregistration( TER_PathFinderThread& thread )
+{
+    ++ nNbrRefs_;
+    thread.AddDynamicDataToUnregister( *this );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_DynamicData::UnregisterDynamicData
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
+{
+    IT_HandleMap it = handles_.find( &thread );
+    assert( it != handles_.end() );
+    delete it->second;
+    handles_.erase( it );
+
+    assert( nNbrRefs_ > 0 );
+    -- nNbrRefs_;
+
+    if( nNbrRefs_ == 0 && handles_.empty() )
+        delete this;
+}
+

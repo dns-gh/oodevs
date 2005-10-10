@@ -21,11 +21,13 @@
 
 #include "TER.h"
 
+#include "TER_PathFinderThread.h"
+
 class TER_NodeFunctor_ABC;
 class TerrainData;
-class TER_PathFinderThread;
 class TER_DynamicData;
 class TER_PathFindRequest_ABC;
+
 namespace tools
 {
     namespace thread
@@ -35,13 +37,16 @@ namespace tools
 }
 
 // =============================================================================
-/** @class  TER_PathFindManager
-    @brief  TER_PathFindManager
-*/
 // Created: AGE 2005-01-31
 // =============================================================================
 class TER_PathFindManager
 {
+public:
+    //! @name Helpers
+    //@{
+    static TerrainData& DefaultTerrainData();
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -55,11 +60,11 @@ public:
     TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
 
     TerrainData GetTerrainDataAt( const MT_Vector2D& pos ) const;
-    void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
+    
+    template< typename Functor > void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, Functor& bestNodeFunction ) const;
 
-    void DeleteDynamicData( TER_DynamicData& data );
-    TER_DynamicData& CreateLineTree( const T_PointVector& points = T_PointVector(), const TerrainData& terrainData = DefaultTerrainData() );
-    void AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData = DefaultTerrainData() );
+    void AddDynamicData   ( TER_DynamicData& data );
+    void RemoveDynamicData( TER_DynamicData& data );
     //@}
 
 private:
@@ -72,16 +77,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< TER_PathFinderThread* > T_Threads;
-    typedef T_Threads::const_iterator        CIT_Threads;
-
-    typedef std::pair< TER_DynamicData*, bool > T_FlagedData;
-    typedef std::vector< T_FlagedData >         T_DynamicDatas;
-    typedef T_DynamicDatas::iterator           IT_DynamicDatas;
-    //@}
-
-    //! @name Helpers
-    //@{
-    static TerrainData& DefaultTerrainData();
+    typedef T_Threads::const_iterator            CIT_Threads;
     //@}
 
 private:
@@ -90,9 +86,22 @@ private:
     const std::string strGraphArchive_;
     const std::string strNodeArchive_;
     const std::string strLinkArchive_;
-    T_Threads threads_;
-    T_DynamicDatas datas_;
+    T_Threads         threads_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::SearchForBestNodePositionWithinCircle
+// Created: AGE 2005-01-31
+// -----------------------------------------------------------------------------
+template < typename Functor >
+void TER_PathFindManager::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, Functor& bestNodeFunction ) const
+{
+    if( threads_.empty() )
+        return;
+
+    TER_NodeFunctor< Functor > functor( bestNodeFunction );
+    threads_.front()->ApplyOnNodesWithinCircle( vCenter, rRadius, functor );
+}
 
 #endif // __TER_PathFindManager_h_

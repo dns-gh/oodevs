@@ -734,34 +734,8 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 // Name: MIL_EntityManager::Update
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-#include "Network/NET_ASN_Tools.h"
 void MIL_EntityManager::Update()
 {
-    //$$$$$$$$ TEST DEGUEU
-    if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() == 2 && !populations_.empty() && !pions_.empty() )
-    {
-        ASN1T_Mission_Population_FaireMouvement asnMission;
-        NET_ASN_Tools::WritePoint( pions_.begin()->second->GetRole< PHY_RolePion_Location >().GetPosition(), asnMission.destination );
-
-
-        ASN1T_MsgPopulationOrder asnMsg;
-        asnMsg.oid_unite_executante = populations_.begin()->second->GetID();
-        asnMsg.order_id             = 1;
-
-        asnMsg.mission.t                                    = T_Mission_Population_mission_population_faire_mouvement;
-        asnMsg.mission.u.mission_population_faire_mouvement = &asnMission;
-
-        OnReceiveMsgPopulationOrder( asnMsg, 69 );
-
-        NET_ASN_Tools::Delete( asnMission.destination );
-    }
-
-
-    //$$$$$$$$ TEST DEGUEU
-
-
-
-
     PreprocessRandomBreakdowns();
 
     UpdateKnowledges();

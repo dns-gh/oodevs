@@ -17,8 +17,11 @@
 // *****************************************************************************
 
 #include "ter_pch.h"
+
 #include "TER_Agent_ABC.h"
+
 #include "TER_World.h"
+#include "TER_AgentManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_Agent_ABC constructor
@@ -45,7 +48,7 @@ TER_Agent_ABC::~TER_Agent_ABC()
 // -----------------------------------------------------------------------------
 void TER_Agent_ABC::UpdatePatch()
 {
-    hint_ = TER_World::GetWorld().UpdateAgentPosition( *this, hint_ );
+    hint_ = TER_World::GetWorld().GetAgentManager().UpdatePosition( *this, hint_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +57,7 @@ void TER_Agent_ABC::UpdatePatch()
 // -----------------------------------------------------------------------------
 void TER_Agent_ABC::InsertInPatch()
 {
-    hint_ = TER_World::GetWorld().UpdateAgentPosition( *this, hint_ );
+    hint_ = TER_World::GetWorld().GetAgentManager().UpdatePosition( *this, hint_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,5 +66,5 @@ void TER_Agent_ABC::InsertInPatch()
 // -----------------------------------------------------------------------------
 void TER_Agent_ABC::RemoveFromPatch()
 {
-    TER_World::GetWorld().RemoveAgent( *this, hint_ );
+    TER_World::GetWorld().GetAgentManager().Remove( *this, hint_ );
 }

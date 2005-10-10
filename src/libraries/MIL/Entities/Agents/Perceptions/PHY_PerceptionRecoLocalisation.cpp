@@ -76,7 +76,7 @@ void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_
     if ( bShouldUseRadius_ )
     {
         const MT_Float rRadius = rRadius_ < 0. ? perceiver.GetMaxAgentPerceptionDistance() : rRadius_;
-        TER_World::GetWorld().GetListAgentWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), rRadius, result );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), rRadius, result );
         
         for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
             if ( localisation_.IsInside( (*it)->GetPosition() ) )
@@ -86,7 +86,7 @@ void PHY_PerceptionRecoLocalisation::sReco::GetAgentsInside( const PHY_RolePion_
     }
     else
     {
-        TER_World::GetWorld().GetListAgentWithinLocalisation( localisation_, result );
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
     }
 }
 
@@ -253,7 +253,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoLocalisation::Compute( const DEC_Kn
 // Name: PHY_PerceptionRecoLocalisation::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoLocalisation::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionRecoLocalisation::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

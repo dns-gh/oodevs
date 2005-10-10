@@ -234,3 +234,13 @@ void MIL_PopulationFlow::SetTailPosition( const MT_Vector2D& position )
     flowShape_.front() = position;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetLocation
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+inline
+const TER_Localisation& MIL_PopulationFlow::GetLocation() const
+{
+    return location_;
+}
+

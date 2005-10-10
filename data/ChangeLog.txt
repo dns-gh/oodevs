@@ -25,6 +25,7 @@ Next Version - Codename ''
     
     
     - DEC_Itineraire_ProchainsObjets virée
+    - Réutilisation des limites lors de la découpe des fuseaux
     
 
 Version 1.0.5 [24/09/2005] - Codename 'jusqu'au bout de la nuit ...'

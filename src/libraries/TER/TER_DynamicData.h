@@ -19,62 +19,55 @@
 #ifndef __TER_DynamicData_h_
 #define __TER_DynamicData_h_
 
-#include "boost/shared_ptr.hpp"
+#include "TER.h"
+
+class TER_PathFinderThread;
 class TerrainRetractationHandle;
-namespace boost
-{
-    class mutex;
-}
 
 // =============================================================================
-/** @class  TER_DynamicData
-    @brief  TER_DynamicData
-*/
 // Created: AGE 2005-02-01
 // =============================================================================
 class TER_DynamicData
 {
-    friend class TER_PathFindManager;
 public:
-    //! @name Constructors/Destructor
+    TER_DynamicData( const T_PointVector& points, const TerrainData& terrainData );
+
+    //! @name Notifications
     //@{
-    virtual ~TER_DynamicData();
+    void NotifyNotUsed        (); // MIL
+    void NotifyUsedByThread   ( TER_PathFinderThread& thread );
+    void NotifyNotUsedByThread( TER_PathFinderThread& thread );
     //@}
 
     //! @name Operations
     //@{
-    TER_DynamicData& Duplicate();
+    void AddForRegistration   ( TER_PathFinderThread& thread );
+    void AddForUnregistration ( TER_PathFinderThread& thread );
+
+    void RegisterDynamicData  ( TER_PathFinderThread& thread );
+    void UnregisterDynamicData( TER_PathFinderThread& thread );
     //@}
 
 private:
-    //! @name Copy/Assignement
-    //@{
-    TER_DynamicData( const TER_DynamicData& );            //!< Copy constructor
-    TER_DynamicData& operator=( const TER_DynamicData& ); //!< Assignement operator
-    //@}
+     TER_DynamicData( const TER_DynamicData& );            //!< Copy constructor
+     TER_DynamicData& operator=( const TER_DynamicData& ); //!< Assignement operator
+    ~TER_DynamicData();
 
-    //! @name Constructor
-    //@{
-    TER_DynamicData();
-    //@}
-
-    //! @name Operations
-    //@{
-    void AddRetractationHandle( TerrainRetractationHandle& handle );
-    //@}
-
+private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< TerrainRetractationHandle > T_Handle;
-    typedef std::vector< T_Handle >                        T_Handles;
-    typedef T_Handles::iterator                           IT_Handles;
+    typedef std::map< TER_PathFinderThread*, TerrainRetractationHandle* > T_HandleMap;
+    typedef T_HandleMap::iterator                                         IT_HandleMap;
+    typedef T_HandleMap::const_iterator                                   CIT_HandleMap;
     //@}
 
 private:
-    //! @name Member data
-    //@{
-    T_Handles handles_;
-    //@}
+    T_HandleMap     handles_;
+    uint            nNbrRefs_;
+
+    const T_PointVector points_;
+    const TerrainData   terrainData_;
 };
+
 
 #endif // __TER_DynamicData_h_

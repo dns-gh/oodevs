@@ -82,7 +82,7 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
 
     // Recherche des pions dans la localisation
     TER_Agent_ABC::T_AgentPtrVector agentsDetected;
-    TER_World::GetWorld().GetListAgentWithinLocalisation( localisation_, agentsDetected );
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, agentsDetected );
    
     // Enregistrement des pions vus
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
@@ -122,7 +122,7 @@ const PHY_PerceptionLevel& PHY_PerceptionAlat::Compute( const MIL_RealObject_ABC
 // Name: PHY_PerceptionAlat::Execute
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_PerceptionAlat::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionAlat::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

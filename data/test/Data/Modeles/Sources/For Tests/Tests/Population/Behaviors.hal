@@ -20,7 +20,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
     {
         persistent T_Action                actionMove;
         persistent E_EtatActionDeplacement nEtatDeplacement;
-        persistent float rDummy = 0;
+        persistent float  rDummy = 0;
         
         if( DIA_ModuleBegins() )
         {

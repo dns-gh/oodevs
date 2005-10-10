@@ -22,6 +22,7 @@
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
+#include "MIL_PopulationType.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
@@ -36,6 +37,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     : population_      ( population )
     , nID_             ( idManager_.GetFreeSimID() )
     , position_        ()
+    , location_        ()
     , rNbrAliveHumans_ ( 0 )
     , rNbrDeadHumans_  ( 0 )
     , pAttitude_       ( &population.GetDefaultAttitude() )
@@ -49,6 +51,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     archive.ReadField( "Position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     archive.ReadField( "NombreHumains", rNbrAliveHumans_ );
+    UpdateLocation();
     // SendCreation()
 }
 
@@ -60,6 +63,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     : population_      ( population )
     , nID_             ( idManager_.GetFreeSimID() )
     , position_        ( position )
+    , location_        ()
     , rNbrAliveHumans_ ( 0 )
     , rNbrDeadHumans_  ( 0 )
     , pAttitude_       ( &population.GetDefaultAttitude() )
@@ -68,6 +72,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , bHumansUpdated_  ( true )
     , bAttitudeUpdated_( true )
 {
+    UpdateLocation();
     SendCreation();
 }
 
@@ -102,7 +107,21 @@ bool MIL_PopulationConcentration::Update()
         pPullingFlow_ = 0;
         return false;
     }
+    if( bHumansUpdated_ )
+        UpdateLocation();
     return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::UpdateLocation
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::UpdateLocation()
+{
+    assert( population_.GetType().GetConcentrationDensity() );
+    MT_Float rSurface = rNbrAliveHumans_ / population_.GetType().GetConcentrationDensity();
+    location_.Reset( TER_Localisation( position_, std::sqrt( rSurface / MT_PI ) ) );
 }
 
 // =============================================================================
@@ -242,4 +261,4 @@ void MIL_PopulationConcentration::SendChangedState() const
     }
 
     asnMsg.Send();
-}    
+}

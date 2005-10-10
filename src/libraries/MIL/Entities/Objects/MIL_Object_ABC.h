@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "TER/TER_DynaObject_ABC.h"
+#include "TER/TER_Object_ABC.h"
 
 class MIL_Agent_ABC;
 class MIL_Army;
@@ -24,7 +24,7 @@ class TER_Localisation;
 // Created: NLD 2002-12-12
 // Last modified: JVT 03-07-15
 //=============================================================================
-class MIL_Object_ABC : public TER_DynaObject_ABC
+class MIL_Object_ABC : public TER_Object_ABC
 {
     MT_COPYNOTALLOWED( MIL_Object_ABC ); 
    

@@ -19,12 +19,16 @@
 #ifndef __TER_Agent_ABC_h_
 #define __TER_Agent_ABC_h_
 
-#include "TER_AgentPositionHint.h"
+#include "TER.h"
+
+#include "TER_AgentTraits.h"
+
+namespace pathfind
+{
+    template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
+};
 
 // =============================================================================
-/** @class  TER_Agent_ABC
-    @brief  TER_Agent_ABC
-*/
 // Created: AGE 2005-01-28
 // =============================================================================
 class TER_Agent_ABC
@@ -35,6 +39,8 @@ public:
     typedef std::vector< TER_Agent_ABC* >       T_AgentPtrVector;
     typedef T_AgentPtrVector::iterator         IT_AgentPtrVector;
     typedef T_AgentPtrVector::const_iterator  CIT_AgentPtrVector;
+
+    typedef pathfind::SpatialContainerNode< TER_Agent_ABC*, TER_AgentTraits, MT_Float >* T_Hint;
     //@}
 
 public:
@@ -67,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TER_AgentPositionHint hint_;
+    T_Hint hint_;
     //@}
 };
 

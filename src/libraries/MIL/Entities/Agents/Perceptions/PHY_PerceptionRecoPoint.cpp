@@ -124,7 +124,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
     {
         perceivableAgents.clear();
 
-        TER_World::GetWorld().GetListAgentWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableAgents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableAgents );
 
         for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
@@ -185,16 +185,16 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoPoint::Compute( const DEC_Knowledge
 // Name: PHY_PerceptionRecoPoint::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoPoint::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
-    TER_DynaObject_ABC::T_DynaObjectVector perceivableObjects;
+    TER_Object_ABC::T_ObjectVector perceivableObjects;
 
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableObjects.clear();
 
-        TER_World::GetWorld().GetListDynaObjectWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableObjects );
-        for ( TER_DynaObject_ABC::CIT_DynaObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( (*itReco)->vCenter_, (*itReco)->rCurrentSize_, perceivableObjects );
+        for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( !object.IsReal() )

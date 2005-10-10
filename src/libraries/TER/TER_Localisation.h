@@ -68,6 +68,7 @@ public:
     void Reset( const TER_Localisation& localisation );
     void Reset( const MT_Vector2D& vPos );
     bool Reset( const T_PointVector& pointVector );
+    bool Reset( const T_PointList&   pointList   );
     void Read ( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive );
     void Write( MT_OutputArchive_ABC& archive ) const;
     //@}

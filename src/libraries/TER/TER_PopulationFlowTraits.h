@@ -8,38 +8,35 @@
 // *****************************************************************************
 //
 // $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/ter/src/TER_ObjectTraits.h $
+// $Archive: /MVW_v10/Build/SDK/ter/src/TER_PopulationFlowTraits.h $
 // $Author: Age $
 // $Modtime: 31/01/05 17:39 $
 // $Revision: 1 $
-// $Workfile: TER_ObjectTraits.h $
+// $Workfile: TER_PopulationFlowTraits.h $
 //
 // *****************************************************************************
 
-#ifndef __TER_ObjectTraits_h_
-#define __TER_ObjectTraits_h_
+#ifndef __TER_PopulationFlowTraits_h_
+#define __TER_PopulationFlowTraits_h_
 
-class TER_Object_ABC;
+class TER_PopulationFlow_ABC;
 
 // =============================================================================
-/** @class  TER_ObjectTraits
-    @brief  TER_ObjectTraits
-*/
 // Created: AGE 2005-01-31
 // =============================================================================
-class TER_ObjectTraits
+class TER_PopulationFlowTraits
 {
 public:
     //! @name Types
     //@{
-    typedef TER_Object_ABC* T_Value;
+    typedef TER_PopulationFlow_ABC* T_Value;
     //@}
 public:
     //! @name Operations
     //@{
-    int CompareOnX( MT_Float rValue, const T_Value& pObject ) const;
-    int CompareOnY( MT_Float rValue, const T_Value& pObject ) const;
+    int CompareOnX( MT_Float rValue, const T_Value& pFlow ) const;
+    int CompareOnY( MT_Float rValue, const T_Value& pFlow ) const;
     //@}
 };
 
-#endif // __TER_ObjectTraits_h_
+#endif // __TER_PopulationFlowTraits_h_

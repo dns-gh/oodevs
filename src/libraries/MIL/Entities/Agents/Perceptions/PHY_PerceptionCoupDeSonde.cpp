@@ -108,7 +108,7 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_Agent_A
 void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     TER_Agent_ABC::T_AgentPtrVector vAgentDetectedList;
-    TER_World::GetWorld().GetListAgentWithinCircle( GetPerceiverPosition(), rLength_, vAgentDetectedList );
+    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( GetPerceiverPosition(), rLength_, vAgentDetectedList );
 
     for ( TER_Agent_ABC::CIT_AgentPtrVector itAgent = vAgentDetectedList.begin(); itAgent != vAgentDetectedList.end(); ++itAgent )
     {
@@ -143,7 +143,7 @@ const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_RealObj
 // Name: PHY_PerceptionCoupDeSonde::Execute
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_PerceptionCoupDeSonde::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionCoupDeSonde::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

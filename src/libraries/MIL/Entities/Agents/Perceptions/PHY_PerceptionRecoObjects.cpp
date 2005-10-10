@@ -70,11 +70,11 @@ bool PHY_PerceptionRecoObjects::sReco::IsInside( const TER_Localisation& localis
 // Name: PHY_PerceptionRecoObjects::sReco::GetObjectsInside
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoObjects::sReco::GetObjectsInside( TER_DynaObject_ABC::T_DynaObjectVector& result ) const
+void PHY_PerceptionRecoObjects::sReco::GetObjectsInside( TER_Object_ABC::T_ObjectVector& result ) const
 {
-    TER_World::GetWorld().GetListDynaObjectWithinCircle( vCenter_, rCurrentSize_, result );
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vCenter_, rCurrentSize_, result );
 
-    for ( TER_DynaObject_ABC::IT_DynaObjectVector it = result.begin(); it != result.end(); )
+    for ( TER_Object_ABC::IT_ObjectVector it = result.begin(); it != result.end(); )
         if ( localisation_.IsIntersecting( (*it)->GetLocalisation() ) )
             ++it;
         else
@@ -215,16 +215,16 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowled
 // Name: PHY_PerceptionRecoObjects::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoObjects::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
-    TER_DynaObject_ABC::T_DynaObjectVector perceivableObjects;
+    TER_Object_ABC::T_ObjectVector perceivableObjects;
 
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {       
         perceivableObjects.clear();
         (*itReco)->GetObjectsInside( perceivableObjects );
 
-        for ( TER_DynaObject_ABC::CIT_DynaObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
+        for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( !object.IsReal() )

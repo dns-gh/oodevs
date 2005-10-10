@@ -8,41 +8,47 @@
 // *****************************************************************************
 //
 // $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_DynaObject_ABC.h $
+// $Archive: /MVW_v10/Build/SDK/TER/src/TER_Object_ABC.h $
 // $Author: Jvt $
 // $Modtime: 5/04/05 18:36 $
 // $Revision: 3 $
-// $Workfile: TER_DynaObject_ABC.h $
+// $Workfile: TER_Object_ABC.h $
 //
 // *****************************************************************************
 
-#ifndef __TER_DynaObject_ABC_h_
-#define __TER_DynaObject_ABC_h_
+#ifndef __TER_Object_ABC_h_
+#define __TER_Object_ABC_h_
 
 #include "TER_Localisation.h"
-#include "TER_ObjectPositionHint.h"
+
+#include "TER_ObjectTraits.h"
+
+namespace pathfind
+{
+    template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
+};
+
 
 // =============================================================================
-/** @class  TER_DynaObject_ABC
-    @brief  TER_DynaObject_ABC
-*/
 // Created: AGE 2005-01-31
 // =============================================================================
-class TER_DynaObject_ABC
+class TER_Object_ABC
 {
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_DynaObject_ABC* >   T_DynaObjectVector;
-    typedef T_DynaObjectVector::iterator        IT_DynaObjectVector;
-    typedef T_DynaObjectVector::const_iterator CIT_DynaObjectVector;
+    typedef std::vector< TER_Object_ABC* >   T_ObjectVector;
+    typedef T_ObjectVector::iterator        IT_ObjectVector;
+    typedef T_ObjectVector::const_iterator CIT_ObjectVector;
+
+    typedef pathfind::SpatialContainerNode< TER_Object_ABC*, TER_ObjectTraits, MT_Float >* T_Hint;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_DynaObject_ABC();
-    virtual ~TER_DynaObject_ABC();
+             TER_Object_ABC();
+    virtual ~TER_Object_ABC();
     //@}
 
     //! @name CheckPoints
@@ -73,15 +79,11 @@ public:
     void UpdateLocalisation( const TER_Localisation& newLocalisation );
     //@}
 
-    //! @name Operators
-    //@{
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
-    TER_DynaObject_ABC( const TER_DynaObject_ABC& );            //!< Copy constructor
-    TER_DynaObject_ABC& operator=( const TER_DynaObject_ABC& ); //!< Assignement operator
+    TER_Object_ABC( const TER_Object_ABC& );            //!< Copy constructor
+    TER_Object_ABC& operator=( const TER_Object_ABC& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -94,8 +96,8 @@ private:
     //! @name Member data
     //@{
     TER_Localisation location_;
-    TER_ObjectPositionHint hint_;
+    T_Hint           hint_;
     //@}
 };
 
-#endif // __TER_DynaObject_ABC_h_
+#endif // __TER_Object_ABC_h_

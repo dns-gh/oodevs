@@ -8,20 +8,20 @@
 // *****************************************************************************
 //
 // $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/ter/src/TER_ObjectTraits.cpp $
+// $Archive: /MVW_v10/Build/SDK/ter/src/TER_PopulationFlowTraits.cpp $
 // $Author: Age $
 // $Modtime: 31/01/05 18:53 $
 // $Revision: 1 $
-// $Workfile: TER_ObjectTraits.cpp $
+// $Workfile: TER_PopulationFlowTraits.cpp $
 //
 // *****************************************************************************
 
 #include "ter_pch.h"
-#include "TER_ObjectTraits.h"
-#include "pathfind/SpatialContainerTraits.h"
-#include "MT_Tools/MT_Rect.h"
-#include "TER_Object_ABC.h"
+#include "TER_PopulationFlowTraits.h"
+#include "TER_PopulationFlow_ABC.h"
 #include "TER_Localisation.h"
+#include "MT_Tools/MT_Rect.h"
+#include "pathfind/SpatialContainerTraits.h"
 
 namespace
 {
@@ -34,19 +34,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectTraits::CompareOnX
+// Name: TER_PopulationFlowTraits::CompareOnX
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_ObjectTraits::CompareOnX( MT_Float rValue, const T_Value& pObject ) const
+int TER_PopulationFlowTraits::CompareOnX( MT_Float rValue, const T_Value& pFlow ) const
 {
-    return Intersector( pObject->GetLocalisation().GetBoundingBox() ).CompareOnX( rValue );
+    return Intersector( pFlow->GetLocation().GetBoundingBox() ).CompareOnX( rValue );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectTraits::CompareOnY
+// Name: TER_PopulationFlowTraits::CompareOnY
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_ObjectTraits::CompareOnY( MT_Float rValue, const T_Value& pObject ) const
+int TER_PopulationFlowTraits::CompareOnY( MT_Float rValue, const T_Value& pFlow ) const
 {
-    return Intersector( pObject->GetLocalisation().GetBoundingBox() ).CompareOnY( rValue );
+    return Intersector( pFlow->GetLocation().GetBoundingBox() ).CompareOnY( rValue );
 }

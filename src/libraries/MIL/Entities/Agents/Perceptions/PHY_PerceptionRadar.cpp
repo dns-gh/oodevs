@@ -164,7 +164,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const DEC_Knowledge_Obj
 // Name: PHY_PerceptionRadar::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRadar::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionRadar::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

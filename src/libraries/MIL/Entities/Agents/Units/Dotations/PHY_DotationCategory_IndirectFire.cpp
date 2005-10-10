@@ -89,7 +89,7 @@ void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& /*firer*/, co
     const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
 
     TER_Agent_ABC::T_AgentPtrVector targets;
-    TER_World::GetWorld().GetListAgentWithinEllipse( neutralizationSurface, targets );
+    TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
     for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();

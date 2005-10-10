@@ -20,19 +20,16 @@
 #define __TER_PathFinderThread_h_
 
 #include "tools/thread/RequestProcessor_ABC.h"
-namespace boost
-{
-    class mutex;
-}
+#pragma warning( disable : 4275 )
+#include "boost/thread/mutex.hpp"
+
 class TerrainPathfinder;
 class TerrainRetractationHandle;
 class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
+class TER_DynamicData;
 
 // =============================================================================
-/** @class  TER_PathFinderThread
-    @brief  pathfinder thread
-*/
 // Created: AGE 2005-02-23
 // =============================================================================
 class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< TER_PathFindRequest_ABC* >
@@ -47,8 +44,10 @@ public:
 
     //! @name Dynamic data
     //@{
-    TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData );
-    void AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData );
+    void AddDynamicDataToRegister  ( TER_DynamicData& data );
+    void AddDynamicDataToUnregister( TER_DynamicData& data );
+
+    TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData ); 
     //@}
 
     //! @name Terrain analysis
@@ -69,16 +68,28 @@ private:
     TER_PathFinderThread& operator=( const TER_PathFinderThread& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
+    //! @name Tools
     //@{
-    void Dump() const;
-    virtual void Process( TER_PathFindRequest_ABC* const& pRequest );
+    virtual void Process              ( TER_PathFindRequest_ABC* const& pRequest );
+            void RegisterDynamicData  ();
+            void UnregisterDynamicData();
+            void Dump                 () const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< TER_DynamicData* >     T_DynamicDataVector;
+    typedef T_DynamicDataVector::const_iterator CIT_DynamicDataVector;
     //@}
 
 private:
     //! @name Member data
     //@{
-    TerrainPathfinder* pPathfinder_;
+    TerrainPathfinder*  pPathfinder_;
+    T_DynamicDataVector dynamicDataToRegister_;
+    T_DynamicDataVector dynamicDataToUnregister_;
+    boost::mutex        dynamicDataMutex_;
     //@}
 };
 

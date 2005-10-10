@@ -223,9 +223,9 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
     if( rHeight == rHeight_ )
         return;
 
-/*    TER_DynaObject_ABC::T_DynaObjectVector objectsColliding;
-    TER_DynaObject_ABC::CIT_DynaObjectVector itObject;
-    TER_World::GetWorld().GetListDynaObjectsAt( vPosition_, objectsColliding );
+/*    TER_Object_ABC::T_ObjectVector objectsColliding;
+    TER_Object_ABC::CIT_ObjectVector itObject;
+    TER_World::GetWorld().GetObjectManager().GetListsAt( vPosition_, objectsColliding );
     for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyMovingOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
 */
@@ -271,9 +271,9 @@ void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Hide()
 {
-    TER_DynaObject_ABC::T_DynaObjectVector objectsColliding;
-    TER_World::GetWorld().GetListDynaObjectsAt( vPosition_, objectsColliding );
-    for( TER_DynaObject_ABC::CIT_DynaObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+    TER_Object_ABC::T_ObjectVector objectsColliding;
+    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition_, objectsColliding );
+    for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
 
     RemoveFromPatch();
@@ -287,9 +287,9 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 {
     Move( vPosition, vDirection_, 0. );
 
-    TER_DynaObject_ABC::T_DynaObjectVector objectsColliding;
-    TER_World::GetWorld().GetListDynaObjectsAt( vPosition_, objectsColliding );
-    for( TER_DynaObject_ABC::CIT_DynaObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+    TER_Object_ABC::T_ObjectVector objectsColliding;
+    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition_, objectsColliding );
+    for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
     bHasDoneMagicMove_ = true;
 }

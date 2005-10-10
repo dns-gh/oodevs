@@ -120,14 +120,14 @@ void PHY_PerceptionRadarData::Acquire( PHY_RolePion_Perceiver& perceiver, const 
     for( CIT_ZoneSet itZone = zones.begin(); itZone != zones.end(); ++itZone )
     {
         targets.clear();
-        TER_World::GetWorld().GetListAgentWithinLocalisation( **itZone, targets );
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( **itZone, targets );
         AcquireTargets( perceiver, targets );
     }
 
     if( bAcquireOnPerceiverPosition )
     {
         targets.clear();
-        TER_World::GetWorld().GetListAgentWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), pRadarType_->GetRadius(), targets );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), pRadarType_->GetRadius(), targets );
         AcquireTargets( perceiver, targets );
     }
 

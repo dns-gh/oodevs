@@ -79,3 +79,14 @@ void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flo
     int nOut = pushingFlows_.erase( &flow );
     assert( nOut );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetLocation
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+inline
+const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
+{
+    return location_;
+}

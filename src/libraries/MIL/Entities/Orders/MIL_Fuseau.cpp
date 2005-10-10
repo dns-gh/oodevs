@@ -916,7 +916,10 @@ TER_DynamicData* MIL_Fuseau::CreateDynamicData() const
     T_PointVector middle;
     for( uint j = 0; j < leftPointVectorTmp.size(); ++j )
         middle.push_back( leftPointVectorTmp[0] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
-    return & TER_PathFindManager::GetPathFindManager().CreateLineTree( middle );
+
+    TER_DynamicData* pDynamicData = new TER_DynamicData( middle, TER_PathFindManager::DefaultTerrainData() );
+    TER_PathFindManager::GetPathFindManager().AddDynamicData( *pDynamicData );
+    return pDynamicData;
 }
 
 // -----------------------------------------------------------------------------

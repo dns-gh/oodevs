@@ -9,7 +9,7 @@
 
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "TER/TER_Agent_ABC.h"
-#include "TER/TER_DynaObject_ABC.h"
+#include "TER/TER_Object_ABC.h"
 
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
@@ -36,7 +36,7 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const = 0;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const = 0;
 
-    virtual void                       Execute( const TER_DynaObject_ABC::T_DynaObjectVector& perceivableObjects ) = 0;
+    virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects ) = 0;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const = 0;
     virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const = 0;
     //@}

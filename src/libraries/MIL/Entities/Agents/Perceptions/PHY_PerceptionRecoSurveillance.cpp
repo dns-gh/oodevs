@@ -114,7 +114,7 @@ bool PHY_PerceptionRecoSurveillance::sReco::IsInside( const MT_Vector2D& vPoint 
 inline
 void PHY_PerceptionRecoSurveillance::sReco::GetAgentsInside( TER_Agent_ABC::T_AgentPtrVector& result ) const
 {
-    TER_World::GetWorld().GetListAgentWithinLocalisation( localisation_, result );
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( localisation_, result );
 
     for ( TER_Agent_ABC::IT_AgentPtrVector it = result.begin(); it != result.end(); )
         if ( IsInside( (*it)->GetPosition() ) )
@@ -262,7 +262,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const DEC_Kn
 // Name: PHY_PerceptionRecoSurveillance::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionRecoSurveillance::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionRecoSurveillance::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

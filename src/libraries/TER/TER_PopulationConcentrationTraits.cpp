@@ -8,20 +8,20 @@
 // *****************************************************************************
 //
 // $Created: AGE 2005-01-31 $
-// $Archive: /MVW_v10/Build/SDK/ter/src/TER_ObjectTraits.cpp $
+// $Archive: /MVW_v10/Build/SDK/ter/src/TER_PopulationConcentrationTraits.cpp $
 // $Author: Age $
 // $Modtime: 31/01/05 18:53 $
 // $Revision: 1 $
-// $Workfile: TER_ObjectTraits.cpp $
+// $Workfile: TER_PopulationConcentrationTraits.cpp $
 //
 // *****************************************************************************
 
 #include "ter_pch.h"
-#include "TER_ObjectTraits.h"
-#include "pathfind/SpatialContainerTraits.h"
-#include "MT_Tools/MT_Rect.h"
-#include "TER_Object_ABC.h"
+#include "TER_PopulationConcentrationTraits.h"
+#include "TER_PopulationConcentration_ABC.h"
 #include "TER_Localisation.h"
+#include "MT_Tools/MT_Rect.h"
+#include "pathfind/SpatialContainerTraits.h"
 
 namespace
 {
@@ -34,19 +34,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectTraits::CompareOnX
+// Name: TER_PopulationConcentrationTraits::CompareOnX
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_ObjectTraits::CompareOnX( MT_Float rValue, const T_Value& pObject ) const
+int TER_PopulationConcentrationTraits::CompareOnX( MT_Float rValue, const T_Value& pConcentration ) const
 {
-    return Intersector( pObject->GetLocalisation().GetBoundingBox() ).CompareOnX( rValue );
+    return Intersector( pConcentration->GetLocation().GetBoundingBox() ).CompareOnX( rValue );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectTraits::CompareOnY
+// Name: TER_PopulationConcentrationTraits::CompareOnY
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_ObjectTraits::CompareOnY( MT_Float rValue, const T_Value& pObject ) const
+int TER_PopulationConcentrationTraits::CompareOnY( MT_Float rValue, const T_Value& pConcentration ) const
 {
-    return Intersector( pObject->GetLocalisation().GetBoundingBox() ).CompareOnY( rValue );
+    return Intersector( pConcentration->GetLocation().GetBoundingBox() ).CompareOnY( rValue );
 }

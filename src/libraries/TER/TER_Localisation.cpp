@@ -453,6 +453,18 @@ bool TER_Localisation::Reset( const T_PointVector& pointVector )
     return Initialize();
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::Reset
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+bool TER_Localisation::Reset( const T_PointList& pointList )
+{
+    pointVector_.clear();
+    pointVector_.reserve( pointList.size() );
+    std::copy( pointList.begin(), pointList.end(), std::back_inserter( pointVector_ ) );
+    return Reset( pointVector_ );
+}
+
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::Reset
 // Created: NLD 2003-07-25

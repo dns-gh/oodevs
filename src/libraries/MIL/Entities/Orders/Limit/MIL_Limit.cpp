@@ -290,7 +290,7 @@ bool MIL_Limit::DecreaseReference( const MIL_Limit& other ) const
         if( --data.second == 0 )
         {
             if( data.first )
-                TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *data.first );
+                TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *data.first );
             fuseauDatas_.erase( itOther );
         }
         return true;
@@ -320,8 +320,9 @@ void MIL_Limit::CreateDynamicData( const MIL_Limit& other, const MIL_Fuseau& fus
 // -----------------------------------------------------------------------------
 TER_DynamicData* MIL_Limit::CreateDynamicData( const T_PointVector& points ) const
 {
-    // $$$$ AGE 2005-03-25: Maybe also add around the data
-    return & TER_PathFindManager::GetPathFindManager().CreateLineTree( points );
+    TER_DynamicData* pDynamicData = new TER_DynamicData( points, TER_PathFindManager::DefaultTerrainData() );
+    TER_PathFindManager::GetPathFindManager().AddDynamicData( *pDynamicData );
+    return pDynamicData;
 }
 
 // -----------------------------------------------------------------------------

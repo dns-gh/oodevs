@@ -20,6 +20,7 @@
 #include "TER_PathFinderThread.h"
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_PathFindRequest_ABC.h"
+#include "TER_DynamicData.h"
 #include "pathfind/TerrainPathfinder.h"
 #include "pathfind/TerrainRule_ABC.h"
 #include "pathfind/Node.h"
@@ -31,10 +32,6 @@
 #include "MT/MT_Logger/MT_LogDefines.h"
 #include "MT/MT_IO/MT_Dir.h"
 #include "MT/MT_IO/MT_FormatString.h"
-
-#pragma warning( disable : 4275 )
-#pragma warning( disable : 4251 )
-#include "boost/thread/mutex.hpp"
 
 using namespace pathfind;
 
@@ -69,6 +66,30 @@ TER_PathFinderThread::~TER_PathFinderThread()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::RegisterDynamicData
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_PathFinderThread::RegisterDynamicData()
+{
+    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
+    for( CIT_DynamicDataVector it = dynamicDataToRegister_.begin(); it != dynamicDataToRegister_.end(); ++it )
+        (**it).RegisterDynamicData  ( *this );
+    dynamicDataToRegister_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::UnregisterDynamicData
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_PathFinderThread::UnregisterDynamicData()
+{
+    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
+    for( CIT_DynamicDataVector it = dynamicDataToUnregister_.begin(); it != dynamicDataToUnregister_.end(); ++it )
+        (**it).UnregisterDynamicData( *this );
+    dynamicDataToUnregister_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::Process
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
@@ -76,9 +97,12 @@ void TER_PathFinderThread::Process( TER_PathFindRequest_ABC* const& pRequest )
 {
     try
     {
+        RegisterDynamicData();
+        
         if( pRequest )
             pRequest->Execute( *pPathfinder_ );
-//        Dump();
+
+        UnregisterDynamicData();
     }
     catch( std::exception& e )
     {
@@ -116,15 +140,6 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::AddLineTree
-// Created: AGE 2005-10-07
-// -----------------------------------------------------------------------------
-void TER_PathFinderThread::AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TerrainRetractationHandle& handle, const TerrainData& terrainData )
-{
-    pPathfinder_->AddDynamicData( MakePoint( from ), MakePoint( to ), handle, terrainData );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::GetTerrainDataAt
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
@@ -132,7 +147,6 @@ TerrainData TER_PathFinderThread::GetTerrainDataAt( const MT_Vector2D& pos ) con
 {
     return pPathfinder_->Pick( MakePoint( pos ) );
 }
-
 
 namespace 
 {
@@ -216,4 +230,25 @@ void TER_PathFinderThread::Dump( const std::string& strBaseArchiveName ) const
     nodes.OpenOutputFile( strBaseArchiveName + "Nodes.bin" );
     links.OpenOutputFile( strBaseArchiveName + "Links.bin" );
     pPathfinder_->Dump( graph, nodes, links );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::AddDynamicDataToRegister
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_PathFinderThread::AddDynamicDataToRegister( TER_DynamicData& data )
+{
+    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
+    dynamicDataToRegister_.push_back( &data );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::AddDynamicDataToUnregister
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_PathFinderThread::AddDynamicDataToUnregister( TER_DynamicData& data )
+{
+    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
+    dynamicDataToUnregister_.push_back( &data );
 }

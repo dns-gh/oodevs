@@ -323,7 +323,7 @@ void DEC_KS_Perception::Talk()
         bMakePerceptionsAvailable_ = false;
     }
 
-    else if ( bMakePerceptionsAvailableTimed_ )
+    else if( bMakePerceptionsAvailableTimed_ )
     {
         uint nReferenceTimeStep = std::numeric_limits< uint >::max();
         sReferenceTimeCalculator functor( nReferenceTimeStep );

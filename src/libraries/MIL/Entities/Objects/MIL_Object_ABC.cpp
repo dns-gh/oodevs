@@ -36,7 +36,7 @@ MIL_Object_ABC::MIL_Object_ABC()
 MIL_Object_ABC::~MIL_Object_ABC()
 {
     assert( agentInsideSet_.empty() );
-    TER_DynaObject_ABC::Terminate(); //$$$ Ne devrait pas être appelé (Cf MarkForDestruction() )
+    TER_Object_ABC::Terminate(); //$$$ Ne devrait pas être appelé (Cf MarkForDestruction() )
 }
 
 // =============================================================================
@@ -49,12 +49,12 @@ MIL_Object_ABC::~MIL_Object_ABC()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Initialize( MIL_Army& army, const TER_Localisation& localisation )
 {
-    TER_DynaObject_ABC::Initialize( localisation );    
+    TER_Object_ABC::Initialize( localisation );    
     pArmy_ = &army;
 
     // Notify the agent natively inside the object that they are inside it
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
-    TER_World::GetWorld().GetListAgentWithinLocalisation( GetLocalisation(), agentsInsideObject );
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
         static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyPutInsideObject( *this );
 }
@@ -69,7 +69,7 @@ void MIL_Object_ABC::Initialize( MIL_Army& army, const TER_Localisation& localis
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< TER_DynaObject_ABC >( *this );
+    file >> boost::serialization::base_object< TER_Object_ABC >( *this );
     file >> pArmy_
          >> bMarkedForDestruction_
          >> bReadyForDeletion_
@@ -85,7 +85,7 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< TER_DynaObject_ABC >( *this );
+    file << boost::serialization::base_object< TER_Object_ABC >( *this );
     file << pArmy_
          << bMarkedForDestruction_
          << bReadyForDeletion_
@@ -219,12 +219,12 @@ void MIL_Object_ABC::ProcessEvents()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation )
 {
-    TER_DynaObject_ABC::UpdateLocalisation( newLocalisation );
+    TER_Object_ABC::UpdateLocalisation( newLocalisation );
     while( !agentInsideSet_.empty() )
         (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( *this );
 
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
-    TER_World::GetWorld().GetListAgentWithinLocalisation( GetLocalisation(), agentsInsideObject );
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
         static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyPutInsideObject( *this );
 }
@@ -238,7 +238,7 @@ void MIL_Object_ABC::MarkForDestruction()
     bMarkedForDestruction_ = true;
     while( !agentInsideSet_.empty() )
         (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( *this );
-    TER_DynaObject_ABC::Terminate(); // Degueu : vire l'objet du monde
+    TER_Object_ABC::Terminate(); // Degueu : vire l'objet du monde
 }
 
 

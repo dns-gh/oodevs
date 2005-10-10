@@ -95,11 +95,16 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
 {
     const T_PointVector points = GetLocalisation().GetPoints();
     assert( !points.empty() );
-    delete pPathfindData_;
-    pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateLineTree();
 
+    if( pPathfindData_ )
+        TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
+    
+    T_PointVector tmpPoints;
     if( points.size() == 1 )
-        TER_PathFindManager::GetPathFindManager().AddLineTree( points.front(), points.front(), *pPathfindData_, TerrainData::Bridge() ); // $$$$ AGE 2005-10-07: Probably does absolutely nix
+    {
+        tmpPoints.push_back( points.front() );
+        tmpPoints.push_back( points.front() );
+    }
     else
     {
         CIT_PointVector itPoint = points.begin();
@@ -109,10 +114,14 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
             const MT_Vector2D* pCurPoint = &*itPoint;
             MT_Vector2D direction( *pCurPoint - *pLastPoint );
             direction.Normalize() *= 150;
-            TER_PathFindManager::GetPathFindManager().AddLineTree( *pLastPoint - direction, *pCurPoint + direction, *pPathfindData_, TerrainData::Bridge() );
+            tmpPoints.push_back( *pLastPoint - direction );
+            tmpPoints.push_back( *pCurPoint  + direction );
             pLastPoint = pCurPoint;
         }
     }
+
+    pPathfindData_ = new TER_DynamicData( tmpPoints, TerrainData::Bridge() );
+    TER_PathFindManager::GetPathFindManager().AddDynamicData( *pPathfindData_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -121,8 +130,11 @@ void MIL_FloatingBridge_ABC::LinkToPathFinder()
 //-----------------------------------------------------------------------------
 void MIL_FloatingBridge_ABC::UnlinkFromPathFinder()
 {
-    delete pPathfindData_; // Immediate deletion
-    pPathfindData_ = 0;
+    if( pPathfindData_ )
+    {
+        TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
+        pPathfindData_ = 0;
+    }
 }
 
 // =============================================================================

@@ -118,7 +118,7 @@ MIL_RealObject_ABC::~MIL_RealObject_ABC()
         idManager.ReleaseSimID( nID_ );
 
     if( pPathfindData_ )
-        TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *pPathfindData_ );
+        TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
 }
 
 
@@ -203,14 +203,15 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
     else
     {
         if( pPathfindData_ )
-            TER_PathFindManager::GetPathFindManager().DeleteDynamicData( *pPathfindData_ );
+            TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
         avoidanceLocalisation_.Reset( GetLocalisation() );
         avoidanceLocalisation_.Scale( pType_->GetAvoidanceDistance() );
 
         const T_PointVector points = avoidanceLocalisation_.GetPoints();
         assert( points.size() > 3 );
 
-        pPathfindData_ = & TER_PathFindManager::GetPathFindManager().CreateLineTree( points );
+        pPathfindData_ = new TER_DynamicData( points, TER_PathFindManager::DefaultTerrainData() );
+        TER_PathFindManager::GetPathFindManager().AddDynamicData( *pPathfindData_ );
     }
 }
 

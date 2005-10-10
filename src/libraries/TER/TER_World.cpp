@@ -20,10 +20,9 @@
 #include "TER_World.h"
 #include "TER_AgentManager.h"
 #include "TER_ObjectManager.h"
+#include "TER_PopulationManager.h"
 #include "TER_CoordinateManager.h"
 #include "TER_PathFindManager.h"
-#include "TER_AgentPositionHint.h"
-#include "TER_ObjectPositionHint.h"
 #include "pathfind/TerrainData.h"
 #include "geocoord/Geoid.h"
 #include "MT_Tools/MT_Rect.h"
@@ -74,8 +73,9 @@ TER_World::TER_World( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive )
     MT_Rect extent;
     ReadWorld( strWorld, rMiddleLatitude, rMiddleLongitude, extent );
 
-    pAgentManager_      = new TER_AgentManager( extent );
-    pObjectManager_     = new TER_ObjectManager( extent );
+    pAgentManager_      = new TER_AgentManager     ( extent );
+    pObjectManager_     = new TER_ObjectManager    ( extent );
+    pPopulationManager_ = new TER_PopulationManager( extent );
     pCoordinateManager_ = new TER_CoordinateManager( rMiddleLatitude, rMiddleLongitude, extent );
        
     const_cast< std::string& >( graphFileName_ ).insert( const_cast< std::string& >( graphFileName_ ).begin(), strPathfind.begin(), strPathfind.end() );
@@ -113,6 +113,7 @@ TER_World::~TER_World()
     delete pCoordinateManager_;
     delete pObjectManager_;
     delete pAgentManager_;
+    delete pPopulationManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,155 +181,3 @@ MT_Vector2D TER_World::ClipPointInsideWorld( const MT_Vector2D& pos ) const
     return v;
 }
 
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetTerrainDataAt
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-TerrainData TER_World::GetTerrainDataAt( const MT_Vector2D& pos ) const
-{
-    return pPathfindManager_->GetTerrainDataAt( pos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::ApplyFunctorOnNodesWithinCircle
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::ApplyFunctorOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
-{
-    pPathfindManager_->ApplyOnNodesWithinCircle( vCenter, rRadius, bestNodeFunction );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::CreatePathFinderThread
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-TER_PathFinderThread& TER_World::CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue ) const
-{
-    return pPathfindManager_->CreatePathFinderThread( queue );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetListAgentWithinEllipse
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::GetListAgentWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agentVector ) const
-{
-    pAgentManager_->GetListAgentWithinEllipse( ellipse, agentVector );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetListAgentWithinCircle
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::GetListAgentWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agentVector ) const
-{
-    pAgentManager_->GetListAgentWithinCircle( vCenter, rRadius, agentVector );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetListAgentWithinLocalisation
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::GetListAgentWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agentVector ) const
-{
-    pAgentManager_->GetListAgentWithinLocalisation( localisation, agentVector );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetListAgentWithinPolygon
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::GetListAgentWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agentVector ) const
-{
-    pAgentManager_->GetListAgentWithinPolygon( polygon, agentVector );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetListDynaObjectsAt
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::GetListDynaObjectsAt( const MT_Vector2D& vPos, T_DynaObjectVector& dynaObjectsSet ) const
-{
-    pObjectManager_->GetListDynaObjectsAt( vPos, dynaObjectsSet );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetListDynaObjectWithinCircle
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-void TER_World::GetListDynaObjectWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_DynaObjectVector& dynaObjectsSet ) const
-{
-    pObjectManager_->GetListDynaObjectWithinCircle( vCenter, rRadius, dynaObjectsSet );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::UpdateAgentPosition
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-TER_AgentPositionHint TER_World::UpdateAgentPosition( TER_Agent_ABC& agent, const TER_AgentPositionHint& hint )
-{
-    return pAgentManager_->UpdateAgentPosition( agent, hint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::RemoveAgent
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-bool TER_World::RemoveAgent( TER_Agent_ABC& agent, const TER_AgentPositionHint& hint )
-{
-    return pAgentManager_->RemoveAgent( agent, hint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::UpdateObjectPosition
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-TER_ObjectPositionHint TER_World::UpdateObjectPosition( TER_DynaObject_ABC& object, const TER_ObjectPositionHint& hint )
-{
-    return pObjectManager_->UpdateObjectPosition( object, hint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::RemoveObject
-// Created: AGE 2005-01-31
-// -----------------------------------------------------------------------------
-bool TER_World::RemoveObject( TER_DynaObject_ABC& object, const TER_ObjectPositionHint& hint )
-{
-    return pObjectManager_->RemoveObject( object, hint );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetPathFindManager
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-TER_PathFindManager& TER_World::GetPathFindManager() const
-{
-    return *pPathfindManager_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetGraphFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-const std::string& TER_World::GetGraphFileName() const
-{
-    return graphFileName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetNodeFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-const std::string& TER_World::GetNodeFileName() const
-{
-    return nodeFileName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetLinkFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-const std::string& TER_World::GetLinkFileName() const
-{
-    return linkFileName_;
-}

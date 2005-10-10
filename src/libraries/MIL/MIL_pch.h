@@ -68,7 +68,9 @@
 #include "TER/TER_World.h"
 #include "TER/TER_PathFindRequest_ABC.h"
 #include "TER/TER_Agent_ABC.h"
-#include "TER/TER_DynaObject_ABC.h"
+#include "TER/TER_Object_ABC.h"
+#include "TER/TER_AgentManager.h"
+#include "TER/TER_ObjectManager.h"
 #include "TER/TER_Polygon.h"
 
 #endif // __MIL_pch_h_

@@ -23,6 +23,7 @@
 
 #include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
+#include "TER/TER_PopulationFlow_ABC.h"
 
 class MIL_Population;
 class MIL_PopulationConcentration;
@@ -33,6 +34,7 @@ class DEC_Population_Path;
 // Created: NLD 2005-09-28
 // =============================================================================
 class MIL_PopulationFlow : public PHY_MovingEntity_ABC
+                         , public TER_PopulationFlow_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,9 +56,11 @@ public:
 
     //! @name Accessors
     //@{
-                  uint         GetID       () const;
-    virtual const MT_Vector2D& GetPosition () const;
-    virtual const MT_Vector2D& GetDirection() const;
+                  uint              GetID       () const;
+    virtual const MT_Vector2D&      GetPosition () const;
+    virtual const MT_Vector2D&      GetDirection() const;
+
+    virtual const TER_Localisation& GetLocation () const;
     //@}
 
     //! @name Concentration management
@@ -85,15 +89,16 @@ private:
     virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
-    //! @name 
+    //! @name  Position operations
     //@{
     virtual void               ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
             void               UpdateTailPosition( const MT_Float rWalkedDistance );
 
-    const MT_Vector2D& GetHeadPosition   () const;
-    const MT_Vector2D& GetTailPosition   () const;
+    const MT_Vector2D& GetHeadPosition() const;
+    const MT_Vector2D& GetTailPosition() const;
           void         SetHeadPosition( const MT_Vector2D& position );
           void         SetTailPosition( const MT_Vector2D& position );
+          void         UpdateLocation ();
     //@}
 
     //! @name Notifications
@@ -136,6 +141,7 @@ private:
     MT_Vector2D          direction_;
     MT_Float             rSpeed_;
     T_PointList          flowShape_;
+    TER_Localisation     location_; // For terrain
 
     MT_Float             rNbrAliveHumans_;
     MT_Float             rNbrDeadHumans_;

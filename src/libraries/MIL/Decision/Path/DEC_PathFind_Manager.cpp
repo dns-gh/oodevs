@@ -19,6 +19,7 @@
 
 #undef Yield  // $$$$ AGE 2005-02-25: N'importe quoi
 #include "TER/TER_PathfinderThread.h"
+#include "TER/TER_PathFindManager.h"
 #include "TER/TER_World.h"
 
 // -----------------------------------------------------------------------------
@@ -44,7 +45,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", nPathfindThreads ) );
 
     for( int i = 0; i < nPathfindThreads; ++i )
-        pathFindThreads_.push_back( & TER_World::GetWorld().CreatePathFinderThread( *this ) );
+        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
 }   
 
 // -----------------------------------------------------------------------------

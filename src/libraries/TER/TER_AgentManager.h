@@ -20,15 +20,17 @@
 #define __TER_AgentManager_h_
 
 #include "TER.h"
-#include "pathfind/SpatialContainer.h"
-#include "TER_AgentTraits.h"
 
-class MT_Ellipse;
-class TER_Agent_ABC;
+#include "TER_AgentTraits.h"
+#include "TER_Agent_ABC.h"
+
+#include "pathfind/SpatialContainer.h"
+
 class TER_Localisation;
 class TER_Polygon;
 class TER_AgentPositionHint;
 class MT_Rect;
+class MT_Ellipse;
 
 // =============================================================================
 /** @class  TER_AgentManager
@@ -48,19 +50,19 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_AgentManager( const MT_Rect& extent );
-    virtual ~TER_AgentManager();
+     TER_AgentManager( const MT_Rect& extent );
+    ~TER_AgentManager();
     //@}
 
     //! @name Operations
     //@{
-    void GetListAgentWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agentVector ) const;
-    void GetListAgentWithinCircle ( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agentVector ) const;
-    void GetListAgentWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agentVector ) const;
-    void GetListAgentWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agentVector ) const;
+    void GetListWithinEllipse     ( const MT_Ellipse& ellipse, T_AgentVector& agents ) const;
+    void GetListWithinCircle      ( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agents ) const;
+    void GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents ) const;
+    void GetListWithinPolygon     ( const TER_Polygon& polygon, T_AgentVector& agents ) const;
 
-    TER_AgentPositionHint UpdateAgentPosition( TER_Agent_ABC& agent, const TER_AgentPositionHint& hint );
-    bool RemoveAgent( TER_Agent_ABC& agent, const TER_AgentPositionHint& hint );
+    TER_Agent_ABC::T_Hint UpdatePosition( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
+    bool                  Remove        ( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
     //@}
 
 private:
@@ -68,10 +70,6 @@ private:
     //@{
     TER_AgentManager( const TER_AgentManager& );            //!< Copy constructor
     TER_AgentManager& operator=( const TER_AgentManager& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

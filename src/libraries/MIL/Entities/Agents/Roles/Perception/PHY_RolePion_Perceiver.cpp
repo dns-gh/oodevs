@@ -909,12 +909,12 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         CIT_PerceptionVector itPerception;
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-        TER_World::GetWorld().GetListAgentWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableAgents );
         
-        TER_DynaObject_ABC::T_DynaObjectVector perceivableObjects;
-        TER_World::GetWorld().GetListDynaObjectWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
+        TER_Object_ABC::T_ObjectVector perceivableObjects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
     }

@@ -244,7 +244,18 @@ bool MIL_PopulationFlow::Update()
         pDestConcentration_ = 0;
         return false; // Must be destroyed
     }
+    if( bFlowShapeUpdated_ )
+        UpdateLocation();
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UpdateLocation
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::UpdateLocation()
+{
+    location_.Reset( flowShape_ );
 }
 
 // =============================================================================
@@ -338,21 +349,8 @@ void MIL_PopulationFlow::SendFullState() const
 // Name: MIL_PopulationFlow::SendChangedState
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-#include "Network/NET_AS_MOSServerMsgMgr.h"
 void MIL_PopulationFlow::SendChangedState() const
 {
-//$$$$ DEBUG
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
-    
-    dinMsg << (uint32)( 6000025 + ( nID_ - 0x200000 ) );
-
-    dinMsg << (uint32)flowShape_.size();    
-    for( CIT_PointList it = flowShape_.begin(); it != flowShape_.end(); ++it )
-        dinMsg << *it;
-    msgMgr.SendMsgDebugDrawPoints( dinMsg );
-//$$$$ DEBUG
-
     if( !HasChanged() )
         return;
 

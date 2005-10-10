@@ -148,7 +148,7 @@ const PHY_PerceptionLevel& PHY_PerceptionFlyingShell::Compute( const DEC_Knowled
 // Name: PHY_PerceptionFlyingShell::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_PerceptionFlyingShell::Execute( const TER_DynaObject_ABC::T_DynaObjectVector& /*perceivableObjects*/ )
+void PHY_PerceptionFlyingShell::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     // NOTHING
 }

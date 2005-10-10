@@ -19,10 +19,10 @@
 #ifndef __TER_ObjectManager_h_
 #define __TER_ObjectManager_h_
 
-#include "pathfind/SpatialContainer.h"
 #include "TER_ObjectTraits.h"
+#include "TER_Object_ABC.h"
+#include "pathfind/SpatialContainer.h"
 
-class TER_DynaObject_ABC;
 class MT_Ellipse;
 class TER_Localisation;
 class TER_Polygon;
@@ -40,23 +40,23 @@ class TER_ObjectManager
 public:
     //! @name Types
     //@{
-    typedef std::vector< TER_DynaObject_ABC* > T_DynaObjectVector;
+    typedef std::vector< TER_Object_ABC* > T_ObjectVector;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_ObjectManager( const MT_Rect& extent );
-    virtual ~TER_ObjectManager();
+     TER_ObjectManager( const MT_Rect& extent );
+    ~TER_ObjectManager();
     //@}
 
     //! @name Operations
     //@{
-    void GetListDynaObjectsAt( const MT_Vector2D& vPos, T_DynaObjectVector& dynaObjectsSet ) const;
-    void GetListDynaObjectWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_DynaObjectVector& dynaObjectsSet ) const;        
+    void GetListAt          ( const MT_Vector2D& vPos, T_ObjectVector& objects ) const;
+    void GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_ObjectVector& objects ) const;        
 
-    TER_ObjectPositionHint UpdateObjectPosition( TER_DynaObject_ABC& object, const TER_ObjectPositionHint& hint );
-    bool RemoveObject( TER_DynaObject_ABC& object, const TER_ObjectPositionHint& hint );
+    TER_Object_ABC::T_Hint UpdatePosition( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint );
+    bool                   Remove        ( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint );
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
 
     //! @name Types
     //@{
-    typedef pathfind::SpatialContainer< TER_DynaObject_ABC*, TER_ObjectTraits, MT_Float > T_Objects;
+    typedef pathfind::SpatialContainer< TER_Object_ABC*, TER_ObjectTraits, MT_Float > T_Objects;
     //@}
 
 private:

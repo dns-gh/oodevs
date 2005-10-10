@@ -11,14 +11,15 @@
 
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "TER/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-
-#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
+
+#include "TER/TER_Localisation.h"
+#include "TER/TER_PathFindManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::GetPosition
@@ -241,7 +242,7 @@ void DEC_GeometryFunctions::ComputeObstaclePosition( DIA_Call_ABC& call, const T
     call.GetResult().SetValue( (void*)pResultPos, &DEC_Tools::GetTypePoint() );
 
     sBestNodeForObstacle  costEvaluationFunctor( caller.GetFuseau(), *pObjectType, *pCenter, rRadius );
-    TER_World::GetWorld().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
+    TER_World::GetWorld().GetPathFindManager().ApplyOnNodesWithinCircle( *pCenter, rRadius, costEvaluationFunctor );
     const bool bOut = costEvaluationFunctor.FoundAPoint();
 
     if( bOut )

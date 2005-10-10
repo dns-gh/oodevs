@@ -66,16 +66,6 @@ TerrainData TER_PathFindManager::GetTerrainDataAt( const MT_Vector2D& pos ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::ApplyOnNodesWithinCircle
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-void TER_PathFindManager::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
-{
-    if( ! threads_.empty() )
-        threads_.front()->ApplyOnNodesWithinCircle( vCenter, rRadius, bestNodeFunction );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::CreatePathFinderThread
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
@@ -86,65 +76,23 @@ TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::CreateLineTree
+// Name: TER_PathFindManager::AddDynamicData
 // Created: AGE 2005-10-07
 // -----------------------------------------------------------------------------
-TER_DynamicData& TER_PathFindManager::CreateLineTree( const T_PointVector& points, const TerrainData& terrainData /*= DefaultTerrainData()*/ )
+void TER_PathFindManager::AddDynamicData( TER_DynamicData& data )
 {
-    TER_DynamicData* pData = new TER_DynamicData();
     for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
-    {
-        TER_PathFinderThread& thread = **it;
-        pData->AddRetractationHandle( thread.CreateLineTree( points, terrainData )  );
-    }
-    datas_.push_back( T_FlagedData( pData, false ) );
-    return *pData;
+        data.AddForRegistration( **it );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::AddLineTree
-// Created: AGE 2005-10-07
+// Name: TER_PathFindManager::RemoveDynamicData
+// Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_PathFindManager::AddLineTree( const MT_Vector2D& from, const MT_Vector2D& to, TER_DynamicData& data, const TerrainData& terrainData )
+void TER_PathFindManager::RemoveDynamicData( TER_DynamicData& data )
 {
-    TER_DynamicData::IT_Handles itHandle = data.handles_.begin();
-    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it, ++itHandle )
-    {
-        TER_PathFinderThread& thread = **it;
-        thread.AddLineTree( from, to, **itHandle, terrainData );
-    }
-}
-
-namespace
-{
-    class DataFinder
-    {
-    public:
-        DataFinder( TER_DynamicData& data ) : data_( data ) {};
-        bool operator()( const std::pair< TER_DynamicData*, bool >& item ) const
-        {
-            return item.first == &data_;
-        };
-    private:
-        TER_DynamicData& data_;
-        DataFinder& operator=( const DataFinder& );
-    };
-};
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::DeleteDynamicData
-// Created: AGE 2005-09-20
-// -----------------------------------------------------------------------------
-void TER_PathFindManager::DeleteDynamicData( TER_DynamicData& data )
-{
-    IT_DynamicDatas it = std::find_if( datas_.begin(), datas_.end(), DataFinder( data ) );
-    assert( it != datas_.end() );
-    it->second = true;
-    while( ! datas_.empty() && datas_.back().second )
-    {
-        delete datas_.back().first; // $$$$ AGE 2005-10-07: Many successive mutex locks here
-        datas_.pop_back();
-    }
+    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
+        data.AddForUnregistration( **it );
 }
 
 // -----------------------------------------------------------------------------

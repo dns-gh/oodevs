@@ -45,7 +45,7 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
 
-    virtual void                       Execute( const TER_DynaObject_ABC::T_DynaObjectVector& perceivableObjects );
+    virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const;
     //@}
@@ -58,7 +58,7 @@ private:
         sReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DIA_Variable_ABC& result );
         
         bool IsInside        ( const TER_Localisation& )                 const;
-        void GetObjectsInside( TER_DynaObject_ABC::T_DynaObjectVector& ) const;
+        void GetObjectsInside( TER_Object_ABC::T_ObjectVector& ) const;
 
         void UpdateLocalisation();
 

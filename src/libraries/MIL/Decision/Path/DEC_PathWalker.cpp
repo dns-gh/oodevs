@@ -202,8 +202,8 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
 void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet )
 {   
     // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
-    TER_DynaObject_ABC::T_DynaObjectVector dynaObjectSet;
-    TER_World::GetWorld().GetListDynaObjectWithinCircle( vNewPos_, (vEnd - vStart).Magnitude(), dynaObjectSet ); 
+    TER_Object_ABC::T_ObjectVector objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vNewPos_, (vEnd - vStart).Magnitude(), objects ); 
 
     moveStepSet.clear();
 
@@ -215,7 +215,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     TER_DistanceLess colCmp( vStart );
     T_PointSet collisions( colCmp );
 
-    for( TER_DynaObject_ABC::CIT_DynaObjectVector itObject = dynaObjectSet.begin(); itObject != dynaObjectSet.end(); ++itObject )
+    for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
 

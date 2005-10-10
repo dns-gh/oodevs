@@ -19,7 +19,7 @@
 #include "ter_pch.h"
 #include "TER_ObjectManager.h"
 #include "pathfind/SpatialContainerTraits.h"
-#include "TER_DynaObject_ABC.h"
+#include "TER_Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_ObjectManager constructor
@@ -41,54 +41,54 @@ TER_ObjectManager::~TER_ObjectManager()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectManager::GetListDynaObjectsAt
+// Name: TER_ObjectManager::GetListAt
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_ObjectManager::GetListDynaObjectsAt( const MT_Vector2D& vPos, T_DynaObjectVector& dynaObjectsSet ) const
+void TER_ObjectManager::GetListAt( const MT_Vector2D& vPos, T_ObjectVector& objects ) const
 {
-    dynaObjectsSet.reserve( 10 );
+    objects.reserve( 10 );
     pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vPos.rX_, vPos.rY_ ) );
     T_Objects::View view = objects_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
-        TER_DynaObject_ABC* pObject = view.NextElement();
+        TER_Object_ABC* pObject = view.NextElement();
         if( pObject && pObject->IsInside( vPos ) )
-            dynaObjectsSet.push_back( pObject );
+            objects.push_back( pObject );
     };
 }
     
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectManager::GetListDynaObjectWithinCircle
+// Name: TER_ObjectManager::GetListWithinCircle
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_ObjectManager::GetListDynaObjectWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_DynaObjectVector& dynaObjectsSet ) const
+void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_ObjectVector& objects ) const
 {
-    dynaObjectsSet.reserve( 10 );
+    objects.reserve( 10 );
     pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vCenter.rX_, vCenter.rY_ ), rRadius );
     T_Objects::View view = objects_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
-        TER_DynaObject_ABC* pObject = view.NextElement();
+        TER_Object_ABC* pObject = view.NextElement();
         if( pObject && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
-            dynaObjectsSet.push_back( pObject );
+            objects.push_back( pObject );
     };
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectManager::UpdateObjectPosition
+// Name: TER_ObjectManager::UpdatePosition
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-TER_ObjectPositionHint TER_ObjectManager::UpdateObjectPosition( TER_DynaObject_ABC& object, const TER_ObjectPositionHint& hint )
+TER_Object_ABC::T_Hint TER_ObjectManager::UpdatePosition( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint )
 {
     objects_.Erase( &object, hint );
     return objects_.Insert( &object );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectManager::RemoveObject
+// Name: TER_ObjectManager::Remove
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-bool TER_ObjectManager::RemoveObject( TER_DynaObject_ABC& object, const TER_ObjectPositionHint& hint )
+bool TER_ObjectManager::Remove( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint )
 {
     return objects_.Erase( &object, hint );
 }
