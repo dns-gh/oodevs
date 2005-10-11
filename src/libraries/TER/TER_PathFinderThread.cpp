@@ -26,6 +26,7 @@
 #include "pathfind/Node.h"
 #include "pathfind/SpatialContainerTraits.h"
 #include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Profiler.h"
 #include "MT/MT_Archive/MT_FlatBinaryInputArchive.h"
 #include "MT/MT_Archive/MT_FlatBinaryOutputArchive.h"
 #include "MT/MT_Logger/MT_LogManager.h"
@@ -66,28 +67,45 @@ TER_PathFinderThread::~TER_PathFinderThread()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::RegisterDynamicData
+// Name: TER_PathFinderThread::ProcessDynamicData
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::RegisterDynamicData()
+void TER_PathFinderThread::ProcessDynamicData()
 {
     boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-    for( CIT_DynamicDataVector it = dynamicDataToRegister_.begin(); it != dynamicDataToRegister_.end(); ++it )
-        (**it).RegisterDynamicData  ( *this );
-    dynamicDataToRegister_.clear();
-}
 
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::UnregisterDynamicData
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-void TER_PathFinderThread::UnregisterDynamicData()
-{
-    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-    for( CIT_DynamicDataVector it = dynamicDataToUnregister_.begin(); it != dynamicDataToUnregister_.end(); ++it )
-        (**it).UnregisterDynamicData( *this );
-    dynamicDataToUnregister_.clear();
-}
+    if( !dynamicDataToRegister_.empty() )
+    {
+        MT_Profiler profiler;
+        profiler.Start();
+
+        for( CIT_DynamicDataVector it = dynamicDataToRegister_.begin(); it != dynamicDataToRegister_.end(); ++it )
+        {
+            TER_DynamicData* pData = *it;
+            assert( pData );
+            pData->RegisterDynamicData( *this );
+        }
+
+        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", dynamicDataToRegister_.size(), profiler.Stop() ) );    
+        dynamicDataToRegister_.clear();
+    }
+
+    if( !dynamicDataToUnregister_.empty() )
+    {
+        MT_Profiler profiler;
+        profiler.Start();
+
+        for( CIT_DynamicDataVector it = dynamicDataToUnregister_.begin(); it != dynamicDataToUnregister_.end(); ++it )
+        {
+            TER_DynamicData* pData = *it;
+            assert( pData );
+            pData->UnregisterDynamicData( *this );
+        }
+
+        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", dynamicDataToUnregister_.size(), profiler.Stop() ) );    
+        dynamicDataToUnregister_.clear();
+    }
+}   
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::Process
@@ -97,12 +115,10 @@ void TER_PathFinderThread::Process( TER_PathFindRequest_ABC* const& pRequest )
 {
     try
     {
-        RegisterDynamicData();
+        ProcessDynamicData();
         
         if( pRequest )
             pRequest->Execute( *pPathfinder_ );
-
-        UnregisterDynamicData();
     }
     catch( std::exception& e )
     {
@@ -137,15 +153,6 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
     return pPathfinder_->CreateDynamicData( geometryPoints.begin(), geometryPoints.end(), terrainData );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::GetTerrainDataAt
-// Created: AGE 2005-02-23
-// -----------------------------------------------------------------------------
-TerrainData TER_PathFinderThread::GetTerrainDataAt( const MT_Vector2D& pos ) const
-{
-    return pPathfinder_->Pick( MakePoint( pos ) );
 }
 
 namespace 

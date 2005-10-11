@@ -58,9 +58,7 @@ public:
     //@{
     static TER_PathFindManager& GetPathFindManager();
     TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< TER_PathFindRequest_ABC* >& queue );
-
-    TerrainData GetTerrainDataAt( const MT_Vector2D& pos ) const;
-    
+   
     template< typename Functor > void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, Functor& bestNodeFunction ) const;
 
     void AddDynamicData   ( TER_DynamicData& data );

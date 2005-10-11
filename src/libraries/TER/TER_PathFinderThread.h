@@ -52,7 +52,6 @@ public:
 
     //! @name Terrain analysis
     //@{
-    TerrainData GetTerrainDataAt( const MT_Vector2D& pos ) const;
     void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const;
     //@}
 
@@ -70,10 +69,9 @@ private:
 
     //! @name Tools
     //@{
-    virtual void Process              ( TER_PathFindRequest_ABC* const& pRequest );
-            void RegisterDynamicData  ();
-            void UnregisterDynamicData();
-            void Dump                 () const;
+    virtual void Process           ( TER_PathFindRequest_ABC* const& pRequest );
+            void ProcessDynamicData();
+            void Dump              () const;
     //@}
 
 private:

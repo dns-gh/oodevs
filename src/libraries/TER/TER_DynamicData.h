@@ -21,6 +21,9 @@
 
 #include "TER.h"
 
+#pragma warning( disable : 4275 )
+#include "boost/thread/mutex.hpp"
+
 class TER_PathFinderThread;
 class TerrainRetractationHandle;
 
@@ -67,6 +70,8 @@ private:
 
     const T_PointVector points_;
     const TerrainData   terrainData_;
+
+    boost::mutex mutex_;
 };
 
 

@@ -21,7 +21,6 @@
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MT_Profiler.h"
 #include "Hla/HLA_Federate.h"
 
 // For class IDs
@@ -41,6 +40,7 @@
 
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_ArchiveDirectoryHelper.h"
+#include "MT_Tools/MT_Profiler.h"
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
 
 #include "tools/thread/Thread.h"

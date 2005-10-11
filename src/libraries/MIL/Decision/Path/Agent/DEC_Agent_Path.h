@@ -21,7 +21,7 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Network/NET_ASN_Types.h"
-#include "Tools/MT_Profiler.h"
+#include "MT_Tools/MT_Profiler.h"
 
 class DEC_Rep_PathPoint;
 class MIL_Lima;

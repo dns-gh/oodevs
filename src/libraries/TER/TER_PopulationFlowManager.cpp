@@ -58,3 +58,20 @@ bool TER_PopulationFlowManager::Remove( TER_PopulationFlow_ABC& flow, const TER_
 {
     return flows_.Erase( &flow, hint );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlowManager::GetListWithinCircle
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+void TER_PopulationFlowManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationFlowVector& flows ) const
+{
+    flows.reserve( 10 );
+    pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vCenter.rX_, vCenter.rY_ ), rRadius );
+    T_PopulationFlows::View view = flows_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        TER_PopulationFlow_ABC* pFlow = view.NextElement();
+        if( pFlow && pFlow->Intersect2DWithCircle( vCenter, rRadius ) )
+            flows.push_back( pFlow );
+    }
+}

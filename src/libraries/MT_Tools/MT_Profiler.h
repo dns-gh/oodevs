@@ -12,17 +12,9 @@
 #ifndef __MT_Profiler_h_
 #define __MT_Profiler_h_
 
-#include "MIL.h"
+#include "MT_Tools_Types.h"
 
 //=============================================================================
-/**
-*   @class  MT_Profiler
-*   @brief  PUT THE COMMENTS ON THE CLASS HERE
-*   @par    Using example
-*   @code
-*     PUT YOUR EXAMPLE CODE HERE
-*   @endcode
-*/
 // Created: NLD 2002-10-14
 //=============================================================================
 class MT_Profiler

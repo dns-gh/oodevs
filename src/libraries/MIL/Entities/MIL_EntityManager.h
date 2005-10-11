@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "Tools/MIL_MOSIDManager.h"
-#include "Tools/MT_Profiler.h"
+#include "MT_Tools/MT_Profiler.h"
 
 class MIL_EffectManager;
 class MIL_ObjectManager;

@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    //void GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationFlowVector& flows ) const;
+    void GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationFlowVector& flows ) const;
 
     TER_PopulationFlow_ABC::T_Hint UpdatePosition( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );
     bool                           Remove        ( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );

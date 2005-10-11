@@ -52,6 +52,8 @@ TER_DynamicData::~TER_DynamicData()
 // -----------------------------------------------------------------------------
 void TER_DynamicData::AddForRegistration( TER_PathFinderThread& thread )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
+
     ++ nNbrRefs_;
     thread.AddDynamicDataToRegister( *this );    
 }
@@ -62,6 +64,8 @@ void TER_DynamicData::AddForRegistration( TER_PathFinderThread& thread )
 // -----------------------------------------------------------------------------
 void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
+
     bool bOut = handles_.insert( std::make_pair( &thread, &thread.CreateLineTree( points_, terrainData_ ) ) ).second;
     assert( bOut );
     assert( nNbrRefs_ > 0 );
@@ -74,6 +78,8 @@ void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread )
 // -----------------------------------------------------------------------------
 void TER_DynamicData::AddForUnregistration( TER_PathFinderThread& thread )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
+
     ++ nNbrRefs_;
     thread.AddDynamicDataToUnregister( *this );    
 }
@@ -84,15 +90,21 @@ void TER_DynamicData::AddForUnregistration( TER_PathFinderThread& thread )
 // -----------------------------------------------------------------------------
 void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
 {
-    IT_HandleMap it = handles_.find( &thread );
-    assert( it != handles_.end() );
-    delete it->second;
-    handles_.erase( it );
+    bool bMustBeDeleted = false;
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
 
-    assert( nNbrRefs_ > 0 );
-    -- nNbrRefs_;
+        IT_HandleMap it = handles_.find( &thread );
+        assert( it != handles_.end() );
+        delete it->second;
+        handles_.erase( it );
 
-    if( nNbrRefs_ == 0 && handles_.empty() )
+        assert( nNbrRefs_ > 0 );
+        -- nNbrRefs_;
+
+        bMustBeDeleted = ( nNbrRefs_ == 0 && handles_.empty() );
+    }
+    if( bMustBeDeleted )
         delete this;
-}
+ }
 

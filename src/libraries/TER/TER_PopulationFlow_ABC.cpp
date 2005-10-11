@@ -61,3 +61,12 @@ void TER_PopulationFlow_ABC::RemoveFromPatch()
 {
     TER_World::GetWorld().GetPopulationManager().GetFlowManager().Remove( *this, hint_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlow_ABC::Intersect2DWithCircle
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+{
+    return GetLocation().Intersect2DWithCircle( vCircleCenter, rRadius );
+}

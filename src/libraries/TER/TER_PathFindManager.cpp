@@ -55,17 +55,6 @@ TER_PathFindManager::~TER_PathFindManager()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathFindManager::GetTerrainDataAt
-// Created: AGE 2005-02-01
-// -----------------------------------------------------------------------------
-TerrainData TER_PathFindManager::GetTerrainDataAt( const MT_Vector2D& pos ) const
-{
-    if( threads_.empty() )
-        return TerrainData();
-    return threads_.front()->GetTerrainDataAt( pos );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::CreatePathFinderThread
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------

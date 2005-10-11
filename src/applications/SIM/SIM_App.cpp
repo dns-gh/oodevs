@@ -16,10 +16,10 @@
 #include "SIM_NetworkLogger.h"
 
 #include "MIL/MIL_AgentServer.h"
-#include "MIL/Tools/MT_Profiler.h"
 #include "Missions/Missions.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Profiler.h"
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
 bool SIM_App::bCrashWithCoreDump_ = false;
