@@ -41,10 +41,11 @@ public:
 
     //! @name Accessors
     //@{
-    int  GetCurrentThread() const;
-    uint GetNbrShortRequests() const;
-    uint GetNbrLongRequests () const;
-    uint GetNbrRequests     () const;
+    int  GetCurrentThread         () const;
+    uint GetNbrShortRequests      () const;
+    uint GetNbrLongRequests       () const;
+    uint GetNbrRequests           () const;
+    uint GetMaxComputationDuration() const;
     //@}
 
 private:
@@ -73,6 +74,7 @@ private:
     T_Requests shortRequests_;
     T_Requests longRequests_;
     MT_Float   rDistanceThreshold_;
+    uint       nMaxComputationDuration_;
 
     T_PathFindThreadPtrVector  pathFindThreads_;
 

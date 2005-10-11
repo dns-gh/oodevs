@@ -10,10 +10,12 @@
 //*****************************************************************************
 
 #include "MIL_pch.h"
+
 #include "DEC_Path_ABC.h"
+
 #include "DEC_PathSection_ABC.h"
-#include "MIL_AgentServer.h"
 #include "DEC_Pathfind_Manager.h"
+#include "MIL_AgentServer.h"
 
 uint DEC_Path_ABC::nIDIdx_ = 0;
 
@@ -90,6 +92,14 @@ MT_Float DEC_Path_ABC::GetLength() const
 // -----------------------------------------------------------------------------
 void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
 {
+    uint nComputationEndTime = 0;
+    
+    const uint nMaxComputationDuration = MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
+    if( nMaxComputationDuration == std::numeric_limits< uint >::max() )
+        nComputationEndTime = std::numeric_limits< uint >::max();
+    else
+        nComputationEndTime = time( 0 ) + nMaxComputationDuration;
+
     nState_ = eComputing;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
     {
@@ -99,7 +109,7 @@ void DEC_Path_ABC::Execute( TerrainPathfinder& pathfind )
             return;
         }
         DEC_PathSection_ABC& pathSection = **itPathSection;
-        if( !pathSection.Execute( pathfind ) )
+        if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
             if( bJobCanceled_ )
                 nState_ = eCanceled;

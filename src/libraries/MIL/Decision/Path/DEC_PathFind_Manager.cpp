@@ -27,14 +27,18 @@
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
+    : nMaxComputationDuration_( std::numeric_limits< uint >::max() )
+    , rDistanceThreshold_     ( 0. )
 {
     archive.Section( "Pathfind" );
     int nPathfindThreads = 1;
-    archive.ReadField( "PathfindNumber", nPathfindThreads, CheckValueGreaterOrEqual( 1 ) );
+    archive.ReadField( "PathfindNumber"   , nPathfindThreads, CheckValueGreaterOrEqual( 1 ) );
     archive.ReadField( "DistanceThreshold", rDistanceThreshold_ );
+    archive.ReadField( "TempsCalculMax"   , nMaxComputationDuration_, CheckValueGreater( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+
     std::string strRulesArchive;
     archive.ReadField( "Rules", strRulesArchive );
-    archive.EndSection();
+    archive.EndSection(); // Pathfind
 
     MIL_InputArchive rulesArchive;
     rulesArchive.AddWarningStream( std::cout );

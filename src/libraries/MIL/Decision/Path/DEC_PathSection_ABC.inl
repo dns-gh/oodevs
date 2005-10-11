@@ -30,16 +30,6 @@ const MT_Vector2D& DEC_PathSection_ABC::GetPosEnd() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathSection_ABC::ShouldEndComputation
-// Created: AGE 2005-02-28
-// -----------------------------------------------------------------------------
-inline
-bool DEC_PathSection_ABC::ShouldEndComputation( float /*rCostToCurrentNode*/, float /*rCostToGoalNode*/ )
-{
-    return bCanceled_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathSection_ABC::IsImpossible
 // Created: AGE 2005-03-04
 // -----------------------------------------------------------------------------

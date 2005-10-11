@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    bool     Execute  ( TerrainPathfinder& pathfind );
+    bool     Execute  ( TerrainPathfinder& pathfind, uint nComputationEndTime );
     MT_Float GetLength() const;
     void     Cancel   ();
     //@}
@@ -67,6 +67,7 @@ private:
     DEC_Path_ABC& path_;
     MT_Vector2D   vStartPoint_;
     MT_Vector2D   vEndPoint_;
+    uint          nComputationEndTime_;
 
     bool          bCanceled_;
     unsigned int  nAddedPoints_;
