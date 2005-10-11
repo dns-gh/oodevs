@@ -32,9 +32,9 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
 {
     archive.Section( "Pathfind" );
     int nPathfindThreads = 1;
-    archive.ReadField( "PathfindNumber"   , nPathfindThreads, CheckValueGreaterOrEqual( 1 ) );
-    archive.ReadField( "DistanceThreshold", rDistanceThreshold_ );
-    archive.ReadField( "TempsCalculMax"   , nMaxComputationDuration_, CheckValueGreater( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    archive.ReadField    ( "PathfindNumber"   , nPathfindThreads, CheckValueGreaterOrEqual( 1 ) );
+    archive.ReadField    ( "DistanceThreshold", rDistanceThreshold_ );
+    archive.ReadTimeField( "TempsMaxCalcul"   , nMaxComputationDuration_, CheckValueGreater( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
     std::string strRulesArchive;
     archive.ReadField( "Rules", strRulesArchive );
