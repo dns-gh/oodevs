@@ -54,6 +54,7 @@ public:
     //@{
     void Prepare();
     void Update ( const PHY_PerceptionLevel& perceptionLevel, bool bRecordModeEnabled );
+    bool Clean  (); 
     //@}
 
     //! @name Network operations

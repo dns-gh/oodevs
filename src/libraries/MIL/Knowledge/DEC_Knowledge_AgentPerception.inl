@@ -140,3 +140,13 @@ uint DEC_Knowledge_AgentPerception::GetCreationTimeStep() const
 {
     return nCreationTimeStep_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerception::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_AgentPerception::Clean()
+{
+    return !IsPerceived();
+}

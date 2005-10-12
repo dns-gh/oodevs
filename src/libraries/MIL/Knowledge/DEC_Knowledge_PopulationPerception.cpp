@@ -1,0 +1,168 @@
+// *****************************************************************************
+//
+// $Created: NLD 2004-03-11 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_Knowledge_PopulationPerception.cpp $
+// $Author: Jvt $
+// $Modtime: 6/04/05 12:59 $
+// $Revision: 3 $
+// $Workfile: DEC_Knowledge_PopulationPerception.cpp $
+//
+// *****************************************************************************
+
+#include "MIL_pch.h"
+#include "DEC_Knowledge_PopulationPerception.h"
+
+#include "DEC_KnowledgeBlackBoard.h"
+#include "DEC_Knowledge_PopulationConcentrationPerception.h"
+#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_AgentServer.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
+
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationPerception, "DEC_Knowledge_PopulationPerception" )
+
+using namespace DIN;
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception constructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived )
+    : DEC_Knowledge_ABC    ()
+    , pAgentPerceiving_    ( &agentPerceiving )
+    , pPopulationPerceived_( &populationPerceived )
+    , concentrations_      ()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception constructor
+// Created: JVT 2005-03-17
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
+    : DEC_Knowledge_ABC    ()
+    , pAgentPerceiving_    ( 0 )
+    , pPopulationPerceived_( 0 )
+    , concentrations_      ()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception destructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationPerception::~DEC_Knowledge_PopulationPerception()
+{
+}
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::load
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const uint )
+{
+    assert( false );
+//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+//
+//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+//         >> pPopulationPerceived_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::save
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+{
+    assert( false );
+//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+//         << pPopulationPerceived_;
+}
+
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::Prepare
+// Created: NLD 2004-03-18
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::Prepare()
+{
+    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        it->second->Prepare();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::Update
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::Update( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& perceptionLevel )
+{
+    DEC_Knowledge_PopulationConcentrationPerception*& pKnowledge = concentrations_[ &concentrationPerceived ];
+    if( !pKnowledge )
+        pKnowledge = new DEC_Knowledge_PopulationConcentrationPerception( *this, concentrationPerceived );
+    pKnowledge->Update( perceptionLevel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationPerception::Clean()
+{
+    for( IT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); )
+    {
+        DEC_Knowledge_PopulationConcentrationPerception* pKnowledge = it->second;
+        if( pKnowledge->Clean() )
+        {
+            delete pKnowledge;
+            it = concentrations_.erase( it );
+        }
+        else 
+            ++ it;
+    }
+
+    return concentrations_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::IsIdentified
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationPerception::IsIdentified( const MIL_PopulationConcentration& concentration )
+{
+    CIT_ConcentrationMap it = concentrations_.find( &concentration );
+    if( it == concentrations_.end() )
+        return false;
+    return it->second->IsIdentified();
+}
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::UpdateOnNetwork
+// Created: NLD 2004-03-17
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
+{
+    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        it->second->UpdateOnNetwork();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::SendStateToNewClient
+// Created: NLD 2004-03-18
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::SendStateToNewClient() const
+{
+    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        it->second->SendStateToNewClient();
+}

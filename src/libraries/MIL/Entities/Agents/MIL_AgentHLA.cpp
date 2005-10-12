@@ -138,10 +138,10 @@ DEC_Knowledge_Agent& MIL_AgentHLA::CreateKnowledge( const MIL_KnowledgeGroup& kn
 }
     
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentHLA::IsAgentPerceived
+// Name: MIL_AgentHLA::IsPerceived
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-bool MIL_AgentHLA::IsAgentPerceived( const MIL_Agent_ABC& /*agent*/ ) const
+bool MIL_AgentHLA::IsPerceived( const MIL_Agent_ABC& /*agent*/ ) const
 {
     return true;
 }

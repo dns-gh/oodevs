@@ -34,17 +34,18 @@ MIL_MOSIDManager MIL_PopulationConcentration::idManager_;
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive )
-    : population_      ( population )
-    , nID_             ( idManager_.GetFreeSimID() )
-    , position_        ()
-    , location_        ()
-    , rNbrAliveHumans_ ( 0 )
-    , rNbrDeadHumans_  ( 0 )
-    , pAttitude_       ( &population.GetDefaultAttitude() )
-    , pPullingFlow_    ( 0 )
-    , pushingFlows_    ()
-    , bHumansUpdated_  ( true )
-    , bAttitudeUpdated_( true )
+    : TER_PopulationConcentration_ABC()
+    , population_                    ( population )
+    , nID_                           ( idManager_.GetFreeSimID() )
+    , position_                      ()
+    , location_                      ()
+    , rNbrAliveHumans_               ( 0 )
+    , rNbrDeadHumans_                ( 0 )
+    , pAttitude_                     ( &population.GetDefaultAttitude() )
+    , pPullingFlow_                  ( 0 )
+    , pushingFlows_                  ()
+    , bHumansUpdated_                ( true )
+    , bAttitudeUpdated_              ( true )
 {
     // Position
     std::string strPosition;
@@ -60,17 +61,18 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
-    : population_      ( population )
-    , nID_             ( idManager_.GetFreeSimID() )
-    , position_        ( position )
-    , location_        ()
-    , rNbrAliveHumans_ ( 0 )
-    , rNbrDeadHumans_  ( 0 )
-    , pAttitude_       ( &population.GetDefaultAttitude() )
-    , pPullingFlow_    ( 0 )
-    , pushingFlows_    ()
-    , bHumansUpdated_  ( true )
-    , bAttitudeUpdated_( true )
+    : TER_PopulationConcentration_ABC()
+    , population_                    ( population )
+    , nID_                           ( idManager_.GetFreeSimID() )
+    , position_                      ( position )
+    , location_                      ()
+    , rNbrAliveHumans_               ( 0 )
+    , rNbrDeadHumans_                ( 0 )
+    , pAttitude_                     ( &population.GetDefaultAttitude() )
+    , pPullingFlow_                  ( 0 )
+    , pushingFlows_                  ()
+    , bHumansUpdated_                ( true )
+    , bAttitudeUpdated_              ( true )
 {
     UpdateLocation();
     SendCreation();
@@ -122,6 +124,7 @@ void MIL_PopulationConcentration::UpdateLocation()
     assert( population_.GetType().GetConcentrationDensity() );
     MT_Float rSurface = rNbrAliveHumans_ / population_.GetType().GetConcentrationDensity();
     location_.Reset( TER_Localisation( position_, std::sqrt( rSurface / MT_PI ) ) );
+    UpdatePatch();
 }
 
 // =============================================================================

@@ -80,7 +80,6 @@ void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flo
     assert( nOut );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::GetLocation
 // Created: NLD 2005-10-07
@@ -89,4 +88,24 @@ inline
 const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
 {
     return location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetPopulation
+// Created: NLD 2005-10-11
+// -----------------------------------------------------------------------------
+inline
+MIL_Population& MIL_PopulationConcentration::GetPopulation() const
+{
+    return population_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetID
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationConcentration::GetID() const
+{
+    return nID_;
 }

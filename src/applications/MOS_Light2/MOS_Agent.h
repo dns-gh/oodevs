@@ -41,6 +41,7 @@ class MOS_Morale;
 class MOS_LogSupplyConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogMaintenanceConsign;
+class MOS_PopulationConcentration;
 
 // =============================================================================
 /** @class  MOS_Agent
@@ -66,9 +67,13 @@ public:
     typedef T_AgentConstPtrSet::iterator        IT_AgentConstPtrSet;
     typedef T_AgentConstPtrSet::const_iterator  CIT_AgentConstPtrSet;
 
-    typedef std::set< const MOS_Object_ABC* > T_ObjectConstPtrSet;
+    typedef std::set< const MOS_Object_ABC* >     T_ObjectConstPtrSet;
     typedef T_ObjectConstPtrSet::iterator         IT_ObjectConstPtrSet;
     typedef T_ObjectConstPtrSet::const_iterator   CIT_ObjectConstPtrSet;
+
+    typedef std::set< const MOS_PopulationConcentration* > T_ConcentrationSet;
+    typedef T_ConcentrationSet::iterator                   IT_ConcentrationSet;
+    typedef T_ConcentrationSet::const_iterator             CIT_ConcentrationSet;
 
     typedef MT_Quad< MT_Float, MT_Vector2D, MT_Vector2D, MT_Float > T_VisionConeQuad;
     typedef std::vector< T_VisionConeQuad >                         T_VisionConeVector;
@@ -168,9 +173,10 @@ public:
     /** @name Attributes*/
     //-------------------------------------------------------------------------
     //@{
-    void OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input );
-    void OnReceiveMsgUnitInterVisibility  ( DIN::DIN_Input& input );
-    void OnReceiveDebugDrawPointsMsg      ( DIN::DIN_Input& msg );
+    void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Input& input );
+    void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
+    void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
+    void OnReceiveDebugDrawPointsMsg                       ( DIN::DIN_Input& msg );
 
     void OnAttributeUpdated         ( const ASN1T_MsgUnitAttributes& asnMsg );
     void OnAttributeUpdated         ( const ASN1T_MsgUnitDotations& asnMsg );
@@ -292,6 +298,8 @@ public:
 
     T_ObjectConstPtrSet			objectsPerceived_;
     T_ObjectConstPtrSet			objectsPerceptionInProgress_;
+
+    T_ConcentrationSet          concentrationsPerceived_;
 
     std::vector< MT_Vector2D >	reportPoints_;
     T_FireResults				fireResults_;

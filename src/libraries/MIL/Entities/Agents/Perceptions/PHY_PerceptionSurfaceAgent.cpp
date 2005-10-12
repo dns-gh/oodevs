@@ -144,6 +144,15 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );  
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::ComputePerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const
+{
+    return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================

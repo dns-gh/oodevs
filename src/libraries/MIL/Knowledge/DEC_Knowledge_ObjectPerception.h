@@ -53,6 +53,7 @@ public:
     //@{
     void Prepare();
     void Update ( const PHY_PerceptionLevel& perceptionLevel );
+    bool Clean  (); 
     //@}
 
     //! @name Network operations

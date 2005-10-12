@@ -130,7 +130,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
             if( target.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) )
-                perceiver_.NotifyAgentPerception( target, PHY_PerceptionLevel::recognized_ );
+                perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }
 }
@@ -201,7 +201,7 @@ void PHY_PerceptionRecoPoint::Execute( const TER_Object_ABC::T_ObjectVector& /*p
                 continue;
             MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
             if( realObject.CanBePerceived() )
-                perceiver_.NotifyObjectPerception( realObject, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
+                perceiver_.NotifyPerception( realObject, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
 }

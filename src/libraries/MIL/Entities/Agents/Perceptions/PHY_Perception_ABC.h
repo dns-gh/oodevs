@@ -10,11 +10,15 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "TER/TER_Agent_ABC.h"
 #include "TER/TER_Object_ABC.h"
+#include "TER/TER_PopulationFlow_ABC.h"
+#include "TER/TER_PopulationConcentration_ABC.h"
 
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
 class MIL_RealObject_ABC;
+class MIL_PopulationConcentration;
+class MIL_PopulationFlow;
 
 //*****************************************************************************
 // Created: DFT 02-02-26
@@ -30,15 +34,20 @@ public:
 
     //! @name Execution
     //@{
-    virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const = 0;
+    virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const;
 
-    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents ) = 0;
-    virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const = 0;
-    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const = 0;
+    virtual void                       Execute( const TER_Agent_ABC::T_AgentPtrVector& perceivableAgents );
+    virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
+    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
 
-    virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects ) = 0;
-    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const = 0;
-    virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const = 0;
+    virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
+    virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
+    virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const;
+
+    virtual void                       Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivableFlows );
+
+    virtual void                       Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations );
+    virtual const PHY_PerceptionLevel& Compute( const MIL_PopulationConcentration& concentration ) const;
     //@}
 
 protected:

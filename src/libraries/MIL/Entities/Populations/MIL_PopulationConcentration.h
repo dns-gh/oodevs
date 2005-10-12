@@ -62,8 +62,10 @@ public:
 
     //! @name Accessors
     //@{
+          MIL_Population&         GetPopulation () const;
     const MT_Vector2D&            GetPosition   () const;
     const MIL_PopulationAttitude& GetAttitude   () const;
+          uint                    GetID         () const;
           bool                    IsNearPosition( const MT_Vector2D& position ) const;
 
     virtual const TER_Localisation& GetLocation () const;

@@ -53,16 +53,17 @@ MOS_AgentServerMsgMgr::MOS_AgentServerMsgMgr( MOS_AgentServerController& control
     DIN_ConnectorGuest connector( eConnector_SIM_MOS );
     pMessageService_ = new DIN_MessageServiceUserCbk<MOS_AgentServerMsgMgr>( *this, controller.GetDINEngine(), connector, "Msgs MOS Server -> Agent Server" );
 
-    pMessageService_->RegisterReceivedMessage( eMsgInit                   , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgInit                );
-    pMessageService_->RegisterReceivedMessage( eMsgProfilingValues        , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
+    pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgInit                );
+    pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
 
-    pMessageService_->RegisterReceivedMessage( eMsgUnitTrace              , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitTrace           );
-    pMessageService_->RegisterReceivedMessage( eMsgUnitVisionCones        , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitVisionCones     );
-    pMessageService_->RegisterReceivedMessage( eMsgUnitInterVisibility    , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgKnowledgeGroup         , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup        );
-    pMessageService_->RegisterReceivedMessage( eMsgArmy                   , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgArmy        );
-    pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints        , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
+    pMessageService_->RegisterReceivedMessage( eMsgUnitTrace                             , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitTrace           );
+    pMessageService_->RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitVisionCones     );
+    pMessageService_->RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility );
+    pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
+    pMessageService_->RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, & MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility );
+    pMessageService_->RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup        );
+    pMessageService_->RegisterReceivedMessage( eMsgArmy                                  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgArmy        );
+    pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
 
     pMessageService_->RegisterReceivedMessage( eMsgSimMos           , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgSimMos            );
     pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext, *this, & MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext );
@@ -296,6 +297,21 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& /*li
     pAgent->OnReceiveMsgUnitInterVisibility( input );
 }
 
+
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+{
+    MIL_AgentID nAgentID;
+
+    input >> nAgentID;
+
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
+    assert( pAgent );
+    pAgent->OnReceiveMsgPopulationConcentrationInterVisibility( input );
+}
 
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility

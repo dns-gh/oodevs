@@ -103,8 +103,8 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual DEC_Knowledge_Agent& CreateKnowledge ( const MIL_KnowledgeGroup& knowledgeGroup );
-    virtual bool                 IsAgentPerceived( const MIL_Agent_ABC& agent ) const; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
+    virtual DEC_Knowledge_Agent& CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup );
+    virtual bool                 IsPerceived    ( const MIL_Agent_ABC& agent ) const; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
     //@}
 
     //! @name Network

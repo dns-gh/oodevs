@@ -70,16 +70,6 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( void* pId )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionFlyingShell::Compute
-// Created: JVT 2004-10-21
-// Modified: JVT 2004-10-28
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionFlyingShell::Compute( const MT_Vector2D& /*vPoint*/ ) const
-{   
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell::Execute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
@@ -97,58 +87,9 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
             {
                 perceivedFlyingShells.insert( &flyingShell );
                 if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )
-                    perceiver_.NotifyFlyingShellPerception( flyingShell );
+                    perceiver_.NotifyPerception( flyingShell );
             }
         }
     }
     lastPerceivedFlyingShells_.swap( perceivedFlyingShells );
-}
-
-// ----------------------------------------------------------------------j-------
-// Name: PHY_PerceptionFlyingShell::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionFlyingShell::Compute( const MIL_Agent_ABC& /*agent*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionFlyingShell::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionFlyingShell::Compute( const DEC_Knowledge_Agent& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// =============================================================================
-// OBJECTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionFlyingShell::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionFlyingShell::Compute( const MIL_RealObject_ABC& /*object*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionFlyingShell::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionFlyingShell::Compute( const DEC_Knowledge_Object& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionFlyingShell::Execute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_PerceptionFlyingShell::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
-{
-    // NOTHING
 }

@@ -113,38 +113,7 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
     for ( TER_Agent_ABC::CIT_AgentPtrVector itAgent = vAgentDetectedList.begin(); itAgent != vAgentDetectedList.end(); ++itAgent )
     {
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-        perceiver_.NotifyAgentPerception( agent, Compute( agent ) );
+        perceiver_.NotifyPerception( agent, Compute( agent ) );
     }
-}
-
-// =============================================================================
-// PERCEPTION OBJECTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionCoupDeSonde::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const DEC_Knowledge_Object& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionCoupDeSonde::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionCoupDeSonde::Compute( const MIL_RealObject_ABC& /*target*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionCoupDeSonde::Execute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void PHY_PerceptionCoupDeSonde::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
-{
-    // NOTHING
 }
 

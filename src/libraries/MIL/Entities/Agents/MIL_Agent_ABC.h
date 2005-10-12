@@ -63,8 +63,8 @@ public:
 
     //! @name Knowledge
     //@{
-    virtual DEC_Knowledge_Agent& CreateKnowledge ( const MIL_KnowledgeGroup& knowledgeGroup ) = 0;
-    virtual bool                 IsAgentPerceived( const MIL_Agent_ABC& target ) const = 0; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
+    virtual DEC_Knowledge_Agent& CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup ) = 0;
+    virtual bool                 IsPerceived    ( const MIL_Agent_ABC& target ) const = 0; //$$$$ DEGUEU - VOIR AVEC MODELISATEURS
     //@}
 
     //! @name Operators

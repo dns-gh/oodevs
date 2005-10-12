@@ -189,3 +189,4 @@ bool DEC_Knowledge_Object::IsRecon() const
 {
     return !reconByAgentTypes_.empty();
 }
+

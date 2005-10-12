@@ -35,6 +35,7 @@
 #include "MOS_Tiredness.h"
 #include "MOS_Morale.h"
 #include "MOS_FireResult.h"
+#include "MOS_Population.h"
 
 using namespace DIN;
 
@@ -232,6 +233,39 @@ void MOS_Agent::OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMsgPopulationConcentrationInterVisibility
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input )
+{
+    uint32  nPopulationID;
+    uint32  nConcentrationID;
+    uint8   nVisType;
+
+    input >> nPopulationID;
+    input >> nConcentrationID;
+    input >> nVisType;
+    MOS_Population* pPopulation = MOS_App::GetApp().GetAgentManager().FindPopulation( nPopulationID );
+    if( !pPopulation )
+        return;
+
+    const MOS_PopulationConcentration* pConcentration = pPopulation->FindConcentration( nConcentrationID );
+    if( !pConcentration )
+        return;
+
+    concentrationsPerceived_.erase( pConcentration );
+    switch( nVisType )
+    {
+        case eVisTypeInvisible: break;
+        case eVisTypeRecognized:
+        case eVisTypeDetected  :
+        case eVisTypeIdentified:
+            concentrationsPerceived_.insert( pConcentration ); break;
+        default:
+            assert( false );
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: MOS_Agent::OnReceiveMsgObjectInterVisibility

@@ -32,11 +32,11 @@ DEC_Knowledge_Agent* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromDiaID( u
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_KnowledgeGroupQuerier::IsAgentKnown
+// Name: DEC_KS_KnowledgeGroupQuerier::IsKnown
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------
 inline
-bool DEC_KS_KnowledgeGroupQuerier::IsAgentKnown( const MIL_Agent_ABC& agent ) const
+bool DEC_KS_KnowledgeGroupQuerier::IsKnown( const MIL_Agent_ABC& agent ) const
 {
     assert( pBlackBoard_ );
     return pBlackBoard_->HasKnowledgeAgent( agent );

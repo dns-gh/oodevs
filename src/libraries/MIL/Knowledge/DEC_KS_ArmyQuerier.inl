@@ -62,11 +62,11 @@ DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObject( MIL_RealObject_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_ArmyQuerier::IsObjectKnown
+// Name: DEC_KS_ArmyQuerier::IsKnown
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------
 inline
-bool DEC_KS_ArmyQuerier::IsObjectKnown( const MIL_RealObject_ABC& object ) const
+bool DEC_KS_ArmyQuerier::IsKnown( const MIL_RealObject_ABC& object ) const
 {
     assert( pBlackBoard_ );
     return pBlackBoard_->HasKnowledgeObject( object );

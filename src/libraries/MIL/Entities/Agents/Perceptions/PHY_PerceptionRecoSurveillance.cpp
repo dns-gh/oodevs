@@ -210,7 +210,7 @@ void PHY_PerceptionRecoSurveillance::Execute( const TER_Agent_ABC::T_AgentPtrVec
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
             if( target.GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) )
-                perceiver_.NotifyAgentPerception( target, PHY_PerceptionLevel::recognized_ );
+                perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }
 }
@@ -234,35 +234,4 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_Ag
 const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const DEC_Knowledge_Agent & knowledge ) const
 {
     return Compute( knowledge.GetPosition() );
-}
-
-// =============================================================================
-// OBJECTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const MIL_RealObject_ABC& /*object*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoSurveillance::Compute( const DEC_Knowledge_Object& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoSurveillance::Execute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_PerceptionRecoSurveillance::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
-{
-    // NOTHING
 }

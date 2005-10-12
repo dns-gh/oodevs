@@ -49,6 +49,7 @@ public:
     //@{
     void Prepare();
     void Update ( const MT_Vector2D& vPosition );
+    bool Clean  ();
     //@}
 
     //! @name Accessors

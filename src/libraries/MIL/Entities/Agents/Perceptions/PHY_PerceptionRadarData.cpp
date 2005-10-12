@@ -103,7 +103,7 @@ void PHY_PerceptionRadarData::Update( PHY_RolePion_Perceiver& perceiver )
             itAcquisitionData = acquisitionData_.erase( itAcquisitionData );
             continue;
         }
-        perceiver.NotifyAgentPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_ ) );
+        perceiver.NotifyPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_ ) );
         data.bUpdated_ = false;
         ++itAcquisitionData;
     }

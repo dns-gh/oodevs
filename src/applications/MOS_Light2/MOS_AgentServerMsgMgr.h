@@ -52,18 +52,20 @@ public:
     //! SIM -> MOS
     enum
     {
-        eMsgSimMos                  = 0,
-        eMsgSimMosWithContext       = 1,
+        eMsgSimMos                                 = 0,
+        eMsgSimMosWithContext                      = 1,
 
-        eMsgUnitVisionCones         = 1004,
-        eMsgUnitTrace               = 1005,
-        eMsgInit                    = 1007,
-        eMsgProfilingValues         = 1008,
-        eMsgUnitInterVisibility     = 1009,
-        eMsgObjectInterVisibility   = 1010,
-        eMsgKnowledgeGroup          = 1013,
-        eMsgArmy                    = 1014,
-        eMsgDebugDrawPoints         = 1015,
+        eMsgUnitVisionCones                        = 1004,
+        eMsgUnitTrace                              = 1005,
+        eMsgInit                                   = 1007,
+        eMsgProfilingValues                        = 1008,
+        eMsgUnitInterVisibility                    = 1009,
+        eMsgObjectInterVisibility                  = 1010,
+        eMsgPopulationConcentrationInterVisibility = 1011,
+        eMsgKnowledgeGroup                         = 1013,
+        eMsgArmy                                   = 1014,
+        eMsgDebugDrawPoints                        = 1015,
+        eMsgEnvironmentType                        = 1016,
     };
     //@}
     
@@ -121,14 +123,15 @@ private:
     void OnReceiveMsgProfilingValues( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // Debug
-    void OnReceiveMsgInit               ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitVisionCones    ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitTrace          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgObjectInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgKnowledgeGroup       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgArmy                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgDebugDrawPoints      ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgInit                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgUnitTrace                             ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgArmy                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // ASN
     void OnReceiveMsgSimMos           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

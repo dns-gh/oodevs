@@ -45,6 +45,9 @@
 #include "Network/NET_ASN_Messages.h"
 
 #include "TER/TER_Agent_ABC.h"
+#include "TER/TER_PopulationConcentration_ABC.h"
+#include "TER/TER_PopulationFlow_ABC.h"
+#include "TER/TER_PopulationManager.h"
 #include "TER/TER_World.h"
 
 const uint PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
@@ -917,10 +920,20 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxObjectPerceptionDistance(), perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
+
+        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableConcentrations );
+        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).Execute( perceivableConcentrations );
+
+        TER_PopulationFlow_ABC::T_PopulationFlowVector perceivableFlows;
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( GetRole< PHY_RolePion_Location >().GetPosition(), GetMaxAgentPerceptionDistance(), perceivableFlows );
+        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).Execute( perceivableFlows );
     }
 
     assert( pPion_ );
-    NotifyAgentPerception( *pPion_, PHY_PerceptionLevel::identified_, false );
+    NotifyPerception( *pPion_, PHY_PerceptionLevel::identified_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1045,7 +1058,7 @@ const MIL_KnowledgeGroup& PHY_RolePion_Perceiver::GetKnowledgeGroup() const
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsAgentKnown( agent );
+    return pPion_->GetKSQuerier().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1055,7 +1068,7 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsAgentIdentified( agent );
+    return pPion_->GetKSQuerier().IsIdentified( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1065,7 +1078,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 bool PHY_RolePion_Perceiver::WasPerceived( const MIL_Agent_ABC& agent  ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().WasAgentPerceived( agent );
+    return pPion_->GetKSQuerier().WasPerceived( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1075,7 +1088,7 @@ bool PHY_RolePion_Perceiver::WasPerceived( const MIL_Agent_ABC& agent  ) const
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_RealObject_ABC& object ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsObjectKnown( object );
+    return pPion_->GetKSQuerier().IsKnown( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1085,14 +1098,24 @@ bool PHY_RolePion_Perceiver::IsKnown( const MIL_RealObject_ABC& object ) const
 bool PHY_RolePion_Perceiver::IsIdentified( const MIL_RealObject_ABC& object ) const
 {
     assert( pPion_ );
-    return pPion_->GetKSQuerier().IsObjectIdentified( object );
+    return pPion_->GetKSQuerier().IsIdentified( object );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyFlyingShellPerception
+// Name: PHY_RolePion_Perceiver::IsIdentified
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concentration ) const
+{
+    assert( pPion_ );
+    return pPion_->GetKSQuerier().IsIdentified( concentration );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyFlyingShellPerception( const MIL_Effect_IndirectFire& flyingShell ) const
+void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
     assert( pPion_ );
     MIL_RC::pRcObservationTirIndirect_->Send( *pPion_, MIL_RC::eRcTypeOperational, flyingShell );

@@ -51,3 +51,13 @@ const MT_Vector2D& DEC_Knowledge_ObjectCollision::GetPosition() const
 {
     return vPosition_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_ObjectCollision::Clean()
+{
+    return !IsValid();
+}

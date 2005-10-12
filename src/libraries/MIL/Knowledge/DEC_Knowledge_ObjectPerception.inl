@@ -53,4 +53,12 @@ const PHY_PerceptionLevel& DEC_Knowledge_ObjectPerception::GetCurrentPerceptionL
     return *pCurrentPerceptionLevel_;
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_ObjectPerception::Clean()
+{
+    return !IsPerceived();
+}

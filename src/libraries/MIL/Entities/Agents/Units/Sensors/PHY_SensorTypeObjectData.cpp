@@ -104,7 +104,7 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const MIL_RealObject_ABC& target, MT_Float /*rSensorHeight*/ ) const
 {   
-          MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
+    const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RolePion_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDD_ * rDistanceMaxModificator ) )
@@ -118,7 +118,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MI
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObjectData::ComputePerception( const MIL_AgentPion& source, const DEC_Knowledge_Object& target, MT_Float /*rSensorHeight*/ ) const
 {
-          MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
+    const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RolePion_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. || !target.GetLocalisation().Intersect2DWithCircle( vSourcePos, rDD_ * rDistanceMaxModificator ) )

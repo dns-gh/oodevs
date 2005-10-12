@@ -603,6 +603,11 @@ void MOS_GLTool::DrawVisionLines( MOS_Agent& agent )
     glColor4d( MOS_COLOR_IDENTIED );
     for( itObject = agent.objectsPerceived_.begin(); itObject != agent.objectsPerceived_.end(); ++itObject )
         DrawLine( agent.vPos_, (*itObject)->center_, 150.0 );
+
+//    glColor4d( MOS_COLOR_IDENTIED );
+    glColor3d( 0., 1., 0. );
+    for( MOS_Agent::CIT_ConcentrationSet itConcentration = agent.concentrationsPerceived_.begin(); itConcentration != agent.concentrationsPerceived_.end(); ++itConcentration )
+        DrawLine( agent.vPos_, (*itConcentration)->GetPos(), 150.0 );
 }
 
 // -----------------------------------------------------------------------------

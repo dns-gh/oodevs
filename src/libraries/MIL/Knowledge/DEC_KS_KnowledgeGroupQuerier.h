@@ -44,7 +44,7 @@ public:
 
     //! @name Queries / Operations
     //@{
-    bool                  IsAgentKnown                 ( const MIL_Agent_ABC& agent ) const;
+    bool                  IsKnown                      ( const MIL_Agent_ABC& agent ) const;
     DEC_Knowledge_Agent*  GetKnowledgeAgent            ( const DEC_Knowledge_AgentPerception& perception ) const;
     DEC_Knowledge_Agent*  GetKnowledgeAgentFromMosID   ( uint nID ) const;
     DEC_Knowledge_Agent*  GetKnowledgeAgentFromDiaID   ( uint nID ) const;

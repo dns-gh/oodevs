@@ -236,6 +236,15 @@ void NET_AS_MOSServerMsgMgr::SendMsgObjectInterVisibility( DIN::DIN_BufferedMess
 }
 
 // -----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg )
+{
+    SendMsgToAllMosLight( eMsgPopulationConcentrationInterVisibility, msg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints
 // Created: NLD 2005-03-22
 // -----------------------------------------------------------------------------

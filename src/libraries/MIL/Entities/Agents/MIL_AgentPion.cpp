@@ -1029,9 +1029,9 @@ void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target ) const
 // Name: MIL_AgentPion::IsPerceiving
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool MIL_AgentPion::IsAgentPerceived( const MIL_Agent_ABC& agent ) const
+bool MIL_AgentPion::IsPerceived( const MIL_Agent_ABC& agent ) const
 {
     assert( pKsQuerier_ );
-    return pKsQuerier_->IsAgentPerceived( agent );    
+    return pKsQuerier_->IsPerceived( agent );    
 }
 

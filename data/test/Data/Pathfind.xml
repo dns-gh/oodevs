@@ -7,6 +7,6 @@
 
   <Rules>PathfindRules.xml</Rules>
   
-  <TempsCalculMax>1</TempsCalculMax>
+  <TempsMaxCalcul>1</TempsMaxCalcul>
 
 </Pathfind>

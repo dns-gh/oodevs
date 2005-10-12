@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
+#include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_RapForLocal.h"
@@ -22,6 +23,7 @@
 #include "DEC_KS_KnowledgeGroupQuerier.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/MIL_Army.h"
 
 #include "MIL_KnowledgeGroup.h"
@@ -51,30 +53,30 @@ DEC_KS_AgentQuerier::~DEC_KS_AgentQuerier()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::IsAgentKnown
+// Name: DEC_KS_AgentQuerier::IsKnown
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::IsAgentKnown( const MIL_Agent_ABC& agent ) const
+bool DEC_KS_AgentQuerier::IsKnown( const MIL_Agent_ABC& agent ) const
 {
     assert( pPion_ );
-    return pPion_->GetKnowledgeGroup().GetKSQuerier().IsAgentKnown( agent );
+    return pPion_->GetKnowledgeGroup().GetKSQuerier().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::IsObjectKnown
+// Name: DEC_KS_AgentQuerier::IsKnown
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::IsObjectKnown( const MIL_RealObject_ABC& object ) const
+bool DEC_KS_AgentQuerier::IsKnown( const MIL_RealObject_ABC& object ) const
 {
     assert( pPion_ );
-    return pPion_->GetArmy().GetKSQuerier().IsObjectKnown( object );
+    return pPion_->GetArmy().GetKSQuerier().IsKnown( object );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::IsAgentIdentified
+// Name: DEC_KS_AgentQuerier::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::IsAgentIdentified( const MIL_Agent_ABC& agent ) const
+bool DEC_KS_AgentQuerier::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
     assert( pBlackBoard_ );
     
@@ -85,10 +87,10 @@ bool DEC_KS_AgentQuerier::IsAgentIdentified( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::WasAgentPerceived
+// Name: DEC_KS_AgentQuerier::WasPerceived
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::WasAgentPerceived( const MIL_Agent_ABC& agent ) const
+bool DEC_KS_AgentQuerier::WasPerceived( const MIL_Agent_ABC& agent ) const
 {
     assert( pBlackBoard_ );
     
@@ -99,10 +101,10 @@ bool DEC_KS_AgentQuerier::WasAgentPerceived( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::IsObjectIdentified
+// Name: DEC_KS_AgentQuerier::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::IsObjectIdentified( const MIL_RealObject_ABC& object ) const
+bool DEC_KS_AgentQuerier::IsIdentified( const MIL_RealObject_ABC& object ) const
 {
     assert( pBlackBoard_ );
     
@@ -113,10 +115,10 @@ bool DEC_KS_AgentQuerier::IsObjectIdentified( const MIL_RealObject_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::IsAgentPerceived
+// Name: DEC_KS_AgentQuerier::IsPerceived
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::IsAgentPerceived( const MIL_Agent_ABC& agent ) const
+bool DEC_KS_AgentQuerier::IsPerceived( const MIL_Agent_ABC& agent ) const
 {
     assert( pBlackBoard_ );
     
@@ -126,18 +128,31 @@ bool DEC_KS_AgentQuerier::IsAgentPerceived( const MIL_Agent_ABC& agent ) const
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::IsObjectPerceived
+// Name: DEC_KS_AgentQuerier::IsPerceived
 // Created: NLD 2004-03-23
 // -----------------------------------------------------------------------------
-bool DEC_KS_AgentQuerier::IsObjectPerceived( const MIL_RealObject_ABC& object ) const
+bool DEC_KS_AgentQuerier::IsPerceived( const MIL_RealObject_ABC& object ) const
 {
     assert( pBlackBoard_ );
     
     DEC_Knowledge_ObjectPerception* pKnowledge = pBlackBoard_->GetKnowledgeObjectPerception( object );
     if( pKnowledge )
         return pKnowledge->IsPerceived();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::IsIdentified
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_KS_AgentQuerier::IsIdentified( const MIL_PopulationConcentration& concentration ) const
+{
+    assert( pBlackBoard_ );
+    
+    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( concentration.GetPopulation() );
+    if( pKnowledge )
+        return pKnowledge->IsIdentified( concentration );
     return false;
 }
 

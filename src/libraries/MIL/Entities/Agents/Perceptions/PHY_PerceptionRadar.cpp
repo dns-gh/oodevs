@@ -139,49 +139,8 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const DEC_Knowledge_Age
 }
 
 // =============================================================================
-// OBJECTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadar::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MIL_RealObject_ABC& /*object*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadar::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const DEC_Knowledge_Object& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadar::Execute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_PerceptionRadar::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
-{
-    // NOTHING
-}
-
-// =============================================================================
 // AGENTS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadar::Compute
-// Created: JVT 2004-10-21
-// Modified: JVT 2004-10-28
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MT_Vector2D& /*vPoint*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar::Execute

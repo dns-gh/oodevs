@@ -14,13 +14,13 @@
 
 #include "MIL.h"
 
-
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgeRapFor.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 
 class DEC_KnowledgeSource_ABC;
 
@@ -36,6 +36,7 @@ class DEC_KnowledgeBlackBoard : public DEC_BlackBoard_CanContainKnowledgeAgentPe
                               , public DEC_BlackBoard_CanContainKnowledgeObjectPerception
                               , public DEC_BlackBoard_CanContainKnowledgeObject
                               , public DEC_BlackBoard_CanContainKnowledgeRapFor
+                              , public DEC_BlackBoard_CanContainKnowledgePopulationPerception
 {
     MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard )
 

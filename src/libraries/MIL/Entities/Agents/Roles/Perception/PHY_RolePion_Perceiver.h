@@ -80,11 +80,12 @@ public:
     //@}
 
     //@{
-    void NotifyAgentPerception        ( MIL_Agent_ABC&      agent , const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
-    void NotifyAgentPerception        ( MIL_Agent_ABC&      agent , const PHY_PerceptionLevel& level );
-    void NotifyObjectPerception       ( MIL_RealObject_ABC& object, const PHY_PerceptionLevel& level );
-    void NotifyFlyingShellPerception  ( const MIL_Effect_IndirectFire& flyingShell ) const;
-    void NotifyAgentExternalPerception( MIL_Agent_ABC&      agent , const PHY_PerceptionLevel& level );
+    void NotifyExternalPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
+    void NotifyPerception        ( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
+    void NotifyPerception        ( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
+    void NotifyPerception        ( MIL_RealObject_ABC&          object       , const PHY_PerceptionLevel& level );
+    void NotifyPerception        ( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
+    void NotifyPerception        ( const MIL_Effect_IndirectFire& flyingShell ) const;    
     //@}
 
     //! @name Operations
@@ -158,11 +159,12 @@ public:
           void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const;
 
     bool IsPeriphericalVisionEnabled() const;
-    bool IsKnown                    ( const MIL_Agent_ABC&     agent  ) const;
-    bool IsIdentified               ( const MIL_Agent_ABC&     agent  ) const;
-    bool WasPerceived               ( const MIL_Agent_ABC&     agent  ) const;
-    bool IsKnown                    ( const MIL_RealObject_ABC& object ) const;
-    bool IsIdentified               ( const MIL_RealObject_ABC& object ) const;
+    bool IsKnown                    ( const MIL_Agent_ABC&               agent         ) const;
+    bool IsIdentified               ( const MIL_Agent_ABC&               agent         ) const;
+    bool WasPerceived               ( const MIL_Agent_ABC&               agent         ) const;
+    bool IsKnown                    ( const MIL_RealObject_ABC&          object        ) const;
+    bool IsIdentified               ( const MIL_RealObject_ABC&          object        ) const;
+    bool IsIdentified               ( const MIL_PopulationConcentration& concentration ) const;
     //@}
 
     //! @name Network

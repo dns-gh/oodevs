@@ -36,39 +36,8 @@ PHY_PerceptionAlat::~PHY_PerceptionAlat()
 }
 
 // =============================================================================
-// PERCEPTION POINT
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionAlat::Compute
-// Created: NLD 2004-10-14
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionAlat::Compute( const MT_Vector2D& /*vTargetPos*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// =============================================================================
 // PERCEPTION AGENTS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionAlat::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionAlat::Compute( const DEC_Knowledge_Agent& /*target*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionAlat::Compute
-// Created: NLD 2004-08-20
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionAlat::Compute( const MIL_Agent_ABC& /*target*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionAlat::Execute
@@ -91,39 +60,9 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
         if( targetRoleLocation.GetAgent().GetRole< PHY_RoleInterface_Posture >().CanBePerceived( perceiver_.GetPion() ) && fabs( ( targetRoleLocation.GetPosition() - perceiverRoleLocation.GetPosition() ) * perceiverRoleLocation.GetDirection() ) <= rDetectionSemiHeight )
         {
             const bool bPerceptionDelayed = ( rawVisionData.GetVisionObject( targetRoleLocation.GetPosition() ) != PHY_RawVisionData::eVisionEmpty );
-            perceiver_.NotifyAgentPerception( targetRoleLocation.GetAgent(), PHY_PerceptionLevel::recognized_, bPerceptionDelayed );
+            perceiver_.NotifyPerception( targetRoleLocation.GetAgent(), PHY_PerceptionLevel::recognized_, bPerceptionDelayed );
         }
     }
 }
 
-// =============================================================================
-// PERCEPTION OBJECTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionAlat::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionAlat::Compute( const DEC_Knowledge_Object& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionAlat::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionAlat::Compute( const MIL_RealObject_ABC& /*target*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionAlat::Execute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void PHY_PerceptionAlat::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
-{
-    // NOTHING
-}
 

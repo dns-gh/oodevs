@@ -73,7 +73,9 @@ public:
 	void	DeletePopulationConcentration	( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
 
-	MIL_AgentID			        GetPopulationID();
+    const MOS_PopulationConcentration* FindConcentration( uint nID ) const;
+
+	        MIL_AgentID			        GetPopulationID();
 	virtual const uint			        GetID();
 	virtual MOS_Team&		            GetTeam() const;
 	virtual const std::string	        GetName() const;
@@ -182,8 +184,6 @@ private:
     T_AgentKnowledgeMap         agentKnowledges_;
     //@}
 };
-
-
 
 #include "MOS_Population.inl"
 

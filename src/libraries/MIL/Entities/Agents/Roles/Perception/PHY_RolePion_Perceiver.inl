@@ -10,47 +10,58 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyAgentPerception
+// Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Perceiver::NotifyAgentPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded )
 {
     assert( pKsPerception_ );
-    pKsPerception_->NotifyAgentPerception( agent, level, bPerceptionRecorded );
+    pKsPerception_->NotifyPerception( agent, level, bPerceptionRecorded );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyAgentPerception
+// Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Perceiver::NotifyAgentPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level )
 {
     assert( pKsPerception_ );
-    pKsPerception_->NotifyAgentPerception( agent, level, bRecordModeEnabled_ );
+    pKsPerception_->NotifyPerception( agent, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyObjectPerception
+// Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Perceiver::NotifyObjectPerception( MIL_RealObject_ABC& object, const PHY_PerceptionLevel& level )
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_RealObject_ABC& object, const PHY_PerceptionLevel& level )
 {
     assert( pKsPerception_ ); 
-    pKsPerception_->NotifyObjectPerception( object, level, bRecordModeEnabled_ );
+    pKsPerception_->NotifyPerception( object, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyAgentExternalPerception
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2005-10-11
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
+{
+    assert( pKsPerception_ );
+    pKsPerception_->NotifyPerception( concentration, level, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifytExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Perceiver::NotifyAgentExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
+void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , const PHY_PerceptionLevel& level )
 {
     assert( pKsPerception_ );
-    pKsPerception_->NotifyAgentExternalPerception( agent, level );
+    pKsPerception_->NotifyExternalPerception( agent, level );
 }
 
 // -----------------------------------------------------------------------------

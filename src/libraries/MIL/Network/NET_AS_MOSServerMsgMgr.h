@@ -50,19 +50,20 @@ public:
     //! SIM -> MOS
     enum
     {
-        eMsgSimMos                  = 0,
-        eMsgSimMosWithContext       = 1,
+        eMsgSimMos                                 = 0,
+        eMsgSimMosWithContext                      = 1,
 
-        eMsgUnitVisionCones         = 1004,
-        eMsgUnitTrace               = 1005,
-        eMsgInit                    = 1007,
-        eMsgProfilingValues         = 1008,
-        eMsgUnitInterVisibility     = 1009,
-        eMsgObjectInterVisibility   = 1010,
-        eMsgKnowledgeGroup          = 1013,
-        eMsgArmy                    = 1014,
-        eMsgDebugDrawPoints         = 1015,
-        eMsgEnvironmentType         = 1016
+        eMsgUnitVisionCones                        = 1004,
+        eMsgUnitTrace                              = 1005,
+        eMsgInit                                   = 1007,
+        eMsgProfilingValues                        = 1008,
+        eMsgUnitInterVisibility                    = 1009,
+        eMsgObjectInterVisibility                  = 1010,
+        eMsgPopulationConcentrationInterVisibility = 1011,
+        eMsgKnowledgeGroup                         = 1013,
+        eMsgArmy                                   = 1014,
+        eMsgDebugDrawPoints                        = 1015,
+        eMsgEnvironmentType                        = 1016,
     };
     //@}
 
@@ -87,16 +88,17 @@ public:
     void SendMsgProfilingValues( DIN::DIN_BufferedMessage& msg );
 
     // Debug
-    void SendMsgKnowledgeGroup       ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgArmy                 ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgKnowledgeGroup                        ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgArmy                                  ( DIN::DIN_BufferedMessage& msg );
 
-    void SendMsgInit                 ( NET_AS_MOSServer& mosServer, DIN::DIN_BufferedMessage& msg );
-    void SendMsgUnitTrace            ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgUnitVisionCones      ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgUnitInterVisibility  ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgObjectInterVisibility( DIN::DIN_BufferedMessage& msg );
-    void SendMsgDebugDrawPoints      ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgEnvironmentType      ( DIN::DIN_BufferedMessage& msg ); 
+    void SendMsgInit                                  ( NET_AS_MOSServer& mosServer, DIN::DIN_BufferedMessage& msg );
+    void SendMsgUnitTrace                             ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgUnitVisionCones                       ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgUnitInterVisibility                   ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg );
+    void SendMsgDebugDrawPoints                       ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg ); 
     
     // ASN
     void SendMsgSimMos           ( ASN1T_MsgsSimMos& asnMsg, NET_AS_MOSServer* pMOS = 0 );

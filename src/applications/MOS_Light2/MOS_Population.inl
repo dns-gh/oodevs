@@ -78,3 +78,16 @@ MOS_AgentKnowledge* MOS_Population::FindAgentKnowledge( uint nId )
         return it->second;
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: mos_population::FindConcentration
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+const MOS_PopulationConcentration* MOS_Population::FindConcentration( uint nID ) const
+{
+    CIT_ConcentrationMap it = concentrationMap_.find( nID );
+    if( it == concentrationMap_.end() )
+        return 0;
+    return it->second;
+}

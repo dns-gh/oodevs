@@ -15,10 +15,12 @@
 #include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
+#include "DEC_Knowledge_PopulationPerception.h"
 
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KS_Perception, "DEC_KS_Perception" )
 
@@ -142,8 +144,9 @@ void DEC_KS_Perception::save( boost::archive::binary_oarchive& file, const uint 
 void DEC_KS_Perception::Prepare()
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesAgentPerception ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception  ::Prepare ) );
-    pBlackBoard_->ApplyOnKnowledgesObjectPerception( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception ::Prepare ) );
+    pBlackBoard_->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::Prepare ) );
+    pBlackBoard_->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::Prepare ) );
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::Prepare ) );
 }
 
 // =============================================================================
@@ -156,7 +159,7 @@ void DEC_KS_Perception::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_KS_Perception::CleanKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge )
 {
-    if( !knowledge.IsPerceived() )
+    if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
         pBlackBoard_->DestroyKnowledgeAgentPerception( knowledge ); // The knowledge will be deleted
@@ -169,10 +172,23 @@ void DEC_KS_Perception::CleanKnowledgeAgentPerception( DEC_Knowledge_AgentPercep
 // -----------------------------------------------------------------------------
 void DEC_KS_Perception::CleanKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge )
 {
-    if( !knowledge.IsPerceived() )
+    if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
         pBlackBoard_->DestroyKnowledgeObjectPerception( knowledge ); // The knowledge will be deleted
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::CleanKnowledgePopulationPerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::CleanKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge )
+{
+    if( knowledge.Clean() )
+    {
+        assert( pBlackBoard_ );
+        pBlackBoard_->DestroyKnowledgePopulationPerception( knowledge ); // The knowledge will be deleted
     }
 }
 
@@ -184,11 +200,14 @@ void DEC_KS_Perception::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception> methodAgent( DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_AgentPerception > methodAgent( DEC_KS_Perception::CleanKnowledgeAgentPerception, *this );
     pBlackBoard_->ApplyOnKnowledgesAgentPerception( methodAgent );
 
-    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception> methodObject( DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_ObjectPerception > methodObject( DEC_KS_Perception::CleanKnowledgeObjectPerception, *this );
     pBlackBoard_->ApplyOnKnowledgesObjectPerception( methodObject );
+
+    class_mem_fun_void_t< DEC_KS_Perception, DEC_Knowledge_PopulationPerception > methodPopulation( DEC_KS_Perception::CleanKnowledgePopulationPerception, *this );
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( methodPopulation );
 }
 
 
@@ -197,10 +216,10 @@ void DEC_KS_Perception::Clean()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::NotifyAgentExternalPerception
+// Name: DEC_KS_Perception::NotifyExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyAgentExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level )
+void DEC_KS_Perception::NotifyExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level )
 {
     const PHY_PerceptionLevel*& pLevel = externalPerceptions_[ &agentPerceived ];
     if( !pLevel || *pLevel < level )
@@ -208,10 +227,10 @@ void DEC_KS_Perception::NotifyAgentExternalPerception( MIL_Agent_ABC& agentPerce
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::NotifyAgentPerception
+// Name: DEC_KS_Perception::NotifyPerception
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyAgentPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled )
+void DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled )
 {
     if ( level == PHY_PerceptionLevel::notSeen_ )
         return;
@@ -229,10 +248,10 @@ void DEC_KS_Perception::NotifyAgentPerception( MIL_Agent_ABC& agentPerceived, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_Perception::NotifyObjectPerception
+// Name: DEC_KS_Perception::NotifyPerception
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyObjectPerception( MIL_RealObject_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
+void DEC_KS_Perception::NotifyPerception( MIL_RealObject_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
 {
     if( level == PHY_PerceptionLevel::notSeen_ )
         return;
@@ -245,8 +264,27 @@ void DEC_KS_Perception::NotifyObjectPerception( MIL_RealObject_ABC& objectPercei
         assert( pAgentPerceiving_ );
         pKnowledge = &pBlackBoard_->CreateKnowledgeObjectPerception( *pAgentPerceiving_, objectPerceived );
     }
-
     pKnowledge->Update( level );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::NotifyPerception
+// Created: NLD 2005-10-11
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
+{
+    if( level == PHY_PerceptionLevel::notSeen_ )
+        return;
+
+    assert( pBlackBoard_ );
+
+    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( concentrationPerceived.GetPopulation() );
+    if( !pKnowledge )
+    {
+        assert( pAgentPerceiving_ );
+        pKnowledge = &pBlackBoard_->CreateKnowledgePopulationPerception( *pAgentPerceiving_, concentrationPerceived.GetPopulation() );
+    }
+    pKnowledge->Update( concentrationPerceived, level );
 }
 
 // =============================================================================
@@ -314,7 +352,7 @@ void DEC_KS_Perception::Talk()
     pAgentPerceiving_->GetRole< PHY_RolePion_Perceiver >().ExecutePerceptions();
 
     for( CIT_AgentPerceptionMap itExt = externalPerceptions_.begin(); itExt != externalPerceptions_.end(); ++itExt )
-        NotifyAgentPerception( *itExt->first, *itExt->second, false );
+        NotifyPerception( *itExt->first, *itExt->second, false );
     externalPerceptions_.clear();
 
     if( bMakePerceptionsAvailable_ )

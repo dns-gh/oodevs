@@ -68,6 +68,6 @@ void MIL_PosteControle::ProcessAgentInside( MIL_Agent_ABC& agent )
     
     //$$$$$ NotifyAgentExternalPerception() A GICLER  - remplacer par perception::AddPerceptionLocalisationBlabla()
     for( CIT_AgentSet itAnimator = animators.begin(); itAnimator != animators.end(); ++itAnimator )
-        const_cast< MIL_AgentPion& >(**itAnimator).GetRole< PHY_RolePion_Perceiver >().NotifyAgentExternalPerception( agent, PHY_PerceptionLevel::identified_ );
+        const_cast< MIL_AgentPion& >(**itAnimator).GetRole< PHY_RolePion_Perceiver >().NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
 }
 

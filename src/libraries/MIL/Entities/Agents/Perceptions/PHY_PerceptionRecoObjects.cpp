@@ -141,52 +141,6 @@ void PHY_PerceptionRecoObjects::Update()
         (*it)->UpdateLocalisation();
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MT_Vector2D& /*vPoint*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::Execute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-void PHY_PerceptionRecoObjects::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
-{
-    // NOTHING
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const MIL_Agent_ABC& /*agent*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_; 
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRecoObjects::Compute
-// Created: JVT 2004-10-21
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowledge_Agent& /*knowledge*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_; 
-}
-
-
-
-
-
-
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjects::Compute
 // Created: JVT 2004-10-21
@@ -231,7 +185,7 @@ void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /
                 continue;
             MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
             if( realObject.CanBePerceived() )
-                perceiver_.NotifyObjectPerception( realObject, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
+                perceiver_.NotifyPerception( realObject, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }
 }

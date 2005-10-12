@@ -19,9 +19,11 @@
 class DEC_KnowledgeBlackBoard;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_ObjectPerception;
+class DEC_Knowledge_PopulationPerception;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_RealObject_ABC;
+class MIL_PopulationConcentration;
 class PHY_PerceptionLevel;
 
 // =============================================================================
@@ -60,11 +62,12 @@ public:
     //! @name Events
     //@{
     // Called by ::Talk()
-    void NotifyAgentPerception ( MIL_Agent_ABC&      agentPerceived , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
-    void NotifyObjectPerception( MIL_RealObject_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    void NotifyPerception( MIL_Agent_ABC&               agentPerceived        , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    void NotifyPerception( MIL_RealObject_ABC&          objectPerceived       , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    void NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
 
     // Not called by ::Talk()
-    void NotifyAgentExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level );
+    void NotifyExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level );
     //@}
 
     //! @name Operations
@@ -79,8 +82,9 @@ public:
 private:
     //! @name Operations
     //@{
-    void CleanKnowledgeAgentPerception ( DEC_Knowledge_AgentPerception& perception );
-    void CleanKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& perception );
+    void CleanKnowledgeAgentPerception     ( DEC_Knowledge_AgentPerception&      knowledge );
+    void CleanKnowledgeObjectPerception    ( DEC_Knowledge_ObjectPerception&     knowledge );
+    void CleanKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge );
     //@}
 
 public:

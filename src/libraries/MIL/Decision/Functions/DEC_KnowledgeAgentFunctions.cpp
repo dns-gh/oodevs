@@ -190,7 +190,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const 
     }
 
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    bool bIsPerceived = callerAgent.GetKSQuerier().IsAgentPerceived( pKnowledge->GetAgentKnown() );
+    bool bIsPerceived = callerAgent.GetKSQuerier().IsPerceived( pKnowledge->GetAgentKnown() );
     call.GetResult().SetValue( bIsPerceived );
 }
 
@@ -265,7 +265,7 @@ void DEC_KnowledgeAgentFunctions::IsPerceivingAgent( DIA_Call_ABC& call, const M
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
     
-    bool bResult = pKnowledge->GetAgentKnown().IsAgentPerceived( callerAgent );
+    bool bResult = pKnowledge->GetAgentKnown().IsPerceived( callerAgent );
     call.GetResult().SetValue( bResult );
 }
 

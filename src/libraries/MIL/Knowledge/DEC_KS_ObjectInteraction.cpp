@@ -136,7 +136,7 @@ void DEC_KS_ObjectInteraction::Talk()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge( DEC_Knowledge_ObjectCollision& knowledge )
 {
-    if ( !knowledge.IsValid() )
+    if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );
         pBlackBoard_->DestroyKnowledgeObjectCollision( knowledge ); // NB - The knowledge will be deleted

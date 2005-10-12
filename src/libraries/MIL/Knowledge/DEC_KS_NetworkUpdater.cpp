@@ -17,8 +17,7 @@
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_Object.h"
-
-using namespace DIN;
+#include "DEC_Knowledge_PopulationPerception.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_NetworkUpdater constructor
@@ -61,10 +60,12 @@ void DEC_KS_NetworkUpdater::Talk()
 {
     assert( pBlackBoard_ );
     
-    pBlackBoard_->ApplyOnKnowledgesAgentPerception ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception ::UpdateOnNetwork ) );
-    pBlackBoard_->ApplyOnKnowledgesAgent           ( std::mem_fun_ref( & DEC_Knowledge_Agent           ::UpdateOnNetwork ) );
-    pBlackBoard_->ApplyOnKnowledgesObjectPerception( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception::UpdateOnNetwork ) );
-    pBlackBoard_->ApplyOnKnowledgesObject          ( std::mem_fun_ref( & DEC_Knowledge_Object          ::UpdateOnNetwork ) );
+    pBlackBoard_->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::UpdateOnNetwork ) );
+    pBlackBoard_->ApplyOnKnowledgesAgent               ( std::mem_fun_ref( & DEC_Knowledge_Agent               ::UpdateOnNetwork ) );
+    pBlackBoard_->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::UpdateOnNetwork ) );
+    pBlackBoard_->ApplyOnKnowledgesObject              ( std::mem_fun_ref( & DEC_Knowledge_Object              ::UpdateOnNetwork ) );
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::UpdateOnNetwork ) );
+//    pBlackBoard_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateOnNetwork ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +76,10 @@ void DEC_KS_NetworkUpdater::SendFullState()
 {
     assert( pBlackBoard_ );
 
-    pBlackBoard_->ApplyOnKnowledgesAgentPerception ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception ::SendStateToNewClient ) );
-    pBlackBoard_->ApplyOnKnowledgesAgent           ( std::mem_fun_ref( & DEC_Knowledge_Agent           ::SendStateToNewClient ) );
-    pBlackBoard_->ApplyOnKnowledgesObjectPerception( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception::SendStateToNewClient ) );
-    pBlackBoard_->ApplyOnKnowledgesObject          ( std::mem_fun_ref( & DEC_Knowledge_Object          ::SendStateToNewClient ) );
+    pBlackBoard_->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::SendStateToNewClient ) );
+    pBlackBoard_->ApplyOnKnowledgesAgent               ( std::mem_fun_ref( & DEC_Knowledge_Agent               ::SendStateToNewClient ) );
+    pBlackBoard_->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::SendStateToNewClient ) );
+    pBlackBoard_->ApplyOnKnowledgesObject              ( std::mem_fun_ref( & DEC_Knowledge_Object              ::SendStateToNewClient ) );
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::SendStateToNewClient ) );
+//    pBlackBoard_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::SendStateToNewClient ) );
 }

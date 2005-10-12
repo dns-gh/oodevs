@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "MOS_Light2_pch.h"
 #include "MOS_Agent_ABC.h"
 #include "MOS_Report_ABC.h"

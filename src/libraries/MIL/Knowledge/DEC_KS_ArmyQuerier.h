@@ -44,7 +44,7 @@ public:
 
     //! @name Queries / Operations
     //@{
-    bool                  IsObjectKnown              ( const MIL_RealObject_ABC& oject ) const;
+    bool                  IsKnown                    ( const MIL_RealObject_ABC& oject ) const;
     DEC_Knowledge_Object* GetKnowledgeObjectFromMosID( uint nID ) const;
     DEC_Knowledge_Object* GetKnowledgeObjectFromDiaID( uint nID ) const;
 

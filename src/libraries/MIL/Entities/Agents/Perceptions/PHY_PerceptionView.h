@@ -38,6 +38,11 @@ public:
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_RealObject_ABC&   object    ) const;
+
+    virtual void                       Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivableFlows );
+
+    virtual void                       Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations );
+    virtual const PHY_PerceptionLevel& Compute( const MIL_PopulationConcentration& concentration ) const;
     //@}
 
 private:

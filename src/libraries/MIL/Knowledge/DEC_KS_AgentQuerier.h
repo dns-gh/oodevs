@@ -26,6 +26,7 @@ class MIL_RealObject_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_RealObjectTypeFilter;
+class MIL_PopulationConcentration;
 
 // =============================================================================
 /** @class  DEC_KS_AgentQuerier
@@ -46,14 +47,17 @@ public:
 
     //! @name Agent level
     //@{
-    bool IsAgentKnown     ( const MIL_Agent_ABC& agent ) const;
-    bool IsAgentIdentified( const MIL_Agent_ABC& agent ) const;
-    bool IsAgentPerceived ( const MIL_Agent_ABC& agent ) const;
-    bool WasAgentPerceived( const MIL_Agent_ABC& agent ) const;
+    bool IsKnown     ( const MIL_Agent_ABC& agent ) const;
+    bool IsIdentified( const MIL_Agent_ABC& agent ) const;
+    bool IsPerceived ( const MIL_Agent_ABC& agent ) const;
+    bool WasPerceived( const MIL_Agent_ABC& agent ) const;
 
-    bool IsObjectKnown     ( const MIL_RealObject_ABC& object ) const;
-    bool IsObjectIdentified( const MIL_RealObject_ABC& object ) const;
-    bool IsObjectPerceived ( const MIL_RealObject_ABC& object ) const;
+    bool IsKnown     ( const MIL_RealObject_ABC& object ) const;
+    bool IsIdentified( const MIL_RealObject_ABC& object ) const;
+    bool IsPerceived ( const MIL_RealObject_ABC& object ) const;
+
+    bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
+    
 
     void                  GetPerceivedAgents           ( T_KnowledgeAgentDiaIDVector&        container ) const;
     void                  GetAttackers                 ( T_KnowledgeAgentDiaIDVector&        container ) const;
