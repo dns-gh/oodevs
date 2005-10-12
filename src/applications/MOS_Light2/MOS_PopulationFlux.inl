@@ -66,5 +66,5 @@ const MT_Vector2D& MOS_PopulationFlux::GetHeadPosition() const
 inline
 const MT_Vector2D& MOS_PopulationFlux::GetPos() const
 {
-    return GetTailPosition();
+    return GetHeadPosition();
 }
