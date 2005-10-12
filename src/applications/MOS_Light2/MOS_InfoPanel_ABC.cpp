@@ -39,6 +39,7 @@ MOS_InfoPanel_ABC::MOS_InfoPanel_ABC( QWidget* pParent )
     setFrameStyle( QFrame::Box | QFrame::Sunken );
     connect( &MOS_App::GetApp(), SIGNAL( AgentUpdated( MOS_Agent& ) ),       this, SLOT( OnAgentUpdated( MOS_Agent& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectUpdated( MOS_Object_ABC& ) ), this, SLOT( OnObjectUpdated( MOS_Object_ABC& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationUpdated( MOS_Population& ) ), this, SLOT( OnPopulationUpdated( MOS_Population& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +86,7 @@ void MOS_InfoPanel_ABC::OnAgentUpdated( MOS_Agent& )
 // Name: MOS_InfoPanel_ABC::OnAgentUpdated
 // Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
-void MOS_InfoPanel_ABC::OnAgentUpdated( MOS_Population& )
+void MOS_InfoPanel_ABC::OnPopulationUpdated( MOS_Population& )
 {
     // NOTHING
 }

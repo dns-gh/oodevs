@@ -15,6 +15,7 @@
 #include "MOS_AgentServerController.h"
 #include "MOS_AgentServerConnectionMgr.h"
 #include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_AgentManager.h"
 #include "MOS_Object_ABC.h"
 #include "MOS_ObjectManager.h"
@@ -1108,7 +1109,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderCo
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg )
 {
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.unit_id );
+    MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAllAgent( asnMsg.unit_id );
     assert( pAgent );
     pAgent->OnReceiveMsgCR( asnMsg );
 
@@ -1660,6 +1661,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCr
                  << " - ID  " << asnMsg.oid_population;
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_App::GetApp().GetAgentManager().CreatePopulation( asnMsg );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -1675,6 +1677,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpda
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulation( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1690,6 +1693,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_Ms
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->CreatePopulationConcentration( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1705,6 +1709,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->DeletePopulationConcentration( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1720,6 +1725,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgP
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulationConcentration( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1735,6 +1741,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulati
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->CreatePopulationFlux( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1750,6 +1757,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPop
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->DeletePopulationFlux( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 // -----------------------------------------------------------------------------
@@ -1765,6 +1773,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulation
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulationFlux( asnMsg );
+    MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
 //=============================================================================

@@ -44,7 +44,7 @@ MOS_PopulationPanel::MOS_PopulationPanel(  QWidget* pParent )
     new QLabel( tr( "Attitude:" ), pInfoGroupBox );
     pAttitudeLabel_ = new QLabel( pInfoGroupBox );
 
-    pPartsListView_ = new QListView( pInfoGroupBox );
+    pPartsListView_ = new QListView( this );
     pPartsListView_->addColumn( tr( "Morceau" ) );
     pPartsListView_->addColumn( tr( "Hommes vivants" ) );
     pPartsListView_->addColumn( tr( "Hommes morts" ) );

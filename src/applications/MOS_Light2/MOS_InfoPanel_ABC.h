@@ -55,7 +55,7 @@ protected slots:
     virtual void OnClearSelection() = 0;
     virtual void OnAgentUpdated  ( MOS_Agent&      agent  );
     virtual void OnObjectUpdated ( MOS_Object_ABC& object );
-    virtual void OnAgentUpdated  ( MOS_Population& population );
+    virtual void OnPopulationUpdated  ( MOS_Population& population );
 
     virtual void showEvent( QShowEvent* );
     //@}

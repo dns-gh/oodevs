@@ -153,7 +153,7 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 //        if( ! ( bAgentVisible_ 
 //             && selectedElement.pAgent_ != 0 
 //             && &(selectedElement.pAgent_->GetGtia()) == &(selectedElement.pAgentKnowledge_->GetOwner()) ) )
-            ShowAgentPanel( false );
+        ShowAgentPanel( false );
         ShowAgentKnowledgePanel( true );
         ShowObjectKnowledgePanel( true ); 
         ShowObjectPanel( false );

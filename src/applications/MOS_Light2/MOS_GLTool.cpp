@@ -1721,7 +1721,8 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
     for( MOS_Population::CIT_ConcentrationMap itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
     {
         color.SetGLColor();
-        DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * (itCon->second->GetLivingHumans() / 3000.0 ) , 2.0, color);
+        DrawCircle( itCon->second->GetPos(), MOS_GL_CROSSSIZE * 2.0 );
+        //DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * (itCon->second->GetLivingHumans() / 3000.0 ) , 2.0, color);
     }
 
     //Draw the flux
@@ -1734,7 +1735,9 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
         DrawPath( flow );
         //DrawLine( flow.GetItineraire() );
         //DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 0.5, 2.0, color );
-        DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
+        //DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
+        color.SetGLColor();
+        DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0 );
         glLineWidth( 5.0 );
         DrawLine( flow.GetFlow() );
         glLineWidth( 1.0 );
@@ -2211,7 +2214,9 @@ void MOS_GLTool::DrawCylinder( const MT_Vector2D& center, MT_Float rRadius, MT_F
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawTriangle3D( const MT_Vector3D& vPos1 , MT_Vector3D& vPos2 , MT_Vector3D& vPos3 , GFX_Color& color )
 {
+    glBindTexture( GL_TEXTURE_2D, 0 );
     color.SetGLColor();
+
 
     glBegin( GL_TRIANGLES );
     glVertex3f( vPos1.rX_, vPos1.rY_, vPos1.rZ_ );

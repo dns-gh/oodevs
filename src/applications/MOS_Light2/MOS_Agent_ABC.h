@@ -61,14 +61,13 @@ public:
 
     //Knowledge
 
-    virtual MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
+    virtual MOS_AgentKnowledge* FindAgentKnowledge( uint nId ) = 0;
     virtual T_FireResults&       GetFireResults();
 
 private:
     T_FireResults				fireResults_;
     T_ReportVector				reportVector_;
     std::vector< MT_Vector2D >	reportPoints_;
-    MOS_AgentKnowledge* agentKnowledge_;
     
 };
 
