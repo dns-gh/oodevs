@@ -61,6 +61,7 @@ public:
     uint               GetPeriod            () const;
     uint               GetIterationNumber   () const;
     uint               GetIterationInterval () const;
+    uint               GetMaxMissionPerTick () const;
     uint               GetRecompletionPeriod() const;
     const std::string& GetLogFile           () const;
     //@}
@@ -93,6 +94,7 @@ private:
     uint        nPeriod_;
     uint        nItNumber_;
     uint        nItInterval_;
+    uint        nMaxMissionPerTick_;
     uint        nRecompletionPeriod_;
     std::string strLogFile_;
     //@}

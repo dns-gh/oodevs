@@ -43,6 +43,7 @@ Scheduler::Scheduler( const Config& config )
     , nSameMissionInterval_ ( config.GetIterationInterval() )
     , nRecoveryTick_        ( config.MustRecover() ? config.GetRecoveryTick() : 0 )
     , nLastExecutionTick_   ( 0 )
+    , nMaxMissionInPeriod_  ( config.GetMaxMissionPerTick() )
 {
     // NOTHING
 }
@@ -89,9 +90,11 @@ bool Scheduler::Run( uint nCurrentTick )
         nCurrentTick_    = ( -1 ) * ( int )nExecutionPeriod_;
     }
     ++nCurrentTick_;
-    while( itCurrentAction_ != actions_.end()  && 
+    uint nMissionInTick = 0;
+    while( itCurrentAction_ != actions_.end()           && 
            (int)itCurrentAction_->first < nCurrentTick_ &&
-           itCurrentAction_->second->IsReady() )
+           itCurrentAction_->second->IsReady()          &&
+           nMissionInTick < nMaxMissionInPeriod_ )
     {
         MT_LOG_INFO_MSG( "[" << nTestRun_ / nTestTotal_ << "][" << nTestRun_ % nTestTotal_ << "/" << nTestTotal_ 
                              << "] Starting action: " << itCurrentAction_->second->GetName() );
@@ -99,6 +102,7 @@ bool Scheduler::Run( uint nCurrentTick )
         ++itCurrentAction_;
         ++nTestRun_;
         nLastExecutionTick_ = nCurrentTick;
+        ++nMissionInTick;
     }
     return true;
 }

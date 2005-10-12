@@ -43,6 +43,7 @@ Config::Config( const std::string& strFile )
     , nRecompletionPeriod_ ( 180 )
     , nItNumber_           ( 1 )
     , nItInterval_         ( 1 )
+    , nMaxMissionPerTick_  ( std::numeric_limits< uint >::max() )
     , strLogFile_          ( "./test.log" )
     , strRandomSeedFile_   ( "./test_seed.xml" )
     , bRecover_            ( false )
@@ -96,6 +97,7 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.ReadField( "Period"                , nPeriod_             );
         archive.ReadField( "NumberOfSameMissions"  , nItNumber_           );
         archive.ReadField( "IntervalOfSameMissions", nItInterval_         );
+        archive.ReadField( "MaxNumberOfMission"    , nMaxMissionPerTick_  );
         archive.ReadField( "RecompletionPeriod"    , nRecompletionPeriod_ );
         archive.ReadField( "LogFile"               , strLogFile_          );
         archive.ReadField( "RandomSeedFile"        , strRandomSeedFile_   );

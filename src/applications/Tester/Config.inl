@@ -139,6 +139,16 @@ uint Config::GetIterationInterval() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Config::GetMaxMissionPerTick
+// Created: SBO 2005-10-06
+// -----------------------------------------------------------------------------
+inline
+uint Config::GetMaxMissionPerTick() const
+{
+    return nMaxMissionPerTick_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::GetRecompletionPeriod
 // Created: SBO 2005-09-01
 // -----------------------------------------------------------------------------

@@ -1,0 +1,35 @@
+<?xml version="1.0" standalone="no"?>
+
+<Tester>
+    <Sim>
+        <Server>127.0.0.1</Server>
+        <Port>10000</Port>
+        <ConfigFile>C:\Documents and Settings\sde\Bureau\Ref patchee\scipio.xml</ConfigFile>
+        <TimeFactor>40</TimeFactor>
+    </Sim>
+    <Actions>
+        <!-- launch automat missions (true) or pawn missions (false) -->
+        <TestAutomats>true</TestAutomats>
+        <!-- launch missions every N tick -->
+        <Period>60</Period>
+        <!-- launch each mission N consecutive time -->
+        <NumberOfSameMissions>1</NumberOfSameMissions>
+        <!-- launch same missions with an interval of N ticks -->
+        <IntervalOfSameMissions>1</IntervalOfSameMissions>
+        <!-- launch a maximum of N missions at each launch series -->
+        <MaxNumberOfMission>1</MaxNumberOfMission>
+        <!-- recomplete pawn/automat every N ticks -->
+        <RecompletionPeriod>360</RecompletionPeriod>
+        <!-- output file to put log debug infos to -->
+        <LogFile>./test.log</LogFile>
+        <!-- input/output random seed file -->
+        <RandomSeedFile>./test_rand.xml</RandomSeedFile>
+        <!-- recovery parameters -->
+        <Recovery>
+            <!-- try to recover (true) -->
+            <Recover>true</Recover>
+            <!-- use this file for input (load recovery tick) and output (output last tick) -->
+            <File>./test_recover.xml</File>
+        </Recovery>
+    </Actions>
+</Tester>

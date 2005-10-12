@@ -162,14 +162,29 @@ TacticalLine_ABC* TacticalLineManager::Find( T_EntityId nId  )
 
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLineManager::GetLimitIdExcluding
+// Name: TacticalLineManager::GetNextLimitId
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-T_EntityId TacticalLineManager::GetLimitIdExcluding( T_EntityId nId )
+T_EntityId TacticalLineManager::GetNextLimitId()
 {
-    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
-        if( ( *it )->GetLineType() == TacticalLine_ABC::eLimit && ( *it )->GetId() != nId )
+    static uint nStart = 0;
+
+    uint nCur = 0;
+    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it, ++nCur )
+        if( nCur >= nStart && ( *it )->GetLineType() == TacticalLine_ABC::eLimit )
+        {
+            nStart = ( nCur + 1 ) % lines_.size();
             return ( *it )->GetId();
+        }
+    // if we went to end of list, try to find a limit from the beginning
+    nCur   = 0;
+    nStart = 0;
+    for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it, ++nCur )
+        if( nCur >= nStart && ( *it )->GetLineType() == TacticalLine_ABC::eLimit )
+        {
+            nStart = ( nCur + 1 ) % lines_.size();
+            return ( *it )->GetId();
+        }
     return 0;
 }
 

@@ -54,13 +54,13 @@ public:
 
     //! @name Operations
     //@{
-    void              LoadTacticalLines  ( const std::string& strConfigFile );
-    void              Register           ( TacticalLine_ABC&  line          );
-    void              UnRegister         ( TacticalLine_ABC&  line          );
-    TacticalLine_ABC* Find               ( T_EntityId         nId           );
-    T_EntityId        GetLimitIdExcluding( T_EntityId         nId           );
-    T_EntityId        GetLimaByType      ( ASN1T_EnumTypeLima eLimaType     );
-    void              UpdateToSim        ();
+    void              LoadTacticalLines( const std::string& strConfigFile );
+    void              Register         ( TacticalLine_ABC&  line          );
+    void              UnRegister       ( TacticalLine_ABC&  line          );
+    TacticalLine_ABC* Find             ( T_EntityId         nId           );
+    T_EntityId        GetNextLimitId   ();
+    T_EntityId        GetLimaByType    ( ASN1T_EnumTypeLima eLimaType     );
+    void              UpdateToSim      ();
     //@}
 
 private:

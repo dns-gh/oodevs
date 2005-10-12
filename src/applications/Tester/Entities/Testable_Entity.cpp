@@ -313,9 +313,9 @@ T_IdVector& Testable_Entity::GetTestParam_Limas() const
 // -----------------------------------------------------------------------------
 T_EntityId Testable_Entity::GetTestParam_LeftLimit()
 {
-    // if left limit is not ser get an existing limit which is not the right limit
+    // if left limit is not set get the next limit
     if( nLeftLimit_ == 0 )
-        nLeftLimit_ = workspace_.GetTacticalLineManager().GetLimitIdExcluding( nRightLimit_ );
+        nLeftLimit_ = workspace_.GetTacticalLineManager().GetNextLimitId();
     // at least world border limits should exist
     assert( nLeftLimit_ );
     return nLeftLimit_;
@@ -327,9 +327,9 @@ T_EntityId Testable_Entity::GetTestParam_LeftLimit()
 // -----------------------------------------------------------------------------
 T_EntityId Testable_Entity::GetTestParam_RightLimit()
 {
-    // if right limit is not ser get an existing limit which is not the left limit
+    // if right limit is not set get the next limit
     if( nRightLimit_ == 0 )
-        nRightLimit_ = workspace_.GetTacticalLineManager().GetLimitIdExcluding( nLeftLimit_ );
+        nRightLimit_ = workspace_.GetTacticalLineManager().GetNextLimitId();
     // at least world border limits should exist
     assert( nRightLimit_ );
     return nRightLimit_;

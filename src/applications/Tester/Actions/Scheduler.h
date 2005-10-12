@@ -92,6 +92,9 @@ private:
     uint         nSameMissionInterval_;
     uint         nRecoveryTick_;
 
+    // mission per period limiters
+    uint         nMaxMissionInPeriod_;
+
     // test statistics
     uint         nTestRun_;
     uint         nTestTotal_;
