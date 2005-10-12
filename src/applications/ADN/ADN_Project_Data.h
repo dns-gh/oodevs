@@ -61,6 +61,7 @@ public:
         ADN_Type_Int    nPathfinderNbr_;
         ADN_Type_Int    nDistanceThreshold_;
         ADN_Type_String szRulesFile_;
+        ADN_Type_Time   maxComputationTime_;
     };
     
 //*****************************************************************************

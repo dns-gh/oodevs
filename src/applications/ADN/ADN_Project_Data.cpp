@@ -87,9 +87,10 @@ void ADN_Project_Data::SimInfos::WriteArchive( MT_OutputArchive_ABC& output )
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 ADN_Project_Data::PathfinderInfo::PathfinderInfo()
-: nPathfinderNbr_( 2 )
+: nPathfinderNbr_    ( 2 )
 , nDistanceThreshold_( 15000 )
-, szRulesFile_( "PathfindRules.xml" )
+, szRulesFile_       ( "PathfindRules.xml" )
+, maxComputationTime_( "15s" )
 {
 }
 
@@ -104,6 +105,7 @@ void ADN_Project_Data::PathfinderInfo::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "PathfindNumber", nPathfinderNbr_ );
     input.ReadField( "DistanceThreshold", nDistanceThreshold_ );
     input.ReadField( "Rules", szRulesFile_ );
+    input.ReadField( "TempsCalculMax", maxComputationTime_, ADN_XmlInput_Helper::eNothing );
     input.EndSection(); // Pathfind
 }
 
@@ -118,6 +120,7 @@ void ADN_Project_Data::PathfinderInfo::WriteArchive( MT_OutputArchive_ABC& outpu
     output.WriteField( "PathfindNumber", nPathfinderNbr_.GetData() );
     output.WriteField( "DistanceThreshold", nDistanceThreshold_.GetData() );
     output.WriteField( "Rules", szRulesFile_.GetData() );
+    output.WriteField( "TempsCalculMax", maxComputationTime_.GetData() );
     output.EndSection(); // Pathfind
 }
 

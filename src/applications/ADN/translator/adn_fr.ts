@@ -3723,6 +3723,10 @@ Assurez vous que le fichier existe.</translation>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Max computation time</source>
+        <translation>Temps maximum de calcul</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Radars_GUI</name>

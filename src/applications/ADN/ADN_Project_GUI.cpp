@@ -16,6 +16,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_FileChooser.h"
 #include "ADN_Project_Data.h"
+#include "ADN_TimeField.h"
 
 #include <qlayout.h>
 #include <qgroupbox.h>
@@ -111,6 +112,7 @@ void ADN_Project_GUI::Build()
 
     builder.AddField<ADN_EditLine_Int>( pPathfinderGroup, tr( "Pathfinder threads" ), data_.pathfinderInfo_.nPathfinderNbr_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Int>( pPathfinderGroup, tr( "Distance threshold" ), data_.pathfinderInfo_.nDistanceThreshold_ );
+    builder.AddField<ADN_TimeField>( pPathfinderGroup, tr( "Max computation time" ), data_.pathfinderInfo_.maxComputationTime_ );
 
     // SIM
     QGroupBox* pSimGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Sim" ), pMainWidget_ );

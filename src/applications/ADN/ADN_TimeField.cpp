@@ -128,7 +128,15 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
         nSecondsValue_ = strValue.toUInt() * 60;
     else if( pComboBox_->currentText() == "h" )
         nSecondsValue_ = strValue.toUInt() * 3600;
-    static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( strValue + pComboBox_->currentText() );
+    
+    // $$$$ SBO 2005-10-12: to avoid line field beeing empty
+    if( strValue.isEmpty() )
+    {
+        pLineEdit_->setText( "0" );
+        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( "0" + pComboBox_->currentText() );
+    }
+    else
+        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( strValue + pComboBox_->currentText() );
     emit ValueChanged();
 }
 
