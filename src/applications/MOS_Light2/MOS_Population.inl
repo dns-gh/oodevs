@@ -91,3 +91,16 @@ const MOS_PopulationConcentration* MOS_Population::FindConcentration( uint nID )
         return 0;
     return it->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::FindFlow
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+const MOS_PopulationFlux* MOS_Population::FindFlow( uint nID ) const
+{
+    CIT_FluxMap it = fluxMap_.find( nID );
+    if( it == fluxMap_.end() )
+        return 0;
+    return it->second;
+}

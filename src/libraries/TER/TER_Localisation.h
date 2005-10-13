@@ -89,6 +89,7 @@ public:
     MT_Float       GetLength     () const;
 
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
     bool IsInside             ( const MT_Vector2D& vPos ) const;
     bool IsOnBorder           ( const MT_Vector2D& vPos ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation ) const;

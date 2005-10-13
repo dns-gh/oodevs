@@ -247,12 +247,9 @@ void MOS_Agent::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Inp
     input >> nConcentrationID;
     input >> nVisType;
     MOS_Population* pPopulation = MOS_App::GetApp().GetAgentManager().FindPopulation( nPopulationID );
-    if( !pPopulation )
-        return;
-
+    assert( pPopulation );
     const MOS_PopulationConcentration* pConcentration = pPopulation->FindConcentration( nConcentrationID );
-    if( !pConcentration )
-        return;
+    assert( pConcentration );
 
     concentrationsPerceived_.erase( pConcentration );
     switch( nVisType )
@@ -265,6 +262,40 @@ void MOS_Agent::OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Inp
         default:
             assert( false );
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMsgPopulationFlowInterVisibility
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Input& input )
+{
+    uint32  nPopulationID;
+    uint32  nFlowID;
+
+    input >> nPopulationID;
+    input >> nFlowID;
+    MOS_Population* pPopulation = MOS_App::GetApp().GetAgentManager().FindPopulation( nPopulationID );
+    assert( pPopulation );
+
+    const MOS_PopulationFlux* pFlow = pPopulation->FindFlow( nFlowID );
+    assert( pFlow );
+
+    uint32 nNbrPoints;
+    input >> nNbrPoints;
+
+    T_PointVector shape;
+    for( uint i = 0; i < nNbrPoints; ++i )
+    {
+        MT_Vector2D vTmp;
+        input >> vTmp;
+        shape.push_back( vTmp );
+    }
+
+    flowsPerceived_.erase( pFlow );
+    if( !shape.empty() )
+        flowsPerceived_.insert( std::make_pair( pFlow, shape )  );
 }
 
 //-----------------------------------------------------------------------------

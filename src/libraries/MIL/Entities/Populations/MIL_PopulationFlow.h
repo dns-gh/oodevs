@@ -56,11 +56,11 @@ public:
 
     //! @name Accessors
     //@{
-                  uint              GetID       () const;
-    virtual const MT_Vector2D&      GetPosition () const;
-    virtual const MT_Vector2D&      GetDirection() const;
-
-    virtual const TER_Localisation& GetLocation () const;
+                  uint              GetID        () const;
+                  MIL_Population&   GetPopulation() const;
+    virtual const MT_Vector2D&      GetPosition  () const;
+    virtual const MT_Vector2D&      GetDirection () const;
+    virtual const TER_Localisation& GetLocation  () const;
     //@}
 
     //! @name Concentration management

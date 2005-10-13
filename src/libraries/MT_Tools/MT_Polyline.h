@@ -40,6 +40,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
     bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision ) const;
     bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions, MT_Float rPrecision ) const;
     bool Intersect2D          ( const MT_Line& line, MT_Float rPrecision ) const;

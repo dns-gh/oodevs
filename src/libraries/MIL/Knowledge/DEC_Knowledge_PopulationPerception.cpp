@@ -14,9 +14,11 @@
 
 #include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
+#include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationPerception, "DEC_Knowledge_PopulationPerception" )
 
@@ -31,6 +33,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
     , pAgentPerceiving_    ( &agentPerceiving )
     , pPopulationPerceived_( &populationPerceived )
     , concentrations_      ()
+    , flows_               ()
 {
 }
 
@@ -43,6 +46,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
     , pAgentPerceiving_    ( 0 )
     , pPopulationPerceived_( 0 )
     , concentrations_      ()
+    , flows_               ()
 {
 }
 
@@ -96,6 +100,9 @@ void DEC_Knowledge_PopulationPerception::Prepare()
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
+
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->Prepare();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,6 +115,18 @@ void DEC_Knowledge_PopulationPerception::Update( MIL_PopulationConcentration& co
     if( !pKnowledge )
         pKnowledge = new DEC_Knowledge_PopulationConcentrationPerception( *this, concentrationPerceived );
     pKnowledge->Update( perceptionLevel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::Update
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::Update( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& perceptionLevel, const T_PointVector& shape )
+{
+    DEC_Knowledge_PopulationFlowPerception*& pKnowledge = flows_[ &flowPerceived ];
+    if( !pKnowledge )
+        pKnowledge = new DEC_Knowledge_PopulationFlowPerception( *this, flowPerceived );
+    pKnowledge->Update( perceptionLevel, shape );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +147,19 @@ bool DEC_Knowledge_PopulationPerception::Clean()
             ++ it;
     }
 
-    return concentrations_.empty();
+    for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
+    {
+        DEC_Knowledge_PopulationFlowPerception* pKnowledge = it->second;
+        if( pKnowledge->Clean() )
+        {
+            delete pKnowledge;
+            it = flows_.erase( it );
+        }
+        else 
+            ++ it;
+    }
+
+    return concentrations_.empty() && flows_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +186,9 @@ void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
+
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,5 +198,8 @@ void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
 void DEC_Knowledge_PopulationPerception::SendStateToNewClient() const
 {
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        it->second->SendStateToNewClient();
+
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient();
 }

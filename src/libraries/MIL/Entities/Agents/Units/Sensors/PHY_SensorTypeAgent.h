@@ -23,6 +23,7 @@ class PHY_RolePion_Posture;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
+class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class PHY_SensorType;
@@ -52,10 +53,12 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MT_Vector2D&                 target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_Agent_ABC&               target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const DEC_Knowledge_Agent&         target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_AgentPion& perceiver, const MIL_PopulationConcentration& target, MT_Float rSensorHeight ) const;    
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MT_Vector2D&                 target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_Agent_ABC&               target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const DEC_Knowledge_Agent&         target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationConcentration& target, MT_Float rSensorHeight ) const;    
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
+          MT_Float             ComputePerceptionAccuracy( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
     //@}
 
 private:

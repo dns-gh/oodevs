@@ -21,6 +21,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KS_Perception, "DEC_KS_Perception" )
 
@@ -285,6 +286,27 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationConcentration& concentra
         pKnowledge = &pBlackBoard_->CreateKnowledgePopulationPerception( *pAgentPerceiving_, concentrationPerceived.GetPopulation() );
     }
     pKnowledge->Update( concentrationPerceived, level );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::NotifyPerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape, bool /*bRecordModeEnabled*/ )
+{
+    if( level == PHY_PerceptionLevel::notSeen_ )
+        return;
+
+    assert( pBlackBoard_ );
+
+    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( flowPerceived.GetPopulation() );
+    if( !pKnowledge )
+    {
+        assert( pAgentPerceiving_ );
+        pKnowledge = &pBlackBoard_->CreateKnowledgePopulationPerception( *pAgentPerceiving_, flowPerceived.GetPopulation() );
+    }
+    pKnowledge->Update( flowPerceived, level, shape );
+
 }
 
 // =============================================================================

@@ -107,6 +107,7 @@ bool MIL_PopulationConcentration::Update()
     {
         pPullingFlow_->UnregisterSourceConcentration( *this );
         pPullingFlow_ = 0;
+        RemoveFromPatch();
         return false;
     }
     if( bHumansUpdated_ )

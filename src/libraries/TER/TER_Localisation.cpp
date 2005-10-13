@@ -445,7 +445,7 @@ bool TER_Localisation::Reset( const T_PointVector& pointVector )
     if( pointVector_.size() == 1 )
         nType_ = ePoint;
 
-    if( *pointVector.begin() == pointVector[ pointVector.size() - 1 ] )
+    if( pointVector_.size() > 2 && ( *pointVector.begin() == pointVector[ pointVector.size() - 1 ] ) )
         nType_ = ePolygon;
     else
         nType_ = eLine;

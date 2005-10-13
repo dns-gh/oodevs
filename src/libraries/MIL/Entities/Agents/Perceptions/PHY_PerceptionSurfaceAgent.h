@@ -14,6 +14,7 @@ class PHY_PerceptionLevel;
 class PHY_RolePion_Perceiver;
 class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
+class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
 
 namespace DIN
@@ -42,10 +43,13 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D&                 target ) const;
-    const PHY_PerceptionLevel& ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_Agent_ABC&               target ) const;
-    const PHY_PerceptionLevel& ComputePerception( const PHY_RolePion_Perceiver& perceiver, const DEC_Knowledge_Agent&         target ) const;
-    const PHY_PerceptionLevel& ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RolePion_Perceiver& perceiver, const MT_Vector2D&                 target ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RolePion_Perceiver& perceiver, const MIL_Agent_ABC&               target ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RolePion_Perceiver& perceiver, const DEC_Knowledge_Agent&         target ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationFlow&          target, T_PointVector& shape ) const;
+          MT_Float             ComputePerceptionAccuracy( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationFlow& target ) const;
+
           void                 AddDirection     ( const MT_Vector2D& vDir );
     //@}
 

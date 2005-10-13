@@ -88,10 +88,20 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
     MT_Float a, b, c, mu, i ;
     MT_Vector2D p1=line.GetPosStart();
     MT_Vector2D p2=line.GetPosEnd();
+
+    if( p1 == p2 )
+    {
+        if( Inside( p1 ) )
+            res.push_back( p1 );
+        return res;
+    }
+
     a=  (p2-p1).SquareMagnitude();
     b=  2   *   DotProduct(p2-p1,p1-c_);
     c=  c_.SquareMagnitude() + p1.SquareMagnitude() - 2* DotProduct(c_,p1) - square(r_) ;
     i=  b * b - 4 * a * c ;
+
+    assert( a != 0 );
 
     if ( i < 0.0 )
     {
@@ -121,10 +131,6 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
 }
 
 
-
-
-
-
 //-----------------------------------------------------------------------------
 // Name: MT_Circle::Intersection
 // Created: JDY 03-03-06
@@ -136,8 +142,15 @@ T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1,const MT_Vector2D& 
     MT_Float      d=p2.SquareDistance(p1);
     for (CIT_PointVector cit=vect.begin();cit!=vect.end();cit++)
     {
-        if (p1.SquareDistance(*cit) <= d && p2.SquareDistance(*cit) <= d)
-            res.push_back(*cit);
+        MT_Float rDist1 = p1.SquareDistance(*cit);
+        MT_Float rDist2 = p2.SquareDistance(*cit);
+
+        if( rDist1 <= d && rDist2 <= d)
+            res.push_back( *cit );
+        else if( rDist1 < rDist2 && Inside( p1 ) )
+            res.push_back( p1 );
+        else if( rDist2 <= rDist1 && Inside( p2 ) )
+            res.push_back( p2 );
     }
     return res;
 }

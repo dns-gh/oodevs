@@ -21,6 +21,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Meteo/PHY_Precipitation.h"
 #include "Meteo/PHY_Lighting.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
@@ -380,4 +381,31 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;
     return PHY_PerceptionLevel::identified_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputePerceptionAccuracy
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+MT_Float PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_AgentPion& source, const MIL_PopulationFlow& /*target*/, MT_Float /*rSensorHeight*/ ) const
+{
+    const MT_Float rDistanceMaxModificator = GetSourceFactor( source );
+    return rDetectionDist_ * rDistanceMaxModificator;
+}
+          
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputePerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_AgentPion& source, const MIL_PopulationFlow& target, MT_Float rSensorHeight, T_PointVector& shape ) const
+{
+    const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
+    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
+
+    if( rDistanceMaxModificator == 0. )
+        return PHY_PerceptionLevel::notSeen_;
+
+    if( !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
+        return PHY_PerceptionLevel::notSeen_;
+    return PHY_PerceptionLevel::identified_;    
 }

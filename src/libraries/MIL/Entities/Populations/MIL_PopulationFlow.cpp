@@ -242,6 +242,7 @@ bool MIL_PopulationFlow::Update()
     {
         pDestConcentration_->UnregisterPushingFlow( *this );
         pDestConcentration_ = 0;
+        RemoveFromPatch();
         return false; // Must be destroyed
     }
     if( bFlowShapeUpdated_ )
@@ -256,6 +257,7 @@ bool MIL_PopulationFlow::Update()
 void MIL_PopulationFlow::UpdateLocation()
 {
     location_.Reset( flowShape_ );
+    UpdatePatch();
 }
 
 // =============================================================================

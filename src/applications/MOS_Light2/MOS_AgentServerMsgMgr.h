@@ -62,6 +62,7 @@ public:
         eMsgUnitInterVisibility                    = 1009,
         eMsgObjectInterVisibility                  = 1010,
         eMsgPopulationConcentrationInterVisibility = 1011,
+        eMsgPopulationFlowInterVisibility          = 1012,
         eMsgKnowledgeGroup                         = 1013,
         eMsgArmy                                   = 1014,
         eMsgDebugDrawPoints                        = 1015,
@@ -129,6 +130,7 @@ private:
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgArmy                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

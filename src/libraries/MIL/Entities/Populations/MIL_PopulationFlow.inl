@@ -244,3 +244,12 @@ const TER_Localisation& MIL_PopulationFlow::GetLocation() const
     return location_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetPopulation
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+MIL_Population& MIL_PopulationFlow::GetPopulation() const
+{
+    return population_;
+}

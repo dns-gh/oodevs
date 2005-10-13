@@ -42,6 +42,7 @@ class MOS_LogSupplyConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogMaintenanceConsign;
 class MOS_PopulationConcentration;
+class MOS_PopulationFlux;
 
 // =============================================================================
 /** @class  MOS_Agent
@@ -74,6 +75,10 @@ public:
     typedef std::set< const MOS_PopulationConcentration* > T_ConcentrationSet;
     typedef T_ConcentrationSet::iterator                   IT_ConcentrationSet;
     typedef T_ConcentrationSet::const_iterator             CIT_ConcentrationSet;
+
+    typedef std::map< const MOS_PopulationFlux*, T_PointVector > T_FlowVisionMap;
+    typedef T_FlowVisionMap::iterator                            IT_FlowVisionMap;
+    typedef T_FlowVisionMap::const_iterator                      CIT_FlowVisionMap;
 
     typedef MT_Quad< MT_Float, MT_Vector2D, MT_Vector2D, MT_Float > T_VisionConeQuad;
     typedef std::vector< T_VisionConeQuad >                         T_VisionConeVector;
@@ -176,6 +181,7 @@ public:
     void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Input& input );
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
+    void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
     void OnReceiveDebugDrawPointsMsg                       ( DIN::DIN_Input& msg );
 
     void OnAttributeUpdated         ( const ASN1T_MsgUnitAttributes& asnMsg );
@@ -300,7 +306,8 @@ public:
     T_ObjectConstPtrSet			objectsPerceptionInProgress_;
 
     T_ConcentrationSet          concentrationsPerceived_;
-
+    T_FlowVisionMap             flowsPerceived_;
+    
     std::vector< MT_Vector2D >	reportPoints_;
     T_FireResults				fireResults_;
 

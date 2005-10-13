@@ -161,4 +161,6 @@ void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() con
     msg << (uint32)pPopulationConcentrationPerceived_->GetID();
     msg << (uint8)pCurrentPerceptionLevel_->GetID();
     msgMgr.SendMsgPopulationConcentrationInterVisibility( msg );
+
+    std::cout << "POPU CONCENTRATION PERCEPTION " << (uint32)pPopulationConcentrationPerceived_->GetID() << std::endl;
 }

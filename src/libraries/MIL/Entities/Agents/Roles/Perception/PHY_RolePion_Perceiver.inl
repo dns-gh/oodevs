@@ -54,6 +54,17 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& conc
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::NotifyPerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
+{
+    assert( pKsPerception_ );
+    pKsPerception_->NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifytExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------

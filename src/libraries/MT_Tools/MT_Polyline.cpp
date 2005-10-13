@@ -14,6 +14,7 @@
 #include "MT_Polyline.h"
 
 #include "MT_Line.h"
+#include "MT_Circle.h"
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline constructor
@@ -88,6 +89,70 @@ bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
     return false;   
 }
 
+// -----------------------------------------------------------------------------
+// Name: MT_Polyline::Intersect2DWithCircle
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const
+{
+    shape.clear();
+
+    CIT_PointVector itCur  = points_.begin();
+    CIT_PointVector itPrev = points_.begin();
+    ++ itCur;
+
+    MT_Circle circle( vCircleCenter, rRadius );
+
+    MT_Vector2D     vEntryPoint;
+    CIT_PointVector itAfterEntryPoint = points_.end();
+    MT_Vector2D     vExitPoint;
+    CIT_PointVector itAfterExitPoint = points_.end();
+
+    while( itCur != points_.end()  )
+    {
+        T_PointVector res = circle.Intersection( *itPrev, *itCur );
+
+        if( !res.empty() )
+        {
+            //$$$$
+            if( res.size() == 2 )
+            {
+                if( (*itPrev).SquareDistance( res.back () ) < (*itPrev).SquareDistance( res.front() ) )
+                    std::swap( res.back(), res.front() );
+            }
+
+            if( itAfterEntryPoint == points_.end() )
+            {
+                itAfterEntryPoint = itCur;
+                vEntryPoint = res.front();
+            }
+            
+            itAfterExitPoint = itCur;
+            vExitPoint       = res.back();            
+        }
+        itPrev = itCur;
+        ++ itCur;
+    }
+
+
+    if( itAfterEntryPoint == points_.end() )
+    {
+        assert( itAfterExitPoint == points_.end() );
+        return false;
+    }
+
+    if( itAfterExitPoint == points_.end() )
+    {
+        shape.push_back( vEntryPoint );
+        std::copy( itAfterEntryPoint, points_.end(), std::back_inserter( shape ) );
+        return true;
+    }
+
+    shape.push_back( vEntryPoint );
+    std::copy( itAfterEntryPoint, itAfterExitPoint, std::back_inserter( shape ) );
+    shape.push_back( vExitPoint );
+    return true;
+}
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline::IsInside

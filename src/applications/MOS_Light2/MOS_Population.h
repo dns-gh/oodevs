@@ -74,6 +74,7 @@ public:
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
 
     const MOS_PopulationConcentration* FindConcentration( uint nID ) const;
+    const MOS_PopulationFlux*          FindFlow         ( uint nID ) const;
 
 	        MIL_AgentID			        GetPopulationID();
 	virtual const uint			        GetID();

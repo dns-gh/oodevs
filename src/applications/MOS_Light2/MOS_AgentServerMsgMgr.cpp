@@ -61,6 +61,7 @@ MOS_AgentServerMsgMgr::MOS_AgentServerMsgMgr( MOS_AgentServerController& control
     pMessageService_->RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, & MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility );
+    pMessageService_->RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup        );
     pMessageService_->RegisterReceivedMessage( eMsgArmy                                  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgArmy        );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
@@ -311,6 +312,21 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility( 
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
     assert( pAgent );
     pAgent->OnReceiveMsgPopulationConcentrationInterVisibility( input );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility
+// Created: NLD 2003-03-17
+//-----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
+{
+    MIL_AgentID nAgentID;
+
+    input >> nAgentID;
+
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
+    assert( pAgent );
+    pAgent->OnReceiveMsgPopulationFlowInterVisibility( input );
 }
 
 //-----------------------------------------------------------------------------

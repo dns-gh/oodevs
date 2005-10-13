@@ -77,6 +77,25 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::Intersect2DWithCircle
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const
+{
+    switch( nType_ )
+    {
+        case ePoint:   
+        case ePolygon: 
+            {
+                assert( false ); 
+                return false;
+            }
+        case eLine:    return polyline_.Intersect2DWithCircle( vCircleCenter, rRadius, shape );
+        default:
+            return false;
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::IsInside

@@ -608,6 +608,19 @@ void MOS_GLTool::DrawVisionLines( MOS_Agent& agent )
     glColor3d( 0., 1., 0. );
     for( MOS_Agent::CIT_ConcentrationSet itConcentration = agent.concentrationsPerceived_.begin(); itConcentration != agent.concentrationsPerceived_.end(); ++itConcentration )
         DrawLine( agent.vPos_, (*itConcentration)->GetPos(), 150.0 );
+
+    glColor3d( 1., 1., 0. );
+    for( MOS_Agent::CIT_FlowVisionMap it = agent.flowsPerceived_.begin(); it != agent.flowsPerceived_.end(); ++it )
+    {
+        const T_PointVector& shape = it->second;
+        assert( !shape.empty() );
+
+        DrawLine( agent.vPos_, shape.back(), 150.0 );
+        DrawLine( agent.vPos_, shape.front(), 150.0 );
+        glLineWidth( 3.0 );
+        DrawLine( shape );
+        glLineWidth( 1.0 );
+    }
 }
 
 // -----------------------------------------------------------------------------

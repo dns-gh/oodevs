@@ -94,13 +94,13 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_PopulationConcentration* > T_ConcentrationSet;
-    typedef T_ConcentrationSet::iterator             IT_ConcentrationSet;
-    typedef T_ConcentrationSet::const_iterator       CIT_ConcentrationSet;
+    typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
+    typedef T_ConcentrationVector::iterator             IT_ConcentrationVector;
+    typedef T_ConcentrationVector::const_iterator       CIT_ConcentrationVector;
     
-    typedef std::set< MIL_PopulationFlow* > T_FlowSet;
-    typedef T_FlowSet::iterator             IT_FlowSet;
-    typedef T_FlowSet::const_iterator       CIT_FlowSet;
+    typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
+    typedef T_FlowVector::iterator             IT_FlowVector;
+    typedef T_FlowVector::const_iterator       CIT_FlowVector;
     //@}
 
 private:
@@ -116,8 +116,11 @@ private:
           std::string             strName_;
     const MIL_PopulationAttitude* pDefaultAttitude_;
 
-          T_ConcentrationSet concentrations_;
-          T_FlowSet          flows_;
+          T_ConcentrationVector   concentrations_;
+          T_FlowVector            flows_;
+
+          T_ConcentrationVector   trashedConcentrations_;
+          T_FlowVector            trashedFlows_;
 
           DEC_PopulationDecision*    pDecision_;
           MIL_PopulationOrderManager orderManager_;

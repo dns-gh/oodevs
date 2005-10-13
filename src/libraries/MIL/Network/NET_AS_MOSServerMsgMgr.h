@@ -60,6 +60,7 @@ public:
         eMsgUnitInterVisibility                    = 1009,
         eMsgObjectInterVisibility                  = 1010,
         eMsgPopulationConcentrationInterVisibility = 1011,
+        eMsgPopulationFlowInterVisibility          = 1012,
         eMsgKnowledgeGroup                         = 1013,
         eMsgArmy                                   = 1014,
         eMsgDebugDrawPoints                        = 1015,
@@ -97,6 +98,7 @@ public:
     void SendMsgUnitInterVisibility                   ( DIN::DIN_BufferedMessage& msg );
     void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg );
+    void SendMsgPopulationFlowInterVisibility         ( DIN::DIN_BufferedMessage& msg );
     void SendMsgDebugDrawPoints                       ( DIN::DIN_BufferedMessage& msg );
     void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg ); 
     

@@ -19,8 +19,10 @@
 
 class MIL_Population;
 class MIL_PopulationConcentration;
+class MIL_PopulationFlow;
 class MIL_AgentPion;
 class DEC_Knowledge_PopulationConcentrationPerception;
+class DEC_Knowledge_PopulationFlowPerception;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -49,6 +51,7 @@ public:
     //@{
     void Prepare();
     void Update ( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level );
+    void Update ( MIL_PopulationFlow&          flowPerceived         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
     bool Clean  ();
 
     bool IsIdentified( const MIL_PopulationConcentration& concentration );
@@ -72,6 +75,10 @@ private:
     typedef std::map< const MIL_PopulationConcentration*, DEC_Knowledge_PopulationConcentrationPerception* > T_ConcentrationMap;
     typedef T_ConcentrationMap::iterator                                                                     IT_ConcentrationMap;
     typedef T_ConcentrationMap::const_iterator                                                               CIT_ConcentrationMap;
+
+    typedef std::map< const MIL_PopulationFlow*, DEC_Knowledge_PopulationFlowPerception* > T_FlowMap;
+    typedef T_FlowMap::iterator                                                            IT_FlowMap;
+    typedef T_FlowMap::const_iterator                                                      CIT_FlowMap;
     //@}
 
 private:
@@ -79,6 +86,7 @@ private:
           MIL_Population*  pPopulationPerceived_;
 
     T_ConcentrationMap concentrations_;
+    T_FlowMap          flows_;
 };
 
 #include "DEC_Knowledge_PopulationPerception.inl"

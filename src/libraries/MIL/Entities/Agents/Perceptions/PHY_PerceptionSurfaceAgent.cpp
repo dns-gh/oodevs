@@ -153,6 +153,25 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
     return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+MT_Float PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationFlow& target ) const
+{
+    return pSensorType_->ComputePerceptionAccuracy( perceiver.GetPion(), target, rHeight_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::ComputePerception
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RolePion_Perceiver& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const
+{
+    return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_, shape );
+}
+
+
 // =============================================================================
 // NETWORK
 // =============================================================================

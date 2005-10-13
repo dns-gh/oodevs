@@ -63,7 +63,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
 
     pDecision_ = new DEC_PopulationDecision( *this );
     
-    concentrations_.insert( new MIL_PopulationConcentration( *this, archive ) );    
+    concentrations_.push_back( new MIL_PopulationConcentration( *this, archive ) );    
 }
 
 // -----------------------------------------------------------------------------
@@ -95,27 +95,35 @@ void MIL_Population::UpdateDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateState()
 {
+    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+        delete *it;
+    trashedConcentrations_.clear();
+
+    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        delete *it;
+    trashedFlows_.clear();
+
     // Flows    
-    for( IT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); )
+    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
     {
         MIL_PopulationFlow* pFlow = *itFlow;
         if( !pFlow->Update() )
         {
             itFlow = flows_.erase( itFlow );
-            delete pFlow;
+            trashedFlows_.push_back( pFlow );
         }
         else 
             ++ itFlow;
     }
 
     // Concentrations
-    for( IT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
+    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
     {
         MIL_PopulationConcentration* pConcentration = *itConcentration;
         if( !pConcentration->Update() )
         {
             itConcentration = concentrations_.erase( itConcentration );
-            delete pConcentration;
+            trashedConcentrations_.push_back( pConcentration );
         }
         else 
             ++ itConcentration;
@@ -128,10 +136,10 @@ void MIL_Population::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Population::Clean()
 {
-    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).Clean();
 
-    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).Clean();
 }
 
@@ -141,10 +149,10 @@ void MIL_Population::Clean()
 // -----------------------------------------------------------------------------
 void MIL_Population::Move( const MT_Vector2D& destination )
 {
-    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).Move( destination );
 
-    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).Move( destination );
 }
 
@@ -159,7 +167,7 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& concentration )
 {
     MIL_PopulationFlow* pFlow = new MIL_PopulationFlow( *this, concentration );
-    flows_.insert( pFlow );
+    flows_.push_back( pFlow );
     return *pFlow;
 }
 
@@ -169,14 +177,14 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& con
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D& position )
 {
-    for( CIT_ConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( (**it).IsNearPosition( position ) )
             return **it;
     }
 
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, position );
-    concentrations_.insert( pConcentration  );
+    concentrations_.push_back( pConcentration );
     return *pConcentration;
 }
 
@@ -219,10 +227,10 @@ void MIL_Population::SendCreation() const
     asnMsg.GetAsnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
     asnMsg.Send();
 
-    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).SendCreation();
 
-    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).SendCreation();
 }
 
@@ -236,10 +244,10 @@ void MIL_Population::SendFullState() const
     asnMsg.GetAsnMsg().oid_population = nID_;
     asnMsg.Send();
 
-    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).SendFullState();
 
-    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).SendFullState();
 }
 
@@ -249,10 +257,10 @@ void MIL_Population::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateNetwork()
 {
-    for( CIT_ConcentrationSet itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).SendChangedState();
 
-    for( CIT_FlowSet itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).SendChangedState();
 }
 

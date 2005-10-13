@@ -220,6 +220,34 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionView::Compute
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationFlow& flow, T_PointVector& shape ) const
+{
+    if( !bIsEnabled_ )
+        return PHY_PerceptionLevel::notSeen_;
+
+    const PHY_PerceptionSurfaceAgent* pBestSurface = 0;
+          MT_Float                    rBestCost    = std::numeric_limits< MT_Float >::min();
+
+    const PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+    for( PHY_RolePion_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    {
+        const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
+        const MT_Float                    rCost   = surface.ComputePerceptionAccuracy( perceiver_, flow );
+        if( rCost > rBestCost )
+        {
+            rBestCost    = rCost;
+            pBestSurface = &surface;
+        }
+    }
+    if( !pBestSurface )
+        return PHY_PerceptionLevel::notSeen_;
+    return pBestSurface->ComputePerception( perceiver_, flow, shape );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
@@ -230,7 +258,10 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_PopulationFlow
         for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector it = perceivableFlows.begin(); it != perceivableFlows.end(); ++it )
         {
             MIL_PopulationFlow& flow = static_cast< MIL_PopulationFlow& >( **it );
-//            perceiver_.NotifyPerception( realObject, Compute( realObject ) );
+
+            T_PointVector shape;
+            const PHY_PerceptionLevel& level = Compute( flow, shape );
+            perceiver_.NotifyPerception( flow, level, shape );
         }
     }
 }
@@ -277,3 +308,4 @@ void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_Popul
         }
     }
 }
+
