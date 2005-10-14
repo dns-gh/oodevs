@@ -79,6 +79,10 @@ protected:
     template< typename Container, typename NameResolver >
     void DisplayAvailabilities( const Container& cont, QListView& viewer, const NameResolver& resolver, const char* szUnit  )
     {
+        int x = viewer.contentsX();
+        int y = viewer.contentsY();
+        int w = viewer.contentsWidth();
+        int h = viewer.contentsHeight();
         viewer.clear();
         for( Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
         {
@@ -86,6 +90,7 @@ protected:
             QString strNumber    = QString( "%1 " ).arg( it->second ) + szUnit;
             new QListViewItem( &viewer, strEquipment, strNumber );
         }
+        viewer.scrollBy( 0, y );
         viewer.show();
     }
 
