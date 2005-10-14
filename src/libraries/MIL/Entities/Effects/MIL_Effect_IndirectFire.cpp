@@ -93,7 +93,7 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 {
     if( nTargetKnowledgeID_ == 0 )
         return;
-    const DEC_Knowledge_Agent* pTargetKnowledge = firer_.GetKSQuerier().GetKnowledgeAgentFromDiaID( nTargetKnowledgeID_ );
+    const DEC_Knowledge_Agent* pTargetKnowledge = firer_.GetKSQuerier().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
     if( !pTargetKnowledge )
     {
         nTargetKnowledgeID_ = 0;

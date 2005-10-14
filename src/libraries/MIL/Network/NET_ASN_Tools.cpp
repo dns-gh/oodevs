@@ -325,7 +325,7 @@ bool NET_ASN_Tools::ReadAutomateList( const ASN1T_ListAutomate& asnListAgent, T_
 // static $$NLDJVT$$ Interet de cette fonction
 DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_KnowledgeAgent& asnAgent, const DEC_KS_KnowledgeGroupQuerier& knowledge )
 {
-    return knowledge.GetKnowledgeAgentFromMosID( asnAgent );
+    return knowledge.GetKnowledgeAgentFromID( asnAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +340,7 @@ bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnL
         DEC_Knowledge_Agent* pKnowledge = ReadAgentKnowledge( asnListAgent.elem[n], knowledge );
         if( pKnowledge == 0 )
             return false;
-        knowledges.push_back( (void*)pKnowledge->GetDiaID() );
+        knowledges.push_back( (void*)pKnowledge->GetID() );
     }
     return true;        
 }
@@ -353,7 +353,7 @@ bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnL
 // static
 DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_KnowledgeObject& asnObject, const DEC_KS_KnowledgeGroupQuerier& knowledge )
 {
-    return knowledge.GetKnowledgeObjectFromMosID( asnObject );
+    return knowledge.GetKnowledgeObjectFromID( asnObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& as
         DEC_Knowledge_Object* pKnowledge = ReadObjectKnowledge( asnListObject.elem[n], knowledge );
         if( !pKnowledge )
             return false;
-        knowledges.push_back( (void*)pKnowledge->GetDiaID() );
+        knowledges.push_back( (void*)pKnowledge->GetID() );
     }
     return true;        
 }
@@ -696,7 +696,7 @@ void NET_ASN_Tools::WriteAutomateList( const T_ObjectVector& unitList, ASN1T_Lis
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, ASN1T_KnowledgeAgent& asnKnowledge )
 {
-    asnKnowledge = knowledge.GetMosID();
+    asnKnowledge = knowledge.GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -713,9 +713,9 @@ void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& 
     uint i = 0;
     for( CIT_KnowledgeAgentDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
     {
-        const DEC_Knowledge_Agent* pKnowledge = knowledge.GetKnowledgeAgentFromDiaID( (uint)*itKnowledge );
+        const DEC_Knowledge_Agent* pKnowledge = knowledge.GetKnowledgeAgentFromID( (uint)*itKnowledge );
         if( pKnowledge )
-            asnListKnowledge.elem[i] = pKnowledge->GetMosID();
+            asnListKnowledge.elem[i] = pKnowledge->GetID();
         else
             asnListKnowledge.elem[i] = 0;       
         ++i;
@@ -729,7 +729,7 @@ void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& 
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge, ASN1T_KnowledgeObject& asnKnowledge )
 {
-    asnKnowledge = knowledge.GetMosID();
+    asnKnowledge = knowledge.GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -746,9 +746,9 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
     uint i = 0;
     for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
     {
-        const DEC_Knowledge_Object* pKnowledge = knowledge.GetKnowledgeObjectFromDiaID( (uint)*itKnowledge );
+        const DEC_Knowledge_Object* pKnowledge = knowledge.GetKnowledgeObjectFromID( (uint)*itKnowledge );
         if( pKnowledge )
-            asnListKnowledge.elem[i] = pKnowledge->GetMosID();
+            asnListKnowledge.elem[i] = pKnowledge->GetID();
         else
             asnListKnowledge.elem[i] = 0;       
         ++i;
@@ -922,7 +922,7 @@ bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_KnowledgeObject& asn, DIA_V
     if( !pKnowledge ) 
         return false;
 
-    dia.SetValue( (void*)pKnowledge->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
+    dia.SetValue( (void*)pKnowledge->GetID(), &DEC_Tools::GetTypeConnaissanceObjet() );
     return true;
 }
 
@@ -935,7 +935,7 @@ bool NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& dia, ASN1T_Know
     assert( DEC_Tools::CheckTypeConnaissanceObjet( dia ) );
 
     uint nDiaID = (uint)dia.ToPtr();
-    DEC_Knowledge_Object* pKnowledge = knowledge.GetKnowledgeObjectFromDiaID( nDiaID );
+    DEC_Knowledge_Object* pKnowledge = knowledge.GetKnowledgeObjectFromID( nDiaID );
     if( !pKnowledge )
         return false;
     
@@ -1038,7 +1038,7 @@ bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_KnowledgeAgent& asn, DIA_Var
     if( !pKnowledge ) 
         return false;
 
-    dia.SetValue( (void*)pKnowledge->GetDiaID(), &DEC_Tools::GetTypeConnaissanceAgent() );
+    dia.SetValue( (void*)pKnowledge->GetID(), &DEC_Tools::GetTypeConnaissanceAgent() );
     return true;
 }
 
@@ -1051,11 +1051,11 @@ bool NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& dia, ASN1T_Knowl
     assert( DEC_Tools::CheckTypeConnaissanceAgent( dia ) );
 
     uint nDiaID = (uint)dia.ToPtr();
-    DEC_Knowledge_Agent* pKnowledge = knowledge.GetKnowledgeAgentFromDiaID( nDiaID );
+    DEC_Knowledge_Agent* pKnowledge = knowledge.GetKnowledgeAgentFromID( nDiaID );
     if( !pKnowledge )
         return false;
     
-    asn = pKnowledge->GetMosID();
+    asn = pKnowledge->GetID();
     return true;    
 }
 

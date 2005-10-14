@@ -74,7 +74,7 @@ void MIL_RC_UniteDetectee::Send( const MIL_AgentPion& sender, E_RcType nType, co
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    asnMsg.GetAsnMsg().cr.u.cr_unite_detectee = param.GetMosID();
+    asnMsg.GetAsnMsg().cr.u.cr_unite_detectee = param.GetID();
     asnMsg.Send();
 }
 

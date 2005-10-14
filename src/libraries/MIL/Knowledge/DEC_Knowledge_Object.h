@@ -83,8 +83,7 @@ public:
           bool                IsRecon                 () const;
           bool                IsBypassed              () const;
           bool                IsPrepared              () const;
-          uint                GetMosID                () const;
-          uint                GetDiaID                () const;
+          uint                GetID                   () const;
           MIL_RealObject_ABC* GetObjectKnown          () const;
     const MIL_RealObjectType& GetType                 () const;
     const TER_Localisation&   GetLocalisation         () const;
@@ -170,8 +169,7 @@ private:
           MIL_RealObject_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
 
     const MIL_RealObjectType* pObjectType_;
-    uint                      nMosID_;               // ID utilisé pour les échanges MOS-SIM
-    uint                      nDiaID_;               // ID utilisé pour les échanges SIM-DIA
+    const uint                nID_;
 
     int nAttributesUpdated_;
 
@@ -194,9 +192,6 @@ private:
     MT_Float rRelevance_;
 
     T_AgentTypeSet  reconByAgentTypes_;
-
-private:
-    static uint nDiaIDIdx_;
 };
 
 #include "DEC_Knowledge_Object.inl"

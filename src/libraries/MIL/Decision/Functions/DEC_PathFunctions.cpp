@@ -125,7 +125,7 @@ void DEC_PathFunctions::GetNextObjectOnPath( DIA_Call_ABC& call, const MIL_Agent
     }
     assert( pObjectColliding );
 
-    call.GetParameter( 0 ).SetValue( (void*)pObjectColliding->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
+    call.GetParameter( 0 ).SetValue( (void*)pObjectColliding->GetID(), &DEC_Tools::GetTypeConnaissanceObjet() );
     call.GetParameter( 1 ).SetValue( (float)MIL_Tools::ConvertSimToMeter( rDistanceCollision ) );
     call.GetResult().SetValue( true );
 }
@@ -154,7 +154,7 @@ void DEC_PathFunctions::GetNextObjectOnPionPath( DIA_Call_ABC& call, const MIL_A
     }
     assert( pObjectColliding );
     
-    call.GetParameter( 1 ).SetValue( (void*)pObjectColliding->GetDiaID(), &DEC_Tools::GetTypeConnaissanceObjet() );
+    call.GetParameter( 1 ).SetValue( (void*)pObjectColliding->GetID(), &DEC_Tools::GetTypeConnaissanceObjet() );
     call.GetParameter( 2 ).SetValue( (float)rDistanceCollision );
     call.GetResult().SetValue( true );
 }

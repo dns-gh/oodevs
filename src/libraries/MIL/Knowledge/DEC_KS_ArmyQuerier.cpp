@@ -55,7 +55,7 @@ public:
     void operator() ( DEC_Knowledge_Object& knowledge )
     {
         if( pFilter_->Test( knowledge.GetType() ) )
-            pContainer_->push_back( (void*)knowledge.GetDiaID() );
+            pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
 private:

@@ -86,7 +86,7 @@ MIL_RealObject_ABC* PHY_RoleAction_Objects::GetRealObject( uint nKnowledgeObject
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromDiaID( nKnowledgeObjectID );
+    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
         return 0;
 
@@ -272,7 +272,7 @@ int PHY_RoleAction_Objects::Destroy( uint nKnowledgeObjectID )
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromDiaID( nKnowledgeObjectID );
+    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
         return eImpossible;
     MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
@@ -446,7 +446,7 @@ int PHY_RoleAction_Objects::Bypass( uint nKnowledgeObjectID )
 int PHY_RoleAction_Objects::ResumeWork( uint nKnowledgeObjectID )
 {
     assert( pPion_ );
-    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromDiaID( nKnowledgeObjectID );
+    DEC_Knowledge_Object* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeObjectID );
     if( !pKnowledge )
         return eImpossible;
     MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();

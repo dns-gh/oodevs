@@ -283,7 +283,6 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         asnMsg.GetAsnMsg().m.vitessePresent = 1;
         asnMsg.GetAsnMsg().vitesse          = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
     }
-   
 
     if( bShapeUpdated_ )
     {
@@ -299,7 +298,8 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     }
 
     asnMsg.Send();
-    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
+    if( asnMsg.GetAsnMsg().m.portions_fluxPresent )
+        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +345,8 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     }
 
     asnMsg.Send();  
-    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
+    if( asnMsg.GetAsnMsg().m.portions_fluxPresent )
+        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
 }
     
 // -----------------------------------------------------------------------------

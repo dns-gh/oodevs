@@ -10,23 +10,13 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::GetMosID
+// Name: DEC_Knowledge_Object::GetID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
 inline
-uint DEC_Knowledge_Object::GetMosID() const
+uint DEC_Knowledge_Object::GetID() const
 {
-    return nMosID_;    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::GetDiaID
-// Created: NLD 2004-03-24
-// -----------------------------------------------------------------------------
-inline
-uint DEC_Knowledge_Object::GetDiaID() const
-{
-    return nDiaID_;    
+    return nID_;    
 }
 
 // -----------------------------------------------------------------------------

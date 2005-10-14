@@ -35,8 +35,8 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObject()
 {
-    while( !knowledgeObjectFromDiaIDMap_.empty() )
-        DestroyKnowledgeObject( *knowledgeObjectFromDiaIDMap_.begin()->second );        	
+    while( !knowledgeObjectFromIDMap_.empty() )
+        DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );        	
 }
 
 // =============================================================================
@@ -84,9 +84,8 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> knowledgeObjectMap_
-         >> knowledgeObjectFromMosIDMap_
-         >> knowledgeObjectFromDiaIDMap_;
+    file >> realObjectMap_
+         >> knowledgeObjectFromIDMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,9 +94,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgeObjectMap_
-         << knowledgeObjectFromMosIDMap_
-         << knowledgeObjectFromDiaIDMap_;
+    file << realObjectMap_
+         << knowledgeObjectFromIDMap_;
 }
 
 
@@ -112,13 +110,10 @@ DEC_Knowledge_Object& DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeO
 {
     DEC_Knowledge_Object& knowledge = objectKnown.CreateKnowledge( teamKnowing );
     
-    bool bOut = knowledgeObjectMap_.insert( std::make_pair( &objectKnown, &knowledge ) ).second;
+    bool bOut = realObjectMap_.insert( std::make_pair( &objectKnown, &knowledge ) ).second;
     assert( bOut );
 
-    bOut = knowledgeObjectFromMosIDMap_.insert( std::make_pair( knowledge.GetMosID(), &knowledge ) ).second;
-    assert( bOut );
-
-    bOut = knowledgeObjectFromDiaIDMap_.insert( std::make_pair( knowledge.GetDiaID(), &knowledge ) ).second;
+    bOut = knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge.GetID(), &knowledge ) ).second;
     assert( bOut );
 
     return knowledge;
@@ -133,18 +128,14 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 {
     if( knowledge.GetObjectKnown() )
     {
-        int nOut = knowledgeObjectMap_.erase( knowledge.GetObjectKnown() );
+        int nOut = realObjectMap_.erase( knowledge.GetObjectKnown() );
         assert( nOut >= 1 );
     }
 
-    int nOut = knowledgeObjectFromMosIDMap_.erase( knowledge.GetMosID() );
-    assert( nOut >= 1 );
-
-    nOut = knowledgeObjectFromDiaIDMap_.erase( knowledge.GetDiaID() );
+    int nOut = knowledgeObjectFromIDMap_.erase( knowledge.GetID() );
     assert( nOut >= 1 );
     delete &knowledge;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject
@@ -153,6 +144,6 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_RealObject_ABC& objectKnown, DEC_Knowledge_Object& knowledge )
 {
     assert( knowledge.GetObjectKnown() == 0 );
-    int nOut = knowledgeObjectMap_.erase( &objectKnown );
+    int nOut = realObjectMap_.erase( &objectKnown );
     assert( nOut >= 1 );
 }

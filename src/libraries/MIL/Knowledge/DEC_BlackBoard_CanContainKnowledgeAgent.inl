@@ -20,8 +20,8 @@
 inline
 DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
 {
-    CIT_KnowledgeAgentMap it = knowledgeAgentMap_.find( &agentKnown );
-    if( it == knowledgeAgentMap_.end() )
+    CIT_KnowledgeAgentMap it = realAgentMap_.find( &agentKnown );
+    if( it == realAgentMap_.end() )
         return 0;
     return it->second;
 }
@@ -33,28 +33,17 @@ DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent(
 inline
 bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
 {
-    return knowledgeAgentMap_.find( &agentKnown ) != knowledgeAgentMap_.end();
+    return realAgentMap_.find( &agentKnown ) != realAgentMap_.end();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromMosID
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromMosID( uint nID ) const
+DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( uint nID ) const
 {
-    CIT_KnowledgeAgentIDMap itKnowledge = knowledgeAgentFromMosIDMap_.find( nID );
-    return itKnowledge == knowledgeAgentFromMosIDMap_.end() ? 0 : itKnowledge->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromDiaID
-// Created: NLD 2004-03-24
-// -----------------------------------------------------------------------------
-inline
-DEC_Knowledge_Agent* DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromDiaID( uint nID ) const
-{
-    CIT_KnowledgeAgentIDMap itKnowledge = knowledgeAgentFromDiaIDMap_.find( nID );
-    return itKnowledge == knowledgeAgentFromDiaIDMap_.end() ? 0 : itKnowledge->second;
+    CIT_KnowledgeAgentIDMap itKnowledge = knowledgeAgentFromIDMap_.find( nID );
+    return itKnowledge == knowledgeAgentFromIDMap_.end() ? 0 : itKnowledge->second;
 }

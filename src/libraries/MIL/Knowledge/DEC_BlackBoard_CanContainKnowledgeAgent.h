@@ -52,15 +52,14 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_Agent* GetKnowledgeAgentFromMosID( uint nID ) const;
-    DEC_Knowledge_Agent* GetKnowledgeAgentFromDiaID( uint nID ) const;
-    DEC_Knowledge_Agent* GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const;
-    bool                 HasKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const;
+    DEC_Knowledge_Agent* GetKnowledgeAgentFromID( uint nID ) const;
+    DEC_Knowledge_Agent* GetKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
+    bool                 HasKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeAgentMap itKnowledge = knowledgeAgentMap_.begin(); itKnowledge != knowledgeAgentMap_.end(); )
+        for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
         {
             DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -87,9 +86,8 @@ private:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeAgentMap   knowledgeAgentMap_;
-    T_KnowledgeAgentIDMap knowledgeAgentFromMosIDMap_;
-    T_KnowledgeAgentIDMap knowledgeAgentFromDiaIDMap_;
+    T_KnowledgeAgentMap   realAgentMap_;
+    T_KnowledgeAgentIDMap knowledgeAgentFromIDMap_;
     //@}
 };
 

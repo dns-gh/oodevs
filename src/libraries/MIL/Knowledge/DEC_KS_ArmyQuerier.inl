@@ -24,25 +24,14 @@ void DEC_KS_ArmyQuerier::GetKnowledgesObject( T_KnowledgeObjectVector& container
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_ArmyQuerier::GetKnowledgeObjectFromMosID
+// Name: DEC_KS_ArmyQuerier::GetKnowledgeObjectFromID
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObjectFromMosID( uint nID ) const
+DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObjectFromID( uint nID ) const
 {
     assert( pBlackBoard_ );
-    return pBlackBoard_->GetKnowledgeObjectFromMosID( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_ArmyQuerier::GetKnowledgeObjectFromDiaID
-// Created: NLD 2004-03-25
-// -----------------------------------------------------------------------------
-inline
-DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObjectFromDiaID( uint nID ) const
-{
-    assert( pBlackBoard_ );
-    return pBlackBoard_->GetKnowledgeObjectFromDiaID( nID );
+    return pBlackBoard_->GetKnowledgeObjectFromID( nID );
 }
 
 // -----------------------------------------------------------------------------

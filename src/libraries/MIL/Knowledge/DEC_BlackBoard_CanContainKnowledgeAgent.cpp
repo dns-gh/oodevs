@@ -33,8 +33,8 @@ DEC_BlackBoard_CanContainKnowledgeAgent::DEC_BlackBoard_CanContainKnowledgeAgent
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgent::~DEC_BlackBoard_CanContainKnowledgeAgent()
 {
-    while( !knowledgeAgentFromDiaIDMap_.empty() )
-        DestroyKnowledgeAgent( *knowledgeAgentFromDiaIDMap_.begin()->second );
+    while( !knowledgeAgentFromIDMap_.empty() )
+        DestroyKnowledgeAgent( *knowledgeAgentFromIDMap_.begin()->second );
 }
 
 // =============================================================================
@@ -87,9 +87,8 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> knowledgeAgentMap_
-         >> knowledgeAgentFromMosIDMap_
-         >> knowledgeAgentFromDiaIDMap_;
+    file >> realAgentMap_
+         >> knowledgeAgentFromIDMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,9 +97,8 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgeAgentMap_
-         << knowledgeAgentFromMosIDMap_
-         << knowledgeAgentFromDiaIDMap_;
+    file << realAgentMap_
+         << knowledgeAgentFromIDMap_;
 }
 
 // =============================================================================
@@ -114,11 +112,10 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
 DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown )
 {
     DEC_Knowledge_Agent& knowledge = agentKnown.CreateKnowledge( knowledgeGroup );
-    knowledgeAgentMap_.insert( std::make_pair( &agentKnown, &knowledge ) );
-
-    bool bOut = knowledgeAgentFromMosIDMap_.insert( std::make_pair( knowledge.GetMosID(), &knowledge ) ).second;
+    bool bOut = realAgentMap_.insert( std::make_pair( &agentKnown, &knowledge ) ).second;
     assert( bOut );
-    bOut = knowledgeAgentFromDiaIDMap_.insert( std::make_pair( knowledge.GetDiaID(), &knowledge ) ).second;
+
+    bOut = knowledgeAgentFromIDMap_.insert( std::make_pair( knowledge.GetID(), &knowledge ) ).second;
     assert( bOut );
 
     return knowledge;
@@ -131,11 +128,9 @@ DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAge
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
 {
-    int nOut = knowledgeAgentMap_.erase( &knowledge.GetAgentKnown() );
+    int nOut = realAgentMap_.erase( &knowledge.GetAgentKnown() );
     assert( nOut >= 1 );
-    nOut = knowledgeAgentFromMosIDMap_.erase( knowledge.GetMosID() );
-    assert( nOut == 1 );
-    nOut = knowledgeAgentFromDiaIDMap_.erase( knowledge.GetDiaID() );
+    nOut = knowledgeAgentFromIDMap_.erase( knowledge.GetID() );
     assert( nOut == 1 );
     delete &knowledge;
 }

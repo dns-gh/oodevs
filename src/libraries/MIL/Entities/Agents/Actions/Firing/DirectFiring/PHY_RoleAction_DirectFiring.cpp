@@ -78,7 +78,7 @@ MIL_Agent_ABC* PHY_RoleAction_DirectFiring::GetTarget( uint nTargetKnowledgeID )
 {
     assert( pPion_ );
     
-    DEC_Knowledge_Agent* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeAgentFromDiaID( nTargetKnowledgeID );
+    DEC_Knowledge_Agent* pKnowledge = pPion_->GetKSQuerier().GetKnowledgeAgentFromID( nTargetKnowledgeID );
     return pKnowledge ? &pKnowledge->GetAgentKnown() : 0;
 }
 

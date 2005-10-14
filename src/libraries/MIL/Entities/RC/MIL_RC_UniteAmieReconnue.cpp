@@ -74,7 +74,7 @@ void MIL_RC_UniteAmieReconnue::Send( const MIL_AgentPion& sender, E_RcType nType
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    asnMsg.GetAsnMsg().cr.u.cr_unite_amie_reconnue = param.GetMosID();
+    asnMsg.GetAsnMsg().cr.u.cr_unite_amie_reconnue = param.GetID();
     asnMsg.Send();
 }
 

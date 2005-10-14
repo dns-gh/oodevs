@@ -80,15 +80,13 @@ public:
 
     //! @name Gtia level
     //@{
-    DEC_Knowledge_Agent*  GetKnowledgeAgentFromDiaID ( uint nID ) const;
-    DEC_Knowledge_Agent*  GetKnowledgeAgentFromMosID ( uint nID ) const;
+    DEC_Knowledge_Agent*  GetKnowledgeAgentFromID( uint nID ) const;
     //@}
 
     //! @name Team level
     //@{
-    DEC_Knowledge_Object* GetKnowledgeObjectFromDiaID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObjectFromMosID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject         ( MIL_RealObject_ABC& object ) const;
+    DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
+    DEC_Knowledge_Object* GetKnowledgeObject      ( MIL_RealObject_ABC& object ) const;
     //@}
 
 private:

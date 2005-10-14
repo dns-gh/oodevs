@@ -60,7 +60,7 @@ void PHY_ActionPrepareObject::Execute()
     DEC_Knowledge_Object* pKnowledge = 0;
     int nReturn = role_.Prepare( pObject_, pKnowledge );
     diaReturnCode_     .SetValue( nReturn );
-    diaReturnKnowledge_.SetValue( (void*)( pKnowledge ? pKnowledge->GetDiaID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+    diaReturnKnowledge_.SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
 }
 
 // -----------------------------------------------------------------------------

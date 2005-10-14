@@ -22,8 +22,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( const MIL_Re
 {
     outContainer.clear();
 
-    CIT_KnowledgeObjectMap itKnowledge = knowledgeObjectMap_.find( &objectKnown );   
-    if( itKnowledge != knowledgeObjectMap_.end() )
+    CIT_KnowledgeObjectMap itKnowledge = realObjectMap_.find( &objectKnown );   
+    if( itKnowledge != realObjectMap_.end() )
         outContainer.push_back( itKnowledge->second );
 }
 
@@ -34,31 +34,20 @@ void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( const MIL_Re
 inline
 void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const
 {
-    for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromMosIDMap_.begin(); itKnowledge != knowledgeObjectFromMosIDMap_.end(); ++itKnowledge )
+    for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); ++itKnowledge )
         outContainer.push_back( itKnowledge->second );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromMosID
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromMosID( uint nMosID ) const
+DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromID( uint nMosID ) const
 {
-    CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromMosIDMap_.find( nMosID );
-    return itKnowledge == knowledgeObjectFromMosIDMap_.end() ? 0 : itKnowledge->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromDiaID
-// Created: NLD 2004-03-24
-// -----------------------------------------------------------------------------
-inline
-DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromDiaID( uint nDiaID ) const
-{
-    CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromDiaIDMap_.find( nDiaID );
-    return itKnowledge == knowledgeObjectFromDiaIDMap_.end() ? 0 : itKnowledge->second;
+    CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.find( nMosID );
+    return itKnowledge == knowledgeObjectFromIDMap_.end() ? 0 : itKnowledge->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,5 +57,5 @@ DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObje
 inline
 bool DEC_BlackBoard_CanContainKnowledgeObject::HasKnowledgeObject( const MIL_RealObject_ABC& objectKnown ) const
 {
-    return knowledgeObjectMap_.find( &objectKnown ) != knowledgeObjectMap_.end();
+    return realObjectMap_.find( &objectKnown ) != realObjectMap_.end();
 }

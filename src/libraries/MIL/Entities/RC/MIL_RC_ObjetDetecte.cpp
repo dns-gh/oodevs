@@ -80,7 +80,7 @@ void MIL_RC_ObjetDetecte::Send( const MIL_AgentPion& sender, E_RcType nType, con
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    asnMsg.GetAsnMsg().cr.u.cr_objet_detecte = param.GetMosID();
+    asnMsg.GetAsnMsg().cr.u.cr_objet_detecte = param.GetID();
     asnMsg.Send();
 }
 

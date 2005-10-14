@@ -10,25 +10,14 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromMosID
+// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromID
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
 inline
-DEC_Knowledge_Agent* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromMosID( uint nID ) const
+DEC_Knowledge_Agent* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromID( uint nID ) const
 {
     assert( pBlackBoard_ );
-    return pBlackBoard_->GetKnowledgeAgentFromMosID( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromDiaID
-// Created: NLD 2004-03-25
-// -----------------------------------------------------------------------------
-inline
-DEC_Knowledge_Agent* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromDiaID( uint nID ) const
-{
-    assert( pBlackBoard_ );
-    return pBlackBoard_->GetKnowledgeAgentFromDiaID( nID );
+    return pBlackBoard_->GetKnowledgeAgentFromID( nID );
 }
 
 // -----------------------------------------------------------------------------

@@ -44,9 +44,8 @@ public:
 
     //! @name Queries / Operations
     //@{
-    bool                  IsKnown                    ( const MIL_RealObject_ABC& oject ) const;
-    DEC_Knowledge_Object* GetKnowledgeObjectFromMosID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObjectFromDiaID( uint nID ) const;
+    bool                  IsKnown                 ( const MIL_RealObject_ABC& oject ) const;
+    DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
 
     void                  GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
     DEC_Knowledge_Object* GetKnowledgeObject ( MIL_RealObject_ABC& object ) const;

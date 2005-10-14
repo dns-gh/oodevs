@@ -29,8 +29,6 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Object, "DEC_Knowledge_Object" )
 
-uint DEC_Knowledge_Object::nDiaIDIdx_ = 1;
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object constructor
 // Created: NLD 2004-03-11
@@ -40,8 +38,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_Rea
     , pArmyKnowing_                     ( &armyKnowing )
     , pObjectKnown_                     ( &objectKnown )
     , pObjectType_                      ( &objectKnown.GetType() )
-    , nMosID_                           ( pObjectType_->GetIDManager().GetFreeSimID() )
-    , nDiaID_                           ( nDiaIDIdx_++ )
+    , nID_                              ( pObjectType_->GetIDManager().GetFreeSimID() )
     , nAttributesUpdated_               ( eAttr_AllAttributes )
     , localisation_                     ( )
     , avoidanceLocalisation_            ( )
@@ -69,8 +66,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , pObjectType_                     ( 0 )
     , pArmyKnowing_                    ( 0 )
     , pObjectKnown_                    ( 0 )
-    , nMosID_                          ( 0 )
-    , nDiaID_                          ( 0 )
+    , nID_                             ( 0 )
     , nAttributesUpdated_              ( 0 )
     , localisation_                    ()
     , avoidanceLocalisation_           ()
@@ -97,7 +93,7 @@ DEC_Knowledge_Object::~DEC_Knowledge_Object()
     assert( pObjectType_ );
     
     SendMsgDestruction();
-    pObjectType_->GetIDManager().ReleaseSimID( nMosID_ );
+    pObjectType_->GetIDManager().ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -120,8 +116,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
     
     file >> const_cast< MIL_Army*& >( pArmyKnowing_ )
          >> pObjectKnown_
-         >> nMosID_
-         >> nDiaID_
+         >> const_cast< uint& >( nID_ )
          >> nAttributesUpdated_
          >> localisation_
          >> avoidanceLocalisation_
@@ -155,8 +150,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
         reconByAgentTypes_.insert( MIL_AgentTypePion::FindPionType( nID ) );
     }
     
-    pObjectType_->GetIDManager().LockSimID( nMosID_ );
-    nDiaIDIdx_ = std::max( nDiaIDIdx_, nDiaID_ + 1 );
+    pObjectType_->GetIDManager().LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,8 +165,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
          << pObjectType_->GetAsnID()
          << pArmyKnowing_
          << pObjectKnown_
-         << nMosID_
-         << nDiaID_
+         << nID_
          << nAttributesUpdated_
          << localisation_
          << avoidanceLocalisation_
@@ -566,7 +559,7 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
         return;
 
     NET_ASN_MsgObjectKnowledgeUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance    = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
     asnMsg.GetAsnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
@@ -595,7 +588,7 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
     NET_ASN_MsgObjectKnowledgeCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance    = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
     asnMsg.GetAsnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
@@ -617,7 +610,7 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     NET_ASN_MsgObjectKnowledgeDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance    = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
     asnMsg.GetAsnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();

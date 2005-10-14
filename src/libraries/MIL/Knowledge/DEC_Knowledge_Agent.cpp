@@ -32,10 +32,7 @@
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Agent, "DEC_Knowledge_Agent" )
 
-class PHY_Composante;
-
 MIL_MOSIDManager DEC_Knowledge_Agent::idManager_;
-uint             DEC_Knowledge_Agent::nDiaIDIdx_                                    = 1;
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByEtatOps_          = 0.2; // 20%
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
@@ -48,8 +45,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     : DEC_Knowledge_ABC              ()
     , pKnowledgeGroup_               ( &knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
-    , nMosID_                        ( idManager_.GetFreeSimID() )
-    , nDiaID_                        ( nDiaIDIdx_++ )
+    , nID_                           ( idManager_.GetFreeSimID() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -73,8 +69,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     : DEC_Knowledge_ABC                     ()
-    , nMosID_                               ()
-    , nDiaID_                               ()
+    , nID_                                  ()
     , pKnowledgeGroup_                      ()
     , pAgentKnown_                          ()
     , dataDetection_                        ()
@@ -105,7 +100,7 @@ DEC_Knowledge_Agent::~DEC_Knowledge_Agent()
 {
     if( bCreatedOnNetwork_ )
         SendMsgDestruction();
-    idManager_.ReleaseSimID( nMosID_ );
+    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -163,8 +158,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> pAgentKnown_
-         >> const_cast< uint& >( nMosID_ )
-         >> const_cast< uint& >( nDiaID_ )
+         >> const_cast< uint& >( nID_ )
          >> dataDetection_
          >> dataRecognition_
          >> dataIdentification_
@@ -189,8 +183,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const uint )
          >> bMaxPerceptionLevelUpdated_
          >> nTimeExtrapolationEnd_;
 
-    idManager_.LockSimID( nMosID_ );
-    nDiaIDIdx_ = std::max( nDiaIDIdx_, nDiaID_ + 1 );
+    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,8 +195,7 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const uint ) con
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pKnowledgeGroup_
          << pAgentKnown_
-         << nMosID_
-         << nDiaID_
+         << nID_
          << dataDetection_
          << dataRecognition_
          << dataIdentification_
@@ -456,7 +448,7 @@ void DEC_Knowledge_Agent::SendChangedState()
     assert( pKnowledgeGroup_ );
 
     NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
     asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     
     if( bRelevanceUpdated_ )
@@ -500,7 +492,7 @@ void DEC_Knowledge_Agent::SendFullState()
     assert( pKnowledgeGroup_ );
 
     NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
     asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     
     asnMsg.GetAsnMsg().m.pertinencePresent = 1;
@@ -577,7 +569,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pAgentKnown_ );
 
     NET_ASN_MsgUnitKnowledgeCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
     asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     asnMsg.GetAsnMsg().oid_unite_reelle      = pAgentKnown_->GetID();    
     asnMsg.Send();
@@ -592,7 +584,7 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
     assert( pKnowledgeGroup_ );
     
     NET_ASN_MsgUnitKnowledgeDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nMosID_;
+    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
     asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     asnMsg.Send();
 }

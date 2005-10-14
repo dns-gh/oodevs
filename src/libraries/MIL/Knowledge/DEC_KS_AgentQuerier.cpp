@@ -160,40 +160,20 @@ bool DEC_KS_AgentQuerier::IsIdentified( const MIL_PopulationConcentration& conce
 // Name: DEC_KS_AgentQuerier::GetKnowledgeAgentFromDiaID
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KS_AgentQuerier::GetKnowledgeAgentFromDiaID( uint nID ) const
+DEC_Knowledge_Agent* DEC_KS_AgentQuerier::GetKnowledgeAgentFromID( uint nID ) const
 {
     assert( pPion_ );
-    return pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgentFromDiaID( nID );
+    return pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgentFromID( nID );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::GetKnowledgeAgentFromMosID
+// Name: DEC_KS_AgentQuerier::GetKnowledgeObjectFromID
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent* DEC_KS_AgentQuerier::GetKnowledgeAgentFromMosID( uint nID ) const
+DEC_Knowledge_Object* DEC_KS_AgentQuerier::GetKnowledgeObjectFromID( uint nID ) const
 {
     assert( pPion_ );
-    return pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgentFromMosID( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::GetKnowledgeObjectFromDiaID
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KS_AgentQuerier::GetKnowledgeObjectFromDiaID( uint nID ) const
-{
-    assert( pPion_ );
-    return pPion_->GetArmy().GetKSQuerier().GetKnowledgeObjectFromDiaID( nID );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::GetKnowledgeObjectFromMosID
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KS_AgentQuerier::GetKnowledgeObjectFromMosID( uint nID ) const
-{
-    assert( pPion_ );
-    return pPion_->GetArmy().GetKSQuerier().GetKnowledgeObjectFromMosID( nID );    
+    return pPion_->GetArmy().GetKSQuerier().GetKnowledgeObjectFromID( nID );    
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +202,7 @@ void DEC_KS_AgentQuerier::GetAttackers( T_KnowledgeAgentDiaIDVector& container )
     {
         DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgent( **itPerception );
         assert( pKnowledge );
-        container.push_back( (void*)pKnowledge->GetDiaID() );
+        container.push_back( (void*)pKnowledge->GetID() );
     }
 }
 
@@ -246,7 +226,7 @@ public:
 
         DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgent( knowledge );
         assert( pKnowledge );
-        pContainer_->push_back( (void*)pKnowledge->GetDiaID() );
+        pContainer_->push_back( (void*)pKnowledge->GetID() );
     }
 
 private:
@@ -389,7 +369,7 @@ void DEC_KS_AgentQuerier::GetObjectsColliding( T_KnowledgeObjectDiaIDVector& con
     {
         DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKSQuerier().GetKnowledgeObject( **itObjectColliding );
         assert( pKnowledge );
-        container.push_back( (void*)( pKnowledge->GetDiaID() ) );
+        container.push_back( (void*)( pKnowledge->GetID() ) );
     }
 }
 

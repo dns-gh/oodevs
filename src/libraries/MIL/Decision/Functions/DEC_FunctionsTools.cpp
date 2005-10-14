@@ -32,7 +32,7 @@ DEC_Knowledge_Agent* DEC_FunctionsTools::GetKnowledgeAgentFromDia( const DIA_Var
     assert( DEC_Tools::CheckTypeConnaissanceAgent( diaVar ) );
 
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKSQuerier().GetKnowledgeAgentFromDiaID( nKnowledgeID_ );
+    return caller.GetKSQuerier().GetKnowledgeAgentFromID( nKnowledgeID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +44,6 @@ DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_V
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaVar ) );
 
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
-    return caller.GetKSQuerier().GetKnowledgeObjectFromDiaID( nKnowledgeID_ ); 
+    return caller.GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
 }
 

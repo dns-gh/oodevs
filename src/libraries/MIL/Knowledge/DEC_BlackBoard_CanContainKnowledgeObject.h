@@ -54,16 +54,15 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_Object* GetKnowledgeObjectFromMosID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObjectFromDiaID( uint nID ) const;
-    void                  GetKnowledgesObject        ( const MIL_RealObject_ABC& objectKnown, T_KnowledgeObjectVector& outContainer ) const;
-    void                  GetKnowledgesObject        ( T_KnowledgeObjectVector& outContainer ) const;
-    bool                  HasKnowledgeObject         ( const MIL_RealObject_ABC& objectKnown ) const;
+    DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
+    void                  GetKnowledgesObject     ( const MIL_RealObject_ABC& objectKnown, T_KnowledgeObjectVector& outContainer ) const;
+    void                  GetKnowledgesObject     ( T_KnowledgeObjectVector& outContainer ) const;
+    bool                  HasKnowledgeObject      ( const MIL_RealObject_ABC& objectKnown ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromMosIDMap_.begin(); itKnowledge != knowledgeObjectFromMosIDMap_.end(); )
+        for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
         {
             DEC_Knowledge_Object& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -91,9 +90,8 @@ private:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeObjectMap   knowledgeObjectMap_;
-    T_KnowledgeObjectIDMap knowledgeObjectFromMosIDMap_;
-    T_KnowledgeObjectIDMap knowledgeObjectFromDiaIDMap_; //$$$ A remplacer par une table de hash
+    T_KnowledgeObjectMap   realObjectMap_;
+    T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
     //@}
 };
 

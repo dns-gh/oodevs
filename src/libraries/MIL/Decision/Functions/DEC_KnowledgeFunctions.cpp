@@ -125,7 +125,7 @@ void DEC_KnowledgeFunctions::GetClosestObject( DIA_Call_ABC& call, const MIL_Age
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
     
     DEC_Knowledge_Object* pKnowledge = callerAgent.GetKSQuerier().GetClosestObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), objectsFilter );
-    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetDiaID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
 }
 
 // -----------------------------------------------------------------------------

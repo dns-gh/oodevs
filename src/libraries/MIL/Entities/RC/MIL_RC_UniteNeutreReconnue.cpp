@@ -74,7 +74,7 @@ void MIL_RC_UniteNeutreReconnue::Send( const MIL_AgentPion& sender, E_RcType nTy
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_reconnue = param.GetMosID();
+    asnMsg.GetAsnMsg().cr.u.cr_unite_neutre_reconnue = param.GetID();
     asnMsg.Send();
 }
 

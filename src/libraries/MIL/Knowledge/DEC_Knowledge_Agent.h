@@ -103,8 +103,7 @@ public:
           bool                           IsPrisoner               () const;
           bool                           IsRefugeeManaged         () const;
           bool                           IsDead                   () const;
-          uint                           GetMosID                 () const;
-          uint                           GetDiaID                 () const;
+          uint                           GetID                    () const;
           MT_Float                       GetAltitude              () const;
     const MT_Vector2D&                   GetPosition              () const;
     const MT_Vector2D&                   GetDirection             () const;
@@ -171,9 +170,7 @@ private:
 private:
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
           MIL_Agent_ABC*      pAgentKnown_;
-
-    const uint nMosID_;               // ID utilisé pour les échanges MOS-SIM
-    const uint nDiaID_;               // ID utilisé pour les échanges SIM-DIA
+    const uint                nID_;
          
     DEC_Knowledge_AgentDataDetection      dataDetection_;
     DEC_Knowledge_AgentDataRecognition    dataRecognition_;
@@ -196,9 +193,6 @@ private:
     bool     bCurrentPerceptionLevelUpdated_;
     bool     bMaxPerceptionLevelUpdated_;
     MT_Float rLastRelevanceSent_;
-
-private:
-    static uint nDiaIDIdx_;
 };
 
 #include "DEC_Knowledge_Agent.inl"

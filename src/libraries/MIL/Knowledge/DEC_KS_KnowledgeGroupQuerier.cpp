@@ -55,7 +55,7 @@ public:
         if(    pKnowledgeGroup_->GetArmy().IsAnEnemy( knowledge ) != eTristate_False 
             && !knowledge.IsMilitia() 
             && !knowledge.IsRefugee() )
-            pContainer_->push_back( (void*)knowledge.GetDiaID() );
+            pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
 private:
@@ -92,7 +92,7 @@ public:
     void operator() ( DEC_Knowledge_Agent& knowledge )
     {
         if ( knowledge.IsMilitia() )
-            pContainer_->push_back( (void*)knowledge.GetDiaID() );
+            pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
 private:
@@ -128,7 +128,7 @@ public:
     void operator() ( DEC_Knowledge_Agent& knowledge )
     {
         if( knowledge.IsRefugee() )
-            pContainer_->push_back( (void*)knowledge.GetDiaID() );
+            pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
 private:
@@ -164,7 +164,7 @@ public:
     void operator() ( DEC_Knowledge_Agent& knowledge )
     {
         if( knowledge.IsSurrendered() )
-            pContainer_->push_back( (void*)knowledge.GetDiaID() );
+            pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
 private:
@@ -276,7 +276,7 @@ public:
     void operator() ( DEC_Knowledge_Agent& knowledge )
     {
         if( pArmy_->IsAFriend( knowledge ) == eTristate_True && pZone_->IsInside( knowledge.GetPosition() ) )
-            pContainer_->push_back( (void*)knowledge.GetDiaID() );
+            pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
 private:
@@ -312,23 +312,13 @@ DEC_Knowledge_Agent* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgent( const DEC_
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObjectFromDiaID
+// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObjectFromID
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObjectFromDiaID( uint nID ) const
+DEC_Knowledge_Object* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObjectFromID( uint nID ) const
 {
     assert( pKnowledgeGroup_ );
-    return pKnowledgeGroup_->GetArmy().GetKSQuerier().GetKnowledgeObjectFromDiaID( nID );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObjectFromMosID
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Object* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObjectFromMosID( uint nID ) const
-{
-    assert( pKnowledgeGroup_ );  
-    return pKnowledgeGroup_->GetArmy().GetKSQuerier().GetKnowledgeObjectFromMosID( nID );    
+    return pKnowledgeGroup_->GetArmy().GetKSQuerier().GetKnowledgeObjectFromID( nID );    
 }
 
 // -----------------------------------------------------------------------------
