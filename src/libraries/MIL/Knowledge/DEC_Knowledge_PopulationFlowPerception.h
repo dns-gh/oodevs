@@ -16,6 +16,7 @@
 
 class DEC_Knowledge_PopulationPerception;
 class MIL_PopulationFlow;
+class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
 
 // =============================================================================
@@ -37,7 +38,7 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
+    void load( MIL_CheckPointInArchive& , const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
     
@@ -52,7 +53,15 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_PopulationFlow& GetFlowPerceived() const;
+    const PHY_PerceptionLevel&                GetCurrentPerceptionLevel() const;
+    const MIL_PopulationFlow&                 GetFlowPerceived         () const;
+    const DEC_Knowledge_PopulationPerception& GetKnowledge             () const;
+          uint                                GetNbrAliveHumans        () const;
+          uint                                GetNbrDeadHumans         () const;
+    const MIL_PopulationAttitude&             GetAttitude              () const;
+    const T_PointVector&                      GetShape                 () const;
+    const MT_Vector2D&                        GetDirection             () const;
+          MT_Float                            GetSpeed                 () const;
     //@}
 
     //! @name Network operations
@@ -66,6 +75,9 @@ private:
           MIL_PopulationFlow*                  pPopulationFlowPerceived_;
           T_PointVector                        shape_;
           T_PointVector                        previousShape_;
+
+    const PHY_PerceptionLevel*                 pCurrentPerceptionLevel_;
+    const PHY_PerceptionLevel*                 pPreviousPerceptionLevel_;
           
 };
 

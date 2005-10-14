@@ -34,6 +34,8 @@ DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception( 
     , pPopulationFlowPerceived_( &flowPerceived )
     , shape_                   ()
     , previousShape_           ()
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
 }
 
@@ -46,6 +48,8 @@ DEC_Knowledge_PopulationFlowPerception::DEC_Knowledge_PopulationFlowPerception()
     , pPopulationFlowPerceived_( 0 )
     , shape_                   ()
     , previousShape_           ()
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
 }
 
@@ -70,7 +74,7 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
     assert( false );
 //    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
 //
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
 //         >> pPopulationPerceived_;
 }
 
@@ -82,7 +86,7 @@ void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& fil
 {
     assert( false );
 //    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
 //         << pPopulationPerceived_;
 }
 
@@ -96,8 +100,11 @@ void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& fil
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::Prepare()
 {
+    pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
+    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_;
+
     previousShape_.clear();
-    shape_.swap( previousShape_ );
+    shape_.swap( previousShape_ );    
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +114,11 @@ void DEC_Knowledge_PopulationFlowPerception::Prepare()
 void DEC_Knowledge_PopulationFlowPerception::Update( const PHY_PerceptionLevel& perceptionLevel, const T_PointVector& shape )
 {
     assert( perceptionLevel != PHY_PerceptionLevel::notSeen_ );
-    shape_ = shape;
+    if( perceptionLevel > *pCurrentPerceptionLevel_ )
+        pCurrentPerceptionLevel_ = &perceptionLevel;   
+
+    shape_                   = shape;
+    pCurrentPerceptionLevel_ = &perceptionLevel;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +128,69 @@ void DEC_Knowledge_PopulationFlowPerception::Update( const PHY_PerceptionLevel& 
 bool DEC_Knowledge_PopulationFlowPerception::Clean()
 {
     return shape_.empty();
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return pPopulationFlowPerceived_->GetNbrAliveHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetNbrDeadHumans
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_PopulationFlowPerception::GetNbrDeadHumans() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return pPopulationFlowPerceived_->GetNbrDeadHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetAttitude
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+const MIL_PopulationAttitude& DEC_Knowledge_PopulationFlowPerception::GetAttitude() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return pPopulationFlowPerceived_->GetAttitude();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetShape
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+const T_PointVector& DEC_Knowledge_PopulationFlowPerception::GetShape() const
+{
+    return shape_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetDirection
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_PopulationFlowPerception::GetDirection() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return pPopulationFlowPerceived_->GetDirection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetSpeed
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_PopulationFlowPerception::GetSpeed() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return pPopulationFlowPerceived_->GetSpeed();
 }
 
 // =============================================================================

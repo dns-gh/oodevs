@@ -47,6 +47,8 @@ public:
     //@{
     bool Update();
     void Clean ();
+
+    bool IsValid() const; // false = will be deleted
     //@}
 
     //! @name Actions
@@ -56,11 +58,15 @@ public:
 
     //! @name Accessors
     //@{
-                  uint              GetID        () const;
-                  MIL_Population&   GetPopulation() const;
-    virtual const MT_Vector2D&      GetPosition  () const;
-    virtual const MT_Vector2D&      GetDirection () const;
-    virtual const TER_Localisation& GetLocation  () const;
+                  uint                    GetID            () const;
+                  MIL_Population&         GetPopulation    () const;
+    virtual const MT_Vector2D&            GetPosition      () const;
+    virtual const MT_Vector2D&            GetDirection     () const;
+    virtual const TER_Localisation&       GetLocation      () const;
+            const MIL_PopulationAttitude& GetAttitude      () const;
+                  uint                    GetNbrAliveHumans() const;
+                  uint                    GetNbrDeadHumans () const;
+                  MT_Float                GetSpeed         () const;
     //@}
 
     //! @name Concentration management

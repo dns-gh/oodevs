@@ -238,7 +238,7 @@ bool MIL_PopulationFlow::Update()
     }
 
     // Destruction
-    if( pDestConcentration_ && !pSourceConcentration_ && GetHeadPosition() == GetTailPosition() )
+    if( !IsValid() )
     {
         pDestConcentration_->UnregisterPushingFlow( *this );
         pDestConcentration_ = 0;

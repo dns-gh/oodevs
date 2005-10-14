@@ -13,28 +13,46 @@
 #include "DEC_Knowledge_PopulationFlow.h"
 
 #include "DEC_Knowledge_Population.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
-#include "Network/NET_AgentServer.h"
-#include "Entities/Agents/s/PHY_Level.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Populations/MIL_Population.h"
+#include "DEC_Knowledge_PopulationFlowPerception.h"
+#include "DEC_Knowledge_PopulationPerception.h"
+#include "MIL_KnowledgeGroup.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
-#include "MIL_AgentServer.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Tools/MIL_Tools.h"
+#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
+
+MIL_MOSIDManager DEC_Knowledge_PopulationFlow::idManager_;
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_PopulationFlow" )
-
-using namespace DIN;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, MIL_PopulationFlow& flowPerceived )
-    : pPopulationKnowledge_    ( &populationKnowledge    )
-    , pPopulationFlowPerceived_( &flowPerceived )
-    , shape_                   ()
-    , previousShape_           ()
+DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown )
+    : pPopulationKnowledge_    ( &populationKnowledge )
+    , pFlowKnown_              ( &flowKnown )
+    , nID_                     ( idManager_.GetFreeSimID() )
+    , direction_               ( 1., 0. )
+    , rSpeed_                  ( 0. )
+    , shapes_                  ()
+    , nNbrAliveHumans_         ( 0 )
+    , nNbrDeadHumans_          ( 0 )
+    , pAttitude_               ( 0 ) // $$$
+    , rRelevance_              ( 1. )
+    , bHumansUpdated_          ( true )
+    , bAttitudeUpdated_        ( true )
+    , bRealFlowUpdated_        ( true )
+    , bRelevanceUpdated_       ( true )
+    , bShapeUpdated_           ( true )
+    , bSpeedUpdated_           ( true )
+    , bDirectionUpdated_       ( true )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
 {
+    SendMsgCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,9 +61,24 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     : pPopulationKnowledge_    ( 0 )
-    , pPopulationFlowPerceived_( 0 )
-    , shape_                   ()
-    , previousShape_           ()
+    , pFlowKnown_              ( 0 )
+    , nID_                     ( 0 )
+    , direction_               ( 1., 0. )
+    , rSpeed_                  ( 0. )
+    , shapes_                  ()
+    , nNbrAliveHumans_         ( 0 )
+    , nNbrDeadHumans_          ( 0 )
+    , pAttitude_               ( 0 ) // $$$
+    , rRelevance_              ( 1. )
+    , bHumansUpdated_          ( true )
+    , bAttitudeUpdated_        ( true )
+    , bRealFlowUpdated_        ( true )
+    , bRelevanceUpdated_       ( true )
+    , bShapeUpdated_           ( true )
+    , bSpeedUpdated_           ( true )
+    , bDirectionUpdated_       ( true )
+    , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
+    , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
 {
 }
 
@@ -55,6 +88,8 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlow::~DEC_Knowledge_PopulationFlow()
 {
+    SendMsgDestruction();
+    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -96,27 +131,90 @@ void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::Prepare()
 {
-    previousShape_.clear();
-    shape_.swap( previousShape_ );
+    pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
+    pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_; 
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::Update
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlow::Update( const PHY_Level& Level, const T_PointVector& shape )
+void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
-    assert( Level != PHY_Level::notSeen_ );
-    shape_ = shape;
+    pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
+
+    T_PointVector& shape = shapes_[ &perception.GetKnowledge().GetAgentPerceiving() ];
+
+    if( shape != perception.GetShape() )
+    {
+        shape          = perception.GetShape();
+        bShapeUpdated_ = true;
+    }
+
+    if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
+    {
+        nNbrAliveHumans_ = perception.GetNbrAliveHumans();
+        bHumansUpdated_  = true;
+    }
+    if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
+    {
+        nNbrDeadHumans_  = perception.GetNbrDeadHumans();
+        bHumansUpdated_  = true;
+    }
+
+    if( !pAttitude_ || *pAttitude_ != perception.GetAttitude() )
+    {
+        pAttitude_        = &perception.GetAttitude();
+        bAttitudeUpdated_ = true;
+    }
+
+    if( direction_ != perception.GetDirection() )
+    {
+        direction_         = perception.GetDirection();
+        bDirectionUpdated_ = true;
+    }
+
+    if( rSpeed_ != perception.GetSpeed() )
+    {
+        rSpeed_        = perception.GetSpeed();
+        bSpeedUpdated_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationFlow::Clean
-// Created: NLD 2005-10-12
+// Name: DEC_Knowledge_PopulationFlow::UpdateRelevance
+// Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlow::Clean()
+void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 {
-    return shape_.empty();
+    assert( rRelevance_ > 0. );
+
+    if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
+    {
+        assert( pFlowKnown_ && pFlowKnown_->IsValid() );
+        if( rRelevance_ != 1. )
+        {
+            rRelevance_        = 1.;
+            bRelevanceUpdated_ = true;
+        }
+        return;
+    }
+
+    // L'objet réel va être détruit
+    if( pFlowKnown_ && !pFlowKnown_->IsValid() )
+    {
+        pFlowKnown_       = 0;
+        bRealFlowUpdated_ = true;
+    }
+
+    // Si plus d'objet réel associé est si l'emplacement de l'objet est vu
+//    assert( pArmyKnowing_ );
+//    if ( !pFlowKnown_ && pArmyKnowing_->IsPerceived( *this ) )
+//    {
+//        rRelevance_ = 0.;
+//        NotifyAttributeUpdated( eAttr_Relevance );
+//        return;
+//    }   
 }
 
 // =============================================================================
@@ -129,8 +227,160 @@ bool DEC_Knowledge_PopulationFlow::Clean()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
 {
-    if( shape_ != previousShape_ )
-        SendStateToNewClient();
+    assert( pPreviousPerceptionLevel_ );
+    assert( pCurrentPerceptionLevel_  );
+    assert( pAttitude_ );
+
+    if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bRelevanceUpdated_ && !bShapeUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
+        return;
+
+    NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
+
+    asnMsg.GetAsnMsg().oid_connaissance_flux       = nID_;
+    asnMsg.GetAsnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
+    asnMsg.GetAsnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+
+    if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
+    {
+        asnMsg.GetAsnMsg().m.est_percuPresent = 1;
+        asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+    }
+
+    if( bHumansUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+        asnMsg.GetAsnMsg().nb_humains_morts            = nNbrDeadHumans_;
+        asnMsg.GetAsnMsg().nb_humains_vivants          = nNbrAliveHumans_;
+    }
+
+    if( bAttitudeUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.attitudePresent = 1;
+        asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
+    }
+
+    if( bRealFlowUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.oid_flux_reelPresent = 1;
+        asnMsg.GetAsnMsg().oid_flux_reel          = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
+    }
+
+    if( bRelevanceUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.pertinencePresent = 1;
+        asnMsg.GetAsnMsg().pertinence          = (uint)( rRelevance_ * 100. );
+    }
+
+    if( bDirectionUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.directionPresent = 1;
+        NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
+    }
+
+    if( bSpeedUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.vitessePresent = 1;
+        asnMsg.GetAsnMsg().vitesse          = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    }
+   
+
+    if( bShapeUpdated_ )
+    {
+        asnMsg.GetAsnMsg().m.portions_fluxPresent = 1;
+        asnMsg.GetAsnMsg().portions_flux.n        = shapes_.size();
+        if( !shapes_.empty() )
+        {
+            asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_Itineraire[ asnMsg.GetAsnMsg().portions_flux.n ];
+            uint i = 0;
+            for( CIT_ShapeMap it = shapes_.begin(); it != shapes_.end(); ++it, ++i )
+                NET_ASN_Tools::WritePath( it->second, asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
+        }
+    }
+
+    asnMsg.Send();
+    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::SendFullState
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::SendFullState() const
+{
+    assert( pPopulationKnowledge_ );
+    assert( pAttitude_ );
+
+    NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
+
+    asnMsg.GetAsnMsg().oid_connaissance_flux = nID_;
+    asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
+    asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    
+    asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
+    asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+    asnMsg.GetAsnMsg().m.attitudePresent           = 1;
+    asnMsg.GetAsnMsg().m.est_percuPresent          = 1;
+    asnMsg.GetAsnMsg().m.oid_flux_reelPresent      = 1;
+    asnMsg.GetAsnMsg().m.pertinencePresent         = 1;
+    asnMsg.GetAsnMsg().m.portions_fluxPresent      = 1;
+    asnMsg.GetAsnMsg().m.directionPresent          = 1;
+    asnMsg.GetAsnMsg().m.vitessePresent            = 1;
+
+    asnMsg.GetAsnMsg().nb_humains_morts   = nNbrDeadHumans_;
+    asnMsg.GetAsnMsg().nb_humains_vivants = nNbrAliveHumans_;
+    asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
+    asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+    asnMsg.GetAsnMsg().oid_flux_reel      = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
+    asnMsg.GetAsnMsg().pertinence         = (uint)( rRelevance_ * 100. );
+    asnMsg.GetAsnMsg().vitesse            = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
+    asnMsg.GetAsnMsg().portions_flux.n    = shapes_.size();
+    if( !shapes_.empty() )
+    {
+        asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_Itineraire[ asnMsg.GetAsnMsg().portions_flux.n ];
+        uint i = 0;
+        for( CIT_ShapeMap it = shapes_.begin(); it != shapes_.end(); ++it, ++i )
+            NET_ASN_Tools::WritePath( it->second, asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
+    }
+
+    asnMsg.Send();  
+    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::SendMsgCreation
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
+{
+    assert( pPopulationKnowledge_ );
+
+    NET_ASN_MsgPopulationFluxKnowledgeCreation asnMsg;
+
+    asnMsg.GetAsnMsg().oid_connaissance_flux       = nID_;
+    asnMsg.GetAsnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
+    asnMsg.GetAsnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg.GetAsnMsg().oid_flux_reel               = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
+
+    asnMsg.Send();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::SendMsgDestruction
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
+{
+    assert( pPopulationKnowledge_ );
+
+    NET_ASN_MsgPopulationFluxKnowledgeDestruction asnMsg;
+
+    asnMsg.GetAsnMsg().oid_connaissance_flux       = nID_;
+    asnMsg.GetAsnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
+    asnMsg.GetAsnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+
+    asnMsg.Send();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,17 +389,6 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::SendStateToNewClient() const
 {
-    assert( pPopulationKnowledge_ );
-    assert( pPopulationFlowPerceived_ );
-
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    msg << (uint32)pPopulationKnowledge_->GetAgentPerceiving().GetID();
-    msg << (uint32)pPopulationKnowledge_->GetPopulationPerceived().GetID();
-    msg << (uint32)pPopulationFlowPerceived_->GetID();
-
-    msg << (uint32)shape_.size();
-    for( CIT_PointVector it = shape_.begin(); it != shape_.end(); ++it )
-        msg << *it;
-    msgMgr.SendMsgPopulationFlowInterVisibility( msg );
+    SendMsgCreation();
+    SendFullState  ();
 }

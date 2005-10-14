@@ -226,6 +226,7 @@ public:
     static void WritePointList( const T_PointList& points, ASN1T_ListPoint& asn );
     static void WriteEllipse  ( const MT_Ellipse&       ellipse     , ASN1T_Localisation& asn );
     static void WritePath     ( const T_PointList&      points      , ASN1T_Itineraire&   asn );
+    static void WritePath     ( const T_PointVector&    points      , ASN1T_Itineraire&   asn );
     //@}
 
 private:
@@ -262,7 +263,6 @@ private:
     // @name Encoding tools
     //@{
     static void WriteLine               ( const TER_Localisation& localisation, ASN1T_Line&         asn );
-    static void WritePath               ( const T_PointVector&    points, ASN1T_Itineraire&   asn );
     static void WritePolygon            ( const TER_Localisation& localisation, ASN1T_Polygon&      asn );
 
     static void WriteLocationList       ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );

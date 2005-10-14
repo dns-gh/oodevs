@@ -253,3 +253,54 @@ MIL_Population& MIL_PopulationFlow::GetPopulation() const
 {
     return population_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetAttitude
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+inline
+const MIL_PopulationAttitude& MIL_PopulationFlow::GetAttitude() const
+{
+    assert( pAttitude_ );
+    return *pAttitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetNbrAliveHumans
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationFlow::GetNbrAliveHumans() const
+{
+    return ( uint )rNbrAliveHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetNbrDeadHumans
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationFlow::GetNbrDeadHumans() const
+{
+    return ( uint )rNbrDeadHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetSpeed
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_PopulationFlow::GetSpeed() const
+{
+    return rSpeed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::IsValid
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationFlow::IsValid() const
+{
+    return !pDestConcentration_ || pSourceConcentration_ || GetHeadPosition() != GetTailPosition();
+}

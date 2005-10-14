@@ -113,8 +113,8 @@ void DEC_Knowledge_Population::Prepare()
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
 
-//    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
-//        it->second->Prepare();
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->Prepare();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationConcentrati
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
-//    GetKnowledge( perception.GetFlowPerceived() ).Update( perception );
+    GetKnowledge( perception.GetFlowPerceived() ).Update( perception );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +153,8 @@ void DEC_Knowledge_Population::UpdateRelevance()
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateRelevance();
 
-//    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
-//        it->second->UpdateRelevance(); 
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->UpdateRelevance(); 
 }
 
 // -----------------------------------------------------------------------------
@@ -175,18 +175,17 @@ bool DEC_Knowledge_Population::Clean()
             ++ it;
     }
 
-//    for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
-//    {
-//        DEC_Knowledge_PopulationFlow* pKnowledge = it->second;
-//        if( pKnowledge->Clean() )
-//        {
-//            delete pKnowledge;
-//            it = flows_.erase( it );
-//        }
-//        else 
-//            ++ it;
-//    }
-
+    for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
+    {
+        DEC_Knowledge_PopulationFlow* pKnowledge = it->second;
+        if( pKnowledge->Clean() )
+        {
+            delete pKnowledge;
+            it = flows_.erase( it );
+        }
+        else 
+            ++ it;
+    }
     return concentrations_.empty() && flows_.empty();
 }
 
@@ -213,8 +212,8 @@ DEC_Knowledge_PopulationConcentration& DEC_Knowledge_Population::GetKnowledge( c
 DEC_Knowledge_PopulationFlow& DEC_Knowledge_Population::GetKnowledge( const MIL_PopulationFlow& flow )
 {
     DEC_Knowledge_PopulationFlow*& pKnowledge = flows_[ flow.GetID() ];
-//    if( !pKnowledge )
-//        pKnowledge = new DEC_Knowledge_PopulationFlow( *this, flow );
+    if( !pKnowledge )
+        pKnowledge = new DEC_Knowledge_PopulationFlow( *this, flow );
     return *pKnowledge;
 }
 
@@ -265,8 +264,8 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
 
-//    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
-//        it->second->UpdateOnNetwork();
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,6 +278,6 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->SendStateToNewClient();
 
-//    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
-//        it->second->SendStateToNewClient();
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        it->second->SendStateToNewClient();
 }

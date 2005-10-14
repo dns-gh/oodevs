@@ -6,6 +6,9 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+
+    //DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTotalement ); 
+
     if( DEC_NouvelleMission() )
         DEC_Debug( "DEC_NouvelleMission" );
 
