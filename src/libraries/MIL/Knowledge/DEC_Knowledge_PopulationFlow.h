@@ -18,6 +18,7 @@
 
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationFlowPerception;
+class DEC_Knowledge_PopulationFlowPart;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
@@ -52,8 +53,6 @@ public:
     void Update         ( const DEC_Knowledge_PopulationFlowPerception& perception );
     void UpdateRelevance();
     bool Clean          ();
-
-    bool IsIdentified();
     //@}
 
     //! @name Network operations
@@ -73,10 +72,10 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< const MIL_AgentPion*, T_PointVector > T_ShapeMap;
-    typedef T_ShapeMap::const_iterator                      CIT_ShapeMap;
+    typedef std::map< const MIL_AgentPion*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
+    typedef T_FlowPartMap::iterator                                             IT_FlowPartMap;
+    typedef T_FlowPartMap::const_iterator                                       CIT_FlowPartMap;
     //@}
-
 
 private:
     const DEC_Knowledge_Population*  pPopulationKnowledge_;
@@ -85,18 +84,16 @@ private:
 
           MT_Vector2D                direction_;
           MT_Float                   rSpeed_;
-          T_ShapeMap                 shapes_;
+          T_FlowPartMap              flowParts_;
           uint                       nNbrAliveHumans_;
           uint                       nNbrDeadHumans_;
     const MIL_PopulationAttitude*    pAttitude_;
-          MT_Float                   rRelevance_;
 
           // Network update
           bool                       bHumansUpdated_;
           bool                       bAttitudeUpdated_;
           bool                       bRealFlowUpdated_;
-          bool                       bRelevanceUpdated_;
-          bool                       bShapeUpdated_;
+          bool                       bFlowPartsUpdated_;
           bool                       bSpeedUpdated_;
           bool                       bDirectionUpdated_;
         

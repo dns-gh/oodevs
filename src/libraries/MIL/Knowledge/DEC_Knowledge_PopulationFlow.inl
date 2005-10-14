@@ -8,20 +8,3 @@
 // $Workfile: DEC_Knowledge_PopulationFlow.inl $
 //
 // *****************************************************************************
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationFlow::Clean
-// Created: NLD 2005-10-12
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_PopulationFlow::Clean()
-{
-    bHumansUpdated_    = false;
-    bAttitudeUpdated_  = false;  
-    bRealFlowUpdated_  = false;
-    bRelevanceUpdated_ = false;
-    bShapeUpdated_     = false;
-    bSpeedUpdated_     = false;
-    bDirectionUpdated_ = false;
-    return false;
-}

@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "DEC_Knowledge_PopulationFlowPart.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
@@ -37,16 +38,14 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
     , nID_                     ( idManager_.GetFreeSimID() )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
-    , shapes_                  ()
+    , flowParts_               ()
     , nNbrAliveHumans_         ( 0 )
     , nNbrDeadHumans_          ( 0 )
     , pAttitude_               ( 0 ) // $$$
-    , rRelevance_              ( 1. )
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
     , bRealFlowUpdated_        ( true )
-    , bRelevanceUpdated_       ( true )
-    , bShapeUpdated_           ( true )
+    , bFlowPartsUpdated_       ( true )
     , bSpeedUpdated_           ( true )
     , bDirectionUpdated_       ( true )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
@@ -65,16 +64,14 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , nID_                     ( 0 )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
-    , shapes_                  ()
+    , flowParts_               ()
     , nNbrAliveHumans_         ( 0 )
     , nNbrDeadHumans_          ( 0 )
     , pAttitude_               ( 0 ) // $$$
-    , rRelevance_              ( 1. )
     , bHumansUpdated_          ( true )
     , bAttitudeUpdated_        ( true )
     , bRealFlowUpdated_        ( true )
-    , bRelevanceUpdated_       ( true )
-    , bShapeUpdated_           ( true )
+    , bFlowPartsUpdated_       ( true )
     , bSpeedUpdated_           ( true )
     , bDirectionUpdated_       ( true )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
@@ -133,6 +130,8 @@ void DEC_Knowledge_PopulationFlow::Prepare()
 {
     pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::notSeen_; 
+    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
+        (*it->second).Prepare();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,13 +142,14 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
 {
     pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
 
-    T_PointVector& shape = shapes_[ &perception.GetKnowledge().GetAgentPerceiving() ];
-
-    if( shape != perception.GetShape() )
+    DEC_Knowledge_PopulationFlowPart*& pFlowPart = flowParts_[ &perception.GetKnowledge().GetAgentPerceiving() ];
+    if( !pFlowPart )
     {
-        shape          = perception.GetShape();
-        bShapeUpdated_ = true;
+        bFlowPartsUpdated_ = true;
+        pFlowPart = new DEC_Knowledge_PopulationFlowPart();
     }
+    if( pFlowPart->Update( perception ) )
+        bFlowPartsUpdated_ = true;
 
     if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
     {
@@ -187,34 +187,46 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 {
-    assert( rRelevance_ > 0. );
-
-    if( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
-    {
-        assert( pFlowKnown_ && pFlowKnown_->IsValid() );
-        if( rRelevance_ != 1. )
-        {
-            rRelevance_        = 1.;
-            bRelevanceUpdated_ = true;
-        }
-        return;
-    }
-
     // L'objet réel va être détruit
     if( pFlowKnown_ && !pFlowKnown_->IsValid() )
     {
         pFlowKnown_       = 0;
         bRealFlowUpdated_ = true;
     }
+    
+    const MT_Float rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
+    {
+        if( (*it->second).UpdateRelevance( rMaxLifeTime ) )
+            bFlowPartsUpdated_ = true;
+    }
+}
 
-    // Si plus d'objet réel associé est si l'emplacement de l'objet est vu
-//    assert( pArmyKnowing_ );
-//    if ( !pFlowKnown_ && pArmyKnowing_->IsPerceived( *this ) )
-//    {
-//        rRelevance_ = 0.;
-//        NotifyAttributeUpdated( eAttr_Relevance );
-//        return;
-//    }   
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::Clean
+// Created: NLD 2005-10-12
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlow::Clean()
+{
+    bHumansUpdated_    = false;
+    bAttitudeUpdated_  = false;  
+    bRealFlowUpdated_  = false;
+    bFlowPartsUpdated_ = false;
+    bSpeedUpdated_     = false;
+    bDirectionUpdated_ = false;
+    
+    for( IT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); )
+    {
+        if( (*it->second).Clean() )
+        {
+            delete it->second;
+            it = flowParts_.erase( it );
+        }
+        else 
+            ++ it;
+    }
+    return flowParts_.empty();
 }
 
 // =============================================================================
@@ -231,7 +243,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     assert( pCurrentPerceptionLevel_  );
     assert( pAttitude_ );
 
-    if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bRelevanceUpdated_ && !bShapeUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
+    if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealFlowUpdated_ && !bFlowPartsUpdated_ && !bDirectionUpdated_ && !bSpeedUpdated_ )
         return;
 
     NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
@@ -266,12 +278,6 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         asnMsg.GetAsnMsg().oid_flux_reel          = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
     }
 
-    if( bRelevanceUpdated_ )
-    {
-        asnMsg.GetAsnMsg().m.pertinencePresent = 1;
-        asnMsg.GetAsnMsg().pertinence          = (uint)( rRelevance_ * 100. );
-    }
-
     if( bDirectionUpdated_ )
     {
         asnMsg.GetAsnMsg().m.directionPresent = 1;
@@ -284,22 +290,27 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         asnMsg.GetAsnMsg().vitesse          = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
     }
 
-    if( bShapeUpdated_ )
+    if( bFlowPartsUpdated_ )
     {
         asnMsg.GetAsnMsg().m.portions_fluxPresent = 1;
-        asnMsg.GetAsnMsg().portions_flux.n        = shapes_.size();
-        if( !shapes_.empty() )
+        asnMsg.GetAsnMsg().portions_flux.n        = flowParts_.size();
+        if( !flowParts_.empty() )
         {
-            asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_Itineraire[ asnMsg.GetAsnMsg().portions_flux.n ];
+            asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg.GetAsnMsg().portions_flux.n ];
             uint i = 0;
-            for( CIT_ShapeMap it = shapes_.begin(); it != shapes_.end(); ++it, ++i )
-                NET_ASN_Tools::WritePath( it->second, asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
+            for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
+                (*it->second).Serialize( asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
         }
     }
 
     asnMsg.Send();
     if( asnMsg.GetAsnMsg().m.portions_fluxPresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
+    {
+        for( uint i = 0; i < asnMsg.GetAsnMsg().portions_flux.n; ++i )
+            NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux.elem[ i ].forme );
+        if( asnMsg.GetAsnMsg().portions_flux.n > 0 )
+            delete [] asnMsg.GetAsnMsg().portions_flux.elem;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +333,6 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg.GetAsnMsg().m.attitudePresent           = 1;
     asnMsg.GetAsnMsg().m.est_percuPresent          = 1;
     asnMsg.GetAsnMsg().m.oid_flux_reelPresent      = 1;
-    asnMsg.GetAsnMsg().m.pertinencePresent         = 1;
     asnMsg.GetAsnMsg().m.portions_fluxPresent      = 1;
     asnMsg.GetAsnMsg().m.directionPresent          = 1;
     asnMsg.GetAsnMsg().m.vitessePresent            = 1;
@@ -332,21 +342,25 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
     asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
     asnMsg.GetAsnMsg().oid_flux_reel      = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
-    asnMsg.GetAsnMsg().pertinence         = (uint)( rRelevance_ * 100. );
     asnMsg.GetAsnMsg().vitesse            = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
     NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
-    asnMsg.GetAsnMsg().portions_flux.n    = shapes_.size();
-    if( !shapes_.empty() )
+    asnMsg.GetAsnMsg().portions_flux.n    = flowParts_.size();
+    if( !flowParts_.empty() )
     {
-        asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_Itineraire[ asnMsg.GetAsnMsg().portions_flux.n ];
+        asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg.GetAsnMsg().portions_flux.n ];
         uint i = 0;
-        for( CIT_ShapeMap it = shapes_.begin(); it != shapes_.end(); ++it, ++i )
-            NET_ASN_Tools::WritePath( it->second, asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
+        for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
+            (*it->second).Serialize( asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
     }
 
     asnMsg.Send();  
     if( asnMsg.GetAsnMsg().m.portions_fluxPresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux );
+    {
+        for( uint i = 0; i < asnMsg.GetAsnMsg().portions_flux.n; ++i )
+            NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux.elem[ i ].forme );
+        if( asnMsg.GetAsnMsg().portions_flux.n > 0 )
+            delete [] asnMsg.GetAsnMsg().portions_flux.elem;
+    }
 }
     
 // -----------------------------------------------------------------------------

@@ -1045,6 +1045,174 @@ int ASN1C_MsgPopulationFluxKnowledgeDestruction::Decode ()
 
 /**************************************************************/
 /*                                                            */
+/*  PortionFlux                                               */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_PortionFlux::ASN1C_PortionFlux (
+   ASN1MessageBuffer& msgBuf, ASN1T_PortionFlux& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_PortionFlux (ASN1CTXT* ctxt_p, ASN1T_PortionFlux* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_PortionFlux: start\n");
+
+   /* encode forme */
+
+   PU_PUSHNAME (ctxt_p, "forme");
+
+   stat = asn1PE_Itineraire (ctxt_p, &pvalue->forme);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode pertinence */
+
+   PU_PUSHNAME (ctxt_p, "pertinence");
+
+   stat = asn1PE_Pourcentage (ctxt_p, pvalue->pertinence);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_PortionFlux: end\n");
+   return (stat);
+}
+
+int ASN1C_PortionFlux::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_PortionFlux (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_PortionFlux (ASN1CTXT* ctxt_p, ASN1T_PortionFlux* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_PortionFlux: start\n");
+
+   /* decode forme */
+
+   PU_PUSHNAME (ctxt_p, "forme");
+
+   stat = asn1PD_Itineraire (ctxt_p, &pvalue->forme);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode pertinence */
+
+   PU_PUSHNAME (ctxt_p, "pertinence");
+
+   stat = asn1PD_Pourcentage (ctxt_p, &pvalue->pertinence);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_PortionFlux: end\n");
+
+   return (stat);
+}
+
+int ASN1C_PortionFlux::Decode ()
+{
+   return asn1PD_PortionFlux (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  _SeqOfPortionFlux                                         */
+/*                                                            */
+/**************************************************************/
+
+ASN1C__SeqOfPortionFlux::ASN1C__SeqOfPortionFlux (
+   ASN1MessageBuffer& msgBuf, ASN1T__SeqOfPortionFlux& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE__SeqOfPortionFlux (ASN1CTXT* ctxt_p, ASN1T__SeqOfPortionFlux* pvalue)
+{
+   int stat = ASN_OK;
+   ASN1UINT xx1;
+
+   rtdiag ("asn1PE__SeqOfPortionFlux: start\n");
+
+   /* encode length determinant */
+
+   PU_PUSHNAME (ctxt_p, "n");
+
+   stat = pe_Length (ctxt_p, pvalue->n);
+   if (stat < 0) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* encode elements */
+
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      PU_PUSHELEMNAME (ctxt_p, xx1);
+
+      stat = asn1PE_PortionFlux (ctxt_p, &pvalue->elem[xx1]);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+      PU_POPNAME (ctxt_p);
+   }
+
+   rtdiag ("asn1PE__SeqOfPortionFlux: end\n");
+   return (stat);
+}
+
+int ASN1C__SeqOfPortionFlux::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE__SeqOfPortionFlux (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD__SeqOfPortionFlux (ASN1CTXT* ctxt_p, ASN1T__SeqOfPortionFlux* pvalue)
+{
+   int stat = ASN_OK;
+   ASN1UINT xx1;
+
+   rtdiag ("asn1PD__SeqOfPortionFlux: start\n");
+
+   /* decode length determinant */
+
+   PU_PUSHNAME (ctxt_p, "n");
+
+   stat = pd_Length (ctxt_p, &pvalue->n);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode elements */
+
+   ALLOC_ASN1ARRAY (ctxt_p, pvalue, ASN1T_PortionFlux);
+
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      PU_PUSHELEMNAME (ctxt_p, xx1);
+
+      stat = asn1PD_PortionFlux (ctxt_p, &pvalue->elem[xx1]);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_POPNAME (ctxt_p);
+   }
+
+
+   rtdiag ("asn1PD__SeqOfPortionFlux: end\n");
+
+   return (stat);
+}
+
+int ASN1C__SeqOfPortionFlux::Decode ()
+{
+   return asn1PD__SeqOfPortionFlux (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
 /*  MsgPopulationFluxKnowledgeUpdate                          */
 /*                                                            */
 /**************************************************************/
@@ -1109,13 +1277,6 @@ EXTERN int asn1PE_MsgPopulationFluxKnowledgeUpdate (ASN1CTXT* ctxt_p, ASN1T_MsgP
 
    PU_SETBITCOUNT (ctxt_p);
 
-   PU_NEWFIELD (ctxt_p, "pertinencePresent");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.pertinencePresent);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
    PU_NEWFIELD (ctxt_p, "est_percuPresent");
 
    stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.est_percuPresent);
@@ -1162,7 +1323,7 @@ EXTERN int asn1PE_MsgPopulationFluxKnowledgeUpdate (ASN1CTXT* ctxt_p, ASN1T_MsgP
    if (pvalue->m.portions_fluxPresent) {
       PU_PUSHNAME (ctxt_p, "portions_flux");
 
-      stat = asn1PE_ListItineraire (ctxt_p, &pvalue->portions_flux);
+      stat = asn1PE__SeqOfPortionFlux (ctxt_p, &pvalue->portions_flux);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
       PU_POPNAME (ctxt_p);
    }
@@ -1213,16 +1374,6 @@ EXTERN int asn1PE_MsgPopulationFluxKnowledgeUpdate (ASN1CTXT* ctxt_p, ASN1T_MsgP
       PU_PUSHNAME (ctxt_p, "attitude");
 
       stat = asn1PE_EnumPopulationAttitude (ctxt_p, pvalue->attitude);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-      PU_POPNAME (ctxt_p);
-   }
-
-   /* encode pertinence */
-
-   if (pvalue->m.pertinencePresent) {
-      PU_PUSHNAME (ctxt_p, "pertinence");
-
-      stat = asn1PE_Pourcentage (ctxt_p, pvalue->pertinence);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
       PU_POPNAME (ctxt_p);
    }
@@ -1320,14 +1471,6 @@ EXTERN int asn1PD_MsgPopulationFluxKnowledgeUpdate (ASN1CTXT* ctxt_p, ASN1T_MsgP
 
    PU_SETBITCOUNT (ctxt_p);
 
-   PU_NEWFIELD (ctxt_p, "pertinencePresent");
-
-   stat = pd_bit (ctxt_p, &optbit);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else pvalue->m.pertinencePresent = optbit;
-
-   PU_SETBITCOUNT (ctxt_p);
-
    PU_NEWFIELD (ctxt_p, "est_percuPresent");
 
    stat = pd_bit (ctxt_p, &optbit);
@@ -1379,7 +1522,7 @@ EXTERN int asn1PD_MsgPopulationFluxKnowledgeUpdate (ASN1CTXT* ctxt_p, ASN1T_MsgP
    if (pvalue->m.portions_fluxPresent) {
       PU_PUSHNAME (ctxt_p, "portions_flux");
 
-      stat = asn1PD_ListItineraire (ctxt_p, &pvalue->portions_flux);
+      stat = asn1PD__SeqOfPortionFlux (ctxt_p, &pvalue->portions_flux);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
       PU_POPNAME (ctxt_p);
@@ -1435,17 +1578,6 @@ EXTERN int asn1PD_MsgPopulationFluxKnowledgeUpdate (ASN1CTXT* ctxt_p, ASN1T_MsgP
       PU_PUSHNAME (ctxt_p, "attitude");
 
       stat = asn1PD_EnumPopulationAttitude (ctxt_p, &pvalue->attitude);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_POPNAME (ctxt_p);
-   }
-
-   /* decode pertinence */
-
-   if (pvalue->m.pertinencePresent) {
-      PU_PUSHNAME (ctxt_p, "pertinence");
-
-      stat = asn1PD_Pourcentage (ctxt_p, &pvalue->pertinence);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
       PU_POPNAME (ctxt_p);

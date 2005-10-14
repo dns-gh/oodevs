@@ -1,0 +1,134 @@
+// *****************************************************************************
+//
+// $Created: NLD 2004-03-11 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_Knowledge_PopulationFlowPart.cpp $
+// $Author: Jvt $
+// $Modtime: 6/04/05 12:59 $
+// $Revision: 3 $
+// $Workfile: DEC_Knowledge_PopulationFlowPart.cpp $
+//
+// *****************************************************************************
+
+#include "MIL_pch.h"
+#include "DEC_Knowledge_PopulationFlowPart.h"
+
+#include "DEC_Knowledge_Population.h"
+#include "DEC_Knowledge_PopulationFlowPerception.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_ASN_Tools.h"
+
+BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPart, "DEC_Knowledge_PopulationFlowPart" )
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart constructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
+    : shape_             ()
+    , rRelevance_        ( 1. )
+    , rLastRelevanceSent_( 1. )
+    , bPerceived_        ( true )
+    , nTimeLastUpdate_   ( 0 )
+{
+    
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart destructor
+// Created: NLD 2004-03-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationFlowPart::~DEC_Knowledge_PopulationFlowPart()
+{
+}
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::load
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, const uint )
+{
+    assert( false );
+//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+//
+//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+//         >> pPopulationPerceived_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::save
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, const uint ) const
+{
+    assert( false );
+//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+//         << pPopulationPerceived_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::Prepare
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlowPart::Prepare()
+{
+    bPerceived_ = false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::Update
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
+{
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+
+    if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
+    {
+        bPerceived_ = true;
+        if( shape_ != perception.GetShape() )
+        {
+            shape_ = perception.GetShape();
+            return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::UpdateRelevance
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeTime )
+{
+    assert( rRelevance_ > 0. );
+
+    if( bPerceived_ )
+        return ChangeRelevance( 1. );
+
+    if( shape_.empty() )
+        return ChangeRelevance( 0. );
+
+    assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
+    
+    // Degradation : effacement au bout de X minutes
+    const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
+    const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+    return ChangeRelevance( rRelevance );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::Serialize
+// Created: NLD 2005-10-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlowPart::Serialize( ASN1T_PortionFlux& asn ) 
+{
+    NET_ASN_Tools::WritePath( shape_, asn.forme );
+    asn.pertinence      = (uint)( rRelevance_ * 100. );
+    rLastRelevanceSent_ = rRelevance_;    
+}

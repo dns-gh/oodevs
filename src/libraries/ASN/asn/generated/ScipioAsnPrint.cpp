@@ -17981,6 +17981,45 @@ void ASN1C_MsgPopulationFluxKnowledgeDestruction::Print (ASN1ConstCharPtr name)
    asn1Print_MsgPopulationFluxKnowledgeDestruction (name, &msgData);
 }
 
+void asn1Print_PortionFlux (ASN1ConstCharPtr name, ASN1T_PortionFlux* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.forme", name);
+   asn1Print_Itineraire (namebuf, &pvalue->forme);
+
+   sprintf (namebuf, "%s.pertinence", name);
+   asn1Print_Pourcentage (namebuf, &pvalue->pertinence);
+
+}
+
+void ASN1C_PortionFlux::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_PortionFlux (name, &msgData);
+}
+
+void asn1Print__SeqOfPortionFlux (ASN1ConstCharPtr name, ASN1T__SeqOfPortionFlux* pvalue)
+{
+   char namebuf[512];
+
+   printf ("%s.n = %d\n", name, pvalue->n);
+   {
+   ASN1UINT xx1;
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      sprintf (namebuf, "%s.elem[%d]", name, xx1);
+      asn1Print_PortionFlux (namebuf, &pvalue->elem[xx1]);
+   }
+   }
+
+}
+
+void ASN1C__SeqOfPortionFlux::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print__SeqOfPortionFlux (name, &msgData);
+}
+
 void asn1Print_MsgPopulationFluxKnowledgeUpdate (ASN1ConstCharPtr name, ASN1T_MsgPopulationFluxKnowledgeUpdate* pvalue)
 {
    char namebuf[512];
@@ -17992,7 +18031,6 @@ void asn1Print_MsgPopulationFluxKnowledgeUpdate (ASN1ConstCharPtr name, ASN1T_Ms
    printf ("%s.m.nb_humains_vivantsPresent = %d\n", name, (int)pvalue->m.nb_humains_vivantsPresent);
    printf ("%s.m.nb_humains_mortsPresent = %d\n", name, (int)pvalue->m.nb_humains_mortsPresent);
    printf ("%s.m.attitudePresent = %d\n", name, (int)pvalue->m.attitudePresent);
-   printf ("%s.m.pertinencePresent = %d\n", name, (int)pvalue->m.pertinencePresent);
    printf ("%s.m.est_percuPresent = %d\n", name, (int)pvalue->m.est_percuPresent);
    sprintf (namebuf, "%s.oid_connaissance_flux", name);
    asn1Print_OID (namebuf, &pvalue->oid_connaissance_flux);
@@ -18010,7 +18048,7 @@ void asn1Print_MsgPopulationFluxKnowledgeUpdate (ASN1ConstCharPtr name, ASN1T_Ms
 
    if (pvalue->m.portions_fluxPresent) {
       sprintf (namebuf, "%s.portions_flux", name);
-      asn1Print_ListItineraire (namebuf, &pvalue->portions_flux);
+      asn1Print__SeqOfPortionFlux (namebuf, &pvalue->portions_flux);
    }
 
    if (pvalue->m.directionPresent) {
@@ -18036,11 +18074,6 @@ void asn1Print_MsgPopulationFluxKnowledgeUpdate (ASN1ConstCharPtr name, ASN1T_Ms
    if (pvalue->m.attitudePresent) {
       sprintf (namebuf, "%s.attitude", name);
       asn1Print_EnumPopulationAttitude (namebuf, &pvalue->attitude);
-   }
-
-   if (pvalue->m.pertinencePresent) {
-      sprintf (namebuf, "%s.pertinence", name);
-      asn1Print_Pourcentage (namebuf, &pvalue->pertinence);
    }
 
    if (pvalue->m.est_percuPresent) {

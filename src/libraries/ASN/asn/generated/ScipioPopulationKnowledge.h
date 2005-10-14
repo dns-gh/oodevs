@@ -255,6 +255,58 @@ EXTERN void asn1Print_MsgPopulationFluxKnowledgeDestruction (ASN1ConstCharPtr na
 
 /**************************************************************/
 /*                                                            */
+/*  PortionFlux                                               */
+/*                                                            */
+/**************************************************************/
+
+typedef struct EXTERN ASN1T_PortionFlux {
+   ASN1T_Itineraire  forme;
+   ASN1T_Pourcentage  pertinence;
+} ASN1T_PortionFlux;
+
+class EXTERN ASN1C_PortionFlux : public ASN1CType {
+public:
+   ASN1T_PortionFlux& msgData;
+   ASN1C_PortionFlux (
+      ASN1MessageBuffer& msgBuf, ASN1T_PortionFlux& data);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_PortionFlux (ASN1CTXT* ctxt_p, ASN1T_PortionFlux* pvalue);
+EXTERN int asn1PD_PortionFlux (ASN1CTXT* ctxt_p, ASN1T_PortionFlux* pvalue);
+
+EXTERN void asn1Print_PortionFlux (ASN1ConstCharPtr name, ASN1T_PortionFlux* pvalue);
+
+/**************************************************************/
+/*                                                            */
+/*  _SeqOfPortionFlux                                         */
+/*                                                            */
+/**************************************************************/
+
+typedef struct EXTERN ASN1T__SeqOfPortionFlux {
+   ASN1UINT n;
+   ASN1T_PortionFlux *elem;
+} ASN1T__SeqOfPortionFlux;
+
+class EXTERN ASN1C__SeqOfPortionFlux : public ASN1CType {
+public:
+   ASN1T__SeqOfPortionFlux& msgData;
+   ASN1C__SeqOfPortionFlux (
+      ASN1MessageBuffer& msgBuf, ASN1T__SeqOfPortionFlux& data);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE__SeqOfPortionFlux (ASN1CTXT* ctxt_p, ASN1T__SeqOfPortionFlux* pvalue);
+EXTERN int asn1PD__SeqOfPortionFlux (ASN1CTXT* ctxt_p, ASN1T__SeqOfPortionFlux* pvalue);
+
+EXTERN void asn1Print__SeqOfPortionFlux (ASN1ConstCharPtr name, ASN1T__SeqOfPortionFlux* pvalue);
+
+/**************************************************************/
+/*                                                            */
 /*  MsgPopulationFluxKnowledgeUpdate                          */
 /*                                                            */
 /**************************************************************/
@@ -268,20 +320,18 @@ typedef struct EXTERN ASN1T_MsgPopulationFluxKnowledgeUpdate {
       unsigned nb_humains_vivantsPresent : 1;
       unsigned nb_humains_mortsPresent : 1;
       unsigned attitudePresent : 1;
-      unsigned pertinencePresent : 1;
       unsigned est_percuPresent : 1;
    } m;
    ASN1T_OID  oid_connaissance_flux;
    ASN1T_OID  oid_connaissance_population;
    ASN1T_OID  oid_groupe_possesseur;
    ASN1T_OID  oid_flux_reel;
-   ASN1T_ListItineraire  portions_flux;
+   ASN1T__SeqOfPortionFlux  portions_flux;
    ASN1T_Direction  direction;
    ASN1T_Vitesse  vitesse;
    ASN1INT   nb_humains_vivants;
    ASN1INT   nb_humains_morts;
    ASN1T_EnumPopulationAttitude  attitude;
-   ASN1T_Pourcentage  pertinence;
    ASN1BOOL  est_percu;
 
    ASN1T_MsgPopulationFluxKnowledgeUpdate () {
@@ -292,7 +342,6 @@ typedef struct EXTERN ASN1T_MsgPopulationFluxKnowledgeUpdate {
       m.nb_humains_vivantsPresent = 0;
       m.nb_humains_mortsPresent = 0;
       m.attitudePresent = 0;
-      m.pertinencePresent = 0;
       m.est_percuPresent = 0;
    }
 } ASN1T_MsgPopulationFluxKnowledgeUpdate;
