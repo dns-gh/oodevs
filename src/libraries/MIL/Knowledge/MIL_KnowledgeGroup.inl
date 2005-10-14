@@ -94,28 +94,6 @@ MIL_Army& MIL_KnowledgeGroup::GetArmy() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetKnowledgeMaxLifeTime
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_KnowledgeGroup::GetKnowledgeMaxLifeTime() const
-{
-    assert( pType_ );
-    return pType_->GetKnowledgeMaxLifeTime();
-}
-          
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::GetKnowledgeMaxDistBtwKnowledgeAndRealUnit
-// Created: NLD 2004-11-15
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_KnowledgeGroup::GetKnowledgeMaxDistBtwKnowledgeAndRealUnit() const
-{
-    assert( pType_ );
-    return pType_->GetKnowledgeMaxDistBtwKnowledgeAndRealUnit();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterAutomate
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------

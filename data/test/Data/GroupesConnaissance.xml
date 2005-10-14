@@ -2,26 +2,35 @@
 <GroupesConnaissance>
 
   <GroupeConnaissance nom="Standard">
-    <Connaissance>
+    <ConnaissancesAgent>
       <DureeDeVieMax>1800s</DureeDeVieMax>
       <DistanceMaxEntreUniteReelleEtUniteConnue>60000</DistanceMaxEntreUniteReelleEtUniteConnue>
-    </Connaissance>
+    </ConnaissancesAgent>
+    <ConnaissancesPopulation>
+        <DureeDeVieMax>1800s</DureeDeVieMax>
+    </ConnaissancesPopulation>
   </GroupeConnaissance>
 
   <GroupeConnaissance nom="Rens">
-    <Connaissance>
+    <ConnaissancesAgent>
       <DureeDeVieMax>43200s</DureeDeVieMax>
       <DistanceMaxEntreUniteReelleEtUniteConnue>-1</DistanceMaxEntreUniteReelleEtUniteConnue>
       <TempsInterpolation>12000s</TempsInterpolation>
-    </Connaissance>
+    </ConnaissancesAgent>
+    <ConnaissancesPopulation>
+        <DureeDeVieMax>1800s</DureeDeVieMax>
+    </ConnaissancesPopulation>
   </GroupeConnaissance>
 
   <GroupeConnaissance nom="Alat">
-    <Connaissance>
+    <ConnaissancesAgent>
       <DureeDeVieMax>1800s</DureeDeVieMax>
       <DistanceMaxEntreUniteReelleEtUniteConnue>60000</DistanceMaxEntreUniteReelleEtUniteConnue>
       <TempsInterpolation>60s</TempsInterpolation>
-    </Connaissance>
+    </ConnaissancesAgent>
+    <ConnaissancesPopulation>
+        <DureeDeVieMax>1800s</DureeDeVieMax>
+    </ConnaissancesPopulation>
   </GroupeConnaissance>
 
 </GroupesConnaissance>

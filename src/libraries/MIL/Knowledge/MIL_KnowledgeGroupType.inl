@@ -42,33 +42,43 @@ uint MIL_KnowledgeGroupType::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroupType::GetKnowledgeMaxLifeTime
-// Created: NLD 2004-11-15
+// Name: MIL_KnowledgeGroupType::GetKnowledgePopulationMaxLifeTime
+// Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeMaxLifeTime() const
+MT_Float MIL_KnowledgeGroupType::GetKnowledgePopulationMaxLifeTime() const
 {
-    return rKnowledgeMaxLifeTime_;
+    return rKnowledgePopulationMaxLifeTime_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroupType::GetKnowledgeMaxDistBtwKnowledgeAndRealUnit
+// Name: MIL_KnowledgeGroupType::GetKnowledgeAgentMaxLifeTime
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeMaxDistBtwKnowledgeAndRealUnit() const
+MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentMaxLifeTime() const
 {
-    return rKnowledgeMaxDistBtwKnowledgeAndRealUnit_;
+    return rKnowledgeAgentMaxLifeTime_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroupType::GetKnowledgeExtrapolationTime
+// Name: MIL_KnowledgeGroupType::GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit
+// Created: NLD 2004-11-15
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const
+{
+    return rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime
 // Created: JVT 2004-11-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_KnowledgeGroupType::GetKnowledgeExtrapolationTime() const
+MT_Float MIL_KnowledgeGroupType::GetKnowledgeAgentExtrapolationTime() const
 {
-    return rKnowledgeExtrapolationTime_;
+    return rKnowledgeAgentExtrapolationTime_;
 }
 
 // -----------------------------------------------------------------------------

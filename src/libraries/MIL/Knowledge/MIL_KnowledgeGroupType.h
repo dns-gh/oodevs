@@ -45,11 +45,12 @@ public:
 
     //! @name Accessors
     //@{
-          MT_Float     GetKnowledgeMaxLifeTime                   () const;
-          MT_Float     GetKnowledgeMaxDistBtwKnowledgeAndRealUnit() const;
-          MT_Float     GetKnowledgeExtrapolationTime             () const;
-    const std::string& GetName                                   () const;
-          uint         GetID                                     () const;
+          MT_Float     GetKnowledgeAgentMaxLifeTime                   () const;
+          MT_Float     GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() const;
+          MT_Float     GetKnowledgeAgentExtrapolationTime             () const;
+          MT_Float     GetKnowledgePopulationMaxLifeTime              () const;
+    const std::string& GetName                                        () const;
+          uint         GetID                                          () const;
     //@}
 
 private:
@@ -62,9 +63,11 @@ private:
 private:
     const std::string strName_;
     const uint        nID_;
-          MT_Float    rKnowledgeMaxLifeTime_;
-          MT_Float    rKnowledgeMaxDistBtwKnowledgeAndRealUnit_;
-          MT_Float    rKnowledgeExtrapolationTime_;
+          MT_Float    rKnowledgeAgentMaxLifeTime_;
+          MT_Float    rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
+          MT_Float    rKnowledgeAgentExtrapolationTime_;
+
+          MT_Float    rKnowledgePopulationMaxLifeTime_;
 
 private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;

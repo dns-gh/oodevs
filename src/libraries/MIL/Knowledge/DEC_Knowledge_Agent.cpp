@@ -329,7 +329,7 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
             MIL_RC::pRcUniteNeutreReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
     }
 
-    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + pKnowledgeGroup_->GetType().GetKnowledgeExtrapolationTime();
+    nTimeExtrapolationEnd_ = nTimeLastUpdate_ + pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
 }   
 
 // -----------------------------------------------------------------------------
@@ -398,11 +398,11 @@ void DEC_Knowledge_Agent::UpdateRelevance()
     }
 
     // Degradation : effacement au bout de X minutes
-    const MT_Float rTimeRelevanceDegradation = ( GetCurrentTimeStep() - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetKnowledgeMaxLifeTime();
+    const MT_Float rTimeRelevanceDegradation = ( GetCurrentTimeStep() - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
 
     // Degradation : effacement quand l'unité réelle et l'unité connnue sont distantes de X metres
     const MT_Float rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    const MT_Float rDistRelevanceDegradation     = rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetKnowledgeMaxDistBtwKnowledgeAndRealUnit();
+    const MT_Float rDistRelevanceDegradation     = rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
 
     ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
 

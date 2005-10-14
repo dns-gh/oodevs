@@ -16,7 +16,7 @@
 #include "Tools/MIL_Tools.h"
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
-uint                                            MIL_KnowledgeGroupType::nNextID_             = 0;
+uint                                            MIL_KnowledgeGroupType::nNextID_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroupType::Initialize
@@ -66,27 +66,36 @@ void MIL_KnowledgeGroupType::Terminate()
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, MIL_InputArchive& archive )
-    : strName_                                 ( strName )
-    , nID_                                     ( nNextID_++ )
-    , rKnowledgeMaxLifeTime_                   ( 0. )
-    , rKnowledgeMaxDistBtwKnowledgeAndRealUnit_( 0. )
-    , rKnowledgeExtrapolationTime_             ( 0. )
+    : strName_                                      ( strName )
+    , nID_                                          ( nNextID_++ )
+    , rKnowledgeAgentMaxLifeTime_                   ( 0. )
+    , rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_( 0. )
+    , rKnowledgeAgentExtrapolationTime_             ( 0. )
+    , rKnowledgePopulationMaxLifeTime_              ( 0. )
 {
-    // Connaissance
-    archive.Section( "Connaissance" );
+    // Connaissances agent
+    archive.Section( "ConnaissancesAgent" );
 
-    archive.ReadTimeField( "DureeDeVieMax", rKnowledgeMaxLifeTime_, CheckValueGreater( 0. ) );
-    rKnowledgeMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgeMaxLifeTime_ );
+    archive.ReadTimeField( "DureeDeVieMax", rKnowledgeAgentMaxLifeTime_, CheckValueGreater( 0. ) );
+    rKnowledgeAgentMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentMaxLifeTime_ );
 
     uint nTmp;
     archive.ReadField( "DistanceMaxEntreUniteReelleEtUniteConnue", nTmp, CheckValueGreater( (uint)0 ) );
-    rKnowledgeMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
+    rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_ = MIL_Tools::ConvertMeterToSim( nTmp );
 
-    archive.ReadTimeField( "TempsInterpolation", rKnowledgeExtrapolationTime_, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-    rKnowledgeExtrapolationTime_ = std::max( 1., MIL_Tools::ConvertSecondsToSim( rKnowledgeExtrapolationTime_ ) );
+    archive.ReadTimeField( "TempsInterpolation", rKnowledgeAgentExtrapolationTime_, CheckValueGreater( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    rKnowledgeAgentExtrapolationTime_ = std::max( 1., MIL_Tools::ConvertSecondsToSim( rKnowledgeAgentExtrapolationTime_ ) );
     // JVT : 1 car lorsque l'on perd de vue une unité, on veux au moins que l'emplacement de la connaissance soit celle au pas de temps suivant le non vu
 
-    archive.EndSection(); // Connaissance
+    archive.EndSection(); // ConnaissancesAgent
+
+    // Connaissances population
+    archive.Section( "ConnaissancesPopulation" );
+
+    archive.ReadTimeField( "DureeDeVieMax", rKnowledgePopulationMaxLifeTime_, CheckValueGreater( 0. ) );
+    rKnowledgePopulationMaxLifeTime_ = MIL_Tools::ConvertSecondsToSim( rKnowledgePopulationMaxLifeTime_ );
+
+    archive.EndSection(); // ConnaissancesPopulation
 }
 
 // -----------------------------------------------------------------------------

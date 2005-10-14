@@ -74,15 +74,13 @@ public:
 
     //! @name Accessors
     //@{
-          uint                          GetID                                     () const;
-    const MIL_KnowledgeGroupType&       GetType                                   () const;
-          MIL_Army&                     GetArmy                                   () const;
-    const T_AutomateVector&             GetAutomates                              () const;
-    const DEC_KnowledgeBlackBoard&      GetKnowledge                              () const;
-    const DEC_KS_KnowledgeGroupQuerier& GetKSQuerier                              () const;
-          DEC_KS_Sharing&               GetKSSharing                              ();
-          MT_Float                      GetKnowledgeMaxLifeTime                   () const;
-          MT_Float                      GetKnowledgeMaxDistBtwKnowledgeAndRealUnit() const;
+          uint                          GetID       () const;
+    const MIL_KnowledgeGroupType&       GetType     () const;
+          MIL_Army&                     GetArmy     () const;
+    const T_AutomateVector&             GetAutomates() const;
+    const DEC_KnowledgeBlackBoard&      GetKnowledge() const;
+    const DEC_KS_KnowledgeGroupQuerier& GetKSQuerier() const;
+          DEC_KS_Sharing&               GetKSSharing();
     //@}
 
     //! @name Network

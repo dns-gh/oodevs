@@ -55,16 +55,21 @@ public:
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork     () const;
-    void SendStateToNewClient() const;
+    void UpdateOnNetwork     ();
+    void SendStateToNewClient();
     //@}
 
 private:
     //! @name Network
     //@{
-    void SendFullState     () const;
+    void SendFullState     ();
     void SendMsgCreation   () const;
     void SendMsgDestruction() const;
+    //@}
+
+    //! @name Tools
+    //@{
+    void ChangeRelevance( MT_Float rNewRelevance );
     //@}
 
 private:
@@ -72,6 +77,7 @@ private:
     const MIL_PopulationConcentration*  pConcentrationKnown_;
     const uint                          nID_;
 
+          uint                          nTimeLastUpdate_;
           MT_Vector2D                   position_;
           uint                          nNbrAliveHumans_;
           uint                          nNbrDeadHumans_;
@@ -82,10 +88,11 @@ private:
     const PHY_PerceptionLevel*          pPreviousPerceptionLevel_;
 
     // Network
-    bool bHumansUpdated_;
-    bool bAttitudeUpdated_;
-    bool bRealConcentrationUpdated_;
-    bool bRelevanceUpdated_;
+    bool     bHumansUpdated_;
+    bool     bAttitudeUpdated_;
+    bool     bRealConcentrationUpdated_;
+    bool     bRelevanceUpdated_;
+    MT_Float rLastRelevanceSent_;
 
 private:
     static MIL_MOSIDManager idManager_;
