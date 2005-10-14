@@ -157,4 +157,6 @@ void MOS_AgentSupplyPanel::OnAgentUpdated( MOS_Agent& agent )
     DisplayAvailabilities( data.dispoTransporters_, *pDispoTransporters_, EquipmentResolver(), "%" );
     DisplayAvailabilities( data.stocks_, *pStocks_, ResourceResolver(), "" );
     DisplayAvailabilities( data.quotas_, *pQuotas_, ResourceResolver(), "" );
+
+    pState_->show();
 }
