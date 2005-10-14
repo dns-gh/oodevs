@@ -97,6 +97,14 @@ void MOS_LogisticSupplyChangeQuotasDialog::SetAgent( const MOS_Agent& agent )
         const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
         pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
     }
+    for ( MOS_Agent::T_LogisticAvailabilities::const_iterator itQuota = agent.pSupplyData_->quotas_.begin(); itQuota != agent.pSupplyData_->quotas_.end(); ++itQuota )
+    {
+        std::string str = MOS_App::GetApp().GetResourceName( itQuota->first );
+        int value = itQuota->second;
+        QListViewItem* item = new QListViewItem( pQuotas_, str.c_str(), QString::number(value) );
+        item->setRenameEnabled( 1, true );
+    }
+    pQuotas_->show();
 }
 
 // -----------------------------------------------------------------------------
