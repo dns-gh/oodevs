@@ -65,6 +65,8 @@ private:
 
     QCheckBox* pAutoOpenCheckbox_;
     QCheckBox* pAutoSaveLoadCheckbox_;
+
+    QCheckBox* pLogisticLinksDisplayCheckbox_;
     //@}
 };
 

@@ -474,6 +474,31 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     if( options.nDrawVisionLines_ == MOS_Options::eOn
    || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal ) )
        DrawVisionLines( agent );
+    
+    //Logistic links
+    if ( nState == eSelected && agent.IsAutomate() && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayLoglinks_ )
+    {
+        if ( agent.nTC2_ != 0 )
+        {
+            glColor4d( MOS_COLOR_YELLOW );
+            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos() );
+        }
+        if ( agent.nLogMaintenanceSuperior_ != 0 )
+        {
+            glColor4d( MOS_COLOR_MAROON );
+            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos() );
+        }
+        if ( agent.nLogMedicalSuperior_ != 0 )
+        {
+            glColor4d( MOS_COLOR_PINK );
+            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos() );
+        }
+        if ( agent.nLogSupplySuperior_ != 0 )
+        {
+            glColor4d( MOS_COLOR_AQUA );
+            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
