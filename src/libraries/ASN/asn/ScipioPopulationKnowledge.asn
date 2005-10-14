@@ -1,0 +1,108 @@
+--
+-- file name : ScipioPopulationKnowledge.asn
+--
+-- Messages de gestion des objets
+--
+
+ScipioPopulationKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, Point, GDH, Localisation, TypePopulation, OID FROM ScipioBase
+IMPORTS EnumPopulationAttitude From ScipioPopulation;
+
+-------------------
+-- Population
+-------------------
+
+MsgPopulationKnowledgeCreation ::= SEQUENCE
+{  
+    oid-connaissance      OID,
+    oid-groupe-possesseur OID, -- Groupe de connaissance possedant la connaissance
+    
+    oid-population-reelle OID,
+    camp                  OID  -- Camp de la population    
+}
+
+MsgPopulationKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance      OID,
+    oid-groupe-possesseur OID -- Groupe de connaissance possedant la connaissance
+}
+
+MsgPopulationKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance      OID,
+    oid-groupe-possesseur OID -- Groupe de connaissance possedant la connaissance
+}
+
+-------------------
+-- Concentration
+-------------------
+
+MsgPopulationConcentrationKnowledgeCreation ::= SEQUENCE
+{
+    oid-connaissance-concentration  OID,
+    oid-connaissance-population     OID,
+    oid-groupe-possesseur           OID, -- Groupe de connaissance possedant la connaissance
+    
+    oid-concentration-reelle        OID,
+    position                        CoordUTM
+}
+
+MsgPopulationConcentrationKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance-concentration  OID,
+    oid-connaissance-population     OID,
+    oid-groupe-possesseur           OID, -- Groupe de connaissance possedant la connaissance
+    
+    oid-concentration-reelle        OID                    OPTIONAL, 
+    nb-humains-vivants              INTEGER                OPTIONAL,
+    nb-humains-morts                INTEGER                OPTIONAL,
+    attitude                        EnumPopulationAttitude OPTIONAL,
+    pertinence                      Pourcentage            OPTIONAL,
+    est-percu                       BOOLEAN                OPTIONAL
+}
+
+MsgPopulationConcentrationKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance-concentration  OID,
+    oid-connaissance-population     OID,
+    oid-groupe-possesseur           OID -- Groupe de connaissance possedant la connaissance
+}
+
+
+-------------------
+-- Flux
+-------------------
+
+MsgPopulationFluxKnowledgeCreation ::= SEQUENCE
+{
+    oid-connaissance-flux       OID,
+    oid-connaissance-population OID,
+    oid-groupe-possesseur       OID -- Groupe de connaissance possedant la connaissance
+}
+
+MsgPopulationFluxKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance-flux       OID,
+    oid-connaissance-population OID,
+    oid-groupe-possesseur       OID, -- Groupe de connaissance possedant la connaissance
+    
+    flux                        Itineraire             OPTIONAL,
+    direction                   Direction              OPTIONAL, -- en degres
+    vitesse                     Vitesse                OPTIONAL, -- en km/h
+    nb-humains-vivants          INTEGER                OPTIONAL,
+    nb-humains-morts            INTEGER                OPTIONAL,
+    attitude                    EnumPopulationAttitude OPTIONAL,
+    pertinence                  Pourcentage            OPTIONAL,
+    est-percu                   BOOLEAN                OPTIONAL
+}
+
+MsgPopulationFluxKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance-flux       OID,
+    oid-connaissance-population OID,
+    oid-groupe-possesseur       OID -- Groupe de connaissance possedant la connaissance
+}
+
+
+END -- ScipioPopulationKnowledge

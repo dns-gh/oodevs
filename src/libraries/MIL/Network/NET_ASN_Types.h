@@ -32,6 +32,7 @@
 #include "ASN/ASN/Generated/ScipioLauncher.h"
 #include "ASN/ASN/Generated/ScipioHierarchie.h"
 #include "ASN/ASN/Generated/ScipioPopulation.h"
+#include "ASN/ASN/Generated/ScipioPopulationKnowledge.h"
 #include "ASN/ASN/Generated/ScipioPopulationOrder.h"
 
 #pragma warning( pop ) 

@@ -123,12 +123,11 @@ void DEC_KS_ObjectInteraction::Talk()
         knowledge.Update( itCollision->second ); 
     }
     objectCollisions_.clear();
-
-    // Remove all invalid knowledges
-    assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> methodDestroyInvalidCollisionObjectKnowledge( DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge, *this );        
-    pBlackBoard_->ApplyOnKnowledgesObjectCollision( methodDestroyInvalidCollisionObjectKnowledge );    
 }
+
+// =============================================================================
+// CLEAN
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge
@@ -141,4 +140,16 @@ void DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge( DEC_Knowl
         assert( pBlackBoard_ );
         pBlackBoard_->DestroyKnowledgeObjectCollision( knowledge ); // NB - The knowledge will be deleted
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::Clean
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::Clean()
+{
+    // Remove all invalid knowledges
+    assert( pBlackBoard_ );
+    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> methodDestroyInvalidCollisionObjectKnowledge( DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge, *this );        
+    pBlackBoard_->ApplyOnKnowledgesObjectCollision( methodDestroyInvalidCollisionObjectKnowledge );    
 }

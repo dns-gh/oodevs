@@ -15,6 +15,7 @@
 #include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
+#include "DEC_Knowledge_Population.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -173,6 +174,21 @@ bool DEC_Knowledge_PopulationPerception::IsIdentified( const MIL_PopulationConce
         return false;
     return it->second->IsIdentified();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::PublishKnowledges
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationPerception::PublishKnowledges( DEC_Knowledge_Population& knowledge ) const
+{
+    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        knowledge.Update( *it->second );
+
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        knowledge.Update( *it->second );
+}
+
 
 // =============================================================================
 // NETWORK

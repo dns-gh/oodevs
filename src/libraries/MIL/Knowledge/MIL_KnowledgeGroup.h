@@ -16,7 +16,7 @@
 
 class DEC_KnowledgeBlackBoard;
 class DEC_KS_AgentKnowledgeSynthetizer;
-class DEC_KS_Alzheimer;
+class DEC_KS_PopulationKnowledgeSynthetizer;
 class DEC_KS_RapFor;
 class DEC_KS_NetworkUpdater;
 class DEC_KS_KnowledgeGroupQuerier;
@@ -96,13 +96,13 @@ private:
     const uint                    nID_;
           MIL_Army*               pArmy_;
 
-    DEC_KnowledgeBlackBoard*          pKnowledgeBlackBoard_;
-    DEC_KS_AgentKnowledgeSynthetizer* pKsAgentKnowledgeSynthetizer_;
-    DEC_KS_Alzheimer*                 pKsAlzheimer_;
-    DEC_KS_RapFor*                    pKsRapFor_;
-    DEC_KS_Sharing*                   pKsSharing_;
-    DEC_KS_NetworkUpdater*            pKsNetworkUpdater_;
-    DEC_KS_KnowledgeGroupQuerier*     pKsQuerier_;
+    DEC_KnowledgeBlackBoard*                pKnowledgeBlackBoard_;
+    DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;
+    DEC_KS_PopulationKnowledgeSynthetizer*  pKsPopulationKnowledgeSynthetizer_;
+    DEC_KS_Sharing*                         pKsSharing_;
+    DEC_KS_RapFor*                          pKsRapFor_;    
+    DEC_KS_NetworkUpdater*                  pKsNetworkUpdater_;
+    DEC_KS_KnowledgeGroupQuerier*           pKsQuerier_;
 
     T_AutomateVector automates_;
 

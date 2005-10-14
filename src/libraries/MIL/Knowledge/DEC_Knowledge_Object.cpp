@@ -370,6 +370,9 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collision )
 {
+    if( !collision.IsValid() )
+        return;
+
     assert( pObjectKnown_ );
     nTimeLastUpdate_ = GetCurrentTimeStep();
     

@@ -15,7 +15,6 @@
 
 #include "Knowledge/DEC_KnowledgeBlackBoard.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/DEC_KS_Alzheimer.h"
 #include "Knowledge/DEC_KS_NetworkUpdater.h"
 #include "Knowledge/DEC_KS_ArmyQuerier.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
@@ -57,7 +56,6 @@ MIL_Army::MIL_Army( const std::string& strName, uint nID, MIL_InputArchive& arch
     , nID_                          ( nID )
     , pKnowledgeBlackBoard_         ( new DEC_KnowledgeBlackBoard          () )
     , pKsObjectKnowledgeSynthetizer_( new DEC_KS_ObjectKnowledgeSynthetizer( *pKnowledgeBlackBoard_, *this ) )
-    , pKsAlzheimer_                 ( new DEC_KS_Alzheimer                 ( *pKnowledgeBlackBoard_ ) )
     , pKsNetworkUpdater_            ( new DEC_KS_NetworkUpdater            ( *pKnowledgeBlackBoard_ ) )
     , pKsQuerier_                   ( new DEC_KS_ArmyQuerier               ( *pKnowledgeBlackBoard_, *this ) )
 {
@@ -110,7 +108,6 @@ MIL_Army::~MIL_Army()
 
     delete pKsQuerier_;
     delete pKsNetworkUpdater_;
-    delete pKsAlzheimer_;
     delete pKsObjectKnowledgeSynthetizer_;
     delete pKnowledgeBlackBoard_;
 }
@@ -168,7 +165,6 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const uint )
          >> pKnowledgeBlackBoard_;
 
     pKsObjectKnowledgeSynthetizer_ = new DEC_KS_ObjectKnowledgeSynthetizer( *pKnowledgeBlackBoard_, *this );
-    pKsAlzheimer_                  = new DEC_KS_Alzheimer                 ( *pKnowledgeBlackBoard_ );
     pKsNetworkUpdater_             = new DEC_KS_NetworkUpdater            ( *pKnowledgeBlackBoard_ );
     pKsQuerier_                    = new DEC_KS_ArmyQuerier               ( *pKnowledgeBlackBoard_, *this );
 }

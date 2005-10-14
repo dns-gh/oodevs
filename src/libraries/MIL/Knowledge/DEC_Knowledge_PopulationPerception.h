@@ -23,6 +23,7 @@ class MIL_PopulationFlow;
 class MIL_AgentPion;
 class DEC_Knowledge_PopulationConcentrationPerception;
 class DEC_Knowledge_PopulationFlowPerception;
+class DEC_Knowledge_Population;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -54,7 +55,8 @@ public:
     void Update ( MIL_PopulationFlow&          flowPerceived         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
     bool Clean  ();
 
-    bool IsIdentified( const MIL_PopulationConcentration& concentration );
+    void PublishKnowledges( DEC_Knowledge_Population& knowledge ) const;
+    bool IsIdentified     ( const MIL_PopulationConcentration& concentration );
     //@}
 
     //! @name Network operations

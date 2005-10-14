@@ -223,3 +223,12 @@ const PHY_NatureAtlas& DEC_Knowledge_Agent::GetNatureAtlas() const
     return dataRecognition_.GetNatureAtlas();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::Clean
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Agent::Clean() const
+{
+    return GetRelevance() <= 0.;
+}

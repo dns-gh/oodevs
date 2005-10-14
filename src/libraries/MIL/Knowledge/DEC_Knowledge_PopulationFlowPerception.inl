@@ -9,3 +9,13 @@
 //
 // *****************************************************************************
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetFlowPerceived
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+const MIL_PopulationFlow& DEC_Knowledge_PopulationFlowPerception::GetFlowPerceived() const
+{
+    assert( pPopulationFlowPerceived_ );
+    return *pPopulationFlowPerceived_;
+}

@@ -16,6 +16,7 @@
 
 class DEC_Knowledge_PopulationPerception;
 class MIL_PopulationConcentration;
+class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
 
 // =============================================================================
@@ -48,6 +49,16 @@ public:
     bool Clean  ();
 
     bool IsIdentified();
+    //@}
+
+    //! @name Accessors
+    //@{
+    const PHY_PerceptionLevel&         GetCurrentPerceptionLevel() const;
+    const MIL_PopulationConcentration& GetConcentrationPerceived() const;
+          uint                         GetNbrAliveHumans        () const;
+          uint                         GetNbrDeadHumans         () const;
+    const MIL_PopulationAttitude&      GetAttitude              () const;
+
     //@}
 
     //! @name Network operations

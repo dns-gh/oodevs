@@ -54,6 +54,7 @@ public:
           MT_Float                    GetMaxSpeed          () const;
           MT_Float                    GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
+    const MIL_Army&                   GetArmy              () const;
     //@}
 
     //! @name Operations

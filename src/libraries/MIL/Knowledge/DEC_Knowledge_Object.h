@@ -61,6 +61,8 @@ public:
     void Update( const PHY_PerceptionLevel& currentPerceptionLevel );
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision&  collision  );
+
+    bool Clean() const;
     //@}
 
     //! @name Relevance management

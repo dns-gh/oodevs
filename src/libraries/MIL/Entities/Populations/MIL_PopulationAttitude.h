@@ -41,6 +41,12 @@ public:
     ASN1T_EnumPopulationAttitude GetAsnID() const;
     //@}
 
+    //! @name Operators
+    //@{
+    bool operator==( const MIL_PopulationAttitude& rhs ) const;
+    bool operator!=( const MIL_PopulationAttitude& rhs ) const;
+    //@}
+
 private:
     //! @name Types
     //@{

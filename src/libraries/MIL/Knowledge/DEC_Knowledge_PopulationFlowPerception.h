@@ -50,6 +50,11 @@ public:
     bool IsIdentified();
     //@}
 
+    //! @name Accessors
+    //@{
+    const MIL_PopulationFlow& GetFlowPerceived() const;
+    //@}
+
     //! @name Network operations
     //@{
     void UpdateOnNetwork     () const;

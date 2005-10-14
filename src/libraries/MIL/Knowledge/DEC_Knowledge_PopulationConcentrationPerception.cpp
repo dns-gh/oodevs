@@ -19,6 +19,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentrationPerception, "DEC_Knowledge_PopulationConcentrationPerception" )
@@ -132,6 +133,40 @@ bool DEC_Knowledge_PopulationConcentrationPerception::IsIdentified()
 }
 
 // =============================================================================
+// ACCESSORS
+// =============================================================================
+        
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans() const
+{
+    assert( pPopulationConcentrationPerceived_ );
+    return pPopulationConcentrationPerceived_->GetNbrAliveHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::GetNbrDeadHumans
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+uint DEC_Knowledge_PopulationConcentrationPerception::GetNbrDeadHumans() const
+{
+    assert( pPopulationConcentrationPerceived_ );
+    return pPopulationConcentrationPerceived_->GetNbrDeadHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::GetAttitude
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+const MIL_PopulationAttitude& DEC_Knowledge_PopulationConcentrationPerception::GetAttitude() const
+{
+    assert( pPopulationConcentrationPerceived_ );
+    return pPopulationConcentrationPerceived_->GetAttitude();
+}
+
+// =============================================================================
 // NETWORK
 // =============================================================================
 
@@ -161,6 +196,4 @@ void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() con
     msg << (uint32)pPopulationConcentrationPerceived_->GetID();
     msg << (uint8)pCurrentPerceptionLevel_->GetID();
     msgMgr.SendMsgPopulationConcentrationInterVisibility( msg );
-
-    std::cout << "POPU CONCENTRATION PERCEPTION " << (uint32)pPopulationConcentrationPerceived_->GetID() << std::endl;
 }

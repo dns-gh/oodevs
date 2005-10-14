@@ -109,3 +109,33 @@ uint MIL_PopulationConcentration::GetID() const
 {
     return nID_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetNbrAliveHumans
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationConcentration::GetNbrAliveHumans() const
+{
+    return (uint)rNbrAliveHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetNbrDeadHumans
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+uint MIL_PopulationConcentration::GetNbrDeadHumans() const
+{
+    return (uint)rNbrDeadHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::IsValid
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationConcentration::IsValid() const
+{
+    return rNbrAliveHumans_ > 0. || !pushingFlows_.empty();
+}

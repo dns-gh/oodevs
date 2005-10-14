@@ -80,6 +80,7 @@ public:
     void Update     ( const DEC_Knowledge_AgentPerception& perception );
     void Update     ( const DEC_Knowledge_Agent& knowledge );
     void Extrapolate();
+    bool Clean      () const;
     //@}
 
     //! @name Relevance management

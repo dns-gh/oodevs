@@ -22,7 +22,6 @@ class DEC_Knowledge_Agent;
 
 class MIL_KnowledgeGroup;
 class MIL_Agent_ABC;
-class MIL_AgentPion;
 
 // =============================================================================
 /** @class  DEC_KS_AgentKnowledgeSynthetizer
@@ -47,17 +46,13 @@ public:
     //@{
     virtual void Prepare();
     virtual void Talk   ();
+    virtual void Clean  ();
     //@}
 
 private:
-    //! @name Preparation
+    //! @name Tools
     //@{
-    void PrepareKnowledgeAgent    ( DEC_Knowledge_Agent& knowledge );
-    void ExtrapolateKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
-    //@}
-
-    //! @name Update
-    //@{
+    void                 CleanKnowledgeAgent                ( DEC_Knowledge_Agent& knowledge );
     void                 UpdateKnowledgesFromAgentPerception( const DEC_Knowledge_AgentPerception& perception );
     DEC_Knowledge_Agent& GetKnowledgeToUpdate               ( MIL_Agent_ABC& agentKnown ) const;
     //@}

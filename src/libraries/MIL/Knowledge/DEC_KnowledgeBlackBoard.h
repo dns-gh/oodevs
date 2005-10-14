@@ -21,6 +21,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgeRapFor.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
+#include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 
 class DEC_KnowledgeSource_ABC;
 
@@ -37,6 +38,7 @@ class DEC_KnowledgeBlackBoard : public DEC_BlackBoard_CanContainKnowledgeAgentPe
                               , public DEC_BlackBoard_CanContainKnowledgeObject
                               , public DEC_BlackBoard_CanContainKnowledgeRapFor
                               , public DEC_BlackBoard_CanContainKnowledgePopulationPerception
+                              , public DEC_BlackBoard_CanContainKnowledgePopulation
 {
     MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard )
 

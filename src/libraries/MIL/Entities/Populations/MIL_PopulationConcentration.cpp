@@ -103,7 +103,7 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 bool MIL_PopulationConcentration::Update()
 {
     //$$$$ nNbrDeadHumans_ 
-    if( rNbrAliveHumans_ <= 0. && pushingFlows_.empty() )
+    if( !IsValid() )
     {
         pPullingFlow_->UnregisterSourceConcentration( *this );
         pPullingFlow_ = 0;

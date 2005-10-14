@@ -274,6 +274,17 @@ NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxCreation            , populat
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxDestruction         , population_flux_destruction          )
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxUpdate              , population_flux_update               )
 
+// Population knowledge
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationKnowledgeCreation                , population_knowledge_creation                  )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationKnowledgeUpdate                  , population_knowledge_update                    )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationKnowledgeDestruction             , population_knowledge_destruction               )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationKnowledgeCreation   , population_concentration_knowledge_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationKnowledgeDestruction, population_concentration_knowledge_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationKnowledgeUpdate     , population_concentration_knowledge_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeCreation            , population_flux_knowledge_creation             )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeDestruction         , population_flux_knowledge_destruction          )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeUpdate              , population_flux_knowledge_update               )
+
 #endif // __NET_ASN_Messages_h_
 
 

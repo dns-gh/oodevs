@@ -190,3 +190,12 @@ bool DEC_Knowledge_Object::IsRecon() const
     return !reconByAgentTypes_.empty();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::Clean
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Object::Clean() const
+{
+    return GetRelevance() <= 0.;
+}

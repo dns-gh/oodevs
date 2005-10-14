@@ -51,24 +51,12 @@ DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_ObjectKnowledgeSynthetizer::PrepareKnowledgeObject
-// Created: NLD 2004-03-17
-// -----------------------------------------------------------------------------
-void DEC_KS_ObjectKnowledgeSynthetizer::PrepareKnowledgeObject( DEC_Knowledge_Object& knowledge )
-{
-    knowledge.Prepare();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::Prepare
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 {
-    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object> method( DEC_KS_ObjectKnowledgeSynthetizer::PrepareKnowledgeObject, *this );
-    
-    assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesObject( method );
+    pBlackBoard_->ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +98,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( co
 inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
 {
-    assert( collision.IsValid() );
     GetKnowledgeToUpdate( collision.GetObject() ).Update( collision );
 }
 
@@ -197,16 +184,54 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
 {
-    // Step 1 - Synthesis of the perceptions of the subordinates 
+    // Synthesis of the perceptions of the subordinates 
     SynthetizeSubordinatesPerception();
 
-    // Step 2 - Ephemeral knowledges
+    // Ephemeral knowledges
     ProcessEphemeralKnowledges();
     
-    // Step 3 - Objects to forget
+    // Objects to forget
     ProcessObjectsToForget();
 
-    // Step 4 - Knowledges object to forget (i.e. after an interaction on a knowledge dissociated from its real object)
+    // Knowledges object to forget (i.e. after an interaction on a knowledge dissociated from its real object)
     ProcessKnowledgesObjectToForget();
+
+    // Relevance
+    pBlackBoard_->ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::UpdateRelevance ) );
 }
 
+// =============================================================================
+// CLEAN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject
+// Created: NLD 2004-03-17
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject( DEC_Knowledge_Object& knowledge )
+{
+    const MIL_RealObject_ABC* pObjectKnown = knowledge.GetObjectKnown();
+    if( pObjectKnown && knowledge.IsDissociatedFromRealObject() )
+    {
+        assert( pBlackBoard_ );
+        pBlackBoard_->NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, knowledge );
+    }
+
+    if( knowledge.Clean() )
+    {
+        assert( pBlackBoard_ );
+        pBlackBoard_->DestroyKnowledgeObject( knowledge ); // The knowledge will be deleted
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::Clean
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::Clean()
+{
+    assert( pBlackBoard_ );
+
+    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodObject( DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    pBlackBoard_->ApplyOnKnowledgesObject( methodObject );
+}

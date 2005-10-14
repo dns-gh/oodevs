@@ -47,24 +47,12 @@ DEC_KS_AgentKnowledgeSynthetizer::~DEC_KS_AgentKnowledgeSynthetizer()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentKnowledgeSynthetizer::PrepareKnowledgeAgent
-// Created: NLD 2004-03-17
-// -----------------------------------------------------------------------------
-void DEC_KS_AgentKnowledgeSynthetizer::PrepareKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
-{
-    knowledge.Prepare();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer::Prepare
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
 void DEC_KS_AgentKnowledgeSynthetizer::Prepare()
 {
-    class_mem_fun_void_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent> method( DEC_KS_AgentKnowledgeSynthetizer::PrepareKnowledgeAgent, *this );
-    
-    assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesAgent( method );
+    pBlackBoard_->ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Prepare ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,28 +82,19 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( cons
         GetKnowledgeToUpdate( perception.GetAgentPerceived() ).Update( perception );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentKnowledgeSynthetizer::PrepareKnowledgeAgent
-// Created: JVT 2004-11-29
-// -----------------------------------------------------------------------------
-void DEC_KS_AgentKnowledgeSynthetizer::ExtrapolateKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
-{
-    knowledge.Extrapolate();
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
 void DEC_KS_AgentKnowledgeSynthetizer::Talk()
 {
+    assert( pKnowledgeGroup_ );
+    assert( pBlackBoard_ );
+
     class_mem_fun_void_const_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_AgentPerception> method( DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, *this );
 
     // Synthèse de la perception des subordonnés
-    // Ajout automatique de la connaissance de chaque subordonné
-    assert( pKnowledgeGroup_ );
-    
+    // Ajout automatique de la connaissance de chaque subordonné    
     const MIL_KnowledgeGroup::T_AutomateVector& automates = pKnowledgeGroup_->GetAutomates();
     for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
     {
@@ -128,9 +107,38 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk()
     }
     
     // Extrapolation
-    class_mem_fun_void_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent > methodExtrapolation( DEC_KS_AgentKnowledgeSynthetizer::ExtrapolateKnowledgeAgent, *this );
-    
-    assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesAgent( methodExtrapolation );
+    pBlackBoard_->ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::Extrapolate ) );
+
+    // Relevance
+    pBlackBoard_->ApplyOnKnowledgesAgent( std::mem_fun_ref( & DEC_Knowledge_Agent::UpdateRelevance ) );
 }
 
+
+// =============================================================================
+// CLEAN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent
+// Created: NLD 2004-03-17
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
+{
+    if( knowledge.Clean() )
+    {
+        assert( pBlackBoard_ );
+        pBlackBoard_->DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentKnowledgeSynthetizer::Clean
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentKnowledgeSynthetizer::Clean()
+{
+    assert( pBlackBoard_ );
+
+    class_mem_fun_void_t< DEC_KS_AgentKnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( DEC_KS_AgentKnowledgeSynthetizer::CleanKnowledgeAgent, *this );
+    pBlackBoard_->ApplyOnKnowledgesAgent( methodAgent );
+}

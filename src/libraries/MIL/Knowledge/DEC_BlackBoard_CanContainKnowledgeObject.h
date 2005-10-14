@@ -72,14 +72,17 @@ public:
     }
     //@}
 
+public:
     //! @name Types
     //@{
-public:
     typedef std::map< const MIL_RealObject_ABC*, DEC_Knowledge_Object* > T_KnowledgeObjectMap;
     typedef T_KnowledgeObjectMap::iterator                               IT_KnowledgeObjectMap;
     typedef T_KnowledgeObjectMap::const_iterator                         CIT_KnowledgeObjectMap;
+    //@}
 
 private:
+    //! @name Types
+    //@{
     typedef std::map< uint, DEC_Knowledge_Object* >   T_KnowledgeObjectIDMap;
     typedef T_KnowledgeObjectIDMap::iterator          IT_KnowledgeObjectIDMap;
     typedef T_KnowledgeObjectIDMap::const_iterator    CIT_KnowledgeObjectIDMap;

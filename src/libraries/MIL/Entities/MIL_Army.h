@@ -18,7 +18,6 @@
 
 class DEC_KnowledgeBlackBoard;
 class DEC_KS_ObjectKnowledgeSynthetizer;
-class DEC_KS_Alzheimer;
 class DEC_KS_NetworkUpdater;
 class DEC_KS_ArmyQuerier;
 class DEC_Knowledge_Object;
@@ -132,7 +131,6 @@ private:
 
     DEC_KnowledgeBlackBoard*           pKnowledgeBlackBoard_;
     DEC_KS_ObjectKnowledgeSynthetizer* pKsObjectKnowledgeSynthetizer_;
-    DEC_KS_Alzheimer*                  pKsAlzheimer_;
     DEC_KS_NetworkUpdater*             pKsNetworkUpdater_;
     DEC_KS_ArmyQuerier*                pKsQuerier_;
 

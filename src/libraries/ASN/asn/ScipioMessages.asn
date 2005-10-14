@@ -153,7 +153,17 @@ IMPORTS MsgPopulationCreation,
         MsgPopulationConcentrationUpdate,
         MsgPopulationFluxCreation,
         MsgPopulationFluxDestruction,
-        MsgPopulationFluxUpdate FROM ScipioPopulation;              
+        MsgPopulationFluxUpdate FROM ScipioPopulation
+        
+IMPORTS MsgPopulationKnowledgeCreation,
+        MsgPopulationKnowledgeUpdate,
+        MsgPopulationKnowledgeDestruction,
+        MsgPopulationConcentrationKnowledgeCreation,
+        MsgPopulationConcentrationKnowledgeDestruction,
+        MsgPopulationConcentrationKnowledgeUpdate,
+        MsgPopulationFluxKnowledgeCreation,
+        MsgPopulationFluxKnowledgeDestruction,
+        MsgPopulationFluxKnowledgeUpdate FROM ScipioPopulationKnowledge;                      
 
 --
 -- Messages globaux
@@ -245,6 +255,16 @@ MsgsSimMos ::= CHOICE
     msg-population-flux-creation                            MsgPopulationFluxCreation,
     msg-population-flux-destruction                         MsgPopulationFluxDestruction,
     msg-population-flux-update                              MsgPopulationFluxUpdate,
+    
+    msg-population-knowledge-creation                       MsgPopulationKnowledgeCreation,
+    msg-population-knowledge-update                         MsgPopulationKnowledgeUpdate,
+    msg-population-knowledge-destruction                    MsgPopulationKnowledgeDestruction,
+    msg-population-concentration-knowledge-creation         MsgPopulationConcentrationKnowledgeCreation,
+    msg-population-concentration-knowledge-destruction      MsgPopulationConcentrationKnowledgeDestruction,
+    msg-population-concentration-knowledge-update           MsgPopulationConcentrationKnowledgeUpdate,
+    msg-population-flux-knowledge-creation                  MsgPopulationFluxKnowledgeCreation,
+    msg-population-flux-knowledge-destruction               MsgPopulationFluxKnowledgeDestruction,
+    msg-population-flux-knowledge-update                    MsgPopulationFluxKnowledgeUpdate,
 
     nb-choice 	                                            NbChoice
     

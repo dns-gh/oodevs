@@ -60,3 +60,23 @@ uint MIL_PopulationAttitude::GetID() const
 {
     return (uint)nAttitude_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationAttitude::operator==
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationAttitude::operator==( const MIL_PopulationAttitude& rhs ) const
+{
+    return nAttitude_ == rhs.nAttitude_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationAttitude::operator!=
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationAttitude::operator!=( const MIL_PopulationAttitude& rhs ) const
+{
+    return nAttitude_ != rhs.nAttitude_;
+}

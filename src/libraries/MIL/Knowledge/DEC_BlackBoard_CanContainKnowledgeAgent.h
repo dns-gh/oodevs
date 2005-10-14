@@ -74,8 +74,11 @@ public:
     typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_Agent* > T_KnowledgeAgentMap;
     typedef T_KnowledgeAgentMap::iterator                          IT_KnowledgeAgentMap;
     typedef T_KnowledgeAgentMap::const_iterator                    CIT_KnowledgeAgentMap;
+    //@}
 
 private:
+    //! @name Types
+    //@{
     typedef std::map< uint, DEC_Knowledge_Agent* >   T_KnowledgeAgentIDMap;
     typedef T_KnowledgeAgentIDMap::iterator          IT_KnowledgeAgentIDMap;
     typedef T_KnowledgeAgentIDMap::const_iterator    CIT_KnowledgeAgentIDMap;

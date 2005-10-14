@@ -1,0 +1,42 @@
+// *****************************************************************************
+//
+// $Created: NLD 2004-03-11 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_Knowledge_Population.inl $
+// $Author: Jvt $
+// $Modtime: 17/03/05 12:34 $
+// $Revision: 4 $
+// $Workfile: DEC_Knowledge_Population.inl $
+//
+// *****************************************************************************
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetID
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+uint DEC_Knowledge_Population::GetID() const
+{
+    return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetKnowledgeGroup
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+const MIL_KnowledgeGroup& DEC_Knowledge_Population::GetKnowledgeGroup() const
+{
+    assert( pKnowledgeGroup_ );
+    return *pKnowledgeGroup_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetPopulationKnown
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+const MIL_Population& DEC_Knowledge_Population::GetPopulationKnown() const
+{
+    assert( pPopulationKnown_ );
+    return *pPopulationKnown_;
+}

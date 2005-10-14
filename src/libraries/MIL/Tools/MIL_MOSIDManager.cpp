@@ -88,7 +88,7 @@ bool MIL_MOSIDManager::ReleaseMosID( uint nID )
 //-----------------------------------------------------------------------------
 uint MIL_MOSIDManager::GetFreeSimID()
 {
-//    uint nID = simIDManager_.GetFreeIdentifier();
+//    uint nID = simIDManager_.GetFreeIdentifier(); <==== NE JAMAIS REMETTRE !!
     uint nID = nNextSimInstanceID_++;
 
     nID += nSimStartID_;

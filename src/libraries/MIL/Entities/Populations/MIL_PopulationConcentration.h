@@ -45,6 +45,8 @@ public:
     //@{
     bool Update(); // Return false if the concentration must be deleted
     void Clean ();
+
+    bool IsValid() const; // false = will be deleted
     //@}
 
     //! @name Actions
@@ -62,11 +64,13 @@ public:
 
     //! @name Accessors
     //@{
-          MIL_Population&         GetPopulation () const;
-    const MT_Vector2D&            GetPosition   () const;
-    const MIL_PopulationAttitude& GetAttitude   () const;
-          uint                    GetID         () const;
-          bool                    IsNearPosition( const MT_Vector2D& position ) const;
+          MIL_Population&         GetPopulation    () const;
+    const MT_Vector2D&            GetPosition      () const;
+    const MIL_PopulationAttitude& GetAttitude      () const;
+          uint                    GetID            () const;
+          uint                    GetNbrAliveHumans() const;
+          uint                    GetNbrDeadHumans () const;
+          bool                    IsNearPosition   ( const MT_Vector2D& position ) const;
 
     virtual const TER_Localisation& GetLocation () const;
     //@}

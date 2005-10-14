@@ -54,19 +54,16 @@ public:
     //@{
     virtual void Prepare();
     virtual void Talk   ();
+    virtual void Clean  ();
     //@}
 
 private:    
-    //! @name Preparation
-    //@{
-    void PrepareKnowledgeObject( DEC_Knowledge_Object& knowledge );
-    //@}
-
     //! @name Update
     //@{
     void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     void                  UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
     DEC_Knowledge_Object& GetKnowledgeToUpdate                ( MIL_RealObject_ABC& objectKnown ) const;
+    void                  CleanKnowledgeObject                ( DEC_Knowledge_Object& knowledge );
     //@}
 
     //! @name Operations
