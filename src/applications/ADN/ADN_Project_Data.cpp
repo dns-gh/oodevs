@@ -105,7 +105,7 @@ void ADN_Project_Data::PathfinderInfo::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "PathfindNumber", nPathfinderNbr_ );
     input.ReadField( "DistanceThreshold", nDistanceThreshold_ );
     input.ReadField( "Rules", szRulesFile_ );
-    input.ReadField( "TempsCalculMax", maxComputationTime_, ADN_XmlInput_Helper::eNothing );
+    input.ReadField( "TempsMaxCalcul", maxComputationTime_, ADN_XmlInput_Helper::eNothing );
     input.EndSection(); // Pathfind
 }
 
@@ -120,7 +120,7 @@ void ADN_Project_Data::PathfinderInfo::WriteArchive( MT_OutputArchive_ABC& outpu
     output.WriteField( "PathfindNumber", nPathfinderNbr_.GetData() );
     output.WriteField( "DistanceThreshold", nDistanceThreshold_.GetData() );
     output.WriteField( "Rules", szRulesFile_.GetData() );
-    output.WriteField( "TempsCalculMax", maxComputationTime_.GetData() );
+    output.WriteField( "TempsMaxCalcul", maxComputationTime_.GetData() );
     output.EndSection(); // Pathfind
 }
 
