@@ -149,13 +149,7 @@ void MOS_ChangeLogisticLinksDialog::SetAgent( MOS_Agent& agent )
         return;
 	
 	std::string strii = pAgent_->GetTypeAutomate()->GetType();	
-	if( strii != std::string("Automate LOG TC2")
-		&& strii != std::string("Automate LOG BLD Maintenance")
-		&& strii != std::string("Automate LOG BLT Maintenance")
-		&& strii != std::string("Automate LOG BLD Sante")
-		&& strii != std::string("Automate LOG BLT Sante")
-		&& strii != std::string("Automate LOG BLD Ravitaillement")
-		&& strii != std::string("Automate LOG BLT Ravitaillement"))
+	if( strii != std::string("Automate LOG TC2"))
 		pTC2ComboBox_->setEnabled( true );
 	if( strii == std::string("Automate LOG TC2")
 		|| strii == std::string("Automate LOG BLD Maintenance")
@@ -167,11 +161,7 @@ void MOS_ChangeLogisticLinksDialog::SetAgent( MOS_Agent& agent )
         pMedicalComboBox_->setEnabled( true );
 	if( strii == std::string("Automate LOG TC2")
 		|| strii == std::string("Automate LOG BLD Ravitaillement")
-		|| strii == std::string("Automate LOG BLT Ravitaillement")
-		|| strii == std::string("Automate LOG BLD Sante")
-		|| strii == std::string("Automate LOG BLT Sante")
-		|| strii == std::string("Automate LOG BLD Maintenance")
-		|| strii == std::string("Automate LOG BLT Maintenance"))
+		|| strii == std::string("Automate LOG BLT Ravitaillement"))
         pSupplyComboBox_->setEnabled( true );
 
 	pTC2ComboBox_->setCurrentItem( 0 );
@@ -225,13 +215,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 				pAgent_->nTC2_ = it->second->GetAgentID();
 			else
 			{
-				if( strii == std::string("Automate LOG TC2")
-					|| strii == std::string("Automate LOG BLD Maintenance")
-					|| strii == std::string("Automate LOG BLT Maintenance")
-					|| strii == std::string("Automate LOG BLD Sante")
-					|| strii == std::string("Automate LOG BLT Sante")
-					|| strii == std::string("Automate LOG BLD Ravitaillement")
-					|| strii == std::string("Automate LOG BLT Ravitaillement"))
+				if( strii == std::string("Automate LOG TC2"))
 						pAgent_->nTC2_ = pAgent_->GetAgentID();
 				else
 						pAgent_->nTC2_ = (uint)0;
@@ -273,13 +257,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 			CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
 			if( it == tc2ComboBoxIDs_.end() )
 			{
-				if( strii == std::string("Automate LOG TC2")
-					|| strii == std::string("Automate LOG BLD Maintenance")
-					|| strii == std::string("Automate LOG BLT Maintenance")
-					|| strii == std::string("Automate LOG BLD Sante")
-					|| strii == std::string("Automate LOG BLT Sante")
-					|| strii == std::string("Automate LOG BLD Ravitaillement")
-					|| strii == std::string("Automate LOG BLT Ravitaillement"))
+				if( strii == std::string("Automate LOG TC2")s)
 						asnMsg.GetAsnMsg().oid_tc2 = pAgent_->GetAgentID();
 				else
 						asnMsg.GetAsnMsg().oid_tc2 = (uint)0;
