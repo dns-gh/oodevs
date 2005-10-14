@@ -257,7 +257,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 			CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
 			if( it == tc2ComboBoxIDs_.end() )
 			{
-				if( strii == std::string("Automate LOG TC2")s)
+				if( strii == std::string("Automate LOG TC2"))
 						asnMsg.GetAsnMsg().oid_tc2 = pAgent_->GetAgentID();
 				else
 						asnMsg.GetAsnMsg().oid_tc2 = (uint)0;
