@@ -85,6 +85,14 @@ public:
     void UpdateNetwork              () const;    
     //@}
 
+    //! @name CheckPoints
+    //@{
+//    BOOST_SERIALIZATION_SPLIT_MEMBER()
+//    
+//    void load( MIL_CheckPointInArchive&, const uint );
+//    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

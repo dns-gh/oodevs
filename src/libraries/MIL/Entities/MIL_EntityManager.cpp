@@ -240,6 +240,9 @@ MIL_EntityManager::~MIL_EntityManager()
 
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         delete itAutomate->second;
+
+    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
+        delete itPopulation->second;
     
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         delete itArmy->second;
@@ -1131,6 +1134,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> armies_
          >> pions_
          >> automates_
+//         >> populations_
          >> pObjectManager_
          >> recycledPions_
          >> rKnowledgesTime_
@@ -1151,6 +1155,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          << armies_
          << pions_
          << automates_
+//         << populations_
          << pObjectManager_
          << recycledPions_ 
          << rKnowledgesTime_
