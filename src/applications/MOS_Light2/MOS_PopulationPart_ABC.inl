@@ -46,3 +46,14 @@ const std::string& MOS_PopulationPart_ABC::GetStringAttitude() const
 {
     return ENT_Tr::ConvertFromPopulationAttitude( attitude_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationPart_ABC::GetAttitude
+// Created: HME 2005-10-18
+// -----------------------------------------------------------------------------
+inline
+E_PopulationAttitude MOS_PopulationPart_ABC::GetAttitude() const
+{
+    return  attitude_ ;
+}
+

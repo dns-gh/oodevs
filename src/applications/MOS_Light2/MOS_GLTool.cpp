@@ -1764,7 +1764,7 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
     for( MOS_Population::CIT_ConcentrationMap itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
     {
         color.SetGLColor();
-        DrawCircle( itCon->second->GetPos(), MOS_GL_CROSSSIZE * 2.0 );
+        DrawCircle( itCon->second->GetPos(), MOS_GL_CROSSSIZE *  sqrt(itCon->second->GetLivingHumans() / 30.0 ) );
         //DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * (itCon->second->GetLivingHumans() / 3000.0 ) , 2.0, color);
     }
 

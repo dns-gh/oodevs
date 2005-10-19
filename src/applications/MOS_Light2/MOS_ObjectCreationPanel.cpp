@@ -198,6 +198,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
 
     this->OnObjectChanged();
     this->Push();
+
 }
 
 

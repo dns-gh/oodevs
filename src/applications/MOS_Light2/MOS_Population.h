@@ -62,13 +62,18 @@ public :
 public:
 
              MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg );
+             MOS_Population();
+             MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name );
     virtual ~MOS_Population();
 
+    void ReadODB( MOS_InputArchive& archive );
+    void WriteODB( MT_XXmlOutputArchive& archive );
 
 	void	UpdatePopulationFlux			( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
 	void	UpdatePopulationConcentration	( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
 	void	CreatePopulationFlux			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
 	void	CreatePopulationConcentration	( const ASN1T_MsgPopulationConcentrationCreation& asnMsg );
+    void    CreatePopulationConcentration   ( MT_Vector2D point, E_PopulationAttitude attitude , int persons );
 	void	DeletePopulationFlux			( const ASN1T_MsgPopulationFluxDestruction& asnMsg );
 	void	DeletePopulationConcentration	( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
 	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
@@ -183,6 +188,8 @@ private:
 	MOS_Team*					pTeam_;
 	std::string					sName_;
     T_AgentKnowledgeMap         agentKnowledges_;
+
+    static MIL_AgentID nMaxId_ ;
     //@}
 };
 

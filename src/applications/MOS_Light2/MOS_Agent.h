@@ -132,6 +132,7 @@ public:
     int                     GetAltitude () const;
     E_UnitPosture           GetOldStance() const;
     E_UnitPosture           GetStance   () const;
+    T_FireResults           GetFireResult() const;
     int                     GetStanceCompletion() const;
     bool                    IsDead      () const;
     bool                    IsNeutralized() const;

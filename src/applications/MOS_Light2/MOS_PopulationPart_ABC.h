@@ -12,7 +12,6 @@
 
 #include "MOS_Types.h"
 #include "MOS_ASN_Types.h"
-#include <string>
 
 class MOS_Population;
 
@@ -26,16 +25,17 @@ class MOS_PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_PopulationPart_ABC( uint nID, const MOS_Population& parent );
+             MOS_PopulationPart_ABC( uint nID, const MOS_Population& parent , E_PopulationAttitude attitude = ePopulationAttitude_Calme, int persons = 0 );
     virtual ~MOS_PopulationPart_ABC();
     //@}
     
     //! @name Accessors
     //@{
-    uint               GetLivingHumans  () const;
-    uint               GetDeadHumans    () const;
-    uint               GetID            () const;
-    const std::string& GetStringAttitude() const;
+    uint                    GetLivingHumans  () const;
+    uint                    GetDeadHumans    () const;
+    uint                    GetID            () const;
+    const std::string&      GetStringAttitude() const;
+    E_PopulationAttitude    GetAttitude      () const;    
 
     virtual const std::string& GetName() const = 0;
     virtual const MT_Vector2D& GetPos()  const = 0;

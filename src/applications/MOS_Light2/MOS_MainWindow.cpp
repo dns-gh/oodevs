@@ -47,6 +47,7 @@
 #include "MOS_Logger.h"
 #include "MOS_ObjectCreationPanel.h"
 #include "MOS_AgentCreationPanel.h"
+#include "MOS_PopulationCreationPanel.h"
 #include "MOS_OptionsPanel.h"
 #include "MOS_DefaultMapEventHandler.h"
 
@@ -107,6 +108,8 @@ MOS_MainWindow::MOS_MainWindow()
     {
         pAgentCreationPanel_ = new MOS_AgentCreationPanel( pTabWidget );
         pTabWidget->addTab( pAgentCreationPanel_, tr("Création agent" ) );
+        pPopulationCreationPanel_ = new MOS_PopulationCreationPanel( pTabWidget );
+        pTabWidget->addTab( pPopulationCreationPanel_, tr("Création Population") );
     }
     pCreationDockWnd_->setWidget( pTabWidget );
     pCreationDockWnd_->setResizeEnabled( true );

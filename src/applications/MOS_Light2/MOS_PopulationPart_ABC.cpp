@@ -10,16 +10,17 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationPart_ABC.h"
 
+
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationPart_ABC constructor
-// Created: HME 2005-10-04
+// Created: HME 2005-10-18
 // -----------------------------------------------------------------------------
-MOS_PopulationPart_ABC::MOS_PopulationPart_ABC( uint nID, const MOS_Population& parent )
+MOS_PopulationPart_ABC::MOS_PopulationPart_ABC( uint nID, const MOS_Population& parent , E_PopulationAttitude attitude, int persons )
     : parent_       ( parent )
     , nID_          ( nID    )
-    , nLivingHumans_( 0 )
+    , nLivingHumans_( persons )
     , nDeadHumans_  ( 0 )
-    , attitude_     ( ePopulationAttitude_Calme )
+    , attitude_     ( attitude )
 {
 }
 

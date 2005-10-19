@@ -14,6 +14,7 @@
 
 class MOS_Population;
 
+
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
@@ -22,7 +23,8 @@ class MOS_PopulationConcentration : public MOS_PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , const MOS_Population& );
+             MOS_PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg , const MOS_Population& pop );
+             MOS_PopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons , const MOS_Population& parent  );
     virtual ~MOS_PopulationConcentration();
     //@}
 

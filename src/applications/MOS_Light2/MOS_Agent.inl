@@ -629,3 +629,13 @@ MOS_AgentKnowledge* MOS_Agent::FindAgentKnowledge( uint nId )
 {
     return GetGtia().FindAgentKnowledge( nId );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetFireResult
+// Created: HME 2005-10-19
+// -----------------------------------------------------------------------------
+inline
+T_FireResults MOS_Agent::GetFireResult() const
+{
+    return fireResults_;
+}

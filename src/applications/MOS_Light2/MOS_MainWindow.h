@@ -38,6 +38,7 @@ class MOS_Logger;
 class MOS_Options;
 class MOS_ObjectCreationPanel;
 class MOS_AgentCreationPanel;
+class MOS_PopulationCreationPanel;
 class MOS_Agent;
 class MOS_Gtia;
 class MOS_MapEventFilter_ABC;
@@ -115,15 +116,16 @@ private:
     MOS_GL3DWidget*	pGL3DWidget_;
     MOS_GLWidget*	pGLWidget_;
 
-    MOS_InfoPanel*				pInfoPanel_;
-    MOS_AgentListView*			pAgentList_;
-    MOS_ObjectListView*			pObjectList_;
-	MOS_PopulationListView*		pPopulationList_;
-    MOS_MissionPanel*			pMissionPanel_;
-    MOS_Logger*					pLogPanel_;
-    MOS_WeatherPanel*			pWeatherPanel_;
-    MOS_ObjectCreationPanel*	pObjCreationPanel_;
-    MOS_AgentCreationPanel*		pAgentCreationPanel_;
+    MOS_InfoPanel*				 pInfoPanel_;
+    MOS_AgentListView*			 pAgentList_;
+    MOS_ObjectListView*			 pObjectList_;
+	MOS_PopulationListView*		 pPopulationList_;
+    MOS_MissionPanel*			 pMissionPanel_;
+    MOS_Logger*					 pLogPanel_;
+    MOS_WeatherPanel*			 pWeatherPanel_;
+    MOS_ObjectCreationPanel*	 pObjCreationPanel_;
+    MOS_AgentCreationPanel*		 pAgentCreationPanel_;
+    MOS_PopulationCreationPanel* pPopulationCreationPanel_;
 
     QDockWindow* pListDockWnd_;
     QDockWindow* pInfoDockWnd_;

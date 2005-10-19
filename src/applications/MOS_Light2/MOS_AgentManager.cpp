@@ -653,6 +653,15 @@ void MOS_AgentManager::ReadODB( MOS_InputArchive& archive )
         this->AddAgent( *(spAgent.release()));
     }
     archive.EndList();
+
+    archive.BeginList( "Populations");
+    while( archive.NextListElement())
+    {
+        std::auto_ptr<MOS_Population> spAgent( new MOS_Population() );
+        spAgent->ReadODB( archive );
+        this->AddPopulation( *(spAgent.release()));
+    }
+    archive.EndList();
 }
 
 
@@ -687,6 +696,11 @@ void MOS_AgentManager::WriteODB( MT_XXmlOutputArchive& archive )
     for( it = agentMap_.begin(); it != agentMap_.end(); ++it )
         if( ! (*it).second->IsAutomate() )
             (*it).second->WriteODB( archive );
+    archive.EndList();
+
+    archive.BeginList( "Populations", populationMap_.size() );
+    for( IT_PopulationMap itPop = populationMap_.begin(); itPop != populationMap_.end(); ++itPop )
+        (*itPop).second->WriteODB( archive );
     archive.EndList();
 }
 

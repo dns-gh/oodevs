@@ -31,6 +31,17 @@ MOS_PopulationConcentration::MOS_PopulationConcentration( const ASN1T_MsgPopulat
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_PopulationConcentration constructor
+// Created: HME 2005-10-18
+// -----------------------------------------------------------------------------
+MOS_PopulationConcentration::MOS_PopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons , const MOS_Population& parent  )
+:   MOS_PopulationPart_ABC  ( 0, parent, attitude, persons )	
+,   position_		        ( point )
+,   strName_                ( "Concentration" )
+{
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_PopulationConcentration destructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------

@@ -86,7 +86,6 @@ void MOS_ReportPanel::OnAgentUpdated( MOS_Population& population )
     if( ShouldDisplay( population ) )
     {
         pReportListView_->SetAgent( selectedItem_.pPopulation_ );
-        pFireResultListView_->SetAgent( selectedItem_.pPopulation_ );
     }
 }
 
