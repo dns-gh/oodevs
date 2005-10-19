@@ -133,7 +133,7 @@ void MIL_Object_ABC::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
     if( agentInsideSet_.insert( &agent ).second )
         agentEnteringSet_.insert( &agent );
     agentMovingInsideSet_.insert( &agent );
-    agentExitingSet_     .erase ( &agent );
+    agentExitingSet_.erase ( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 
     if( agentInsideSet_.insert( &agent ).second )
         agentEnteringSet_.insert( &agent );
-    agentExitingSet_     .erase ( &agent );
+    agentExitingSet_.erase ( &agent );
 }
 
 // -----------------------------------------------------------------------------

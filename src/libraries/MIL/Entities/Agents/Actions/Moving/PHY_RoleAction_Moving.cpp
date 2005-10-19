@@ -84,19 +84,19 @@ PHY_RoleAction_Moving::~PHY_RoleAction_Moving()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RoleAction_Moving::serialize( Archive& /*file*/, const uint )
+void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
 {
-    assert( false );
-//    file & boost::serialization::base_object< MT_Role_ABC >( *this )
-//         & pPion_
-//         & pRoleLocation_;
+    file & boost::serialization::base_object< MT_Role_ABC >( *this )
+         & pPion_
+         & pRoleLocation_;
 }
 
 // =============================================================================
 // SPEED CALCULATIONS
 // =============================================================================
 
-// -----------------------------------------------------------------------------// Name: PHY_RoleAction_Moving::ApplyMaxSpeedModificators
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::ApplyMaxSpeedModificators
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
 inline

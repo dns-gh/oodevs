@@ -63,6 +63,7 @@ private:
     void                  UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     void                  UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
     DEC_Knowledge_Object& GetKnowledgeToUpdate                ( MIL_RealObject_ABC& objectKnown ) const;
+    void                  UpdateKnowledgeRelevance            ( DEC_Knowledge_Object& knowledge );
     void                  CleanKnowledgeObject                ( DEC_Knowledge_Object& knowledge );
     //@}
 

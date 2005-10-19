@@ -71,16 +71,6 @@ MIL_RealObject_ABC* DEC_Knowledge_Object::GetObjectKnown() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::IsDissociatedFromRealObject
-// Created: NLD 2004-03-25
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Knowledge_Object::IsDissociatedFromRealObject() const
-{
-    return pObjectKnown_ == 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::IsBypassed
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------

@@ -179,6 +179,21 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance
+// Created: NLD 2005-10-19
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance( DEC_Knowledge_Object& knowledge )
+{
+    assert( pBlackBoard_ );
+
+    //$$$$ VIRER TOUT CA quand stockage dans blackboard avec comme clé l'ID de l'objet réel plutot que le pointeur de l'objet réél ...
+    const MIL_RealObject_ABC* pObjectKnown = knowledge.GetObjectKnown();
+    knowledge.UpdateRelevance();
+    if( pObjectKnown && !knowledge.GetObjectKnown() )
+        pBlackBoard_->NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, knowledge );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
@@ -197,7 +212,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
     ProcessKnowledgesObjectToForget();
 
     // Relevance
-    pBlackBoard_->ApplyOnKnowledgesObject( std::mem_fun_ref( & DEC_Knowledge_Object::UpdateRelevance ) );
+    class_mem_fun_void_t< DEC_KS_ObjectKnowledgeSynthetizer, DEC_Knowledge_Object > methodRelevance( DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, *this );
+    pBlackBoard_->ApplyOnKnowledgesObject( methodRelevance );
 }
 
 // =============================================================================
@@ -210,13 +226,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::CleanKnowledgeObject( DEC_Knowledge_Object& knowledge )
 {
-    const MIL_RealObject_ABC* pObjectKnown = knowledge.GetObjectKnown();
-    if( pObjectKnown && knowledge.IsDissociatedFromRealObject() )
-    {
-        assert( pBlackBoard_ );
-        pBlackBoard_->NotifyKnowledgeObjectDissociatedFromRealObject( *pObjectKnown, knowledge );
-    }
-
     if( knowledge.Clean() )
     {
         assert( pBlackBoard_ );

@@ -67,9 +67,8 @@ public:
 
     //! @name Relevance management
     //@{
-    void     UpdateRelevance            ();
-    MT_Float GetRelevance               () const;
-    bool     IsDissociatedFromRealObject() const;
+    void     UpdateRelevance();
+    MT_Float GetRelevance   () const;
     //@}
 
     //! @name Network operations
