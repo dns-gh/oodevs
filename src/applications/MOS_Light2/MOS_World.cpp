@@ -20,10 +20,9 @@
 #include "MT/MT_IO/MT_Dir.h"
 
 #include "geocoord/Geoid.h"
-#include "graphics/GraphicShape.h"
+#include "graphics/GraphicShapeProxy.h"
 #include "graphics/DrawDetection.h"
 #include "graphics/DataFactory.h"
-#include "terrain/TesselatedShape.h"
 
 #include "MOS_GraphicSetup.h"
 #include "MOS_MainWindow.h"
@@ -247,15 +246,10 @@ void MOS_World::ReadGraphicFile( const std::string& strName )
         archive.Open( strName );
         while( ! archive.EndOfBuffer() )
         {
-            if( MOS_MainWindow::GetMainWindow().GetOptions().bNoList_ )
-            {
-                noListShapes_.push_back( new TesselatedShape( archive, factory ) );
-            }
-            else
-            {
-                GraphicShape* pShape = new GraphicShape( archive, factory, setup );
-                lodshapes_[ setup.GetLastLevelOfDetail() ].push_back( pShape );
-            }
+            bool useLists = ! MOS_MainWindow::GetMainWindow().GetOptions().bNoList_ &&
+                              strName.find( "list" ) != std::string::npos;
+            GraphicShape_ABC* pShape = new GraphicShapeProxy( archive, factory, setup, useLists );
+            lodshapes_[ setup.GetLastLevelOfDetail() ].push_back( pShape );
         }
     } 
     catch( ... )

@@ -110,7 +110,6 @@ public:
     static void Draw( MT_Rect& viewRect, float rClicksPerPix );
 
     static void Draw( MOS_World& world );
-    static void DrawNoList( MOS_World& world );
     static void DrawAreas( MOS_World& world, unsigned int nMaxLod );
     static void DrawBorders( MOS_World& world, unsigned int nMaxLod );
     static void DrawLines( MOS_World& world, unsigned int nMaxLod );

@@ -18,9 +18,8 @@
 #include "geocoord/PlanarCartesian.h"
 #include "geocoord/Geodetic.h"
 
-class GraphicShape;
+class GraphicShape_ABC;
 class DrawDetection;
-class TesselatedShape;
 
 // =============================================================================
 /** @class  MOS_World
@@ -76,11 +75,8 @@ private:
     
     //! @name Types
     //@{
-    typedef std::vector< GraphicShape* > T_Shapes;
+    typedef std::vector< GraphicShape_ABC* > T_Shapes;
     typedef T_Shapes::const_iterator   CIT_Shapes;
-
-    typedef std::vector< TesselatedShape* >  T_NoListShapes;
-    typedef T_NoListShapes::const_iterator CIT_NoListShapes;
     //@}
     
 private:
@@ -91,7 +87,6 @@ private:
     MT_Vector2D    translation_;
 
     T_Shapes       lodshapes_[ 3 ];
-    T_NoListShapes noListShapes_;
 
     DrawDetection* pDetection_;
 

@@ -78,9 +78,8 @@
 #undef min
 #undef max
 #include "geometry/Types.h"
-#include "graphics/GraphicShape.h"
+#include "graphics/GraphicShape_ABC.h"
 #include "graphics/DrawDetection.h"
-#include "terrain/TesselatedShape.h" // $$$$ AGE 2005-06-24:
 #include "graphics/GraphicSetup.h"
 
 DECLARE_ICON( flare );
@@ -174,12 +173,6 @@ void MOS_GLTool::Draw( MOS_World& world )
     geometry::Rectangle2f extent( viewRect_.GetLeft(), viewRect_.GetBottom(), viewRect_.GetRight(), viewRect_.GetTop() );
     DrawDetection( world );
 
-    if( MOS_MainWindow::GetMainWindow().GetOptions().bNoList_ )
-    {
-        DrawNoList( world );
-        return;
-    }
-
     unsigned int nMaxLod = 3;
     if( extent.Width() > 400000.f ) // $$$$ AGE 2005-02-28:
         nMaxLod = 0; // draw nothing
@@ -192,35 +185,6 @@ void MOS_GLTool::Draw( MOS_World& world )
     if( nMaxLod > 2 )
         DrawBorders( world, nMaxLod );
     DrawLines( world, nMaxLod );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_GLTool::DrawNoList
-// Created: AGE 2005-05-16
-// -----------------------------------------------------------------------------
-void MOS_GLTool::DrawNoList( MOS_World& world )
-{
-    geometry::Rectangle2f extent( viewRect_.GetLeft(), viewRect_.GetBottom(), viewRect_.GetRight(), viewRect_.GetTop() );
-    GraphicSetup setup;
-    for( MOS_World::CIT_NoListShapes it = world.noListShapes_.begin(); it != world.noListShapes_.end(); ++it )
-    {
-        const TesselatedShape& shape = **it;
-        if( ! shape.BoundingBox().Intersect( extent ).IsEmpty() )
-        {
-            if( shape.IsALine() )
-            {
-                setup.SetupLineGraphics( shape.GetData() );
-                shape.DrawBorders();
-            }
-            else
-            {
-                setup.SetupAreaGraphics( shape.GetData() );
-                shape.Draw();
-                setup.SetupBorderGraphics( shape.GetData() );
-                shape.DrawBorders();
-            }
-        };
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +209,7 @@ void MOS_GLTool::DrawAreas( MOS_World& world, unsigned int nMaxLod )
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawArea( extent );
             glTranslatef( 0.f, 0.f, 0.0001f );
         }
@@ -270,7 +234,7 @@ void MOS_GLTool::DrawBorders( MOS_World& world, unsigned int nMaxLod )
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawBorders( extent );
         }
     }
@@ -281,7 +245,7 @@ void MOS_GLTool::DrawBorders( MOS_World& world, unsigned int nMaxLod )
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawBorders( extent );
         }
     }
@@ -302,7 +266,7 @@ void MOS_GLTool::DrawLines( MOS_World& world, unsigned int nMaxLod )
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawLines( extent );
         }
     }
@@ -338,7 +302,7 @@ void MOS_GLTool::DrawNameObjects( MOS_World& world )
         for( MOS_World::CIT_Shapes it = world.lodshapes_[nLod].begin(); it != world.lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             glColor3f( 0, 0, 0 );
             shape.DrawName( extent, widget );
         }

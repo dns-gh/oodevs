@@ -20,7 +20,7 @@
 
 class MOS_GLWidget;
 class MT_XXmlInputArchive;
-class GraphicShape;
+class GraphicShape_ABC;
 class DrawDetection;
     
 //*****************************************************************************
@@ -74,7 +74,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< GraphicShape* > T_Shapes;
+    typedef std::vector< GraphicShape_ABC* > T_Shapes;
     typedef T_Shapes::const_iterator   CIT_Shapes;
     //@}
     

@@ -21,7 +21,7 @@
 #include "MT/MT_IO/MT_Dir.h"
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 #include "geocoord/Geoid.h"
-#include "graphics/GraphicShape.h"
+#include "graphics/GraphicShapeProxy.h"
 #include "graphics/DrawDetection.h"
 #include "graphics/DataFactory.h"
 #include "MOS_GraphicSetup.h"
@@ -111,7 +111,7 @@ void MOS_World::DrawAreas( unsigned int nMaxLod, const geometry::Rectangle2f& ex
         for( CIT_Shapes it = lodshapes_[nLod].begin(); it != lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawArea( extent );
             glTranslatef( 0.f, 0.f, 0.0001f );
         }
@@ -136,7 +136,7 @@ void MOS_World::DrawBorders( unsigned int nMaxLod, const geometry::Rectangle2f& 
         for( CIT_Shapes it = lodshapes_[nLod].begin(); it != lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawBorders( extent );
         }
     }
@@ -147,7 +147,7 @@ void MOS_World::DrawBorders( unsigned int nMaxLod, const geometry::Rectangle2f& 
         for( CIT_Shapes it = lodshapes_[nLod].begin(); it != lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawBorders( extent );
         }
     }
@@ -168,7 +168,7 @@ void MOS_World::DrawLines( unsigned int nMaxLod, const geometry::Rectangle2f& ex
         for( CIT_Shapes it = lodshapes_[nLod].begin(); it != lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawLines( extent );
         }
     }
@@ -213,7 +213,7 @@ void MOS_World::DrawNameObjects( const MT_Rect& viewport, QGLWidget& widget ) co
         for( CIT_Shapes it = lodshapes_[nLod].begin(); it != lodshapes_[nLod].end(); ++it )
         {
             assert( *it );
-            const GraphicShape& shape = **it;
+            const GraphicShape_ABC& shape = **it;
             shape.DrawName( extent, widget );
         }
     }
@@ -259,7 +259,8 @@ void MOS_World::ReadGraphicFile( const std::string& strName )
         archive.Open( strName );
         while( ! archive.EndOfBuffer() )
         {
-            GraphicShape* pShape = new GraphicShape( archive, factory, setup );
+            bool useLists = strName.find( "list" ) != std::string::npos;
+            GraphicShape_ABC* pShape = new GraphicShapeProxy( archive, factory, setup, useLists );
             lodshapes_[ setup.GetLastLevelOfDetail() ].push_back( pShape );
         }
     } 
