@@ -390,7 +390,6 @@ void MOS_AgentManager::CreatePopulation( const ASN1T_MsgPopulationCreation& asnM
     {
         MOS_Population* pPopulation = new MOS_Population( asnMsg );
         AddPopulation( *pPopulation );
-        MOS_App::GetApp().NotifyPopulationCreated( *pPopulation );
     }
 }
 
@@ -404,6 +403,7 @@ void MOS_AgentManager::AddAgent( MOS_Agent& agent )
         RUNTIME_ERROR;
     if( ! allMap_.insert( std::make_pair( agent.GetID(), &agent ) ).second )
         RUNTIME_ERROR; 
+
 }
 
 //-----------------------------------------------------------------------------
@@ -416,6 +416,7 @@ void MOS_AgentManager::AddPopulation( MOS_Population& popu )
         RUNTIME_ERROR;
     if( ! allMap_.insert( std::make_pair( popu.GetID(), &popu ) ).second )
         RUNTIME_ERROR; 
+    MOS_App::GetApp().NotifyPopulationCreated( popu );
 }
 
 // -----------------------------------------------------------------------------
