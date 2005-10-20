@@ -56,13 +56,13 @@ MOS_Population::MOS_Population()
 // Name: MOS_Population constructor
 // Created: HME 2005-10-18
 // -----------------------------------------------------------------------------
-MOS_Population::MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name )
+MOS_Population::MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name, MOS_TypePopulation* type )
 : nPopulationID_	( nMaxId_++ )
-, pTypePopulation_	( 0 )
+, pTypePopulation_	( type )
 , pTeam_			( &team )
 , sName_            ( name )
 {
-    CreatePopulationConcentration( point, attitude, persons ); 
+    CreatePopulationConcentration( point, attitude, persons );
 }
 
 // -----------------------------------------------------------------------------

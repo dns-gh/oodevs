@@ -56,7 +56,7 @@ private slots:
 
     void OnTeamCreated           ( MOS_Team& team );
     void OnConnexionStatusChanged( bool bConnected );
-
+    void OnTypePopulationCreated( MOS_TypePopulation& type );
     void OnDeletePopulation();
 
 private:

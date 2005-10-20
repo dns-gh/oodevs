@@ -948,6 +948,14 @@ void MOS_App::NotifyTacticalLineDeleted( MOS_TacticalLine_ABC& line )
     emit TacticalLineDeleted( line );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyTypePopulationCreated
+// Created: HME 2005-10-19
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyTypePopulationCreated ( MOS_TypePopulation& type )
+{
+    emit TypePopulationCreated( type );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::SetSplashText

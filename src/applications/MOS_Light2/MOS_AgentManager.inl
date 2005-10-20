@@ -219,3 +219,13 @@ MOS_Agent* MOS_AgentManager::FindConflictOrigin( ASN1T_OID nConflictID )
     }
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::GetTypePopulations
+// Created: HME 2005-10-20
+// -----------------------------------------------------------------------------
+inline
+const MOS_AgentManager::T_TypePopulationMap* MOS_AgentManager::GetTypePopulations() const
+{
+    return &typesPopulation_;
+}

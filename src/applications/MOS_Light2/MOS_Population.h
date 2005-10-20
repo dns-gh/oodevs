@@ -63,7 +63,7 @@ public:
 
              MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg );
              MOS_Population();
-             MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name );
+             MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name, MOS_TypePopulation* type );
     virtual ~MOS_Population();
 
     void ReadODB( MOS_InputArchive& archive );

@@ -15,6 +15,7 @@
 #include "MOS_TypePopulation.h"
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
+#include "MOS_App.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_TypePopulation constructor
@@ -31,6 +32,7 @@ MOS_TypePopulation::MOS_TypePopulation( const std::string& strName, MOS_InputArc
     pModel_ = MOS_App::GetApp().GetAgentManager().FindModel( strModel );
     if( !pModel_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
+    MOS_App::GetApp().NotifyTypePopulationCreated( *this );
 }
 
 // -----------------------------------------------------------------------------

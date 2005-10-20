@@ -37,6 +37,7 @@ class MOS_ObjectKnowledge;
 class MOS_Object_ABC;
 class MOS_TacticalLine_ABC;
 class QSplashScreen;
+class MOS_TypePopulation;
 
 typedef std::map< MIL_AgentID, std::string > T_MosId_String_Map;
 typedef T_MosId_String_Map::iterator         IT_MosId_String_Map;
@@ -124,6 +125,8 @@ public:
     void NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
 
     void NotifyTacticalLineDeleted( MOS_TacticalLine_ABC& line );
+
+    void NotifyTypePopulationCreated( MOS_TypePopulation& type );
     //@}
 
     //-------------------------------------------------------------------------
@@ -203,6 +206,8 @@ signals:
     void ObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
 
     void TacticalLineDeleted( MOS_TacticalLine_ABC& line );
+
+    void TypePopulationCreated( MOS_TypePopulation& type );
 
 private slots:
     void UpdateData();
