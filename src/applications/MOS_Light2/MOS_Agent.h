@@ -137,9 +137,6 @@ public:
     bool                    IsDead      () const;
     bool                    IsNeutralized() const;
     uint                    GetRawOpState () const;
-    E_ForceRatioState        GetRapFor   () const;
-    E_RulesOfEngagementState GetROE             () const;
-    E_CloseCombatState       GetCloseCombatState() const;
     const T_AgentIdVector&    GetReinforcements() const; 
     uint                    GetReinforced() const;
     const T_AgentIdVector&    GetTransportees() const; 
@@ -334,10 +331,13 @@ public:
     bool            bNeutralized_;
 
     // Etat decisionnel
-    E_ForceRatioState         nFightRateState_;
-    E_RulesOfEngagementState nRulesOfEngagementState_;
-    E_CloseCombatState       nCloseCombatState_;
-    E_OperationalState       nOpState_;
+    
+
+    E_EtatRapFor            nFightRateState_;
+    E_ReglesEngagement      nRulesOfEngagementState_;
+    E_EtatCombatRencontre   nCloseCombatState_;
+    E_EtatOperationnel      nOpState_;
+    E_DisponibiliteAuTir    nIndirectFireAvailability_;
     
     // NBC
     bool                bNbcProtectionSuitWorn_;

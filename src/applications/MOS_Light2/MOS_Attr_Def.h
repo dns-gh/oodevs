@@ -55,34 +55,4 @@ enum E_NatureAtlasType
     eNbrNatureAtlas
 };
 
-enum E_ForceRatioState
-{
-    eForceRatioStateNone,
-    eForceRatioStateNeutral,
-    eForceRatioStateFavorable,
-    eForceRatioStateUnfavorable,
-};
-
-enum E_RulesOfEngagementState 
-{
-    eRoeStateNone,
-    eRoeStateFreeFire,
-    eRoeStateRestrictedFire,
-    eRoeStateFireByOrder
-};
-
-enum E_CloseCombatState 
-{
-    eCloseCombatStateNone,
-    eCloseCombatStateDodge,
-    eCloseCombatStateFixed,
-    eCloseCombatStateProceedMission
-};
-enum E_OperationalState
-{
-    eOpStateFullyDestroyed,
-    eOpStateTacticallyDestroyed,
-    eOpStateOperational,
-};
-
 #endif // __MOS_Attr_Def_h_

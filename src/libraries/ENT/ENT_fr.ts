@@ -3528,5 +3528,13 @@
         <source>agressive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>pret au tir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>indisponible</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

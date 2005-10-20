@@ -91,6 +91,7 @@ public:
     static const std::string& ConvertFromReglesEngagement( E_ReglesEngagement, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatCombatRencontre( E_EtatCombatRencontre, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatOperationnel( E_EtatOperationnel, E_Conversion = eToSim );
+    static const std::string& ConvertFromDisponibiliteAuTir( E_DisponibiliteAuTir, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitFatigue( E_UnitFatigue, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitMoral( E_UnitMoral, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
@@ -162,6 +163,7 @@ public:
     static E_ReglesEngagement ConvertToReglesEngagement( const std::string& );
     static E_EtatCombatRencontre ConvertToEtatCombatRencontre( const std::string& );
     static E_EtatOperationnel ConvertToEtatOperationnel( const std::string& );
+    static E_DisponibiliteAuTir ConvertToDisponibiliteAuTir( const std::string& );
     static E_UnitFatigue ConvertToUnitFatigue( const std::string& );
     static E_UnitMoral ConvertToUnitMoral( const std::string& );
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
@@ -234,6 +236,7 @@ private:
     typedef ENT_Tr::converter<E_ReglesEngagement> T_ConverterReglesEngagement;
     typedef ENT_Tr::converter<E_EtatCombatRencontre> T_ConverterEtatCombatRencontre;
     typedef ENT_Tr::converter<E_EtatOperationnel> T_ConverterEtatOperationnel;
+    typedef ENT_Tr::converter<E_DisponibiliteAuTir> T_ConverterDisponibiliteAuTir;
     typedef ENT_Tr::converter<E_UnitFatigue> T_ConverterUnitFatigue;
     typedef ENT_Tr::converter<E_UnitMoral> T_ConverterUnitMoral;
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
@@ -305,6 +308,7 @@ private:
     static T_ConverterReglesEngagement ReglesEngagementConverter_ [];
     static T_ConverterEtatCombatRencontre EtatCombatRencontreConverter_ [];
     static T_ConverterEtatOperationnel EtatOperationnelConverter_ [];
+    static T_ConverterDisponibiliteAuTir DisponibiliteAuTirConverter_ [];
     static T_ConverterUnitFatigue UnitFatigueConverter_ [];
     static T_ConverterUnitMoral UnitMoralConverter_ [];
     static T_ConverterUnitExperience UnitExperienceConverter_ [];

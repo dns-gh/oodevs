@@ -68,6 +68,20 @@ bool DEC_RolePion_Decision::HasStateChanged() const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyIndirectFireAvailabilityChanged
+// Created: NLD 2005-10-19
+// -----------------------------------------------------------------------------
+inline
+void DEC_RolePion_Decision::NotifyIndirectFireAvailabilityChanged( E_FireAvailability nState )
+{
+    if( nIndirectFireAvailability_ != nState )
+    {
+        nIndirectFireAvailability_ = nState;
+        bStateHasChanged_  = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------

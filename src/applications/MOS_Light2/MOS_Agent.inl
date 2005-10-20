@@ -182,18 +182,6 @@ uint MOS_Agent::GetRawOpState() const
     return nRawOpState_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetRapFor
-/** @return 
-*/
-// Created: APE 2004-03-10
-// -----------------------------------------------------------------------------
-inline
-E_ForceRatioState MOS_Agent::GetRapFor() const
-{
-    return nFightRateState_;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::IsLoaded
@@ -305,31 +293,6 @@ int MOS_Agent::GetAltitude() const
     return nAltitude_;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetROE
-/** @return 
-*/
-// Created: APE 2004-07-28
-// -----------------------------------------------------------------------------
-inline
-E_RulesOfEngagementState MOS_Agent::GetROE() const
-{
-    return nRulesOfEngagementState_;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::GetCloseCombatState
-/** @return 
-*/
-// Created: APE 2004-07-28
-// -----------------------------------------------------------------------------
-inline
-E_CloseCombatState MOS_Agent::GetCloseCombatState() const
-{
-    return nCloseCombatState_;
-}
 
 
 // -----------------------------------------------------------------------------

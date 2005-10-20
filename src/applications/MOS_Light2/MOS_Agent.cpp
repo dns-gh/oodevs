@@ -136,16 +136,17 @@ void MOS_Agent::Initialize()
     pParent_                      = 0;
     bEmbraye_                     = false;
     nSpeed_                       = 0;
-    nFightRateState_              = (E_ForceRatioState)-1;
-    nRulesOfEngagementState_      = (E_RulesOfEngagementState)-1;
-    nCloseCombatState_            = (E_CloseCombatState)-1;
+    nFightRateState_              = eEtatRapFor_None;
+    nRulesOfEngagementState_      = eReglesEngagement_None;
+    nCloseCombatState_            = eEtatCombatRencontre_None;
     bLoadingState_                = true;
     bHumanTransportersReady_      = true;
     pGtia_                        = 0;
     bNbcProtectionSuitWorn_       = false;
     bVisionSurfacesNeedUpdating_  = true;
     nRawOpState_                  = 100;
-    nOpState_                     = (E_OperationalState)-1;
+    nOpState_                     = eEtatOperationnel_Operationnel;
+    nIndirectFireAvailability_    = eDisponibiliteAuTir_None;
     nContamination_               = 0;
     symbolName_                   = "?";
     levelSymbolName_              = "a";
@@ -367,7 +368,10 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
         nRawOpState_ = asnMsg.etat_operationnel_brut;
 
     if( asnMsg.m.etat_operationnelPresent )
-        nOpState_ = (E_OperationalState)asnMsg.etat_operationnel;
+        nOpState_ = (E_EtatOperationnel)asnMsg.etat_operationnel;
+
+    if( asnMsg.m.disponibilite_au_tir_indirectPresent )
+        nIndirectFireAvailability_  = (E_DisponibiliteAuTir)asnMsg.disponibilite_au_tir_indirect;
 
     if( asnMsg.m.pions_renforcantPresent )
     {
@@ -408,13 +412,13 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
         bNeutralized_ = asnMsg.neutralise;
 
     if( asnMsg.m.rapport_de_forcePresent )
-        nFightRateState_ = (E_ForceRatioState)asnMsg.rapport_de_force;
+        nFightRateState_ = (E_EtatRapFor)asnMsg.rapport_de_force;
 
     if( asnMsg.m.regles_d_engagementPresent )
-        nRulesOfEngagementState_ = (E_RulesOfEngagementState)asnMsg.regles_d_engagement;
+        nRulesOfEngagementState_ = (E_ReglesEngagement)asnMsg.regles_d_engagement;
 
     if( asnMsg.m.combat_de_rencontrePresent )
-        nCloseCombatState_ = (E_CloseCombatState)asnMsg.combat_de_rencontre;
+        nCloseCombatState_ = (E_EtatCombatRencontre)asnMsg.combat_de_rencontre;
 
     if( asnMsg.m.embarquePresent )
         bLoadingState_ = asnMsg.embarque;

@@ -51,6 +51,13 @@ typedef enum E_LocalisationFunctionsReturnCode
 // -----------------------------------------------------------------------------
 // Etat entité
 // -----------------------------------------------------------------------------
+typedef enum E_DisponibiliteAuTir
+{
+    eDisponibiliteAuTir_None,
+    eDisponibiliteAuTir_PretAuTir,
+    eDisponibiliteAuTir_Indisponible    
+};
+
 typedef enum E_EtatOperationnel
 {
     eEtatOp_DetruitTotalement,

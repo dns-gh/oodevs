@@ -823,6 +823,15 @@ enum E_EtatOperationnel
 };
 
 
+enum E_DisponibiliteAuTir
+{
+    eDisponibiliteAuTir_None,
+    eDisponibiliteAuTir_PretAuTir,
+    eDisponibiliteAuTir_Indisponible,
+    eNbrDisponibiliteAuTir
+};
+
+
 enum E_UnitFatigue
 {
     eUnitFatigue_Normal,

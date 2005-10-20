@@ -62,6 +62,7 @@ private:
     //@{
     QLabel*    pNameLabel_;
     QLabel*    pRawOpStateLabel_;
+    QLabel*    pIndirectFireAvailabilityPanel_;
     QLabel*    pDeadLabel_;
     QLabel*    pNeutralizedLabel_;
     QLabel*    pSpeedLabel_;

@@ -46,11 +46,6 @@ public:
     static QString ToString( ASN1T_EnumMissionGenSousTypeObstacle nType );
     static QString ToString( ASN1T_EnumMissionGenPriorite nObject );
 
-    static QString ToString( E_ForceRatioState nState );
-    static QString ToString( E_RulesOfEngagementState nState );
-    static QString ToString( E_CloseCombatState nState );
-    static QString ToString( E_OperationalState nState );
-
     static QString ToString( MOS_Meteo_ABC::E_WeatherType nType );
 
     static const char* ToString( const ASN1T_EnumInfoContextErrorCode& nCode );

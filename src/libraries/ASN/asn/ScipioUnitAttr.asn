@@ -48,16 +48,14 @@ DotationEquipement ::= SEQUENCE
     nb-indisponibles           INTEGER (0..max-uint32),
     nb-reparables              INTEGER (0..max-uint32),
     nb-dans-chaine-maintenance INTEGER (0..max-uint32), -- En réparation
-    nb-prisonniers             INTEGER (0..max-uint32),
-    majeur                     BOOLEAN DEFAULT FALSE
+    nb-prisonniers             INTEGER (0..max-uint32)
 }
 
 -- Ressources
 DotationRessource ::= SEQUENCE 
 {
     ressource-id        TypeDotation,
-    quantite-disponible INTEGER (0..max-uint32),
-    majeur              BOOLEAN DEFAULT FALSE
+    quantite-disponible INTEGER (0..max-uint32)
 }
 
 EnumUnitFatigue ::= ENUMERATED
@@ -130,51 +128,59 @@ EnumEtatOperationnel ::= ENUMERATED
     operationnel            (2)
 }
 
+EnumDisponibiliteAuTir ::= ENUMERATED
+{
+    none         (0),
+    pret-au-tir  (1),
+    indisponible (2)
+}
+
 -- Msg envoyé
 MsgUnitAttributes ::= SEQUENCE
 {
-    oid-pion                    Agent,
-    position				    CoordUTM                OPTIONAL,
-    direction                   Direction               OPTIONAL, -- en degrés
-    hauteur                     Hauteur                 OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
-    vitesse                     Vitesse                 OPTIONAL, -- en km/h
-    etat-operationnel-brut      PourcentageLibre        OPTIONAL,
-    pions-renforcant            ListAgent               OPTIONAL,
-    pion-renforce               Agent                   OPTIONAL, -- '0' quand pas en renfort                                                    
-    etat-automate               EnumAutomateState       OPTIONAL,   
-    mort                        BOOLEAN                 OPTIONAL,   
-    neutralise                  BOOLEAN                 OPTIONAL,   
-    mode-furtif-actif           BOOLEAN                 OPTIONAL,
-    embarque                    BOOLEAN                 OPTIONAL,
-    transporteurs-disponibles   BOOLEAN                 OPTIONAL,
+    oid-pion                      Agent,
+    position				      CoordUTM                OPTIONAL,
+    direction                     Direction               OPTIONAL, -- en degrés
+    hauteur                       Hauteur                 OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
+    vitesse                       Vitesse                 OPTIONAL, -- en km/h
+    etat-operationnel-brut        PourcentageLibre        OPTIONAL,
+    pions-renforcant              ListAgent               OPTIONAL,
+    pion-renforce                 Agent                   OPTIONAL, -- '0' quand pas en renfort                                                    
+    etat-automate                 EnumAutomateState       OPTIONAL,   
+    mort                          BOOLEAN                 OPTIONAL,   
+    neutralise                    BOOLEAN                 OPTIONAL,   
+    mode-furtif-actif             BOOLEAN                 OPTIONAL,
+    embarque                      BOOLEAN                 OPTIONAL,
+    transporteurs-disponibles     BOOLEAN                 OPTIONAL,
     
-    posture-old                 EnumUnitPosture         OPTIONAL,
-    posture-new                 EnumUnitPosture         OPTIONAL,
-    posture-pourcentage         Pourcentage             OPTIONAL,
-                                                        
-    en-tenue-de-protection-nbc  BOOLEAN                 OPTIONAL,
-    contamine-par-agents-nbc    ListOID                 OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
-    etat-contamination          Pourcentage             OPTIONAL,
+    posture-old                   EnumUnitPosture         OPTIONAL,
+    posture-new                   EnumUnitPosture         OPTIONAL,
+    posture-pourcentage           Pourcentage             OPTIONAL,
+                                                          
+    en-tenue-de-protection-nbc    BOOLEAN                 OPTIONAL,
+    contamine-par-agents-nbc      ListOID                 OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
+    etat-contamination            Pourcentage             OPTIONAL,
     
-    communications-brouillees   BOOLEAN                 OPTIONAL,
-    silence-radio               BOOLEAN                 OPTIONAL,
-    radar-actif                 BOOLEAN                 OPTIONAL,
+    communications-brouillees     BOOLEAN                 OPTIONAL,
+    silence-radio                 BOOLEAN                 OPTIONAL,
+    radar-actif                   BOOLEAN                 OPTIONAL,
     
-    pions-transportes           ListAgent               OPTIONAL, 
-    pion-transporteur           Agent                   OPTIONAL, -- '0' quand aucun transporteur
+    pions-transportes             ListAgent               OPTIONAL, 
+    pion-transporteur             Agent                   OPTIONAL, -- '0' quand aucun transporteur
     
-    rapport-de-force            EnumEtatRapFor          OPTIONAL,
-    regles-d-engagement         EnumReglesEngagement    OPTIONAL,
-    combat-de-rencontre         EnumEtatCombatRencontre OPTIONAL,
-    etat-operationnel           EnumEtatOperationnel    OPTIONAL,
+    rapport-de-force              EnumEtatRapFor          OPTIONAL,
+    regles-d-engagement           EnumReglesEngagement    OPTIONAL,
+    combat-de-rencontre           EnumEtatCombatRencontre OPTIONAL,
+    etat-operationnel             EnumEtatOperationnel    OPTIONAL,
+    disponibilite-au-tir-indirect EnumDisponibiliteAuTir  OPTIONAL,
     
-    fatigue                     EnumUnitFatigue         OPTIONAL,
-    moral                       EnumUnitMoral           OPTIONAL,
-    experience                  EnumUnitExperience      OPTIONAL,
+    fatigue                       EnumUnitFatigue         OPTIONAL,
+    moral                         EnumUnitMoral           OPTIONAL,
+    experience                    EnumUnitExperience      OPTIONAL,
     
-    rendu                       BOOLEAN                 OPTIONAL,
-    prisonnier                  BOOLEAN                 OPTIONAL,
-    refugie-pris-en-compte      BOOLEAN                 OPTIONAL
+    rendu                         BOOLEAN                 OPTIONAL,
+    prisonnier                    BOOLEAN                 OPTIONAL,
+    refugie-pris-en-compte        BOOLEAN                 OPTIONAL
 }
 
 -- Actions magiques

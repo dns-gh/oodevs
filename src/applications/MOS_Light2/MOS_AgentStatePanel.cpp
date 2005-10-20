@@ -125,6 +125,9 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
     new QLabel( tr( "Rapport de force:" ), pAIGroupBox );
     pFightRateLabel_ = new QLabel( pAIGroupBox );
 
+    new QLabel( tr( "Disponibilité au tir indirect:" ), pAIGroupBox );
+    pIndirectFireAvailabilityPanel_ = new QLabel( pAIGroupBox );       
+
     new QLabel( tr( "Tenue NBC:" ), pAIGroupBox );
     pNBCSuitLabel_ = new QLabel( pAIGroupBox );
 
@@ -242,10 +245,11 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     pOldStanceLabel_  ->setText( MOS_Tools::ToString( agent.GetOldStance() ) );
     pStanceLabel_     ->setText( strStance );
 
-    pROELabel_        ->setText( MOS_Tools::ToString( agent.GetROE() ) );
-    pCloseCombatLabel_->setText( MOS_Tools::ToString( agent.GetCloseCombatState() ) );
-    pFightRateLabel_  ->setText( MOS_Tools::ToString( agent.GetRapFor() ) );
-    pOpStateLabel_    ->setText( MOS_Tools::ToString( agent.nOpState_ ) );
+    pROELabel_                     ->setText( ENT_Tr::ConvertFromReglesEngagement   ( agent.nRulesOfEngagementState_ ).c_str() );
+    pCloseCombatLabel_             ->setText( ENT_Tr::ConvertFromEtatCombatRencontre( agent.nCloseCombatState_ ).c_str() );
+    pFightRateLabel_               ->setText( ENT_Tr::ConvertFromEtatRapFor         ( agent.nFightRateState_ ).c_str() );
+    pOpStateLabel_                 ->setText( ENT_Tr::ConvertFromEtatOperationnel   ( agent.nOpState_ ).c_str() );
+    pIndirectFireAvailabilityPanel_->setText( ENT_Tr::ConvertFromDisponibiliteAuTir ( agent.nIndirectFireAvailability_ ).c_str() );
     
     uint nReinforced = agent.GetReinforced();
     if( nReinforced )
@@ -339,6 +343,7 @@ void MOS_AgentStatePanel::OnClearSelection()
     pCloseCombatLabel_           ->setText( "" );
     pFightRateLabel_             ->setText( "" );
     pOpStateLabel_               ->setText( "" );
+    pIndirectFireAvailabilityPanel_->setText( "" );
 
     pReinforcedLabel_            ->setText( "" );
     pReinforcementsGroupBox_     ->hide();

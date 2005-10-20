@@ -24,6 +24,7 @@ class DEC_Path;
 enum E_FightRateState;
 enum E_RulesOfEngagementState;
 enum E_CloseCombatState;
+enum E_FireAvailability;
 
 // =============================================================================
 // @class  DEC_RolePion_Decision
@@ -87,10 +88,11 @@ public:
 
     //! @name Notifications
     //@{
-    void NotifyForceRatioStateChanged       ( E_ForceRatioState        nState );
-    void NotifyRulesOfEngagementStateChanged( E_RulesOfEngagementState nState );
-    void NotifyCloseCombatStateChanged      ( E_CloseCombatState       nState );
-    void NotifyOperationalStateChanged      ( E_OperationalState       nState );
+    void NotifyForceRatioStateChanged         ( E_ForceRatioState        nState );
+    void NotifyRulesOfEngagementStateChanged  ( E_RulesOfEngagementState nState );
+    void NotifyCloseCombatStateChanged        ( E_CloseCombatState       nState );
+    void NotifyOperationalStateChanged        ( E_OperationalState       nState );
+    void NotifyIndirectFireAvailabilityChanged( E_FireAvailability       nState );
     //@}
 
 private:
@@ -121,6 +123,7 @@ private:
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
     E_OperationalState       nOperationalState_;
+    E_FireAvailability       nIndirectFireAvailability_;
     bool                     bStateHasChanged_;
 
     T_PathSet                paths_;

@@ -767,6 +767,14 @@ ENT_Tr::T_ConverterEtatOperationnel ENT_Tr::EtatOperationnelConverter_[] =
     T_ConverterEtatOperationnel( "", "", (E_EtatOperationnel)-1 )
 };
 
+ENT_Tr::T_ConverterDisponibiliteAuTir ENT_Tr::DisponibiliteAuTirConverter_[] =
+{
+    T_ConverterDisponibiliteAuTir( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eDisponibiliteAuTir_None ),
+    T_ConverterDisponibiliteAuTir( "pret au tir", QT_TRANSLATE_NOOP( "ENT_Tr", "pret au tir" ), eDisponibiliteAuTir_PretAuTir ),
+    T_ConverterDisponibiliteAuTir( "indisponible", QT_TRANSLATE_NOOP( "ENT_Tr", "indisponible" ), eDisponibiliteAuTir_Indisponible ),
+    T_ConverterDisponibiliteAuTir( "", "", (E_DisponibiliteAuTir)-1 )
+};
+
 ENT_Tr::T_ConverterUnitFatigue ENT_Tr::UnitFatigueConverter_[] =
 {
     T_ConverterUnitFatigue( "normal", QT_TRANSLATE_NOOP( "ENT_Tr", "normal" ), eUnitFatigue_Normal ),
@@ -1321,6 +1329,7 @@ void ENT_Tr::InitTranslations()
     InitTr( ReglesEngagementConverter_, "ENT_Tr" );
     InitTr( EtatCombatRencontreConverter_, "ENT_Tr" );
     InitTr( EtatOperationnelConverter_, "ENT_Tr" );
+    InitTr( DisponibiliteAuTirConverter_, "ENT_Tr" );
     InitTr( UnitFatigueConverter_, "ENT_Tr" );
     InitTr( UnitMoralConverter_, "ENT_Tr" );
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
@@ -1831,6 +1840,15 @@ const std::string& ENT_Tr::ConvertFromEtatCombatRencontre( E_EtatCombatRencontre
 const std::string& ENT_Tr::ConvertFromEtatOperationnel( E_EtatOperationnel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( EtatOperationnelConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromDisponibiliteAuTir
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromDisponibiliteAuTir( E_DisponibiliteAuTir nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( DisponibiliteAuTirConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2448,6 +2466,15 @@ E_EtatCombatRencontre ENT_Tr::ConvertToEtatCombatRencontre( const std::string& s
 E_EtatOperationnel ENT_Tr::ConvertToEtatOperationnel( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( EtatOperationnelConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToDisponibiliteAuTir
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_DisponibiliteAuTir ENT_Tr::ConvertToDisponibiliteAuTir( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( DisponibiliteAuTirConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

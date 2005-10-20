@@ -510,6 +510,15 @@ void DEC_AgentFunctions::NotifyForceRatioStateChanged( DIA_Call_ABC& call, MIL_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged
+// Created: NLD 2005-10-19
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetDecision().NotifyIndirectFireAvailabilityChanged( (E_FireAvailability)call.GetParameter( 0 ).ToId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
