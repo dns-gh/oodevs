@@ -237,7 +237,7 @@ void MOS_World::ReadGraphics( const std::string& strArchive )
 // -----------------------------------------------------------------------------
 void MOS_World::ReadGraphicFile( const std::string& strName )
 {
-    MOS_GraphicSetup setup;
+    static MOS_GraphicSetup setup; // $$$$ AGE 2005-10-20: 
     DataFactory factory;
     try
     {
