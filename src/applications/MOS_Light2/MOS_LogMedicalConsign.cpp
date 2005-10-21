@@ -63,7 +63,7 @@ MOS_LogMedicalConsign::~MOS_LogMedicalConsign()
 // -----------------------------------------------------------------------------
 void MOS_LogMedicalConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogSanteTraitementHumainUpdate& asn )
 {
-    assert( pion_.GetAgentID() == asn.oid_pion );
+    assert( pion_.GetID() == asn.oid_pion );
     if( asn.m.oid_pion_log_traitantPresent )
     {
         if( pPionLogHandling_ )

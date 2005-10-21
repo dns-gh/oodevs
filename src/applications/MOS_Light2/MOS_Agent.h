@@ -20,6 +20,7 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_AgentComposition.h"
 #include "MOS_IDManager.h"
+#include "MOS_FireResult.h"
 
 #include "MT_Tools/MT_Quad.h"
 
@@ -92,121 +93,112 @@ public:
     typedef std::vector< uint >                 T_NbcAgentVector;
     typedef T_NbcAgentVector::const_iterator    CIT_NbcAgentVector;
 
-    typedef std::vector< uint >                 T_AgentIdVector;
+    typedef std::vector< uint >               T_AgentIdVector;
     typedef T_AgentIdVector::const_iterator   CIT_AgentIdVector;
 
     typedef std::vector< MOS_Surface* >     T_SurfaceVector;
     typedef T_SurfaceVector::const_iterator CIT_SurfaceVector;
 
-    typedef std::vector< uint >             T_Priorities;
+    typedef std::vector< uint >           T_Priorities;
     typedef T_Priorities::const_iterator  CIT_Priorities;
     //@}
 
 public:
-    MOS_Agent( bool bGenerateId = false );
-    MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg );
-    MOS_Agent( const ASN1T_MsgPionCreation& asnMsg );
+     MOS_Agent( bool bGenerateId = false );
+     MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg );
+     MOS_Agent( const ASN1T_MsgPionCreation& asnMsg );
     ~MOS_Agent();
 
     void Initialize();
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
-    const MOS_AgentModel*   GetModelPion() const;
-    const MOS_AgentModel*   GetModelAutomate() const;
-    bool                    IsAutomate  () const;
-    bool                    IsEmbraye   () const;
-    const std::string       GetCategory () const;
-    MIL_AgentID             GetAgentID  () const;
-	const uint				GetID		() ;
-    const MT_Vector2D&      GetPos      () const;
-    const std::string&      GetSymbol   () const;
-    MOS_Agent*              GetParent   () const;
-    MOS_Team&               GetTeam     () const;
-    MOS_Gtia&               GetGtia     () const;
-    const std::string       GetName     () const;
-    int                     GetSpeed    () const;
-    int                     GetDirection() const;
-    int                     GetAltitude () const;
-    E_UnitPosture           GetOldStance() const;
-    E_UnitPosture           GetStance   () const;
-    T_FireResults           GetFireResult() const;
-    int                     GetStanceCompletion() const;
-    bool                    IsDead      () const;
-    bool                    IsNeutralized() const;
-    uint                    GetRawOpState () const;
-    const T_AgentIdVector&    GetReinforcements() const; 
-    uint                    GetReinforced() const;
-    const T_AgentIdVector&    GetTransportees() const; 
-    uint                    GetTransporter() const;
-    int                     GetContamination() const;
-    bool                    IsOutOfGas() const;
+    const MOS_AgentModel*       GetModelPion       () const;
+    const MOS_AgentModel*       GetModelAutomate   () const;
+    bool                        IsAutomate         () const;
+    bool                        IsEmbraye          () const;
+    const std::string           GetCategory        () const;
+	const MIL_AgentID           GetID              () const;
+    const MT_Vector2D&          GetPos             () const;
+    const std::string&          GetSymbol          () const;
+    MOS_Agent*                  GetParent          () const;
+    MOS_Team&                   GetTeam            () const;
+    MOS_Gtia&                   GetGtia            () const;
+    const std::string           GetName            () const;
+    int                         GetSpeed           () const;
+    int                         GetDirection       () const;
+    int                         GetAltitude        () const;
+    E_UnitPosture               GetOldStance       () const;
+    E_UnitPosture               GetStance          () const;
+    int                         GetStanceCompletion() const;
+    bool                        IsDead             () const;
+    bool                        IsNeutralized      () const;
+    uint                        GetRawOpState      () const;
+    const T_AgentIdVector&      GetReinforcements  () const; 
+    uint                        GetReinforced      () const;
+    const T_AgentIdVector&      GetTransportees    () const; 
+    uint                        GetTransporter     () const;
+    int                         GetContamination   () const;
+    bool                        IsOutOfGas         () const;
+    const T_FireResults&        GetFireResult      () const;
 
-    const MOS_Experience&   GetExperience() const;
-    const MOS_Tiredness&    GetTiredness() const;
-    const MOS_Morale&       GetMorale() const;
+    const MOS_Experience&       GetExperience      () const;
+    const MOS_Tiredness&        GetTiredness       () const;
+    const MOS_Morale&           GetMorale          () const;
 
-    bool                    IsLoaded    () const;
-    bool                    AreHumanTransportersReady() const;
-    bool                    IsNBSSuitOn () const;
-    const T_NbcAgentVector& GetContaminatingNBCAgents() const;
+    bool                        IsLoaded                 () const;
+    bool                        AreHumanTransportersReady() const;
+    bool                        IsNBSSuitOn              () const;
+    const T_NbcAgentVector&     GetContaminatingNBCAgents() const;
 
-    const MOS_AgentComposition&   GetComposition () const;
-    const MOS_TypePion*           GetTypePion    () const;
-	const MOS_TypeAutomate*		  GetTypeAutomate() const;
+    const MOS_AgentComposition& GetComposition () const;
+    const MOS_TypePion*         GetTypePion    () const;
+	const MOS_TypeAutomate*		GetTypeAutomate() const;
+    T_AgentVector&              GetChildren    ();
 
-
-    void AddChild( MOS_Agent& agent );
-    T_AgentVector& GetChildren();
-
-    void SetName( const std::string& strName );
-    void SetAgentID( MIL_AgentID nID );
-    void SetGtia( MOS_Gtia& gtia );
-    void SetParent( MOS_Agent* pParent );
-    void SetCategory( const std::string& strCategory );
-    void SetSymbol( const std::string& strSymbol );
-    void SetPos( const MT_Vector2D& vPos );
-    void SetIsAutomate( bool b );
-    void SetEmbraye( bool b );
+    MOS_AgentKnowledge*         FindAgentKnowledge( uint nId );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Attributes*/
-    //-------------------------------------------------------------------------
+    //! @name Modifiers
+    //@{
+    void AddChild     ( MOS_Agent&         agent       );
+    void SetName      ( const std::string& strName     );
+    void SetAgentID   ( MIL_AgentID        nID         );
+    void SetGtia      ( MOS_Gtia&          gtia        );
+    void SetParent    ( MOS_Agent*         pParent     );
+    void SetCategory  ( const std::string& strCategory );
+    void SetSymbol    ( const std::string& strSymbol   );
+    void SetPos       ( const MT_Vector2D& vPos        );
+    void SetIsAutomate( bool               b           );
+    void SetEmbraye   ( bool               b           );
+    //@}
+
+    //! @name Network: Attributes update
     //@{
     void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Input& input );
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
-    void OnReceiveDebugDrawPointsMsg                       ( DIN::DIN_Input& msg );
+    void OnReceiveDebugDrawPointsMsg                       ( DIN::DIN_Input& msg   );
 
-    void OnAttributeUpdated         ( const ASN1T_MsgUnitAttributes& asnMsg );
-    void OnAttributeUpdated         ( const ASN1T_MsgUnitDotations& asnMsg );
-    void OnLogisticLinksUpdated     ( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg );
+    void OnAttributeUpdated    ( const ASN1T_MsgUnitAttributes&            asnMsg );
+    void OnAttributeUpdated    ( const ASN1T_MsgUnitDotations&             asnMsg );
+    void OnLogisticLinksUpdated( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg );
 
     void OnSuperiorChanged( MOS_Agent& superior );
     void OnSuperiorChanged( MOS_Gtia& superior );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Reports */
-    //-------------------------------------------------------------------------
+    //! @name Reports
     //@{
     void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
-
-
-    MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
 
     // fire results
     void OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg );
     void DeleteAllFireResults();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Vision*/
-    //-------------------------------------------------------------------------
+    //! @name Vision
     //@{
     void GetVisionCones         ( T_VisionConeVector& res ) const;
     void GetVisionSurfaces      ( T_VisionResultMap& res );
@@ -214,19 +206,15 @@ public:
     MT_Float GetElongationFactor() const;
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name PathFind */
-    //-------------------------------------------------------------------------
+    //! @name PathFind
     //@{
     void UpdatePathFind      ();
     void OnReceiveMsgPathFind( const ASN1T_MsgUnitPathFind& asnMsg );
     void ClearOldPath        ();
-    void ClearPath();
-   //@}
+    void ClearPath           ();
+    //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Logistique */
-    //-------------------------------------------------------------------------
+    //! @name Logistique
     //@{
     void AddConsign   ( MOS_LogSupplyConsign& consign );
     void RemoveConsign( MOS_LogSupplyConsign& consign );
@@ -252,23 +240,26 @@ public:
     void OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogRavitaillementQuotas& asnMsg );
     //@}
 
+    //! @name ODB
+    //@{
     void ReadODB( MOS_InputArchive& archive, bool bAutomate );
     void WriteODB( MT_XXmlOutputArchive& archive );
+    //@}
 
 public:
     //! @name Types
     //@{
     typedef std::set< MOS_LogSupplyConsign* > T_SupplyConsigns;
-    typedef T_SupplyConsigns::iterator       IT_SupplyConsigns;
+    typedef T_SupplyConsigns::iterator        IT_SupplyConsigns;
 
     typedef std::set< MOS_LogMaintenanceConsign* > T_MaintenanceConsigns;
-    typedef T_MaintenanceConsigns::iterator       IT_MaintenanceConsigns;
+    typedef T_MaintenanceConsigns::iterator        IT_MaintenanceConsigns;
 
     typedef std::set< MOS_LogMedicalConsign* > T_MedicalConsigns;
-    typedef T_MedicalConsigns::iterator       IT_MedicalConsigns;
+    typedef T_MedicalConsigns::iterator        IT_MedicalConsigns;
 
-    typedef std::vector< std::pair< uint, uint > >        T_LogisticAvailabilities;
-    typedef T_LogisticAvailabilities::const_iterator    CIT_LogisticAvailabilities;
+    typedef std::vector< std::pair< uint, uint > >    T_LogisticAvailabilities;
+    typedef T_LogisticAvailabilities::const_iterator  CIT_LogisticAvailabilities;
     //@}
 
 
@@ -326,13 +317,11 @@ public:
     MOS_AgentComposition		composition_;
 
     // State
-    uint            nRawOpState_;
-    bool            bDead_;
-    bool            bNeutralized_;
+    uint                    nRawOpState_;
+    bool                    bDead_;
+    bool                    bNeutralized_;
 
     // Etat decisionnel
-    
-
     E_EtatRapFor            nFightRateState_;
     E_ReglesEngagement      nRulesOfEngagementState_;
     E_EtatCombatRencontre   nCloseCombatState_;
@@ -346,11 +335,11 @@ public:
 
     // Renforts
     T_AgentIdVector renforts_;
-    uint           nPionRenforce_;
+    uint            nPionRenforce_;
 
     // Transport
     T_AgentIdVector pionTransportes_;
-    uint           nTransporteur_;
+    uint            nTransporteur_;
     bool            bHumanTransportersReady_;
 
     // Human Stuff
@@ -378,7 +367,7 @@ public:
         bool                        bChainEnabled_;
         uint                        nTempsBordee_;
         T_Priorities                priorities_;
-        T_Priorities             tacticalPriorities_;
+        T_Priorities                tacticalPriorities_;
         T_LogisticAvailabilities    dispoHaulers_;
         T_LogisticAvailabilities    dispoRepairers_;
     } T_MaintenanceData;
@@ -416,6 +405,6 @@ private:
     static MIL_AgentID nMaxId_;
 };
 
-#   include "MOS_Agent.inl"
+#include "MOS_Agent.inl"
 
 #endif // __MOS_Agent_h_

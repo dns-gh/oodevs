@@ -28,6 +28,8 @@
 #include "ASN/ASN/Generated/ScipioPionOrder.h"
 #include "ASN/ASN/Generated/ScipioOrderConduite.h"
 #include "ASN/ASN/Generated/ScipioAutomateOrder.h"
+#include "ASN/ASN/Generated/ScipioPopulation.h"
+#include "ASN/ASN/Generated/ScipioPopulationKnowledge.h"
 
 #pragma warning( pop ) 
 

@@ -211,9 +211,20 @@ private:
     void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
 
     // Knowledge object
-    void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
-    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
+    void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg );
     void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
+
+    // Knowledge population
+    void OnReceiveMsgPopulationKnowledgeCreation                ( const ASN1T_MsgPopulationKnowledgeCreation&                 asnMsg );
+    void OnReceiveMsgPopulationKnowledgeUpdate                  ( const ASN1T_MsgPopulationKnowledgeUpdate&                   asnMsg );
+    void OnReceiveMsgPopulationKnowledgeDestruction             ( const ASN1T_MsgPopulationKnowledgeDestruction&              asnMsg );
+    void OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const ASN1T_MsgPopulationFluxKnowledgeCreation&             asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
 
     // Orders
     void OnReceiveMsgAutomateOrderAck    ( const ASN1T_MsgAutomateOrderAck& asnMsg    , MIL_MOSContextID nCtx ); 

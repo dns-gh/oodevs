@@ -25,20 +25,14 @@
 
 #include "MOS_Types.h"
 
-
 // =============================================================================
-/** @class  MT_GLDShapeProperties
-    @brief  MT_GLDShapeProperties
-    @par    Using example
-    @code
-    MT_GLDShapeProperties;
-    @endcode
-*/
 // Created: APE 2004-07-02
 // =============================================================================
 class MT_GLDShapeProperties
 {
 public:
+    //! @name Enums
+    //@{
     enum E_Properties
     {
         eNone           = 0,
@@ -73,6 +67,7 @@ public:
         eNormalArrow,
         eDiamondArrow
     };
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -82,31 +77,28 @@ public:
     //@}
 
 public:
-    MT_GLDShapeProperties IntersectWith( const MT_GLDShapeProperties& rhs ) const;
-
-    void Read( MT_XXmlInputArchive& archive );
-    void Write( MT_XXmlOutputArchive& archive ) const;
+    //! @name Operations
+    //@{
+    MT_GLDShapeProperties IntersectWith( const MT_GLDShapeProperties& rhs     ) const;
+    void                  Read         ( MT_XXmlInputArchive&         archive );
+    void                  Write        ( MT_XXmlOutputArchive&        archive ) const;
+    //@}
 
 public:
     //! @name Public member data
     //@{
-    E_Properties nProperties_;
-
-    QString strText_;
-    float rFontSize_;
-
-    QRgb lineColor_;
-    int nLineWidth_;
+    E_Properties  nProperties_;
+    QString       strText_;
+    float         rFontSize_;
+    QRgb          lineColor_;
+    int           nLineWidth_;
     E_LinePattern nLinePattern_;
-    E_ArrowHead nArrowStart_;
-    E_ArrowHead nArrowEnd_;
+    E_ArrowHead   nArrowStart_;
+    E_ArrowHead   nArrowEnd_;
 
-    QRgb fillColor_;
-
-    float rSize_;
+    QRgb          fillColor_;
+    float         rSize_;
     //@}
 };
-
-#   include "MT_GLDShapeProperties.inl"
 
 #endif // __MT_GLDShapeProperties_h_

@@ -16,8 +16,6 @@
 //
 // *****************************************************************************
 
-#include "MOS_AgentKnowledge.h"
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Gtia::GetID
 // Created: NLD 2004-03-18
@@ -42,8 +40,6 @@ const MOS_Gtia::T_AgentKnowledgeMap& MOS_Gtia::GetAgentKnowledges() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Gtia::SetTeam
-/** @param  team 
-*/
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
 inline
@@ -72,8 +68,6 @@ void MOS_Gtia::SetType( const std::string& strType )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Gtia::GetTeam
-/** @return 
-*/
 // Created: APE 2004-05-27
 // -----------------------------------------------------------------------------
 inline
@@ -85,35 +79,11 @@ MOS_Team& MOS_Gtia::GetTeam() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Gtia::FindAgentKnowledge
-/** @param  nId 
-    @return 
-*/
-// Created: APE 2004-09-10
+// Name: MOS_Gtia::GetPopulationKnowledges
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 inline
-MOS_AgentKnowledge* MOS_Gtia::FindAgentKnowledge( int nId )
+const MOS_Gtia::T_PopulationKnowledgeMap& MOS_Gtia::GetPopulationKnowledges() const
 {
-    IT_AgentKnowledgeMap it = agentKnowledges_.find( nId );    
-    if( it != agentKnowledges_.end() )
-        return it->second;
-    return 0;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Gtia::FindKnowledgeOnAgent
-/** @param  agent 
-    @return 
-*/
-// Created: APE 2004-05-28
-// -----------------------------------------------------------------------------
-inline
-MOS_AgentKnowledge* MOS_Gtia::FindKnowledgeOnAgent( const MOS_Agent& agent )
-{
-    for( IT_AgentKnowledgeMap it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )
-        if( &(it->second->GetRealAgent()) == &agent )
-            return it->second;
-
-    return 0;
+    return populationKnowledges_;
 }

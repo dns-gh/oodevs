@@ -14,19 +14,11 @@
 #   pragma interface
 #endif
 
-
 #include "MOS_Types.h"
 
 class MOS_AgentModel;
 
 // =============================================================================
-/** @class  MOS_TypePopulation
-    @brief  MOS_TypePopulation
-    @par    Using example
-    @code
-    MOS_TypePopulation;
-    @endcode
-*/
 // Created: HME 2005-09-28
 // =============================================================================
 
@@ -41,38 +33,23 @@ public:
     virtual ~MOS_TypePopulation();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
     //! @name Accessors
     //@{
-    const std::string&    GetName () const;
-          uint            GetID   () const;
-    const MOS_AgentModel& GetModel() const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    //@}
-
-    //! @name Helpers
-    //@{
+    const std::string&    GetName                () const;
+          uint            GetID                  () const;
+    const MOS_AgentModel& GetModel               () const;
+          MT_Float        GetConcentrationDensity() const;
+          MT_Float        GetDefaultFlowDensity  () const;
+          MT_Float        GetMaxSpeed            () const;
     //@}
 
 private:
 	const std::string     strName_;
     uint                  nID_;
     const MOS_AgentModel* pModel_;
+    MT_Float              rConcentrationDensity_;
+    MT_Float              rDefaultFlowDensity_;
+    MT_Float              rMaxSpeed_;
 };
 
 

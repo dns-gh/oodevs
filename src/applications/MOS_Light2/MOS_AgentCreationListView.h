@@ -56,6 +56,4 @@ private:
     //@}
 };
 
-#include "MOS_AgentCreationListView.inl"
-
 #endif // __MOS_AgentCreationListView_h_

@@ -29,7 +29,7 @@
 MOS_InfoPanel_ABC::MOS_InfoPanel_ABC( QWidget* pParent )
     : QScrollView( pParent )
     , pBox_( new QVBox( viewport() ) )
-    , bVisible_( false )
+    //, bVisible_( false )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );
     pBox_->setMargin( 5 );

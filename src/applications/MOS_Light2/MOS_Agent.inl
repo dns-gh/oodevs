@@ -24,18 +24,6 @@ const std::string MOS_Agent::GetCategory() const
     return strCategory_;
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: MOS_Agent::GetAgentID
-// Created: NLD 2002-07-16
-//-----------------------------------------------------------------------------
-inline
-MIL_AgentID MOS_Agent::GetAgentID() const
-{
-    return nAgentID_;
-}
-
-
 //-----------------------------------------------------------------------------
 // Name: MOS_Agent::GetPosition
 // Created: NLD 2002-11-28
@@ -231,8 +219,6 @@ MOS_Team& MOS_Agent::GetTeam() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetGtia
-/** @return 
-*/
 // Created: APE 2004-04-29
 // -----------------------------------------------------------------------------
 inline
@@ -250,8 +236,6 @@ MOS_Gtia& MOS_Agent::GetGtia() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::IsNBSSuitOn
-/** @return 
-*/
 // Created: APE 2004-06-09
 // -----------------------------------------------------------------------------
 inline
@@ -293,12 +277,8 @@ int MOS_Agent::GetAltitude() const
     return nAltitude_;
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetReinforcements
-/** @return 
-*/
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
 inline
@@ -339,8 +319,6 @@ uint MOS_Agent::GetTransporter() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::IsOutOfGas
-/** @return 
-*/
 // Created: APE 2004-09-14
 // -----------------------------------------------------------------------------
 inline
@@ -396,8 +374,6 @@ void MOS_Agent::ClearPath()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetName
-/** @param  strName 
-*/
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
 inline
@@ -409,8 +385,6 @@ void MOS_Agent::SetName( const std::string& strName )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetAgentID
-/** @param  nID 
-*/
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
 inline
@@ -422,11 +396,8 @@ void MOS_Agent::SetAgentID( MIL_AgentID nID )
         nMaxId_ = nAgentID_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetGtia
-/** @param  gtia 
-*/
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
 inline
@@ -435,11 +406,8 @@ void MOS_Agent::SetGtia( MOS_Gtia& gtia )
     pGtia_ = &gtia;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetParent
-/** @param  pParent 
-*/
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
 inline
@@ -448,11 +416,8 @@ void MOS_Agent::SetParent( MOS_Agent* pParent )
     pParent_ = pParent;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetCategory
-/** @param  strCategory 
-*/
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
 inline
@@ -461,11 +426,8 @@ void MOS_Agent::SetCategory( const std::string& strCategory )
     strCategory_ = strCategory;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetSymbol
-/** @param  strCategory 
-*/
 // Created: APE 2004-09-03
 // -----------------------------------------------------------------------------
 inline
@@ -474,11 +436,8 @@ void MOS_Agent::SetSymbol( const std::string& strSymbol )
     symbolName_ = strSymbol;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetPos
-/** @param  vPos 
-*/
 // Created: APE 2004-08-26
 // -----------------------------------------------------------------------------
 inline
@@ -487,11 +446,8 @@ void MOS_Agent::SetPos( const MT_Vector2D& vPos )
     vPos_ = vPos;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetIsAutomate
-/** @param  b 
-*/
 // Created: APE 2004-08-27
 // -----------------------------------------------------------------------------
 inline
@@ -500,11 +456,8 @@ void MOS_Agent::SetIsAutomate( bool b )
     bAutomate_ = b;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::SetEmbraye
-/** @param  b 
-*/
 // Created: APE 2004-09-20
 // -----------------------------------------------------------------------------
 inline
@@ -513,11 +466,8 @@ void MOS_Agent::SetEmbraye( bool b )
     bEmbraye_ = b;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetContamination
-/** @return 
-*/
 // Created: APE 2004-11-03
 // -----------------------------------------------------------------------------
 inline
@@ -526,11 +476,8 @@ int MOS_Agent::GetContamination() const
     return nContamination_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::AddChild
-/** @param  agent 
-*/
 // Created: APE 2004-11-04
 // -----------------------------------------------------------------------------
 inline
@@ -541,8 +488,6 @@ void MOS_Agent::AddChild( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetChildren
-/** @return 
-*/
 // Created: APE 2004-11-04
 // -----------------------------------------------------------------------------
 inline
@@ -573,14 +518,12 @@ const MOS_TypeAutomate* MOS_Agent::GetTypeAutomate() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::GetID
-/** @return 
-*/
 // Created: HME 2005-10-05
 // -----------------------------------------------------------------------------
 inline
-const uint MOS_Agent::GetID()
+const MIL_AgentID MOS_Agent::GetID() const
 {
-	return GetAgentID();
+	return nAgentID_;
 }
 
 // -----------------------------------------------------------------------------
@@ -598,7 +541,7 @@ MOS_AgentKnowledge* MOS_Agent::FindAgentKnowledge( uint nId )
 // Created: HME 2005-10-19
 // -----------------------------------------------------------------------------
 inline
-T_FireResults MOS_Agent::GetFireResult() const
+const T_FireResults& MOS_Agent::GetFireResult() const
 {
     return fireResults_;
 }

@@ -34,6 +34,8 @@ class MOS_Team;
 class MOS_Population;
 class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
+class MOS_PopulationKnowledge;
+class MOS_PopulationConcentrationKnowledge;
 class MOS_Object_ABC;
 class MOS_TacticalLine_ABC;
 class QSplashScreen;
@@ -124,6 +126,14 @@ public:
     void NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
     void NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
 
+    void NotifyPopulationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge );
+    void NotifyPopulationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge );
+    void NotifyPopulationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge );
+
+    void NotifyPopulationConcentrationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
+    void NotifyPopulationConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
+    void NotifyPopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
+
     void NotifyTacticalLineDeleted( MOS_TacticalLine_ABC& line );
 
     void NotifyTypePopulationCreated( MOS_TypePopulation& type );
@@ -193,8 +203,8 @@ signals:
     void AgentOutOfGas( MOS_Agent& agent );
     void AgentRefueled( MOS_Agent& agent );
 
-    void AgentConflictStarted( MOS_Agent&      agent  );
-    void AgentConflictEnded  ( MOS_Agent&      agent  );
+    void AgentConflictStarted( MOS_Agent&  agent  );
+    void AgentConflictEnded  ( MOS_Agent&  agent  );
     void ObjectExplosion     ( MOS_Object_ABC& object );
 
     void AgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
@@ -204,6 +214,14 @@ signals:
     void ObjectKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
     void ObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
     void ObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
+
+    void PopulationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge );
+    void PopulationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge );
+    void PopulationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge );
+
+    void PopulationConcentrationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
+    void PopulationConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
+    void PopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
 
     void TacticalLineDeleted( MOS_TacticalLine_ABC& line );
 

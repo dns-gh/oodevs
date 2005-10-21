@@ -53,6 +53,4 @@ signals:
     void ODBLoaded();
 };
 
-#include "MOS_ODBToolbar.inl"
-
 #endif // __MOS_ODBToolbar_h_

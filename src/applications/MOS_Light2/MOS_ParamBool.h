@@ -28,13 +28,6 @@
 
 
 // =============================================================================
-/** @class  MOS_ParamBool
-    @brief  MOS_ParamBool
-    @par    Using example
-    @code
-    MOS_ParamBool;
-    @endcode
-*/
 // Created: APE 2004-04-21
 // =============================================================================
 class MOS_ParamBool : public QCheckBox, public MOS_Param_ABC
@@ -59,7 +52,5 @@ private:
     ASN1BOOL& asnBool_;
     //@}
 };
-
-#   include "MOS_ParamBool.inl"
 
 #endif // __MOS_ParamBool_h_

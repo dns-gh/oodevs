@@ -246,7 +246,7 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
     assert( pAgent_ );
 
     MOS_ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid = pAgent_->GetAgentID();
+    asnMsg.GetAsnMsg().oid = pAgent_->GetID();
 
     ASN1T_MagicActionRecompletementPartiel asnMagicAction;
 

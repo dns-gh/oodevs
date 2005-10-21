@@ -69,9 +69,6 @@ protected:
     //@}
 };
 
-#include "MT_ValuedRichListViewItem.inl"
-
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedRichListViewItem constructor
 // Created: APE 2004-04-19

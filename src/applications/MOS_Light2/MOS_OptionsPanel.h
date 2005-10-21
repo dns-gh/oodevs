@@ -27,13 +27,6 @@ class QCheckBox;
 
 
 // =============================================================================
-/** @class  MOS_OptionsPanel
-    @brief  MOS_OptionsPanel
-    @par    Using example
-    @code
-    MOS_OptionsPanel;
-    @endcode
-*/
 // Created: APE 2004-07-09
 // =============================================================================
 class MOS_OptionsPanel : public QWidget
@@ -52,7 +45,7 @@ private slots:
     //! @name Helpers
     //@{
     void OnCheckpoint();
-    void Apply();
+    void Apply       ();
     //@}
 
 private:
@@ -69,7 +62,5 @@ private:
     QCheckBox* pLogisticLinksDisplayCheckbox_;
     //@}
 };
-
-#   include "MOS_OptionsPanel.inl"
 
 #endif // __MOS_OptionsPanel_h_

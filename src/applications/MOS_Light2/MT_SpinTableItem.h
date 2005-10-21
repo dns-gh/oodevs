@@ -63,6 +63,4 @@ protected:
 
 } // end namespace MT
 
-#include "MT_SpinTableItem.inl"
-
 #endif // __MT_SpinTableItem_h_

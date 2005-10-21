@@ -70,6 +70,7 @@ void MOS_PopulationPanel::OnClearSelection()
     pLivingLabel_  ->setText( "" );
     pDeadLabel_    ->setText( "" );
     pAttitudeLabel_->setText( "" );
+    pPartsListView_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,24 +88,19 @@ void MOS_PopulationPanel::OnUpdate()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationPanel::OnPopulationUpdated
-/** @param  population 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
 {
+    OnClearSelection();
+
     if( ! ShouldDisplay( population ) )
         return;
 
-    pNameLabel_->setText( (population.GetName()).c_str() );
+    pNameLabel_    ->setText( population.GetName().c_str() );
+    pLivingLabel_  ->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
+    pDeadLabel_    ->setText( QString( "%1" ).arg( population.GetDeadHumans  () ) );
 
-    pLivingLabel_->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
-
-    pDeadLabel_->setText( QString( "%1" ).arg( population.GetDeadHumans() )  );
-
-    pAttitudeLabel_->setText( "" );
-
-    pPartsListView_->clear();
     for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
         new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
             , QString( (*it)->GetName().c_str() )

@@ -27,13 +27,14 @@ class MOS_SIMControlToolbar : public QToolBar
     MT_COPYNOTALLOWED( MOS_SIMControlToolbar );
 
 public:
+    //! @name Constructor/Destructor
+    //@{
     explicit MOS_SIMControlToolbar( QMainWindow* pParent );
     virtual ~MOS_SIMControlToolbar();
+    //@}
 
 protected slots:
-    //-------------------------------------------------------------------------
-    /** @name Slots */
-    //-------------------------------------------------------------------------
+    //! @name Slots
     //@{
     void SlotConnectDisconnect();
     void SlotPlayPause();
@@ -52,7 +53,5 @@ private:
     MOS_ConnectDialog*      pConnectDlg_;
     MOS_DisconnectDialog*   pDisconnectDlg_;
 };
-
-#	include "MOS_SIMControlToolbar.inl"
 
 #endif // __MOS_SIMControlToolbar_h_

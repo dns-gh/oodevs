@@ -27,13 +27,6 @@
 
 
 // =============================================================================
-/** @class  MOS_ParamRadioBtnGroup
-    @brief  MOS_ParamRadioBtnGroup
-    @par    Using example
-    @code
-    MOS_ParamRadioBtnGroup;
-    @endcode
-*/
 // Created: APE 2004-04-20
 // =============================================================================
 template< class T >
@@ -63,10 +56,6 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamRadioBtnGroup constructor
-/** @param  output 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 template< class T >
@@ -89,8 +78,6 @@ MOS_ParamRadioBtnGroup<T>::~MOS_ParamRadioBtnGroup()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamRadioBtnGroup::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 template< class T >
@@ -99,7 +86,5 @@ void MOS_ParamRadioBtnGroup<T>::WriteMsg( std::stringstream& strMsg )
     output_ = this->GetValue();
     strMsg << this->title().latin1() << ": " << this->GetValue();
 }
-
-#   include "MOS_ParamRadioBtnGroup.inl"
 
 #endif // __MOS_ParamRadioBtnGroup_h_

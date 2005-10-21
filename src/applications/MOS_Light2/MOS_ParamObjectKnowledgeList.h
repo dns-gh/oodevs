@@ -84,6 +84,4 @@ private:
     //@}
 };
 
-#   include "MOS_ParamObjectKnowledgeList.inl"
-
 #endif // __MOS_ParamObjectKnowledgeList_h_

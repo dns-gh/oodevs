@@ -32,9 +32,6 @@ class MOS_ReportListView;
 class QGroupBox;
 
 // =============================================================================
-/** @class  MOS_AgentStatePanel
-    @brief  MOS_AgentStatePanel
-*/
 // Created: APE 2004-03-10
 // =============================================================================
 class MOS_AgentStatePanel : public MOS_InfoPanel_ABC

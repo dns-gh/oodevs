@@ -309,7 +309,7 @@ void MOS_ObjectCreationPanel::OnOk()
 		
 		if( nType == EnumObjectType::camp_refugies || nType == EnumObjectType::camp_prisonniers )
         {
-            static_cast< MOS_Object_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetAgentID() );
+            static_cast< MOS_Object_Camp* >( pObject )->SetTC2ID( pAgent_->GetAgent()->GetID() );
         }
 		pAgent_->Clear();
         

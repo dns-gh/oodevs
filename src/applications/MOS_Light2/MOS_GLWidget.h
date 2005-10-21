@@ -33,13 +33,6 @@ class QPopupMenu;
 
 
 // =============================================================================
-/** @class  MOS_GLWidget
-    @brief  MOS_GLWidget
-    @par    Using example
-    @code
-    MOS_GLWidget;
-    @endcode
-*/
 // Created: APE 2004-02-27
 // =============================================================================
 class MOS_GLWidget : public QGLWidget
@@ -49,25 +42,35 @@ class MOS_GLWidget : public QGLWidget
     friend class MOS_GLTool;
 
 public:
+    //! @name Constructor/Destructor
+    //@{
     MOS_GLWidget( QWidget* pParent, QGLWidget* pShare = 0 );
     ~MOS_GLWidget();
+    //@}
 
 public:
+    //! @name Operations
+    //@{
     MT_Vector2D ScreenToGL ( const MT_Vector2D& v );
     MT_Vector2D ScreenToGL ( const QMouseEvent& event );
     MT_Vector2D ScreenToGL ( const QPoint& vScreenPos );
+    //@}
 
-    const T_MapEventFilterVector& GetMapEvents() const;
-    void PushMapEventFilter( MOS_MapEventFilter_ABC& filter );
-    void PopMapEventFilter( MOS_MapEventFilter_ABC& filter );
+    //! @name Event management
+    //@{
+    const T_MapEventFilterVector& GetMapEvents      () const;
+          void                    PushMapEventFilter( MOS_MapEventFilter_ABC& filter );
+          void                    PopMapEventFilter ( MOS_MapEventFilter_ABC& filter );
+    //@}
 
 public slots:
+    //! @name Slots
+    //@{
     void OnCenterOnPoint( const MT_Vector2D& vPoint );
+    //@}
 
 protected:
-    //-------------------------------------------------------------------------
-    /** @name Event handeling */
-    //-------------------------------------------------------------------------
+    //! @name Event Handlers
     //@{
     virtual void hideEvent( QHideEvent* );
     virtual void showEvent( QShowEvent* );
@@ -75,14 +78,14 @@ protected:
     void resizeGL         ( int w, int h );
     void paintGL          ();
 
-    bool event            ( QEvent* pEvent );
+    bool event            ( QEvent*      pEvent      );
     void mousePressEvent  ( QMouseEvent* pMouseEvent );
     void mouseMoveEvent   ( QMouseEvent* pMouseEvent );
     void mouseReleaseEvent( QMouseEvent* pMouseEvent );
     void wheelEvent       ( QWheelEvent* pWheelEvent );
-    void keyPressEvent    ( QKeyEvent* pKeyEvent );
+    void keyPressEvent    ( QKeyEvent*   pKeyEvent   );
 
-    void Update( unsigned int nWait = 0 );
+    void Update           ( unsigned int nWait = 0 );
     //@}
 
     //! @name Tools
@@ -91,15 +94,21 @@ protected:
     //@}
 
 signals:
+    //! @name Signals
+    //@{
     void MouseMove( QMouseEvent* pMouseEvent, const MT_Vector2D& vGLPos );
+    //@}
 
 private:
+    //! @name Enums
+    //@{
     enum E_RulerState
     {
         eNone,
         eStarting,
         eExistant
     };
+    //@}
 
 private:
     QTimer*      pTimer_;
@@ -119,7 +128,5 @@ private:
 
     T_MapEventFilterVector eventFilterStack_;
 };
-
-#   include "MOS_GLWidget.inl"
 
 #endif // __MOS_GLWidget_h_

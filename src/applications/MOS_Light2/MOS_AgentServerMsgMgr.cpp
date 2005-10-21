@@ -37,6 +37,7 @@
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogSupplyConsign.h"
 #include "MOS_Population.h"
+#include "MOS_PopulationKnowledge.h"
 
 using namespace DIN;
 
@@ -147,7 +148,7 @@ void MOS_AgentServerMsgMgr::SendMsgUnitMagicActionDestroyComposante( const MOS_A
     MOS_AgentServer& agentServer = controller_.GetConnectionMgr().GetAgentServer();
 
     DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg << agent.GetAgentID();
+    dinMsg << agent.GetID();
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     pMessageService_->Send( agentServer.GetSession(), eMsgUnitMagicAction, dinMsg );
@@ -1394,6 +1395,10 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_M
     MOS_App::GetApp().NotifyAgentUpdated( *pAutomate );
 }
 
+// =============================================================================
+// KNOWLEDGES
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation
 // Created: NLD 2004-03-18
@@ -1463,6 +1468,109 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_
     MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeam( asnMsg.oid_camp_possesseur );
     assert( pTeam );
     pTeam->OnReceiveMsgObjectKnowledgeDestruction( asnMsg );
+}
+
+// =============================================================================
+// POPULATION KNOWLEDGE
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation
+// Created: SBO 2005-10-17
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+{
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    pGtia->OnReceiveMsgPopulationKnowledgeCreation( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate
+// Created: SBO 2005-10-17
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
+{
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    pGtia->OnReceiveMsgPopulationKnowledgeUpdate( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction
+// Created: SBO 2005-10-17
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+{
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    pGtia->OnReceiveMsgPopulationKnowledgeDestruction( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation
+// Created: SBO 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeCreation( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+{
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    MOS_PopulationKnowledge* pKnowledge = pGtia->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+    assert( pKnowledge );
+    pKnowledge->OnReceiveMsgPopulationConcentrationKnowledgeCreation( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate
+// Created: SBO 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
+{
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    MOS_PopulationKnowledge* pKnowledge = pGtia->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+    assert( pKnowledge );
+    pKnowledge->OnReceiveMsgPopulationConcentrationKnowledgeUpdate( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction
+// Created: SBO 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg )
+{
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    MOS_PopulationKnowledge* pKnowledge = pGtia->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+    assert( pKnowledge );
+    pKnowledge->OnReceiveMsgPopulationConcentrationKnowledgeDestruction( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation
+// Created: SBO 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+{
+     // $$$$ SBO 2005-10-17: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate
+// Created: SBO 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+{
+    // $$$$ SBO 2005-10-17: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction
+// Created: SBO 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
+{
+    // $$$$ SBO 2005-10-17: TODO
 }
 
 
@@ -1930,6 +2038,16 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
         case T_MsgsSimMos_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *asnMsg.u.msg_population_flux_creation ); break;
         case T_MsgsSimMos_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *asnMsg.u.msg_population_flux_destruction ); break;
         case T_MsgsSimMos_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *asnMsg.u.msg_population_flux_update ); break;
+
+        case T_MsgsSimMos_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *asnMsg.u.msg_population_knowledge_creation                  ); break;
+        case T_MsgsSimMos_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *asnMsg.u.msg_population_knowledge_update                    ); break;
+        case T_MsgsSimMos_msg_population_knowledge_destruction               : OnReceiveMsgPopulationKnowledgeDestruction             ( *asnMsg.u.msg_population_knowledge_destruction               ); break;
+        case T_MsgsSimMos_msg_population_concentration_knowledge_creation    : OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( *asnMsg.u.msg_population_concentration_knowledge_creation    ); break;
+        case T_MsgsSimMos_msg_population_concentration_knowledge_update      : OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( *asnMsg.u.msg_population_concentration_knowledge_update      ); break;
+        case T_MsgsSimMos_msg_population_concentration_knowledge_destruction : OnReceiveMsgPopulationConcentrationKnowledgeDestruction( *asnMsg.u.msg_population_concentration_knowledge_destruction ); break;
+        case T_MsgsSimMos_msg_population_flux_knowledge_creation             : OnReceiveMsgPopulationFlowKnowledgeCreation            ( *asnMsg.u.msg_population_flux_knowledge_creation             ); break;
+        case T_MsgsSimMos_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *asnMsg.u.msg_population_flux_knowledge_update               ); break;
+        case T_MsgsSimMos_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *asnMsg.u.msg_population_flux_knowledge_destruction          ); break;
 
         default:
             {

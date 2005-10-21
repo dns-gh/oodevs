@@ -27,18 +27,16 @@ MIL_AgentID MOS_Population::nMaxId_ = 7000000;
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Population constructor
-/** @param  asnMsg 
-*/
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 MOS_Population::MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg )
-: nPopulationID_	( asnMsg.oid_population )
-, pTypePopulation_	( 0 )
-, pTeam_			( 0 )
+    : nPopulationID_( asnMsg.oid_population )
+    , strName_      ( asnMsg.nom )
+    , pType_        ( MOS_App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population ) )
+    , pTeam_        ( MOS_App::GetApp().GetAgentManager().FindTeam( asnMsg.oid_camp ) )
 {
-	pTypePopulation_	= MOS_App::GetApp().GetAgentManager().FindTypePopulation( asnMsg.type_population );
-	pTeam_				= MOS_App::GetApp().GetAgentManager().FindTeam( asnMsg.oid_camp );
-	sName_				= std::string( asnMsg.nom );
+    assert( pType_ );
+    assert( pTeam_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,10 +44,12 @@ MOS_Population::MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg )
 // Created: HME 2005-10-18
 // -----------------------------------------------------------------------------
 MOS_Population::MOS_Population()
-: nPopulationID_	( nMaxId_++ )
-, pTypePopulation_	( 0 )
-, pTeam_			( 0 )
+    : nPopulationID_( nMaxId_++ )
+    , pType_        ( 0 )
+    , pTeam_        ( 0 )
+    , strName_      ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,10 +57,10 @@ MOS_Population::MOS_Population()
 // Created: HME 2005-10-18
 // -----------------------------------------------------------------------------
 MOS_Population::MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name, MOS_TypePopulation* type )
-: nPopulationID_	( nMaxId_++ )
-, pTypePopulation_	( type )
-, pTeam_			( &team )
-, sName_            ( name )
+    : nPopulationID_( nMaxId_++ )
+    , pType_        ( type )
+    , pTeam_        ( &team )
+    , strName_      ( name )
 {
     CreatePopulationConcentration( point, attitude, persons );
 }
@@ -81,78 +81,78 @@ MOS_Population::~MOS_Population()
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::UpdatePopulationFlux			
+// Name: MOS_Population::UpdatePopulationFlux			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::UpdatePopulationFlux( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void MOS_Population::UpdatePopulationFlux( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
 	fluxMap_[ asnMsg.oid_flux ]->Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::UpdatePopulationConcentration	
+// Name: MOS_Population::UpdatePopulationConcentration	
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+void MOS_Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
 	concentrationMap_[ asnMsg.oid_concentration ]->Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::CreatePopulationFlux			
+// Name: MOS_Population::CreatePopulationFlux			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::CreatePopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void MOS_Population::CreatePopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
 	MOS_PopulationFlux* pFlux = new MOS_PopulationFlux( asnMsg, *this );
 	fluxMap_[ asnMsg.oid_flux ] = pFlux;
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::CreatePopulationConcentration	
+// Name: MOS_Population::CreatePopulationConcentration	
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+void MOS_Population::CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
 {
 	MOS_PopulationConcentration* pCon = new MOS_PopulationConcentration( asnMsg, *this );
 	concentrationMap_[ asnMsg.oid_concentration ] = pCon ;
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::CreatePopulationConcentration
+// Name: MOS_Population::CreatePopulationConcentration
 // Created: HME 2005-10-18
 // -----------------------------------------------------------------------------
-void	MOS_Population::CreatePopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons )
+void MOS_Population::CreatePopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude, int persons )
 {
     MOS_PopulationConcentration* pCon = new MOS_PopulationConcentration( point, attitude, persons, *this );
     concentrationMap_[ nMaxId_  ] = pCon ;
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::DeletePopulationFlux			
+// Name: MOS_Population::DeletePopulationFlux			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::DeletePopulationFlux( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void MOS_Population::DeletePopulationFlux( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
     IT_FluxMap it = fluxMap_.find( asnMsg.oid_flux );
     fluxMap_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::DeletePopulationConcentration	
+// Name: MOS_Population::DeletePopulationConcentration	
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+void MOS_Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
     IT_ConcentrationMap it = concentrationMap_.find( asnMsg.oid_concentration );
     concentrationMap_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
-// Name: void	MOS_Population::UpdatePopulation				
+// Name: MOS_Population::UpdatePopulation				
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void	MOS_Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& asnMsg )
+void MOS_Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
 {
 } 
 
@@ -211,14 +211,15 @@ void MOS_Population::ReadODB( MOS_InputArchive& archive )
     std::string strCategory;
     
     archive.ReadAttribute( "type", strCategory );
-    pTypePopulation_ = MOS_App::GetApp().GetAgentManager().FindTypePopulation( strCategory );
+    pType_ = MOS_App::GetApp().GetAgentManager().FindTypePopulation( strCategory );
+    assert( pType_ );
 
     archive.ReadAttribute( "id", nPopulationID_ );
     if( nPopulationID_ > nMaxId_ )
         nMaxId_ = nPopulationID_;
 
-    if( ! archive.ReadField( "Nom", sName_, MOS_InputArchive::eNothing ) )
-        sName_ = strCategory;
+    if( ! archive.ReadField( "Nom", strName_, MOS_InputArchive::eNothing ) )
+        strName_ = strCategory;
 
     std::string strPos;
     MT_Vector2D vPos;
@@ -250,17 +251,17 @@ void MOS_Population::WriteODB( MT_XXmlOutputArchive& archive )
 {
     archive.Section( "Population" );
 
-    archive.WriteAttribute( "type", pTypePopulation_->GetName() );
+    archive.WriteAttribute( "type", pType_->GetName() );
     archive.WriteAttribute( "id", nPopulationID_ );
-    archive.WriteField( "Nom", sName_ );
-    archive.WriteField( "Camp", pTeam_->GetName() );
+    archive.WriteField    ( "Nom", strName_ );
+    archive.WriteField    ( "Camp", pTeam_->GetName() );
 
     MOS_PopulationConcentration* pCon = concentrationMap_.begin()->second;
     std::string strPos;
     MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( pCon->GetPos() , strPos );
-    archive.WriteField( "Position", strPos );
+    archive.WriteField( "Position"     , strPos );
     archive.WriteField( "NombreHumains", pCon->GetLivingHumans() );
-    archive.WriteField( "Attitude", ENT_Tr::ConvertFromPopulationAttitude( pCon->GetAttitude() ) );
+    archive.WriteField( "Attitude"     , ENT_Tr::ConvertFromPopulationAttitude( pCon->GetAttitude() ) );
     
     archive.EndSection();
 }

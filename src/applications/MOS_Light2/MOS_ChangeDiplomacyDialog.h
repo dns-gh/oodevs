@@ -53,6 +53,4 @@ private:
     QComboBox*     pDiplomacyComboBox_;
 };
 
-#include "MOS_ChangeDiplomacyDialog.inl"
-
 #endif // __MOS_ChangeDiplomacyDialog_h_

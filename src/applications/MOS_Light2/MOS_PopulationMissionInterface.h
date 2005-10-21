@@ -22,13 +22,6 @@ class MOS_ASN_MsgPopulationOrder;
 class MOS_Population;
 
 // =============================================================================
-/** @class  MOS_PopulationMissionInterface
-    @brief  MOS_PopulationMissionInterface
-    @par    Using example
-    @code
-    MOS_PopulationMissionInterface;
-    @endcode
-*/
 // Created: APE 2004-04-20
 // =============================================================================
 class MOS_PopulationMissionInterface : public MOS_MissionInterface_ABC
@@ -68,7 +61,5 @@ private:
     //@}
 };
 
-
-#include "MOS_PopulationMissionInterface.inl"
 
 #endif // __MOS_PopulationMissionInterface_h_

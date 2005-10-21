@@ -80,6 +80,4 @@ private:
     MOS_AgentKnowledge* pPopupKnowledge_;
 };
 
-#   include "MOS_ParamAgentKnowledge.inl"
-
 #endif // __MOS_ParamAgentKnowledge_h_

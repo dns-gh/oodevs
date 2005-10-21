@@ -71,7 +71,7 @@ MOS_LogSupplyConsign::~MOS_LogSupplyConsign()
 // -----------------------------------------------------------------------------
 void MOS_LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementTraitementUpdate& asn )
 {
-    assert( pion_.GetAgentID() == asn.oid_automate );
+    assert( pion_.GetID() == asn.oid_automate );
 
     if( asn.m.oid_pion_log_traitantPresent )
     {

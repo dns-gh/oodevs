@@ -77,6 +77,4 @@ private:
     */
 };
 
-#include "MOS_LogisticSupplyRecompletionDialog.inl"
-
 #endif // __MOS_LogisticSupplyRecompletionDialog_h_

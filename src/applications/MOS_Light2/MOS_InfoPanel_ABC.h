@@ -51,11 +51,11 @@ public:
 protected slots:
     //! @name Slots
     //@{
-    virtual void OnUpdate        ();
-    virtual void OnClearSelection() = 0;
-    virtual void OnAgentUpdated  ( MOS_Agent&      agent  );
-    virtual void OnObjectUpdated ( MOS_Object_ABC& object );
-    virtual void OnPopulationUpdated  ( MOS_Population& population );
+    virtual void OnUpdate           ();
+    virtual void OnClearSelection   () = 0;
+    virtual void OnAgentUpdated     ( MOS_Agent&      agent  );
+    virtual void OnObjectUpdated    ( MOS_Object_ABC& object );
+    virtual void OnPopulationUpdated( MOS_Population& population );
 
     virtual void showEvent( QShowEvent* );
     //@}
@@ -103,7 +103,7 @@ protected:
     //@{
     QVBox* pBox_;
     MOS_SelectedElement selectedItem_;
-    bool bVisible_;
+    //bool bVisible_;
     //@}
 };
 

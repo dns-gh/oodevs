@@ -70,6 +70,4 @@ private:
 };
 
 
-#include "MOS_UnitToolbar.inl"
-
 #endif // __MOS_UnitToolbar_h_

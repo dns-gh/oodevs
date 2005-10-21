@@ -22,9 +22,6 @@ class GraphicShape_ABC;
 class DrawDetection;
 
 // =============================================================================
-/** @class  MOS_World
-    @brief  Represents the world. Offers coordinate transformation functions.
-*/
 // Created: APE 2004-07-19
 // =============================================================================
 class MOS_World
@@ -95,7 +92,5 @@ private:
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
 };
-
-#	include "MOS_World.inl"
 
 #endif // __MOS_World_h_

@@ -30,13 +30,6 @@ class MOS_ASN_MsgPionOrder;
 class MOS_Agent;
 
 // =============================================================================
-/** @class  MOS_UnitMissionInterface
-    @brief  MOS_UnitMissionInterface
-    @par    Using example
-    @code
-    MOS_UnitMissionInterface;
-    @endcode
-*/
 // Created: APE 2004-04-20
 // =============================================================================
 class MOS_UnitMissionInterface : public MOS_MissionInterface_ABC
@@ -74,7 +67,5 @@ private:
     MOS_ASN_MsgPionOrder* pASNMsgOrder_;
     //@}
 };
-
-#   include "MOS_UnitMissionInterface.inl"
 
 #endif // __MOS_UnitMissionInterface_h_

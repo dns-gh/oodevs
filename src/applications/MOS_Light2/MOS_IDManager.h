@@ -40,6 +40,4 @@ private:
     uint                 nStartInstanceID_;
 };
 
-#   include "MOS_IDManager.inl"
-
 #endif // __MOS_IDManager_h_

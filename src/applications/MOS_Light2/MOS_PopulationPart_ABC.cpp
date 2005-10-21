@@ -9,7 +9,7 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationPart_ABC.h"
-
+ 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationPart_ABC constructor

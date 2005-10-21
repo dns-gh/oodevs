@@ -103,6 +103,4 @@ private:
     MOS_ShapeEditorMapEventFilter* pLineEditor_;
 };
 
-#   include "MOS_MissionPanel.inl"
-
 #endif // __MOS_MissionPanel_h_

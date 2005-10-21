@@ -29,8 +29,11 @@ class MOS_Surface
     MT_COPYNOTALLOWED( MOS_Surface )
 
 public:
+    //! @name Constructor/Destructor
+    //@{
      MOS_Surface( DIN::DIN_Input& input );
     ~MOS_Surface();
+    //@}
 
     //! @name Operations
     //@{
@@ -51,7 +54,5 @@ private:
     T_SectorVector sectors_;
     const MOS_SensorType* pSensorType_;
 };
-
-#include "MOS_Surface.inl"
 
 #endif // __MOS_Surface_h_

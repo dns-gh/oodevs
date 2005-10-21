@@ -97,7 +97,7 @@ void MOS_ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     if( ! pAgent_ )
         RUNTIME_ERROR;
-    SendMessage( pAgent_->GetAgentID(), fatigue, moral, experience );
+    SendMessage( pAgent_->GetID(), fatigue, moral, experience );
     hide();
 }
 

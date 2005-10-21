@@ -32,10 +32,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface constructor
-/** @param  agent 
-    @param  nOrderType 
-    @param  parentPanel 
-*/
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
 MOS_FragmentaryOrderInterface::MOS_FragmentaryOrderInterface( MOS_Agent& agent, uint nMissionId, MOS_MissionPanel& parentPanel )
@@ -43,7 +39,7 @@ MOS_FragmentaryOrderInterface::MOS_FragmentaryOrderInterface( MOS_Agent& agent, 
     , nMissionId_             ( nMissionId )
 {
     pASNMsgOrder_ = new MOS_ASN_MsgOrderConduite();
-    pASNMsgOrder_->GetAsnMsg().unit_id = agent.GetAgentID();
+    pASNMsgOrder_->GetAsnMsg().unit_id = agent.GetID();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = nMissionId_;
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromFragOrder( ( E_FragOrder )nMissionId_ ).c_str(), this );

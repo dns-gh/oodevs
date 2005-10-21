@@ -67,6 +67,4 @@ private:
 };
 
 
-#include "MOS_ControllerToolbar.inl"
-
 #endif // __MOS_ControllerToolbar_h_

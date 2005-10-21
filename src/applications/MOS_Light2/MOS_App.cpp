@@ -17,7 +17,7 @@
 #include "MOS_AgentManager.h"
 #include "MOS_LineManager.h"
 #include "MOS_World.h"
-#include "MOS_ObjectManager.h"s
+#include "MOS_ObjectManager.h"
 #include "MOS_Meteo_Manager.h"
 #include "MOS_MainWindow.h"
 #include "MOS_SensorType.h"
@@ -28,6 +28,9 @@
 #include "MOS_LogMedicalConsign.h"
 #include "MOS_LogMaintenanceConsign.h"
 #include "MOS_Object_ABC.h"
+#include "MOS_Population.h"
+#include "MOS_PopulationKnowledge.h"
+#include "MOS_PopulationConcentrationKnowledge.h"
 #include "MOS_Options.h"
 #include "MT/MT_IO/MT_CommandLine.h"
 
@@ -768,8 +771,6 @@ void MOS_App::NotifyTeamDeleted( MOS_Team& team )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyGtiaDeleted
-/** @param  gtia 
-*/
 // Created: APE 2004-08-25
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyGtiaDeleted( MOS_Gtia& gtia )
@@ -780,9 +781,6 @@ void MOS_App::NotifyGtiaDeleted( MOS_Gtia& gtia )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyReportCreated
-/** @param  agent 
-    @param  rc 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report )
@@ -793,8 +791,6 @@ void MOS_App::NotifyReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentOutOfGas
-/** @param  agent 
-*/
 // Created: APE 2004-09-30
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentOutOfGas( MOS_Agent& agent )
@@ -805,8 +801,6 @@ void MOS_App::NotifyAgentOutOfGas( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentRefueled
-/** @param  pAgent 
-*/
 // Created: APE 2004-09-30
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentRefueled( MOS_Agent& agent )
@@ -817,8 +811,6 @@ void MOS_App::NotifyAgentRefueled( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentConflictStarted
-/** @param  agent 
-*/
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentConflictStarted( MOS_Agent& agent )
@@ -829,8 +821,6 @@ void MOS_App::NotifyAgentConflictStarted( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentConflictEnded
-/** @param  pAgent 
-*/
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentConflictEnded( MOS_Agent& agent )
@@ -840,8 +830,6 @@ void MOS_App::NotifyAgentConflictEnded( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyObjectExplosion
-/** @param  object 
-*/
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyObjectExplosion( MOS_Object_ABC& object )
@@ -852,8 +840,6 @@ void MOS_App::NotifyObjectExplosion( MOS_Object_ABC& object )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifySpeedChanged
-/** @param  nSpeed 
-*/
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------
 void MOS_App::NotifySpeedChanged( int nSpeed )
@@ -864,8 +850,6 @@ void MOS_App::NotifySpeedChanged( int nSpeed )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentKnowledgeCreated
-/** @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge )
@@ -876,8 +860,6 @@ void MOS_App::NotifyAgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& k
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentKnowledgeUpdated
-/** @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentKnowledgeUpdated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge )
@@ -888,8 +870,6 @@ void MOS_App::NotifyAgentKnowledgeUpdated( MOS_Gtia& gtia, MOS_AgentKnowledge& k
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyAgentKnowledgeDeleted
-/** @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge )
@@ -900,9 +880,6 @@ void MOS_App::NotifyAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& k
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyObjectKnowledgeCreated
-/** @param  gtia 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
@@ -913,9 +890,6 @@ void MOS_App::NotifyObjectKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge&
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyObjectKnowledgeUpdated
-/** @param  gtia 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
@@ -926,9 +900,6 @@ void MOS_App::NotifyObjectKnowledgeUpdated( MOS_Team& team, MOS_ObjectKnowledge&
 
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyObjectKnowledgeDeleted
-/** @param  gtia 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_App::NotifyObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
@@ -1042,4 +1013,58 @@ unsigned int MOS_App::GetRessourceID( const std::string& strRessource ) const
 bool MOS_App::Is3D()
 {
     return pMainWindow_ && pMainWindow_->GetOptions().b3D_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationKnowledgeCreated
+// Created: SBO 2005-10-19
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge )
+{
+    emit PopulationKnowledgeCreated( gtia, knowledge );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationKnowledgeUpdated
+// Created: SBO 2005-10-19
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge )
+{
+    emit PopulationKnowledgeUpdated( gtia, knowledge );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationKnowledgeDeleted
+// Created: SBO 2005-10-19
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationKnowledge& knowledge )
+{
+    emit PopulationKnowledgeDeleted( gtia, knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationConcentrationKnowledgeCreated
+// Created: SBO 2005-10-20
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationConcentrationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge )
+{
+    emit PopulationConcentrationKnowledgeCreated( gtia, knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationConcentrationKnowledgeUpdated
+// Created: SBO 2005-10-20
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge )
+{
+    emit PopulationConcentrationKnowledgeUpdated( gtia, knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationConcentrationKnowledgeDeleted
+// Created: SBO 2005-10-20
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge )
+{
+    emit PopulationConcentrationKnowledgeDeleted( gtia, knowledge );
 }

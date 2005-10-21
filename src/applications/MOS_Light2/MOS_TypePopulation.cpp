@@ -22,8 +22,11 @@
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
 MOS_TypePopulation::MOS_TypePopulation( const std::string& strName, MOS_InputArchive& archive )
-    : strName_( strName )
-    , pModel_ ( 0 )
+    : strName_              ( strName )
+    , pModel_               ( 0 )
+    , rConcentrationDensity_( 0. )
+    , rDefaultFlowDensity_  ( 0. )
+    , rMaxSpeed_            ( 0. )
 {
 	archive.ReadField( "MosID", nID_ );
     std::string strModel;
@@ -33,6 +36,10 @@ MOS_TypePopulation::MOS_TypePopulation( const std::string& strName, MOS_InputArc
     if( !pModel_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "" );
     MOS_App::GetApp().NotifyTypePopulationCreated( *this );
+
+    archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_ );
+    archive.ReadField( "DensiteNominaleDeplacement", rDefaultFlowDensity_   );
+    archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_             );
 }
 
 // -----------------------------------------------------------------------------

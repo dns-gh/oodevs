@@ -99,7 +99,4 @@ private:
     //@}
 };
 
-
-#include "MOS_EventToolbar.inl"
-
 #endif // __MOS_EventToolbar_h_

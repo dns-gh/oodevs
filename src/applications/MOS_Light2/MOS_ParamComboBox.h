@@ -123,6 +123,4 @@ void MOS_ParamComboBox<T>::WriteMsg( std::stringstream& strMsg )
 }
 
 
-#   include "MOS_ParamComboBox.inl"
-
 #endif // __MOS_ParamComboBox_h_

@@ -79,10 +79,10 @@ protected:
     template< typename Container, typename NameResolver >
     void DisplayAvailabilities( const Container& cont, QListView& viewer, const NameResolver& resolver, const char* szUnit  )
     {
-        int x = viewer.contentsX();
+//        int x = viewer.contentsX();
         int y = viewer.contentsY();
-        int w = viewer.contentsWidth();
-        int h = viewer.contentsHeight();
+//        int w = viewer.contentsWidth();
+//        int h = viewer.contentsHeight();
         viewer.clear();
         for( Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
         {

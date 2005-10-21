@@ -28,9 +28,12 @@ public:
     //@}
 
 private:
+    //! @name Event handlers
+    //@{
 	virtual void OnClearSelection();
     virtual void OnUpdate();
 	virtual void OnPopulationUpdated( MOS_Population& population );
+    //@}
 
 private:
     QLabel*    pNameLabel_;
@@ -39,9 +42,5 @@ private:
     QLabel*    pAttitudeLabel_;
 	QListView* pPartsListView_;
 };
-
-
-
-#include "MOS_PopulationPanel.inl"
 
 #endif // __MOS_PopulationPanel_h_

@@ -71,14 +71,6 @@ enum E_LightingType
     eNbrLightingType
 };
 
-enum E_AttitudePopulation
-{
-    eCalme,
-    eAgitee,
-    eExcitee,
-    eAgressive
-};
-
 enum E_TypeAgent
 {
     eAgent,

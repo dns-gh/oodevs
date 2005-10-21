@@ -18,3 +18,4 @@ MOS_Agent_ABC::T_ReportVector& MOS_Agent_ABC::GetReports()
 {
     return reportVector_;
 }
+

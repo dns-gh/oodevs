@@ -61,7 +61,7 @@ MOS_LogMaintenanceConsign::~MOS_LogMaintenanceConsign()
 // -----------------------------------------------------------------------------
 void MOS_LogMaintenanceConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogMaintenanceTraitementEquipementUpdate& asn )
 {
-    assert( pion_.GetAgentID() == asn.oid_pion );
+    assert( pion_.GetID() == asn.oid_pion );
     if( pPionLogHandling_ )
         pPionLogHandling_->TerminateConsign( *this );
     if( asn.oid_pion_log_traitant != 0 )

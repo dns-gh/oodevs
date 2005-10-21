@@ -116,6 +116,4 @@ protected:
     //@}
 };
 
-#   include "MOS_MissionInterface_ABC.inl"
-
 #endif // __MOS_MissionInterface_ABC_h_

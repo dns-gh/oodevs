@@ -37,15 +37,9 @@ class MOS_ObjectPanel;
 class MOS_ObjectReportPanel;
 class MOS_ObjectKnowledgePanel;
 class MOS_PopulationPanel;
+class MOS_PopulationKnowledgePanel;
 
 // =============================================================================
-/** @class  MOS_InfoPanel
-    @brief  MOS_InfoPanel
-    @par    Using example
-    @code
-    MOS_InfoPanel;
-    @endcode
-*/
 // Created: APE 2004-03-10
 // =============================================================================
 class MOS_InfoPanel : public QWidgetStack
@@ -74,12 +68,13 @@ public slots:
     void ClearAll();
 
 private:
-    void ShowAgentPanel             ( bool bShow );
-    void ShowAgentKnowledgePanel    ( bool bShow );
-    void ShowObjectKnowledgePanel   ( bool bShow );
-    void ShowObjectPanel            ( bool bShow );
-    void ShowLogisticPanels         ( bool bShow );
-	void ShowPopulationPanel		( bool bShow );
+    void ShowAgentPanel              ( bool bShow );
+    void ShowAgentKnowledgePanel     ( bool bShow );
+    void ShowObjectKnowledgePanel    ( bool bShow );
+    void ShowObjectPanel             ( bool bShow );
+    void ShowLogisticPanels          ( bool bShow );
+	void ShowPopulationPanel		 ( bool bShow );
+    void ShowPopulationKnowledgePanel( bool bShow );
 
 private:
     MOS_AgentStatePanel*          pStatePanel_;
@@ -94,7 +89,9 @@ private:
     MOS_ObjectReportPanel*        pObjectReportPanel_;
     MOS_ObjectKnowledgePanel*     pObjectKnowledgePanel_;
 
-	MOS_PopulationPanel*		  pPopulationPanel_;
+	MOS_PopulationPanel*          pPopulationPanel_;
+    MOS_ReportPanel*              pPopulationReportPanel_;
+    MOS_PopulationKnowledgePanel* pPopulationKnowledgePanel_;
 
     bool bAgentVisible_;
     bool bAgentKnowledgeVisible_;
@@ -102,6 +99,7 @@ private:
     bool bObjectKnowledgeVisible_;
     bool bLogisiticVisible_;
 	bool bPopulationVisible_;
+    bool bPopulationKnowledgeVisible_;
 
     QTabWidget* pTabWidget_;
 };

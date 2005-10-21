@@ -212,11 +212,11 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 		{
 			CIT_AgentIDMap it = tc2ComboBoxIDs_.find( pTC2ComboBox_->currentItem() );
 			if( it != tc2ComboBoxIDs_.end() )
-				pAgent_->nTC2_ = it->second->GetAgentID();
+				pAgent_->nTC2_ = it->second->GetID();
 			else
 			{
 				if( strii == std::string("Automate LOG TC2"))
-						pAgent_->nTC2_ = pAgent_->GetAgentID();
+						pAgent_->nTC2_ = pAgent_->GetID();
 				else
 						pAgent_->nTC2_ = (uint)0;
 			}
@@ -225,7 +225,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 		{
 			CIT_AgentIDMap it = maintenanceComboBoxIDs_.find( pMaintenanceComboBox_->currentItem() );
 			if( it != maintenanceComboBoxIDs_.end() )
-				pAgent_->nLogMaintenanceSuperior_ =  it->second->GetAgentID();
+				pAgent_->nLogMaintenanceSuperior_ =  it->second->GetID();
 			else
 				pAgent_->nLogMaintenanceSuperior_ = (uint)0;
 		}
@@ -233,7 +233,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 		{
 			CIT_AgentIDMap it = medicalComboBoxIDs_.find( pMedicalComboBox_->currentItem() );
 			if( it != medicalComboBoxIDs_.end() )
-				pAgent_->nLogMedicalSuperior_ =  it->second->GetAgentID();
+				pAgent_->nLogMedicalSuperior_ =  it->second->GetID();
 			else
 				pAgent_->nLogMedicalSuperior_ = (uint)0;
 		}
@@ -241,7 +241,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 		{
 			CIT_AgentIDMap it = supplyComboBoxIDs_.find( pSupplyComboBox_->currentItem() );
 			if( it != supplyComboBoxIDs_.end() )
-				pAgent_->nLogSupplySuperior_ =  it->second->GetAgentID();
+				pAgent_->nLogSupplySuperior_ =  it->second->GetID();
 			else
 				pAgent_->nLogSupplySuperior_ = (uint)0;
 		}
@@ -249,7 +249,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 	else
 	{
 		MOS_ASN_MsgChangeLiensLogistiques asnMsg;
-		asnMsg.GetAsnMsg().oid_automate = pAgent_->GetAgentID();
+		asnMsg.GetAsnMsg().oid_automate = pAgent_->GetID();
 
 		if( pTC2ComboBox_->isEnabled() )
 		{
@@ -258,12 +258,12 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 			if( it == tc2ComboBoxIDs_.end() )
 			{
 				if( strii == std::string("Automate LOG TC2"))
-						asnMsg.GetAsnMsg().oid_tc2 = pAgent_->GetAgentID();
+						asnMsg.GetAsnMsg().oid_tc2 = pAgent_->GetID();
 				else
 						asnMsg.GetAsnMsg().oid_tc2 = (uint)0;
 			}
 			else
-				asnMsg.GetAsnMsg().oid_tc2 = it->second->GetAgentID();
+				asnMsg.GetAsnMsg().oid_tc2 = it->second->GetID();
 		}
 
 		if( pMaintenanceComboBox_->isEnabled() )
@@ -273,7 +273,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 			if( it == maintenanceComboBoxIDs_.end() )
 				asnMsg.GetAsnMsg().oid_maintenance = 0;
 			else
-				asnMsg.GetAsnMsg().oid_maintenance = it->second->GetAgentID();
+				asnMsg.GetAsnMsg().oid_maintenance = it->second->GetID();
 
 		}
 
@@ -284,7 +284,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 			if( it == medicalComboBoxIDs_.end() )
 				asnMsg.GetAsnMsg().oid_sante = 0;
 			else
-				asnMsg.GetAsnMsg().oid_sante = it->second->GetAgentID();
+				asnMsg.GetAsnMsg().oid_sante = it->second->GetID();
 
 		}
 
@@ -295,7 +295,7 @@ void MOS_ChangeLogisticLinksDialog::Validate()
 			if( it == supplyComboBoxIDs_.end() )
 				asnMsg.GetAsnMsg().oid_ravitaillement = 0;
 			else
-				asnMsg.GetAsnMsg().oid_ravitaillement = it->second->GetAgentID();
+				asnMsg.GetAsnMsg().oid_ravitaillement = it->second->GetID();
 
 		}
 		asnMsg.Send( 57 );

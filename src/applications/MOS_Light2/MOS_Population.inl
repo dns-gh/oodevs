@@ -8,21 +8,17 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Population::GetPopulationID
-/** @return 
-*/
-// Created: HME 2005-09-29
+// Name: MOS_Population::GetID
+// Created: HME 2005-10-05
 // -----------------------------------------------------------------------------
 inline
-MIL_AgentID MOS_Population::GetPopulationID()
+const MIL_AgentID MOS_Population::GetID() const
 {
 	return nPopulationID_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Population::GetTeam
-/** @return 
-*/
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 inline
@@ -33,26 +29,12 @@ MOS_Team& MOS_Population::GetTeam() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Population::GetName
-/** @return 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 inline
 const std::string MOS_Population::GetName() const
 {
-	return sName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Population::GetID
-/** @return 
-*/
-// Created: HME 2005-10-05
-// -----------------------------------------------------------------------------
-inline
-const uint MOS_Population::GetID()
-{
-	return GetPopulationID();
+	return strName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +44,19 @@ const uint MOS_Population::GetID()
 inline
 const MOS_AgentModel& MOS_Population::GetModel() const
 {
-    assert( pTypePopulation_ );
-    return pTypePopulation_->GetModel();
+    assert( pType_ );
+    return pType_->GetModel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetType
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+const MOS_TypePopulation& MOS_Population::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
 }
 
 // -----------------------------------------------------------------------------

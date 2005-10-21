@@ -60,6 +60,4 @@ private:
     T_AgentIDMap  automateComboBoxIDs_;
 };
 
-#include "MOS_LogisticSupplyChangeQuotasDialog.inl"
-
 #endif // __MOS_LogisticSupplyChangeQuotasDialog_h_

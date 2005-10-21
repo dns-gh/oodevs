@@ -501,8 +501,8 @@ void MOS_AgentListView::dropEvent( QDropEvent* pEvent )
 
         // Envoi réseau
         MOS_ASN_MsgChangeAutomate asnMsg;
-        asnMsg.GetAsnMsg().oid_pion     = pAgent->GetAgentID();
-        asnMsg.GetAsnMsg().oid_automate  = pSupAgent->GetAgentID();
+        asnMsg.GetAsnMsg().oid_pion     = pAgent->GetID();
+        asnMsg.GetAsnMsg().oid_automate  = pSupAgent->GetID();
         asnMsg.Send( 351 );
 
         std::stringstream strMsg;
@@ -525,7 +525,7 @@ void MOS_AgentListView::dropEvent( QDropEvent* pEvent )
 
         // Envoi réseau
         MOS_ASN_MsgChangeGroupeConnaissance asnMsg;
-        asnMsg.GetAsnMsg().oid_automate  = pAgent->GetAgentID();
+        asnMsg.GetAsnMsg().oid_automate  = pAgent->GetID();
         asnMsg.GetAsnMsg().oid_camp      = pGtia->GetTeam().GetID();
         asnMsg.GetAsnMsg().oid_groupe_connaissance = pGtia->GetID();
         asnMsg.Send( 351 );

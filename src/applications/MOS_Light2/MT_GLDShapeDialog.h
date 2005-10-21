@@ -31,13 +31,6 @@ class MT_Slider;
 class QSlider;
 
 // =============================================================================
-/** @class  MT_GLDShapeDialog
-    @brief  MT_GLDShapeDialog
-    @par    Using example
-    @code
-    MT_GLDShapeDialog;
-    @endcode
-*/
 // Created: APE 2004-06-28
 // =============================================================================
 class MT_GLDShapeDialog : public QDialog
@@ -109,7 +102,5 @@ private:
     MT_GLDShapeProperties::E_Properties nModifiedProperties_;
     //@}
 };
-
-#   include "MT_GLDShapeDialog.inl"
 
 #endif // __MT_GLDShapeDialog_h_

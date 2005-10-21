@@ -80,6 +80,4 @@ private:
     MOS_ObjectKnowledge* pPopupKnowledge_;
 };
 
-#   include "MOS_ParamObjectKnowledge.inl"
-
 #endif // __MOS_ParamObjectKnowledge_h_

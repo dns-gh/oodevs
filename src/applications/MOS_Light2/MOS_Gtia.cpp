@@ -25,7 +25,10 @@
 
 #include "MOS_Team.h"
 #include "MOS_App.h"
+#include "MOS_Agent.h"
 #include "MOS_AgentKnowledge.h"
+#include "MOS_Population.h"
+#include "MOS_PopulationKnowledge.h"
 #include "MOS_AgentManager.h"
 
 MOS_IDManager MOS_Gtia::idManager_( 0 );
@@ -67,8 +70,39 @@ MOS_Gtia::~MOS_Gtia()
     idManager_.ReleaseIdentifier( nID_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::ReadODB
+// Created: APE 2004-08-30
+// -----------------------------------------------------------------------------
+void MOS_Gtia::ReadODB( MOS_InputArchive& archive )
+{
+    archive.Section( "GroupeConnaissance" );
+    archive.ReadAttribute( "id", nID_ );
+    idManager_.LockIdentifier( nID_ );
+    archive.ReadAttribute( "type", strType_ );
+    archive.EndSection();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::WriteODB
+// Created: APE 2004-08-30
+// -----------------------------------------------------------------------------
+void MOS_Gtia::WriteODB( MT_OutputArchive_ABC& archive )
+{
+    archive.Section( "GroupeConnaissance" );
+    archive.WriteAttribute( "id", nID_ );
+    archive.WriteAttribute( "type", strType_ );
+    archive.EndSection();
+}
+
+
 // =============================================================================
 // NETWORK EVENTS
+// =============================================================================
+
+// =============================================================================
+// AGENT KNOWLEDGE
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -84,7 +118,7 @@ void MOS_Gtia::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCr
     agentKnowledges_.insert( std::make_pair( pAgentKnowledge->GetID(), pAgentKnowledge ) );
     pTeam_->RegisterAgentKnowledge( *pAgentKnowledge );
 
-    //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de 
+    //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ MOS_App dans le code reseau mais bon...
     MOS_App::GetApp().NotifyAgentKnowledgeCreated( *this, *pAgentKnowledge );
 }
@@ -101,7 +135,7 @@ void MOS_Gtia::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpda
 
     itAgentKnowledge->second->Update( asnMsg );
 
-    //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de 
+    //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ MOS_App dans le code reseau mais bon...
     MOS_App::GetApp().NotifyAgentKnowledgeUpdated( *this, *(itAgentKnowledge->second) );
 }
@@ -116,7 +150,7 @@ void MOS_Gtia::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledg
     IT_AgentKnowledgeMap itAgentKnowledge = agentKnowledges_.find( asnMsg.oid_connaissance );
     assert( itAgentKnowledge != agentKnowledges_.end() );
 
-    //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de 
+    //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ MOS_App dans le code reseau mais bon...
     MOS_App::GetApp().NotifyAgentKnowledgeDeleted( *this, *(itAgentKnowledge->second) );
 
@@ -125,33 +159,93 @@ void MOS_Gtia::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledg
     agentKnowledges_.erase( itAgentKnowledge );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: MOS_Gtia::ReadODB
-/** @param  archive 
-*/
-// Created: APE 2004-08-30
+// Name: MOS_Gtia::FindAgentKnowledge
+// Created: APE 2004-09-10
 // -----------------------------------------------------------------------------
-void MOS_Gtia::ReadODB( MOS_InputArchive& archive )
+MOS_AgentKnowledge* MOS_Gtia::FindAgentKnowledge( int nId )
 {
-    archive.Section( "GroupeConnaissance" );
-    archive.ReadAttribute( "id", nID_ );
-    idManager_.LockIdentifier( nID_ );
-    archive.ReadAttribute( "type", strType_ );
-    archive.EndSection();
+    IT_AgentKnowledgeMap it = agentKnowledges_.find( nId );    
+    if( it != agentKnowledges_.end() )
+        return it->second;
+    return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::FindKnowledgeOnAgent
+// Created: APE 2004-05-28
+// -----------------------------------------------------------------------------
+MOS_AgentKnowledge* MOS_Gtia::FindKnowledgeOnAgent( const MOS_Agent& agent )
+{
+    for( IT_AgentKnowledgeMap it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )
+        if( &(it->second->GetRealAgent()) == &agent )
+            return it->second;
+    return 0;
+}
+
+// =============================================================================
+// POPULATION KNOWLEDGE
+// =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Gtia::WriteODB
-/** @param  archive 
-*/
-// Created: APE 2004-08-30
+// Name: MOS_Gtia::OnReceiveMsgPopulationKnowledgeCreation
+// Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void MOS_Gtia::WriteODB( MT_OutputArchive_ABC& archive )
+void MOS_Gtia::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 {
-    archive.Section( "GroupeConnaissance" );
-    archive.WriteAttribute( "id", nID_ );
-    archive.WriteAttribute( "type", strType_ );
-    archive.EndSection();
+    if( populationKnowledges_.find( asnMsg.oid_connaissance ) != populationKnowledges_.end() )
+        return;
+
+    MOS_PopulationKnowledge* pKnowledge = new MOS_PopulationKnowledge( asnMsg );
+    populationKnowledges_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
+    MOS_App::GetApp().NotifyPopulationKnowledgeCreated( *this, *pKnowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::OnReceiveMsgPopulationKnowledgeUpdate
+// Created: SBO 2005-10-17
+// -----------------------------------------------------------------------------
+void MOS_Gtia::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
+{
+    IT_PopulationKnowledgeMap it = populationKnowledges_.find( asnMsg.oid_connaissance );
+    assert( it != populationKnowledges_.end() );
+    it->second->Update( asnMsg );
+    MOS_App::GetApp().NotifyPopulationKnowledgeUpdated( *this, *( it->second ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::OnReceiveMsgPopulationKnowledgeDestruction
+// Created: SBO 2005-10-17
+// -----------------------------------------------------------------------------
+void MOS_Gtia::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+{
+    IT_PopulationKnowledgeMap it = populationKnowledges_.find( asnMsg.oid_connaissance );
+    assert( it != populationKnowledges_.end() );
+    MOS_App::GetApp().NotifyPopulationKnowledgeDeleted( *this, *( it->second ) );
+    delete it->second;
+    populationKnowledges_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::FindPopulationKnowledge
+// Created: SBO 2005-10-17
+// -----------------------------------------------------------------------------
+MOS_PopulationKnowledge* MOS_Gtia::FindPopulationKnowledge( int nId )
+{
+    CIT_PopulationKnowledgeMap it = populationKnowledges_.find( nId );    
+    if( it != populationKnowledges_.end() )
+        return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Gtia::FindKnowledgeOnPopulation
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+MOS_PopulationKnowledge* MOS_Gtia::FindKnowledgeOnPopulation( const MOS_Population& population )
+{
+    for( CIT_PopulationKnowledgeMap it = populationKnowledges_.begin(); it != populationKnowledges_.end(); ++it )
+        if( &( it->second->GetPopulation() ) == &population )
+            return it->second;
+    return 0;
 }

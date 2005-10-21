@@ -110,6 +110,4 @@ public:
     bool bEmptyGasTank_;
 };
 
-#   include "MOS_AgentComposition.inl"
-
 #endif // __MOS_AgentComposition_h_

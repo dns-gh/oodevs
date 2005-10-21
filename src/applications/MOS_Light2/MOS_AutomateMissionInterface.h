@@ -29,13 +29,6 @@ class MOS_Mission;
 class MOS_ASN_MsgAutomateOrder;
 
 // =============================================================================
-/** @class  MOS_AutomateMissionInterface
-    @brief  MOS_AutomateMissionInterface
-    @par    Using example
-    @code
-    MOS_UnitMissionInterface;
-    @endcode
-*/
 // Created: APE 2004-04-20
 // =============================================================================
 class MOS_AutomateMissionInterface : public MOS_MissionInterface_ABC
@@ -72,7 +65,5 @@ private:
     MOS_ASN_MsgAutomateOrder* pASNMsgOrder_;
     //@}
 };
-
-#   include "MOS_AutomateMissionInterface.inl"
 
 #endif // __MOS_AutomateMissionInterface_h_

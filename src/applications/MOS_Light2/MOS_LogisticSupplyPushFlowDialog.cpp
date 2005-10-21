@@ -113,8 +113,8 @@ void MOS_LogisticSupplyPushFlowDialog::Validate()
 
     MOS_ASN_MsgLogRavitaillementPousserFlux asnMsg;
 
-    asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetAgentID();
-    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pAutomateChangedComboBox_->currentItem() )->second->GetAgentID();
+    asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetID();
+    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pAutomateChangedComboBox_->currentItem() )->second->GetID();
 
     asnMsg.GetAsnMsg().stocks.n = pStocks_->childCount();
     if( asnMsg.GetAsnMsg().stocks.n > 0 )

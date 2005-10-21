@@ -331,12 +331,12 @@ void MOS_MissionPanel::hideEvent( QHideEvent* pEvent )
 void MOS_MissionPanel::ToggleAutomate()
 {
     MOS_ASN_MsgSetAutomateMode asnMsg;
-    asnMsg.GetAsnMsg().unit_id = pPopupAgent_->GetAgentID();
+    asnMsg.GetAsnMsg().unit_id = pPopupAgent_->GetID();
     asnMsg.GetAsnMsg().mode    = pPopupAgent_->IsEmbraye() ? EnumAutomateState::debraye : EnumAutomateState::embraye;
     asnMsg.Send( 0 );
 
     std::stringstream strMsg;
-    strMsg << "Demande passage mode " << (pPopupAgent_->IsEmbraye() ? "débrayé" : "embrayé") << " pour agent " << pPopupAgent_->GetAgentID();
+    strMsg << "Demande passage mode " << (pPopupAgent_->IsEmbraye() ? "débrayé" : "embrayé") << " pour agent " << pPopupAgent_->GetID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
@@ -452,13 +452,13 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
         default:
         {
             MOS_ASN_MsgOrderConduite asnMsg;
-            asnMsg.GetAsnMsg().unit_id  = pPopupAgent_->GetAgentID();
+            asnMsg.GetAsnMsg().unit_id  = pPopupAgent_->GetID();
             asnMsg.GetAsnMsg().order_id = 43;
             asnMsg.GetAsnMsg().order_conduite.t =  (uint)nOrderId +1;  // +1 because of ASN/enum stupidity
             asnMsg.Send( 65 );
 
             QString strMsg( tr( "Ordre de conduite %1 pour agent %2" ) );
-            strMsg = strMsg.arg( ENT_Tr::ConvertFromFragOrder( E_FragOrder( (uint)nOrderId ) ).c_str(), pPopupAgent_->GetAgentID() );
+            strMsg = strMsg.arg( ENT_Tr::ConvertFromFragOrder( E_FragOrder( (uint)nOrderId ) ).c_str(), pPopupAgent_->GetID() );
 
             MT_LOG_INFO( strMsg.ascii(), eSent, 0 );
             return;
@@ -498,13 +498,13 @@ void MOS_MissionPanel::MagicMoveDone()
     if ( typeAgent_ == eAgent )
     {
         MOS_ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetAgentID();
+        asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetID();
         asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
         asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
         asnMsg.Send( 56 );
 
         std::stringstream strMsg;
-        strMsg << "Demande déplacement magique pour agent #" << pPopupAgent_->GetAgentID();
+        strMsg << "Demande déplacement magique pour agent #" << pPopupAgent_->GetID();
         MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 
         //$$$ Temporary solution. Clearing the paths should be done when we receive confirmation
@@ -547,12 +547,12 @@ void MOS_MissionPanel::MagicRestore( int nId )
 {
     assert( pPopupAgent_ );
     MOS_ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetAgentID();
+    asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetID();
     asnMsg.GetAsnMsg().action.t         = nId;
     asnMsg.Send( 56 );
 
     std::stringstream strMsg;
-    strMsg << "Demande recompletement magique pour agent #" << pPopupAgent_->GetAgentID();
+    strMsg << "Demande recompletement magique pour agent #" << pPopupAgent_->GetID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
@@ -565,12 +565,12 @@ void MOS_MissionPanel::MagicDestroyAll()
     assert( pPopupAgent_ != 0 );
 
     MOS_ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid      = pPopupAgent_->GetAgentID();
+    asnMsg.GetAsnMsg().oid      = pPopupAgent_->GetID();
     asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_destruction_totale;
     asnMsg.Send( 561 );
 
     std::stringstream strMsg;
-    strMsg << "Demande destruction totale pour agent #" << pPopupAgent_->GetAgentID();
+    strMsg << "Demande destruction totale pour agent #" << pPopupAgent_->GetID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
@@ -584,7 +584,7 @@ void MOS_MissionPanel::MagicDestroyComponent()
     MOS_App::GetApp().GetMOSServer().GetController().GetMessageMgr().SendMsgUnitMagicActionDestroyComposante( *pPopupAgent_ );
 
     std::stringstream strMsg;
-    strMsg << "Demande destruction composante pour agent #" << pPopupAgent_->GetAgentID();
+    strMsg << "Demande destruction composante pour agent #" << pPopupAgent_->GetID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
@@ -608,12 +608,12 @@ void MOS_MissionPanel::MagicSurrender()
     assert( pPopupAgent_  );
 
     MOS_ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid                = pPopupAgent_ ->GetAgentID();
+    asnMsg.GetAsnMsg().oid                = pPopupAgent_ ->GetID();
     asnMsg.GetAsnMsg().action.t           = T_MsgUnitMagicAction_action_se_rendre;
     asnMsg.Send( 547 );
 
     std::stringstream strMsg;
-    strMsg << "Demande reddition pour agent #" << pPopupAgent_->GetAgentID();
+    strMsg << "Demande reddition pour agent #" << pPopupAgent_->GetID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 

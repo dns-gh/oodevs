@@ -20,12 +20,7 @@
 
 class MOS_Agent_ABC;
 
-
 // =============================================================================
-/** @class  MOS_Trace
-    @brief  Debug message sent by one of the simulation's agent for display in
-            the GUI.
-*/
 // Created: AGN 2003-12-22
 // =============================================================================
 class MOS_Trace : public MOS_Report_ABC
@@ -33,17 +28,18 @@ class MOS_Trace : public MOS_Report_ABC
     MT_COPYNOTALLOWED( MOS_Trace );
 
 public:
+    //! @name Constructor/Destructor
+    //@{
      MOS_Trace( MOS_Agent_ABC& agent );
     ~MOS_Trace();
+    //@}
 
-    //-------------------------------------------------------------------------
-    /** @name */
-    //-------------------------------------------------------------------------
+    //! @name Operations
     //@{
     void Initialize( DIN::DIN_Input& input );
     //@}
+
 };
 
-#   include "MOS_Trace.inl"
 
 #endif // __MOS_Trace_h_

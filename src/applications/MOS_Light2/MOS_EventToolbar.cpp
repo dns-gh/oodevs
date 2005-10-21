@@ -100,7 +100,7 @@ void MOS_EventToolbar::FillRemotePopup( QPopupMenu& popupMenu, const MOS_ActionC
     pSelectedAgent_ = context.selectedElement_.pAgent_;
     for( IT_ButtonVector it = agentButtons_.begin(); it != agentButtons_.end(); ++it )
     {
-        if( (*it)->GetFilterId() == (int)pSelectedAgent_->GetAgentID() )
+        if( (*it)->GetFilterId() == (int)pSelectedAgent_->GetID() )
         {
             popupMenu.insertItem( tr("Se désabonner"), this, SLOT( UnsubscribeFromAgent() ) );
             return;
@@ -117,7 +117,7 @@ void MOS_EventToolbar::FillRemotePopup( QPopupMenu& popupMenu, const MOS_ActionC
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::SubscribeToAgent()
 {
-    MOS_EventToolButton* pButton = new MOS_EventToolButton( QIconSet(), pSelectedAgent_->GetName().c_str(), this, pSelectedAgent_->GetAgentID() );
+    MOS_EventToolButton* pButton = new MOS_EventToolButton( QIconSet(), pSelectedAgent_->GetName().c_str(), this, pSelectedAgent_->GetID() );
     pButton->SetSignalsSlots( this, SIGNAL( ReportCreated( int ) ), SIGNAL( ReadingReports( int ) ), SLOT( FocusOnAgent( int, bool ) ) );
 
     agentButtons_.push_back( pButton );
@@ -132,7 +132,7 @@ void MOS_EventToolbar::UnsubscribeFromAgent()
 {
     for( IT_ButtonVector it = agentButtons_.begin(); it != agentButtons_.end(); ++it )
     {
-        if( (*it)->GetFilterId() == (int)pSelectedAgent_->GetAgentID() )
+        if( (*it)->GetFilterId() == (int)pSelectedAgent_->GetID() )
         {
             delete *it;
             agentButtons_.erase( it );
@@ -176,54 +176,44 @@ void MOS_EventToolbar::ClearSubscriptions()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::OnAgentOutOfGas
-/** @param  agent 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::OnAgentOutOfGas( MOS_Agent& agent )
 {
-    emit AgentOutOfGas( agent.GetAgentID() );
+    emit AgentOutOfGas( agent.GetID() );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::OnAgentRefueled
-/** @param  agent 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::OnAgentRefueled( MOS_Agent& agent )
 {
-    emit AgentRefueled( agent.GetAgentID() );
+    emit AgentRefueled( agent.GetID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::OnConflictStarted
-/** @param  agent 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::OnConflictStarted( MOS_Agent& agent )
 {
-    emit ConflictStarted( agent.GetAgentID() );
+    emit ConflictStarted( agent.GetID() );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::OnConflictEnded
-/** @param  agent 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::OnConflictEnded( MOS_Agent& agent )
 {
-    emit ConflictEnded( agent.GetAgentID() );
+    emit ConflictEnded( agent.GetID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::OnReportCreated
-/** @param  agent 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::OnReportCreated( MOS_Agent& agent )
@@ -232,27 +222,22 @@ void MOS_EventToolbar::OnReportCreated( MOS_Agent& agent )
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
     if( options.nPlayedTeam_ != MOS_Options::eController && options.nPlayedTeam_ != (int)(agent.GetTeam().GetIdx()) )
         return;
-    emit ReportCreated( agent.GetAgentID() );
+    emit ReportCreated( agent.GetID() );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::OnReadingReports
-/** @param  agent 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::OnReadingReports( MOS_Agent& agent )
 {
-    emit ReadingReports( agent.GetAgentID() );
+    emit ReadingReports( agent.GetID() );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::FocusOnAgent
-/** @param  nId 
-    @param  bCenter 
-*/
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::FocusOnAgent( int nId, bool bCenter )

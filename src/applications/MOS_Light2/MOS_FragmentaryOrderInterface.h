@@ -29,13 +29,6 @@ class MOS_ASN_MsgOrderConduite;
 
 
 // =============================================================================
-/** @class  MOS_FragmentaryOrderInterface
-    @brief  MOS_FragmentaryOrderInterface
-    @par    Using example
-    @code
-    MOS_FragmentaryOrderInterface;
-    @endcode
-*/
 // Created: APE 2004-05-12
 // =============================================================================
 class MOS_FragmentaryOrderInterface : public MOS_MissionInterface_ABC
@@ -69,7 +62,5 @@ private:
     //@}
 };
 
-
-#   include "MOS_FragmentaryOrderInterface.inl"
 
 #endif // __MOS_FragmentaryOrderInterface_h_

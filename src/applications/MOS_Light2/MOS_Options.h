@@ -99,6 +99,4 @@ public:
     //@}
 };
 
-#   include "MOS_Options.inl"
-
 #endif // __MOS_Options_h_

@@ -130,7 +130,7 @@ void MOS_PopulationCreationPanel::OnOk()
 // Name: MOS_PopulationCreationPanel::SetSelectedElement
 // Created: HME 2005-10-17
 // -----------------------------------------------------------------------------
-void MOS_PopulationCreationPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
+void MOS_PopulationCreationPanel::SetSelectedElement( MOS_SelectedElement& /*selectedElement*/ )
 {
 }
 
@@ -138,7 +138,7 @@ void MOS_PopulationCreationPanel::SetSelectedElement( MOS_SelectedElement& selec
 // Name: MOS_PopulationCreationPanel::OnTeamCreated
 // Created: HME 2005-10-17
 // -----------------------------------------------------------------------------
-void MOS_PopulationCreationPanel::OnTeamCreated           ( MOS_Team& team )
+void MOS_PopulationCreationPanel::OnTeamCreated( MOS_Team& team )
 {
     pTeamCombo_->Clear();
 

@@ -119,6 +119,4 @@ private:
     //@}
 };
 
-#   include "MOS_WeatherPanel.inl"
-
 #endif // __MOS_WeatherPanel_h_

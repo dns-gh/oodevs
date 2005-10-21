@@ -62,6 +62,4 @@ private:
     T_AgentIDMap tc2ComboBoxIDs_;
 };
 
-#include "MOS_ChangeLogisticLinksDialog.inl"
-
 #endif // __MOS_ChangeLogisticLinksDialog_h_

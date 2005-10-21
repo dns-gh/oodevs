@@ -26,9 +26,11 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_IDManager.h"
 
-class MOS_AgentKnowledge;
-class MOS_Agent;
 class MOS_Team;
+class MOS_Agent;
+class MOS_AgentKnowledge;
+class MOS_Population;
+class MOS_PopulationKnowledge;
 
 
 // =============================================================================
@@ -46,9 +48,13 @@ class MOS_Gtia
 public:
     //! @name Types
     //@{
-    typedef std::map< uint, MOS_AgentKnowledge* >   T_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::iterator           IT_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::const_iterator     CIT_AgentKnowledgeMap;
+    typedef std::map< uint, MOS_AgentKnowledge* >      T_AgentKnowledgeMap;
+    typedef T_AgentKnowledgeMap::iterator              IT_AgentKnowledgeMap;
+    typedef T_AgentKnowledgeMap::const_iterator        CIT_AgentKnowledgeMap;
+
+    typedef std::map< uint, MOS_PopulationKnowledge* > T_PopulationKnowledgeMap;
+    typedef T_PopulationKnowledgeMap::iterator         IT_PopulationKnowledgeMap;
+    typedef T_PopulationKnowledgeMap::const_iterator   CIT_PopulationKnowledgeMap;
     //@}
 
 public:
@@ -59,40 +65,52 @@ public:
     virtual ~MOS_Gtia();
     //@}
 
+    //! @name ODB operations
+    //@{
+    void ReadODB ( MOS_InputArchive&     archive );
+    void WriteODB( MT_OutputArchive_ABC& archive );
+    //@}
+
     //! @name Accessors & Modifiers
     //@{
-    void SetTeam( MOS_Team& team );
+    uint      GetID() const;
     MOS_Team& GetTeam() const;
 
-    void SetType( const std::string& strType );
+    const T_AgentKnowledgeMap& GetAgentKnowledges     () const;
+    MOS_AgentKnowledge*        FindAgentKnowledge     ( int nId );
+    MOS_AgentKnowledge*        FindKnowledgeOnAgent   ( const MOS_Agent& agent );
 
-    uint GetID() const;
-
-    const T_AgentKnowledgeMap& GetAgentKnowledges() const;
-    MOS_AgentKnowledge*        FindAgentKnowledge( int nId );
-    MOS_AgentKnowledge*        FindKnowledgeOnAgent( const MOS_Agent& agent );
+    const T_PopulationKnowledgeMap& GetPopulationKnowledges() const;
+    MOS_PopulationKnowledge*        FindPopulationKnowledge( int nId );
+    MOS_PopulationKnowledge*        FindKnowledgeOnPopulation( const MOS_Population& population );
+    //@}
+    
+    //! @name Modifiers
+    //@{
+    void      SetTeam( MOS_Team& team );
+    void      SetType( const std::string& strType );
     //@}
 
     //! @name Network events
     //@{
-    void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgUnitKnowledgeCreation         ( const ASN1T_MsgUnitKnowledgeCreation&          asnMsg );
+    void OnReceiveMsgUnitKnowledgeUpdate           ( const ASN1T_MsgUnitKnowledgeUpdate&            asnMsg );
+    void OnReceiveMsgUnitKnowledgeDestruction      ( const ASN1T_MsgUnitKnowledgeDestruction&       asnMsg );
+    void OnReceiveMsgPopulationKnowledgeCreation   ( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgPopulationKnowledgeUpdate     ( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
     //@}
 
-    void ReadODB( MOS_InputArchive& archive );
-    void WriteODB( MT_OutputArchive_ABC& archive );
+private:
+    uint32                   nID_;
+    MOS_Team*                pTeam_;
+    std::string              strType_;
+
+    T_AgentKnowledgeMap      agentKnowledges_;
+    T_PopulationKnowledgeMap populationKnowledges_;
 
 private:
-    uint32              nID_;
-    T_AgentKnowledgeMap agentKnowledges_;
-    MOS_Team* pTeam_;
-
-    std::string strType_;
-
-
-private:
-    static MOS_IDManager idManager_;
+    static MOS_IDManager     idManager_;
 };
 
 

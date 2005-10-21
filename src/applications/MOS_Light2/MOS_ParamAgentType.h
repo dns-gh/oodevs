@@ -28,13 +28,6 @@
 
 
 // =============================================================================
-/** @class  MOS_ParamAgentType
-    @brief  MOS_ParamAgentType
-    @par    Using example
-    @code
-    MOS_ParamBool;
-    @endcode
-*/
 // Created: APE 2004-04-21
 // =============================================================================
 class MOS_ParamAgentType : public QButtonGroup, public MOS_Param_ABC
@@ -71,7 +64,5 @@ private:
     QCheckBox* pNoneCheckBox_;
     //@}
 };
-
-#   include "MOS_ParamAgentType.inl"
 
 #endif // __MOS_ParamAgentType_h_

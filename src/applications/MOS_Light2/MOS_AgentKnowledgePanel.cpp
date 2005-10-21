@@ -261,7 +261,7 @@ void MOS_AgentKnowledgePanel::UpdateSelected()
         return;
 
     pIdLabel_             ->setText( QString::number( pSelectedKnowledge_->GetID() ) );
-    pAssociatedAgentLabel_->setText( QString::number( pSelectedKnowledge_->GetRealAgent().GetAgentID() ) );
+    pAssociatedAgentLabel_->setText( QString::number( pSelectedKnowledge_->GetRealAgent().GetID() ) );
 
     if( pSelectedKnowledge_->IsValid( MOS_AgentKnowledge::eUpdated_Team ) )
         pTeamLabel_->setText(  MOS_App::GetApp().GetAgentManager().FindTeam( pSelectedKnowledge_->nTeam_)->GetName().c_str() );
@@ -392,7 +392,7 @@ void MOS_AgentKnowledgePanel::OnKnowledgeUpdated( MOS_Gtia& /*gtia*/, MOS_AgentK
 {
     if( &knowledge != pSelectedKnowledge_ )
         return;
-    this->UpdateSelected();
+    UpdateSelected();
 }
 
 

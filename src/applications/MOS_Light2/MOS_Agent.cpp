@@ -960,7 +960,7 @@ void MOS_Agent::WriteODB( MT_XXmlOutputArchive& archive )
     else
     {
         archive.Section( "LiensHierarchiques" );
-        archive.WriteField( "Automate", pParent_->GetAgentID() );
+        archive.WriteField( "Automate", pParent_->GetID() );
         archive.EndSection();
     }
     

@@ -33,65 +33,65 @@ class MOS_AgentKnowledge;
 
 
 // =============================================================================
-/** @class  MOS_Population
-    @brief  MOS_Population
-    @par    Using example
-    @code
-    MOS_Population;
-    @endcode
-*/
 // Created: HME 2005-09-29
 // =============================================================================
 class MOS_Population : public MOS_Agent_ABC
 {
-    friend class MOS_GLTool;
-public :
+    friend class MOS_GLTool; // to avoid "get" on concentration/flow maps
 
-	typedef std::map< MIL_AgentID , MOS_PopulationConcentration* >  T_ConcentrationMap;
-	typedef T_ConcentrationMap::iterator							IT_ConcentrationMap;
-	typedef T_ConcentrationMap::const_iterator						CIT_ConcentrationMap;
+private:
+	typedef std::map< uint, MOS_PopulationConcentration* >  T_ConcentrationMap;
+	typedef T_ConcentrationMap::iterator                    IT_ConcentrationMap;
+	typedef T_ConcentrationMap::const_iterator              CIT_ConcentrationMap;
 
-	typedef std::map< MIL_AgentID , MOS_PopulationFlux* >			T_FluxMap;
-	typedef T_FluxMap::iterator										IT_FluxMap;
-	typedef T_FluxMap::const_iterator								CIT_FluxMap;
+	typedef std::map< uint , MOS_PopulationFlux* >          T_FluxMap;
+	typedef T_FluxMap::iterator                             IT_FluxMap;
+	typedef T_FluxMap::const_iterator                       CIT_FluxMap;
 
-    typedef std::map< uint, MOS_AgentKnowledge* >   T_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::iterator           IT_AgentKnowledgeMap;
-    typedef T_AgentKnowledgeMap::const_iterator     CIT_AgentKnowledgeMap;
+    typedef std::map< uint, MOS_AgentKnowledge* >           T_AgentKnowledgeMap;
+    typedef T_AgentKnowledgeMap::iterator                   IT_AgentKnowledgeMap;
+    typedef T_AgentKnowledgeMap::const_iterator             CIT_AgentKnowledgeMap;
 
 public:
-
-             MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg );
-             MOS_Population();
-             MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name, MOS_TypePopulation* type );
-    virtual ~MOS_Population();
+    //! @name Constructor/Destructor
+    //@{
+     MOS_Population();
+     MOS_Population( const ASN1T_MsgPopulationCreation& asnMsg );
+     MOS_Population( MT_Vector2D point, E_PopulationAttitude attitude, int persons, MOS_Team& team , std::string name, MOS_TypePopulation* type );
+    ~MOS_Population();
+    //@}
 
     void ReadODB( MOS_InputArchive& archive );
     void WriteODB( MT_XXmlOutputArchive& archive );
 
-	void	UpdatePopulationFlux			( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
-	void	UpdatePopulationConcentration	( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
-	void	CreatePopulationFlux			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
-	void	CreatePopulationConcentration	( const ASN1T_MsgPopulationConcentrationCreation& asnMsg );
-    void    CreatePopulationConcentration   ( MT_Vector2D point, E_PopulationAttitude attitude , int persons );
-	void	DeletePopulationFlux			( const ASN1T_MsgPopulationFluxDestruction& asnMsg );
-	void	DeletePopulationConcentration	( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
-	void	UpdatePopulation				( const ASN1T_MsgPopulationUpdate& asnMsg ); 
+    //! @name Network
+    //@{
+	void CreatePopulationFlux         ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
+	void CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
+    void CreatePopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons );
+    void UpdatePopulation             ( const ASN1T_MsgPopulationUpdate&                   asnMsg );
+    void UpdatePopulationFlux         ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
+	void UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
+	void DeletePopulationFlux         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
+	void DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
+    //@}
 
-    const MOS_PopulationConcentration* FindConcentration( uint nID ) const;
-    const MOS_PopulationFlux*          FindFlow         ( uint nID ) const;
+    const MOS_PopulationConcentration* FindConcentration ( uint nID ) const;
+    const MOS_PopulationFlux*          FindFlow          ( uint nID ) const;
+    virtual MOS_AgentKnowledge*        FindAgentKnowledge( uint nId );
 
-	        MIL_AgentID			        GetPopulationID();
-	virtual const uint			        GetID();
-	virtual MOS_Team&		            GetTeam() const;
-	virtual const std::string	        GetName() const;
-	virtual const MT_Vector2D&	        GetPos() const ;
+    //! @name Accessors
+    //@{
+	virtual const MIL_AgentID          GetID  () const;
+	virtual MOS_Team&                  GetTeam() const;
+	virtual const std::string          GetName() const;
+	virtual const MT_Vector2D&         GetPos () const;
 
-	uint				        GetLivingHumans();
-	uint				        GetDeadHumans();
-    const MOS_AgentModel&       GetModel() const ;
-
-    virtual MOS_AgentKnowledge* FindAgentKnowledge( uint nId );
+	uint                               GetLivingHumans();
+	uint                               GetDeadHumans  ();
+    const MOS_AgentModel&              GetModel       () const;
+    const MOS_TypePopulation&          GetType        () const;
+    //@}
 
 public:
 
@@ -179,18 +179,18 @@ public:
 	};
 
 private:
-    //! @name Member data
-    //@{
-	MIL_AgentID					nPopulationID_;
-	T_ConcentrationMap			concentrationMap_;
-	T_FluxMap					fluxMap_;
-	const MOS_TypePopulation*	pTypePopulation_;
-	MOS_Team*					pTeam_;
-	std::string					sName_;
-    T_AgentKnowledgeMap         agentKnowledges_;
+	MIL_AgentID               nPopulationID_;
+	std::string               strName_;
+    const MOS_TypePopulation* pType_;
+	MOS_Team*                 pTeam_;
 
-    static MIL_AgentID nMaxId_ ;
-    //@}
+    T_ConcentrationMap        concentrationMap_;
+	T_FluxMap                 fluxMap_;
+
+    T_AgentKnowledgeMap       agentKnowledges_;
+
+private:
+    static MIL_AgentID        nMaxId_;
 };
 
 #include "MOS_Population.inl"

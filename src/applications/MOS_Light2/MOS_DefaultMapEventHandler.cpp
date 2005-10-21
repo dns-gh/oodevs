@@ -484,7 +484,7 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
     }
     else
     {
-        MOS_AgentManager::CIT_AgentMap it = agentMap.find( selectedElement_.pAgent_->GetAgentID() );
+        MOS_AgentManager::CIT_AgentMap it = agentMap.find( selectedElement_.pAgent_->GetID() );
         assert( it != agentMap.end() );
         rit = MOS_AgentManager::RCIT_AgentMap( ++it );
         ++rit;
@@ -736,10 +736,6 @@ MOS_ObjectKnowledge* MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( const 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::IsObjectKnowledgeAtPos
-/** @param  object 
-    @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
 bool MOS_DefaultMapEventHandler::IsObjectKnowledgeAtPos( const MOS_ObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
@@ -763,11 +759,12 @@ void MOS_DefaultMapEventHandler::PopupMenu( const MT_Vector2D& vGLPos, float rDi
     // If something is selected, make sure we clicked on it, otherwise select what's under the click.
     // If nothing selected, try selecting what's under the click.
     if(   ( ! selectedElement_.IsAMapElementSelected() )
-       || ( selectedElement_.pAgent_          != 0 && ! IsAgentAtPos( selectedElement_.pAgent_, vGLPos ) )
-       || ( selectedElement_.pPopulation_     != 0 && ! IsAgentAtPos( selectedElement_.pPopulation_, vGLPos ) )
-       || ( selectedElement_.pObject_     != 0 && ! IsObjectAtPos( *selectedElement_.pObject_, vGLPos, rDistancePerPixel ) )
-       || ( selectedElement_.pLine_           != 0 && ! IsLineAtPos( *selectedElement_.pLine_, vGLPos, rDistancePerPixel ) )
-       || ( selectedElement_.pAgentKnowledge_ != 0 && ! IsAgentKnowledgeAtPos( *selectedElement_.pAgentKnowledge_, vGLPos ) ) )
+       || ( selectedElement_.pAgent_               != 0 && ! IsAgentAtPos              ( selectedElement_.pAgent_, vGLPos ) )
+       || ( selectedElement_.pPopulation_          != 0 && ! IsAgentAtPos              ( selectedElement_.pPopulation_, vGLPos ) )
+       || ( selectedElement_.pObject_              != 0 && ! IsObjectAtPos             ( *selectedElement_.pObject_, vGLPos, rDistancePerPixel ) )
+       || ( selectedElement_.pLine_                != 0 && ! IsLineAtPos               ( *selectedElement_.pLine_, vGLPos, rDistancePerPixel ) )
+       || ( selectedElement_.pAgentKnowledge_      != 0 && ! IsAgentKnowledgeAtPos     ( *selectedElement_.pAgentKnowledge_, vGLPos ) ) 
+       || ( selectedElement_.pObjectKnowledge_     != 0 && ! IsObjectKnowledgeAtPos    ( *selectedElement_.pObjectKnowledge_, vGLPos, rDistancePerPixel ) ) )
     {
         SelectElementAtPos( vGLPos, rDistancePerPixel );
 

@@ -84,6 +84,4 @@ private:
     //@}
 };
 
-#include "MOS_RecorderToolbar.inl"
-
 #endif // __MOS_RecorderToolbar_h_

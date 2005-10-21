@@ -17,7 +17,7 @@
 #include "MOS_App.h"
 #include "MOS_MainWindow.h"
 #include "moc_MOS_PopulationListView.cpp"
-#include "MOS_Population.h";
+#include "MOS_Population.h"
 #include "MOS_Team.h"
 #include "MOS_AgentManager.h"
 #include "MOS_ActionContext.h"
@@ -25,8 +25,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationListView constructor
-/** @param  pParent 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 MOS_PopulationListView::MOS_PopulationListView( QWidget* pParent )
@@ -67,8 +65,6 @@ MOS_PopulationListView::~MOS_PopulationListView()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationListView::AddPopulation
-/** @param  population 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 void MOS_PopulationListView::AddPopulation( MOS_Population& population )
@@ -104,8 +100,6 @@ void MOS_PopulationListView::AddPopulation( MOS_Population& population )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationListView::SetSelectedElement
-/** @param  selectedElement 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 void MOS_PopulationListView::SetSelectedElement( MOS_SelectedElement& selectedElement )
@@ -142,13 +136,9 @@ void MOS_PopulationListView::SetSelectedElement( MOS_SelectedElement& selectedEl
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationListView::OnRequestPopup
-/** @param  pItem 
-    @param  pos 
-    @param  nCol 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-void MOS_PopulationListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol )
+void MOS_PopulationListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int /*nCol*/ )
 {
 	delete pPopupMenu_;
     pPopupMenu_ = new QPopupMenu( this );

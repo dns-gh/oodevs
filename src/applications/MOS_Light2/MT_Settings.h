@@ -29,13 +29,6 @@ class QDockWindow;
 class QMainWindow;
 
 // =============================================================================
-/** @class  MT_Settings
-    @brief  MT_Settings
-    @par    Using example
-    @code
-    MT_Settings;
-    @endcode
-*/
 // Created: APE 2004-06-01
 // =============================================================================
 class MT_Settings : public QSettings
@@ -56,7 +49,5 @@ public:
     void ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible );
     //@}
 };
-
-#   include "MT_Settings.inl"
 
 #endif // __MT_Settings_h_

@@ -31,13 +31,6 @@ class QCheckBox;
 
 
 // =============================================================================
-/** @class  MOS_ParamGDH
-    @brief  MOS_ParamGDH
-    @par    Using example
-    @code
-    MOS_ParamGDH;
-    @endcode
-*/
 // Created: APE 2004-03-18
 // =============================================================================
 class MOS_ParamGDH : public QHBox, public MOS_Param_ABC 
@@ -59,18 +52,6 @@ public:
     void WriteMsg( std::stringstream& strMsg );
     //@}
 
-    //! @name Accessors
-    //@{
-    //@}
-
-    //! @name Modifiers
-    //@{
-    //@}
-
-    //! @name Operators
-    //@{
-    //@}
-
 private slots:
     void OnCheckboxToogled( bool b );
 
@@ -81,7 +62,5 @@ private:
     QDateTimeEdit* pDateTimeEdit_;
     QCheckBox*     pCheckbox_;
 };
-
-#   include "MOS_ParamGDH.inl"
 
 #endif // __MOS_ParamGDH_h_

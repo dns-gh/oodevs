@@ -30,13 +30,6 @@ class MT_Slider;
 
 
 // =============================================================================
-/** @class  MT_GLDLayerDialog
-    @brief  MT_GLDLayerDialog
-    @par    Using example
-    @code
-    MT_GLDLayerDialog;
-    @endcode
-*/
 // Created: APE 2004-06-23
 // =============================================================================
 class MT_GLDLayerDialog : public QDialog
@@ -63,7 +56,10 @@ private slots:
     //@}
 
 signals:
+    //! @name Signals
+    //@{
     void LayerEdited( MT_GLDLayer& layer );
+    //@}
 
 private:
     //! @name Member data
@@ -78,7 +74,5 @@ private:
     QPushButton* pCancelButton_;
     //@}
 };
-
-#   include "MT_GLDLayerDialog.inl"
 
 #endif // __MT_GLDLayerDialog_h_

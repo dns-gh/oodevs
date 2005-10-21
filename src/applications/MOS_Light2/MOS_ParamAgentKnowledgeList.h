@@ -83,6 +83,4 @@ private:
     //@}
 };
 
-#   include "MOS_ParamAgentKnowledgeList.inl"
-
 #endif // __MOS_ParamAgentKnowledgeList_h_

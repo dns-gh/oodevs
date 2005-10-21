@@ -39,13 +39,6 @@ class MOS_Population;
 
 
 // =============================================================================
-/** @class  MOS_DefaultMapEventHandler
-    @brief  MOS_DefaultMapEventHandler
-    @par    Using example
-    @code
-    MOS_DefaultMapEventHandler;
-    @endcode
-*/
 // Created: APE 2004-03-26
 // =============================================================================
 class MOS_DefaultMapEventHandler : public QObject, public MOS_MapEventFilter_ABC

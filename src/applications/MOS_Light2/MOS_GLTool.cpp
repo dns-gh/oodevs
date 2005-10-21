@@ -73,6 +73,7 @@
 #include "MOS_Population.h"
 #include "MOS_PopulationFlux.h"
 #include "MOS_PopulationConcentration.h"
+#include "MOS_TypePopulation.h"
 
 #include "MT_GLFont.h"
 #undef min
@@ -105,8 +106,6 @@ MT_Vector2D MOS_GLTool::iconLocations_[eNbrIcons];
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  glWidget
-*/
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
@@ -164,8 +163,6 @@ void MOS_GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  world
-*/
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_World& world )
@@ -311,8 +308,6 @@ void MOS_GLTool::DrawNameObjects( MOS_World& world )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  agentManager
-*/
 // Created: APE 2004-03-05
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_AgentManager& manager )
@@ -371,8 +366,6 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  agent
-*/
 // Created: APE 2004-03-05
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
@@ -467,9 +460,6 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  pop
-    @param  nState
-*/
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_Population& pop, E_State nState )
@@ -521,7 +511,7 @@ void MOS_GLTool::DrawPath( MOS_Agent& agent )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawPath( MOS_PopulationFlux& flux )
 {
-    MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
+//    MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions(); // $$$$ SBO 2005-10-20: not used
     // Update the path data.
     flux.UpdatePathFind();
 
@@ -614,8 +604,6 @@ void MOS_GLTool::DrawVisionLines( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  team
-*/
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_Team& team )
@@ -627,8 +615,6 @@ void MOS_GLTool::Draw( MOS_Team& team )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  gtia
-*/
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_Gtia& gtia )
@@ -640,8 +626,6 @@ void MOS_GLTool::Draw( MOS_Gtia& gtia )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  knowledge
-*/
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_AgentKnowledge& knowledge, E_State nState )
@@ -665,8 +649,6 @@ void MOS_GLTool::Draw( MOS_AgentKnowledge& knowledge, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  manager
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ObjectManager& manager )
@@ -682,8 +664,6 @@ void MOS_GLTool::Draw( MOS_ObjectManager& manager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  object
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
@@ -731,8 +711,6 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  knowledge
-*/
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
@@ -759,8 +737,6 @@ void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  lineManager
-*/
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_LineManager& lineManager )
@@ -773,9 +749,6 @@ void MOS_GLTool::Draw( MOS_LineManager& lineManager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  line
-    @param  nState
-*/
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelectedPoint )
@@ -846,8 +819,6 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  weatherManager
-*/
 // Created: APE 2004-06-03
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_Meteo_Manager& weatherManager )
@@ -905,8 +876,6 @@ void MOS_GLTool::Draw( MOS_Meteo_Manager& weatherManager )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_MissionPanel& panel )
@@ -918,8 +887,6 @@ void MOS_GLTool::Draw( MOS_MissionPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  missionInterface
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_MissionInterface_ABC& missionInterface )
@@ -931,8 +898,6 @@ void MOS_GLTool::Draw( MOS_MissionInterface_ABC& missionInterface )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel
-*/
 // Created: APE 2004-06-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_WeatherPanel& panel )
@@ -976,8 +941,6 @@ void MOS_GLTool::Draw( MOS_WeatherPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel
-*/
 // Created: APE 2004-06-07
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ObjectCreationPanel& panel )
@@ -991,8 +954,6 @@ void MOS_GLTool::Draw( MOS_ObjectCreationPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  panel
-*/
 // Created: APE 2004-06-22
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_InfoPanel& panel )
@@ -1011,8 +972,6 @@ void MOS_GLTool::Draw( MOS_InfoPanel& panel )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamPath& param )
@@ -1044,8 +1003,6 @@ void MOS_GLTool::Draw( MOS_ParamPath& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-05-17
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamPathList& param )
@@ -1066,8 +1023,6 @@ void MOS_GLTool::Draw( MOS_ParamPathList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamLimaList& param )
@@ -1088,8 +1043,6 @@ void MOS_GLTool::Draw( MOS_ParamLimaList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamLimits& param )
@@ -1107,8 +1060,6 @@ void MOS_GLTool::Draw( MOS_ParamLimits& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamPoint& param )
@@ -1120,8 +1071,6 @@ void MOS_GLTool::Draw( MOS_ParamPoint& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamAgent& param )
@@ -1133,8 +1082,6 @@ void MOS_GLTool::Draw( MOS_ParamAgent& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamAgentList& param )
@@ -1155,8 +1102,6 @@ void MOS_GLTool::Draw( MOS_ParamAgentList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamLocation& param, bool bSelected )
@@ -1174,8 +1119,6 @@ void MOS_GLTool::Draw( MOS_ParamLocation& param, bool bSelected )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamLocationList& param )
@@ -1197,8 +1140,6 @@ void MOS_GLTool::Draw( MOS_ParamLocationList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamObstacle& param, bool bSelected )
@@ -1209,8 +1150,6 @@ void MOS_GLTool::Draw( MOS_ParamObstacle& param, bool bSelected )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  param
-*/
 // Created: APE 2004-05-25
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ParamObstacleList& param )
@@ -1238,8 +1177,6 @@ void MOS_GLTool::Draw( MOS_ParamObstacleList& param )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  eventHandler
-*/
 // Created: APE 2004-04-16
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
@@ -1293,8 +1230,6 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw
-/** @param  eventHandler
-*/
 // Created: APE 2004-04-15
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( const MOS_ShapeEditorMapEventFilter& eventHandler )
@@ -1306,9 +1241,6 @@ void MOS_GLTool::Draw( const MOS_ShapeEditorMapEventFilter& eventHandler )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLocation
-/** @param  nType
-    @param  pointList
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawLocation( MOS_ShapeEditorMapEventFilter::E_LineType nType, const T_PointVector& pointList )
@@ -1420,8 +1352,6 @@ T_PointVector MOS_GLTool::Refine( const T_PointVector& points )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLine
-/** @param  pointList
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawLine( CT_PointVector& points, MT_Float rArrowSize, bool bDoubleArrow )
@@ -1479,8 +1409,6 @@ void MOS_GLTool::DrawLine( CT_PointVector& points, MT_Float rArrowSize, bool bDo
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLine
-/** @param  pointList
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw3DLine( MT_Vector3D src, MT_Vector3D dst, float width, GFX_Color color )
@@ -1523,10 +1451,6 @@ void MOS_GLTool::DrawArrow( const MT_Vector2D& src, const MT_Vector2D& dest, MT_
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLine
-/** @param  from
-    @param  to
-    @param  rArrowHeadSize
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawLine( const MT_Vector2D& src, const MT_Vector2D& dest, MT_Float rArrowSize, bool bDoubleArrow )
@@ -1544,8 +1468,6 @@ void MOS_GLTool::DrawLine( const MT_Vector2D& src, const MT_Vector2D& dest, MT_F
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawPoints
-/** @param  pointList
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawPoints( CT_PointVector& pointList )
@@ -1582,8 +1504,6 @@ void MOS_GLTool::DrawPoint( const MT_Vector2D& p )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawPolygon
-/** @param  pointList
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawPolygon( CT_PointVector& pointList )
@@ -1598,10 +1518,6 @@ void MOS_GLTool::DrawPolygon( CT_PointVector& pointList )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawRect
-/** @param  point1
-    @param  point2
-    @param  rAlpha
-*/
 // Created: APE 2004-06-03
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawRect( const MT_Vector2D& point1, const MT_Vector2D& point2, bool bInside )
@@ -1638,9 +1554,6 @@ void MOS_GLTool::DrawRect( const MT_Vector2D& point1, const MT_Vector2D& point2,
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawUnit
-/** @param  agent
-    @param  nState
-*/
 // Created: APE 2004-06-10
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
@@ -1706,17 +1619,12 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawUnit
-/** @param  pop
-    @param  nState
-*/
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
 {
     static const MOS_RawVisionData& data = MOS_App::GetApp().GetRawVisionData();
     static MT_Float rAngle = 0;
-
-    MT_Float rSize = 600.;
 
     GFX_Color color = MOS_GLTool::GetColorForTeam( pop.GetTeam() );
     if( nState == eSelected )
@@ -1725,11 +1633,11 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
         color.AddRGB( 50, 100, 50 );
 
     //Draw the concentrations
-    for( MOS_Population::CIT_ConcentrationMap itCon = pop.concentrationMap_.begin(); itCon != pop.concentrationMap_.end(); ++itCon )
+    for( MOS_Population::CIT_ConcentrationMap it = pop.concentrationMap_.begin(); it != pop.concentrationMap_.end(); ++it )
     {
         color.SetGLColor();
-        DrawCircle( itCon->second->GetPos(), MOS_GL_CROSSSIZE *  sqrt(itCon->second->GetLivingHumans() / 30.0 ) );
-        //DrawCylinder( itCon->second->GetPos(), MOS_GL_CROSSSIZE * (itCon->second->GetLivingHumans() / 3000.0 ) , 2.0, color);
+        MT_Float rSurface = it->second->GetLivingHumans() / pop.GetType().GetConcentrationDensity();
+        DrawCircle( it->second->GetPos(), std::sqrt( rSurface / MT_PI ), true );
     }
 
     //Draw the flux
@@ -1748,7 +1656,7 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
         glLineWidth( 5.0 );
         DrawLine( flow.GetFlow() );
         glLineWidth( 1.0 );
-            //Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
+        //Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
     }
 }
 
@@ -1756,8 +1664,6 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawVisionCones
-/** @param  agent
-*/
 // Created: APE 2004-06-15
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawVisionCones( MOS_Agent& agent )
@@ -1772,8 +1678,6 @@ void MOS_GLTool::DrawVisionCones( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawVisionSurfaces
-/** @param  agent
-*/
 // Created: APE 2004-06-16
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
@@ -1812,10 +1716,6 @@ void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawLines
-/** @param  lines
-    @param  color
-    @param  nSize
-*/
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawLines( T_MOSLinePtrVector& lines, float /*rZ */)
@@ -1833,10 +1733,6 @@ void MOS_GLTool::DrawLines( T_MOSLinePtrVector& lines, float /*rZ */)
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Draw3DLines
-/** @param  points
-    @param  width
-    @param  color
-*/
 // Created: HME 2005-10-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw3DLines( T_Point3DVector& points, float width, GFX_Color color )
@@ -1855,10 +1751,6 @@ void MOS_GLTool::Draw3DLines( T_Point3DVector& points, float width, GFX_Color co
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCircles
-/** @param  nodes
-    @param  color
-    @param  rRadius
-*/
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawCircles( T_NodePtrVector& nodes, MT_Float rRadius )
@@ -1870,16 +1762,13 @@ void MOS_GLTool::DrawCircles( T_NodePtrVector& nodes, MT_Float rRadius )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCircle
-/** @param  center
-    @param  radius
-*/
 // Created: APE 2004-03-17
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool bFill )
 {
     T_PointVector points;
     points.reserve( 24 );
-    for( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
+    for( MT_Float angle = 0; angle <= 2 * MT_PI; angle += 0.3f )
         points.push_back( MT_Vector2D( center.rX_ + rRadius * cos( angle )
                                      , center.rY_ + rRadius * sin( angle ) ) );
     points.push_back( MT_Vector2D( center.rX_ + rRadius, center.rY_ ) );
@@ -1889,7 +1778,7 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
         glBegin( GL_TRIANGLE_FAN );
         Vertex( center.rX_, center.rY_, -3 );
         for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-            Vertex( it->rX_, it->rY_, -3 );
+            Vertex( it->rX_, it->rY_ , -3 );
         glEnd();
         DrawLine( points );
     }
@@ -1900,11 +1789,6 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawArc
-/** @param  center
-    @param  rRadius
-    @param  rAngleStart
-    @param  rAngleEnd
-*/
 // Created: APE 2004-06-16
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float rAngleStart, MT_Float rAngleEnd )
@@ -1925,8 +1809,6 @@ void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawGrid
-/** @param  world
-*/
 // Created: APE 2004-03-22
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawGrid( MOS_World& world )
@@ -1955,10 +1837,6 @@ void MOS_GLTool::DrawGrid( MOS_World& world )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCross
-/** @param  point
-    @param  rSize
-    @param  nLineWidth
-*/
 // Created: APE 2004-04-23
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawCross( const MT_Vector2D& vCenter, double rSize, int nLineWidth )
@@ -1973,10 +1851,6 @@ void MOS_GLTool::DrawCross( const MT_Vector2D& vCenter, double rSize, int nLineW
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::Overlaps
-/** @param  a
-    @param  b
-    @return
-*/
 // Created: APE 2004-03-04
 // -----------------------------------------------------------------------------
 bool MOS_GLTool::Overlaps( MT_Rect& a, MT_Rect& b )
@@ -1990,9 +1864,6 @@ bool MOS_GLTool::Overlaps( MT_Rect& a, MT_Rect& b )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::InitializeIcon
-/** @param  icon
-    @return
-    */
 // Created: APE 2004-09-13
 // -----------------------------------------------------------------------------
 int MOS_GLTool::InitializeIcon( const QImage& icon )
@@ -2048,9 +1919,6 @@ int MOS_GLTool::InitializeIcon( const QImage& icon )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawIcon
-/** @param  nIcon
-    @param  vAgentPos
-    */
 // Created: APE 2004-09-14
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawIcon( E_Icon nIcon, const MT_Vector2D& vCenter, float rSize )
@@ -2171,36 +2039,34 @@ void MOS_GLTool::SetAltitudeRatio( MT_Float r )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawCylinder
-/** @param  center
-    @param  rRadius
-    @param  rHeight
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawCylinder( const MT_Vector2D& center, MT_Float rRadius, MT_Float rHeight, GFX_Color& color )
 {
     T_Point3DVector points;
     points.reserve( 24 );
+
     for( MT_Float angle = 0 ; angle <= 2 * MT_PI; angle += 0.3f )
         points.push_back( MT_Vector3D( center.rX_ + rRadius * cos( angle )
                                      , center.rY_ + rRadius * sin( angle )
                                      , 0 ) );
     points.push_back( MT_Vector3D( center.rX_ + rRadius, center.rY_, 0 ) );
 
+    points.push_back( *points.begin() );
+
     MT_Vector3D height = MT_Vector3D( 0, 0, rHeight );
     MT_Vector3D base   = MT_Vector3D( 0, 0, 0 );
     MT_Vector3D last = *points.begin();
-    for( CIT_Point3DVector itPoint = ++points.begin(); itPoint != points.end(); ++itPoint )
+    IT_Point3DVector itPointPrev = points.begin();
+    IT_Point3DVector itPointNext = points.begin();
+    ++itPointNext;
+    for( ; itPointNext != points.end(); ++itPointPrev, ++itPointNext )
     {
-        DrawTriangle3D( last + base, *itPoint + base, *itPoint + height, color );
-        DrawTriangle3D( last + height, *itPoint + height, last + base , color );
-        GFX_Tools::CreateGLLine3D( last, *itPoint, 1.0, color);
-        GFX_Tools::CreateGLLine3D( last + height, *itPoint + height, 1.0, color);
-        last = *itPoint;
+        DrawTriangle3D( *itPointPrev + base, *itPointNext + base, *itPointPrev + height, color );
+        DrawTriangle3D( *itPointNext + height, *itPointPrev + height, *itPointNext + base , color );
+        GFX_Tools::CreateGLLine3D( *itPointPrev + height, *itPointNext + height, 1.0, color);
+        GFX_Tools::CreateGLLine3D( *itPointNext + base, *itPointPrev + height, 1.0, color);
     }
-    last = *points.begin();
-    DrawTriangle3D( *itPoint + base , last + base , last + height, color );
-    DrawTriangle3D( *itPoint + height, last + height, *itPoint + base , color );
 
     glBegin( GL_TRIANGLE_FAN );
     Vertex( center.rX_, center.rY_, 0 );
@@ -2219,7 +2085,7 @@ void MOS_GLTool::DrawCylinder( const MT_Vector2D& center, MT_Float rRadius, MT_F
 // Name: MOS_GLTool::DrawTriangle3D
 // Created: HME 2005-10-07
 // -----------------------------------------------------------------------------
-void MOS_GLTool::DrawTriangle3D( const MT_Vector3D& vPos1 , MT_Vector3D& vPos2 , MT_Vector3D& vPos3 , GFX_Color& color )
+void MOS_GLTool::DrawTriangle3D( const MT_Vector3D& vPos1 , const MT_Vector3D& vPos2 , const MT_Vector3D& vPos3 , const GFX_Color& color )
 {
     glBindTexture( GL_TEXTURE_2D, 0 );
     color.SetGLColor();

@@ -38,3 +38,32 @@ const MOS_AgentModel& MOS_TypePopulation::GetModel() const
     return *pModel_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_TypePopulation::GetConcentrationDensity
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_TypePopulation::GetConcentrationDensity() const
+{
+    return rConcentrationDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_TypePopulation::GetDefaultFlowDensity
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_TypePopulation::GetDefaultFlowDensity() const
+{
+    return rDefaultFlowDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_TypePopulation::GetMaxSpeed
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_TypePopulation::GetMaxSpeed() const
+{
+    return rMaxSpeed_;
+}

@@ -117,8 +117,8 @@ void MOS_LogisticSupplyChangeQuotasDialog::Validate()
 
     MOS_ASN_MsgLogRavitaillementChangeQuotas asnMsg;
 
-    asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetAgentID();
-    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pAutomateChangedComboBox_->currentItem() )->second->GetAgentID();
+    asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetID();
+    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pAutomateChangedComboBox_->currentItem() )->second->GetID();
 
     asnMsg.GetAsnMsg().quotas.n = pQuotas_->childCount();
     if( asnMsg.GetAsnMsg().quotas.n > 0 )

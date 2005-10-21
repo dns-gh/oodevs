@@ -104,8 +104,8 @@ bool MOS_ParamAgent::CheckValidity()
 // -----------------------------------------------------------------------------
 void MOS_ParamAgent::WriteMsg( std::stringstream& strMsg )
 {
-    strMsg << pLabel_->text().latin1() << ": agent #" << pAgent_->GetAgentID();
-    asnAgent_ = pAgent_->GetAgentID();
+    strMsg << pLabel_->text().latin1() << ": agent #" << pAgent_->GetID();
+    asnAgent_ = pAgent_->GetID();
 }
 
 

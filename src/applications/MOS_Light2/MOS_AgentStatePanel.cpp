@@ -196,8 +196,6 @@ void MOS_AgentStatePanel::OnUpdate()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentStatePanel::OnAgentUpdated
-/** Updates all the displayed information according to the agent's state.
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )

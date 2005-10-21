@@ -30,13 +30,6 @@ class MOS_Agent;
 class MOS_Object_ABC;
 
 // =============================================================================
-/** @class  MOS_FireResultListView
-    @brief  MOS_FireResultListView
-    @par    Using example
-    @code
-    MOS_FireResultListView;
-    @endcode
-*/
 // Created: SBO 2005-08-30
 // =============================================================================
 class MOS_FireResultListView : public QListView
@@ -75,7 +68,5 @@ private:
     MOS_Object_ABC* pObject_;
     QListViewItem*  pPopupItem_;
 };
-
-#include "MOS_FireResultListView.inl"
 
 #endif // __MOS_FireResultListView_h_

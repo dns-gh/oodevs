@@ -124,8 +124,8 @@ void MOS_ParamAgentList::WriteMsg( std::stringstream& strMsg )
     while( pItem != 0 )
     {
         MT_ValuedListViewItem< MOS_Agent* >* pCastItem = (MT_ValuedListViewItem< MOS_Agent* >*)pItem;
-        asnListAgent_.elem[i] = pCastItem->GetValue()->GetAgentID();
-        strMsg << "#" << pCastItem->GetValue()->GetAgentID() << (pItem->nextSibling() != 0 ? ", " : "");
+        asnListAgent_.elem[i] = pCastItem->GetValue()->GetID();
+        strMsg << "#" << pCastItem->GetValue()->GetID() << (pItem->nextSibling() != 0 ? ", " : "");
         pItem = pItem->nextSibling();
         ++i;
     }

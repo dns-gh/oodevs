@@ -62,6 +62,4 @@ protected:
     QPopupMenu* pPopupMenu_;
 };
 
-#   include "MOS_ParamListView.inl"
-
 #endif // __MOS_ParamListView_h_

@@ -32,53 +32,57 @@
 #include "MOS_ObjectPanel.h"
 #include "MOS_ObjectReportPanel.h"
 #include "MOS_ObjectKnowledgePanel.h"
+#include "MOS_PopulationPanel.h"
+#include "MOS_PopulationKnowledgePanel.h"
 #include "MOS_AgentMaintenancePanel.h"
 #include "MOS_AgentMedicalPanel.h"
 #include "MOS_AgentSupplyPanel.h"
 #include "MOS_SelectedElement.h"
 #include "MOS_AgentKnowledge.h"
 #include "MOS_ObjectKnowledge.h"
+#include "MOS_PopulationKnowledge.h"
 #include "MOS_App.h"
 #include "MOS_Gtia.h"
 #include "MOS_Agent.h"
-#include "MOS_PopulationPanel.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 MOS_InfoPanel::MOS_InfoPanel( QWidget* pParent )
-    : QWidgetStack              ( pParent )
-    , bAgentVisible_            ( false )
-    , bAgentKnowledgeVisible_   ( false )
-    , bObjectKnowledgeVisible_  ( false )
-    , bObjectVisible_           ( false )
-    , bLogisiticVisible_        ( false )
-	, bPopulationVisible_		( false )
+    : QWidgetStack                 ( pParent )
+    , bAgentVisible_               ( false )
+    , bAgentKnowledgeVisible_      ( false )
+    , bObjectKnowledgeVisible_     ( false )
+    , bPopulationKnowledgeVisible_ ( false )
+    , bObjectVisible_              ( false )
+    , bLogisiticVisible_           ( false )
+	, bPopulationVisible_		   ( false )
 {
     this->setMinimumSize( 1, 1 );
 
-    pStatePanel_            = new MOS_AgentStatePanel( this );
-    pResourcesPanel_        = new MOS_AgentResourcesPanel( this );
-    pAgentKnowledgePanel_   = new MOS_AgentKnowledgePanel( this );
-    pObjectPanel_           = new MOS_ObjectPanel( this );
-    pObjectReportPanel_     = new MOS_ObjectReportPanel( this );
-    pObjectKnowledgePanel_  = new MOS_ObjectKnowledgePanel( this );
-    pAgentMaintenancePanel_ = new MOS_AgentMaintenancePanel( this );
-    pAgentMedicalPanel_     = new MOS_AgentMedicalPanel( this );
-    pAgentSupplyPanel_      = new MOS_AgentSupplyPanel( this );
-    pReportPanel_           = new MOS_ReportPanel( this );
-	pPopulationPanel_		= new MOS_PopulationPanel( this );
+    pStatePanel_               = new MOS_AgentStatePanel( this );
+    pResourcesPanel_           = new MOS_AgentResourcesPanel( this );
+    pAgentKnowledgePanel_      = new MOS_AgentKnowledgePanel( this );
+    pObjectPanel_              = new MOS_ObjectPanel( this );
+    pObjectReportPanel_        = new MOS_ObjectReportPanel( this );
+    pObjectKnowledgePanel_     = new MOS_ObjectKnowledgePanel( this );
+    pAgentMaintenancePanel_    = new MOS_AgentMaintenancePanel( this );
+    pAgentMedicalPanel_        = new MOS_AgentMedicalPanel( this );
+    pAgentSupplyPanel_         = new MOS_AgentSupplyPanel( this );
+    pReportPanel_              = new MOS_ReportPanel( this );
+	pPopulationPanel_		   = new MOS_PopulationPanel( this );
+    pPopulationReportPanel_    = new MOS_ReportPanel( this );
+    pPopulationKnowledgePanel_ = new MOS_PopulationKnowledgePanel( this );
 
     pTabWidget_ = new QTabWidget( this );
 
-    ShowAgentPanel( true );
-    ShowAgentKnowledgePanel( true );
-    ShowObjectKnowledgePanel( true );
+    ShowAgentPanel              ( true );
+    ShowAgentKnowledgePanel     ( true );
+    ShowObjectKnowledgePanel    ( true );
+    ShowPopulationKnowledgePanel( true );
 
-    addWidget( pTabWidget_ );
+    addWidget  ( pTabWidget_ );
     raiseWidget( pTabWidget_ );
     pTabWidget_->setCurrentPage( 0 );
 
@@ -100,117 +104,127 @@ MOS_InfoPanel::~MOS_InfoPanel()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_InfoPanel::SetSelectedElement
-/** @param  pAgent 
-*/
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 {
     disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this, SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
 
+    QWidget* pPreviousPage = pTabWidget_->currentPage();
+
     if( selectedElement.pAgent_ != 0 )
     {
-        ShowAgentPanel( true );
-        ShowAgentKnowledgePanel( true );
-        ShowObjectKnowledgePanel( true );
-        ShowLogisticPanels( true );
-        ShowObjectPanel( false );
-		ShowPopulationPanel( false );
+        ShowAgentPanel              ( true  );
+        ShowAgentKnowledgePanel     ( true  );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( true  );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( true  );
+        ShowLogisticPanels          ( true  );
     }
 
     else if( selectedElement.pGtia_ != 0 )
     {
-        ShowAgentPanel( false );
-        ShowAgentKnowledgePanel( true );
-        ShowObjectKnowledgePanel( true );
-        ShowLogisticPanels( false );
-        ShowObjectPanel( false );
-		ShowPopulationPanel( false );
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( true  );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( true  );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( true  );
+        ShowLogisticPanels          ( false );
     }
 
     else if( selectedElement.pTeam_ != 0 && selectedElement.pPopulation_ == 0 )
     {
-        ShowAgentPanel( false );
-        ShowAgentKnowledgePanel( false );
-        ShowLogisticPanels( false );
-        ShowObjectKnowledgePanel( true );
-        ShowObjectPanel( false );
-		ShowPopulationPanel( false );
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( false );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( false );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( true  );
+        ShowLogisticPanels          ( false );
     }
 
 	else if( selectedElement.pPopulation_ != 0 )
     {
-        ShowAgentPanel( false );
-        ShowAgentKnowledgePanel( false );
-        ShowLogisticPanels( false );
-        ShowObjectKnowledgePanel( true );
-        ShowObjectPanel( false );
-		ShowPopulationPanel( true );
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( false );
+        ShowPopulationPanel         ( true  );
+        ShowPopulationKnowledgePanel( false );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( false );
+        ShowLogisticPanels          ( false );
+    }
+
+    else if( selectedElement.pPopulationKnowledge_ != 0 )
+    {
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( false );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( true  );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( false );
+        ShowLogisticPanels          ( false );
     }
 
     else if( selectedElement.pAgentKnowledge_ != 0 )
     {
-//        if( ! ( bAgentVisible_ 
-//             && selectedElement.pAgent_ != 0 
-//             && &(selectedElement.pAgent_->GetGtia()) == &(selectedElement.pAgentKnowledge_->GetOwner()) ) )
-        ShowAgentPanel( false );
-        ShowAgentKnowledgePanel( true );
-        ShowObjectKnowledgePanel( true ); 
-        ShowObjectPanel( false );
-        ShowLogisticPanels( false );
-		ShowPopulationPanel( false );
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( true  );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( false );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( false );
+        ShowLogisticPanels          ( false );
     }
 
     else if( selectedElement.pObjectKnowledge_ != 0 )
     {
-//        if( ! (bAgentVisible_ 
-//            && selectedElement.pAgent_ != 0 && &(pStatePanel_->GetAgent()->GetTeam()) ==  &(selectedElement.pObjectKnowledge_->GetOwner()) ) )
-//            ShowAgentPanel( false );
-//
-//        if( ! (bAgentKnowledgeVisible_ && pAgentKnowledgePanel_->GetGtia() != 0 && &(pAgentKnowledgePanel_->GetGtia()->GetTeam()) ==  &(selectedElement.pObjectKnowledge_->GetOwner()) ) )
-//            ShowAgentPanel( false );
-
-        ShowObjectKnowledgePanel( true );
-        ShowObjectPanel( false );
-        ShowLogisticPanels( false );
-		ShowPopulationPanel( false );
-
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( false );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( false );
+        ShowObjectPanel             ( false );
+        ShowObjectKnowledgePanel    ( true  );
+        ShowLogisticPanels          ( false );
     }
 
     else if( selectedElement.pObject_ != 0 )
     {
-        ShowAgentPanel( false );
-        ShowAgentKnowledgePanel( false );
-        ShowObjectKnowledgePanel( false );
-        ShowObjectPanel( true );
-        ShowLogisticPanels( false );
-		ShowPopulationPanel( false );
-        pTabWidget_->setCurrentPage( 0 );
+        ShowAgentPanel              ( false );
+        ShowAgentKnowledgePanel     ( false );
+        ShowPopulationPanel         ( false );
+        ShowPopulationKnowledgePanel( false );
+        ShowObjectPanel             ( true  );
+        ShowObjectKnowledgePanel    ( false );
+        ShowLogisticPanels          ( false );
     }
 
-    else
+    if( pTabWidget_->count() > 0 )
     {
-        ShowAgentPanel( false );
-        ShowAgentKnowledgePanel( false );
-        ShowObjectKnowledgePanel( false );
-        ShowObjectPanel( false );
-		ShowPopulationPanel( false );
-        //pTabWidget_->setCurrentPage( 0 );
+        int nPreviousPage = pTabWidget_->indexOf( pPreviousPage );
+        if( nPreviousPage == -1 )
+            pTabWidget_->setCurrentPage( 0 );
+        else
+            pTabWidget_->setCurrentPage( nPreviousPage );
     }
-	pPopulationPanel_	   ->SetSelection( selectedElement );
-    pStatePanel_           ->SetSelection( selectedElement );
-    pReportPanel_          ->SetSelection( selectedElement );
-    pResourcesPanel_       ->SetSelection( selectedElement );
-    pAgentKnowledgePanel_  ->SetSelection( selectedElement );
-    pObjectPanel_          ->SetSelection( selectedElement );
 
+    pStatePanel_              ->SetSelection( selectedElement );
+    pReportPanel_             ->SetSelection( selectedElement );
+    pResourcesPanel_          ->SetSelection( selectedElement );
+    pAgentKnowledgePanel_     ->SetSelection( selectedElement );
 
-    pObjectKnowledgePanel_ ->SetSelection( selectedElement );
-    pAgentMaintenancePanel_->SetSelection( selectedElement );
-    pAgentMedicalPanel_    ->SetSelection( selectedElement );
-    pAgentSupplyPanel_     ->SetSelection( selectedElement );
+    pPopulationPanel_	      ->SetSelection( selectedElement );
+    pPopulationReportPanel_   ->SetSelection( selectedElement );
+    pPopulationKnowledgePanel_->SetSelection( selectedElement );
 
-    pObjectReportPanel_    ->SetSelection( selectedElement );
+    pObjectPanel_             ->SetSelection( selectedElement );
+    pObjectReportPanel_       ->SetSelection( selectedElement );
+    pObjectKnowledgePanel_    ->SetSelection( selectedElement );
+
+    pAgentMaintenancePanel_   ->SetSelection( selectedElement );
+    pAgentMedicalPanel_       ->SetSelection( selectedElement );
+    pAgentSupplyPanel_        ->SetSelection( selectedElement );
 
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this, SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
 }
@@ -221,19 +235,24 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 // -----------------------------------------------------------------------------
 void MOS_InfoPanel::ClearAll()
 {
-    MOS_SelectedElement nullSelection;
-    pStatePanel_           ->SetSelection( nullSelection );
-    pReportPanel_          ->SetSelection( nullSelection );
-    pResourcesPanel_       ->SetSelection( nullSelection );
-    pAgentKnowledgePanel_  ->SetSelection( nullSelection );
-    pObjectPanel_          ->SetSelection( nullSelection );
-	pPopulationPanel_	   ->SetSelection( nullSelection );
-    pObjectReportPanel_    ->SetSelection( nullSelection );
-    pObjectKnowledgePanel_ ->SetSelection( nullSelection );
-    pAgentMaintenancePanel_->SetSelection( nullSelection );
-    pAgentMedicalPanel_    ->SetSelection( nullSelection );
-    pAgentSupplyPanel_     ->SetSelection( nullSelection );
-    this->raiseWidget( pTabWidget_ );
+    MOS_SelectedElement       nullSelection;
+    pStatePanel_              ->SetSelection( nullSelection );
+    pReportPanel_             ->SetSelection( nullSelection );
+    pResourcesPanel_          ->SetSelection( nullSelection );
+    pAgentKnowledgePanel_     ->SetSelection( nullSelection );
+
+    pPopulationPanel_         ->SetSelection( nullSelection );
+    pPopulationReportPanel_   ->SetSelection( nullSelection );
+    pPopulationKnowledgePanel_->SetSelection( nullSelection );
+
+    pObjectPanel_             ->SetSelection( nullSelection );
+    pObjectReportPanel_       ->SetSelection( nullSelection );
+    pObjectKnowledgePanel_    ->SetSelection( nullSelection );
+    
+    pAgentMaintenancePanel_   ->SetSelection( nullSelection );
+    pAgentMedicalPanel_       ->SetSelection( nullSelection );
+    pAgentSupplyPanel_        ->SetSelection( nullSelection );
+    //this->raiseWidget( pTabWidget_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,8 +289,8 @@ void MOS_InfoPanel::ShowAgentPanel( bool bShow )
     {
         bAgentVisible_ = true;
         pTabWidget_->insertTab( pStatePanel_, tr( "Etat" ), 0 );
-        pTabWidget_->insertTab( pReportPanel_, tr( "Rapports" ), 0 );
-        pTabWidget_->insertTab( pResourcesPanel_, tr( "Res." ), 1 );
+        pTabWidget_->insertTab( pReportPanel_, tr( "Rapports" ), 1 );
+        pTabWidget_->insertTab( pResourcesPanel_, tr( "Res." ), 2 );
 	}
 
     if( !bShow && bAgentVisible_ )
@@ -293,15 +312,15 @@ void MOS_InfoPanel::ShowPopulationPanel( bool bShow )
     if( bShow && ! bPopulationVisible_ )
     {
         bPopulationVisible_ = true;
-        pTabWidget_->insertTab( pPopulationPanel_, tr( "Etat Population" ));
-        pTabWidget_->insertTab( pReportPanel_, tr( "Rapports" ) );
+        pTabWidget_->insertTab( pPopulationPanel_, tr( "Etat Population" ), 0 );
+        pTabWidget_->insertTab( pPopulationReportPanel_, tr( "Rapports" ), 1 );
     }
 
     if( !bShow && bPopulationVisible_ )
     {
         bPopulationVisible_ = false;
         pTabWidget_->removePage( pPopulationPanel_ );
-        pTabWidget_->removePage( pReportPanel_ );
+        pTabWidget_->removePage( pPopulationReportPanel_ );
     }
 }
 
@@ -354,8 +373,8 @@ void MOS_InfoPanel::ShowObjectPanel( bool bShow )
     if( bShow && ! bObjectVisible_ )
     {
         bObjectVisible_ = true;
-        pTabWidget_->insertTab( pObjectPanel_, tr( "Objet" ) );
-        pTabWidget_->insertTab( pObjectReportPanel_, tr( "Rapports" ) );
+        pTabWidget_->insertTab( pObjectPanel_, tr( "Objet" ), 0 );
+        pTabWidget_->insertTab( pObjectReportPanel_, tr( "Rapports" ), 1 );
     }
 
     if( ! bShow && bObjectVisible_ )
@@ -363,5 +382,24 @@ void MOS_InfoPanel::ShowObjectPanel( bool bShow )
         bObjectVisible_ = false;
         pTabWidget_->removePage( pObjectPanel_ );
         pTabWidget_->removePage( pObjectReportPanel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_InfoPanel::ShowPopulationKnowledgePanel
+// Created: SBO 2005-10-19
+// -----------------------------------------------------------------------------
+void MOS_InfoPanel::ShowPopulationKnowledgePanel( bool bShow )
+{
+    if( bShow && ! bPopulationKnowledgeVisible_ )
+    {
+        bPopulationKnowledgeVisible_ = true;
+        pTabWidget_->insertTab( pPopulationKnowledgePanel_, tr( "C. popu" ) );
+    }
+
+    if( ! bShow && bPopulationKnowledgeVisible_ )
+    {
+        bPopulationKnowledgeVisible_ = false;
+        pTabWidget_->removePage( pPopulationKnowledgePanel_ );
     }
 }

@@ -32,14 +32,12 @@ class MOS_Population;
 class MOS_Object_ABC;
 class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
+class MOS_PopulationKnowledge;
 class MOS_RC;
 class MOS_TacticalLine_ABC;
 
 
 // =============================================================================
-/** @class  MOS_SelectedElement
-    @brief  Used to hold an object that was selected on the gui.
-*/
 // Created: APE 2004-05-05
 // =============================================================================
 class MOS_SelectedElement
@@ -48,27 +46,40 @@ class MOS_SelectedElement
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_SelectedElement();
-    MOS_SelectedElement( MOS_Agent& agent );
-	MOS_SelectedElement( MOS_Population& population );
-    MOS_SelectedElement( MOS_Gtia& gtia );
-    MOS_SelectedElement( MOS_Team& team );
-    MOS_SelectedElement( MOS_Object_ABC& object );
-    MOS_SelectedElement( MOS_AgentKnowledge& agentKnowledge );
-    MOS_SelectedElement( MOS_ObjectKnowledge& ObjectKnowledge );
-    MOS_SelectedElement( MOS_RC& rc );
-    MOS_SelectedElement( MOS_TacticalLine_ABC& line, int nLinePoint = -1 );
+     MOS_SelectedElement();
+     MOS_SelectedElement( MOS_Agent&                            agent );
+	 MOS_SelectedElement( MOS_Population&                       population );
+     MOS_SelectedElement( MOS_Gtia&                             gtia );
+     MOS_SelectedElement( MOS_Team&                             team );
+     MOS_SelectedElement( MOS_Object_ABC&                       object );
+     MOS_SelectedElement( MOS_AgentKnowledge&                   agentKnowledge );
+     MOS_SelectedElement( MOS_ObjectKnowledge&                  objectKnowledge );
+     MOS_SelectedElement( MOS_PopulationKnowledge&              populationKnowledge );
+     MOS_SelectedElement( MOS_RC&                               rc );
+     MOS_SelectedElement( MOS_TacticalLine_ABC&                 line, int nLinePoint = -1 );
     ~MOS_SelectedElement();
     //@}
 
+    //! @name Accessors
+    //@{
     bool IsAMapElementSelected() const;
+    //@}
 
+    //! @name Operators
+    //@{
     bool operator==( const MOS_SelectedElement& ) const;
+    //@}
 
+    //! @name Operations
+    //@{
     void Dump();
+    //@}
 
 private:
+    //! @name Helpers
+    //@{
     void Init();
+    //@}
 
 public:
     //! @name Public member data
@@ -80,6 +91,7 @@ public:
     MOS_Object_ABC*			 pObject_;
     MOS_AgentKnowledge*      pAgentKnowledge_;
     MOS_ObjectKnowledge*	 pObjectKnowledge_;
+    MOS_PopulationKnowledge* pPopulationKnowledge_;
     MOS_RC*                  pRC_;
     MOS_TacticalLine_ABC*    pLine_;
     int                      nLinePoint_;
