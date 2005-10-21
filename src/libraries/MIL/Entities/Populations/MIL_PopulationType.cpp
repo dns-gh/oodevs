@@ -144,8 +144,8 @@ void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
             MT_Float    rSlowDownFactor      = 0.;
 
             archive.ReadAttribute( "nom", strVolume );
-            archive.ReadAttribute( "densitePopulation"          , rPopulationDensity, CheckValueGreaterOrEqual( 0. ) );
-            archive.ReadAttribute( "FactorficientRalentissement", rSlowDownFactor   , CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadAttribute( "densitePopulation"        , rPopulationDensity, CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadAttribute( "coefficientRalentissement", rSlowDownFactor   , CheckValueGreaterOrEqual( 0. ) );
 
             const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
             if( !pVolume )
