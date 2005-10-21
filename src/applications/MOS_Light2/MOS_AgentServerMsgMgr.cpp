@@ -1552,7 +1552,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationKnowledgeDestruct
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
 {
-     // $$$$ SBO 2005-10-17: TODO
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    MOS_PopulationKnowledge* pKnowledge = pGtia->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+    assert( pKnowledge );
+    pKnowledge->OnReceiveMsgPopulationFlowKnowledgeCreation( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1561,7 +1565,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeCreation( const A
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
 {
-    // $$$$ SBO 2005-10-17: TODO
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    MOS_PopulationKnowledge* pKnowledge = pGtia->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+    assert( pKnowledge );
+    pKnowledge->OnReceiveMsgPopulationFlowKnowledgeUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1570,7 +1578,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
 {
-    // $$$$ SBO 2005-10-17: TODO
+    MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
+    assert( pGtia );
+    MOS_PopulationKnowledge* pKnowledge = pGtia->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
+    assert( pKnowledge );
+    pKnowledge->OnReceiveMsgPopulationFlowKnowledgeDestruction( asnMsg );
 }
 
 
@@ -1880,7 +1892,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxCreation( const ASN1T_MsgPopulati
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
-		pop->CreatePopulationFlux( asnMsg );
+		pop->CreatePopulationFlow( asnMsg );
     MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
@@ -1896,7 +1908,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPop
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
-		pop->DeletePopulationFlux( asnMsg );
+		pop->DeletePopulationFlow( asnMsg );
     MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
@@ -1912,7 +1924,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulation
 	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
-		pop->UpdatePopulationFlux( asnMsg );
+		pop->UpdatePopulationFlow( asnMsg );
     MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 

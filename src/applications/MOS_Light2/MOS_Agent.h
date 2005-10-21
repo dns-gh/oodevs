@@ -43,12 +43,9 @@ class MOS_LogSupplyConsign;
 class MOS_LogMedicalConsign;
 class MOS_LogMaintenanceConsign;
 class MOS_PopulationConcentration;
-class MOS_PopulationFlux;
+class MOS_PopulationFlow;
 
 // =============================================================================
-/** @class  MOS_Agent
-    @brief  An agent of the simulation.
-*/
 // Created: APE 2004-07-19
 // =============================================================================
 class MOS_Agent : public MOS_Agent_ABC
@@ -77,7 +74,7 @@ public:
     typedef T_ConcentrationSet::iterator                   IT_ConcentrationSet;
     typedef T_ConcentrationSet::const_iterator             CIT_ConcentrationSet;
 
-    typedef std::map< const MOS_PopulationFlux*, T_PointVector > T_FlowVisionMap;
+    typedef std::map< const MOS_PopulationFlow*, T_PointVector > T_FlowVisionMap;
     typedef T_FlowVisionMap::iterator                            IT_FlowVisionMap;
     typedef T_FlowVisionMap::const_iterator                      CIT_FlowVisionMap;
 

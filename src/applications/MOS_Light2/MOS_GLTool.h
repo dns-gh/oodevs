@@ -61,7 +61,7 @@ class MOS_MapEventHandler_ABC;
 class MOS_DefaultMapEventHandler;
 class MOS_ShapeEditorMapEventFilter;
 class MOS_Population;
-class MOS_PopulationFlux;
+class MOS_PopulationFlow;
 
 
 // =============================================================================
@@ -121,7 +121,7 @@ public:
 	static void Draw( MOS_Population& pop, E_State nState );
 	static void DrawPopulation( MOS_Population& pop, E_State nState );
     static void DrawPath( MOS_Agent& agent );
-    static void DrawPath( MOS_PopulationFlux& flux );
+    static void DrawPath( MOS_PopulationFlow& flow );
     static void DrawAutomataStatus( MOS_Agent& agent, E_State nState );
     static void DrawVisionLines( MOS_Agent& agent );
     static void Draw( MOS_Team& team );

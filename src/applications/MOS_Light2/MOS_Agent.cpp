@@ -280,7 +280,7 @@ void MOS_Agent::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Input& input
     MOS_Population* pPopulation = MOS_App::GetApp().GetAgentManager().FindPopulation( nPopulationID );
     assert( pPopulation );
 
-    const MOS_PopulationFlux* pFlow = pPopulation->FindFlow( nFlowID );
+    const MOS_PopulationFlow* pFlow = pPopulation->FindFlow( nFlowID );
     assert( pFlow );
 
     uint32 nNbrPoints;

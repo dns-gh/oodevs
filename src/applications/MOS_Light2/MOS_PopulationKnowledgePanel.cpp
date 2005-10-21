@@ -36,6 +36,8 @@
 #include "MOS_PopulationKnowledge.h"
 #include "MOS_PopulationConcentration.h"
 #include "MOS_PopulationConcentrationKnowledge.h"
+#include "MOS_PopulationFlow.h"
+#include "MOS_PopulationFlowKnowledge.h"
 #include "MOS_ActionContext.h"
 
 // -----------------------------------------------------------------------------
@@ -47,6 +49,7 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
     , pPopupMenu_                      ( new QPopupMenu( this ) )
     , pSelectedKnowledge_              ( 0 )
     , pSelectedConcentrationKnowledge_ ( 0 )
+    , pSelectedFlowKnowledge_          ( 0 )
     , pGtia_                           ( 0 )
 {
     pKnowledgeListView_ = new QListView( this );
@@ -88,7 +91,7 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
 
     new QLabel( tr( "Attitude:" ), pConcentrationBox_ );
     pConcentrationAttitude_ = new QLabel( pConcentrationBox_ );
-
+ 
     new QLabel( tr( "Percue:" ), pConcentrationBox_ );
     pConcentrationPerceived_ = new QLabel( pConcentrationBox_ );
 
@@ -96,6 +99,35 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
     pConcentrationRelevance_ = new QLabel( pConcentrationBox_ );
 
     pConcentrationBox_->hide();
+
+    // Flow
+    pFlowBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Flux" ), this );
+    
+    new QLabel( tr( "Id:" ), pFlowBox_ );
+    pFlowIdLabel_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Flux associé:" ), pFlowBox_ );
+    pFlowAssociatedLabel_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Direction:" ), pFlowBox_ );
+    pFlowDirection_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Speed:" ), pFlowBox_ );
+    pFlowSpeed_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Humains vivants:" ), pFlowBox_ );
+    pFlowAliveHumans_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Humains morts:" ), pFlowBox_ );
+    pFlowDeadHumans_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Attitude:" ), pFlowBox_ );
+    pFlowAttitude_ = new QLabel( pFlowBox_ );
+
+    new QLabel( tr( "Percu:" ), pFlowBox_ );
+    pFlowPerceived_ = new QLabel( pFlowBox_ );
+
+    pFlowBox_->hide();
 
     // Perception Agents
     pPerceptionListView_ = new QListView( this );
@@ -106,19 +138,25 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
 
     // populations
     connect( &MOS_App::GetApp(), SIGNAL( PopulationKnowledgeCreated( MOS_Gtia&, MOS_PopulationKnowledge& ) ),
-             this,                 SLOT(    OnKnowledgeCreated( MOS_Gtia&, MOS_PopulationKnowledge& ) ) );
+             this,                 SLOT( OnKnowledgeCreated( MOS_Gtia&, MOS_PopulationKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationKnowledgeUpdated( MOS_Gtia&, MOS_PopulationKnowledge& ) ),
-             this,                 SLOT(    OnKnowledgeUpdated( MOS_Gtia&, MOS_PopulationKnowledge& ) ) );
+             this,                 SLOT( OnKnowledgeUpdated( MOS_Gtia&, MOS_PopulationKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationKnowledgeDeleted( MOS_Gtia&, MOS_PopulationKnowledge& ) ),
-             this,                 SLOT(    OnKnowledgeDeleted( MOS_Gtia&, MOS_PopulationKnowledge& ) ) );
+             this,                 SLOT( OnKnowledgeDeleted( MOS_Gtia&, MOS_PopulationKnowledge& ) ) );
     // concentrations
     connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationKnowledgeCreated( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ),
-             this,                 SLOT(    OnConcentrationKnowledgeCreated( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ) );
+             this,                 SLOT( OnConcentrationKnowledgeCreated( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationKnowledgeUpdated( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ),
-             this,                 SLOT(    OnConcentrationKnowledgeUpdated( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ) );
+             this,                 SLOT( OnConcentrationKnowledgeUpdated( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationKnowledgeDeleted( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ),
-             this,                 SLOT(    OnConcentrationKnowledgeDeleted( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ) );
-
+             this,                 SLOT( OnConcentrationKnowledgeDeleted( MOS_Gtia&, MOS_PopulationConcentrationKnowledge& ) ) );
+    // flow
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowKnowledgeCreated( MOS_Gtia&, MOS_PopulationFlowKnowledge& ) ),
+             this,                 SLOT( OnFlowKnowledgeCreated( MOS_Gtia&, MOS_PopulationFlowKnowledge& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowKnowledgeUpdated( MOS_Gtia&, MOS_PopulationFlowKnowledge& ) ),
+             this,                 SLOT( OnFlowKnowledgeUpdated( MOS_Gtia&, MOS_PopulationFlowKnowledge& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowKnowledgeDeleted( MOS_Gtia&, MOS_PopulationFlowKnowledge& ) ),
+             this,                 SLOT( OnFlowKnowledgeDeleted( MOS_Gtia&, MOS_PopulationFlowKnowledge& ) ) );
     connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
     connect( this, SIGNAL( ElementSelected( MOS_SelectedElement& ) )              , &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ) );
     connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) )                  , &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
@@ -158,8 +196,9 @@ void MOS_PopulationKnowledgePanel::OnClearSelection()
 {
     pGtia_ = 0;
     pKnowledgeListView_->clear();
-    pSelectedKnowledge_ = 0;
+    pSelectedKnowledge_              = 0;
     pSelectedConcentrationKnowledge_ = 0;
+    pSelectedFlowKnowledge_          = 0;
     UpdateSelected();
 }
 
@@ -191,9 +230,12 @@ void MOS_PopulationKnowledgePanel::UpdateList()
                 const MOS_PopulationKnowledge::T_ConcentrationKnowledgeMap& concentrationKnowledges = it->second->GetConcentrations();
                 for( MOS_PopulationKnowledge::CIT_ConcentrationKnowledgeMap itC = concentrationKnowledges.begin(); itC != concentrationKnowledges.end(); ++itC )
                     new MT_ValuedListViewItem< MOS_PopulationConcentrationKnowledge*, eConcentration >( itC->second, pParentItem, tr( "Concentration - " ) + QString::number( itC->second->GetID() ) );
+                const MOS_PopulationKnowledge::T_FlowKnowledgeMap& flowKnowledges = it->second->GetFlows();
+                for( MOS_PopulationKnowledge::CIT_FlowKnowledgeMap itF = flowKnowledges.begin(); itF != flowKnowledges.end(); ++itF )
+                    new MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >( itF->second, pParentItem, tr( "Flux - " ) + QString::number( itF->second->GetID() ) );
             }
         }
-        pGtia_       = pGtia;
+        pGtia_ = pGtia;
     }
 
     // Try to select the appropriate knowledge.
@@ -216,8 +258,9 @@ void MOS_PopulationKnowledgePanel::UpdateList()
         pKnowledgeListView_->setSelected( pKnowledgeListView_->firstChild(), true );
     else
     {
-        pSelectedKnowledge_ = 0;
+        pSelectedKnowledge_              = 0;
         pSelectedConcentrationKnowledge_ = 0;
+        pSelectedFlowKnowledge_          = 0;
         UpdateSelected();
     }
 }
@@ -233,6 +276,7 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
     pAssociatedPopulationLabel_->setText( "-" );
     pTeamLabel_                ->setText( "-" );
     pConcentrationBox_         ->hide   ();
+    pFlowBox_                  ->hide   ();
 
     if( pSelectedKnowledge_ == 0 )
         return;
@@ -262,6 +306,22 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
 
         pConcentrationBox_->show();
     }
+    else if( pSelectedFlowKnowledge_ != 0 )
+    {
+        pFlowIdLabel_->setText( QString::number( pSelectedFlowKnowledge_->GetID() ) );
+        if( pSelectedFlowKnowledge_->GetFlow() != 0 )
+            pFlowAssociatedLabel_->setText( QString::number( pSelectedFlowKnowledge_->GetFlow()->GetID() ) );
+        else
+            pFlowAssociatedLabel_->setText( tr( "-" ) );
+        pFlowDirection_->setText( QString::number( pSelectedFlowKnowledge_->GetDirection() ) );
+        pFlowSpeed_->setText( QString::number( pSelectedFlowKnowledge_->GetSpeed() ) );
+        pFlowAliveHumans_->setText( QString::number( pSelectedFlowKnowledge_->GetNbrAliveHumans() ) );
+        pFlowDeadHumans_->setText( QString::number( pSelectedFlowKnowledge_->GetNbrDeadHumans() ) );
+        pFlowAttitude_->setText( ENT_Tr::ConvertFromPopulationAttitude( pSelectedFlowKnowledge_->GetAttitude() ).c_str() );
+        pFlowPerceived_->setText( pSelectedFlowKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" ) );
+
+        pFlowBox_->show();        
+    }
 }
 
 
@@ -277,6 +337,7 @@ void MOS_PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* pItem )
         {
             pSelectedKnowledge_ = ( ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pItem )->GetValue();
             pSelectedConcentrationKnowledge_ = 0;
+            pSelectedFlowKnowledge_ = 0;
         }
         else if( pItem->rtti() == eConcentration )
         {
@@ -285,14 +346,25 @@ void MOS_PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* pItem )
             pSelectedConcentrationKnowledge_ = pCastConcentration->GetValue();
             QListViewItem* pParent = pCastConcentration->parent();
             pSelectedKnowledge_ = ( ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pParent )->GetValue();
+            pSelectedFlowKnowledge_ = 0;
+        }
+        else if( pItem->rtti() == eFlow )
+        {
+            MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >* pCastFlow;
+            pCastFlow = ( MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >* )pItem;
+            pSelectedFlowKnowledge_ = pCastFlow->GetValue();
+            QListViewItem* pParent = pCastFlow->parent();
+            pSelectedKnowledge_ = ( ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pParent )->GetValue();            
+            pSelectedConcentrationKnowledge_ = 0;
         }
         MOS_SelectedElement selectedElement( *pSelectedKnowledge_ );
         emit ElementSelected( selectedElement );
     }
     else
     {
-        pSelectedKnowledge_ = 0;
+        pSelectedKnowledge_              = 0;
         pSelectedConcentrationKnowledge_ = 0;
+        pSelectedFlowKnowledge_          = 0;
     }
 
     UpdateSelected();
@@ -376,9 +448,7 @@ void MOS_PopulationKnowledgePanel::OnConcentrationKnowledgeCreated( MOS_Gtia& gt
     if( &gtia != GetSelectedGtia() )
         return;
 
-    if( knowledge.GetPopulation() == 0 )
-        return;
-    MOS_PopulationKnowledge* pParentKnowledge = gtia.FindKnowledgeOnPopulation( *knowledge.GetPopulation() );
+    const MOS_PopulationKnowledge* pParentKnowledge = knowledge.GetPopulationKnowledge();
     assert( pParentKnowledge );
 
     QListViewItem* pItem = pKnowledgeListView_->firstChild();
@@ -388,8 +458,8 @@ void MOS_PopulationKnowledgePanel::OnConcentrationKnowledgeCreated( MOS_Gtia& gt
         if( pCastItem->GetValue() == pParentKnowledge )
         {
             // We only display knowledges concerning our own team if the appropriate check box is checked.
-            if( pOwnTeamCheckBox_->isChecked() || gtia.GetTeam().GetID() != knowledge.GetPopulation()->GetTeam().GetID() )
-                new MT_ValuedListViewItem< MOS_PopulationConcentrationKnowledge*, eConcentration >( &knowledge, pCastItem, knowledge.GetConcentration()->GetName().c_str() );
+            if( pOwnTeamCheckBox_->isChecked() || gtia.GetTeam().GetID() != pParentKnowledge->GetPopulation().GetTeam().GetID() )
+                new MT_ValuedListViewItem< MOS_PopulationConcentrationKnowledge*, eConcentration >( &knowledge, pCastItem, QString( knowledge.GetConcentration()->GetName().c_str() ) + QString( " - " ) + QString::number( knowledge.GetID() ) );
             return;
         }
         pItem = pItem->nextSibling();
@@ -402,6 +472,8 @@ void MOS_PopulationKnowledgePanel::OnConcentrationKnowledgeCreated( MOS_Gtia& gt
 // -----------------------------------------------------------------------------
 void MOS_PopulationKnowledgePanel::OnConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge )
 {
+    if( &gtia != GetSelectedGtia() )
+        return;
     if( pSelectedConcentrationKnowledge_ == &knowledge )
         UpdateSelected();
 }
@@ -415,9 +487,7 @@ void MOS_PopulationKnowledgePanel::OnConcentrationKnowledgeDeleted( MOS_Gtia& gt
     if( &gtia != GetSelectedGtia() )
         return;
 
-    if( knowledge.GetPopulation() == 0 )
-        return;
-    MOS_PopulationKnowledge* pParentKnowledge = gtia.FindKnowledgeOnPopulation( *knowledge.GetPopulation() );
+    const MOS_PopulationKnowledge* pParentKnowledge = knowledge.GetPopulationKnowledge();
     assert( pParentKnowledge );
 
     QListViewItem* pItem = pKnowledgeListView_->firstChild();
@@ -435,6 +505,80 @@ void MOS_PopulationKnowledgePanel::OnConcentrationKnowledgeDeleted( MOS_Gtia& gt
                     delete pCastChild;
                     return;
                 }
+                pChild = pChild->nextSibling();
+            }
+        }
+        pItem = pItem->nextSibling();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledgePanel::OnFlowKnowledgeCreated
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_PopulationKnowledgePanel::OnFlowKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
+{
+    if( &gtia != GetSelectedGtia() )
+        return;
+
+    const MOS_PopulationKnowledge* pParentKnowledge = knowledge.GetPopulationKnowledge();
+    assert( pParentKnowledge );
+
+    QListViewItem* pItem = pKnowledgeListView_->firstChild();
+    while( pItem != 0 )
+    {
+        MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* pCastItem = ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pItem;
+        if( pCastItem->GetValue() == pParentKnowledge )
+        {
+            // We only display knowledges concerning our own team if the appropriate check box is checked.
+            if( pOwnTeamCheckBox_->isChecked() || gtia.GetTeam().GetID() != pParentKnowledge->GetPopulation().GetTeam().GetID() )
+                new MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >( &knowledge, pCastItem, QString( knowledge.GetFlow()->GetName().c_str() ) + QString( " - " ) + QString::number( knowledge.GetID() ) );
+            return;
+        }
+        pItem = pItem->nextSibling();
+    }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledgePanel::OnFlowKnowledgeUpdated
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_PopulationKnowledgePanel::OnFlowKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
+{
+//    if( &gtia != GetSelectedGtia() )
+//        return;
+//    if( pSelectedFlowKnowledge_ == &knowledge )
+//        UpdateSelected();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledgePanel::OnFlowKnowledgeDeleted
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_PopulationKnowledgePanel::OnFlowKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
+{
+    if( &gtia != GetSelectedGtia() )
+        return;
+
+    const MOS_PopulationKnowledge* pParentKnowledge = knowledge.GetPopulationKnowledge();
+    assert( pParentKnowledge );
+
+    QListViewItem* pItem = pKnowledgeListView_->firstChild();
+    while( pItem != 0 )
+    {
+        MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* pCastItem = ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pItem;
+        if( pCastItem->GetValue() == pParentKnowledge )
+        {
+            QListViewItem* pChild = pCastItem->firstChild();
+            while( pChild != 0 )
+            {
+                MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >* pCastChild = ( MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >* )pChild;
+                if( pCastChild->GetValue() == &knowledge )
+                {
+                    delete pCastChild;
+                    return;
+                }
+                pChild = pChild->nextSibling();
             }
         }
         pItem = pItem->nextSibling();

@@ -12,7 +12,7 @@
 #endif
 
 #include "MOS_Light2_pch.h"
-#include "MOS_PopulationFlux.h"
+#include "MOS_PopulationFlow.h"
 
 #include "MOS_PopulationPart_ABC.h"
 #include "MOS_App.h"
@@ -20,12 +20,12 @@
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux constructor
+// Name: MOS_PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-MOS_PopulationFlux::MOS_PopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg, const MOS_Population& parent )
+MOS_PopulationFlow::MOS_PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const MOS_Population& parent )
     : MOS_PopulationPart_ABC( asnMsg.oid_flux, parent )	
-    , strName_              ( "Flux" )
+    , strName_              ( "Flow" )
     , itineraire_           ( )
     , flow_                 ( 2, MT_Vector2D( 0, 0 ) )
     , nDirection_           ( 0 )
@@ -34,49 +34,43 @@ MOS_PopulationFlux::MOS_PopulationFlux( const ASN1T_MsgPopulationFluxCreation& a
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux destructor
+// Name: MOS_PopulationFlow destructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-MOS_PopulationFlux::~MOS_PopulationFlux()
+MOS_PopulationFlow::~MOS_PopulationFlow()
 {
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux::Update
+// Name: MOS_PopulationFlow::Update
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void MOS_PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
 	if( asnMsg.m.nb_humains_vivantsPresent )
 		nLivingHumans_ = asnMsg.nb_humains_vivants;
-
 	if ( asnMsg.m.nb_humains_mortsPresent )
 		nDeadHumans_ = asnMsg.nb_humains_morts;
-
 	if ( asnMsg.m.attitudePresent )
 		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
-
 	if ( asnMsg.m.vitessePresent )
 		nSpeed_ = asnMsg.vitesse;
-
 	if ( asnMsg.m.directionPresent )
 		nDirection_	= asnMsg.direction;
-
 	if ( asnMsg.m.itinerairePresent )
 	{
         itineraire_.clear();
-		for( int i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
+		for( uint i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
 		{
 			MT_Vector2D point;
 			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, point  );
 			itineraire_.push_back( point );
 		}
 	}
-
 	if ( asnMsg.m.fluxPresent )
 	{
         flow_.clear();
-		for( int i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
+		for( uint i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
 		{
 			MT_Vector2D point;
 			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.flux.vecteur_point.elem[i].data, point  );
@@ -86,10 +80,10 @@ void MOS_PopulationFlux::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlux::UpdatePathFind
+// Name: MOS_PopulationFlow::UpdatePathFind
 // Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
-void MOS_PopulationFlux::UpdatePathFind()
+void MOS_PopulationFlow::UpdatePathFind()
 {
     if( itineraire_.size() <= 1 )
         return;

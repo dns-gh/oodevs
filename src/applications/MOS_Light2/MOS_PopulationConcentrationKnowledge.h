@@ -16,8 +16,8 @@
 #include "MOS_IDManager.h"
 
 class MOS_Gtia;
-class MOS_Population;
 class MOS_PopulationConcentration;
+class MOS_PopulationKnowledge;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -35,16 +35,16 @@ public:
 
     //! @name Accessors
     //@{
-    uint                               GetID            () const;
-    const MOS_Gtia&                    GetGtia          () const;
-    const MOS_Population*              GetPopulation    () const;
-    const MOS_PopulationConcentration* GetConcentration () const;
-    const MT_Vector2D&                 GetPosition      () const;
-    uint                               GetNbrAliveHumans() const;
-    uint                               GetNbrDeadHumans () const;
-    E_PopulationAttitude               GetAttitude      () const;
-    MT_Float                           GetRelevance     () const;
-    bool                               IsPerceived      () const;
+    uint                               GetID                 () const;
+    const MOS_Gtia&                    GetGtia               () const;
+    const MOS_PopulationKnowledge*     GetPopulationKnowledge() const;
+    const MOS_PopulationConcentration* GetConcentration      () const;
+    const MT_Vector2D&                 GetPosition           () const;
+    uint                               GetNbrAliveHumans     () const;
+    uint                               GetNbrDeadHumans      () const;
+    E_PopulationAttitude               GetAttitude           () const;
+    MT_Float                           GetRelevance          () const;
+    bool                               IsPerceived           () const;
     //@}
 
     //! @name Network
@@ -55,7 +55,7 @@ public:
 private:
     const uint                         nID_;
           MOS_Gtia*                    pGtia_;
-    const MOS_Population*              pPopulation_;
+    const MOS_PopulationKnowledge*     pPopulationKnowledge_;
     const MOS_PopulationConcentration* pConcentration_;
           MT_Vector2D                  position_;
           uint                         nNbrAliveHumans_;

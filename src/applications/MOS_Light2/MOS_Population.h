@@ -24,7 +24,7 @@
 #include "MOS_AgentKnowledge.h"
 
 class MOS_PopulationConcentration;
-class MOS_PopulationFlux;
+class MOS_PopulationFlow;
 class MOS_Team;
 
 class MOS_AgentModel;
@@ -44,9 +44,9 @@ private:
 	typedef T_ConcentrationMap::iterator                    IT_ConcentrationMap;
 	typedef T_ConcentrationMap::const_iterator              CIT_ConcentrationMap;
 
-	typedef std::map< uint , MOS_PopulationFlux* >          T_FluxMap;
-	typedef T_FluxMap::iterator                             IT_FluxMap;
-	typedef T_FluxMap::const_iterator                       CIT_FluxMap;
+	typedef std::map< uint , MOS_PopulationFlow* >          T_FlowMap;
+	typedef T_FlowMap::iterator                             IT_FlowMap;
+	typedef T_FlowMap::const_iterator                       CIT_FlowMap;
 
     typedef std::map< uint, MOS_AgentKnowledge* >           T_AgentKnowledgeMap;
     typedef T_AgentKnowledgeMap::iterator                   IT_AgentKnowledgeMap;
@@ -66,18 +66,18 @@ public:
 
     //! @name Network
     //@{
-	void CreatePopulationFlux         ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
+	void CreatePopulationFlow         ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
 	void CreatePopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
     void CreatePopulationConcentration( MT_Vector2D point, E_PopulationAttitude attitude , int persons );
     void UpdatePopulation             ( const ASN1T_MsgPopulationUpdate&                   asnMsg );
-    void UpdatePopulationFlux         ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
+    void UpdatePopulationFlow         ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
 	void UpdatePopulationConcentration( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
-	void DeletePopulationFlux         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
+	void DeletePopulationFlow         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
 	void DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
     //@}
 
     const MOS_PopulationConcentration* FindConcentration ( uint nID ) const;
-    const MOS_PopulationFlux*          FindFlow          ( uint nID ) const;
+    const MOS_PopulationFlow*          FindFlow          ( uint nID ) const;
     virtual MOS_AgentKnowledge*        FindAgentKnowledge( uint nId );
 
     //! @name Accessors
@@ -98,9 +98,9 @@ public:
 	class iterator
 	{
 	public:
-		iterator( T_ConcentrationMap& cm, T_FluxMap& fm, bool e = true )
+		iterator( T_ConcentrationMap& cm, T_FlowMap& fm, bool e = true )
 		: concentrationMap_	( cm )
-		, fluxMap_			( fm )
+		, flowMap_			( fm )
 		{
 			onCon_  = e;
 			if ( e )
@@ -108,19 +108,19 @@ public:
 				if ( concentrationMap_.size() > 0 )
                 {
                     itCon   = concentrationMap_.begin();
-				    itFlux	= fluxMap_.begin();
+				    itFlow	= flowMap_.begin();
                 }
                 else
                 {
                     onCon_ = false;
                     itCon   = concentrationMap_.end();
-				    itFlux	= fluxMap_.begin();
+				    itFlow	= flowMap_.begin();
                 }
 			}
 			else
 			{
 				itCon   = concentrationMap_.end();
-				itFlux	= fluxMap_.end();
+				itFlow	= flowMap_.end();
 			}
 		}
 		~iterator()
@@ -135,7 +135,7 @@ public:
 					onCon_ = false;
 			}
 			else
-				++itFlux;
+				++itFlow;
 			return *this;
 		}
 		MOS_PopulationPart_ABC*	operator*()
@@ -143,39 +143,39 @@ public:
 			if ( onCon_ )
 				return (MOS_PopulationPart_ABC*) itCon->second;
 			else
-				return (MOS_PopulationPart_ABC*) itFlux->second;
+				return (MOS_PopulationPart_ABC*) itFlow->second;
 		}
 		bool operator==( iterator& it )
 		{
-			return ( itCon == it.itCon && itFlux == it.itFlux );
+			return ( itCon == it.itCon && itFlow == it.itFlow );
 		}
 		bool operator!=( iterator& it )
 		{
-			return ( itCon != it.itCon || itFlux != it.itFlux );
+			return ( itCon != it.itCon || itFlow != it.itFlow );
 		}
 		iterator& operator=( iterator& it )
 		{
 			itCon = it.itCon;
-			itFlux = it.itFlux;
+			itFlow = it.itFlow;
 			onCon_ = it.onCon_;
-			fluxMap_ = it.fluxMap_;
+			flowMap_ = it.flowMap_;
 			return *this;
 		}
 	private:
 		bool onCon_;
 		IT_ConcentrationMap itCon;
-		IT_FluxMap			itFlux;
+		IT_FlowMap			itFlow;
 		T_ConcentrationMap&			concentrationMap_;
-		T_FluxMap&					fluxMap_;
+		T_FlowMap&					flowMap_;
 	};
 
 	iterator& begin()
 	{
-		return *new iterator( concentrationMap_ , fluxMap_ );
+		return *new iterator( concentrationMap_ , flowMap_ );
 	};
 	iterator& end()
 	{
-		return *new iterator( concentrationMap_ , fluxMap_, false );
+		return *new iterator( concentrationMap_ , flowMap_, false );
 	};
 
 private:
@@ -185,7 +185,7 @@ private:
 	MOS_Team*                 pTeam_;
 
     T_ConcentrationMap        concentrationMap_;
-	T_FluxMap                 fluxMap_;
+	T_FlowMap                 flowMap_;
 
     T_AgentKnowledgeMap       agentKnowledges_;
 

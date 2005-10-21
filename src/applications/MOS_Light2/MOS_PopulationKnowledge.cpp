@@ -17,6 +17,7 @@
 #include "MOS_Population.h"
 #include "MOS_AgentManager.h"
 #include "MOS_PopulationConcentrationKnowledge.h"
+#include "MOS_PopulationFlowKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationKnowledge::MOS_PopulationKnowledge
@@ -86,7 +87,7 @@ void MOS_PopulationKnowledge::OnReceiveMsgPopulationConcentrationKnowledgeCreati
         return;
     MOS_PopulationConcentrationKnowledge* pKnowledge = new MOS_PopulationConcentrationKnowledge( asnMsg );
     assert( pKnowledge );
-    concentrations_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) ).second;
+    concentrations_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
 
     MOS_App::GetApp().NotifyPopulationConcentrationKnowledgeCreated( *pGtia_, *pKnowledge );
 }
@@ -117,12 +118,61 @@ void MOS_PopulationKnowledge::OnReceiveMsgPopulationConcentrationKnowledgeDestru
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledge::OnReceiveMsgPopulationFlowKnowledgeCreation
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_PopulationKnowledge::OnReceiveMsgPopulationFlowKnowledgeCreation( const ASN1T_MsgPopulationFluxKnowledgeCreation& asnMsg )
+{
+    if( flows_.find( asnMsg.oid_connaissance_flux ) != flows_.end() )
+        return;
+    MOS_PopulationFlowKnowledge* pKnowledge = new MOS_PopulationFlowKnowledge( asnMsg );
+    assert( pKnowledge );
+    flows_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
+
+    MOS_App::GetApp().NotifyPopulationFlowKnowledgeCreated( *pGtia_, *pKnowledge );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledge::OnReceiveMsgPopulationFlowKnowledgeUpdate
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_PopulationKnowledge::OnReceiveMsgPopulationFlowKnowledgeUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+{
+    IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
+    assert( it != flows_.end() );
+    it->second->Update( asnMsg );
+    MOS_App::GetApp().NotifyPopulationFlowKnowledgeUpdated( *pGtia_, *( it->second ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledge::OnReceiveMsgPopulationFlowKnowledgeDestruction
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_PopulationKnowledge::OnReceiveMsgPopulationFlowKnowledgeDestruction( const ASN1T_MsgPopulationFluxKnowledgeDestruction& asnMsg )
+{
+    IT_FlowKnowledgeMap it = flows_.find( asnMsg.oid_connaissance_flux );
+    assert( it != flows_.end() );
+    MOS_App::GetApp().NotifyPopulationFlowKnowledgeDeleted( *pGtia_, *( it->second ) );
+    delete it->second;
+    flows_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_PopulationKnowledge::GetConcentrations
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 const MOS_PopulationKnowledge::T_ConcentrationKnowledgeMap& MOS_PopulationKnowledge::GetConcentrations() const
 {
     return concentrations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledge::GetFlows
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+const MOS_PopulationKnowledge::T_FlowKnowledgeMap& MOS_PopulationKnowledge::GetFlows() const
+{
+    return flows_;
 }
 
 // -----------------------------------------------------------------------------

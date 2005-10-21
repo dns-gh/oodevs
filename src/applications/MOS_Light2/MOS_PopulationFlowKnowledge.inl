@@ -10,102 +10,121 @@
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetID
-// Created: SBO 2005-10-17
+// Name: MOS_PopulationFlowKnowledge::GetID
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-uint MOS_PopulationConcentrationKnowledge::GetID() const
+uint MOS_PopulationFlowKnowledge::GetID() const
 {
     return nID_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetGtia
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetGtia
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-const MOS_Gtia& MOS_PopulationConcentrationKnowledge::GetGtia() const
+const MOS_Gtia& MOS_PopulationFlowKnowledge::GetGtia() const
 {
     assert( pGtia_ );
     return *pGtia_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetPopulation
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetPopulationKnowledge
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-const MOS_PopulationKnowledge* MOS_PopulationConcentrationKnowledge::GetPopulationKnowledge() const
+const MOS_PopulationKnowledge* MOS_PopulationFlowKnowledge::GetPopulationKnowledge() const
 {
     return pPopulationKnowledge_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetConcentration
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetFlow
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-const MOS_PopulationConcentration* MOS_PopulationConcentrationKnowledge::GetConcentration() const
+const MOS_PopulationFlow* MOS_PopulationFlowKnowledge::GetFlow() const
 {
-    return pConcentration_;
+    return pFlow_;
 }
-
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetPosition
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetPosition
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-const MT_Vector2D& MOS_PopulationConcentrationKnowledge::GetPosition() const
+const MT_Vector2D& MOS_PopulationFlowKnowledge::GetPosition() const
 {
     return position_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetNbrAliveHumans
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetDirection
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-uint MOS_PopulationConcentrationKnowledge::GetNbrAliveHumans() const
+MT_Float MOS_PopulationFlowKnowledge::GetDirection() const
+{
+    return rDirection_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlowKnowledge::GetSpeed
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_PopulationFlowKnowledge::GetSpeed() const
+{
+    return rSpeed_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlowKnowledge::GetNbrAliveHumans
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+uint MOS_PopulationFlowKnowledge::GetNbrAliveHumans() const
 {
     return nNbrAliveHumans_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetNbrDeadHumans
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetNbrDeadHumans
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-uint MOS_PopulationConcentrationKnowledge::GetNbrDeadHumans() const
+uint MOS_PopulationFlowKnowledge::GetNbrDeadHumans() const
 {
     return nNbrDeadHumans_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetAttitude
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetAttitude
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-E_PopulationAttitude MOS_PopulationConcentrationKnowledge::GetAttitude() const
+E_PopulationAttitude MOS_PopulationFlowKnowledge::GetAttitude() const
 {
     return eAttitude_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::GetRelevance
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::GetRelevance
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-MT_Float MOS_PopulationConcentrationKnowledge::GetRelevance() const
+MT_Float MOS_PopulationFlowKnowledge::GetRelevance() const
 {
     return rRelevance_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationConcentrationKnowledge::IsPerceived
-// Created: SBO 2005-10-20
+// Name: MOS_PopulationFlowKnowledge::IsPerceived
+// Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-bool MOS_PopulationConcentrationKnowledge::IsPerceived() const
+bool MOS_PopulationFlowKnowledge::IsPerceived() const
 {
     return bIsPerceived_;
 }

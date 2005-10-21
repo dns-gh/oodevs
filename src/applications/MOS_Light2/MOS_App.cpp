@@ -31,6 +31,7 @@
 #include "MOS_Population.h"
 #include "MOS_PopulationKnowledge.h"
 #include "MOS_PopulationConcentrationKnowledge.h"
+#include "MOS_PopulationFlowKnowledge.h"
 #include "MOS_Options.h"
 #include "MT/MT_IO/MT_CommandLine.h"
 
@@ -1067,4 +1068,31 @@ void MOS_App::NotifyPopulationConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS
 void MOS_App::NotifyPopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge )
 {
     emit PopulationConcentrationKnowledgeDeleted( gtia, knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationFlowKnowledgeCreated
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationFlowKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
+{
+    emit PopulationFlowKnowledgeCreated( gtia, knowledge );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationFlowKnowledgeUpdated
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationFlowKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
+{
+    emit PopulationFlowKnowledgeUpdated( gtia, knowledge );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationFlowKnowledgeDeleted
+// Created: SBO 2005-10-21
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationFlowKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
+{
+    emit PopulationFlowKnowledgeDeleted( gtia, knowledge );
 }

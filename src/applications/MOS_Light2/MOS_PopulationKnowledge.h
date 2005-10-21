@@ -19,6 +19,7 @@ class MOS_Gtia;
 class MOS_Team;
 class MOS_Population;
 class MOS_PopulationConcentrationKnowledge;
+class MOS_PopulationFlowKnowledge;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -33,6 +34,10 @@ public:
     typedef std::map< uint, MOS_PopulationConcentrationKnowledge* > T_ConcentrationKnowledgeMap;
     typedef T_ConcentrationKnowledgeMap::iterator                   IT_ConcentrationKnowledgeMap;
     typedef T_ConcentrationKnowledgeMap::const_iterator             CIT_ConcentrationKnowledgeMap;
+
+    typedef std::map< uint, MOS_PopulationFlowKnowledge* >          T_FlowKnowledgeMap;
+    typedef T_FlowKnowledgeMap::iterator                            IT_FlowKnowledgeMap;
+    typedef T_FlowKnowledgeMap::const_iterator                      CIT_FlowKnowledgeMap;
     //@}
 
 public:
@@ -49,6 +54,7 @@ public:
     const MOS_Population& GetPopulation() const;
           MOS_Gtia*       GetGtia      () const;
     const T_ConcentrationKnowledgeMap& GetConcentrations() const;
+    const T_FlowKnowledgeMap&          GetFlows         () const;
     //@}
 
     //! @name Network
@@ -58,9 +64,9 @@ public:
     void OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    asnMsg );
     void OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      asnMsg );
     void OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg );
-//    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const ASN1T_MsgPopulationFluxKnowledgeCreation&             asnMsg );
-//    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               asnMsg );
-//    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const ASN1T_MsgPopulationFluxKnowledgeCreation&             asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               asnMsg );
+    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
     //@}
 
 private:
@@ -70,6 +76,7 @@ private:
           MOS_Gtia*                     pGtia_;
 
           T_ConcentrationKnowledgeMap   concentrations_;
+          T_FlowKnowledgeMap            flows_;
 };
 
 

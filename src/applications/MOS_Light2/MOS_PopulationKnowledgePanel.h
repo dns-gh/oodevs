@@ -29,6 +29,7 @@
 class MOS_Gtia;
 class MOS_PopulationKnowledge;
 class MOS_PopulationConcentrationKnowledge;
+class MOS_PopulationFlowKnowledge;
 class MOS_ActionContext;
 class MOS_SelectedElement;
 class QCheckBox;
@@ -77,10 +78,13 @@ private slots:
     void OnConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
     void OnConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
 
+    void OnFlowKnowledgeCreated         ( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+    void OnFlowKnowledgeUpdated         ( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+    void OnFlowKnowledgeDeleted         ( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+
     void OnContextMenuRequested         ( QListViewItem* pItem, const QPoint&            pos       );
     void ToggleDisplayOwnTeam           ();
     //@}
-
 
 signals:
     //! @name Signals
@@ -107,6 +111,7 @@ private:
     MOS_Gtia*                             pGtia_;
     MOS_PopulationKnowledge*              pSelectedKnowledge_;
     MOS_PopulationConcentrationKnowledge* pSelectedConcentrationKnowledge_;
+    MOS_PopulationFlowKnowledge*          pSelectedFlowKnowledge_;
 
     QListView* pKnowledgeListView_;
     QListView* pPerceptionListView_;
@@ -130,6 +135,17 @@ private:
     QLabel*    pConcentrationAttitude_;
     QLabel*    pConcentrationPerceived_;
     QLabel*    pConcentrationRelevance_;
+
+    // Flow info
+    QGroupBox* pFlowBox_;
+    QLabel*    pFlowIdLabel_;
+    QLabel*    pFlowAssociatedLabel_;
+    QLabel*    pFlowDirection_;
+    QLabel*    pFlowSpeed_;
+    QLabel*    pFlowAliveHumans_;
+    QLabel*    pFlowDeadHumans_;
+    QLabel*    pFlowAttitude_;
+    QLabel*    pFlowPerceived_;
 
     QPopupMenu* pPopupMenu_;
     //@}

@@ -36,6 +36,7 @@ class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
 class MOS_PopulationKnowledge;
 class MOS_PopulationConcentrationKnowledge;
+class MOS_PopulationFlowKnowledge;
 class MOS_Object_ABC;
 class MOS_TacticalLine_ABC;
 class QSplashScreen;
@@ -134,6 +135,10 @@ public:
     void NotifyPopulationConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
     void NotifyPopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
 
+    void NotifyPopulationFlowKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+    void NotifyPopulationFlowKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+    void NotifyPopulationFlowKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+
     void NotifyTacticalLineDeleted( MOS_TacticalLine_ABC& line );
 
     void NotifyTypePopulationCreated( MOS_TypePopulation& type );
@@ -222,6 +227,10 @@ signals:
     void PopulationConcentrationKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
     void PopulationConcentrationKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
     void PopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationConcentrationKnowledge& knowledge );
+
+    void PopulationFlowKnowledgeCreated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+    void PopulationFlowKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
+    void PopulationFlowKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge );
 
     void TacticalLineDeleted( MOS_TacticalLine_ABC& line );
 

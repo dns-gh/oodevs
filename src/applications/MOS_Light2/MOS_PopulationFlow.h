@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MOS_PopulationFlux_h_
-#define __MOS_PopulationFlux_h_
+#ifndef __MOS_PopulationFlow_h_
+#define __MOS_PopulationFlow_h_
 
 #include "MOS_PopulationPart_ABC.h"
 
@@ -17,13 +17,13 @@ class MOS_Population;
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class MOS_PopulationFlux : public MOS_PopulationPart_ABC
+class MOS_PopulationFlow : public MOS_PopulationPart_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_PopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg, const MOS_Population& );
-    virtual ~MOS_PopulationFlux();
+     MOS_PopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg, const MOS_Population& );
+    ~MOS_PopulationFlow();
     //@}
 
     //! @name Operations
@@ -45,8 +45,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    MOS_PopulationFlux( const MOS_PopulationFlux& );            //!< Copy constructor
-    MOS_PopulationFlux& operator=( const MOS_PopulationFlux& ); //!< Assignement operator
+    MOS_PopulationFlow( const MOS_PopulationFlow& );            //!< Copy constructor
+    MOS_PopulationFlow& operator=( const MOS_PopulationFlow& ); //!< Assignement operator
     //@}
 
 private:
@@ -61,6 +61,6 @@ private:
     //@}
 };
 
-#include "MOS_PopulationFlux.inl"
+#include "MOS_PopulationFlow.inl"
 
-#endif // __MOS_PopulationFlux_h_
+#endif // __MOS_PopulationFlow_h_

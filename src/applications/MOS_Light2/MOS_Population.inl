@@ -90,10 +90,10 @@ const MOS_PopulationConcentration* MOS_Population::FindConcentration( uint nID )
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
 inline
-const MOS_PopulationFlux* MOS_Population::FindFlow( uint nID ) const
+const MOS_PopulationFlow* MOS_Population::FindFlow( uint nID ) const
 {
-    CIT_FluxMap it = fluxMap_.find( nID );
-    if( it == fluxMap_.end() )
+    CIT_FlowMap it = flowMap_.find( nID );
+    if( it == flowMap_.end() )
         return 0;
     return it->second;
 }

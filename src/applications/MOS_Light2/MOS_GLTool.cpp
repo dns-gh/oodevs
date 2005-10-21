@@ -71,7 +71,7 @@
 #include "MOS_TypePion.h"
 #include "MOS_ReportPanel.h"
 #include "MOS_Population.h"
-#include "MOS_PopulationFlux.h"
+#include "MOS_PopulationFlow.h"
 #include "MOS_PopulationConcentration.h"
 #include "MOS_TypePopulation.h"
 
@@ -509,19 +509,19 @@ void MOS_GLTool::DrawPath( MOS_Agent& agent )
 // Name: MOS_GLTool::DrawPath
 // Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
-void MOS_GLTool::DrawPath( MOS_PopulationFlux& flux )
+void MOS_GLTool::DrawPath( MOS_PopulationFlow& flow )
 {
 //    MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions(); // $$$$ SBO 2005-10-20: not used
     // Update the path data.
-    flux.UpdatePathFind();
+    flow.UpdatePathFind();
 
         // Draw the path if it exists
-    T_PointVector vPath( flux.GetItineraire() );
+    T_PointVector vPath( flow.GetItineraire() );
     if( vPath.size() > 1 )
     {
         // Replace the first point (which is the first point of the segment the agent is on)
         // by the agent's position.
-        vPath[0] = flux.GetPos();
+        vPath[0] = flow.GetPos();
         glColor4d( MOS_COLOR_PATH );
         glLineWidth( 3 );
         glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_ % 16) ] );
@@ -1641,9 +1641,9 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
     }
 
     //Draw the flux
-    for( MOS_Population::CIT_FluxMap itFlux = pop.fluxMap_.begin(); itFlux != pop.fluxMap_.end(); ++itFlux )
+    for( MOS_Population::CIT_FlowMap itFlow = pop.flowMap_.begin(); itFlow != pop.flowMap_.end(); ++itFlow )
     {
-        MOS_PopulationFlux& flow = *itFlux->second;
+        MOS_PopulationFlow& flow = *itFlow->second;
 
         color.SetGLColor();
         glColor4d( MOS_COLOR_WHITE );

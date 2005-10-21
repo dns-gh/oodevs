@@ -20,7 +20,7 @@
 #include "MOS_TypePopulation.h"
 #include "MOS_World.h"
 
-#include "MOS_PopulationFlux.h"
+#include "MOS_PopulationFlow.h"
 #include "MOS_PopulationConcentration.h"
 
 MIL_AgentID MOS_Population::nMaxId_ = 7000000;
@@ -75,18 +75,18 @@ MOS_Population::~MOS_Population()
 		delete itCon->second;
 	concentrationMap_.clear();
 
-	for( IT_FluxMap itFlux = fluxMap_.begin(); itFlux != fluxMap_.end(); ++itFlux )
-		delete itFlux->second;
-	fluxMap_.clear();
+	for( IT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
+		delete itFlow->second;
+	flowMap_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Population::UpdatePopulationFlux			
+// Name: MOS_Population::UpdatePopulationFlow			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void MOS_Population::UpdatePopulationFlux( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+void MOS_Population::UpdatePopulationFlow( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	fluxMap_[ asnMsg.oid_flux ]->Update( asnMsg );
+	flowMap_[ asnMsg.oid_flux ]->Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,13 +99,13 @@ void MOS_Population::UpdatePopulationConcentration( const ASN1T_MsgPopulationCon
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Population::CreatePopulationFlux			
+// Name: MOS_Population::CreatePopulationFlow			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void MOS_Population::CreatePopulationFlux( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+void MOS_Population::CreatePopulationFlow( const ASN1T_MsgPopulationFluxCreation& asnMsg )
 {
-	MOS_PopulationFlux* pFlux = new MOS_PopulationFlux( asnMsg, *this );
-	fluxMap_[ asnMsg.oid_flux ] = pFlux;
+	MOS_PopulationFlow* pFlow = new MOS_PopulationFlow( asnMsg, *this );
+	flowMap_[ asnMsg.oid_flux ] = pFlow;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,13 +129,13 @@ void MOS_Population::CreatePopulationConcentration( MT_Vector2D point, E_Populat
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_Population::DeletePopulationFlux			
+// Name: MOS_Population::DeletePopulationFlow			
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void MOS_Population::DeletePopulationFlux( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+void MOS_Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
-    IT_FluxMap it = fluxMap_.find( asnMsg.oid_flux );
-    fluxMap_.erase( it );
+    IT_FlowMap it = flowMap_.find( asnMsg.oid_flux );
+    flowMap_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,10 +163,10 @@ void MOS_Population::UpdatePopulation( const ASN1T_MsgPopulationUpdate& /*asnMsg
 // -----------------------------------------------------------------------------
 const MT_Vector2D& MOS_Population::GetPos() const
 {
-	if ( concentrationMap_.size() == 0 && fluxMap_.size() == 0 )
+	if ( concentrationMap_.size() == 0 && flowMap_.size() == 0 )
 		assert( false );
-	if( fluxMap_.size() != 0 )
-        return fluxMap_.begin()->second->GetHeadPosition();
+	if( flowMap_.size() != 0 )
+        return flowMap_.begin()->second->GetHeadPosition();
 	else
         return concentrationMap_.begin()->second->GetPos();
 		
@@ -181,8 +181,8 @@ uint MOS_Population::GetLivingHumans()
 	uint sum = 0;
 	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
 		sum += itCon->second->GetLivingHumans();
-	for( CIT_FluxMap itFlux = fluxMap_.begin(); itFlux != fluxMap_.end(); ++itFlux )
-		sum += itFlux->second->GetLivingHumans();
+	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
+		sum += itFlow->second->GetLivingHumans();
 	return sum;
 }
 
@@ -195,8 +195,8 @@ uint MOS_Population::GetDeadHumans()
 	uint sum = 0;
 	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
 		sum += itCon->second->GetDeadHumans();
-	for( CIT_FluxMap itFlux = fluxMap_.begin(); itFlux != fluxMap_.end(); ++itFlux )
-		sum += itFlux->second->GetDeadHumans();
+	for( CIT_FlowMap itFlow = flowMap_.begin(); itFlow != flowMap_.end(); ++itFlow )
+		sum += itFlow->second->GetDeadHumans();
 	return sum;
 }
 
