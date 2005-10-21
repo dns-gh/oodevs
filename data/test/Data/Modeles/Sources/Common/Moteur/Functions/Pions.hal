@@ -4,292 +4,293 @@
 signatures
 {
     // RC
-    V                                A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
-    V                                A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
-    V                                A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
-           
-    // Actions
-    V                                A::DEC_StopAction   ( U /*T_Action*/ );
-    V                                A::DEC_PauseAction  ( U /*T_Action*/ );
-    V                                A::DEC_ReprendAction( U /*T_Action*/ );        
-    
-    // Transport
-    V                                A::DEC_Transport_AjouterPions            ( S /*T_ListePions*/, B /*Transporte seulement embarquables*/ );
-    V                                A::DEC_Transport_AjouterPion             ( A /*T_Pion*/      , B /*Transporte seulement embarquables*/ );          
-    U /*T_Action*/                   A::DEC_Transport_StartEmbarquer          ( I /*E_EtatActionTransport*/ );
-    U /*T_Action*/                   A::DEC_Transport_StartDebarquer          ( I /*E_EtatActionTransport*/ );              
-    V                                A::DEC_Transport_EmbarquerPionsSansDelais( S /*T_ListePions*/, B /*Transporte seulement embarquables*/ );    
-    V                                A::DEC_Transport_EmbarquerPionSansDelais ( A /*T_Pion*/      , B /*Transporte seulement embarquables*/ );    
-    V                                A::DEC_Transport_DebarquerPionsSansDelais( S /*T_ListePions*/ ); 
-    V                                A::DEC_Transport_DebarquerPionSansDelais ( A /*T_Pion*/ );        
-    B                                A::DEC_Transport_EstTermine              ();   
-    B                                A::DEC_Transport_EnCoursDeTransport      (); 
-    V                                A::DEC_Transport_Annuler                 ();
-    B                                A::DEC_Agent_PeutTransporterPion         ( A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
-            
-    // Prisonniers
-    B                                A::DEC_FairePrisonnier( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de prisonniers*/, I /*E_ValiditeRequete&*/ );
-    
-    // Refugies
-    B                                A::DEC_OrienterRefugies( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de refugiés*/, I /*E_ValiditeRequete&*/ );
-    
-    // Tir
-    U /*T_Action*/                   A::DEC_StartTirDirect                        ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );
-    U /*T_Action*/                   A::DEC_StartTirDirectDebarques               ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );
-    U /*T_Action*/                   A::DEC_StartTirDirectTransporteurs           ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );    
-    U /*T_Action*/                   A::DEC_StartTirIndirectSurPosition           ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*position*/     );
-    U /*T_Action*/                   A::DEC_StartTirIndirectSurConnaissance       ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*connaissance*/ );    
-    V                                A::DEC_Tir_LancerFumigeneSurConnaissance     ( U /*T_ConnaissanceAgent*/ );
-    R                                A::DEC_Tir_PorteeMaxPourTirerSurAgent        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                A::DEC_Tir_PorteeMinPourTirerSurAgent        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                A::DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                A::DEC_Tir_PorteeMaxPourEtreTireParAgent     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
-    R                                A::DEC_Tir_PorteeMaxTirIndirect              ( I /*E_TypeObus*/ );
-    R                                A::DEC_Tir_PorteeMinTirIndirect              ( I /*E_TypeObus*/ );
-
-        
-    // Embarquement / débarquement
-    U /*T_Action*/                   A::DEC_StartEmbarquement                   ( I /*E_EtatEmbarquementDebarquement*/ );
-    U /*T_Action*/                   A::DEC_StartDebarquement                   ( I /*E_EtatEmbarquementDebarquement*/ );
-    U /*T_Action*/                   A::DEC_StartAttenteTransporteurs           ( I /*E_EtatEmbarquementDebarquement*/ );
-    U /*T_Action*/                   A::DEC_StartAttenteTransporteursSurPosition( I /*E_EtatEmbarquementDebarquement*/, U /*T_Point*/ );    
-    V                                A::DEC_LaisserTransporteursSansDelai       ();
-    V                                A::DEC_RecupererTransporteursSansDelai     ();
-        
-    // Controle de zone
-    U /*T_Action*/                   A::DEC_StartControlerZone         ( U /*T_Localisation*/, R /*distance max en metres*/, B /*Tir autorisé*/ );
+    V                                       A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                       A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                       A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+                                            
+    // Actions                              
+    V                                       A::DEC_StopAction   ( U /*T_Action*/ );
+    V                                       A::DEC_PauseAction  ( U /*T_Action*/ );
+    V                                       A::DEC_ReprendAction( U /*T_Action*/ );        
+                                            
+    // Transport                            
+    V                                       A::DEC_Transport_AjouterPions            ( S /*T_ListePions*/, B /*Transporte seulement embarquables*/ );
+    V                                       A::DEC_Transport_AjouterPion             ( A /*T_Pion*/      , B /*Transporte seulement embarquables*/ );          
+    U /*T_Action*/                          A::DEC_Transport_StartEmbarquer          ( I /*E_EtatActionTransport*/ );
+    U /*T_Action*/                          A::DEC_Transport_StartDebarquer          ( I /*E_EtatActionTransport*/ );              
+    V                                       A::DEC_Transport_EmbarquerPionsSansDelais( S /*T_ListePions*/, B /*Transporte seulement embarquables*/ );    
+    V                                       A::DEC_Transport_EmbarquerPionSansDelais ( A /*T_Pion*/      , B /*Transporte seulement embarquables*/ );    
+    V                                       A::DEC_Transport_DebarquerPionsSansDelais( S /*T_ListePions*/ ); 
+    V                                       A::DEC_Transport_DebarquerPionSansDelais ( A /*T_Pion*/ );        
+    B                                       A::DEC_Transport_EstTermine              ();   
+    B                                       A::DEC_Transport_EnCoursDeTransport      (); 
+    V                                       A::DEC_Transport_Annuler                 ();
+    B                                       A::DEC_Agent_PeutTransporterPion         ( A /*T_Pion à transporter*/, B /*Transporte seulement embarquables*/ );
+                                            
+    // Prisonniers                          
+    B                                       A::DEC_FairePrisonnier( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de prisonniers*/, I /*E_ValiditeRequete&*/ );
+                                            
+    // Refugies                             
+    B                                       A::DEC_OrienterRefugies( U /*T_ConnaissanceAgent*/, U /*T_ConnaissanceObjet camp de refugiés*/, I /*E_ValiditeRequete&*/ );
+                                            
+    // Tir                                  
+    U /*T_Action*/                          A::DEC_StartTirDirect                        ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );
+    U /*T_Action*/                          A::DEC_StartTirDirectDebarques               ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );
+    U /*T_Action*/                          A::DEC_StartTirDirectTransporteurs           ( I /*E_EtatActionTirDirect*/, U /*T_ConnaissanceAgent*/, R /*pourcentage de composantes à utiliser*/, I /*E_ModeTirDirect*/, * /*I E_DotationMunitionClasse : type de munition à utiliser*/ );    
+    U /*T_Action*/                          A::DEC_StartTirIndirectSurPosition           ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*position*/     );
+    U /*T_Action*/                          A::DEC_StartTirIndirectSurConnaissance       ( I /*E_EtatActionTirIndirect*/, I /*Type d'obus*/, R /*Nb d'IT*/, U /*connaissance*/ );    
+    V                                       A::DEC_Tir_LancerFumigeneSurConnaissance     ( U /*T_ConnaissanceAgent*/ );
+    R                                       A::DEC_Tir_PorteeMaxPourTirerSurAgent        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMinPourTirerSurAgent        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxPourEtreTireParAgent     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxTirIndirect              ( I /*E_TypeObus*/ );
+    R                                       A::DEC_Tir_PorteeMinTirIndirect              ( I /*E_TypeObus*/ );
+                                            
+                                            
+    // Embarquement / débarquement          
+    U /*T_Action*/                          A::DEC_StartEmbarquement                   ( I /*E_EtatEmbarquementDebarquement*/ );
+    U /*T_Action*/                          A::DEC_StartDebarquement                   ( I /*E_EtatEmbarquementDebarquement*/ );
+    U /*T_Action*/                          A::DEC_StartAttenteTransporteurs           ( I /*E_EtatEmbarquementDebarquement*/ );
+    U /*T_Action*/                          A::DEC_StartAttenteTransporteursSurPosition( I /*E_EtatEmbarquementDebarquement*/, U /*T_Point*/ );    
+    V                                       A::DEC_LaisserTransporteursSansDelai       ();
+    V                                       A::DEC_RecupererTransporteursSansDelai     ();
+                                            
+    // Controle de zone                     
+    U /*T_Action*/                          A::DEC_StartControlerZone         ( U /*T_Localisation*/, R /*distance max en metres*/, B /*Tir autorisé*/ );
     
     // Accesseurs
 
     // Objets
-    U /*T_Action*/                   A::DEC_StartReprendreTravauxObjet     ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
-    U /*T_Action*/                   A::DEC_StartOccuperObjet              ( U /*T_ConnaissanceObjet*/ );
-    U /*T_Action*/                   A::DEC_StartCreerObjet                ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
-    U /*T_Action*/                   A::DEC_StartPreparerObjet             ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
-    U /*T_Action*/                   A::DEC_StartDetruireObjet             ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
-    U /*T_Action*/                   A::DEC_StartCreerContournementObjet   ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
-    U /*T_Action*/                   A::DEC_StartValoriserObjet            ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
-    U /*T_Action*/                   A::DEC_StartAnimerObjet               ( U /*connaissance objet*/ );
-    B                                A::DEC_ActiverObjet                   ( U /*connaissance objet*/ );
-    V                                A::DEC_CreerObjetSansDelais           ( I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
-    V                                A::DEC_DetruireObjetSansDelais        ( U /*T_ConnaissanceObjet*/ ); 
-    
-    // Déplacement
-    U /*T_Action*/                   A::DEC_StartDeplacement           ( I /*E_EtatActionDeplacement*/, U /*T_Itineraire*/ );
-    V                                A::DEC_ModulationVitesseMax       ( R /*modulation*/ );    
-    V                                A::DEC_ModulationVitesseCourante  ( R /*modulation*/ );    
-    V                                A::DEC_Agent_ActiverModeDiscret   ();               
-    V                                A::DEC_Agent_DesactiverModeDiscret();        
-    
-    // Gestion itineraires
-    U /*T_Itineraire*/               A::DEC_CreerItineraire              ( U /*T_Point : point d'arrivée*/, I /*E_TypeItineraire*/ );
-    U /*T_Itineraire*/               A::DEC_CreerItineraireListe         ( U /*T_ListePoints : liste des points de l'itinéraire*/, I /*E_TypeItineraire*/ ); 
-    V                                A::DEC_DetruireItineraire           ( U /*T_Itineraire*/ );
-    I /*E_EtatCalculItineraire*/     A::DEC_Itineraire_Etat              ( U /*T_Itineraire*/ ); 
-    U /*T_Point*/                    A::DEC_Itineraire_ExtrapolerPosition( R /*Tps en minutes*/, B /* True = N'extrapole pas au dela du dernier point de l'itinéraire*/ );
-    B                                A::DEC_Itineraire_ProchainObjet     ( U /*OUT T_ConnaissanceObjet*/, R /*OUT Distance*/, * /*Liste de E_TypeObject à prendre en compte*/ );    
-    U /*T_Point*/                    A::DEC_Itineraire_DernierPoint      ( U /*T_Itineraire*/ );
-    B                                A::DEC_Itineraire_EstEnMouvementSur ( U /*T_Itineraire*/ );
+    U /*T_Action*/                          A::DEC_StartReprendreTravauxObjet     ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
+    U /*T_Action*/                          A::DEC_StartOccuperObjet              ( U /*T_ConnaissanceObjet*/ );
+    U /*T_Action*/                          A::DEC_StartCreerObjet                ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartPreparerObjet             ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartDetruireObjet             ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
+    U /*T_Action*/                          A::DEC_StartCreerContournementObjet   ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
+    U /*T_Action*/                          A::DEC_StartValoriserObjet            ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
+    U /*T_Action*/                          A::DEC_StartAnimerObjet               ( U /*connaissance objet*/ );
+    B                                       A::DEC_ActiverObjet                   ( U /*connaissance objet*/ );
+    V                                       A::DEC_CreerObjetSansDelais           ( I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
+    V                                       A::DEC_DetruireObjetSansDelais        ( U /*T_ConnaissanceObjet*/ ); 
+                                            
+    // Déplacement                          
+    U /*T_Action*/                          A::DEC_StartDeplacement           ( I /*E_EtatActionDeplacement*/, U /*T_Itineraire*/ );
+    V                                       A::DEC_ModulationVitesseMax       ( R /*modulation*/ );    
+    V                                       A::DEC_ModulationVitesseCourante  ( R /*modulation*/ );    
+    V                                       A::DEC_Agent_ActiverModeDiscret   ();               
+    V                                       A::DEC_Agent_DesactiverModeDiscret();        
+                                            
+    // Gestion itineraires                  
+    U /*T_Itineraire*/                      A::DEC_CreerItineraire              ( U /*T_Point : point d'arrivée*/, I /*E_TypeItineraire*/ );
+    U /*T_Itineraire*/                      A::DEC_CreerItineraireListe         ( U /*T_ListePoints : liste des points de l'itinéraire*/, I /*E_TypeItineraire*/ ); 
+    V                                       A::DEC_DetruireItineraire           ( U /*T_Itineraire*/ );
+    I /*E_EtatCalculItineraire*/            A::DEC_Itineraire_Etat              ( U /*T_Itineraire*/ ); 
+    U /*T_Point*/                           A::DEC_Itineraire_ExtrapolerPosition( R /*Tps en minutes*/, B /* True = N'extrapole pas au dela du dernier point de l'itinéraire*/ );
+    B                                       A::DEC_Itineraire_ProchainObjet     ( U /*OUT T_ConnaissanceObjet*/, R /*OUT Distance*/, * /*Liste de E_TypeObject à prendre en compte*/ );    
+    U /*T_Point*/                           A::DEC_Itineraire_DernierPoint      ( U /*T_Itineraire*/ );
+    B                                       A::DEC_Itineraire_EstEnMouvementSur ( U /*T_Itineraire*/ );
 
     
     // Perception
-    V                                   A::DEC_Perception_Furtivite                           ( R );
-    R                                   A::DEC_Perception_DistanceMax                         ();
-    V                                   A::DEC_Perception_ActiverCoupsDeSonde                 (); 
-    V                                   A::DEC_Perception_DesactiverCoupsDeSonde              ();
-    B                                   A::DEC_Perception_PointEstVisible                     ( U /*T_Point*/     );  // teste si le point est visible par l'agent
-    V                                   A::DEC_Perception_VisionVerrouilleeSurDirection       ( U /*T_DIrection*/ );
-    V                                   A::DEC_Perception_VisionVerrouilleeSurPoint           ( U /*T_Point*/     );
-    V                                   A::DEC_Perception_VisionNormale                       ();    
-    U /*T_PerceptionPoint*/             A::DEC_Perception_ActiverReconnaissancePoint          ( U /*T_Point*/, R /*rayon de la reconnaissance*/, B/* ack taille max obtenue */, * /* R : vitesse de progression en km.h-1, par défaut : 5 km.h-1*/ );
-    V                                   A::DEC_Perception_DesactiverReconnaissancePoint       ( U /*T_PerceptionPoint*/ );
-    U /*T_PerceptionLocalisation*/      A::DEC_Perception_ActiverReconnaissanceLocalisation   ( U /*T_Localisation*/, * /*rien ou (R) rayon max*/ );
-    V                                   A::DEC_Perception_DesactiverReconnaissanceLocalisation( U /*T_PerceptionLocalisation*/ );
-    V                                   A::DEC_Perception_ActiverRadar                        ( I /*E_RadarType*/ );
-    V                                   A::DEC_Perception_DesactiverRadar                     ( I /*E_RadarType*/ );    
-    U /*T_PerceptionRadar*/             A::DEC_Perception_ActiverRadarSurLocalisation         ( I /*E_RadarType*/, U /*T_Localisation*/ );
-    V                                   A::DEC_Perception_DesactiverRadarSurLocalisation      ( I /*E_RadarType*/, U /*T_PerceptionRadar*/ );
-    U /*T_PerceptionLocalisationObjet*/ A::DEC_Perception_ActiverDetectionObjetLocalisation   ( U /*T_Localisation*/, U/*T_Point center*/, B/*ack taille max obtenue*/, * /*R : vitesse de progression en km.h-1, par défaut 5 km.h-1*/ );  
-    V                                   A::DEC_Perception_DesactiverDetectionObjetLocalisation( U /*T_PerceptionLocalisationObjet*/ );    
-    U /*T_PerceptionTirIndirect*/       A::DEC_Perception_ActiverPerceptionTirsIndirect       ( U /*T_Localisation*/ );
-    V                                   A::DEC_Perception_DesactiverPerceptionTirsIndirect    ( U /*T_PerceptionTirIndirect*/ );    
-    V                                   A::DEC_Perception_DesactiverSenseurs                  ();
-    V                                   A::DEC_Perception_ActiverSenseurs                     ();
+    V                                       A::DEC_Perception_Furtivite                           ( R );
+    R                                       A::DEC_Perception_DistanceMax                         ();
+    V                                       A::DEC_Perception_ActiverCoupsDeSonde                 (); 
+    V                                       A::DEC_Perception_DesactiverCoupsDeSonde              ();
+    B                                       A::DEC_Perception_PointEstVisible                     ( U /*T_Point*/     );  // teste si le point est visible par l'agent
+    V                                       A::DEC_Perception_VisionVerrouilleeSurDirection       ( U /*T_DIrection*/ );
+    V                                       A::DEC_Perception_VisionVerrouilleeSurPoint           ( U /*T_Point*/     );
+    V                                       A::DEC_Perception_VisionNormale                       ();    
+    U /*T_PerceptionPoint*/                 A::DEC_Perception_ActiverReconnaissancePoint          ( U /*T_Point*/, R /*rayon de la reconnaissance*/, B/* ack taille max obtenue */, * /* R : vitesse de progression en km.h-1, par défaut : 5 km.h-1*/ );
+    V                                       A::DEC_Perception_DesactiverReconnaissancePoint       ( U /*T_PerceptionPoint*/ );
+    U /*T_PerceptionLocalisation*/          A::DEC_Perception_ActiverReconnaissanceLocalisation   ( U /*T_Localisation*/, * /*rien ou (R) rayon max*/ );
+    V                                       A::DEC_Perception_DesactiverReconnaissanceLocalisation( U /*T_PerceptionLocalisation*/ );
+    V                                       A::DEC_Perception_ActiverRadar                        ( I /*E_RadarType*/ );
+    V                                       A::DEC_Perception_DesactiverRadar                     ( I /*E_RadarType*/ );    
+    U /*T_PerceptionRadar*/                 A::DEC_Perception_ActiverRadarSurLocalisation         ( I /*E_RadarType*/, U /*T_Localisation*/ );
+    V                                       A::DEC_Perception_DesactiverRadarSurLocalisation      ( I /*E_RadarType*/, U /*T_PerceptionRadar*/ );
+    U /*T_PerceptionLocalisationObjet*/     A::DEC_Perception_ActiverDetectionObjetLocalisation   ( U /*T_Localisation*/, U/*T_Point center*/, B/*ack taille max obtenue*/, * /*R : vitesse de progression en km.h-1, par défaut 5 km.h-1*/ );  
+    V                                       A::DEC_Perception_DesactiverDetectionObjetLocalisation( U /*T_PerceptionLocalisationObjet*/ );    
+    U /*T_PerceptionTirIndirect*/           A::DEC_Perception_ActiverPerceptionTirsIndirect       ( U /*T_Localisation*/ );
+    V                                       A::DEC_Perception_DesactiverPerceptionTirsIndirect    ( U /*T_PerceptionTirIndirect*/ );    
+    V                                       A::DEC_Perception_DesactiverSenseurs                  ();
+    V                                       A::DEC_Perception_ActiverSenseurs                     ();
        
     // Renforcements
-    B                                A::DEC_Renforce          ( A );
-    V                                A::DEC_AnnuleRenforcement();
-    B                                A::DEC_EstEnRenfort      ();   
-    S /*T_ListePions*/               A::DEC_Renforts          (); 
-    
-    // Info agents
-    B                                A::DEC_Agent_EstEnVol                        ();
-    V                                A::DEC_Agent_HauteurDeVol                    ( R /* hauteur de vol en m*/ );    
-    B                                A::DEC_Agent_SEstRendu                       ();
-    B                                A::DEC_Agent_EstRefugie                      ();
-    B                                A::DEC_Agent_EstMilice                       ();    
-    B                                A::DEC_Agent_EstPrisonnier                   ();
-    B                                A::DEC_Agent_EstContamine                    ();
-    B                                A::DEC_Agent_EstEnTenueProtectionNBC         ();
-    V                                A::DEC_Agent_MettreTenueProtectionNBC        ();
-    V                                A::DEC_Agent_EnleverTenueProtectionNBC       ();
-    B                                A::DEC_Agent_EstEnMouvement                  ();
-    B                                A::DEC_Agent_EstTransporte                   ();
-    B                                A::DEC_Agent_EstPC                           ();
-    R                                A::DEC_Agent_EtatOps                         (); // Retourne une valeur entre 0 et 1
-    B                                A::DEC_Agent_PeutConstruireObjet             ( I /*E_TypeObject*/ );
-    B                                A::DEC_Agent_PeutConstruireContournementObjet( I /*E_TypeObject*/ );
-    B                                A::DEC_Agent_PeutDetruireObjet               ( I /*E_TypeObject*/ );
-    B                                A::DEC_Agent_PeutValoriserObjet              ( I /*E_TypeObject*/ );         
-    B                                A::DEC_Agent_PeutActiverObjet                ( I /*E_TypeObject*/ );             
-    B                                A::DEC_Agent_EstNeutralise                   ();                  
-    B                                A::DEC_Agent_AutomateEstEmbraye              ();         
-    U /*T_Point*/                    A::DEC_Agent_Position                        ();
-    U /*T_Direction*/                A::DEC_Agent_Direction                       ();
-    V                                A::DEC_Agent_PasserEnSilenceRadio            ();
-    V                                A::DEC_Agent_ArreterSilenceRadio             ();
-    I /*E_EtatNiveauInstallation*/   A::DEC_Agent_NiveauInstallation              ();
-    B                                A::DEC_Agent_EstEmbarque                     ();
-    R                                A::DEC_Agent_DureeEmbarquement               (); // En minutes
-    R                                A::DEC_Agent_DureeDebarquement               (); // En minutes         
-    R                                A::DEC_Agent_DureeRecuperationTranporteurs   (); // En minutes
-    R                                A::DEC_Agent_DureeRecuperationTranporteursSurPosition( U /*T_Point*/ ); // En minutes
-    B                                A::DEC_Agent_TransporteursPret               ();
-                
-    
-       
-    R /* temps en minutes */         A::DEC_Agent_AutonomieEnDeplacement();
-    R /* temps en minutes */         A::DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( R /*distance en m*/ );    
-    
-    // Etats décisionnel
-    V                                A::DEC_Agent_ChangeEtatRapportDeForce        ( I /*E_EtatRapportDeForce*/ );
-    V                                A::DEC_Agent_ChangeEtatROE                   ( I /*E_EtatROE*/ );
-    V                                A::DEC_Agent_ChangeEtatCombatDeRencontre     ( I /*E_EtatCombatDeRencontre*/ );
-    V                                A::DEC_Agent_ChangeEtatOperationnel          ( I /*E_EtatOperationnel*/ );
-    V                                A::DEC_Agent_ChangeDisponibiliteAuTirIndirect( I /*E_DisponibiliteAuTir*/ );    
-        
-    // Connaissance agent
-    R                                A::DEC_ConnaissanceAgent_Vitesse                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
-    R                                A::DEC_ConnaissanceAgent_EtatOps                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
-    U /*T_Point*/                    A::DEC_ConnaissanceAgent_Position                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_EstEnVol                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_NatureAtlasType*/          A::DEC_ConnaissanceAgent_NatureAtlas                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_NatureWeaponType*/         A::DEC_ConnaissanceAgent_NatureArme                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_NiveauPerception*/         A::DEC_ConnaissanceAgent_NiveauPerceptionMax            ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)
-    R                                A::DEC_ConnaissanceAgent_Dangerosite                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
-    R                                A::DEC_ConnaissanceAgent_DangerositeSurPion             ( U /*T_ConnaissanceAgent*/ , A /*T_Pion*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
-    R                                A::DEC_ConnaissanceAgent_DangerositeSurConnaissance     ( U /*T_ConnaissanceAgent*/ , U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2        
-    B                                A::DEC_ConnaissanceAgent_PercoitUnite                   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
-    B                                A::DEC_ConnaissanceAgent_EstPercuParUnite               ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_EstPercuParGroupeDeConnaissance( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
-    I /*E_Tristate*/                 A::DEC_ConnaissanceAgent_EstUnEnnemi                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourn un E_Tristate (oui/non/nesaispas)
-    B                                A::DEC_ConnaissanceAgent_EstValide                      ( U /*T_ConnaissanceAgent*/  );    
-    B                                A::DEC_ConnaissanceAgent_EstEnMouvement                 ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_SEstRendu                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_EstPrisonnier                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_EstMilice                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_EstRefugie                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanteAgent_EstRefugiePrisEnCompte         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    V                                A::DEC_ConnaissanceAgent_Verrouiller                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    V                                A::DEC_ConnaissanceAgent_Deverrouiller                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceAgent_EstDansDirection               ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/ );
-    B                                A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone     ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/, R /*angle en degré*/ );
-
-    // Interceptions
-    U /*T_Point*/                    A::DEC_Agent_PositionInterception    ( U /*T_ConnaissanceAgent*/ );                                                            // Attention, le résultat peut être nul
-    U /*T_Point*/                    A::DEC_Geometrie_PositionInterception( U /*T_ConnaissanceAgent*/, U /*T_Point position ini missile*/, R /*vitesse missile*/ ); // Attention, le résultat peut être nul
-
-    // Connaissance objet
-    B                                A::DEC_ConnaissanceObjet_EstReconnu                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceObjet_EstPrepare                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceObjet_EstContourne                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceObjet_EstValide                        ( U /*T_ConnaissanceObjet*/  );
-    U /*T_Localisation*/             A::DEC_ConnaissanceObjet_Localisation                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_TypeObject*/               A::DEC_ConnaissanceObjet_Type                             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    R                                A::DEC_ConnaissanceObjet_LargeurSiteFranchissement        ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    B                                A::DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    V                                A::DEC_ConnaissanceObjet_Reconnaitre                      ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_ValiditeRequete&*/         A::DEC_ConnaissanceObjet_DemandeDeDecontamination         ( U /*T_ConnaissanceObjet*/ );    
-    B                                A::DEC_ConnaissanceObjet_PeutEtreOccupe                   ( U /*T_ConnaissanceObjet*/ );   
-    B                                A::DEC_ConnaissanceObjet_PeutEtreAnime                    ( U /*T_ConnaissanceObjet*/ );
-    V                                A::DEC_ConnaissanceObjet_ItineraireLogEstEquipe           ( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
-       
-    // Requêtes connaissance globale    
-    V                                A::DEC_Connaissances_PartageConnaissancesAvec        ( A /*T_Automate*/, R /*delai en minutes*/ );    
-    V                                A::DEC_Connaissances_PartageConnaissancesDansZoneAvec( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
-    S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_CollisionsObjets                ();
-    S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
-    U /*T_ConnaissanceObjet*/        A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AgentsPrenantAPartie            (); 
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AmisDansZone                    ( U /*T_Localisation*/ ); 
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AgentsPercus                    ();
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AgentsPotentiellementDangereux  ();     
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_Milices                         ();
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_Refugies                        ();
-    S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AgentsRendus                    ();    
-    R                                A::DEC_RapportDeForceLocal                           (); // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
-    
-    // Ordres
-    V                                A::DEC_AttenteOrdre      ( * /* Paramètres de type E_TypeOrdreConduite + 1 paramètre optionnel de type string (= hint)*/ );
-    V                                A::DEC_AnnuleAttenteOrdre();
-    B                                A::DEC_ReleverPion       ( A /*T_Pion*/ );        
-    B                                A::DEC_PeutReleverPion   ( A /*T_Pion*/ );        
+    B                                       A::DEC_Renforce          ( A );
+    V                                       A::DEC_AnnuleRenforcement();
+    B                                       A::DEC_EstEnRenfort      ();   
+    S /*T_ListePions*/                      A::DEC_Renforts          (); 
+                                            
+    // Info agents                          
+    B                                       A::DEC_Agent_EstEnVol                        ();
+    V                                       A::DEC_Agent_HauteurDeVol                    ( R /* hauteur de vol en m*/ );    
+    B                                       A::DEC_Agent_SEstRendu                       ();
+    B                                       A::DEC_Agent_EstRefugie                      ();
+    B                                       A::DEC_Agent_EstMilice                       ();    
+    B                                       A::DEC_Agent_EstPrisonnier                   ();
+    B                                       A::DEC_Agent_EstContamine                    ();
+    B                                       A::DEC_Agent_EstEnTenueProtectionNBC         ();
+    V                                       A::DEC_Agent_MettreTenueProtectionNBC        ();
+    V                                       A::DEC_Agent_EnleverTenueProtectionNBC       ();
+    B                                       A::DEC_Agent_EstEnMouvement                  ();
+    B                                       A::DEC_Agent_EstTransporte                   ();
+    B                                       A::DEC_Agent_EstPC                           ();
+    R                                       A::DEC_Agent_EtatOps                         (); // Retourne une valeur entre 0 et 1
+    B                                       A::DEC_Agent_PeutConstruireObjet             ( I /*E_TypeObject*/ );
+    B                                       A::DEC_Agent_PeutConstruireContournementObjet( I /*E_TypeObject*/ );
+    B                                       A::DEC_Agent_PeutDetruireObjet               ( I /*E_TypeObject*/ );
+    B                                       A::DEC_Agent_PeutValoriserObjet              ( I /*E_TypeObject*/ );         
+    B                                       A::DEC_Agent_PeutActiverObjet                ( I /*E_TypeObject*/ );             
+    B                                       A::DEC_Agent_EstNeutralise                   ();                  
+    B                                       A::DEC_Agent_AutomateEstEmbraye              ();         
+    U /*T_Point*/                           A::DEC_Agent_Position                        ();
+    U /*T_Direction*/                       A::DEC_Agent_Direction                       ();
+    V                                       A::DEC_Agent_PasserEnSilenceRadio            ();
+    V                                       A::DEC_Agent_ArreterSilenceRadio             ();
+    I /*E_EtatNiveauInstallation*/          A::DEC_Agent_NiveauInstallation              ();
+    B                                       A::DEC_Agent_EstEmbarque                     ();
+    R                                       A::DEC_Agent_DureeEmbarquement               (); // En minutes
+    R                                       A::DEC_Agent_DureeDebarquement               (); // En minutes         
+    R                                       A::DEC_Agent_DureeRecuperationTranporteurs   (); // En minutes
+    R                                       A::DEC_Agent_DureeRecuperationTranporteursSurPosition( U /*T_Point*/ ); // En minutes
+    B                                       A::DEC_Agent_TransporteursPret               ();
+                                            
+                                            
+                                            
+    R /* temps en minutes */                A::DEC_Agent_AutonomieEnDeplacement();
+    R /* temps en minutes */                A::DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( R /*distance en m*/ );    
+                                            
+    // Etats décisionnel                    
+    V                                       A::DEC_Agent_ChangeEtatRapportDeForce        ( I /*E_EtatRapportDeForce*/ );
+    V                                       A::DEC_Agent_ChangeEtatROE                   ( I /*E_EtatROE*/ );
+    V                                       A::DEC_Agent_ChangeEtatCombatDeRencontre     ( I /*E_EtatCombatDeRencontre*/ );
+    V                                       A::DEC_Agent_ChangeEtatOperationnel          ( I /*E_EtatOperationnel*/ );
+    V                                       A::DEC_Agent_ChangeDisponibiliteAuTirIndirect( I /*E_DisponibiliteAuTir*/ );    
+                                            
+    // Connaissance agent                   
+    R                                       A::DEC_ConnaissanceAgent_Vitesse                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
+    R                                       A::DEC_ConnaissanceAgent_EtatOps                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
+    U /*T_Point*/                           A::DEC_ConnaissanceAgent_Position                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstEnVol                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    I /*E_NatureAtlasType*/                 A::DEC_ConnaissanceAgent_NatureAtlas                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    I /*E_NatureWeaponType*/                A::DEC_ConnaissanceAgent_NatureArme                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    I /*E_NiveauPerception*/                A::DEC_ConnaissanceAgent_NiveauPerceptionMax            ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)
+    R                                       A::DEC_ConnaissanceAgent_Dangerosite                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
+    R                                       A::DEC_ConnaissanceAgent_DangerositeSurPion             ( U /*T_ConnaissanceAgent*/ , A /*T_Pion*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
+    R                                       A::DEC_ConnaissanceAgent_DangerositeSurConnaissance     ( U /*T_ConnaissanceAgent*/ , U /*T_ConnaissanceAgent*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2        
+    B                                       A::DEC_ConnaissanceAgent_PercoitUnite                   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
+    B                                       A::DEC_ConnaissanceAgent_EstPercuParUnite               ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstPercuParGroupeDeConnaissance( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
+    I /*E_Tristate*/                        A::DEC_ConnaissanceAgent_EstUnEnnemi                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourn un E_Tristate (oui/non/nesaispas)
+    B                                       A::DEC_ConnaissanceAgent_EstValide                      ( U /*T_ConnaissanceAgent*/  );    
+    B                                       A::DEC_ConnaissanceAgent_EstEnMouvement                 ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_SEstRendu                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstPrisonnier                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstMilice                      ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstRefugie                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanteAgent_EstRefugiePrisEnCompte         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    V                                       A::DEC_ConnaissanceAgent_Verrouiller                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    V                                       A::DEC_ConnaissanceAgent_Deverrouiller                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstDansDirection               ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/ );
+    B                                       A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone     ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/, R /*angle en degré*/ );
+                                            
+    // Interceptions                        
+    U /*T_Point*/                           A::DEC_Agent_PositionInterception    ( U /*T_ConnaissanceAgent*/ );                                                            // Attention, le résultat peut être nul
+    U /*T_Point*/                           A::DEC_Geometrie_PositionInterception( U /*T_ConnaissanceAgent*/, U /*T_Point position ini missile*/, R /*vitesse missile*/ ); // Attention, le résultat peut être nul
+                                            
+    // Connaissance objet                   
+    B                                       A::DEC_ConnaissanceObjet_EstReconnu                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceObjet_EstPrepare                       ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceObjet_EstContourne                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceObjet_EstValide                        ( U /*T_ConnaissanceObjet*/  );
+    U /*T_Localisation*/                    A::DEC_ConnaissanceObjet_Localisation                     ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    I /*E_TypeObject*/                      A::DEC_ConnaissanceObjet_Type                             ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    R                                       A::DEC_ConnaissanceObjet_LargeurSiteFranchissement        ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissanceObjet_BergesAAmenagerSiteFranchissement( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    V                                       A::DEC_ConnaissanceObjet_Reconnaitre                      ( U /*T_ConnaissanceObjet*/ , I /*E_ValiditeRequete&*/ );
+    I /*E_ValiditeRequete&*/                A::DEC_ConnaissanceObjet_DemandeDeDecontamination         ( U /*T_ConnaissanceObjet*/ );    
+    B                                       A::DEC_ConnaissanceObjet_PeutEtreOccupe                   ( U /*T_ConnaissanceObjet*/ );   
+    B                                       A::DEC_ConnaissanceObjet_PeutEtreAnime                    ( U /*T_ConnaissanceObjet*/ );
+    V                                       A::DEC_ConnaissanceObjet_ItineraireLogEstEquipe           ( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+                                            
+    // Requêtes connaissance globale           
+    V                                       A::DEC_Connaissances_PartageConnaissancesAvec        ( A /*T_Automate*/, R /*delai en minutes*/ );    
+    V                                       A::DEC_Connaissances_PartageConnaissancesDansZoneAvec( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
+    S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_CollisionsObjets                ();
+    S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
+    U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
+    S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_CollisionsPopulations           ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPrenantAPartie            (); 
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AmisDansZone                    ( U /*T_Localisation*/ ); 
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPercus                    ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPotentiellementDangereux  ();     
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_Milices                         ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_Refugies                        ();
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsRendus                    ();    
+    R                                       A::DEC_RapportDeForceLocal                           (); // Retourne une valeur entre 0.2 et 5 (0.2 = très défavorable / 2.4 = neutre / 5 = favorable)
+                                            
+    // Ordres                               
+    V                                       A::DEC_AttenteOrdre      ( * /* Paramètres de type E_TypeOrdreConduite + 1 paramètre optionnel de type string (= hint)*/ );
+    V                                       A::DEC_AnnuleAttenteOrdre();
+    B                                       A::DEC_ReleverPion       ( A /*T_Pion*/ );        
+    B                                       A::DEC_PeutReleverPion   ( A /*T_Pion*/ );        
     
     // Limas / Missions
-    B                                A::DEC_NouvelleMission            ();    
-    V                                A::DEC_FinMission                 ();    
-    B                                A::DEC_SetMissionLimaFlag         ( U /*T_Lima*/, B /*bFlag*/ );
-    B                                A::DEC_GetMissionLimaFlag         ( U /*T_Lima*/ );
-    U /*T_Lima*/                     A::DEC_GetLima                    ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé
-    B                                A::DEC_Automate_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
-
-    // Geometrie
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionAppui                    ( A /*T_Pion*/, R /*rDist*/ ); 
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionEmbuscade                ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionSurete                   ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionSureteAvecObjectif       ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculerPositionObstacle                 ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
-    B                                A::DEC_Geometrie_CalculePointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
-    S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeLocalisation                      ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    S /*T_ListeLocalisations*/       A::DEC_Geometrie_DecoupeLocalisationSurface               ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    S /*T_LIsteLocalisations*/       A::DEC_Geometrie_DecoupeFuseauEnTroncons                  ( R /*profondeur des segments en m*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau  ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
-    B                                A::DEC_Geometrie_EstPointDansFuseau                       ( U /*T_Point*/ );
-    U /*T_Point*/                    A::DEC_Geometrie_CalculeEntreeFuseauLaPlusProche          ();           
-    U /*T_Point*/                    A::DEC_Geometrie_CalculePointArrivee                      ();
-    U /*T_Point*/                    A::DEC_Geometrie_CalculePointDepart                       ();    
-    U /*T_Point*/                    A::DEC_Geometrie_CalculeBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
-    A                                A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
-    A                                A::DEC_Geometrie_PionDerriere                             ( S /*T_ListePions*/, U /*T_Direction*/ );
-
-    // Etat
-    V                                A::DEC_Elongation( R /*facteur d'élongation du pion*/ );
-    
-    // Facteurs humains
-    I /*E_FacteurHumain_Fatigue*/    A::DEC_FacteurHumain_Fatigue   ();
-    I /*E_FacteurHumain_Moral*/      A::DEC_FacteurHumain_Moral     ();
-    I /*E_FacteurHumain_Experience*/ A::DEC_FacteurHumain_Experience();
-    R                                A::DEC_ForceFacteursHumains    ();
-    
-    // Hiérarchie
-    S /*T_ListePions*/               A::DEC_Pion_PionsAvecPC          ();
-    S /*T_ListePions*/               A::DEC_Pion_PionsSansPC          ();
-    A /*T_Pion*/                     A::DEC_Pion_PionPC               ();
-    A /*T_Pion*/                     A::DEC_Pion_PionPCDeAutomate     ( A /*T_Automate*/ );
-    S /*T_ListePions*/               A::DEC_Pion_PionsDeAutomateSansPC( A /*T_Automate*/ );
-    B                                A::DEC_Pion_ChangeAutomate       ( A /*T_Automate*/ );
-
-    // Logistique
-    A /*T_Automate*/                 A::DEC_Pion_TC2                  (); // ATTENTION : La valeur de retour peut être nulle
-    V                                A::DEC_DemandeDeRavitaillement   ();
-    V                                A::DEC_ChangeValeurDotations     ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
+    B                                       A::DEC_NouvelleMission            ();    
+    V                                       A::DEC_FinMission                 ();    
+    B                                       A::DEC_SetMissionLimaFlag         ( U /*T_Lima*/, B /*bFlag*/ );
+    B                                       A::DEC_GetMissionLimaFlag         ( U /*T_Lima*/ );
+    U /*T_Lima*/                            A::DEC_GetLima                    ( I /*E_TypeLima*/ ); // Retourn un T_Lima, ou 0 si pas de lima du type demandé
+    B                                       A::DEC_Automate_SetMissionLimaFlag( U /*T_Lima*/, B /*bFlag*/ );
+                                            
+    // Geometrie                            
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionAppui                    ( A /*T_Pion*/, R /*rDist*/ ); 
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionEmbuscade                ( U /*T_Point point d'embuscade*/, U /*T_Point point de retraite*/, R /*Distance*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSurete                   ( U /*T_ConnaissanceAgent*/, R /*distance min*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecObjectif       ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionObstacle                 ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
+    B                                       A::DEC_Geometrie_CalculePointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
+    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisation                      ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisationSurface               ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    S /*T_LIsteLocalisations*/              A::DEC_Geometrie_DecoupeFuseauEnTroncons                  ( R /*profondeur des segments en m*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau  ( U /*T_Localisation*/, I /*E_LocalisationFunctionsReturnCode*/ );
+    B                                       A::DEC_Geometrie_EstPointDansFuseau                       ( U /*T_Point*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculeEntreeFuseauLaPlusProche          ();           
+    U /*T_Point*/                           A::DEC_Geometrie_CalculePointArrivee                      ();
+    U /*T_Point*/                           A::DEC_Geometrie_CalculePointDepart                       ();    
+    U /*T_Point*/                           A::DEC_Geometrie_CalculeBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
+    A                                       A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
+    A                                       A::DEC_Geometrie_PionDerriere                             ( S /*T_ListePions*/, U /*T_Direction*/ );
+                                            
+    // Etat                                 
+    V                                       A::DEC_Elongation( R /*facteur d'élongation du pion*/ );
+                                            
+    // Facteurs humains                     
+    I /*E_FacteurHumain_Fatigue*/           A::DEC_FacteurHumain_Fatigue   ();
+    I /*E_FacteurHumain_Moral*/             A::DEC_FacteurHumain_Moral     ();
+    I /*E_FacteurHumain_Experience*/        A::DEC_FacteurHumain_Experience();
+    R                                       A::DEC_ForceFacteursHumains    ();
+                                            
+    // Hiérarchie                           
+    S /*T_ListePions*/                      A::DEC_Pion_PionsAvecPC          ();
+    S /*T_ListePions*/                      A::DEC_Pion_PionsSansPC          ();
+    A /*T_Pion*/                            A::DEC_Pion_PionPC               ();
+    A /*T_Pion*/                            A::DEC_Pion_PionPCDeAutomate     ( A /*T_Automate*/ );
+    S /*T_ListePions*/                      A::DEC_Pion_PionsDeAutomateSansPC( A /*T_Automate*/ );
+    B                                       A::DEC_Pion_ChangeAutomate       ( A /*T_Automate*/ );
+                                            
+    // Logistique                           
+    A /*T_Automate*/                        A::DEC_Pion_TC2                  (); // ATTENTION : La valeur de retour peut être nulle
+    V                                       A::DEC_DemandeDeRavitaillement   ();
+    V                                       A::DEC_ChangeValeurDotations     ( I /*E_TypeDotation*/, R /* ratio (0..1) par rapport aux capacités du pion*/, * /*I E_DotationMunitionClasse*/ );
 
     // Test / debug 
-    V                               A::DEC_PostureForTest    ( I );
-    V                               A::DEC_DebugAffichePoint ( U /*T_Point*/ );
-    V                               A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );    
-    V                               A::DEC_Debug             ( X );
-    V                               A::DEC_Trace             ( X );
+    V                                       A::DEC_PostureForTest    ( I );
+    V                                       A::DEC_DebugAffichePoint ( U /*T_Point*/ );
+    V                                       A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );    
+    V                                       A::DEC_Debug             ( X );
+    V                                       A::DEC_Trace             ( X );
 }
 
 T_ID gNullID = 0;

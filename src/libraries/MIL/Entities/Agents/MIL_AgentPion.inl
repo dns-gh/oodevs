@@ -149,6 +149,17 @@ DEC_KS_ObjectInteraction& MIL_AgentPion::GetKSObjectInteraction()
     return *pKsObjectInteraction_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetKSPopulationInteraction
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+DEC_KS_PopulationInteraction& MIL_AgentPion::GetKSPopulationInteraction()
+{
+    assert( pKsPopulationInteraction_ );
+    return *pKsPopulationInteraction_;
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================

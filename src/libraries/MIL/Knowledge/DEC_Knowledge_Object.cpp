@@ -372,7 +372,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
     UpdateMaxPerceptionLevel    ( PHY_PerceptionLevel::identified_ );
     UpdateStates                ();
-
+ 
     //$$$ TMP
     if( !(localisation_ == pObjectKnown_->GetLocalisation() ) )
     {

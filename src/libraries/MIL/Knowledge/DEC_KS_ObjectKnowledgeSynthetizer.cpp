@@ -66,19 +66,14 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 inline
 DEC_Knowledge_Object& DEC_KS_ObjectKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_RealObject_ABC& objectKnown ) const
 {
-    T_KnowledgeObjectVector objectKnowledges;
-    
     assert( pBlackBoard_ );    
-    pBlackBoard_->GetKnowledgesObject( objectKnown, objectKnowledges );
+    DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObject( objectKnown );
 
-    assert( objectKnowledges.size() < 2 );
-    if ( objectKnowledges.empty() )
-    {
-        assert( pArmy_ );
-        return pBlackBoard_->CreateKnowledgeObject( *pArmy_, objectKnown );
-    }
-    else
-        return *objectKnowledges.front();
+    if( pKnowledge )
+        return *pKnowledge;
+    
+    assert( pArmy_ );
+    return pBlackBoard_->CreateKnowledgeObject( *pArmy_, objectKnown );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,14 +148,11 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
 {
     assert( pBlackBoard_ );
 
-    for ( CIT_ObjectVector itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
+    for( CIT_ObjectVector itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
     {
-        T_KnowledgeObjectVector objectKnowledges;
-        
-        pBlackBoard_->GetKnowledgesObject( **itObject, objectKnowledges );
-        
-        for ( CIT_KnowledgeObjectVector itKnowledge = objectKnowledges.begin(); itKnowledge != objectKnowledges.end(); ++itKnowledge )
-            pBlackBoard_->DestroyKnowledgeObject( **itKnowledge );
+        DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObject( **itObject );
+        if( pKnowledge )
+            pBlackBoard_->DestroyKnowledgeObject( *pKnowledge );
     }
     objectsToForget_.clear();    
 }

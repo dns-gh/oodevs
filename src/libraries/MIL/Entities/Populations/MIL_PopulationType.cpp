@@ -141,18 +141,19 @@ void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
 
             std::string strVolume;
             MT_Float    rPopulationDensity = 0.;
-            MT_Float    rSlowDownFactor      = 0.;
+            MT_Float    rMaxSpeed          = 0.;
 
             archive.ReadAttribute( "nom", strVolume );
-            archive.ReadAttribute( "densitePopulation"        , rPopulationDensity, CheckValueGreaterOrEqual( 0. ) );
-            archive.ReadAttribute( "coefficientRalentissement", rSlowDownFactor   , CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadAttribute( "densitePopulation", rPopulationDensity, CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadAttribute( "vitesseMaximale"  , rMaxSpeed         , CheckValueGreaterOrEqual( 0. ) );
+            rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
 
             const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
             if( !pVolume )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVolume.c_str() ), archive.GetContext() );
 
             assert( volumeSlowDownData.size() > pVolume->GetID() );
-            volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rSlowDownFactor );
+            volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rMaxSpeed );
 
             archive.EndSection(); // VolumePion
         }
@@ -190,10 +191,10 @@ MIL_Population& MIL_PopulationType::InstanciatePopulation( uint nID, MIL_InputAr
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::GetSlowDownFactor
+// Name: MIL_PopulationType::GetMaxSpeed
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetSlowDownFactor( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const
+MT_Float MIL_PopulationType::GetMaxSpeed( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const
 {
     assert( slowDownData_.size() > populationAttitude.GetID() );
     const T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ populationAttitude.GetID() ];
@@ -204,5 +205,5 @@ MT_Float MIL_PopulationType::GetSlowDownFactor( const MIL_PopulationAttitude& po
     if( slowDownData.rPopulationDensity_ == 0. )
         return 0.;
 
-    return rPopulationDensity * slowDownData.rSlowDownFactor_ / slowDownData.rPopulationDensity_;
+    return ( slowDownData.rMaxSpeed_ / slowDownData.rPopulationDensity_ ) / rPopulationDensity;
 }

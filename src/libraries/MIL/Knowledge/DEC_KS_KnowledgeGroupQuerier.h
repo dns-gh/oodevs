@@ -44,9 +44,12 @@ public:
 
     //! @name Queries / Operations
     //@{
-    bool                  IsKnown                ( const MIL_Agent_ABC& agent ) const;
-    DEC_Knowledge_Agent*  GetKnowledgeAgent      ( const DEC_Knowledge_AgentPerception& perception ) const;
-    DEC_Knowledge_Agent*  GetKnowledgeAgentFromID( uint nID ) const;
+    bool                      IsKnown                 ( const MIL_Agent_ABC& agent ) const;
+    DEC_Knowledge_Agent*      GetKnowledgeAgent       ( const DEC_Knowledge_AgentPerception& perception ) const;
+    DEC_Knowledge_Agent*      GetKnowledgeAgentFromID ( uint nID ) const;
+    DEC_Knowledge_Object*     GetKnowledgeObjectFromID( uint nID ) const;
+    DEC_Knowledge_Object*     GetKnowledgeObject      ( MIL_RealObject_ABC& object ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation  ( const DEC_Knowledge_PopulationCollision& collision ) const;
 
     void                  GetPotentiallyDangerousAgents( T_KnowledgeAgentDiaIDVector& container ) const;
     void                  GetMilitiaAgents             ( T_KnowledgeAgentDiaIDVector& container ) const;
@@ -55,12 +58,6 @@ public:
     void                  GetEnemies                   ( T_KnowledgeAgentVector&      container ) const;
     void                  GetFriends                   ( T_KnowledgeAgentVector&      container ) const;
     void                  GetFriendsInZone             ( T_KnowledgeAgentDiaIDVector& container, const TER_Localisation& zone ) const;
-    //@}
-
-    //! @name 
-    //@{
-    DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
-    DEC_Knowledge_Object* GetKnowledgeObject      ( MIL_RealObject_ABC& object ) const;
     //@}
 
 private:

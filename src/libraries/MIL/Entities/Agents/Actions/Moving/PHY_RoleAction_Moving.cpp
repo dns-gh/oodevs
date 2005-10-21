@@ -23,6 +23,7 @@
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -104,6 +105,7 @@ MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( MT_Float rSpeed ) con
 {
     rSpeed  = GetRole< PHY_RolePion_NBC          >().ModifyMaxSpeed( rSpeed );
     rSpeed  = GetRole< PHY_RolePion_HumanFactors >().ModifyMaxSpeed( rSpeed );
+    rSpeed  = GetRole< PHY_RolePion_Population   >().ModifyMaxSpeed( rSpeed );
     rSpeed *= rMaxSpeedModificator_;
     return rSpeed;
 }

@@ -42,6 +42,7 @@ public:
     static bool CheckTypeLima                           ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeConnaissanceObjet              ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeConnaissanceAgent              ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeConnaissancePopulation         ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeID                             ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeAction                         ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePion                           ( const DIA_Variable_ABC& diaVariable );
@@ -51,8 +52,9 @@ public:
     static bool CheckTypeGenObjet                       ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeMissionPion                    ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeConnaissancesAgent        ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeLocalisations             ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeConnaissancesObjet        ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeLocalisations             ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeConnaissancesPopulation   ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListePions                     ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeAutomates                 ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeListesPoints              ( const DIA_Variable_ABC& diaVariable );
@@ -71,8 +73,8 @@ public:
     //@{
     static const DIA_TypeDef& GetTypeLocalisation                   ();
     static const DIA_TypeDef& GetTypeConnaissanceAgent              ();
-    static const DIA_TypeDef& GetTypeListeConnaissanceObjet         ();
     static const DIA_TypeDef& GetTypeConnaissanceObjet              ();
+    static const DIA_TypeDef& GetTypeConnaissancePopulation         ();
     static const DIA_TypeDef& GetTypeListePoints                    ();
     static const DIA_TypeDef& GetTypeItineraire                     ();
     static const DIA_TypeDef& GetTypeAction                         ();
@@ -100,6 +102,7 @@ private:
     static const DIA_TypeDef* pTypeCalculLignesAvantArriere_;
     static const DIA_TypeDef* pTypeLima_;
     static const DIA_TypeDef* pTypeConnaissanceObjet_;
+    static const DIA_TypeDef* pTypeConnaissancePopulation_;
     static const DIA_TypeDef* pTypeConnaissanceAgent_;
     static const DIA_TypeDef* pTypeID_;
     static const DIA_TypeDef* pTypeAction_;
@@ -115,7 +118,6 @@ private:
     static const DIA_TypeDef* pTypeMaintenancePriorites_;
     static const DIA_TypeDef* pTypeSantePriorites_;
     static const DIA_TypeDef* pTypePerceptionFlyingShell_;
-    static const DIA_TypeDef* pTypeListeConnaissanceObjet_;
 };
 
 //! @name DIA Functions registration tools

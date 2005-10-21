@@ -79,7 +79,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeObjectCollisionMap   knowledgeObjectCollisionMap_;
+    T_KnowledgeObjectCollisionMap knowledgeObjectCollisionMap_;
     //@}
 };
 

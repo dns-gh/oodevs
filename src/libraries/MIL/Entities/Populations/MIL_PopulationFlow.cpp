@@ -23,6 +23,7 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "Entities/RC/MIL_RC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -56,6 +57,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , bSpeedUpdated_       ( true )
     , bHumansUpdated_      ( true )
     , bAttitudeUpdated_    ( true )
+    , rDensity_            ( 0. )
 {
     assert( pAttitude_ );
     SendCreation();
@@ -219,6 +221,9 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 
     if( bFlowShapeUpdated_ )
         UpdateLocation();
+
+    if( bFlowShapeUpdated_ || bHumansUpdated_ )
+        UpdateDensity();
 }
 
 // -----------------------------------------------------------------------------
@@ -236,12 +241,14 @@ bool MIL_PopulationFlow::Update()
         return false; // Must be destroyed
     }
 
-    ///$$$$ TEST
-    TER_AgentManager::T_AgentVector agents;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location_, agents, 100. );
-
-    std::cout << agents.size() << " AGENTS DANS POPU" << std::endl;
-    ///$$$$ TEST
+    // Collisions
+    TER_Agent_ABC::T_AgentPtrVector agents;
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location_, agents, 100. ); //$$$ TEST
+    for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
+    {
+        PHY_RoleInterface_Location& agent = static_cast< PHY_RoleInterface_Location& >( **it );
+        agent.NotifyPopulationCollision( *this );
+    }
 
     return true;
 }
@@ -399,4 +406,14 @@ void MIL_PopulationFlow::SendChangedState() const
         NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().flux );
     if( asnMsg.GetAsnMsg().m.itinerairePresent )
         NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().itineraire );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetMaxSpeed
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetMaxSpeed( const PHY_Volume& pionVolume ) const
+{
+    assert( pAttitude_ );
+    return population_.GetMaxSpeed( *pAttitude_, rDensity_, pionVolume );
 }

@@ -335,3 +335,17 @@ bool MIL_PopulationFlow::IsValid() const
 {
     return !pDestConcentration_ || pSourceConcentration_ || GetHeadPosition() != GetTailPosition();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::UpdateDensity
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationFlow::UpdateDensity()
+{
+    const MT_Float rArea = location_.GetArea();
+    if( rArea == 0. )
+        rDensity_ = 0; // $$$ +infini sauf si aucun humain
+    else
+        rDensity_ = rNbrAliveHumans_ / rArea;
+}

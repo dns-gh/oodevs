@@ -25,6 +25,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
+#include "Knowledge/DEC_KS_PopulationInteraction.h"
 
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
@@ -311,6 +312,26 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 // =============================================================================
 // NOTIFICATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::NotifyPopulationCollision
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationFlow& population )
+{
+    assert( pPion_ );
+    pPion_->GetKSPopulationInteraction().NotifyPopulationCollision( population );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::NotifyPopulationCollision
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::NotifyPopulationCollision( MIL_PopulationConcentration& population )
+{
+    assert( pPion_ );
+    pPion_->GetKSPopulationInteraction().NotifyPopulationCollision( population );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::NotifyObjectCollision

@@ -67,6 +67,7 @@ public:
                   uint                    GetNbrAliveHumans() const;
                   uint                    GetNbrDeadHumans () const;
                   MT_Float                GetSpeed         () const;
+                  MT_Float                GetMaxSpeed      ( const PHY_Volume& pionVolume ) const;
     //@}
 
     //! @name Concentration management
@@ -97,8 +98,8 @@ private:
 
     //! @name  Position operations
     //@{
-    virtual void               ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
-            void               UpdateTailPosition( const MT_Float rWalkedDistance );
+    virtual void       ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
+            void       UpdateTailPosition( const MT_Float rWalkedDistance );
 
     const MT_Vector2D& GetHeadPosition() const;
     const MT_Vector2D& GetTailPosition() const;
@@ -107,6 +108,7 @@ private:
           void         SetDirection   ( const MT_Vector2D& direction );
           void         SetSpeed       ( const MT_Float rSpeed );
           void         UpdateLocation ();
+          void         UpdateDensity  ();
     //@}
 
     //! @name Notifications
@@ -152,6 +154,7 @@ private:
 
     MT_Float             rNbrAliveHumans_;
     MT_Float             rNbrDeadHumans_;
+    MT_Float             rDensity_;
           
     // Network
     bool bPathUpdated_;

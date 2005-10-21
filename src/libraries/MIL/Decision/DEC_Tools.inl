@@ -186,6 +186,17 @@ bool DEC_Tools::CheckTypeConnaissanceObjet( const DIA_Variable_ABC& diaVariable 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeConnaissancePopulation
+// Created: NLD 2004-10-20
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeConnaissancePopulation( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeConnaissancePopulation_ );
+    return diaVariable.GetType() == *pTypeConnaissancePopulation_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeConnaissanceAgent
 // Created: NLD 2004-10-20
 // -----------------------------------------------------------------------------
@@ -341,18 +352,6 @@ const DIA_TypeDef& DEC_Tools::GetTypeListePoints()
     assert( pTypeListePoints_ );
     return *pTypeListePoints_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: dec_tools::GetTypeListeConnaissanceObjet
-// Created: JVT 2005-05-11
-// -----------------------------------------------------------------------------
-inline
-const DIA_TypeDef& DEC_Tools::GetTypeListeConnaissanceObjet()
-{
-    assert( pTypeListeConnaissanceObjet_ );
-    return *pTypeListeConnaissanceObjet_;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::GetTypeItineraire
@@ -517,4 +516,15 @@ const DIA_TypeDef& DEC_Tools::GetTypePerceptionFlyingShell()
 {
     assert( pTypePerceptionFlyingShell_ );
     return *pTypePerceptionFlyingShell_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeConnaissancePopulation
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeConnaissancePopulation()
+{
+    assert( pTypeConnaissancePopulation_ );
+    return *pTypeConnaissancePopulation_;
 }

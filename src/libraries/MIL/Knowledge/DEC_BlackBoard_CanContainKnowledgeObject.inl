@@ -14,17 +14,16 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject
-// Created: NLD 2004-03-16
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject
+// Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
 inline
-void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( const MIL_RealObject_ABC& objectKnown, T_KnowledgeObjectVector& outContainer ) const
+DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_RealObject_ABC& objectKnown ) const
 {
-    outContainer.clear();
-
     CIT_KnowledgeObjectMap itKnowledge = realObjectMap_.find( &objectKnown );   
-    if( itKnowledge != realObjectMap_.end() )
-        outContainer.push_back( itKnowledge->second );
+    if( itKnowledge == realObjectMap_.end() )
+        return 0;
+    return itKnowledge->second;
 }
 
 // -----------------------------------------------------------------------------

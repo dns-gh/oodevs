@@ -863,7 +863,7 @@ void PHY_RolePion_Composantes::GetVisibleVolumes( T_ComposanteVolumeSet& volumes
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
         const PHY_Volume&                 compTypeVolume = it->first->GetVolume();
-        const T_ComposanteTypeProperties&  compProp       = it->second;
+        const T_ComposanteTypeProperties& compProp       = it->second;
 
         if( !compProp.HasUsableComposantes() )
             continue;

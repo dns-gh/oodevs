@@ -231,6 +231,14 @@ MT_Float MIL_Population::GetDefaultFlowDensity() const
 {
     return type_.GetDefaultFlowDensity();
 }
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetMaxSpeed
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const
+{
+    return type_.GetMaxSpeed( attitude, rDensity, pionVolume );
+}
 
 // =============================================================================
 // NETWORK

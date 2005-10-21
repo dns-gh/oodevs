@@ -28,6 +28,7 @@
 #include "Roles/Transported/PHY_RolePion_Transported.h"
 #include "Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Roles/Refugee/PHY_RolePion_Refugee.h"
+#include "Roles/Population/PHY_RolePion_Population.h"
 #include "Roles/Logistic/Maintenance/PHY_RolePion_Maintenance.h"
 #include "Roles/Logistic/Medical/PHY_RolePion_Medical.h"
 #include "Roles/Logistic/Supply/PHY_RolePion_Supply.h"
@@ -61,6 +62,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard.h"
 #include "Knowledge/DEC_KS_NetworkUpdater.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
+#include "Knowledge/DEC_KS_PopulationInteraction.h"
 #include "Knowledge/DEC_KS_Fire.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -82,18 +84,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
-    : MIL_Agent_ABC        ( nID )
-    , PHY_Actor            ()
-    , pType_               ( &type )
-    , bIsPC_               ( false )
-    , strName_             ( pType_->GetName() )
-    , pAutomate_           ( 0 )
-    , pKnowledgeBlackBoard_(  new DEC_KnowledgeBlackBoard() )
-    , pKsObjectInteraction_(  new DEC_KS_ObjectInteraction( *pKnowledgeBlackBoard_, *this ) )
-    , pKsFire_             (  new DEC_KS_Fire             ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsQuerier_          (  new DEC_KS_AgentQuerier     ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_   (  new DEC_KS_NetworkUpdater   ( *pKnowledgeBlackBoard_ ) )
-    , orderManager_        ( *new MIL_PionOrderManager    ( *this ) )
+    : MIL_Agent_ABC            ( nID )
+    , PHY_Actor                ()
+    , pType_                   ( &type )
+    , bIsPC_                   ( false )
+    , strName_                 ( pType_->GetName() )
+    , pAutomate_               ( 0 )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard     () )
+    , pKsObjectInteraction_    (  new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsPopulationInteraction_(  new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this ) )
+    , pKsFire_                 (  new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsQuerier_              (  new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsNetworkUpdater_       (  new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ ) )
+    , orderManager_            ( *new MIL_PionOrderManager        ( *this ) )
 {
     // Liens hiérarchiques
     archive.Section( "LiensHierarchiques" );
@@ -113,18 +116,19 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Input
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_Agent_ABC        ( automate.GetID() )
-    , PHY_Actor            ()
-    , pType_               ( &automate.GetType().GetTypePionPC() )
-    , bIsPC_               ( true )
-    , strName_             ( pType_->GetName() )
-    , pAutomate_           ( &automate )
-    , pKnowledgeBlackBoard_(  new DEC_KnowledgeBlackBoard () )
-    , pKsObjectInteraction_(  new DEC_KS_ObjectInteraction( *pKnowledgeBlackBoard_, *this ) )
-    , pKsFire_             (  new DEC_KS_Fire             ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsQuerier_          (  new DEC_KS_AgentQuerier     ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_   (  new DEC_KS_NetworkUpdater   ( *pKnowledgeBlackBoard_ ) )
-    , orderManager_        ( *new MIL_PionOrderManager    ( *this ) )
+    : MIL_Agent_ABC            ( automate.GetID() )
+    , PHY_Actor                ()
+    , pType_                   ( &automate.GetType().GetTypePionPC() )
+    , bIsPC_                   ( true )
+    , strName_                 ( pType_->GetName() )
+    , pAutomate_               ( &automate )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard     () )
+    , pKsObjectInteraction_    (  new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsPopulationInteraction_(  new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this ) )
+    , pKsFire_                 (  new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsQuerier_              (  new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsNetworkUpdater_       (  new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ ) )
+    , orderManager_            ( *new MIL_PionOrderManager        ( *this ) )
 {
     Initialize( archive );
 }
@@ -134,18 +138,19 @@ MIL_AgentPion::MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive 
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    : MIL_Agent_ABC        ( nID )
-    , PHY_Actor            ()
-    , pType_               ( &type )
-    , bIsPC_               ( false )
-    , strName_             ( pType_->GetName() )
-    , pAutomate_           ( &automate )
-    , pKnowledgeBlackBoard_(  new DEC_KnowledgeBlackBoard () )
-    , pKsObjectInteraction_(  new DEC_KS_ObjectInteraction( *pKnowledgeBlackBoard_, *this ) )
-    , pKsFire_             (  new DEC_KS_Fire             ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsQuerier_          (  new DEC_KS_AgentQuerier     ( *pKnowledgeBlackBoard_, *this ) )
-    , pKsNetworkUpdater_   (  new DEC_KS_NetworkUpdater   ( *pKnowledgeBlackBoard_ ) )
-    , orderManager_        ( *new MIL_PionOrderManager    ( *this ) )
+    : MIL_Agent_ABC            ( nID )
+    , PHY_Actor                ()
+    , pType_                   ( &type )
+    , bIsPC_                   ( false )
+    , strName_                 ( pType_->GetName() )
+    , pAutomate_               ( &automate )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard     () )
+    , pKsObjectInteraction_    (  new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsPopulationInteraction_(  new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this ) )
+    , pKsFire_                 (  new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsQuerier_              (  new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this ) )
+    , pKsNetworkUpdater_       (  new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ ) )
+    , orderManager_            ( *new MIL_PionOrderManager        ( *this ) )
 {
     Initialize( vPosition );
 }
@@ -155,16 +160,17 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Autom
 // Created: JVT 2005-03-15
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion()
-    : MIL_Agent_ABC         ()
-    , PHY_Actor             ()
-    , pType_                ( 0 )
-    , bIsPC_                ()
-    , pKnowledgeBlackBoard_ ( 0 )
-    , pKsObjectInteraction_ ( 0 )
-    , pKsFire_              ( 0 )
-    , pKsQuerier_           ( 0 )
-    , pKsNetworkUpdater_    ( 0 )
-    , orderManager_         ( *new MIL_PionOrderManager( *this ) )
+    : MIL_Agent_ABC            ()
+    , PHY_Actor                ()
+    , pType_                   ( 0 )
+    , bIsPC_                   ()
+    , pKnowledgeBlackBoard_    ( 0 )
+    , pKsObjectInteraction_    ( 0 )
+    , pKsPopulationInteraction_( 0 )
+    , pKsFire_                 ( 0 )
+    , pKsQuerier_              ( 0 )
+    , pKsNetworkUpdater_       ( 0 )
+    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
 {
 }
 
@@ -192,10 +198,11 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_;
          
-    pKsObjectInteraction_ = new DEC_KS_ObjectInteraction( *pKnowledgeBlackBoard_, *this );
-    pKsFire_              = new DEC_KS_Fire             ( *pKnowledgeBlackBoard_, *this );
-    pKsQuerier_           = new DEC_KS_AgentQuerier     ( *pKnowledgeBlackBoard_, *this );
-    pKsNetworkUpdater_    = new DEC_KS_NetworkUpdater   ( *pKnowledgeBlackBoard_ );
+    pKsObjectInteraction_     = new DEC_KS_ObjectInteraction    ( *pKnowledgeBlackBoard_, *this );
+    pKsPopulationInteraction_ = new DEC_KS_PopulationInteraction( *pKnowledgeBlackBoard_, *this );
+    pKsFire_                  = new DEC_KS_Fire                 ( *pKnowledgeBlackBoard_, *this );
+    pKsQuerier_               = new DEC_KS_AgentQuerier         ( *pKnowledgeBlackBoard_, *this );
+    pKsNetworkUpdater_        = new DEC_KS_NetworkUpdater       ( *pKnowledgeBlackBoard_ );
     
 
     { NET_RolePion_Dotations        * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -214,7 +221,8 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RolePion_Medical          * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Supply           * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RolePion_Surrender        * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); } 
+    { PHY_RolePion_Refugee          * pRole; file >> pRole; RegisterRole( pRole ); }
+    { PHY_RolePion_Population       * pRole; file >> pRole; RegisterRole( pRole ); }
     { PHY_RoleAction_Loading        * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_Transport      * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_Moving         * pRole; file >> pRole; RegisterRole( pRole ); } 
@@ -222,7 +230,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     { PHY_RoleAction_DirectFiring   * pRole; file >> pRole; RegisterRole( pRole ); } 
     { PHY_RoleAction_IndirectFiring * pRole; file >> pRole; RegisterRole( pRole ); } 
     { DEC_RolePion_Decision         * pRole; file >> pRole; RegisterRole( pRole ); } 
-    { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }
+    { PHY_RoleAction_InterfaceFlying* pRole; file >> pRole; RegisterRole( pRole ); }    
 }
 
 // -----------------------------------------------------------------------------
@@ -258,6 +266,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     file << &GetRole< PHY_RolePion_Supply            >();
     file << &GetRole< PHY_RolePion_Surrender         >();
     file << &GetRole< PHY_RolePion_Refugee           >();
+    file << &GetRole< PHY_RolePion_Population        >();
     file << &GetRole< PHY_RoleAction_Loading         >();
     file << &GetRole< PHY_RoleAction_Transport       >();
     file << &GetRole< PHY_RoleAction_Moving          >();
@@ -297,6 +306,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RolePion_Supply            >();
     RegisterRole< PHY_RolePion_Surrender         >( *this );
     RegisterRole< PHY_RolePion_Refugee           >( *this );
+    RegisterRole< PHY_RolePion_Population        >( *this );
     RegisterRole< PHY_RoleAction_Loading         >();
     RegisterRole< PHY_RoleAction_Transport       >( *this );
     RegisterRole< PHY_RoleAction_Moving          >( *this );
@@ -358,6 +368,7 @@ MIL_AgentPion::~MIL_AgentPion()
     delete pKsQuerier_;
     delete pKsFire_;
     delete pKsObjectInteraction_;
+    delete pKsPopulationInteraction_;
     delete pKnowledgeBlackBoard_;
 }
 
@@ -439,6 +450,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RolePion_Supply            >().Update( bIsDead );
     GetRole< PHY_RolePion_Surrender         >().Update( bIsDead );
     GetRole< PHY_RolePion_Refugee           >().Update( bIsDead );    
+    GetRole< PHY_RolePion_Population        >().Update( bIsDead );    
     GetRole< PHY_RolePion_Perceiver         >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes
     GetRole< PHY_RoleAction_Loading         >().Update( bIsDead );
     GetRole< PHY_RoleAction_Transport       >().Update( bIsDead );
@@ -496,6 +508,7 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RolePion_HumanFactors      >().Clean();
     GetRole< PHY_RolePion_Surrender         >().Clean();
     GetRole< PHY_RolePion_Refugee           >().Clean();
+    GetRole< PHY_RolePion_Population        >().Clean();
     GetRole< PHY_RolePion_Transported       >().Clean();
     GetRole< PHY_RolePion_Maintenance       >().Clean();
     GetRole< PHY_RolePion_Medical           >().Clean();

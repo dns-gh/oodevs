@@ -30,6 +30,7 @@ class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class MIL_Army;
 class DEC_PopulationDecision;
+class PHY_Volume;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -55,6 +56,7 @@ public:
           MT_Float                    GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
     const MIL_Army&                   GetArmy              () const;
+          MT_Float                    GetMaxSpeed          ( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
     //@}
 
     //! @name Operations

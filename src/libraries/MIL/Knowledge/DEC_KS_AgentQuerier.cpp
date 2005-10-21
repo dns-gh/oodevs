@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_RapForLocal.h"
@@ -368,6 +369,35 @@ void DEC_KS_AgentQuerier::GetObjectsColliding( T_KnowledgeObjectDiaIDVector& con
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
         DEC_Knowledge_Object* pKnowledge = pPion_->GetArmy().GetKSQuerier().GetKnowledgeObject( **itObjectColliding );
+        assert( pKnowledge );
+        container.push_back( (void*)( pKnowledge->GetID() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetPopulationsColliding
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentQuerier::GetPopulationsColliding( T_KnowledgePopulationCollisionVector& container ) const
+{
+    assert( pBlackBoard_ );
+    pBlackBoard_->GetKnowledgesPopulationCollision( container );  
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetPopulationsColliding
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentQuerier::GetPopulationsColliding( T_KnowledgePopulationDiaIDVector& container ) const
+{
+    assert( pPion_ );
+
+    container.clear();
+    T_KnowledgePopulationCollisionVector populationsColliding;
+    GetPopulationsColliding( populationsColliding );
+    for ( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+    {
+        DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgePopulation( **it );
         assert( pKnowledge );
         container.push_back( (void*)( pKnowledge->GetID() ) );
     }

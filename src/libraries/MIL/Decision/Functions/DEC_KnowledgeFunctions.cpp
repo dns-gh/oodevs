@@ -140,3 +140,17 @@ void DEC_KnowledgeFunctions::GetObjectsColliding( DIA_Call_ABC& call, const MIL_
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( objectsColliding, DEC_Tools::GetTypeConnaissanceObjet() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetPopulationsColliding
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetPopulationsColliding( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgePopulationDiaIDVector populationsColliding;
+    callerAgent.GetKSQuerier().GetPopulationsColliding( populationsColliding );
+
+    DIA_Variable_ObjectList& diaPopulationList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaPopulationList.SetValueUserType( populationsColliding, DEC_Tools::GetTypeConnaissancePopulation() );
+
+}

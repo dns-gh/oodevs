@@ -23,6 +23,7 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
@@ -39,8 +40,9 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , nID_                           ( idManager_.GetFreeSimID() )
     , position_                      ()
     , location_                      ()
-    , rNbrAliveHumans_               ( 0 )
-    , rNbrDeadHumans_                ( 0 )
+    , rNbrAliveHumans_               ( 0. )
+    , rNbrDeadHumans_                ( 0. )
+    , rDensity_                      ( 0. )
     , pAttitude_                     ( &population.GetDefaultAttitude() )
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
@@ -53,6 +55,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     archive.ReadField( "NombreHumains", rNbrAliveHumans_ );
     UpdateLocation();
+    UpdateDensity ();
     // SendCreation()
 }
 
@@ -66,8 +69,9 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , nID_                           ( idManager_.GetFreeSimID() )
     , position_                      ( position )
     , location_                      ()
-    , rNbrAliveHumans_               ( 0 )
-    , rNbrDeadHumans_                ( 0 )
+    , rNbrAliveHumans_               ( 0. )
+    , rNbrDeadHumans_                ( 0. )
+    , rDensity_                      ( 0. )
     , pAttitude_                     ( &population.GetDefaultAttitude() )
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
@@ -75,6 +79,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , bAttitudeUpdated_              ( true )
 {
     UpdateLocation();
+    UpdateDensity ();
     SendCreation();
 }
 
@@ -111,7 +116,19 @@ bool MIL_PopulationConcentration::Update()
         return false;
     }
     if( bHumansUpdated_ )
+    {
         UpdateLocation();
+        UpdateDensity ();
+    }
+
+    // Collisions
+    TER_Agent_ABC::T_AgentPtrVector agents;
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location_, agents, 100. ); //$$$ TEST
+    for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
+    {
+        PHY_RoleInterface_Location& agent = static_cast< PHY_RoleInterface_Location& >( **it );
+        agent.NotifyPopulationCollision( *this );
+    }
 
     return true;
 }
@@ -153,6 +170,20 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 {
     static MT_Float rPrecision = 100.;
     return position_.Distance( position ) <= rPrecision;
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetMaxSpeed
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationConcentration::GetMaxSpeed( const PHY_Volume& pionVolume ) const
+{
+    assert( pAttitude_ );
+    return population_.GetMaxSpeed( *pAttitude_, rDensity_, pionVolume );
 }
 
 // =============================================================================

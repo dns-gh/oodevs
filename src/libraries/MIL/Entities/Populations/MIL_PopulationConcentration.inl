@@ -139,3 +139,17 @@ bool MIL_PopulationConcentration::IsValid() const
 {
     return rNbrAliveHumans_ > 0. || !pushingFlows_.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::UpdateDensity
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationConcentration::UpdateDensity()
+{
+    const MT_Float rArea = location_.GetArea();
+    if( rArea == 0. )
+        rDensity_ = 0; // $$$ +infini sauf si aucun humain
+    else
+        rDensity_ = rNbrAliveHumans_ / rArea;    
+}

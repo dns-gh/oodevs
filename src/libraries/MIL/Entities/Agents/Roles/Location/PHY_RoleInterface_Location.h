@@ -21,6 +21,8 @@
 class MIL_Agent_ABC;
 class MIL_RealObject_ABC;
 class MIL_Object_ABC;
+class MIL_PopulationFlow;
+class MIL_PopulationConcentration;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Location
@@ -46,6 +48,8 @@ public:
     
     //! @name Operations
     //@{
+    virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population ) = 0;
+    virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population ) = 0;
     virtual void NotifyObjectCollision    ( MIL_RealObject_ABC& object ) = 0;
 
     virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object ) = 0;

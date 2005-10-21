@@ -18,6 +18,7 @@ typedef UserType T_CalculLignesAvantArriere;        // Type C++ : DEC_FrontAndBa
 typedef UserType T_Lima;                            // Type C++ : MIL_Lima
 typedef UserType T_ConnaissanceObjet;               // Type C++ : uint d'index sur un DEC_Knowledge_Object
 typedef UserType T_ConnaissanceAgent;               // Type C++ : uint d'index sur un DEC_Knowledge_Agent
+typedef UserType T_ConnaissancePopulation;          // Type C++ : uint d'index sur un DEC_Knowledge_Population
 typedef UserType T_ID;                              // Type C++ : uint directement dans l'adresse du pointeur
 typedef UserType T_Action;                          // Type C++ : PHY2_Action_ABC
 typedef UserType T_PerceptionPoint;
@@ -29,11 +30,12 @@ typedef UserType T_PerceptionTirIndirect;
 typedef UserType T_MaintenancePriorites;
 typedef UserType T_SantePriorites;
 
-typedef list<T_ConnaissanceObjet> T_ListeConnaissancesObjet;
-typedef list<T_ConnaissanceAgent> T_ListeConnaissancesAgent;
-typedef list<T_Localisation>      T_ListeLocalisations;
-typedef list<T_ListePoints>       T_ListeListesPoints;
-typedef list<T_Direction>         T_ListeDirections;
+typedef list<T_ConnaissanceObjet>      T_ListeConnaissancesObjet;
+typedef list<T_ConnaissanceAgent>      T_ListeConnaissancesAgent;
+typedef list<T_ConnaissancePopulation> T_ListeConnaissancesPopulation;
+typedef list<T_Localisation>           T_ListeLocalisations;
+typedef list<T_ListePoints>            T_ListeListesPoints;
+typedef list<T_Direction>              T_ListeDirections;
 
 include "Common/Moteur/Types_Enums.hal";
 include "Common/Moteur/Types_Enums_Generated.hal";

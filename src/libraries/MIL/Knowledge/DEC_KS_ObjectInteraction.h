@@ -72,8 +72,7 @@ private:
 
     //! @name Tools
     //@{
-    void PrepareKnowledgeObjectCollision       ( DEC_Knowledge_ObjectCollision& knowledge );
-    void DestroyInvalidCollisionObjectKnowledge( DEC_Knowledge_ObjectCollision& knowledge );
+    void CleanKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
     //@}
 
 private:

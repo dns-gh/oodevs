@@ -21,6 +21,7 @@ const DIA_TypeDef* DEC_Tools::pTypeCalculLignesAvantArriere_      = 0;
 const DIA_TypeDef* DEC_Tools::pTypeLima_                          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissanceObjet_             = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissanceAgent_             = 0;
+const DIA_TypeDef* DEC_Tools::pTypeConnaissancePopulation_        = 0;
 const DIA_TypeDef* DEC_Tools::pTypeID_                            = 0;
 const DIA_TypeDef* DEC_Tools::pTypeAction_                        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePion_                          = 0;
@@ -35,7 +36,6 @@ const DIA_TypeDef* DEC_Tools::pTypeMaintenancePriorites_          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeSantePriorites_                = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionObjectsLocalisation_ = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
-const DIA_TypeDef* DEC_Tools::pTypeListeConnaissanceObjet_        = 0;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::InitializeDIA
@@ -52,6 +52,7 @@ void DEC_Tools::InitializeDIA()
     pTypeLima_                          = &GetDIAType( "T_Lima"                        );
     pTypeConnaissanceObjet_             = &GetDIAType( "T_ConnaissanceObjet"           );
     pTypeConnaissanceAgent_             = &GetDIAType( "T_ConnaissanceAgent"           );
+    pTypeConnaissancePopulation_        = &GetDIAType( "T_ConnaissancePopulation"      );
     pTypeID_                            = &GetDIAType( "T_ID"                          );
     pTypeAction_                        = &GetDIAType( "T_Action"                      );
     pTypePion_                          = &GetDIAType( "T_Pion"                        );
@@ -66,7 +67,6 @@ void DEC_Tools::InitializeDIA()
     pTypeSantePriorites_                = &GetDIAType( "T_SantePriorites"              );
     pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet" );
     pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"       );
-    pTypeListeConnaissanceObjet_        = &GetDIAType( "T_ListeConnaissancesObjet"     );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,6 +124,24 @@ bool DEC_Tools::CheckTypeListeConnaissancesObjet( const DIA_Variable_ABC& diaVar
     for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
     {
         if( !CheckTypeConnaissanceObjet( **it ) )
+            return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeListeConnaissancesPopulation
+// Created: NLD 2004-10-21
+// -----------------------------------------------------------------------------
+bool DEC_Tools::CheckTypeListeConnaissancesPopulation( const DIA_Variable_ABC& diaVariable )
+{
+    if( diaVariable.Type() != eSelection )
+        return false;
+
+    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
+    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
+    {
+        if( !CheckTypeConnaissancePopulation( **it ) )
             return false;
     }
     return true;

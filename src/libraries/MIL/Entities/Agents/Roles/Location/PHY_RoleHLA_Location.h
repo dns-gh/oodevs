@@ -43,7 +43,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyObjectCollision( MIL_RealObject_ABC& object );
+    virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
+    virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
+    virtual void NotifyObjectCollision    ( MIL_RealObject_ABC& object );
 
     virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );

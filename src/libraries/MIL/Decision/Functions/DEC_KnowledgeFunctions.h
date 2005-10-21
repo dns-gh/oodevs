@@ -36,6 +36,7 @@ public:
     static void GetPerceivedAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetClosestObject             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetObjectsColliding          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetPopulationsColliding      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent ); 
 
     template< typename T > static void ShareKnowledgesWith      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller );

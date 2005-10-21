@@ -6,6 +6,11 @@ actuators = deplacement, ordre;
 
 default Default()
 {    
+
+    T_ListeConnaissancesPopulation popus = DEC_Connaissances_CollisionsPopulations();
+    if( DIA_Size( popus ) > 0 )
+        DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
+
     //DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTotalement ); 
     persistent float i = 0;
         

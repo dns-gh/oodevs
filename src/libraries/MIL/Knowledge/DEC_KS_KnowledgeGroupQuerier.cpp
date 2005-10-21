@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_KS_ArmyQuerier.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
@@ -329,4 +330,14 @@ DEC_Knowledge_Object* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeObject( MIL_Real
 {
     assert( pKnowledgeGroup_ );
     return pKnowledgeGroup_->GetArmy().GetKSQuerier().GetKnowledgeObject( object );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgePopulation
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KS_KnowledgeGroupQuerier::GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const
+{   
+    assert( pBlackBoard_ );
+    return pBlackBoard_->GetKnowledgePopulation( collision.GetPopulation() );
 }

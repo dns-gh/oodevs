@@ -27,6 +27,7 @@
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
+class PHY_Volume;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -70,6 +71,7 @@ public:
           uint                    GetID            () const;
           uint                    GetNbrAliveHumans() const;
           uint                    GetNbrDeadHumans () const;
+          MT_Float                GetMaxSpeed      ( const PHY_Volume& pionVolume ) const;
           bool                    IsNearPosition   ( const MT_Vector2D& position ) const;
 
     virtual const TER_Localisation& GetLocation () const;
@@ -92,6 +94,7 @@ private:
     //! @name Helpers
     //@{
     void UpdateLocation();
+    void UpdateDensity ();
     //@}
 
     //! @name Network
@@ -114,6 +117,7 @@ private:
           TER_Localisation        location_;
           MT_Float                rNbrAliveHumans_;
           MT_Float                rNbrDeadHumans_;
+          MT_Float                rDensity_;
     const MIL_PopulationAttitude* pAttitude_;
 
           MIL_PopulationFlow*     pPullingFlow_;

@@ -55,7 +55,7 @@ public:
     //! @name Queries
     //@{
     DEC_Knowledge_Object* GetKnowledgeObjectFromID( uint nID ) const;
-    void                  GetKnowledgesObject     ( const MIL_RealObject_ABC& objectKnown, T_KnowledgeObjectVector& outContainer ) const;
+    DEC_Knowledge_Object* GetKnowledgeObject      ( const MIL_RealObject_ABC& objectKnown ) const;
     void                  GetKnowledgesObject     ( T_KnowledgeObjectVector& outContainer ) const;
     bool                  HasKnowledgeObject      ( const MIL_RealObject_ABC& objectKnown ) const;
 

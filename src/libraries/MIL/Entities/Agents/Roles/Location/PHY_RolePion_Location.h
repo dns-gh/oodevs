@@ -54,6 +54,8 @@ public:
     void Follow   ( const MIL_Agent_ABC& agent );
     void Fly      ( MT_Float rHeight );
 
+    virtual void NotifyPopulationCollision( MIL_PopulationFlow&          population );
+    virtual void NotifyPopulationCollision( MIL_PopulationConcentration& population );
     virtual void NotifyObjectCollision    ( MIL_RealObject_ABC& object );
 
     virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );

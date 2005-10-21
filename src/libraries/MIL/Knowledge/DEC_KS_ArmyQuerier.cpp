@@ -185,10 +185,5 @@ DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetClosestObject( const MT_Vector2D& v
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const
 {
-    T_KnowledgeObjectVector knowledges;
-    
-    assert( pBlackBoard_ );
-    pBlackBoard_->GetKnowledgesObject( collision.GetObject(), knowledges );
-    
-    return knowledges.empty() ? 0 : knowledges.front();    
+    return GetKnowledgeObject( collision.GetObject() );
 }

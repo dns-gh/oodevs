@@ -41,13 +41,8 @@ DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObjectFromID( uint nID ) c
 inline
 DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetKnowledgeObject( MIL_RealObject_ABC& object ) const
 {
-    T_KnowledgeObjectVector knowledges;
-    
     assert( pBlackBoard_ );
-    pBlackBoard_->GetKnowledgesObject( object, knowledges );
-    if( knowledges.empty() )
-        return 0;
-    return knowledges.front();
+    return pBlackBoard_->GetKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------

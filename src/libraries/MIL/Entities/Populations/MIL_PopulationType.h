@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float        GetSlowDownFactor    ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
+    MT_Float        GetMaxSpeed          ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
     MIL_Population& InstanciatePopulation( uint nID, MIL_InputArchive& archive ) const;
     //@}
 
@@ -74,9 +74,9 @@ private:
     //@{
     struct sSlowDownData
     {
-        sSlowDownData( MT_Float rPopulationDensity, MT_Float rSlowDownFactor ) : rPopulationDensity_( rPopulationDensity ), rSlowDownFactor_( rSlowDownFactor ) {}
+        sSlowDownData( MT_Float rPopulationDensity, MT_Float rMaxSpeed ) : rPopulationDensity_( rPopulationDensity ), rMaxSpeed_( rMaxSpeed ) {}
         MT_Float rPopulationDensity_;
-        MT_Float rSlowDownFactor_;
+        MT_Float rMaxSpeed_;
     };
 
     typedef std::vector< sSlowDownData >        T_VolumeSlowDownData;

@@ -45,27 +45,13 @@ DEC_KS_ObjectInteraction::~DEC_KS_ObjectInteraction()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_ObjectInteraction::PrepareKnowledgeObjectCollision
-// Created: NLD 2004-05-03
-// -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::PrepareKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge )
-{
-    knowledge.Prepare();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::Prepare
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::Prepare()
 {
-    // Nothing
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( DEC_KS_ObjectInteraction::PrepareKnowledgeObjectCollision, *this );
-
-    assert( pBlackBoard_ );
-    pBlackBoard_->ApplyOnKnowledgesObjectCollision( method );
+    pBlackBoard_->ApplyOnKnowledgesObjectCollision( std::mem_fun_ref( &DEC_Knowledge_ObjectCollision::Prepare ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::UpdateObjectPerceptionKnowledge
@@ -94,7 +80,6 @@ DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectColli
         pKnowledge = &pBlackBoard_->CreateKnowledgeObjectCollision( GetAgentInteracting(), object );
     return *pKnowledge;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::Talk
@@ -130,10 +115,10 @@ void DEC_KS_ObjectInteraction::Talk()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge
+// Name: DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge( DEC_Knowledge_ObjectCollision& knowledge )
+void DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge )
 {
     if( knowledge.Clean() )
     {
@@ -150,6 +135,6 @@ void DEC_KS_ObjectInteraction::Clean()
 {
     // Remove all invalid knowledges
     assert( pBlackBoard_ );
-    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> methodDestroyInvalidCollisionObjectKnowledge( DEC_KS_ObjectInteraction::DestroyInvalidCollisionObjectKnowledge, *this );        
-    pBlackBoard_->ApplyOnKnowledgesObjectCollision( methodDestroyInvalidCollisionObjectKnowledge );    
+    class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );        
+    pBlackBoard_->ApplyOnKnowledgesObjectCollision( method );    
 }
