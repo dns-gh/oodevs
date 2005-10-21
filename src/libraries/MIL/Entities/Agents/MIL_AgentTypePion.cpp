@@ -401,6 +401,10 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::RelievePion               , "DEC_ReleverPion"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanRelievePion            , "DEC_PeutReleverPion"            );
 
+    // Population
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableSlowDownByPopulation , "DEC_Agent_ActiverRalentissementParPopulation"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableSlowDownByPopulation, "DEC_Agent_DesactiverRalentissementParPopulation" );
+
     // Agent knowledges accessors    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetEtatOps                                , "DEC_ConnaissanceAgent_EtatOps"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetSpeed       < MIL_AgentPion >          , "DEC_ConnaissanceAgent_Vitesse"                         );

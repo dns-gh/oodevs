@@ -30,15 +30,35 @@ void PHY_RolePion_Population::Update( bool /*bIsDead*/ )
 inline
 void PHY_RolePion_Population::Clean()
 {
-    bHasChanged_ = false;
+//    bHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::HasChanged
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
+//inline
+//bool PHY_RolePion_Population::HasChanged() const
+//{
+//    return bHasChanged_;
+//}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::EnableSlowDown
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
 inline
-bool PHY_RolePion_Population::HasChanged() const
+void PHY_RolePion_Population::EnableSlowDown()
 {
-    return bHasChanged_;
+    bSlowDownEnabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableSlowDown
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Population::DisableSlowDown()
+{
+    bSlowDownEnabled_ = false;
 }

@@ -79,7 +79,7 @@ public:
     static void TimeLeftForMoving  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void TimeToMoveDistance ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
-    // hiérarchie
+    // Hiérarchie
     static void GetPionsWithPC             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPionsWithoutPC          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPionPC                  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -96,6 +96,10 @@ public:
     static void WearNbcProtectionSuit     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void RemoveNbcProtectionSuit   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void SelfDecontaminate         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+
+    // Population
+    static void EnableSlowDownByPopulation ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void DisableSlowDownByPopulation( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
    
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

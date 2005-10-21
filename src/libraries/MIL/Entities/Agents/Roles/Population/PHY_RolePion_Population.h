@@ -42,23 +42,26 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-    bool HasChanged() const;
+//    bool HasChanged() const;
     //@}
 
     //! @name Operations
     //@{
-    MT_Float ModifyMaxSpeed( MT_Float rSpeed ) const;
+    MT_Float ModifyMaxSpeed ( MT_Float rSpeed ) const;
+    void     EnableSlowDown ();
+    void     DisableSlowDown();
     //@}
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+//    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+//    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
 private:
-    MIL_AgentPion*      pPion_;
-    bool                bHasChanged_;
+    MIL_AgentPion* pPion_;
+    bool           bSlowDownEnabled_;
+//    bool           bHasChanged_;
 };
 
 #include "PHY_RolePion_Population.inl"

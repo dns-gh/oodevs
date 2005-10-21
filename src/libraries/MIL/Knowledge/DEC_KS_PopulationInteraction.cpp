@@ -67,30 +67,6 @@ DEC_Knowledge_PopulationCollision& DEC_KS_PopulationInteraction::GetKnowledgePop
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationInteraction::UpdateObjectPerceptionKnowledge
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-/*DEC_Knowledge_ObjectPerception& DEC_KS_PopulationInteraction::GetKnowledgeObjectPerception( MIL_RealObject_ABC& object ) const
-{
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationInteraction::UpdateObjectCollisionKnowledge
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectCollision& DEC_KS_PopulationInteraction::GetKnowledgeObjectCollision( MIL_RealObject_ABC& object ) const
-{
-    assert( pBlackBoard_ );
-    
-    DEC_Knowledge_ObjectCollision* pKnowledge = pBlackBoard_->GetKnowledgeObjectCollision( object );
-    if( !pKnowledge )
-        pKnowledge = &pBlackBoard_->CreateKnowledgeObjectCollision( GetAgentInteracting(), object );
-    return *pKnowledge;
-}
-*/
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction::Talk
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------

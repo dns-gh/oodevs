@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
+#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
@@ -757,4 +758,26 @@ void DEC_AgentFunctions::GetInterceptionPoint( DIA_Call_ABC& call, const MIL_Age
         call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
     else
         call.GetResult().SetValue( new MT_Vector2D( vInterceptionPosition ), &DEC_Tools::GetTypePoint() );
+}
+
+// =============================================================================
+// POPULATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableSlowDownByPopulation
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableSlowDownByPopulation( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Population >().EnableSlowDown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisableSlowDownByPopulation
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisableSlowDownByPopulation( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Population >().DisableSlowDown();
 }

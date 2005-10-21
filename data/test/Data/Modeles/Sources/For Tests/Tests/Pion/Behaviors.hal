@@ -24,6 +24,18 @@ default Default()
         DEC_Agent_ChangeDisponibiliteAuTirIndirect( eDisponibiliteAuTir_None );        
     }
     i++;
+    
+    
+    persistent float j = 10; 
+    if( j == 10 )
+        DEC_Agent_ActiverRalentissementParPopulation();
+    else if( j == 20 ) 
+    {
+        DEC_Agent_DesactiverRalentissementParPopulation();
+        j = 0;
+    }
+    j++;
+        
 
     if( DEC_NouvelleMission() )
         DEC_Debug( "DEC_NouvelleMission" );

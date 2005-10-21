@@ -76,6 +76,7 @@ NET_RolePion_Dotations::~NET_RolePion_Dotations()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: NET_RolePion_Dotations::serialize
 // Created: JVT 2005-03-30
@@ -88,7 +89,6 @@ void NET_RolePion_Dotations::serialize( Archive& file, const uint )
          & bLastStateDead_
          & bLastStateNeutralized_;
 }
-
 
 // =============================================================================
 // UPDATE

@@ -27,7 +27,8 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_AgentPion& pion )
     : PHY_RoleInterface_Population( role )
     , pPion_                      ( &pion )
-    , bHasChanged_                ( true )
+//    , bHasChanged_                ( true )
+    , bSlowDownEnabled_           ( true )
 {
 }
  
@@ -36,7 +37,10 @@ PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population()
-    : bHasChanged_( true )
+    : PHY_RoleInterface_Population()
+    , pPion_                      ( 0 )
+//    , bHasChanged_                ( true )
+    , bSlowDownEnabled_           ( true )
 {
 }
 
@@ -60,7 +64,8 @@ template< typename Archive >
 void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this )
-         & pPion_;
+         & pPion_
+         & bSlowDownEnabled_;
 }
 
 // =============================================================================
@@ -74,6 +79,8 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
 MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
 {
     assert( pPion_ );
+    if( !bSlowDownEnabled_ )
+        return rSpeed;
 
     T_KnowledgePopulationCollisionVector collisions;
     pPion_->GetKSQuerier().GetPopulationsColliding( collisions );
@@ -96,17 +103,17 @@ MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
 // Name: PHY_RolePion_Population::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Population::SendFullState( NET_ASN_MsgUnitAttributes& /*msg*/ ) const
-{
-    // NOTHING
-}
+//void PHY_RolePion_Population::SendFullState( NET_ASN_MsgUnitAttributes& /*msg*/ ) const
+//{
+//    // NOTHING
+//}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Population::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
-{
-    if( bHasChanged_ )
-        SendFullState( msg );
-}
+//void PHY_RolePion_Population::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+//{
+//    if( bHasChanged_ )
+//        SendFullState( msg );
+//}

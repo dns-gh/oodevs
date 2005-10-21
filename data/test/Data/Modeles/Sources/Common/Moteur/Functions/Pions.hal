@@ -156,8 +156,10 @@ signatures
     R                                       A::DEC_Agent_DureeRecuperationTranporteursSurPosition( U /*T_Point*/ ); // En minutes
     B                                       A::DEC_Agent_TransporteursPret               ();
                                             
-                                            
-                                            
+    // Population
+    V                                       A::DEC_Agent_ActiverRalentissementParPopulation   ();
+    V                                       A::DEC_Agent_DesactiverRalentissementParPopulation();
+                                                                                        
     R /* temps en minutes */                A::DEC_Agent_AutonomieEnDeplacement();
     R /* temps en minutes */                A::DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( R /*distance en m*/ );    
                                             
