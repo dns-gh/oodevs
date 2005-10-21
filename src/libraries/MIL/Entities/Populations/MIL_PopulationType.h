@@ -15,6 +15,8 @@
 #include "MIL.h"
 
 class MIL_Population;
+class MIL_PopulationAttitude;
+class PHY_Volume;
 class DEC_ModelPopulation;
 
 // =============================================================================
@@ -46,6 +48,7 @@ public:
 
     //! @name Operations
     //@{
+    MT_Float        GetSlowDownFactor    ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
     MIL_Population& InstanciatePopulation( uint nID, MIL_InputArchive& archive ) const;
     //@}
 
@@ -63,6 +66,21 @@ private:
     //! @name Tools
     //@{
     void InitializeDiaFunctions();
+    void InitializeSlowDownData( MIL_InputArchive& archive );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    struct sSlowDownData
+    {
+        sSlowDownData( MT_Float rPopulationDensity, MT_Float rSlowDownFactor ) : rPopulationDensity_( rPopulationDensity ), rSlowDownFactor_( rSlowDownFactor ) {}
+        MT_Float rPopulationDensity_;
+        MT_Float rSlowDownFactor_;
+    };
+
+    typedef std::vector< sSlowDownData >        T_VolumeSlowDownData;
+    typedef std::vector< T_VolumeSlowDownData > T_AttitudeSlowDownData;
     //@}
 
 private:
@@ -71,6 +89,7 @@ private:
           MT_Float                             rConcentrationDensity_;
           MT_Float                             rDefaultFlowDensity_;
           MT_Float                             rMaxSpeed_;
+          T_AttitudeSlowDownData               slowDownData_;
     const DEC_ModelPopulation*                 pModel_;
           DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;
 

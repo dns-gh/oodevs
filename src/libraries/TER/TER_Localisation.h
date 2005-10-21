@@ -90,7 +90,7 @@ public:
 
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
-    bool IsInside             ( const MT_Vector2D& vPos ) const;
+    bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision = rPrecision_ ) const;
     bool IsOnBorder           ( const MT_Vector2D& vPos ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation ) const;
     bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions ) const;

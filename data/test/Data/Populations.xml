@@ -4,8 +4,27 @@
         <MosID>1</MosID>
         <ModeleDecisionnel>Population Test</ModeleDecisionnel>
         <DensiteConcentration>1</DensiteConcentration>
-        <DensiteNominaleDeplacement>10</DensiteNominaleDeplacement>
+        <DensiteNominaleDeplacement>10</DensiteNominaleDeplacement> <!-- Densite nb hommes par metre carre-->
         <VitesseDeplacement>60</VitesseDeplacement>
+
+        <Effets>        
+            <Ralentissement>
+                <Attitudes>
+                    <Attitude nom="agressive">
+                        <VolumesPions>
+                            <VolumePion nom="gros"  densitePopulation="0.9" coefficientRalentissement="0.2"/>
+                            <VolumePion nom="petit" densitePopulation="0.9" coefficientRalentissement="0.01"/>
+                        </VolumesPions>
+                     </Attitude>
+                    <Attitude nom="calme">
+                        <VolumesPions>
+                            <VolumePion nom="gros"  densitePopulation="0.9" coefficientRalentissement="0.2"/>
+                            <VolumePion nom="petit" densitePopulation="0.9" coefficientRalentissement="0.01"/>
+                        </VolumesPions>
+                     </Attitude>
+                </Attitudes>
+            </Ralentissement>
+        </Effets>
     </Population>
     
     <Population nom="test2">
@@ -14,5 +33,10 @@
         <DensiteConcentration>2</DensiteConcentration>
         <DensiteNominaleDeplacement>20</DensiteNominaleDeplacement>
         <VitesseDeplacement>24</VitesseDeplacement>
+        <Effets>
+            <Ralentissement>
+                <Attitudes/>
+            </Ralentissement>                
+        </Effets>
     </Population>
 </Populations>

@@ -161,7 +161,7 @@ void PHY_RolePion_Location::SetHeight( MT_Float rHeight )
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::SetPosition					
+// Name: PHY_RolePion_Location::SetPosition
 // Created: DFT 02-02-27
 // Last modified: JVT 04-06-01
 //-----------------------------------------------------------------------------

@@ -102,14 +102,14 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 // Created: NLD 2003-07-24
 // Last modified: JVT 03-09-02
 //-----------------------------------------------------------------------------
-bool TER_Localisation::IsInside( const MT_Vector2D& vPos ) const
+bool TER_Localisation::IsInside( const MT_Vector2D& vPos, MT_Float rPrecision ) const
 {
     switch( nType_ )
     {
 //        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision_ * rPrecision_ );
-        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision_ );
-        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision_ );
-        case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside( vPos, rPrecision_ );
+        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision );
+        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision );
+        case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside( vPos, rPrecision );
         default:
             return false;
     }

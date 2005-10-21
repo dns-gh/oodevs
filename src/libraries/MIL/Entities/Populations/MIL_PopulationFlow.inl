@@ -160,7 +160,6 @@ void MIL_PopulationFlow::Clean()
     bSpeedUpdated_     = false;
     bHumansUpdated_    = false;
     bAttitudeUpdated_  = false;
-    bMoving_           = false;
     bHeadMoveFinished_ = false;
 }
 
@@ -213,6 +212,32 @@ const MT_Vector2D& MIL_PopulationFlow::GetTailPosition() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetDirection
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationFlow::SetDirection( const MT_Vector2D& direction )
+{
+    if( direction_ == direction )
+        return;
+    direction_         = direction;
+    bDirectionUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetSpeed
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationFlow::SetSpeed( const MT_Float rSpeed )
+{
+    if( rSpeed_ == rSpeed )
+        return;
+    rSpeed_        = rSpeed;
+    bSpeedUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::SetHeadPosition
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
@@ -220,6 +245,9 @@ inline
 void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
 {
     assert( flowShape_.size() >= 2 );
+    if( flowShape_.back() == position )
+        return;
+    bFlowShapeUpdated_ = true;
     flowShape_.back() = position;
 }
 
@@ -231,6 +259,9 @@ inline
 void MIL_PopulationFlow::SetTailPosition( const MT_Vector2D& position )
 {
     assert( flowShape_.size() >= 2 );
+    if( flowShape_.front() == position )
+        return;
+    bFlowShapeUpdated_ = true;
     flowShape_.front() = position;
 }
 

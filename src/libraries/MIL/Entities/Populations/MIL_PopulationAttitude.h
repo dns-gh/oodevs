@@ -25,13 +25,21 @@ class MIL_PopulationAttitude
     MT_COPYNOTALLOWED( MIL_PopulationAttitude )
 
 public:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, const MIL_PopulationAttitude*, sCaseInsensitiveLess > T_AttitudeMap;
+    typedef T_AttitudeMap::const_iterator                                                CIT_AttitudeMap;
+    //@}
+
+public:
     //! @name Manager
     //@{
     static void Initialize();
     static void Terminate ();
 
-    static const MIL_PopulationAttitude* Find( const std::string& strName );
-    static const MIL_PopulationAttitude* Find( ASN1T_EnumPopulationAttitude nAsnID );
+    static const MIL_PopulationAttitude* Find        ( const std::string& strName );
+    static const MIL_PopulationAttitude* Find        ( ASN1T_EnumPopulationAttitude nAsnID );
+    static const T_AttitudeMap&          GetAttitudes();
     //@}
 
     //! @name Accessors
@@ -57,9 +65,6 @@ private:
         eExcitee   = 2,
         eAgressive = 3
     };
-
-    typedef std::map< std::string, const MIL_PopulationAttitude*, sCaseInsensitiveLess > T_AttitudeMap;
-    typedef T_AttitudeMap::const_iterator                                                CIT_AttitudeMap;
     //@}
 
 private:

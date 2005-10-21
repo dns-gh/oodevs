@@ -63,6 +63,24 @@ namespace
         TER_AgentManager::T_AgentVector& agents_;
     };
 
+    template< typename Where >
+    class AgentFinderPrecision
+    {
+    public:
+        AgentFinderPrecision( const Where& where, MT_Float rPrecision, TER_AgentManager::T_AgentVector& agents ) : where_( where ), rPrecision_( rPrecision ), agents_( agents ) {};
+        bool operator()( TER_Agent_ABC* pAgent )
+        {
+            if( pAgent && where_.IsInside( pAgent->GetPosition(), rPrecision_ ) )
+                agents_.push_back( pAgent );
+            return true;
+        }
+    private:
+        AgentFinderPrecision& operator=( const AgentFinderPrecision& );
+        const Where& where_;
+        const MT_Float rPrecision_;
+        TER_AgentManager::T_AgentVector& agents_;
+    };
+
     class Circle
     {
     public:
@@ -113,6 +131,19 @@ void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& locali
     pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
                                                         , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< TER_Localisation > finder( localisation, agents );
+    agents_.Apply( intersecter, finder );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_AgentManager::GetListWithinLocalisation
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents, MT_Float rPrecision ) const
+{
+    const MT_Rect& boundingBox = localisation.GetBoundingBox();
+    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                        , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    AgentFinderPrecision< TER_Localisation > finder( localisation, rPrecision, agents );
     agents_.Apply( intersecter, finder );
 }
 

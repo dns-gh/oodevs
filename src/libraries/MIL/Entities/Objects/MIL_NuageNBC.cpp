@@ -297,7 +297,7 @@ void MIL_NuageNBC::UpdateState()
 {
     MIL_RealObject_ABC::UpdateState();
     
-    if ( nDeathTimeStep_ <= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    if( nDeathTimeStep_ <= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     {
         MarkForDestruction();
         return;

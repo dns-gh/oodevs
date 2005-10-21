@@ -112,9 +112,9 @@ bool MIL_PopulationConcentration::Update()
     }
     if( bHumansUpdated_ )
         UpdateLocation();
+
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::UpdateLocation

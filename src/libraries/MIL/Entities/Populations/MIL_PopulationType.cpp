@@ -12,7 +12,10 @@
 #include "MIL_pch.h"
 
 #include "MIL_PopulationType.h"
+
 #include "MIL_Population.h"
+#include "MIL_PopulationAttitude.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_PopulationFunctions.h"
@@ -79,14 +82,18 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     , rDefaultFlowDensity_  ( 0. )
     , rMaxSpeed_            ( 0. )
     , pModel_               ( 0 )
+    , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     archive.ReadField( "MosID"                     , nID_                   );
     archive.ReadField( "DensiteConcentration"      , rConcentrationDensity_, CheckValueGreater( 0. ) );
     archive.ReadField( "DensiteNominaleDeplacement", rDefaultFlowDensity_  , CheckValueGreater( 0. ) );
     archive.ReadField( "VitesseDeplacement"        , rMaxSpeed_            , CheckValueGreater( 0. ) );
-
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
+
+    archive.Section( "Effets" );
+    InitializeSlowDownData( archive );
+    archive.EndSection(); // Effets
     
     std::string strModel;
     archive.ReadField( "ModeleDecisionnel", strModel );
@@ -104,6 +111,56 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
 MIL_PopulationType::~MIL_PopulationType()
 {
     delete pDIAFunctionTable_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::InitializeSlowDownEffectData
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
+{
+    archive.Section( "Ralentissement" );
+    archive.BeginList( "Attitudes" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "Attitude" );
+        std::string strAttitude;
+        archive.ReadAttribute( "nom", strAttitude );
+
+        const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
+        if( !pAttitude )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ), archive.GetContext() );
+
+        assert( slowDownData_.size() > pAttitude->GetID() );
+        T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
+
+        archive.BeginList( "VolumesPions" );
+        while( archive.NextListElement() )
+        {
+            archive.Section( "VolumePion" );
+
+            std::string strVolume;
+            MT_Float    rPopulationDensity = 0.;
+            MT_Float    rSlowDownFactor      = 0.;
+
+            archive.ReadAttribute( "nom", strVolume );
+            archive.ReadAttribute( "densitePopulation"          , rPopulationDensity, CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadAttribute( "FactorficientRalentissement", rSlowDownFactor   , CheckValueGreaterOrEqual( 0. ) );
+
+            const PHY_Volume* pVolume = PHY_Volume::FindVolume( strVolume );
+            if( !pVolume )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown volume '%s'", strVolume.c_str() ), archive.GetContext() );
+
+            assert( volumeSlowDownData.size() > pVolume->GetID() );
+            volumeSlowDownData[ pVolume->GetID() ] = sSlowDownData( rPopulationDensity, rSlowDownFactor );
+
+            archive.EndSection(); // VolumePion
+        }
+        archive.EndList(); // VolumesPions
+        archive.EndSection(); // Attitude
+    }
+    archive.EndList(); // Attitudes
+    archive.EndSection(); // Ralentissement
 }
 
 // -----------------------------------------------------------------------------
@@ -132,3 +189,20 @@ MIL_Population& MIL_PopulationType::InstanciatePopulation( uint nID, MIL_InputAr
     return *new MIL_Population( *this, nID, archive );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetSlowDownFactor
+// Created: NLD 2005-10-20
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationType::GetSlowDownFactor( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const
+{
+    assert( slowDownData_.size() > populationAttitude.GetID() );
+    const T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ populationAttitude.GetID() ];
+
+    assert( volumeSlowDownData.size() > pionVolume.GetID() );
+    const sSlowDownData& slowDownData = volumeSlowDownData[ pionVolume.GetID() ];
+
+    if( slowDownData.rPopulationDensity_ == 0. )
+        return 0.;
+
+    return rPopulationDensity * slowDownData.rSlowDownFactor_ / slowDownData.rPopulationDensity_;
+}

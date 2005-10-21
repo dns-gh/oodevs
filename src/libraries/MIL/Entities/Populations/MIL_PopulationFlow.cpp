@@ -44,7 +44,6 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , pAttitude_           ( &sourceConcentration.GetAttitude() )
     , destination_         ( )
     , pCurrentPath_        ( 0 )
-    , bMoving_             ( false )
     , bHeadMoveFinished_   ( false )
     , flowShape_           ( 2, sourceConcentration.GetPosition() )
     , direction_           ( 0., 1. )
@@ -128,23 +127,6 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::ApplyMove
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
-{
-    bMoving_   = true;
-    direction_ = direction;
-    rSpeed_    = rSpeed;
-
-    SetHeadPosition( position );
-
-    bFlowShapeUpdated_ = true;
-    bDirectionUpdated_ = true;
-    bSpeedUpdated_     = true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::UpdateTailPosition
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
@@ -202,41 +184,49 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ApplyMove
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
+{
+    SetDirection( direction );
+    SetSpeed    ( rSpeed    );
+
+    const MT_Float rWalkedDistance = population_.GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+    const MT_Float rNbrHumans      = rWalkedDistance * population_.GetDefaultFlowDensity(); // Nombre d'humains deplacés
+
+    // Head management
+    SetHeadPosition( position );
+    if( bHeadMoveFinished_ && !pDestConcentration_ )
+    {
+        pDestConcentration_ = &population_.GetConcentration( GetHeadPosition() );
+        pDestConcentration_->RegisterPushingFlow( *this );
+    }
+    if( pDestConcentration_ )
+    {
+        rNbrAliveHumans_ -= pDestConcentration_->PushHumans( std::min( rNbrHumans, rNbrAliveHumans_ ) );
+        bHumansUpdated_ = true;
+    }
+
+    // Tail management
+    if( pSourceConcentration_ )
+    {
+        rNbrAliveHumans_ += pSourceConcentration_->PullHumans( rNbrHumans );
+        bHumansUpdated_ = true;
+    }
+    else
+        UpdateTailPosition( rWalkedDistance );
+
+    if( bFlowShapeUpdated_ )
+        UpdateLocation();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::Update
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::Update()
 {
-    if( bMoving_ )
-    {
-        const MT_Float rWalkedDistance = population_.GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
-
-        // Tail management
-        MT_Float rNbrHumans = rWalkedDistance * population_.GetDefaultFlowDensity();
-        if( pSourceConcentration_ )
-        {
-            rNbrAliveHumans_ += pSourceConcentration_->PullHumans( rNbrHumans );
-            bHumansUpdated_ = true;
-        }
-        else
-            UpdateTailPosition( rWalkedDistance );
-
-
-        // Head management
-        if( bHeadMoveFinished_ && !pDestConcentration_ )
-        {
-            pDestConcentration_ = &population_.GetConcentration( GetHeadPosition() );
-            pDestConcentration_->RegisterPushingFlow( *this );
-        }
-
-        rNbrHumans = std::min( rNbrHumans, rNbrAliveHumans_ );
-        if( pDestConcentration_ )
-        {
-            rNbrAliveHumans_ -= pDestConcentration_->PushHumans( rNbrHumans );
-            bHumansUpdated_ = true;
-        }
-    }
-
     // Destruction
     if( !IsValid() )
     {
@@ -245,8 +235,14 @@ bool MIL_PopulationFlow::Update()
         RemoveFromPatch();
         return false; // Must be destroyed
     }
-    if( bFlowShapeUpdated_ )
-        UpdateLocation();
+
+    ///$$$$ TEST
+    TER_AgentManager::T_AgentVector agents;
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location_, agents, 100. );
+
+    std::cout << agents.size() << " AGENTS DANS POPU" << std::endl;
+    ///$$$$ TEST
+
     return true;
 }
 

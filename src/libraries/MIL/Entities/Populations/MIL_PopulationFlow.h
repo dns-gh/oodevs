@@ -104,6 +104,8 @@ private:
     const MT_Vector2D& GetTailPosition() const;
           void         SetHeadPosition( const MT_Vector2D& position );
           void         SetTailPosition( const MT_Vector2D& position );
+          void         SetDirection   ( const MT_Vector2D& direction );
+          void         SetSpeed       ( const MT_Float rSpeed );
           void         UpdateLocation ();
     //@}
 
@@ -141,7 +143,6 @@ private:
          
     MT_Vector2D          destination_;
     DEC_Population_Path* pCurrentPath_;
-    bool                 bMoving_;
     bool                 bHeadMoveFinished_;
 
     MT_Vector2D          direction_;
