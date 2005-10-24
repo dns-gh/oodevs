@@ -71,12 +71,18 @@ void ADN_KnowledgeGroups_GUI::Build()
     pGroupsList->GetConnector().Connect( &data_.vGroups_ );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Knowledge group" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 3, Qt::Vertical, tr( "Knowledge group" ), pMainWidget_ );
 
-    builder.AddField<ADN_EditLine_String>( pGroup, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField<ADN_TimeField>( pGroup, tr( "Maximum lifetime" ), vInfosConnectors[eMaxLifetime] );
-    builder.AddField<ADN_EditLine_Double>( pGroup, tr( "Maximum distance between knowledge and real unit" ), vInfosConnectors[eMaxDistance], 0, eGreaterZero );
-    builder.AddOptionnalField<ADN_TimeField>( pGroup, tr( "Interpolation time" ), vInfosConnectors[eHasInterpolationTime], vInfosConnectors[eInterpolationTime] );
+    QWidget* pHolder = builder.AddFieldHolder( pGroup );
+    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
+
+    QGroupBox* pAgentGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Agents" ), pGroup );
+    builder.AddField<ADN_TimeField>( pAgentGroup, tr( "Maximum lifetime" ), vInfosConnectors[eAgentMaxLifetime] );
+    builder.AddField<ADN_EditLine_Double>( pAgentGroup, tr( "Maximum distance between knowledge and real unit" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
+    builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, tr( "Interpolation time" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
+
+    QGroupBox* pPopulationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Populations" ), pGroup );
+    builder.AddField<ADN_TimeField>( pPopulationGroup, tr( "Maximum lifetime" ), vInfosConnectors[ePopulationMaxLifetime] );
 
     pGroupsList->SetItemConnectors( vInfosConnectors );
 

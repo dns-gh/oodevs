@@ -26,16 +26,87 @@
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::AgentGroupInfo::AgentGroupInfo
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_KnowledgeGroups_Data::AgentGroupInfo::AgentGroupInfo()
+: ADN_Ref_ABC   ()
+, maxLifetime_        ( "0s" )
+, rMaxDistance_       ( 0.0 )
+, bInterpolationTime_ ( false )
+, interpolationTime_  ( "0s" )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_KnowledgeGroups_Data::AgentGroupInfo::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "ConnaissancesAgent" );
+    input.ReadField( "DureeDeVieMax", maxLifetime_ );
+    input.ReadField( "DistanceMaxEntreUniteReelleEtUniteConnue", rMaxDistance_ );
+    if( input.ReadField( "TempsInterpolation", interpolationTime_, ADN_XmlInput_Helper::eNothing ) )
+        bInterpolationTime_ = true;
+    input.EndSection(); // ConnaissancesAgent
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_KnowledgeGroups_Data::AgentGroupInfo::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "ConnaissancesAgent" );
+    output.WriteField( "DureeDeVieMax", maxLifetime_.GetData() );
+    output.WriteField( "DistanceMaxEntreUniteReelleEtUniteConnue", rMaxDistance_.GetData() );
+    if( bInterpolationTime_.GetData() )
+        output.WriteField( "TempsInterpolation", interpolationTime_.GetData() );
+    output.EndSection(); // ConnaissancesAgent
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::PopulationGroupInfo::PopulationGroupInfo
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_KnowledgeGroups_Data::PopulationGroupInfo::PopulationGroupInfo()
+: ADN_Ref_ABC   ()
+, maxLifetime_        ( "0s" )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::PopulationGroupInfo::ReadArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_KnowledgeGroups_Data::PopulationGroupInfo::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "ConnaissancesPopulation" );
+    input.ReadField( "DureeDeVieMax", maxLifetime_ );
+    input.EndSection(); // ConnaissancesPopulation
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "ConnaissancesPopulation" );
+    output.WriteField( "DureeDeVieMax", maxLifetime_.GetData() );
+    output.EndSection(); // ConnaissancesPopulation
+}
+
+// -----------------------------------------------------------------------------
 // Name: GroupInfo::GroupInfo
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
-, maxLifetime_        ( "0s" )
-, rMaxDistance_       ( 0.0 )
-, bInterpolationTime_ ( false )
-, interpolationTime_  ( "0s" )
+, agentInfos_         ()
+, populationInfos_    ()
 {
 }
 
@@ -69,12 +140,8 @@ void ADN_KnowledgeGroups_Data::GroupInfo::ReadArchive( ADN_XmlInput_Helper& inpu
     input.Section( "GroupeConnaissance" );
     input.ReadAttribute( "nom", strName_ );
 
-    input.Section( "Connaissance" );
-    input.ReadField( "DureeDeVieMax", maxLifetime_ );
-    input.ReadField( "DistanceMaxEntreUniteReelleEtUniteConnue", rMaxDistance_ );
-    if( input.ReadField( "TempsInterpolation", interpolationTime_, ADN_XmlInput_Helper::eNothing ) )
-        bInterpolationTime_ = true;
-    input.EndSection(); // Connaissance
+    agentInfos_     .ReadArchive( input );
+    populationInfos_.ReadArchive( input );
 
     input.EndSection(); // GroupeConnaissance
 }
@@ -89,12 +156,8 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( MT_OutputArchive_ABC& ou
     output.Section( "GroupeConnaissance" );
     output.WriteAttribute( "nom", strName_.GetData() );
 
-    output.Section( "Connaissance" );
-    output.WriteField( "DureeDeVieMax", maxLifetime_.GetData() );
-    output.WriteField( "DistanceMaxEntreUniteReelleEtUniteConnue", rMaxDistance_.GetData() );
-    if( bInterpolationTime_.GetData() )
-        output.WriteField( "TempsInterpolation", interpolationTime_.GetData() );
-    output.EndSection(); // Connaissance
+    agentInfos_     .WriteArchive( output );
+    populationInfos_.WriteArchive( output );
 
     output.EndSection(); // GroupeConnaissance
 }

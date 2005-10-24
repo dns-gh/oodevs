@@ -39,6 +39,42 @@ class ADN_KnowledgeGroups_Data
 
 public:
 // *****************************************************************************
+    class AgentGroupInfo
+        : public ADN_Ref_ABC
+    {
+        MT_COPYNOTALLOWED( AgentGroupInfo )
+
+    public:
+        AgentGroupInfo();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_Time   maxLifetime_;
+        ADN_Type_Double rMaxDistance_;
+        ADN_Type_Bool   bInterpolationTime_;
+        ADN_Type_Time   interpolationTime_;
+    };
+
+// *****************************************************************************
+    class PopulationGroupInfo
+        : public ADN_Ref_ABC
+    {
+        MT_COPYNOTALLOWED( PopulationGroupInfo )
+
+    public:
+        PopulationGroupInfo();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_Time   maxLifetime_;
+    };
+
+
+// *****************************************************************************
     class GroupInfo
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -55,12 +91,10 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_String strName_;
+        ADN_Type_String     strName_;
 
-        ADN_Type_Time   maxLifetime_;
-        ADN_Type_Double rMaxDistance_;
-        ADN_Type_Bool   bInterpolationTime_;
-        ADN_Type_Time   interpolationTime_;
+        AgentGroupInfo      agentInfos_;
+        PopulationGroupInfo populationInfos_;
     };
 
     typedef ADN_Type_Vector_ABC< GroupInfo > T_GroupInfoVector;

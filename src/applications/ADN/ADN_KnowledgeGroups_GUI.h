@@ -38,10 +38,11 @@ public:
     enum E_GuiElements
     {
         eName,
-        eMaxLifetime,
-        eMaxDistance,
-        eHasInterpolationTime,
-        eInterpolationTime,
+        eAgentMaxLifetime,
+        eAgentMaxDistance,
+        eAgentHasInterpolationTime,
+        eAgentInterpolationTime,
+        ePopulationMaxLifetime,
         eNbrGuiElements
     };
 

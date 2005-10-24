@@ -70,10 +70,11 @@ void ADN_KnowledgeGroups_ListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_KnowledgeGroups_GUI::eNbrGuiElements );
 
     vItemConnectors_[ADN_KnowledgeGroups_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_KnowledgeGroups_GUI::eMaxLifetime]->Connect( &pInfos->maxLifetime_, bConnect );
-    vItemConnectors_[ADN_KnowledgeGroups_GUI::eMaxDistance]->Connect( &pInfos->rMaxDistance_, bConnect );
-    vItemConnectors_[ADN_KnowledgeGroups_GUI::eHasInterpolationTime]->Connect( &pInfos->bInterpolationTime_, bConnect );
-    vItemConnectors_[ADN_KnowledgeGroups_GUI::eInterpolationTime]->Connect( &pInfos->interpolationTime_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::eAgentMaxLifetime]->Connect( &pInfos->agentInfos_.maxLifetime_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::eAgentMaxDistance]->Connect( &pInfos->agentInfos_.rMaxDistance_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::eAgentHasInterpolationTime]->Connect( &pInfos->agentInfos_.bInterpolationTime_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::eAgentInterpolationTime]->Connect( &pInfos->agentInfos_.interpolationTime_, bConnect );
+    vItemConnectors_[ADN_KnowledgeGroups_GUI::ePopulationMaxLifetime]->Connect( &pInfos->populationInfos_.maxLifetime_, bConnect );
 }
 
 

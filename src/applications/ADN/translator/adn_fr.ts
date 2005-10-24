@@ -2808,6 +2808,14 @@
         <source>Interpolation time</source>
         <translation>Temps d&apos;interpolation</translation>
     </message>
+    <message>
+        <source>Agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Populations</translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_ListView</name>
