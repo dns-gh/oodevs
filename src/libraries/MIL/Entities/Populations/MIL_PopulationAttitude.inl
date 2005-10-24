@@ -42,6 +42,17 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( ASN1T_EnumPopulation
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationAttitude::Find
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+inline
+const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( uint nID )
+{
+    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
+    return it == attitudes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationAttitude::GetName
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------

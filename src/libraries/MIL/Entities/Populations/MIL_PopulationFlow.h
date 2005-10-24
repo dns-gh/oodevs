@@ -40,6 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
+     MIL_PopulationFlow();
     ~MIL_PopulationFlow();
     //@}
 
@@ -80,6 +81,14 @@ public:
     void SendCreation    () const;
     void SendFullState   () const;
     void SendChangedState() const;
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
 private:
@@ -136,7 +145,7 @@ private:
     //@}
 
 private:
-          MIL_Population&              population_;
+          MIL_Population*              pPopulation_;
     const uint                         nID_;
 
     const MIL_PopulationAttitude*      pAttitude_;

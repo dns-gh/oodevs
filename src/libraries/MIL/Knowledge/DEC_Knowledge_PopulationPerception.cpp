@@ -18,6 +18,8 @@
 #include "DEC_Knowledge_Population.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 
@@ -63,17 +65,86 @@ DEC_Knowledge_PopulationPerception::~DEC_Knowledge_PopulationPerception()
 // CHECKPOINTS
 // =============================================================================
 
+namespace boost
+{
+    namespace serialization
+    {
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint nVersion )
+        {
+            split_free( file, map, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint )
+        {
+            file << map.size();
+            for ( DEC_Knowledge_PopulationPerception::CIT_ConcentrationMap it = map.begin(); it != map.end(); ++it )
+            {
+                file << it->first
+                     << it->second;
+            }
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                MIL_PopulationConcentration* pConcentration;
+                file >> pConcentration;
+                file >> map[ pConcentration ];
+            }
+        }
+
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint nVersion )
+        {
+            split_free( file, map, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint )
+        {
+            file << map.size();
+            for ( DEC_Knowledge_PopulationPerception::CIT_FlowMap it = map.begin(); it != map.end(); ++it )
+            {
+                file << it->first
+                     << it->second;
+            }
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                MIL_PopulationFlow* pFlow;
+                file >> pFlow;
+                file >> map[ pFlow ];
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         >> pPopulationPerceived_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
+
+    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
+         >> pPopulationPerceived_
+         >> concentrations_
+         >> flows_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,10 +153,11 @@ void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, co
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         << pPopulationPerceived_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
+         << pPopulationPerceived_
+         << concentrations_
+         << flows_;
 }
 
 

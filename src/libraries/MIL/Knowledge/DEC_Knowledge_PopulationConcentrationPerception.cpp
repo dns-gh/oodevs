@@ -68,11 +68,15 @@ DEC_Knowledge_PopulationConcentrationPerception::~DEC_Knowledge_PopulationConcen
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         >> pPopulationPerceived_;
+    file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
+         >> pPopulationConcentrationPerceived_;
+
+    uint nID;
+    file >> nID;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
+
+    file >> nID;
+    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,10 +85,10 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         << pPopulationPerceived_;
+    file << const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
+         << pPopulationConcentrationPerceived_
+         << pCurrentPerceptionLevel_->GetID()
+         << pPreviousPerceptionLevel_->GetID();
 }
 
 // =============================================================================

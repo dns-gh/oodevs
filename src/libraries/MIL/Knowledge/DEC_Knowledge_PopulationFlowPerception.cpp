@@ -13,13 +13,14 @@
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
-#include "MIL_AgentServer.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPerception, "DEC_Knowledge_PopulationFlowPerception" )
 
@@ -71,11 +72,17 @@ DEC_Knowledge_PopulationFlowPerception::~DEC_Knowledge_PopulationFlowPerception(
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
-//         >> pPopulationPerceived_;
+    file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
+         >> pPopulationFlowPerceived_
+         >> shape_
+         >> previousShape_;
+
+    uint nID;
+    file >> nID;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
+
+    file >> nID;
+    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,10 +91,12 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
-//         << pPopulationPerceived_;
+    file << const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
+         << pPopulationFlowPerceived_
+         << shape_
+         << previousShape_
+         << pCurrentPerceptionLevel_->GetID()
+         << pPreviousPerceptionLevel_->GetID();
 }
 
 // =============================================================================

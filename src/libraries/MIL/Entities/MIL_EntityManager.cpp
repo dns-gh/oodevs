@@ -1134,7 +1134,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
          >> armies_
          >> pions_
          >> automates_
-//         >> populations_
+         >> populations_
          >> pObjectManager_
          >> recycledPions_
          >> rKnowledgesTime_
@@ -1155,7 +1155,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          << armies_
          << pions_
          << automates_
-//         << populations_
+         << populations_
          << pObjectManager_
          << recycledPions_ 
          << rKnowledgesTime_

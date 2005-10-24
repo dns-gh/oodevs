@@ -27,8 +27,11 @@
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 MIL_MOSIDManager MIL_PopulationConcentration::idManager_;
+
+BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration constructor
@@ -36,7 +39,7 @@ MIL_MOSIDManager MIL_PopulationConcentration::idManager_;
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive )
     : TER_PopulationConcentration_ABC()
-    , population_                    ( population )
+    , pPopulation_                   ( &population )
     , nID_                           ( idManager_.GetFreeSimID() )
     , position_                      ()
     , location_                      ()
@@ -65,7 +68,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
     : TER_PopulationConcentration_ABC()
-    , population_                    ( population )
+    , pPopulation_                   ( &population )
     , nID_                           ( idManager_.GetFreeSimID() )
     , position_                      ( position )
     , location_                      ()
@@ -81,6 +84,28 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     UpdateLocation();
     UpdateDensity ();
     SendCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration constructor
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration::MIL_PopulationConcentration()
+    : TER_PopulationConcentration_ABC()
+    , pPopulation_                   ( 0 )
+    , nID_                           ( 0 )
+    , position_                      ()
+    , location_                      ()
+    , rNbrAliveHumans_               ( 0 )
+    , rNbrDeadHumans_                ( 0 )
+    , rDensity_                      ( 0. )
+    , pAttitude_                     ( 0 )
+    , pPullingFlow_                  ( 0 )
+    , pushingFlows_                  ()
+    , bHumansUpdated_                ( true )
+    , bAttitudeUpdated_              ( true )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -139,8 +164,8 @@ bool MIL_PopulationConcentration::Update()
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::UpdateLocation()
 {
-    assert( population_.GetType().GetConcentrationDensity() );
-    MT_Float rSurface = rNbrAliveHumans_ / population_.GetType().GetConcentrationDensity();
+    assert( pPopulation_ && pPopulation_->GetType().GetConcentrationDensity() );
+    MT_Float rSurface = rNbrAliveHumans_ / pPopulation_->GetType().GetConcentrationDensity();
     location_.Reset( TER_Localisation( position_, std::sqrt( rSurface / MT_PI ) ) );
     UpdatePatch();
 }
@@ -158,7 +183,8 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
     if( pPullingFlow_ || IsNearPosition( destination ) )
         return;
 
-    pPullingFlow_ = &population_.CreateFlow( *this );
+    assert( pPopulation_ );
+    pPullingFlow_ = &pPopulation_->CreateFlow( *this );
     pPullingFlow_->Move( destination );
 }
 
@@ -183,7 +209,7 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 MT_Float MIL_PopulationConcentration::GetMaxSpeed( const PHY_Volume& pionVolume ) const
 {
     assert( pAttitude_ );
-    return population_.GetMaxSpeed( *pAttitude_, rDensity_, pionVolume );
+    return pPopulation_->GetMaxSpeed( *pAttitude_, rDensity_, pionVolume );
 }
 
 // =============================================================================
@@ -223,9 +249,11 @@ MT_Float MIL_PopulationConcentration::PullHumans( MT_Float rNbr )
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendCreation() const
 {
+    assert( pPopulation_ );
+
     NET_ASN_MsgPopulationConcentrationCreation asnMsg;
     asnMsg.GetAsnMsg().oid_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_population    = population_.GetID();
+    asnMsg.GetAsnMsg().oid_population    = pPopulation_->GetID();
     NET_ASN_Tools::WritePoint( position_, asnMsg.GetAsnMsg().position ); 
     asnMsg.Send();
 }
@@ -236,9 +264,11 @@ void MIL_PopulationConcentration::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendDestruction() const
 {
+    assert( pPopulation_ );
+
     NET_ASN_MsgPopulationConcentrationDestruction asnMsg;
     asnMsg.GetAsnMsg().oid_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_population    = population_.GetID();
+    asnMsg.GetAsnMsg().oid_population    = pPopulation_->GetID();
     asnMsg.Send();
 }
 
@@ -248,11 +278,12 @@ void MIL_PopulationConcentration::SendDestruction() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendFullState() const
 {
+    assert( pPopulation_ );
     assert( pAttitude_ );
 
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
     asnMsg.GetAsnMsg().oid_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_population    = population_.GetID();
+    asnMsg.GetAsnMsg().oid_population    = pPopulation_->GetID();
 
     asnMsg.GetAsnMsg().m.attitudePresent           = 1;
     asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
@@ -271,6 +302,7 @@ void MIL_PopulationConcentration::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendChangedState() const
 {
+    assert( pPopulation_ );
     assert( pAttitude_ );
 
     if( !HasChanged() )
@@ -278,7 +310,7 @@ void MIL_PopulationConcentration::SendChangedState() const
 
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
     asnMsg.GetAsnMsg().oid_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_population    = population_.GetID();
+    asnMsg.GetAsnMsg().oid_population    = pPopulation_->GetID();
 
     if( bAttitudeUpdated_ )
     {
@@ -296,4 +328,57 @@ void MIL_PopulationConcentration::SendChangedState() const
     }
 
     asnMsg.Send();
+}
+
+// =============================================================================
+// CHECKPOINT
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::load
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uint )
+{
+    file >> boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
+    
+    file >> pPopulation_
+         >> nID_
+         >> position_
+         >> location_
+         >> rNbrAliveHumans_
+         >> rNbrDeadHumans_
+         >> rDensity_;
+
+    if ( !idManager_.IsMosIDValid( nID_ ) )
+        idManager_.LockSimID( nID_ );
+
+    uint nAttitudeID;
+    file >> nAttitudeID;
+    pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
+    assert( pAttitude_ );
+
+    file >> pPullingFlow_
+         >> pushingFlows_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::save
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const uint ) const
+{
+    file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
+
+    file << pPopulation_
+         << nID_
+         << position_
+         << location_
+         << rNbrAliveHumans_
+         << rNbrDeadHumans_
+         << rDensity_
+         << pAttitude_->GetID()
+         << pPullingFlow_
+         << pushingFlows_
+    ;
 }

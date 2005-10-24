@@ -34,6 +34,7 @@ class DEC_KS_ObjectInteraction : public DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             DEC_KS_ObjectInteraction();
              DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& agentInteracting );
     virtual ~DEC_KS_ObjectInteraction();
     //@}
@@ -49,6 +50,14 @@ public:
     //@{
     void NotifyObjectInteraction( MIL_RealObject_ABC& object );
     void NotifyObjectCollision  ( MIL_RealObject_ABC& object, const MT_Vector2D& vPosition );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( boost::archive::binary_iarchive&, const uint );
+    void save( boost::archive::binary_oarchive&, const uint ) const;
     //@}
 
 private:

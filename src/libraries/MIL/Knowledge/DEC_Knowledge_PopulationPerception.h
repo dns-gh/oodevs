@@ -33,6 +33,18 @@ class DEC_Knowledge_PopulationPerception : public DEC_Knowledge_ABC
     MT_COPYNOTALLOWED( DEC_Knowledge_PopulationPerception ) 
 
 public:
+    //! @name Types
+    //@{
+    typedef std::map< const MIL_PopulationConcentration*, DEC_Knowledge_PopulationConcentrationPerception* > T_ConcentrationMap;
+    typedef T_ConcentrationMap::iterator                                                                     IT_ConcentrationMap;
+    typedef T_ConcentrationMap::const_iterator                                                               CIT_ConcentrationMap;
+
+    typedef std::map< const MIL_PopulationFlow*, DEC_Knowledge_PopulationFlowPerception* > T_FlowMap;
+    typedef T_FlowMap::iterator                                                            IT_FlowMap;
+    typedef T_FlowMap::const_iterator                                                      CIT_FlowMap;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_PopulationPerception( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived );
@@ -72,23 +84,11 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_PopulationConcentration*, DEC_Knowledge_PopulationConcentrationPerception* > T_ConcentrationMap;
-    typedef T_ConcentrationMap::iterator                                                                     IT_ConcentrationMap;
-    typedef T_ConcentrationMap::const_iterator                                                               CIT_ConcentrationMap;
-
-    typedef std::map< const MIL_PopulationFlow*, DEC_Knowledge_PopulationFlowPerception* > T_FlowMap;
-    typedef T_FlowMap::iterator                                                            IT_FlowMap;
-    typedef T_FlowMap::const_iterator                                                      CIT_FlowMap;
-    //@}
-
-private:
     const MIL_AgentPion*   pAgentPerceiving_;
           MIL_Population*  pPopulationPerceived_;
 
-    T_ConcentrationMap concentrations_;
-    T_FlowMap          flows_;
+    T_ConcentrationMap     concentrations_;
+    T_FlowMap              flows_;
 };
 
 #include "DEC_Knowledge_PopulationPerception.inl"

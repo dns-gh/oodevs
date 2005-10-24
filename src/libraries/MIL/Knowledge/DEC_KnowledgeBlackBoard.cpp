@@ -57,12 +57,15 @@ void DEC_KnowledgeBlackBoard::Terminate()
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgentPerception >( *this );
-    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgent           >( *this );
-    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectCollision >( *this );
-    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectPerception>( *this );
-    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObject          >( *this );
-    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeRapFor          >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgentPerception     >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgent               >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectCollision     >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectPerception    >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObject              >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgePopulation          >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgePopulationCollision >( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgePopulationPerception>( *this );
+    file >> boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeRapFor              >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,12 +74,15 @@ void DEC_KnowledgeBlackBoard::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgentPerception >( *this );
-    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgent           >( *this );
-    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectCollision >( *this );
-    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectPerception>( *this );
-    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObject          >( *this );
-    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeRapFor          >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgentPerception     >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeAgent               >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectCollision     >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObjectPerception    >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeObject              >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgePopulation          >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgePopulationCollision >( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgePopulationPerception>( *this );
+    file << boost::serialization::base_object< DEC_BlackBoard_CanContainKnowledgeRapFor              >( *this );
 }
 
 

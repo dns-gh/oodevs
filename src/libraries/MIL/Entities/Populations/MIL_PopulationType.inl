@@ -91,3 +91,16 @@ const MIL_PopulationType* MIL_PopulationType::Find( const std::string& strName )
     CIT_PopulationMap it = populations_.find( strName );   
     return it == populations_.end() ? 0 :  it->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::Find
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+inline
+const MIL_PopulationType* MIL_PopulationType::Find( uint nID )
+{
+    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+        if( it->second->nID_ == nID )
+            return it->second;
+    return 0;
+}

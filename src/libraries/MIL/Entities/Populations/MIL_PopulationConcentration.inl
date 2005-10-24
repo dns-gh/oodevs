@@ -97,7 +97,8 @@ const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
 inline
 MIL_Population& MIL_PopulationConcentration::GetPopulation() const
 {
-    return population_;
+    assert( pPopulation_ );
+    return *pPopulation_;
 }
 
 // -----------------------------------------------------------------------------

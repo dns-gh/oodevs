@@ -187,6 +187,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     uint nTypeID;
     
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
+    file >> boost::serialization::base_object< PHY_Actor     >( *this );
 
     file >> nTypeID;
     pType_ = MIL_AgentTypePion::FindPionType( nTypeID );
@@ -242,6 +243,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
     assert( pType_ );
     
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
+    file << boost::serialization::base_object< PHY_Actor     >( *this );
     file << pType_->GetID()
          << bIsPC_
          << strName_

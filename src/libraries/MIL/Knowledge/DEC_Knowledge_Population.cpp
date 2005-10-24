@@ -76,27 +76,35 @@ DEC_Knowledge_Population::~DEC_Knowledge_Population()
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::load
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         >> pPopulationPerceived_;
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
+         >> pPopulationKnown_
+         >> const_cast< uint& >( nID_ )
+         >> concentrations_
+         >> flows_;
+
+    assert( pPopulationKnown_ );
+    pArmy_ = &pPopulationKnown_->GetArmy();
+
+    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::save
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         << pPopulationPerceived_;
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         << pKnowledgeGroup_
+         << pPopulationKnown_
+         << nID_
+         << concentrations_
+         << flows_;
 }
 
 

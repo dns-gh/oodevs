@@ -14,13 +14,14 @@
 
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
+#include "MIL_AgentServer.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "MIL_AgentServer.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 MIL_MOSIDManager DEC_Knowledge_PopulationConcentration::idManager_;
 
@@ -89,27 +90,53 @@ DEC_Knowledge_PopulationConcentration::~DEC_Knowledge_PopulationConcentration()
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::load
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         >> pPopulationPerceived_;
+    file >> const_cast< DEC_Knowledge_Population*&    >( pPopulationKnowledge_ )
+         >> const_cast< MIL_PopulationConcentration*& >( pConcentrationKnown_  )
+         >> const_cast< uint&                         >( nID_                  )
+         >> nTimeLastUpdate_
+         >> position_
+         >> nNbrAliveHumans_
+         >> nNbrDeadHumans_;
+
+    uint nTmpID;
+    file >> nTmpID;
+    pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
+    assert( pAttitude_ );
+
+    file >> rRelevance_;
+
+    file >> nTmpID;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
+    assert( pCurrentPerceptionLevel_ );
+
+    file >> nTmpID;
+    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
+    assert( pPreviousPerceptionLevel_ );
+
+    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::save
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         << pPopulationPerceived_;
+    file << pPopulationKnowledge_
+         << pConcentrationKnown_
+         << nID_
+         << nTimeLastUpdate_
+         << position_
+         << nNbrAliveHumans_
+         << nNbrDeadHumans_
+         << pAttitude_->GetID()
+         << rRelevance_
+         << pCurrentPerceptionLevel_->GetID()
+         << pPreviousPerceptionLevel_->GetID();
 }
 
 // =============================================================================

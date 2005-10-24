@@ -20,8 +20,6 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationCollision, "DEC_Knowledge_PopulationCollision" )
 
 // -----------------------------------------------------------------------------
@@ -71,12 +69,12 @@ template< typename Archive >
 void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const uint )
 {
     assert( false );
-//    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         & const_cast< MIL_AgentPion*& >( pAgentColliding_ )
-//         & pPopulation_
-//         & flows_
-//         & concentrations_
-//         & bIsValid_;    
+    file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         & const_cast< MIL_AgentPion*& >( pAgentColliding_ )
+         & pPopulation_
+         & flows_
+         & concentrations_
+         & bIsValid_;
 }
 
 // =============================================================================

@@ -41,6 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive );
+     MIL_Population();
     ~MIL_Population();
     //@}
 
@@ -89,10 +90,10 @@ public:
 
     //! @name CheckPoints
     //@{
-//    BOOST_SERIALIZATION_SPLIT_MEMBER()
-//    
-//    void load( MIL_CheckPointInArchive&, const uint );
-//    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
 private:
@@ -109,9 +110,9 @@ private:
     typedef T_ConcentrationVector::iterator             IT_ConcentrationVector;
     typedef T_ConcentrationVector::const_iterator       CIT_ConcentrationVector;
     
-    typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
-    typedef T_FlowVector::iterator             IT_FlowVector;
-    typedef T_FlowVector::const_iterator       CIT_FlowVector;
+    typedef std::vector< MIL_PopulationFlow* >          T_FlowVector;
+    typedef T_FlowVector::iterator                      IT_FlowVector;
+    typedef T_FlowVector::const_iterator                CIT_FlowVector;
     //@}
 
 private:
@@ -121,17 +122,17 @@ private:
     //@}
 
 private:
-    const MIL_PopulationType&     type_;
-    const uint                    nID_;
-    const MIL_Army*               pArmy_;
-          std::string             strName_;
-    const MIL_PopulationAttitude* pDefaultAttitude_;
+    const MIL_PopulationType*        pType_;
+    const uint                       nID_;
+    const MIL_Army*                  pArmy_;
+          std::string                strName_;
+    const MIL_PopulationAttitude*    pDefaultAttitude_;
 
-          T_ConcentrationVector   concentrations_;
-          T_FlowVector            flows_;
+          T_ConcentrationVector      concentrations_;
+          T_FlowVector               flows_;
 
-          T_ConcentrationVector   trashedConcentrations_;
-          T_FlowVector            trashedFlows_;
+          T_ConcentrationVector      trashedConcentrations_;
+          T_FlowVector               trashedFlows_;
 
           DEC_PopulationDecision*    pDecision_;
           MIL_PopulationOrderManager orderManager_;

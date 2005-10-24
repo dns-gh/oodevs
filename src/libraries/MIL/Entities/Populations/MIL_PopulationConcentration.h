@@ -39,6 +39,7 @@ public:
     //@{
      MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive );
      MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
+     MIL_PopulationConcentration();
     ~MIL_PopulationConcentration();
     //@}
 
@@ -84,6 +85,21 @@ public:
     void SendChangedState() const;
     //@}
 
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    //@}
+
+public:
+    //! @name Types
+    //@{
+    typedef std::set< MIL_PopulationFlow* > T_FlowSet;
+    typedef T_FlowSet::const_iterator       CIT_FlowSet;
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -104,14 +120,7 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< MIL_PopulationFlow* > T_FlowSet;
-    typedef T_FlowSet::const_iterator       CIT_FlowSet;
-    //@}
-
-private:
-          MIL_Population&         population_;
+          MIL_Population*         pPopulation_;
           uint                    nID_;
           MT_Vector2D             position_;
           TER_Localisation        location_;

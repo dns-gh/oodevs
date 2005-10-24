@@ -92,6 +92,12 @@ public:
     bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, const DEC_Knowledge_Object** pObject ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    template< typename Archive >
+    void serialize( Archive& file, const uint );
+    //@}
+
 protected:
     //! @name Network
     //@{

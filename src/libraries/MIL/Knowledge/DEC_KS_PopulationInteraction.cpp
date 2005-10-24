@@ -14,8 +14,11 @@
 
 #include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_PopulationCollision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+
+BOOST_CLASS_EXPORT_GUID( DEC_KS_PopulationInteraction, "DEC_KS_PopulationInteraction" )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction constructor
@@ -26,7 +29,20 @@ DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBo
     , pAgentInteracting_     ( &agentInteracting )
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this );    
+    pBlackBoard_->AddToScheduler( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction constructor
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+DEC_KS_PopulationInteraction::DEC_KS_PopulationInteraction()
+    : DEC_KnowledgeSource_ABC ()
+    , pAgentInteracting_      ( 0 )
+    , flowCollisions_         ()
+    , concentrationCollisions_()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -119,4 +135,32 @@ void DEC_KS_PopulationInteraction::Clean()
     assert( pBlackBoard_ );
     class_mem_fun_void_t< DEC_KS_PopulationInteraction, DEC_Knowledge_PopulationCollision > method( DEC_KS_PopulationInteraction::CleanKnowledgePopulationCollision, *this );        
     pBlackBoard_->ApplyOnKnowledgesPopulationCollision( method );    
+}
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::load
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::load( boost::archive::binary_iarchive& file, const uint )
+{
+    file >> boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+         >> const_cast< MIL_AgentPion*& >( pAgentInteracting_ )
+         >> concentrationCollisions_
+         >> flowCollisions_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::save
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::save( boost::archive::binary_oarchive& file, const uint ) const
+{
+    file << boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
+         << pAgentInteracting_
+         << concentrationCollisions_
+         << flowCollisions_;
 }

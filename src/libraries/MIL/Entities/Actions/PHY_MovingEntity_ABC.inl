@@ -95,3 +95,18 @@ bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const MT_Vector2D& vSta
 {
     return pathWalker_.ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject );
 }
+
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MovingEntity_ABC::serialize
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+template< typename Archive >
+inline
+void PHY_MovingEntity_ABC::serialize( Archive& /*file*/, const uint )
+{
+    // NOTHING
+}

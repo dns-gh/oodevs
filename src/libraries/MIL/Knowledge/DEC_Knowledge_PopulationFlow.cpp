@@ -17,12 +17,14 @@
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationFlowPart.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 MIL_MOSIDManager DEC_Knowledge_PopulationFlow::idManager_;
 
@@ -93,29 +95,91 @@ DEC_Knowledge_PopulationFlow::~DEC_Knowledge_PopulationFlow()
 // CHECKPOINTS
 // =============================================================================
 
+namespace boost
+{
+    namespace serialization
+    {
+        template< typename Archive >
+        inline
+        void serialize( Archive& file, DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const uint nVersion )
+        {
+            split_free( file, map, nVersion );
+        }
+        
+        template< typename Archive >
+        void save( Archive& file, const DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const uint )
+        {
+            file << map.size();
+            for ( DEC_Knowledge_PopulationFlow::CIT_FlowPartMap it = map.begin(); it != map.end(); ++it )
+            {
+                file << it->first
+                     << it->second;
+            }
+        }
+        
+        template< typename Archive >
+        void load( Archive& file, DEC_Knowledge_PopulationFlow::T_FlowPartMap& map, const uint )
+        {
+            uint nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                MIL_AgentPion* pPion;
+                file >> pPion;
+                file >> map[ pPion ];
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::load
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         >> pPopulationPerceived_;
+    file >> const_cast< DEC_Knowledge_Population*& >( pPopulationKnowledge_ )
+         >> const_cast< MIL_PopulationFlow*&       >( pFlowKnown_           )
+         >> const_cast< uint&                      >( nID_                  )
+         >> direction_
+         >> rSpeed_
+         >> flowParts_
+         >> nNbrAliveHumans_
+         >> nNbrDeadHumans_;
+
+    uint nTmpID;
+    file >> nTmpID;
+    pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
+    assert( pAttitude_ );
+    
+    file >> nTmpID;
+    pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
+    assert( pPreviousPerceptionLevel_ );
+
+    file >> nTmpID;
+    pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
+    assert( pCurrentPerceptionLevel_ );
+
+    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow::save
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         << pPopulationPerceived_;
+    file << pPopulationKnowledge_
+         << pFlowKnown_
+         << nID_
+         << direction_
+         << rSpeed_
+         << flowParts_
+         << nNbrAliveHumans_
+         << nNbrDeadHumans_
+         << pAttitude_->GetID()
+         << pPreviousPerceptionLevel_->GetID()
+         << pCurrentPerceptionLevel_->GetID();
 }
 
 // =============================================================================

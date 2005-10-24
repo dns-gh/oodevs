@@ -37,8 +37,9 @@ public:
     static void Initialize();
     static void Terminate ();
 
-    static const MIL_PopulationAttitude* Find        ( const std::string& strName );
-    static const MIL_PopulationAttitude* Find        ( ASN1T_EnumPopulationAttitude nAsnID );
+    static const MIL_PopulationAttitude* Find        ( const std::string&           strName );
+    static const MIL_PopulationAttitude* Find        ( ASN1T_EnumPopulationAttitude nAsnID  );
+    static const MIL_PopulationAttitude* Find        ( uint                         nID     );
     static const T_AttitudeMap&          GetAttitudes();
     //@}
 

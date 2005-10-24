@@ -50,3 +50,17 @@ bool PHY_Actor::HasAction( PHY_Action_ABC& action ) const
 {
     return actions_.find( &action ) != actions_.end();
 }
+
+// =============================================================================
+// CHECKPOINT
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Actor::serialize
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void PHY_Actor::serialize( Archive&, const uint )
+{
+    // Actions are not serialized
+}

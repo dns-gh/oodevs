@@ -37,6 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_KS_PopulationInteraction( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& agentInteracting );
+             DEC_KS_PopulationInteraction();
     virtual ~DEC_KS_PopulationInteraction();
     //@}
 
@@ -51,6 +52,14 @@ public:
     //@{
     void NotifyPopulationCollision( MIL_PopulationFlow&          flow          );
     void NotifyPopulationCollision( MIL_PopulationConcentration& concentration );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( boost::archive::binary_iarchive&, const uint );
+    void save( boost::archive::binary_oarchive&, const uint ) const;
     //@}
 
 private:

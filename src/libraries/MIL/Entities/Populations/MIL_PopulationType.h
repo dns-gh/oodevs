@@ -33,6 +33,7 @@ public:
     static void                      Initialize( MIL_InputArchive& archive );
     static void                      Terminate ();
     static const MIL_PopulationType* Find      ( const std::string& strName );
+    static const MIL_PopulationType* Find      ( uint nID );
     //@}
 
     //! @name Accessors

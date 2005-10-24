@@ -461,6 +461,7 @@ void MOS_AgentManager::DeleteAllAgents()
 	for( IT_PopulationMap it = populationMap_.begin(); it != populationMap_.end(); ++it )
         delete it->second;
     populationMap_.clear();
+    allMap_.clear();
 }
 
 

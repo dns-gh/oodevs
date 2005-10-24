@@ -29,13 +29,15 @@
 #include "Network/NET_ASN_Messages.h"
 #include "MIL_AgentServer.h"
 
+BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
     : PHY_Actor        ()
-    , type_            ( type )
+    , pType_           ( &type )
     , nID_             ( nID )
     , pArmy_           ( 0 )
     , strName_         ( type.GetName() )
@@ -67,6 +69,23 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population constructor
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+MIL_Population::MIL_Population()
+    : PHY_Actor        ()
+    , pType_           ( 0 )
+    , nID_             ( 0 )
+    , pArmy_           ( 0 )
+    , strName_         ()
+    , pDecision_       ( 0 )
+    , orderManager_    ( *this )
+    , pDefaultAttitude_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population destructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
@@ -81,21 +100,57 @@ MIL_Population::~MIL_Population()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::load
-// Created: NLD 2005-10-14
+// Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-//void MIL_Population::load( MIL_CheckPointInArchive&, const uint )
-//{
-//
-//}
+void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
+{
+    file >> boost::serialization::base_object< PHY_Actor >( *this );
+
+    uint nTypeID;
+    file >> nTypeID;
+    pType_ = MIL_PopulationType::Find( nTypeID );
+    assert( pType_ );
+
+    file >> nID_
+         >> const_cast< MIL_Army*& >( pArmy_ )
+         >> strName_;
+
+    if ( !MIL_EntityManager::populationIDManager_.IsMosIDValid( nID_ ) )
+        MIL_EntityManager::populationIDManager_.LockSimID( nID_ );
+
+    uint nAttitudeID;
+    file >> nAttitudeID;
+    pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
+    assert( pDefaultAttitude_ );
+
+    file >> concentrations_
+         >> flows_
+         >> trashedConcentrations_
+         >> trashedFlows_
+    ;
+
+    pDecision_ = new DEC_PopulationDecision( *this );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::save
-// Created: NLD 2005-10-14
+// Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-//void MIL_Population::save( MIL_CheckPointOutArchive&, const uint ) const
-//{
-//
-//}
+void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
+{
+    file << boost::serialization::base_object< PHY_Actor >( *this );
+
+    file << pType_->GetID()
+         << nID_
+         << pArmy_
+         << strName_
+         << pDefaultAttitude_->GetID()
+         << concentrations_
+         << flows_
+         << trashedConcentrations_
+         << trashedFlows_
+    ;
+}
 
 // =============================================================================
 // OPERATIONS
@@ -220,7 +275,8 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetMaxSpeed() const
 {
-    return type_.GetMaxSpeed();
+    assert( pType_ );
+    return pType_->GetMaxSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +285,8 @@ MT_Float MIL_Population::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetDefaultFlowDensity() const
 {
-    return type_.GetDefaultFlowDensity();
+    assert( pType_ );
+    return pType_->GetDefaultFlowDensity();
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetMaxSpeed
@@ -237,7 +294,7 @@ MT_Float MIL_Population::GetDefaultFlowDensity() const
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const
 {
-    return type_.GetMaxSpeed( attitude, rDensity, pionVolume );
+    return pType_->GetMaxSpeed( attitude, rDensity, pionVolume );
 }
 
 // =============================================================================
@@ -252,7 +309,7 @@ void MIL_Population::SendCreation() const
 {
     NET_ASN_MsgPopulationCreation asnMsg;
     asnMsg.GetAsnMsg().oid_population  = nID_;
-    asnMsg.GetAsnMsg().type_population = type_.GetID();
+    asnMsg.GetAsnMsg().type_population = pType_->GetID();
     asnMsg.GetAsnMsg().oid_camp        = pArmy_->GetID();
     asnMsg.GetAsnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
     asnMsg.Send();

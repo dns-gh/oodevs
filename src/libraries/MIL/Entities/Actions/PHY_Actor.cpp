@@ -47,4 +47,3 @@ void PHY_Actor::UpdateActions()
     for( CIT_ActionSet itAction = actions_.begin(); itAction != actions_.end(); ++itAction )
         (**itAction).Update();
 }
-

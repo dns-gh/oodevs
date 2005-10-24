@@ -50,4 +50,3 @@ void PHY_MovingEntity_ABC::Clean()
 {
     pathWalker_.Clean();
 }
-

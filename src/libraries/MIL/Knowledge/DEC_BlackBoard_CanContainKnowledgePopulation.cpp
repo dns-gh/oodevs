@@ -47,14 +47,14 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const uint )
 {
-//    uint nNbr;
-//    file >> nNbr;
-//    while ( nNbr-- )
-//    {
-//        MIL_Population* pPopulation;
-//        file >> pPopulation;
-//        file >> knowledgePopulationMap_[ pPopulation ];
-//    }
+    uint nNbr;
+    file >> nNbr;
+    while ( nNbr-- )
+    {
+        MIL_Population* pPopulation;
+        file >> pPopulation;
+        file >> knowledgePopulationMap_[ pPopulation ];
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -63,12 +63,12 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-//    file << knowledgePopulationMap_.size();
-//    for ( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
-//    {
-//        file << it->first
-//             << it->second;
-//    }
+    file << knowledgePopulationMap_.size();
+    for ( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
+    {
+        file << it->first
+             << it->second;
+    }
 }
 
 

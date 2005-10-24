@@ -44,7 +44,8 @@ uint MIL_Population::GetID() const
 inline
 const MIL_PopulationType& MIL_Population::GetType() const
 {
-    return type_;
+    assert( pType_ );
+    return *pType_;
 }
 
 // -----------------------------------------------------------------------------

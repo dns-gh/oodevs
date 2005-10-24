@@ -17,6 +17,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlowPart, "DEC_Knowledge_PopulationFlowPart" )
 
@@ -39,6 +40,7 @@ DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlowPart::~DEC_Knowledge_PopulationFlowPart()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -47,27 +49,26 @@ DEC_Knowledge_PopulationFlowPart::~DEC_Knowledge_PopulationFlowPart()
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart::load
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-//
-//    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         >> pPopulationPerceived_;
+    file >> shape_
+         >> rRelevance_
+         >> rLastRelevanceSent_
+         >> nTimeLastUpdate_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart::save
-// Created: JVT 2005-03-23
+// Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-//         << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
-//         << pPopulationPerceived_;
+    file << shape_
+         << rRelevance_
+         << rLastRelevanceSent_
+         << nTimeLastUpdate_;
 }
 
 // -----------------------------------------------------------------------------

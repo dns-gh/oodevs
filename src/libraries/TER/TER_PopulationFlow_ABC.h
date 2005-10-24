@@ -50,14 +50,6 @@ public:
     virtual ~TER_PopulationFlow_ABC();
     //@}
 
-    //! @name CheckPoints
-    //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( boost::archive::binary_iarchive&, const uint );
-    void save( boost::archive::binary_oarchive&, const uint ) const;
-    //@}
-
     //! @name Operations
     //@{
 //    bool IsInside             ( const MT_Vector2D& vPos ) const;
@@ -73,6 +65,12 @@ public:
 
     void UpdatePatch    ();
     void RemoveFromPatch();
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive >
+    void serialize( Archive& file, const uint );
     //@}
 
 private:
@@ -93,5 +91,16 @@ private:
     T_Hint hint_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlow_ABC::serialize
+// Created: SBO 2005-10-18
+// -----------------------------------------------------------------------------
+template< typename Archive >
+inline
+void TER_PopulationFlow_ABC::serialize( Archive& /*file*/, const uint )
+{
+    // NOTHING
+}
 
 #endif // __TER_PopulationFlow_ABC_h_

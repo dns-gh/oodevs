@@ -282,7 +282,8 @@ const TER_Localisation& MIL_PopulationFlow::GetLocation() const
 inline
 MIL_Population& MIL_PopulationFlow::GetPopulation() const
 {
-    return population_;
+    assert( pPopulation_ );
+    return *pPopulation_;
 }
 
 // -----------------------------------------------------------------------------

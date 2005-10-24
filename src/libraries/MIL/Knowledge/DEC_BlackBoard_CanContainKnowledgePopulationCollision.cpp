@@ -48,8 +48,14 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContai
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( false );
-//    file >> knowledgePopulationCollisionMap_;
+    uint nNbr;
+    file >> nNbr;
+    while ( nNbr-- )
+    {
+        MIL_Population* pPopulation;
+        file >> pPopulation;
+        file >> knowledgePopulationCollisionMap_[ pPopulation ];
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -58,8 +64,12 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPoint
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    assert( false );
-//    file << knowledgePopulationCollisionMap_;
+    file << knowledgePopulationCollisionMap_.size();
+    for ( CIT_KnowledgePopulationCollisionMap it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
+    {
+        file << it->first
+             << it->second;
+    }
 }
 
 // =============================================================================

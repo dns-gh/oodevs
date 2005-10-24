@@ -69,7 +69,7 @@ private:
     void SendMsgDestruction() const;
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     typedef std::map< const MIL_AgentPion*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
