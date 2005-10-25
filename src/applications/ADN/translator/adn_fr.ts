@@ -2810,11 +2810,11 @@
     </message>
     <message>
         <source>Agents</source>
-        <translation type="unfinished"></translation>
+        <translation>Agents</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished">Populations</translation>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>
@@ -3497,6 +3497,26 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>km/h</source>
         <translation>km/h</translation>
+    </message>
+    <message>
+        <source>Speed effects</source>
+        <translation>Effets sur la vitesse</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation>Effets</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation>Densité</translation>
+    </message>
+    <message>
+        <source>Max speed</source>
+        <translation>Vitesse max</translation>
     </message>
 </context>
 <context>

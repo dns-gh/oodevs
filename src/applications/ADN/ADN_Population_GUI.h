@@ -43,6 +43,10 @@ public:
         eConcentrationDensity,
         eMoveDensity,
         eMoveSpeed,
+        eSpeedEffectAttitude,
+        eSpeedEffectVolume,
+        eSpeedEffectDensity,
+        eSpeedEffectMaxSpeed,
         eNbrGuiElements
     };
 
@@ -56,6 +60,12 @@ public:
     //! @name Operations
     //@{
     void Build();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void BuildSpeedEffect( QWidget* pParent );
     //@}
 
 private:

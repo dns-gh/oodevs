@@ -32,6 +32,8 @@
 #include "ADN_Population_Data.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_Population_ListView.h"
+#include "ADN_Population_SpeedEffect_Attitude_ListView.h"
+#include "ADN_Population_SpeedEffect_Volume_ListView.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
@@ -74,9 +76,9 @@ void ADN_Population_GUI::Build()
     pPopulationList->GetConnector().Connect( &data_.GetPopulation() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Population" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainWidget_ );
 
-    QWidget* pPropertiesGroup = builder.AddFieldHolder( pGroup );
+    QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
     // Name
     builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
@@ -93,14 +95,33 @@ void ADN_Population_GUI::Build()
     // Move speed
     builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
 
+    // Speed effects
+    QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Speed effects" ), pGroup );
+
+    ADN_Population_SpeedEffect_Attitude_ListView* pAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
+    vInfosConnectors[eSpeedEffectAttitude] = &pAttitudeList->GetConnector();
+
+    ADN_Population_SpeedEffect_Volume_ListView* pVolumeList = new ADN_Population_SpeedEffect_Volume_ListView( pSpeedEffectGroup );
+    vInfosConnectors[eSpeedEffectVolume] = &pVolumeList->GetConnector();
+
+    QGroupBox* pSpeedEffectVolumeGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
+
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
+
+    builder.AddStretcher( pGroup, Qt::Vertical );
+
     pPopulationList->SetItemConnectors( vInfosConnectors );
+    pAttitudeList  ->SetItemConnectors( vInfosConnectors );
+    pVolumeList    ->SetItemConnectors( vInfosConnectors );
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pPopulationList, 1 );
     pMainLayout->addWidget( pGroup, 3 );
 
-    QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 5 );
-    pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
-    builder.AddStretcher( pGroupLayout, Qt::Vertical );
+    //QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 6 );
+    //pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
+    //builder.AddStretcher( pGroupLayout, Qt::Vertical );
 }
+

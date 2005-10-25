@@ -28,6 +28,174 @@
 #include "ADN_SaveFile_Exception.h"
 
 #include "ADN_Tr.h"
+#include "ENT/ENT_Tr.h"
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr )
+: ADN_Ref_ABC         ()
+, ADN_DataTreeNode_ABC()
+, strName_            ( ptr->GetData() )
+, ptrVolume_          ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
+, rDensity_           ( 0. )
+, rMaxSpeed_          ( 0. )
+{
+    this->BindExistenceTo( &ptrVolume_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectVolumeInfos::ReadArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::SpeedEffectVolumeInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    if( !input.Section( "VolumePion", ADN_XmlInput_Helper::eNothing ) )
+        return;
+
+    std::string strVolume;
+    input.ReadAttribute( "nom", strVolume );
+    ADN_Categories_Data::SizeInfos* pVolume = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strVolume );
+    assert( pVolume != 0 );
+    ptrVolume_ = pVolume;
+
+    input.ReadAttribute( "densitePopulation", rDensity_  );
+    input.ReadAttribute( "vitesseMaximale"  , rMaxSpeed_ );
+
+    input.EndSection(); // VolumePion
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    // do not save Volume with density and speed == 0
+    if( rDensity_ == 0. && rMaxSpeed_ == 0. )
+        return;
+
+    output.Section( "VolumePion" );
+
+    output.WriteAttribute( "nom"              , ptrVolume_.GetData()->GetData() );
+    output.WriteAttribute( "densitePopulation", rDensity_ .GetData() );
+    output.WriteAttribute( "vitesseMaximale"  , rMaxSpeed_.GetData() );
+
+    output.EndSection(); // VolumePion
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectVolumeInfos::~SpeedEffectVolumeInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::SpeedEffectVolumeInfos::~SpeedEffectVolumeInfos()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectVolumeInfos::GetNodeName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::SpeedEffectVolumeInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectVolumeInfos::GetItemName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::SpeedEffectVolumeInfos::GetItemName()
+{
+    return std::string();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nAttitude )
+: ADN_Ref_ABC         ()
+, ADN_DataTreeNode_ABC()
+, nAttitude_          ( nAttitude )
+, strName_            ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude ) )
+, vVolumeInfos_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectInfos::ReadArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::SpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+//    input.Section( "Attitude" );
+//
+//    std::string strAttitude;
+//    input.ReadAttribute( "nom", strAttitude );
+//    E_PopulationAttitude nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+//    assert( nAttitude == nAttitude_ );
+  
+    input.BeginList( "VolumesPions" );
+    ADN_Categories_Data::T_SizeInfos_Vector& sizeInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
+    for( ADN_Categories_Data::T_SizeInfos_Vector::iterator it = sizeInfos.begin(); it != sizeInfos.end(); ++it )
+    {
+        IT_SpeedEffectVolumeInfosVector itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),SpeedEffectVolumeInfos::CmpRef(*it));
+        assert( itVolume != vVolumeInfos_.end() );
+        (*itVolume)->ReadArchive( input );
+    }
+        
+    input.EndList(); // VolumesPions
+
+//    input.EndSection(); // Attitude
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectInfos::WriteArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::SpeedEffectInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "Attitude" );
+
+    output.WriteAttribute( "nom", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
+    
+    output.BeginList( "VolumesPions", vVolumeInfos_.size() );
+    for( IT_SpeedEffectVolumeInfosVector it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output.EndList(); // VolumesPions
+    
+    output.EndSection(); // Attitude
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectInfos::~SpeedEffectInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::SpeedEffectInfos::~SpeedEffectInfos()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectInfos::GetNodeName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::SpeedEffectInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::SpeedEffectInfos::GetItemName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::SpeedEffectInfos::GetItemName()
+{
+    return strName_.GetData();
+}
 
 
 // -----------------------------------------------------------------------------
@@ -41,7 +209,14 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
 , rConcentrationDensity_ ( 0. )
 , rMoveDensity_          ( 0. )
 , rMoveSpeed_            ( 0. )
+, vSpeedEffectInfos_     ()
 {
+    for( int i = 0; i < eNbrPopulationAttitude; ++i )
+    {
+        SpeedEffectInfos* pNew = new SpeedEffectInfos( ( E_PopulationAttitude )i );
+        std::auto_ptr< SpeedEffectInfos > spNew( pNew );
+        vSpeedEffectInfos_.AddItem( spNew.release() );
+    }
     this->BindExistenceTo( &ptrModel_ );
 }
 
@@ -111,6 +286,24 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
     input.ReadField( "DensiteNominaleDeplacement", rMoveDensity_          );
     input.ReadField( "VitesseDeplacement"        , rMoveSpeed_            );
 
+    input.Section( "Effets" );
+    input.Section( "Ralentissement" );
+
+    input.BeginList( "Attitudes" );
+    while( input.NextListElement() )
+    {
+        input.Section( "Attitude" );
+        std::string strAttitude;
+        input.ReadAttribute( "nom", strAttitude );
+        uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+        vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
+        input.EndSection(); // Attitude
+    }
+    input.EndList(); // Attitudes
+
+    input.EndSection(); // Ralentissement
+    input.EndSection(); // Effets
+
     input.EndSection(); // Population
 }
 
@@ -130,6 +323,17 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( MT_OutputArchive_ABC& o
     output.WriteField( "DensiteConcentration"      , rConcentrationDensity_.GetData() );
     output.WriteField( "DensiteNominaleDeplacement", rMoveDensity_.GetData()          );
     output.WriteField( "VitesseDeplacement"        , rMoveSpeed_.GetData()            );
+
+    output.Section( "Effets" );
+    output.Section( "Ralentissement" );
+
+    output.BeginList( "Attitudes", vSpeedEffectInfos_.size() );
+    for( IT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output.EndList(); // Attitudes
+
+    output.EndSection(); // Ralentissement
+    output.EndSection(); // Effets
 
     output.EndSection(); // Population
 }

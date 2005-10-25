@@ -23,7 +23,9 @@
 
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
+#include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Models_Data.h"
+#include "ADN_Categories_Data.h"
 
 class ADN_XmlInput_Helper;
 
@@ -38,6 +40,75 @@ class ADN_Population_Data : public ADN_Data_ABC
     MT_COPYNOTALLOWED( ADN_Population_Data )
 
 public:
+// *****************************************************************************
+    class SpeedEffectVolumeInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( SpeedEffectVolumeInfos )
+
+    public:
+         SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr );
+        ~SpeedEffectVolumeInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_String                                          strName_;
+        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrVolume_;
+        ADN_Type_Double                                          rDensity_;
+        ADN_Type_Double                                          rMaxSpeed_;
+
+    public:
+        typedef ADN_Categories_Data::SizeInfos T_Item;
+
+        class CmpRef : public std::unary_function< SpeedEffectVolumeInfos* , bool >
+        {
+        public:
+            CmpRef(ADN_Categories_Data::SizeInfos* val) : val_(val) {}
+            ~CmpRef(){}
+
+            bool operator()( SpeedEffectVolumeInfos* tgtnfos ) const 
+            {   return tgtnfos->ptrVolume_.GetData() == val_;}
+
+        private:
+            ADN_Categories_Data::SizeInfos* val_;
+        };
+    };
+
+    typedef ADN_Type_VectorFixed_ABC<SpeedEffectVolumeInfos>  T_SpeedEffectVolumeInfosVector;
+    typedef T_SpeedEffectVolumeInfosVector::iterator          IT_SpeedEffectVolumeInfosVector;
+
+// *****************************************************************************
+    class SpeedEffectInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( SpeedEffectInfos )
+
+    public:
+        SpeedEffectInfos( E_PopulationAttitude nAttitude );
+        ~SpeedEffectInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        E_PopulationAttitude           nAttitude_;
+        ADN_Type_String                strName_;
+        T_SpeedEffectVolumeInfosVector vVolumeInfos_;
+    };
+
+    typedef ADN_Type_Vector_ABC<SpeedEffectInfos>  T_SpeedEffectInfosVector;
+    typedef T_SpeedEffectInfosVector::iterator     IT_SpeedEffectInfosVector;
+
 // *****************************************************************************
     class PopulationInfos
         : public ADN_Ref_ABC
@@ -63,6 +134,8 @@ public:
         ADN_Type_Double                                       rConcentrationDensity_;
         ADN_Type_Double                                       rMoveDensity_;
         ADN_Type_Double                                       rMoveSpeed_;
+
+        T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
     };
 
     typedef ADN_Type_Vector_ABC<PopulationInfos>  T_PopulationInfosVector;
