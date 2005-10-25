@@ -25,7 +25,34 @@ class MOS_PopulationKnowledge;
 class MOS_PopulationFlowKnowledge
 {
     MT_COPYNOTALLOWED( MOS_PopulationFlowKnowledge );
-        
+
+public:
+    //! @name Types
+    //@{
+    class FlowPart
+    {
+    public:
+        //! @name Constructor/Destructor
+        //@{
+         FlowPart( ASN1T_PortionFlux& asn );
+        ~FlowPart();
+        //@}
+
+        //! @name Accessors
+        //@{
+        const T_PointVector& GetPart     () const;
+        const MT_Float       GetRelevance() const;
+        //@}
+
+    private:
+        T_PointVector flowPart_;
+        MT_Float      rRelevance_;
+    };
+
+    typedef std::vector< FlowPart* >    T_FlowParts;
+    typedef T_FlowParts::const_iterator CIT_FlowParts;
+    //@}
+
 public:
     //! @name Constructor/Destructor
     //@{
@@ -39,7 +66,6 @@ public:
     const MOS_Gtia&                GetGtia               () const;
     const MOS_PopulationKnowledge* GetPopulationKnowledge() const;
     const MOS_PopulationFlow*      GetFlow               () const;
-    const MT_Vector2D&             GetPosition           () const;
     MT_Float                       GetDirection          () const;
     MT_Float                       GetSpeed              () const;
     uint                           GetNbrAliveHumans     () const;
@@ -47,6 +73,7 @@ public:
     E_PopulationAttitude           GetAttitude           () const;
     MT_Float                       GetRelevance          () const;
     bool                           IsPerceived           () const;
+    const T_FlowParts&             GetFlowParts          () const;
     //@}
 
     //! @name Network
@@ -59,7 +86,6 @@ private:
           MOS_Gtia*                pGtia_;
     const MOS_PopulationKnowledge* pPopulationKnowledge_;
     const MOS_PopulationFlow*      pFlow_;
-          MT_Vector2D              position_;
           MT_Float                 rDirection_;
           MT_Float                 rSpeed_;
           uint                     nNbrAliveHumans_;
@@ -67,6 +93,7 @@ private:
           E_PopulationAttitude     eAttitude_;
           bool                     bIsPerceived_;
           MT_Float                 rRelevance_;
+          T_FlowParts              flowParts_;
 
           // portions
 };

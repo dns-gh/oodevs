@@ -18,6 +18,7 @@
 #include "MOS_AgentManager.h"
 #include "MOS_PopulationConcentrationKnowledge.h"
 #include "MOS_PopulationFlowKnowledge.h"
+#include "MOS_TypePopulation.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationKnowledge::MOS_PopulationKnowledge
@@ -28,6 +29,7 @@ MOS_PopulationKnowledge::MOS_PopulationKnowledge( const ASN1T_MsgPopulationKnowl
     , pGtia_      ( MOS_App::GetApp().GetAgentManager().FindGtia      ( asnMsg.oid_groupe_possesseur ) )
     , pTeam_      ( MOS_App::GetApp().GetAgentManager().FindTeam      ( asnMsg.camp                  ) )
     , pPopulation_( MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population_reelle ) )
+    , pType_      ( &pPopulation_->GetType() )
 {
     assert( pGtia_ );
     assert( pTeam_ );
@@ -182,4 +184,14 @@ const MOS_PopulationKnowledge::T_FlowKnowledgeMap& MOS_PopulationKnowledge::GetF
 MOS_Gtia* MOS_PopulationKnowledge::GetGtia() const
 {
     return pGtia_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationKnowledge::GetType
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+const MOS_TypePopulation& MOS_PopulationKnowledge::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
 }

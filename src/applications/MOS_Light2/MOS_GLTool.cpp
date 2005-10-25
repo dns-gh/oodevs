@@ -73,6 +73,9 @@
 #include "MOS_Population.h"
 #include "MOS_PopulationFlow.h"
 #include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationKnowledge.h"
+#include "MOS_PopulationFlowKnowledge.h"
+#include "MOS_PopulationConcentrationKnowledge.h"
 #include "MOS_TypePopulation.h"
 
 #include "MT_GLFont.h"
@@ -350,7 +353,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     for( MOS_AgentManager::IT_PopulationMap itPop = manager.populationMap_.begin(); itPop != manager.populationMap_.end(); ++itPop )
     {
         // If not in controller view, avoid drawing the enemy units.
-        if( nPlayedTeam != MOS_Options::eController && nPlayedTeam != (int)(itAgent->second->GetTeam().GetIdx()) )
+        if( nPlayedTeam != MOS_Options::eController && nPlayedTeam != (int)(itPop->second->GetTeam().GetIdx()) )
             continue;
         Draw( *(itPop->second), eNormal );
     }
@@ -621,6 +624,9 @@ void MOS_GLTool::Draw( MOS_Gtia& gtia )
 {
     for( MOS_Gtia::IT_AgentKnowledgeMap it = gtia.agentKnowledges_.begin(); it != gtia.agentKnowledges_.end(); ++it )
         Draw( *(it->second) );
+
+    for( MOS_Gtia::IT_PopulationKnowledgeMap it = gtia.populationKnowledges_.begin(); it != gtia.populationKnowledges_.end(); ++it ) 
+        Draw( *it->second );
 }
 
 
@@ -644,6 +650,58 @@ void MOS_GLTool::Draw( MOS_AgentKnowledge& knowledge, E_State nState )
     }
     else
         DrawUnit( knowledge.realAgent_, nState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw( MOS_PopulationKnowledge& knowledge, E_State nState /*= eNormal*/ )
+{
+    const MOS_PopulationKnowledge::T_ConcentrationKnowledgeMap& concentrations = knowledge.GetConcentrations();
+    for( MOS_PopulationKnowledge::CIT_ConcentrationKnowledgeMap it = concentrations.begin(); it != concentrations.end(); ++it )
+        Draw( *it->second, nState );
+
+    const MOS_PopulationKnowledge::T_FlowKnowledgeMap& flows = knowledge.GetFlows();
+    for( MOS_PopulationKnowledge::CIT_FlowKnowledgeMap it = flows.begin(); it != flows.end(); ++it )
+        Draw( *it->second, nState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw( MOS_PopulationConcentrationKnowledge& knowledge, E_State nState /*= eNormal*/ )
+{
+    assert( knowledge.GetPopulationKnowledge() );
+    GFX_Color color = MOS_GLTool::GetColorForTeam( *knowledge.GetPopulationKnowledge()->GetTeam() );
+    if( nState == eSelected )
+        color.AddRGB( 50, 200, 50 );
+    if( nState == eHighlighted )
+        color.AddRGB( 50, 100, 50 );
+    color.SetGLColor();
+    MT_Float rSurface = knowledge.GetNbrAliveHumans() / knowledge.GetPopulationKnowledge()->GetType().GetConcentrationDensity();
+    DrawCircle( knowledge.GetPosition(), std::sqrt( rSurface / MT_PI ), true );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw( MOS_PopulationFlowKnowledge& knowledge, E_State nState /*= eNormal*/ )
+{
+    assert( knowledge.GetPopulationKnowledge() );
+    GFX_Color color = MOS_GLTool::GetColorForTeam( *knowledge.GetPopulationKnowledge()->GetTeam() );
+    if( nState == eSelected )
+        color.AddRGB( 50, 200, 50 );
+    if( nState == eHighlighted )
+        color.AddRGB( 50, 100, 50 );
+    color.SetGLColor();
+    glLineWidth( 5.0 );
+
+    const MOS_PopulationFlowKnowledge::T_FlowParts& parts = knowledge.GetFlowParts();
+    for( MOS_PopulationFlowKnowledge::CIT_FlowParts it = parts.begin(); it != parts.end(); ++it )
+        DrawLine( ( *it )->GetPart() );
 }
 
 

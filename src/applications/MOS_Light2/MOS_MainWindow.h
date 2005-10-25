@@ -39,6 +39,7 @@ class MOS_Options;
 class MOS_ObjectCreationPanel;
 class MOS_AgentCreationPanel;
 class MOS_PopulationCreationPanel;
+class MOS_Agent_ABC;
 class MOS_Agent;
 class MOS_Gtia;
 class MOS_MapEventFilter_ABC;
@@ -98,7 +99,7 @@ signals:
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
     void CenterOnPoint( const MT_Vector2D& vPoint );
     void TeamChanged();
-    void ReadingReports( MOS_Agent& agent );
+    void ReadingReports( MOS_Agent_ABC& agent );
     void ODBNewAgent( const std::string& strCategory, MOS_Gtia& gtia, MOS_Agent* pParent );
 
 private:

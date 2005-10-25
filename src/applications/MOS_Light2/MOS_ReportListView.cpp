@@ -70,14 +70,11 @@ MOS_ReportListView::MOS_ReportListView( QWidget* pParent, const MOS_ReportFilter
     connect( this, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed( QListViewItem* ) ),  this, SLOT( OnRequestCenter() ) );
 
-    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ),                   &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
+    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) )                  , &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
     connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
-    connect( this, SIGNAL( ReadingReports( MOS_Agent_ABC& ) ),                          &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports( MOS_Agent_ABC& ) ) );
+    connect( this, SIGNAL( ReadingReports( MOS_Agent_ABC& ) )                     , &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports( MOS_Agent_ABC& ) ) );
 
- 
     connect( &MOS_App::GetApp(), SIGNAL( ReportCreated( MOS_Agent_ABC&, MOS_Report_ABC& ) ), this, SLOT( OnReportCreated( MOS_Agent_ABC&, MOS_Report_ABC& ) ) );
-
-
 }
 
 
@@ -92,8 +89,6 @@ MOS_ReportListView::~MOS_ReportListView()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::SetAgent
-/** @param  pAgent 
-*/
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::SetAgent( MOS_Agent_ABC* pAgent )
@@ -143,9 +138,6 @@ void MOS_ReportListView::OnOptionsChanged()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::OnReportCreated
-/** @param  agent 
-    @param  report 
-*/
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report )
@@ -256,10 +248,6 @@ void MOS_ReportListView::OnClick( QListViewItem* pItem, const QPoint& pos, int n
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::OnRequestCenter
-/** @param  pItem 
-    @param  pos 
-    @param  nCol 
-*/
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnRequestCenter()
@@ -276,10 +264,6 @@ void MOS_ReportListView::OnRequestCenter()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::OnRequestPopup
-/** @param  pItem 
-    @param  pos 
-    @param  nCol 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int /*nCol*/ )
@@ -402,24 +386,18 @@ void MOS_ReportListView::hideEvent( QHideEvent* pEvent )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::showEvent
-/** @param  pEvent 
-*/
 // Created: APE 2004-06-17
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::showEvent( QShowEvent* pEvent )
 {
     QListView::showEvent( pEvent );
-    emit ReadingReports( *pAgent_ );
+    if( isVisible() && pAgent_ != 0 )
+        emit ReadingReports( *pAgent_ );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::InterpretLink
-/** @param  strLink 
-    @param  strKeyword 
-    @param  nResultId 
-    @return 
-*/
 // Created: APE 2004-09-10
 // -----------------------------------------------------------------------------
 bool MOS_ReportListView::InterpretLink( const QString& strLink, const QString& strKeyword, int& nResultId )

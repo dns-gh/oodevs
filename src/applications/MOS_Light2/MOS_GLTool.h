@@ -62,6 +62,10 @@ class MOS_DefaultMapEventHandler;
 class MOS_ShapeEditorMapEventFilter;
 class MOS_Population;
 class MOS_PopulationFlow;
+class MOS_PopulationConcentration;
+class MOS_PopulationKnowledge;
+class MOS_PopulationFlowKnowledge;
+class MOS_PopulationConcentrationKnowledge;
 
 
 // =============================================================================
@@ -126,7 +130,11 @@ public:
     static void DrawVisionLines( MOS_Agent& agent );
     static void Draw( MOS_Team& team );
     static void Draw( MOS_Gtia& gtia );
-    static void Draw( MOS_AgentKnowledge& knowledge, E_State nState = eNormal );
+
+    static void Draw( MOS_AgentKnowledge&                   knowledge, E_State nState = eNormal );
+    static void Draw( MOS_PopulationKnowledge&              knowledge, E_State nState = eNormal );
+    static void Draw( MOS_PopulationConcentrationKnowledge& knowledge, E_State nState = eNormal );
+    static void Draw( MOS_PopulationFlowKnowledge&          knowledge, E_State nState = eNormal );
 
     static void Draw( MOS_ObjectManager& manager );
     static void Draw( MOS_Object_ABC& object, E_State nState = eNormal );
@@ -162,18 +170,18 @@ public:
     static void Draw( const MOS_ShapeEditorMapEventFilter& eventHandler );
 
     static void DrawLocation( MOS_ShapeEditorMapEventFilter::E_LineType nType, const T_PointVector& pointList );
-    static void DrawLine      ( CT_PointVector& pointList, MT_Float rArrowSize = 0, bool bDoubleArrow = false );
-    static void DrawLine( const MT_Vector2D& src, const MT_Vector2D& dest, MT_Float rArrowSize = 0, bool bDoubleArrow = false );
-    static void DrawArrow( const MT_Vector2D& src, const MT_Vector2D& dest, MT_Float rArrowSize );
-    static void DrawPoints( CT_PointVector& pointList );
-    static void DrawPoint( const MT_Vector2D& p );
-    static void DrawPolygon( CT_PointVector& pointList );
-    static void DrawRect( const MT_Vector2D& point1, const MT_Vector2D& point2, bool bInside );
-	static void Draw3DLine( MT_Vector3D src, MT_Vector3D dst, float width, GFX_Color color );
-	static void Draw3DLines( T_Point3DVector& points, float width, GFX_Color color );
+    static void DrawLine    ( CT_PointVector& pointList, MT_Float rArrowSize = 0, bool bDoubleArrow = false );
+    static void DrawLine    ( const MT_Vector2D& src, const MT_Vector2D& dest, MT_Float rArrowSize = 0, bool bDoubleArrow = false );
+    static void DrawArrow   ( const MT_Vector2D& src, const MT_Vector2D& dest, MT_Float rArrowSize );
+    static void DrawPoints  ( CT_PointVector& pointList );
+    static void DrawPoint   ( const MT_Vector2D& p );
+    static void DrawPolygon ( CT_PointVector& pointList );
+    static void DrawRect    ( const MT_Vector2D& point1, const MT_Vector2D& point2, bool bInside );
+	static void Draw3DLine  ( MT_Vector3D src, MT_Vector3D dst, float width, GFX_Color color );
+	static void Draw3DLines ( T_Point3DVector& points, float width, GFX_Color color );
 
-    static void DrawUnit( MOS_Agent& agent, E_State nState = eNormal );
-    static void DrawVisionCones( MOS_Agent& agent );
+    static void DrawUnit          ( MOS_Agent& agent, E_State nState = eNormal );
+    static void DrawVisionCones   ( MOS_Agent& agent );
     static void DrawVisionSurfaces( MOS_Agent& agent );
 
     static void DrawLines     ( T_MOSLinePtrVector& lines, float rZ );

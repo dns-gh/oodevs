@@ -24,6 +24,7 @@
 #endif
 
 class MOS_Agent;
+class MOS_Agent_ABC;
 class MOS_SelectedElement;
 class MOS_ActionContext;
 class MOS_EventToolButton;
@@ -66,8 +67,8 @@ private slots:
     void OnConflictStarted( MOS_Agent& agent );
     void OnConflictEnded( MOS_Agent& agent );
 
-    void OnReportCreated( MOS_Agent& agent );
-    void OnReadingReports( MOS_Agent& agent );
+    void OnReportCreated( MOS_Agent_ABC& agent );
+    void OnReadingReports( MOS_Agent_ABC& agent );
 
     void FocusOnAgent( int nId, bool bCenter );
     //@}
@@ -91,7 +92,7 @@ signals:
 private:
     //! @name Member data
     //@{
-    MOS_Agent* pSelectedAgent_;
+    MOS_Agent_ABC* pSelectedAgent_;
 
     typedef std::vector< MOS_EventToolButton* >   T_ButtonVector;
     typedef T_ButtonVector::iterator              IT_ButtonVector;

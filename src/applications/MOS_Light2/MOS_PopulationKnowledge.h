@@ -20,6 +20,7 @@ class MOS_Team;
 class MOS_Population;
 class MOS_PopulationConcentrationKnowledge;
 class MOS_PopulationFlowKnowledge;
+class MOS_TypePopulation;
 
 // =============================================================================
 // Created: APE 2004-03-10
@@ -49,10 +50,11 @@ public:
 
     //! @name Accessors
     //@{
-    const uint            GetID        () const;
-    const MOS_Team*       GetTeam      () const;
-    const MOS_Population& GetPopulation() const;
-          MOS_Gtia*       GetGtia      () const;
+    const uint                         GetID            () const;
+    const MOS_Team*                    GetTeam          () const;
+    const MOS_Population&              GetPopulation    () const;
+          MOS_Gtia*                    GetGtia          () const;
+    const MOS_TypePopulation&          GetType          () const;
     const T_ConcentrationKnowledgeMap& GetConcentrations() const;
     const T_FlowKnowledgeMap&          GetFlows         () const;
     //@}
@@ -73,6 +75,7 @@ private:
     const uint                          nID_;
     const MOS_Team*                     pTeam_;
     const MOS_Population*               pPopulation_;
+    const MOS_TypePopulation*           pType_;
           MOS_Gtia*                     pGtia_;
 
           T_ConcentrationKnowledgeMap   concentrations_;

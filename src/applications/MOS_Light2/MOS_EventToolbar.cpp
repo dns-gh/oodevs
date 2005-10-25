@@ -27,6 +27,7 @@
 #include "MOS_App.h"
 #include "MOS_Options.h"
 #include "MOS_AgentManager.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Agent.h"
 #include "MOS_MainWindow.h"
 //#include "MOS_Report_ABC.h"
@@ -61,12 +62,12 @@ MOS_EventToolbar::MOS_EventToolbar( QMainWindow* pParent )
     MOS_EventToolButton* pB3 = new MOS_EventToolButton( MAKE_ICON( msg ), "Général", this );
     pB3->SetSignalsSlots( this, SIGNAL( ReportCreated( int ) ), SIGNAL( ReadingReports( int ) ), SLOT( FocusOnAgent( int, bool ) ) );
 
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentConflictStarted( MOS_Agent& ) ),                    this, SLOT( OnConflictStarted( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentConflictEnded  ( MOS_Agent& ) ),                    this, SLOT( OnConflictEnded  ( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentOutOfGas       ( MOS_Agent& ) ),                    this, SLOT( OnAgentOutOfGas  ( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentRefueled       ( MOS_Agent& ) ),                    this, SLOT( OnAgentRefueled  ( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( ReportCreated       ( MOS_Agent&, MOS_Report_ABC& ) ),   this, SLOT( OnReportCreated  ( MOS_Agent& ) ) );
-    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports      ( MOS_Agent& ) ),                    this, SLOT( OnReadingReports ( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( AgentConflictStarted( MOS_Agent& ) ),                      this, SLOT( OnConflictStarted( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( AgentConflictEnded  ( MOS_Agent& ) ),                      this, SLOT( OnConflictEnded  ( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( AgentOutOfGas       ( MOS_Agent& ) ),                      this, SLOT( OnAgentOutOfGas  ( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( AgentRefueled       ( MOS_Agent& ) ),                      this, SLOT( OnAgentRefueled  ( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( ReportCreated       ( MOS_Agent_ABC&, MOS_Report_ABC& ) ), this, SLOT( OnReportCreated  ( MOS_Agent_ABC& ) ) );
+    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports      ( MOS_Agent_ABC& ) ),                  this, SLOT( OnReadingReports ( MOS_Agent_ABC& ) ) );
 
     connect( &MOS_App::GetApp(),               SIGNAL( ConnexionStatusChanged( bool ) ),                        this, SLOT( ClearSubscriptions() ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ),                                         this, SLOT( OnTeamChanged() ) );
@@ -216,7 +217,7 @@ void MOS_EventToolbar::OnConflictEnded( MOS_Agent& agent )
 // Name: MOS_EventToolbar::OnReportCreated
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
-void MOS_EventToolbar::OnReportCreated( MOS_Agent& agent )
+void MOS_EventToolbar::OnReportCreated( MOS_Agent_ABC& agent )
 {
     // Only receive events from agents on the team we are currently playing.
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
@@ -230,7 +231,7 @@ void MOS_EventToolbar::OnReportCreated( MOS_Agent& agent )
 // Name: MOS_EventToolbar::OnReadingReports
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
-void MOS_EventToolbar::OnReadingReports( MOS_Agent& agent )
+void MOS_EventToolbar::OnReadingReports( MOS_Agent_ABC& agent )
 {
     emit ReadingReports( agent.GetID() );
 }

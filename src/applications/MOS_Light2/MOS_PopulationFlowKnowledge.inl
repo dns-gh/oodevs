@@ -49,15 +49,6 @@ const MOS_PopulationFlow* MOS_PopulationFlowKnowledge::GetFlow() const
 {
     return pFlow_;
 }
-// -----------------------------------------------------------------------------
-// Name: MOS_PopulationFlowKnowledge::GetPosition
-// Created: SBO 2005-10-21
-// -----------------------------------------------------------------------------
-inline
-const MT_Vector2D& MOS_PopulationFlowKnowledge::GetPosition() const
-{
-    return position_;
-}
     
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationFlowKnowledge::GetDirection
@@ -127,4 +118,14 @@ inline
 bool MOS_PopulationFlowKnowledge::IsPerceived() const
 {
     return bIsPerceived_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlowKnowledge::GetFlowParts
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+inline
+const MOS_PopulationFlowKnowledge::T_FlowParts& MOS_PopulationFlowKnowledge::GetFlowParts() const
+{
+    return flowParts_;
 }
