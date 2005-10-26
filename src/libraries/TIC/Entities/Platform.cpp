@@ -130,8 +130,14 @@ void Platform::MoveTo( const Position& position )
             rSpeed_ = pType_->GetType().GetMaxSpeed();
 
         double rRatio = rNeededSpeed / rSpeed_;
+        Position startPos( position_ );
         position_.SetSimCoordinates( ( position.X() - position_.X() ) / rRatio + position_.X()
                                    , ( position.Y() - position_.Y() ) / rRatio + position_.Y() );
+        // make sure speed is correct
+        double rTime = ( double )TicManager::GetTicManager().GetTickDuration() / 3600;
+        double rDistance = position_.GetDistanceTo( startPos ) / 1000;
+
+        rSpeed_ = rDistance / rTime;
         assert( !_isnan( position_.X() ) );
     }
 }
