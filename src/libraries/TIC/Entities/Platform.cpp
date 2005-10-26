@@ -115,7 +115,7 @@ void Platform::MoveTo( const Position& position )
     // smooth move
     else
     {
-        // check that acceleration isn't more than 1m/s²
+// check that acceleration isn't more than 1m/s²
         double rAccel = ( rNeededSpeed - rSpeed_ ) / ( double )TicManager::GetTicManager().GetTickDuration();
         if( rAccel > 1 )
             rAccel = 1;
@@ -125,19 +125,16 @@ void Platform::MoveTo( const Position& position )
         if( rSpeed_ == 0 )
             return;
 
-        // check that speed isn't > max : speed limiter
-        if( rSpeed_ > pType_->GetType().GetMaxSpeed() )
-            rSpeed_ = pType_->GetType().GetMaxSpeed();
-
         double rRatio = rNeededSpeed / rSpeed_;
         Position startPos( position_ );
         position_.SetSimCoordinates( ( position.X() - position_.X() ) / rRatio + position_.X()
                                    , ( position.Y() - position_.Y() ) / rRatio + position_.Y() );
         // make sure speed is correct
-        double rTime = ( double )TicManager::GetTicManager().GetTickDuration() / 3600;
-        double rDistance = position_.GetDistanceTo( startPos ) / 1000;
+        double rTime = ( double )TicManager::GetTicManager().GetTickDuration() / 3600.;
+        double rDistance = position_.GetDistanceTo( startPos ) / 1000.;
+   
+        rSpeed_ = std::min( pType_->GetType().GetMaxSpeed(), rDistance / rTime );
 
-        rSpeed_ = rDistance / rTime;
         assert( !_isnan( position_.X() ) );
     }
 }
