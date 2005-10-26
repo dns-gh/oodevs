@@ -391,8 +391,7 @@ void MOS_ReportListView::hideEvent( QHideEvent* pEvent )
 void MOS_ReportListView::showEvent( QShowEvent* pEvent )
 {
     QListView::showEvent( pEvent );
-    if( isVisible() && pAgent_ != 0 )
-        emit ReadingReports( *pAgent_ );
+    NotifyReadingReports();
 }
 
 

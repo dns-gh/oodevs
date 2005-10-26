@@ -1710,7 +1710,7 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
         //DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 0.5, 2.0, color );
         //DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
         color.SetGLColor();
-        DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0 );
+        DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
         glLineWidth( 5.0 );
         DrawLine( flow.GetFlow() );
         glLineWidth( 1.0 );
@@ -1834,14 +1834,21 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
     if( bFill )
     {
         glBegin( GL_TRIANGLE_FAN );
-        Vertex( center.rX_, center.rY_, -3 );
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
-            Vertex( it->rX_, it->rY_ , -3 );
+        if( ! MOS_App::GetApp().Is3D() )
+        {
+            glVertex3f( center.rX_, center.rY_, 0 );
+            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                glVertex3f( it->rX_, it->rY_ , 0 );
+        }
+        else
+        {
+            Vertex( center.rX_, center.rY_, 1 );
+            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                Vertex( it->rX_, it->rY_ , 1 );
+        }
         glEnd();
-        DrawLine( points );
     }
-    else
-        DrawLine( points );
+    DrawLine( points );
 }
 
 
