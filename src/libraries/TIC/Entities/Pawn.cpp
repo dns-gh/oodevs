@@ -270,9 +270,9 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
                 ( *it )->nHeight_ = 0;
     }
 
-    if( asnMsg.m.etat_operationnelPresent )
+    if( asnMsg.m.etat_operationnel_brutPresent )
     {
-        if( asnMsg.etat_operationnel >= 100 )
+        if( asnMsg.etat_operationnel_brut >= 100 )
             eState_ = eStateOperational;
         else
             eState_ = eStateFixable;
