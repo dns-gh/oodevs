@@ -68,20 +68,20 @@ void MOS_LogMaintenanceConsign_ListView_Item::Update()
     QString strState( tr( "Aucun" ) );
     switch( nState ) 
     {        
-        case MOS_LogMaintenanceConsign::eGoingFrom               : strState = tr( "En déplacement vers la chaine" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForCarrier       : strState = tr( "En attente d'un remorqueur" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierGoingTo          : strState = tr( "Remorqueur en route" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierLoading          : strState = tr( "Remorqueur en cours de chargement" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierGoingFrom        : strState = tr( "Remorqueur en retour" ); break;         
-        case MOS_LogMaintenanceConsign::eCarrierUnloading        : strState = tr( "Remorqueur en cours de déchargement" ); break;         
-        case MOS_LogMaintenanceConsign::eDiagnosing              : strState = tr( "Diagnostique en cours" ); break;         
-        case MOS_LogMaintenanceConsign::eSearchingForUpperLevel  : strState = tr( "En attente de prise en charge par le niveau supérieur" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForParts         : strState = tr( "En attente de pièces" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForRepairer      : strState = tr( "En attente d'un réparateur" ); break;         
-        case MOS_LogMaintenanceConsign::eRepairing               : strState = tr( "En cours de réparation" ); break;         
-        case MOS_LogMaintenanceConsign::eWaitingForGoingBackToWar: strState = tr( "En attente de retour" ); break;         
-        case MOS_LogMaintenanceConsign::eGoingBackToWar          : strState = tr( "Retour en cours" ); break;         
-        case MOS_LogMaintenanceConsign::eFinished                : strState = tr( "Terminé" ); break;         
+        case MOS_LogMaintenanceConsign::eGoingFrom               : strState = tr( "en déplacement vers chaîne" ); break;         
+        case MOS_LogMaintenanceConsign::eWaitingForCarrier       : strState = tr( "en attente disponibilité remorqueu" ); break;         
+        case MOS_LogMaintenanceConsign::eCarrierGoingTo          : strState = tr( "remorqueur déplacement aller" ); break;         
+        case MOS_LogMaintenanceConsign::eCarrierLoading          : strState = tr( "remorqueur chargement" ); break;         
+        case MOS_LogMaintenanceConsign::eCarrierGoingFrom        : strState = tr( "remorqueur déplacement retour" ); break;         
+        case MOS_LogMaintenanceConsign::eCarrierUnloading        : strState = tr( "remorqueur déchargement" ); break;         
+        case MOS_LogMaintenanceConsign::eDiagnosing              : strState = tr( "diagnostique" ); break;         
+        case MOS_LogMaintenanceConsign::eSearchingForUpperLevel  : strState = tr( "en attente prise en charge par niveau supérieur" ); break;         
+        case MOS_LogMaintenanceConsign::eWaitingForParts         : strState = tr( "en attente disponibilité pièces" ); break;         
+        case MOS_LogMaintenanceConsign::eWaitingForRepairer      : strState = tr( "en attente disponibilité réparateur" ); break;         
+        case MOS_LogMaintenanceConsign::eRepairing               : strState = tr( "en réparation" ); break;         
+        case MOS_LogMaintenanceConsign::eWaitingForGoingBackToWar: strState = tr( "en attente de retour sur le terrain" ); break;         
+        case MOS_LogMaintenanceConsign::eGoingBackToWar          : strState = tr( "retour sur terrain en cours" ); break;         
+        case MOS_LogMaintenanceConsign::eFinished                : strState = tr( "terminé" ); break;         
         default:
             assert( false );
     }

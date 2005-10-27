@@ -637,6 +637,9 @@ void MOS_Agent::OnReceiveMsgLogSupplyEtat( const ASN1T_MsgLogRavitaillementEtat&
 // -----------------------------------------------------------------------------
 void MOS_Agent::OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogRavitaillementQuotas& asn )
 {
+    if( !pSupplyData_ && asn.quotas.n == 0 )
+        return;
+
     if( ! pSupplyData_ )
         pSupplyData_ = new T_SupplyData();
 
