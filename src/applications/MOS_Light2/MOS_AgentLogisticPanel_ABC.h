@@ -66,6 +66,7 @@ protected:
     {
         if( ! cont.empty() )
         {
+            viewer.clear();
             viewer.BeginList();
             for( Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
                 viewer.AddConsign( **it );
