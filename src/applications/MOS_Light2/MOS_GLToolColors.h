@@ -36,6 +36,8 @@
 #define MOS_COLOR_MAROON       0.5, 0.0, 0.0, 1.0
 #define MOS_COLOR_PINK          1.0, 0.64, 0.78, 1.0
 #define MOS_COLOR_AQUA          0.15, 0.39, 0.5, 1.0
+#define MOS_COLOR_ORANGE        1.0, 0.6, 0.04, 1.0
+#define MOS_COLOR_GREEN        0.0, 1.0, 0.0, 1.0
 
 #define MOS_COLOR_RC            0.5, 1.0, 0.5, 1.0
 

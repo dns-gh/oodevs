@@ -436,27 +436,63 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
        DrawVisionLines( agent );
     
     //Logistic links
-    if ( nState == eSelected && agent.IsAutomate() && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayLoglinks_ )
+    if ( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayLoglinks_ && agent.IsAutomate() )
     {
-        if ( agent.nTC2_ != 0 )
+        // Display the missing links
+        MT_Vector2D translation = MT_Vector2D(0, 150);
+        glLineWidth( 3 );
+        if ( ! agent.IsLogisticBLT() )
         {
-            glColor4d( MOS_COLOR_YELLOW );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos() );
+            if ( agent.nTC2_ == 0 && ( ! agent.IsLogisticTC2() ) )
+            {
+                glColor4d( MOS_COLOR_YELLOW );
+                DrawCircle( agent.GetPos() + translation, 300, false );
+            }
+            if ( agent.nLogMedicalSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticSante() ) )
+            {
+                glColor4d( MOS_COLOR_PINK );
+                DrawCircle( agent.GetPos() + translation, 375, false );
+            }
+            if ( agent.nLogMaintenanceSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() ) )
+            {
+                glColor4d( MOS_COLOR_MAROON );
+                DrawCircle( agent.GetPos() + translation, 450, false );
+            }
+            if ( agent.nLogSupplySuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() ) )
+            {
+                glColor4d( MOS_COLOR_ORANGE );
+                DrawCircle( agent.GetPos() + translation, 525, false );
+            }
         }
-        if ( agent.nLogMaintenanceSuperior_ != 0 )
+        else
         {
-            glColor4d( MOS_COLOR_MAROON );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos() );
+            glColor4d( MOS_COLOR_GREEN );
+            DrawCircle( agent.GetPos() + translation, 300, false );
         }
-        if ( agent.nLogMedicalSuperior_ != 0 )
+        // Draw the logitic links of the selected automata
+        if ( nState == eSelected  )
         {
-            glColor4d( MOS_COLOR_PINK );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos() );
-        }
-        if ( agent.nLogSupplySuperior_ != 0 )
-        {
-            glColor4d( MOS_COLOR_AQUA );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos() );
+            glLineWidth( 5 );
+            if ( agent.nTC2_ != 0 )
+            {
+                glColor4d( MOS_COLOR_YELLOW );
+                DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos() );
+            }
+            if ( agent.nLogMaintenanceSuperior_ != 0 )
+            {
+                glColor4d( MOS_COLOR_MAROON );
+                DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos() );
+            }
+            if ( agent.nLogMedicalSuperior_ != 0 )
+            {
+                glColor4d( MOS_COLOR_PINK );
+                DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos() );
+            }
+            if ( agent.nLogSupplySuperior_ != 0 )
+            {
+                glColor4d( MOS_COLOR_ORANGE );
+                DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos() );
+            }
         }
     }
 }
