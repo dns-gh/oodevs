@@ -435,6 +435,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
    || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal ) )
        DrawVisionLines( agent );
     
+    /* A DECOMMENTER QUAND TRUNK AURA LES FONCTIONS MOS_AGENT::IsLogistic.....
     //Logistic links
     if ( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayLoglinks_ && agent.IsAutomate() )
     {
@@ -495,6 +496,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             }
         }
     }
+    */
 }
 
 // -----------------------------------------------------------------------------
