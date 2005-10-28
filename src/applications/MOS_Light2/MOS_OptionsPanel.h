@@ -60,6 +60,7 @@ private:
     QCheckBox* pAutoSaveLoadCheckbox_;
 
     QCheckBox* pLogisticLinksDisplayCheckbox_;
+    QCheckBox* pLogisticLinksDisplayAllCheckBox_;
     //@}
 };
 

@@ -471,7 +471,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             DrawCircle( agent.GetPos() + translation, 300, false );
         }
         // Draw the logitic links of the selected automata
-        if ( nState == eSelected  )
+        if ( nState == eSelected || MOS_MainWindow::GetMainWindow().GetOptions().bDisplayAllLogLinks_  )
         {
             glLineWidth( 5 );
             if ( agent.nTC2_ != 0 )

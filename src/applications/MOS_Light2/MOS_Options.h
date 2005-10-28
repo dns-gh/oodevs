@@ -81,6 +81,7 @@ public:
     bool bDrawOldPaths_;
     bool bDisplayWeather_;
     bool bDisplayLoglinks_;
+    bool bDisplayAllLogLinks_;
 
     MT_Float rGridStep_;
 
