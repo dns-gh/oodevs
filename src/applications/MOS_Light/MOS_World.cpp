@@ -250,7 +250,7 @@ void MOS_World::ReadGraphicFile( const std::string& strName )
     std::string strFeature;
     MT_ExtractBaseName( strName, strFeature );
     MT_FlatBinaryInputArchive archive;
-    MOS_GraphicSetup setup;
+    static MOS_GraphicSetup setup;
     DataFactory factory;
 
     try
