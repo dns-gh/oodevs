@@ -208,7 +208,7 @@ MT_Float MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& popu
     assert( volumeSlowDownData.size() > pionVolume.GetID() );
     const sSlowDownData& slowDownData = volumeSlowDownData[ pionVolume.GetID() ];
 
-    if( rPopulationDensity == 0. )
+    if( rPopulationDensity == 0. || slowDownData.rPopulationDensity_ == 0. )
         return std::numeric_limits< MT_Float >::max();
 
     return ( slowDownData.rMaxSpeed_ * slowDownData.rPopulationDensity_ ) / rPopulationDensity;

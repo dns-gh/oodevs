@@ -132,7 +132,7 @@ MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
     assert( pAgentColliding_ );
 
     T_ComposanteVolumeSet volumes_;
-    pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ );
+    pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ ); /// $$$ BOF
 
     MT_Float rMaxSpeed = std::numeric_limits< MT_Float >::max();
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )

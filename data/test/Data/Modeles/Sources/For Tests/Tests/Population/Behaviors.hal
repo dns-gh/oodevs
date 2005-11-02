@@ -13,7 +13,7 @@ behavior BEH_Defaut( id nDummy )
 {         
     DEC_Debug( "BEH_Defaut" );
     
-    DEC_Population_RalentissementPion_ChangeVitesse   (  5 );
+    // DEC_Population_RalentissementPion_ChangeVitesse   (  5 );
 //    V              A::DEC_Population_RalentissementPion_VitesseParDefaut();
 }
 
