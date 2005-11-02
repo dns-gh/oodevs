@@ -581,6 +581,7 @@ void NET_AS_MOSServerMsgMgr::DoUpdateWithContext( const T_MessageWithCtxControll
             case T_MsgsMosSimWithContext_msg_order_conduite                     : workspace.GetEntityManager().OnReceiveMsgOrderConduite        ( *asnMsg.u.msg_order_conduite                  , nCtx ); break;
             case T_MsgsMosSimWithContext_msg_automate_order                     : workspace.GetEntityManager().OnReceiveMsgAutomateOrder        ( *asnMsg.u.msg_automate_order                  , nCtx ); break;
             case T_MsgsMosSimWithContext_msg_population_order                   : workspace.GetEntityManager().OnReceiveMsgPopulationOrder      ( *asnMsg.u.msg_population_order                , nCtx ); break;
+            case T_MsgsMosSimWithContext_msg_population_magic_action            : workspace.GetEntityManager().OnReceiveMsgPopulationMagicAction( *asnMsg.u.msg_population_magic_action         , nCtx ); break;
             case T_MsgsMosSimWithContext_msg_set_automate_mode                  : workspace.GetEntityManager().OnReceiveMsgSetAutomateMode      ( *asnMsg.u.msg_set_automate_mode               , nCtx ); break;
             case T_MsgsMosSimWithContext_msg_unit_magic_action                  : workspace.GetEntityManager().OnReceiveMsgUnitMagicAction      ( *asnMsg.u.msg_unit_magic_action               , nCtx ); break;
             case T_MsgsMosSimWithContext_msg_object_magic_action                : workspace.GetEntityManager().OnReceiveMsgObjectMagicAction    ( *asnMsg.u.msg_object_magic_action             , nCtx ); break;

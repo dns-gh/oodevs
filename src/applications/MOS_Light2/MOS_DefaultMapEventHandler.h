@@ -36,6 +36,8 @@ class MOS_MapMouseEvent;
 class QPopupMenu;
 class MOS_Agent_ABC;
 class MOS_Population;
+class MOS_PopulationConcentration;
+class MOS_PopulationFlow;
 
 
 // =============================================================================
@@ -70,6 +72,8 @@ public slots:
     void ClearSelection();
 
     void OnObjectDeleted( MOS_Object_ABC& object );
+    void OnPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
+    void OnPopulationFlowDeleted( MOS_PopulationFlow& flow );
     void OnTacticalLineDeleted( MOS_TacticalLine_ABC& line );
     void OnAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void OnObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
@@ -92,9 +96,14 @@ private:
     //@{
     void SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_Agent*      GetAgentAtPos( const MT_Vector2D& vGLPos );
-    MOS_Population* GetPopulationAtPos( const MT_Vector2D& vGLPos );
-    bool IsAgentAtPos( const MOS_Agent_ABC* agent, const MT_Vector2D& vGLPos );
+    MOS_Agent*  GetAgentAtPos( const MT_Vector2D& vGLPos );
+    bool        IsAgentAtPos ( const MOS_Agent&   agent, const MT_Vector2D& vGLPos );
+
+    MOS_Population*              GetPopulationAtPos             ( const MT_Vector2D& vGLPos );
+    MOS_PopulationConcentration* GetPopulationConcentrationAtPos( const MT_Vector2D& vGLPos );
+    MOS_PopulationFlow*          GetPopulationFlowAtPos         ( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         IsPopulationConcentrationAtPos ( const MOS_PopulationConcentration& concentration, const MT_Vector2D& vGLPos ) const;
+    bool                         IsPopulationFlowAtPos          ( const MOS_PopulationFlow& flow, const MT_Vector2D& vGLPos, float rDistancePerPixel ) const;
 
     MOS_AgentKnowledge* GetAgentKnowledgeAtPos( const MT_Vector2D& vGLPos );
     bool IsAgentKnowledgeAtPos( const MOS_AgentKnowledge& agent, const MT_Vector2D& vGLPos );

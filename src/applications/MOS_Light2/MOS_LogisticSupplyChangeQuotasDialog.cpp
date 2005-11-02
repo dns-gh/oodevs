@@ -29,13 +29,13 @@ MOS_LogisticSupplyChangeQuotasDialog::MOS_LogisticSupplyChangeQuotasDialog( QWid
     , pAgent_ ( 0 )
     , pQuotas_( 0 )
     , pTypesMenu_  ( 0 )
-    , pAutomateChangedComboBox_( 0 )
+    , pSuppliedComboBox_( 0 )
 {
 //    resize( 400, 150 );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
-    pAutomateChangedComboBox_ = new QComboBox( FALSE, this );
-    pMainLayout->addWidget( pAutomateChangedComboBox_ );
+    pSuppliedComboBox_ = new QComboBox( FALSE, this );
+    pMainLayout->addWidget( pSuppliedComboBox_ );
 
     pQuotas_ = new QListView( this, "" );
     pQuotas_->addColumn( tr( "Dotation" ) );
@@ -55,18 +55,9 @@ MOS_LogisticSupplyChangeQuotasDialog::MOS_LogisticSupplyChangeQuotasDialog( QWid
 
     pTypesMenu_ = new QPopupMenu( this );
 
-    connect( pQuotas_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ), SLOT(OnContextMenu( QListViewItem*, const QPoint&, int )) );
-
-    MOS_AgentManager::CT_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
-    for( MOS_AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
-    {
-        const MOS_Agent& agent = *itAgent->second;
-        if( !agent.IsAutomate() || !agent.pSupplyData_ )
-            continue;
-
-        automateComboBoxIDs_.insert( std::make_pair( pAutomateChangedComboBox_->count(), &agent ) );
-        pAutomateChangedComboBox_->insertItem( agent.GetName().c_str() );
-    }
+    connect( pQuotas_          , SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ), SLOT(OnContextMenu( QListViewItem*, const QPoint&, int )) );
+    connect( pQuotas_          , SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), SLOT( onItemRenamed( QListViewItem*, int, const QString& ) ) );
+    connect( pSuppliedComboBox_, SIGNAL( activated( int ) ), SLOT( OnSuppliedChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +66,16 @@ MOS_LogisticSupplyChangeQuotasDialog::MOS_LogisticSupplyChangeQuotasDialog( QWid
 // -----------------------------------------------------------------------------
 MOS_LogisticSupplyChangeQuotasDialog::~MOS_LogisticSupplyChangeQuotasDialog()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: MOS_LogisticSupplyChangeQuotasDialog::onItemRenamed
+// Created: HME 2005-10-14
+// -----------------------------------------------------------------------------
+void MOS_LogisticSupplyChangeQuotasDialog::onItemRenamed( QListViewItem* /*item*/, int /*col*/, const QString& /*text*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -91,20 +91,20 @@ void MOS_LogisticSupplyChangeQuotasDialog::SetAgent( const MOS_Agent& agent )
     if( ! agent.pSupplyData_ )
         return;
 
-    const T_ResourceQty_Map& ressources = agent.pSupplyData_->stocks_;
-    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+    automateComboBoxIDs_.clear();
+    pSuppliedComboBox_->clear();
+
+    MOS_AgentManager::CT_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
+    for( MOS_AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
     {
-        const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
-        pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+        if( itAgent->second && itAgent->second->nLogSupplySuperior_== agent.GetID() )
+        {
+            automateComboBoxIDs_.insert( std::make_pair( pSuppliedComboBox_->count(), itAgent->second ) );
+            pSuppliedComboBox_->insertItem( itAgent->second->GetName().c_str() );
+        }
     }
-    for ( MOS_Agent::T_LogisticAvailabilities::const_iterator itQuota = agent.pSupplyData_->quotas_.begin(); itQuota != agent.pSupplyData_->quotas_.end(); ++itQuota )
-    {
-        std::string str = MOS_App::GetApp().GetResourceName( itQuota->first );
-        int value = itQuota->second;
-        QListViewItem* item = new QListViewItem( pQuotas_, str.c_str(), QString::number(value) );
-        item->setRenameEnabled( 1, true );
-    }
-    pQuotas_->show();
+    if( pSuppliedComboBox_->count() > 0 )
+        OnSuppliedChanged( pSuppliedComboBox_->currentItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,10 +115,15 @@ void MOS_LogisticSupplyChangeQuotasDialog::Validate()
 {
     assert( pAgent_ );
 
+    CIT_AgentIDMap itSupplied = automateComboBoxIDs_.find( pSuppliedComboBox_->currentItem() );
+    assert( itSupplied != automateComboBoxIDs_.end() );
+
+    const MOS_Agent& supplied = *itSupplied->second;
+
     MOS_ASN_MsgLogRavitaillementChangeQuotas asnMsg;
 
     asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetID();
-    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pAutomateChangedComboBox_->currentItem() )->second->GetID();
+    asnMsg.GetAsnMsg().oid_receveur = supplied.GetID();
 
     asnMsg.GetAsnMsg().quotas.n = pQuotas_->childCount();
     if( asnMsg.GetAsnMsg().quotas.n > 0 )
@@ -180,4 +185,55 @@ void MOS_LogisticSupplyChangeQuotasDialog::OnContextMenu( QListViewItem* pItem, 
         QListViewItem* pItem = new QListViewItem( pQuotas_, pQuotas_->lastItem(), pTypesMenu_->text( nResult ), "10" );
         pItem->setRenameEnabled( 1, true );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogisticSupplyChangeQuotasDialog::OnSuppliedChanged
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_LogisticSupplyChangeQuotasDialog::OnSuppliedChanged( int nItem )
+{
+    CIT_AgentIDMap itSupplied = automateComboBoxIDs_.find( nItem );
+    assert( itSupplied != automateComboBoxIDs_.end() );
+
+    const MOS_Agent& supplied = *itSupplied->second;
+
+    std::set< std::string > menuRessources;
+
+    pTypesMenu_->clear();
+    const T_ResourceQty_Map& ressources = supplied.pSupplyData_->stocks_;
+    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+    {
+        const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
+        pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+        menuRessources.insert( strRessourceName );
+    }
+
+    const MOS_Agent::T_AgentVector& childs = supplied.children_;
+    for( MOS_Agent::CIT_AgentVector itChild = childs.begin(); itChild != childs.end(); ++itChild )
+    {
+        if( !( *itChild )->pSupplyData_ )
+            continue;
+        const T_ResourceQty_Map& ressources = ( *itChild )->pSupplyData_->stocks_;
+        for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+        {
+            const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
+            if( menuRessources.find( strRessourceName ) == menuRessources.end() )
+            {
+                pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+                menuRessources.insert( strRessourceName );
+            }
+        }
+    }
+
+    pQuotas_->clear();
+    const MOS_Agent::T_LogisticAvailabilities quotas = supplied.pSupplyData_->quotas_;
+    for ( MOS_Agent::CIT_LogisticAvailabilities it = quotas.begin(); it != quotas.end(); ++it )
+    {
+        std::string str = MOS_App::GetApp().GetResourceName( it->first );
+        int value = it->second;
+        QListViewItem* item = new QListViewItem( pQuotas_, str.c_str(), QString::number( value ) );
+        item->setRenameEnabled( 1, true );
+    }
+    pQuotas_->show();
 }

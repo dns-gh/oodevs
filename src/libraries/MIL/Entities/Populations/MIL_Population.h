@@ -94,6 +94,8 @@ public:
     void SendCreation               () const;
     void SendFullState              () const;
     void UpdateNetwork              () const;    
+
+    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, MIL_MOSContextID nCtx );
     //@}
 
     //! @name CheckPoints
@@ -109,6 +111,13 @@ private:
     //@{
     MIL_Population( const MIL_Population& );            //!< Copy constructor
     MIL_Population& operator=( const MIL_Population& ); //!< Assignement operator
+    //@}
+
+    //! @name Magic actions
+    //@{
+    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgMagicMove     ( ASN1T_MagicActionPopulationMoveTo& asn );
+    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgDestroyAll    ();
+    ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
     //@}
 
 private:

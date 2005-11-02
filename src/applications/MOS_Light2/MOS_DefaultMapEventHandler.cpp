@@ -42,6 +42,10 @@
 #include "MOS_MapMouseEvent.h"
 #include "MOS_ASN_Messages.h"
 #include "MOS_Population.h"
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
+
+#include "MT_Tools/MT_Circle.h"
 
 
 // -----------------------------------------------------------------------------
@@ -66,6 +70,8 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( ClearSelection() ) );
 
     connect( &MOS_App::GetApp(), SIGNAL( ObjectDeleted( MOS_Object_ABC& ) ), this, SLOT( OnObjectDeleted( MOS_Object_ABC& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationDeleted( MOS_PopulationConcentration& ) ), this, SLOT( OnPopulationConcentrationDeleted( MOS_PopulationConcentration& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowDeleted( MOS_PopulationFlow& ) ), this, SLOT( OnPopulationFlowDeleted( MOS_PopulationFlow& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TacticalLineDeleted( MOS_TacticalLine_ABC& ) ), this, SLOT( OnTacticalLineDeleted( MOS_TacticalLine_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( AgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ), this, SLOT( OnAgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ), this, SLOT( OnObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ) );
@@ -288,8 +294,6 @@ void MOS_DefaultMapEventHandler::ClearSelection()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::OnObjectDeleted
-/** @param  object 
-*/
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::OnObjectDeleted( MOS_Object_ABC& object )
@@ -301,11 +305,35 @@ void MOS_DefaultMapEventHandler::OnObjectDeleted( MOS_Object_ABC& object )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+void MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration )
+{
+    if( selectedElement_.pPopulationConcentration_ == &concentration )
+    {
+        selectedElement_ = MOS_SelectedElement();
+        emit ElementSelected( selectedElement_ );
+    }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::OnPopulationFlowDeleted
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+void MOS_DefaultMapEventHandler::OnPopulationFlowDeleted( MOS_PopulationFlow& flow )
+{
+    if( selectedElement_.pPopulationFlow_ == &flow )
+    {
+        selectedElement_ = MOS_SelectedElement();
+        emit ElementSelected( selectedElement_ );
+    }    
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::OnTacticalLineDeleted
-/** @param  line 
-*/
 // Created: APE 2004-07-28
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::OnTacticalLineDeleted( MOS_TacticalLine_ABC& line )
@@ -365,10 +393,24 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
         return;
     }
 
-    MOS_Population* pPopulation = GetPopulationAtPos( vGLPos );
-    if( pPopulation != 0 )
+//    MOS_Population* pPopulation = GetPopulationAtPos( vGLPos );
+//    if( pPopulation != 0 )
+//    {
+//        selectedElement_ = MOS_SelectedElement( *pPopulation );
+//        return;
+//    }
+
+    MOS_PopulationConcentration* pPopulationConcentration = GetPopulationConcentrationAtPos( vGLPos );
+    if( pPopulationConcentration != 0 )
     {
-        selectedElement_ = MOS_SelectedElement( *pPopulation );
+        selectedElement_ = MOS_SelectedElement( *pPopulationConcentration );
+        return;
+    }
+
+    MOS_PopulationFlow* pPopulationFlow = GetPopulationFlowAtPos( vGLPos, rDistancePerPixel );
+    if( pPopulationFlow != 0 )
+    {
+        selectedElement_ = MOS_SelectedElement( *pPopulationFlow );
         return;
     }
 
@@ -398,17 +440,20 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
             selectedElement_ = MOS_SelectedElement( *pAgentKnowledge );
             return;
         }
-    }
-   
-    // Only enable direct object selection in all-team mode.
-    if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == MOS_Options::eController )
-    {
+
         MOS_Object_ABC* pObject = GetObjectAtPos( vGLPos, rDistancePerPixel );
         if( pObject != 0 )
         {
             selectedElement_ = MOS_SelectedElement( *pObject );
             return;
         }
+
+//        MOS_PopulationKnowledge* pPopulationKnowledge = GetPopulationKnowledgeAtPos( vGLPos, rDistancePerPixel );
+//        if( pPopulationKnowledge != 0 )
+//        {
+//            selectedElement_ = MOS_SelectedElement( *pPopulationKnowledge );
+//            return;
+//        }
     }
 
     // Only enable knowledge selection in non all-team mode.
@@ -432,39 +477,132 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
 // -----------------------------------------------------------------------------
 MOS_Population* MOS_DefaultMapEventHandler::GetPopulationAtPos( const MT_Vector2D& vGLPos )
 {
+    // $$$$ SBO 2005-10-26: To be removed as we cannot select a full population
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::GetPopulationConcentrationAtPos
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+MOS_PopulationConcentration* MOS_DefaultMapEventHandler::GetPopulationConcentrationAtPos( const MT_Vector2D& vGLPos )
+{
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
     MOS_AgentManager::RCIT_PopulationMap rit;
+    MOS_Population::RCIT_ConcentrationMap ritConcentration;
 
-    if( selectedElement_.pPopulation_ == 0 )
+    if( selectedElement_.pPopulationConcentration_ == 0 )
     {
         rit = populationMap.rbegin();
+        assert( rit->second );
+        ritConcentration = rit->second->GetConcentrations().rbegin();
     }
     else
     {
-        MOS_AgentManager::CIT_PopulationMap it = populationMap.find( selectedElement_.pPopulation_->GetID() );
+        // get the next concentration from population
+        MOS_AgentManager::CIT_PopulationMap it = populationMap.find( selectedElement_.pPopulationConcentration_->GetPopulation().GetID() );
         assert( it != populationMap.end() );
-        rit = MOS_AgentManager::RCIT_PopulationMap( ++it );
-        ++rit;
+        rit = MOS_AgentManager::RCIT_PopulationMap( it );
+        MOS_Population::CIT_ConcentrationMap itConcentration = rit->second->GetConcentrations().find( selectedElement_.pPopulationConcentration_->GetID() );
+        ritConcentration = MOS_Population::RCIT_ConcentrationMap( ++itConcentration );
     }
 
-    for( uint n = 0; n < populationMap.size(); ++n )
+    for( uint nPopulation = 0; nPopulation < populationMap.size(); ++nPopulation )
     {
         if( rit == populationMap.rend() )
             rit = populationMap.rbegin();
-
-        MOS_Population* pPopulation = (*rit).second;
-        if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
+        const MOS_Population* pPopulation = (*rit).second;
+        if( nPopulation > 0 )
+            ritConcentration = pPopulation->GetConcentrations().rbegin();
+        for( uint nConcentration = 0; nConcentration < pPopulation->GetConcentrations().size(); ++nConcentration )
         {
-            if( IsAgentAtPos( pPopulation, vGLPos ) )
-                return pPopulation;
+            if( ritConcentration == pPopulation->GetConcentrations().rend() )
+                break;
+            MOS_PopulationConcentration* pConcentration = (*ritConcentration).second;
+            if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
+            {
+                if( IsPopulationConcentrationAtPos( *pConcentration, vGLPos ) )
+                    return pConcentration;
+            }
+            ++ritConcentration;
         }
-
         ++rit;
     }
-
     return 0;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::GetPopulationFlowAtPos
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+MOS_PopulationFlow* MOS_DefaultMapEventHandler::GetPopulationFlowAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+{
+    int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
+
+    MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
+    MOS_AgentManager::RCIT_PopulationMap rit;
+    MOS_Population::RCIT_FlowMap ritFlow;
+
+    if( selectedElement_.pPopulationFlow_ == 0 )
+    {
+        rit = populationMap.rbegin();
+        assert( rit->second );
+        ritFlow = rit->second->GetFlows().rbegin();
+    }
+    else
+    {
+        // get the next concentration from population
+        MOS_AgentManager::CIT_PopulationMap it = populationMap.find( selectedElement_.pPopulationFlow_->GetPopulation().GetID() );
+        assert( it != populationMap.end() );
+        rit = MOS_AgentManager::RCIT_PopulationMap( it );
+        MOS_Population::CIT_FlowMap itFlow = rit->second->GetFlows().find( selectedElement_.pPopulationFlow_->GetID() );
+        ritFlow = MOS_Population::RCIT_FlowMap( ++itFlow );
+    }
+
+    for( uint nPopulation = 0; nPopulation < populationMap.size(); ++nPopulation )
+    {
+        if( rit == populationMap.rend() )
+            rit = populationMap.rbegin();
+        const MOS_Population* pPopulation = (*rit).second;
+        if( nPopulation > 0 )
+            ritFlow = pPopulation->GetFlows().rbegin();
+        for( uint nFlow = 0; nFlow < pPopulation->GetFlows().size(); ++nFlow )
+        {
+            if( ritFlow == pPopulation->GetFlows().rend() )
+                break;
+            MOS_PopulationFlow* pFlow = (*ritFlow).second;
+            if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
+            {
+                if( IsPopulationFlowAtPos( *pFlow, vGLPos, rDistancePerPixel ) )
+                    return pFlow;
+            }
+            ++ritFlow;
+        }
+        ++rit;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::IsPopulationConcentrationAtPos
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+bool MOS_DefaultMapEventHandler::IsPopulationConcentrationAtPos( const MOS_PopulationConcentration& concentration, const MT_Vector2D& vGLPos ) const
+{
+    MT_Float rSurface = concentration.GetLivingHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
+    MT_Circle concentrationCircle( concentration.GetPos().rX_, concentration.GetPos().rY_, std::sqrt( rSurface / MT_PI ) );
+    return concentrationCircle.Inside( vGLPos );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::IsPopulationFlowAtPos
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+bool MOS_DefaultMapEventHandler::IsPopulationFlowAtPos( const MOS_PopulationFlow& flow, const MT_Vector2D& vGLPos, float rDistancePerPixel ) const
+{
+    return MOS_Tools::PointNearLine( vGLPos, flow.GetFlow(), 9.0 * rDistancePerPixel );
 }
 
 // -----------------------------------------------------------------------------
@@ -498,7 +636,7 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
         MOS_Agent* pAgent = (*rit).second;
         if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pAgent->GetTeam().GetIdx()) )
         {
-            if( IsAgentAtPos( pAgent, vGLPos ) )
+            if( IsAgentAtPos( *pAgent, vGLPos ) )
                 return pAgent;
         }
 
@@ -759,12 +897,14 @@ void MOS_DefaultMapEventHandler::PopupMenu( const MT_Vector2D& vGLPos, float rDi
     // If something is selected, make sure we clicked on it, otherwise select what's under the click.
     // If nothing selected, try selecting what's under the click.
     if(   ( ! selectedElement_.IsAMapElementSelected() )
-       || ( selectedElement_.pAgent_               != 0 && ! IsAgentAtPos              ( selectedElement_.pAgent_, vGLPos ) )
-       || ( selectedElement_.pPopulation_          != 0 && ! IsAgentAtPos              ( selectedElement_.pPopulation_, vGLPos ) )
-       || ( selectedElement_.pObject_              != 0 && ! IsObjectAtPos             ( *selectedElement_.pObject_, vGLPos, rDistancePerPixel ) )
-       || ( selectedElement_.pLine_                != 0 && ! IsLineAtPos               ( *selectedElement_.pLine_, vGLPos, rDistancePerPixel ) )
-       || ( selectedElement_.pAgentKnowledge_      != 0 && ! IsAgentKnowledgeAtPos     ( *selectedElement_.pAgentKnowledge_, vGLPos ) ) 
-       || ( selectedElement_.pObjectKnowledge_     != 0 && ! IsObjectKnowledgeAtPos    ( *selectedElement_.pObjectKnowledge_, vGLPos, rDistancePerPixel ) ) )
+       || ( selectedElement_.pAgent_                   != 0 && ! IsAgentAtPos                  ( *selectedElement_.pAgent_, vGLPos ) )
+       //|| ( selectedElement_.pPopulation_          != 0 && ! IsAgentAtPos              ( *selectedElement_.pPopulation_, vGLPos ) )
+       || ( selectedElement_.pPopulationConcentration_ != 0 && ! IsPopulationConcentrationAtPos( *selectedElement_.pPopulationConcentration_, vGLPos ) )
+       || ( selectedElement_.pPopulationFlow_          != 0 && ! IsPopulationFlowAtPos         ( *selectedElement_.pPopulationFlow_, vGLPos, rDistancePerPixel ) )
+       || ( selectedElement_.pObject_                  != 0 && ! IsObjectAtPos                 ( *selectedElement_.pObject_, vGLPos, rDistancePerPixel ) )
+       || ( selectedElement_.pLine_                    != 0 && ! IsLineAtPos                   ( *selectedElement_.pLine_, vGLPos, rDistancePerPixel ) )
+       || ( selectedElement_.pAgentKnowledge_          != 0 && ! IsAgentKnowledgeAtPos         ( *selectedElement_.pAgentKnowledge_, vGLPos ) ) 
+       || ( selectedElement_.pObjectKnowledge_         != 0 && ! IsObjectKnowledgeAtPos        ( *selectedElement_.pObjectKnowledge_, vGLPos, rDistancePerPixel ) ) )
     {
         SelectElementAtPos( vGLPos, rDistancePerPixel );
 

@@ -43,6 +43,7 @@ private slots:
     void Validate     ();
     void Reject       ();
     void OnContextMenu( QListViewItem* pItem, const QPoint& pos, int );
+    void OnSuppliedChanged( int item );
     //@}
 
 private:
@@ -57,7 +58,7 @@ private:
     const MOS_Agent* pAgent_;
     
     QListView*    pStocks_;
-    QComboBox*    pAutomateChangedComboBox_;
+    QComboBox*    pSuppliedComboBox_;
     QPopupMenu*   pTypesMenu_;   
     T_AgentIDMap  automateComboBoxIDs_;
 };

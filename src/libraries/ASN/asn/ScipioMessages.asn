@@ -288,6 +288,7 @@ MsgsSimMosWithContext ::= CHOICE
                                                 
     msg-unit-magic-action-ack                   MsgUnitMagicActionAck,
     msg-object-magic-action-ack                 MsgObjectMagicActionAck,
+    msg-population-magic-action-ack             MsgPopulationMagicActionAck,
    
     msg-change-diplomatie-ack                   MsgChangeDiplomatieAck,
     msg-change-groupe-connaissance-ack          MsgChangeGroupeConnaissanceAck,
@@ -332,6 +333,7 @@ MsgsMosSimWithContext ::= CHOICE
                                             
     msg-unit-magic-action                   MsgUnitMagicAction,
     msg-object-magic-action                 MsgObjectMagicAction,
+    msg-population-magic-action             MsgPopulationMagicAction,
 
     msg-change-diplomatie                   MsgChangeDiplomatie,
     msg-change-groupe-connaissance          MsgChangeGroupeConnaissance,

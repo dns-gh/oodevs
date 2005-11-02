@@ -17,7 +17,7 @@
 class QListView;
 class QPopupMenu;
 class QComboBox;
-class QListViewItem;
+class QComboBoxItem;
 class MOS_Agent;
 
 //=============================================================================
@@ -42,6 +42,8 @@ private slots:
     void Validate     ();
     void Reject       ();
     void OnContextMenu( QListViewItem* pItem, const QPoint& pos, int );
+    void onItemRenamed( QListViewItem* item, int col, const QString& text );
+    void OnSuppliedChanged( int item );
     //@}
 
 private:
@@ -55,7 +57,7 @@ private:
     const MOS_Agent* pAgent_;
 
     QListView*    pQuotas_;
-    QComboBox*    pAutomateChangedComboBox_;
+    QComboBox*    pSuppliedComboBox_;
     QPopupMenu*   pTypesMenu_;   
     T_AgentIDMap  automateComboBoxIDs_;
 };

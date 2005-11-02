@@ -33,16 +33,17 @@ class NET_AS_MOSServer;
 
 class HLA_Federate;
 
-struct ASN1T_MsgUnitMagicAction;             
-struct ASN1T_MsgPionOrder;                   
-struct ASN1T_MsgAutomateOrder;               
-struct ASN1T_MsgSetAutomateMode;             
-struct ASN1T_MsgOrderConduite;               
-struct ASN1T_MsgObjectMagicAction;           
-struct ASN1T_MsgChangeDiplomatie;            
-struct ASN1T_MsgChangeGroupeConnaissance;    
-struct ASN1T_MsgChangeLiensLogistiques;      
-struct ASN1T_MsgChangeAutomate;              
+struct ASN1T_MsgUnitMagicAction;
+struct ASN1T_MsgPionOrder;
+struct ASN1T_MsgAutomateOrder;
+struct ASN1T_MsgSetAutomateMode;
+struct ASN1T_MsgOrderConduite;
+struct ASN1T_MsgObjectMagicAction;
+struct ASN1T_MsgPopulationMagicAction;
+struct ASN1T_MsgChangeDiplomatie;
+struct ASN1T_MsgChangeGroupeConnaissance;
+struct ASN1T_MsgChangeLiensLogistiques;
+struct ASN1T_MsgChangeAutomate;
 struct ASN1T_MsgLogRavitaillementChangeQuotas;
 struct ASN1T_MsgLogRavitaillementPousserFlux;
 
@@ -116,6 +117,7 @@ public:
     void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgOrderConduite        ( ASN1T_MsgOrderConduite&                 msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgObjectMagicAction    ( ASN1T_MsgObjectMagicAction&             msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction&         msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgChangeDiplomacy      ( ASN1T_MsgChangeDiplomatie&              msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, MIL_MOSContextID nCtx );

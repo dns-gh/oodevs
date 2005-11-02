@@ -189,6 +189,19 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::SetAttitude
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::SetAttitude( const MIL_PopulationAttitude& attitude )
+{
+    if( pAttitude_ != &attitude )
+    {
+        bAttitudeUpdated_ = true;
+        pAttitude_ = &attitude;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::IsNearPosition
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------

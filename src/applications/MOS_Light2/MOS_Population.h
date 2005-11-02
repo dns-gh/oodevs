@@ -39,15 +39,18 @@ class MOS_Population : public MOS_Agent_ABC
 {
     friend class MOS_GLTool; // to avoid "get" on concentration/flow maps
 
-private:
+public:
 	typedef std::map< uint, MOS_PopulationConcentration* >  T_ConcentrationMap;
 	typedef T_ConcentrationMap::iterator                    IT_ConcentrationMap;
 	typedef T_ConcentrationMap::const_iterator              CIT_ConcentrationMap;
+    typedef T_ConcentrationMap::const_reverse_iterator      RCIT_ConcentrationMap;
 
 	typedef std::map< uint , MOS_PopulationFlow* >          T_FlowMap;
 	typedef T_FlowMap::iterator                             IT_FlowMap;
 	typedef T_FlowMap::const_iterator                       CIT_FlowMap;
+    typedef T_FlowMap::const_reverse_iterator               RCIT_FlowMap;
 
+private:
     typedef std::map< uint, MOS_AgentKnowledge* >           T_AgentKnowledgeMap;
     typedef T_AgentKnowledgeMap::iterator                   IT_AgentKnowledgeMap;
     typedef T_AgentKnowledgeMap::const_iterator             CIT_AgentKnowledgeMap;
@@ -87,96 +90,15 @@ public:
 	virtual const std::string          GetName() const;
 	virtual const MT_Vector2D&         GetPos () const;
 
-	uint                               GetLivingHumans();
-	uint                               GetDeadHumans  ();
+	uint                               GetLivingHumans() const;
+	uint                               GetDeadHumans  () const;
     const MOS_AgentModel&              GetModel       () const;
     const MOS_TypePopulation&          GetType        () const;
+
+    // for selection management
+    const T_ConcentrationMap&          GetConcentrations() const;
+    const T_FlowMap&                   GetFlows         () const;
     //@}
-
-public:
-
-	class iterator
-	{
-	public:
-		iterator( T_ConcentrationMap& cm, T_FlowMap& fm, bool e = true )
-		: concentrationMap_	( cm )
-		, flowMap_			( fm )
-		{
-			onCon_  = e;
-			if ( e )
-			{
-				if ( concentrationMap_.size() > 0 )
-                {
-                    itCon   = concentrationMap_.begin();
-				    itFlow	= flowMap_.begin();
-                }
-                else
-                {
-                    onCon_ = false;
-                    itCon   = concentrationMap_.end();
-				    itFlow	= flowMap_.begin();
-                }
-			}
-			else
-			{
-				itCon   = concentrationMap_.end();
-				itFlow	= flowMap_.end();
-			}
-		}
-		~iterator()
-		{
-		}
-		iterator& operator++()
-		{
-			if ( onCon_ )
-			{
-				++itCon;
-				if ( itCon == concentrationMap_.end() )
-					onCon_ = false;
-			}
-			else
-				++itFlow;
-			return *this;
-		}
-		MOS_PopulationPart_ABC*	operator*()
-		{
-			if ( onCon_ )
-				return (MOS_PopulationPart_ABC*) itCon->second;
-			else
-				return (MOS_PopulationPart_ABC*) itFlow->second;
-		}
-		bool operator==( iterator& it )
-		{
-			return ( itCon == it.itCon && itFlow == it.itFlow );
-		}
-		bool operator!=( iterator& it )
-		{
-			return ( itCon != it.itCon || itFlow != it.itFlow );
-		}
-		iterator& operator=( iterator& it )
-		{
-			itCon = it.itCon;
-			itFlow = it.itFlow;
-			onCon_ = it.onCon_;
-			flowMap_ = it.flowMap_;
-			return *this;
-		}
-	private:
-		bool onCon_;
-		IT_ConcentrationMap itCon;
-		IT_FlowMap			itFlow;
-		T_ConcentrationMap&			concentrationMap_;
-		T_FlowMap&					flowMap_;
-	};
-
-	iterator& begin()
-	{
-		return *new iterator( concentrationMap_ , flowMap_ );
-	};
-	iterator& end()
-	{
-		return *new iterator( concentrationMap_ , flowMap_, false );
-	};
 
 private:
 	MIL_AgentID               nPopulationID_;

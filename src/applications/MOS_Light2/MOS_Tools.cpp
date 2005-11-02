@@ -345,6 +345,24 @@ const char* MOS_Tools::ToString( const ASN1T_EnumUnitAttrErrorCode& nCode )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Tools::ToString
+// Created: SBO 2005-11-02
+// -----------------------------------------------------------------------------
+const char* MOS_Tools::ToString( const ASN1T_EnumPopulationAttrErrorCode& nCode )
+{
+    switch( nCode )
+    {
+        case EnumPopulationAttrErrorCode::no_error               : return "No error";
+        case EnumPopulationAttrErrorCode::error_invalid_unit     : return "Invalid population";
+        case EnumPopulationAttrErrorCode::error_invalid_attribute: return "Invalid attribute";
+
+        default:
+            assert( false );
+            return "Unknown";
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Tools::ToString
 // Created: APE 2004-05-17
 // -----------------------------------------------------------------------------
 const char* MOS_Tools::ToString( const ASN1T_EnumObjectErrorCode& nCode )

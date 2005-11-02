@@ -115,9 +115,9 @@ public:
     //@}
 
 public:
-     MOS_Agent( bool bGenerateId = false );
-     MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg );
-     MOS_Agent( const ASN1T_MsgPionCreation& asnMsg );
+    explicit MOS_Agent( bool bGenerateId = false );
+    explicit MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg );
+    explicit MOS_Agent( const ASN1T_MsgPionCreation& asnMsg );
     ~MOS_Agent();
 
     void Initialize();
@@ -252,6 +252,14 @@ public:
     void OnReceiveMsgLogMedicalEtat( const ASN1T_MsgLogSanteEtat& asn );
     void OnReceiveMsgLogSupplyEtat  ( const ASN1T_MsgLogRavitaillementEtat& asn );
     void OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogRavitaillementQuotas& asnMsg );
+
+    // Accessor
+    bool MOS_Agent::IsLogisticTC2           () const;
+    bool MOS_Agent::IsLogisticBLD           () const;
+    bool MOS_Agent::IsLogisticBLT           () const;
+    bool MOS_Agent::IsLogisticMaintenance   () const;
+    bool MOS_Agent::IsLogisticSante         () const;
+    bool MOS_Agent::IsLogisticRavitaillement() const;
     //@}
 
     //! @name ODB

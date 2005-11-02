@@ -122,7 +122,11 @@ public:
 
     static void Draw( MOS_AgentManager& agentManager );
     static void Draw( MOS_Agent& agent, E_State nState = eNormal );
-	static void Draw( MOS_Population& pop, E_State nState );
+
+	static void Draw( MOS_Population&              population   , E_State nState = eNormal );
+    static void Draw( MOS_PopulationConcentration& concentration, E_State nState = eNormal );
+    static void Draw( MOS_PopulationFlow&          flow         , E_State nState = eNormal );
+
 	static void DrawPopulation( MOS_Population& pop, E_State nState );
     static void DrawPath( MOS_Agent& agent );
     static void DrawPath( MOS_PopulationFlow& flow );

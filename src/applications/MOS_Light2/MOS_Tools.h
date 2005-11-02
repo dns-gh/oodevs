@@ -53,6 +53,7 @@ public:
     static const char* ToString( const ASN1T_EnumOrderErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumUnitAttrErrorCode& nCode );
     static const char* ToString( const ASN1T_EnumObjectErrorCode& nCode );
+    static const char* ToString( const ASN1T_EnumPopulationAttrErrorCode& nCode );
 
 
     //$$$$$ bof bof - N'IMPORTE QUOI !

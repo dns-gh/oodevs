@@ -72,12 +72,12 @@ void MOS_LogSupplyConsign_ListView_Item::Update()
 
     switch( nState ) 
     {     
-        case MOS_LogSupplyConsign::eConvoyForming    : strState = tr( "convoi constitution" ); break;
-        case MOS_LogSupplyConsign::eConvoyLoading    : strState = tr( "convoi chargement" ); break;
-        case MOS_LogSupplyConsign::eConvoyGoingTo    : strState = tr( "convoi deplacement aller" ); break;
-        case MOS_LogSupplyConsign::eConvoyUnloading  : strState = tr( "Convoi déchargement" ); break;
-        case MOS_LogSupplyConsign::eConvoyGoingFrom  : strState = tr( "Convoi deplacement retour" ); break;
-        case MOS_LogSupplyConsign::eFinished         : strState = tr( "terminé" ); break;
+        case MOS_LogSupplyConsign::eConvoyForming    : strState = tr( "Convoi en cours de constitution" ); break;
+        case MOS_LogSupplyConsign::eConvoyLoading    : strState = tr( "Convoi en cours de chargement" ); break;
+        case MOS_LogSupplyConsign::eConvoyGoingTo    : strState = tr( "Convoi en route" ); break;
+        case MOS_LogSupplyConsign::eConvoyUnloading  : strState = tr( "Convoi en cours de déchargement" ); break;
+        case MOS_LogSupplyConsign::eConvoyGoingFrom  : strState = tr( "Convoi en retour" ); break;
+        case MOS_LogSupplyConsign::eFinished         : strState = tr( "Terminé" ); break;
         default:
             assert( false );
     }

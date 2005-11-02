@@ -1003,6 +1003,24 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicActio
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgPopulationMagicAction
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, MIL_MOSContextID nCtx )
+{
+    MIL_Population* pPopulation = FindPopulation( asnMsg.oid_population );
+    if( !pPopulation )
+    {
+        NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
+        asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid_population;
+        asnReplyMsg.GetAsnMsg().error_code = EnumPopulationAttrErrorCode::error_invalid_unit;
+        asnReplyMsg.Send( nCtx );
+        return;
+    }
+    pPopulation->OnReceiveMsgPopulationMagicAction( asnMsg, nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------

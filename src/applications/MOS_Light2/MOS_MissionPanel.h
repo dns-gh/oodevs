@@ -29,19 +29,14 @@
 class QPopupMenu;
 class MOS_Agent;
 class MOS_Population;
+class MOS_PopulationConcentration;
+class MOS_PopulationFlow;
 class MOS_MissionInterface_ABC;
 class MOS_RC;
 class MOS_ShapeEditorMapEventFilter;
 class MOS_Team;
 
 // =============================================================================
-/** @class  MOS_MissionPanel
-    @brief  MOS_MissionPanel
-    @par    Using example
-    @code
-    MOS_MissionPanel;
-    @endcode
-*/
 // Created: APE 2004-03-19
 // =============================================================================
 class MOS_MissionPanel : public QDockWindow
@@ -68,6 +63,8 @@ private:
     void FillDiplomacyPopupMenu( QPopupMenu& popumMenu, MOS_Team& team );
     void FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& agent );
     void FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Population& population );
+    void FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_PopulationConcentration& concentration );
+    void FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_PopulationFlow& flow );
     void FillFragmentaryOrderPopup( QPopupMenu& popupMenu, MOS_RC& rc );
 
     void hideEvent( QHideEvent* pEvent );
@@ -79,7 +76,7 @@ private slots:
     void ActivateAutomataMission( int nMissionId );
     void ActivateFragmentaryOrder( int nOrderId );
 
-    void MagicMove( );
+    void MagicMove();
     void MagicMoveDone();
     void MagicRestore( int nId );
     void MagicDestroyComponent();
@@ -92,15 +89,26 @@ private slots:
     void MagicChangeQuotas();
     void ChangeHumanFactors();
 
+    //! @name Population magic actions
+    //@{
+    void PopulationMagicMove                ();
+    void PopulationMagicMoveDone            ();
+    void PopulationMagicChangeAttitudeGlobal( int nAttitude );
+    void PopulationMagicChangeAttitude      ( int nAttitude, bool bGlobal = false );
+    void PopulationMagicDestroyAll          ();
+    //@}
+
 private:
-    E_TypeAgent     typeAgent_;
-    MOS_Team*		pPopupTeam_;
-    MOS_Agent*		pPopupAgent_;
-	MOS_Population* pPopupPopulation_;
+    MOS_Team*		             pPopupTeam_;
+    MOS_Agent*		             pPopupAgent_;
+	MOS_Population*              pPopupPopulation_;
+    MOS_PopulationConcentration* pPopupPopulationConcentration_;
+    MOS_PopulationFlow*          pPopupPopulationFlow_;
 
     MOS_MissionInterface_ABC* pMissionInterface_;
 
-    MOS_ShapeEditorMapEventFilter* pLineEditor_;
+    MOS_ShapeEditorMapEventFilter* pAgentMagicMovePositionEditor_;
+    MOS_ShapeEditorMapEventFilter* pPopulationMagicMovePositionEditor_;
 };
 
 #endif // __MOS_MissionPanel_h_

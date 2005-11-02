@@ -26,6 +26,8 @@
 
 #include "MOS_Agent.h"
 #include "MOS_Population.h"
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
 #include "MOS_MainWindow.h"
 #include "MOS_AgentModel.h"
 #include "MOS_ASN_Messages.h"
@@ -55,16 +57,20 @@
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 MOS_MissionPanel::MOS_MissionPanel( QWidget* pParent )
-    : QDockWindow       ( pParent )
-    , pMissionInterface_( 0 )
-    , pLineEditor_      ( new MOS_ShapeEditorMapEventFilter( this ) )
-    , typeAgent_        ( eAgent )
+    : QDockWindow                        ( pParent )
+    , pMissionInterface_                 ( 0 )
+    , pAgentMagicMovePositionEditor_     ( new MOS_ShapeEditorMapEventFilter( this ) )
+    , pPopulationMagicMovePositionEditor_( new MOS_ShapeEditorMapEventFilter( this ) )
+    , pPopupPopulation_                  ( 0 )
+    , pPopupPopulationConcentration_     ( 0 )
+    , pPopupPopulationFlow_              ( 0 )
 {
     this->setResizeEnabled( true );
     this->setCaption( tr( "Mission" ) );
     this->setCloseMode( QDockWindow::Always );
 
-    connect( pLineEditor_, SIGNAL( Done() ), this, SLOT( MagicMoveDone() ) );
+    connect( pAgentMagicMovePositionEditor_     , SIGNAL( Done() ), this, SLOT( MagicMoveDone() ) );
+    connect( pPopulationMagicMovePositionEditor_, SIGNAL( Done() ), this, SLOT( PopulationMagicMoveDone() ) );
 
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), this,   SLOT( FillRemotePopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ),                                         this,   SLOT( hide() ) );
@@ -82,9 +88,6 @@ MOS_MissionPanel::~MOS_MissionPanel()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  agent 
-*/
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -96,8 +99,12 @@ void MOS_MissionPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Act
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pAgent_ );
     if( context.selectedElement_.pTeam_ != 0 && MOS_MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
         FillDiplomacyPopupMenu( popupMenu, *context.selectedElement_.pTeam_ );
-    if( context.selectedElement_.pPopulation_ != 0 )
+    if( context.selectedElement_.pPopulation_ )
         FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulation_ );
+    else if( context.selectedElement_.pPopulationConcentration_ )
+        FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulationConcentration_ );
+    else if( context.selectedElement_.pPopulationFlow_ )
+        FillStandardPopupMenu( popupMenu, *context.selectedElement_.pPopulationFlow_ );
     else if( context.selectedElement_.pRC_ != 0 )
         FillFragmentaryOrderPopup( popupMenu, *context.selectedElement_.pRC_ );
 }
@@ -133,26 +140,62 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Populat
     }
 
     // Add the unit mission menu.
-    int nPopulationMenuId = popupMenu.insertItem( tr( "Missions Population" ), pPopulationMenu  );
+    popupMenu.insertItem( tr( "Missions Population" ), pPopulationMenu );
 
     // Add the magic orders if playing as controller.
     if( MOS_MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
     {
         QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
-        int nId;
+        pMagicOrdersMenu->insertItem( tr( "Téléportation" )               , this, SLOT( PopulationMagicMove() ) );
 
-        nId = pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( MagicMove( ePopulation ) ) );
+        QPopupMenu* pAttitudeMenu = new QPopupMenu();
+        pAttitudeMenu->setCheckable( true );
+        QPopupMenu* pAttitudeGlobalMenu = new QPopupMenu();
+        for( int i = 0; i < eNbrPopulationAttitude; ++i )
+        {
+            int nIdx = pAttitudeMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( ( E_PopulationAttitude )i ).c_str(), this, SLOT( PopulationMagicChangeAttitude( int ) ) );
+            pAttitudeMenu->setItemParameter( nIdx, i );
+            if(    ( pPopupPopulationConcentration_ && pPopupPopulationConcentration_->GetAttitude() == ( E_PopulationAttitude )i )
+                || ( pPopupPopulationFlow_ && pPopupPopulationFlow_->GetAttitude() == ( E_PopulationAttitude )i ) )
+                pAttitudeMenu->setItemChecked( nIdx, true );
 
+            nIdx = pAttitudeGlobalMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( ( E_PopulationAttitude )i ).c_str(), this, SLOT( PopulationMagicChangeAttitudeGlobal( int ) ) );
+            pAttitudeGlobalMenu->setItemParameter( nIdx, i );
+        }
+
+        pMagicOrdersMenu->insertItem( tr( "Changement d'attitude" ), pAttitudeMenu );
+        pMagicOrdersMenu->insertItem( tr( "Changement d'attitude global" ), pAttitudeGlobalMenu );
+        pMagicOrdersMenu->insertItem( tr( "Destruction totale" )          , this, SLOT( PopulationMagicDestroyAll() ) );
         popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
     }
-
-    typeAgent_ = ePopulation;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::FillStandardPopupMenu
-/** @param  popupMenu 
-*/
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_PopulationConcentration& concentration )
+{
+    pPopupPopulationConcentration_ = &concentration;
+    pPopupPopulation_ = 0;
+    pPopupPopulationFlow_ = 0;
+    FillStandardPopupMenu( popupMenu, const_cast< MOS_Population& >( concentration.GetPopulation() ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::FillStandardPopupMenu
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_PopulationFlow& flow )
+{
+    pPopupPopulationFlow_ = &flow;
+    pPopupPopulation_ = 0;
+    pPopupPopulationConcentration_ = 0;
+    FillStandardPopupMenu( popupMenu, const_cast< MOS_Population& >( flow.GetPopulation() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::FillStandardPopupMenu
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& agent )
@@ -276,24 +319,17 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
             popupMenu.insertItem( tr( "Liens logistiques" ), this, SLOT( MagicChangeLogisticLinks() ) );
     }
 
-//    if(    ( agent.pSupplyData_     && ! agent.pSupplyData_->stocks_.empty() ) 
-//        || ( agent.handledSupplies_.size() > 0 ) )
-    if( agent.pSupplyData_ )
+    if( agent.IsLogisticRavitaillement() && ( agent.IsLogisticBLT() || agent.IsLogisticBLD() ) )
     {
-        popupMenu.insertItem( tr( "Pousser flux" ), this, SLOT( MagicPushFlux() ) );
+        popupMenu.insertItem( tr( "Pousser flux" )  , this, SLOT( MagicPushFlux    () ) );
         popupMenu.insertItem( tr( "Changer quotas" ), this, SLOT( MagicChangeQuotas() ) );
         popupMenu.insertSeparator();
     }
-
-    typeAgent_ = eAgent;
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::FillFragmentaryOrderPopup
-/** @param  popupMenu 
-    @param  rc 
-*/
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, MOS_RC& rc )
@@ -311,8 +347,6 @@ void MOS_MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, MOS_RC&
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::hideEvent
-/** @param  pEvent 
-*/
 // Created: APE 2004-04-27
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::hideEvent( QHideEvent* pEvent )
@@ -344,8 +378,6 @@ void MOS_MissionPanel::ToggleAutomate()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::ActivateUnitMission
-/** @param  nMissionId 
-*/
 // Created: APE 2004-10-25
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::ActivateUnitMission( int nMissionId )
@@ -367,8 +399,6 @@ void MOS_MissionPanel::ActivateUnitMission( int nMissionId )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::ActivateAutomataMission
-/** @param  nMissionId 
-*/
 // Created: APE 2004-10-25
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::ActivateAutomataMission( int nMissionId )
@@ -409,8 +439,6 @@ void MOS_MissionPanel::ActivatePopulationMission( int nMissionId )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::ActivateFragmentaryOrder
-/** @param  nOrderType 
-*/
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
@@ -467,6 +495,9 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
     }
 }
 
+// =============================================================================
+// MAGIC ACTIONS: Agents
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::MagicMove
@@ -474,8 +505,8 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::MagicMove()
 {
-    pLineEditor_->PrepareNewLine( MOS_ShapeEditorMapEventFilter::ePoint );
-    pLineEditor_->Push();
+    pAgentMagicMovePositionEditor_->PrepareNewLine( MOS_ShapeEditorMapEventFilter::ePoint );
+    pAgentMagicMovePositionEditor_->Push();
 }
 
 
@@ -485,7 +516,7 @@ void MOS_MissionPanel::MagicMove()
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::MagicMoveDone()
 {
-    T_PointVector& pointList = pLineEditor_->GetPointList();
+    T_PointVector& pointList = pAgentMagicMovePositionEditor_->GetPointList();
     if( pointList.empty() )
         return;
 
@@ -496,52 +527,33 @@ void MOS_MissionPanel::MagicMoveDone()
     ASN1T_CoordUTM  coordUTM;
     coordUTM = strPos.c_str();
 
-    if ( typeAgent_ == eAgent )
+    MOS_ASN_MsgUnitMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetID();
+    asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
+    asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
+    asnMsg.Send( 56 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande déplacement magique pour agent #" << pPopupAgent_->GetID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+
+    //$$$ Temporary solution. Clearing the paths should be done when we receive confirmation
+    // that the magic move has gone through to the sim, but since we lack that confirmation
+    // message, we have to do this here.
+    pPopupAgent_->ClearPath();
+    
+    if( pPopupAgent_->IsAutomate() && pPopupAgent_->IsEmbraye() )
     {
-        MOS_ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid              = pPopupAgent_->GetID();
-        asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
-        asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
-        asnMsg.Send( 56 );
-
-        std::stringstream strMsg;
-        strMsg << "Demande déplacement magique pour agent #" << pPopupAgent_->GetID();
-        MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
-
-        //$$$ Temporary solution. Clearing the paths should be done when we receive confirmation
-        // that the magic move has gone through to the sim, but since we lack that confirmation
-        // message, we have to do this here.
-        pPopupAgent_->ClearPath();
-        
-        if( pPopupAgent_->IsAutomate() && pPopupAgent_->IsEmbraye() )
-        {
-            const MOS_AgentManager::T_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
-            for( MOS_AgentManager::CIT_AgentMap it = agents.begin(); it != agents.end(); ++it )
-                if( (it->second)->GetParent() == pPopupAgent_ )
-                (it->second)->ClearPath();
-        }
+        const MOS_AgentManager::T_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
+        for( MOS_AgentManager::CIT_AgentMap it = agents.begin(); it != agents.end(); ++it )
+            if( (it->second)->GetParent() == pPopupAgent_ )
+            (it->second)->ClearPath();
     }
-    else if ( typeAgent_ == ePopulation  )
-    {
-        MOS_ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid              = pPopupPopulation_->GetID();
-        asnMsg.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
-        asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
-        asnMsg.Send( 56 );
-
-        std::stringstream strMsg;
-        strMsg << "Demande déplacement magique pour population #" << pPopupPopulation_->GetID();
-        MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );        
-    }
-    else
-        assert( false );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::MagicRestore
-/** @param  nId 
-*/
 // Created: APE 2004-05-26
 // -----------------------------------------------------------------------------
 void MOS_MissionPanel::MagicRestore( int nId )
@@ -671,4 +683,130 @@ void MOS_MissionPanel::ChangeHumanFactors()
     static MOS_ChangeHumanFactorsDialog* pDialog = new MOS_ChangeHumanFactorsDialog( this );
     pDialog->SetAgent( *pPopupAgent_ );
     pDialog->show();
+}
+
+// =============================================================================
+// MAGIC ACTIONS: Populations
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::PopulationMagicMove
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::PopulationMagicMove()
+{
+    pPopulationMagicMovePositionEditor_->PrepareNewLine( MOS_ShapeEditorMapEventFilter::ePoint );
+    pPopulationMagicMovePositionEditor_->Push();
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::PopulationMagicMoveDone
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::PopulationMagicMoveDone()
+{
+    if( pPopupPopulationConcentration_ )
+        pPopupPopulation_ = const_cast< MOS_Population* >( &pPopupPopulationConcentration_->GetPopulation() );
+    else if( pPopupPopulationFlow_ )
+        pPopupPopulation_ = const_cast< MOS_Population* >( &pPopupPopulationFlow_->GetPopulation() );
+    assert( pPopupPopulation_ != 0 );
+
+    T_PointVector& pointList = pPopulationMagicMovePositionEditor_->GetPointList();
+    if( pointList.empty() )
+        return;
+
+    assert( pointList.size() == 1 );
+    std::string strPos;
+    MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( pointList.front(), strPos );
+
+    ASN1T_CoordUTM  coordUTM;
+    coordUTM = strPos.c_str();
+
+    MOS_ASN_MsgPopulationMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid_population   = pPopupPopulation_->GetID();
+    asnMsg.GetAsnMsg().action.t         = T_MsgPopulationMagicAction_action_move_to;
+    asnMsg.GetAsnMsg().action.u.move_to = &coordUTM;
+    asnMsg.Send( 56 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande déplacement magique pour population #" << pPopupPopulation_->GetID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+
+    // $$$$ SBO 2005-10-28: cancel path as for agents?
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::PopulationMagicChangeAttitudeGlobal
+// Created: SBO 2005-11-02
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::PopulationMagicChangeAttitudeGlobal( int nAttitude )
+{
+    PopulationMagicChangeAttitude( nAttitude, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::PopulationMagicChangeAttitude
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::PopulationMagicChangeAttitude( int nAttitude, bool bGlobal /* = false */ )
+{
+    if( pPopupPopulationConcentration_ )
+        pPopupPopulation_ = const_cast< MOS_Population* >( &pPopupPopulationConcentration_->GetPopulation() );
+    else if( pPopupPopulationFlow_ )
+        pPopupPopulation_ = const_cast< MOS_Population* >( &pPopupPopulationFlow_->GetPopulation() );
+    assert( pPopupPopulation_ != 0 );
+
+    MOS_ASN_MsgPopulationMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid_population = pPopupPopulation_->GetID();
+    asnMsg.GetAsnMsg().action.t       = T_MsgPopulationMagicAction_action_change_attitude;
+
+    ASN1T_MagicActionPopulationChangeAttitude* pAction = new ASN1T_MagicActionPopulationChangeAttitude();
+
+    pAction->oid_population = pPopupPopulation_->GetID();
+    pAction->attitude       = ( ASN1T_EnumPopulationAttitude )nAttitude;
+
+    if( ! bGlobal && pPopupPopulationConcentration_ )
+    {
+        pAction->beneficiaire.t = T_MagicActionPopulationChangeAttitude_beneficiaire_concentration;
+        pAction->beneficiaire.u.concentration = pPopupPopulationConcentration_->GetID();
+    }
+    else if( ! bGlobal && pPopupPopulationFlow_ )
+    {
+        pAction->beneficiaire.t = T_MagicActionPopulationChangeAttitude_beneficiaire_flux;
+        pAction->beneficiaire.u.flux = pPopupPopulationFlow_->GetID();
+    }
+    else
+        pAction->beneficiaire.t = T_MagicActionPopulationChangeAttitude_beneficiaire_global;
+
+    asnMsg.GetAsnMsg().action.u.change_attitude = pAction;
+
+    asnMsg.Send( 561 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande changement d'attitude pour population #" << pPopupPopulation_->GetID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+
+    delete pAction;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::PopulationMagicDestroyAll
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::PopulationMagicDestroyAll()
+{
+    if( pPopupPopulationConcentration_ )
+        pPopupPopulation_ = const_cast< MOS_Population* >( &pPopupPopulationConcentration_->GetPopulation() );
+    else if( pPopupPopulationFlow_ )
+        pPopupPopulation_ = const_cast< MOS_Population* >( &pPopupPopulationFlow_->GetPopulation() );
+    assert( pPopupPopulation_ != 0 );
+
+    MOS_ASN_MsgPopulationMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid_population = pPopupPopulation_->GetID();
+    asnMsg.GetAsnMsg().action.t       = T_MsgPopulationMagicAction_action_destruction_totale;
+    asnMsg.Send( 561 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande destruction totale pour population #" << pPopupPopulation_->GetID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }

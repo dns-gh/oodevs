@@ -18,6 +18,8 @@
 #include "MOS_MainWindow.h"
 #include "moc_MOS_PopulationListView.cpp"
 #include "MOS_Population.h"
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
 #include "MOS_Team.h"
 #include "MOS_AgentManager.h"
 #include "MOS_ActionContext.h"
@@ -104,26 +106,33 @@ void MOS_PopulationListView::AddPopulation( MOS_Population& population )
 // -----------------------------------------------------------------------------
 void MOS_PopulationListView::SetSelectedElement( MOS_SelectedElement& selectedElement )
 {
-    if(    selectedElement.pPopulation_ == 0 )
+    const MOS_Population* pPopulation;
+    if( selectedElement.pPopulation_ )
+        pPopulation = selectedElement.pPopulation_;
+    else if( selectedElement.pPopulationConcentration_ )
+        pPopulation = &selectedElement.pPopulationConcentration_->GetPopulation();
+    else if( selectedElement.pPopulationFlow_ )
+        pPopulation = &selectedElement.pPopulationFlow_->GetPopulation();
+    else
     {
-        this->selectAll( false );
+        selectAll( false );
         return;
     }
 
     // Check if it's not already selected.
-    if(    ( selectedElement.pPopulation_ != 0 && this->ToPopulation( this->selectedItem() ) == selectedElement.pPopulation_ ) )
+    if( ToPopulation( selectedItem() ) == pPopulation )
         return;
 
-    QListViewItemIterator it( this->firstChild() );
+    QListViewItemIterator it( firstChild() );
     while( it.current() )
     {
-        if(    ( selectedElement.pPopulation_ != 0 && this->ToPopulation( it.current() ) == selectedElement.pPopulation_ ) )
+        if( ToPopulation( it.current() ) == pPopulation )
         {
             disconnect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-            this->setSelected( it.current(), true );
+            setSelected( it.current(), true );
             connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
             if( MOS_MainWindow::GetMainWindow().GetOptions().bOpenTreeToItem_ )
-                this->ensureItemVisible( it.current() );
+                ensureItemVisible( it.current() );
             return;
         }
         ++it;
@@ -144,10 +153,10 @@ void MOS_PopulationListView::OnRequestPopup( QListViewItem* pItem, const QPoint&
     pPopupMenu_ = new QPopupMenu( this );
 
     MOS_SelectedElement selectedElement;
-    if( this->ToPopulation( pItem ) != 0 )
-        selectedElement.pPopulation_ = this->ToPopulation( pItem );
-    if( this->ToTeam( pItem ) != 0 )
-        selectedElement.pTeam_ = this->ToTeam( pItem );
+    if( ToPopulation( pItem ) != 0 )
+        selectedElement.pPopulation_ = ToPopulation( pItem );
+    else if( ToTeam( pItem ) != 0 )
+        selectedElement.pTeam_ = ToTeam( pItem );
 
     // Give a chance to the rest of the objets to fill up the popup menu if necessary.
     emit NewPopupMenu( *pPopupMenu_, MOS_ActionContext( selectedElement, 0 ) );
@@ -170,28 +179,26 @@ void MOS_PopulationListView::OnRequestCenter()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationListView::OnSelectionChange
-/** @param  pItem 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 void MOS_PopulationListView::OnSelectionChange( QListViewItem* pItem )
 {
-	if( pItem == 0 )
-    return;
+	if( ! pItem )
+        return;
 
-    MOS_Population* pPopulation = this->ToPopulation( pItem );
+    MOS_Population* pPopulation = ToPopulation( pItem );
     MOS_SelectedElement selectedElement;
     if( pPopulation != 0 )
         selectedElement = MOS_SelectedElement( *pPopulation );
 
-    MOS_Team* pTeam = this->ToTeam( pItem );
+    MOS_Team* pTeam = ToTeam( pItem );
     if( pTeam != 0 )
         selectedElement = MOS_SelectedElement( *pTeam );
 
     // Disconnect and connect to avoid having the signal come back to us.
-    disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
+    disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this, SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
     emit ElementSelected( selectedElement );
-    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
+    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this, SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,5 +224,5 @@ void MOS_PopulationListView::OnTeamChanged()
 
     MOS_AgentManager::CT_PopulationMap popMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
     for( MOS_AgentManager::CIT_PopulationMap it = popMap.begin(); it != popMap.end(); ++it )
-		this->AddPopulation( *(it->second) );
+        AddPopulation( *(it->second) );
 }

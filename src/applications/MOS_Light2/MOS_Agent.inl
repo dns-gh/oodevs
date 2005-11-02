@@ -10,6 +10,7 @@
 //*****************************************************************************
 
 #include "MOS_Gtia.h"
+#include "MOS_TypeAutomate.h"
 
 
 // -----------------------------------------------------------------------------
@@ -544,4 +545,70 @@ inline
 const T_FireResults& MOS_Agent::GetFireResult() const
 {
     return fireResults_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsLogisticTC2
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Agent::IsLogisticTC2() const
+{
+    return IsAutomate() && !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG TC2" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsLogisticBLD
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Agent::IsLogisticBLD() const
+{
+    return IsAutomate() && !strcmp( pTypeAutomate_->GetType().substr( 0, 16 ).c_str(), "Automate LOG BLD" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsLogisticBLT
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Agent::IsLogisticBLT() const
+{
+    return IsAutomate() && !strcmp( pTypeAutomate_->GetType().substr( 0, 16 ).c_str(), "Automate LOG BLT" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsLogisticMaintenance
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Agent::IsLogisticMaintenance() const
+{
+    return IsAutomate() &&
+        (  !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLT Maintenance" )
+        || !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLD Maintenance" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsLogisticSante
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Agent::IsLogisticSante() const
+{
+    return IsAutomate() &&
+        (  !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLT Sante" )
+        || !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLD Sante" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsLogisticRavitaillement
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Agent::IsLogisticRavitaillement() const
+{
+    return IsAutomate() &&
+        (  !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLT Ravitaillement" )
+        || !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLD Ravitaillement" ) );
 }

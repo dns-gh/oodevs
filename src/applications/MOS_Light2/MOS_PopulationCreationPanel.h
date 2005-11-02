@@ -14,6 +14,7 @@
 #   pragma interface
 #endif
 
+#include "MOS_Types.h"
 #include "MOS_ASN_Types.h"
 
 class MOS_ParamLocation;

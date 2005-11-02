@@ -32,6 +32,8 @@ class MOS_Report_ABC;
 class MOS_Gtia;
 class MOS_Team;
 class MOS_Population;
+class MOS_PopulationConcentration;
+class MOS_PopulationFlow;
 class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
 class MOS_PopulationKnowledge;
@@ -192,6 +194,9 @@ signals:
 	
 	void PopulationCreated( MOS_Population& );
 	void PopulationUpdated( MOS_Population& );
+
+    void PopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
+    void PopulationFlowDeleted         ( MOS_PopulationFlow& flow );
 
     void ObjectCreated( MOS_Object_ABC& object );
     void ObjectUpdated( MOS_Object_ABC& object );

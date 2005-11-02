@@ -32,3 +32,11 @@ MOS_PopulationPart_ABC::~MOS_PopulationPart_ABC()
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationPart_ABC::GetPopulation
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+const MOS_Population& MOS_PopulationPart_ABC::GetPopulation() const
+{
+    return parent_;
+}

@@ -35,7 +35,8 @@ public:
     uint                    GetDeadHumans    () const;
     uint                    GetID            () const;
     const std::string&      GetStringAttitude() const;
-    E_PopulationAttitude    GetAttitude      () const;    
+    E_PopulationAttitude    GetAttitude      () const;
+    const MOS_Population&   GetPopulation    () const;
 
     virtual const std::string& GetName() const = 0;
     virtual const MT_Vector2D& GetPos () const = 0;

@@ -85,9 +85,9 @@ protected:
         }
     }
 
-    bool     ShouldDisplay( MOS_Agent& agent );
-    bool     ShouldDisplay( MOS_Population& population );
-    bool     ShouldDisplay( MOS_Object_ABC& object );
+    bool     ShouldDisplay( const MOS_Agent&      agent      ) const;
+    bool     ShouldDisplay( const MOS_Population& population ) const;
+    bool     ShouldDisplay( const MOS_Object_ABC& object     ) const;
     QLayout* layout       ();
     //@}
 

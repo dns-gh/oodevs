@@ -13,16 +13,18 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationPanel.h"
+#include "moc_MOS_PopulationPanel.cpp"
 
+#include "MOS_MainWindow.h"
 #include "MOS_Population.h"
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationPanel constructor
-/** @param  pParent 
-*/
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-MOS_PopulationPanel::MOS_PopulationPanel(  QWidget* pParent )
+MOS_PopulationPanel::MOS_PopulationPanel( QWidget* pParent )
     : MOS_InfoPanel_ABC ( pParent )
 {
     QFont boldFont = this->font();
@@ -50,6 +52,8 @@ MOS_PopulationPanel::MOS_PopulationPanel(  QWidget* pParent )
     pPartsListView_->addColumn( tr( "Hommes morts" ) );
     pPartsListView_->addColumn( tr( "attitude" ) );
 
+    connect( this, SIGNAL( ElementSelected( MOS_SelectedElement& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ) );
+    connect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,6 +85,10 @@ void MOS_PopulationPanel::OnUpdate()
 {
     if( selectedItem_.pPopulation_ != 0 )
         OnPopulationUpdated( *selectedItem_.pPopulation_ );
+    else if( selectedItem_.pPopulationConcentration_ != 0 )
+        OnPopulationUpdated( selectedItem_.pPopulationConcentration_->GetPopulation() );
+    else if( selectedItem_.pPopulationFlow_ != 0 )
+        OnPopulationUpdated( selectedItem_.pPopulationFlow_->GetPopulation() );
     else
         OnClearSelection();
     
@@ -90,23 +98,73 @@ void MOS_PopulationPanel::OnUpdate()
 // Name: MOS_PopulationPanel::OnPopulationUpdated
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-void MOS_PopulationPanel::OnPopulationUpdated( MOS_Population& population )
+void MOS_PopulationPanel::OnPopulationUpdated( const MOS_Population& population )
 {
     OnClearSelection();
 
-    if( ! ShouldDisplay( population ) )
+    pNameLabel_  ->setText( population.GetName().c_str() );
+    pLivingLabel_->setText( QString::number( population.GetLivingHumans() ) );
+    pDeadLabel_  ->setText( QString::number( population.GetDeadHumans  () ) );
+
+    const MOS_Population::T_ConcentrationMap& concentrations = population.GetConcentrations();
+    for( MOS_Population::CIT_ConcentrationMap it = concentrations.begin(); it != concentrations.end(); ++it )
+    {
+        new MT_ValuedListViewItem< MOS_PopulationConcentration*, eConcentration >( it->second, pPartsListView_
+            , QString( it->second->GetName().c_str() )
+            , QString::number( it->second->GetLivingHumans() )
+            , QString::number( it->second->GetDeadHumans() ) 
+            , QString( it->second->GetStringAttitude().c_str() ) );
+        if( it->second == selectedItem_.pPopulationConcentration_ )
+        {
+            disconnect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+            pPartsListView_->setSelected( pPartsListView_->lastItem(), true );
+            connect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+        }
+    }
+
+    const MOS_Population::T_FlowMap& flows = population.GetFlows();
+    for( MOS_Population::CIT_FlowMap it = flows.begin(); it != flows.end(); ++it )
+    {
+        new MT_ValuedListViewItem< MOS_PopulationFlow*, eFlow >( it->second, pPartsListView_
+            , QString( it->second->GetName().c_str() )
+            , QString::number( it->second->GetLivingHumans() )
+            , QString::number( it->second->GetDeadHumans() ) 
+            , QString( it->second->GetStringAttitude().c_str() ) );
+        if( it->second == selectedItem_.pPopulationFlow_ )
+        {
+            disconnect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+            pPartsListView_->setSelected( pPartsListView_->lastItem(), true );
+            connect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationPanel::OnSelectionChange
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+void MOS_PopulationPanel::OnSelectionChange( QListViewItem* pItem )
+{
+    MOS_SelectedElement selectedElement;
+
+    if( !pItem )
         return;
 
-    pNameLabel_    ->setText( population.GetName().c_str() );
-    pLivingLabel_  ->setText( QString( "%1" ).arg( population.GetLivingHumans() ) );
-    pDeadLabel_    ->setText( QString( "%1" ).arg( population.GetDeadHumans  () ) );
-
-    for ( MOS_Population::iterator it = population.begin(); it != population.end(); ++it )
-        new MT_ValuedListViewItem<MOS_PopulationPart_ABC*>( (*it), pPartsListView_
-            , QString( (*it)->GetName().c_str() )
-            , QString( "%1" ).arg( (*it)->GetLivingHumans() )
-            , QString( "%1" ).arg( (*it)->GetDeadHumans() ) 
-            , QString( (*it)->GetStringAttitude().c_str() ) );
-
-
+    if( pItem->rtti() == eConcentration )
+    {
+        MT_ValuedListViewItem< MOS_PopulationConcentration*, eConcentration >* pConcentrationItem = static_cast< MT_ValuedListViewItem< MOS_PopulationConcentration*, eConcentration >* >( pItem );
+        selectedElement.pPopulationConcentration_ = pConcentrationItem->GetValue();
+    }
+    else if( pItem->rtti() == eFlow )
+    {
+        MT_ValuedListViewItem< MOS_PopulationFlow*, eFlow >* pFlowItem = static_cast< MT_ValuedListViewItem< MOS_PopulationFlow*, eFlow >* >( pItem );
+        selectedElement.pPopulationFlow_ = pFlowItem->GetValue();
+    }
+    else
+    {
+        assert( false );
+    }
+    disconnect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    emit ElementSelected( selectedElement );
+    connect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
 }

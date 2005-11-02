@@ -44,25 +44,25 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     : PHY_MovingEntity_ABC  ()
     , TER_PopulationFlow_ABC()
     , pPopulation_          ( &population )
-    , nID_                 ( idManager_.GetFreeSimID() )
-    , pSourceConcentration_( &sourceConcentration )
-    , pDestConcentration_  ( 0 )
-    , pAttitude_           ( &sourceConcentration.GetAttitude() )
-    , destination_         ( )
-    , pCurrentPath_        ( 0 )
-    , bHeadMoveFinished_   ( false )
-    , flowShape_           ( 2, sourceConcentration.GetPosition() )
-    , direction_           ( 0., 1. )
-    , rSpeed_              ( 0. )
-    , rNbrAliveHumans_     ( 0. )
-    , rNbrDeadHumans_      ( 0. )
-    , bPathUpdated_        ( true )
-    , bFlowShapeUpdated_   ( true ) 
-    , bDirectionUpdated_   ( true )
-    , bSpeedUpdated_       ( true )
-    , bHumansUpdated_      ( true )
-    , bAttitudeUpdated_    ( true )
-    , rDensity_            ( 0. )
+    , nID_                  ( idManager_.GetFreeSimID() )
+    , pSourceConcentration_ ( &sourceConcentration )
+    , pDestConcentration_   ( 0 )
+    , pAttitude_            ( &sourceConcentration.GetAttitude() )
+    , destination_          ( )
+    , pCurrentPath_         ( 0 )
+    , bHeadMoveFinished_    ( false )
+    , flowShape_            ( 2, sourceConcentration.GetPosition() )
+    , direction_            ( 0., 1. )
+    , rSpeed_               ( 0. )
+    , rNbrAliveHumans_      ( 0. )
+    , rNbrDeadHumans_       ( 0. )
+    , bPathUpdated_         ( true )
+    , bFlowShapeUpdated_    ( true ) 
+    , bDirectionUpdated_    ( true )
+    , bSpeedUpdated_        ( true )
+    , bHumansUpdated_       ( true )
+    , bAttitudeUpdated_     ( true )
+    , rDensity_             ( 0. )
 {
     assert( pAttitude_ );
     SendCreation();
@@ -148,6 +148,19 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
     int nOut = PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
     if( nOut == DEC_PathWalker::eFinished )
         bHeadMoveFinished_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SetAttitude
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SetAttitude( const MIL_PopulationAttitude& attitude )
+{
+    if( pAttitude_ != &attitude )
+    {
+        bAttitudeUpdated_ = true;
+        pAttitude_ = &attitude;
+    }
 }
 
 // -----------------------------------------------------------------------------

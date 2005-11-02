@@ -54,7 +54,8 @@ public:
 
     //! @name Actions
     //@{
-    void Move( const MT_Vector2D& destination );
+    void Move       ( const MT_Vector2D&            destination );
+    void SetAttitude( const MIL_PopulationAttitude& attitude    );
     //@}
 
     //! @name Accessors

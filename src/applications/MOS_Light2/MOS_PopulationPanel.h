@@ -12,19 +12,29 @@
 
 #include "MOS_InfoPanel_ABC.h"
 
+class QListViewItem;
+
 // =============================================================================
 // Created: HME 2005-10-03
 // =============================================================================
 class MOS_PopulationPanel : public MOS_InfoPanel_ABC
 {
+    Q_OBJECT
+
     MT_COPYNOTALLOWED( MOS_PopulationPanel );
     friend class MOS_GLTool;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MOS_PopulationPanel(  QWidget* pParent );
+    explicit MOS_PopulationPanel( QWidget* pParent );
     virtual ~MOS_PopulationPanel();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ElementSelected( MOS_SelectedElement& selectedElement );
     //@}
 
 private:
@@ -32,7 +42,23 @@ private:
     //@{
 	virtual void OnClearSelection();
     virtual void OnUpdate();
-	virtual void OnPopulationUpdated( MOS_Population& population );
+	virtual void OnPopulationUpdated( const MOS_Population& population );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChange( QListViewItem* pItem );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    enum E_ItemType
+    {
+        eConcentration,
+        eFlow
+    };
     //@}
 
 private:

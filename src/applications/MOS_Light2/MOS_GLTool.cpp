@@ -503,10 +503,52 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 // Name: MOS_GLTool::Draw
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void MOS_GLTool::Draw( MOS_Population& pop, E_State nState )
+void MOS_GLTool::Draw( MOS_Population& population, E_State nState /*= eNormal*/ )
 {
-    // Draw the unit.
-    DrawPopulation( pop, nState );
+    //Draw concentrations
+    for( MOS_Population::CIT_ConcentrationMap it = population.concentrationMap_.begin(); it != population.concentrationMap_.end(); ++it )
+        Draw( *it->second, nState );
+
+    //Draw flows
+    for( MOS_Population::CIT_FlowMap it = population.flowMap_.begin(); it != population.flowMap_.end(); ++it )
+        Draw( *it->second, nState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw( MOS_PopulationConcentration& concentration, E_State nState /*= eNormal*/ )
+{
+    GFX_Color color = MOS_GLTool::GetColorForTeam( concentration.GetPopulation().GetTeam() );
+    if( nState == eSelected )
+        color.AddRGB( 50, 200, 50 );
+    if( nState == eHighlighted )
+        color.AddRGB( 50, 100, 50 );
+    color.SetGLColor();
+    MT_Float rSurface = concentration.GetLivingHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
+    DrawCircle( concentration.GetPos(), std::sqrt( rSurface / MT_PI ), true );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::Draw
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+void MOS_GLTool::Draw( MOS_PopulationFlow& flow, E_State nState /*= eNormal*/ )
+{
+    GFX_Color color = MOS_GLTool::GetColorForTeam( flow.GetPopulation().GetTeam() );
+    if( nState == eSelected )
+        color.AddRGB( 50, 200, 50 );
+    if( nState == eHighlighted )
+        color.AddRGB( 50, 100, 50 );
+    color.SetGLColor();
+    glColor4d( MOS_COLOR_WHITE );
+    DrawPath( flow );
+    color.SetGLColor();
+    DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
+    glLineWidth( 5.0 );
+    DrawLine( flow.GetFlow() );
+    //glLineWidth( 1.0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1011,7 +1053,7 @@ void MOS_GLTool::Draw( MOS_WeatherPanel& panel )
     }
 
     QListViewItem* pItem = panel.pWeatherListView_->currentItem();
-    if( pItem == 0
+    if(    pItem == 0 
         || pItem->rtti() != MOS_WeatherPanel::eLocal )
         return;
 
@@ -1054,7 +1096,7 @@ void MOS_GLTool::Draw( MOS_ObjectCreationPanel& panel )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_InfoPanel& panel )
 {
-    if( ! panel.isVisible()
+    if(    ! panel.isVisible()  
         || panel.pTabWidget_->currentPage() != panel.pStatePanel_
         || panel.pReportPanel_->pReportListView_->selectedItem() == 0 )
         return;
@@ -1150,7 +1192,7 @@ void MOS_GLTool::Draw( MOS_ParamLimits& param )
         Draw( *param.pLimit1_, eHighlighted );
 
     if( param.pLimit2_ != 0 )
-        Draw( *param.pLimit2_, eHighlighted );
+        Draw( *param.pLimit2_, eHighlighted ); 
 }
 
 
@@ -1205,7 +1247,7 @@ void MOS_GLTool::Draw( MOS_ParamLocation& param, bool bSelected )
     if( param.pointList_.empty() )
         return;
 
-    if( bSelected )
+    if( bSelected ) 
         glColor4d( MOS_COLOR_SEL_PARAM );
     else
         glColor4d( MOS_COLOR_PARAM );
@@ -1277,6 +1319,7 @@ void MOS_GLTool::Draw( MOS_ParamObstacleList& param )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
 {
+    // Agent
     if( eventHandler.selectedElement_.pAgent_ != 0 )
     {
         MOS_Agent* pSelectedAgent = eventHandler.selectedElement_.pAgent_;
@@ -1302,23 +1345,29 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         // Draw the selected agent on top of all that.
         Draw( *pSelectedAgent, eSelected );
     }
-    if( eventHandler.selectedElement_.pPopulation_ != 0 )
-    {
-        MOS_Population* pSelectedAgent = eventHandler.selectedElement_.pPopulation_;
-
-        // Draw the selected agent on top of all that.
-        Draw( *pSelectedAgent, eSelected );
-    }
-
     if( eventHandler.selectedElement_.pAgentKnowledge_ != 0 )
         Draw( *eventHandler.selectedElement_.pAgentKnowledge_, eSelected );
 
+    // Population
+    if( eventHandler.selectedElement_.pPopulation_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulation_, eSelected );
+    if( eventHandler.selectedElement_.pPopulationConcentration_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulationConcentration_, eSelected );
+    if( eventHandler.selectedElement_.pPopulationFlow_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulationFlow_, eSelected );
+
+    if( eventHandler.selectedElement_.pPopulationKnowledge_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulationKnowledge_, eSelected );
+    if( eventHandler.selectedElement_.pPopulationConcentrationKnowledge_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulationConcentrationKnowledge_, eSelected );
+    if( eventHandler.selectedElement_.pPopulationFlowKnowledge_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulationFlowKnowledge_, eSelected );
+
+    // Objects
     if( eventHandler.selectedElement_.pObject_ != 0 )
         Draw( *eventHandler.selectedElement_.pObject_, eSelected );
-
     if( eventHandler.selectedElement_.pObjectKnowledge_ != 0 )
         Draw( *eventHandler.selectedElement_.pObjectKnowledge_, eSelected );
-
     if( eventHandler.selectedElement_.pLine_ != 0 )
         Draw( * eventHandler.selectedElement_.pLine_, eSelected, eventHandler.selectedElement_.nLinePoint_);
 }
@@ -1668,7 +1717,7 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
     glPushMatrix();
 
-    MT_Float rAltitude = 0;
+    MT_Float rAltitude = 0; 
     if( MOS_App::GetApp().Is3D() )
         rAltitude = ( data.GetHeight( agent.vPos_.rX_, agent.vPos_.rY_ ) + 10 ) * rZRatio_;
     glTranslatef( agent.vPos_.rX_, agent.vPos_.rY_, rAltitude );
@@ -1712,51 +1761,6 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
         DrawCross( *itCur, MOS_GL_CROSSSIZE, 4.0 );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: MOS_GLTool::DrawUnit
-// Created: HME 2005-09-30
-// -----------------------------------------------------------------------------
-void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
-{
-    static const MOS_RawVisionData& data = MOS_App::GetApp().GetRawVisionData();
-    static MT_Float rAngle = 0;
-
-    GFX_Color color = MOS_GLTool::GetColorForTeam( pop.GetTeam() );
-    if( nState == eSelected )
-        color.AddRGB( 50, 200, 50 );
-    if( nState == eHighlighted )
-        color.AddRGB( 50, 100, 50 );
-
-    //Draw the concentrations
-    for( MOS_Population::CIT_ConcentrationMap it = pop.concentrationMap_.begin(); it != pop.concentrationMap_.end(); ++it )
-    {
-        color.SetGLColor();
-        MT_Float rSurface = it->second->GetArea();
-        DrawCircle( it->second->GetPos(), std::sqrt( rSurface / MT_PI ), true );
-    }
-
-    //Draw the flux
-    for( MOS_Population::CIT_FlowMap itFlow = pop.flowMap_.begin(); itFlow != pop.flowMap_.end(); ++itFlow )
-    {
-        MOS_PopulationFlow& flow = *itFlow->second;
-
-        color.SetGLColor();
-        glColor4d( MOS_COLOR_WHITE );
-        DrawPath( flow );
-        //DrawLine( flow.GetItineraire() );
-        //DrawCylinder( flow.GetTailPosition(), MOS_GL_CROSSSIZE * 0.5, 2.0, color );
-        //DrawCylinder( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 1.0, 2.0, color );
-        color.SetGLColor();
-        DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
-        glLineWidth( 5.0 );
-        DrawLine( flow.GetFlow() );
-        glLineWidth( 1.0 );
-        //Draw3DLines( itFlux->second->itineraire_, MOS_GL_CROSSSIZE , color );
-    }
-}
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_GLTool::DrawVisionCones

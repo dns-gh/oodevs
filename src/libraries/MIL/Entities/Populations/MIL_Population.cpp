@@ -28,6 +28,7 @@
 #include "Entities/MIL_Army.h"
 #include "Network/NET_ASN_Messages.h"
 #include "MIL_AgentServer.h"
+#include "Tools/MIL_Tools.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 
@@ -360,3 +361,131 @@ void MIL_Population::UpdateNetwork()
         (**itFlow).SendChangedState();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgPopulationMagicAction
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, MIL_MOSContextID nCtx )
+{
+    NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
+    asnReplyMsg.GetAsnMsg().oid = asnMsg.oid_population;
+
+    switch( asnMsg.action.t )
+    {
+        case T_MsgPopulationMagicAction_action_move_to           : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
+        case T_MsgPopulationMagicAction_action_destruction_totale: asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll    (); break;
+        case T_MsgPopulationMagicAction_action_change_attitude   : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
+        default:
+            assert( false );
+    }
+
+    asnReplyMsg.Send( nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgMagicMove
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
+{
+//    MT_Vector2D vPosTmp;
+//    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
+//
+//    // $$$$ SBO 2005-10-25: TODO/CHECK
+//    // create a new concentration at the right position (we could also take the first in list and move it...)
+//    MIL_PopulationConcentration* pNewConcentration = new MIL_PopulationConcentration( *this, vPosTmp );
+//
+//    // merge all concentrations into new
+//    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
+//    {
+//        MIL_PopulationConcentration* pConcentration = *itConcentration;
+//        pNewConcentration->PushHumans( pConcentration->GetNbrAliveHumans() ); // what about dead people?
+//        pConcentration->PullHumans( pConcentration->GetNbrAliveHumans() );
+//        itConcentration = concentrations_.erase( itConcentration );
+//        trashedConcentrations_.push_back( pConcentration );
+//        //++itConcentration;
+//    }
+//
+//    // merge all flows into new concentration
+//    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
+//    {
+//        MIL_PopulationFlow* pFlow = *itFlow;
+//        pNewConcentration->PushHumans( pFlow->GetNbrAliveHumans() ); // what about dead people?
+//        itFlow = flows_.erase( itFlow );
+//        trashedFlows_.push_back( pFlow );
+//        //++itFlow;
+//    }
+//
+//    pDecision_->Reset();
+//    orderManager_.CancelAllOrders();
+    return EnumPopulationAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgDestroyAll
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgDestroyAll()
+{
+    // $$$$ SBO 2005-10-25: TODO/CHECK
+    // destroy all concentrations
+//    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+//    {
+//        MIL_PopulationConcentration* pConcentration = *itConcentration;
+//        itConcentration = concentrations_.erase( itConcentration );
+//        trashedConcentrations_.push_back( pConcentration );
+//    }
+//
+//    // destroy all flows
+//    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+//    {
+//        MIL_PopulationFlow* pFlow = *itFlow;
+//        itFlow = flows_.erase( itFlow );
+//        trashedFlows_.push_back( pFlow );
+//    }
+    // $$$$ Notification destruction population ?
+    return EnumPopulationAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgChangeAttitude
+// Created: SBO 2005-10-25
+// -----------------------------------------------------------------------------
+ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn )
+{
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude );
+    if( !pAttitude )
+        return EnumPopulationAttrErrorCode::error_invalid_attribute;
+
+    // concentration
+    if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_concentration )
+    {
+        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+            if( ( **it ).GetID() == asn.beneficiaire.u.concentration )
+            {
+                ( **it ).SetAttitude( *pAttitude );
+                return EnumPopulationAttrErrorCode::no_error;
+            }
+        return EnumPopulationAttrErrorCode::error_invalid_attribute;
+    }
+    // flow
+    else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_flux )
+    {
+        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+            if( ( **it ).GetID() == asn.beneficiaire.u.flux )
+            {
+                ( **it ).SetAttitude( *pAttitude );
+                return EnumPopulationAttrErrorCode::no_error;
+            }
+        return EnumPopulationAttrErrorCode::error_invalid_attribute;
+    }
+    // global
+    else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_global )
+    {
+        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+            ( **it ).SetAttitude( *pAttitude );
+        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+            ( **it ).SetAttitude( *pAttitude );
+    }
+    return EnumPopulationAttrErrorCode::no_error;
+}

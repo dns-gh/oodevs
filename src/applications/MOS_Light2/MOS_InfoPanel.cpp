@@ -145,7 +145,9 @@ void MOS_InfoPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
         ShowLogisticPanels          ( false );
     }
 
-	else if( selectedElement.pPopulation_ != 0 )
+    else if(   selectedElement.pPopulation_              != 0
+            || selectedElement.pPopulationConcentration_ != 0 
+            || selectedElement.pPopulationFlow_          != 0 )
     {
         ShowAgentPanel              ( false );
         ShowAgentKnowledgePanel     ( false );

@@ -176,7 +176,7 @@ const MT_Vector2D& MOS_Population::GetPos() const
 // Name: MOS_Population::GetLivingHumans
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-uint MOS_Population::GetLivingHumans()
+uint MOS_Population::GetLivingHumans() const
 {
 	uint sum = 0;
 	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )
@@ -190,7 +190,7 @@ uint MOS_Population::GetLivingHumans()
 // Name: MOS_Population::GetDeadHumans
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-uint MOS_Population::GetDeadHumans()
+uint MOS_Population::GetDeadHumans() const
 {
 	uint sum = 0;
 	for( CIT_ConcentrationMap itCon = concentrationMap_.begin(); itCon != concentrationMap_.end(); ++itCon )

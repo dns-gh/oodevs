@@ -53,9 +53,10 @@ public:
 
     //! @name Actions
     //@{
-    MT_Float PushHumans( MT_Float rNbr );
-    MT_Float PullHumans( MT_Float rNbr );
-    void     Move      ( const MT_Vector2D& destination );
+    MT_Float PushHumans ( MT_Float rNbr );
+    MT_Float PullHumans ( MT_Float rNbr );
+    void     Move       ( const MT_Vector2D& destination );
+    void     SetAttitude( const MIL_PopulationAttitude& attitude );
     //@}
 
     //! @name Flows management

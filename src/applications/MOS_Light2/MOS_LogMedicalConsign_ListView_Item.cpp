@@ -70,26 +70,26 @@ void MOS_LogMedicalConsign_ListView_Item::Update()
     QString strState( tr( "Aucun" ) );
     switch( nState ) 
     {        
-        case MOS_LogMedicalConsign::eWaitingForEvacuation               : strState = tr( "attente disponibilite ambulance releve" )         ; break;
-        case MOS_LogMedicalConsign::eEvacuationGoingTo                  : strState = tr( "ambulance releve deplacement aller" )             ; break;
-        case MOS_LogMedicalConsign::eEvacuationLoading                  : strState = tr( "ambulance releve embarquement" )                  ; break;
-        case MOS_LogMedicalConsign::eEvacuationWaitingForFullLoading    : strState = tr( "attente chargement complet ambulance releve" )    ; break;
-        case MOS_LogMedicalConsign::eEvacuationGoingFrom                : strState = tr( "ambulance releve deplacement retour" )            ; break;
-        case MOS_LogMedicalConsign::eEvacuationUnloading                : strState = tr( "ambulance releve débarquement" )                  ; break;
-        case MOS_LogMedicalConsign::eWaitingForDiagnostic               : strState = tr( "attente disponibilite medecin pour diagnostique" ); break;
-        case MOS_LogMedicalConsign::eDiagnosing                         : strState = tr( "diagnostique" )                                   ; break;
-        case MOS_LogMedicalConsign::eSearchingForSortingArea            : strState = tr( "recherche secteur tri" )                          ; break;
-        case MOS_LogMedicalConsign::eWaitingForSorting                  : strState = tr( "attente disponibilite medecin pour tri" )         ; break;
-        case MOS_LogMedicalConsign::eSorting                            : strState = tr( "tri" )                                            ; break;
-        case MOS_LogMedicalConsign::eSearchingForHealingArea            : strState = tr( "recherche secteur de soin" )                      ; break;
-        case MOS_LogMedicalConsign::eWaitingForHealing                  : strState = tr( "attente disponibilite medecin pour soin" )        ; break;
-        case MOS_LogMedicalConsign::eHealing                            : strState = tr( "soin" )                                           ; break;
-        case MOS_LogMedicalConsign::eWaitingForCollection               : strState = tr( "attente disponibilite ambulance ramassage" )      ; break;
-        case MOS_LogMedicalConsign::eCollectionLoading                  : strState = tr( "ambulance ramassage embarquement" )               ; break;
-        case MOS_LogMedicalConsign::eCollectionWaitingForFullLoading    : strState = tr( "attente chargement complet ambulance ramassage" ) ; break;
-        case MOS_LogMedicalConsign::eCollectionGoingTo                  : strState = tr( "ambulance ramassage deplacement aller" )          ; break;
-        case MOS_LogMedicalConsign::eCollectionUnloading                : strState = tr( "ambulance ramassage dechargement" )               ; break;
-        case MOS_LogMedicalConsign::eFinished                           : strState = tr( "terminé" )                                        ; break;
+        case MOS_LogMedicalConsign::eWaitingForEvacuation               : strState = tr( "En attente d'évacuation" )                    ; break;
+        case MOS_LogMedicalConsign::eEvacuationGoingTo                  : strState = tr( "Ambulance en route" )                         ; break;
+        case MOS_LogMedicalConsign::eEvacuationLoading                  : strState = tr( "Ambulance en cours de chargement" )           ; break;
+        case MOS_LogMedicalConsign::eEvacuationWaitingForFullLoading    : strState = tr( "Ambulance en attente de fin de chargement" )  ; break;
+        case MOS_LogMedicalConsign::eEvacuationGoingFrom                : strState = tr( "Ambulance en retour" )                        ; break;
+        case MOS_LogMedicalConsign::eEvacuationUnloading                : strState = tr( "Ambulance en cours de déchargement" )         ; break;
+        case MOS_LogMedicalConsign::eWaitingForDiagnostic               : strState = tr( "En attente de diagnostique" )                 ; break;
+        case MOS_LogMedicalConsign::eDiagnosing                         : strState = tr( "Diagnostique en cours" )                      ; break;
+        case MOS_LogMedicalConsign::eSearchingForSortingArea            : strState = tr( "Recherche d'un secteur de tri" )              ; break;
+        case MOS_LogMedicalConsign::eWaitingForSorting                  : strState = tr( "En attente de tri" )                          ; break;
+        case MOS_LogMedicalConsign::eSorting                            : strState = tr( "Tri en cours" )                               ; break;
+        case MOS_LogMedicalConsign::eSearchingForHealingArea            : strState = tr( "Recherche d'un secteur de soin" )             ; break;
+        case MOS_LogMedicalConsign::eWaitingForHealing                  : strState = tr( "En attente de soins" )                        ; break;
+        case MOS_LogMedicalConsign::eHealing                            : strState = tr( "Soins en cours" )                             ; break;
+        case MOS_LogMedicalConsign::eWaitingForCollection               : strState = tr( "En attente de ramassage" )                    ; break;
+        case MOS_LogMedicalConsign::eCollectionLoading                  : strState = tr( "Ramassage en cours" )                         ; break;
+        case MOS_LogMedicalConsign::eCollectionWaitingForFullLoading    : strState = tr( "En attente de fin de ramassage" )             ; break;
+        case MOS_LogMedicalConsign::eCollectionGoingTo                  : strState = tr( "Ramassage en route" )                         ; break;
+        case MOS_LogMedicalConsign::eCollectionUnloading                : strState = tr( "Dechargement du ramassage en cours" )         ; break;
+        case MOS_LogMedicalConsign::eFinished                           : strState = tr( "Terminé" )                                    ; break;
         default:
             assert( false );
     }

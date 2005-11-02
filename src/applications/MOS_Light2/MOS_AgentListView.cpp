@@ -254,10 +254,10 @@ void MOS_AgentListView::SetSelectedElement( MOS_SelectedElement& selectedElement
     }
 
     // Check if it's not already selected.
-    if(    ( selectedElement.pAgent_ != 0               && this->ToAgent( this->selectedItem() ) == selectedElement.pAgent_ )
-        || ( selectedElement.pGtia_ != 0                && this->ToGtia( this->selectedItem() ) == selectedElement.pGtia_ )
-        || ( selectedElement.pTeam_ != 0                && this->ToTeam( this->selectedItem() ) == selectedElement.pTeam_ )
-        || ( selectedElement.pAgentKnowledge_ != 0      && this->ToGtia( this->selectedItem() ) == &(selectedElement.pAgentKnowledge_->GetOwner()) )
+    if(    ( selectedElement.pAgent_           != 0 && this->ToAgent( this->selectedItem() ) == selectedElement.pAgent_ )
+        || ( selectedElement.pGtia_            != 0 && this->ToGtia( this->selectedItem() ) == selectedElement.pGtia_ )
+        || ( selectedElement.pTeam_            != 0 && this->ToTeam( this->selectedItem() ) == selectedElement.pTeam_ )
+        || ( selectedElement.pAgentKnowledge_  != 0 && this->ToGtia( this->selectedItem() ) == &(selectedElement.pAgentKnowledge_->GetOwner()) )
         || ( selectedElement.pObjectKnowledge_ != 0 && this->ToTeam( this->selectedItem() ) == &(selectedElement.pObjectKnowledge_->GetOwner()) ) )
         return;
 

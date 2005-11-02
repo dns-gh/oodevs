@@ -169,7 +169,8 @@ MOS_GENERATE_SEND_ASN_MSG_NOPTR_CTX( LimaDestruction, lima_destruction )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( LimaUpdate, lima_update )
 
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( ObjectMagicAction, object_magic_action )
-MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( UnitMagicAction  , unit_magic_action   )
+MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( UnitMagicAction, unit_magic_action )
+MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( PopulationMagicAction, population_magic_action )
 
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( PionOrder, pion_order )
 MOS_GENERATE_SEND_ASN_MSG_PTR_CTX( OrderConduite, order_conduite )

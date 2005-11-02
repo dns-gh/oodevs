@@ -97,3 +97,23 @@ const MOS_PopulationFlow* MOS_Population::FindFlow( uint nID ) const
         return 0;
     return it->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetConcentrations
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+inline
+const MOS_Population::T_ConcentrationMap& MOS_Population::GetConcentrations() const
+{
+    return concentrationMap_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetFlows
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+inline
+const MOS_Population::T_FlowMap& MOS_Population::GetFlows() const
+{
+    return flowMap_;
+}

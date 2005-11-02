@@ -1944,6 +1944,17 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulation
     MOS_App::GetApp().NotifyPopulationUpdated( *pop );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck
+// Created: SBO 2005-11-02
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID nCtx )
+{
+    std::stringstream strOutputMsg;
+    strOutputMsg << "PopulationMagicActionAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
+    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+}
+
 //=============================================================================
 // ASN
 //=============================================================================
@@ -2149,6 +2160,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*
         case T_MsgsSimMosWithContext_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *asnMsg.u.msg_change_liens_logistiques_ack        , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  asnMsg.u.msg_log_ravitaillement_pousser_flux_ack , nCtx ); break;
         case T_MsgsSimMosWithContext_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  asnMsg.u.msg_log_ravitaillement_change_quotas_ack, nCtx ); break;
+        case T_MsgsSimMosWithContext_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *asnMsg.u.msg_population_magic_action_ack         , nCtx ); break;
 
 //        case T_MsgsSimMosWithContext_msg_population_order_ack  : break; //$$$ TODO        
 

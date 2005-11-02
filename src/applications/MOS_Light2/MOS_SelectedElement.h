@@ -29,10 +29,14 @@ class MOS_Agent;
 class MOS_Gtia;
 class MOS_Team;
 class MOS_Population;
+class MOS_PopulationConcentration;
+class MOS_PopulationFlow;
 class MOS_Object_ABC;
 class MOS_AgentKnowledge;
 class MOS_ObjectKnowledge;
 class MOS_PopulationKnowledge;
+class MOS_PopulationConcentrationKnowledge;
+class MOS_PopulationFlowKnowledge;
 class MOS_RC;
 class MOS_TacticalLine_ABC;
 
@@ -49,12 +53,16 @@ public:
      MOS_SelectedElement();
      MOS_SelectedElement( MOS_Agent&                            agent );
 	 MOS_SelectedElement( MOS_Population&                       population );
+     MOS_SelectedElement( MOS_PopulationConcentration&          populationConcentration );
+     MOS_SelectedElement( MOS_PopulationFlow&                   populationFlow );
      MOS_SelectedElement( MOS_Gtia&                             gtia );
      MOS_SelectedElement( MOS_Team&                             team );
      MOS_SelectedElement( MOS_Object_ABC&                       object );
      MOS_SelectedElement( MOS_AgentKnowledge&                   agentKnowledge );
      MOS_SelectedElement( MOS_ObjectKnowledge&                  objectKnowledge );
      MOS_SelectedElement( MOS_PopulationKnowledge&              populationKnowledge );
+     MOS_SelectedElement( MOS_PopulationConcentrationKnowledge& populationConcentrationKnowledge );
+     MOS_SelectedElement( MOS_PopulationFlowKnowledge&          populationFlowKnowledge );
      MOS_SelectedElement( MOS_RC&                               rc );
      MOS_SelectedElement( MOS_TacticalLine_ABC&                 line, int nLinePoint = -1 );
     ~MOS_SelectedElement();
@@ -84,17 +92,21 @@ private:
 public:
     //! @name Public member data
     //@{
-    MOS_Agent*               pAgent_;
-	MOS_Population*			 pPopulation_;
-    MOS_Gtia*                pGtia_;
-    MOS_Team*                pTeam_;
-    MOS_Object_ABC*			 pObject_;
-    MOS_AgentKnowledge*      pAgentKnowledge_;
-    MOS_ObjectKnowledge*	 pObjectKnowledge_;
-    MOS_PopulationKnowledge* pPopulationKnowledge_;
-    MOS_RC*                  pRC_;
-    MOS_TacticalLine_ABC*    pLine_;
-    int                      nLinePoint_;
+    MOS_Agent*                            pAgent_;
+	MOS_Population*			              pPopulation_;
+    MOS_PopulationConcentration*          pPopulationConcentration_;
+    MOS_PopulationFlow*                   pPopulationFlow_;
+    MOS_Gtia*                             pGtia_;
+    MOS_Team*                             pTeam_;
+    MOS_Object_ABC*			              pObject_;
+    MOS_AgentKnowledge*                   pAgentKnowledge_;
+    MOS_ObjectKnowledge*	              pObjectKnowledge_;
+    MOS_PopulationKnowledge*              pPopulationKnowledge_;
+    MOS_PopulationConcentrationKnowledge* pPopulationConcentrationKnowledge_;
+    MOS_PopulationFlowKnowledge*          pPopulationFlowKnowledge_;
+    MOS_RC*                               pRC_;
+    MOS_TacticalLine_ABC*                 pLine_;
+    int                                   nLinePoint_;
     //@}
 };
 

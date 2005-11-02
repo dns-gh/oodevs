@@ -268,6 +268,7 @@ private:
 	void OnMsgPopulationFluxCreation			( const ASN1T_MsgPopulationFluxCreation& asnMsg );
 	void OnMsgPopulationFluxDestruction			( const ASN1T_MsgPopulationFluxDestruction& asnMsg ); 
 	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
+    void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID nCtx );
     //@}
     
 private:

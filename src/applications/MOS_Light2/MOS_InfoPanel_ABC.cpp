@@ -20,6 +20,10 @@
 #include "MOS_InfoPanel_ABC.h"
 #include "moc_MOS_InfoPanel_ABC.cpp"
 #include "MOS_App.h"
+
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
+
 #include <qobjectlist.h>
 
 // -----------------------------------------------------------------------------
@@ -88,7 +92,7 @@ void MOS_InfoPanel_ABC::OnAgentUpdated( MOS_Agent& )
 // -----------------------------------------------------------------------------
 void MOS_InfoPanel_ABC::OnPopulationUpdated( MOS_Population& )
 {
-    // NOTHING
+    OnUpdate();
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +128,7 @@ QLayout* MOS_InfoPanel_ABC::layout()
 // Name: MOS_InfoPanel_ABC::ShouldDisplay
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Agent& agent )
+bool MOS_InfoPanel_ABC::ShouldDisplay( const MOS_Agent& agent ) const
 {
     return isVisible() && selectedItem_.pAgent_ != 0 && selectedItem_.pAgent_ == &agent;
 }
@@ -133,7 +137,7 @@ bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Agent& agent )
 // Name: MOS_InfoPanel_ABC::ShouldDisplay
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------
-bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Object_ABC& object )
+bool MOS_InfoPanel_ABC::ShouldDisplay( const MOS_Object_ABC& object ) const
 {
     return isVisible() && selectedItem_.pObject_ != 0 && selectedItem_.pObject_ == &object;
 }
@@ -142,9 +146,14 @@ bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Object_ABC& object )
 // Name: MOS_InfoPanel_ABC::ShouldDisplay
 // Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
-bool MOS_InfoPanel_ABC::ShouldDisplay( MOS_Population& population )
+bool MOS_InfoPanel_ABC::ShouldDisplay( const MOS_Population& population ) const
 {
-    return isVisible() && selectedItem_.pPopulation_ != 0 && selectedItem_.pPopulation_ == &population;
+    bool bPopulation    = selectedItem_.pPopulation_ != 0 && selectedItem_.pPopulation_ == &population;
+    bool bConcentration = selectedItem_.pPopulationConcentration_ != 0 
+                       && &selectedItem_.pPopulationConcentration_->GetPopulation() == &population;
+    bool bFlow          = selectedItem_.pPopulationFlow_ != 0 
+                       && &selectedItem_.pPopulationFlow_->GetPopulation() == &population;
+    return isVisible() && ( bPopulation || bConcentration || bFlow );
 }
 
 

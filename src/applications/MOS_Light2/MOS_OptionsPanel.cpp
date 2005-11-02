@@ -63,7 +63,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     
     pSubLayout1->addWidget( pL1, 0, 0 );
     pSubLayout1->addWidget( pCheckpointSpinbox_, 0, 1 );
-    pSubLayout1->addMultiCellWidget( pBG1, 1, 1, 0, 1 );
+    pSubLayout1->addMultiCellWidget( pBG1, 1, 1, 0, 1 ); 
     pSubLayout1->setRowStretch( 2, 10 );
 
     // Display panel

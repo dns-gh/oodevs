@@ -89,5 +89,47 @@ MsgPopulationFluxDestruction ::= SEQUENCE
     oid-population  OID
 }
 
+---------------------------
+-- Actions magiques
+---------------------------
+
+MagicActionPopulationChangeAttitude ::= SEQUENCE
+{
+	oid-population	OID,					-- oid de l'entité population
+	attitude        EnumPopulationAttitude,	-- nouvelle attitude
+	beneficiaire    CHOICE					-- cible
+	{
+        flux            OID,
+        concentration   OID,
+        global          NULL
+    }
+}
+
+MagicActionPopulationMoveTo				::= CoordUTM    -- Position
+MagicActionPopulationDestructionTotale	::= NULL
+
+MsgPopulationMagicAction ::= SEQUENCE
+{
+    oid-population  OID,  -- oid de l'entité population
+    action          CHOICE
+    {       
+        change-attitude    MagicActionPopulationChangeAttitude,
+        move-to            MagicActionPopulationMoveTo,
+        destruction-totale MagicActionPopulationDestructionTotale
+    }       
+}
+
+EnumPopulationAttrErrorCode ::= ENUMERATED
+{
+    no-error                (0),
+    error-invalid-unit      (1),
+    error-invalid-attribute (2)
+}
+
+MsgPopulationMagicActionAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumPopulationAttrErrorCode
+}
 
 END -- ScipioPopulation

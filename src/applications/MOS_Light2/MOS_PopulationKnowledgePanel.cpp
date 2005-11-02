@@ -208,12 +208,10 @@ void MOS_PopulationKnowledgePanel::OnClearSelection()
 // -----------------------------------------------------------------------------
 void MOS_PopulationKnowledgePanel::UpdateList()
 {
-    MOS_Gtia*                pGtia      = GetSelectedGtia();
-    MOS_PopulationKnowledge* pKnowledge = selectedItem_.pPopulationKnowledge_;
+    MOS_Gtia* pGtia = GetSelectedGtia();
 
     if( pGtia == 0 )
         return;
-
 
     if( pGtia_ != pGtia )
     {
@@ -229,34 +227,32 @@ void MOS_PopulationKnowledgePanel::UpdateList()
                 pParentItem = new MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >( it->second, pKnowledgeListView_, it->second->GetPopulation().GetName().c_str() );
                 const MOS_PopulationKnowledge::T_ConcentrationKnowledgeMap& concentrationKnowledges = it->second->GetConcentrations();
                 for( MOS_PopulationKnowledge::CIT_ConcentrationKnowledgeMap itC = concentrationKnowledges.begin(); itC != concentrationKnowledges.end(); ++itC )
+                {
                     new MT_ValuedListViewItem< MOS_PopulationConcentrationKnowledge*, eConcentration >( itC->second, pParentItem, tr( "Concentration - " ) + QString::number( itC->second->GetID() ) );
+                    if( itC->second == pSelectedConcentrationKnowledge_ )
+                    {
+                        disconnect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+                        pKnowledgeListView_->setSelected( pKnowledgeListView_->lastItem(), true );
+                        connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+                    }
+                }
                 const MOS_PopulationKnowledge::T_FlowKnowledgeMap& flowKnowledges = it->second->GetFlows();
                 for( MOS_PopulationKnowledge::CIT_FlowKnowledgeMap itF = flowKnowledges.begin(); itF != flowKnowledges.end(); ++itF )
+                {
                     new MT_ValuedListViewItem< MOS_PopulationFlowKnowledge*, eFlow >( itF->second, pParentItem, tr( "Flux - " ) + QString::number( itF->second->GetID() ) );
+                    if( itF->second == pSelectedFlowKnowledge_ )
+                    {
+                        disconnect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+                        pKnowledgeListView_->setSelected( pKnowledgeListView_->lastItem(), true );
+                        connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+                    }
+                }
             }
         }
         pGtia_ = pGtia;
     }
 
-    // Try to select the appropriate knowledge.
-    if( pKnowledge != 0 )
-    {
-        QListViewItem* pItem = pKnowledgeListView_->firstChild();
-        while( pItem != 0 )
-        {
-            MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* pCastItem = ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pItem ;
-            if( pCastItem->GetValue() == pKnowledge )
-            {
-                pKnowledgeListView_->setSelected( pItem, true );
-                return;
-            }
-            pItem = pItem->nextSibling();
-        }
-    }
-
-    if( pKnowledgeListView_->childCount() > 0 )
-        pKnowledgeListView_->setSelected( pKnowledgeListView_->firstChild(), true );
-    else
+    if( pKnowledgeListView_->childCount() == 0 )
     {
         pSelectedKnowledge_              = 0;
         pSelectedConcentrationKnowledge_ = 0;
@@ -356,6 +352,10 @@ void MOS_PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* pItem )
             QListViewItem* pParent = pCastFlow->parent();
             pSelectedKnowledge_ = ( ( MT_ValuedListViewItem< MOS_PopulationKnowledge*, ePopulation >* )pParent )->GetValue();            
             pSelectedConcentrationKnowledge_ = 0;
+        }
+        else
+        {
+            assert( false );
         }
         MOS_SelectedElement selectedElement( *pSelectedKnowledge_ );
         emit ElementSelected( selectedElement );

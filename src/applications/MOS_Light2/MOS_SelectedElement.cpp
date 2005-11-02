@@ -26,10 +26,14 @@
 #include "MOS_Gtia.h"
 #include "MOS_Team.h"
 #include "MOS_Population.h"
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
 #include "MOS_Object_ABC.h"
 #include "MOS_AgentKnowledge.h"
 #include "MOS_ObjectKnowledge.h"
 #include "MOS_PopulationKnowledge.h"
+#include "MOS_PopulationConcentrationKnowledge.h"
+#include "MOS_PopulationFlowKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement constructor
@@ -59,6 +63,26 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Population& population )
 {
 	this->Init();
 	pPopulation_ = &population;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_SelectedElement constructor
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentration& populationConcentration )
+{
+    this->Init();
+    pPopulationConcentration_ = &populationConcentration;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_SelectedElement constructor
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlow& populationFlow )
+{
+    this->Init();
+    pPopulationFlow_ = &populationFlow;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +151,26 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationKnowledge& populationKno
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SelectedElement constructor
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentrationKnowledge& populationConcentrationKnowledge )
+{
+    this->Init();
+    pPopulationConcentrationKnowledge_ = &populationConcentrationKnowledge;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_SelectedElement constructor
+// Created: SBO 2005-10-26
+// -----------------------------------------------------------------------------
+MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlowKnowledge& populationFlowKnowledge )
+{
+    this->Init();
+    pPopulationFlowKnowledge_ = &populationFlowKnowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_SelectedElement constructor
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_TacticalLine_ABC& line, int nLinePoint )
@@ -163,17 +207,21 @@ MOS_SelectedElement::~MOS_SelectedElement()
 // -----------------------------------------------------------------------------
 void MOS_SelectedElement::Init()
 {
-    pAgent_               = 0;
-    pGtia_                = 0;
-    pTeam_                = 0;
-    pObject_              = 0;
-    pAgentKnowledge_      = 0;
-    pObjectKnowledge_     = 0;
-    pPopulationKnowledge_ = 0;
-    pRC_                  = 0;
-    pLine_                = 0;
-    nLinePoint_           = -1;
-	pPopulation_          = 0;
+    pAgent_                            = 0;
+    pGtia_                             = 0;
+    pTeam_                             = 0;
+    pObject_                           = 0;
+    pAgentKnowledge_                   = 0;
+    pObjectKnowledge_                  = 0;
+    pRC_                               = 0;
+    pLine_                             = 0;
+    nLinePoint_                        = -1;
+	pPopulation_                       = 0;
+    pPopulationConcentration_          = 0;
+    pPopulationFlow_                   = 0;
+    pPopulationKnowledge_              = 0;
+    pPopulationConcentrationKnowledge_ = 0;
+    pPopulationFlowKnowledge_          = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -182,17 +230,21 @@ void MOS_SelectedElement::Init()
 // -----------------------------------------------------------------------------
 bool MOS_SelectedElement::operator==( const MOS_SelectedElement& rhs ) const
 {
-    return pAgent_               == rhs.pAgent_
-		&& pPopulation_          == rhs.pPopulation_
-        && pGtia_                == rhs.pGtia_
-        && pTeam_                == rhs.pTeam_
-        && pObject_              == rhs.pObject_
-        && pAgentKnowledge_      == rhs.pAgentKnowledge_
-        && pObjectKnowledge_     == rhs.pObjectKnowledge_
-        && pPopulationKnowledge_ == rhs.pPopulationKnowledge_
-        && pRC_                  == rhs.pRC_
-        && pLine_                == rhs.pLine_
-        && nLinePoint_           == rhs.nLinePoint_;
+    return pAgent_                            == rhs.pAgent_
+		&& pPopulation_                       == rhs.pPopulation_
+        && pPopulationConcentration_          == rhs.pPopulationConcentration_
+        && pPopulationFlow_                   == rhs.pPopulationFlow_
+        && pGtia_                             == rhs.pGtia_
+        && pTeam_                             == rhs.pTeam_
+        && pObject_                           == rhs.pObject_
+        && pAgentKnowledge_                   == rhs.pAgentKnowledge_
+        && pObjectKnowledge_                  == rhs.pObjectKnowledge_
+        && pPopulationKnowledge_              == rhs.pPopulationKnowledge_
+        && pPopulationConcentrationKnowledge_ == rhs.pPopulationConcentrationKnowledge_
+        && pPopulationFlowKnowledge_          == rhs.pPopulationFlowKnowledge_
+        && pRC_                               == rhs.pRC_
+        && pLine_                             == rhs.pLine_
+        && nLinePoint_                        == rhs.nLinePoint_;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,6 +259,12 @@ void MOS_SelectedElement::Dump()
         str << " agent : " << pAgent_->GetID() << "; ";
 	if( pPopulation_ )
         str << " population : " << pPopulation_->GetID() << "; ";
+    if( pPopulationConcentration_ )
+        str << " population concentration : " << pPopulationConcentration_->GetID() << "; ";
+    if( pPopulationFlow_ )
+        str << " population flow : " << pPopulationFlow_->GetID() << "; ";
+    if( pPopulation_ )
+        str << " population : " << pPopulation_->GetID() << "; ";
     if( pGtia_ )
         str << " gtia : " << pGtia_->GetID() << "; ";
     if( pTeam_ )
@@ -219,5 +277,9 @@ void MOS_SelectedElement::Dump()
         str << " object knowledge : " << pObjectKnowledge_->GetID() << "; ";
     if( pPopulationKnowledge_ )
         str << " population knowledge : " << pPopulationKnowledge_->GetID() << "; ";
+    if( pPopulationConcentrationKnowledge_ )
+        str << " population concentration knowledge : " << pPopulationConcentrationKnowledge_->GetID() << "; ";
+    if( pPopulationFlowKnowledge_ )
+        str << " population flow knowledge : " << pPopulationFlowKnowledge_->GetID() << "; ";
     MT_LOG_INFO_MSG( str.str() );
 }

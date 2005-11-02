@@ -25,19 +25,19 @@
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
 MOS_LogisticSupplyPushFlowDialog::MOS_LogisticSupplyPushFlowDialog( QWidget* pParent  )
-    : QDialog ( pParent, "Pousser flux" )
-    , pAgent_ ( 0 )
-    , pStocks_( 0 )
-    , pTypesMenu_  ( 0 )
-    , pAutomateChangedComboBox_( 0 )
-    , bInitialized_( false )
+    : QDialog           ( pParent, "Pousser flux" )
+    , pAgent_           ( 0 )
+    , pStocks_          ( 0 )
+    , pTypesMenu_       ( 0 )
+    , pSuppliedComboBox_( 0 )
+    , bInitialized_     ( false )
 {
 //    resize( 400, 150 );
     setCaption( tr( "Pousser flux" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
-    pAutomateChangedComboBox_ = new QComboBox( FALSE, this );
-    pMainLayout->addWidget( pAutomateChangedComboBox_ );
+    pSuppliedComboBox_ = new QComboBox( FALSE, this );
+    pMainLayout->addWidget( pSuppliedComboBox_ );
 
     pStocks_ = new QListView( this, "" );
     pStocks_->addColumn( tr( "Dotation" ) );
@@ -59,17 +59,7 @@ MOS_LogisticSupplyPushFlowDialog::MOS_LogisticSupplyPushFlowDialog( QWidget* pPa
     pTypesMenu_ = new QPopupMenu( this );
 
     connect( pStocks_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ), SLOT(OnContextMenu( QListViewItem*, const QPoint&, int )) );
-
-    MOS_AgentManager::CT_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
-    for( MOS_AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
-    {
-        const MOS_Agent& agent = *itAgent->second;
-        if( !agent.IsAutomate() || !agent.pSupplyData_ )
-            continue;
-
-        automateComboBoxIDs_.insert( std::make_pair( pAutomateChangedComboBox_->count(), &agent ) );
-        pAutomateChangedComboBox_->insertItem( agent.GetName().c_str() );
-    }
+    connect( pSuppliedComboBox_, SIGNAL( activated( int ) ), SLOT( OnSuppliedChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,19 +78,26 @@ MOS_LogisticSupplyPushFlowDialog::~MOS_LogisticSupplyPushFlowDialog()
 void MOS_LogisticSupplyPushFlowDialog::SetAgent( const MOS_Agent& agent )
 {
     pAgent_ = &agent;
+
     pStocks_->clear();
     pTypesMenu_->clear();
-
     if( ! agent.pSupplyData_ )
         return;
-    const T_ResourceQty_Map& ressources = agent.pSupplyData_->stocks_;
-    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+
+    automateComboBoxIDs_.clear();
+    pSuppliedComboBox_->clear();
+
+    MOS_AgentManager::CT_AgentMap& agents = MOS_App::GetApp().GetAgentManager().GetAgentList();
+    for( MOS_AgentManager::CIT_AgentMap itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
     {
-        if( ! it->second )
-            continue;
-        const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
-        pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+        if( itAgent->second && itAgent->second->nLogSupplySuperior_== agent.GetID() )
+        {
+            automateComboBoxIDs_.insert( std::make_pair( pSuppliedComboBox_->count(), itAgent->second ) );
+            pSuppliedComboBox_->insertItem( itAgent->second->GetName().c_str() );
+        }
     }
+    if( pSuppliedComboBox_->count() > 0 )
+        OnSuppliedChanged( pSuppliedComboBox_->currentItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +111,7 @@ void MOS_LogisticSupplyPushFlowDialog::Validate()
     MOS_ASN_MsgLogRavitaillementPousserFlux asnMsg;
 
     asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetID();
-    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pAutomateChangedComboBox_->currentItem() )->second->GetID();
+    asnMsg.GetAsnMsg().oid_receveur = automateComboBoxIDs_.find( pSuppliedComboBox_->currentItem() )->second->GetID();
 
     asnMsg.GetAsnMsg().stocks.n = pStocks_->childCount();
     if( asnMsg.GetAsnMsg().stocks.n > 0 )
@@ -177,5 +174,45 @@ void MOS_LogisticSupplyPushFlowDialog::OnContextMenu( QListViewItem* pItem, cons
     {
         QListViewItem* pItem = new QListViewItem( pStocks_, pStocks_->lastItem(), pTypesMenu_->text( nResult ), "1" );
         pItem->setRenameEnabled( 1, true );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogisticSupplyPushFlowDialog::OnSuppliedChanged
+// Created: SBO 2005-10-27
+// -----------------------------------------------------------------------------
+void MOS_LogisticSupplyPushFlowDialog::OnSuppliedChanged( int nItem )
+{
+    CIT_AgentIDMap itSupplied = automateComboBoxIDs_.find( nItem );
+    assert( itSupplied != automateComboBoxIDs_.end() );
+
+    const MOS_Agent& supplied = *itSupplied->second;
+
+    std::set< std::string > menuRessources;
+
+    pTypesMenu_->clear();
+    const T_ResourceQty_Map& ressources = supplied.pSupplyData_->stocks_;
+    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+    {
+        const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
+        pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+        menuRessources.insert( strRessourceName );
+    }
+
+    const MOS_Agent::T_AgentVector& childs = supplied.children_;
+    for( MOS_Agent::CIT_AgentVector itChild = childs.begin(); itChild != childs.end(); ++itChild )
+    {
+        if( !( *itChild )->pSupplyData_ )
+            continue;
+        const T_ResourceQty_Map& ressources = ( *itChild )->pSupplyData_->stocks_;
+        for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+        {
+            const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
+            if( menuRessources.find( strRessourceName ) == menuRessources.end() )
+            {
+                pTypesMenu_->insertItem( strRessourceName.c_str(), it->first );
+                menuRessources.insert( strRessourceName );
+            }
+        }
     }
 }
