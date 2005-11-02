@@ -50,7 +50,8 @@ MOS_PopulationPanel::MOS_PopulationPanel( QWidget* pParent )
     pPartsListView_->addColumn( tr( "Morceau" ) );
     pPartsListView_->addColumn( tr( "Hommes vivants" ) );
     pPartsListView_->addColumn( tr( "Hommes morts" ) );
-    pPartsListView_->addColumn( tr( "attitude" ) );
+    pPartsListView_->addColumn( tr( "Attitude" ) );
+    pPartsListView_->addColumn( tr( "Densité" ) );
 
     connect( this, SIGNAL( ElementSelected( MOS_SelectedElement& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ) );
     connect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
@@ -113,7 +114,8 @@ void MOS_PopulationPanel::OnPopulationUpdated( const MOS_Population& population 
             , QString( it->second->GetName().c_str() )
             , QString::number( it->second->GetLivingHumans() )
             , QString::number( it->second->GetDeadHumans() ) 
-            , QString( it->second->GetStringAttitude().c_str() ) );
+            , QString( it->second->GetStringAttitude().c_str() )
+            , QString::number( it->second->GetDensity() ) );
         if( it->second == selectedItem_.pPopulationConcentration_ )
         {
             disconnect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
@@ -129,7 +131,8 @@ void MOS_PopulationPanel::OnPopulationUpdated( const MOS_Population& population 
             , QString( it->second->GetName().c_str() )
             , QString::number( it->second->GetLivingHumans() )
             , QString::number( it->second->GetDeadHumans() ) 
-            , QString( it->second->GetStringAttitude().c_str() ) );
+            , QString( it->second->GetStringAttitude().c_str() )
+            , QString::number( it->second->GetDensity() ) );
         if( it->second == selectedItem_.pPopulationFlow_ )
         {
             disconnect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
