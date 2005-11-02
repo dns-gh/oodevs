@@ -10,16 +10,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::HasWeaponsReady
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-inline
-bool PHY_DirectFireData::HasWeaponsReady() const
-{
-    return bHasWeaponsReady_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::HasWeaponsNotReady
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
@@ -37,16 +27,6 @@ inline
 bool PHY_DirectFireData::HasWeaponsAndNoAmmo() const
 {
     return bHasWeaponsAndNoAmmo_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::sComposanteWeapons::HasWeaponsNotReady
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-inline
-bool PHY_DirectFireData::sComposanteWeapons::HasWeaponsReady() const
-{
-    return !weaponsReady_.empty();
 }
 
 // -----------------------------------------------------------------------------

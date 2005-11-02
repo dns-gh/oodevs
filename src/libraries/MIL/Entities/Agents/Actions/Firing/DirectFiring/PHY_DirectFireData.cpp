@@ -72,14 +72,16 @@ void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 // Name: PHY_DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, const PHY_AmmoDotationClass* pAmmoDotationClass /* = 0 */ )
-    : bHasWeaponsReady_     ( false )
-    , bHasWeaponsNotReady_  ( false )
-    , bHasWeaponsAndNoAmmo_ ( false )
-    , firer_                ( firer )
-    , nComposanteFiringType_( nComposanteFiringType )
-    , pAmmoDotationClass_   ( pAmmoDotationClass )
+PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, const PHY_AmmoDotationClass* pAmmoDotationClass /* = 0 */ )
+    : bHasWeaponsNotReady_        ( false )
+    , bHasWeaponsAndNoAmmo_       ( false )
+    , firer_                      ( firer )
+    , nComposanteFiringType_      ( nComposanteFiringType )
+    , nFiringMode_                ( nFiringMode )
+    , rPercentageComposantesToUse_( rPercentageComposantesToUse )
+    , pAmmoDotationClass_         ( pAmmoDotationClass )
 {
+    assert( rPercentageComposantesToUse_  >= 0. && rPercentageComposantesToUse_ <= 1. );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,36 +98,35 @@ PHY_DirectFireData::~PHY_DirectFireData()
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::GetNbrWeaponsUsable
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-uint PHY_DirectFireData::GetNbrWeaponsUsable( MT_Float rPercentage ) const
-{
-    assert( rPercentage >= 0. && rPercentage <= 1. );
-
-    uint nNbrUsedComposantes = 0;
-    for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
-        if( itData->second.IsFiring() )
-            ++ nNbrUsedComposantes;
-        
-    uint nNbrComps = (uint)( composantesWeapons_.size() * rPercentage );
-    if( !( nNbrComps || composantesWeapons_.empty() ) )
-        nNbrComps = 1;
-
-    if( nNbrComps >= nNbrUsedComposantes )
-        return nNbrComps - nNbrUsedComposantes;
-    return 0;   
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::GetNbrWeaponsUsable
-// Created: NLD 2004-10-05
+// Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
 uint PHY_DirectFireData::GetNbrWeaponsUsable() const
 {
-    uint nNbrWeaponsUsable = 0;
-    for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
-        nNbrWeaponsUsable += itData->second.GetNbrWeaponsUsable();
-    return nNbrWeaponsUsable;
+    if( nFiringMode_ == eFiringModeFree )
+    {
+        uint nNbrWeaponsUsable = 0;
+        for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
+            nNbrWeaponsUsable += itData->second.GetNbrWeaponsUsable();
+        return nNbrWeaponsUsable;
+    }
+    else if( nFiringMode_ == eFiringModeNormal )
+    {
+        uint nNbrUsedComposantes = 0;
+        for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
+            if( itData->second.IsFiring() )
+                ++ nNbrUsedComposantes;
+            
+        uint nNbrComps = (uint)( composantesWeapons_.size() * rPercentageComposantesToUse_ );
+        if( !( nNbrComps || composantesWeapons_.empty() ) )
+            nNbrComps = 1;
+
+        if( nNbrComps >= nNbrUsedComposantes )
+            return nNbrComps - nNbrUsedComposantes;
+        return 0;   
+    }
+
+    assert( false );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +151,6 @@ void PHY_DirectFireData::AddWeapon( PHY_ComposantePion& compFirer, PHY_Weapon& w
         sComposanteWeapons& data = composantesWeapons_[ &compFirer ];
         data.AddWeapon( weapon );
 
-        bHasWeaponsReady_    |= data.HasWeaponsReady();
         bHasWeaponsNotReady_ |= data.IsFiring       ();    
     }
 }
@@ -286,4 +286,19 @@ bool PHY_DirectFireData::GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer
         return false;
     pUnusedFirer = it->first;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::ReleaseWeapon
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+void PHY_DirectFireData::ReleaseWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon )
+{
+    switch( nFiringMode_ )
+    {
+        case eFiringModeNormal : RemoveFirer ( firer ); break;
+        case eFiringModeFree   : RemoveWeapon( firer, weapon ); break;
+        default:
+            assert( false );
+    }
 }

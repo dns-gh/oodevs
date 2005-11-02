@@ -44,10 +44,10 @@ public:
 
 private:
           PHY_RoleAction_DirectFiring&               role_;
-          DIA_Variable_ABC&                           diaReturnCode_;
-    const uint                                        nTargetKnowledgeID_;
-    const MT_Float                                    rPercentageComposantesToUse_;
-    const PHY_RoleAction_DirectFiring::E_Mode        nFireMode_;
+          DIA_Variable_ABC&                          diaReturnCode_;
+    const uint                                       nTargetKnowledgeID_;
+    const MT_Float                                   rPercentageComposantesToUse_;
+    const PHY_DirectFireData::E_FiringMode           nFiringMode_;
     const PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
     const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
           PHY_DirectFireResults*                     pFireResult_;

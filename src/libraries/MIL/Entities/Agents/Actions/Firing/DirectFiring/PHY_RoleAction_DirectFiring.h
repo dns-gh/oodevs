@@ -38,12 +38,6 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleAction_DirectFiring RoleInterface;
-
-    enum E_Mode
-    {
-        eModeNormal, // Chaque composante fait feu avec le meilleur couple ( lanceur / munition )
-        eModeFree    // Chaque composante fait feu avec tous les lanceurs
-    };
     //@}
 
 public:
@@ -64,7 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    int  Fire         ( uint nTargetKnowledgeID, E_Mode nFireMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    int  Fire         ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     void FireSuspended( uint nTargetKnowledgeID );
     void FireZone     ( const MIL_ControlZone& zone, PHY_ControlZoneFireResults*& pFireResult );
     //@}
@@ -93,7 +87,7 @@ private:
     //! @name Tools
     //@{
     MIL_Agent_ABC* GetTarget( uint nTargetKnowledgeID );
-    void           Fire     ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, E_Mode nFireMode, PHY_DirectFireResults& fireResult );
+    void           Fire     ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_DirectFireResults& fireResult );
     //@}
 
 private:

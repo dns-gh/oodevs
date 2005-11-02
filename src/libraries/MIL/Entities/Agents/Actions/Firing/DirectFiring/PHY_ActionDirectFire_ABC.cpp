@@ -28,7 +28,7 @@ PHY_ActionDirectFire_ABC::PHY_ActionDirectFire_ABC( MIL_AgentPion& pion, DIA_Cal
     , diaReturnCode_              (       diaCall.GetParameter( 0 )         )
     , nTargetKnowledgeID_         ( (uint)diaCall.GetParameter( 1 ).ToPtr  () )
     , rPercentageComposantesToUse_(  std::max( 0., std::min( 1., (MT_Float)diaCall.GetParameter( 2 ).ToFloat() ) ) )
-    , nFireMode_                  ( (PHY_RoleAction_DirectFiring::E_Mode)diaCall.GetParameter( 3 ).ToId   () )
+    , nFiringMode_                ( (PHY_DirectFireData::E_FiringMode)diaCall.GetParameter( 3 ).ToId   () )
     , nComposanteFiringType_      ( nComposanteFiringType )
     , pAmmoDotationClass_         ( 0 )
     , pFireResult_                ( 0 )  
@@ -64,7 +64,7 @@ PHY_ActionDirectFire_ABC::~PHY_ActionDirectFire_ABC()
 void PHY_ActionDirectFire_ABC::Execute()
 {
     bool bMustRefResult = ( pFireResult_ == 0 );
-    int nResult = role_.Fire( nTargetKnowledgeID_, nFireMode_, rPercentageComposantesToUse_, nComposanteFiringType_, pFireResult_, pAmmoDotationClass_ );
+    int nResult = role_.Fire( nTargetKnowledgeID_, nFiringMode_, rPercentageComposantesToUse_, nComposanteFiringType_, pFireResult_, pAmmoDotationClass_ );
     diaReturnCode_.SetValue( nResult );
 
     if( pFireResult_ && bMustRefResult )

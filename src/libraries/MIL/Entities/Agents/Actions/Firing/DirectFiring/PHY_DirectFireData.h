@@ -34,38 +34,46 @@ class PHY_DirectFireData
 public:
     //! @name Types
     //@{
-
     enum E_ComposanteFiringType
     {
         eFireAllComposantes,
         eFireComposantesLoadable,
         eFireComposantesCarrier        
     };
+
+    enum E_FiringMode
+    {
+        eFiringModeNormal, // Chaque composante fait feu avec le meilleur couple ( lanceur / munition )
+        eFiringModeFree    // Chaque composante fait feu avec tous les lanceurs
+    };
     //@}
 
 public:
-     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode = eFiringModeNormal, MT_Float rPercentageComposantesToUse = 1., const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     ~PHY_DirectFireData();
 
     //! @name Operations
     //@{
     void AddWeapon   ( PHY_ComposantePion& firer, PHY_Weapon& weapon );
-    void RemoveFirer ( PHY_ComposantePion& firer );
-    void RemoveWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon );
 
     void ChooseRandomWeapon  ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
     void ChooseBestWeapon    ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
     bool GetUnusedFirerWeapon( PHY_ComposantePion*& pUnusedFirer, PHY_Weapon*& pUnusedFirerWeapon ) const;
+    void ReleaseWeapon       ( PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
 
     //! @name Accessors
     //@{
-    bool HasWeaponsReady    () const;
     bool HasWeaponsNotReady () const;
     bool HasWeaponsAndNoAmmo() const;
+    uint GetNbrWeaponsUsable() const;
+    //@}
 
-    uint GetNbrWeaponsUsable( MT_Float rPercentage ) const; // Mode tir normal
-    uint GetNbrWeaponsUsable() const;                       // Mode tir libre
+private:
+    //! @name Tools
+    //@{
+    void RemoveFirer ( PHY_ComposantePion& firer );
+    void RemoveWeapon( PHY_ComposantePion& firer, PHY_Weapon& weapon );
     //@}
 
 private:
@@ -81,7 +89,6 @@ private:
 
         //! @name Accessors
         //@{
-        bool HasWeaponsReady    () const;
         uint GetNbrWeaponsUsable() const;
         bool IsFiring           () const;
         //@}
@@ -107,7 +114,9 @@ private:
 private:
           MIL_AgentPion&         firer_;
     const PHY_AmmoDotationClass* pAmmoDotationClass_;
-          E_ComposanteFiringType nComposanteFiringType_;
+    const E_ComposanteFiringType nComposanteFiringType_;
+    const E_FiringMode           nFiringMode_;
+    const MT_Float               rPercentageComposantesToUse_;
           T_ComposanteWeaponsMap composantesWeapons_;
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;
