@@ -51,6 +51,7 @@ MOS_Options::MOS_Options()
     , bSaveLoadTacticalLines_   ( true )
     , b3D_                      ( false )
     , bNoList_                  ( true )
+    , bDisplayRealTimeLog_      ( false )
 {
     MT_CommandLine arguments( qApp->argc(), qApp->argv() );
     bNoList_ = arguments.IsOptionSet( "-nolist" );

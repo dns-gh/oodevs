@@ -229,3 +229,33 @@ const MOS_AgentManager::T_TypePopulationMap* MOS_AgentManager::GetTypePopulation
 {
     return &typesPopulation_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::GetMaintenanceConsigns
+// Created: HME 2005-11-02
+// -----------------------------------------------------------------------------
+inline
+const MOS_AgentManager::T_MaintenanceConsigns& MOS_AgentManager::GetMaintenanceConsigns() const
+{
+    return maintenanceConsigns_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::GetMedicalConsigns
+// Created: HME 2005-11-02
+// -----------------------------------------------------------------------------
+inline
+const MOS_AgentManager::T_MedicalConsigns& MOS_AgentManager::GetMedicalConsigns() const
+{
+    return medicalConsigns_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::GetSupplyConsigns
+// Created: HME 2005-11-02
+// -----------------------------------------------------------------------------
+inline
+const MOS_AgentManager::T_SupplyConsigns& MOS_AgentManager::GetSupplyConsigns() const
+{
+    return supplyConsigns_;
+}

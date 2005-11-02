@@ -103,12 +103,15 @@ public:
 
     typedef std::map< uint, MOS_LogMaintenanceConsign* > T_MaintenanceConsigns;
     typedef T_MaintenanceConsigns::iterator             IT_MaintenanceConsigns;
+    typedef T_MaintenanceConsigns::const_iterator       CIT_MaintenanceConsigns;
 
     typedef std::map< uint, MOS_LogSupplyConsign* > T_SupplyConsigns;
     typedef T_SupplyConsigns::iterator             IT_SupplyConsigns;
+    typedef T_SupplyConsigns::const_iterator       CIT_SupplyConsigns;
 
     typedef std::map< uint, MOS_LogMedicalConsign* > T_MedicalConsigns;
     typedef T_MedicalConsigns::iterator             IT_MedicalConsigns;
+    typedef T_MedicalConsigns::const_iterator       CIT_MedicalConsigns;
     //@}
 
 public:
@@ -190,6 +193,10 @@ public:
     MOS_LogMedicalConsign*     FindMedicalConsign( ASN1T_OID nConsignId );
     MOS_LogSupplyConsign*      FindSupplyConsign( ASN1T_OID nConsignId );
     MOS_Agent*                 FindConflictOrigin( ASN1T_OID nConflictID );
+
+    const T_MaintenanceConsigns&        GetMaintenanceConsigns() const;
+    const T_MedicalConsigns&            GetMedicalConsigns() const;
+    const T_SupplyConsigns&             GetSupplyConsigns() const;
 
     void DeleteMaintenanceConsign( ASN1T_OID nConsignId );
     void DeleteMedicalConsign( ASN1T_OID nConsignId );

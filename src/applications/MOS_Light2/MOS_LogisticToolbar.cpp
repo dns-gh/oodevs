@@ -41,7 +41,8 @@ MOS_LogisticToolbar::MOS_LogisticToolbar( QMainWindow* pParent )
     this->FillButton( *pMissingLinksButton, options.nDisplayMissingLogLinks_ );
     
     pAutoSetLogisticLinksButton_ = new QToolButton( MAKE_ICON( autolog ), tr( "Calcul automatique des liens logistiques" ), "", this, SLOT( OnAutoSetLogisticLinks() ), this );
-    }
+    pRealTimeLogButton_ = new QToolButton( MAKE_ICON( realtimelog ), tr( "Affichage temps réel des actions logistiques" ), "", this, SLOT( OnRealTimeLog() ), this );  
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_LogisticToolbar destructor
@@ -83,6 +84,15 @@ void MOS_LogisticToolbar::OnMissingLogisticLinks( float rValue )
     options.nDisplayMissingLogLinks_ = (MOS_Options::E_State)(int)(rValue);
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_LogisticToolbar::OnRealTimeLog
+// Created: HME 2005-11-02
+// -----------------------------------------------------------------------------
+void MOS_LogisticToolbar::OnRealTimeLog()
+{
+    MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
+    options.bDisplayRealTimeLog_ =! options.bDisplayRealTimeLog_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_LogisticToolbar::OnAutoSetLogisticLinks

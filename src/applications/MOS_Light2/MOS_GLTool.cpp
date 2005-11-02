@@ -77,6 +77,9 @@
 #include "MOS_PopulationFlowKnowledge.h"
 #include "MOS_PopulationConcentrationKnowledge.h"
 #include "MOS_TypePopulation.h"
+#include "MOS_LogMaintenanceConsign.h"
+#include "MOS_LogMedicalConsign.h"
+#include "MOS_LogSupplyConsign.h"
 
 #include "MT_GLFont.h"
 #undef min
@@ -364,6 +367,36 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     for( MOS_AgentManager::IT_ConflictMap itC = manager.conflictMap_.begin(); itC != manager.conflictMap_.end(); ++itC )
         DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_ != 0 ? (*itC).second.pDirectFireTarget_->vPos_ : (*itC).second.vIndirectFireTarget_, 300.0 ); // $$$$ AGE 2005-03-22:
 
+    //Draw the real time logistic actions
+    if ( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
+    {
+        glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_ % 16) ] );
+        glEnable( GL_LINE_STIPPLE );
+        glLineWidth( 2.0 );
+        const MOS_AgentManager::T_MaintenanceConsigns& consignsMain = MOS_App::GetApp().GetAgentManager().GetMaintenanceConsigns();
+        glColor4d( MOS_COLOR_MAROON );
+        for( MOS_AgentManager::CIT_MaintenanceConsigns itMain = consignsMain.begin(); itMain != consignsMain.end(); ++itMain )
+        {
+            const MOS_LogMaintenanceConsign* con = itMain->second;
+
+            DrawLine( con->GetPion().GetPos(), con->GetPionLogHandling()->GetPos() );
+        }
+        const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
+        glColor4d( MOS_COLOR_PINK );
+        for( MOS_AgentManager::CIT_MedicalConsigns itSan = consignsSan.begin(); itSan != consignsSan.end(); ++itSan )
+        {
+            const MOS_LogMedicalConsign* con = itSan->second;
+            DrawLine( con->GetPion().GetPos(), con->GetPionLogHandling()->GetPos() );
+        }
+        const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
+        glColor4d( MOS_COLOR_ORANGE );
+        for( MOS_AgentManager::CIT_SupplyConsigns itRav = consignsRav.begin(); itRav != consignsRav.end(); ++itRav )
+        {
+            const MOS_LogSupplyConsign* con = itRav->second;
+            DrawLine( con->GetPion().GetPos(), con->GetPionLogHandling()->GetPos() );
+        }
+        glDisable( GL_LINE_STIPPLE );
+    }
 }
 
 
@@ -500,6 +533,8 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos() );
         }
     }
+
+    
     
 }
 

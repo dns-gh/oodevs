@@ -82,6 +82,7 @@ public:
     bool bDisplayWeather_;
     E_State nDisplayLogLinks_;
     E_State nDisplayMissingLogLinks_;
+    bool    bDisplayRealTimeLog_;
 
     MT_Float rGridStep_;
 

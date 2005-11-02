@@ -41,7 +41,8 @@ public:
 private slots:
     void OnAutoSetLogisticLinks();
     void OnLogisticLinks( float rValue );
-    void OnMissingLogisticLinks( float rValue  );
+    void OnMissingLogisticLinks( float rValue );
+    void OnRealTimeLog();
 
 private:
     void FillButton( MT_ToolListButton& button, MOS_Options::E_State nState );
@@ -50,6 +51,7 @@ private:
 private:
 
     QToolButton* pAutoSetLogisticLinksButton_;
+    QToolButton* pRealTimeLogButton_;
 
 };
 

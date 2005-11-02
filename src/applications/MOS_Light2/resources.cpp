@@ -77,6 +77,7 @@
 #include "res/missinglog.xpm"
 #include "res/loglink.xpm"
 #include "res/autolog.xpm"
+#include "res/realtimelog.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {
