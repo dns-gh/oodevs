@@ -73,10 +73,6 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     pSubLayout2->setMargin( 5 );
 
     QGroupBox* pGB2 = new QGroupBox( 2, Qt::Vertical, tr( "Afficher" ), pDisplayPanel );
-    pLogisticLinksDisplayCheckbox_ = new QCheckBox( tr("Affichage des liens logistiques"), pGB2 );
-    pLogisticLinksDisplayCheckbox_->setChecked( options.bDisplayLoglinks_ );
-    pLogisticLinksDisplayAllCheckBox_ = new QCheckBox( tr("Liens de tous les automates"), pGB2 );
-    pLogisticLinksDisplayAllCheckBox_->setChecked( options.bDisplayAllLogLinks_ );
 
     QLabel* pL2 = new QLabel( tr( "Taille police" ), pDisplayPanel );
     pFontSpinbox_ = new QSpinBox( 1, 50, 1, pDisplayPanel );
@@ -161,6 +157,5 @@ void MOS_OptionsPanel::Apply()
 
     options.bOpenTreeToItem_ = pAutoOpenCheckbox_->isChecked();
     options.bSaveLoadTacticalLines_ = pAutoSaveLoadCheckbox_->isChecked();
-    options.bDisplayLoglinks_ = pLogisticLinksDisplayCheckbox_->isChecked();
-    options.bDisplayAllLogLinks_ = pLogisticLinksDisplayAllCheckBox_->isChecked();
+
 }

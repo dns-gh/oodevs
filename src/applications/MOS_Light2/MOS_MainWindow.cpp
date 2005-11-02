@@ -41,6 +41,7 @@
 #include "MOS_ControllerToolbar.h"
 #include "MOS_RecorderToolbar.h"
 #include "MOS_ODBToolbar.h"
+#include "MOS_LogisticToolbar.h"
 #include "MOS_MissionPanel.h"
 #include "MOS_WeatherPanel.h"
 #include "MT_Settings.h"
@@ -186,6 +187,7 @@ MOS_MainWindow::MOS_MainWindow()
     new MOS_EventToolbar( this );
     new MOS_ControllerToolbar( this );
     new MOS_RecorderToolbar( this );
+    new MOS_LogisticToolbar( this );
 
     // Status bar & indicators
     pLocationLabel_  = new QLabel( "---", this );

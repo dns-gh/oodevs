@@ -64,5 +64,8 @@ DECLARE_ICON( image );
 DECLARE_ICON( empty );
 DECLARE_ICON( cross );
 DECLARE_ICON( saveall );
+DECLARE_ICON( autolog );
+DECLARE_ICON( missinglog );
+DECLARE_ICON( loglink );
 
 #endif // __demo_resources_h_

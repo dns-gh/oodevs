@@ -80,8 +80,8 @@ public:
     E_State nDrawPaths_;
     bool bDrawOldPaths_;
     bool bDisplayWeather_;
-    bool bDisplayLoglinks_;
-    bool bDisplayAllLogLinks_;
+    E_State nDisplayLogLinks_;
+    E_State nDisplayMissingLogLinks_;
 
     MT_Float rGridStep_;
 
