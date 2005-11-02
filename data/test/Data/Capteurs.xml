@@ -194,6 +194,21 @@
               </PosturesSource>
             </ModificateursDeDistance>
           </Objet>
+          <Objet type="site franchissement">
+            <DD>5000</DD>
+            <ModificateursDeDistance>
+              <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+              <PosturesSource>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>1</MouvementDiscret>
+                <Arret>1</Arret>
+                <PosteReflexe>1</PosteReflexe>
+                <Poste>1</Poste>
+                <PosteAmenage>1</PosteAmenage>
+                <PostePrepareGenie>1</PostePrepareGenie>
+              </PosturesSource>
+            </ModificateursDeDistance>
+          </Objet>          
         </Objets>
       </DetectionObjets>
     </Senseur>

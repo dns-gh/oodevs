@@ -199,9 +199,8 @@ void PHY_SensorTypeAgent::InitializePopulationFactors( MIL_InputArchive& archive
 inline
 MT_Float PHY_SensorTypeAgent::GetPopulationFactor( MT_Float rDensity ) const
 {
-    if( rDensity == 0. )
+    if( rDensity == 0. || rPopulationDensity_ == 0. )
         return 1.;
-
     return std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rDensity );
 }
 

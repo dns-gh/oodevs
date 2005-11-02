@@ -25,10 +25,11 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_Population( role )
-    , pPion_                      ( &pion )
-//    , bHasChanged_                ( true )
-    , bSlowDownEnabled_           ( true )
+    : PHY_RoleInterface_Population          ( role )
+    , pPion_                                ( &pion )
+//    , bHasChanged_                          ( true )
+    , bSlowDownEnabled_                     ( true )
+    , bReloadingDurationModificationEnabled_( true )
 {
 }
  
@@ -37,10 +38,11 @@ PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_Ag
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population()
-    : PHY_RoleInterface_Population()
-    , pPion_                      ( 0 )
-//    , bHasChanged_                ( true )
-    , bSlowDownEnabled_           ( true )
+    : PHY_RoleInterface_Population          ()
+    , pPion_                                ( 0 )
+//    , bHasChanged_                          ( true )
+    , bSlowDownEnabled_                     ( true )
+    , bReloadingDurationModificationEnabled_( true )
 {
 }
 
@@ -65,7 +67,8 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this )
          & pPion_
-         & bSlowDownEnabled_;
+         & bSlowDownEnabled_
+         & bReloadingDurationModificationEnabled_;
 }
 
 // =============================================================================
@@ -93,6 +96,29 @@ MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
     }
 
     return rMaxSpeed;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::ModifyReloadingDuration
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) const
+{
+    assert( pPion_ );
+    if( !bReloadingDurationModificationEnabled_ )
+        return rDuration;
+
+    T_KnowledgePopulationCollisionVector collisions;
+    pPion_->GetKSQuerier().GetPopulationsColliding( collisions );
+
+    MT_Float rFactor = 1.;
+    for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
+    {
+        const DEC_Knowledge_PopulationCollision& population = **it;
+        rFactor = std::max( rFactor, population.GetPionReloadingTimeFactor() );
+    }
+
+    return rDuration * rFactor;
 }
 
 // =============================================================================

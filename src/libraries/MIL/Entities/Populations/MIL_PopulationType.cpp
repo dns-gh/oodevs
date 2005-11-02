@@ -25,6 +25,8 @@
 #include "MIL_AgentServer.h"
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
+MT_Float                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
+MT_Float                            MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
 
 // =============================================================================
 // STATIC INITIALIZATION (MANAGER)
@@ -37,6 +39,16 @@ MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 void MIL_PopulationType::Initialize( MIL_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing population types" );
+
+    archive.Section( "Effets" );
+    
+    archive.Section( "TempsRechargement" );
+    archive.ReadAttribute( "densitePopulation", rEffectReloadingTimeDensity_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "modificateur"     , rEffectReloadingTimeFactor_ , CheckValueGreaterOrEqual( 1. ) );
+    archive.EndSection(); // TempsRechargement
+
+    archive.EndSection(); // Effets
+
 
     archive.BeginList( "Populations" );
     while( archive.NextListElement() )
@@ -212,4 +224,16 @@ MT_Float MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& popu
         return std::numeric_limits< MT_Float >::max();
 
     return ( slowDownData.rMaxSpeed_ * slowDownData.rPopulationDensity_ ) / rPopulationDensity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetPionReloadingTimeFactor
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationType::GetPionReloadingTimeFactor( MT_Float rPopulationDensity ) const
+{
+    if( rEffectReloadingTimeDensity_ == 0. )
+        return 1.;
+
+    return std::max( 1., rPopulationDensity * rEffectReloadingTimeFactor_ / rEffectReloadingTimeDensity_ );
 }

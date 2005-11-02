@@ -348,6 +348,15 @@ MT_Float MIL_PopulationFlow::GetPionMaxSpeed( const PHY_Volume& pionVolume ) con
     return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetPionReloadingTimeFactor
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetPionReloadingTimeFactor() const
+{
+    return pPopulation_->GetPionReloadingTimeFactor( rDensity_ );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================

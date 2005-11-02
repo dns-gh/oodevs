@@ -212,7 +212,7 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 }
 
 // =============================================================================
-// ACCESSORS
+// PION EFFECTS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -223,6 +223,15 @@ MT_Float MIL_PopulationConcentration::GetPionMaxSpeed( const PHY_Volume& pionVol
 {
     assert( pAttitude_ );
     return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetPionReloadingTimeFactor
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationConcentration::GetPionReloadingTimeFactor() const
+{
+    return pPopulation_->GetPionReloadingTimeFactor( rDensity_ );
 }
 
 // =============================================================================

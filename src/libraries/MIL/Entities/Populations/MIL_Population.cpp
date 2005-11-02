@@ -277,7 +277,7 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetPionMaxSpeed
+// Name: MIL_Population::GetMaxSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetMaxSpeed() const
@@ -295,12 +295,27 @@ MT_Float MIL_Population::GetDefaultFlowDensity() const
     assert( pType_ );
     return pType_->GetDefaultFlowDensity();
 }
+// =============================================================================
+// PION EFFECTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetPionReloadingTimeFactor
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetPionReloadingTimeFactor( MT_Float rDensity ) const
+{
+    assert( pType_ );
+    return pType_->GetPionReloadingTimeFactor( rDensity );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const
 {
+    assert( pType_ );
     if( bPionMaxSpeedOverloaded_ )
         return rOverloadedPionMaxSpeed_;
     else

@@ -152,6 +152,26 @@ MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
+{
+    assert( pAgentColliding_ );
+
+    T_ComposanteVolumeSet volumes_;
+
+    MT_Float rFactor = 1.;
+    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+        rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
+
+    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
+
+    return rFactor;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------

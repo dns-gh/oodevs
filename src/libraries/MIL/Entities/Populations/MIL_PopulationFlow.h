@@ -70,7 +70,12 @@ public:
                   uint                    GetNbrDeadHumans () const;
                   MT_Float                GetSpeed         () const;
                   MT_Float                GetDensity       () const;
-                  MT_Float                GetPionMaxSpeed  ( const PHY_Volume& pionVolume ) const;
+    //@}
+
+    //! @name Pion effects
+    //@{
+    MT_Float GetPionMaxSpeed           ( const PHY_Volume& pionVolume ) const;
+    MT_Float GetPionReloadingTimeFactor() const;
     //@}
 
     //! @name Concentration management

@@ -781,3 +781,21 @@ void DEC_AgentFunctions::DisableSlowDownByPopulation( DIA_Call_ABC& /*call*/, MI
 {
     callerAgent.GetRole< PHY_RolePion_Population >().DisableSlowDown();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableReloadingDurationModification
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableReloadingDurationModification( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Population >().EnableReloadingDurationModification();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisableReloadingDurationModification
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisableReloadingDurationModification( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< PHY_RolePion_Population >().DisableReloadingDurationModification();
+}

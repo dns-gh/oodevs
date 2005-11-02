@@ -43,14 +43,20 @@ public:
           MT_Float                             GetConcentrationDensity() const;
           MT_Float                             GetDefaultFlowDensity  () const;
           MT_Float                             GetMaxSpeed            () const;
+
     const DEC_ModelPopulation&                 GetModel               () const;
           DIA_FunctionTable< MIL_Population >& GetFunctionTable       () const;
     //@}
 
     //! @name Operations
     //@{
-    MT_Float        GetPionMaxSpeed      ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
     MIL_Population& InstanciatePopulation( uint nID, MIL_InputArchive& archive ) const;
+    //@}
+
+    //! @name Effects
+    //@{
+    MT_Float GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
+    MT_Float GetPionReloadingTimeFactor( MT_Float rPopulationDensity ) const;
     //@}
 
 private:
@@ -96,6 +102,8 @@ private:
 
 private:
     static T_PopulationMap populations_;
+    static MT_Float        rEffectReloadingTimeDensity_;
+    static MT_Float        rEffectReloadingTimeFactor_;    
 };
 
 #include "MIL_PopulationType.inl"

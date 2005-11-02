@@ -62,3 +62,23 @@ void PHY_RolePion_Population::DisableSlowDown()
 {
     bSlowDownEnabled_ = false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::EnableReloadingDurationModification
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Population::EnableReloadingDurationModification()
+{
+    bReloadingDurationModificationEnabled_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableReloadingDurationModification
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Population::DisableReloadingDurationModification()
+{
+    bReloadingDurationModificationEnabled_ = false;
+}

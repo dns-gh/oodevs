@@ -62,10 +62,11 @@ public:
 
     //! @name Pion effects
     //@{
-    MT_Float GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
-
+    MT_Float GetPionMaxSpeed  ( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
     void     SetPionMaxSpeed  ( MT_Float rSpeed );
     void     ResetPionMaxSpeed();
+
+    MT_Float GetPionReloadingTimeFactor( MT_Float rDensity ) const;
     //@}
 
     //! @name Operations

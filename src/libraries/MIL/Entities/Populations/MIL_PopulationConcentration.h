@@ -74,10 +74,15 @@ public:
           uint                    GetNbrAliveHumans() const;
           uint                    GetNbrDeadHumans () const;
           MT_Float                GetDensity       () const;
-          MT_Float                GetPionMaxSpeed  ( const PHY_Volume& pionVolume ) const;
           bool                    IsNearPosition   ( const MT_Vector2D& position ) const;
 
     virtual const TER_Localisation& GetLocation () const;
+    //@}
+
+    //! @name Pion effects
+    //@{
+    MT_Float GetPionMaxSpeed           ( const PHY_Volume& pionVolume ) const;
+    MT_Float GetPionReloadingTimeFactor() const;
     //@}
 
     //! @name Network

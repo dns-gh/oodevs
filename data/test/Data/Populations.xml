@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Populations>
+
+    <Effets>
+        <TempsRechargement densitePopulation="2" modificateur="2"/>        
+    </Effets>
+    
     <Population nom="test1">
         <MosID>1</MosID>
         <ModeleDecisionnel>Population Test</ModeleDecisionnel>
@@ -12,21 +17,21 @@
                 <Attitudes>
                     <Attitude nom="agressive">
                         <VolumesPions>
-                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="20"/>
-                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="30"/>
+                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="21"/>
+                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="22"/>
                         </VolumesPions>
                      </Attitude>
                     <Attitude nom="agitee">
                         <VolumesPions>
-                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="20"/>
-                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="30"/>
-                            <VolumePion nom="moyen" densitePopulation="0.9" vitesseMaximale="50"/>
+                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="31"/>
+                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="32"/>
+                            <VolumePion nom="moyen" densitePopulation="0.9" vitesseMaximale="33"/>
                         </VolumesPions>
                      </Attitude>                     
                     <Attitude nom="calme">
                         <VolumesPions>
-                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="20"/>
-                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="10"/>
+                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="41"/>
+                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="42"/>
                         </VolumesPions>
                      </Attitude>
                 </Attitudes>

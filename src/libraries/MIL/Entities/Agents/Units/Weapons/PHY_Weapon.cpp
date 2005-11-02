@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "MIL_AgentServer.h"
@@ -143,6 +144,7 @@ MT_Float PHY_Weapon::ModifyReloadingDuration( const MIL_AgentPion& firer, MT_Flo
     rDuration = firer.GetRole< PHY_RolePion_NBC            >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RolePion_Communications >().ModifyReloadingDuration( rDuration );
     rDuration = firer.GetRole< PHY_RolePion_HumanFactors   >().ModifyReloadingDuration( rDuration );
+    rDuration = firer.GetRole< PHY_RolePion_Population     >().ModifyReloadingDuration( rDuration );
     return rDuration;
 }
 

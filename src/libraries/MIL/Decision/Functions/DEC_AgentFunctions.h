@@ -98,8 +98,10 @@ public:
     static void SelfDecontaminate         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
 
     // Population
-    static void EnableSlowDownByPopulation ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void DisableSlowDownByPopulation( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void EnableSlowDownByPopulation          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void DisableSlowDownByPopulation         ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void EnableReloadingDurationModification ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void DisableReloadingDurationModification( DIA_Call_ABC& call, MIL_AgentPion& callerAgent ); 
    
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

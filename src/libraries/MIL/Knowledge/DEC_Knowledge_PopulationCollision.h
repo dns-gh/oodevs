@@ -54,9 +54,10 @@ public:
 
     //! @name Operations
     //@{
-          MT_Float     GetMaxPopulationDensity() const;
-          MT_Float     GetPionMaxSpeed        () const;
-    const MT_Vector2D& GetPosition            () const;
+          MT_Float     GetMaxPopulationDensity   () const;
+          MT_Float     GetPionMaxSpeed           () const;
+          MT_Float     GetPionReloadingTimeFactor() const;
+    const MT_Vector2D& GetPosition               () const;
     //@}
 
     //! @name Accessors

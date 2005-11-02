@@ -157,8 +157,10 @@ signatures
     B                                       A::DEC_Agent_TransporteursPret               ();
                                             
     // Population
-    V                                       A::DEC_Agent_ActiverRalentissementParPopulation   ();
-    V                                       A::DEC_Agent_DesactiverRalentissementParPopulation();
+    V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();
+    V                                       A::DEC_Agent_DesactiverRalentissementParPopulation               ();
+    V                                       A::DEC_Agent_ActiverModificationTempsRechargementParPopulation   ();
+    V                                       A::DEC_Agent_DesactiverModificationTempsRechargementParPopulation();
                                                                                         
     R /* temps en minutes */                A::DEC_Agent_AutonomieEnDeplacement();
     R /* temps en minutes */                A::DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( R /*distance en m*/ );    

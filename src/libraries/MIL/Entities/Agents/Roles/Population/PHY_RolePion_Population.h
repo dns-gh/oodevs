@@ -47,9 +47,14 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ModifyMaxSpeed ( MT_Float rSpeed ) const;
+    MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const;
+    MT_Float ModifyReloadingDuration( MT_Float rDuration ) const;
+
     void     EnableSlowDown ();
     void     DisableSlowDown();
+
+    void     EnableReloadingDurationModification ();
+    void     DisableReloadingDurationModification();
     //@}
 
     //! @name Network
@@ -61,6 +66,7 @@ public:
 private:
     MIL_AgentPion* pPion_;
     bool           bSlowDownEnabled_;
+    bool           bReloadingDurationModificationEnabled_;
 //    bool           bHasChanged_;
 };
 
