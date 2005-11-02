@@ -90,6 +90,13 @@ void MOS_LogisticToolbar::OnMissingLogisticLinks( float rValue )
 // -----------------------------------------------------------------------------
 void MOS_LogisticToolbar::OnAutoSetLogisticLinks()
 {
+    if ( QMessageBox::question(
+            this,
+            tr("Attention"),
+            tr("Ecraser les liens existants ?"),
+            tr("&Oui"), tr("&Non"),
+            QString::null, 0, 1 ) )
+        return;
     MOS_AgentManager::CT_AgentMap& agentMap = MOS_App::GetApp().GetAgentManager().GetAgentList();
     //link the BLD to the BLT and the TC2 to the BLD
     for ( MOS_AgentManager::CIT_AgentMap itAgent = agentMap.begin(); itAgent != agentMap.end(); ++itAgent )
