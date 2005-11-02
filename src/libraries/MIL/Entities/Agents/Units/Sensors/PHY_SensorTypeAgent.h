@@ -73,6 +73,7 @@ private:
     void InitializeAngle             ( MIL_InputArchive& archive );
     void InitializeDistances         ( MIL_InputArchive& archive );
     void InitializeEnvironmentFactors( MIL_InputArchive& archive );
+    void InitializePopulationFactors ( MIL_InputArchive& archive );
 
     template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive );
     //@}
@@ -90,6 +91,8 @@ private:
     MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
     MT_Float GetTargetFactor( const MIL_Agent_ABC&       target ) const;
     MT_Float GetTargetFactor( const DEC_Knowledge_Agent& target ) const;
+
+    MT_Float GetPopulationFactor( MT_Float rDensity ) const;
     //@}
 
 private:
@@ -111,6 +114,10 @@ private:
     T_FactorVector postureSourceFactors_;
     T_FactorVector postureTargetFactors_;
     T_FactorVector environmentFactors_;   
+
+    // Population
+    MT_Float rPopulationDensity_;
+    MT_Float rPopulationFactor_;    
 };
 
 #include "PHY_SensorTypeAgent.inl"

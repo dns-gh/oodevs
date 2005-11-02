@@ -29,6 +29,9 @@ public:
 //    static void Trace          ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
 //    static void DebugDrawPoints( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
 //    static void DebugDrawPoint ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+
+    static void SetPionMaxSpeed  ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+    static void ResetPionMaxSpeed( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     //@}    
 };
 

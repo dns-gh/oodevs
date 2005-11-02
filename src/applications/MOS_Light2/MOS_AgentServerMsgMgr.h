@@ -67,6 +67,7 @@ public:
         eMsgArmy                                   = 1014,
         eMsgDebugDrawPoints                        = 1015,
         eMsgEnvironmentType                        = 1016,
+        eMsgPopulationCollision                    = 1017
     };
     //@}
     
@@ -134,6 +135,7 @@ private:
     void OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgArmy                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // ASN
     void OnReceiveMsgSimMos           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

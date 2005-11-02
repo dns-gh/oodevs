@@ -110,3 +110,26 @@ void MIL_Population::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg,
     orderManager_.OnReceiveMsgPopulationOrder( msg, nCtx );
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetPionMaxSpeed
+// Created: NLD 2005-10-24
+// -----------------------------------------------------------------------------
+inline
+void MIL_Population::SetPionMaxSpeed( MT_Float rSpeed )
+{
+    assert( rSpeed >= 0. );
+    bPionMaxSpeedOverloaded_ = true;
+    rOverloadedPionMaxSpeed_ = rSpeed;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::ResetPionMaxSpeed
+// Created: NLD 2005-10-24
+// -----------------------------------------------------------------------------
+inline
+void MIL_Population::ResetPionMaxSpeed()
+{
+    bPionMaxSpeedOverloaded_ = false;
+    rOverloadedPionMaxSpeed_ = 0.;
+}

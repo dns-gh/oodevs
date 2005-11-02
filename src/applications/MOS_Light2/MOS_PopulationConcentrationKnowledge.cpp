@@ -71,3 +71,13 @@ void MOS_PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConc
     if( asnMsg.m.pertinencePresent )
         rRelevance_ = asnMsg.pertinence;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationConcentrationKnowledge::GetArea
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+MT_Float MOS_PopulationConcentrationKnowledge::GetArea() const
+{
+    assert( pPopulationKnowledge_ );
+    return GetNbrAliveHumans() / pPopulationKnowledge_->GetType().GetConcentrationDensity();
+}

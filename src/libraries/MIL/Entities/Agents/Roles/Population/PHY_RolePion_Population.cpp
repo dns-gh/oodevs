@@ -89,7 +89,7 @@ MT_Float PHY_RolePion_Population::ModifyMaxSpeed( MT_Float rSpeed ) const
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
     {
         const DEC_Knowledge_PopulationCollision& population = **it;
-        rMaxSpeed = std::min( rMaxSpeed, population.GetMaxSpeed() );
+        rMaxSpeed = std::min( rMaxSpeed, population.GetPionMaxSpeed() );
     }
 
     return rMaxSpeed;

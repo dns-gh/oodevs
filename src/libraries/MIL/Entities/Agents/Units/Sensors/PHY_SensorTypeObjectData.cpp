@@ -22,6 +22,8 @@
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_PopulationCollision.h"
+#include "Knowledge/DEC_KS_AgentQuerier.h"
 
 #include "Tools/MIL_Tools.h"
 
@@ -54,12 +56,17 @@ void PHY_SensorTypeObjectData::InitializeFactors( const PHY_Posture::T_PostureMa
 PHY_SensorTypeObjectData::PHY_SensorTypeObjectData( MIL_InputArchive& archive )
     : rDD_                 ( 0. )
     , postureSourceFactors_( PHY_Posture::GetPostures().size(), 0. )
+    , rPopulationDensity_  ( 1. )
+    , rPopulationFactor_   ( 1. )
 {
     archive.ReadField( "DD", rDD_ );
     rDD_ = MIL_Tools::ConvertMeterToSim( rDD_ );
 
     archive.Section( "ModificateursDeDistance" );
-    InitializeFactors( PHY_Posture::GetPostures(), "PosturesSource", postureSourceFactors_, archive );
+    
+    InitializeFactors          ( PHY_Posture::GetPostures(), "PosturesSource", postureSourceFactors_, archive );
+    InitializePopulationFactors( archive );
+
     archive.EndSection(); // ModificateursDeDistance
 }
 
@@ -77,11 +84,36 @@ PHY_SensorTypeObjectData::~PHY_SensorTypeObjectData()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObjectData::InitializePopulationFactors
+// Created: NLD 2005-10-27
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeObjectData::InitializePopulationFactors( MIL_InputArchive& archive )
+{
+    archive.Section( "PresencePopulation" );
+
+    archive.ReadAttribute( "densitePopulation", rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "modificateur"     , rPopulationFactor_ , CheckValueBound( 0., 1. )      );
+
+    archive.EndSection(); // PresencePopulation
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObjectData::GetPopulationFactor
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_SensorTypeObjectData::GetPopulationFactor( MT_Float rDensity ) const
+{
+    return std::min( 1., rDensity * rPopulationFactor_ / rPopulationDensity_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObjectData::GetSourceFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source ) const
 {
+    // Posture
     const PHY_RolePion_Posture& sourcePosture = source.GetRole< PHY_RolePion_Posture >();
 
     const uint nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
@@ -89,9 +121,25 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
 
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
-    const MT_Float rModificator =     postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
-                                  * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
-    return rModificator * sourcePosture.GetElongationFactor() * source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+    MT_Float rModificator =     postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
+                            * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
+
+    // Elongation
+    rModificator *= sourcePosture.GetElongationFactor(); 
+
+    // Human factors
+    rModificator *= source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+
+     // Population
+    T_KnowledgePopulationCollisionVector populationsColliding;
+    source.GetKSQuerier().GetPopulationsColliding( populationsColliding );
+    MT_Float rPopulationDensity = 0.;
+    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+        rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
+
+    rModificator *= GetPopulationFactor( rPopulationDensity );
+
+    return rModificator;
 }
 
 // =============================================================================

@@ -49,6 +49,7 @@ private:
 private:
     //! @name 
     //@{
+    void InitializePopulationFactors   ( MOS_InputArchive& archive );
     void InitializeDistances           ( MOS_InputArchive& archive );
     void InitializePostureSourceFactors( MOS_InputArchive& archive );
     void InitializeWeatherFactors      ( MOS_InputArchive& archive );
@@ -76,6 +77,11 @@ private:
     T_FactorVector lightingFactors_;
     T_FactorVector weatherFactors_;
     T_FactorVector environementFactors_;
+
+    // Population
+    MT_Float rPopulationDensity_;
+    MT_Float rPopulationFactor_;
+
 };
 
 #include "MOS_SensorType.inl"

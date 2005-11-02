@@ -18,6 +18,7 @@
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
+#include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -123,6 +124,33 @@ void DEC_Knowledge_Population::Prepare()
 
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Update
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision&  collision )
+{
+    collision.PublishKnowledges( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Update
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision& collision, const MIL_PopulationFlow& flow )
+{
+    GetKnowledge( flow ).Update( collision );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Update
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationCollision& collision, const MIL_PopulationConcentration& concentration )
+{
+    GetKnowledge( concentration ).Update( collision );
 }
 
 // -----------------------------------------------------------------------------

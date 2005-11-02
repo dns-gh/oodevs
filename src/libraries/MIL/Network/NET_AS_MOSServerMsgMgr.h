@@ -65,6 +65,7 @@ public:
         eMsgArmy                                   = 1014,
         eMsgDebugDrawPoints                        = 1015,
         eMsgEnvironmentType                        = 1016,
+        eMsgPopulationCollision                    = 1017
     };
     //@}
 
@@ -99,6 +100,7 @@ public:
     void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg );
     void SendMsgPopulationFlowInterVisibility         ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgPopulationCollision                   ( DIN::DIN_BufferedMessage& msg );
     void SendMsgDebugDrawPoints                       ( DIN::DIN_BufferedMessage& msg );
     void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg ); 
     

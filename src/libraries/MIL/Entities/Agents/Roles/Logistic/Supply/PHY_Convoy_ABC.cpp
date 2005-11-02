@@ -141,11 +141,11 @@ void PHY_Convoy_ABC::Terminate()
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
-    : pConsign_         ( &consign )
+    : pConsign_      ( &consign )
     , pCommanderComp_( 0 )
-    , pCommanderPion_   ( 0 ) 
+    , pCommanderPion_( 0 ) 
     , conveyors_     ()
-    , nFormingTime_     ( 0 )
+    , nFormingTime_  ( 0 )
 {
 }
     
@@ -154,11 +154,11 @@ PHY_Convoy_ABC::PHY_Convoy_ABC( PHY_SupplyConsign_ABC& consign )
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Convoy_ABC::PHY_Convoy_ABC()
-    : pConsign_         ( 0 )
+    : pConsign_      ( 0 )
     , pCommanderComp_( 0 )
-    , pCommanderPion_   ( 0 ) 
+    , pCommanderPion_( 0 ) 
     , conveyors_     ()
-    , nFormingTime_     ( 0 )
+    , nFormingTime_  ( 0 )
 {
 }
 

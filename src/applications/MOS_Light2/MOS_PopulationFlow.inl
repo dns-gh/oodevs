@@ -68,3 +68,13 @@ const MT_Vector2D& MOS_PopulationFlow::GetPos() const
 {
     return GetHeadPosition();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationFlow::GetDensity
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_PopulationFlow::GetDensity() const
+{
+    return rDensity_;
+}

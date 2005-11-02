@@ -57,7 +57,15 @@ public:
           MT_Float                    GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
     const MIL_Army&                   GetArmy              () const;
-          MT_Float                    GetMaxSpeed          ( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
+          
+    //@}
+
+    //! @name Pion effects
+    //@{
+    MT_Float GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
+
+    void     SetPionMaxSpeed  ( MT_Float rSpeed );
+    void     ResetPionMaxSpeed();
     //@}
 
     //! @name Operations
@@ -136,6 +144,10 @@ private:
 
           DEC_PopulationDecision*    pDecision_;
           MIL_PopulationOrderManager orderManager_;
+
+          // Pion effects
+          bool                       bPionMaxSpeedOverloaded_;
+          MT_Float                   rOverloadedPionMaxSpeed_;
 };
 
 #include "MIL_Population.inl"

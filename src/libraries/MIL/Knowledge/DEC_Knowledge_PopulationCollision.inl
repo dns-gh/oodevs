@@ -48,5 +48,6 @@ void DEC_Knowledge_PopulationCollision::Prepare()
 inline
 bool DEC_Knowledge_PopulationCollision::Clean()
 {
+    bHasChanged_ = false;
     return !bIsValid_;
 }

@@ -68,7 +68,8 @@ public:
                   uint                    GetNbrAliveHumans() const;
                   uint                    GetNbrDeadHumans () const;
                   MT_Float                GetSpeed         () const;
-                  MT_Float                GetMaxSpeed      ( const PHY_Volume& pionVolume ) const;
+                  MT_Float                GetDensity       () const;
+                  MT_Float                GetPionMaxSpeed  ( const PHY_Volume& pionVolume ) const;
     //@}
 
     //! @name Concentration management

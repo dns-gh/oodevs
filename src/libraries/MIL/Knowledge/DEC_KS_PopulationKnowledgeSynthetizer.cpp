@@ -14,6 +14,7 @@
 
 #include "DEC_KnowledgeBlackBoard.h"
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_Population.h"
 
 #include "MIL_KnowledgeGroup.h"
@@ -82,6 +83,15 @@ void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception( cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision( const DEC_Knowledge_PopulationCollision& collision )
+{
+    GetKnowledgeToUpdate( collision.GetPopulation() ).Update( collision );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
@@ -90,7 +100,8 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
     assert( pKnowledgeGroup_ );
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationPerception> method( DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, *this );
+    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationPerception > methodPerception( DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, *this );
+    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationCollision  > methodCollision ( DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision , *this );
 
     // Synthèse de la perception des subordonnés
     // Ajout automatique de la connaissance de chaque subordonné    
@@ -101,7 +112,8 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk()
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         {
             MIL_AgentPion& pion = **itPion;
-            pion.GetKnowledge().ApplyOnKnowledgesPopulationPerception( method );
+            pion.GetKnowledge().ApplyOnKnowledgesPopulationPerception( methodPerception );
+            pion.GetKnowledge().ApplyOnKnowledgesPopulationCollision ( methodCollision  );
         }
     }
     

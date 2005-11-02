@@ -254,6 +254,15 @@ void NET_AS_MOSServerMsgMgr::SendMsgPopulationFlowInterVisibility( DIN::DIN_Buff
 }
 
 // -----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::SendMsgPopulationCollision
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::SendMsgPopulationCollision( DIN::DIN_BufferedMessage& msg )
+{
+    SendMsgToAllMosLight( eMsgPopulationCollision, msg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints
 // Created: NLD 2005-03-22
 // -----------------------------------------------------------------------------

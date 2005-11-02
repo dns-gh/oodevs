@@ -35,8 +35,10 @@ public:
 
     //! @name Accessors
     //@{
-	virtual const MT_Vector2D& GetPos () const;
-	virtual const std::string& GetName() const;
+	virtual const MT_Vector2D& GetPos    () const;
+	virtual const std::string& GetName   () const;
+            MT_Float           GetDensity() const;
+            MT_Float           GetArea   () const;
     //@}
 
 private:
@@ -50,7 +52,6 @@ private:
     //! @name Member data
     //@{
     const std::string strName_;
-	      float		  rDensity_;
 	      MT_Vector2D position_;
     //@}			
 };

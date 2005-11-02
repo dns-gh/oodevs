@@ -44,6 +44,7 @@ class MOS_LogMedicalConsign;
 class MOS_LogMaintenanceConsign;
 class MOS_PopulationConcentration;
 class MOS_PopulationFlow;
+class MOS_Population;
 
 // =============================================================================
 // Created: APE 2004-07-19
@@ -74,9 +75,22 @@ public:
     typedef T_ConcentrationSet::iterator                   IT_ConcentrationSet;
     typedef T_ConcentrationSet::const_iterator             CIT_ConcentrationSet;
 
+    typedef std::set< const MOS_PopulationFlow* > T_FlowSet;
+    typedef T_FlowSet::iterator                   IT_FlowSet;
+    typedef T_FlowSet::const_iterator             CIT_FlowSet;
+
     typedef std::map< const MOS_PopulationFlow*, T_PointVector > T_FlowVisionMap;
     typedef T_FlowVisionMap::iterator                            IT_FlowVisionMap;
     typedef T_FlowVisionMap::const_iterator                      CIT_FlowVisionMap;
+
+    struct sPopulationCollision
+    {
+        T_ConcentrationSet concentrations_;
+        T_FlowSet          flows_;
+    };
+
+    typedef std::map< const MOS_Population*, sPopulationCollision > T_PopulationCollisionMap;
+    typedef T_PopulationCollisionMap::const_iterator               CIT_PopulationCollisionMap;
 
     typedef MT_Quad< MT_Float, MT_Vector2D, MT_Vector2D, MT_Float > T_VisionConeQuad;
     typedef std::vector< T_VisionConeQuad >                         T_VisionConeVector;
@@ -176,6 +190,7 @@ public:
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
+    void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
     void OnReceiveDebugDrawPointsMsg                       ( DIN::DIN_Input& msg   );
 
     void OnAttributeUpdated    ( const ASN1T_MsgUnitAttributes&            asnMsg );
@@ -201,6 +216,8 @@ public:
     void GetVisionSurfaces      ( T_VisionResultMap& res );
     void OnReceiveMsgVisionCones( DIN::DIN_Input& input );
     MT_Float GetElongationFactor() const;
+
+    MT_Float GetPopulationCollisionDensity() const;
     //@}
 
     //! @name PathFind
@@ -293,6 +310,8 @@ public:
 
     T_ConcentrationSet          concentrationsPerceived_;
     T_FlowVisionMap             flowsPerceived_;
+
+    T_PopulationCollisionMap    populationCollisions_;
     
     std::vector< MT_Vector2D >	reportPoints_;
     T_FireResults				fireResults_;

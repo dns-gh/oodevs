@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class DEC_Knowledge_PopulationFlowPerception;
+class DEC_Knowledge_PopulationCollision;
 class PHY_PerceptionLevel;
 
 // =============================================================================
@@ -43,6 +44,7 @@ public:
     //@{
     void Prepare        ();
     bool Update         ( const DEC_Knowledge_PopulationFlowPerception& perception );
+    bool Update         ( const DEC_Knowledge_PopulationCollision&      collision  );
     bool UpdateRelevance( const MT_Float rMaxLifeTime );
     bool Clean          ();
     //@}

@@ -17,6 +17,7 @@
 #include "Tools/MIL_MOSIDManager.h"
 
 class DEC_Knowledge_Population;
+class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationConcentrationPerception;
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
@@ -49,6 +50,7 @@ public:
     //@{
     void Prepare        ();
     void Update         ( const DEC_Knowledge_PopulationConcentrationPerception& perception );
+    void Update         ( const DEC_Knowledge_PopulationCollision&               collision  );
     void UpdateRelevance();
     bool Clean          ();
     //@}

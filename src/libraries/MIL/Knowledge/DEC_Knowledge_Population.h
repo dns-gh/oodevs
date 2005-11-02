@@ -27,6 +27,7 @@ class DEC_Knowledge_PopulationFlow;
 class DEC_Knowledge_PopulationPerception;
 class DEC_Knowledge_PopulationConcentrationPerception;
 class DEC_Knowledge_PopulationFlowPerception;
+class DEC_Knowledge_PopulationCollision;
 
 
 // =============================================================================
@@ -55,10 +56,14 @@ public:
     //! @name Operations
     //@{
     void Prepare();
+    
     void Update ( const DEC_Knowledge_PopulationPerception& perception );
-
     void Update ( const DEC_Knowledge_PopulationConcentrationPerception& perception ); // Called by DEC_Knowledge_PopulationPerception
     void Update ( const DEC_Knowledge_PopulationFlowPerception&          perception ); // Called by DEC_Knowledge_PopulationPerception
+
+    void Update ( const DEC_Knowledge_PopulationCollision&  collision  );
+    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationFlow&          flow          );
+    void Update ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_PopulationConcentration& concentration );
 
     void UpdateRelevance();
 

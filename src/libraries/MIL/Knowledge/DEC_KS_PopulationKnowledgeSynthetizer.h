@@ -49,6 +49,7 @@ private:
     //@{
     void                      CleanKnowledgePopulation      ( DEC_Knowledge_Population& knowledge );
     void                      UpdateKnowledgesFromPerception( const DEC_Knowledge_PopulationPerception& perception );
+    void                      UpdateKnowledgesFromCollision ( const DEC_Knowledge_PopulationCollision&  collision  );
     DEC_Knowledge_Population& GetKnowledgeToUpdate          ( MIL_Population& populationKnown ) const;
     //@}
 

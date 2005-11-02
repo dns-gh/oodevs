@@ -36,14 +36,16 @@ BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
-    : PHY_Actor        ()
-    , pType_           ( &type )
-    , nID_             ( nID )
-    , pArmy_           ( 0 )
-    , strName_         ( type.GetName() )
-    , pDecision_       ( 0 )
-    , orderManager_    ( *this )
-    , pDefaultAttitude_( 0 )
+    : PHY_Actor               ()
+    , pType_                  ( &type )
+    , nID_                    ( nID )
+    , pArmy_                  ( 0 )
+    , strName_                ( type.GetName() )
+    , pDecision_              ( 0 )
+    , orderManager_           ( *this )
+    , pDefaultAttitude_       ( 0 )
+    , bPionMaxSpeedOverloaded_( false )
+    , rOverloadedPionMaxSpeed_( 0. )
 {
     archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
 
@@ -73,14 +75,16 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population()
-    : PHY_Actor        ()
-    , pType_           ( 0 )
-    , nID_             ( 0 )
-    , pArmy_           ( 0 )
-    , strName_         ()
-    , pDecision_       ( 0 )
-    , orderManager_    ( *this )
-    , pDefaultAttitude_( 0 )
+    : PHY_Actor               ()
+    , pType_                  ( 0 )
+    , nID_                    ( 0 )
+    , pArmy_                  ( 0 )
+    , strName_                ()
+    , pDecision_              ( 0 )
+    , orderManager_           ( *this )
+    , pDefaultAttitude_       ( 0 )
+    , bPionMaxSpeedOverloaded_( false )
+    , rOverloadedPionMaxSpeed_( 0. )
 {
     // NOTHING
 }
@@ -127,7 +131,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> flows_
          >> trashedConcentrations_
          >> trashedFlows_
-    ;
+         >> bPionMaxSpeedOverloaded_
+         >> rOverloadedPionMaxSpeed_;
 
     pDecision_ = new DEC_PopulationDecision( *this );
 }
@@ -149,7 +154,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << flows_
          << trashedConcentrations_
          << trashedFlows_
-    ;
+         << bPionMaxSpeedOverloaded_
+         << rOverloadedPionMaxSpeed_;
 }
 
 // =============================================================================
@@ -270,7 +276,7 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetMaxSpeed
+// Name: MIL_Population::GetPionMaxSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetMaxSpeed() const
@@ -289,12 +295,15 @@ MT_Float MIL_Population::GetDefaultFlowDensity() const
     return pType_->GetDefaultFlowDensity();
 }
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetMaxSpeed
+// Name: MIL_Population::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const
+MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const
 {
-    return pType_->GetMaxSpeed( attitude, rDensity, pionVolume );
+    if( bPionMaxSpeedOverloaded_ )
+        return rOverloadedPionMaxSpeed_;
+    else
+        return pType_->GetPionMaxSpeed( attitude, rDensity, pionVolume );
 }
 
 // =============================================================================

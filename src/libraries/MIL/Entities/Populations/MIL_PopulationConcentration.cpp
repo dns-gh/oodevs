@@ -203,13 +203,13 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetMaxSpeed
+// Name: MIL_PopulationConcentration::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationConcentration::GetMaxSpeed( const PHY_Volume& pionVolume ) const
+MT_Float MIL_PopulationConcentration::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
 {
     assert( pAttitude_ );
-    return pPopulation_->GetMaxSpeed( *pAttitude_, rDensity_, pionVolume );
+    return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
 }
 
 // =============================================================================

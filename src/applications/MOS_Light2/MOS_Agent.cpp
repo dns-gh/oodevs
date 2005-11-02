@@ -36,6 +36,9 @@
 #include "MOS_Morale.h"
 #include "MOS_FireResult.h"
 #include "MOS_Population.h"
+#include "MOS_PopulationConcentration.h"
+#include "MOS_PopulationFlow.h"
+
 
 using namespace DIN;
 
@@ -232,6 +235,49 @@ void MOS_Agent::OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input )
         default:
             assert( false );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMsgPopulationCollision
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnReceiveMsgPopulationCollision( DIN::DIN_Input& msg )
+{
+    uint32  nPopulationID;
+
+    msg >> nPopulationID;
+    MOS_Population* pPopulation = MOS_App::GetApp().GetAgentManager().FindPopulation( nPopulationID );
+    assert( pPopulation );
+
+    populationCollisions_.erase( pPopulation );
+
+    sPopulationCollision collision;
+
+    uint32 nTmp;
+    msg >> nTmp;
+    for( uint i = 0; i < nTmp; ++i )
+    {
+        uint32 nConcentrationID;
+        msg >> nConcentrationID;
+
+        const MOS_PopulationConcentration* pConcentration = pPopulation->FindConcentration( nConcentrationID );
+        assert( pConcentration );
+        collision.concentrations_.insert( pConcentration );
+    }
+
+    msg >> nTmp;
+    for( uint i = 0; i < nTmp; ++i )
+    {
+        uint32 nFlowID;
+        msg >> nFlowID;
+
+        const MOS_PopulationFlow* pFlow = pPopulation->FindFlow( nFlowID );
+        assert( pFlow );
+        collision.flows_.insert( pFlow );
+    }
+
+    if( !collision.flows_.empty() || !collision.concentrations_.empty() )
+        populationCollisions_.insert( std::make_pair( pPopulation, collision ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -773,6 +819,26 @@ void MOS_Agent::OnReceiveMsgVisionCones( DIN_Input& msg )
 MT_Float MOS_Agent::GetElongationFactor() const
 {
     return rElongationFactor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetPopulationCollisionDensity
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+MT_Float MOS_Agent::GetPopulationCollisionDensity() const
+{
+    MT_Float rDensity = 0.;
+    for( CIT_PopulationCollisionMap itCol = populationCollisions_.begin(); itCol != populationCollisions_.end(); ++itCol )
+    {
+        const sPopulationCollision& data = itCol->second;
+
+        for( CIT_ConcentrationSet it = data.concentrations_.begin(); it != data.concentrations_.end(); ++it )
+            rDensity = max( rDensity, (**it).GetDensity() );
+
+        for( CIT_FlowSet it = data.flows_.begin(); it != data.flows_.end(); ++it )
+            rDensity = max( rDensity, (**it).GetDensity() );
+    }
+    return rDensity;
 }
 
 // -----------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_PopulationFlowPart;
+class DEC_Knowledge_PopulationCollision;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
@@ -51,6 +52,7 @@ public:
     //@{
     void Prepare        ();
     void Update         ( const DEC_Knowledge_PopulationFlowPerception& perception );
+    void Update         ( const DEC_Knowledge_PopulationCollision&      collision  );
     void UpdateRelevance();
     bool Clean          ();
     //@}

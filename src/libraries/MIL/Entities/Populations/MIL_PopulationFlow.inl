@@ -328,6 +328,16 @@ MT_Float MIL_PopulationFlow::GetSpeed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetDensity
+// Created: NLD 2005-10-27
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_PopulationFlow::GetDensity() const
+{
+    return rDensity_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::IsValid
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

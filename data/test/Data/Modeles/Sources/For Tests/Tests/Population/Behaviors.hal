@@ -12,6 +12,9 @@ default Default()
 behavior BEH_Defaut( id nDummy )
 {         
     DEC_Debug( "BEH_Defaut" );
+    
+    DEC_Population_RalentissementPion_ChangeVitesse   (  5 );
+//    V              A::DEC_Population_RalentissementPion_VitesseParDefaut();
 }
 
 behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement mission, id nDummy )

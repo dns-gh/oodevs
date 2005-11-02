@@ -13,12 +13,17 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 
 #include "DEC_KnowledgeBlackBoard.h"
-
+#include "DEC_Knowledge_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_AgentServer.h"
+
+using namespace DIN;
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationCollision, "DEC_Knowledge_PopulationCollision" )
 
@@ -33,6 +38,7 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_
     , flows_           ()
     , concentrations_  () 
     , bIsValid_        ( false )
+    , bHasChanged_     ( true )
 {
 }
 
@@ -47,6 +53,7 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
     , flows_           ()
     , concentrations_  () 
     , bIsValid_        ( false )
+    , bHasChanged_     ( true )
 {
 }
 
@@ -87,8 +94,9 @@ void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationFlow& flow )
 {
-    bIsValid_ = true;
-    flows_.insert( &flow );
+    bIsValid_    = true;
+    if( flows_.insert( &flow ).second )
+        bHasChanged_ = true;
 }
     
 // -----------------------------------------------------------------------------
@@ -97,15 +105,29 @@ void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationFlow& flow )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationConcentration& concentration )
 {
-    bIsValid_ = true;
-    concentrations_.insert( &concentration );
+    bIsValid_    = true;
+    if( concentrations_.insert( &concentration ).second )
+        bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationCollision::GetMaxSpeed
+// Name: DEC_Knowledge_PopulationCollision::PublishKnowledges
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Population& knowledge ) const
+{
+    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        knowledge.Update( *this, **it  );
+
+    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+        knowledge.Update( *this, **it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationCollision::GetMaxSpeed() const
+MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 {
     assert( pAgentColliding_ );
 
@@ -117,14 +139,87 @@ MT_Float DEC_Knowledge_PopulationCollision::GetMaxSpeed() const
     {
         const MIL_PopulationFlow& flow = **it;
         for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
-            rMaxSpeed = std::min( rMaxSpeed, flow.GetMaxSpeed( **itVolume ) );
+            rMaxSpeed = std::min( rMaxSpeed, flow.GetPionMaxSpeed( **itVolume ) );
     }
 
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         const MIL_PopulationConcentration& concentration = **it;
         for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
-            rMaxSpeed = std::min( rMaxSpeed, concentration.GetMaxSpeed( **itVolume ) );
+            rMaxSpeed = std::min( rMaxSpeed, concentration.GetPionMaxSpeed( **itVolume ) );
     }
     return rMaxSpeed;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity
+// Created: NLD 2005-10-27
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
+{
+    MT_Float rMaxDensity = 0.;
+    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+        rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
+
+    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
+    return rMaxDensity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::GetPosition
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
+{
+    assert( pAgentColliding_ );
+    return pAgentColliding_->GetRole< PHY_RolePion_Location >().GetPosition(); //$$$
+}
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::UpdateOnNetwork
+// Created: NLD 2004-03-17
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationCollision::UpdateOnNetwork() const
+{
+    if( bHasChanged_ || !bIsValid_ )
+        SendStateToNewClient();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationCollision::SendStateToNewClient
+// Created: NLD 2004-03-18
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationCollision::SendStateToNewClient() const
+{
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN_BufferedMessage msg = msgMgr.BuildMessage();
+
+    assert( pAgentColliding_ );
+    assert( pPopulation_ );
+
+    msg << (uint32)pAgentColliding_->GetID();
+    msg << (uint32)pPopulation_    ->GetID();
+
+    if( !bIsValid_ )
+    {
+        msg << (uint32)0;
+        msg << (uint32)0;
+    }
+    else
+    {
+        msg << (uint32)concentrations_.size();
+        for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+            msg << (uint32)(**it).GetID();
+
+        msg << (uint32)flows_.size();
+        for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+            msg << (uint32)(**it).GetID();
+    }
+
+    msgMgr.SendMsgPopulationCollision( msg );
 }

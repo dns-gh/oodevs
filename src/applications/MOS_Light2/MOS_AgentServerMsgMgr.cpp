@@ -66,7 +66,7 @@ MOS_AgentServerMsgMgr::MOS_AgentServerMsgMgr( MOS_AgentServerController& control
     pMessageService_->RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup        );
     pMessageService_->RegisterReceivedMessage( eMsgArmy                                  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgArmy        );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
-
+    pMessageService_->RegisterReceivedMessage( eMsgPopulationCollision                   , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgPopulationCollision );
     pMessageService_->RegisterReceivedMessage( eMsgSimMos           , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgSimMos            );
     pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext, *this, & MOS_AgentServerMsgMgr::OnReceiveMsgSimMosWithContext );
 
@@ -328,6 +328,22 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
     assert( pAgent );
     pAgent->OnReceiveMsgPopulationFlowInterVisibility( input );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationCollision
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::DIN_Input& input )
+{
+    MIL_AgentID nAgentID;
+
+    input >> nAgentID;
+
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
+    assert( pAgent );
+    pAgent->OnReceiveMsgPopulationCollision( input );
 }
 
 //-----------------------------------------------------------------------------

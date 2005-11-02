@@ -76,6 +76,19 @@ void MOS_PopulationFlow::Update( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 			MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.flux.vecteur_point.elem[i].data, point  );
 			flow_.push_back( point );
 		}
+
+        // Density
+        MT_Float rLength = 0.;
+        CIT_PointVector itCur = flow_.begin();
+        CIT_PointVector itNext = itCur;
+        ++itNext;
+        for( ; itNext != flow_.end(); ++itNext, ++itCur )
+            rLength += (*itCur).Distance( *itNext );
+
+        if( rLength > 0. )
+            rDensity_ = GetLivingHumans() / rLength;
+        else 
+            rDensity_ = 0.;
 	}
 }
 

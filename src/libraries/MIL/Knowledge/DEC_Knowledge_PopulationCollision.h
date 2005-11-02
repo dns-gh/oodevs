@@ -20,6 +20,7 @@ class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_AgentPion;
+class DEC_Knowledge_Population;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -44,20 +45,30 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( MIL_PopulationFlow&          flow           );
-    void Update ( MIL_PopulationConcentration& ceontentration );
+    void Update ( MIL_PopulationFlow&          flow          );
+    void Update ( MIL_PopulationConcentration& concentration );
     bool Clean  ();
+
+    void PublishKnowledges( DEC_Knowledge_Population& knowledge ) const;
     //@}
 
     //! @name Operations
     //@{
-    MT_Float GetMaxSpeed() const;
+          MT_Float     GetMaxPopulationDensity() const;
+          MT_Float     GetPionMaxSpeed        () const;
+    const MT_Vector2D& GetPosition            () const;
     //@}
 
     //! @name Accessors
     //@{
           MIL_Population&  GetPopulation    () const;
     const MIL_AgentPion&   GetAgentColliding() const;
+    //@}
+
+    //! @name Network
+    //@{
+    void UpdateOnNetwork     () const;
+    void SendStateToNewClient() const;
     //@}
 
 private:
@@ -76,6 +87,7 @@ private:
           T_PopulationFlowSet           flows_;
           T_PopulationConcentrationSet  concentrations_;
           bool                          bIsValid_;
+          bool                          bHasChanged_;
 };
 
 #include "DEC_Knowledge_PopulationCollision.inl"

@@ -26,6 +26,8 @@
 #include "Meteo/PHY_Lighting.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_PopulationCollision.h"
+#include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -80,7 +82,9 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputA
     , lightingFactors_     ( PHY_Lighting     ::GetLightings     ().size(), 0. )
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
-    , environmentFactors_  ( PHY_RawVisionData ::eNbrVisionObjects         , 0. )
+    , environmentFactors_  ( PHY_RawVisionData::eNbrVisionObjects         , 0. )
+    , rPopulationDensity_  ( 1. )
+    , rPopulationFactor_   ( 1. )
 {
     InitializeAngle        ( archive );
     InitializeDistances    ( archive );
@@ -94,6 +98,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, MIL_InputA
     InitializeFactors( PHY_Posture      ::GetPostures       (), "PosturesCible" , postureTargetFactors_, archive );
 
     InitializeEnvironmentFactors( archive );
+    InitializePopulationFactors ( archive );
 
     archive.EndSection(); // ModificateursDeDistance
 }
@@ -169,9 +174,36 @@ void PHY_SensorTypeAgent::InitializeEnvironmentFactors( MIL_InputArchive& archiv
     archive.EndSection(); // Environnements
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::InitializePopulationFactors
+// Created: NLD 2005-10-27
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::InitializePopulationFactors( MIL_InputArchive& archive )
+{
+    archive.Section( "PresencePopulation" );
+
+    archive.ReadAttribute( "densitePopulation", rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "modificateur"     , rPopulationFactor_ , CheckValueBound( 0., 1. )      );
+
+    archive.EndSection(); // PresencePopulation
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetPopulationFactor
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_SensorTypeAgent::GetPopulationFactor( MT_Float rDensity ) const
+{
+    if( rDensity == 0. )
+        return 1.;
+
+    return std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rDensity );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::GetSourceFactor
@@ -179,6 +211,7 @@ void PHY_SensorTypeAgent::InitializeEnvironmentFactors( MIL_InputArchive& archiv
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) const
 {
+    // Posture
     const PHY_RolePion_Posture& sourcePosture = source.GetRole< PHY_RolePion_Posture >();
 
     const uint nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
@@ -187,10 +220,25 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
 
+    MT_Float rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
+                          * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
-    const MT_Float rModificator =    postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage() 
-                                 * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
-    return rModificator * sourcePosture.GetElongationFactor() * source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+    // Elongation
+    rModificator *= sourcePosture.GetElongationFactor();
+
+    // Human factors
+    rModificator *= source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
+
+    // Population
+    T_KnowledgePopulationCollisionVector populationsColliding;
+    source.GetKSQuerier().GetPopulationsColliding( populationsColliding );
+    MT_Float rPopulationDensity = 0.;
+    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+        rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
+
+    rModificator *= GetPopulationFactor( rPopulationDensity );
+
+    return rModificator;
 }
 
 // -----------------------------------------------------------------------------
@@ -331,9 +379,9 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if ( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
-    MT_Float rDistanceMaxModificator = GetFactor     ( *pSignificantVolume );
-    rDistanceMaxModificator *= GetTargetFactor( target );
-    rDistanceMaxModificator *= GetSourceFactor( source );
+    MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+             rDistanceMaxModificator *= GetTargetFactor( target );
+             rDistanceMaxModificator *= GetSourceFactor( source );
 
     const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Float     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
@@ -358,7 +406,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if ( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
-    MT_Float rDistanceMaxModificator  = GetFactor( *pSignificantVolume );
+    MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
              rDistanceMaxModificator *= GetTargetFactor( target );
              rDistanceMaxModificator *= GetSourceFactor( source );
 
@@ -397,7 +445,7 @@ MT_Float PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_AgentPion& so
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_AgentPion& source, const MIL_PopulationFlow& target, MT_Float rSensorHeight, T_PointVector& shape ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_AgentPion& source, const MIL_PopulationFlow& target, MT_Float /*rSensorHeight*/, T_PointVector& shape ) const
 {
     const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();

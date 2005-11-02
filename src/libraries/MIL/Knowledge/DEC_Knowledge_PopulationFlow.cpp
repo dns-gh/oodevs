@@ -16,6 +16,7 @@
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationFlowPart.h"
+#include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -243,6 +244,22 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
         rSpeed_        = perception.GetSpeed();
         bSpeedUpdated_ = true;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::Update
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollision& collision  )
+{
+    DEC_Knowledge_PopulationFlowPart*& pFlowPart = flowParts_[ &collision.GetAgentColliding() ];
+    if( !pFlowPart )
+    {
+        bFlowPartsUpdated_ = true;
+        pFlowPart = new DEC_Knowledge_PopulationFlowPart();
+    }
+    if( pFlowPart->Update( collision ) )
+        bFlowPartsUpdated_ = true;
 }
 
 // -----------------------------------------------------------------------------

@@ -182,6 +182,15 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::Update
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationCollision& collision )
+{
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration::UpdateRelevance
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

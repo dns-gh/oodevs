@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
+#include "DEC_Knowledge_PopulationCollision.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
@@ -96,6 +97,25 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlo
             shape_ = perception.GetShape();
             return true;
         }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::Update
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision  )
+{
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+    if( bPerceived_ )
+        return false;
+    
+    T_PointVector shape( 1, collision.GetPosition() );
+    if( shape_ != shape )
+    {
+        shape_ = shape;
+        return true;
     }
     return false;
 }

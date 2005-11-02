@@ -322,6 +322,20 @@ void MIL_PopulationFlow::SendRC( const MIL_RC& rc ) const
 }
 
 // =============================================================================
+// PION EFFECTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetPionMaxSpeed
+// Created: NLD 2005-10-21
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationFlow::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
+{
+    assert( pAttitude_ );
+    return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
+}
+
+// =============================================================================
 // NETWORK
 // =============================================================================
 
@@ -504,12 +518,4 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << rDensity_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetMaxSpeed
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetMaxSpeed( const PHY_Volume& pionVolume ) const
-{
-    assert( pAttitude_ );
-    return pPopulation_->GetMaxSpeed( *pAttitude_, rDensity_, pionVolume );
-}
+

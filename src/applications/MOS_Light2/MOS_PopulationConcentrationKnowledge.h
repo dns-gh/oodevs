@@ -45,6 +45,7 @@ public:
     E_PopulationAttitude               GetAttitude           () const;
     MT_Float                           GetRelevance          () const;
     bool                               IsPerceived           () const;
+    MT_Float                           GetArea               () const;
     //@}
 
     //! @name Network

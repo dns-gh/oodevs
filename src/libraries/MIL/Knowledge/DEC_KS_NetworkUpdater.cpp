@@ -19,6 +19,7 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_Population.h"
+#include "DEC_Knowledge_PopulationCollision.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_NetworkUpdater constructor
@@ -67,6 +68,7 @@ void DEC_KS_NetworkUpdater::Talk()
     pBlackBoard_->ApplyOnKnowledgesObject              ( std::mem_fun_ref( & DEC_Knowledge_Object              ::UpdateOnNetwork ) );
     pBlackBoard_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::UpdateOnNetwork ) );
     pBlackBoard_->ApplyOnKnowledgesPopulation          ( std::mem_fun_ref( & DEC_Knowledge_Population          ::UpdateOnNetwork ) );
+    pBlackBoard_->ApplyOnKnowledgesPopulationCollision ( std::mem_fun_ref( & DEC_Knowledge_PopulationCollision ::UpdateOnNetwork ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,4 +85,5 @@ void DEC_KS_NetworkUpdater::SendFullState()
     pBlackBoard_->ApplyOnKnowledgesObject              ( std::mem_fun_ref( & DEC_Knowledge_Object              ::SendStateToNewClient ) );
     pBlackBoard_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::SendStateToNewClient ) );
     pBlackBoard_->ApplyOnKnowledgesPopulation          ( std::mem_fun_ref( & DEC_Knowledge_Population          ::SendStateToNewClient ) );
+    pBlackBoard_->ApplyOnKnowledgesPopulationCollision ( std::mem_fun_ref( & DEC_Knowledge_PopulationCollision ::SendStateToNewClient ) );
 }

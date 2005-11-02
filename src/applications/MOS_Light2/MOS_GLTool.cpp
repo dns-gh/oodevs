@@ -718,7 +718,7 @@ void MOS_GLTool::Draw( MOS_PopulationConcentrationKnowledge& knowledge, E_State 
     if( nState == eHighlighted )
         color.AddRGB( 50, 100, 50 );
     color.SetGLColor();
-    MT_Float rSurface = knowledge.GetNbrAliveHumans() / knowledge.GetPopulationKnowledge()->GetType().GetConcentrationDensity();
+    MT_Float rSurface = knowledge.GetArea();
     DrawCircle( knowledge.GetPosition(), std::sqrt( rSurface / MT_PI ), true );
 }
     
@@ -1732,7 +1732,7 @@ void MOS_GLTool::DrawPopulation( MOS_Population& pop, E_State nState )
     for( MOS_Population::CIT_ConcentrationMap it = pop.concentrationMap_.begin(); it != pop.concentrationMap_.end(); ++it )
     {
         color.SetGLColor();
-        MT_Float rSurface = it->second->GetLivingHumans() / pop.GetType().GetConcentrationDensity();
+        MT_Float rSurface = it->second->GetArea();
         DrawCircle( it->second->GetPos(), std::sqrt( rSurface / MT_PI ), true );
     }
 

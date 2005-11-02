@@ -53,12 +53,18 @@ private:
     //! @name Tools
     //@{
     template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, MIL_InputArchive& archive );
-    MT_Float GetSourceFactor( const MIL_AgentPion& source ) const;
+    MT_Float GetPopulationFactor        ( MT_Float rDensity ) const;
+    MT_Float GetSourceFactor            ( const MIL_AgentPion& source ) const;
+    void     InitializePopulationFactors( MIL_InputArchive& archive );
     //@}
 
 private:
     MT_Float       rDD_;
     T_FactorVector postureSourceFactors_;
+
+    // Population
+    MT_Float rPopulationDensity_;
+    MT_Float rPopulationFactor_;
 };
 
 #include "PHY_SensorTypeObjectData.inl"

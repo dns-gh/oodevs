@@ -261,7 +261,6 @@ void DEC_Knowledge_PopulationPerception::PublishKnowledges( DEC_Knowledge_Popula
         knowledge.Update( *it->second );
 }
 
-
 // =============================================================================
 // NETWORK
 // =============================================================================

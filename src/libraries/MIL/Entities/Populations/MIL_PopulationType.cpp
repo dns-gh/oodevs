@@ -144,7 +144,7 @@ void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
             MT_Float    rMaxSpeed          = 0.;
 
             archive.ReadAttribute( "nom", strVolume );
-            archive.ReadAttribute( "densitePopulation", rPopulationDensity, CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadAttribute( "densitePopulation", rPopulationDensity, CheckValueGreater       ( 0. ) );
             archive.ReadAttribute( "vitesseMaximale"  , rMaxSpeed         , CheckValueGreaterOrEqual( 0. ) );
             rMaxSpeed = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed );
 
@@ -174,7 +174,13 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population            >, "DEC_PauseAction"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population            >, "DEC_ReprendAction"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove >, "DEC_StartDeplacement" );
+
+    // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug                                 , "DEC_Debug"            );
+
+    // Effects
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetPionMaxSpeed                       , "DEC_Population_RalentissementPion_ChangeVitesse"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::ResetPionMaxSpeed                     , "DEC_Population_RalentissementPion_VitesseParDefaut" );
 } 
 
 // =============================================================================
@@ -191,10 +197,10 @@ MIL_Population& MIL_PopulationType::InstanciatePopulation( uint nID, MIL_InputAr
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::GetMaxSpeed
+// Name: MIL_PopulationType::GetPionMaxSpeed
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetMaxSpeed( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const
+MT_Float MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const
 {
     assert( slowDownData_.size() > populationAttitude.GetID() );
     const T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ populationAttitude.GetID() ];
@@ -202,8 +208,8 @@ MT_Float MIL_PopulationType::GetMaxSpeed( const MIL_PopulationAttitude& populati
     assert( volumeSlowDownData.size() > pionVolume.GetID() );
     const sSlowDownData& slowDownData = volumeSlowDownData[ pionVolume.GetID() ];
 
-    if( slowDownData.rPopulationDensity_ == 0. )
-        return 0.;
+    if( rPopulationDensity == 0. )
+        return std::numeric_limits< MT_Float >::max();
 
-    return ( slowDownData.rMaxSpeed_ / slowDownData.rPopulationDensity_ ) / rPopulationDensity;
+    return ( slowDownData.rMaxSpeed_ * slowDownData.rPopulationDensity_ ) / rPopulationDensity;
 }

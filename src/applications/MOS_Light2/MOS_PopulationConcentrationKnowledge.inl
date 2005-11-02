@@ -109,3 +109,4 @@ bool MOS_PopulationConcentrationKnowledge::IsPerceived() const
 {
     return bIsPerceived_;
 }
+

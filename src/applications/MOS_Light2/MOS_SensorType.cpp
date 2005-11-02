@@ -36,6 +36,7 @@ MOS_SensorType::MOS_SensorType( const std::string& strName, MOS_InputArchive& ar
     InitializeWeatherFactors      ( archive );
     InitializeLightingFactors     ( archive );
     InitializeEnvironnementFactors( archive );
+    InitializePopulationFactors   ( archive );
     
     archive.EndSection(); // ModificateursDeDistance
 }
@@ -153,6 +154,20 @@ void MOS_SensorType::InitializeDistances( MOS_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_SensorType::InitializePopulationFactors
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+void MOS_SensorType::InitializePopulationFactors( MOS_InputArchive& archive )
+{
+    archive.Section( "PresencePopulation" );
+
+    archive.ReadAttribute( "densitePopulation", rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "modificateur"     , rPopulationFactor_ , CheckValueBound( 0., 1. )      );
+
+    archive.EndSection(); // PresencePopulation
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_SensorType::InitializePostureSourceFactors
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
@@ -194,9 +209,15 @@ MT_Float MOS_SensorType::GetPostureSourceFactor( const MOS_Agent& agent ) const
 // -----------------------------------------------------------------------------
 MT_Float MOS_SensorType::GetDistanceModificator( const MOS_Agent& agent ) const
 {
+    const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
+          MT_Float rPopulationFactor = 1.;
+    if( rPopulationCollisionDensity != 0. )
+        rPopulationFactor = min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
+       
     return    GetPostureSourceFactor( agent ) * agent.GetElongationFactor()
             * agent.GetTiredness ().GetCoefSensorDistanceModificator()
-            * agent.GetExperience().GetCoefSensorDistanceModificator();
+            * agent.GetExperience().GetCoefSensorDistanceModificator()
+            * rPopulationFactor;
 }
 
 // -----------------------------------------------------------------------------

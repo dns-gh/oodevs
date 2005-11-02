@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float        GetMaxSpeed          ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
+    MT_Float        GetPionMaxSpeed      ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
     MIL_Population& InstanciatePopulation( uint nID, MIL_InputArchive& archive ) const;
     //@}
 

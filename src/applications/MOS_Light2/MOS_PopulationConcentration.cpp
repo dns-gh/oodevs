@@ -7,16 +7,13 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "MOS_Light2_pch.h"
 #include "MOS_PopulationConcentration.h"
 
 #include "MOS_PopulationPart_ABC.h"
 #include "MOS_App.h"
 #include "MOS_World.h"
+#include "MOS_Population.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationConcentration constructor
@@ -65,3 +62,21 @@ void MOS_PopulationConcentration::Update( const ASN1T_MsgPopulationConcentration
 		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationConcentration::GetDensity
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+MT_Float MOS_PopulationConcentration::GetDensity() const
+{
+    return parent_.GetType().GetConcentrationDensity();   
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationConcentration::GetArea
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+MT_Float MOS_PopulationConcentration::GetArea() const
+{
+    return GetLivingHumans() / GetDensity();
+}
