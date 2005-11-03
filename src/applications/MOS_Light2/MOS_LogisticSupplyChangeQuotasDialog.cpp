@@ -88,7 +88,7 @@ void MOS_LogisticSupplyChangeQuotasDialog::SetAgent( const MOS_Agent& agent )
 
     pQuotas_->clear();
     pTypesMenu_->clear();
-    if( ! agent.pSupplyData_ )
+    if( ! agent.IsLogisticRavitaillement() )
         return;
 
     automateComboBoxIDs_.clear();

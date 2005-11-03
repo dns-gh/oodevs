@@ -36,6 +36,7 @@
 #include "MOS_ActionContext.h"
 #include "MOS_Nature.h"
 #include "MOS_ChangeLogisticLinksDialog.h"
+#include "MOS_LogisticSupplyChangeQuotasDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentCreationPanel constructor
@@ -172,6 +173,9 @@ void MOS_AgentCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const M
     selectedElement_ = context.selectedElement_;
     popupMenu.insertItem( selectedElement_.pAgent_->IsEmbraye() ? tr( "Débrayer automate" ) : tr( "Embrayer automate" ), this, SLOT( ToggleAutomate() ) );
     popupMenu.insertItem( "Liens Logistiques" , this , SLOT( LogisticLinksDialog() ) );
+    /*if ( selectedElement_.pAgent_->IsLogisticRavitaillement() 
+        && ( selectedElement_.pAgent_->IsLogisticBLT() || selectedElement_.pAgent_->IsLogisticBLD() ) )
+        popupMenu.insertItem( "Changer les quotas", this, SLOT( ChangeQuotasDialog() ) );*/
 }
 
 
@@ -215,6 +219,17 @@ void MOS_AgentCreationPanel::ToggleAutomate()
 void MOS_AgentCreationPanel::LogisticLinksDialog()
 {
     static MOS_ChangeLogisticLinksDialog* pDialog = new MOS_ChangeLogisticLinksDialog( this );
+    pDialog->SetAgent( *(selectedElement_.pAgent_) );
+    pDialog->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentCreationPanel::ChangeQuotasDialog
+// Created: HME 2005-11-03
+// -----------------------------------------------------------------------------
+void MOS_AgentCreationPanel::ChangeQuotasDialog()
+{
+    static MOS_LogisticSupplyChangeQuotasDialog* pDialog = new MOS_LogisticSupplyChangeQuotasDialog( this );
     pDialog->SetAgent( *(selectedElement_.pAgent_) );
     pDialog->show();
 }

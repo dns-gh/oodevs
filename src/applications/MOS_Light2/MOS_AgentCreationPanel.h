@@ -92,6 +92,7 @@ private slots:
     void CreateGtia();
     void ToggleAutomate();
     void LogisticLinksDialog();
+    void ChangeQuotasDialog();
 
 signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );

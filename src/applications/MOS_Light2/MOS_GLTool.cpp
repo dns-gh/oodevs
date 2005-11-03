@@ -2272,13 +2272,19 @@ void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Fl
     float radius = (dist2 / (8 * height)) + (height / 2);
     float ortho_x = (dst.rY_ - src.rY_) / dist;
     float ortho_y = (src.rX_ - dst.rX_) / dist;
-    const MT_Vector2D center = MT_Vector2D( middle_x + (radius - height)* ortho_x,  middle_y + (radius - height)* ortho_y );
+    MT_Vector2D center = MT_Vector2D( middle_x + (radius - height)* ortho_x,  middle_y + (radius - height)* ortho_y );
+    //MT_Vector2D center2 = MT_Vector2D( middle_x - (radius - height)* ortho_x,  middle_y - (radius - height)* ortho_y );
     float angleStart = acos( (dst.rX_ - center.rX_) / radius );
     if ( asin( ( dst.rY_ - center.rY_ ) / radius ) < 0 )
-        angleStart = - angleStart;
+        angleStart = 6.283 - angleStart;
     float angleEnd = acos( (src.rX_ - center.rX_) / radius );
     if ( asin( (src.rY_ - center.rY_) / radius ) < 0 )
-        angleEnd = - angleEnd;
+        angleEnd = 6.283 - angleEnd;
     //DrawCircle( center, radius );
+    if ( abs(angleEnd - angleStart) > 3.141 )
+        if ( ((angleEnd > angleStart) ? angleEnd : angleStart ) == angleStart )
+            angleStart = angleStart - 6.283;
+        else
+            angleEnd = angleEnd - 6.283;
     DrawArc( center, radius, angleStart, angleEnd );
 }
