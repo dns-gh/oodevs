@@ -18,6 +18,7 @@
 #include "Decision/Functions/DEC_AgentFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
+#include "Decision/Functions/DEC_KnowledgePopulationFunctions.h"
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/Functions/DEC_FireFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeFunctions.h"
@@ -447,6 +448,10 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeOccupied 									 , "DEC_ConnaissanceObjet_PeutEtreOccupe"                    ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeAnimated                                     , "DEC_ConnaissanceObjet_PeutEtreAnime"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
+
+    // Population knowledges accessors
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsRecon                      < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstReconnu"                   );    
     
     // Global knowledge
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetRapForLocal                                          , "DEC_RapportDeForceLocal"                            );

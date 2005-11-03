@@ -29,6 +29,7 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireResults.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireResults.h"
+#include "Entities/Populations/Actions/PHY_PopulationFireResults.h"
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyState_ABC.h"
@@ -303,6 +304,7 @@ void MIL_AgentServer::ReadIDClasses( MIL_InputArchive& archive )
              if( sCaseInsensitiveEqual()( strName, "Unite"                       ) )  MIL_EntityManager::unitsIDManager_        .SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "TirDirect"                   ) )  PHY_DirectFireResults::idManager_         .SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "TirIndirect"                 ) )  PHY_IndirectFireResults::idManager_       .SetClassID( nID );
+        else if( sCaseInsensitiveEqual()( strName, "TirPopulation"               ) )  PHY_PopulationFireResults::idManager_     .SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "Lima"                        ) )  MIL_Lima::idManager_                      .SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "Limite"                      ) )  MIL_Limit::idManager_                     .SetClassID( nID );
         else if( sCaseInsensitiveEqual()( strName, "Ordre"                       ) )  MIL_PionMission_ABC::idManager_           .SetClassID( nID );

@@ -21,6 +21,7 @@
 
 #include "MIL.h"
 
+#include "MIL_PopulationElement_ABC.h"
 #include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "TER/TER_PopulationFlow_ABC.h"
@@ -35,6 +36,7 @@ class DEC_Population_Path;
 // =============================================================================
 class MIL_PopulationFlow : public PHY_MovingEntity_ABC
                          , public TER_PopulationFlow_ABC
+                         , public MIL_PopulationElement_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,28 +56,15 @@ public:
 
     //! @name Actions
     //@{
-    void Move       ( const MT_Vector2D&            destination );
-    void SetAttitude( const MIL_PopulationAttitude& attitude    );
+    void Move( const MT_Vector2D& destination );
     //@}
 
     //! @name Accessors
     //@{
-                  uint                    GetID            () const;
-                  MIL_Population&         GetPopulation    () const;
-    virtual const MT_Vector2D&            GetPosition      () const;
-    virtual const MT_Vector2D&            GetDirection     () const;
-    virtual const TER_Localisation&       GetLocation      () const;
-            const MIL_PopulationAttitude& GetAttitude      () const;
-                  uint                    GetNbrAliveHumans() const;
-                  uint                    GetNbrDeadHumans () const;
-                  MT_Float                GetSpeed         () const;
-                  MT_Float                GetDensity       () const;
-    //@}
-
-    //! @name Pion effects
-    //@{
-    MT_Float GetPionMaxSpeed           ( const PHY_Volume& pionVolume ) const;
-    MT_Float GetPionReloadingTimeFactor() const;
+    virtual const MT_Vector2D&      GetPosition () const;
+    virtual const MT_Vector2D&      GetDirection() const;
+    virtual const TER_Localisation& GetLocation () const;
+                  MT_Float          GetSpeed    () const;
     //@}
 
     //! @name Concentration management
@@ -124,7 +113,6 @@ private:
           void         SetDirection   ( const MT_Vector2D& direction );
           void         SetSpeed       ( const MT_Float rSpeed );
           void         UpdateLocation ();
-          void         UpdateDensity  ();
     //@}
 
     //! @name Notifications
@@ -135,6 +123,8 @@ private:
     virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object );
     virtual void NotifyEnvironmentChanged  ();
     virtual void NotifyCurrentPathChanged  ();
+
+    virtual void NotifyCollision           ( MIL_Agent_ABC& agent );
     //@}
 
     //! @name 
@@ -152,12 +142,8 @@ private:
     //@}
 
 private:
-          MIL_Population*              pPopulation_;
-    const uint                         nID_;
-
-    const MIL_PopulationAttitude*      pAttitude_;
-          MIL_PopulationConcentration* pSourceConcentration_;
-          MIL_PopulationConcentration* pDestConcentration_;
+    MIL_PopulationConcentration* pSourceConcentration_;
+    MIL_PopulationConcentration* pDestConcentration_;
          
     MT_Vector2D          destination_;
     DEC_Population_Path* pCurrentPath_;
@@ -168,17 +154,11 @@ private:
     T_PointList          flowShape_;
     TER_Localisation     location_; // For terrain
 
-    MT_Float             rNbrAliveHumans_;
-    MT_Float             rNbrDeadHumans_;
-    MT_Float             rDensity_;
-          
     // Network
     bool bPathUpdated_;
     bool bFlowShapeUpdated_;
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
-    bool bHumansUpdated_;
-    bool bAttitudeUpdated_;     
 
 public:
     static MIL_MOSIDManager idManager_;

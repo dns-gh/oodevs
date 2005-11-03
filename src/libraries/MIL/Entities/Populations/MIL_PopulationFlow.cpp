@@ -23,6 +23,7 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "Entities/RC/MIL_RC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
@@ -41,30 +42,22 @@ BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
-    : PHY_MovingEntity_ABC  ()
-    , TER_PopulationFlow_ABC()
-    , pPopulation_          ( &population )
-    , nID_                  ( idManager_.GetFreeSimID() )
-    , pSourceConcentration_ ( &sourceConcentration )
-    , pDestConcentration_   ( 0 )
-    , pAttitude_            ( &sourceConcentration.GetAttitude() )
-    , destination_          ( )
-    , pCurrentPath_         ( 0 )
-    , bHeadMoveFinished_    ( false )
-    , flowShape_            ( 2, sourceConcentration.GetPosition() )
-    , direction_            ( 0., 1. )
-    , rSpeed_               ( 0. )
-    , rNbrAliveHumans_      ( 0. )
-    , rNbrDeadHumans_       ( 0. )
-    , bPathUpdated_         ( true )
-    , bFlowShapeUpdated_    ( true ) 
-    , bDirectionUpdated_    ( true )
-    , bSpeedUpdated_        ( true )
-    , bHumansUpdated_       ( true )
-    , bAttitudeUpdated_     ( true )
-    , rDensity_             ( 0. )
+    : PHY_MovingEntity_ABC     ()
+    , TER_PopulationFlow_ABC   ()
+    , MIL_PopulationElement_ABC( population, idManager_.GetFreeSimID() )
+    , pSourceConcentration_    ( &sourceConcentration )
+    , pDestConcentration_      ( 0 )
+    , destination_             ( )
+    , pCurrentPath_            ( 0 )
+    , bHeadMoveFinished_       ( false )
+    , flowShape_               ( 2, sourceConcentration.GetPosition() )
+    , direction_               ( 0., 1. )
+    , rSpeed_                  ( 0. )
+    , bPathUpdated_            ( true )
+    , bFlowShapeUpdated_       ( true ) 
+    , bDirectionUpdated_       ( true )
+    , bSpeedUpdated_           ( true )
 {
-    assert( pAttitude_ );
     SendCreation();
 }
 
@@ -73,28 +66,21 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow()
-    : PHY_MovingEntity_ABC  ()
-    , TER_PopulationFlow_ABC()
-    , pPopulation_          ( 0 )
-    , nID_                  ( 0 )
-    , pSourceConcentration_ ( 0 )
-    , pDestConcentration_   ( 0 )
-    , pAttitude_            ( 0 )
-    , destination_          ()
-    , pCurrentPath_         ( 0 )
-    , bHeadMoveFinished_    ( false )
-    , flowShape_            ()
-    , direction_            ( 0., 1. )
-    , rSpeed_               ( 0. )
-    , rNbrAliveHumans_      ( 0. )
-    , rNbrDeadHumans_       ( 0. )
-    , bPathUpdated_         ( true )
-    , bFlowShapeUpdated_    ( true ) 
-    , bDirectionUpdated_    ( true )
-    , bSpeedUpdated_        ( true )
-    , bHumansUpdated_       ( true )
-    , bAttitudeUpdated_     ( true )
-    , rDensity_             ( 0. )
+    : PHY_MovingEntity_ABC     ()
+    , TER_PopulationFlow_ABC   ()
+    , MIL_PopulationElement_ABC( )
+    , pSourceConcentration_    ( 0 )
+    , pDestConcentration_      ( 0 )
+    , destination_             ()
+    , pCurrentPath_            ( 0 )
+    , bHeadMoveFinished_       ( false )
+    , flowShape_               ()
+    , direction_               ( 0., 1. )
+    , rSpeed_                  ( 0. )
+    , bPathUpdated_            ( true )
+    , bFlowShapeUpdated_       ( true ) 
+    , bDirectionUpdated_       ( true )
+    , bSpeedUpdated_           ( true )
 {
 }
 
@@ -109,11 +95,11 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
 
     SendDestruction();
 
-    idManager_.ReleaseSimID( nID_ );
+    idManager_.ReleaseSimID( GetID() );
 }
 
 // =============================================================================
-// OPERATIONS
+// ACTIONS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -148,19 +134,6 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
     int nOut = PHY_MovingEntity_ABC::Move( *pCurrentPath_ );
     if( nOut == DEC_PathWalker::eFinished )
         bHeadMoveFinished_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::SetAttitude
-// Created: SBO 2005-10-25
-// -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SetAttitude( const MIL_PopulationAttitude& attitude )
-{
-    if( pAttitude_ != &attitude )
-    {
-        bAttitudeUpdated_ = true;
-        pAttitude_ = &attitude;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -241,35 +214,32 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 {
     SetDirection( direction );
     SetSpeed    ( rSpeed    );
-    const MT_Float rWalkedDistance = pPopulation_->GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
-    const MT_Float rNbrHumans      = rWalkedDistance * pPopulation_->GetDefaultFlowDensity(); // Nombre d'humains deplacés
+    const MT_Float rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+    const MT_Float rNbrHumans      = rWalkedDistance * GetPopulation().GetDefaultFlowDensity(); // Nombre d'humains deplacés
 
     // Head management
     SetHeadPosition( position );
     if( bHeadMoveFinished_ && !pDestConcentration_ )
     {
-        pDestConcentration_ = &pPopulation_->GetConcentration( GetHeadPosition() );
+        pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->RegisterPushingFlow( *this );
     }
     if( pDestConcentration_ )
     {
-        rNbrAliveHumans_ -= pDestConcentration_->PushHumans( std::min( rNbrHumans, rNbrAliveHumans_ ) );
-        bHumansUpdated_ = true;
+        const MT_Float rNbrHumansPushed = pDestConcentration_->PushHumans( std::min( rNbrHumans, GetNbrAliveHumans() ) );
+        PullHumans( rNbrHumansPushed );
     }
 
     // Tail management
     if( pSourceConcentration_ )
-    {
-        rNbrAliveHumans_ += pSourceConcentration_->PullHumans( rNbrHumans );
-        bHumansUpdated_ = true;
-    }
+        PushHumans( pSourceConcentration_->PullHumans( rNbrHumans ) );
     else
         UpdateTailPosition( rWalkedDistance );
 
     if( bFlowShapeUpdated_ )
         UpdateLocation();
 
-    if( bFlowShapeUpdated_ || bHumansUpdated_ )
+    if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
 }
 
@@ -289,14 +259,7 @@ bool MIL_PopulationFlow::Update()
     }
 
     // Collisions
-    TER_Agent_ABC::T_AgentPtrVector agents;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location_, agents, 100. ); //$$$ TEST
-    for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
-    {
-        PHY_RoleInterface_Location& agent = static_cast< PHY_RoleInterface_Location& >( **it );
-        agent.NotifyPopulationCollision( *this );
-    }
-
+    UpdateCollisions();
     return true;
 }
 
@@ -310,6 +273,15 @@ void MIL_PopulationFlow::UpdateLocation()
     UpdatePatch();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyCollision
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
+{
+    agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
+}
+
 // =============================================================================
 // ACCESSORS
 // =============================================================================
@@ -320,8 +292,7 @@ void MIL_PopulationFlow::UpdateLocation()
 // -----------------------------------------------------------------------------
 MT_Float MIL_PopulationFlow::GetMaxSpeed() const
 {
-    assert( pPopulation_ );
-    return pPopulation_->GetMaxSpeed();
+    return GetPopulation().GetMaxSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -330,31 +301,7 @@ MT_Float MIL_PopulationFlow::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendRC( const MIL_RC& rc ) const
 {
-    assert( pPopulation_ );
-    rc.Send( *pPopulation_, MIL_RC::eRcTypeWarning );
-}
-
-// =============================================================================
-// PION EFFECTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetPionMaxSpeed
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
-{
-    assert( pAttitude_ );
-    return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetPionReloadingTimeFactor
-// Created: NLD 2005-11-02
-// -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetPionReloadingTimeFactor() const
-{
-    return pPopulation_->GetPionReloadingTimeFactor( rDensity_ );
+    rc.Send( GetPopulation(), MIL_RC::eRcTypeWarning );
 }
 
 // =============================================================================
@@ -367,11 +314,9 @@ MT_Float MIL_PopulationFlow::GetPionReloadingTimeFactor() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendCreation() const
 {
-    assert( pPopulation_ );
-
     NET_ASN_MsgPopulationFluxCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_population = pPopulation_->GetID();
+    asnMsg.GetAsnMsg().oid_flux       = GetID();
+    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
     asnMsg.Send();
 }
 
@@ -381,11 +326,9 @@ void MIL_PopulationFlow::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendDestruction() const
 {
-    assert( pPopulation_ );
-
     NET_ASN_MsgPopulationFluxDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_population = pPopulation_->GetID();
+    asnMsg.GetAsnMsg().oid_flux       = GetID();
+    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
     asnMsg.Send();
 }
 
@@ -395,13 +338,10 @@ void MIL_PopulationFlow::SendDestruction() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendFullState() const
 {
-    assert( pAttitude_ );
-    assert( pPopulation_ );
-
     NET_ASN_MsgPopulationFluxUpdate asnMsg;
     
-    asnMsg.GetAsnMsg().oid_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_population = pPopulation_->GetID();
+    asnMsg.GetAsnMsg().oid_flux       = GetID();
+    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
 
     if( SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
         asnMsg.GetAsnMsg().m.itinerairePresent = 1;
@@ -415,10 +355,10 @@ void MIL_PopulationFlow::SendFullState() const
 
     NET_ASN_Tools::WritePath     ( flowShape_, asnMsg.GetAsnMsg().flux      );
     NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
-    asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
+    asnMsg.GetAsnMsg().attitude           = GetAttitude().GetAsnID();
     asnMsg.GetAsnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
-    asnMsg.GetAsnMsg().nb_humains_vivants = (uint)rNbrAliveHumans_; 
-    asnMsg.GetAsnMsg().nb_humains_morts   = (uint)rNbrDeadHumans_;
+    asnMsg.GetAsnMsg().nb_humains_vivants = (uint)GetNbrAliveHumans(); 
+    asnMsg.GetAsnMsg().nb_humains_morts   = (uint)GetNbrDeadHumans ();
 
     asnMsg.Send();
 
@@ -433,14 +373,13 @@ void MIL_PopulationFlow::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendChangedState() const
 {
-    assert( pPopulation_ );
     if( !HasChanged() )
         return;
 
     NET_ASN_MsgPopulationFluxUpdate asnMsg;
     
-    asnMsg.GetAsnMsg().oid_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_population = pPopulation_->GetID();
+    asnMsg.GetAsnMsg().oid_flux       = GetID();
+    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
 
     if( bPathUpdated_ && SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
         asnMsg.GetAsnMsg().m.itinerairePresent = 1;
@@ -451,11 +390,10 @@ void MIL_PopulationFlow::SendChangedState() const
         NET_ASN_Tools::WritePath( flowShape_, asnMsg.GetAsnMsg().flux );
     }
 
-    if( bAttitudeUpdated_ )
+    if( HasAttitudeChanged() )
     {
-        assert( pAttitude_ );
         asnMsg.GetAsnMsg().m.attitudePresent = 1;
-        asnMsg.GetAsnMsg().attitude          = pAttitude_->GetAsnID();
+        asnMsg.GetAsnMsg().attitude          = GetAttitude().GetAsnID();
     }
 
     if( bDirectionUpdated_ )
@@ -464,12 +402,12 @@ void MIL_PopulationFlow::SendChangedState() const
         NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
     }
 
-    if( bHumansUpdated_ )
+    if( HasHumansChanged() )
     {
         asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1; 
         asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().nb_humains_vivants          = (uint)rNbrAliveHumans_; 
-        asnMsg.GetAsnMsg().nb_humains_morts            = (uint)rNbrDeadHumans_;
+        asnMsg.GetAsnMsg().nb_humains_vivants          = (uint)GetNbrAliveHumans();
+        asnMsg.GetAsnMsg().nb_humains_morts            = (uint)GetNbrDeadHumans ();
     }
 
     if( bSpeedUpdated_ )
@@ -496,27 +434,20 @@ void MIL_PopulationFlow::SendChangedState() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> boost::serialization::base_object< PHY_MovingEntity_ABC   >( *this );
-    file >> boost::serialization::base_object< TER_PopulationFlow_ABC >( *this );
+    file >> boost::serialization::base_object< PHY_MovingEntity_ABC      >( *this );
+    file >> boost::serialization::base_object< TER_PopulationFlow_ABC    >( *this );
+    file >> boost::serialization::base_object< MIL_PopulationElement_ABC >( *this );
 
-    file >> pPopulation_
-         >> const_cast< uint& >( nID_ )
-         >> pSourceConcentration_
+    file >> pSourceConcentration_
          >> pDestConcentration_;
 
-    if ( !idManager_.IsMosIDValid( nID_ ) )
-        idManager_.LockSimID( nID_ );
-
-    uint nAttitudeID;
-    file >> nAttitudeID;
-    pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
-    assert( pAttitude_ );
+    idManager_.LockSimID( GetID() );
 
     file >> flowShape_
          >> direction_
-         >> rNbrAliveHumans_
-         >> rNbrDeadHumans_
-         >> rDensity_;
+         >> rSpeed_;
+
+    UpdateLocation();
 }
     
 // -----------------------------------------------------------------------------
@@ -525,19 +456,15 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << boost::serialization::base_object< PHY_MovingEntity_ABC   >( *this );
-    file << boost::serialization::base_object< TER_PopulationFlow_ABC >( *this );
+    file << boost::serialization::base_object< PHY_MovingEntity_ABC      >( *this );
+    file << boost::serialization::base_object< TER_PopulationFlow_ABC    >( *this );
+    file << boost::serialization::base_object< MIL_PopulationElement_ABC >( *this );
 
-    file << pPopulation_
-         << nID_
-         << pSourceConcentration_
+    file << pSourceConcentration_
          << pDestConcentration_
-         << pAttitude_->GetID()
          << flowShape_
          << direction_
-         << rNbrAliveHumans_
-         << rNbrDeadHumans_
-         << rDensity_;
+         << rSpeed_;
 }
 
 

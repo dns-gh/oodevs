@@ -49,7 +49,7 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
+    void load( MIL_CheckPointInArchive& , const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
     
@@ -68,6 +68,8 @@ public:
     void UpdateRelevance();
 
     bool Clean  ();
+
+    void Recon  ();
     //@}
 
     //! @name Accessors
@@ -75,6 +77,7 @@ public:
           uint                GetID             () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
     const MIL_Population&     GetPopulationKnown() const;     
+          bool                IsRecon           () const;
     //@}
 
     //! @name Network operations
@@ -115,6 +118,7 @@ private:
           T_ConcentrationMap  concentrations_;
           T_FlowMap           flows_;
     const MIL_Army*           pArmy_;
+          bool                bIsRecon_;
 
 private:
     static MIL_MOSIDManager idManager_;

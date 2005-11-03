@@ -39,7 +39,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , position_                 ( concentrationKnown.GetPosition() )
     , nNbrAliveHumans_          ( 0 )
     , nNbrDeadHumans_           ( 0 )
-    , pAttitude_                ( 0 ) //$$
+    , pAttitude_                ( 0 ) 
     , bHumansUpdated_           ( true )
     , bAttitudeUpdated_         ( true )
     , bRealConcentrationUpdated_( true )
@@ -47,6 +47,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , rRelevance_               ( 1. )
     , pPreviousPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
+    , bReconAttributesValid_    ( false )
 {
     SendMsgCreation();       
 }
@@ -71,6 +72,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
     , rRelevance_               ( 1. )
     , pPreviousPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
+    , bReconAttributesValid_    ( false )
 {
 }
 
@@ -100,7 +102,8 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
          >> nTimeLastUpdate_
          >> position_
          >> nNbrAliveHumans_
-         >> nNbrDeadHumans_;
+         >> nNbrDeadHumans_
+         >> bReconAttributesValid_;
 
     uint nTmpID;
     file >> nTmpID;
@@ -133,6 +136,7 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << position_
          << nNbrAliveHumans_
          << nNbrDeadHumans_
+         << bReconAttributesValid_
          << pAttitude_->GetID()
          << rRelevance_
          << pCurrentPerceptionLevel_->GetID()
@@ -163,21 +167,26 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 
     pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
 
-    if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
+    assert( pPopulationKnowledge_ );
+    if( pPopulationKnowledge_->IsRecon() )
     {
-        nNbrAliveHumans_ = perception.GetNbrAliveHumans();
-        bHumansUpdated_  = true;
-    }
-    if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
-    {
-        nNbrDeadHumans_  = perception.GetNbrDeadHumans();
-        bHumansUpdated_  = true;
-    }
+        bReconAttributesValid_ = true;
+        if( nNbrAliveHumans_ != perception.GetNbrAliveHumans() )
+        {
+            nNbrAliveHumans_ = perception.GetNbrAliveHumans();
+            bHumansUpdated_  = true;
+        }
+        if( nNbrDeadHumans_ != perception.GetNbrDeadHumans() )
+        {
+            nNbrDeadHumans_  = perception.GetNbrDeadHumans();
+            bHumansUpdated_  = true;
+        }
 
-    if( !pAttitude_ || *pAttitude_ != perception.GetAttitude() )
-    {
-        pAttitude_        = &perception.GetAttitude();
-        bAttitudeUpdated_ = true;
+        if( !pAttitude_ || *pAttitude_ != perception.GetAttitude() )
+        {
+            pAttitude_        = &perception.GetAttitude();
+            bAttitudeUpdated_ = true;
+        }
     }
 }
 
@@ -268,7 +277,6 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 void DEC_Knowledge_PopulationConcentration::SendFullState() 
 {
     assert( pPopulationKnowledge_ );
-    assert( pAttitude_ );
 
     NET_ASN_MsgPopulationConcentrationKnowledgeUpdate asnMsg;
 
@@ -276,20 +284,26 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
     asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
     asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
     
-    asnMsg.GetAsnMsg().m.nb_humains_mortsPresent         = 1;
-    asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent       = 1;
-    asnMsg.GetAsnMsg().m.attitudePresent                 = 1;
     asnMsg.GetAsnMsg().m.est_percuPresent                = 1;
     asnMsg.GetAsnMsg().m.oid_concentration_reellePresent = 1;
     asnMsg.GetAsnMsg().m.pertinencePresent               = 1;
 
-    asnMsg.GetAsnMsg().nb_humains_morts         = nNbrDeadHumans_;
-    asnMsg.GetAsnMsg().nb_humains_vivants       = nNbrAliveHumans_;
-    asnMsg.GetAsnMsg().attitude                 = pAttitude_->GetAsnID();
     asnMsg.GetAsnMsg().est_percu                = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
     asnMsg.GetAsnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
     asnMsg.GetAsnMsg().pertinence               = (uint)( rRelevance_ * 100. );
     rLastRelevanceSent_ = rRelevance_;
+
+    if( bReconAttributesValid_ )
+    {
+        assert( pAttitude_ );
+        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+        asnMsg.GetAsnMsg().m.attitudePresent           = 1;
+    
+        asnMsg.GetAsnMsg().nb_humains_morts         = nNbrDeadHumans_;
+        asnMsg.GetAsnMsg().nb_humains_vivants       = nNbrAliveHumans_;
+        asnMsg.GetAsnMsg().attitude                 = pAttitude_->GetAsnID();
+    }
 
     asnMsg.Send();    
 }
@@ -302,7 +316,6 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
 {
     assert( pPreviousPerceptionLevel_ );
     assert( pCurrentPerceptionLevel_  );
-    assert( pAttitude_ );
 
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealConcentrationUpdated_ && !bRelevanceUpdated_ )
         return;
@@ -319,20 +332,6 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
     }
 
-    if( bHumansUpdated_ )
-    {
-        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-        asnMsg.GetAsnMsg().nb_humains_morts            = nNbrDeadHumans_;
-        asnMsg.GetAsnMsg().nb_humains_vivants          = nNbrAliveHumans_;
-    }
-
-    if( bAttitudeUpdated_ )
-    {
-        asnMsg.GetAsnMsg().m.attitudePresent = 1;
-        asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
-    }
-
     if( bRealConcentrationUpdated_ )
     {
         asnMsg.GetAsnMsg().m.oid_concentration_reellePresent = 1;
@@ -344,6 +343,24 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         asnMsg.GetAsnMsg().m.pertinencePresent = 1;
         asnMsg.GetAsnMsg().pertinence          = (uint)( rRelevance_ * 100. );
         rLastRelevanceSent_                    = rRelevance_;
+    }
+
+    if( bReconAttributesValid_ )
+    {
+        assert( pAttitude_ );
+        if( bHumansUpdated_ )
+        {
+            asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
+            asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+            asnMsg.GetAsnMsg().nb_humains_morts            = nNbrDeadHumans_;
+            asnMsg.GetAsnMsg().nb_humains_vivants          = nNbrAliveHumans_;
+        }
+
+        if( bAttitudeUpdated_ )
+        {
+            asnMsg.GetAsnMsg().m.attitudePresent = 1;
+            asnMsg.GetAsnMsg().attitude          = pAttitude_->GetAsnID();
+        }
     }
 
     asnMsg.Send();

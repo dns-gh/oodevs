@@ -12,6 +12,9 @@ signatures
     // Déplacement
     U /*T_Action*/ A::DEC_StartDeplacement( U /*T_Point*/ );
     
+    // Tir
+    U /*T_Action*/ A::DEC_StartTirSurPions();
+    
     // Effets sur les pions
     V              A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
     V              A::DEC_Population_RalentissementPion_VitesseParDefaut();

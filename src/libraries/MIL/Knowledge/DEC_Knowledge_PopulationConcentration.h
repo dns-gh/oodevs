@@ -81,10 +81,12 @@ private:
 
           uint                          nTimeLastUpdate_;
           MT_Vector2D                   position_;
+          MT_Float                      rRelevance_;
+
+          bool                          bReconAttributesValid_;
+    const MIL_PopulationAttitude*       pAttitude_;
           uint                          nNbrAliveHumans_;
           uint                          nNbrDeadHumans_;
-    const MIL_PopulationAttitude*       pAttitude_;
-          MT_Float                      rRelevance_;
 
     const PHY_PerceptionLevel*          pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel*          pPreviousPerceptionLevel_;

@@ -3,6 +3,7 @@
     <Classe nom="Unite"                         id="1"   />
     <Classe nom="TirDirect"                     id="127" />
     <Classe nom="TirIndirect"                   id="128" />
+    <Classe nom="TirPopulation"                 id="128" />
     <Classe nom="Lima"                          id="137" />
     <Classe nom="Limite"                        id="138" />
     <Classe nom="Ordre"                         id="145" />

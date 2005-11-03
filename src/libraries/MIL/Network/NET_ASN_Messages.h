@@ -202,13 +202,15 @@ NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( LimaCreation                      , lima_
 NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( LimaDestruction                   , lima_destruction                      )
 
 // Fire
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartDirectFire  , start_direct_fire     )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartIndirectFire, start_indirect_fire   )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopDirectFire   , stop_direct_fire      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopIndirectFire , stop_indirect_fire    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( Explosion        , explosion             )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartFireEffect  , start_fire_effect     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( StopFireEffect   , stop_fire_effect      )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartDirectFire    , start_direct_fire     )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartIndirectFire  , start_indirect_fire   )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartPopulationFire, start_population_fire )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopDirectFire     , stop_direct_fire      )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopIndirectFire   , stop_indirect_fire    )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopPopulationFire , stop_population_fire  )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( Explosion          , explosion             )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartFireEffect    , start_fire_effect     )
+NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( StopFireEffect     , stop_fire_effect      )
 
 // Unit knowledge
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX ( UnitKnowledgeCreation   , unit_knowledge_creation    )
@@ -287,5 +289,6 @@ NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeDestruction         
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeUpdate              , population_flux_knowledge_update               )
 
 #endif // __NET_ASN_Messages_h_
+
 
 

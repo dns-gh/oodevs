@@ -24,6 +24,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
 class MIL_PopulationAttitude;
+class PHY_Protection;
 
 // =============================================================================
 // Created: NLD 2005-11-02
@@ -40,6 +41,11 @@ public:
     //! @name Initialization
     //@{
     void Initialize( MIL_InputArchive& archive );
+    //@}
+
+    //! @name Accessors
+    //@{
+    const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
     //@}
 
 private:

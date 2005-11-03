@@ -45,12 +45,12 @@ private:
     //@}
 
 private:
-    const uint                              nID_;
-    const MT_Ellipse                        surface_;
+    const uint                           nID_;
+    const MT_Ellipse                     surface_;
     const PHY_IndirectFireDotationClass& ammoCategory_;
-    const uint                              nDeploymentTimeStep_;
-    const uint                              nLifeLastTimeStep_;
-          bool                              bIsDeployed_;
+    const uint                           nDeploymentTimeStep_;
+    const uint                           nLifeLastTimeStep_;
+          bool                           bIsDeployed_;
 public:
     static MIL_MOSIDManager idManager_;
 };

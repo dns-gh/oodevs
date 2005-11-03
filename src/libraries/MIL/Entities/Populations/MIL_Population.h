@@ -31,6 +31,7 @@ class MIL_PopulationAttitude;
 class MIL_Army;
 class DEC_PopulationDecision;
 class PHY_Volume;
+class PHY_PopulationFireResults;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -80,7 +81,8 @@ public:
 
     //! @name Actions
     //@{
-    void Move( const MT_Vector2D& destination );
+    void Move       ( const MT_Vector2D& destination );
+    void FireOnPions( PHY_PopulationFireResults& fireResult );
     //@}
 
     //! @name Tools

@@ -21,7 +21,7 @@
 #include "Decision/Functions/DEC_PopulationFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
-//#include "Entities/Populations/Actions/PHY_Population_ActionPionFire.h"
+#include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 
@@ -201,11 +201,11 @@ void MIL_PopulationType::InitializePionAttritionData( MIL_InputArchive& archive 
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population                >, "DEC_StopAction"       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population                >, "DEC_PauseAction"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population                >, "DEC_ReprendAction"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove     >, "DEC_StartDeplacement" );
-//    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionPionFire >, "DEC_StartTirSurPions" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population                   >, "DEC_StopAction"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population                   >, "DEC_PauseAction"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population                   >, "DEC_ReprendAction"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove        >, "DEC_StartDeplacement" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPions >, "DEC_StartTirSurPions" );
 
     // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug                                 , "DEC_Debug"            );
@@ -257,3 +257,4 @@ MT_Float MIL_PopulationType::GetPionReloadingTimeFactor( MT_Float rPopulationDen
 
     return std::max( 1., rPopulationDensity * rEffectReloadingTimeFactor_ / rEffectReloadingTimeDensity_ );
 }
+

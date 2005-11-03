@@ -17,16 +17,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetDensity
-// Created: NLD 2005-10-27
-// -----------------------------------------------------------------------------
-inline
-MT_Float MIL_PopulationConcentration::GetDensity() const
-{
-    return rDensity_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::GetPosition
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
@@ -37,25 +27,13 @@ const MT_Vector2D& MIL_PopulationConcentration::GetPosition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetAttitude
-// Created: NLD 2005-10-04
-// -----------------------------------------------------------------------------
-inline
-const MIL_PopulationAttitude& MIL_PopulationConcentration::GetAttitude() const
-{
-    assert( pAttitude_ );
-    return *pAttitude_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::Clean
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
 inline
 void MIL_PopulationConcentration::Clean()
 {
-    bHumansUpdated_   = false;
-    bAttitudeUpdated_ = false;   
+    MIL_PopulationElement_ABC::Clean();    
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +43,7 @@ void MIL_PopulationConcentration::Clean()
 inline
 bool MIL_PopulationConcentration::HasChanged() const
 {
-    return bHumansUpdated_ || bAttitudeUpdated_;
+    return HasAttitudeChanged() || HasHumansChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -101,66 +79,11 @@ const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetPopulation
-// Created: NLD 2005-10-11
-// -----------------------------------------------------------------------------
-inline
-MIL_Population& MIL_PopulationConcentration::GetPopulation() const
-{
-    assert( pPopulation_ );
-    return *pPopulation_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetID
-// Created: NLD 2005-10-12
-// -----------------------------------------------------------------------------
-inline
-uint MIL_PopulationConcentration::GetID() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetNbrAliveHumans
-// Created: NLD 2005-10-13
-// -----------------------------------------------------------------------------
-inline
-uint MIL_PopulationConcentration::GetNbrAliveHumans() const
-{
-    return (uint)rNbrAliveHumans_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::GetNbrDeadHumans
-// Created: NLD 2005-10-13
-// -----------------------------------------------------------------------------
-inline
-uint MIL_PopulationConcentration::GetNbrDeadHumans() const
-{
-    return (uint)rNbrDeadHumans_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::IsValid
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
 inline
 bool MIL_PopulationConcentration::IsValid() const
 {
-    return rNbrAliveHumans_ > 0. || !pushingFlows_.empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::UpdateDensity
-// Created: NLD 2005-10-21
-// -----------------------------------------------------------------------------
-inline
-void MIL_PopulationConcentration::UpdateDensity()
-{
-    const MT_Float rArea = location_.GetArea();
-    if( rArea == 0. )
-        rDensity_ = 0; // $$$ +infini sauf si aucun humain
-    else
-        rDensity_ = rNbrAliveHumans_ / rArea;    
+    return GetNbrAliveHumans() > 0. || !pushingFlows_.empty();
 }

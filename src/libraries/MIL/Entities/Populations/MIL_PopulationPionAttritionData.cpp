@@ -110,3 +110,20 @@ void MIL_PopulationPionAttritionData::ReadAttitudeAttritionData( const MIL_Popul
     archive.EndList(); // ProtectionsPions
 }
 
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationPionAttritionData::GetAttritionData
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+const PHY_AttritionData& MIL_PopulationPionAttritionData::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const
+{
+    assert( attitudeAttritionData_.size() > attitude.GetID() );
+
+    const sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
+
+    assert( attitudeData.attritions_.size() > protection.GetID() );
+    return attitudeData.attritions_[ protection.GetID() ];
+}

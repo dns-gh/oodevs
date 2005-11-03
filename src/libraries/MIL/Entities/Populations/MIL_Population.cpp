@@ -1,4 +1,4 @@
-// *****************************************************************************
+*****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -227,6 +227,10 @@ void MIL_Population::Clean()
         (**itFlow).Clean();
 }
 
+// =============================================================================
+// ACTIONS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::Move
 // Created: NLD 2005-09-29
@@ -238,6 +242,19 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).Move( destination );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::FireOnPions
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void MIL_Population::FireOnPions( PHY_PopulationFireResults& fireResult )
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        (**itConcentration).FireOnPions( fireResult );
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        (**itFlow).FireOnPions( fireResult );    
 }
 
 // =============================================================================

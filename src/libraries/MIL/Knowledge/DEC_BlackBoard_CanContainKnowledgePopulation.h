@@ -58,7 +58,8 @@ public:
 
     //! @name Queries
     //@{
-    DEC_Knowledge_Population* GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation      ( const MIL_Population& associatedPopulation ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulationFromID( uint nID ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulation( UnaryFunction fct ) const

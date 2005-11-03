@@ -42,6 +42,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
     , concentrations_  ()
     , flows_           ()
     , pArmy_           ( &populationKnown.GetArmy() )
+    , bIsRecon_        ( false )
 {
     SendMsgCreation();
 }
@@ -58,6 +59,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , concentrations_  ()
     , flows_           ()
     , pArmy_           ( 0 )
+    , bIsRecon_        ( false )
 {
 }
 
@@ -86,7 +88,8 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> pPopulationKnown_
          >> const_cast< uint& >( nID_ )
          >> concentrations_
-         >> flows_;
+         >> flows_
+         >> bIsRecon_;
 
     assert( pPopulationKnown_ );
     pArmy_ = &pPopulationKnown_->GetArmy();
@@ -105,7 +108,8 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const uint 
          << pPopulationKnown_
          << nID_
          << concentrations_
-         << flows_;
+         << flows_
+         << bIsRecon_;
 }
 
 

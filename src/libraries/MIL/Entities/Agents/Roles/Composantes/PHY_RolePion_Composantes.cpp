@@ -982,6 +982,22 @@ void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyPopulationFire
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& fireResult )
+{
+    assert( pPion_ );
+    assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
+
+    PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
+    PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
+
+    if( compTargetPion.CanBeFired() )
+        compTargetPion.ApplyPopulationFire( populationType, populationAttitude, agentFireResult );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Neutralize
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------

@@ -82,6 +82,16 @@ MT_Float MIL_PopulationType::GetMaxSpeed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetAttritionData
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const
+{
+    return attritionData_.GetAttritionData( attitude, protection );    
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::Find
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------

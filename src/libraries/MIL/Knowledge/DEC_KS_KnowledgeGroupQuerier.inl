@@ -21,6 +21,17 @@ DEC_Knowledge_Agent* DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgentFromID( uint
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgePopulationFromID
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+DEC_Knowledge_Population* DEC_KS_KnowledgeGroupQuerier::GetKnowledgePopulationFromID( uint nID ) const
+{
+    assert( pBlackBoard_ );
+    return pBlackBoard_->GetKnowledgePopulationFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_KnowledgeGroupQuerier::IsKnown
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------

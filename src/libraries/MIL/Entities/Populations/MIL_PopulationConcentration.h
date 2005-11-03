@@ -21,6 +21,7 @@
 
 #include "MIL.h"
 
+#include "MIL_PopulationElement_ABC.h"
 #include "Tools/MIL_MOSIDManager.h"
 #include "TER/TER_PopulationConcentration_ABC.h"
 
@@ -32,7 +33,8 @@ class PHY_Volume;
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
-class MIL_PopulationConcentration : public TER_PopulationConcentration_ABC
+class MIL_PopulationConcentration : public MIL_PopulationElement_ABC
+                                  , public TER_PopulationConcentration_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -45,18 +47,15 @@ public:
 
     //! @name Operations
     //@{
-    bool Update(); // Return false if the concentration must be deleted
-    void Clean ();
+            bool Update(); // Return false if the concentration must be deleted
+    virtual void Clean ();
 
     bool IsValid() const; // false = will be deleted
     //@}
 
     //! @name Actions
     //@{
-    MT_Float PushHumans ( MT_Float rNbr );
-    MT_Float PullHumans ( MT_Float rNbr );
-    void     Move       ( const MT_Vector2D& destination );
-    void     SetAttitude( const MIL_PopulationAttitude& attitude );
+    void Move( const MT_Vector2D& destination );
     //@}
 
     //! @name Flows management
@@ -67,22 +66,10 @@ public:
 
     //! @name Accessors
     //@{
-          MIL_Population&         GetPopulation    () const;
-    const MT_Vector2D&            GetPosition      () const;
-    const MIL_PopulationAttitude& GetAttitude      () const;
-          uint                    GetID            () const;
-          uint                    GetNbrAliveHumans() const;
-          uint                    GetNbrDeadHumans () const;
-          MT_Float                GetDensity       () const;
-          bool                    IsNearPosition   ( const MT_Vector2D& position ) const;
+    const MT_Vector2D& GetPosition   () const;
+          bool         IsNearPosition( const MT_Vector2D& position ) const;
 
-    virtual const TER_Localisation& GetLocation () const;
-    //@}
-
-    //! @name Pion effects
-    //@{
-    MT_Float GetPionMaxSpeed           ( const PHY_Volume& pionVolume ) const;
-    MT_Float GetPionReloadingTimeFactor() const;
+    virtual const TER_Localisation& GetLocation() const;
     //@}
 
     //! @name Network
@@ -114,10 +101,10 @@ private:
     MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
+    //! @name Tools
     //@{
-    void UpdateLocation();
-    void UpdateDensity ();
+    void NotifyCollision( MIL_Agent_ABC& agent );
+    void UpdateLocation ();
     //@}
 
     //! @name Network
@@ -127,21 +114,11 @@ private:
     //@}
 
 private:
-          MIL_Population*         pPopulation_;
-          uint                    nID_;
-          MT_Vector2D             position_;
-          TER_Localisation        location_;
-          MT_Float                rNbrAliveHumans_;
-          MT_Float                rNbrDeadHumans_;
-          MT_Float                rDensity_;
-    const MIL_PopulationAttitude* pAttitude_;
+    MT_Vector2D             position_;
+    TER_Localisation        location_;
 
-          MIL_PopulationFlow*     pPullingFlow_;
-          T_FlowSet               pushingFlows_;
-
-    // Network
-    bool bHumansUpdated_;
-    bool bAttitudeUpdated_;
+    MIL_PopulationFlow*     pPullingFlow_;
+    T_FlowSet               pushingFlows_;
 
 public:
     static MIL_MOSIDManager idManager_;

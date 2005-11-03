@@ -100,3 +100,17 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( D
     delete &knowledge;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID
+// Created: NLD 2004-03-24
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( uint nID ) const
+{
+    for( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
+    {
+        DEC_Knowledge_Population& knowledge = *it->second;
+        if( knowledge.GetID() == nID ) 
+            return &knowledge;
+    }
+    return 0;
+}

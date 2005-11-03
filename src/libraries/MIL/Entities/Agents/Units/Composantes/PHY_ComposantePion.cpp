@@ -36,6 +36,7 @@
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/RC/MIL_RC.h"
 
 MT_Random PHY_ComposantePion::random_;
@@ -468,6 +469,16 @@ void PHY_ComposantePion::ApplyExplosion( const MIL_RealObjectType& objectType, P
 {
     assert( pType_ );
     ApplyFire( objectType.GetAttritionData( pType_->GetProtection() ), fireResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyPopulationFire
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_AgentFireResult& fireResult )
+{
+    assert( pType_ );
+    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection() ), fireResult );
 }
 
 // -----------------------------------------------------------------------------

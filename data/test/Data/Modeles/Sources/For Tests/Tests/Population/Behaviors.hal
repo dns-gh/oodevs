@@ -10,11 +10,34 @@ default Default()
 }
 
 behavior BEH_Defaut( id nDummy )
-{         
-    DEC_Debug( "BEH_Defaut" );
+{   
+    when updated:
+    {      
+        persistent T_Action actionFire;
+        
+        DEC_Debug( "BEH_Defaut" );
+        
+        if( DIA_ModuleBegins() )
+        {
+            actionFire = DEC_StartTirSurPions();
+        }
+        
+        // DEC_Population_RalentissementPion_ChangeVitesse   (  5 );
+        //    V              A::DEC_Population_RalentissementPion_VitesseParDefaut();
+    }
     
-    // DEC_Population_RalentissementPion_ChangeVitesse   (  5 );
-//    V              A::DEC_Population_RalentissementPion_VitesseParDefaut();
+    on spontaneous end:
+    {
+        if( actionFire != 0 )
+            DEC_StopAction( actionFire );    
+    }        
+    
+
+    
+    
+    
+    
+    
 }
 
 behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement mission, id nDummy )

@@ -64,6 +64,19 @@ MsgStopIndirectFire ::= SEQUENCE
     resultats   SEQUENCE OF FireResult
 }
 
+-- Tir population -> Pion
+MsgStartPopulationFire ::= SEQUENCE
+{
+    oid-tir     TirPopulation,
+    oid-src     Population
+}
+
+MsgStopPopulationFire ::= SEQUENCE
+{
+    oid-tir     TirPopulation,
+    resultats   SEQUENCE OF FireResult
+}
+
 -- Explosion mine
 MsgExplosion ::= SEQUENCE
 {

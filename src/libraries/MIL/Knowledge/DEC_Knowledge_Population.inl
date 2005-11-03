@@ -40,3 +40,23 @@ const MIL_Population& DEC_Knowledge_Population::GetPopulationKnown() const
     assert( pPopulationKnown_ );
     return *pPopulationKnown_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::IsRecon
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Population::IsRecon() const
+{
+    return bIsRecon_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Recon
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+void DEC_Knowledge_Population::Recon()
+{
+    bIsRecon_ = true;
+}

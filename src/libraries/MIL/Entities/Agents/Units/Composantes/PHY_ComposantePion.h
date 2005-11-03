@@ -24,6 +24,8 @@
 
 class MIL_AgentPion;
 class MIL_AutomateLOG;
+class MIL_PopulationType;
+class MIL_PopulationAttitude;
 class PHY_Sensor;
 class PHY_Radar;
 class PHY_Weapon;
@@ -128,9 +130,11 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-    void     FillDirectFireData             ( PHY_DirectFireData& data   );
+    void     FillDirectFireData             ( PHY_DirectFireData&   data );
     void     FillIndirectFireData           ( PHY_IndirectFireData& data );
-    void     FillIndirectFireData           ( PHY_SmokeData& data );
+    void     FillIndirectFireData           ( PHY_SmokeData&        data );
+
+    void     ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_AgentFireResult& fireResult );
     void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
     void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
     void     ApplyExplosion                 ( const MIL_RealObjectType& objectType, PHY_AgentFireResult& result );

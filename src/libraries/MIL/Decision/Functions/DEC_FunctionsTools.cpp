@@ -24,6 +24,18 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_FunctionsTools::GetKnowledgePopulationFromDia
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_FunctionsTools::GetKnowledgePopulationFromDia( const DIA_Variable_ABC& diaVar, const MIL_KnowledgeGroup& caller )
+{
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaVar ) );
+
+    uint nKnowledgeID_ = (uint)diaVar.ToPtr();
+    return caller.GetKSQuerier().GetKnowledgePopulationFromID( nKnowledgeID_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_FunctionsTools::GetKnowledgeAgentFromDia
 // Created: NLD 2004-03-31
 // -----------------------------------------------------------------------------
@@ -46,4 +58,6 @@ DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_V
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
     return caller.GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
 }
+
+
 

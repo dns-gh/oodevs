@@ -279,6 +279,15 @@ void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dot
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Composantes::ApplyPopulationFire
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result )
+{
+    // TODO $$$ HLA
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Composantes::ApplyExplosion
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------

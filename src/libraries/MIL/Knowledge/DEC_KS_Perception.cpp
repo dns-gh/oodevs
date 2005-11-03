@@ -306,7 +306,6 @@ void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, con
         pKnowledge = &pBlackBoard_->CreateKnowledgePopulationPerception( *pAgentPerceiving_, flowPerceived.GetPopulation() );
     }
     pKnowledge->Update( flowPerceived, level, shape );
-
 }
 
 // =============================================================================

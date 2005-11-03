@@ -87,9 +87,11 @@ private:
           MT_Vector2D                direction_;
           MT_Float                   rSpeed_;
           T_FlowPartMap              flowParts_;
+
           uint                       nNbrAliveHumans_;
           uint                       nNbrDeadHumans_;
     const MIL_PopulationAttitude*    pAttitude_;
+          bool                       bReconAttributesValid_;
 
           // Network update
           bool                       bHumansUpdated_;

@@ -10,6 +10,14 @@ default Default()
     T_ListeConnaissancesPopulation popus = DEC_Connaissances_CollisionsPopulations();
     if( DIA_Size( popus ) > 0 )
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
+    
+    with( x in popus )
+    {
+        E_ValiditeRequete   nValidite;
+        DEC_ConnaissancePopulation_Reconnaitre( x, nValidite );
+    }        
+    
+            
 
     //DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTotalement ); 
     persistent float i = 0;
