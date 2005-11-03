@@ -21,6 +21,7 @@
 #include "Decision/Functions/DEC_PopulationFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
+//#include "Entities/Populations/Actions/PHY_Population_ActionPionFire.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 
@@ -41,7 +42,7 @@ void MIL_PopulationType::Initialize( MIL_InputArchive& archive )
     MT_LOG_INFO_MSG( "Initializing population types" );
 
     archive.Section( "Effets" );
-    
+
     archive.Section( "TempsRechargement" );
     archive.ReadAttribute( "densitePopulation", rEffectReloadingTimeDensity_, CheckValueGreaterOrEqual( 0. ) );
     archive.ReadAttribute( "modificateur"     , rEffectReloadingTimeFactor_ , CheckValueGreaterOrEqual( 1. ) );
@@ -104,7 +105,8 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
     archive.Section( "Effets" );
-    InitializeSlowDownData( archive );
+    InitializeSlowDownData     ( archive );
+    InitializePionAttritionData( archive );
     archive.EndSection(); // Effets
     
     std::string strModel;
@@ -132,7 +134,13 @@ MIL_PopulationType::~MIL_PopulationType()
 void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
 {
     archive.Section( "Ralentissement" );
-    archive.BeginList( "Attitudes" );
+
+    if( !archive.BeginList( "Attitudes", MIL_InputArchive::eNothing ) )
+    {
+        archive.EndSection(); // Ralentissement
+        return;
+    }
+
     while( archive.NextListElement() )
     {
         archive.Section( "Attitude" );
@@ -177,15 +185,27 @@ void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::InitializePionAttritionData
+// Created: NLD 2005-11-02
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::InitializePionAttritionData( MIL_InputArchive& archive )
+{
+    archive.Section( "Tir" );
+    attritionData_.Initialize( archive );
+    archive.EndSection(); // Tir
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::InitializeDiaFunctions
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population            >, "DEC_StopAction"       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population            >, "DEC_PauseAction"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population            >, "DEC_ReprendAction"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove >, "DEC_StartDeplacement" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_Population                >, "DEC_StopAction"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_Population                >, "DEC_PauseAction"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_Population                >, "DEC_ReprendAction"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionMove     >, "DEC_StartDeplacement" );
+//    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionPionFire >, "DEC_StartTirSurPions" );
 
     // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug                                 , "DEC_Debug"            );

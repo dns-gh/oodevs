@@ -10,6 +10,19 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Protection::Find
+// Created: NLD 2004-08-04
+// -----------------------------------------------------------------------------
+inline
+const PHY_Protection* PHY_Protection::Find( const std::string& strName )
+{
+    CIT_ProtectionMap itProtection = protections_.find( strName );
+    if( itProtection == protections_.end() )
+        return 0;
+    return itProtection->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Protection::GetName
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------

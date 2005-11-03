@@ -208,7 +208,6 @@ private:
     typedef T_EnvironmentScoreMap::const_iterator CIT_EnvironmentScoreMap;
 
     typedef std::vector< PHY_AttritionData >  T_AttritionVector;
-    typedef T_AttritionVector                 CIT_AttritionVector;
 
     typedef std::map< uint, MIL_MOSIDManager* >                              T_IDManagerMap;
     typedef T_IDManagerMap::const_iterator                                   CIT_IDManagerMap;

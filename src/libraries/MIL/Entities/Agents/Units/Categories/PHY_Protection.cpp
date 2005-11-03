@@ -63,18 +63,6 @@ void PHY_Protection::Terminate()
     protections_.clear();
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_Protection::FindProtection
-// Created: NLD 2004-08-04
-// -----------------------------------------------------------------------------
-const PHY_Protection* PHY_Protection::FindProtection( const std::string& strName )
-{
-    CIT_ProtectionMap itProtection = protections_.find( strName );
-    if( itProtection == protections_.end() )
-        return 0;
-    return itProtection->second;
-}
-
 // =============================================================================
 // INITIALIZATION
 // =============================================================================

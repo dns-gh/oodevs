@@ -14,6 +14,8 @@
 
 #include "MIL.h"
 
+#include "MIL_PopulationPionAttritionData.h"
+
 class MIL_Population;
 class MIL_PopulationAttitude;
 class PHY_Volume;
@@ -70,10 +72,11 @@ private:
      MIL_PopulationType( const std::string& strName, MIL_InputArchive& archive );
     ~MIL_PopulationType();
 
-    //! @name Tools
+    //! @name Initialization
     //@{
-    void InitializeDiaFunctions();
-    void InitializeSlowDownData( MIL_InputArchive& archive );
+    void InitializeSlowDownData     ( MIL_InputArchive& archive );
+    void InitializePionAttritionData( MIL_InputArchive& archive );
+    void InitializeDiaFunctions     ();
     //@}
 
 private:
@@ -85,7 +88,6 @@ private:
         MT_Float rPopulationDensity_;
         MT_Float rMaxSpeed_;
     };
-
     typedef std::vector< sSlowDownData >        T_VolumeSlowDownData;
     typedef std::vector< T_VolumeSlowDownData > T_AttitudeSlowDownData;
     //@}
@@ -97,6 +99,9 @@ private:
           MT_Float                             rDefaultFlowDensity_;
           MT_Float                             rMaxSpeed_;
           T_AttitudeSlowDownData               slowDownData_;
+          MIL_PopulationPionAttritionData      attritionData_;
+
+
     const DEC_ModelPopulation*                 pModel_;
           DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;
 

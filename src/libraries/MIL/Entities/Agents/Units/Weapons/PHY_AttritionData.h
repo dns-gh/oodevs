@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     PHY_AttritionData&         operator=             ( const PHY_AttritionData& rhs );
-    MT_Float                    GetScore              () const;
+    MT_Float                   GetScore              () const;
     const PHY_ComposanteState& ComputeComposanteState() const; 
     //@}
 

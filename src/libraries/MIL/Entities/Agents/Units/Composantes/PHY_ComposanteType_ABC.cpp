@@ -34,7 +34,7 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, MIL_
     std::string strVal;
     archive.ReadField( "Protection", strVal );
     
-    pProtection_ = PHY_Protection::FindProtection( strVal );
+    pProtection_ = PHY_Protection::Find( strVal );
     if ( !pProtection_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strVal.c_str() ), archive.GetContext() );
 

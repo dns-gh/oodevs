@@ -41,7 +41,7 @@ public:
     static void Terminate ();
 
     static const T_ProtectionMap& GetProtections();
-    static const PHY_Protection*  FindProtection( const std::string& strName );
+    static const PHY_Protection*  Find          ( const std::string& strName );
     //@}
 
     //! @name Accessors

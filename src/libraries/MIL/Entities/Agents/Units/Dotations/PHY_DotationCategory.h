@@ -72,8 +72,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< PHY_AttritionData >  T_AttritionVector;
-    typedef T_AttritionVector                 CIT_AttritionVector;
+    typedef std::vector< PHY_AttritionData > T_AttritionVector;
     //@}
 
 private:
