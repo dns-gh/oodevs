@@ -379,21 +379,21 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         {
             const MOS_LogMaintenanceConsign* con = itMain->second;
 
-            DrawLine( con->GetPion().GetPos(), con->GetPionLogHandling()->GetPos() );
+            DrawArrow(  con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 100.0);
         }
         const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
         glColor4d( MOS_COLOR_PINK );
         for( MOS_AgentManager::CIT_MedicalConsigns itSan = consignsSan.begin(); itSan != consignsSan.end(); ++itSan )
         {
             const MOS_LogMedicalConsign* con = itSan->second;
-            DrawLine( con->GetPion().GetPos(), con->GetPionLogHandling()->GetPos() );
+            DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
         }
         const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
         glColor4d( MOS_COLOR_ORANGE );
         for( MOS_AgentManager::CIT_SupplyConsigns itRav = consignsRav.begin(); itRav != consignsRav.end(); ++itRav )
         {
             const MOS_LogSupplyConsign* con = itRav->second;
-            DrawLine( con->GetPion().GetPos(), con->GetPionLogHandling()->GetPos() );
+            DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
         }
         glDisable( GL_LINE_STIPPLE );
     }
@@ -511,26 +511,31 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eOn
         || ( nState == eSelected && (MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eAuto ))))
     {
+        float offset = 0.0;
         glLineWidth( 5 );
         if ( agent.nTC2_ != 0 )
         {
             glColor4d( MOS_COLOR_YELLOW );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos() );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos(), agent.GetPos(), offset );
+            offset += 100.0;
         }
         if ( agent.nLogMaintenanceSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_MAROON );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos() );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos(), agent.GetPos(), offset  );
+            offset += 100.0;
         }
         if ( agent.nLogMedicalSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_PINK );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos() );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos(), agent.GetPos(), offset );
+            offset += 100.0;
         }
         if ( agent.nLogSupplySuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_ORANGE );
-            DrawLine( agent.GetPos(), MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos() );
+            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos(), agent.GetPos(), offset );
+            offset += 100.0;
         }
     }
 
@@ -1944,7 +1949,8 @@ void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float 
 
     T_PointVector points;
     points.reserve( 24 );
-    for( MT_Float rAngle = rAngleStart; rAngle <= rAngleEnd; rAngle += 0.3f )
+    float incr = (rAngleEnd - rAngleStart) / 24.0;
+    for( MT_Float rAngle = rAngleStart; rAngle <= rAngleEnd; rAngle += incr )
         points.push_back( MT_Vector2D( center.rX_ + rRadius * cos( rAngle )
                                      , center.rY_ + rRadius * sin( rAngle ) ) );
     points.push_back( MT_Vector2D( center.rX_ + rRadius * cos( rAngleEnd )
@@ -2243,4 +2249,36 @@ void MOS_GLTool::DrawTriangle3D( const MT_Vector3D& vPos1 , const MT_Vector3D& v
     glVertex3f( vPos3.rX_, vPos3.rY_, vPos3.rZ_);
     glEnd();
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::DrawArc
+// Created: HME 2005-11-03
+// -----------------------------------------------------------------------------
+void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Float height )
+{
+    if ( src == dst )
+        return;
+    if ( height == 0 )
+    {       DrawLine( src, dst );
+            return;
+    }
+    float middle_x = (dst.rX_ + src.rX_) / 2.0;
+    float middle_y = (dst.rY_ + src.rY_) / 2.0;
+    //const MT_Vector2D middle = MT_Vector2D( middle_x, middle_y ); 
+    //DrawCircle( middle, 50 );
+    float dist2 = (dst.rX_ - src.rX_) * (dst.rX_ - src.rX_) + (dst.rY_ - src.rY_) * (dst.rY_ - src.rY_);
+    float dist = sqrt( dist2 );
+    float radius = (dist2 / (8 * height)) + (height / 2);
+    float ortho_x = (dst.rY_ - src.rY_) / dist;
+    float ortho_y = (src.rX_ - dst.rX_) / dist;
+    const MT_Vector2D center = MT_Vector2D( middle_x + (radius - height)* ortho_x,  middle_y + (radius - height)* ortho_y );
+    float angleStart = acos( (dst.rX_ - center.rX_) / radius );
+    if ( asin( ( dst.rY_ - center.rY_ ) / radius ) < 0 )
+        angleStart = - angleStart;
+    float angleEnd = acos( (src.rX_ - center.rX_) / radius );
+    if ( asin( (src.rY_ - center.rY_) / radius ) < 0 )
+        angleEnd = - angleEnd;
+    //DrawCircle( center, radius );
+    DrawArc( center, radius, angleStart, angleEnd );
 }

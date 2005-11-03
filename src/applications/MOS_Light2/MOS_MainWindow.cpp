@@ -126,6 +126,7 @@ MOS_MainWindow::MOS_MainWindow()
 
         new MOS_ODBToolbar( this );
         new MOS_MapToolbar( this );
+        new MOS_LogisticToolbar( this );
         return;
     }
 
