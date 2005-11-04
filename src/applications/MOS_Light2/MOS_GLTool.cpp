@@ -504,8 +504,9 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         }
         else
         {
-            glColor4d( MOS_COLOR_GREEN );
-            DrawCircle( agent.GetPos() + translation, 300, false );
+            // decommenter pour voir dessiner un rond vert autour des BLT
+            //glColor4d( MOS_COLOR_GREEN );
+            //DrawCircle( agent.GetPos() + translation, 300, false );
         }
     }
     // Draw the logitic links of the selected automata
@@ -518,25 +519,25 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if ( agent.nTC2_ != 0 )
         {
             glColor4d( MOS_COLOR_YELLOW );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos(), agent.GetPos(), offset );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos(), agent.GetPos(), offset, true );
             offset += 100.0;
         }
         if ( agent.nLogMaintenanceSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_MAROON );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos(), agent.GetPos(), offset  );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos(), agent.GetPos(), offset , true );
             offset += 100.0;
         }
         if ( agent.nLogMedicalSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_PINK );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos(), agent.GetPos(), offset );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos(), agent.GetPos(), offset, true );
             offset += 100.0;
         }
         if ( agent.nLogSupplySuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_ORANGE );
-            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos(), agent.GetPos(), offset );
+            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos(), agent.GetPos(), offset, true );
             offset += 100.0;
         }
     }
@@ -1944,7 +1945,7 @@ void MOS_GLTool::DrawCircle( const MT_Vector2D& center, MT_Float rRadius, bool b
 // Name: MOS_GLTool::DrawArc
 // Created: APE 2004-06-16
 // -----------------------------------------------------------------------------
-void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float rAngleStart, MT_Float rAngleEnd )
+void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float rAngleStart, MT_Float rAngleEnd , bool arrowed)
 {
     if( rAngleStart > rAngleEnd )
         std::swap( rAngleStart, rAngleEnd );
@@ -1958,6 +1959,10 @@ void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float 
     points.push_back( MT_Vector2D( center.rX_ + rRadius * cos( rAngleEnd )
                                  , center.rY_ + rRadius * sin( rAngleEnd ) ) );
     DrawLine( points );
+    if( arrowed && ( points.size() > 2 ) )
+    {
+        DrawArrow( *(--(--(--(points.end())))), *(--(points.end())), 100.0 );
+    }
 }
 
 
@@ -2257,7 +2262,7 @@ void MOS_GLTool::DrawTriangle3D( const MT_Vector3D& vPos1 , const MT_Vector3D& v
 // Name: MOS_GLTool::DrawArc
 // Created: HME 2005-11-03
 // -----------------------------------------------------------------------------
-void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Float height )
+void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Float height, bool arrowed )
 {
     if ( src == dst )
         return;
@@ -2288,5 +2293,6 @@ void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Fl
             angleStart = angleStart - 6.283;
         else
             angleEnd = angleEnd - 6.283;
-    DrawArc( center, radius, angleStart, angleEnd );
+    DrawArc( center, radius, angleStart, angleEnd, arrowed );
 }
+

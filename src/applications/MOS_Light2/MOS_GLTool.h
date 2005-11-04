@@ -191,8 +191,8 @@ public:
     static void DrawLines     ( T_MOSLinePtrVector& lines, float rZ );
     static void DrawCircles   ( T_NodePtrVector&    nodes, MT_Float rRadius );
     static void DrawCircle    ( const MT_Vector2D& center, MT_Float rRadius, bool bFill = false );
-    static void DrawArc       ( const MT_Vector2D& center, MT_Float rRadius, MT_Float rAngleStart, MT_Float rAngleEnd );
-    static void DrawArc       ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Float height );
+    static void DrawArc       ( const MT_Vector2D& center, MT_Float rRadius, MT_Float rAngleStart, MT_Float rAngleEnd , bool arrowed = false);
+    static void DrawArc       ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Float height , bool arrowed = false);
     static void DrawGrid      ( MOS_World& world );
     static void DrawCross     ( const MT_Vector2D& vCenter, double rSize, int nLineWidth );
     static void Vertex        ( MT_Float rX, MT_Float rY, MT_Float rZSign = 1 );
