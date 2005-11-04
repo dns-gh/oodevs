@@ -378,7 +378,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         for( MOS_AgentManager::CIT_MaintenanceConsigns itMain = consignsMain.begin(); itMain != consignsMain.end(); ++itMain )
         {
             const MOS_LogMaintenanceConsign* con = itMain->second;
-
+            DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
             DrawArrow(  con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 100.0);
         }
         const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
@@ -386,6 +386,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         for( MOS_AgentManager::CIT_MedicalConsigns itSan = consignsSan.begin(); itSan != consignsSan.end(); ++itSan )
         {
             const MOS_LogMedicalConsign* con = itSan->second;
+            DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
             DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
         }
         const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
@@ -393,6 +394,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         for( MOS_AgentManager::CIT_SupplyConsigns itRav = consignsRav.begin(); itRav != consignsRav.end(); ++itRav )
         {
             const MOS_LogSupplyConsign* con = itRav->second;
+            DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
             DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
         }
         glDisable( GL_LINE_STIPPLE );
@@ -511,7 +513,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eOn
         || ( nState == eSelected && (MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eAuto ))))
     {
-        float offset = 0.0;
+        float offset = 100.0;
         glLineWidth( 3 );
         if ( agent.nTC2_ != 0 )
         {
