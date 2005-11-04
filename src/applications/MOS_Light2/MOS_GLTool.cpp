@@ -370,7 +370,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     //Draw the real time logistic actions
     if ( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
     {
-        glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_ % 16) ] );
+        //glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_  % 16) ] );
         glEnable( GL_LINE_STIPPLE );
         glLineWidth( 2.0 );
         const MOS_AgentManager::T_MaintenanceConsigns& consignsMain = MOS_App::GetApp().GetAgentManager().GetMaintenanceConsigns();
@@ -378,6 +378,24 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         for( MOS_AgentManager::CIT_MaintenanceConsigns itMain = consignsMain.begin(); itMain != consignsMain.end(); ++itMain )
         {
             const MOS_LogMaintenanceConsign* con = itMain->second;
+            switch( con->GetState() )
+            {
+            case MOS_LogMaintenanceConsign::eCarrierGoingTo :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_  % 16) ] );
+                    break;
+                }
+            case MOS_LogMaintenanceConsign::eCarrierGoingFrom :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ ((15 - nFrame_)  % 16) ] );
+                    break;
+                }
+            default:
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ 0 ] );
+                    break;
+                }
+            }
             DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
             DrawArrow(  con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 100.0);
         }
@@ -386,6 +404,29 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         for( MOS_AgentManager::CIT_MedicalConsigns itSan = consignsSan.begin(); itSan != consignsSan.end(); ++itSan )
         {
             const MOS_LogMedicalConsign* con = itSan->second;
+            switch( con->GetState() )
+            {
+            case MOS_LogMedicalConsign::eEvacuationGoingTo :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_  % 16) ] );
+                    break;
+                }
+            case MOS_LogMedicalConsign::eCollectionGoingTo :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_  % 16) ] );
+                    break;
+                }
+            case MOS_LogMedicalConsign::eEvacuationGoingFrom :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ ((15 - nFrame_)  % 16) ] );
+                    break;
+                }
+            default:
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ 0 ] );
+                    break;
+                }
+            }
             DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
             DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
         }
@@ -394,6 +435,24 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         for( MOS_AgentManager::CIT_SupplyConsigns itRav = consignsRav.begin(); itRav != consignsRav.end(); ++itRav )
         {
             const MOS_LogSupplyConsign* con = itRav->second;
+            switch( con->GetState() )
+            {
+            case MOS_LogSupplyConsign::eConvoyGoingTo :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_  % 16) ] );
+                    break;
+                }
+            case MOS_LogSupplyConsign::eConvoyGoingFrom :
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ ((15 - nFrame_)  % 16) ] );
+                    break;
+                }
+            default:
+                {
+                    glLineStipple( 1, MOS_GLTool::stipplePattern_[ 0 ] );
+                    break;
+                }
+            }
             DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
             DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
         }
