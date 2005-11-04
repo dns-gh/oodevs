@@ -17,7 +17,7 @@ inline
 MIL_Population& DEC_Knowledge_PopulationCollision::GetPopulation() const
 {
     assert( pPopulation_ );
-    return *pPopulation_;    
+    return *pPopulation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ inline
 const MIL_AgentPion& DEC_Knowledge_PopulationCollision::GetAgentColliding() const
 {
     assert( pAgentColliding_ );
-    return *pAgentColliding_;   
+    return *pAgentColliding_;
 }  
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,11 @@ const MIL_AgentPion& DEC_Knowledge_PopulationCollision::GetAgentColliding() cons
 inline
 void DEC_Knowledge_PopulationCollision::Prepare()
 {
-    bIsValid_ = false;
+    previousFlows_         .clear();
+    previousConcentrations_.clear();
+
+    std::swap( previousFlows_         , flows_          );
+    std::swap( previousConcentrations_, concentrations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +52,5 @@ void DEC_Knowledge_PopulationCollision::Prepare()
 inline
 bool DEC_Knowledge_PopulationCollision::Clean()
 {
-    bHasChanged_ = false;
-    return !bIsValid_;
+    return flows_.empty() && concentrations_.empty();
 }

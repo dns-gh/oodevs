@@ -38,14 +38,15 @@
             </Ralentissement>
             <Tir>
                 <Attitudes>
-                    <Attitude nom="agressive">
+                    <Attitude nom="agressive">                     
+                        <Intensite densitePopulation="2" intensite="0.9"/>
                         <ProtectionsPions>
-                            <ProtectionPion nom="CharLourd" densitePopulation="0.9">
+                            <ProtectionPion nom="CharLourd">
                                 <Destruction>0.1</Destruction>
                                 <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
                                 <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
                              </ProtectionPion>
-                             <ProtectionPion nom="BlindeLeger" densitePopulation="0.9">
+                             <ProtectionPion nom="BlindeLeger">
                                 <Destruction>0.2</Destruction>
                                 <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
                                 <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
@@ -53,13 +54,14 @@
                         </ProtectionsPions>
                      </Attitude>
                     <Attitude nom="agitee">
+                    <Intensite densitePopulation="2" intensite="0.05"/>
                         <ProtectionsPions>
-                            <ProtectionPion nom="CharLourd" densitePopulation="0.9">
+                            <ProtectionPion nom="CharLourd">
                                 <Destruction>0.1</Destruction>
                                 <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
                                 <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
                              </ProtectionPion>
-                             <ProtectionPion nom="BlindeLeger" densitePopulation="0.9">
+                             <ProtectionPion nom="BlindeLeger">
                                 <Destruction>0.2</Destruction>
                                 <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
                                 <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
@@ -67,13 +69,14 @@
                         </ProtectionsPions>
                      </Attitude>                     
                     <Attitude nom="calme">
+                        <Intensite densitePopulation="2" intensite="0.01"/>
                         <ProtectionsPions>
-                            <ProtectionPion nom="CharLourd" densitePopulation="0.9">
+                            <ProtectionPion nom="CharLourd">
                                 <Destruction>0.1</Destruction>
                                 <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
                                 <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
                              </ProtectionPion>
-                             <ProtectionPion nom="BlindeLeger" densitePopulation="0.9">
+                             <ProtectionPion nom="BlindeLeger">
                                 <Destruction>0.2</Destruction>
                                 <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
                                 <ReparableSansEvacuation>0.4</ReparableSansEvacuation>

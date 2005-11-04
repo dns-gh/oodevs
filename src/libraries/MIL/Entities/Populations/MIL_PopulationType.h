@@ -61,6 +61,7 @@ public:
           MT_Float           GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
           MT_Float           GetPionReloadingTimeFactor( MT_Float rPopulationDensity ) const;
     const PHY_AttritionData& GetAttritionData          ( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
+          MT_Float           GetPH                     ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
     //@}
 
 private:

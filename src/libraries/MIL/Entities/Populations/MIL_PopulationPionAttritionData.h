@@ -46,6 +46,7 @@ public:
     //! @name Accessors
     //@{
     const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
+          MT_Float           GetPH           ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
     //@}
 
 private:
@@ -57,7 +58,7 @@ private:
 
     //! @name Initialization
     //@{
-    void ReadAttitudeAttritionData( const MIL_PopulationAttitude& attitude, MIL_InputArchive& archive );
+    void ReadAttitudeData( const MIL_PopulationAttitude& attitude, MIL_InputArchive& archive );
     //@}
 
 private:
@@ -72,6 +73,7 @@ private:
 
         T_AttritionVector attritions_; // Per protection
         MT_Float          rPopulationDensity_;
+        MT_Float          rIntensity_;
     };
 
     typedef std::vector< sAttritionData > T_AttitudeAttritionDataVector; // Per attitude

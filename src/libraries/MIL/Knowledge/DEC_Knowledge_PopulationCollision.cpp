@@ -32,13 +32,13 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationCollision, "DEC_Knowledge_Popul
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_AgentPion& agentColliding, MIL_Population& population )
-    : DEC_Knowledge_ABC()
-    , pAgentColliding_ ( &agentColliding )
-    , pPopulation_     ( &population )
-    , flows_           ()
-    , concentrations_  () 
-    , bIsValid_        ( false )
-    , bHasChanged_     ( true )
+    : DEC_Knowledge_ABC      ()
+    , pAgentColliding_       ( &agentColliding )
+    , pPopulation_           ( &population )
+    , flows_                 ()
+    , concentrations_        () 
+    , previousFlows_         ()
+    , previousConcentrations_()
 {
 }
 
@@ -47,13 +47,13 @@ DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision()
-    : DEC_Knowledge_ABC()
-    , pAgentColliding_ ( 0 )
-    , pPopulation_     ( 0 )
-    , flows_           ()
-    , concentrations_  () 
-    , bIsValid_        ( false )
-    , bHasChanged_     ( true )
+    : DEC_Knowledge_ABC      ()
+    , pAgentColliding_       ( 0 )
+    , pPopulation_           ( 0 )
+    , flows_                 ()
+    , concentrations_        () 
+    , previousFlows_         ()
+    , previousConcentrations_()
 {
 }
 
@@ -81,7 +81,8 @@ void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const uint )
          & pPopulation_
          & flows_
          & concentrations_
-         & bIsValid_;
+         & previousFlows_;
+         & previousConcentrations_;
 }
 
 // =============================================================================
@@ -94,9 +95,7 @@ void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationFlow& flow )
 {
-    bIsValid_    = true;
-    if( flows_.insert( &flow ).second )
-        bHasChanged_ = true;
+    flows_.insert( &flow ).second;
 }
     
 // -----------------------------------------------------------------------------
@@ -105,9 +104,7 @@ void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationFlow& flow )
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationConcentration& concentration )
 {
-    bIsValid_    = true;
-    if( concentrations_.insert( &concentration ).second )
-        bHasChanged_ = true;
+    concentrations_.insert( &concentration ).second;
 }
 
 // -----------------------------------------------------------------------------
@@ -206,7 +203,7 @@ const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::UpdateOnNetwork() const
 {
-    if( bHasChanged_ || !bIsValid_ )
+    if( previousFlows_ != flows_ || previousConcentrations_ != concentrations_ )
         SendStateToNewClient();
 }
 
@@ -225,21 +222,13 @@ void DEC_Knowledge_PopulationCollision::SendStateToNewClient() const
     msg << (uint32)pAgentColliding_->GetID();
     msg << (uint32)pPopulation_    ->GetID();
 
-    if( !bIsValid_ )
-    {
-        msg << (uint32)0;
-        msg << (uint32)0;
-    }
-    else
-    {
-        msg << (uint32)concentrations_.size();
-        for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
-            msg << (uint32)(**it).GetID();
+    msg << (uint32)concentrations_.size();
+    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        msg << (uint32)(**it).GetID();
 
-        msg << (uint32)flows_.size();
-        for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
-            msg << (uint32)(**it).GetID();
-    }
+    msg << (uint32)flows_.size();
+    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+        msg << (uint32)(**it).GetID();
 
     msgMgr.SendMsgPopulationCollision( msg );
 }

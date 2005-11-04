@@ -85,10 +85,12 @@ private:
 private:
     const MIL_AgentPion*                pAgentColliding_;
           MIL_Population*               pPopulation_;
+
           T_PopulationFlowSet           flows_;
           T_PopulationConcentrationSet  concentrations_;
-          bool                          bIsValid_;
-          bool                          bHasChanged_;
+
+          T_PopulationFlowSet           previousFlows_;
+          T_PopulationConcentrationSet  previousConcentrations_;
 };
 
 #include "DEC_Knowledge_PopulationCollision.inl"

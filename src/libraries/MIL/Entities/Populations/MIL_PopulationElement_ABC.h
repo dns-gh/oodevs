@@ -23,6 +23,7 @@
 
 #include "Tools/MIL_MOSIDManager.h"
 #include "TER/TER_PopulationConcentration_ABC.h"
+#include "MT_Tools/MT_Random.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;
@@ -134,6 +135,9 @@ private:
           // Network
           bool                    bAttitudeUpdated_;   
           bool                    bHumansUpdated_;
+
+private:
+    static MT_Random randomGenerator_;
 };
 
 #include "MIL_PopulationElement_ABC.inl"

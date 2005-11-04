@@ -13,13 +13,13 @@ behavior BEH_Defaut( id nDummy )
 {   
     when updated:
     {      
-        persistent T_Action actionFire;
+        //persistent T_Action actionFire;
         
         DEC_Debug( "BEH_Defaut" );
         
         if( DIA_ModuleBegins() )
         {
-            actionFire = DEC_StartTirSurPions();
+          //  actionFire = DEC_StartTirSurPions();
         }
         
         // DEC_Population_RalentissementPion_ChangeVitesse   (  5 );
@@ -28,16 +28,9 @@ behavior BEH_Defaut( id nDummy )
     
     on spontaneous end:
     {
-        if( actionFire != 0 )
-            DEC_StopAction( actionFire );    
+//        if( actionFire != 0 )
+//            DEC_StopAction( actionFire );    
     }        
-    
-
-    
-    
-    
-    
-    
 }
 
 behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement mission, id nDummy )
@@ -45,6 +38,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
     when updated:
     {
         persistent T_Action                actionMove;
+        persistent T_Action                actionFire;
         persistent E_EtatActionDeplacement nEtatDeplacement;
         persistent float  rDummy = 0;
         
@@ -52,6 +46,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
         {
             DEC_Debug( "MIS_Population_FaireMouvement - DIA_ModuleBegins" );
             actionMove = DEC_StartDeplacement( mission.destination_ );
+            actionFire = DEC_StartTirSurPions();
         }
         
         if( rDummy == 53 )
@@ -68,6 +63,8 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
     {
         if( actionMove != 0 )
             DEC_StopAction( actionMove );    
+        if( actionFire != 0 )
+            DEC_StopAction( actionFire );
     }    
 }
 // 22 + 53 

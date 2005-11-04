@@ -92,6 +92,16 @@ const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_Populat
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetPH
+// Created: NLD 2005-11-04
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_PopulationType::GetPH( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const
+{
+    return attritionData_.GetPH( attitude, rDensity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationType::Find
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------

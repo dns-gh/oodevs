@@ -29,6 +29,7 @@
 MIL_PopulationPionAttritionData::sAttritionData::sAttritionData()
     : attritions_        ( PHY_Protection::GetProtections().size(), PHY_AttritionData() )
     , rPopulationDensity_( 0. )
+    , rIntensity_        ( 0. )
 {
     // NOTHING
 }
@@ -71,7 +72,7 @@ void MIL_PopulationPionAttritionData::Initialize( MIL_InputArchive& archive )
         if( !pAttitude )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown attitude '%s'", strAttitude.c_str() ), archive.GetContext() );
 
-        ReadAttitudeAttritionData( *pAttitude, archive );
+        ReadAttitudeData( *pAttitude, archive );
 
         archive.EndSection(); // Attitude
     }
@@ -79,14 +80,19 @@ void MIL_PopulationPionAttritionData::Initialize( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationPionAttritionData::ReadAttitudeAttritionData
+// Name: MIL_PopulationPionAttritionData::ReadAttitudeData
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-void MIL_PopulationPionAttritionData::ReadAttitudeAttritionData( const MIL_PopulationAttitude& attitude, MIL_InputArchive& archive )
+void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAttitude& attitude, MIL_InputArchive& archive )
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
 
     sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
+
+    archive.Section( "Intensite" );
+    archive.ReadAttribute( "densitePopulation", attitudeData.rPopulationDensity_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "intensite"        , attitudeData.rIntensity_        , CheckValueBound         ( 0., 1. ) );
+    archive.EndSection(); // Intensite
 
     archive.BeginList( "ProtectionsPions" );
     while( archive.NextListElement() )
@@ -98,8 +104,6 @@ void MIL_PopulationPionAttritionData::ReadAttitudeAttritionData( const MIL_Popul
         const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
         if( !pProtection )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown protection '%s'", strProtection.c_str() ), archive.GetContext() );
-
-        archive.ReadAttribute( "densitePopulation", attitudeData.rPopulationDensity_ );
 
         assert( attitudeData.attritions_.size() > pProtection->GetID() );
         attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( archive );
@@ -126,4 +130,20 @@ const PHY_AttritionData& MIL_PopulationPionAttritionData::GetAttritionData( cons
 
     assert( attitudeData.attritions_.size() > protection.GetID() );
     return attitudeData.attritions_[ protection.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationPionAttritionData::GetPH
+// Created: NLD 2005-11-04
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationPionAttritionData::GetPH( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const
+{
+    assert( attitudeAttritionData_.size() > attitude.GetID() );
+
+    const sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
+
+    if( attitudeData.rPopulationDensity_ == 0. )
+        return 0.;
+
+    return std::min( 1., rDensity * attitudeData.rIntensity_ / attitudeData.rPopulationDensity_ );
 }

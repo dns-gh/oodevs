@@ -21,6 +21,7 @@
 
 #include "MIL_PopulationAttitude.h"
 #include "MIL_Population.h"
+#include "MIL_PopulationType.h"
 #include "Entities/Populations/Actions/PHY_PopulationFireResults.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -31,6 +32,8 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "MIL_AgentServer.h"
+
+MT_Random MIL_PopulationElement_ABC::randomGenerator_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC constructor
@@ -82,6 +85,7 @@ MIL_PopulationElement_ABC::~MIL_PopulationElement_ABC()
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::FireOnPions( PHY_PopulationFireResults& fireResult )
 {
+    assert( pAttitude_ );
     for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
     {
         MIL_Agent_ABC& target = **it;
@@ -93,6 +97,10 @@ void MIL_PopulationElement_ABC::FireOnPions( PHY_PopulationFireResults& fireResu
         PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
         target.GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
         if( compTargets.empty() )
+            continue;
+
+        const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
+        if ( !( randomGenerator_.rand_oi() <= rPH ) ) 
             continue;
 
         MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult );
