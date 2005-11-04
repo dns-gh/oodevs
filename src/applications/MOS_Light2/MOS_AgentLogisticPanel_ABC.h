@@ -66,11 +66,13 @@ protected:
     {
         if( ! cont.empty() )
         {
+            int y = viewer.contentsY();
             viewer.clear();
             viewer.BeginList();
             for( Container::const_iterator it = cont.begin(); it != cont.end(); ++it )
                 viewer.AddConsign( **it );
             viewer.EndList();
+            viewer.scrollBy( 0, y );
             viewer.show();
         }
         else
