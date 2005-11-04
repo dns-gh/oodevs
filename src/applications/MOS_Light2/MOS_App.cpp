@@ -285,6 +285,8 @@ void MOS_App::InitializeRessourceIDs( MOS_InputArchive& scipioArchive )
     while( dotArchive.NextListElement() )
     {
         dotArchive.Section( "Dotation" );
+        std::string strDot;
+        dotArchive.ReadAttribute( "nom", strDot );
         dotArchive.BeginList( "Categories" );
         while( dotArchive.NextListElement() )
         {
@@ -295,6 +297,7 @@ void MOS_App::InitializeRessourceIDs( MOS_InputArchive& scipioArchive )
             dotArchive.ReadField( "MosID", nID );
 
             resourcesNameMap_.insert( std::make_pair( nID, strName ) );
+            resourcesMap_.insert( std::make_pair( nID, MOS_Resource( nID, strName, strDot ) ) );
 
             dotArchive.EndSection(); // Categorie
         }

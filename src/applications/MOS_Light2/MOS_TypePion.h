@@ -30,7 +30,8 @@ class MOS_Nature;
 class MOS_TypePion
 {
     MT_COPYNOTALLOWED( MOS_TypePion );
-
+public:
+         typedef std::map< MIL_AgentID, uint >       T_ResourceQty_Map;
 public:
               MOS_TypePion( const std::string& strName, const MOS_Nature& nature );
               MOS_TypePion( const std::string& strName, MOS_InputArchive& archive );
@@ -42,6 +43,7 @@ public:
           uint            GetID   () const;
     const MOS_AgentModel& GetModel() const;
     char                  GetSymbol() const;
+    T_ResourceQty_Map     GetStocks() const;
     char                  GetLevelSymbol() const;
           bool            IsLogistic    () const;
           bool            HasMaintenance() const;
@@ -57,6 +59,7 @@ private:
     bool                  bHasMaintenance_;
     bool                  bHasMedical_;
     bool                  bHasSupply_;
+    T_ResourceQty_Map     stocks_;
 };
 
 #include "MOS_TypePion.inl"

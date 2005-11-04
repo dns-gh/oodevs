@@ -38,6 +38,7 @@
 #include "MOS_Population.h"
 #include "MOS_PopulationConcentration.h"
 #include "MOS_PopulationFlow.h"
+#include "MOS_Resource.h"
 
 
 using namespace DIN;
@@ -163,7 +164,7 @@ void MOS_Agent::Initialize()
     bRefugeesManaged_             = false;
     pMedicalData_                 = 0;
     pMaintenanceData_             = 0;
-    pSupplyData_                  = 0;
+    pSupplyData_                  = ( new MOS_Agent::T_SupplyData() );
     pTypeAutomate_				  = 0;
 }
 
@@ -944,6 +945,27 @@ void MOS_Agent::ReadODB( MOS_InputArchive& archive, bool bAutomata )
 			if( archive.Section( "Ravitaillement", MOS_InputArchive::eNothing ) )
 			{
 				archive.ReadAttribute( "automate", nLogSupplySuperior_ );
+                if( archive.BeginList( "Quotas", MOS_InputArchive::eNothing ) )
+			    {
+                    while( archive.NextListElement() )
+                    {
+                        archive.Section( "Dotation" );
+                        archive.BeginList( "Categories" );
+                        while( archive.NextListElement() )
+                        {
+                            archive.Section( "Categorie" );
+                            std::string strName;
+                            archive.ReadAttribute( "nom", strName );
+                            uint quota;
+                            archive.ReadAttribute( "quota", quota );
+                            pSupplyData_->quotas_.push_back( std::pair< uint, uint >( MOS_App::GetApp().GetRessourceID( strName ), quota ) );
+                            archive.EndSection(); //Categorie
+                        }
+                        archive.EndList(); //Categories
+                        archive.EndSection(); //Dotation
+                    }
+                    archive.EndList(); //Quotas
+                }
 				archive.EndSection();
 			}
             archive.EndSection();
@@ -961,6 +983,8 @@ void MOS_Agent::ReadODB( MOS_InputArchive& archive, bool bAutomata )
     archive.EndSection();
 
     archive.EndSection();
+
+    InitializeStocks();
 }
 
 
@@ -1019,6 +1043,22 @@ void MOS_Agent::WriteODB( MT_XXmlOutputArchive& archive )
 					archive.Section( "Ravitaillement" );
 					archive.WriteAttribute( "automate", nLogSupplySuperior_ );
 					archive.Section( "Quotas" );
+                    if ( pSupplyData_->quotas_.size() > 0 )
+                    {
+                        for( MOS_Agent::CIT_LogisticAvailabilities itQuota = pSupplyData_->quotas_.begin(); itQuota != pSupplyData_->quotas_.end(); ++itQuota )
+                        {
+                            const MOS_Resource& resource = MOS_App::GetApp().GetResource( itQuota->first );
+                            archive.Section( "Dotation" );
+                            archive.WriteAttribute( "nom", resource.GetDotationName() );
+                            archive.Section( "Categories" );
+                            archive.Section( "Categorie" );
+                            archive.WriteAttribute( "nom", resource.GetName() );
+                            archive.WriteAttribute( "quota", itQuota->second );
+                            archive.EndSection();
+                            archive.EndSection();
+                            archive.EndSection();
+                        }
+                    }
 					archive.EndSection();
 					archive.EndSection();
 				}
@@ -1188,4 +1228,22 @@ void MOS_Agent::DeleteAllFireResults()
     for( CIT_FireResults it = fireResults_.begin(); it != fireResults_.end(); ++it )
         delete *it;
     fireResults_.clear();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::InitializeStocks
+// Created: HME 2005-11-03
+// -----------------------------------------------------------------------------
+void MOS_Agent::InitializeStocks()
+{
+    if ( pTypePion_ == 0 )
+        return;
+    if ( pSupplyData_ )
+            pSupplyData_->stocks_ = pTypePion_->GetStocks();
+    else
+    {
+        pSupplyData_ = new T_SupplyData();
+        pSupplyData_->stocks_ = pTypePion_->GetStocks();
+    }
 }

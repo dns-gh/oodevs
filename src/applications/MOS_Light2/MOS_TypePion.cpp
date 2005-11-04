@@ -50,6 +50,30 @@ MOS_TypePion::MOS_TypePion( const std::string& strName, MOS_InputArchive& archiv
         archive.EndSection(); // Equipement
     }
     archive.EndList(); // Equipements
+    
+    if ( archive.Section( "Stocks", MOS_InputArchive::eNothing ) )
+    {
+        archive.EndSection(); // $$$$ _RC_ HME 2005-11-03: ugly !!!
+        archive.BeginList( "Stocks" );
+        while( archive.NextListElement() )
+        {
+            archive.Section( "Dotation" );
+            archive.BeginList( "Categories" );
+            while( archive.NextListElement() )
+            {
+                archive.Section( "Categorie" );
+                std::string strName;
+                archive.ReadAttribute( "nom", strName );
+                uint qte = 0;
+                archive.ReadAttribute( "contenance", qte );
+                stocks_[ MOS_App::GetApp().GetRessourceID( strName ) ] = qte;
+                archive.EndSection(); //Categorie
+            }
+            archive.EndList(); //Categories
+            archive.EndSection(); //Dotation
+        }
+        archive.EndList(); //Stocks
+    }
 
     pModel_ = MOS_App::GetApp().GetAgentManager().FindModel( strModel );
     if( !pModel_ )

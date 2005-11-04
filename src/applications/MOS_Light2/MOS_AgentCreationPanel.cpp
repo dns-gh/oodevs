@@ -173,9 +173,9 @@ void MOS_AgentCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const M
     selectedElement_ = context.selectedElement_;
     popupMenu.insertItem( selectedElement_.pAgent_->IsEmbraye() ? tr( "Débrayer automate" ) : tr( "Embrayer automate" ), this, SLOT( ToggleAutomate() ) );
     popupMenu.insertItem( "Liens Logistiques" , this , SLOT( LogisticLinksDialog() ) );
-    /*if ( selectedElement_.pAgent_->IsLogisticRavitaillement() 
+    if ( selectedElement_.pAgent_->IsLogisticRavitaillement() 
         && ( selectedElement_.pAgent_->IsLogisticBLT() || selectedElement_.pAgent_->IsLogisticBLD() ) )
-        popupMenu.insertItem( "Changer les quotas", this, SLOT( ChangeQuotasDialog() ) );*/
+        popupMenu.insertItem( "Changer les quotas", this, SLOT( ChangeQuotasDialog() ) );
 }
 
 

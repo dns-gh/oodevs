@@ -86,3 +86,13 @@ bool MOS_TypePion::HasSupply() const
 {
     return bHasSupply_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_TypePion::GetStocks
+// Created: HME 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+MOS_TypePion::T_ResourceQty_Map MOS_TypePion::GetStocks() const
+{
+    return stocks_;
+}

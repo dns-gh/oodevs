@@ -253,6 +253,8 @@ public:
     void OnReceiveMsgLogSupplyEtat  ( const ASN1T_MsgLogRavitaillementEtat& asn );
     void OnReceiveMsgLogSupplyQuotas( const ASN1T_MsgLogRavitaillementQuotas& asnMsg );
 
+    void InitializeStocks();
+
     // Accessor
     bool MOS_Agent::IsLogisticTC2           () const;
     bool MOS_Agent::IsLogisticBLD           () const;

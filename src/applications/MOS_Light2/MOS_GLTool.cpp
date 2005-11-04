@@ -512,7 +512,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         || ( nState == eSelected && (MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eAuto ))))
     {
         float offset = 0.0;
-        glLineWidth( 5 );
+        glLineWidth( 3 );
         if ( agent.nTC2_ != 0 )
         {
             glColor4d( MOS_COLOR_YELLOW );

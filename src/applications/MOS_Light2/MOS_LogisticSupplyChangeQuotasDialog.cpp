@@ -116,10 +116,28 @@ void MOS_LogisticSupplyChangeQuotasDialog::Validate()
     assert( pAgent_ );
 
     CIT_AgentIDMap itSupplied = automateComboBoxIDs_.find( pSuppliedComboBox_->currentItem() );
-    assert( itSupplied != automateComboBoxIDs_.end() );
+    if ( itSupplied == automateComboBoxIDs_.end() )
+        return;
 
     const MOS_Agent& supplied = *itSupplied->second;
-
+    
+    if ( MOS_App::GetApp().IsODBEdition() )
+    {
+        if ( pQuotas_->childCount() > 0 )
+        {
+            MOS_Agent::T_LogisticAvailabilities& quotas = supplied.pSupplyData_->quotas_;
+            quotas.clear();
+            QListViewItem* pItem = pQuotas_->firstChild();
+            while( pItem )
+            {
+                quotas.push_back( std::pair< uint, uint >(MOS_App::GetApp().GetRessourceID( (const char*)pItem->text( 0 ) ) , pItem->text( 1 ).toInt()) );
+                pItem = pItem->nextSibling();
+            }
+        }
+        hide();
+        return;
+    }
+    
     MOS_ASN_MsgLogRavitaillementChangeQuotas asnMsg;
 
     asnMsg.GetAsnMsg().oid_donneur  = pAgent_->GetID();

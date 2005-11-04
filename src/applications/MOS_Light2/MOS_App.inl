@@ -250,3 +250,16 @@ const std::string& MOS_App::GetRootConfigFile() const
 {
     return strRootConfigFile_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::GetResource
+// Created: HME 2005-11-04
+// -----------------------------------------------------------------------------
+inline
+const MOS_Resource& MOS_App::GetResource ( MIL_AgentID id ) const
+{
+    CIT_ResourceMap it = resourcesMap_.find( id );
+    assert( it != resourcesMap_.end() );
+    return  it->second;
+
+}

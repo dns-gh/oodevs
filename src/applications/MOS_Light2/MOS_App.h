@@ -15,6 +15,7 @@
 #include "MOS_Types.h"
 
 #include "MOS_RawVisionData.h"
+#include "MOS_Resource.h"
 
 #include <qapplication.h>
 
@@ -43,6 +44,7 @@ class MOS_Object_ABC;
 class MOS_TacticalLine_ABC;
 class QSplashScreen;
 class MOS_TypePopulation;
+class MOS_Resource;
 
 typedef std::map< MIL_AgentID, std::string > T_MosId_String_Map;
 typedef T_MosId_String_Map::iterator         IT_MosId_String_Map;
@@ -167,18 +169,19 @@ public:
     /** @name Helpers */
     //-------------------------------------------------------------------------
     //@{
-    std::string GetResourceName         ( MIL_AgentID ) const;
-    std::string GetEquipmentName        ( MIL_AgentID ) const;
-    uint        GetEquipementID         ( const std::string& strName ) const;
-    std::string GetTransportDotationName( MIL_AgentID ) const;
-    std::string GetBreakDownName        ( uint )        const;
-    std::string GetNBCName              ( uint )        const;
-    uint        GetNBCID                ( const std::string& strName ) const;
-    const T_MosId_String_Map& GetNBCNames      () const;
-    const T_MosId_String_Map& GetResourceNames () const;
-    const T_MosId_String_Map& GetEquipmentNames() const;
-    const MOS_SensorType*     FindSensorType  ( const std::string& strName ) const;
-    unsigned int              GetRessourceID  ( const std::string& strRessource ) const;
+    std::string                 GetResourceName         ( MIL_AgentID )                     const;
+    const MOS_Resource&         GetResource             ( MIL_AgentID )                     const;
+    std::string                 GetEquipmentName        ( MIL_AgentID )                     const;
+    uint                        GetEquipementID         ( const std::string& strName )      const;
+    std::string                 GetTransportDotationName( MIL_AgentID )                     const;
+    std::string                 GetBreakDownName        ( uint )                            const;
+    std::string                 GetNBCName              ( uint )                            const;
+    uint                        GetNBCID                ( const std::string& strName )      const;
+    const T_MosId_String_Map&   GetNBCNames             ()                                  const;
+    const T_MosId_String_Map&   GetResourceNames        ()                                  const;
+    const T_MosId_String_Map&   GetEquipmentNames       ()                                  const;
+    const MOS_SensorType*       FindSensorType          ( const std::string& strName )      const;
+    unsigned int                GetRessourceID          ( const std::string& strRessource ) const;
     //@}
 
 signals:
@@ -261,6 +264,11 @@ private:
     typedef std::map< std::string, const MOS_SensorType* > T_SensorTypeMap;
     typedef T_SensorTypeMap::const_iterator                CIT_SensorTypeMap;
 
+public:
+    typedef std::map< uint, MOS_Resource >                T_ResourceMap;
+    typedef T_ResourceMap::iterator                       IT_ResourceMap;
+    typedef T_ResourceMap::const_iterator                 CIT_ResourceMap;
+
 private:
     //! @name Member data
     //@{
@@ -281,6 +289,8 @@ private:
     T_MosId_String_Map resourcesNameMap_;
     T_MosId_String_Map breakDownsNameMap_;
     T_MosId_String_Map nbcNamesMap_;
+
+    T_ResourceMap     resourcesMap_;
 
     T_SensorTypeMap    sensorTypes_;
 

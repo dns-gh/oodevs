@@ -211,6 +211,11 @@ MOS_Agent& MOS_AgentCreationMapFilter::CreateAgent( const MOS_AgentCreationPanel
     pNewAgent->symbolName_      = agentType.pNature_->symbol_;
     pNewAgent->levelSymbolName_ = agentType.pNature_->levelSymbol_;
 	pNewAgent->pTypeAutomate_ = MOS_App::GetApp().GetAgentManager().FindTypeAutomate( agentType.strName_ );
+    if ( pNewAgent->IsAutomate() )
+        pNewAgent->pTypePion_ = & pNewAgent->pTypeAutomate_->GetTypePC();
+    else
+        pNewAgent->pTypePion_ = MOS_App::GetApp().GetAgentManager().FindTypePion( agentType.strName_ );
+    pNewAgent->InitializeStocks();
 
 //$$$$$$
 //    MOS_AgentModel* pModel = MOS_App::GetApp().GetAgentManager().FindModel( agentType.strDIAModel_ );
