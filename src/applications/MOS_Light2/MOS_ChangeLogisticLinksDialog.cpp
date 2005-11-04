@@ -43,10 +43,19 @@ MOS_ChangeLogisticLinksDialog::MOS_ChangeLogisticLinksDialog( QWidget* pParent  
     pDataLayout->setMargin ( 10 );
     pDataLayout->setSpacing( 10 );
 
-    pDataLayout->addWidget( new QLabel( "TC2"                     , this ), 0, 0 );
-    pDataLayout->addWidget( new QLabel( "Superieur maintenance"   , this ), 1, 0 );
-    pDataLayout->addWidget( new QLabel( "Superieur santé"         , this ), 2, 0 );
-    pDataLayout->addWidget( new QLabel( "Superieur ravitaillement", this ), 3, 0 );
+    QLabel* lab_tc2 = new QLabel( "TC2"                     , this );
+    lab_tc2->setPaletteBackgroundColor( QColor( "yellow" ) );
+    pDataLayout->addWidget( lab_tc2 , 0, 0 );
+    QLabel* lab_main = new QLabel( "Superieur maintenance"   , this );
+    lab_main->setPaletteBackgroundColor( QColor( 128, 0, 0 ) );
+    lab_main->setPaletteForegroundColor( QColor( "white" ) );
+    pDataLayout->addWidget( lab_main, 1, 0 );
+    QLabel* lab_san = new QLabel( "Superieur santé"         , this );
+    lab_san->setPaletteBackgroundColor( QColor( 255, 164, 200 ) );
+    pDataLayout->addWidget( lab_san, 2, 0 );
+    QLabel* lab_rav = new QLabel( "Superieur ravitaillement", this );
+    lab_rav->setPaletteBackgroundColor( QColor( 255, 150, 10 ) );
+    pDataLayout->addWidget( lab_rav , 3, 0 );
     pTC2ComboBox_           = new QComboBox( FALSE, this );
     pMaintenanceComboBox_   = new QComboBox( FALSE, this );
     pMedicalComboBox_       = new QComboBox( FALSE, this );  

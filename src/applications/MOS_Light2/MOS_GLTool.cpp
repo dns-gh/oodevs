@@ -396,8 +396,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
-            DrawArrow(  con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 100.0);
+            DrawArc( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 40.0, true );
         }
         const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
         glColor4d( MOS_COLOR_PINK );
@@ -427,8 +426,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
-            DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
+            DrawArc( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 0.0, true );
         }
         const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
         glColor4d( MOS_COLOR_ORANGE );
@@ -453,8 +451,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawLine( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos() );
-            DrawArrow( con->GetPionLogHandling()->GetPos(), con->GetPion().GetPos(), 100.0 );
+            DrawArc( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 20.0, true );
         }
         glDisable( GL_LINE_STIPPLE );
     }
