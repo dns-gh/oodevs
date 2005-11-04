@@ -102,6 +102,8 @@ public:
     static void DisableSlowDownByPopulation         ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void EnableReloadingDurationModification ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void DisableReloadingDurationModification( DIA_Call_ABC& call, MIL_AgentPion& callerAgent ); 
+    static void EnableInvulnerability               ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void DisableInvulnerability              ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
    
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

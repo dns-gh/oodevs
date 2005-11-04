@@ -42,7 +42,7 @@ public:
     //@{
     void Update    ( bool bIsDead );
     void Clean     ();
-//    bool HasChanged() const;
+    bool HasChanged() const;
     //@}
 
     //! @name Operations
@@ -55,6 +55,10 @@ public:
 
     void     EnableReloadingDurationModification ();
     void     DisableReloadingDurationModification();
+
+            void EnableInvulnerability ();
+            void DisableInvulnerability();
+    virtual bool IsInvulnerable() const;
     //@}
 
     //! @name Network
@@ -67,7 +71,8 @@ private:
     MIL_AgentPion* pPion_;
     bool           bSlowDownEnabled_;
     bool           bReloadingDurationModificationEnabled_;
-//    bool           bHasChanged_;
+    bool           bInvulnerabilityEnabled_;
+    bool           bHasChanged_;
 };
 
 #include "PHY_RolePion_Population.inl"

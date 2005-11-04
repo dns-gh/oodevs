@@ -27,9 +27,10 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Population, "PHY_RolePion_Population" )
 PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_AgentPion& pion )
     : PHY_RoleInterface_Population          ( role )
     , pPion_                                ( &pion )
-//    , bHasChanged_                          ( true )
+    , bHasChanged_                          ( true )
     , bSlowDownEnabled_                     ( true )
     , bReloadingDurationModificationEnabled_( true )
+    , bInvulnerabilityEnabled_              ( false )
 {
 }
  
@@ -40,9 +41,10 @@ PHY_RolePion_Population::PHY_RolePion_Population( MT_RoleContainer& role, MIL_Ag
 PHY_RolePion_Population::PHY_RolePion_Population()
     : PHY_RoleInterface_Population          ()
     , pPion_                                ( 0 )
-//    , bHasChanged_                          ( true )
+    , bHasChanged_                          ( true )
     , bSlowDownEnabled_                     ( true )
     , bReloadingDurationModificationEnabled_( true )
+    , bInvulnerabilityEnabled_              ( false )
 {
 }
 
@@ -68,7 +70,8 @@ void PHY_RolePion_Population::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this )
          & pPion_
          & bSlowDownEnabled_
-         & bReloadingDurationModificationEnabled_;
+         & bReloadingDurationModificationEnabled_
+         & bInvulnerabilityEnabled_;
 }
 
 // =============================================================================

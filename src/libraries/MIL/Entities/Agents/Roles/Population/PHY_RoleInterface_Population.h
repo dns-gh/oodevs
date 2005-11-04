@@ -38,6 +38,11 @@ public:
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
+
+    //! @name Accessors
+    //@{
+    virtual bool IsInvulnerable() const = 0;
+    //@}
 };
 
 #include "PHY_RoleInterface_Population.inl"

@@ -30,18 +30,18 @@ void PHY_RolePion_Population::Update( bool /*bIsDead*/ )
 inline
 void PHY_RolePion_Population::Clean()
 {
-//    bHasChanged_ = false;
+    bHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::HasChanged
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-//inline
-//bool PHY_RolePion_Population::HasChanged() const
-//{
-//    return bHasChanged_;
-//}
+inline
+bool PHY_RolePion_Population::HasChanged() const
+{
+    return bHasChanged_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::EnableSlowDown
@@ -81,4 +81,42 @@ inline
 void PHY_RolePion_Population::DisableReloadingDurationModification()
 {
     bReloadingDurationModificationEnabled_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::EnableInvulnerability
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Population::EnableInvulnerability()
+{
+    if( ! bInvulnerabilityEnabled_ )
+    {
+        bHasChanged_ = true;
+        bInvulnerabilityEnabled_ = true;
+    }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableInvulnerability
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+void PHY_RolePion_Population::DisableInvulnerability()
+{
+    if( bInvulnerabilityEnabled_ )
+    {
+        bHasChanged_ = true;
+        bInvulnerabilityEnabled_ = false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::IsInvulnerable
+// Created: NLD 2005-11-03
+// -----------------------------------------------------------------------------
+inline
+bool PHY_RolePion_Population::IsInvulnerable() const
+{
+    return bInvulnerabilityEnabled_;
 }

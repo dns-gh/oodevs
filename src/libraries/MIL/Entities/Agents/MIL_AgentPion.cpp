@@ -949,7 +949,8 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
                               || GetRole< PHY_RolePion_Posture        >().HLAStatusHasChanged()
                               || GetRole< PHY_RolePion_Transported    >().HasChanged()
                               || GetRole< PHY_RolePion_Surrender      >().HasChanged()
-                              || GetRole< PHY_RolePion_Perceiver      >().HasRadarStateChanged();
+                              || GetRole< PHY_RolePion_Perceiver      >().HasRadarStateChanged()
+                              || GetRole< PHY_RolePion_Population     >().HasChanged();
 
     // $$$$ AGE 2004-12-13: Test functor.MustUpdateAll() if performance issues (doubt it)
     std::vector< std::string > statuses;
@@ -973,6 +974,8 @@ void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
         statuses.push_back( "rendu" );
     if( GetRole< PHY_RolePion_Refugee >().IsManaged() )
         statuses.push_back( "refugie_prisencompte" );
+    if( GetRole< PHY_RolePion_Population >().IsInvulnerable() )
+        statuses.push_back( "invulnerable_population" );
     functor.Serialize( "status", bUpdateStatuses, statuses );
 }
 

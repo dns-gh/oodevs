@@ -404,6 +404,7 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
                 DEC_Automate_SetMissionLimaFlag( lima, true );
                 
             DEC_InterdireEvacuationAutomatiqueBlesses( myself );
+            DEC_Agent_ActiverInvulnerabilitePopulation();
                     
             T_ListePoints echantillon = DEC_Geometrie_DecouperListePoints( mission.itineraire_, 7 );
             if( echantillon != 0 )
@@ -442,6 +443,7 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
           DEC_StopAction( currentAction );
         
         DEC_AutoriserEvacuationAutomatiqueBlesses( myself );
+        DEC_Agent_DesactiverInvulnerabilitePopulation();
     }
 }
 

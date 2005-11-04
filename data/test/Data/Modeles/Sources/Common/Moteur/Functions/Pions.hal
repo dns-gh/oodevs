@@ -161,6 +161,9 @@ signatures
     V                                       A::DEC_Agent_DesactiverRalentissementParPopulation               ();
     V                                       A::DEC_Agent_ActiverModificationTempsRechargementParPopulation   ();
     V                                       A::DEC_Agent_DesactiverModificationTempsRechargementParPopulation();
+    V                                       A::DEC_Agent_ActiverInvulnerabilitePopulation                    ();
+    V                                       A::DEC_Agent_DesactiverInvulnerabilitePopulation                 ();
+
                                                                                         
     R /* temps en minutes */                A::DEC_Agent_AutonomieEnDeplacement();
     R /* temps en minutes */                A::DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( R /*distance en m*/ );    

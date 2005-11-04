@@ -25,9 +25,11 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/MIL_Army.h"
 #include "MIL_AgentServer.h"
 
 // -----------------------------------------------------------------------------
@@ -83,6 +85,10 @@ void MIL_PopulationElement_ABC::FireOnPions( PHY_PopulationFireResults& fireResu
     for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
     {
         MIL_Agent_ABC& target = **it;
+
+        if(    target.GetArmy().IsAnEnemy( GetPopulation().GetArmy() ) != eTristate_True 
+            || target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
+            continue;
 
         PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
         target.GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );

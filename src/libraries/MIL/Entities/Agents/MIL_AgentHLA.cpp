@@ -26,6 +26,7 @@
 #include "Roles/Communications/PHY_RoleHLA_Communications.h"
 #include "Roles/Perception/PHY_RoleHLA_Perceiver.h"
 #include "Roles/Hla/HLA_RoleDistantPion.h"
+#include "Roles/Population/PHY_RoleHLA_Population.h"
 #include "HLA/HLA_Serialization.h"
 #include "HLA/AttributeIdentifier.h"
 #include "HLA/Deserializer.h"
@@ -50,6 +51,7 @@ MIL_AgentHLA::MIL_AgentHLA( uint nID, const ObjectIdentifier& objectId, HLA_Inte
     RegisterRole< PHY_RoleHLA_Perceiver      >();
     RegisterRole< PHY_RoleHLA_Surrender      >();
     RegisterRole< PHY_RoleHLA_Refugee        >();
+    RegisterRole< PHY_RoleHLA_Population     >();
 }
 
 // -----------------------------------------------------------------------------
@@ -186,6 +188,7 @@ void MIL_AgentHLA::Deserialize( const AttributeIdentifier& attributeID, Deserial
         GetRole< PHY_RoleHLA_Perceiver >     ().ChangeStatus( statuses );
         GetRole< PHY_RoleHLA_Surrender >     ().ChangeStatus( statuses );
         GetRole< PHY_RoleHLA_Refugee >       ().ChangeStatus( statuses );
+        GetRole< PHY_RoleHLA_Population >    ().ChangeStatus( statuses );
     }
     if( bWasInvalid && IsValid() && GetRole< PHY_RoleHLA_Location >().IsValid() )
         GetRole< PHY_RoleHLA_Location >().UpdatePatch();
