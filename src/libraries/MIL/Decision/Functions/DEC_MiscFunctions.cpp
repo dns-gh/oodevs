@@ -39,7 +39,7 @@ void DEC_MiscFunctions::SetCurrentSpeedModificator( DIA_Call_ABC& call, MIL_Agen
 void DEC_MiscFunctions::SetMaxSpeedModificator( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     MT_Float rFactor = call.GetParameter( 0 ).ToFloat();
-    callerAgent.GetRole< PHY_RoleAction_Moving >().SetSpeedModificator( rFactor );
+    callerAgent.GetRole< PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }
 
 // =============================================================================
