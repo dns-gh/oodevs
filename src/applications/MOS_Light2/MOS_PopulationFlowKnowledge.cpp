@@ -80,13 +80,14 @@ MOS_PopulationFlowKnowledge::MOS_PopulationFlowKnowledge( const ASN1T_MsgPopulat
     , pGtia_               ( MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pFlow_               ( 0 )
-    , rDirection_          ( 0. )
-    , rSpeed_              ( 0. )
-    , nNbrAliveHumans_     ( 0 )
-    , nNbrDeadHumans_      ( 0 )
-    , eAttitude_           ( ePopulationAttitude_Calme )
-    , bIsPerceived_        ( false )
+    , rDirection_          ( 0., false )
+    , rSpeed_              ( 0., false )
+    , nNbrAliveHumans_     ( 0, false )
+    , nNbrDeadHumans_      ( 0, false )
+    , eAttitude_           ( ePopulationAttitude_Calme, false )
+    , bIsPerceived_        ( false, false )
     , rRelevance_          ( 0. )
+    , flowParts_           ( *new T_FlowParts(), false )
 {
     assert( pGtia_ );
     pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
@@ -115,15 +116,15 @@ void MOS_PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledge
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
     if( asnMsg.m.directionPresent )
-        rDirection_ = asnMsg.direction;
+        rDirection_ = ( MT_Float )asnMsg.direction;
     if( asnMsg.m.vitessePresent )
-        rSpeed_ = asnMsg.vitesse;
+        rSpeed_ = ( MT_Float )asnMsg.vitesse;
     if( asnMsg.m.est_percuPresent )
-        bIsPerceived_ = asnMsg.est_percu;
+        bIsPerceived_ = ( bool )asnMsg.est_percu;
     if( asnMsg.m.nb_humains_vivantsPresent )
-        nNbrAliveHumans_ = asnMsg.nb_humains_vivants;
+        nNbrAliveHumans_ = ( uint )asnMsg.nb_humains_vivants;
     if( asnMsg.m.nb_humains_mortsPresent )
-        nNbrDeadHumans_ = asnMsg.nb_humains_morts;
+        nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
     if( asnMsg.m.oid_flux_reelPresent )
     {
         assert( pPopulationKnowledge_ );
@@ -133,7 +134,7 @@ void MOS_PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledge
     if( asnMsg.m.portions_fluxPresent )
     {
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
-            flowParts_.push_back( new FlowPart( asnMsg.portions_flux.elem[ i ] ) );
+            flowParts_.value_.push_back( new FlowPart( asnMsg.portions_flux.elem[ i ] ) );
     }
 //    if( asnMsg.m.pertinencePresent )
 //        rRelevance_ = asnMsg.pertinence;

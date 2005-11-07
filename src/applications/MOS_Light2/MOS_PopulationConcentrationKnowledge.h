@@ -48,22 +48,56 @@ public:
     MT_Float                           GetArea               () const;
     //@}
 
+    //! @name Validity Accessors
+    //@{
+    bool IsValidNbrAliveHumans() const;
+    bool IsValidNbrDeadHumans () const;
+    bool IsValidAttitude      () const;
+    bool IsValidPerceived     () const;
+    //@}
+
     //! @name Network
     //@{
     void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg );
     //@}
 
 private:
-    const uint                         nID_;
-          MOS_Gtia*                    pGtia_;
-    const MOS_PopulationKnowledge*     pPopulationKnowledge_;
-    const MOS_PopulationConcentration* pConcentration_;
-          MT_Vector2D                  position_;
-          uint                         nNbrAliveHumans_;
-          uint                         nNbrDeadHumans_;
-          E_PopulationAttitude         eAttitude_;
-          bool                         bIsPerceived_;
-          MT_Float                     rRelevance_;
+    //! @name Types
+    //@{
+    template< typename T >
+    struct sValidableData
+    {
+        template< typename T >
+        sValidableData( T val, bool bIsValid )
+            : value_    ( val )
+            , bIsValid_ ( bIsValid )
+        {
+        }
+
+        template< typename T >
+        sValidableData< typename T >& operator=( const T& val )
+        {
+            value_    = val;
+            bIsValid_ = true;
+            return *this;
+        }
+
+        bool bIsValid_;
+        T    value_;
+    };
+    //@}
+
+private:
+    const uint                                   nID_;
+          MOS_Gtia*                              pGtia_;
+    const MOS_PopulationKnowledge*               pPopulationKnowledge_;
+    const MOS_PopulationConcentration*           pConcentration_;
+          MT_Vector2D                            position_;
+          sValidableData< uint >                 nNbrAliveHumans_;
+          sValidableData< uint >                 nNbrDeadHumans_;
+          sValidableData< E_PopulationAttitude > eAttitude_;
+          sValidableData< bool >                 bIsPerceived_;
+          MT_Float                               rRelevance_;
 };
 
 

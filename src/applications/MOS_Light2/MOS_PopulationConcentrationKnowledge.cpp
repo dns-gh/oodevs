@@ -28,6 +28,10 @@ MOS_PopulationConcentrationKnowledge::MOS_PopulationConcentrationKnowledge( cons
     , pGtia_               ( MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur ) )
     , pPopulationKnowledge_( 0 )
     , pConcentration_      ( 0 )
+    , nNbrAliveHumans_     ( 0, false )
+    , nNbrDeadHumans_      ( 0, false )
+    , eAttitude_           ( ePopulationAttitude_Calme, false )
+    , bIsPerceived_        ( false, false )
 {
     assert( pGtia_ );
     pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
@@ -58,11 +62,11 @@ void MOS_PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConc
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
     if( asnMsg.m.est_percuPresent )
-        bIsPerceived_ = asnMsg.est_percu;
+        bIsPerceived_ = ( bool )asnMsg.est_percu;
     if( asnMsg.m.nb_humains_vivantsPresent )
-        nNbrAliveHumans_ = asnMsg.nb_humains_vivants;
+        nNbrAliveHumans_ = ( uint )asnMsg.nb_humains_vivants;
     if( asnMsg.m.nb_humains_mortsPresent )
-        nNbrDeadHumans_ = asnMsg.nb_humains_morts;
+        nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
     if( asnMsg.m.oid_concentration_reellePresent )
     {
         const MOS_Population& population = pPopulationKnowledge_->GetPopulation();

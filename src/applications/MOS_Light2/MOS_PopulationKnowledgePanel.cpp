@@ -293,12 +293,12 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
             pConcentrationAssociatedLabel_->setText( tr( "-" ) );
         std::string strPos;
         MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( pSelectedConcentrationKnowledge_->GetPosition(), strPos );
-        pConcentrationPosition_->setText( strPos.c_str() );
-        pConcentrationAliveHumans_->setText( QString::number( pSelectedConcentrationKnowledge_->GetNbrAliveHumans() ) );
-        pConcentrationDeadHumans_->setText( QString::number( pSelectedConcentrationKnowledge_->GetNbrDeadHumans() ) );
-        pConcentrationAttitude_->setText( ENT_Tr::ConvertFromPopulationAttitude( pSelectedConcentrationKnowledge_->GetAttitude() ).c_str() );
-        pConcentrationPerceived_->setText( pSelectedConcentrationKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" ) );
-        pConcentrationRelevance_->setText( QString::number( pSelectedConcentrationKnowledge_->GetRelevance() ) );
+        pConcentrationPosition_   ->setText( strPos.c_str() );
+        pConcentrationAliveHumans_->setText( pSelectedConcentrationKnowledge_->IsValidNbrAliveHumans() ? QString::number( pSelectedConcentrationKnowledge_->GetNbrAliveHumans() )                         : tr( "n/d" ) );
+        pConcentrationDeadHumans_ ->setText( pSelectedConcentrationKnowledge_->IsValidNbrDeadHumans()  ? QString::number( pSelectedConcentrationKnowledge_->GetNbrDeadHumans() )                          : tr( "n/d" ) );
+        pConcentrationAttitude_   ->setText( pSelectedConcentrationKnowledge_->IsValidAttitude()       ? ENT_Tr::ConvertFromPopulationAttitude( pSelectedConcentrationKnowledge_->GetAttitude() ).c_str() : tr( "n/d" ) );
+        pConcentrationPerceived_  ->setText( pSelectedConcentrationKnowledge_->IsValidPerceived()      ? pSelectedConcentrationKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" )                      : tr( "n/d" ) );
+        pConcentrationRelevance_  ->setText( QString::number( pSelectedConcentrationKnowledge_->GetRelevance() ) );
 
         pConcentrationBox_->show();
     }
@@ -309,12 +309,12 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
             pFlowAssociatedLabel_->setText( QString::number( pSelectedFlowKnowledge_->GetFlow()->GetID() ) );
         else
             pFlowAssociatedLabel_->setText( tr( "-" ) );
-        pFlowDirection_->setText( QString::number( pSelectedFlowKnowledge_->GetDirection() ) );
-        pFlowSpeed_->setText( QString::number( pSelectedFlowKnowledge_->GetSpeed() ) );
-        pFlowAliveHumans_->setText( QString::number( pSelectedFlowKnowledge_->GetNbrAliveHumans() ) );
-        pFlowDeadHumans_->setText( QString::number( pSelectedFlowKnowledge_->GetNbrDeadHumans() ) );
-        pFlowAttitude_->setText( ENT_Tr::ConvertFromPopulationAttitude( pSelectedFlowKnowledge_->GetAttitude() ).c_str() );
-        pFlowPerceived_->setText( pSelectedFlowKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" ) );
+        pFlowDirection_  ->setText( pSelectedFlowKnowledge_->IsValidDirection()      ? QString::number( pSelectedFlowKnowledge_->GetDirection() )                              : tr( "n/d" ) );
+        pFlowSpeed_      ->setText( pSelectedFlowKnowledge_->IsValidSpeed()          ? QString::number( pSelectedFlowKnowledge_->GetSpeed() )                                  : tr( "n/d" ) );
+        pFlowAliveHumans_->setText( pSelectedFlowKnowledge_->IsValidNbrAliveHumans() ? QString::number( pSelectedFlowKnowledge_->GetNbrAliveHumans() )                         : tr( "n/d" ) );
+        pFlowDeadHumans_ ->setText( pSelectedFlowKnowledge_->IsValidNbrDeadHumans()  ? QString::number( pSelectedFlowKnowledge_->GetNbrDeadHumans() )                          : tr( "n/d" ) );
+        pFlowAttitude_   ->setText( pSelectedFlowKnowledge_->IsValidAttitude()       ? ENT_Tr::ConvertFromPopulationAttitude( pSelectedFlowKnowledge_->GetAttitude() ).c_str() : tr( "n/d" ) );
+        pFlowPerceived_  ->setText( pSelectedFlowKnowledge_->IsValidPerceived()      ? pSelectedFlowKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" )                      : tr( "n/d" ) );
 
         pFlowBox_->show();        
     }

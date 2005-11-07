@@ -628,6 +628,7 @@ void MOS_GLTool::Draw( MOS_PopulationConcentration& concentration, E_State nStat
         color.AddRGB( 50, 200, 50 );
     if( nState == eHighlighted )
         color.AddRGB( 50, 100, 50 );
+    color.SetAlpha( 0.9 );
     color.SetGLColor();
     MT_Float rSurface = concentration.GetLivingHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
     DrawCircle( concentration.GetPos(), std::sqrt( rSurface / MT_PI ), true );
@@ -647,6 +648,7 @@ void MOS_GLTool::Draw( MOS_PopulationFlow& flow, E_State nState /*= eNormal*/ )
     color.SetGLColor();
     glColor4d( MOS_COLOR_WHITE );
     DrawPath( flow );
+    color.SetAlpha( 0.9 );
     color.SetGLColor();
     DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
     glLineWidth( 5.0 );
@@ -862,9 +864,19 @@ void MOS_GLTool::Draw( MOS_PopulationConcentrationKnowledge& knowledge, E_State 
         color.AddRGB( 50, 200, 50 );
     if( nState == eHighlighted )
         color.AddRGB( 50, 100, 50 );
-    color.SetGLColor();
-    MT_Float rSurface = knowledge.GetArea();
-    DrawCircle( knowledge.GetPosition(), std::sqrt( rSurface / MT_PI ), true );
+    color.SetAlpha( 0.8 );
+    if( knowledge.IsValidNbrAliveHumans() )
+    {
+        color.SetGLColor();
+        MT_Float rSurface = knowledge.GetArea();
+        DrawCircle( knowledge.GetPosition(), std::sqrt( rSurface / MT_PI ), true );
+    }
+    else
+    {
+        color.SetAlpha( 0.4 );
+        color.SetGLColor();
+        DrawCircle( knowledge.GetPosition(), 100, true );
+    }
 }
     
 // -----------------------------------------------------------------------------
@@ -879,6 +891,7 @@ void MOS_GLTool::Draw( MOS_PopulationFlowKnowledge& knowledge, E_State nState /*
         color.AddRGB( 50, 200, 50 );
     if( nState == eHighlighted )
         color.AddRGB( 50, 100, 50 );
+    color.SetAlpha( 0.8 );
     color.SetGLColor();
     glLineWidth( 5.0 );
 

@@ -76,26 +76,61 @@ public:
     const T_FlowParts&             GetFlowParts          () const;
     //@}
 
+    //! @name Validity accessors
+    //@{
+    bool IsValidDirection     () const;
+    bool IsValidSpeed         () const;
+    bool IsValidNbrAliveHumans() const;
+    bool IsValidNbrDeadHumans () const;
+    bool IsValidAttitude      () const;
+    bool IsValidPerceived     () const;
+    bool IsValidFlowParts     () const;
+    //@}
+
     //! @name Network
     //@{
     void Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg );
     //@}
 
 private:
-    const uint                     nID_;
-          MOS_Gtia*                pGtia_;
-    const MOS_PopulationKnowledge* pPopulationKnowledge_;
-    const MOS_PopulationFlow*      pFlow_;
-          MT_Float                 rDirection_;
-          MT_Float                 rSpeed_;
-          uint                     nNbrAliveHumans_;
-          uint                     nNbrDeadHumans_;
-          E_PopulationAttitude     eAttitude_;
-          bool                     bIsPerceived_;
-          MT_Float                 rRelevance_;
-          T_FlowParts              flowParts_;
+    //! @name Types
+    //@{
+    template< typename T >
+    struct sValidableData
+    {
+        template< typename T >
+        sValidableData( T val, bool bIsValid )
+            : value_    ( val )
+            , bIsValid_ ( bIsValid )
+        {
+        }
 
-          // portions
+        template< typename T >
+        sValidableData< typename T >& operator=( const T& val )
+        {
+            value_    = val;
+            bIsValid_ = true;
+            return *this;
+        }
+
+        bool bIsValid_;
+        T    value_;
+    };
+    //@}
+
+private:
+    const uint                                    nID_;
+          MOS_Gtia*                               pGtia_;
+    const MOS_PopulationKnowledge*                pPopulationKnowledge_;
+    const MOS_PopulationFlow*                     pFlow_;
+          sValidableData< MT_Float >              rDirection_;
+          sValidableData< MT_Float >              rSpeed_;
+          sValidableData< uint     >              nNbrAliveHumans_;
+          sValidableData< uint     >              nNbrDeadHumans_;
+          sValidableData< E_PopulationAttitude >  eAttitude_;
+          sValidableData< bool     >              bIsPerceived_;
+          MT_Float                                rRelevance_;
+          sValidableData< T_FlowParts >           flowParts_;
 };
 
 

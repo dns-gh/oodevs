@@ -425,6 +425,13 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
         return;
     }
 
+    MOS_Object_ABC* pObject = GetObjectAtPos( vGLPos, rDistancePerPixel );
+    if( pObject != 0 )
+    {
+        selectedElement_ = MOS_SelectedElement( *pObject );
+        return;
+    }
+
     // Only enable knowledge selection in non all-team mode.
     if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
     {
@@ -435,10 +442,10 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
             return;
         }
 
-        MOS_Object_ABC* pObject = GetObjectAtPos( vGLPos, rDistancePerPixel );
-        if( pObject != 0 )
+        MOS_ObjectKnowledge* pObjectKnowledge = GetObjectKnowledgeAtPos( vGLPos, rDistancePerPixel );
+        if( pObjectKnowledge != 0 )
         {
-            selectedElement_ = MOS_SelectedElement( *pObject );
+            selectedElement_ = MOS_SelectedElement( *pObjectKnowledge );
             return;
         }
 
@@ -448,17 +455,6 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
 //            selectedElement_ = MOS_SelectedElement( *pPopulationKnowledge );
 //            return;
 //        }
-    }
-
-    // Only enable knowledge selection in non all-team mode.
-    if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
-    {
-        MOS_ObjectKnowledge* pObjectKnowledge = GetObjectKnowledgeAtPos( vGLPos, rDistancePerPixel );
-        if( pObjectKnowledge != 0 )
-        {
-            selectedElement_ = MOS_SelectedElement( *pObjectKnowledge );
-            return;
-        }
     }
 
     selectedElement_ = MOS_SelectedElement();
