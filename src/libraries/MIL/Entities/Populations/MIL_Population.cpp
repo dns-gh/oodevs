@@ -120,9 +120,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> strName_;
 
-    if ( !MIL_EntityManager::populationIDManager_.IsMosIDValid( nID_ ) )
-        MIL_EntityManager::populationIDManager_.LockSimID( nID_ );
-
     uint nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );

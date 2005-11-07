@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "MIL_Effect_ABC.h"
-#include "Tools/MIL_MOSIDManager.h"
 #include "MT_Tools/MT_Ellipse.h"
 
 class PHY_IndirectFireDotationClass;
@@ -51,8 +50,6 @@ private:
     const uint                           nDeploymentTimeStep_;
     const uint                           nLifeLastTimeStep_;
           bool                           bIsDeployed_;
-public:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "MIL_Effect_Weather.inl"

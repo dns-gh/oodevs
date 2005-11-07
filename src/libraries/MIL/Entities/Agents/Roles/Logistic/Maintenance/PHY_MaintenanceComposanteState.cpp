@@ -19,8 +19,7 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Network/NET_ASN_Messages.h"
-
-MIL_MOSIDManager PHY_MaintenanceComposanteState::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposanteState" )
 
@@ -29,7 +28,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MaintenanceComposanteState, "PHY_MaintenanceComposa
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_AgentPion& pion, PHY_ComposantePion& composante )
-    : nID_                ( idManager_.GetFreeSimID() )
+    : nID_                ( MIL_IDManager::maintenanceComposanteStates_.GetFreeSimID() )
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
     , pConsign_           ( 0 )
@@ -62,7 +61,6 @@ PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState()
 PHY_MaintenanceComposanteState::~PHY_MaintenanceComposanteState()
 {
     SendMsgDestruction();
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -81,8 +79,6 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
          >> pConsign_
          >> vComposantePosition_
          >> bDiagnosed_;
-         
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

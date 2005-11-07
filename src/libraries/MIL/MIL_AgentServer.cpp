@@ -21,21 +21,8 @@
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "Hla/HLA_Federate.h"
-
-// For class IDs
-#include "Entities/Orders/Limit/MIL_Limit.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
-#include "Entities/Objects/MIL_RealObjectType.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireResults.h"
-#include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireResults.h"
-#include "Entities/Populations/Actions/PHY_PopulationFireResults.h"
-#include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
-#include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
-#include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyState_ABC.h"
-#include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Entities/Effects/MIL_Effect_Weather.h"
 
 #include "TER/TER_World.h"
 
@@ -189,7 +176,7 @@ void MIL_AgentServer::ReadStaticData( MIL_InputArchive& archive )
     
     pAgentServer_ = new NET_AgentServer( archive );
 
-    ReadIDClasses   ( archive );
+    MIL_IDManager::Initialize( archive );
     ReadTerData     ( archive );
     ReadMissionsData( archive );
 
@@ -273,54 +260,6 @@ void MIL_AgentServer::ReadTerData( MIL_InputArchive& archive )
     config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetLinkFileName() );
 
     terArchive.Close();
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadIDClasses
-// Created: JVT 03-02-27
-// Last modified: JVT 04-03-29
-//-----------------------------------------------------------------------------
-void MIL_AgentServer::ReadIDClasses( MIL_InputArchive& archive )
-{
-    MT_LOG_INFO_MSG( "Initializing classe ids" );
-
-    std::string strName;
-    archive.ReadField( "ClasseIDs", strName );
-
-    MIL_InputArchive idsFile;
-    idsFile.AddWarningStream( std::cout );
-    idsFile.Open( strName );
-    config_.AddFileToCRC( strName );
-
-    idsFile.BeginList( "Classes" );
-    while( idsFile.NextListElement() )
-    {
-        uint nID;
-        idsFile.Section( "Classe" );
-        idsFile.ReadAttribute( "id", nID );
-        idsFile.ReadAttribute( "nom", strName );
-        idsFile.EndSection(); // Classe
-
-             if( sCaseInsensitiveEqual()( strName, "Unite"                       ) )  MIL_EntityManager::unitsIDManager_        .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "TirDirect"                   ) )  PHY_DirectFireResults::idManager_         .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "TirIndirect"                 ) )  PHY_IndirectFireResults::idManager_       .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "TirPopulation"               ) )  PHY_PopulationFireResults::idManager_     .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "Lima"                        ) )  MIL_Lima::idManager_                      .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "Limite"                      ) )  MIL_Limit::idManager_                     .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "Ordre"                       ) )  MIL_PionMission_ABC::idManager_           .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "GhostAgent"                  ) )  DEC_Knowledge_Agent::idManager_           .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "EffetsTirs"                  ) )  MIL_Effect_Weather::idManager_            .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "TraitementLogMaintenance"    ) )  PHY_MaintenanceComposanteState::idManager_.SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "TraitementLogSante"          ) )  PHY_MedicalHumanState::idManager_         .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "TraitementLogRavitaillement" ) )  PHY_SupplyState_ABC::idManager_           .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "Population"                  ) )  MIL_EntityManager::populationIDManager_   .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "PopulationConcentration"     ) )  MIL_PopulationConcentration::idManager_   .SetClassID( nID );
-        else if( sCaseInsensitiveEqual()( strName, "PopulationFlux"              ) )  MIL_PopulationFlow::idManager_            .SetClassID( nID );
-        else
-            MIL_RealObjectType::RegisterIDManager( strName, nID );
-    }
-    idsFile.EndList(); // IDs
-    idsFile.Close();
 }
 
 // -----------------------------------------------------------------------------
@@ -475,6 +414,7 @@ void MIL_AgentServer::SendMsgEndTick() const
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::save
 // Created: JVT 2005-03-22
@@ -499,7 +439,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pAgentServer_         // moi-même ( static )
 //         << pFederate_            // reloadé à la main ( cf. MIL_AgentServer::Initialize )
     ;
-
 }
 
 // -----------------------------------------------------------------------------

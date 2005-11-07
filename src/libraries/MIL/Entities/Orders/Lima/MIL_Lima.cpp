@@ -13,11 +13,10 @@
 
 #include "MIL_Lima.h"
 
-#include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-
-MIL_MOSIDManager MIL_Lima::idManager_;
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_Tools.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Lima constructor
@@ -25,8 +24,7 @@ MIL_MOSIDManager MIL_Lima::idManager_;
 // Last Modified : JVT 02-10-10
 //-----------------------------------------------------------------------------
 MIL_Lima::MIL_Lima()
-    : nID_          ( (uint)-1 )
-    , bCreatedBySim_( false )
+    : nID_( (uint)-1 )
 {
     
 }
@@ -51,13 +49,12 @@ MIL_Lima::~MIL_Lima()
 //-----------------------------------------------------------------------------
 bool MIL_Lima::Initialize( const ASN1T_MsgLimaCreation& asnMsg, MIL_MOSContextID nCtx )
 {
-    bCreatedBySim_ = false;
-    nID_           = asnMsg.oid;
+    nID_ = asnMsg.oid;
 
     NET_ASN_MsgLimaCreationAck asnAckMsg;
     asnAckMsg.GetAsnMsg().oid = nID_;
 
-    if( !idManager_.IsMosIDValid( nID_ ) || !idManager_.LockMosID( nID_ ) )
+    if( !MIL_IDManager::limas_.IsMosIDValid( nID_ ) || !MIL_IDManager::limas_.LockMosID( nID_ ) )
     {
         asnAckMsg.GetAsnMsg().error_code = EnumInfoContextErrorCode::error_invalid_id;
         asnAckMsg.Send( nCtx );
@@ -94,7 +91,6 @@ bool MIL_Lima::Initialize( const ASN1T_MsgLimaCreation& asnMsg, MIL_MOSContextID
 //-----------------------------------------------------------------------------
 void MIL_Lima::Cleanup()
 {
-//    assert( bCreatedBySim_ );
     /*
     NET_ASN_MsgLimaDestruction asnMsg;
     asnMsg.GetAsnMsg() = nID_;
@@ -113,9 +109,7 @@ void MIL_Lima::Cleanup()
 //-----------------------------------------------------------------------------
 void MIL_Lima::Cleanup( MIL_MOSContextID nCtx )
 {
-//    assert( bCreatedBySim_ == false );
-
-    bool bOut = idManager_.ReleaseMosID( nID_ );
+    bool bOut = MIL_IDManager::limas_.ReleaseMosID( nID_ );
     assert( bOut );
 
     NET_ASN_MsgLimaDestructionAck asnAckMsg;

@@ -24,6 +24,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Tools/MIL_MOSIDManager.h"
 
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
@@ -114,8 +115,6 @@ MIL_RealObject_ABC::~MIL_RealObject_ABC()
     MIL_MOSIDManager& idManager = pType_->GetIDManager();
     if( idManager.IsMosIDValid( nID_ ) )
         idManager.ReleaseMosID( nID_ );
-    else if( idManager.IsSimIDValid( nID_ ) )
-        idManager.ReleaseSimID( nID_ );
 
     if( pPathfindData_ )
         TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
@@ -155,7 +154,11 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
          >> pView_;
 
     InitializeAvoidanceLocalisation();
-    pType_->GetIDManager().LockMosID( nID_ );
+    if ( pType_->GetIDManager().IsMosIDValid( nID_ ) )
+    {
+        bool bOut = pType_->GetIDManager().LockMosID( nID_ );
+        assert( bOut );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -280,9 +283,11 @@ bool MIL_RealObject_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaParamete
 void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
 {
     assert( pType_ );
-    
+
     nID = pType_->GetIDManager().ConvertSimIDToMosID( nID );
-    pType_->GetIDManager().LockMosID( nID );
+    
+    if ( !pType_->GetIDManager().IsMosIDValid( nID ) || !pType_->GetIDManager().LockMosID( nID ) )
+        throw MT_ScipioException( "MIL_RealObject_ABC::Initialize", __FILE__, __LINE__, "Invalid ID", archive.GetContext() );
 
     // Armee
     std::string strArmy;

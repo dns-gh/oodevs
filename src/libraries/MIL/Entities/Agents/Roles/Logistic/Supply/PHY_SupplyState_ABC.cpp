@@ -12,15 +12,14 @@
 #include "MIL_pch.h"
 
 #include "PHY_SupplyState_ABC.h"
-
-MIL_MOSIDManager PHY_SupplyState_ABC::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyState_ABC::PHY_SupplyState_ABC
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_SupplyState_ABC::PHY_SupplyState_ABC()
-    : nID_( idManager_.GetFreeSimID() )
+    : nID_( MIL_IDManager::supplyStates_.GetFreeSimID() )
 {
 }
 
@@ -30,7 +29,6 @@ PHY_SupplyState_ABC::PHY_SupplyState_ABC()
 // -----------------------------------------------------------------------------
 PHY_SupplyState_ABC::~PHY_SupplyState_ABC()
 {
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,8 +38,6 @@ PHY_SupplyState_ABC::~PHY_SupplyState_ABC()
 void PHY_SupplyState_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> const_cast< uint& >( nID_ );
-    
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

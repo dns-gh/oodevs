@@ -24,11 +24,10 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_Army.h"
+#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Population, "DEC_Knowledge_Population" )
-
-MIL_MOSIDManager DEC_Knowledge_Population::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population constructor
@@ -36,7 +35,7 @@ MIL_MOSIDManager DEC_Knowledge_Population::idManager_;
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
     : DEC_Knowledge_ABC()
-    , nID_             ( idManager_.GetFreeSimID() )
+    , nID_             ( MIL_IDManager::knowledgePopulations_.GetFreeSimID() )
     , pKnowledgeGroup_ ( &knowledgeGroup )
     , pPopulationKnown_( &populationKnown )
     , concentrations_  ()
@@ -70,7 +69,6 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
 DEC_Knowledge_Population::~DEC_Knowledge_Population()
 {
     SendMsgDestruction();
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -93,8 +91,6 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
 
     assert( pPopulationKnown_ );
     pArmy_ = &pPopulationKnown_->GetArmy();
-
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

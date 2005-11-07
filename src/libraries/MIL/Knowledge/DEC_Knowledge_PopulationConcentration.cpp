@@ -22,8 +22,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
-MIL_MOSIDManager DEC_Knowledge_PopulationConcentration::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_PopulationConcentration" )
 
@@ -34,7 +33,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_P
 DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationConcentration& concentrationKnown )
     : pPopulationKnowledge_     ( &populationKnowledge    )
     , pConcentrationKnown_      ( &concentrationKnown )
-    , nID_                      ( idManager_.GetFreeSimID() )
+    , nID_                      ( MIL_IDManager::knowledgePopulationConcentrations_.GetFreeSimID() )
     , nTimeLastUpdate_          ( 0 )
     , position_                 ( concentrationKnown.GetPosition() )
     , nNbrAliveHumans_          ( 0 )
@@ -83,7 +82,6 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
 DEC_Knowledge_PopulationConcentration::~DEC_Knowledge_PopulationConcentration()
 {
     SendMsgDestruction();
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -119,8 +117,6 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
     file >> nTmpID;
     pPreviousPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pPreviousPerceptionLevel_ );
-
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +190,7 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 // Name: DEC_Knowledge_PopulationConcentration::Update
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationCollision& collision )
+void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationCollision& /*collision*/ )
 {
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
 }

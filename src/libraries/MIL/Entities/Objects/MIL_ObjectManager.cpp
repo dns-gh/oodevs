@@ -200,6 +200,9 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( uint nID, const ASN1T
     if( !pObjectType )
         return EnumObjectErrorCode::error_invalid_object;
 
+    if( realObjects_.find( nID ) != realObjects_.end() )
+        return EnumObjectErrorCode::error_invalid_id;
+
     MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
     ASN1T_EnumObjectErrorCode nErrorCode = object.Initialize( nID, asn );
     if( nErrorCode != EnumObjectErrorCode::no_error )

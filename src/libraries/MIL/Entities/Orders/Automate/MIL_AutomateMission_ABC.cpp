@@ -24,6 +24,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "MIL_AgentServer.h"
 
 int MIL_AutomateMission_ABC::nDIAMissionType_        = 0;
@@ -76,8 +77,7 @@ MIL_AutomateMission_ABC::~MIL_AutomateMission_ABC()
 // -----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC::Initialize()
 {
-    bCreatedBySim_ = true;
-    nOrderID_      = MIL_PionMission_ABC::idManager_.GetFreeSimID(); //$$$ DEGUEU
+    nOrderID_ = MIL_IDManager::orders_.GetFreeSimID(); 
     mrt_.Initialize( *this );
 
     pLeftLimit_ = pRightLimit_ = 0;
@@ -94,8 +94,7 @@ void MIL_AutomateMission_ABC::Initialize()
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
-    bCreatedBySim_ = false;
-    nOrderID_      = asnMsg.order_id;
+    nOrderID_ = asnMsg.order_id;
     mrt_.Initialize( *this );
 
     ASN1T_EnumOrderErrorCode nCode = InitializeLimits( asnMsg );
@@ -169,9 +168,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::InitializeMission( const ASN1T
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC::Terminate()
 {
-    if( bCreatedBySim_ )
-        MIL_PionMission_ABC::idManager_.ReleaseSimID( nOrderID_ );
-
     nOrderID_  = (uint)-1;
     limaMap_.clear();
 

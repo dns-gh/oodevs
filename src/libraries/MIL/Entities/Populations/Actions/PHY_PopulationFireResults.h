@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
 
 class MIL_Population;
@@ -26,9 +25,6 @@ class MIL_Population;
 class PHY_PopulationFireResults : public PHY_FireResults_ABC
 {
     MT_COPYNOTALLOWED( PHY_PopulationFireResults )
-
-public:
-    static MIL_MOSIDManager idManager_;
 
 public:
     PHY_PopulationFireResults( const MIL_Population& firer );

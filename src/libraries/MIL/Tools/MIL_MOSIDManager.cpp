@@ -101,7 +101,7 @@ uint MIL_MOSIDManager::GetFreeSimID()
 // Name: MIL_MOSIDManager::LockSimID
 // Created: JVT 03-07-31
 //-----------------------------------------------------------------------------
-bool MIL_MOSIDManager::LockSimID( uint nID )
+/*bool MIL_MOSIDManager::LockSimID( uint nID )
 {
     assert( IsSimIDValid( nID ) );
     nID &= 0x3FFFFF;
@@ -111,13 +111,13 @@ bool MIL_MOSIDManager::LockSimID( uint nID )
         return false;
     nNextSimInstanceID_ = nID + 1;
     return true;
-}
+}*/
 
 //-----------------------------------------------------------------------------
 // Name: MIL_MOSIDManager::ReleaseSimID
 // Created: NLD 2003-04-22
 //-----------------------------------------------------------------------------
-void MIL_MOSIDManager::ReleaseSimID( uint nID )
+/*void MIL_MOSIDManager::ReleaseSimID( uint nID )
 {
     assert( IsSimIDValid( nID ) );
     nID &= 0x3FFFFF;
@@ -125,4 +125,4 @@ void MIL_MOSIDManager::ReleaseSimID( uint nID )
     assert( nID < nNextSimInstanceID_ );
 //    simIDManager_.ReleaseIdentifier( nID );
 }
-
+*/

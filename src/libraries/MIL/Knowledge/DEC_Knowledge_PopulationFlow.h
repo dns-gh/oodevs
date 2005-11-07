@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
-
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_PopulationFlowPart;
@@ -103,10 +101,6 @@ private:
         
     const PHY_PerceptionLevel*       pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel*       pCurrentPerceptionLevel_;
-
-private:
-    static MIL_MOSIDManager          idManager_;
-
 };
 
 #include "DEC_Knowledge_PopulationFlow.inl"

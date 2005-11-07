@@ -13,6 +13,7 @@
 
 #include "MIL_Agent_ABC.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Tools/MIL_IDManager.h"
 #include "MT_Tools/MT_Role_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -22,6 +23,11 @@
 MIL_Agent_ABC::MIL_Agent_ABC( uint nID )
     : nID_( nID )
 {
+    if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
+    {
+        bool bOut = MIL_IDManager::units_.LockMosID( nID_ );
+        assert( bOut );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +55,11 @@ void MIL_Agent_ABC::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< MT_RoleContainer >( *this );
     file >> nID_;
     
-    if ( !MIL_EntityManager::unitsIDManager_.IsMosIDValid( nID_ ) )
-        MIL_EntityManager::unitsIDManager_.LockSimID( nID_ );
+    if( MIL_IDManager::units_.IsMosIDValid( nID_ ) )
+    {
+        bool bOut = MIL_IDManager::units_.LockMosID( nID_ );
+        assert( bOut );
+    }
 }
 
 // -----------------------------------------------------------------------------

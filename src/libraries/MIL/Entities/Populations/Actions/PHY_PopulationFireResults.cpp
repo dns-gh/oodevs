@@ -15,8 +15,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-
-MIL_MOSIDManager PHY_PopulationFireResults::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PopulationFireResults constructor
@@ -25,7 +24,7 @@ MIL_MOSIDManager PHY_PopulationFireResults::idManager_;
 PHY_PopulationFireResults::PHY_PopulationFireResults( const MIL_Population& firer )
     : PHY_FireResults_ABC()
     , firer_             ( firer )
-    , nID_               ( idManager_.GetFreeSimID() )
+    , nID_               ( MIL_IDManager::populationFireResults_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPopulationFire asnMsg;
     asnMsg.GetAsnMsg().oid_tir  = nID_;
@@ -58,7 +57,5 @@ PHY_PopulationFireResults::~PHY_PopulationFireResults()
         PHY_AgentFireResult::CleanAfterSerialization( asnMsg.GetAsnMsg().resultats.elem[ n ] );
     if( asnMsg.GetAsnMsg().resultats.n > 0 )
         delete [] asnMsg.GetAsnMsg().resultats.elem;
-
-    idManager_.ReleaseSimID( nID_ );
 }
 

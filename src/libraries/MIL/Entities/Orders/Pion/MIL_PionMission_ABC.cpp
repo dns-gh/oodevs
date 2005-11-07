@@ -21,12 +21,12 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "MIL_PionMissionType.h"
 #include "MIL_AgentServer.h"
 
 int              MIL_PionMission_ABC::nDIAMissionType_        = 0;
 int              MIL_PionMission_ABC::nDIADirectionDangerIdx_ = 0;
-MIL_MOSIDManager MIL_PionMission_ABC::idManager_;
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionMission_ABC constructor
@@ -38,7 +38,6 @@ MIL_PionMission_ABC::MIL_PionMission_ABC( MIL_AgentPion& pion, const MIL_PionMis
     , pion_                 ( pion )
     , type_                 ( type )
     , bDIABehaviorActivated_( false )
-    , bCreatedBySim_        ( false )
     , pLeftLimit_           ( 0 )
     , pRightLimit_          ( 0 )
     , vDirDanger_           ( 1., 0. )
@@ -80,8 +79,7 @@ bool MIL_PionMission_ABC::Initialize()
     assert( !bDIABehaviorActivated_ );
     assert( limaMap_.empty() );
 
-    bCreatedBySim_ = true;
-    nOrderID_      = idManager_.GetFreeSimID();
+    nOrderID_      = MIL_IDManager::orders_.GetFreeSimID();
     vDirDanger_    = MT_Vector2D( 0., 1. );
     GetVariable( nDIADirectionDangerIdx_  ).SetValue( &vDirDanger_ );
     fuseau_.Reset();
@@ -97,8 +95,7 @@ bool MIL_PionMission_ABC::Initialize( const MIL_AutomateMission_ABC& parentMissi
     assert( !bDIABehaviorActivated_ );
     assert( limaMap_.empty() );
 
-    bCreatedBySim_ = true;
-    nOrderID_      = idManager_.GetFreeSimID();
+    nOrderID_ = MIL_IDManager::orders_.GetFreeSimID();
     
     NET_ASN_Tools::CopyDirection( const_cast< MIL_AutomateMission_ABC& >( parentMission ).GetVariable( MIL_AutomateMission_ABC::nDIADirectionDangerIdx_ ), vDirDanger_, GetVariable( nDIADirectionDangerIdx_ ) );
     limaMap_ = parentMission.GetLimas ();
@@ -115,8 +112,7 @@ bool MIL_PionMission_ABC::Initialize( MIL_PionMission_ABC& mission )
     assert( limaMap_.empty() );
     assert( mission.type_ == type_ );
 
-    bCreatedBySim_ = true;
-    nOrderID_      = idManager_.GetFreeSimID();
+    nOrderID_ = MIL_IDManager::orders_.GetFreeSimID();
 
     // Limas / limits
     fuseau_  = mission.fuseau_;
@@ -135,8 +131,7 @@ bool MIL_PionMission_ABC::Initialize( MIL_PionMission_ABC& mission )
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
     assert( !bDIABehaviorActivated_ );
-    bCreatedBySim_ = false;
-    nOrderID_      = asnMsg.order_id;
+    nOrderID_ = asnMsg.order_id;
 
     ASN1T_EnumOrderErrorCode nCode = InitializeLimits( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
@@ -193,7 +188,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC::InitializeLimas( const ASN1T_MsgPi
         const MIL_Lima* pLima =  MIL_AgentServer::GetWorkspace().GetLimaManager().FindLima( asnMsg.oid_limas.elem[nTmp] );
         if( !pLima )
             return EnumOrderErrorCode::error_invalid_lima;
-//        pLima->NotifyUsedByMission( *this );
         limaMap_.insert( std::make_pair( pLima, false ) );
     }
     return EnumOrderErrorCode::no_error;     
@@ -218,18 +212,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC::InitializeMission( const ASN1T_Msg
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC::Terminate()
 { 
-    if( bCreatedBySim_ )
-        idManager_.ReleaseSimID( nOrderID_ );
-
-//    if( pLeftLimit_ )
-//        pLeftLimit_->NotifyNotUsedByMission( *this );
-//    if( pRightLimit_ )
-//        pRightLimit_->NotifyNotUsedByMission( *this );
-//
-//    for( CIT_LimaFlagedPtrMap itLima = limaMap_.begin(); itLima != limaMap_.end(); ++itLima )
-//        itLima->first->NotifyNotUsedByMission( *this );
-
-    nOrderID_    = (uint)-1;
+    nOrderID_ = (uint)-1;
     limaMap_.clear();
     fuseau_.Reset();
     assert( !bDIABehaviorActivated_ );

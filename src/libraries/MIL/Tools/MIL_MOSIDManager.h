@@ -28,6 +28,11 @@ public:
      MIL_MOSIDManager();
     ~MIL_MOSIDManager();
 
+    //! @name Checkpoints
+    //@{
+    template< typename Archive > void serialize( Archive& );
+    //@}
+
     //-------------------------------------------------------------------------
     /** @name ID management */
     //-------------------------------------------------------------------------
@@ -39,23 +44,21 @@ public:
     bool ReleaseMosID( uint nID );
 
     uint GetFreeSimID();
-    bool LockSimID   ( uint nID );
-    void ReleaseSimID( uint nID );
+//    bool LockSimID   ( uint nID );
+//    void ReleaseSimID( uint nID );
+    
+    uint ConvertSimIDToMosID( uint nID );
     //@}
 
     //-------------------------------------------------------------------------
     /** @name */
     //-------------------------------------------------------------------------
     //@{
-    void SetClassID         ( uint nMOSClassID );
-    uint GetClassID         () const;
-    uint ConvertSimIDToMosID( uint nID );
+    void SetClassID( uint nMOSClassID );
     //@}
-
 
 private:
     MT_IdentifierManager mosIDManager_; 
-//    MT_IdentifierManager simIDManager_; 
 
     uint   nNextSimInstanceID_;
     uint   nMOSClassID_;

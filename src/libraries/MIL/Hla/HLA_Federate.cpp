@@ -36,6 +36,7 @@
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Tools/MIL_IDManager.h"
 
 #include <windows.h> // For ::Sleep()
 
@@ -104,7 +105,7 @@ namespace
         {};
         virtual HLA_RoleInterface& Create( const ObjectIdentifier& objectId )
         {
-            MIL_AgentHLA* pPion = new MIL_AgentHLA( MIL_EntityManager::unitsIDManager_.GetFreeSimID(), objectId, interactionManager_ );
+            MIL_AgentHLA* pPion = new MIL_AgentHLA( MIL_IDManager::units_.GetFreeSimID(), objectId, interactionManager_ );
             return pPion->GetRole< HLA_RoleInterface >();
         }
         virtual void Destroy( HLA_RoleInterface& object )

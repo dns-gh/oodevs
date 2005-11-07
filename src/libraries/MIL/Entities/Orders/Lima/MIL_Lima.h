@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Tools/MIL_MOSIDManager.h"
 
 class MIL_Agent_ABC;
 class NET_AS_MOSServer;
@@ -28,9 +27,6 @@ class MIL_LimaFunction_ABC;
 class MIL_Lima
 {
     MT_COPYNOTALLOWED( MIL_Lima );
-
-public:
-    static MIL_MOSIDManager idManager_;
 
 public:
     //! @name Types
@@ -89,7 +85,6 @@ private:
     //@}
 
 private:
-    bool            bCreatedBySim_;
     uint            nID_;
     E_LimaFunctions nLimaFunction_;
        

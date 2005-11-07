@@ -15,13 +15,13 @@
 
 #include "MIL_CheckPointManager.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 
 static const std::string strCheckPointsDirectory( "CheckPoints/" );
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
@@ -125,6 +125,7 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Can't open file '%s'", strFileName.c_str() ) );
 
     MIL_CheckPointOutArchive archive( file );
+    MIL_IDManager  ::serialize( archive );
     MIL_AgentServer::GetWorkspace().save( archive );
     file.close();
     
@@ -217,6 +218,7 @@ void MIL_CheckPointManager::LoadCheckPoint( std::string strCheckPointPath )
 
     MIL_CheckPointInArchive archive( file );
     
+    MIL_IDManager  ::serialize( archive );
     MIL_AgentServer::GetWorkspace().load( archive );
     
     file.close();

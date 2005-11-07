@@ -16,8 +16,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-
-MIL_MOSIDManager PHY_IndirectFireResults::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_IndirectFireResults constructor
@@ -25,7 +24,7 @@ MIL_MOSIDManager PHY_IndirectFireResults::idManager_;
 // -----------------------------------------------------------------------------
 PHY_IndirectFireResults::PHY_IndirectFireResults( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
-    , nID_               ( idManager_.GetFreeSimID() )
+    , nID_               ( MIL_IDManager::indirectFireResults_.GetFreeSimID() )
     , firer_             ( firer )
     , vTargetPosition_   ( vTargetPosition )    
 {
@@ -62,6 +61,5 @@ PHY_IndirectFireResults::~PHY_IndirectFireResults()
         PHY_AgentFireResult::CleanAfterSerialization( asnMsg.GetAsnMsg().resultats.elem[ n ] );
     if( asnMsg.GetAsnMsg().resultats.n > 0 )
         delete [] asnMsg.GetAsnMsg().resultats.elem;
-    idManager_.ReleaseSimID( nID_ );
 }
 

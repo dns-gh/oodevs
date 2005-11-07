@@ -18,15 +18,14 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
-
-MIL_MOSIDManager MIL_Effect_Weather::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Weather constructor
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, MT_Float rLifeDuration, MT_Float rDeploymentDuration )
-    : nID_                ( idManager_.GetFreeSimID() )
+    : nID_                ( MIL_IDManager::effectsWeather_.GetFreeSimID() )
     , surface_            ( surface )
     , ammoCategory_       ( ammoCategory )
     , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (uint)rDeploymentDuration )
@@ -42,7 +41,6 @@ MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_Ind
 // -----------------------------------------------------------------------------
 MIL_Effect_Weather::~MIL_Effect_Weather()
 {
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================

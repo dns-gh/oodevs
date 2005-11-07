@@ -18,6 +18,7 @@
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Tools/MIL_IDManager.h"
 
 #include "TER/TER_PathFindManager.h"
 #include "TER/TER_DynamicData.h"
@@ -25,17 +26,14 @@
 
 using namespace DIN;
 
-MIL_MOSIDManager MIL_Limit::idManager_;
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Limit constructor
 // Created: NLD 2002-08-08
 // Last Modified : JVT 02-10-10
 //-----------------------------------------------------------------------------
 MIL_Limit::MIL_Limit()
-    : nID_          ( (uint)-1 )
-    , bCreatedBySim_( false )
-    , nLevel_       ( EnumNatureLevel::ooo )
+    : nID_       ( (uint)-1 )
+    , nLevel_    ( EnumNatureLevel::ooo )
     , bDestroyed_( false )
 {
     // NOTHING
@@ -62,14 +60,13 @@ MIL_Limit::~MIL_Limit()
 //-----------------------------------------------------------------------------
 bool MIL_Limit::Initialize( const ASN1T_MsgLimitCreation& asnMsg, MIL_MOSContextID nCtx )
 {
-    bCreatedBySim_ = false;
-    nID_           = asnMsg.oid;
-    nLevel_        = asnMsg.level;
+    nID_    = asnMsg.oid;
+    nLevel_ = asnMsg.level;
 
     NET_ASN_MsgLimitCreationAck asnAckMsg;
     asnAckMsg.GetAsnMsg().oid = nID_;
     
-    if( !idManager_.IsMosIDValid( nID_ ) || !idManager_.LockMosID( nID_ ) )
+    if( !MIL_IDManager::limits_.IsMosIDValid( nID_ ) || !MIL_IDManager::limits_.LockMosID( nID_ ) )
     {
         asnAckMsg.GetAsnMsg().error_code = EnumInfoContextErrorCode::error_invalid_id;
         asnAckMsg.Send( nCtx );
@@ -98,10 +95,9 @@ bool MIL_Limit::Initialize( const ASN1T_MsgLimitCreation& asnMsg, MIL_MOSContext
 void MIL_Limit::Initialize( const T_PointVector& points )
 {
     assert( !points.empty() );
-    bCreatedBySim_ = true;
-    points_        = points;
-    nID_           = idManager_.GetFreeSimID();
-    nLevel_        = EnumNatureLevel::ooo;
+    points_ = points;
+    nID_    = MIL_IDManager::limits_.GetFreeSimID();
+    nLevel_ = EnumNatureLevel::ooo;
 
     InitializeDistanceData();    
     SendFullState();
@@ -133,16 +129,10 @@ void MIL_Limit::Cleanup()
     asnMsg.GetAsnMsg() = nID_;
     asnMsg.Send();
 
-    if( !bCreatedBySim_ )
+    if( MIL_IDManager::limits_.IsMosIDValid( nID_ ) )
     {
-        assert( idManager_.IsMosIDValid( nID_ ) );
-        bool bOut = idManager_.ReleaseMosID( nID_ );
+        bool bOut = MIL_IDManager::limits_.ReleaseMosID( nID_ );
         assert( bOut );
-    }
-    else
-    {
-        assert( idManager_.IsSimIDValid( nID_ ) );
-        idManager_.ReleaseSimID( nID_ );
     }
 
     points_.clear();
@@ -159,18 +149,11 @@ void MIL_Limit::Cleanup()
 //-----------------------------------------------------------------------------
 void MIL_Limit::Cleanup( MIL_MOSContextID nCtx )
 {
-    if( !bCreatedBySim_ )
+    if( MIL_IDManager::limits_.IsMosIDValid( nID_ ) )
     {
-        assert( idManager_.IsMosIDValid( nID_ ) );
-        bool bOut = idManager_.ReleaseMosID( nID_ );
+        bool bOut = MIL_IDManager::limits_.ReleaseMosID( nID_ );
         assert( bOut );
     }
-    else
-    {
-        assert( idManager_.IsSimIDValid( nID_ ) );
-        idManager_.ReleaseSimID( nID_ );
-    }
-
 
     NET_ASN_MsgLimitDestructionAck asnAckMsg;
     asnAckMsg.GetAsnMsg().oid        = nID_;

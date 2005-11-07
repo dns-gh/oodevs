@@ -53,12 +53,17 @@ bool MIL_MOSIDManager::IsSimIDValid( uint nID )
     return true;
 }
 
+// =============================================================================
+// CHECKPOINTS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: MIL_MOSIDManager::GetClassID
-// Created: NLD 2005-04-01
+// Name: template< typename Archive > void MIL_MOSIDManager::serialize
+// Created: NLD 2005-11-04
 // -----------------------------------------------------------------------------
-inline
-uint MIL_MOSIDManager::GetClassID() const
+template< typename Archive > 
+void MIL_MOSIDManager::serialize( Archive& file )
 {
-    return nMOSClassID_;
+    file & nNextSimInstanceID_
+         & nMOSClassID_;
 }

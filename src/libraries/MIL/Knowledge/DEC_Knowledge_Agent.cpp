@@ -29,10 +29,10 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Agent, "DEC_Knowledge_Agent" )
 
-MIL_MOSIDManager DEC_Knowledge_Agent::idManager_;
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByEtatOps_          = 0.2; // 20%
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
@@ -45,7 +45,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     : DEC_Knowledge_ABC              ()
     , pKnowledgeGroup_               ( &knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
-    , nID_                           ( idManager_.GetFreeSimID() )
+    , nID_                           ( MIL_IDManager::knowledgesAgent_.GetFreeSimID() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -100,7 +100,6 @@ DEC_Knowledge_Agent::~DEC_Knowledge_Agent()
 {
     if( bCreatedOnNetwork_ )
         SendMsgDestruction();
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -182,8 +181,6 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const uint )
          >> bCurrentPerceptionLevelUpdated_
          >> bMaxPerceptionLevelUpdated_
          >> nTimeExtrapolationEnd_;
-
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

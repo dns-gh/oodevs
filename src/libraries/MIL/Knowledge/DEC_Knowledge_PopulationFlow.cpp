@@ -23,11 +23,10 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
-MIL_MOSIDManager DEC_Knowledge_PopulationFlow::idManager_;
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_PopulationFlow" )
 
@@ -38,7 +37,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationFlow, "DEC_Knowledge_Population
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( &flowKnown )
-    , nID_                     ( idManager_.GetFreeSimID() )
+    , nID_                     ( MIL_IDManager::knowledgePopulationFlows_.GetFreeSimID() )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , flowParts_               ()
@@ -91,7 +90,6 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
 DEC_Knowledge_PopulationFlow::~DEC_Knowledge_PopulationFlow()
 {
     SendMsgDestruction();
-    idManager_.ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -163,8 +161,6 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const ui
     file >> nTmpID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nTmpID );
     assert( pCurrentPerceptionLevel_ );
-
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

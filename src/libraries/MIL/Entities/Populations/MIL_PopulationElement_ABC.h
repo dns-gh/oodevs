@@ -21,7 +21,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
 #include "TER/TER_PopulationConcentration_ABC.h"
 #include "MT_Tools/MT_Random.h"
 

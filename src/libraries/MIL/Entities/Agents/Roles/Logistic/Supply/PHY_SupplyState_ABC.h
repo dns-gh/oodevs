@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
-
 // =============================================================================
 // @class  PHY_SupplyState_ABC
 // Created: JVT 2004-08-03
@@ -38,9 +36,6 @@ public:
 
 protected:
     const uint nID_;
-
-public:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "PHY_SupplyState_ABC.inl"

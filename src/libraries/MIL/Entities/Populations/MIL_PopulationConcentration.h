@@ -22,7 +22,6 @@
 #include "MIL.h"
 
 #include "MIL_PopulationElement_ABC.h"
-#include "Tools/MIL_MOSIDManager.h"
 #include "TER/TER_PopulationConcentration_ABC.h"
 
 class MIL_Population;
@@ -119,9 +118,6 @@ private:
 
     MIL_PopulationFlow*     pPullingFlow_;
     T_FlowSet               pushingFlows_;
-
-public:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "MIL_PopulationConcentration.inl"

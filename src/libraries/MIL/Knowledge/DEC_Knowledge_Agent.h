@@ -20,9 +20,7 @@
 #include "DEC_Knowledge_AgentDataRecognition.h"
 #include "DEC_Knowledge_AgentDataIdentification.h"
 
-
 #include "Network/NET_ASN_Types.h"
-#include "Tools/MIL_MOSIDManager.h"
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 
@@ -51,8 +49,6 @@ class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
     MT_COPYNOTALLOWED( DEC_Knowledge_Agent ) 
 
 public:
-    static MIL_MOSIDManager idManager_;
-
     // Parameters - $$$ Changer - ne devrait pas être public
     static MT_Float rMaxDangerosityDegradationByRelevance_;
     static MT_Float rMaxDangerosityDegradationByEtatOps_;

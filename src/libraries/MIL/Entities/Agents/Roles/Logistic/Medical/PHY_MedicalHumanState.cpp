@@ -20,8 +20,7 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
-MIL_MOSIDManager PHY_MedicalHumanState::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
 
@@ -30,7 +29,7 @@ BOOST_CLASS_EXPORT_GUID( PHY_MedicalHumanState, "PHY_MedicalHumanState" )
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human, bool bEvacuatedByThirdParty )
-    : nID_                   ( idManager_.GetFreeSimID() )
+    : nID_                   ( MIL_IDManager::medicalHumanStates_.GetFreeSimID() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
     , pConsign_              ( 0 )
@@ -50,7 +49,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& hu
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState()
-    : nID_                   ( idManager_.GetFreeSimID() )
+    : nID_                   ()
     , pPion_                 ( 0 )
     , pHuman_                ( 0 )
     , pConsign_              ( 0 )
@@ -70,8 +69,7 @@ PHY_MedicalHumanState::PHY_MedicalHumanState()
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::~PHY_MedicalHumanState()
 {
-    SendMsgDestruction();
-    idManager_.ReleaseSimID( nID_ );
+    SendMsgDestruction();    
 }
 
 // =============================================================================
@@ -93,8 +91,6 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
          >> bShouldGoBackToWar_
          >> bHandledByMedical_
          >> bEvacuatedByThirdParty_;
-         
-    idManager_.LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,10 +20,10 @@
 class PHY_DotationCategory;
 class MIL_RealObject_ABC;
 class MIL_Army;
+class MIL_RealObjectTypeFilter;
+class MIL_MOSIDManager;
 class PHY_ConsumptionType;
 class PHY_Protection;
-class MIL_MOSIDManager;
-class MIL_RealObjectTypeFilter;
 
 // =============================================================================
 // @class  MIL_RealObjectType
@@ -95,7 +95,6 @@ public:
     //! @name Manager
     //@{
     static void Initialize       ( MIL_InputArchive& archive );
-    static void RegisterIDManager( const std::string& strName, uint nClassID );
     static void Terminate        ();
 
     static const T_ObjectTypeMap&    GetObjectTypes();
@@ -208,11 +207,6 @@ private:
     typedef T_EnvironmentScoreMap::const_iterator CIT_EnvironmentScoreMap;
 
     typedef std::vector< PHY_AttritionData >  T_AttritionVector;
-
-    typedef std::map< uint, MIL_MOSIDManager* >                              T_IDManagerMap;
-    typedef T_IDManagerMap::const_iterator                                   CIT_IDManagerMap;
-    typedef std::map< std::string, MIL_MOSIDManager*, sCaseInsensitiveLess > T_ObjectIDManager;
-    typedef T_ObjectIDManager::const_iterator                                CIT_ObjectIDManager;
     //@}
 
 private:
@@ -251,9 +245,7 @@ private:
     E_Behavior                  nBehavior_; //$$$ a renommer 
 
 private:
-    static T_ObjectIDManager objectIDManagers_;
-    static T_IDManagerMap    idManagers_;
-    static T_ObjectTypeMap   objectTypes_;
+    static T_ObjectTypeMap           objectTypes_;
     static MIL_RealObjectTypeFilter* pObjectTypesToAvoid_;
 };
 

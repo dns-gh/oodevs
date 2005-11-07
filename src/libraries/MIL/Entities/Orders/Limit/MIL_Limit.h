@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Tools/MIL_MOSIDManager.h"
 
 class MIL_Agent_ABC;
 class MIL_Fuseau;
@@ -29,9 +28,6 @@ class TER_DynamicData;
 class MIL_Limit
 {
     MT_COPYNOTALLOWED( MIL_Limit )
-
-public:
-    static MIL_MOSIDManager idManager_;
 
 public:
      MIL_Limit();
@@ -106,7 +102,6 @@ private:
     //@}
 
 private:
-    bool bCreatedBySim_;
     uint nID_;
     uint nLevel_;
        

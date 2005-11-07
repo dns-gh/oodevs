@@ -58,11 +58,9 @@
 #include "MIL_ZoneForbiddenMove.h"
 #include "MIL_ZoneImplantationMortier.h"
 #include "Tools/MIL_Tools.h"
-#include "Tools/MIL_MOSIDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 MIL_RealObjectType::T_ObjectTypeMap     MIL_RealObjectType::objectTypes_;
-MIL_RealObjectType::T_IDManagerMap      MIL_RealObjectType::idManagers_;
-MIL_RealObjectType::T_ObjectIDManager   MIL_RealObjectType::objectIDManagers_;
 MIL_RealObjectTypeFilter*               MIL_RealObjectType::pObjectTypesToAvoid_ = 0;
 
 const MIL_RealObjectType& MIL_RealObjectType::fosseAntiChar_            = *new MIL_RealObjectType( "fosse anti char"           , eObjectTypeFosseAntiChar          , EnumObjectType::fosse_anti_char          , &MIL_FosseAntiChar              ::Create, eHate   );  
@@ -182,21 +180,6 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
 
     archive.EndList   (); // ObjetsReels
     archive.EndSection(); // Objets
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::RegisterIDManager
-// Created: NLD 2005-04-05
-// -----------------------------------------------------------------------------
-void MIL_RealObjectType::RegisterIDManager( const std::string& strName, uint nClassID )
-{
-    MIL_MOSIDManager*& pIDManager = idManagers_[ nClassID ];
-    if( !pIDManager )
-    {
-        pIDManager = new MIL_MOSIDManager();
-        pIDManager->SetClassID( nClassID );
-    }
-    objectIDManagers_[ strName ] = pIDManager;
 }
 
 // -----------------------------------------------------------------------------
@@ -390,10 +373,9 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
     if( nBehavior_ == eHate || nBehavior_ == eAvoid )
         pObjectTypesToAvoid_->Set( *this );
 
-    CIT_ObjectIDManager it = objectIDManagers_.find( strName_ );
-    if( it == objectIDManagers_.end() )
+    pIDManager_ = MIL_IDManager::FindObjectIDManager( strName_ );
+    if( !pIDManager_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Class ID of object '%s' is not initialized", strName_.c_str() ) );
-    pIDManager_ = it->second;
 
     std::string strConsumptionMode;
     archive.ReadField( "ModeConsommationParDefaut", strConsumptionMode );

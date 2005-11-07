@@ -8,7 +8,6 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Tools/MIL_MOSIDManager.h"
 
 class MT_InputArchive_ABC;
 class PHY_RawVisionData;

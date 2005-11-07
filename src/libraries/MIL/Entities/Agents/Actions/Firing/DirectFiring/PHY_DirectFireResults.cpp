@@ -14,8 +14,7 @@
 #include "PHY_DirectFireResults.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Messages.h"
-
-MIL_MOSIDManager PHY_DirectFireResults::idManager_;
+#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireResults constructor
@@ -23,7 +22,7 @@ MIL_MOSIDManager PHY_DirectFireResults::idManager_;
 // -----------------------------------------------------------------------------
 PHY_DirectFireResults::PHY_DirectFireResults( const MIL_AgentPion& firer, const MIL_Agent_ABC& target )
     : PHY_FireResults_ABC()
-    , nID_              ( idManager_.GetFreeSimID() )
+    , nID_              ( MIL_IDManager::directFireResults_.GetFreeSimID() )
     , firer_            ( firer )
     , target_           ( target )
 {
@@ -49,6 +48,5 @@ PHY_DirectFireResults::~PHY_DirectFireResults()
     fireResult.Serialize( target_, asnMsg.GetAsnMsg().resultat );
     asnMsg.Send();
     fireResult.CleanAfterSerialization( asnMsg.GetAsnMsg().resultat );
-    idManager_.ReleaseSimID( nID_ );
 }
 

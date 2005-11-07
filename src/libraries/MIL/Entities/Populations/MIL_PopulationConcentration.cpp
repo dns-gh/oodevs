@@ -26,11 +26,10 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
-MIL_MOSIDManager MIL_PopulationConcentration::idManager_;
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentration" )
 
@@ -39,7 +38,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_PopulationConcentration, "MIL_PopulationConcentrati
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, MIL_InputArchive& archive )
-    : MIL_PopulationElement_ABC      (  population, idManager_.GetFreeSimID() )
+    : MIL_PopulationElement_ABC      ( population, MIL_IDManager::populationConcentrations_.GetFreeSimID() )
     , TER_PopulationConcentration_ABC()
     , position_                      ()
     , location_                      ()
@@ -64,7 +63,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position )
-    : MIL_PopulationElement_ABC      (  population, idManager_.GetFreeSimID() )
+    : MIL_PopulationElement_ABC      (  population, MIL_IDManager::populationConcentrations_.GetFreeSimID() )
     , TER_PopulationConcentration_ABC()
     , position_                      ( position )
     , location_                      ()
@@ -102,7 +101,6 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 
     SendDestruction();
 
-    idManager_.ReleaseSimID( GetID() );
 } 
 
 // =============================================================================
@@ -282,11 +280,8 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
     
     file >> position_
-         >> location_;
-
-    idManager_.LockSimID( GetID() );
-
-    file >> pPullingFlow_
+         >> location_
+         >> pPullingFlow_
          >> pushingFlows_;
 }
 

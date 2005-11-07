@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
-
 class MIL_Agent_ABC;
 class PHY_Human;
 class PHY_HumanWound;

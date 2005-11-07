@@ -25,9 +25,6 @@ class PHY_ControlZoneFireResults : public PHY_FireResults_ABC
     MT_COPYNOTALLOWED( PHY_ControlZoneFireResults )
 
 public:
-    static MIL_MOSIDManager idManager_;
-
-public:
     PHY_ControlZoneFireResults();
     virtual ~PHY_ControlZoneFireResults();
 };

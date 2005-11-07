@@ -95,7 +95,6 @@ private:
     const MIL_AutomateMissionType& type_;
           MIL_AutomateMRT          mrt_;
           uint                     nOrderID_;
-          bool                     bCreatedBySim_;
 
     // Mission parameters
     MT_Vector2D        vDirDanger_;

@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
 
 class MIL_Agent_ABC;
@@ -28,9 +27,6 @@ class PHY_DotationCategory;
 class PHY_IndirectFireResults : public PHY_FireResults_ABC
 {
     MT_COPYNOTALLOWED( PHY_IndirectFireResults )
-
-public:
-    static MIL_MOSIDManager idManager_;
 
 public:
     PHY_IndirectFireResults( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );

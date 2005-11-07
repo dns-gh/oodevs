@@ -30,10 +30,9 @@
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
-MIL_MOSIDManager MIL_PopulationFlow::idManager_;
 
 BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
 
@@ -44,7 +43,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_PopulationFlow, "MIL_PopulationFlow" )
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
     : PHY_MovingEntity_ABC     ()
     , TER_PopulationFlow_ABC   ()
-    , MIL_PopulationElement_ABC( population, idManager_.GetFreeSimID() )
+    , MIL_PopulationElement_ABC( population, MIL_IDManager::populationFlows_.GetFreeSimID() )
     , pSourceConcentration_    ( &sourceConcentration )
     , pDestConcentration_      ( 0 )
     , destination_             ( )
@@ -94,8 +93,6 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
     assert( !pDestConcentration_   );    
 
     SendDestruction();
-
-    idManager_.ReleaseSimID( GetID() );
 }
 
 // =============================================================================
@@ -439,11 +436,8 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC >( *this );
 
     file >> pSourceConcentration_
-         >> pDestConcentration_;
-
-    idManager_.LockSimID( GetID() );
-
-    file >> flowShape_
+         >> pDestConcentration_
+         >> flowShape_
          >> direction_
          >> rSpeed_;
 

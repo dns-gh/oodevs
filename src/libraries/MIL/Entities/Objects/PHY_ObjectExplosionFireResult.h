@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
 
 class MIL_RealObject_ABC;

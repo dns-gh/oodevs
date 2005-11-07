@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "DEC_Knowledge_ABC.h"
-#include "Tools/MIL_MOSIDManager.h"
 
 class MIL_Population;
 class MIL_PopulationConcentration;
@@ -119,9 +118,6 @@ private:
           T_FlowMap           flows_;
     const MIL_Army*           pArmy_;
           bool                bIsRecon_;
-
-private:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "DEC_Knowledge_Population.inl"

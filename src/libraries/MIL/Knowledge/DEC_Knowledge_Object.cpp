@@ -14,16 +14,13 @@
 
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/RC/MIL_RC_ObjetDetecte.h"
 #include "Entities/MIL_Army.h"
-
 #include "Tools/MIL_MOSIDManager.h"
-
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -93,7 +90,6 @@ DEC_Knowledge_Object::~DEC_Knowledge_Object()
     assert( pObjectType_ );
     
     SendMsgDestruction();
-    pObjectType_->GetIDManager().ReleaseSimID( nID_ );
 }
 
 // =============================================================================
@@ -149,8 +145,6 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
         file >> nID;
         reconByAgentTypes_.insert( MIL_AgentTypePion::FindPionType( nID ) );
     }
-    
-    pObjectType_->GetIDManager().LockSimID( nID_ );
 }
 
 // -----------------------------------------------------------------------------

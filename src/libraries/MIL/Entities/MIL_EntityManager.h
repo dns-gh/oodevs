@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
 #include "MT_Tools/MT_Profiler.h"
 
 class MIL_EffectManager;
@@ -212,10 +211,6 @@ private:
     MT_Float      rStatesTime_;
 
     uint          nRandomBreakdownsNextTimeStep_;
-
-public:
-    static MIL_MOSIDManager unitsIDManager_;
-    static MIL_MOSIDManager populationIDManager_;
 };
 
 #include "MIL_EntityManager.inl"

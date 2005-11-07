@@ -22,7 +22,6 @@
 #include "MIL.h"
 
 #include "MIL_PopulationElement_ABC.h"
-#include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "TER/TER_PopulationFlow_ABC.h"
 
@@ -159,9 +158,6 @@ private:
     bool bFlowShapeUpdated_;
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
-
-public:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "MIL_PopulationFlow.inl"

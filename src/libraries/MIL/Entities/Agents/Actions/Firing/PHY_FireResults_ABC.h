@@ -27,9 +27,6 @@ class PHY_FireResults_ABC
     MT_COPYNOTALLOWED( PHY_FireResults_ABC )
 
 public:
-    static MIL_MOSIDManager idManager_;
-
-public:
     PHY_FireResults_ABC();
     virtual ~PHY_FireResults_ABC();
 

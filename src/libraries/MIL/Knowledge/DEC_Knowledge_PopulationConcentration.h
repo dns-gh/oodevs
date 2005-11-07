@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
-
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationConcentrationPerception;
@@ -97,9 +95,6 @@ private:
     bool     bRealConcentrationUpdated_;
     bool     bRelevanceUpdated_;
     MT_Float rLastRelevanceSent_;
-
-private:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "DEC_Knowledge_PopulationConcentration.inl"

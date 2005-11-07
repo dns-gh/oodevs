@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Tools/MIL_MOSIDManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/Lima/MIL_Lima.h"
 #include "Entities/Orders/MIL_Order_Def.h"
@@ -32,9 +31,6 @@ class MIL_PionMissionType;
 class MIL_PionMission_ABC : public DIA_Thing
 {
     MT_COPYNOTALLOWED( MIL_PionMission_ABC );
-
-public:
-    static MIL_MOSIDManager idManager_;
 
 public:
     MIL_PionMission_ABC( MIL_AgentPion& pion, const MIL_PionMissionType& type );
@@ -103,7 +99,6 @@ protected:
 
 private:
     const MIL_PionMissionType& type_;
-    bool                       bCreatedBySim_;
     bool                       bDIABehaviorActivated_;
     uint                       nOrderID_;
 

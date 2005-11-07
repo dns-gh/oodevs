@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
-
 class PHY_Human;
 class PHY_MedicalConsign_ABC;
 class MIL_AgentPion;
@@ -98,9 +96,6 @@ private:
           bool                    bDiagnosed_;
           bool                    bHandledByMedical_;
           bool                    bEvacuatedByThirdParty_;
-
-public:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "PHY_MedicalHumanState.inl"

@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-#include "Tools/MIL_MOSIDManager.h"
-
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
 class PHY_MaintenanceConsign_ABC;
@@ -91,9 +89,6 @@ private:
           MT_Vector2D                 vComposantePosition_; // Position de la composante lors de son traitement dans la chaine maintenance
           bool                        bHasChanged_;
           bool                        bDiagnosed_;
-
-public:
-    static MIL_MOSIDManager idManager_;
 };
 
 #include "PHY_MaintenanceComposanteState.inl"

@@ -62,13 +62,11 @@
 #include "Populations/MIL_Population.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Tools/MIL_ProfilerMgr.h"
+#include "Tools/MIL_IDManager.h"
 #include "RC/MIL_RC.h"
 #include "MIL_Army.h"
 #include "Network/NET_ASN_Messages.h"
 #include "HLA/HLA_Federate.h"
-
-MIL_MOSIDManager MIL_EntityManager::unitsIDManager_;
-MIL_MOSIDManager MIL_EntityManager::populationIDManager_;
 
 BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 
@@ -413,7 +411,6 @@ void MIL_EntityManager::InitializeAutomates( MIL_InputArchive& archive )
         
         archive.ReadAttribute( "id", nID );
         archive.ReadAttribute( "type", strType );
-        nID = unitsIDManager_.ConvertSimIDToMosID( nID );
 
         const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
         if( !pAutomateType )
@@ -445,7 +442,6 @@ void MIL_EntityManager::InitializeAutomates( MIL_InputArchive& archive )
         std::string strType;
         
         archive.ReadAttribute( "id", nID );
-        nID = unitsIDManager_.ConvertSimIDToMosID( nID );
 
         MIL_Automate* pAutomate = FindAutomate( nID );
         if( !pAutomate )
@@ -478,7 +474,6 @@ void MIL_EntityManager::InitializePions( MIL_InputArchive& archive )
 
         archive.ReadAttribute( "id"  , nID     );
         archive.ReadAttribute( "type", strType );
-        nID = unitsIDManager_.ConvertSimIDToMosID( nID );
 
         const MIL_AgentTypePion* pPionType = MIL_AgentTypePion::FindPionType( strType );
         if( !pPionType )
@@ -518,7 +513,6 @@ void MIL_EntityManager::InitializePopulations( MIL_InputArchive& archive )
 
         archive.ReadAttribute( "id"  , nID     );
         archive.ReadAttribute( "type", strType );
-        nID = populationIDManager_.ConvertSimIDToMosID( nID );
 
         const MIL_PopulationType* pPopulationType = MIL_PopulationType::Find( strType );
         if( !pPopulationType )
@@ -786,7 +780,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
         }
     }
 
-    MIL_AgentPion& pion = type.InstanciatePion( unitsIDManager_.GetFreeSimID(), automate, vPosition );
+    MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::units_.GetFreeSimID(), automate, vPosition );
     assert( pions_[ pion.GetID() ] == 0 );
     pions_[ pion.GetID() ] = &pion;
 
