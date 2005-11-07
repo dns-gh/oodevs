@@ -39,8 +39,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 MOS_ObjectKnowledgePanel::MOS_ObjectKnowledgePanel( QWidget* pParent )
@@ -215,7 +213,9 @@ void MOS_ObjectKnowledgePanel::UpdateList()
         {
             // We only display knowledges concerning our own team if the appropriate check box is checked.
             if( pOwnTeamCheckBox_->isChecked() || pTeam->GetID() != (*it).second->GetOwner().GetID() )
-                new MT_ValuedListViewItem<MOS_ObjectKnowledge*>( (*it).second, pKnowledgeListView_, QString::number( (*it).second->GetID() ) );
+                new MT_ValuedListViewItem<MOS_ObjectKnowledge*>( it->second, pKnowledgeListView_,
+                QString( ENT_Tr::ConvertFromObjectType( (E_ObjectType)it->second->nObjectTypeID_ ).c_str() )
+                + " [" + QString::number( it->second->GetID() ) + "]" );
         }
         pTeam_ = pTeam;
     }
@@ -361,8 +361,6 @@ void MOS_ObjectKnowledgePanel::UpdateSelected()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel::OnSelectionChanged
-/** @param  pItem 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* pItem )
@@ -399,27 +397,23 @@ void MOS_ObjectKnowledgePanel::OnRequestCenter()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel::OnKnowledgeCreated
-/** @param  team 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::OnKnowledgeCreated( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
 {
-    if( &team != selectedItem_.pTeam_ )
+    if( &team != pTeam_ )
         return;
 
     // We only display knowledges concerning our own team if the appropriate check box is checked.
     if( pOwnTeamCheckBox_->isChecked() || selectedItem_.pTeam_->GetID() != knowledge.GetOwner().GetID() )
-        new MT_ValuedListViewItem<MOS_ObjectKnowledge*>( &knowledge, pKnowledgeListView_, QString::number( knowledge.GetID() ) );
+        new MT_ValuedListViewItem<MOS_ObjectKnowledge*>( &knowledge, pKnowledgeListView_, 
+        QString( ENT_Tr::ConvertFromObjectType( (E_ObjectType)knowledge.nObjectTypeID_ ).c_str() )
+        + " [" + QString::number( knowledge.GetID() ) + "]" );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel::OnKnowledgeUpdated
-/** @param  team 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::OnKnowledgeUpdated( MOS_Team& /*team*/, MOS_ObjectKnowledge& knowledge )
@@ -431,14 +425,11 @@ void MOS_ObjectKnowledgePanel::OnKnowledgeUpdated( MOS_Team& /*team*/, MOS_Objec
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel::OnKnowledgeDeleted
-/** @param  team 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::OnKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge )
 {
-    if( &team != selectedItem_.pTeam_ )
+    if( &team != pTeam_ )
         return;
 
     QListViewItem* pItem = pKnowledgeListView_->firstChild();
@@ -458,10 +449,6 @@ void MOS_ObjectKnowledgePanel::OnKnowledgeDeleted( MOS_Team& team, MOS_ObjectKno
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectKnowledgePanel::OnContextMenuRequested
-/** @param  pItem 
-    @param  pos 
-    @param  nCol 
-*/
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
 void MOS_ObjectKnowledgePanel::OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos )

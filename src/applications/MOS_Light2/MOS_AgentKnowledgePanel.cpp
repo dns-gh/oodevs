@@ -373,7 +373,7 @@ void MOS_AgentKnowledgePanel::OnRequestCenter()
 // -----------------------------------------------------------------------------
 void MOS_AgentKnowledgePanel::OnKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge )
 {
-    if( &gtia != selectedItem_.pGtia_ )
+    if( &gtia != pGtia_ )
         return;
 
     // We only display knowledges concerning our own team if the appropriate check box is checked.
@@ -384,8 +384,6 @@ void MOS_AgentKnowledgePanel::OnKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowl
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel::OnKnowledgeUpdated
-/** @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_AgentKnowledgePanel::OnKnowledgeUpdated( MOS_Gtia& /*gtia*/, MOS_AgentKnowledge& knowledge )
@@ -398,13 +396,11 @@ void MOS_AgentKnowledgePanel::OnKnowledgeUpdated( MOS_Gtia& /*gtia*/, MOS_AgentK
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel::OnKnowledgeDeleted
-/** @param  knowledge 
-*/
 // Created: APE 2004-05-04
 // -----------------------------------------------------------------------------
 void MOS_AgentKnowledgePanel::OnKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge )
 {
-    if( &gtia != selectedItem_.pGtia_ )
+    if( &gtia != pGtia_ )
         return;
 
     QListViewItem* pItem = pKnowledgeListView_->firstChild();
@@ -424,10 +420,6 @@ void MOS_AgentKnowledgePanel::OnKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowl
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentKnowledgePanel::OnContextMenuRequested
-/** @param  pItem 
-    @param  pos 
-    @param  nCol 
-*/
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
 void MOS_AgentKnowledgePanel::OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos )
