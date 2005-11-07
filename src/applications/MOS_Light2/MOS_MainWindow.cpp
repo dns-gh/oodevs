@@ -187,9 +187,9 @@ MOS_MainWindow::MOS_MainWindow()
     new MOS_UnitToolbar( this );
     new MOS_EventToolbar( this );
     new MOS_ControllerToolbar( this );
-    new MOS_RecorderToolbar( this );
     new MOS_LogisticToolbar( this );
-
+    new MOS_RecorderToolbar( this );
+    
     // Status bar & indicators
     pLocationLabel_  = new QLabel( "---", this );
 	pLocationLabel2_ = new QLabel( "---", this );

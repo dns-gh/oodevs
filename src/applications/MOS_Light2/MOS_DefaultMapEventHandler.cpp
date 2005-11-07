@@ -348,8 +348,6 @@ void MOS_DefaultMapEventHandler::OnTacticalLineDeleted( MOS_TacticalLine_ABC& li
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::OnAgentKnowledgeDeleted
-/** @param  knowledge 
-*/
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::OnAgentKnowledgeDeleted( MOS_Gtia& /*gtia*/, MOS_AgentKnowledge& knowledge )
@@ -364,8 +362,6 @@ void MOS_DefaultMapEventHandler::OnAgentKnowledgeDeleted( MOS_Gtia& /*gtia*/, MO
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted
-/** @param  knowledge 
-*/
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, MOS_ObjectKnowledge& knowledge )
@@ -380,8 +376,6 @@ void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, M
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::SelectElementAtPos
-/** @param  vGLPos 
-*/
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
@@ -490,6 +484,9 @@ MOS_PopulationConcentration* MOS_DefaultMapEventHandler::GetPopulationConcentrat
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
+    if( ! populationMap.size() )
+        return 0;
+
     MOS_AgentManager::RCIT_PopulationMap rit;
     MOS_Population::RCIT_ConcentrationMap ritConcentration;
 
@@ -542,6 +539,9 @@ MOS_PopulationFlow* MOS_DefaultMapEventHandler::GetPopulationFlowAtPos( const MT
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
+    if( ! populationMap.size() )
+        return 0;
+
     MOS_AgentManager::RCIT_PopulationMap rit;
     MOS_Population::RCIT_FlowMap ritFlow;
 
@@ -614,6 +614,9 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_AgentMap& agentMap = MOS_App::GetApp().GetAgentManager().GetAgentList();
+    if( ! agentMap.size() )
+        return 0;
+
     MOS_AgentManager::RCIT_AgentMap rit;
 
     if( selectedElement_.pAgent_ == 0 )
@@ -648,9 +651,6 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos
-/** @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
 MOS_AgentKnowledge* MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos( const MT_Vector2D& vGLPos )
@@ -662,6 +662,9 @@ MOS_AgentKnowledge* MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos( const MT
     assert( pPlayedTeam != 0 );
 
     const MOS_Team::T_AgentKnowledgeMap& agentMap = pPlayedTeam->GetAgentKnowledges();
+    if( ! agentMap.size() )
+        return 0;
+
     MOS_Team::RCIT_AgentKnowledgeMap rit;
 
     if( selectedElement_.pAgentKnowledge_ == 0 )
@@ -698,14 +701,14 @@ MOS_AgentKnowledge* MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos( const MT
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetLineAtPos
-/** @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
 MOS_TacticalLine_ABC* MOS_DefaultMapEventHandler::GetLineAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     MOS_LineManager::CT_TacticalLineSet& lineSet = MOS_App::GetApp().GetLineManager().GetLineList();
+    if( ! lineSet.size() )
+        return 0;
+
     MOS_LineManager::RCIT_TacticalLineSet rit;
 
     if( selectedElement_.pLine_ == 0 )
@@ -738,10 +741,6 @@ MOS_TacticalLine_ABC* MOS_DefaultMapEventHandler::GetLineAtPos( const MT_Vector2
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::IsLineAtPos
-/** @param  agent 
-    @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
 bool MOS_DefaultMapEventHandler::IsLineAtPos( const MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel )
@@ -755,10 +754,6 @@ bool MOS_DefaultMapEventHandler::IsLineAtPos( const MOS_TacticalLine_ABC& line, 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetPointAtPos
-/** @param  line 
-    @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-04-16
 // -----------------------------------------------------------------------------
 int MOS_DefaultMapEventHandler::GetPointAtPos( MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel )
@@ -775,14 +770,14 @@ int MOS_DefaultMapEventHandler::GetPointAtPos( MOS_TacticalLine_ABC& line, const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetObjectAt
-/** @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
 MOS_Object_ABC* MOS_DefaultMapEventHandler::GetObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
     const MOS_ObjectManager::T_ObjectMap& objectMap = MOS_App::GetApp().GetObjectManager().GetObjects();
+    if( ! objectMap.size() )
+        return 0;
+
     MOS_ObjectManager::RCIT_ObjectMap rit;
 
     if( selectedElement_.pObject_ == 0 )
@@ -815,10 +810,6 @@ MOS_Object_ABC* MOS_DefaultMapEventHandler::GetObjectAtPos( const MT_Vector2D& v
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::IsObjectAtPos
-/** @param  object 
-    @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
 bool MOS_DefaultMapEventHandler::IsObjectAtPos( const MOS_Object_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel )
@@ -829,9 +820,6 @@ bool MOS_DefaultMapEventHandler::IsObjectAtPos( const MOS_Object_ABC& object, co
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos
-/** @param  vGLPos 
-    @return 
-*/
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
 MOS_ObjectKnowledge* MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
@@ -841,6 +829,8 @@ MOS_ObjectKnowledge* MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( const 
     MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeamFromIdx( options.nPlayedTeam_ );
     assert( pTeam != 0 );
     const MOS_Team::T_ObjectKnowledgeMap& objectMap = pTeam->GetObjectKnowledges();
+    if( ! objectMap.size() )
+        return 0;
 
     MOS_Team::RCIT_ObjectKnowledgeMap rit;
 

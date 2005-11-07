@@ -17,6 +17,7 @@
 class MOS_ConnectDialog;
 class MOS_DisconnectDialog;
 class QMainWindow;
+class MT_SpinBox;
 
 //*****************************************************************************
 // Created: FBD 03-01-14
@@ -40,6 +41,7 @@ protected slots:
     void SlotPlayPause();
     void SlotSpeedChange();
     void SlotOnSpinBoxChange();
+    void SlotOnSpinBoxEnterPressed();
     void SlotOnConnexionStatusChanged( bool bConnected );
     void SlotOnPauseStatusChanged( bool bPaused );
     void SlotOnSpeedChanged( int nSpeed );
@@ -49,7 +51,7 @@ private:
     QToolButton*            pConnectButton_;
     QToolButton*            pPlayButton_;
     QToolButton*            pSpeedButton_;
-    QSpinBox*               pSpeedSpinBox_;
+    MT_SpinBox*             pSpeedSpinBox_;
     MOS_ConnectDialog*      pConnectDlg_;
     MOS_DisconnectDialog*   pDisconnectDlg_;
 };

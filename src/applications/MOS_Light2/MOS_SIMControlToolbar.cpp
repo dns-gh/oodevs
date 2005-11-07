@@ -24,6 +24,8 @@
 #include "MOS_ConnectDialog.h"
 #include "MOS_DisconnectDialog.h"
 
+#include "MT_SpinBox.h"
+
 //-----------------------------------------------------------------------------
 // Name: MOS_SIMControlToolbar constructor
 // Created: FBD 03-01-14
@@ -36,16 +38,19 @@ MOS_SIMControlToolbar::MOS_SIMControlToolbar( QMainWindow* pParent )
     pConnectButton_ = new QToolButton( this );
     pConnectButton_->setAccel( Key_C );
     pConnectButton_->setIconSet( MAKE_ICON( connexionred ) );
+    pConnectButton_->setTextLabel( tr( "Connection (C)" ) );
     
     pPlayButton_ = new QToolButton( this );
     pPlayButton_->setAccel( Key_P );
     pPlayButton_->setIconSet( MAKE_ICON( stop ) );
+    pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
     pPlayButton_->setEnabled( false );
 
     new QLabel( " ", this );
     new QLabel( tr( "Vitesse:" ), this );
 
-    pSpeedSpinBox_ = new QSpinBox( 1, 500, 1, this );
+    pSpeedSpinBox_ = new MT_SpinBox( 1, 500, 1, this );
+    pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
     pSpeedSpinBox_->setValue( 1 );
     pSpeedSpinBox_->setEnabled( false );
 
@@ -62,7 +67,8 @@ MOS_SIMControlToolbar::MOS_SIMControlToolbar( QMainWindow* pParent )
     connect( pConnectButton_, SIGNAL( clicked() ), this, SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), this, SLOT( SlotPlayPause() ) );
     connect( pSpeedButton_,   SIGNAL( clicked() ), this, SLOT( SlotSpeedChange() ) );
-    connect( pSpeedSpinBox_, SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange() ) );
+    connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange() ) );
+    connect( pSpeedSpinBox_ , SIGNAL( enterPressed() ), this, SLOT( SlotOnSpinBoxEnterPressed() ) );
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( SlotOnConnexionStatusChanged( bool ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PauseStatusChanged( bool ) ),     this, SLOT( SlotOnPauseStatusChanged( bool ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( SpeedChanged( int ) ),            this, SLOT( SlotOnSpeedChanged( int ) ) );
@@ -91,9 +97,13 @@ void MOS_SIMControlToolbar::SlotConnectDisconnect()
     else
     {
         pConnectButton_->setIconSet( MAKE_ICON( connexionorange ) );
+        pConnectButton_->setTextLabel( tr( "Connection (C)" ) );
         int nResult = pConnectDlg_->exec();
         if( nResult == QDialog::Rejected )
+        {
             pConnectButton_->setIconSet( MAKE_ICON( connexionred ) );
+            pConnectButton_->setTextLabel( tr( "Deconnection (C)" ) );
+        }
     }
 }
 
@@ -149,11 +159,17 @@ void MOS_SIMControlToolbar::SlotOnSpinBoxChange()
     pSpeedButton_->setEnabled( true );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_SIMControlToolbar::SlotOnSpinBoxEnterPressed
+// Created: SBO 2005-11-07
+// -----------------------------------------------------------------------------
+void MOS_SIMControlToolbar::SlotOnSpinBoxEnterPressed()
+{
+    SlotSpeedChange();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SIMControlToolbar::SlotOnConnexionStatusChanged
-/** @param  bConnected 
-*/
 // Created: APE 2004-03-08
 // -----------------------------------------------------------------------------
 void MOS_SIMControlToolbar::SlotOnConnexionStatusChanged( bool bConnected )
@@ -176,23 +192,25 @@ void MOS_SIMControlToolbar::SlotOnConnexionStatusChanged( bool bConnected )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SIMControlToolbar::SlotOnPauseStatusChanged
-/** @param  bPaused 
-*/
 // Created: APE 2004-03-08
 // -----------------------------------------------------------------------------
 void MOS_SIMControlToolbar::SlotOnPauseStatusChanged( bool bPaused )
 {
     if ( bPaused )
+    {
         pPlayButton_->setIconSet( MAKE_ICON( play ) );
+        pPlayButton_->setTextLabel( tr( "Reprise (P)" ) );
+    }
     else
+    {
         pPlayButton_->setIconSet( MAKE_ICON( stop ) );
+        pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
+    }
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_SIMControlToolbar::SlotOnSpeedChanged
-/** @param  nSpeed 
-*/
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------
 void MOS_SIMControlToolbar::SlotOnSpeedChanged( int nSpeed )
