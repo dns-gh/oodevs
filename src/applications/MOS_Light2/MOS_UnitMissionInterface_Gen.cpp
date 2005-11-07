@@ -463,10 +463,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_EvacuationSanitaire()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
 }
 
 // -----------------------------------------------------------------------------
@@ -482,10 +482,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_ReconnaitreDansLaProfondeur()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -507,10 +507,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_ReconnaitreContourEnnemi()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -533,10 +533,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZone()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -558,10 +558,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_DetruireAeromobile()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -582,10 +582,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Freiner()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -606,10 +606,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Jalonner()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -631,10 +631,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Escorter()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -657,10 +657,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Heliporter()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     CreateBool( asnMission.attendre_unite, "Attendre unite" );
     CreateBool( asnMission.avec_materiel, "Avec materiel" );
 }
@@ -679,10 +679,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_HeliporterHelitransporterPlotR
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
 }
 
 // -----------------------------------------------------------------------------
@@ -701,10 +701,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Helitransporter()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     CreateBool( asnMission.avec_materiel, "Avec materiel" );
 }
 
@@ -722,10 +722,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage(
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
 }
 
 // -----------------------------------------------------------------------------
@@ -742,10 +742,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_IMEX()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
 }
 
 // -----------------------------------------------------------------------------
@@ -761,10 +761,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Eclairer()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -785,10 +785,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Surveiller()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -810,10 +810,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_AppuyerDirectAuContact()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -835,10 +835,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Couvrir()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -859,10 +859,10 @@ void MOS_UnitMissionInterface::CreateMission_ALAT_Attaquer()
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement" );
     CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission" );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action" );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
     MOS_ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission" );
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
@@ -1432,11 +1432,11 @@ void MOS_UnitMissionInterface::CreateMission_GEN_RealiserAbattisMine()
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle" );
     //NOTHING
     MOS_ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence" );
-    pSelector_urgence->AddItem( "Minimum", EnumMissionGenUrgence::serie_minimum );
-    pSelector_urgence->AddItem( "Complementaire", EnumMissionGenUrgence::serie_complementaire );
+    pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
+    pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
     MOS_ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire" );
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "Manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
+    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
 }
 
 // -----------------------------------------------------------------------------
@@ -1464,8 +1464,8 @@ void MOS_UnitMissionInterface::CreateMission_GEN_RealiserBarricade()
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle" );
     //NOTHING
     MOS_ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence" );
-    pSelector_urgence->AddItem( "Minimum", EnumMissionGenUrgence::serie_minimum );
-    pSelector_urgence->AddItem( "Complementaire", EnumMissionGenUrgence::serie_complementaire );
+    pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
+    pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
 }
 
 // -----------------------------------------------------------------------------
@@ -1481,7 +1481,7 @@ void MOS_UnitMissionInterface::CreateMission_GEN_RealiserEboulement()
     //NOTHING
     MOS_ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire" );
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "Manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
+    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
 }
 
 // -----------------------------------------------------------------------------
@@ -1496,8 +1496,8 @@ void MOS_UnitMissionInterface::CreateMission_GEN_RealiserBouchonMine()
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle" );
     //NOTHING
     MOS_ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence" );
-    pSelector_urgence->AddItem( "Minimum", EnumMissionGenUrgence::serie_minimum );
-    pSelector_urgence->AddItem( "Complementaire", EnumMissionGenUrgence::serie_complementaire );
+    pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
+    pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
 }
 
 // -----------------------------------------------------------------------------
@@ -1513,7 +1513,7 @@ void MOS_UnitMissionInterface::CreateMission_GEN_DetruireRoute()
     //NOTHING
     MOS_ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire" );
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "Manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
+    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
 }
 
 // -----------------------------------------------------------------------------
@@ -1529,7 +1529,7 @@ void MOS_UnitMissionInterface::CreateMission_GEN_DetruirePont()
     //NOTHING
     MOS_ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire" );
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "Manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
+    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
 }
 
 // -----------------------------------------------------------------------------
@@ -1925,8 +1925,8 @@ void MOS_UnitMissionInterface::CreateMission_GEN_AmenagerTerrainPoser()
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle" );
     //NOTHING
     MOS_ParamComboBox< ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser_type_objet >* pSelector_type_objet = &CreateVarList( asnMission.type_objet, "Type objet" );
-    pSelector_type_objet->AddItem( "Poser", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::aire_poser );
-    pSelector_type_objet->AddItem( "Largage", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::terrain_largage );
+    pSelector_type_objet->AddItem( "Aire poser", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::aire_poser );
+    pSelector_type_objet->AddItem( "Terrain largage", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::terrain_largage );
 }
 
 // -----------------------------------------------------------------------------
@@ -2191,44 +2191,44 @@ void MOS_UnitMissionInterface::CreateMission_INF_DetruireEmbuscade()
     CreatePoint( asnMission.position_regroupement, "Position regroupement" );
     CreateAgentKnowledge( asnMission.ennemi, "Ennemi" );
     MOS_ParamComboBox< ASN1T_EnumObjectType >* pSelector_nature_obstacle = &CreateVarList( asnMission.nature_obstacle, "Nature obstacle" );
-    pSelector_nature_obstacle->AddItem( "Mines", EnumObjectType::bouchon_mines );
-    pSelector_nature_obstacle->AddItem( "Minee lineaire", EnumObjectType::zone_minee_lineaire );
-    pSelector_nature_obstacle->AddItem( "Minee par dispersion", EnumObjectType::zone_minee_par_dispersion );
-    pSelector_nature_obstacle->AddItem( "Anti char", EnumObjectType::fosse_anti_char );
+    pSelector_nature_obstacle->AddItem( "Bouchon mines", EnumObjectType::bouchon_mines );
+    pSelector_nature_obstacle->AddItem( "Zone minee lineaire", EnumObjectType::zone_minee_lineaire );
+    pSelector_nature_obstacle->AddItem( "Zone minee par dispersion", EnumObjectType::zone_minee_par_dispersion );
+    pSelector_nature_obstacle->AddItem( "Fosse anti char", EnumObjectType::fosse_anti_char );
     pSelector_nature_obstacle->AddItem( "Abattis", EnumObjectType::abattis );
     pSelector_nature_obstacle->AddItem( "Barricade", EnumObjectType::barricade );
     pSelector_nature_obstacle->AddItem( "Eboulement", EnumObjectType::eboulement );
-    pSelector_nature_obstacle->AddItem( "Route", EnumObjectType::destruction_route );
-    pSelector_nature_obstacle->AddItem( "Pont", EnumObjectType::destruction_pont );
-    pSelector_nature_obstacle->AddItem( "Flottant continu", EnumObjectType::pont_flottant_continu );
-    pSelector_nature_obstacle->AddItem( "Tir", EnumObjectType::poste_tir );
-    pSelector_nature_obstacle->AddItem( "Protegee", EnumObjectType::zone_protegee );
-    pSelector_nature_obstacle->AddItem( "Implantation canon", EnumObjectType::zone_implantation_canon );
-    pSelector_nature_obstacle->AddItem( "Implantation cobra", EnumObjectType::zone_implantation_cobra );
-    pSelector_nature_obstacle->AddItem( "Implantation lrm", EnumObjectType::zone_implantation_lrm );
-    pSelector_nature_obstacle->AddItem( "Franchissement", EnumObjectType::site_franchissement );
-    pSelector_nature_obstacle->AddItem( "Nbc", EnumObjectType::nuage_nbc );
-    pSelector_nature_obstacle->AddItem( "Ravitaillement", EnumObjectType::plot_ravitaillement );
-    pSelector_nature_obstacle->AddItem( "Decontamination", EnumObjectType::site_decontamination );
-    pSelector_nature_obstacle->AddItem( "Brouillage brod", EnumObjectType::zone_brouillage_brod );
+    pSelector_nature_obstacle->AddItem( "Destruction route", EnumObjectType::destruction_route );
+    pSelector_nature_obstacle->AddItem( "Destruction pont", EnumObjectType::destruction_pont );
+    pSelector_nature_obstacle->AddItem( "Pont flottant continu", EnumObjectType::pont_flottant_continu );
+    pSelector_nature_obstacle->AddItem( "Poste tir", EnumObjectType::poste_tir );
+    pSelector_nature_obstacle->AddItem( "Zone protegee", EnumObjectType::zone_protegee );
+    pSelector_nature_obstacle->AddItem( "Zone implantation canon", EnumObjectType::zone_implantation_canon );
+    pSelector_nature_obstacle->AddItem( "Zone implantation cobra", EnumObjectType::zone_implantation_cobra );
+    pSelector_nature_obstacle->AddItem( "Zone implantation lrm", EnumObjectType::zone_implantation_lrm );
+    pSelector_nature_obstacle->AddItem( "Site franchissement", EnumObjectType::site_franchissement );
+    pSelector_nature_obstacle->AddItem( "Nuage nbc", EnumObjectType::nuage_nbc );
+    pSelector_nature_obstacle->AddItem( "Plot ravitaillement", EnumObjectType::plot_ravitaillement );
+    pSelector_nature_obstacle->AddItem( "Site decontamination", EnumObjectType::site_decontamination );
+    pSelector_nature_obstacle->AddItem( "Zone brouillage brod", EnumObjectType::zone_brouillage_brod );
     pSelector_nature_obstacle->AddItem( "Rota", EnumObjectType::rota );
-    pSelector_nature_obstacle->AddItem( "Nbc", EnumObjectType::zone_nbc );
-    pSelector_nature_obstacle->AddItem( "Brouillage bromure", EnumObjectType::zone_brouillage_bromure );
-    pSelector_nature_obstacle->AddItem( "Poser", EnumObjectType::aire_poser );
+    pSelector_nature_obstacle->AddItem( "Zone nbc", EnumObjectType::zone_nbc );
+    pSelector_nature_obstacle->AddItem( "Zone brouillage bromure", EnumObjectType::zone_brouillage_bromure );
+    pSelector_nature_obstacle->AddItem( "Aire poser", EnumObjectType::aire_poser );
     pSelector_nature_obstacle->AddItem( "Piste", EnumObjectType::piste );
     pSelector_nature_obstacle->AddItem( "Plateforme", EnumObjectType::plateforme );
-    pSelector_nature_obstacle->AddItem( "Mobilite amelioree", EnumObjectType::zone_mobilite_amelioree );
-    pSelector_nature_obstacle->AddItem( "Poser helicoptere", EnumObjectType::zone_poser_helicoptere );
-    pSelector_nature_obstacle->AddItem( "Logistique", EnumObjectType::aire_logistique );
-    pSelector_nature_obstacle->AddItem( "Logistique", EnumObjectType::itineraire_logistique );
-    pSelector_nature_obstacle->AddItem( "Prisonniers", EnumObjectType::camp_prisonniers );
-    pSelector_nature_obstacle->AddItem( "Refugies", EnumObjectType::camp_refugies );
-    pSelector_nature_obstacle->AddItem( "Controle", EnumObjectType::poste_controle );
-    pSelector_nature_obstacle->AddItem( "Largage", EnumObjectType::terrain_largage );
-    pSelector_nature_obstacle->AddItem( "Interdite mouvement", EnumObjectType::zone_interdite_mouvement );
-    pSelector_nature_obstacle->AddItem( "Interdite tir", EnumObjectType::zone_interdite_tir );
-    pSelector_nature_obstacle->AddItem( "Implantation mortier", EnumObjectType::zone_implantation_mortier );
-    pSelector_nature_obstacle->AddItem( "Flottant discontinu", EnumObjectType::pont_flottant_discontinu );
+    pSelector_nature_obstacle->AddItem( "Zone mobilite amelioree", EnumObjectType::zone_mobilite_amelioree );
+    pSelector_nature_obstacle->AddItem( "Zone poser helicoptere", EnumObjectType::zone_poser_helicoptere );
+    pSelector_nature_obstacle->AddItem( "Aire logistique", EnumObjectType::aire_logistique );
+    pSelector_nature_obstacle->AddItem( "Itineraire logistique", EnumObjectType::itineraire_logistique );
+    pSelector_nature_obstacle->AddItem( "Camp prisonniers", EnumObjectType::camp_prisonniers );
+    pSelector_nature_obstacle->AddItem( "Camp refugies", EnumObjectType::camp_refugies );
+    pSelector_nature_obstacle->AddItem( "Poste controle", EnumObjectType::poste_controle );
+    pSelector_nature_obstacle->AddItem( "Terrain largage", EnumObjectType::terrain_largage );
+    pSelector_nature_obstacle->AddItem( "Zone interdite mouvement", EnumObjectType::zone_interdite_mouvement );
+    pSelector_nature_obstacle->AddItem( "Zone interdite tir", EnumObjectType::zone_interdite_tir );
+    pSelector_nature_obstacle->AddItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_nature_obstacle->AddItem( "Pont flottant discontinu", EnumObjectType::pont_flottant_discontinu );
 }
 
 // -----------------------------------------------------------------------------
@@ -2292,9 +2292,9 @@ void MOS_UnitMissionInterface::CreateMission_INF_Harceler()
     CreateLocation( asnMission.secteur, "Secteur" );
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     MOS_ParamComboBox< ASN1T_EnumMissionInfNatureObjectif >* pSelector_nature_objectif = &CreateVarList( asnMission.nature_objectif, "Nature objectif" );
-    pSelector_nature_objectif->AddItem( "Terrain", EnumMissionInfNatureObjectif::elements_terrain );
+    pSelector_nature_objectif->AddItem( "Elements terrain", EnumMissionInfNatureObjectif::elements_terrain );
     pSelector_nature_objectif->AddItem( "Objets", EnumMissionInfNatureObjectif::objets );
-    pSelector_nature_objectif->AddItem( "Mobiles", EnumMissionInfNatureObjectif::elements_mobiles );
+    pSelector_nature_objectif->AddItem( "Elements mobiles", EnumMissionInfNatureObjectif::elements_mobiles );
 }
 
 // -----------------------------------------------------------------------------
@@ -2310,9 +2310,9 @@ void MOS_UnitMissionInterface::CreateMission_INF_DetruireParCoupDeMain()
     CreatePoint( asnMission.point_regroupement, "Point regroupement" );
     CreateGDH( asnMission.heure_destruction, "Heure destruction" );
     MOS_ParamComboBox< ASN1T_EnumMissionInfNatureObjectif >* pSelector_nature_destruction = &CreateVarList( asnMission.nature_destruction, "Nature destruction" );
-    pSelector_nature_destruction->AddItem( "Terrain", EnumMissionInfNatureObjectif::elements_terrain );
+    pSelector_nature_destruction->AddItem( "Elements terrain", EnumMissionInfNatureObjectif::elements_terrain );
     pSelector_nature_destruction->AddItem( "Objets", EnumMissionInfNatureObjectif::objets );
-    pSelector_nature_destruction->AddItem( "Mobiles", EnumMissionInfNatureObjectif::elements_mobiles );
+    pSelector_nature_destruction->AddItem( "Elements mobiles", EnumMissionInfNatureObjectif::elements_mobiles );
 }
 
 // -----------------------------------------------------------------------------
@@ -2720,7 +2720,7 @@ void MOS_UnitMissionInterface::CreateMission_Test_MoveTo()
     pSelector_type_itineraire->AddItem( "Assault", Mission_Pion_Test_MoveTo_type_itineraire::assault );
     pSelector_type_itineraire->AddItem( "Retreat", Mission_Pion_Test_MoveTo_type_itineraire::retreat );
     pSelector_type_itineraire->AddItem( "Backup", Mission_Pion_Test_MoveTo_type_itineraire::backup );
-    pSelector_type_itineraire->AddItem( "Clearance", Mission_Pion_Test_MoveTo_type_itineraire::mine_clearance );
+    pSelector_type_itineraire->AddItem( "Mine clearance", Mission_Pion_Test_MoveTo_type_itineraire::mine_clearance );
     CreateBool( asnMission.debarque, "Debarque" );
     MOS_ParamComboBox< ASN1T_Mission_Pion_Test_MoveTo_verrouillage_vision >* pSelector_verrouillage_vision = &CreateVarList( asnMission.verrouillage_vision, "Verrouillage vision" );
     pSelector_verrouillage_vision->AddItem( "Rien", Mission_Pion_Test_MoveTo_verrouillage_vision::rien );
@@ -2741,44 +2741,44 @@ void MOS_UnitMissionInterface::CreateMission_Test_CreateObject()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_test_create_object = &asnMission;
     CreateLocation( asnMission.forme, "Forme" );
     MOS_ParamComboBox< ASN1T_EnumObjectType >* pSelector_type = &CreateVarList( asnMission.type, "Type" );
-    pSelector_type->AddItem( "Mines", EnumObjectType::bouchon_mines );
-    pSelector_type->AddItem( "Minee lineaire", EnumObjectType::zone_minee_lineaire );
-    pSelector_type->AddItem( "Minee par dispersion", EnumObjectType::zone_minee_par_dispersion );
-    pSelector_type->AddItem( "Anti char", EnumObjectType::fosse_anti_char );
+    pSelector_type->AddItem( "Bouchon mines", EnumObjectType::bouchon_mines );
+    pSelector_type->AddItem( "Zone minee lineaire", EnumObjectType::zone_minee_lineaire );
+    pSelector_type->AddItem( "Zone minee par dispersion", EnumObjectType::zone_minee_par_dispersion );
+    pSelector_type->AddItem( "Fosse anti char", EnumObjectType::fosse_anti_char );
     pSelector_type->AddItem( "Abattis", EnumObjectType::abattis );
     pSelector_type->AddItem( "Barricade", EnumObjectType::barricade );
     pSelector_type->AddItem( "Eboulement", EnumObjectType::eboulement );
-    pSelector_type->AddItem( "Route", EnumObjectType::destruction_route );
-    pSelector_type->AddItem( "Pont", EnumObjectType::destruction_pont );
-    pSelector_type->AddItem( "Flottant continu", EnumObjectType::pont_flottant_continu );
-    pSelector_type->AddItem( "Tir", EnumObjectType::poste_tir );
-    pSelector_type->AddItem( "Protegee", EnumObjectType::zone_protegee );
-    pSelector_type->AddItem( "Implantation canon", EnumObjectType::zone_implantation_canon );
-    pSelector_type->AddItem( "Implantation cobra", EnumObjectType::zone_implantation_cobra );
-    pSelector_type->AddItem( "Implantation lrm", EnumObjectType::zone_implantation_lrm );
-    pSelector_type->AddItem( "Franchissement", EnumObjectType::site_franchissement );
-    pSelector_type->AddItem( "Nbc", EnumObjectType::nuage_nbc );
-    pSelector_type->AddItem( "Ravitaillement", EnumObjectType::plot_ravitaillement );
-    pSelector_type->AddItem( "Decontamination", EnumObjectType::site_decontamination );
-    pSelector_type->AddItem( "Brouillage brod", EnumObjectType::zone_brouillage_brod );
+    pSelector_type->AddItem( "Destruction route", EnumObjectType::destruction_route );
+    pSelector_type->AddItem( "Destruction pont", EnumObjectType::destruction_pont );
+    pSelector_type->AddItem( "Pont flottant continu", EnumObjectType::pont_flottant_continu );
+    pSelector_type->AddItem( "Poste tir", EnumObjectType::poste_tir );
+    pSelector_type->AddItem( "Zone protegee", EnumObjectType::zone_protegee );
+    pSelector_type->AddItem( "Zone implantation canon", EnumObjectType::zone_implantation_canon );
+    pSelector_type->AddItem( "Zone implantation cobra", EnumObjectType::zone_implantation_cobra );
+    pSelector_type->AddItem( "Zone implantation lrm", EnumObjectType::zone_implantation_lrm );
+    pSelector_type->AddItem( "Site franchissement", EnumObjectType::site_franchissement );
+    pSelector_type->AddItem( "Nuage nbc", EnumObjectType::nuage_nbc );
+    pSelector_type->AddItem( "Plot ravitaillement", EnumObjectType::plot_ravitaillement );
+    pSelector_type->AddItem( "Site decontamination", EnumObjectType::site_decontamination );
+    pSelector_type->AddItem( "Zone brouillage brod", EnumObjectType::zone_brouillage_brod );
     pSelector_type->AddItem( "Rota", EnumObjectType::rota );
-    pSelector_type->AddItem( "Nbc", EnumObjectType::zone_nbc );
-    pSelector_type->AddItem( "Brouillage bromure", EnumObjectType::zone_brouillage_bromure );
-    pSelector_type->AddItem( "Poser", EnumObjectType::aire_poser );
+    pSelector_type->AddItem( "Zone nbc", EnumObjectType::zone_nbc );
+    pSelector_type->AddItem( "Zone brouillage bromure", EnumObjectType::zone_brouillage_bromure );
+    pSelector_type->AddItem( "Aire poser", EnumObjectType::aire_poser );
     pSelector_type->AddItem( "Piste", EnumObjectType::piste );
     pSelector_type->AddItem( "Plateforme", EnumObjectType::plateforme );
-    pSelector_type->AddItem( "Mobilite amelioree", EnumObjectType::zone_mobilite_amelioree );
-    pSelector_type->AddItem( "Poser helicoptere", EnumObjectType::zone_poser_helicoptere );
-    pSelector_type->AddItem( "Logistique", EnumObjectType::aire_logistique );
-    pSelector_type->AddItem( "Logistique", EnumObjectType::itineraire_logistique );
-    pSelector_type->AddItem( "Prisonniers", EnumObjectType::camp_prisonniers );
-    pSelector_type->AddItem( "Refugies", EnumObjectType::camp_refugies );
-    pSelector_type->AddItem( "Controle", EnumObjectType::poste_controle );
-    pSelector_type->AddItem( "Largage", EnumObjectType::terrain_largage );
-    pSelector_type->AddItem( "Interdite mouvement", EnumObjectType::zone_interdite_mouvement );
-    pSelector_type->AddItem( "Interdite tir", EnumObjectType::zone_interdite_tir );
-    pSelector_type->AddItem( "Implantation mortier", EnumObjectType::zone_implantation_mortier );
-    pSelector_type->AddItem( "Flottant discontinu", EnumObjectType::pont_flottant_discontinu );
+    pSelector_type->AddItem( "Zone mobilite amelioree", EnumObjectType::zone_mobilite_amelioree );
+    pSelector_type->AddItem( "Zone poser helicoptere", EnumObjectType::zone_poser_helicoptere );
+    pSelector_type->AddItem( "Aire logistique", EnumObjectType::aire_logistique );
+    pSelector_type->AddItem( "Itineraire logistique", EnumObjectType::itineraire_logistique );
+    pSelector_type->AddItem( "Camp prisonniers", EnumObjectType::camp_prisonniers );
+    pSelector_type->AddItem( "Camp refugies", EnumObjectType::camp_refugies );
+    pSelector_type->AddItem( "Poste controle", EnumObjectType::poste_controle );
+    pSelector_type->AddItem( "Terrain largage", EnumObjectType::terrain_largage );
+    pSelector_type->AddItem( "Zone interdite mouvement", EnumObjectType::zone_interdite_mouvement );
+    pSelector_type->AddItem( "Zone interdite tir", EnumObjectType::zone_interdite_tir );
+    pSelector_type->AddItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_type->AddItem( "Pont flottant discontinu", EnumObjectType::pont_flottant_discontinu );
     CreateNumeric( asnMission.param, "Param" );
 }
 
@@ -2818,12 +2818,12 @@ void MOS_UnitMissionInterface::CreateMission_Test_Fire()
     CreatePoint( asnMission.point, "Point" );
     CreateBool( asnMission.tir_indirect, "Tir indirect" );
     MOS_ParamComboBox< ASN1T_Mission_Pion_Test_Fire_munitions >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions" );
-    pSelector_munitions->AddItem( "Obus explosif", Mission_Pion_Test_Fire_munitions::mun_obus_explosif );
-    pSelector_munitions->AddItem( "Obus grenade", Mission_Pion_Test_Fire_munitions::mun_obus_grenade );
-    pSelector_munitions->AddItem( "Obus aced", Mission_Pion_Test_Fire_munitions::mun_obus_aced );
-    pSelector_munitions->AddItem( "Obus fumigene", Mission_Pion_Test_Fire_munitions::mun_obus_fumigene );
-    pSelector_munitions->AddItem( "Obus eclairant", Mission_Pion_Test_Fire_munitions::mun_obus_eclairant );
-    pSelector_munitions->AddItem( "Obus mine", Mission_Pion_Test_Fire_munitions::mun_obus_mine );
+    pSelector_munitions->AddItem( "Mun obus explosif", Mission_Pion_Test_Fire_munitions::mun_obus_explosif );
+    pSelector_munitions->AddItem( "Mun obus grenade", Mission_Pion_Test_Fire_munitions::mun_obus_grenade );
+    pSelector_munitions->AddItem( "Mun obus aced", Mission_Pion_Test_Fire_munitions::mun_obus_aced );
+    pSelector_munitions->AddItem( "Mun obus fumigene", Mission_Pion_Test_Fire_munitions::mun_obus_fumigene );
+    pSelector_munitions->AddItem( "Mun obus eclairant", Mission_Pion_Test_Fire_munitions::mun_obus_eclairant );
+    pSelector_munitions->AddItem( "Mun obus mine", Mission_Pion_Test_Fire_munitions::mun_obus_mine );
     CreateNumeric( asnMission.nb_obus, "Nb obus" );
     CreateAgentKnowledgeList( asnMission.targets, "Targets" );
 }
@@ -2840,10 +2840,10 @@ void MOS_UnitMissionInterface::CreateMission_Test_ChangePosture()
     MOS_ParamComboBox< ASN1T_Mission_Pion_Test_ChangePosture_posture >* pSelector_posture = &CreateVarList( asnMission.posture, "Posture" );
     pSelector_posture->AddItem( "Mouvement", Mission_Pion_Test_ChangePosture_posture::mouvement );
     pSelector_posture->AddItem( "Arret", Mission_Pion_Test_ChangePosture_posture::arret );
-    pSelector_posture->AddItem( "Reflexe", Mission_Pion_Test_ChangePosture_posture::poste_reflexe );
+    pSelector_posture->AddItem( "Poste reflexe", Mission_Pion_Test_ChangePosture_posture::poste_reflexe );
     pSelector_posture->AddItem( "Poste", Mission_Pion_Test_ChangePosture_posture::poste );
-    pSelector_posture->AddItem( "Amenage", Mission_Pion_Test_ChangePosture_posture::poste_amenage );
-    pSelector_posture->AddItem( "Prepare genie", Mission_Pion_Test_ChangePosture_posture::poste_prepare_genie );
+    pSelector_posture->AddItem( "Poste amenage", Mission_Pion_Test_ChangePosture_posture::poste_amenage );
+    pSelector_posture->AddItem( "Poste prepare genie", Mission_Pion_Test_ChangePosture_posture::poste_prepare_genie );
     pSelector_posture->AddItem( "Automatique", Mission_Pion_Test_ChangePosture_posture::automatique );
 }
 
@@ -2874,7 +2874,7 @@ void MOS_UnitMissionInterface::CreateMission_Test_FindPosition()
     MOS_ParamComboBox< ASN1T_Mission_Pion_Test_FindPosition_type_objectif >* pSelector_type_objectif = &CreateVarList( asnMission.type_objectif, "Type objectif" );
     pSelector_type_objectif->AddItem( "Agent", Mission_Pion_Test_FindPosition_type_objectif::agent );
     pSelector_type_objectif->AddItem( "Point", Mission_Pion_Test_FindPosition_type_objectif::point );
-    pSelector_type_objectif->AddItem( "Point", Mission_Pion_Test_FindPosition_type_objectif::rep_point );
+    pSelector_type_objectif->AddItem( "Rep point", Mission_Pion_Test_FindPosition_type_objectif::rep_point );
     pSelector_type_objectif->AddItem( "Objet", Mission_Pion_Test_FindPosition_type_objectif::objet );
     pSelector_type_objectif->AddItem( "Zone", Mission_Pion_Test_FindPosition_type_objectif::zone );
     MOS_ParamComboBox< ASN1T_Mission_Pion_Test_FindPosition_type_operation >* pSelector_type_operation = &CreateVarList( asnMission.type_operation, "Type operation" );
@@ -2926,10 +2926,10 @@ void MOS_UnitMissionInterface::CreateMission_PlastronEnnemi()
     CreatePath( asnMission.itineraire, "Itineraire" );
     CreatePoint( asnMission.point_mission, "Point mission" );
     MOS_ParamComboBox< ASN1T_Mission_Pion_PlastronEnnemi_type >* pSelector_type = &CreateVarList( asnMission.type, "Type" );
-    pSelector_type->AddItem( "Statique", Mission_Pion_PlastronEnnemi_type::defense_statique );
-    pSelector_type->AddItem( "Dynamique", Mission_Pion_PlastronEnnemi_type::defense_dynamique );
+    pSelector_type->AddItem( "Defense statique", Mission_Pion_PlastronEnnemi_type::defense_statique );
+    pSelector_type->AddItem( "Defense dynamique", Mission_Pion_PlastronEnnemi_type::defense_dynamique );
     pSelector_type->AddItem( "Esquive", Mission_Pion_PlastronEnnemi_type::esquive );
-    pSelector_type->AddItem( "Offensive", Mission_Pion_PlastronEnnemi_type::reco_offensive );
+    pSelector_type->AddItem( "Reco offensive", Mission_Pion_PlastronEnnemi_type::reco_offensive );
 }
 
 // -----------------------------------------------------------------------------
@@ -3072,44 +3072,44 @@ void MOS_UnitMissionInterface::CreateMission_MILICE_DetruireEmbuscade()
     CreatePoint( asnMission.position_embuscade, "Position embuscade" );
     CreatePoint( asnMission.position_regroupement, "Position regroupement" );
     MOS_ParamComboBox< ASN1T_EnumObjectType >* pSelector_nature_obstacle = &CreateVarList( asnMission.nature_obstacle, "Nature obstacle" );
-    pSelector_nature_obstacle->AddItem( "Mines", EnumObjectType::bouchon_mines );
-    pSelector_nature_obstacle->AddItem( "Minee lineaire", EnumObjectType::zone_minee_lineaire );
-    pSelector_nature_obstacle->AddItem( "Minee par dispersion", EnumObjectType::zone_minee_par_dispersion );
-    pSelector_nature_obstacle->AddItem( "Anti char", EnumObjectType::fosse_anti_char );
+    pSelector_nature_obstacle->AddItem( "Bouchon mines", EnumObjectType::bouchon_mines );
+    pSelector_nature_obstacle->AddItem( "Zone minee lineaire", EnumObjectType::zone_minee_lineaire );
+    pSelector_nature_obstacle->AddItem( "Zone minee par dispersion", EnumObjectType::zone_minee_par_dispersion );
+    pSelector_nature_obstacle->AddItem( "Fosse anti char", EnumObjectType::fosse_anti_char );
     pSelector_nature_obstacle->AddItem( "Abattis", EnumObjectType::abattis );
     pSelector_nature_obstacle->AddItem( "Barricade", EnumObjectType::barricade );
     pSelector_nature_obstacle->AddItem( "Eboulement", EnumObjectType::eboulement );
-    pSelector_nature_obstacle->AddItem( "Route", EnumObjectType::destruction_route );
-    pSelector_nature_obstacle->AddItem( "Pont", EnumObjectType::destruction_pont );
-    pSelector_nature_obstacle->AddItem( "Flottant continu", EnumObjectType::pont_flottant_continu );
-    pSelector_nature_obstacle->AddItem( "Tir", EnumObjectType::poste_tir );
-    pSelector_nature_obstacle->AddItem( "Protegee", EnumObjectType::zone_protegee );
-    pSelector_nature_obstacle->AddItem( "Implantation canon", EnumObjectType::zone_implantation_canon );
-    pSelector_nature_obstacle->AddItem( "Implantation cobra", EnumObjectType::zone_implantation_cobra );
-    pSelector_nature_obstacle->AddItem( "Implantation lrm", EnumObjectType::zone_implantation_lrm );
-    pSelector_nature_obstacle->AddItem( "Franchissement", EnumObjectType::site_franchissement );
-    pSelector_nature_obstacle->AddItem( "Nbc", EnumObjectType::nuage_nbc );
-    pSelector_nature_obstacle->AddItem( "Ravitaillement", EnumObjectType::plot_ravitaillement );
-    pSelector_nature_obstacle->AddItem( "Decontamination", EnumObjectType::site_decontamination );
-    pSelector_nature_obstacle->AddItem( "Brouillage brod", EnumObjectType::zone_brouillage_brod );
+    pSelector_nature_obstacle->AddItem( "Destruction route", EnumObjectType::destruction_route );
+    pSelector_nature_obstacle->AddItem( "Destruction pont", EnumObjectType::destruction_pont );
+    pSelector_nature_obstacle->AddItem( "Pont flottant continu", EnumObjectType::pont_flottant_continu );
+    pSelector_nature_obstacle->AddItem( "Poste tir", EnumObjectType::poste_tir );
+    pSelector_nature_obstacle->AddItem( "Zone protegee", EnumObjectType::zone_protegee );
+    pSelector_nature_obstacle->AddItem( "Zone implantation canon", EnumObjectType::zone_implantation_canon );
+    pSelector_nature_obstacle->AddItem( "Zone implantation cobra", EnumObjectType::zone_implantation_cobra );
+    pSelector_nature_obstacle->AddItem( "Zone implantation lrm", EnumObjectType::zone_implantation_lrm );
+    pSelector_nature_obstacle->AddItem( "Site franchissement", EnumObjectType::site_franchissement );
+    pSelector_nature_obstacle->AddItem( "Nuage nbc", EnumObjectType::nuage_nbc );
+    pSelector_nature_obstacle->AddItem( "Plot ravitaillement", EnumObjectType::plot_ravitaillement );
+    pSelector_nature_obstacle->AddItem( "Site decontamination", EnumObjectType::site_decontamination );
+    pSelector_nature_obstacle->AddItem( "Zone brouillage brod", EnumObjectType::zone_brouillage_brod );
     pSelector_nature_obstacle->AddItem( "Rota", EnumObjectType::rota );
-    pSelector_nature_obstacle->AddItem( "Nbc", EnumObjectType::zone_nbc );
-    pSelector_nature_obstacle->AddItem( "Brouillage bromure", EnumObjectType::zone_brouillage_bromure );
-    pSelector_nature_obstacle->AddItem( "Poser", EnumObjectType::aire_poser );
+    pSelector_nature_obstacle->AddItem( "Zone nbc", EnumObjectType::zone_nbc );
+    pSelector_nature_obstacle->AddItem( "Zone brouillage bromure", EnumObjectType::zone_brouillage_bromure );
+    pSelector_nature_obstacle->AddItem( "Aire poser", EnumObjectType::aire_poser );
     pSelector_nature_obstacle->AddItem( "Piste", EnumObjectType::piste );
     pSelector_nature_obstacle->AddItem( "Plateforme", EnumObjectType::plateforme );
-    pSelector_nature_obstacle->AddItem( "Mobilite amelioree", EnumObjectType::zone_mobilite_amelioree );
-    pSelector_nature_obstacle->AddItem( "Poser helicoptere", EnumObjectType::zone_poser_helicoptere );
-    pSelector_nature_obstacle->AddItem( "Logistique", EnumObjectType::aire_logistique );
-    pSelector_nature_obstacle->AddItem( "Logistique", EnumObjectType::itineraire_logistique );
-    pSelector_nature_obstacle->AddItem( "Prisonniers", EnumObjectType::camp_prisonniers );
-    pSelector_nature_obstacle->AddItem( "Refugies", EnumObjectType::camp_refugies );
-    pSelector_nature_obstacle->AddItem( "Controle", EnumObjectType::poste_controle );
-    pSelector_nature_obstacle->AddItem( "Largage", EnumObjectType::terrain_largage );
-    pSelector_nature_obstacle->AddItem( "Interdite mouvement", EnumObjectType::zone_interdite_mouvement );
-    pSelector_nature_obstacle->AddItem( "Interdite tir", EnumObjectType::zone_interdite_tir );
-    pSelector_nature_obstacle->AddItem( "Implantation mortier", EnumObjectType::zone_implantation_mortier );
-    pSelector_nature_obstacle->AddItem( "Flottant discontinu", EnumObjectType::pont_flottant_discontinu );
+    pSelector_nature_obstacle->AddItem( "Zone mobilite amelioree", EnumObjectType::zone_mobilite_amelioree );
+    pSelector_nature_obstacle->AddItem( "Zone poser helicoptere", EnumObjectType::zone_poser_helicoptere );
+    pSelector_nature_obstacle->AddItem( "Aire logistique", EnumObjectType::aire_logistique );
+    pSelector_nature_obstacle->AddItem( "Itineraire logistique", EnumObjectType::itineraire_logistique );
+    pSelector_nature_obstacle->AddItem( "Camp prisonniers", EnumObjectType::camp_prisonniers );
+    pSelector_nature_obstacle->AddItem( "Camp refugies", EnumObjectType::camp_refugies );
+    pSelector_nature_obstacle->AddItem( "Poste controle", EnumObjectType::poste_controle );
+    pSelector_nature_obstacle->AddItem( "Terrain largage", EnumObjectType::terrain_largage );
+    pSelector_nature_obstacle->AddItem( "Zone interdite mouvement", EnumObjectType::zone_interdite_mouvement );
+    pSelector_nature_obstacle->AddItem( "Zone interdite tir", EnumObjectType::zone_interdite_tir );
+    pSelector_nature_obstacle->AddItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
+    pSelector_nature_obstacle->AddItem( "Pont flottant discontinu", EnumObjectType::pont_flottant_discontinu );
 }
 
 // -----------------------------------------------------------------------------

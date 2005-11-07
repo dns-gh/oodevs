@@ -16,7 +16,7 @@
 // Created: NLD 2003-06-05
 //-----------------------------------------------------------------------------
 inline
-const MOS_RC::T_FragOrderVector& MOS_RC::GetFragOrders()const
+const MOS_RC::T_FragOrderVector& MOS_RC::GetFragOrders() const
 {
     return fragOrderVector_;
 }

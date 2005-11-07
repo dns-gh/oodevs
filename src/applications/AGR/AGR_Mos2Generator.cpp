@@ -55,7 +55,6 @@ void AGR_Mos2Generator::Generate( const AGR_Workspace& workspace, const std::str
     MT_MakeDir( strOutputPath + "/MOS_Light2" );
     GenerateMos2MissionInterfaceHeaderFiles( workspace, strOutputPath );
     GenerateMos2MissionInterfaceCppFiles   ( workspace, strOutputPath );
-    GenerateMos2EnumConverterFiles         ( workspace, strOutputPath );
     GenerateMos2Rcs                        ( workspace, strOutputPath );
 }
 
@@ -226,102 +225,6 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_FragmentaryOrderInterface_Gen.cpp" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Mos2Generator::GenerateMos2EnumConverterFiles
-// Created: AGE 2004-10-22
-// -----------------------------------------------------------------------------
-void AGR_Mos2Generator::GenerateMos2EnumConverterFiles( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
-{
-    // .h
-    std::string strAutomataMissionList;
-    std::string strPopulationMissionList;
-    std::string strUnitMissionList;
-    std::string strFragOrderList;
-    for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
-    {
-        const AGR_Mission& mission = **it;
-        const std::string strEntry = "    " + mission.EnumName() + ",\n";
-        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
-            strAutomataMissionList += strEntry;
-        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
-            strPopulationMissionList += strEntry;
-        else
-            strUnitMissionList += strEntry;
-    }
-
-    for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
-    {
-        const AGR_FragOrder& order = **it;
-        strFragOrderList += "    " + order.EnumName() + ",\n";
-    }
-
-    std::string strBaseContent = "";
-    workspace.ReadStringFile( AGR_SKEL_DIR "MOS_EnumConverter_Skeleton.h", strBaseContent );
-
-    workspace.ReplaceInString( strBaseContent, "$AutomateMissionEnumList$", strAutomataMissionList );
-    workspace.ReplaceInString( strBaseContent, "$PopulationMissionEnumList$", strPopulationMissionList );
-    workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strUnitMissionList );
-    workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strFragOrderList );
-    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
-
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_EnumConverter.h" );
-
-
-    // .cpp
-    std::string strAutomataMissionToString;
-    std::string strAutomataMissionToId;
-    std::string strPopulationMissionToString;
-    std::string strPopulationMissionToId;
-    std::string strUnitMissionToString;
-    std::string strUnitMissionToId;
-
-    for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
-    {
-        const AGR_Mission& mission = **it;
-        const std::string strToString = "        case " + mission.EnumName() + " : return a.tr( \"" + mission.HumanName() + "\" );\n";
-        const std::string strToId     = "    if( strMission == \"" + mission.HumanName() + "\" ) return " + mission.EnumName() + ";\n";
-        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
-        {
-            strAutomataMissionToString += strToString;
-            strAutomataMissionToId     += strToId;
-        }
-        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
-        {
-            strPopulationMissionToString += strToString;
-            strPopulationMissionToId     += strToId;
-        }
-        else
-        {
-            strUnitMissionToString += strToString;
-            strUnitMissionToId     += strToId;
-        }
-    }
-
-    std::string strFragOrderToString;
-    std::string strFragOrderToId;
-    for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
-    {
-        const AGR_FragOrder& order = **it;
-        strFragOrderToString += "        case " + order.EnumName() + " : return a.tr( \"" + order.HumanName() + "\" );\n";
-        strFragOrderToId     += "    if( strFragOrder == \"" + order.HumanName() + "\" ) return " + order.EnumName() + ";\n";
-    }
-
-    strBaseContent = "";
-    workspace.ReadStringFile( AGR_SKEL_DIR "MOS_EnumConverter_Skeleton.cpp", strBaseContent );
-
-    workspace.ReplaceInString( strBaseContent, "$AutomataMissionToString$", strAutomataMissionToString );
-    workspace.ReplaceInString( strBaseContent, "$AutomataMissionToId$", strAutomataMissionToId );
-    workspace.ReplaceInString( strBaseContent, "$PopulationMissionToString$", strPopulationMissionToString );
-    workspace.ReplaceInString( strBaseContent, "$PopulationMissionToId$", strPopulationMissionToId );
-    workspace.ReplaceInString( strBaseContent, "$UnitMissionToString$", strUnitMissionToString );
-    workspace.ReplaceInString( strBaseContent, "$UnitMissionToId$", strUnitMissionToId );
-    workspace.ReplaceInString( strBaseContent, "$FragOrderToString$", strFragOrderToString );
-    workspace.ReplaceInString( strBaseContent, "$FragOrderToId$", strFragOrderToId );
-    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
-
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light2/MOS_EnumConverter.cpp" );
 }
 
 // -----------------------------------------------------------------------------

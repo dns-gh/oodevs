@@ -18,9 +18,7 @@
 
 #include "MOS_App.h"
 #include "MOS_AgentManager.h"
-#include "MOS_Agent_ABC.h"
-
-
+#include "MOS_Agent.h"
 
 //-----------------------------------------------------------------------------
 // Name: MOS_RC constructor
@@ -51,7 +49,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     switch( asnMsg.cr.t )
     {
     
-        case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
+            case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
         case T_MsgCR_cr_cr_mission_impossible : strMsg << "mission impossible"; break;
@@ -310,9 +308,6 @@ void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_RC::ObjectKnowledgeLink
-/** @param  nId 
-    @return 
-*/
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
 std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
@@ -325,9 +320,6 @@ std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_RC::AgentKnowledgeLink
-/** @param  nId 
-    @return 
-*/
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
 std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
@@ -340,9 +332,6 @@ std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_RC::AgentLink
-/** @param  nId 
-    @return 
-    */
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
 std::string MOS_RC::AgentLink( ASN1T_OID nId )

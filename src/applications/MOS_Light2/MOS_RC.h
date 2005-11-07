@@ -20,12 +20,7 @@
 class MOS_Agent_ABC;
 enum E_OrderConduiteID;
 
-
 // =============================================================================
-/** @class  MOS_RC
-    @brief  Report sent by one of the simulation's agent.
-    @par    Reports can contain a list of possible fragmentary orders 
-*/
 // Created: AGN 2003-12-22
 // =============================================================================
 class MOS_RC : public MOS_Report_ABC
@@ -33,9 +28,7 @@ class MOS_RC : public MOS_Report_ABC
     MT_COPYNOTALLOWED( MOS_RC );
 
 public:
-    //-------------------------------------------------------------------------
-    /** @name Types */
-    //-------------------------------------------------------------------------
+    //! @name Types
     //@{
     typedef std::vector< uint >               T_FragOrderVector;
     typedef T_FragOrderVector::iterator       IT_FragOrderVector;
@@ -43,22 +36,21 @@ public:
     //@}
 
 public:
+    //! @name Constructor/Destructor
+    //@{
      MOS_RC( MOS_Agent_ABC& agent );
     ~MOS_RC();
+    //@}
 
-    //-------------------------------------------------------------------------
-    /** @name */
-    //-------------------------------------------------------------------------
+    //! @name
     //@{
     void Initialize( const ASN1T_MsgCR& asnMsg );
     void Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
     //@}
     
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
-    MOS_Agent_ABC&               GetAgent     ();
+    MOS_Agent_ABC&           GetAgent     ();
     const T_FragOrderVector& GetFragOrders() const;
     //@}
 
@@ -68,8 +60,8 @@ private:
     std::string AgentLink( ASN1T_OID nId );
 
 private:
-    MOS_Agent_ABC&             agent_;
-    T_FragOrderVector      fragOrderVector_;
+    MOS_Agent_ABC&      agent_;
+    T_FragOrderVector   fragOrderVector_;
 };
 
 #   include "MOS_RC.inl"

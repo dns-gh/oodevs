@@ -287,9 +287,9 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement()
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
     MOS_ParamComboBox< ASN1T_EnumReglesEngagement >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement" );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "None", EnumReglesEngagement::none );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "Libre", EnumReglesEngagement::tir_libre );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "Sur riposte", EnumReglesEngagement::tir_sur_riposte );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "Interdit", EnumReglesEngagement::tir_interdit );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir libre", EnumReglesEngagement::tir_libre );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir sur riposte", EnumReglesEngagement::tir_sur_riposte );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir interdit", EnumReglesEngagement::tir_interdit );
 #undef asnMission
 }
 
@@ -470,11 +470,11 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance()
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
     MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance, "Order conduite modifier temps bordee maintenance" );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "8 heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "12 heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "16 heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "20 heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "24 heures", EnumTempsBordee::temps_24_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 20 heures", EnumTempsBordee::temps_20_heures );
+    pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 24 heures", EnumTempsBordee::temps_24_heures );
 #undef asnMission
 }
 
@@ -487,11 +487,11 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante()
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_sante;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
     MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante, "Order conduite modifier temps bordee sante" );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "8 heures", EnumTempsBordee::temps_8_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "12 heures", EnumTempsBordee::temps_12_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "16 heures", EnumTempsBordee::temps_16_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "20 heures", EnumTempsBordee::temps_20_heures );
-    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "24 heures", EnumTempsBordee::temps_24_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 20 heures", EnumTempsBordee::temps_20_heures );
+    pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 24 heures", EnumTempsBordee::temps_24_heures );
 #undef asnMission
 }
 
@@ -579,7 +579,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni()
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement" );
     MOS_ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action" );
-    pSelector_action->AddItem( "Moyens", EnumActionReagirFaceAEni::detruire_moyens );
+    pSelector_action->AddItem( "Detruire moyens", EnumActionReagirFaceAEni::detruire_moyens );
     pSelector_action->AddItem( "Defendre", EnumActionReagirFaceAEni::defendre );
     pSelector_action->AddItem( "Demonter", EnumActionReagirFaceAEni::demonter );
 }
@@ -618,9 +618,9 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_TC2_GererMaterielAvantD
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
     MOS_ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Order conduite automate tc2 gerer materiel avant deplacement" );
-    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Materiels vers bld", EnumTC2GererMaterielAvantDeplacement::deborder_materiels_vers_bld );
-    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Materiels en reparation", EnumTC2GererMaterielAvantDeplacement::detruire_materiels_en_reparation );
-    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Materiels sur place", EnumTC2GererMaterielAvantDeplacement::reparer_materiels_sur_place );
+    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Deborder materiels vers bld", EnumTC2GererMaterielAvantDeplacement::deborder_materiels_vers_bld );
+    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Detruire materiels en reparation", EnumTC2GererMaterielAvantDeplacement::detruire_materiels_en_reparation );
+    pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Reparer materiels sur place", EnumTC2GererMaterielAvantDeplacement::reparer_materiels_sur_place );
 #undef asnMission
 }
 

@@ -67,18 +67,11 @@ void AGR_Enumeration::Read( MT_InputArchive_ABC& input )
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Enumeration::HumanName
-/** @param  strValue 
-    @return 
-*/
 // Created: SBO 2005-09-22
 // -----------------------------------------------------------------------------
 std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
 {
     std::string strResult = strValue;
-
-    int nPos = strResult.find( '_' );
-    if( nPos != strResult.npos )
-        strResult.erase( 0, nPos + 1 );
 
     boost::replace_all( strResult, "_", " " );
 
