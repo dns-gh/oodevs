@@ -72,10 +72,10 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 2, 2, 5 );
     pSubLayout2->setMargin( 5 );
 
-    QGroupBox* pGB2 = new QGroupBox( 2, Qt::Vertical, tr( "Afficher" ), pDisplayPanel );
+    QGroupBox* pGB2 = new QGroupBox( 2, Qt::Horizontal, tr( "Afficher" ), pDisplayPanel );
 
-    QLabel* pL2 = new QLabel( tr( "Taille police" ), pDisplayPanel );
-    pFontSpinbox_ = new QSpinBox( 1, 50, 1, pDisplayPanel );
+    QLabel* pL2 = new QLabel( tr( "Taille police" ), pGB2 );
+    pFontSpinbox_ = new QSpinBox( 1, 50, 1, pGB2 );
     pFontSpinbox_->setValue( options.nFontSize_ );
 
     pSubLayout2->addMultiCellWidget( pGB2, 0, 0, 0, 1 );

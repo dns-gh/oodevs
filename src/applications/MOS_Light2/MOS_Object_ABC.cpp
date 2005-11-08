@@ -247,6 +247,15 @@ MOS_IDManager& MOS_Object_ABC::GetIDManagerForObjectType( ASN1T_EnumObjectType n
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetIDManagerForObjectType
+// Created: HME 2005-11-08
+// -----------------------------------------------------------------------------
+MOS_IDManager& MOS_Object_ABC::GetIDManagerForObjectType( uint nType )
+{
+    return *managers_[ nType ];
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_Object_ABC::InitializeObjectIds
 // Created: AGE 2005-04-05
 // -----------------------------------------------------------------------------

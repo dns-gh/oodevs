@@ -52,6 +52,7 @@ public:
     //@{
     static void           InitializeObjectIds      ( MOS_InputArchive& classeIds );
     static MOS_IDManager& GetIDManagerForObjectType( ASN1T_EnumObjectType nType );
+    static MOS_IDManager& GetIDManagerForObjectType( uint );
     //@}
 
     //! @name Accessors

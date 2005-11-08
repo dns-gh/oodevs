@@ -17,6 +17,7 @@
 #include "MOS_ASN_Messages.h"
 #include "MOS_AgentManager.h"
 #include "MOS_ObjectManager.h"
+#include "MOS_Object_ABC.h"
 
 //$$$$ mise a jour de pRealObject_ suite a un delete de l'objet réel non fait.
 
@@ -53,6 +54,7 @@ MOS_ObjectKnowledge::MOS_ObjectKnowledge( const ASN1T_MsgObjectKnowledgeCreation
     , bLogRouteEquipped_        ( false )
     , nCampTC2ID_               ( 0 )
 {
+    MOS_Object_ABC::GetIDManagerForObjectType( asnMsg.type ).LockIdentifier( asnMsg.oid_connaissance ) ;
 }
 
 

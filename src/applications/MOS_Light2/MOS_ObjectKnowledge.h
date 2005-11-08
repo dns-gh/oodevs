@@ -62,12 +62,13 @@ public:
 
     //! @name Accessors
     //@{
-    uint                 GetID        () const;
-    bool                 IsValid      ( E_AttributeUpdated ) const;
-    const MT_Vector2D&   GetCenter    () const;
-    MOS_Object_ABC*  GetRealObject() const;
-    MOS_Team&            GetOwner     () const;
-    const T_PointVector& GetPointList () const;
+    uint                 GetID                  () const;
+    uint                 GetObjectTypeID        () const;
+    bool                 IsValid                ( E_AttributeUpdated ) const;
+    const MT_Vector2D&   GetCenter              () const;
+    MOS_Object_ABC*      GetRealObject          () const;
+    MOS_Team&            GetOwner               () const;
+    const T_PointVector& GetPointList           () const;
 
     // crossing
     uint GetSiteFranchissementLargeur        () const;

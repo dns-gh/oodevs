@@ -27,7 +27,7 @@
 #include "MOS_Gtia.h"
 #include "MOS_Tools.h"
 #include "MOS_ObjectKnowledge.h"
-
+#include "MOS_Object_ABC.h"
 // -----------------------------------------------------------------------------
 // Name: MOS_Team constructor
 // Created: NLD 2004-03-18
@@ -201,7 +201,7 @@ void MOS_Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnow
     assert( itObjectKnowledge != objectKnowledges_.end() );
 
     MOS_App::GetApp().NotifyObjectKnowledgeDeleted( *this, *(itObjectKnowledge->second) );
-
+    MOS_Object_ABC::GetIDManagerForObjectType( itObjectKnowledge->second->GetObjectTypeID() ).ReleaseIdentifier( itObjectKnowledge->second->GetID() ) ;
     delete itObjectKnowledge->second;
     objectKnowledges_.erase( itObjectKnowledge );
 }

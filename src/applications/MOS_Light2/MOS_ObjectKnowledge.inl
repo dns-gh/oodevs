@@ -210,3 +210,13 @@ uint MOS_ObjectKnowledge::GetCampTC2ID() const
 {
     return nCampTC2ID_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_ObjectKnowledge::GetObjectTypeID
+// Created: HME 2005-11-08
+// -----------------------------------------------------------------------------
+inline 
+uint MOS_ObjectKnowledge::GetObjectTypeID() const
+{
+    return nObjectTypeID_;
+}
