@@ -71,7 +71,7 @@ MOS_ODBToolbar::~MOS_ODBToolbar()
 // -----------------------------------------------------------------------------
 void MOS_ODBToolbar::OnOpen()
 {
-    QString strFilename = QFileDialog::getOpenFileName( QString::null, "*.xml", this );
+    QString strFilename = QFileDialog::getOpenFileName( QString::null, "*.xml", 0 );
     if( strFilename == QString::null )
         return;
 
@@ -99,7 +99,7 @@ void MOS_ODBToolbar::OnSave()
 // -----------------------------------------------------------------------------
 void MOS_ODBToolbar::OnSaveAs()
 {
-    QString strFilename = QFileDialog::getSaveFileName( QString::null, "*.xml", this );
+    QString strFilename = QFileDialog::getSaveFileName( QString::null, "*.xml", 0 );
     if( strFilename == QString::null )
         return;
 
