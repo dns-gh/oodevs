@@ -58,6 +58,7 @@ public:
     void Draw();
     void FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
     bool CheckValidity();
+    bool CheckValidityWhenRequired();
     void WriteMsg( std::stringstream& strMsg );
     
     void UpdateLabels();

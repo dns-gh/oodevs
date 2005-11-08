@@ -27,6 +27,7 @@
 
 class MOS_Mission;
 class MOS_ASN_MsgAutomateOrder;
+class MOS_ParamLimits;
 
 // =============================================================================
 // Created: APE 2004-04-20
@@ -63,6 +64,7 @@ private:
     //@{
     uint nMissionId_;
     MOS_ASN_MsgAutomateOrder* pASNMsgOrder_;
+    MOS_ParamLimits*          pParamLimits_;
     //@}
 };
 

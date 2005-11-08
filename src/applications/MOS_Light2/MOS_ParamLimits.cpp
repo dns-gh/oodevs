@@ -120,6 +120,17 @@ bool MOS_ParamLimits::CheckValidity()
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_ParamLimits::CheckValidityWhenRequired
+// Created: SBO 2005-11-08
+// -----------------------------------------------------------------------------
+bool MOS_ParamLimits::CheckValidityWhenRequired()
+{
+    if( pLimit1_ != 0 && pLimit2_ != 0 )
+        return true;
+    pLabel_->TurnRed( 3000 );
+    return false;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits::WriteMsg

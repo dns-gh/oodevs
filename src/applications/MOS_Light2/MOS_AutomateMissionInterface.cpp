@@ -51,6 +51,7 @@
 MOS_AutomateMissionInterface::MOS_AutomateMissionInterface( MOS_Agent& agent, uint nMissionId, MOS_MissionPanel& parentPanel )
     : MOS_MissionInterface_ABC( agent, parentPanel )
     , nMissionId_             ( nMissionId )
+    , pParamLimits_           ( 0 )
 {
     pASNMsgOrder_ = new MOS_ASN_MsgAutomateOrder();
     pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent_);
@@ -77,12 +78,14 @@ void MOS_AutomateMissionInterface::CreateDefaultParameters()
     ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
 
     // Limits
-    paramVector_.push_back( new MOS_ParamLimits( order.oid_limite_gauche,
-                                                 order.oid_limite_droite,
-                                                 "Limites" ,
-                                                 "Fixer limite 1",
-                                                 "Fixer limite 2",
-                                                 this ) );
+    // saved so we can check validity later...
+    pParamLimits_ = new MOS_ParamLimits( order.oid_limite_gauche,
+                                        order.oid_limite_droite,
+                                        "Limites" ,
+                                        "Fixer limite 1",
+                                        "Fixer limite 2",
+                                        this );
+    paramVector_.push_back( pParamLimits_ );
 
     // Limas
     paramVector_.push_back( new MOS_ParamLimaList( order.oid_limas,
@@ -112,7 +115,7 @@ void MOS_AutomateMissionInterface::CreateDefaultParameters()
 // -----------------------------------------------------------------------------
 void MOS_AutomateMissionInterface::OnOk()
 {
-    if( ! this->CheckValidity() )
+    if( ! this->CheckValidity() || ! pParamLimits_->CheckValidityWhenRequired() )
         return;
 
     std::stringstream strMsg;
