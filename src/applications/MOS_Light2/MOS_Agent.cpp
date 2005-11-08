@@ -179,6 +179,10 @@ MOS_Agent::~MOS_Agent()
     delete pMaintenanceData_;
     delete pMedicalData_;
     delete pSupplyData_;
+    recognizedAgents_.clear();
+    identifiedAgents_.clear();
+    detectedAgents_  .clear();
+    recordedAgents_  .clear();
 }
 
 //=============================================================================
@@ -209,32 +213,42 @@ void MOS_Agent::OnReceiveMsgUnitInterVisibility( DIN::DIN_Input& input )
 {
     MIL_AgentID     nAgentID;
     uint8           nVisType;
+    uint8           nMaxVisType;
+    bool            bRecordMode;
 
     input >> nAgentID;
     input >> nVisType;
+    input >> nMaxVisType;
+    input >> bRecordMode;
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
     assert( pAgent );
 
     recognizedAgents_.erase( pAgent );
     identifiedAgents_.erase( pAgent );
     detectedAgents_  .erase( pAgent );
+    recordedAgents_  .erase( pAgent );
 
-    switch( nVisType )
+    if( bRecordMode )
+        recordedAgents_.insert( pAgent );
+    else
     {
-        case eVisTypeRecognized:
-            recognizedAgents_.insert( pAgent );
-            break;
-        case eVisTypeIdentified:
-            identifiedAgents_.insert( pAgent );
-            break;
-        case eVisTypeDetected:
-            detectedAgents_.insert( pAgent );
-            break;
-        case eVisTypeInvisible:
-            break;
+        switch( nVisType )
+        {
+            case eVisTypeRecognized:
+                recognizedAgents_.insert( pAgent );
+                break;
+            case eVisTypeIdentified:
+                identifiedAgents_.insert( pAgent );
+                break;
+            case eVisTypeDetected:
+                detectedAgents_.insert( pAgent );
+                break;
+            case eVisTypeInvisible:
+                break;
 
-        default:
-            assert( false );
+            default:
+                assert( false );
+        }
     }
 }
 

@@ -745,8 +745,14 @@ void MOS_GLTool::DrawVisionLines( MOS_Agent& agent )
 {
     SimpleMode sm;
 
-    glColor4d( MOS_COLOR_IDENTIED );
     glLineWidth( 1 );
+
+    glColor4d( MOS_COLOR_RECORDED );
+    for( MOS_Agent::CIT_AgentConstPtrSet it = agent.recordedAgents_.begin(); it != agent.recordedAgents_.end(); ++it )
+        if( (*it)->GetTeam().GetID() != agent.GetTeam().GetID() )
+            DrawLine( agent.vPos_, (*it)->vPos_, 150.0 );
+
+    glColor4d( MOS_COLOR_IDENTIFIED );
     MOS_Agent::CIT_AgentConstPtrSet itAgent;
     for( itAgent = agent.identifiedAgents_.begin(); itAgent != agent.identifiedAgents_.end(); ++itAgent )
         if( (*itAgent)->GetTeam().GetID() != agent.GetTeam().GetID() )
@@ -767,11 +773,11 @@ void MOS_GLTool::DrawVisionLines( MOS_Agent& agent )
     for( itObject = agent.objectsPerceptionInProgress_.begin(); itObject != agent.objectsPerceptionInProgress_.end(); ++itObject )
         DrawLine( agent.vPos_, (*itObject)->center_, 150.0 );
 
-    glColor4d( MOS_COLOR_IDENTIED );
+    glColor4d( MOS_COLOR_IDENTIFIED );
     for( itObject = agent.objectsPerceived_.begin(); itObject != agent.objectsPerceived_.end(); ++itObject )
         DrawLine( agent.vPos_, (*itObject)->center_, 150.0 );
 
-//    glColor4d( MOS_COLOR_IDENTIED );
+//    glColor4d( MOS_COLOR_IDENTIFIED );
     glColor3d( 0., 1., 0. );
     for( MOS_Agent::CIT_ConcentrationSet itConcentration = agent.concentrationsPerceived_.begin(); itConcentration != agent.concentrationsPerceived_.end(); ++itConcentration )
         DrawLine( agent.vPos_, (*itConcentration)->GetPos(), 150.0 );

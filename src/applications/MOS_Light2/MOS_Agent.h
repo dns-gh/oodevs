@@ -314,6 +314,7 @@ public:
     T_AgentConstPtrSet			identifiedAgents_;
     T_AgentConstPtrSet			recognizedAgents_;
     T_AgentConstPtrSet			detectedAgents_;
+    T_AgentConstPtrSet          recordedAgents_;
 
     T_ObjectConstPtrSet			objectsPerceived_;
     T_ObjectConstPtrSet			objectsPerceptionInProgress_;
