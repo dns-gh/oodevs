@@ -124,6 +124,7 @@ public:
 
     //! @name Accessors
     //@{
+<<<<<<< .working
     const MOS_AgentModel*       GetModelPion       () const;
     const MOS_AgentModel*       GetModelAutomate   () const;
     bool                        IsAutomate         () const;
@@ -152,7 +153,6 @@ public:
     int                         GetContamination   () const;
     bool                        IsOutOfGas         () const;
     const T_FireResults&        GetFireResult      () const;
-
     const MOS_Experience&       GetExperience      () const;
     const MOS_Tiredness&        GetTiredness       () const;
     const MOS_Morale&           GetMorale          () const;

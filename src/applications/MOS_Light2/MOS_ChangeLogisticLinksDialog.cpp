@@ -141,6 +141,7 @@ void MOS_ChangeLogisticLinksDialog::SetAgent( MOS_Agent& agent )
         return;
 	
 	std::string strii = pAgent_->GetTypeAutomate()->GetType();	
+
     //if( !agent.IsLogisticTC2() )  // $$$$ SBO 2005-10-28: TC2 parent can be something else than itself
     pTC2ComboBox_->setEnabled( true );
     if( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() )
