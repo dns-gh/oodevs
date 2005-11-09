@@ -29,15 +29,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgent constructor
-/** @param  asnAgent 
-    @param  strName 
-    @param  pParent 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
-MOS_ParamAgent::MOS_ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamAgent::MOS_ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , strMenuText_  ( strMenuText )
     , asnAgent_     ( asnAgent )
     , pPopupAgent_  ( 0 )
@@ -63,10 +59,6 @@ MOS_ParamAgent::~MOS_ParamAgent()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgent::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  pAgent 
-    @param  pPoint 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 void MOS_ParamAgent::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -82,8 +74,6 @@ void MOS_ParamAgent::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Actio
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgent::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 bool MOS_ParamAgent::CheckValidity()
@@ -98,12 +88,13 @@ bool MOS_ParamAgent::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgent::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 void MOS_ParamAgent::WriteMsg( std::stringstream& strMsg )
 {
+    assert( pAgent_ != 0 && !IsOptional() );
+    if( pAgent_ == 0 && IsOptional() )
+        return;
     strMsg << pLabel_->text().latin1() << ": agent #" << pAgent_->GetID();
     asnAgent_ = pAgent_->GetID();
 }

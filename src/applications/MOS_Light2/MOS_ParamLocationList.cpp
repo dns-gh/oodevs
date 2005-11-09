@@ -32,16 +32,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList constructor
-/** @param  asnListLoc 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListLocalisation& asnListLoc, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListLocalisation& asnListLoc, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : MOS_ParamListView     ( strLabel, true, pParent )
-    , MOS_Param_ABC         ()
+    , MOS_Param_ABC         ( bOptional )
     , strMenuText_          ( strMenuText )
     , asnListLoc_           ( asnListLoc )
     , pAsnLocalisationList_ ( 0 )
@@ -62,16 +57,11 @@ MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListLocalisation& asnListLoc
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList constructor
-/** @param  asnListPoly 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListPolygon& asnListPoly, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListPolygon& asnListPoly, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : MOS_ParamListView ( strLabel, true, pParent )
-    , MOS_Param_ABC     ()
+    , MOS_Param_ABC     ( bOptional )
     , strMenuText_      ( strMenuText )
     , asnListLoc_       ( (ASN1T_ListLocalisation&)asnListPoly )
     , pAsnLocalisationList_ ( 0 )
@@ -88,16 +78,11 @@ MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListPolygon& asnListPoly, co
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList constructor
-/** @param  asnListPoint 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-09-07
 // -----------------------------------------------------------------------------
-MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListPoint& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamLocationList::MOS_ParamLocationList( ASN1T_ListPoint& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : MOS_ParamListView ( strLabel, true, pParent )
-    , MOS_Param_ABC     ()
+    , MOS_Param_ABC     ( bOptional )
     , strMenuText_      ( strMenuText )
     , asnListLoc_       ( (ASN1T_ListLocalisation&)asnListPoint )
     , pAsnLocalisationList_ ( 0 )
@@ -130,9 +115,6 @@ MOS_ParamLocationList::~MOS_ParamLocationList()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_ParamLocationList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -147,8 +129,6 @@ void MOS_ParamLocationList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MO
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 bool MOS_ParamLocationList::CheckValidity()
@@ -163,8 +143,6 @@ bool MOS_ParamLocationList::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList::WriteMsg
-/** @param  strMsg 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_ParamLocationList::WriteMsg( std::stringstream& strMsg )
@@ -172,8 +150,11 @@ void MOS_ParamLocationList::WriteMsg( std::stringstream& strMsg )
     strMsg << this->header()->label(0).latin1() << ": " << this->childCount() << " localisations.";
 
     uint nNbrChilds = this->childCount();
-    assert( nNbrChilds != 0 );
     asnListLoc_.n = nNbrChilds;
+
+    assert( !( nNbrChilds == 0 && ! IsOptional() ) );
+    if( nNbrChilds == 0 && IsOptional() )
+        return;
 
     delete[] pAsnLocalisationList_;
     pAsnLocalisationList_ = new ASN1T_Localisation[ nNbrChilds ];
@@ -213,8 +194,6 @@ void MOS_ParamLocationList::WriteMsg( std::stringstream& strMsg )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocationList::StartTracing
-/** @param  nLocationType 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
 void MOS_ParamLocationList::StartTracing( int nLocationType )

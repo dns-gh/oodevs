@@ -48,7 +48,7 @@ class MOS_ParamAgent : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+    MOS_ParamAgent( ASN1T_Agent& asnAgent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamAgent();
     //@}
 

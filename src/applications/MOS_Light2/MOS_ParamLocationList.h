@@ -49,9 +49,9 @@ class MOS_ParamLocationList : public MOS_ParamListView, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ParamLocationList( ASN1T_ListLocalisation& asnListLoc,   const std::string strLabel, const std::string strMenuText, QWidget* pParent );
-     MOS_ParamLocationList( ASN1T_ListPolygon&      asnListPoly,  const std::string strLabel, const std::string strMenuText, QWidget* pParent );
-     MOS_ParamLocationList( ASN1T_ListPoint&        asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+     MOS_ParamLocationList( ASN1T_ListLocalisation& asnListLoc,   const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+     MOS_ParamLocationList( ASN1T_ListPolygon&      asnListPoly,  const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
+     MOS_ParamLocationList( ASN1T_ListPoint&        asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamLocationList();
     //@}
 

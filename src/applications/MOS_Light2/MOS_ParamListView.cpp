@@ -26,10 +26,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamListView constructor
-/** @param  bRequired 
-    @param  bPopupMenu 
-    @param  pParent 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 MOS_ParamListView::MOS_ParamListView( const std::string& strLabel, bool bPopupMenu, QWidget* pParent )

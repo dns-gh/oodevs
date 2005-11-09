@@ -20,9 +20,9 @@
 // Name: MOS_ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-MOS_ParamEquipmentList::MOS_ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& /*strLabel*/, QWidget* pParent )
+MOS_ParamEquipmentList::MOS_ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& /*strLabel*/, QWidget* pParent, bool bOptional )
     : QTable                 ( 0, 1, pParent )
-    , MOS_Param_ABC          ()
+    , MOS_Param_ABC          ( bOptional )
     , pAsnEquipmentList_     ( &asnListEquipment )
     , pEquipmentsStringList_ ( 0 )
 {

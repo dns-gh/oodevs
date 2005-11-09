@@ -50,7 +50,7 @@ class MOS_ParamObjectKnowledge : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+    MOS_ParamObjectKnowledge( ASN1T_KnowledgeObject& asnKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamObjectKnowledge();
     //@}
 

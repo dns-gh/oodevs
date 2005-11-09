@@ -48,7 +48,7 @@ class MOS_ParamLocation : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOutsideData = false );
+     MOS_ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData = false );
     virtual ~MOS_ParamLocation();
     //@}
 

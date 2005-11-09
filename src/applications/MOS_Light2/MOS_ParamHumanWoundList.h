@@ -39,7 +39,7 @@ class MOS_ParamHumanWoundList : public QTable, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MOS_ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& strLabel, QWidget* pParent );
+    explicit MOS_ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& strLabel, QWidget* pParent, bool bOptional );
     virtual ~MOS_ParamHumanWoundList();
     //@}
 

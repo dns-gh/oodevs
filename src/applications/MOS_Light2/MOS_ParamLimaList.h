@@ -49,7 +49,7 @@ class MOS_ParamLimaList : public MOS_ParamListView, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+    MOS_ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamLimaList();
     //@}
 

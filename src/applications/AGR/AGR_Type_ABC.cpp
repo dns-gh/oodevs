@@ -156,7 +156,8 @@ std::string AGR_Type_ABC::MosInitialisationCode( const AGR_Member& member ) cons
 // -----------------------------------------------------------------------------
 std::string AGR_Type_ABC::Mos2InitialisationCode( const AGR_Member& member ) const
 {
-    return "    Create" + strFunctionSuffix_ + "( " + member.Mos2ASNPrefixedName() + ", \"" + member.HumanName() + "\" );\n";
+    return "    Create" + strFunctionSuffix_ + "( " + member.Mos2ASNPrefixedName() + ", \"" 
+            + member.HumanName() + "\", " + ( member.IsOptional() ? "true" : "false" ) + " );\n";
 }
 
 // -----------------------------------------------------------------------------

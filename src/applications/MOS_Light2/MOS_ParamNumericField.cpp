@@ -24,9 +24,9 @@
 // Name: MOS_ParamNumericField constructor
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-MOS_ParamNumericField::MOS_ParamNumericField( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent )
+MOS_ParamNumericField::MOS_ParamNumericField( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
 : QHBox         ( pParent )
-, MOS_Param_ABC ()
+, MOS_Param_ABC ( bOptional )
 , pAsnInt_      ( &asnInt )
 , pAsnReal_     ( 0 )
 {
@@ -45,9 +45,9 @@ MOS_ParamNumericField::MOS_ParamNumericField( ASN1INT& asnInt, int nMin, int nMa
 // Name: MOS_ParamNumericField constructor
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-MOS_ParamNumericField::MOS_ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent )
+MOS_ParamNumericField::MOS_ParamNumericField( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
 : QHBox         ( pParent )
-, MOS_Param_ABC ()
+, MOS_Param_ABC ( bOptional )
 , pAsnInt_      ( 0 )
 , pAsnReal_     ( &asnReal )
 {

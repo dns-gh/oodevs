@@ -37,7 +37,7 @@ class MOS_ParamBool : public QCheckBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent );
+    MOS_ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent, bool bOptional );
     ~MOS_ParamBool();
     //@}
 

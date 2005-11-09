@@ -25,15 +25,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentType constructor
-/** @param  asnNatureAtlas 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-05-07
 // -----------------------------------------------------------------------------
-MOS_ParamAgentType::MOS_ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent )
+MOS_ParamAgentType::MOS_ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, bool bOptional )
     : QButtonGroup    ( 2, Qt::Horizontal, strLabel.c_str(), pParent )
-    , MOS_Param_ABC   ()
+    , MOS_Param_ABC   ( bOptional )
     , asnNatureAtlas_ ( asnNatureAtlas )
 {
     pArmoredCheckBox_        = new QCheckBox( tr( "Blindé" )         , this );

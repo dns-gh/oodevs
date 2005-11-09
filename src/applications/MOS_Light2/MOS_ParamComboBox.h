@@ -44,7 +44,7 @@ class MOS_ParamComboBox : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamComboBox( T& output, const std::string strLabel, QWidget* pParent );
+    MOS_ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, bool bOptional );
     ~MOS_ParamComboBox();
     //@}
 
@@ -66,16 +66,12 @@ private:
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamComboBox constructor
-/** @param  output 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
-MOS_ParamComboBox<T>::MOS_ParamComboBox( T& output, const std::string strLabel, QWidget* pParent )
+MOS_ParamComboBox<T>::MOS_ParamComboBox( T& output, const std::string strLabel, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , output_       ( output )
 {
     pLabel_ = new QLabel( strLabel.c_str(), this );
@@ -97,9 +93,6 @@ MOS_ParamComboBox<T>::~MOS_ParamComboBox()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamComboBox::AddItem
-/** @param  strLabel 
-    @param  value 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
@@ -111,8 +104,6 @@ void MOS_ParamComboBox<T>::AddItem( const std::string strLabel, const T& value )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamComboBox::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >

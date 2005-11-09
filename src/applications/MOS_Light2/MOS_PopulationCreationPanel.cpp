@@ -67,7 +67,7 @@ MOS_PopulationCreationPanel::MOS_PopulationCreationPanel( QTabWidget* pParent )
     pLayout->addWidget( pOkButton, 7, 1, Qt::AlignRight );
 
     pLayout->addWidget( new QLabel( tr( "Emplacement:" ), this ), 5, 0, Qt::AlignLeft );
-    pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement population", this );
+    pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement population", this, false );
     pLayout->addWidget( pLocation_, 5, 1, Qt::AlignRight );
 
     pTeamCombo_->setMinimumWidth( pAttitudeCombo_->width() );

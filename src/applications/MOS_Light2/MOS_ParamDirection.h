@@ -46,7 +46,7 @@ class MOS_ParamDirection : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent );
+     MOS_ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent, bool bOptional );
     ~MOS_ParamDirection();
     //@}
 

@@ -31,16 +31,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacle constructor
-/** @param  asnObject 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOutsideData )
+MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData )
     : QGroupBox     ( 2, Qt::Horizontal, strLabel.c_str(), pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , asnObject_    ( asnObject )
     , strMenuText_  ( strMenuText )
 {
@@ -100,9 +95,6 @@ MOS_ParamObstacle::~MOS_ParamObstacle()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacle::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
 void MOS_ParamObstacle::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -113,8 +105,6 @@ void MOS_ParamObstacle::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Ac
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacle::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
 bool MOS_ParamObstacle::CheckValidity()
@@ -125,8 +115,6 @@ bool MOS_ParamObstacle::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacle::WriteMsg
-/** @param  strMsg 
-*/
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
 void MOS_ParamObstacle::WriteMsg( std::stringstream& strMsg )

@@ -61,6 +61,6 @@ void MOS_PopulationMissionInterface::CreateMission_FaireMouvement()
     ASN1T_Mission_Population_FaireMouvement& asnMission = *new ASN1T_Mission_Population_FaireMouvement();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Population_mission_population_faire_mouvement;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_population_faire_mouvement = &asnMission;
-    CreatePoint( asnMission.destination, "Destination" );
+    CreatePoint( asnMission.destination, "Destination", false );
 }
 

@@ -81,14 +81,16 @@ void MOS_UnitMissionInterface::CreateDefaultParameters()
                                                  "Limites" ,
                                                  "Fixer limite 1",
                                                  "Fixer limite 2",
-                                                 this ) );
+                                                 this, 
+                                                 false ) );
 
     paramVector_.push_back( new MOS_ParamLimaList( order.oid_limas,
                                                    "Limas",
                                                    "Ajouter aux limas",
-                                                   this ) );
+                                                   this, 
+                                                   false ) );
 
-    paramVector_.push_back( new MOS_ParamDirection( order.direction_dangereuse, "Direction dangeureuse", this ) );
+    paramVector_.push_back( new MOS_ParamDirection( order.direction_dangereuse, "Direction dangeureuse", this, false ) );
 }
 
 

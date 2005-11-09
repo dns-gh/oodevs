@@ -52,7 +52,7 @@ class MOS_ParamObjectKnowledgeList : public MOS_ParamListView, public MOS_Param_
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent );
+    MOS_ParamObjectKnowledgeList( ASN1T_ListKnowledgeObject& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional );
     ~MOS_ParamObjectKnowledgeList();
     //@}
 

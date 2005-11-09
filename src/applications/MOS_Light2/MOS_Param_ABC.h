@@ -33,15 +33,7 @@ typedef std::vector< MOS_Param_ABC* >   T_ParamVector;
 typedef T_ParamVector::iterator         IT_ParamVector;
 typedef T_ParamVector::const_iterator   CIT_ParamVector;
 
-
 // =============================================================================
-/** @class  MOS_Param_ABC
-    @brief  MOS_Param_ABC
-    @par    Using example
-    @code
-    MOS_Param_ABC;
-    @endcode
-*/
 // Created: APE 2004-03-18
 // =============================================================================
 class MOS_Param_ABC
@@ -51,7 +43,7 @@ class MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_Param_ABC();
+             MOS_Param_ABC( bool bOptional );
     virtual ~MOS_Param_ABC();
     //@}
 
@@ -62,6 +54,14 @@ public:
     virtual bool CheckValidity();
     virtual void WriteMsg ( std::stringstream& strMsg ) = 0;
     //@}
+
+    //! @name Accessors
+    //@{
+    bool IsOptional() const;
+    //@}
+
+private:
+    bool bIsOptional_;
 };
 
 #   include "MOS_Param_ABC.inl"

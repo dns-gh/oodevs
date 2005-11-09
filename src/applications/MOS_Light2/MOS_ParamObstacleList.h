@@ -49,7 +49,7 @@ class MOS_ParamObstacleList : public QVBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+     MOS_ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamObstacleList();
     //@}
 
@@ -72,7 +72,7 @@ private slots:
     void OnClearList         ();
 
 private:
-    typedef std::vector< ASN1T_CoordUTM* >                     T_ASNUMTCoordPrtVector;
+    typedef std::vector< ASN1T_CoordUTM* >                      T_ASNUMTCoordPrtVector;
     typedef T_ASNUMTCoordPrtVector::iterator                    IT_ASNUMTCoordPrtVector;
     typedef std::pair< ASN1T_MissionGenObject*, T_PointVector > T_Item;
     typedef MT_ValuedListViewItem< T_Item >                     T_ListItem;

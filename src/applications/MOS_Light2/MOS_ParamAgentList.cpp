@@ -29,16 +29,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentList constructor
-/** @param  asnListAgent_ 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
-MOS_ParamAgentList::MOS_ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent )
+MOS_ParamAgentList::MOS_ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent, bool bOptional )
     : MOS_ParamListView( strLabel, true, pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , strMenuText_  ( strMenuText )
     , asnListAgent_ ( asnListAgent )
     , pAsnOIDList_  ( 0 )
@@ -62,10 +57,6 @@ MOS_ParamAgentList::~MOS_ParamAgentList()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentList::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  pAgent 
-    @param  pPoint 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 void MOS_ParamAgentList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -89,8 +80,6 @@ void MOS_ParamAgentList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_A
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentList::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 bool MOS_ParamAgentList::CheckValidity()
@@ -105,8 +94,6 @@ bool MOS_ParamAgentList::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentList::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 void MOS_ParamAgentList::WriteMsg( std::stringstream& strMsg )
@@ -114,6 +101,10 @@ void MOS_ParamAgentList::WriteMsg( std::stringstream& strMsg )
     strMsg << this->header()->label(0) << ": " << this->childCount() << " agents. [";
 
     asnListAgent_.n    = this->childCount();
+
+    assert( !( this->childCount() == 0 && !IsOptional() ) );
+    if( this->childCount() == 0 && IsOptional() )
+        return;
 
     delete[] pAsnOIDList_;
     pAsnOIDList_ = new ASN1T_OID[ this->childCount() ];

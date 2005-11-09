@@ -59,5 +59,6 @@ std::string AGR_PolygonType::MosInitialisationCode( const AGR_Member& member ) c
 // -----------------------------------------------------------------------------
 std::string AGR_PolygonType::Mos2InitialisationCode( const AGR_Member& member ) const
 {
-    return "    CreateLocation( " + member.Mos2ASNPrefixedName()  + ", \"" + member.HumanName() + "\" );\n";
+    return "    CreateLocation( " + member.Mos2ASNPrefixedName() + ", \"" 
+            + member.HumanName() + "\", " + ( member.IsOptional() ? "true" : "false" ) + " );\n";
 }

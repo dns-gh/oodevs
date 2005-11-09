@@ -114,7 +114,8 @@ std::string AGR_Enumeration::MosInitialisationCode( const AGR_Member& member ) c
 // -----------------------------------------------------------------------------
 std::string AGR_Enumeration::Mos2InitialisationCode( const AGR_Member& member ) const
 {
-    std::string strResult = "    MOS_ParamComboBox< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ", \"" + member.HumanName() + "\" );\n";
+    std::string strResult = "    MOS_ParamComboBox< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ", \"" 
+            + member.HumanName() + "\", " + ( member.IsOptional() ? "true" : "false" ) + " );\n";
     for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues )
         strResult += "    pSelector_" + member.ASNName() + "->AddItem( \"" + HumanName( *itValues ) + "\", " + strName_ + "::" + *itValues + " );\n";
     return strResult;

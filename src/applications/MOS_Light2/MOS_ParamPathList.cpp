@@ -30,18 +30,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPathList constructor
-/** @param  asnPathList 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  nMinItems 
-    @param  nMaxItems 
-    @param  pParent 
-*/
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
-MOS_ParamPathList::MOS_ParamPathList( ASN1T_ListItineraire& asnPathList, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent )
+MOS_ParamPathList::MOS_ParamPathList( ASN1T_ListItineraire& asnPathList, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional )
     : MOS_ParamListView( strLabel, true, pParent )
-    , MOS_Param_ABC     ()
+    , MOS_Param_ABC     ( bOptional )
     , strMenuText_      ( strMenuText )
     , asnPathList_      ( asnPathList )
     , pLocalisations_   ( 0 )
@@ -70,9 +63,6 @@ MOS_ParamPathList::~MOS_ParamPathList()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPathList::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
 void MOS_ParamPathList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -84,8 +74,6 @@ void MOS_ParamPathList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Ac
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPathList::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
 bool MOS_ParamPathList::CheckValidity()
@@ -100,8 +88,6 @@ bool MOS_ParamPathList::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPathList::WriteMsg
-/** @param  strMsg 
-*/
 // Created: APE 2004-05-11
 // -----------------------------------------------------------------------------
 void MOS_ParamPathList::WriteMsg( std::stringstream& strMsg )

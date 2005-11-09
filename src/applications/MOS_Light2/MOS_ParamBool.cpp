@@ -25,16 +25,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamBool constructor
-/** @param  asnBool 
-    @param  bDefaultValue 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-MOS_ParamBool::MOS_ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent )
+MOS_ParamBool::MOS_ParamBool( ASN1BOOL& asnBool, bool bDefaultValue, const std::string& strLabel, QWidget* pParent, bool bOptional )
     : QCheckBox     ( strLabel.c_str(), pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , asnBool_      ( asnBool )
 {
     this->setChecked( bDefaultValue );
@@ -52,8 +47,6 @@ MOS_ParamBool::~MOS_ParamBool()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamBool::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_ParamBool::WriteMsg( std::stringstream& strMsg )

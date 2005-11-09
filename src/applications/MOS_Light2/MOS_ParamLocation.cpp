@@ -32,16 +32,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocation constructor
-/** @param  asnListPoint_ 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-MOS_ParamLocation::MOS_ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOutsideData )
+MOS_ParamLocation::MOS_ParamLocation( ASN1T_Localisation& asnListPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData )
     : QHBox             ( pParent )
-    , MOS_Param_ABC     ()
+    , MOS_Param_ABC     ( bOptional )
     , strMenuText_      ( strMenuText )
     , asnListPoint_     ( asnListPoint )
     , pUMTCoords_       ( 0 )
@@ -137,8 +132,6 @@ bool MOS_ParamLocation::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLocation::WriteMsg
-/** @param  strMsg 
-*/
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
 void MOS_ParamLocation::WriteMsg( std::stringstream& strMsg )

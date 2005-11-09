@@ -29,9 +29,6 @@ void MOS_Param_ABC::Draw()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Param_ABC::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 inline
@@ -42,12 +39,20 @@ void MOS_Param_ABC::FillRemotePopupMenu( QPopupMenu& /*popupMenu*/, const MOS_Ac
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Param_ABC::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 inline
 bool MOS_Param_ABC::CheckValidity()
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Param_ABC::IsOptional
+// Created: SBO 2005-11-08
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Param_ABC::IsOptional() const
+{
+    return bIsOptional_;
 }

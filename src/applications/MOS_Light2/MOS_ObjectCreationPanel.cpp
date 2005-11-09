@@ -74,7 +74,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pLayout->addWidget( pObjectTypeCombo_, 1, 1, Qt::AlignRight );
 
     pLayout->addWidget( new QLabel( tr( "Emplacement:" ), this ), 2, 0, Qt::AlignLeft );
-    pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement nouvel objet", this );
+    pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement nouvel objet", this, false );
     pLayout->addWidget( pLocation_, 2, 1, Qt::AlignRight );
     //@}
 
@@ -149,7 +149,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pCrossingParamsGroup_->setInsideMargin( 0 );
     pCrossingParamsGroup_->setMargin( 0 );
     pLayout->addMultiCellWidget( pTC2Group_, 5, 5, 0, 1 );
-	pAgent_ = new MOS_ParamAgent( asnAgent_ , "Tc2: ", "Tc2", pTC2Group_ );
+	pAgent_ = new MOS_ParamAgent( asnAgent_ , "Tc2: ", "Tc2", pTC2Group_, false );
     //@}
 
     //! @name Logistic route

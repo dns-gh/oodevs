@@ -32,13 +32,6 @@ class MOS_Agent_ABC;
 
 
 // =============================================================================
-/** @class  MOS_ParamAgentKnowledge
-    @brief  MOS_ParamAgentKnowledge
-    @par    Using example
-    @code
-    MOS_ParamAgentKnowledge;
-    @endcode
-*/
 // Created: APE 2004-05-10
 // =============================================================================
 class MOS_ParamAgentKnowledge : public QHBox, public MOS_Param_ABC
@@ -50,7 +43,7 @@ class MOS_ParamAgentKnowledge : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamAgentKnowledge( ASN1T_KnowledgeAgent& asnKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent );
+    MOS_ParamAgentKnowledge( ASN1T_KnowledgeAgent& asnKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamAgentKnowledge();
     //@}
 

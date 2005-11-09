@@ -41,7 +41,7 @@ class MOS_ParamGDH : public QHBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent );
+    MOS_ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent, bool bOptional );
     ~MOS_ParamGDH();
     //@}
 

@@ -37,7 +37,7 @@ class MOS_ParamAgentType : public QButtonGroup, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent );
+    MOS_ParamAgentType( ASN1T_NatureAtlas& asnNatureAtlas, const std::string& strLabel, QWidget* pParent, bool bOptional );
     ~MOS_ParamAgentType();
     //@}
 

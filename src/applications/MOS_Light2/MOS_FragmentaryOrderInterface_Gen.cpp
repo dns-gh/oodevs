@@ -285,7 +285,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumReglesEngagement >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement" );
+    MOS_ParamComboBox< ASN1T_EnumReglesEngagement >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement", false );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "None", EnumReglesEngagement::none );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir libre", EnumReglesEngagement::tir_libre );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir sur riposte", EnumReglesEngagement::tir_sur_riposte );
@@ -318,7 +318,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_AcquerirObjectif()
     ASN1T_OrderConduite_AcquerirObjectif& asnMission = *new ASN1T_OrderConduite_AcquerirObjectif();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_acquerir_objectif;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_acquerir_objectif = &asnMission;
-    CreateLocation( asnMission, "Order conduite acquerir objectif" );
+    CreateLocation( asnMission, "Order conduite acquerir objectif", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -338,7 +338,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerPositionDebarquement()
     ASN1T_OrderConduite_ChangerPositionDebarquement& asnMission = *new ASN1T_OrderConduite_ChangerPositionDebarquement();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_position_debarquement = &asnMission;
-    CreatePoint( asnMission, "Order conduite changer position debarquement" );
+    CreatePoint( asnMission, "Order conduite changer position debarquement", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +350,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Pion_ChangerDePosition()
     ASN1T_OrderConduite_Pion_ChangerDePosition& asnMission = *new ASN1T_OrderConduite_Pion_ChangerDePosition();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_changer_de_position;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_changer_de_position = &asnMission;
-    CreatePoint( asnMission, "Order conduite pion changer de position" );
+    CreatePoint( asnMission, "Order conduite pion changer de position", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -386,15 +386,15 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Pion_AppliquerFeux()
     ASN1T_OrderConduite_Pion_AppliquerFeux& asnMission = *new ASN1T_OrderConduite_Pion_AppliquerFeux();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_appliquer_feux = &asnMission;
-    MOS_ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions" );
+    MOS_ParamComboBox< ASN1T_EnumTypeMunitionTirIndirect >* pSelector_munitions = &CreateVarList( asnMission.munitions, "Munitions", false );
     pSelector_munitions->AddItem( "Explosif", EnumTypeMunitionTirIndirect::explosif );
     pSelector_munitions->AddItem( "Grenade", EnumTypeMunitionTirIndirect::grenade );
     pSelector_munitions->AddItem( "Aced", EnumTypeMunitionTirIndirect::aced );
     pSelector_munitions->AddItem( "Fumigene", EnumTypeMunitionTirIndirect::fumigene );
     pSelector_munitions->AddItem( "Eclairant", EnumTypeMunitionTirIndirect::eclairant );
     pSelector_munitions->AddItem( "Mine", EnumTypeMunitionTirIndirect::mine );
-    CreateNumeric( asnMission.nb_IT, "Nb IT" );
-    CreatePoint( asnMission.cible, "Cible" );
+    CreateNumeric( asnMission.nb_IT, "Nb IT", false );
+    CreatePoint( asnMission.cible, "Cible", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -430,8 +430,8 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Pion_RenforcerEnVSRAM()
     ASN1T_OrderConduite_Pion_RenforcerEnVSRAM& asnMission = *new ASN1T_OrderConduite_Pion_RenforcerEnVSRAM();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_vs_ram;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_renforcer_en_vs_ram = &asnMission;
-    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer" );
-    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances" );
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
+    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -443,9 +443,9 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Pion_TransfererVSRAM()
     ASN1T_OrderConduite_Pion_TransfererVSRAM& asnMission = *new ASN1T_OrderConduite_Pion_TransfererVSRAM();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_vs_ram;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_transferer_vs_ram = &asnMission;
-    CreateAgent( asnMission.pion_renforce, "Pion renforce" );
-    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer" );
-    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances" );
+    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
+    CreateAgent( asnMission.pion_a_renforcer, "Pion a renforcer", false );
+    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -457,8 +457,8 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Pion_ReprendreAuxOrdresVSRAM()
     ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM& asnMission = *new ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_reprendre_aux_ordres_vs_ram = &asnMission;
-    CreateAgent( asnMission.pion_renforce, "Pion renforce" );
-    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances" );
+    CreateAgent( asnMission.pion_renforce, "Pion renforce", false );
+    CreateNumeric( asnMission.nbr_ambulances, "Nbr ambulances", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -469,7 +469,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeMaintenance()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_maintenance;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance, "Order conduite modifier temps bordee maintenance" );
+    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_maintenance = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_maintenance, "Order conduite modifier temps bordee maintenance", false );
     pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
     pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
     pSelector_order_conduite_modifier_temps_bordee_maintenance->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
@@ -486,7 +486,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierTempsBordeeSante()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_temps_bordee_sante;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante, "Order conduite modifier temps bordee sante" );
+    MOS_ParamComboBox< ASN1T_EnumTempsBordee >* pSelector_order_conduite_modifier_temps_bordee_sante = &CreateVarList( asnMission.order_conduite_modifier_temps_bordee_sante, "Order conduite modifier temps bordee sante", false );
     pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 8 heures", EnumTempsBordee::temps_8_heures );
     pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 12 heures", EnumTempsBordee::temps_12_heures );
     pSelector_order_conduite_modifier_temps_bordee_sante->AddItem( "Temps 16 heures", EnumTempsBordee::temps_16_heures );
@@ -504,7 +504,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesReparations()
     ASN1T_OrderConduite_ModifierPrioritesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_reparations = &asnMission;
-    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations" );
+    CreateMaintenancePriorities( asnMission, "Order conduite modifier priorites reparations", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +516,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesBlesses()
     ASN1T_OrderConduite_ModifierPrioritesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_blesses = &asnMission;
-    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses" );
+    CreateMedicalPriorities( asnMission, "Order conduite modifier priorites blesses", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -528,7 +528,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesTactiquesRepara
     ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_reparations;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_tactiques_reparations = &asnMission;
-    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques reparations" );
+    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques reparations", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -540,7 +540,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ModifierPrioritesTactiquesBlesse
     ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses& asnMission = *new ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_blesses;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_modifier_priorites_tactiques_blesses = &asnMission;
-    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques blesses" );
+    CreateAutomateList( asnMission, "Order conduite modifier priorites tactiques blesses", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -552,8 +552,8 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_RealiserVariantement()
     ASN1T_OrderConduite_Automate_RealiserVariantement& asnMission = *new ASN1T_OrderConduite_Automate_RealiserVariantement();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_realiser_variantement = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement_original, "Site franchissement original" );
-    CreateObjectKnowledge( asnMission.site_franchissement_variante, "Site franchissement variante" );
+    CreateObjectKnowledge( asnMission.site_franchissement_original, "Site franchissement original", false );
+    CreateObjectKnowledge( asnMission.site_franchissement_variante, "Site franchissement variante", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -565,7 +565,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_DesequiperSiteFranchiss
     ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement& asnMission = *new ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_desequiper_site_franchissement = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement" );
+    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -577,8 +577,8 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni()
     ASN1T_OrderConduite_Automate_ReagirFaceAEni& asnMission = *new ASN1T_OrderConduite_Automate_ReagirFaceAEni();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement" );
-    MOS_ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action" );
+    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement", false );
+    MOS_ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action", false );
     pSelector_action->AddItem( "Detruire moyens", EnumActionReagirFaceAEni::detruire_moyens );
     pSelector_action->AddItem( "Defendre", EnumActionReagirFaceAEni::defendre );
     pSelector_action->AddItem( "Demonter", EnumActionReagirFaceAEni::demonter );
@@ -593,8 +593,8 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_AffecterPionAObstacle()
     ASN1T_OrderConduite_Automate_AffecterPionAObstacle& asnMission = *new ASN1T_OrderConduite_Automate_AffecterPionAObstacle();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_affecter_pion_a_obstacle;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_affecter_pion_a_obstacle = &asnMission;
-    CreateAgent( asnMission.pion, "Pion" );
-    CreateGenObject( asnMission.obstacle, "Obstacle" );
+    CreateAgent( asnMission.pion, "Pion", false );
+    CreateGenObject( asnMission.obstacle, "Obstacle", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -606,7 +606,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_ReconnaitreZoneImplanta
     ASN1T_OrderConduite_Automate_ReconnaitreZoneImplantation& asnMission = *new ASN1T_OrderConduite_Automate_ReconnaitreZoneImplantation();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reconnaitre_zone_implantation;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reconnaitre_zone_implantation = &asnMission;
-    CreatePoint( asnMission, "Order conduite automate reconnaitre zone implantation" );
+    CreatePoint( asnMission, "Order conduite automate reconnaitre zone implantation", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -617,7 +617,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_TC2_GererMaterielAvantD
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Order conduite automate tc2 gerer materiel avant deplacement" );
+    MOS_ParamComboBox< ASN1T_EnumTC2GererMaterielAvantDeplacement >* pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement = &CreateVarList( asnMission.order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Order conduite automate tc2 gerer materiel avant deplacement", false );
     pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Deborder materiels vers bld", EnumTC2GererMaterielAvantDeplacement::deborder_materiels_vers_bld );
     pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Detruire materiels en reparation", EnumTC2GererMaterielAvantDeplacement::detruire_materiels_en_reparation );
     pSelector_order_conduite_automate_tc2_gerer_materiel_avant_deplacement->AddItem( "Reparer materiels sur place", EnumTC2GererMaterielAvantDeplacement::reparer_materiels_sur_place );
@@ -632,7 +632,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_ActiverObstacle()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_activer_obstacle;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    CreateObjectKnowledge( pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_activer_obstacle, "Order conduite automate activer obstacle" );
+    CreateObjectKnowledge( pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_activer_obstacle, "Order conduite automate activer obstacle", false );
 #undef asnMission
 }
 
@@ -645,7 +645,7 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_TransfererRenforts()
     ASN1T_OrderConduite_Automate_TransfererRenforts& asnMission = *new ASN1T_OrderConduite_Automate_TransfererRenforts();
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_transferer_renforts;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_transferer_renforts = &asnMission;
-    CreateAgent( asnMission.pion_a_transferer, "Pion a transferer" );
-    CreateAutomate( asnMission.automate_a_renforcer, "Automate a renforcer" );
+    CreateAgent( asnMission.pion_a_transferer, "Pion a transferer", false );
+    CreateAutomate( asnMission.automate_a_renforcer, "Automate a renforcer", false );
 }
 

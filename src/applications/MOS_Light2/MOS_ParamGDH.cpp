@@ -26,15 +26,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamGDH constructor
-/** @param  asnGDH 
-    @param  pParent 
-    @param  sName 
-*/
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_ParamGDH::MOS_ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent )
+MOS_ParamGDH::MOS_ParamGDH( ASN1T_GDH& asnGDH, const std::string& strName, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , strName_      ( strName )
     , asnGDH_       ( asnGDH )
 {
@@ -68,10 +64,6 @@ MOS_ParamGDH::~MOS_ParamGDH()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamGDH::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  pAgent 
-    @param  pPoint 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 void MOS_ParamGDH::FillRemotePopupMenu( QPopupMenu& /*popupMenu*/, const MOS_ActionContext& /*context*/ )
@@ -81,8 +73,6 @@ void MOS_ParamGDH::FillRemotePopupMenu( QPopupMenu& /*popupMenu*/, const MOS_Act
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamGDH::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 bool MOS_ParamGDH::CheckValidity()
@@ -93,8 +83,6 @@ bool MOS_ParamGDH::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamGDH::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
 void MOS_ParamGDH::WriteMsg( std::stringstream& strMsg )
@@ -120,8 +108,6 @@ void MOS_ParamGDH::WriteMsg( std::stringstream& strMsg )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamGDH::OnCheckboxToogled
-/** @param  b 
-*/
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
 void MOS_ParamGDH::OnCheckboxToogled( bool b )

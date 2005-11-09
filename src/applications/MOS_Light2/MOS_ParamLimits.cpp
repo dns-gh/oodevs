@@ -31,18 +31,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits constructor
-/** @param  asnLimit1ID 
-    @param  asnLimit2ID 
-    @param  strLabel 
-    @param  strMenuText1 
-    @param  strMenuText2 
-    @param  pParent 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-MOS_ParamLimits::MOS_ParamLimits( ASN1T_OID& asnLimit1ID, ASN1T_OID& asnLimit2ID, const std::string strLabel, const std::string strMenuText1, const std::string strMenuText2, QWidget* pParent )
+MOS_ParamLimits::MOS_ParamLimits( ASN1T_OID& asnLimit1ID, ASN1T_OID& asnLimit2ID, const std::string strLabel, const std::string strMenuText1, const std::string strMenuText2, QWidget* pParent, bool bOptional )
     : QHBox          ( pParent)
-    , MOS_Param_ABC  ()
+    , MOS_Param_ABC  ( bOptional )
     , asnLimit1ID_   ( asnLimit1ID )
     , asnLimit2ID_   ( asnLimit2ID )
     , pLimit1_       ( 0 )
@@ -84,9 +77,6 @@ MOS_ParamLimits::~MOS_ParamLimits()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 void MOS_ParamLimits::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -106,8 +96,6 @@ void MOS_ParamLimits::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Acti
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 bool MOS_ParamLimits::CheckValidity()
@@ -134,8 +122,6 @@ bool MOS_ParamLimits::CheckValidityWhenRequired()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 void MOS_ParamLimits::WriteMsg( std::stringstream& strMsg )
@@ -175,8 +161,6 @@ void MOS_ParamLimits::UpdateLabels()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits::AcceptPopupMenuLimit
-/** @param  n 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
 void MOS_ParamLimits::AcceptPopupMenuLimit( int n )
@@ -192,8 +176,6 @@ void MOS_ParamLimits::AcceptPopupMenuLimit( int n )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimits::OnTacticalLineDeleted
-/** @param  line 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_ParamLimits::OnTacticalLineDeleted( MOS_TacticalLine_ABC& line )

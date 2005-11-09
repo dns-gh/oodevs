@@ -37,7 +37,7 @@ class MOS_ParamRadioBtnGroup : public MT_ValuedRadioButtonGroup<T>, public MOS_P
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent );
+    MOS_ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, bool bOptional );
     ~MOS_ParamRadioBtnGroup();
     //@}
 
@@ -59,9 +59,9 @@ private:
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 template< class T >
-MOS_ParamRadioBtnGroup<T>::MOS_ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent )
+MOS_ParamRadioBtnGroup<T>::MOS_ParamRadioBtnGroup( T& output, const std::string strLabel, int nStrips, Orientation orientation, QWidget* pParent, bool bOptional )
     : MT_ValuedRadioButtonGroup<T>( nStrips, orientation, strLabel.c_str(), pParent )
-    , MOS_Param_ABC            ()
+    , MOS_Param_ABC            ( bOptional )
     , output_                  ( output )
 {
 }

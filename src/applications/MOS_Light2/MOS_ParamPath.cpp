@@ -32,16 +32,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPath constructor
-/** @param  asnListPoint 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
-MOS_ParamPath::MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent)
+MOS_ParamPath::MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : MOS_ParamListView ( strLabel, false, pParent )
-    , MOS_Param_ABC     ()
+    , MOS_Param_ABC     ( bOptional )
     , strMenuText_      ( strMenuText )
     , asnListPoint_     ( asnListPoint )
     , pUMTCoords_       ( 0 )
@@ -64,10 +59,6 @@ MOS_ParamPath::~MOS_ParamPath()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPath::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  pAgent 
-    @param  pPoint 
-*/
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
 void MOS_ParamPath::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -79,8 +70,6 @@ void MOS_ParamPath::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_Action
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPath::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
 bool MOS_ParamPath::CheckValidity()
@@ -96,8 +85,6 @@ bool MOS_ParamPath::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPath::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-04-13
 // -----------------------------------------------------------------------------
 void MOS_ParamPath::WriteMsg( std::stringstream& strMsg )

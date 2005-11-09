@@ -46,7 +46,7 @@ class MOS_ParamObstacle : public QGroupBox, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOutsideData = false );
+     MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional, bool bOutsideData = false );
     ~MOS_ParamObstacle();
     //@}
 

@@ -84,14 +84,16 @@ void MOS_AutomateMissionInterface::CreateDefaultParameters()
                                         "Limites" ,
                                         "Fixer limite 1",
                                         "Fixer limite 2",
-                                        this );
+                                        this,
+                                        false );
     paramVector_.push_back( pParamLimits_ );
 
     // Limas
     paramVector_.push_back( new MOS_ParamLimaList( order.oid_limas,
                                                    "Limas",
                                                    "Ajouter aux limas",
-                                                   this ) );
+                                                   this,
+                                                   false ) );
 
     // Formation
     MOS_ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>* pParam 
@@ -99,13 +101,14 @@ void MOS_AutomateMissionInterface::CreateDefaultParameters()
                                                                  "Formation",
                                                                  2,
                                                                  Qt::Horizontal,
-                                                                 this );
+                                                                 this,
+                                                                 false );
     pParam->AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
     pParam->AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
     paramVector_.push_back( pParam );
 
     // Dangerous direction
-    paramVector_.push_back( new MOS_ParamDirection( order.direction_dangereuse, "Direction dangeureuse", this ) );
+    paramVector_.push_back( new MOS_ParamDirection( order.direction_dangereuse, "Direction dangeureuse", this, false ) );
 }
 
 

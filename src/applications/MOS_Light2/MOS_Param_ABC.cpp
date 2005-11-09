@@ -27,7 +27,8 @@
 // Name: MOS_Param_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_Param_ABC::MOS_Param_ABC()
+MOS_Param_ABC::MOS_Param_ABC( bool bOptional )
+: bIsOptional_ ( bOptional )
 {
 }
 

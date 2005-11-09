@@ -51,7 +51,7 @@ class MOS_ParamPath : public MOS_ParamListView, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent);
+    MOS_ParamPath( ASN1T_Itineraire& asnListPoint, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional );
     ~MOS_ParamPath();
     //@}
 

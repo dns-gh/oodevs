@@ -37,7 +37,7 @@ class MOS_ParamEquipmentList : public QTable, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MOS_ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, QWidget* pParent );
+    explicit MOS_ParamEquipmentList( ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, QWidget* pParent, bool bOptional );
     virtual ~MOS_ParamEquipmentList();
     //@}
 

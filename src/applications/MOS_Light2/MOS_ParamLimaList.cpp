@@ -32,15 +32,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamLimaList constructor
-/** @param  asnListLima 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-04-19
 // -----------------------------------------------------------------------------
-MOS_ParamLimaList::MOS_ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamLimaList::MOS_ParamLimaList( ASN1T_ListOID& asnListLima, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : MOS_ParamListView( strLabel, true, pParent )
+    , MOS_Param_ABC    ( bOptional )
     , asnListLima_     ( asnListLima )
     , pAsnOIDList_     ( 0 )
     , strMenuText_     ( strMenuText )

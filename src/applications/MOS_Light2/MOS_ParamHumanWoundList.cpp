@@ -20,9 +20,9 @@
 // Name: MOS_ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-MOS_ParamHumanWoundList::MOS_ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/, QWidget* pParent )
+MOS_ParamHumanWoundList::MOS_ParamHumanWoundList( ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/, QWidget* pParent, bool bOptional )
     : QTable                  ( 0, 1, pParent )
-    , MOS_Param_ABC           ()
+    , MOS_Param_ABC           ( bOptional )
     , pAsnHumanWoundList_     ( &asnListHumanWound )
     , pHumanWoundsStringList_ ( 0 )
 {

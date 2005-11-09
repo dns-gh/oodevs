@@ -26,18 +26,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamSlider constructor
-/** @param  asnInt 
-    @param  nMin 
-    @param  nMax 
-    @param  nDefault 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-MOS_ParamSlider::MOS_ParamSlider( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent )
+MOS_ParamSlider::MOS_ParamSlider( ASN1INT& asnInt, int nMin, int nMax, int nDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , pAsnInt_      ( &asnInt )
     , pAsnReal_     ( 0 )
 {
@@ -58,18 +51,11 @@ MOS_ParamSlider::MOS_ParamSlider( ASN1INT& asnInt, int nMin, int nMax, int nDefa
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamSlider constructor
-/** @param  asnReal 
-    @param  rMin 
-    @param  rMax 
-    @param  rDefault 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
-MOS_ParamSlider::MOS_ParamSlider( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent )
+MOS_ParamSlider::MOS_ParamSlider( ASN1REAL& asnReal, float rMin, float rMax, float rDefault, const std::string& strLabel, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , pAsnInt_      ( 0 )
     , pAsnReal_     ( &asnReal )
 {
@@ -102,8 +88,6 @@ MOS_ParamSlider::~MOS_ParamSlider()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamSlider::WriteMsg
-/** @param  strParam 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_ParamSlider::WriteMsg( std::stringstream& strMsg )
@@ -124,8 +108,6 @@ void MOS_ParamSlider::WriteMsg( std::stringstream& strMsg )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamSlider::OnValueChanged
-/** @param  nValue 
-*/
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 void MOS_ParamSlider::OnValueChanged( int nValue )

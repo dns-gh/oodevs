@@ -33,18 +33,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledgeList constructor
-/** @param  asnListKnowledge 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  nMinItems 
-    @param  nMaxItems 
-    @param  pParent 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
-MOS_ParamAgentKnowledgeList::MOS_ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent )
+MOS_ParamAgentKnowledgeList::MOS_ParamAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asnListKnowledge, MOS_Agent_ABC& agent, const std::string strLabel, const std::string strMenuText, int nMinItems, int nMaxItems, QWidget* pParent, bool bOptional )
     : MOS_ParamListView( strLabel, true, pParent )
-    , MOS_Param_ABC     ()
+    , MOS_Param_ABC     ( bOptional )
     , strMenuText_      ( strMenuText )
     , asnListKnowledge_ ( asnListKnowledge )
     , pAsnOIDList_      ( 0 )
@@ -69,9 +62,6 @@ MOS_ParamAgentKnowledgeList::~MOS_ParamAgentKnowledgeList()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledgeList::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_ParamAgentKnowledgeList::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -105,8 +95,6 @@ void MOS_ParamAgentKnowledgeList::FillRemotePopupMenu( QPopupMenu& popupMenu, co
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledgeList::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 bool MOS_ParamAgentKnowledgeList::CheckValidity()
@@ -121,8 +109,6 @@ bool MOS_ParamAgentKnowledgeList::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledgeList::WriteMsg
-/** @param  strMsg 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_ParamAgentKnowledgeList::WriteMsg( std::stringstream& strMsg )
@@ -130,6 +116,10 @@ void MOS_ParamAgentKnowledgeList::WriteMsg( std::stringstream& strMsg )
     strMsg << this->header()->label(0).latin1() << ": " << this->childCount() << " agent knowledges. [";
 
     asnListKnowledge_.n = this->childCount();
+
+    assert( !( this->childCount() == 0 && !IsOptional() ) );
+    if( this->childCount() == 0 && IsOptional() )
+        return;
 
     delete[] pAsnOIDList_;
     pAsnOIDList_ = new ASN1T_OID[ this->childCount() ];
@@ -166,9 +156,6 @@ void MOS_ParamAgentKnowledgeList::AcceptPopupMenuKnowledge()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamAgentKnowledgeList::OnAgentKnowledgeDeleted
-/** @param  gtia 
-    @param  knowledge 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_ParamAgentKnowledgeList::OnAgentKnowledgeDeleted( MOS_Gtia& /*gtia*/, MOS_AgentKnowledge& knowledge )

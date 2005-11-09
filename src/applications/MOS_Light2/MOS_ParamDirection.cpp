@@ -25,15 +25,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamDirection constructor
-/** @param  asnDirection 
-    @param  strLabel 
-    @param  pParent 
-*/
 // Created: APE 2004-08-03
 // -----------------------------------------------------------------------------
-MOS_ParamDirection::MOS_ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent )
+MOS_ParamDirection::MOS_ParamDirection( ASN1T_Direction& asnDirection, const std::string& strLabel, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , asnDirection_ ( asnDirection )
 {
     new QLabel( strLabel.c_str(), this );
@@ -55,8 +51,6 @@ MOS_ParamDirection::~MOS_ParamDirection()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamDirection::WriteMsg
-/** @param  strMsg 
-*/
 // Created: APE 2004-08-03
 // -----------------------------------------------------------------------------
 void MOS_ParamDirection::WriteMsg( std::stringstream& strMsg )

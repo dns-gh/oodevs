@@ -29,16 +29,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamObstacleList constructor
-/** @param  asnObjectList 
-    @param  strLabel 
-    @param  strMenuText 
-    @param  pParent 
-*/
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-MOS_ParamObstacleList::MOS_ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamObstacleList::MOS_ParamObstacleList( ASN1T_ListMissionGenObject& asnObjectList, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : QVBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , asnObjectList_( asnObjectList )
     , pObstacles_   ( 0 )
     , pSelectedItem_( 0 )
@@ -128,6 +123,10 @@ void MOS_ParamObstacleList::WriteMsg( std::stringstream& strMsg )
     uint nNbrChilds = pListView_->childCount();
     strMsg << pListView_->header()->label( 0 ).latin1() << ": " << nNbrChilds << " obstacles.";
     asnObjectList_.n    = nNbrChilds;
+
+    assert( !( nNbrChilds == 0 && !IsOptional() ) );
+    if( nNbrChilds == 0 && IsOptional() )
+        return;
 
     delete[] pObstacles_;
     pObstacles_ = new ASN1T_MissionGenObject[ nNbrChilds ];

@@ -30,15 +30,11 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPoint constructor
-/** @param  asnListPoint 
-    @param  pParent 
-    @param  strName 
-*/
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-MOS_ParamPoint::MOS_ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent )
+MOS_ParamPoint::MOS_ParamPoint( ASN1T_Point& asnPoint, const std::string strLabel, const std::string strMenuText, QWidget* pParent, bool bOptional )
     : QHBox         ( pParent )
-    , MOS_Param_ABC ()
+    , MOS_Param_ABC ( bOptional )
     , asnPoint_     ( asnPoint )
     , strMenuText_  ( strMenuText )
     , point_        ( 0.0, 0.0 )
@@ -64,8 +60,6 @@ MOS_ParamPoint::~MOS_ParamPoint()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPoint::CheckValidity
-/** @return 
-*/
 // Created: APE 2004-03-24
 // -----------------------------------------------------------------------------
 bool MOS_ParamPoint::CheckValidity()
@@ -81,8 +75,6 @@ bool MOS_ParamPoint::CheckValidity()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPoint::WriteMsg
-/** @param  sParam 
-*/
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
 void MOS_ParamPoint::WriteMsg( std::stringstream& strMsg )
@@ -101,10 +93,6 @@ void MOS_ParamPoint::WriteMsg( std::stringstream& strMsg )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ParamPoint::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  pAgent 
-    @param  pPoint 
-*/
 // Created: APE 2004-03-23
 // -----------------------------------------------------------------------------
 void MOS_ParamPoint::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )

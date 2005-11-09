@@ -49,7 +49,7 @@ class MOS_ParamAgentList : public MOS_ParamListView, public MOS_Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MOS_ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent );
+    MOS_ParamAgentList( ASN1T_ListAgent& asnListAgent, const std::string strLabel, const std::string strMenuText, int nMinAgents, int nMaxAgents, QWidget* pParent, bool bOptional );
     ~MOS_ParamAgentList();
     //@}
 
