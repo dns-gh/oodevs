@@ -124,7 +124,6 @@ public:
 
     //! @name Accessors
     //@{
-<<<<<<< .working
     const MOS_AgentModel*       GetModelPion       () const;
     const MOS_AgentModel*       GetModelAutomate   () const;
     bool                        IsAutomate         () const;

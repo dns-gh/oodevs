@@ -125,7 +125,9 @@ void MOS_AgentMedicalPanel::OnUpdate()
 // -----------------------------------------------------------------------------
 void MOS_AgentMedicalPanel::OnClearSelection()
 {
+    pConsignListView_         ->clear();
     pConsignListView_         ->hide();
+    pConsignHandledListView_  ->clear();
     pConsignHandledListView_  ->hide();
     pState_                   ->hide();
     pDispoReleveAmbulances_   ->hide();
@@ -141,6 +143,8 @@ void MOS_AgentMedicalPanel::OnAgentUpdated( MOS_Agent& agent )
 {
     if( ! ShouldDisplay( agent ) )
         return;
+
+    OnClearSelection();
 
     DisplayConsigns( agent.requestedMedical_, *pConsignListView_ );
     DisplayConsigns( agent.handledMedical_, *pConsignHandledListView_ );
