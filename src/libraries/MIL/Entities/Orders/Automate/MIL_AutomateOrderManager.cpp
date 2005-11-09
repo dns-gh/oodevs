@@ -309,32 +309,32 @@ MIL_PionMission_ABC* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentP
     assert( automate_.IsEmbraye() );
     if( !pMission_ )
     {
-        MT_LOG_ERROR( "Automate has no current mission", 2, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
     if( !pion.GetType().GetModel().IsMissionAvailable( missionType ) )
     {
-        MT_LOG_ERROR( "Mission ID " << missionType.GetID() << " (" << missionType.GetName() << ") not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
     if( pMission_->GetMRT().IsActivated() )
     {
-        MT_LOG_ERROR( "MRT already activated for pion " << pion.GetID(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "MRT already activated for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "') - Mission '" << missionType.GetName() << "'", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
     
     MIL_PionMission_ABC& pionMission = missionType.InstanciateMission( pion );
     if( !pionMission.Initialize( *pMission_ ) )
     {
-        MT_LOG_ERROR( "Mission (ID " << missionType.GetID() << ") initialisation failed for pion " << pion.GetID(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' initialisation failed for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
     if( !pMission_->GetMRT().SetMissionForPion( pion, pionMission ) )
     {
-        MT_LOG_ERROR( "Pion " << pion.GetID() << " has already the mission (ID " << missionType.GetID() << ")", 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "') has already a mission when giving mission '" << missionType.GetName() << "')", 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
         return 0;
     }
 
@@ -374,26 +374,26 @@ MIL_PionMission_ABC* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentP
 
     if( !pMission_ )
     {
-        MT_LOG_WARNING( "Automate has no current mission", 2, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
         return 0;
     }
 
     if( !pion.GetType().GetModel().IsMissionAvailable( missionType ) )
     {
-        MT_LOG_ERROR( MT_FormatString( "Mission (ID %d) not available for pion %d", missionType.GetID(), pion.GetID() ).c_str(), 4, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
         return 0;
     }
 
     if( !pMission_->GetMRT().IsActivated() )
     {
-        MT_LOG_WARNING( MT_FormatString( "MRT not activated for pion %d", pion.GetID() ).c_str(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_WARNING( "MRT not activated for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "') - Mission '" << missionType.GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
         return 0;
     }
     
     MIL_PionMission_ABC& pionMission = missionType.InstanciateMission( pion );
     if( !pionMission.Initialize( *pMission_ ) )
     {
-        MT_LOG_ERROR( MT_FormatString( "Mission (ID %d) initialisation failed (ID %d) for pion %d", missionType.GetID(), pion.GetID() ).c_str(), 5, "MIL_AutomateOrderManager::MRT_CreatePionMission" );
+        MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' initialisation failed for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
         return 0;
     }
 
