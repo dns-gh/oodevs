@@ -57,6 +57,7 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
     , MOS_MapEventFilter_ABC ()
     , selectedElement_       ()
     , pPopupMenu_            ( 0 )
+    , nSelectionState         ( ePhaseSelectionAgent )
 {
     pLineEditor_ = new MOS_ShapeEditorMapEventFilter( this );
     connect( pLineEditor_, SIGNAL( Done() ), this, SLOT( LineCreated() ) );
@@ -380,34 +381,90 @@ void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, M
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
-    MOS_Agent* pAgent = GetAgentAtPos( vGLPos );
-    if( pAgent != 0 )
+    //state machine for selection of things, the selection will loop over all overlapped things
+    int nBeginningState = nSelectionState;
+    bool bLoopDone = false;
+    MOS_Agent* pAgent = 0;
+    MOS_Object_ABC* pObject = 0;
+    MOS_ObjectKnowledge* pObjectKnowledge = 0;
+    MOS_AgentKnowledge* pAgentKnowledge = 0;
+    MOS_PopulationConcentration* pPopulationConcentration = 0;
+    MOS_PopulationFlow* pPopulationFlow = 0;
+    //search while a whole loop over the overlapped things has been done
+    while ( nSelectionState != nBeginningState || ! bLoopDone )
     {
-        selectedElement_ = MOS_SelectedElement( *pAgent );
-        return;
+        switch( nSelectionState )
+        {
+        case ePhaseSelectionAgent:
+            if ( !GetAgentAtPos( pAgent, vGLPos ) && pAgent )
+            {
+                selectedElement_ = MOS_SelectedElement( *pAgent );
+                return;
+            }
+            nSelectionState = ePhaseSelectionObject;
+            break;
+        case ePhaseSelectionObject:
+            if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
+            {
+                nSelectionState = ePhaseSelectionAgentKnowledge;
+                break;
+            }
+            if ( ! GetObjectAtPos( pObject, vGLPos, rDistancePerPixel ) && pObject )
+            {
+                selectedElement_ = MOS_SelectedElement( *pObject );
+                return;
+            }
+            nSelectionState = ePhaseSelectionAgentKnowledge;;
+            break;
+        case ePhaseSelectionAgentKnowledge:
+            if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == MOS_Options::eController )
+            {
+                nSelectionState = ePhaseSelectionObjectKnowledge;
+                break;
+            }
+            if ( !GetAgentKnowledgeAtPos( pAgentKnowledge, vGLPos ) && pAgentKnowledge )
+            {
+                selectedElement_ = MOS_SelectedElement( *pAgentKnowledge );
+                return;
+            }
+            nSelectionState = ePhaseSelectionObjectKnowledge;
+            break;
+        case ePhaseSelectionObjectKnowledge:
+            if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ == MOS_Options::eController )
+            {
+                nSelectionState = ePhaseSelectionPopulationConcentration;
+                break;
+            }
+            if ( !GetObjectKnowledgeAtPos( pObjectKnowledge, vGLPos, rDistancePerPixel ) && pObjectKnowledge )
+            {
+                selectedElement_ = MOS_SelectedElement( *pObjectKnowledge );
+                return;
+            }
+            nSelectionState = ePhaseSelectionPopulationConcentration;
+            break;
+        case ePhaseSelectionPopulationConcentration:
+            if ( !GetPopulationConcentrationAtPos( pPopulationConcentration, vGLPos ) && pPopulationConcentration )
+            {
+                selectedElement_ = MOS_SelectedElement( *pPopulationConcentration );
+                return;
+            }
+            nSelectionState = ePhaseSelectionPopulationFlow;
+            break;
+        case ePhaseSelectionPopulationFlow:
+            if ( !GetPopulationFlowAtPos( pPopulationFlow, vGLPos, rDistancePerPixel ) && pPopulationFlow )
+            {
+                selectedElement_ = MOS_SelectedElement( *pPopulationFlow );
+                return;
+            }
+            nSelectionState = ePhaseSelectionLooping;
+            break;
+        case ePhaseSelectionLooping:
+            nSelectionState = ePhaseSelectionAgent;
+            bLoopDone = true;
+            break;
+        }
     }
-
-//    MOS_Population* pPopulation = GetPopulationAtPos( vGLPos );
-//    if( pPopulation != 0 )
-//    {
-//        selectedElement_ = MOS_SelectedElement( *pPopulation );
-//        return;
-//    }
-
-    MOS_PopulationConcentration* pPopulationConcentration = GetPopulationConcentrationAtPos( vGLPos );
-    if( pPopulationConcentration != 0 )
-    {
-        selectedElement_ = MOS_SelectedElement( *pPopulationConcentration );
-        return;
-    }
-
-    MOS_PopulationFlow* pPopulationFlow = GetPopulationFlowAtPos( vGLPos, rDistancePerPixel );
-    if( pPopulationFlow != 0 )
-    {
-        selectedElement_ = MOS_SelectedElement( *pPopulationFlow );
-        return;
-    }
-
+    //if nothing has been selected: select a point...
     if( selectedElement_.pLine_ != 0 )
     {
         int nPoint = GetPointAtPos( *selectedElement_.pLine_, vGLPos, rDistancePerPixel );
@@ -417,7 +474,7 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
             return;
         }
     }
-
+    //... or a tactical line
     MOS_TacticalLine_ABC* pLine = GetLineAtPos( vGLPos, rDistancePerPixel );
     if( pLine != 0 )
     {
@@ -425,40 +482,9 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
         return;
     }
 
-    MOS_Object_ABC* pObject = GetObjectAtPos( vGLPos, rDistancePerPixel );
-    if( pObject != 0 )
-    {
-        selectedElement_ = MOS_SelectedElement( *pObject );
-        return;
-    }
-
-    // Only enable knowledge selection in non all-team mode.
-    if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
-    {
-        MOS_AgentKnowledge* pAgentKnowledge = GetAgentKnowledgeAtPos( vGLPos );
-        if( pAgentKnowledge != 0 )
-        {
-            selectedElement_ = MOS_SelectedElement( *pAgentKnowledge );
-            return;
-        }
-
-        MOS_ObjectKnowledge* pObjectKnowledge = GetObjectKnowledgeAtPos( vGLPos, rDistancePerPixel );
-        if( pObjectKnowledge != 0 )
-        {
-            selectedElement_ = MOS_SelectedElement( *pObjectKnowledge );
-            return;
-        }
-
-//        MOS_PopulationKnowledge* pPopulationKnowledge = GetPopulationKnowledgeAtPos( vGLPos, rDistancePerPixel );
-//        if( pPopulationKnowledge != 0 )
-//        {
-//            selectedElement_ = MOS_SelectedElement( *pPopulationKnowledge );
-//            return;
-//        }
-    }
-
-    selectedElement_ = MOS_SelectedElement();
+    selectedElement_ = MOS_SelectedElement();   
 }
+
 
 
 // -----------------------------------------------------------------------------
@@ -475,13 +501,14 @@ MOS_Population* MOS_DefaultMapEventHandler::GetPopulationAtPos( const MT_Vector2
 // Name: MOS_DefaultMapEventHandler::GetPopulationConcentrationAtPos
 // Created: SBO 2005-10-26
 // -----------------------------------------------------------------------------
-MOS_PopulationConcentration* MOS_DefaultMapEventHandler::GetPopulationConcentrationAtPos( const MT_Vector2D& vGLPos )
+bool MOS_DefaultMapEventHandler::GetPopulationConcentrationAtPos( MOS_PopulationConcentration*& pPopulationConcentrationReturned, const MT_Vector2D& vGLPos )
 {
+    bool bRescan = false;
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
     if( ! populationMap.size() )
-        return 0;
+        return false;
 
     MOS_AgentManager::RCIT_PopulationMap rit;
     MOS_Population::RCIT_ConcentrationMap ritConcentration;
@@ -505,7 +532,10 @@ MOS_PopulationConcentration* MOS_DefaultMapEventHandler::GetPopulationConcentrat
     for( uint nPopulation = 0; nPopulation < populationMap.size(); ++nPopulation )
     {
         if( rit == populationMap.rend() )
+        {
+            bRescan = true;
             rit = populationMap.rbegin();
+        }
         const MOS_Population* pPopulation = (*rit).second;
         if( nPopulation > 0 )
             ritConcentration = pPopulation->GetConcentrations().rbegin();
@@ -517,26 +547,30 @@ MOS_PopulationConcentration* MOS_DefaultMapEventHandler::GetPopulationConcentrat
             if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
             {
                 if( IsPopulationConcentrationAtPos( *pConcentration, vGLPos ) )
-                    return pConcentration;
+                {
+                    pPopulationConcentrationReturned = pConcentration;
+                    return bRescan;
+                }
             }
             ++ritConcentration;
         }
         ++rit;
     }
-    return 0;
+    return bRescan;
 }
     
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetPopulationFlowAtPos
 // Created: SBO 2005-10-26
 // -----------------------------------------------------------------------------
-MOS_PopulationFlow* MOS_DefaultMapEventHandler::GetPopulationFlowAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+bool MOS_DefaultMapEventHandler::GetPopulationFlowAtPos( MOS_PopulationFlow*& pPopulationFlowReturned, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
+    bool bRescan = false;
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_PopulationMap& populationMap = MOS_App::GetApp().GetAgentManager().GetPopulationList();
     if( ! populationMap.size() )
-        return 0;
+        return false;
 
     MOS_AgentManager::RCIT_PopulationMap rit;
     MOS_Population::RCIT_FlowMap ritFlow;
@@ -560,7 +594,10 @@ MOS_PopulationFlow* MOS_DefaultMapEventHandler::GetPopulationFlowAtPos( const MT
     for( uint nPopulation = 0; nPopulation < populationMap.size(); ++nPopulation )
     {
         if( rit == populationMap.rend() )
+        {
+            bRescan = true;
             rit = populationMap.rbegin();
+        }
         const MOS_Population* pPopulation = (*rit).second;
         if( nPopulation > 0 )
             ritFlow = pPopulation->GetFlows().rbegin();
@@ -572,13 +609,16 @@ MOS_PopulationFlow* MOS_DefaultMapEventHandler::GetPopulationFlowAtPos( const MT
             if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pPopulation->GetTeam().GetIdx()) )
             {
                 if( IsPopulationFlowAtPos( *pFlow, vGLPos, rDistancePerPixel ) )
-                    return pFlow;
+                {
+                    pPopulationFlowReturned = pFlow;
+                    return bRescan;
+                }
             }
             ++ritFlow;
         }
         ++rit;
     }
-    return 0;
+    return bRescan;
 }
 
 // -----------------------------------------------------------------------------
@@ -605,8 +645,9 @@ bool MOS_DefaultMapEventHandler::IsPopulationFlowAtPos( const MOS_PopulationFlow
 // Name: MOS_DefaultMapEventHandler::GetAgentAtPos
 // Created: HME 2005-10-06
 // -----------------------------------------------------------------------------
-MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos )
+bool MOS_DefaultMapEventHandler::GetAgentAtPos( MOS_Agent*& pAgentReturned, const MT_Vector2D& vGLPos )
 {
+    bool bRescan = false;
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
 
     MOS_AgentManager::CT_AgentMap& agentMap = MOS_App::GetApp().GetAgentManager().GetAgentList();
@@ -630,27 +671,34 @@ MOS_Agent* MOS_DefaultMapEventHandler::GetAgentAtPos( const MT_Vector2D& vGLPos 
     for( uint n = 0; n < agentMap.size(); ++n )
     {
         if( rit == agentMap.rend() )
+        {
+            bRescan = true;
             rit = agentMap.rbegin();
+        }
 
         MOS_Agent* pAgent = (*rit).second;
         if( nPlayedTeam == MOS_Options::eController || nPlayedTeam == (int)(pAgent->GetTeam().GetIdx()) )
         {
             if( IsAgentAtPos( *pAgent, vGLPos ) )
-                return pAgent;
+            {
+                pAgentReturned = pAgent;
+                return bRescan;
+            }
         }
 
         ++rit;
     }
-
-    return 0;
+    pAgentReturned = 0;
+    return bRescan;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos
 // Created: APE 2004-05-28
 // -----------------------------------------------------------------------------
-MOS_AgentKnowledge* MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos( const MT_Vector2D& vGLPos )
+bool MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos( MOS_AgentKnowledge*& pAgentKnowledgeReturned, const MT_Vector2D& vGLPos )
 {
+    bool bRescan = false; 
     int nPlayedTeam = MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_;
     assert( nPlayedTeam != MOS_Options::eController );  // You can't select agent knowledges on the map when in 'all teams' mode (ie. controller view).
 
@@ -678,20 +726,26 @@ MOS_AgentKnowledge* MOS_DefaultMapEventHandler::GetAgentKnowledgeAtPos( const MT
     for( uint n = 0; n < agentMap.size(); ++n )
     {
         if( rit == agentMap.rend() )
+        {
+            bRescan = true;
             rit = agentMap.rbegin();
+        }
 
         MOS_AgentKnowledge* pAgentKnowledge = (*rit).second;
         // Only allow the selection of agent knowledges pointing to agents not in our team.
         if( pAgentKnowledge->GetRealAgent().GetTeam().GetID() != pPlayedTeam->GetID() )
         {
             if( IsAgentKnowledgeAtPos( *pAgentKnowledge, vGLPos ) )
-                return pAgentKnowledge;
+            {
+                pAgentKnowledgeReturned = pAgentKnowledge;
+                return bRescan;
+            }
         }
 
         ++rit;
     }
 
-    return 0;
+    return bRescan;
 }
 
 
@@ -768,8 +822,9 @@ int MOS_DefaultMapEventHandler::GetPointAtPos( MOS_TacticalLine_ABC& line, const
 // Name: MOS_DefaultMapEventHandler::GetObjectAt
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-MOS_Object_ABC* MOS_DefaultMapEventHandler::GetObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+bool MOS_DefaultMapEventHandler::GetObjectAtPos( MOS_Object_ABC*&  pObjectReturned, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
+    bool bRescan = false;
     const MOS_ObjectManager::T_ObjectMap& objectMap = MOS_App::GetApp().GetObjectManager().GetObjects();
     if( ! objectMap.size() )
         return 0;
@@ -791,16 +846,22 @@ MOS_Object_ABC* MOS_DefaultMapEventHandler::GetObjectAtPos( const MT_Vector2D& v
     for( uint n = 0; n < objectMap.size(); ++n )
     {
         if( rit == objectMap.rend() )
+        {
+            bRescan = true;
             rit = objectMap.rbegin();
+        }
 
         MOS_Object_ABC* pObject = (*rit).second;
         if( IsObjectAtPos( *pObject, vGLPos, rDistancePerPixel ) )
-            return pObject;
+        {
+            pObjectReturned = pObject;
+            return bRescan;
+        }
 
         ++rit;
     }
-
-    return 0;
+    pObjectReturned = 0;
+    return bRescan;
 }
 
 
@@ -818,8 +879,9 @@ bool MOS_DefaultMapEventHandler::IsObjectAtPos( const MOS_Object_ABC& object, co
 // Name: MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos
 // Created: APE 2004-06-14
 // -----------------------------------------------------------------------------
-MOS_ObjectKnowledge* MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+bool MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( MOS_ObjectKnowledge*& pObjectKnowledgeReturned, const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
+    bool bRescan = false; 
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
     assert( options.nPlayedTeam_ != MOS_Options::eController );
     MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeamFromIdx( options.nPlayedTeam_ );
@@ -845,16 +907,22 @@ MOS_ObjectKnowledge* MOS_DefaultMapEventHandler::GetObjectKnowledgeAtPos( const 
     for( uint n = 0; n < objectMap.size(); ++n )
     {
         if( rit == objectMap.rend() )
+        {
+            bRescan = true;           
             rit = objectMap.rbegin();
+        }
 
         MOS_ObjectKnowledge* pObject = (*rit).second;
         if( IsObjectKnowledgeAtPos( *pObject, vGLPos, rDistancePerPixel ) )
-            return pObject;
+        {
+            pObjectKnowledgeReturned = pObject;
+            return bRescan;
+        }
 
         ++rit;
     }
 
-    return 0;
+    return bRescan;
 }
 
 

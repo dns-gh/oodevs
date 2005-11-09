@@ -77,6 +77,6 @@ bool MOS_DefaultMapEventHandler::IsAgentKnowledgeAtPos( const MOS_AgentKnowledge
 {
     //$$$ evil hard coded values!
     const MT_Vector2D& posAgent = agent.GetPosition();
-    MT_Rect agentRect( posAgent.rX_ - 2.4, posAgent.rY_, posAgent.rX_ + 2.4, posAgent.rY_ + 3 );
+    MT_Rect agentRect( posAgent.rX_ - 300, posAgent.rY_, posAgent.rX_ + 300, posAgent.rY_ + 300 );
     return agentRect.IsInside( vGLPos );
 }

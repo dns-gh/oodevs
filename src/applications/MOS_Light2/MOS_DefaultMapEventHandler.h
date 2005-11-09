@@ -94,36 +94,47 @@ private:
 
     //! @name Helpers
     //@{
-    void SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    void                         SelectElementAtPos             ( const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_Agent*  GetAgentAtPos( const MT_Vector2D& vGLPos );
-    bool        IsAgentAtPos ( const MOS_Agent&   agent, const MT_Vector2D& vGLPos );
+    bool                         GetAgentAtPos                  ( MOS_Agent*&, const MT_Vector2D& vGLPos );
+    bool                         IsAgentAtPos                   ( const MOS_Agent&   agent, const MT_Vector2D& vGLPos );
 
     MOS_Population*              GetPopulationAtPos             ( const MT_Vector2D& vGLPos );
-    MOS_PopulationConcentration* GetPopulationConcentrationAtPos( const MT_Vector2D& vGLPos );
-    MOS_PopulationFlow*          GetPopulationFlowAtPos         ( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         GetPopulationConcentrationAtPos( MOS_PopulationConcentration*&, const MT_Vector2D& vGLPos );
+    bool                         GetPopulationFlowAtPos         ( MOS_PopulationFlow*&, const MT_Vector2D& vGLPos, float rDistancePerPixel );
     bool                         IsPopulationConcentrationAtPos ( const MOS_PopulationConcentration& concentration, const MT_Vector2D& vGLPos ) const;
     bool                         IsPopulationFlowAtPos          ( const MOS_PopulationFlow& flow, const MT_Vector2D& vGLPos, float rDistancePerPixel ) const;
 
-    MOS_AgentKnowledge* GetAgentKnowledgeAtPos( const MT_Vector2D& vGLPos );
-    bool IsAgentKnowledgeAtPos( const MOS_AgentKnowledge& agent, const MT_Vector2D& vGLPos );
+    bool                         GetAgentKnowledgeAtPos         ( MOS_AgentKnowledge*&, const MT_Vector2D& vGLPos );
+    bool                         IsAgentKnowledgeAtPos          ( const MOS_AgentKnowledge& agent, const MT_Vector2D& vGLPos );
 
-    MOS_TacticalLine_ABC* GetLineAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    bool IsLineAtPos( const MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    int GetPointAtPos( MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    MOS_TacticalLine_ABC*        GetLineAtPos                   ( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         IsLineAtPos                    ( const MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    int                          GetPointAtPos                  ( MOS_TacticalLine_ABC& line, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_Object_ABC* GetObjectAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    bool IsObjectAtPos( const MOS_Object_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         GetObjectAtPos                 ( MOS_Object_ABC*&, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         IsObjectAtPos                  ( const MOS_Object_ABC& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    MOS_ObjectKnowledge* GetObjectKnowledgeAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
-    bool IsObjectKnowledgeAtPos( const MOS_ObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         GetObjectKnowledgeAtPos        ( MOS_ObjectKnowledge*&, const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    bool                         IsObjectKnowledgeAtPos         ( const MOS_ObjectKnowledge& object, const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
-    void PopupMenu( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    void                         PopupMenu                      ( const MT_Vector2D& vGLPos, float rDistancePerPixel );
     //@}
 
 signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
+private:
+      enum E_PhaseSelection
+    {
+        ePhaseSelectionAgent = 0,
+        ePhaseSelectionObject,
+        ePhaseSelectionAgentKnowledge,
+        ePhaseSelectionObjectKnowledge,
+        ePhaseSelectionPopulationConcentration,
+        ePhaseSelectionPopulationFlow,
+        ePhaseSelectionLooping,
+    };
 
 private:
     //! @name Member data
@@ -136,6 +147,8 @@ private:
 
     MOS_ShapeEditorMapEventFilter* pLineEditor_;
     int nLineType_;
+
+    E_PhaseSelection nSelectionState;
     //@}
 };
 
