@@ -836,8 +836,28 @@ void MOS_GLTool::Draw( MOS_AgentKnowledge& knowledge, E_State nState )
         GFX_Color color( 200, 200, 200 );
         if( nState == eSelected )
             color = GFX_Color( 255, 255, 255 );
+        if( knowledge.nTeam_ != (uint)-1 )
+        {
+            color = MOS_GLTool::GetColorForTeam( knowledge.realAgent_.GetTeam() );
+            if( nState == eSelected )
+                color.AddRGB( 50, 200, 50 );
+            if( nState == eHighlighted )
+                color.AddRGB( 50, 100, 50 );
+        }
         MT_Float rSize = 600.0;
-        GFX_Tools::CreateGLAgentShadow( knowledge.vPosition_, rSize, 4., 8., color , true, "a", 100 );
+        std::string level;
+        if ( knowledge.nLevel_ != eNatureLevel_None )
+            level = knowledge.realAgent_.levelSymbolName_;
+        else
+            level = "a";
+        std::string symbol;
+        if ( knowledge.nWeapon_ != eUnitNatureWeapon_None )
+            symbol = knowledge.realAgent_.symbolName_;
+        else
+            symbol = "a";
+        GFX_Tools::CreateGLAgentShadow( knowledge.vPosition_, rSize, 4., 8., color , true, symbol, knowledge.nEtatOps_ );
+        GFX_Tools::CreateGLAgentShadow( knowledge.vPosition_, rSize, 4., 8., color , true, level, -1 );
+    
     }
     else
         DrawUnit( knowledge.realAgent_, nState );
