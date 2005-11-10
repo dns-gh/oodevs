@@ -518,6 +518,8 @@ void MIL_EntityManager::InitializePopulations( MIL_InputArchive& archive )
         if( !pPopulationType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type", archive.GetContext() );
 
+        nID = MIL_IDManager::populations_.ConvertSimIDToMosID( nID );
+
         // Check if the ID is unique
         MIL_Population*& pPopulation = populations_[ nID ];
         if( pPopulation )

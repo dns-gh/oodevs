@@ -75,6 +75,25 @@ void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Floa
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_ObjectManager::GetListWithinLocalisation
+// Created: NLD 2005-11-09
+// -----------------------------------------------------------------------------
+void TER_ObjectManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_ObjectVector& objects ) const
+{
+    const MT_Rect& boundingBox = localisation.GetBoundingBox();
+    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                        , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+
+    T_Objects::View view = objects_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        TER_Object_ABC* pObject = view.NextElement();
+        if( pObject && pObject->Intersect2DWithLocalisation( localisation ) )
+            objects.push_back( pObject );
+    };
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_ObjectManager::UpdatePosition
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------

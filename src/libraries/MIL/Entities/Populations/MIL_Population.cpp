@@ -26,6 +26,8 @@
 #include "DEC_PopulationDecision.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Network/NET_ASN_Messages.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
@@ -225,6 +227,51 @@ void MIL_Population::Clean()
 }
 
 // =============================================================================
+// TOOLS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetClosestElement
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+MIL_PopulationElement_ABC* MIL_Population::GetClosestElement( const MT_Vector2D& position ) const
+{
+    MIL_PopulationElement_ABC* pClosestElement = 0;
+    MT_Float                   rMinDistance    = std::numeric_limits< MT_Float >::max();
+
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    {
+        MT_Vector2D nearestPoint;
+
+        if( !(**itConcentration).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
+            continue;
+        MT_Float rDistance = position.Distance( nearestPoint );
+        if( rDistance < rMinDistance )
+        {
+            rMinDistance    = rDistance;
+            pClosestElement = *itConcentration;
+        }
+    }
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    {
+        MT_Vector2D nearestPoint;
+
+        if( !(**itFlow).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
+            continue;
+        MT_Float rDistance = position.Distance( nearestPoint );
+        if( rDistance < rMinDistance )
+        {
+            rMinDistance    = rDistance;
+            pClosestElement = *itFlow;
+        }
+    }
+
+    return pClosestElement;
+}
+
+
+// =============================================================================
 // ACTIONS
 // =============================================================================
 
@@ -245,13 +292,38 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 // Name: MIL_Population::FireOnPions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void MIL_Population::FireOnPions( PHY_PopulationFireResults& fireResult )
+void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_PopulationFireResults& fireResult )
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).FireOnPions( fireResult );
+        (**itConcentration).FireOnPions( rIntensity, fireResult );
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).FireOnPions( fireResult );    
+        (**itFlow).FireOnPions( rIntensity, fireResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::FireOnPion
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult )
+{
+    MIL_PopulationElement_ABC* pClosestElement = GetClosestElement( target.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+
+    if( pClosestElement )
+        pClosestElement->FireOnPion( rIntensity, target, fireResult );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDangerosity
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
+{
+    MIL_PopulationElement_ABC* pClosestElement = GetClosestElement( target.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    if( pClosestElement )
+        return pClosestElement->GetDangerosity( target );
+    else
+        return 0.;
 }
 
 // =============================================================================

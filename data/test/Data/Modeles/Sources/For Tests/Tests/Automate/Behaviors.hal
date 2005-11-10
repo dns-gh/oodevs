@@ -81,6 +81,8 @@ behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
             DEC_SetMissionLimaFlag( lima, bDummy );
             
         bDummy = !bDummy;
+        
+        T_Mission_Pion_Test_MoveTo missionPion2 = DEC_CDT_CreerMissionPion( DIA_GetAt( DEC_Automate_PionsSansPC(), 0 ), eMission_Pion_Test_MoveTo );
 
     
         persistent T_CalculLignesAvantArriere tacheTmp;

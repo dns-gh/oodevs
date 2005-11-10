@@ -53,8 +53,14 @@ public:
     //! @name Operations
     //@{
     void Prepare();
-    void Update ( const PHY_PerceptionLevel& perceptionLevel, bool bRecordModeEnabled );
+    void Update        ( const PHY_PerceptionLevel& perceptionLevel, bool bRecordModeEnabled );
     bool Clean  (); 
+    //@}
+
+    //! @name Attacker
+    //@{
+    void NotifyAttacker();
+    bool IsAttacker    () const;
     //@}
 
     //! @name Network operations
@@ -97,6 +103,8 @@ private:
           bool                                            bRecordModeEnabled_;
           bool                                            bPreviousRecordModeEnabled_;
           uint                                            nRecordModeDisablingDelay_;
+
+          bool                                            bAttacker_;
 };
 
 #include "DEC_Knowledge_AgentPerception.inl"

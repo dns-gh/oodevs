@@ -21,16 +21,29 @@
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetAttackers
+// Name: DEC_KnowledgeFunctions::GetAgentsAttacking
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetAttackers( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_KnowledgeFunctions::GetAgentsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     T_KnowledgeAgentDiaIDVector attackers;
-    callerAgent.GetKSQuerier().GetAttackers( attackers );
+    callerAgent.GetKSQuerier().GetAgentsAttacking( attackers );
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( attackers, DEC_Tools::GetTypeConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetPopulationsAttacking
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetPopulationsAttacking( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgePopulationDiaIDVector attackers;
+    callerAgent.GetKSQuerier().GetPopulationsAttacking( attackers );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( attackers, DEC_Tools::GetTypeConnaissancePopulation() );
 }
 
 // -----------------------------------------------------------------------------

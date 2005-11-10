@@ -188,23 +188,40 @@ DEC_Knowledge_Object* DEC_KS_AgentQuerier::GetKnowledgeObject( MIL_RealObject_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_AgentQuerier::GetAttackers
+// Name: DEC_KS_AgentQuerier::GetAgentsAttacking
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------
-void DEC_KS_AgentQuerier::GetAttackers( T_KnowledgeAgentDiaIDVector& container ) const
+class sAgentAttackingInsertor
 {
-    assert( pBlackBoard_ );
+public:
+    sAgentAttackingInsertor( const MIL_AgentPion& pion, T_KnowledgeAgentDiaIDVector& container )
+        : pContainer_( &container )
+        , pPion_     ( &pion )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_AgentPerception& knowledge )
+    {
+        if( knowledge.IsAttacker() )
+            return;
+
+        DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgent( knowledge );
+        assert( pKnowledge );
+        pContainer_->push_back( (void*)pKnowledge->GetID() );
+    }
+
+private:
+          T_KnowledgeAgentDiaIDVector* pContainer_;
+    const MIL_AgentPion*               pPion_;
+};
+void DEC_KS_AgentQuerier::GetAgentsAttacking( T_KnowledgeAgentDiaIDVector& container ) const
+{
     assert( pPion_ );
+    assert( pBlackBoard_ );
 
     container.clear();
-    T_KnowledgeAgentPerceptionVector perceptionVector;
-    pBlackBoard_->GetAttackersKnowledgeAgentPerception( perceptionVector );    
-    for( CIT_KnowledgeAgentPerceptionVector itPerception = perceptionVector.begin(); itPerception != perceptionVector.end(); ++itPerception )
-    {
-        DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgent( **itPerception );
-        assert( pKnowledge );
-        container.push_back( (void*)pKnowledge->GetID() );
-    }
+    sAgentAttackingInsertor functor( *pPion_, container );
+    pBlackBoard_->ApplyOnKnowledgesAgentPerception( functor );              
 }
 
 // -----------------------------------------------------------------------------
@@ -401,6 +418,43 @@ void DEC_KS_AgentQuerier::GetPopulationsColliding( T_KnowledgePopulationDiaIDVec
         assert( pKnowledge );
         container.push_back( (void*)( pKnowledge->GetID() ) );
     }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetPopulationsAttacking
+// Created: NLD 2004-03-29
+// -----------------------------------------------------------------------------
+class sPopulationAttackingInsertor
+{
+public:
+    sPopulationAttackingInsertor( const MIL_AgentPion& pion, T_KnowledgePopulationDiaIDVector& container )
+        : pContainer_( &container )
+        , pPion_     ( &pion )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_PopulationPerception& knowledge )
+    {
+        if( knowledge.IsAttacker() )
+            return;
+
+        DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgePopulation( knowledge );
+        assert( pKnowledge );
+        pContainer_->push_back( (void*)pKnowledge->GetID() );
+    }
+
+private:
+          T_KnowledgePopulationDiaIDVector* pContainer_;
+    const MIL_AgentPion*                    pPion_;
+};
+void DEC_KS_AgentQuerier::GetPopulationsAttacking( T_KnowledgePopulationDiaIDVector& container ) const
+{
+    assert( pPion_ );
+    assert( pBlackBoard_ );
+
+    container.clear();
+    sPopulationAttackingInsertor functor( *pPion_, container );
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( functor );              
 }
 
 //------------------------------------------------------------------------------

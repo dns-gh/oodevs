@@ -49,7 +49,8 @@ public:
     DEC_Knowledge_Agent*      GetKnowledgeAgentFromID     ( uint nID ) const;
     DEC_Knowledge_Object*     GetKnowledgeObjectFromID    ( uint nID ) const;
     DEC_Knowledge_Object*     GetKnowledgeObject          ( MIL_RealObject_ABC& object ) const;
-    DEC_Knowledge_Population* GetKnowledgePopulation      ( const DEC_Knowledge_PopulationCollision& collision ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation      ( const DEC_Knowledge_PopulationCollision&  collision  ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulation      ( const DEC_Knowledge_PopulationPerception& perception ) const;
     DEC_Knowledge_Population* GetKnowledgePopulationFromID( uint nID ) const;
 
     void                  GetPotentiallyDangerousAgents( T_KnowledgeAgentDiaIDVector& container ) const;

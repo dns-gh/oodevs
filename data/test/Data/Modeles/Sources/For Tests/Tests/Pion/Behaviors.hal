@@ -11,11 +11,17 @@ default Default()
     if( DIA_Size( popus ) > 0 )
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
     
+    E_ValiditeRequete   nValidite;
     with( x in popus )
     {
-        E_ValiditeRequete   nValidite;
         DEC_ConnaissancePopulation_Reconnaitre( x, nValidite );
+        float dangerosite = DEC_ConnaissancePopulation_Dangerosite( x, nValidite );
+        DEC_Debug( "Dangerosite : " + FloatToString( dangerosite ) );
     }        
+    
+    popus = DEC_Connaissances_PopulationsPrenantAPartie();
+    if( DIA_Size( popus ) > 0 )
+        DEC_Debug( "Pris à partie par " + FloatToString( DIA_Size( popus ) ) + " populations" );
     
             
 

@@ -27,8 +27,11 @@
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
+class MIL_PopulationElement_ABC;
 class MIL_PopulationAttitude;
 class MIL_Army;
+class MIL_Agent_ABC;
+class MIL_AgentPion;
 class DEC_PopulationDecision;
 class PHY_Volume;
 class PHY_PopulationFireResults;
@@ -81,8 +84,12 @@ public:
 
     //! @name Actions
     //@{
-    void Move       ( const MT_Vector2D& destination );
-    void FireOnPions( PHY_PopulationFireResults& fireResult );
+    void     Move          ( const MT_Vector2D& destination );
+
+    void     FireOnPions   ( MT_Float rIntensity, PHY_PopulationFireResults& fireResult );
+    void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult );
+
+    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     //@}
 
     //! @name Tools
@@ -121,6 +128,11 @@ private:
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgMagicMove     ( ASN1T_MagicActionPopulationMoveTo& asn );
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgDestroyAll    ();
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
+    //@}
+
+    //! @name Tools
+    //@{
+    MIL_PopulationElement_ABC* GetClosestElement( const MT_Vector2D& position ) const;
     //@}
 
 private:

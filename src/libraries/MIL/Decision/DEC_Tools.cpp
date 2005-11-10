@@ -22,6 +22,7 @@ const DIA_TypeDef* DEC_Tools::pTypeLima_                          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissanceObjet_             = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissanceAgent_             = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissancePopulation_        = 0;
+const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceAgent_   = 0;
 const DIA_TypeDef* DEC_Tools::pTypeID_                            = 0;
 const DIA_TypeDef* DEC_Tools::pTypeAction_                        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePion_                          = 0;
@@ -43,30 +44,31 @@ const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
 // -----------------------------------------------------------------------------
 void DEC_Tools::InitializeDIA()
 {
-    pTypePoint_                         = &GetDIAType( "T_Point"                       );
-    pTypeDirection_                     = &GetDIAType( "T_Direction"                   );
-    pTypeItineraire_                    = &GetDIAType( "T_Itineraire"                  );
-    pTypeListePoints_                   = &GetDIAType( "T_ListePoints"                 );
-    pTypeLocalisation_                  = &GetDIAType( "T_Localisation"                );
-    pTypeCalculLignesAvantArriere_      = &GetDIAType( "T_CalculLignesAvantArriere"    );
-    pTypeLima_                          = &GetDIAType( "T_Lima"                        );
-    pTypeConnaissanceObjet_             = &GetDIAType( "T_ConnaissanceObjet"           );
-    pTypeConnaissanceAgent_             = &GetDIAType( "T_ConnaissanceAgent"           );
-    pTypeConnaissancePopulation_        = &GetDIAType( "T_ConnaissancePopulation"      );
-    pTypeID_                            = &GetDIAType( "T_ID"                          );
-    pTypeAction_                        = &GetDIAType( "T_Action"                      );
-    pTypePion_                          = &GetDIAType( "T_Pion"                        );
-    pTypeAutomate_                      = &GetDIAType( "T_Automate"                    ); 
-    pTypeGenObjet_                      = &GetDIAType( "T_GenObjet"                    );
-    pTypeMissionPion_                   = &GetDIAType( "T_Mission_Pion"                );
-    pTypePerceptionPoint_               = &GetDIAType( "T_PerceptionPoint"             );
-    pTypePerceptionLocalisation_        = &GetDIAType( "T_PerceptionLocalisation"      );
-    pTypePerceptionRadar_               = &GetDIAType( "T_PerceptionRadar"             );
-    pTypePerceptionSurveillance_        = &GetDIAType( "T_PerceptionSurveillance"      );
-    pTypeMaintenancePriorites_          = &GetDIAType( "T_MaintenancePriorites"        );
-    pTypeSantePriorites_                = &GetDIAType( "T_SantePriorites"              );
-    pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet" );
-    pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"       );
+    pTypePoint_                         = &GetDIAType( "T_Point"                        );
+    pTypeDirection_                     = &GetDIAType( "T_Direction"                    );
+    pTypeItineraire_                    = &GetDIAType( "T_Itineraire"                   );
+    pTypeListePoints_                   = &GetDIAType( "T_ListePoints"                  );
+    pTypeLocalisation_                  = &GetDIAType( "T_Localisation"                 );
+    pTypeCalculLignesAvantArriere_      = &GetDIAType( "T_CalculLignesAvantArriere"     );
+    pTypeLima_                          = &GetDIAType( "T_Lima"                         );
+    pTypeConnaissanceObjet_             = &GetDIAType( "T_ConnaissanceObjet"            );
+    pTypeConnaissanceAgent_             = &GetDIAType( "T_ConnaissanceAgent"            );
+    pTypeConnaissancePopulation_        = &GetDIAType( "T_ConnaissancePopulation"       );
+    pTypePopulationConnaissanceAgent_   = &GetDIAType( "T_Population_ConnaissanceAgent" );
+    pTypeID_                            = &GetDIAType( "T_ID"                           );
+    pTypeAction_                        = &GetDIAType( "T_Action"                       );
+    pTypePion_                          = &GetDIAType( "T_Pion"                         );
+    pTypeAutomate_                      = &GetDIAType( "T_Automate"                     ); 
+    pTypeGenObjet_                      = &GetDIAType( "T_GenObjet"                     );
+    pTypeMissionPion_                   = &GetDIAType( "T_Mission_Pion"                 );
+    pTypePerceptionPoint_               = &GetDIAType( "T_PerceptionPoint"              );
+    pTypePerceptionLocalisation_        = &GetDIAType( "T_PerceptionLocalisation"       );
+    pTypePerceptionRadar_               = &GetDIAType( "T_PerceptionRadar"              );
+    pTypePerceptionSurveillance_        = &GetDIAType( "T_PerceptionSurveillance"       );
+    pTypeMaintenancePriorites_          = &GetDIAType( "T_MaintenancePriorites"         );
+    pTypeSantePriorites_                = &GetDIAType( "T_SantePriorites"               );
+    pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet"  );
+    pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"        );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,6 +147,24 @@ bool DEC_Tools::CheckTypeListeConnaissancesPopulation( const DIA_Variable_ABC& d
             return false;
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeListePopulationConnaissancesAgent
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Tools::CheckTypeListePopulationConnaissancesAgent( const DIA_Variable_ABC& diaVariable )
+{
+    if( diaVariable.Type() != eSelection )
+        return false;
+
+    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
+    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
+    {
+        if( !CheckTypePopulationConnaissanceAgent( **it ) )
+            return false;
+    }
+    return true;    
 }
 
 // -----------------------------------------------------------------------------

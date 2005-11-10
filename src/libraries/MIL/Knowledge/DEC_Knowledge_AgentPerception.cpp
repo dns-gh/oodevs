@@ -39,6 +39,7 @@ DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_AgentPio
     , bPreviousRecordModeEnabled_( false )
     , nCreationTimeStep_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , nRecordModeDisablingDelay_ ( 0 )
+    , bAttacker_                 ( false )
 {
 }
 
@@ -60,6 +61,7 @@ DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception()
     , bRecordModeEnabled_        ( false )
     , bPreviousRecordModeEnabled_( false )
     , nRecordModeDisablingDelay_ ( 0 )
+    , bAttacker_                 ( false )
 {
 }
 
@@ -91,6 +93,7 @@ void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const 
          << bRecordModeEnabled_
          << bPreviousRecordModeEnabled_
          << nRecordModeDisablingDelay_
+         << bAttacker_
          << pCurrentPerceptionLevel_->GetID()
          << pPreviousPerceptionLevel_->GetID()
          << pMaxPerceptionLevel_->GetID();
@@ -111,7 +114,8 @@ void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const u
          >> pAgentPerceived_
          >> bRecordModeEnabled_
          >> bPreviousRecordModeEnabled_
-         >> nRecordModeDisablingDelay_;
+         >> nRecordModeDisablingDelay_
+         >> bAttacker_;
     
     uint nID;
     file >> nID;
@@ -143,8 +147,9 @@ void DEC_Knowledge_AgentPerception::Prepare()
         dataDetection_.Prepare( *pAgentPerceived_ );    
     }
 
-    bPreviousRecordModeEnabled_ = bRecordModeEnabled_;
+    bAttacker_ = false;
 
+    bPreviousRecordModeEnabled_ = bRecordModeEnabled_;
     if( nRecordModeDisablingDelay_ > 0 && --nRecordModeDisablingDelay_ == 0 )
         bRecordModeEnabled_ = false;
 }

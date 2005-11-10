@@ -23,36 +23,3 @@ DEC_Knowledge_AgentPerception* DEC_BlackBoard_CanContainKnowledgeAgentPerception
         return 0;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetAttackersKnowledgeAgentPerception
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-inline
-void DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetAttackersKnowledgeAgentPerception( T_KnowledgeAgentPerceptionVector& container ) const
-{
-    std::copy( attackerSet_.begin(), attackerSet_.end(), std::back_inserter( container ) );
-}
-
-// =============================================================================
-// EVENTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::NotifyKnowledgeAgentPerceptionIsAttacker
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-inline
-void DEC_BlackBoard_CanContainKnowledgeAgentPerception::NotifyKnowledgeAgentPerceptionIsAttacker( DEC_Knowledge_AgentPerception& knowledge )
-{
-    attackerSet_.insert( &knowledge );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::NotifyKnowledgesAgentPerceptionNotAttackers
-// Created: NLD 2004-03-29
-// -----------------------------------------------------------------------------
-inline
-void DEC_BlackBoard_CanContainKnowledgeAgentPerception::NotifyKnowledgesAgentPerceptionNotAttackers()
-{
-    attackerSet_.clear();
-}

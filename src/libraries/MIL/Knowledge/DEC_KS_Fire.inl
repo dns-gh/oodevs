@@ -16,6 +16,25 @@
 inline
 void DEC_KS_Fire::NotifyAttackedBy( MIL_AgentPion& attacker )
 {
-    directFireAttackerSet_.insert( &attacker );
+    pionsAttacking_.insert( &attacker );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::NotifyAttackedBy
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+void DEC_KS_Fire::NotifyAttackedBy( MIL_PopulationConcentration& attacker )
+{
+    concentrationsAttacking_.insert( &attacker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::NotifyAttackedBy
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+void DEC_KS_Fire::NotifyAttackedBy( MIL_PopulationFlow& attacker )
+{
+    flowsAttacking_.insert( &attacker );
+}

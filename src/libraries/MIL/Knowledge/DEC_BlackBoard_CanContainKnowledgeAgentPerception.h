@@ -36,10 +36,6 @@ public:
     typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_AgentPerception* > T_KnowledgeAgentPerceptionMap;
     typedef T_KnowledgeAgentPerceptionMap::iterator                          IT_KnowledgeAgentPerceptionMap;
     typedef T_KnowledgeAgentPerceptionMap::const_iterator                    CIT_KnowledgeAgentPerceptionMap;
-
-    typedef std::set< DEC_Knowledge_AgentPerception* >      T_KnowledgeAgentPerceptionSet;
-    typedef T_KnowledgeAgentPerceptionSet::iterator         IT_KnowledgeAgentPerceptionSet;
-    typedef T_KnowledgeAgentPerceptionSet::const_iterator   CIT_KnowledgeAgentPerceptionSet;
     //@}
 
 public:
@@ -63,16 +59,9 @@ public:
     void                           DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge );
     //@}
 
-    //! @name Events
-    //@{
-    void NotifyKnowledgeAgentPerceptionIsAttacker   ( DEC_Knowledge_AgentPerception& knowledge );
-    void NotifyKnowledgesAgentPerceptionNotAttackers();
-    //@}
-
     //! @name Queries
     //@{
-    DEC_Knowledge_AgentPerception* GetKnowledgeAgentPerception         ( const MIL_Agent_ABC& associatedAgent ) const;
-    void                           GetAttackersKnowledgeAgentPerception( T_KnowledgeAgentPerceptionVector& container ) const;
+    DEC_Knowledge_AgentPerception* GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgentPerception( UnaryFunction fct ) const
@@ -90,7 +79,6 @@ private:
     //! @name Member data
     //@{
     T_KnowledgeAgentPerceptionMap knowledgeAgentPerceptionMap_;
-    T_KnowledgeAgentPerceptionSet attackerSet_;
     //@}
 };
 

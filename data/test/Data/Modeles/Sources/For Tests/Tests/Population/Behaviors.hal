@@ -46,7 +46,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
         {
             DEC_Debug( "MIS_Population_FaireMouvement - DIA_ModuleBegins" );
             actionMove = DEC_StartDeplacement( mission.destination_ );
-            actionFire = DEC_StartTirSurPions();
+            actionFire = DEC_StartTirSurPions( 1 );
         }
         
         if( rDummy == 53 )

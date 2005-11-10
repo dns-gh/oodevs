@@ -71,6 +71,12 @@ public:
     bool IsIdentified     ( const MIL_PopulationConcentration& concentration );
     //@}
 
+    //! @name Attacker
+    //@{
+    void NotifyAttacker();
+    bool IsAttacker    () const;
+    //@}
+
     //! @name Network operations
     //@{
     void UpdateOnNetwork     () const;
@@ -89,6 +95,7 @@ private:
 
     T_ConcentrationMap     concentrations_;
     T_FlowMap              flows_;
+    bool                   bAttacker_;
 };
 
 #include "DEC_Knowledge_PopulationPerception.inl"

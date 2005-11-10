@@ -60,23 +60,25 @@ public:
     
 
     void                  GetPerceivedAgents           ( T_KnowledgeAgentDiaIDVector&          container ) const;
-    void                  GetAttackers                 ( T_KnowledgeAgentDiaIDVector&          container ) const;
+    void                  GetAgentsAttacking           ( T_KnowledgeAgentDiaIDVector&          container ) const;
     void                  GetPotentiallyDangerousAgents( T_KnowledgeAgentDiaIDVector&          container ) const;
     void                  GetMilitiaAgents             ( T_KnowledgeAgentDiaIDVector&          container ) const;
     void                  GetRefugeeAgents             ( T_KnowledgeAgentDiaIDVector&          container ) const;
     void                  GetSurrenderedAgents         ( T_KnowledgeAgentDiaIDVector&          container ) const;
     void                  GetEnemies                   ( T_KnowledgeAgentVector&               container ) const;
     void                  GetFriendsInZone             ( T_KnowledgeAgentDiaIDVector&          container, const TER_Localisation& zone ) const;
+
     void                  GetObjects                   ( T_KnowledgeObjectVector&              container ) const;
     void                  GetObjects                   ( T_KnowledgeObjectVector&              container, const MIL_RealObjectTypeFilter& filter ) const;
     void                  GetObjects                   ( T_KnowledgeObjectDiaIDVector&         container, const MIL_RealObjectTypeFilter& filter ) const;
     void                  GetObjectsColliding          ( T_KnowledgeObjectCollisionVector&     container ) const;
     void                  GetObjectsColliding          ( T_KnowledgeObjectDiaIDVector&         container ) const;
+    DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
+
     void                  GetPopulationsColliding      ( T_KnowledgePopulationCollisionVector& container ) const;
     void                  GetPopulationsColliding      ( T_KnowledgePopulationDiaIDVector&     container ) const;
-    DEC_Knowledge_Object* GetClosestObject             ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
+    void                  GetPopulationsAttacking      ( T_KnowledgePopulationDiaIDVector&     container ) const;
     
-
     DEC_Knowledge_RapForLocal&  GetKnowledgeRapForLocal () const;
     MT_Float                    GetRapForLocalValue     () const;
     //@}

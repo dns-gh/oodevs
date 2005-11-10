@@ -150,3 +150,23 @@ bool DEC_Knowledge_AgentPerception::Clean()
 {
     return !IsPerceived();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerception::NotifyAttacker
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+void DEC_Knowledge_AgentPerception::NotifyAttacker()
+{
+    bAttacker_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerception::IsAttacker
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_AgentPerception::IsAttacker() const
+{
+    return bAttacker_;
+}

@@ -43,6 +43,7 @@ public:
 private:
     MIL_Population&           population_;
     PHY_PopulationFireResults fireResults_;
+    const MT_Float            rIntensity_;
 };
 
 #include "PHY_Population_ActionFireOnPions.inl"

@@ -23,9 +23,9 @@
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
 #include "Entities/Populations/Actions/PHY_PopulationFireResults.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -80,32 +80,65 @@ MIL_PopulationElement_ABC::~MIL_PopulationElement_ABC()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetDangerosity
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target ) const
+{
+    assert( pAttitude_   );
+    assert( pPopulation_ );
+
+    if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
+        return 0.;
+
+    // Get back the most dangerous composante type of the target (from our point of view ...)
+    const PHY_ComposantePion* pTargetComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
+    if( !pTargetComposante )
+        return 0.;
+
+    const MT_Float           rPH           = pPopulation_->GetType().GetPH( *pAttitude_, rDensity_ );
+    const PHY_AttritionData& attritionData = pPopulation_->GetType().GetAttritionData( *pAttitude_, pTargetComposante->GetType().GetProtection() );
+
+    return rPH * attritionData.GetScore();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::FireOnPion
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult )
+{
+    assert( pAttitude_ );
+    if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
+        return;
+
+    PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
+    target.GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
+    if( compTargets.empty() )
+        return;
+
+    const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
+    if ( !( randomGenerator_.rand_oi() <= rPH * rIntensity ) ) 
+        return;
+
+    MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::FireOnPions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::FireOnPions( PHY_PopulationFireResults& fireResult )
+void MIL_PopulationElement_ABC::FireOnPions( MT_Float rIntensity, PHY_PopulationFireResults& fireResult )
 {
     assert( pAttitude_ );
     for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
     {
         MIL_Agent_ABC& target = **it;
-
-        if(    target.GetArmy().IsAnEnemy( GetPopulation().GetArmy() ) != eTristate_True 
-            || target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
+        if( target.GetArmy().IsAnEnemy( GetPopulation().GetArmy() ) != eTristate_True )
             continue;
-
-        PHY_RoleInterface_Composantes::T_ComposanteVector compTargets;
-        target.GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
-        if( compTargets.empty() )
-            continue;
-
-        const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
-        if ( !( randomGenerator_.rand_oi() <= rPH ) ) 
-            continue;
-
-        MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult );
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
-    }    
+        FireOnPion( rIntensity, target, fireResult );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -24,7 +24,9 @@ PHY_Population_ActionFireOnPions::PHY_Population_ActionFireOnPions( MIL_Populati
     : PHY_Action_ABC( population, diaCall )
     , population_   ( population )
     , fireResults_  ( population )
+    , rIntensity_   ( diaCall.GetParameter( 0 ).ToFloat() )
 {    
+    assert( rIntensity_ > 0. );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +47,7 @@ PHY_Population_ActionFireOnPions::~PHY_Population_ActionFireOnPions()
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionFireOnPions::Execute()
 {   
-    population_.FireOnPions( fireResults_ );
+    population_.FireOnPions( rIntensity_, fireResults_ );
 }
 
 // -----------------------------------------------------------------------------

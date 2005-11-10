@@ -33,40 +33,42 @@ public:
 
     //! @name Checkers
     //@{
-    static bool CheckTypePoint                          ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeDirection                      ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeItineraire                     ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListePoints                    ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeLocalisation                   ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeCalculLignesAvantArriere       ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeLima                           ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeConnaissanceObjet              ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeConnaissanceAgent              ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeConnaissancePopulation         ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeID                             ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeAction                         ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePion                           ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePion                           ( const DIA_TypedObject&  object      );
-    static bool CheckTypeAutomate                       ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeAutomate                       ( const DIA_TypedObject&  object      );
-    static bool CheckTypeGenObjet                       ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeMissionPion                    ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeConnaissancesAgent        ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeConnaissancesObjet        ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeLocalisations             ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeConnaissancesPopulation   ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListePions                     ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeAutomates                 ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeListesPoints              ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeListeDirection                 ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePerceptionPoint                ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePerceptionLocalisation         ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePerceptionRadar                ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePerceptionSurveillance         ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypePerceptionObjectsLocalisation  ( const DIA_Variable_ABC& diaVariable );   
-    static bool CheckTypePerceptionFlyingShell          ( const DIA_Variable_ABC& diaVariable );   
-    static bool CheckTypeMaintenancePriorites           ( const DIA_Variable_ABC& diaVariable );   
-    static bool CheckTypeSantePriorites                 ( const DIA_Variable_ABC& diaVariable );   
+    static bool CheckTypePoint                              ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeDirection                          ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeDirection                     ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeItineraire                         ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListePoints                        ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeListesPoints                  ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeLocalisation                       ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeLocalisations                 ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeCalculLignesAvantArriere           ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeLima                               ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeID                                 ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeAction                             ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePion                               ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePion                               ( const DIA_TypedObject&  object      );
+    static bool CheckTypeListePions                         ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeAutomate                           ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeAutomate                           ( const DIA_TypedObject&  object      );
+    static bool CheckTypeListeAutomates                     ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeGenObjet                           ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeMissionPion                        ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeConnaissanceAgent                  ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeConnaissancesAgent            ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeConnaissanceObjet                  ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeConnaissancesObjet            ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeConnaissancePopulation             ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeConnaissancesPopulation       ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePopulationConnaissanceAgent        ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListePopulationConnaissancesAgent  ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePerceptionPoint                    ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePerceptionLocalisation             ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePerceptionRadar                    ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePerceptionSurveillance             ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePerceptionObjectsLocalisation      ( const DIA_Variable_ABC& diaVariable );   
+    static bool CheckTypePerceptionFlyingShell              ( const DIA_Variable_ABC& diaVariable );   
+    static bool CheckTypeMaintenancePriorites               ( const DIA_Variable_ABC& diaVariable );   
+    static bool CheckTypeSantePriorites                     ( const DIA_Variable_ABC& diaVariable );   
     //@}
 
     //! @name Accessors
@@ -75,6 +77,7 @@ public:
     static const DIA_TypeDef& GetTypeConnaissanceAgent              ();
     static const DIA_TypeDef& GetTypeConnaissanceObjet              ();
     static const DIA_TypeDef& GetTypeConnaissancePopulation         ();
+    static const DIA_TypeDef& GetTypePopulationConnaissanceAgent    ();
     static const DIA_TypeDef& GetTypeListePoints                    ();
     static const DIA_TypeDef& GetTypeItineraire                     ();
     static const DIA_TypeDef& GetTypeAction                         ();
@@ -104,6 +107,7 @@ private:
     static const DIA_TypeDef* pTypeConnaissanceObjet_;
     static const DIA_TypeDef* pTypeConnaissancePopulation_;
     static const DIA_TypeDef* pTypeConnaissanceAgent_;
+    static const DIA_TypeDef* pTypePopulationConnaissanceAgent_;
     static const DIA_TypeDef* pTypeID_;
     static const DIA_TypeDef* pTypeAction_;
     static const DIA_TypeDef* pTypePion_;

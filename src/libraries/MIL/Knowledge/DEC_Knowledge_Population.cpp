@@ -253,6 +253,16 @@ DEC_Knowledge_PopulationFlow& DEC_Knowledge_Population::GetKnowledge( const MIL_
     return *pKnowledge;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetDangerosity
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+MT_Float DEC_Knowledge_Population::GetDangerosity( const MIL_AgentPion& target ) const
+{
+    assert( pPopulationKnown_ );
+    return pPopulationKnown_->GetDangerosity( target );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================

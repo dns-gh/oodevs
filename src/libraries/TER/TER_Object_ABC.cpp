@@ -102,6 +102,15 @@ bool TER_Object_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::Intersect2DWithLocalisation
+// Created: NLD 2005-11-09
+// -----------------------------------------------------------------------------
+bool TER_Object_ABC::Intersect2DWithLocalisation( const TER_Localisation& localisation ) const
+{
+    return location_.IsIntersecting( localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Object_ABC::GetLocalisation
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------

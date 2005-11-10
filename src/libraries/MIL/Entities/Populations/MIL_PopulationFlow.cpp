@@ -57,7 +57,8 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
 {
-    SendCreation();
+    UpdateLocation();
+    SendCreation  ();
 }
 
 // -----------------------------------------------------------------------------

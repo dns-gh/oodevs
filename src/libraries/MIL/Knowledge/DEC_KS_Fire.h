@@ -18,6 +18,8 @@
 
 class DEC_KnowledgeBlackBoard;
 class MIL_AgentPion;
+class MIL_PopulationConcentration;
+class MIL_PopulationFlow;
 
 // =============================================================================
 /** @class  DEC_KS_Fire
@@ -42,26 +44,35 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Prepare();
     virtual void Talk   ();
     //@}
 
     //! @name Events
     //@{
-    void NotifyAttackedBy( MIL_AgentPion& attacker );
+    void NotifyAttackedBy( MIL_AgentPion&               attacker );
+    void NotifyAttackedBy( MIL_PopulationConcentration& attacker );
+    void NotifyAttackedBy( MIL_PopulationFlow&          attacker );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_AgentPion* >                T_DirectFireAttackerSet;
-    typedef T_DirectFireAttackerSet::iterator         IT_DirectFireAttackerSet;
-    typedef T_DirectFireAttackerSet::const_iterator   CIT_DirectFireAttackerSet;
+    typedef std::set< MIL_AgentPion* >  T_PionSet;
+    typedef T_PionSet::const_iterator   CIT_PionSet;
+
+    typedef std::set< MIL_PopulationConcentration* > T_ConcentrationSet;
+    typedef T_ConcentrationSet::const_iterator       CIT_ConcentrationSet;
+
+    typedef std::set< MIL_PopulationFlow* > T_FlowSet;
+    typedef T_FlowSet::const_iterator       CIT_FlowSet;
     //@}
 
 private:
-    MIL_AgentPion*              pAgentInteracting_;
-    T_DirectFireAttackerSet     directFireAttackerSet_;
+    MIL_AgentPion*      pAgentInteracting_;
+
+    T_PionSet           pionsAttacking_;
+    T_ConcentrationSet  concentrationsAttacking_;
+    T_FlowSet           flowsAttacking_;
 };
 
 #include "DEC_KS_Fire.inl"

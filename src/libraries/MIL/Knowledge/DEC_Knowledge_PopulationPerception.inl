@@ -30,3 +30,24 @@ const MIL_AgentPion& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() co
     assert( pAgentPerceiving_ );
     return *pAgentPerceiving_;    
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::NotifyAttacker
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+void DEC_Knowledge_PopulationPerception::NotifyAttacker()
+{
+    bAttacker_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::IsAttacker
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_PopulationPerception::IsAttacker() const
+{
+    return bAttacker_;
+}

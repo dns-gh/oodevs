@@ -20,6 +20,7 @@ class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class MIL_KnowledgeGroup;
+class MIL_AgentPion;
 class MIL_Army;
 class DEC_Knowledge_PopulationConcentration;
 class DEC_Knowledge_PopulationFlow;
@@ -75,7 +76,8 @@ public:
     //@{
           uint                GetID             () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
-    const MIL_Population&     GetPopulationKnown() const;     
+    const MIL_Population&     GetPopulationKnown() const;
+          MT_Float            GetDangerosity    ( const MIL_AgentPion& target ) const;
           bool                IsRecon           () const;
     //@}
 

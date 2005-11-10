@@ -83,8 +83,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> knowledgeAgentPerceptionMap_
-         >> attackerSet_;
+    file >> knowledgeAgentPerceptionMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,13 +92,13 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << knowledgeAgentPerceptionMap_
-         << attackerSet_;
+    file << knowledgeAgentPerceptionMap_;
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::CreateKnowledgeAgentPerception
 // Created: NLD 2004-03-11
@@ -112,7 +111,6 @@ DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception
     return *pKnowledge;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPerception
 // Created: NLD 2004-03-16
@@ -121,7 +119,5 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPer
 {
     int nOut = knowledgeAgentPerceptionMap_.erase( &knowledge.GetAgentPerceived() );
     assert( nOut == 1 );
-    attackerSet_.erase( &knowledge );
     delete &knowledge;
 }
-

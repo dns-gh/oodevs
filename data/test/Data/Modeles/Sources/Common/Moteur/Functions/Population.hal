@@ -13,7 +13,8 @@ signatures
     U /*T_Action*/ A::DEC_StartDeplacement( U /*T_Point*/ );
     
     // Tir
-    U /*T_Action*/ A::DEC_StartTirSurPions();
+    U /*T_Action*/ A::DEC_StartTirSurPions( R /* intensite */ );
+    U /*T_Action*/ A::DEC_StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
     
     // Effets sur les pions
     V              A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );

@@ -28,7 +28,7 @@ public:
     //@{
     static void GetRapForLocal               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetRapForGlobal              ( DIA_Call_ABC& call, const MIL_Automate&  callerAgent );
-    static void GetAttackers                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetAgentsAttacking           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPotentiallyDangerousAgents( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMilitiaAgents             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetRefugeeAgents             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -36,7 +36,8 @@ public:
     static void GetPerceivedAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetClosestObject             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetObjectsColliding          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetPopulationsColliding      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent ); 
+    static void GetPopulationsColliding      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetPopulationsAttacking      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
     template< typename T > static void ShareKnowledgesWith      ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller );

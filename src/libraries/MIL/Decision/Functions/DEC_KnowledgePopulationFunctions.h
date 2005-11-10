@@ -25,8 +25,9 @@ class DEC_KnowledgePopulationFunctions
 public:
     //! @name Functions
     //@{
-                           static void Recon  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    template< typename T > static void IsRecon( DIA_Call_ABC& call, const T& caller );
+                           static void GetDangerosity( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void Recon         ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+    template< typename T > static void IsRecon       ( DIA_Call_ABC& call, const T& caller );
     //@}
 };
 

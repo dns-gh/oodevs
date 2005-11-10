@@ -37,6 +37,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
     , pPopulationPerceived_( &populationPerceived )
     , concentrations_      ()
     , flows_               ()
+    , bAttacker_           ()
 {
 }
 
@@ -50,6 +51,7 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
     , pPopulationPerceived_( 0 )
     , concentrations_      ()
     , flows_               ()
+    , bAttacker_           ()
 {
 }
 
@@ -144,7 +146,8 @@ void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, co
     file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
          >> pPopulationPerceived_
          >> concentrations_
-         >> flows_;
+         >> flows_
+         >> bAttacker_;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +160,8 @@ void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, c
          << const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
          << pPopulationPerceived_
          << concentrations_
-         << flows_;
+         << flows_
+         << bAttacker_;
 }
 
 
@@ -171,6 +175,8 @@ void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, c
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::Prepare()
 {
+    bAttacker_ = false;
+
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
 

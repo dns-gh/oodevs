@@ -28,6 +28,7 @@ class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class MIL_Agent_ABC;
+class MIL_AgentPion;
 class PHY_Volume;
 class PHY_PopulationFireResults;
 
@@ -58,7 +59,9 @@ public:
 
     //! @name Actions
     //@{
-    void FireOnPions( PHY_PopulationFireResults& fireResult );
+    void     FireOnPions   ( MT_Float rIntensity, PHY_PopulationFireResults& fireResult );
+    void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult );
+    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     //@}
 
     //! @name Accessors
