@@ -489,36 +489,36 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagic
 // -----------------------------------------------------------------------------
 ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
 {
-//    MT_Vector2D vPosTmp;
-//    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
-//
-//    // $$$$ SBO 2005-10-25: TODO/CHECK
-//    // create a new concentration at the right position (we could also take the first in list and move it...)
-//    MIL_PopulationConcentration* pNewConcentration = new MIL_PopulationConcentration( *this, vPosTmp );
-//
-//    // merge all concentrations into new
-//    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
-//    {
-//        MIL_PopulationConcentration* pConcentration = *itConcentration;
-//        pNewConcentration->PushHumans( pConcentration->GetNbrAliveHumans() ); // what about dead people?
-//        pConcentration->PullHumans( pConcentration->GetNbrAliveHumans() );
-//        itConcentration = concentrations_.erase( itConcentration );
-//        trashedConcentrations_.push_back( pConcentration );
-//        //++itConcentration;
-//    }
-//
-//    // merge all flows into new concentration
-//    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
-//    {
-//        MIL_PopulationFlow* pFlow = *itFlow;
-//        pNewConcentration->PushHumans( pFlow->GetNbrAliveHumans() ); // what about dead people?
-//        itFlow = flows_.erase( itFlow );
-//        trashedFlows_.push_back( pFlow );
-//        //++itFlow;
-//    }
-//
-//    pDecision_->Reset();
-//    orderManager_.CancelAllOrders();
+    MT_Vector2D vPosTmp;
+    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
+
+    // create a new concentration at the right position (we could also take the first in list and move it...)
+    MIL_PopulationConcentration* pNewConcentration = new MIL_PopulationConcentration( *this, vPosTmp );
+
+    // merge all concentrations into new
+    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
+    {
+        MIL_PopulationConcentration* pConcentration = *itConcentration;
+        pNewConcentration->PushHumans( pConcentration->GetNbrAliveHumans() ); // what about dead people?
+        pConcentration->PullHumans( pConcentration->GetNbrAliveHumans() );
+        itConcentration = concentrations_.erase( itConcentration );
+        trashedConcentrations_.push_back( pConcentration );
+    }
+
+    // merge all flows into new concentration
+    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
+    {
+        MIL_PopulationFlow* pFlow = *itFlow;
+        pNewConcentration->PushHumans( pFlow->GetNbrAliveHumans() ); // what about dead people?
+        pFlow->PullHumans( pFlow->GetNbrAliveHumans() );
+        itFlow = flows_.erase( itFlow );
+        trashedFlows_.push_back( pFlow );
+    }
+
+    concentrations_.push_back( pNewConcentration );
+
+    pDecision_->Reset();
+    orderManager_.CancelAllOrders();
     return EnumPopulationAttrErrorCode::no_error;
 }
 
@@ -528,23 +528,22 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_M
 // -----------------------------------------------------------------------------
 ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgDestroyAll()
 {
-    // $$$$ SBO 2005-10-25: TODO/CHECK
-    // destroy all concentrations
-//    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-//    {
-//        MIL_PopulationConcentration* pConcentration = *itConcentration;
-//        itConcentration = concentrations_.erase( itConcentration );
-//        trashedConcentrations_.push_back( pConcentration );
-//    }
-//
-//    // destroy all flows
-//    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-//    {
-//        MIL_PopulationFlow* pFlow = *itFlow;
-//        itFlow = flows_.erase( itFlow );
-//        trashedFlows_.push_back( pFlow );
-//    }
-    // $$$$ Notification destruction population ?
+    // kill everybody in every concentration
+    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    {
+        MIL_PopulationConcentration* pConcentration = *itConcentration;
+        pConcentration->PullHumans( pConcentration->GetNbrAliveHumans() );
+    }
+
+    // kill everybody in every flow
+    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    {
+        MIL_PopulationFlow* pFlow = *itFlow;
+        pFlow->PullHumans( pFlow->GetNbrAliveHumans() );
+    }
+
+    pDecision_->Reset();
+    orderManager_.CancelAllOrders();
     return EnumPopulationAttrErrorCode::no_error;
 }
 

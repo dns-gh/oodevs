@@ -117,3 +117,13 @@ const MOS_Population::T_FlowMap& MOS_Population::GetFlows() const
 {
     return flowMap_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::IsEmpty
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Population::IsEmpty() const
+{
+    return flowMap_.size() == 0 && concentrationMap_.size() == 0;
+}

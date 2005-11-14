@@ -103,6 +103,8 @@ public:
 
 	void NotifyPopulationCreated( MOS_Population& population );
 	void NotifyPopulationUpdated( MOS_Population& population );
+    void NotifyPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
+    void NotifyPopulationFlowDeleted         ( MOS_PopulationFlow&          flow          );
 
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );

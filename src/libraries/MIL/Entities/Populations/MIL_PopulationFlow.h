@@ -68,7 +68,7 @@ public:
 
     //! @name Concentration management
     //@{
-    void UnregisterSourceConcentration( MIL_PopulationConcentration& concentration );
+    void UnregisterSourceConcentration   ( MIL_PopulationConcentration& concentration );
     //@}
 
     //! @name Network

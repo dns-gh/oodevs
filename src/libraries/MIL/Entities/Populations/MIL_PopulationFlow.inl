@@ -273,13 +273,3 @@ MT_Float MIL_PopulationFlow::GetSpeed() const
 {
     return rSpeed_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::IsValid
-// Created: NLD 2005-10-13
-// -----------------------------------------------------------------------------
-inline
-bool MIL_PopulationFlow::IsValid() const
-{
-    return !pDestConcentration_ || pSourceConcentration_ || GetHeadPosition() != GetTailPosition(); //$$$ tester uniquement rNbrAliveHumans ? 
-}

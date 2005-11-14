@@ -98,6 +98,7 @@ public:
     // for selection management
     const T_ConcentrationMap&          GetConcentrations() const;
     const T_FlowMap&                   GetFlows         () const;
+    bool                               IsEmpty          () const;
     //@}
 
 private:

@@ -135,6 +135,8 @@ void MOS_Population::CreatePopulationConcentration( MT_Vector2D point, E_Populat
 void MOS_Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
 {
     IT_FlowMap it = flowMap_.find( asnMsg.oid_flux );
+    assert( it != flowMap_.end() );
+    MOS_App::GetApp().NotifyPopulationFlowDeleted( *it->second );
     flowMap_.erase( it );
 }
 
@@ -145,6 +147,8 @@ void MOS_Population::DeletePopulationFlow( const ASN1T_MsgPopulationFluxDestruct
 void MOS_Population::DeletePopulationConcentration( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
 {
     IT_ConcentrationMap it = concentrationMap_.find( asnMsg.oid_concentration );
+    assert( it != concentrationMap_.end() );
+    MOS_App::GetApp().NotifyPopulationConcentrationDeleted( *it->second );
     concentrationMap_.erase( it );
 }
 

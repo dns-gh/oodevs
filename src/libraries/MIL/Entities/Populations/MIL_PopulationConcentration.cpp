@@ -96,8 +96,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::~MIL_PopulationConcentration()
 {
-    assert( !pPullingFlow_ );
-    assert( pushingFlows_.empty() );
+    //assert( !pPullingFlow_ );
+    //assert( pushingFlows_.empty() );
 
     SendDestruction();
 
@@ -116,8 +116,11 @@ bool MIL_PopulationConcentration::Update()
     //$$$$ nNbrDeadHumans_ 
     if( !IsValid() )
     {
-        pPullingFlow_->UnregisterSourceConcentration( *this );
-        pPullingFlow_ = 0;
+        if( pPullingFlow_ )
+        {
+            pPullingFlow_->UnregisterSourceConcentration( *this );
+            pPullingFlow_ = 0;
+        }
         RemoveFromPatch();
         return false;
     }

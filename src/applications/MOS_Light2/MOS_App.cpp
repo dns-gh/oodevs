@@ -929,6 +929,24 @@ void MOS_App::NotifyTypePopulationCreated ( MOS_TypePopulation& type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationConcentrationDeleted
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration )
+{
+    emit PopulationConcentrationDeleted( concentration );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationFlowDeleted
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationFlowDeleted( MOS_PopulationFlow& flow )
+{
+    emit PopulationFlowDeleted( flow );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_App::SetSplashText
 /** @param  strText 
 */

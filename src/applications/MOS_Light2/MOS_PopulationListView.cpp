@@ -173,7 +173,7 @@ void MOS_PopulationListView::OnRequestPopup( QListViewItem* pItem, const QPoint&
 void MOS_PopulationListView::OnRequestCenter()
 {
 	MOS_Population* pPopulation = this->ToPopulation( this->selectedItem() );
-    if( pPopulation != 0 )
+    if( pPopulation != 0 && !pPopulation->IsEmpty() )
         emit CenterOnPoint( pPopulation->GetPos() );
 }
 
