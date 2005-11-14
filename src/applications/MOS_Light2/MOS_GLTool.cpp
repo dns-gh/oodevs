@@ -121,23 +121,93 @@ void MOS_GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
     ++nFrame_;
     if( nFrame_ == 1 )
     {
-        iconIds_[eGasIcon]          = MOS_GLTool::InitializeIcon( QImage( xpm_gas ) );
-        iconIds_[eAmmoIcon]         = MOS_GLTool::InitializeIcon( QImage( xpm_ammo ) );
-        iconIds_[eNbcIcon]          = MOS_GLTool::InitializeIcon( QImage( xpm_nbc ) );
-        iconIds_[eConstructionIcon] = MOS_GLTool::InitializeIcon( QImage( xpm_construction ) );
-        iconIds_[eObservingIcon]    = MOS_GLTool::InitializeIcon( QImage( xpm_observe ) );
-        iconIds_[eFlareIcon]        = MOS_GLTool::InitializeIcon( QImage( xpm_flare ) );
-        iconIds_[eSmokeIcon]        = MOS_GLTool::InitializeIcon( QImage( xpm_smoke ) );
-        iconIds_[eSkullIcon]        = MOS_GLTool::InitializeIcon( QImage( xpm_skull ) );
-
-        iconLocations_[eGasIcon]            = MT_Vector2D( -2.7, 2.3 );
-        iconLocations_[eAmmoIcon]           = MT_Vector2D( -2.7, 1.3 );
-        iconLocations_[eNbcIcon]            = MT_Vector2D( -2.7, 0.3 );
-        iconLocations_[eConstructionIcon]   = MT_Vector2D(  2.5, 2.0 );
-        iconLocations_[eObservingIcon]      = MT_Vector2D(  2.5, 2.0 );
-        iconLocations_[eFlareIcon]          = MT_Vector2D(  0.0, 0.0 );
-        iconLocations_[eSmokeIcon]          = MT_Vector2D(  0.0, 0.0 );
-        iconLocations_[eSkullIcon]          = MT_Vector2D(  0.0, 0.0 );
+      iconIds_[eGasIcon]                                  = MOS_GLTool::InitializeIcon( QImage( xpm_gas ) );
+        iconIds_[eAmmoIcon]                                 = MOS_GLTool::InitializeIcon( QImage( xpm_ammo ) );
+        iconIds_[eNbcIcon]                                  = MOS_GLTool::InitializeIcon( QImage( xpm_nbc ) );
+        iconIds_[eConstructionIcon]                         = MOS_GLTool::InitializeIcon( QImage( xpm_construction ) );
+        iconIds_[eObservingIcon]                            = MOS_GLTool::InitializeIcon( QImage( xpm_observe ) );
+        iconIds_[eFlareIcon]                                = MOS_GLTool::InitializeIcon( QImage( xpm_flare ) );
+        iconIds_[eSmokeIcon]                                = MOS_GLTool::InitializeIcon( QImage( xpm_smoke ) );
+        iconIds_[eSkullIcon]                                = MOS_GLTool::InitializeIcon( QImage( xpm_skull ) );
+        iconIds_[objectTypeZoneProtegee]                    = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneProtegee  ) );
+        iconIds_[objectTypeZonePoserHelicoptere]            = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZonePoserHelicoptere  ) );
+        iconIds_[objectTypeZoneNBC]                         = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneNBC  ) );
+        iconIds_[objectTypeZoneMobiliteAmelioree]           = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneMobiliteAmelioree  ) );
+        iconIds_[objectTypeZoneInterditeTir]                = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneInterditeTir  ) );
+        iconIds_[objectTypeZoneInterditeMvt]                = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneInterditeMvt  ) );
+        iconIds_[objectTypeZoneImplantationLrm]             = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneImplantationLrm  ) );
+        iconIds_[objectTypeZoneImplantationCobra]           = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneImplantationCobra  ) );
+        iconIds_[objectTypeZoneImplantationCanon]           = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneImplantationCanon  ) );
+        iconIds_[objectTypeZoneBrouillardBrod]              = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneBrouillardBrod  ) );
+        iconIds_[objectTypeZoneBrouillageBromure]           = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeZoneBrouillageBromure  ) );
+        iconIds_[objectTypeTerrainLargage]                  = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeTerrainLargage  ) );
+        iconIds_[objectTypeSiteFranchissement]              = MOS_GLTool::InitializeIcon( QImage( objectTypeSiteFranchissement ) );
+        iconIds_[objectTypeSiteDecontamination]             = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeSiteDecontamination  ) );
+        iconIds_[objectTypeRota]                            = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeRota  ) );
+        iconIds_[objectTypePosteTir]                        = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypePosteTir  ) );
+        iconIds_[objectTypePosteControle]                   = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypePosteControle  ) );
+        iconIds_[objectTypePontFlottant]                    = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypePontFlottant  ) );
+        iconIds_[objectTypePlotRavitaillement]              = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypePlotRavitaillement  ) );
+        iconIds_[objectTypePlateForme]                      = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypePlateforme  ) );
+        iconIds_[objectTypePiste]                           = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypePiste  ) );
+        iconIds_[objectTypeNuageNBC]                        = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeNuageNBC  ) );
+        iconIds_[objectTypeMine]                            = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeMine  ) );
+        iconIds_[objectTypeItineraireLog]                   = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeItineraireLog  ) );
+        iconIds_[objectTypeImplantationMortier]             = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeImplantationMortier  ) );
+        iconIds_[objectTypeFosseAC]                         = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeFosseAC  ) );
+        iconIds_[objectTypeEboulement]                      = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeEboulement  ) );
+        iconIds_[objectTypeDestructionRoute]                = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeDestructionRoute  ) );
+        iconIds_[objectTypeDestructionPont]                 = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeDestructionPont  ) );
+        iconIds_[objectTypeCampRefugies]                    = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeCampRefugies  ) );
+        iconIds_[objectTypeCampPrisonniers]                 = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeCampPrisonniers  ) );
+        iconIds_[objectTypeBarricade]                       = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeBarricade  ) );
+        iconIds_[objectTypeAirePoser]                       = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeAirePoser  ) );
+        iconIds_[objectTypeAireLogistique]                  = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeAireLogistique  ) );
+        iconIds_[objectTypeAbattis]                         = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeAbattis  ) );
+  
+        iconLocations_[eGasIcon]                            = MT_Vector2D( -2.7, 2.3 );
+        iconLocations_[eAmmoIcon]                           = MT_Vector2D( -2.7, 1.3 );
+        iconLocations_[eNbcIcon]                            = MT_Vector2D( -2.7, 0.3 );
+        iconLocations_[eConstructionIcon]                   = MT_Vector2D(  2.5, 2.0 );
+        iconLocations_[eObservingIcon]                      = MT_Vector2D(  2.5, 2.0 );
+        iconLocations_[eFlareIcon]                          = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[eSmokeIcon]                          = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[eSkullIcon]                          = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneProtegee]              = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZonePoserHelicoptere]      = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneNBC]                   = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneMobiliteAmelioree]     = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneInterditeTir]          = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneInterditeMvt]          = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneImplantationLrm]       = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneImplantationCobra]     = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneImplantationCanon]     = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneBrouillardBrod]        = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeZoneBrouillageBromure]     = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeTerrainLargage]            = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeSiteFranchissement]        = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeSiteDecontamination]       = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeRota]                      = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypePosteTir]                  = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypePosteControle]             = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypePontFlottant]              = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypePlotRavitaillement]        = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypePlateForme]                = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypePiste]                     = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeNuageNBC]                  = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeMine]                      = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeItineraireLog]             = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeImplantationMortier]       = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeFosseAC]                   = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeEboulement]                = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeDestructionRoute]          = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeDestructionPont]           = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeCampRefugies]              = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeCampPrisonniers]           = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeBarricade]                 = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeAirePoser]                 = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeAireLogistique]            = MT_Vector2D(  0.0, 0.0 );
+        iconLocations_[objectTypeAbattis]                   = MT_Vector2D(  0.0, 0.0 );
     }
 
     DrawNameObjects( MOS_App::GetApp().GetWorld() );
@@ -986,6 +1056,13 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
         default:
             DrawLine( p );
     }
+    if ( MOS_MainWindow::GetMainWindow().GetOptions().bDrawObjetIcons_ )
+    {
+        E_Icon objectIcon = IconOfObjectType( (E_ObjectType) object.GetType() );
+        if ( objectIcon != eNoneIcon && p.size() > 0 )
+            DrawIcon( objectIcon, *(--p.end()), 300 );
+    }
+    
 }
 
 
@@ -2391,3 +2468,55 @@ void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Fl
     DrawArc( center, radius, angleStart, angleEnd, arrowed );
 }
 
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_GLTool::IconOfObjectType
+// Created: HME 2005-11-14
+// -----------------------------------------------------------------------------
+MOS_GLTool::E_Icon MOS_GLTool::IconOfObjectType( E_ObjectType nType )
+{
+    switch( nType )
+    {
+    case eObjectType_ZoneProtegee: return objectTypeZoneProtegee ;
+    case eObjectType_ZonePoserHelicoptere: return objectTypeZonePoserHelicoptere ;
+    case eObjectType_ZoneNbc: return objectTypeZoneNBC ;
+    case eObjectType_ZoneMobiliteAmelioree: return objectTypeZoneMobiliteAmelioree ;
+    case eObjectType_ZoneInterditeTir: return objectTypeZoneInterditeTir ;
+    case eObjectType_ZoneInterditeMouvement: return objectTypeZoneInterditeMvt ;
+    case eObjectType_ZoneImplantationLrm: return objectTypeZoneImplantationLrm ;
+    case eObjectType_ZoneImplantationCobra: return objectTypeZoneImplantationCobra ;
+    case eObjectType_ZoneImplantationCanon: return objectTypeZoneImplantationCanon ;
+    case eObjectType_ZoneBrouillageBrod: return objectTypeZoneBrouillardBrod ;
+    case eObjectType_ZoneBrouillageBromure: return objectTypeZoneBrouillageBromure ;
+    case eObjectType_TerrainLargage: return objectTypeTerrainLargage ;
+    case eObjectType_SiteFranchissement: return objectTypeSiteFranchissement ;
+    case eObjectType_SiteDecontamination: return objectTypeSiteDecontamination ;
+    case eObjectType_Rota: return objectTypeRota ;
+    case eObjectType_PosteTir: return objectTypePosteTir ;
+    case eObjectType_PosteControle: return objectTypePosteControle ;
+    case eObjectType_PontFlottantContinu: return objectTypePontFlottant ;
+    case eObjectType_PontFlottantDiscontinu: return objectTypePontFlottant ;
+    case eObjectType_PlotRavitaillement: return objectTypePlotRavitaillement ;
+    case eObjectType_Plateforme: return objectTypePlateForme ;
+    case eObjectType_Piste: return objectTypePiste ;
+    case eObjectType_NuageNbc: return objectTypeNuageNBC ;
+    case eObjectType_BouchonMines: return objectTypeMine ;
+    case eObjectType_ZoneMineeLineaire: return objectTypeMine ;
+    case eObjectType_ZoneMineeParDispersion: return objectTypeMine ;
+    case eObjectType_ItineraireLogistique: return objectTypeItineraireLog ;
+    case eObjectType_ZoneImplantationMortier: return objectTypeImplantationMortier ;
+    case eObjectType_FosseAntiChar: return  objectTypeFosseAC;
+    case eObjectType_Eboulement: return objectTypeEboulement ;
+    case eObjectType_DestructionRoute: return objectTypeDestructionRoute ;
+    case eObjectType_DestructionPont: return objectTypeDestructionPont ;
+    case eObjectType_CampRefugies: return objectTypeCampRefugies ;
+    case eObjectType_CampPrisonniers: return objectTypeCampPrisonniers ;
+    case eObjectType_Barricade: return objectTypeBarricade ;
+    case eObjectType_AirePoser: return objectTypeAirePoser ;
+    case eObjectType_AireLogistique: return objectTypeAireLogistique ;
+    case eObjectType_Abattis: return objectTypeAbattis ;
+    default:
+        return eNoneIcon;
+    }
+}

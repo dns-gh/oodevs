@@ -90,6 +90,7 @@ public:
 
     enum E_Icon
     {
+        eNoneIcon,
         eGasIcon,
         eAmmoIcon,
         eNbcIcon,
@@ -98,6 +99,41 @@ public:
         eFlareIcon,
         eSmokeIcon,
         eSkullIcon,
+        objectTypeZoneProtegee,
+        objectTypeZonePoserHelicoptere,
+        objectTypeZoneNBC,
+        objectTypeZoneMobiliteAmelioree,
+        objectTypeZoneInterditeTir,
+        objectTypeZoneInterditeMvt,
+        objectTypeZoneImplantationLrm,
+        objectTypeZoneImplantationCobra,
+        objectTypeZoneImplantationCanon,
+        objectTypeZoneBrouillardBrod,
+        objectTypeZoneBrouillageBromure,
+        objectTypeTerrainLargage,
+        objectTypeSiteFranchissement,
+        objectTypeSiteDecontamination,
+        objectTypeRota,
+        objectTypePosteTir,
+        objectTypePosteControle,
+        objectTypePontFlottant,
+        objectTypePlotRavitaillement,
+        objectTypePlateForme,
+        objectTypePiste,
+        objectTypeNuageNBC,
+        objectTypeMine,
+        objectTypeItineraireLog,
+        objectTypeImplantationMortier,
+        objectTypeFosseAC,
+        objectTypeEboulement,
+        objectTypeDestructionRoute,
+        objectTypeDestructionPont,
+        objectTypeCampRefugies,
+        objectTypeCampPrisonniers,
+        objectTypeBarricade,
+        objectTypeAirePoser,
+        objectTypeAireLogistique,
+        objectTypeAbattis,
         eNbrIcons
     };
 
@@ -229,6 +265,7 @@ public:
 
     static int InitializeIcon( const QImage& icon );
     static void DrawIcon( E_Icon nIcon, const MT_Vector2D& vCenter, float rSize = 150.0 );
+    static E_Icon IconOfObjectType( E_ObjectType nType );
 
 private:
     static uint nFrame_;

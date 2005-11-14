@@ -59,6 +59,8 @@ private:
     QCheckBox* pAutoOpenCheckbox_;
     QCheckBox* pAutoSaveLoadCheckbox_;
 
+    QCheckBox* pDrawObjectIcons_;
+
     //@}
 };
 

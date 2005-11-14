@@ -96,6 +96,8 @@ public:
     bool bOpenTreeToItem_;
     bool bSaveLoadTacticalLines_;
 
+    bool bDrawObjetIcons_;
+
     bool b3D_;
     bool bNoList_;
     //@}

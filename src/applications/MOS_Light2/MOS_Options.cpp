@@ -52,6 +52,7 @@ MOS_Options::MOS_Options()
     , b3D_                      ( false )
     , bNoList_                  ( true )
     , bDisplayRealTimeLog_      ( false )
+    , bDrawObjetIcons_          ( true )
 {
     MT_CommandLine arguments( qApp->argc(), qApp->argv() );
     bNoList_ = arguments.IsOptionSet( "-nolist" );
