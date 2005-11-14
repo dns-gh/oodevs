@@ -112,7 +112,7 @@
 #include "res/objectTypeBarricade.xpm"
 #include "res/objectTypeAirePoser.xpm"
 #include "res/objectTypeAireLogistique.xpm"
-#include "res/objectTypeAbattis.xpm"#include "res/realtimelog.xpm"
+#include "res/objectTypeAbattis.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {
