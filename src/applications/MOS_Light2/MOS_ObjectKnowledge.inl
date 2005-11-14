@@ -216,7 +216,7 @@ uint MOS_ObjectKnowledge::GetCampTC2ID() const
 // Created: HME 2005-11-08
 // -----------------------------------------------------------------------------
 inline 
-uint MOS_ObjectKnowledge::GetObjectTypeID() const
+ASN1T_EnumObjectType MOS_ObjectKnowledge::GetObjectTypeID() const
 {
     return nObjectTypeID_;
 }

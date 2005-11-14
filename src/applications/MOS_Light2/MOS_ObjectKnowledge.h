@@ -63,7 +63,7 @@ public:
     //! @name Accessors
     //@{
     uint                 GetID                  () const;
-    uint                 GetObjectTypeID        () const;
+    ASN1T_EnumObjectType GetObjectTypeID        () const;
     bool                 IsValid                ( E_AttributeUpdated ) const;
     const MT_Vector2D&   GetCenter              () const;
     MOS_Object_ABC*      GetRealObject          () const;

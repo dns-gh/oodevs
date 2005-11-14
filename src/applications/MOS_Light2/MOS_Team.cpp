@@ -199,9 +199,8 @@ void MOS_Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnow
 {
     IT_ObjectKnowledgeMap itObjectKnowledge = objectKnowledges_.find( asnMsg.oid_connaissance );
     assert( itObjectKnowledge != objectKnowledges_.end() );
-
     MOS_App::GetApp().NotifyObjectKnowledgeDeleted( *this, *(itObjectKnowledge->second) );
-    //MOS_Object_ABC::GetIDManagerForObjectType( itObjectKnowledge->second->GetObjectTypeID() ).ReleaseIdentifier( itObjectKnowledge->second->GetID() ) ;
+    MOS_Object_ABC::GetIDManagerForObjectType( itObjectKnowledge->second->GetObjectTypeID() ).ReleaseIdentifier( itObjectKnowledge->second->GetID() ) ;
     delete itObjectKnowledge->second;
     objectKnowledges_.erase( itObjectKnowledge );
 }
