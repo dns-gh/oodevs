@@ -3518,6 +3518,18 @@ Assurez vous que le fichier existe.</translation>
         <source>Max speed</source>
         <translation>Vitesse max</translation>
     </message>
+    <message>
+        <source>Global parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reloading effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>

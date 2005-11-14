@@ -141,6 +141,23 @@ public:
     typedef ADN_Type_Vector_ABC<PopulationInfos>  T_PopulationInfosVector;
     typedef T_PopulationInfosVector::iterator      IT_PopulationInfosVector;
 
+// *****************************************************************************
+    class ReloadingSpeedEffectInfos
+        : public ADN_Ref_ABC
+    {
+        MT_COPYNOTALLOWED( ReloadingSpeedEffectInfos )
+
+    public:
+        ReloadingSpeedEffectInfos();
+        ~ReloadingSpeedEffectInfos();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_Double rDensity_;
+        ADN_Type_Double rModifier_;
+    };
 
 // *****************************************************************************
 public:
@@ -158,7 +175,8 @@ private:
     void WriteArchive( MT_OutputArchive_ABC& output );
 
 public:
-    T_PopulationInfosVector  vPopulation_;
+    T_PopulationInfosVector   vPopulation_;
+    ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
 };
 
 

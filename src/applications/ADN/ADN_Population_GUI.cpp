@@ -23,6 +23,7 @@
 #include <qlayout.h>
 #include <qgroupbox.h>
 #include <qdialog.h>
+#include <qvbox.h>
 
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
@@ -71,12 +72,27 @@ void ADN_Population_GUI::Build()
     // Create the top widget.
     pMainWidget_ = new QWidget( 0, "Population main widget" );
 
-    // Create the automata listview.
+    // Create the population listview.
     ADN_Population_ListView* pPopulationList = new ADN_Population_ListView( pMainWidget_ );
     pPopulationList->GetConnector().Connect( &data_.GetPopulation() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainWidget_ );
+    QVBox* pMainBox = new QVBox( pMainWidget_ );
+
+    // Global parameters
+    QGroupBox* pGlobalGroup          = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
+    QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Reloading effects" ), pGlobalGroup );
+
+    // Density
+    builder.AddField<ADN_EditLine_Double>( pReloadingEffectGroup, tr( "Density" ), vInfosConnectors[eReloadingEffectDensity], tr( "people/m²" ), eGreaterZero );
+    vInfosConnectors[eReloadingEffectDensity]->Connect( &data_.reloadingSpeedEffectInfos_.rDensity_ );
+
+    // Modifier
+    builder.AddField<ADN_EditLine_Double>( pReloadingEffectGroup, tr( "Modifier" ), vInfosConnectors[eReloadingEffectModifier], 0, eGreaterZero );
+    vInfosConnectors[eReloadingEffectModifier]->Connect( &data_.reloadingSpeedEffectInfos_.rModifier_ );
+
+    // Population parameters
+    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainBox );
 
     QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
@@ -118,7 +134,7 @@ void ADN_Population_GUI::Build()
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pPopulationList, 1 );
-    pMainLayout->addWidget( pGroup, 3 );
+    pMainLayout->addWidget( pMainBox, 3 );
 
     //QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 6 );
     //pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );

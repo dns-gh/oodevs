@@ -47,6 +47,8 @@ public:
         eSpeedEffectVolume,
         eSpeedEffectDensity,
         eSpeedEffectMaxSpeed,
+        eReloadingEffectDensity,
+        eReloadingEffectModifier,
         eNbrGuiElements
     };
 

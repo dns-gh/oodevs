@@ -289,17 +289,20 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
     input.Section( "Effets" );
     input.Section( "Ralentissement" );
 
-    input.BeginList( "Attitudes" );
-    while( input.NextListElement() )
+
+    if( input.BeginList( "Attitudes", ADN_XmlInput_Helper::eNothing ) )
     {
-        input.Section( "Attitude" );
-        std::string strAttitude;
-        input.ReadAttribute( "nom", strAttitude );
-        uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-        vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
-        input.EndSection(); // Attitude
+        while( input.NextListElement() )
+        {
+            input.Section( "Attitude" );
+            std::string strAttitude;
+            input.ReadAttribute( "nom", strAttitude );
+            uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+            vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
+            input.EndSection(); // Attitude
+        }
+        input.EndList(); // Attitudes
     }
-    input.EndList(); // Attitudes
 
     input.EndSection(); // Ralentissement
     input.EndSection(); // Effets
@@ -340,11 +343,58 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( MT_OutputArchive_ABC& o
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::ReloadingSpeedEffectInfos::ReloadingSpeedEffectInfos
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+ADN_Population_Data::ReloadingSpeedEffectInfos::ReloadingSpeedEffectInfos()
+: ADN_Ref_ABC ()
+, rDensity_   ( 0. )
+, rModifier_  ( 0. )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::ReloadingSpeedEffectInfos::~ReloadingSpeedEffectInfos
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+ADN_Population_Data::ReloadingSpeedEffectInfos::~ReloadingSpeedEffectInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::ReloadingSpeedEffectInfos::ReadArchive
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::ReloadingSpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "TempsRechargement" );
+    input.ReadAttribute( "densitePopulation", rDensity_  );
+    input.ReadAttribute( "modificateur"     , rModifier_ );
+    input.EndSection(); // TempsRechargement
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive
+// Created: SBO 2005-11-14
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "TempsRechargement" );
+    output.WriteAttribute( "densitePopulation", rDensity_.GetData()  );
+    output.WriteAttribute( "modificateur"     , rModifier_.GetData() );
+    output.EndSection(); // TempsRechargement
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Population_Data constructor
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Population_Data::ADN_Population_Data()
-: ADN_Data_ABC()
+: ADN_Data_ABC              ()
+, vPopulation_              ()
+, reloadingSpeedEffectInfos_()
 {
 }
 
@@ -385,6 +435,10 @@ void ADN_Population_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
+    input.Section( "Effets" );
+    reloadingSpeedEffectInfos_.ReadArchive( input );
+    input.EndSection(); // Effets
+
     input.BeginList( "Populations" );
     while( input.NextListElement() )
     {
@@ -402,6 +456,10 @@ void ADN_Population_Data::ReadArchive( ADN_XmlInput_Helper& input )
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
+    output.Section( "Effets" );
+    reloadingSpeedEffectInfos_.WriteArchive( output );
+    output.EndSection(); // Effets
+
     output.BeginList( "Populations", vPopulation_.size() );
     int n = 0;
     for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )

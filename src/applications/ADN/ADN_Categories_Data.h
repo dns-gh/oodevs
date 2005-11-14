@@ -140,11 +140,8 @@ inline
 ADN_Categories_Data::SizeInfos* ADN_Categories_Data::FindSize( const std::string& strName )
 {
     for( IT_SizeInfos_Vector it = vSizes_.begin(); it != vSizes_.end(); ++it )
-    {
-        if( (*it)->GetData() == strName )
+        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
             return *it;
-    }
-
     return 0;
 }
 
