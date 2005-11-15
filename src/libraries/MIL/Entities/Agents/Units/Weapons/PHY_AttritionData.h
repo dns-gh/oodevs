@@ -42,6 +42,8 @@ private:
     MT_Float rReparableWithEvacuationBound_;
     MT_Float rReparableWithoutEvacuationBound_;
 
+    MT_Float rScore_;
+
 private:
     static MT_Random randomGenerator_;
 };

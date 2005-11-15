@@ -16,6 +16,7 @@
 inline
 PHY_AttritionData& PHY_AttritionData::operator=( const PHY_AttritionData& rhs )
 {
+    rScore_                           = rhs.rScore_;
     rDestroyedBound_                  = rhs.rDestroyedBound_;
     rReparableWithEvacuationBound_    = rhs.rReparableWithEvacuationBound_;
     rReparableWithoutEvacuationBound_ = rhs.rReparableWithoutEvacuationBound_;
@@ -29,5 +30,5 @@ PHY_AttritionData& PHY_AttritionData::operator=( const PHY_AttritionData& rhs )
 inline
 MT_Float PHY_AttritionData::GetScore() const
 {
-    return ( 4 * rDestroyedBound_ + 2 * rReparableWithEvacuationBound_ + rReparableWithoutEvacuationBound_ ) / 7.;
+    return rScore_;
 }

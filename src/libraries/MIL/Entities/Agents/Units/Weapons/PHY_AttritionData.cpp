@@ -25,6 +25,7 @@ PHY_AttritionData::PHY_AttritionData()
     : rDestroyedBound_                 ( 0. )
     , rReparableWithEvacuationBound_   ( 0. )
     , rReparableWithoutEvacuationBound_( 0. )
+    , rScore_                          ( 0. )
 {
 
 }
@@ -35,12 +36,25 @@ PHY_AttritionData::PHY_AttritionData()
 // -----------------------------------------------------------------------------
 PHY_AttritionData::PHY_AttritionData( MIL_InputArchive& archive )
 {
-    archive.ReadField( "Destruction"            , rDestroyedBound_                  , CheckValueBound( 0., 1. ) );
-    archive.ReadField( "ReparableAvecEvacuation", rReparableWithEvacuationBound_    , CheckValueBound( 0., 1. ) );
-    archive.ReadField( "ReparableSansEvacuation", rReparableWithoutEvacuationBound_ , CheckValueBound( 0., 1. ) );
-    rReparableWithEvacuationBound_ += rDestroyedBound_;
-    if ( ( rReparableWithoutEvacuationBound_ += rReparableWithEvacuationBound_ ) > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of Attrition percentage is out of bound (%f > 1)", rReparableWithoutEvacuationBound_ ), archive.GetContext() );
+    MT_Float rDestroyed;
+    MT_Float rReparableWithEvacuation;
+    MT_Float rReparableWithoutEvacuation;
+
+    archive.ReadField( "Destruction"            , rDestroyed                  , CheckValueBound( 0., 1. ) );
+    archive.ReadField( "ReparableAvecEvacuation", rReparableWithEvacuation    , CheckValueBound( 0., 1. ) );
+    archive.ReadField( "ReparableSansEvacuation", rReparableWithoutEvacuation , CheckValueBound( 0., 1. ) );
+
+    rDestroyedBound_                    = rDestroyed;
+    rReparableWithEvacuationBound_      = rDestroyedBound_ + rReparableWithEvacuation;
+    rReparableWithoutEvacuationBound_   = rReparableWithEvacuationBound_ + rReparableWithoutEvacuation;
+
+    if( rReparableWithoutEvacuationBound_ > 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of attrition percentages is out of bound (%f > 1)", rReparableWithoutEvacuationBound_ ), archive.GetContext() );
+
+
+    // Score
+    rScore_ = rDestroyed + ( rReparableWithEvacuation / 2. ) + ( rReparableWithoutEvacuation / 4. );
+    assert( rScore_ <= 1. );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +65,7 @@ PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& rhs )
     : rDestroyedBound_                 ( rhs.rDestroyedBound_                  )
     , rReparableWithEvacuationBound_   ( rhs.rReparableWithEvacuationBound_    )
     , rReparableWithoutEvacuationBound_( rhs.rReparableWithoutEvacuationBound_ )
+    , rScore_                          ( rhs.rScore_                           )
 {
 
 }
