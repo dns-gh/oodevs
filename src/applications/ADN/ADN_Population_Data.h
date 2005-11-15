@@ -41,6 +41,78 @@ class ADN_Population_Data : public ADN_Data_ABC
 
 public:
 // *****************************************************************************
+    class FireEffectProtectionInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( FireEffectProtectionInfos )
+
+    public:
+         FireEffectProtectionInfos( ADN_Categories_Data::ArmorInfos* ptr );
+        ~FireEffectProtectionInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_String                                           strName_;
+        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::ArmorInfos> ptrProtection_;
+        ADN_Type_Double                                           rDestruction_;
+        ADN_Type_Double                                           rFixableWithEvacuation_;
+        ADN_Type_Double                                           rFixableWithoutEvacuation_;
+
+    public:
+        typedef ADN_Categories_Data::ArmorInfos T_Item;
+
+        class CmpRef : public std::unary_function< FireEffectProtectionInfos* , bool >
+        {
+        public:
+            CmpRef(ADN_Categories_Data::ArmorInfos* val) : val_(val) {}
+            ~CmpRef(){}
+
+            bool operator()( FireEffectProtectionInfos* tgtnfos ) const 
+            {   return tgtnfos->ptrProtection_.GetData() == val_;}
+
+        private:
+            ADN_Categories_Data::ArmorInfos* val_;
+        };
+    };
+
+    typedef ADN_Type_VectorFixed_ABC<FireEffectProtectionInfos>  T_FireEffectProtectionInfosVector;
+    typedef T_FireEffectProtectionInfosVector::iterator          IT_FireEffectProtectionInfosVector;
+
+// *****************************************************************************
+    class FireEffectInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( FireEffectInfos )
+
+    public:
+         FireEffectInfos( E_PopulationAttitude nAttitude );
+        ~FireEffectInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_String                   strName_;
+        E_PopulationAttitude              nAttitude_;
+        ADN_Type_Double                   rIntensityDensity_;
+        ADN_Type_Double                   rIntensityFactor_;
+        T_FireEffectProtectionInfosVector vProtectionInfos_;
+    };
+
+    typedef ADN_Type_Vector_ABC<FireEffectInfos>  T_FireEffectInfosVector;
+    typedef T_FireEffectInfosVector::iterator     IT_FireEffectInfosVector;
+
+// *****************************************************************************
     class SpeedEffectVolumeInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -136,6 +208,7 @@ public:
         ADN_Type_Double                                       rMoveSpeed_;
 
         T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
+        T_FireEffectInfosVector                               vFireEffectInfos_;
     };
 
     typedef ADN_Type_Vector_ABC<PopulationInfos>  T_PopulationInfosVector;

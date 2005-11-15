@@ -30,6 +30,200 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
+// =============================================================================
+// ADN_Population_Data::FireEffectProtectionInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( ADN_Categories_Data::ArmorInfos* ptr )
+: ADN_Ref_ABC                ()
+, ADN_DataTreeNode_ABC       ()
+, strName_                   ( ptr->strName_.GetData() )
+, ptrProtection_             ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr )
+, rDestruction_              ( 0. )
+, rFixableWithEvacuation_    ( 0. )
+, rFixableWithoutEvacuation_ ( 0. )
+{
+    this->BindExistenceTo( &ptrProtection_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectProtectionInfos::ReadArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::FireEffectProtectionInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    if( !input.Section( "ProtectionPion", ADN_XmlInput_Helper::eNothing ) )
+        return;
+
+    std::string strProtection;
+    input.ReadAttribute( "nom", strProtection );
+    ADN_Categories_Data::ArmorInfos* pProtection = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strProtection );
+    assert( pProtection != 0 );
+    ptrProtection_ = pProtection;
+
+    input.ReadField( "Destruction"            , rDestruction_              );
+    input.ReadField( "ReparableAvecEvacuation", rFixableWithEvacuation_    );
+    input.ReadField( "ReparableSansEvacuation", rFixableWithoutEvacuation_ );
+
+    input.EndSection(); // ProtectionPion
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectProtectionInfos::WriteArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::FireEffectProtectionInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    // do not save unspecified protection hit factor
+    if(    rDestruction_.GetData()              == 0.
+        && rFixableWithEvacuation_.GetData()    == 0.
+        && rFixableWithoutEvacuation_.GetData() == 0. )
+        return;
+
+    output.Section( "ProtectionPion" );
+
+    output.WriteAttribute( "nom", ptrProtection_.GetData()->strName_.GetData() );
+
+    output.WriteField( "Destruction"            , rDestruction_.GetData()              );
+    output.WriteField( "ReparableAvecEvacuation", rFixableWithEvacuation_.GetData()    );
+    output.WriteField( "ReparableSansEvacuation", rFixableWithoutEvacuation_.GetData() );
+
+    output.EndSection(); // ProtectionPion
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectProtectionInfos::~FireEffectProtectionInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::FireEffectProtectionInfos::~FireEffectProtectionInfos()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectProtectionInfos::GetNodeName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::FireEffectProtectionInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectProtectionInfos::GetItemName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::FireEffectProtectionInfos::GetItemName()
+{
+    return std::string();
+}
+
+// =============================================================================
+// ADN_Population_Data::FireEffectInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectInfos::FireEffectInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAttitude )
+: ADN_Ref_ABC         ()
+, ADN_DataTreeNode_ABC()
+, nAttitude_          ( nAttitude )
+, strName_            ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude ) )
+, vProtectionInfos_   ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+, rIntensityDensity_  ( 0. )
+, rIntensityFactor_   ( 0. )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectInfos::ReadArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::FireEffectInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+//    input.Section( "Attitude" );
+//
+//    std::string strAttitude;
+//    input.ReadAttribute( "nom", strAttitude );
+//    E_PopulationAttitude nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+//    assert( nAttitude == nAttitude_ );
+
+    input.Section( "Intensite" );
+    input.ReadAttribute( "densitePopulation", rIntensityDensity_ );
+    input.ReadAttribute( "intensite"        , rIntensityFactor_  );
+    input.EndSection(); // Intensite
+
+    input.BeginList( "ProtectionsPions" );
+    ADN_Categories_Data::T_ArmorInfos_Vector& protectionInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
+    for( ADN_Categories_Data::T_ArmorInfos_Vector::iterator it = protectionInfos.begin(); it != protectionInfos.end(); ++it )
+    {
+        IT_FireEffectProtectionInfosVector itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),FireEffectProtectionInfos::CmpRef(*it));
+        assert( itProtection != vProtectionInfos_.end() );
+        (*itProtection)->ReadArchive( input );
+    }
+
+    input.EndList(); // ProtectionsPions
+
+//    input.EndSection(); // Attitude
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectInfos::WriteArchive
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::FireEffectInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "Attitude" );
+
+    output.Section( "Intensite" );
+    output.WriteAttribute( "densitePopulation", rIntensityDensity_.GetData() );
+    output.WriteAttribute( "intensite"        , rIntensityFactor_.GetData()  );
+    output.EndSection(); // Intensite
+
+    output.WriteAttribute( "nom", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
+
+    output.BeginList( "ProtectionsPions", vProtectionInfos_.size() );
+    for( IT_FireEffectProtectionInfosVector it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output.EndList(); // ProtectionsPions
+
+    output.EndSection(); // Attitude
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectInfos::~FireEffectInfos
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+ADN_Population_Data::FireEffectInfos::~FireEffectInfos()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectInfos::GetNodeName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::FireEffectInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectInfos::GetItemName
+// Created: SBO 2005-10-24
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::FireEffectInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+
+// =============================================================================
+// ADN_Population_Data::SpeedEffectVolumeInfos
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos
@@ -66,7 +260,7 @@ void ADN_Population_Data::SpeedEffectVolumeInfos::ReadArchive( ADN_XmlInput_Help
 
     input.EndSection(); // VolumePion
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive
 // Created: SBO 2005-10-24
@@ -112,6 +306,9 @@ std::string ADN_Population_Data::SpeedEffectVolumeInfos::GetItemName()
     return std::string();
 }
 
+// =============================================================================
+// ADN_Population_Data::SpeedEffectInfos
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos
@@ -138,7 +335,7 @@ void ADN_Population_Data::SpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& in
 //    input.ReadAttribute( "nom", strAttitude );
 //    E_PopulationAttitude nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
 //    assert( nAttitude == nAttitude_ );
-  
+
     input.BeginList( "VolumesPions" );
     ADN_Categories_Data::T_SizeInfos_Vector& sizeInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
     for( ADN_Categories_Data::T_SizeInfos_Vector::iterator it = sizeInfos.begin(); it != sizeInfos.end(); ++it )
@@ -147,7 +344,7 @@ void ADN_Population_Data::SpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& in
         assert( itVolume != vVolumeInfos_.end() );
         (*itVolume)->ReadArchive( input );
     }
-        
+
     input.EndList(); // VolumesPions
 
 //    input.EndSection(); // Attitude
@@ -162,12 +359,12 @@ void ADN_Population_Data::SpeedEffectInfos::WriteArchive( MT_OutputArchive_ABC& 
     output.Section( "Attitude" );
 
     output.WriteAttribute( "nom", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
-    
+
     output.BeginList( "VolumesPions", vVolumeInfos_.size() );
     for( IT_SpeedEffectVolumeInfosVector it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
         (*it)->WriteArchive( output );
     output.EndList(); // VolumesPions
-    
+
     output.EndSection(); // Attitude
 }
 
@@ -197,6 +394,9 @@ std::string ADN_Population_Data::SpeedEffectInfos::GetItemName()
     return strName_.GetData();
 }
 
+// =============================================================================
+// ADN_Population_Data::PopulationInfos
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PopulationInfos::PopulationInfos
@@ -210,12 +410,17 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
 , rMoveDensity_          ( 0. )
 , rMoveSpeed_            ( 0. )
 , vSpeedEffectInfos_     ()
+, vFireEffectInfos_      ()
 {
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
-        SpeedEffectInfos* pNew = new SpeedEffectInfos( ( E_PopulationAttitude )i );
-        std::auto_ptr< SpeedEffectInfos > spNew( pNew );
-        vSpeedEffectInfos_.AddItem( spNew.release() );
+        SpeedEffectInfos* pSpeedNew = new SpeedEffectInfos( ( E_PopulationAttitude )i );
+        std::auto_ptr< SpeedEffectInfos > spSpeedNew( pSpeedNew );
+        vSpeedEffectInfos_.AddItem( spSpeedNew.release() );
+
+        FireEffectInfos* pFireNew = new FireEffectInfos( ( E_PopulationAttitude )i );
+        std::auto_ptr< FireEffectInfos > spFireNew( pFireNew );
+        vFireEffectInfos_.AddItem( spFireNew.release() );
     }
     this->BindExistenceTo( &ptrModel_ );
 }
@@ -287,9 +492,8 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
     input.ReadField( "VitesseDeplacement"        , rMoveSpeed_            );
 
     input.Section( "Effets" );
+
     input.Section( "Ralentissement" );
-
-
     if( input.BeginList( "Attitudes", ADN_XmlInput_Helper::eNothing ) )
     {
         while( input.NextListElement() )
@@ -303,10 +507,25 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
         }
         input.EndList(); // Attitudes
     }
-
     input.EndSection(); // Ralentissement
-    input.EndSection(); // Effets
 
+    input.Section( "Tir" );
+    if( input.BeginList( "Attitudes", ADN_XmlInput_Helper::eNothing ) )
+    {
+        while( input.NextListElement() )
+        {
+            input.Section( "Attitude" );
+            std::string strAttitude;
+            input.ReadAttribute( "nom", strAttitude );
+            uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+            vFireEffectInfos_[ nAttitude ]->ReadArchive( input );
+            input.EndSection(); // Attitude
+        }
+        input.EndList(); // Attitudes
+    }
+    input.EndSection(); // Tir
+
+    input.EndSection(); // Effets
     input.EndSection(); // Population
 }
 
@@ -328,19 +547,29 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( MT_OutputArchive_ABC& o
     output.WriteField( "VitesseDeplacement"        , rMoveSpeed_.GetData()            );
 
     output.Section( "Effets" );
-    output.Section( "Ralentissement" );
 
+    output.Section( "Ralentissement" );
     output.BeginList( "Attitudes", vSpeedEffectInfos_.size() );
     for( IT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output.EndList(); // Attitudes
-
     output.EndSection(); // Ralentissement
+
+    output.Section( "Tir" );
+    output.BeginList( "Attitudes", vFireEffectInfos_.size() );
+    for( IT_FireEffectInfosVector it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output.EndList(); // Attitudes
+    output.EndSection(); // Tir
+
     output.EndSection(); // Effets
 
     output.EndSection(); // Population
 }
 
+// =============================================================================
+// ADN_Population_Data::ReloadingSpeedEffectInfos
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::ReloadingSpeedEffectInfos::ReloadingSpeedEffectInfos
@@ -353,7 +582,7 @@ ADN_Population_Data::ReloadingSpeedEffectInfos::ReloadingSpeedEffectInfos()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::ReloadingSpeedEffectInfos::~ReloadingSpeedEffectInfos
 // Created: SBO 2005-11-14
@@ -386,6 +615,11 @@ void ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive( MT_OutputArch
     output.WriteAttribute( "modificateur"     , rModifier_.GetData() );
     output.EndSection(); // TempsRechargement
 }
+
+
+// =============================================================================
+// ADN_Population_Data
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data constructor
@@ -435,11 +669,12 @@ void ADN_Population_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
+    input.BeginList( "Populations" );
+
     input.Section( "Effets" );
     reloadingSpeedEffectInfos_.ReadArchive( input );
     input.EndSection(); // Effets
 
-    input.BeginList( "Populations" );
     while( input.NextListElement() )
     {
         std::auto_ptr<PopulationInfos> spNew( new PopulationInfos() );
@@ -456,11 +691,12 @@ void ADN_Population_Data::ReadArchive( ADN_XmlInput_Helper& input )
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
+    output.BeginList( "Populations", vPopulation_.size() );
+
     output.Section( "Effets" );
     reloadingSpeedEffectInfos_.WriteArchive( output );
     output.EndSection(); // Effets
 
-    output.BeginList( "Populations", vPopulation_.size() );
     int n = 0;
     for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )
     {

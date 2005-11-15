@@ -3520,15 +3520,35 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Global parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres globaux</translation>
     </message>
     <message>
         <source>Reloading effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Effets sur le rechargement</translation>
     </message>
     <message>
         <source>Modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificateur</translation>
+    </message>
+    <message>
+        <source>Fire effects</source>
+        <translation>Effets des tirs</translation>
+    </message>
+    <message>
+        <source>Intensity</source>
+        <translation>Intensité</translation>
+    </message>
+    <message>
+        <source>Destruction</source>
+        <translation>Destruction</translation>
+    </message>
+    <message>
+        <source>Fixable with evacuation</source>
+        <translation>Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>Fixable without evacuation</source>
+        <translation>Réparable sans évacuation</translation>
     </message>
 </context>
 <context>

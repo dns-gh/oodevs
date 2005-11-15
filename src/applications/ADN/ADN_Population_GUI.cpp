@@ -35,6 +35,8 @@
 #include "ADN_Population_ListView.h"
 #include "ADN_Population_SpeedEffect_Attitude_ListView.h"
 #include "ADN_Population_SpeedEffect_Volume_ListView.h"
+#include "ADN_Population_FireEffect_Attitude_ListView.h"
+#include "ADN_Population_FireEffect_Protection_ListView.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
@@ -112,10 +114,11 @@ void ADN_Population_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Move speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
 
     // Speed effects
+    //@{
     QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Speed effects" ), pGroup );
 
-    ADN_Population_SpeedEffect_Attitude_ListView* pAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
-    vInfosConnectors[eSpeedEffectAttitude] = &pAttitudeList->GetConnector();
+    ADN_Population_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
+    vInfosConnectors[eSpeedEffectAttitude] = &pSpeedEffectAttitudeList->GetConnector();
 
     ADN_Population_SpeedEffect_Volume_ListView* pVolumeList = new ADN_Population_SpeedEffect_Volume_ListView( pSpeedEffectGroup );
     vInfosConnectors[eSpeedEffectVolume] = &pVolumeList->GetConnector();
@@ -124,12 +127,40 @@ void ADN_Population_GUI::Build()
 
     builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
+    //@}
+
+    // Fire effects
+    //@{
+    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Fire effects" ), pGroup );
+    ADN_Population_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Population_FireEffect_Attitude_ListView( pFireEffectGroup );
+    vInfosConnectors[eFireEffectAttitude] = &pFireEffectAttitudeList->GetConnector();
+
+    QVBox* pFireEffectProtectionBox = new QVBox( pFireEffectGroup );
+    pFireEffectProtectionBox->setSpacing( 5 );
+
+    // Protection
+    ADN_Population_FireEffect_Protection_ListView* pProtectionList = new ADN_Population_FireEffect_Protection_ListView( pFireEffectProtectionBox );
+    vInfosConnectors[eFireEffectProtection] = &pProtectionList->GetConnector();
+
+    // Intensity
+    QGroupBox* pFireEffectIntensityGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Intensity" ), pFireEffectProtectionBox );
+    builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, tr( "Density" ), vInfosConnectors[eFireEffectIntensityDensity], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, tr( "Intensity" ), vInfosConnectors[eFireEffectIntensityFactor], tr( "people/m²" ), eGreaterEqualZero );
+
+    // Effects
+    QGroupBox* pFireEffectProtectionGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Effect" ), pFireEffectGroup );
+    builder.AddField< ADN_EditLine_Double >( pFireEffectProtectionGroup, tr( "Destruction" ), vInfosConnectors[eFireEffectDestruction], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pFireEffectProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectFixableWithEvacuation], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pFireEffectProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectFixableWithoutEvacuation], 0, eGreaterEqualZero );
+    //@}
 
     builder.AddStretcher( pGroup, Qt::Vertical );
 
-    pPopulationList->SetItemConnectors( vInfosConnectors );
-    pAttitudeList  ->SetItemConnectors( vInfosConnectors );
-    pVolumeList    ->SetItemConnectors( vInfosConnectors );
+    pPopulationList         ->SetItemConnectors( vInfosConnectors );
+    pSpeedEffectAttitudeList->SetItemConnectors( vInfosConnectors );
+    pVolumeList             ->SetItemConnectors( vInfosConnectors );
+    pFireEffectAttitudeList ->SetItemConnectors( vInfosConnectors );
+    pProtectionList         ->SetItemConnectors( vInfosConnectors );
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );

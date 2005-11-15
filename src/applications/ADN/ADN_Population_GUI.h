@@ -49,6 +49,13 @@ public:
         eSpeedEffectMaxSpeed,
         eReloadingEffectDensity,
         eReloadingEffectModifier,
+        eFireEffectAttitude,
+        eFireEffectProtection,
+        eFireEffectIntensityDensity,
+        eFireEffectIntensityFactor,
+        eFireEffectDestruction,
+        eFireEffectFixableWithEvacuation,
+        eFireEffectFixableWithoutEvacuation,
         eNbrGuiElements
     };
 
@@ -62,12 +69,6 @@ public:
     //! @name Operations
     //@{
     void Build();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void BuildSpeedEffect( QWidget* pParent );
     //@}
 
 private:
