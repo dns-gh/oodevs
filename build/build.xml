@@ -1,22 +1,10 @@
 <?xml version="1.0"?>
 <project name="scipio" default="all">
 
-    <import file="\\install\masa\common\dev\common\tools.xml"/>
-
-    <property name="platform" value="vc71"/>
-    <property name="compiler" value="msvc"/>
-
-    <property name="include.dir"      location="../include"/>
-    <property name="lib.dir"          location="../lib"/>
-    <property name="reports.dir"      location="../reports"/>
-    <property name="libraries.dir"    location="../src/libraries"/>
-    <property name="applications.dir" location="../src/applications"/>
-    <property name="tests.dir"        location="../src/tests"/>
-    <property name="run.dir"          location="../run"/>
-    <property name="dist.dir"         location="../dist"/>
-    <property name="bin.dir"          location="../bin"/>
-    <property name="data.dir"         location="../data"/>
-    <property name="repositories"     value="\\install\Masa\common\dev\delivery\external,\\install\Masa\common\dev\delivery\internal,\\install\masa\simulation\projects\common"/>
+    <property file="build.properties"/>
+    <property file="${user.home}/build.properties"/>
+    <property file="//install/masa/common/dev/common/build.properties"/> <!-- TMP not portable; takes several seconds if not found -->
+    <import file="${import.file}"/>
 
     <!--
     ============================================================================
