@@ -27,6 +27,7 @@
 #include "ASN/asn/Generated/ScipioPionOrder.h"
 #include "ASN/asn/Generated/ScipioOrderConduite.h"
 #include "ASN/asn/Generated/ScipioAutomateOrder.h"
+#include "ASN/asn/Generated/ScipioPopulationOrder.h"
 
 #pragma warning( pop ) 
 
