@@ -9,7 +9,6 @@
 //
 // *****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetBehaviorPart
 // Created: NLD 2002-12-12
@@ -136,4 +135,3 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
         bStateHasChanged_  = true;
     }
 }
-

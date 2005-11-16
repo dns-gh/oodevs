@@ -251,10 +251,8 @@ private:
     void OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg );
 
     // Tirs
-    void OnReceiveMsgStartDirectFire       ( const ASN1T_MsgStartDirectFire& asnMsg   );
-    void OnReceiveMsgStartIndirectFire     ( const ASN1T_MsgStartIndirectFire& asnMsg );
-    void OnReceiveMsgStopDirectFire        ( const ASN1T_MsgStopDirectFire& asnMsg    );
-    void OnReceiveMsgStopIndirectFire      ( const ASN1T_MsgStopIndirectFire& asnMsg  );
+    void OnReceiveMsgStartPionFire         ( const ASN1T_MsgStartPionFire& asnMsg   );
+    void OnReceiveMsgStopPionFire          ( const ASN1T_MsgStopPionFire& asnMsg    );
     void OnReceiveMsgExplosion             ( const ASN1T_MsgExplosion& asnMsg );
     void OnReceiveMsgStartFireEffect       ( const ASN1T_MsgStartFireEffect& asnMsg );
     void OnReceiveMsgStopFireEffect        ( const ASN1T_MsgStopFireEffect& asnMsg );

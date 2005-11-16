@@ -20,6 +20,7 @@ class MIL_AgentPion;
 class MIL_PionMission_ABC;
 class NET_ASN_MsgUnitAttributes;
 class DEC_Path;
+class PHY_RoePopulation;
 
 enum E_FightRateState;
 enum E_RulesOfEngagementState;
@@ -93,6 +94,7 @@ public:
     void NotifyCloseCombatStateChanged        ( E_CloseCombatState       nState );
     void NotifyOperationalStateChanged        ( E_OperationalState       nState );
     void NotifyIndirectFireAvailabilityChanged( E_FireAvailability       nState );
+    void NotifyRoePopulationChanged           ( const PHY_RoePopulation& roe );
     //@}
 
 private:
@@ -106,27 +108,21 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< DEC_Path* >     T_PathSet;
-    typedef T_PathSet::const_iterator CIT_PathSet;
-    //@}
-
-private:
     MIL_AgentPion*                      pPion_;
     DIA_FunctionCaller< MIL_AgentPion > diaFunctionCaller_;
     DIA_Parameters                      defaultBehaviorParameters_;
     DIA_Parameters                      missionBehaviorParameters_;   
 
     // Etat décisionnel
-    E_ForceRatioState        nForceRatioState_;
-    E_RulesOfEngagementState nRulesOfEngagementState_;
-    E_CloseCombatState       nCloseCombatState_;
-    E_OperationalState       nOperationalState_;
-    E_FireAvailability       nIndirectFireAvailability_;
-    bool                     bStateHasChanged_;
+          E_ForceRatioState        nForceRatioState_;
+          E_RulesOfEngagementState nRulesOfEngagementState_;
+          E_CloseCombatState       nCloseCombatState_;
+          E_OperationalState       nOperationalState_;
+          E_FireAvailability       nIndirectFireAvailability_;
+    const PHY_RoePopulation*       pRoePopulation_; //$$$ à déplacer dans Role_Population ?
 
-    T_PathSet                paths_;
+    // Network
+    bool                     bStateHasChanged_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Pion

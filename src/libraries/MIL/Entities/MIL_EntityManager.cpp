@@ -23,12 +23,13 @@
 #include "Agents/Units/Categories/PHY_NatureMobility.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Agents/Units/Categories/PHY_MissionCapacity.h"
+#include "Agents/Units/Categories/PHY_RoePopulation.h"
+#include "Agents/Units/Categories/PHY_Volume.h"
+#include "Agents/Units/Categories/PHY_Protection.h"
 #include "Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Agents/Units/Postures/PHY_Posture.h"
-#include "Agents/Units/Categories/PHY_Volume.h"
-#include "Agents/Units/Categories/PHY_Protection.h"
 #include "Agents/Units/Dotations/PHY_DotationType.h"
 #include "Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
@@ -95,6 +96,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     PHY_NatureMobility           ::Initialize();
     PHY_NatureAtlas              ::Initialize();
     PHY_MissionCapacity          ::Initialize();
+    PHY_RoePopulation            ::Initialize();
     PHY_MaintenanceLevel         ::Initialize();
     PHY_PerceptionLevel          ::Initialize();
     PHY_RadarClass               ::Initialize();
@@ -279,6 +281,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_NatureMobility           ::Terminate();
     PHY_NatureAtlas              ::Terminate();
     PHY_MissionCapacity          ::Terminate();
+    PHY_RoePopulation            ::Terminate();
     PHY_LogWorkTime              ::Terminate();
     PHY_Convoy_ABC               ::Terminate();
     PHY_RadarType                ::Terminate();

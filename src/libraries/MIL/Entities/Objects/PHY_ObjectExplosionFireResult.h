@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
+#include "Entities/Actions/PHY_FireResults_ABC.h"
 
 class MIL_RealObject_ABC;
 
@@ -29,11 +29,6 @@ class PHY_ObjectExplosionFireResult : public PHY_FireResults_ABC
 public:
     PHY_ObjectExplosionFireResult( const MIL_RealObject_ABC& object );
     virtual ~PHY_ObjectExplosionFireResult();
-
-    //! @name Debug
-    //@{
-//    virtual void Dump() const;
-    //@}
 
 private:
     const MIL_RealObject_ABC& object_;

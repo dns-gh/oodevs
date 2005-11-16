@@ -57,32 +57,32 @@ MOS_FireResult::~MOS_FireResult()
 // Name: MOS_FireResult::Initialize
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-void MOS_FireResult::Initialize( const ASN1T_FireResult& asnMsg )
+void MOS_FireResult::Initialize( const ASN1T_FireDamagesPion& asnMsg )
 {
-    pTarget_ = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.oid_cible );
+    pTarget_ = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.cible );
     assert( pTarget_ );
 
-    for( uint i = 0; i < asnMsg.resultats_equipements.n; ++i )
+    for( uint i = 0; i < asnMsg.equipements.n; ++i )
     {
-        const MOS_TypeComposante* pType = MOS_App::GetApp().GetAgentManager().FindTypeComposante( asnMsg.resultats_equipements.elem[ i ].type_equipement );
+        const MOS_TypeComposante* pType = MOS_App::GetApp().GetAgentManager().FindTypeComposante( asnMsg.equipements.elem[ i ].type_equipement );
         assert( pType );
         std::stringstream ss;
         ss  << pType->GetName() << " - [" 
-            << asnMsg.resultats_equipements.elem[ i ].nb_disponibles   << " "
-            << asnMsg.resultats_equipements.elem[ i ].nb_indisponibles << " "
-            << asnMsg.resultats_equipements.elem[ i ].nb_reparables    << "]";
+            << asnMsg.equipements.elem[ i ].nb_disponibles   << " "
+            << asnMsg.equipements.elem[ i ].nb_indisponibles << " "
+            << asnMsg.equipements.elem[ i ].nb_reparables    << "]";
         equipments_.push_back( ss.str() );
     }
 
-    for( uint i = 0; i < asnMsg.resultats_humains.n; ++i )
+    for( uint i = 0; i < asnMsg.humains.n; ++i )
     {
         T_FireResultHuman& result = *new T_FireResultHuman();
-        result.nBlessesUrgence1       = asnMsg.resultats_humains.elem[ i ].nb_blesses_urgence_1;
-        result.nBlessesUrgence2       = asnMsg.resultats_humains.elem[ i ].nb_blesses_urgence_2;
-        result.nBlessesUrgence3       = asnMsg.resultats_humains.elem[ i ].nb_blesses_urgence_3;
-        result.nBlessesUrgenceExtreme = asnMsg.resultats_humains.elem[ i ].nb_blesses_urgence_extreme;
-        result.nMorts                 = asnMsg.resultats_humains.elem[ i ].nb_morts;
-        result.nNonBlesses            = asnMsg.resultats_humains.elem[ i ].nb_non_blesses;
-        humans_.insert( std::make_pair( asnMsg.resultats_humains.elem[ i ].rang, &result ) );
+        result.nBlessesUrgence1       = asnMsg.humains.elem[ i ].nb_blesses_urgence_1;
+        result.nBlessesUrgence2       = asnMsg.humains.elem[ i ].nb_blesses_urgence_2;
+        result.nBlessesUrgence3       = asnMsg.humains.elem[ i ].nb_blesses_urgence_3;
+        result.nBlessesUrgenceExtreme = asnMsg.humains.elem[ i ].nb_blesses_urgence_extreme;
+        result.nMorts                 = asnMsg.humains.elem[ i ].nb_morts;
+        result.nNonBlesses            = asnMsg.humains.elem[ i ].nb_non_blesses;
+        humans_.insert( std::make_pair( asnMsg.humains.elem[ i ].rang, &result ) );
     }
 }

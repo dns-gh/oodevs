@@ -18,7 +18,7 @@ class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_ComposantePion;
 class PHY_ComposanteState;
-class PHY_AgentFireResult;
+class PHY_FireDamages_Agent;
 class MIL_NbcAgentType;
 class MIL_AutomateLOG;
 class PHY_Human;
@@ -47,9 +47,9 @@ public:
     bool ChangeHumanRank  ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
     void ApplyWounds      ( const MIL_NbcAgentType& nbcAgentType );
-    void ApplyWounds      ( const PHY_ComposanteState& newCompState, PHY_AgentFireResult& fireResult );
+    void ApplyWounds      ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     void KillAllHumans    ();
-    void KillAllHumans    ( PHY_AgentFireResult& fireResult );
+    void KillAllHumans    ( PHY_FireDamages_Agent& fireDamages );
 
     uint WoundHumans      ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
     uint HealHumans       ( const PHY_HumanRank& rank, uint nNbrToChange );

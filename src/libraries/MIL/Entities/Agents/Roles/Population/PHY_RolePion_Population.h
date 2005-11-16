@@ -58,7 +58,7 @@ public:
 
             void EnableInvulnerability ();
             void DisableInvulnerability();
-    virtual bool IsInvulnerable() const;
+    virtual bool IsInvulnerable        () const;
     //@}
 
     //! @name Network

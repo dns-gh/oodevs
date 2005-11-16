@@ -46,7 +46,9 @@
 #include "MIL_RC_Trace.h"
 #include "MIL_RC_TraceID.h"
 
+
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 

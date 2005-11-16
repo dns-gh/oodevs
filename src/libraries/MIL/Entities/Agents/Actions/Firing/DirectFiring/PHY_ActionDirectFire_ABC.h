@@ -17,7 +17,7 @@
 #include "Entities/Actions/PHY_Action_ABC.h"
 #include "PHY_RoleAction_DirectFiring.h"
 
-class PHY_DirectFireResults;
+class PHY_FireResults_Pion;
 class PHY_AmmoDotationClass;
 class MIL_AgentPion;
 
@@ -50,7 +50,7 @@ private:
     const PHY_DirectFireData::E_FiringMode           nFiringMode_;
     const PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType_;
     const PHY_AmmoDotationClass*                     pAmmoDotationClass_;
-          PHY_DirectFireResults*                     pFireResult_;
+          PHY_FireResults_Pion*                      pFireResult_;
 };
 
 #include "PHY_ActionDirectFire_ABC.inl"

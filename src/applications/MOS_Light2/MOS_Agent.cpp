@@ -141,7 +141,7 @@ void MOS_Agent::Initialize()
     bEmbraye_                     = false;
     nSpeed_                       = 0;
     nFightRateState_              = eEtatRapFor_None;
-    nRulesOfEngagementState_      = eReglesEngagement_None;
+    nRulesOfEngagementState_      = eRoe_None;
     nCloseCombatState_            = eEtatCombatRencontre_None;
     bLoadingState_                = true;
     bHumanTransportersReady_      = true;
@@ -475,8 +475,8 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.rapport_de_forcePresent )
         nFightRateState_ = (E_EtatRapFor)asnMsg.rapport_de_force;
 
-    if( asnMsg.m.regles_d_engagementPresent )
-        nRulesOfEngagementState_ = (E_ReglesEngagement)asnMsg.regles_d_engagement;
+    if( asnMsg.m.roePresent )
+        nRulesOfEngagementState_ = (E_Roe)asnMsg.roe;
 
     if( asnMsg.m.combat_de_rencontrePresent )
         nCloseCombatState_ = (E_EtatCombatRencontre)asnMsg.combat_de_rencontre;
@@ -1224,7 +1224,7 @@ void MOS_Agent::TerminateConsign( MOS_LogMedicalConsign& consign )
 // Name: MOS_Agent::OnReceiveMsgStopFire
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg )
+void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg )
 {
     MOS_FireResult& fireResult = *new MOS_FireResult();
     fireResult.Initialize( asnMsg );

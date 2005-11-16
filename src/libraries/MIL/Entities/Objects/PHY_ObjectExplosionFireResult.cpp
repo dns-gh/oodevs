@@ -12,6 +12,7 @@
 #include "MIL_pch.h"
 
 #include "PHY_ObjectExplosionFireResult.h"
+
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
@@ -22,7 +23,7 @@
 // -----------------------------------------------------------------------------
 PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_RealObject_ABC& object )
     : PHY_FireResults_ABC()
-    , object_           ( object )
+    , object_            ( object )
 {
 }
 
@@ -34,22 +35,13 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 {
     NET_ASN_MsgExplosion asnMsg;
     asnMsg.GetAsnMsg().oid_objet   = object_ .GetID();
-    asnMsg.GetAsnMsg().resultats.n = results_.size ();
 
-    if( !results_.empty() )
-    {
-        ASN1T_FireResult* pResults = new ASN1T_FireResult[ results_.size() ]; 
-        uint i = 0;
-        for( CIT_ResultMap itResult = results_.begin(); itResult != results_.end(); ++itResult )
-            itResult->second.Serialize( *itResult->first, pResults[ i++ ] );
-        asnMsg.GetAsnMsg().resultats.elem = pResults;
-    }
+    Serialize( asnMsg.GetAsnMsg().degats_pions       );
+    Serialize( asnMsg.GetAsnMsg().degats_populations );
     
     asnMsg.Send();
 
-    for( uint n = 0; n < asnMsg.GetAsnMsg().resultats.n; ++n )  
-        PHY_AgentFireResult::CleanAfterSerialization( asnMsg.GetAsnMsg().resultats.elem[ n ] );
-    if( asnMsg.GetAsnMsg().resultats.n > 0 )
-        delete [] asnMsg.GetAsnMsg().resultats.elem;
+    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_pions       );
+    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_populations );    
 }
 

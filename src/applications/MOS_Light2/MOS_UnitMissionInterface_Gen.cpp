@@ -3027,13 +3027,13 @@ void MOS_UnitMissionInterface::CreateMission_Generique()
     ASN1T_Mission_Pion_Generique& asnMission = *new ASN1T_Mission_Pion_Generique();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_generique;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_generique = &asnMission;
-    CreatePolygonList( asnMission.zones, "Zones", true );
-    CreatePointList( asnMission.points, "Points", true );
-    CreatePathList( asnMission.itineraires, "Itineraires", true );
+    CreatePolygonList( asnMission.zones, "Zones", false );
+    CreatePointList( asnMission.points, "Points", false );
+    CreatePathList( asnMission.itineraires, "Itineraires", false );
     CreateAgentList( asnMission.unites, "Unites", false );
     CreateAutomateList( asnMission.automates, "Automates", false );
-    CreateAgentKnowledgeList( asnMission.connaissances_agents, "Connaissances agents", true );
-    CreateObjectKnowledgeList( asnMission.connaissances_objets, "Connaissances objets", true );
+    CreateAgentKnowledgeList( asnMission.connaissances_agents, "Connaissances agents", false );
+    CreateObjectKnowledgeList( asnMission.connaissances_objets, "Connaissances objets", false );
 }
 
 // -----------------------------------------------------------------------------

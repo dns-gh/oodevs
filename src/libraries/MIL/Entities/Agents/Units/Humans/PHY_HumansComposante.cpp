@@ -15,8 +15,8 @@
 
 #include "PHY_Human.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Actions/Firing/PHY_AgentFireResult.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
+#include "Entities/Actions/PHY_FireDamages_Agent.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_HumansComposante, "PHY_HumansComposante" )
 
@@ -89,14 +89,14 @@ void PHY_HumansComposante::KillAllHumans()
 // Name: PHY_HumansComposante::ChangeAllHumansWound
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::KillAllHumans( PHY_AgentFireResult& fireResult )
+void PHY_HumansComposante::KillAllHumans( PHY_FireDamages_Agent& fireDamages )
 {
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end() ; ++it )
     {
         PHY_Human& human = **it;
         const PHY_HumanWound& oldWound = human.GetWound();
         if( human.ChangeWound( PHY_HumanWound::killed_ ) )
-            fireResult.NotifyHumanWoundChanged( human, oldWound );
+            fireDamages.NotifyHumanWoundChanged( human, oldWound );
     }
 }
 
@@ -164,7 +164,7 @@ uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToCh
 // Name: PHY_HumansComposante::ApplyWounds
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposanteState, PHY_AgentFireResult& fireResult )
+void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposanteState, PHY_FireDamages_Agent& fireDamages )
 {
     std::random_shuffle( humans_.begin(), humans_.end() );
 
@@ -182,7 +182,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
             -- nNbrToDo;
             const PHY_HumanWound& oldWound = human.GetWound();
             if( human.ApplyWound() )
-                fireResult.NotifyHumanWoundChanged( human, oldWound );
+                fireDamages.NotifyHumanWoundChanged( human, oldWound );
         }
         human.ApplyMentalDisease();
     }

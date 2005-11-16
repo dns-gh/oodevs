@@ -35,7 +35,7 @@ class PHY_DirectFireData;
 class PHY_IndirectFireData;
 class PHY_IndirectFireDotationClass;
 class PHY_SmokeData;
-class PHY_AgentFireResult;
+class PHY_FireDamages_Agent;
 class PHY_AttritionData;
 class PHY_Breakdown;
 class PHY_MaintenanceComposanteState;
@@ -134,13 +134,13 @@ public:
     void     FillIndirectFireData           ( PHY_IndirectFireData& data );
     void     FillIndirectFireData           ( PHY_SmokeData&        data );
 
-    void     ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_AgentFireResult& fireResult );
-    void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
-    void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult );
-    void     ApplyExplosion                 ( const MIL_RealObjectType& objectType, PHY_AgentFireResult& result );
+    void     ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
+    void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
+    void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
+    void     ApplyExplosion                 ( const MIL_RealObjectType& objectType                                                      , PHY_FireDamages_Agent& fireDamages );
     void     ApplyContamination             ( const MIL_NbcAgentType& nbcAgentType );
     uint     GetNeutralizationTime          () const;
-    void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_AgentFireResult& fireResult );
+    void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
     MT_Float GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwFirerAndTarget ) const;
     MT_Float GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
     MT_Float GetMaxRangeToFireOn            ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
@@ -223,7 +223,7 @@ private:
 private:
     //! @name Tools
     //@{
-    void ApplyFire           ( const PHY_AttritionData& attritionData, PHY_AgentFireResult& fireResult );
+    void ApplyFire           ( const PHY_AttritionData& attritionData, PHY_FireDamages_Agent& fireDamages );
     bool CanBeUsed           () const;
     bool CanBeUsedForMove    () const;
     void ManageEndMaintenance();

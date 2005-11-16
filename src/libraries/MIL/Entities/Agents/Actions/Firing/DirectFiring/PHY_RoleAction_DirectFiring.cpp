@@ -16,11 +16,11 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
+#include "Entities/Actions/PHY_FireResults_Default.h"
+#include "Entities/Objects/MIL_ControlZone.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
-#include "PHY_DirectFireResults.h"
-#include "PHY_ControlZoneFireResults.h"
-#include "Entities/Objects/MIL_ControlZone.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_DirectFiring, "PHY_RoleAction_DirectFiring" )
 
@@ -90,7 +90,7 @@ MIL_Agent_ABC* PHY_RoleAction_DirectFiring::GetTarget( uint nTargetKnowledgeID )
 // Name: PHY_RoleAction_DirectFiring::Fire
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::Fire( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_DirectFireResults& fireResult )
+void PHY_RoleAction_DirectFiring::Fire( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
 {
     assert( pPion_ );
 
@@ -146,7 +146,7 @@ void PHY_RoleAction_DirectFiring::Fire( PHY_DirectFireData& firerWeapons, MIL_Ag
 // Name: PHY_RoleAction_DirectFiring::Fire
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireResults*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
+int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
     MIL_Agent_ABC* pTarget = GetTarget( nTargetKnowledgeID );
     if( !pTarget )
@@ -158,7 +158,7 @@ int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, PHY_DirectFireDa
     assert( pPion_ );
     
     if( !pFireResult )
-        pFireResult = new PHY_DirectFireResults( *pPion_, *pTarget );
+        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
 
     pPion_ ->NotifyAttacking ( *pTarget );
     pTarget->NotifyAttackedBy( *pPion_  );
@@ -206,10 +206,10 @@ void PHY_RoleAction_DirectFiring::FireSuspended( uint nTargetKnowledgeID )
 // Name: PHY_RoleAction_DirectFiring::FireZone
 // Created: NLD 2004-10-27
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FireZone( const MIL_ControlZone& zone, PHY_ControlZoneFireResults*& pFireResult )
+void PHY_RoleAction_DirectFiring::FireZone( const MIL_ControlZone& zone, PHY_FireResults_Default*& pFireResult )
 {
     if( !pFireResult )
-        pFireResult = new PHY_ControlZoneFireResults();
+        pFireResult = new PHY_FireResults_Default();
 
     assert( pPion_ );
 

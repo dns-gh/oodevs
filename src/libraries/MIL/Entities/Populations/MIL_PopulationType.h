@@ -77,9 +77,9 @@ private:
 
     //! @name Initialization
     //@{
-    void InitializeSlowDownData     ( MIL_InputArchive& archive );
-    void InitializePionAttritionData( MIL_InputArchive& archive );
-    void InitializeDiaFunctions     ();
+    void InitializeSlowDownData ( MIL_InputArchive& archive );
+    void InitializeFireData     ( MIL_InputArchive& archive );
+    void InitializeDiaFunctions ();
     //@}
 
 private:
@@ -93,6 +93,7 @@ private:
     };
     typedef std::vector< sSlowDownData >        T_VolumeSlowDownData;
     typedef std::vector< T_VolumeSlowDownData > T_AttitudeSlowDownData;
+    typedef std::vector< MT_Float >             T_DamageData;
     //@}
 
 private:
@@ -103,7 +104,7 @@ private:
           MT_Float                             rMaxSpeed_;
           T_AttitudeSlowDownData               slowDownData_;
           MIL_PopulationPionAttritionData      attritionData_;
-
+          T_DamageData                         damageData_;
 
     const DEC_ModelPopulation*                 pModel_;
           DIA_FunctionTable< MIL_Population >* pDIAFunctionTable_;

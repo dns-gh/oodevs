@@ -68,8 +68,8 @@ template< typename Archive >
 void MIL_IDManager::serialize( Archive& file )
 {
     units_                              .serialize( file );
-    directFireResults_                  .serialize( file );
-    indirectFireResults_                .serialize( file );
+    fireResultsPion_                    .serialize( file );
+    fireResultsPopulation_              .serialize( file );
     limas_                              .serialize( file );
     limits_                             .serialize( file );
     orders_                             .serialize( file );
@@ -78,7 +78,6 @@ void MIL_IDManager::serialize( Archive& file )
     maintenanceComposanteStates_        .serialize( file );
     medicalHumanStates_                 .serialize( file );
     supplyStates_                       .serialize( file );
-    populationFireResults_              .serialize( file );
     populations_                        .serialize( file );
     populationConcentrations_           .serialize( file );
     populationFlows_                    .serialize( file );

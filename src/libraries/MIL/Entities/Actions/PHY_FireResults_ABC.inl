@@ -10,13 +10,13 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_FireResults_ABC::GetAgentFireResult
-// Created: NLD 2004-10-06
+// Name: PHY_FireResults_ABC::GetDamages
+// Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
 inline
-PHY_AgentFireResult& PHY_FireResults_ABC::GetAgentFireResult( const MIL_Agent_ABC& target )
+PHY_FireDamages_Agent& PHY_FireResults_ABC::GetDamages( const MIL_Agent_ABC& target )
 {
-    return results_[ &target ];
+    return agentsDamages_[ &target ];
 }
 
 // -----------------------------------------------------------------------------

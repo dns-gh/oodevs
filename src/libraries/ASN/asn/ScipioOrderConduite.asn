@@ -16,14 +16,15 @@ IMPORTS EnumReglesEngagement    FROM ScipioUnitAttr;
 ----------------------------------------------------------------------------
 -- Ordres de conduite pions/automates
 ----------------------------------------------------------------------------
-OrderConduite-MettreTenueNBC          ::= NULL                 -- Dispo même sans mission
-OrderConduite-EnleverTenueNBC         ::= NULL                 -- Dispo même sans mission
-OrderConduite-PasserEnSilenceRadio    ::= NULL                 -- Dispo même sans mission
-OrderConduite-ArreterSilenceRadio     ::= NULL                 -- Dispo même sans mission
-OrderConduite-ChangerReglesEngagement ::= EnumReglesEngagement -- Dispo même sans mission
-OrderConduite-PasserEnSilenceRadar    ::= NULL                 -- Dispo même sans mission
-OrderConduite-ArreterSilenceRadar     ::= NULL                 -- Dispo même sans mission
-OrderConduite-RecupererTransporteurs  ::= NULL                 -- Dispo même sans mission, Infanterie : récupération des VABs
+OrderConduite-MettreTenueNBC                    ::= NULL                 -- Dispo même sans mission
+OrderConduite-EnleverTenueNBC                   ::= NULL                 -- Dispo même sans mission
+OrderConduite-PasserEnSilenceRadio              ::= NULL                 -- Dispo même sans mission
+OrderConduite-ArreterSilenceRadio               ::= NULL                 -- Dispo même sans mission
+OrderConduite-ChangerReglesEngagement           ::= EnumRoe              -- Dispo même sans mission
+OrderConduite-ChangerReglesEngagementPopulation ::= EnumRoe              -- Dispo même sans mission
+OrderConduite-PasserEnSilenceRadar              ::= NULL                 -- Dispo même sans mission
+OrderConduite-ArreterSilenceRadar               ::= NULL                 -- Dispo même sans mission
+OrderConduite-RecupererTransporteurs            ::= NULL                 -- Dispo même sans mission, Infanterie : récupération des VABs
 
 OrderConduite-AttendreSePoster             ::= NULL -- Dispo pour toutes les missions
 OrderConduite-Poursuivre                   ::= NULL -- Dispo pour toutes les missions
@@ -174,6 +175,7 @@ MsgOrderConduite ::= SEQUENCE
         order-conduite-poursuivre                                       OrderConduite-Poursuivre,
         order-conduite-interrompre                                      OrderConduite-Interrompre,        
         order-conduite-changer-regles-engagement                        OrderConduite-ChangerReglesEngagement,
+        order-conduite-changer-regles-engagement-population             OrderConduite-ChangerReglesEngagementPopulation,        
         order-conduite-deboucher                                        OrderConduite-Deboucher,
         order-conduite-decrocher                                        OrderConduite-Decrocher,                                                               
         order-conduite-acquerir-objectif                                OrderConduite-AcquerirObjectif,

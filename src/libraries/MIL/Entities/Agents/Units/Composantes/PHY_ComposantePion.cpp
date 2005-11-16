@@ -29,7 +29,6 @@
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/Logistic/Maintenance/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
-#include "Entities/Agents/Actions/Firing/PHY_AgentFireResult.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireData.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
@@ -37,6 +36,7 @@
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Populations/MIL_PopulationType.h"
+#include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/RC/MIL_RC.h"
 
 MT_Random PHY_ComposantePion::random_;
@@ -418,19 +418,19 @@ void PHY_ComposantePion::FillIndirectFireData( PHY_SmokeData& data )
 // Name: PHY_ComposantePion::ApplyHumansWounds
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages )
 {
     const PHY_ComposanteState& oldState = *pState_;
-    humans_.ApplyWounds( composanteNewState, fireResult );
+    humans_.ApplyWounds( composanteNewState, fireDamages );
     if( nNbrUsableHumans_ == 0 )
-        fireResult.NotifyComposanteStateChanged( *this, oldState, PHY_ComposanteState::dead_ );
+        fireDamages.NotifyComposanteStateChanged( *this, oldState, PHY_ComposanteState::dead_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pRole_ );
     assert( pType_ );
@@ -439,22 +439,22 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
     const PHY_ComposanteState& tmpState  = attritionData.ComputeComposanteState();
     const PHY_ComposanteState* pNewState = &tmpState;
 
-    ApplyHumansWounds( *pNewState, fireResult );    
-    pRole_->WoundLoadedHumans( *this, *pNewState, fireResult );
+    ApplyHumansWounds( *pNewState, fireDamages );    
+    pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
 
     if ( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
 
     if ( *pNewState < *pState_ )
     {
-        fireResult.NotifyComposanteStateChanged( *this, *pState_, *pNewState );
+        fireDamages.NotifyComposanteStateChanged( *this, *pState_, *pNewState );
         const PHY_ComposanteState* pOldState = pState_;
         pState_                              = pNewState;
 
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
                 pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
         else if( *pState_ == PHY_ComposanteState::dead_ )
-            humans_.KillAllHumans( fireResult );        
+            humans_.KillAllHumans( fireDamages );        
         ManageEndMaintenance();
        
         pRole_->NotifyComposanteChanged ( *this, *pOldState );
@@ -465,43 +465,43 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
 // Name: PHY_ComposantePion::ApplyExplosion
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyExplosion( const MIL_RealObjectType& objectType, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( objectType.GetAttritionData( pType_->GetProtection() ), fireResult );
+    ApplyFire( objectType.GetAttritionData( pType_->GetProtection() ), fireDamages );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyPopulationFire
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection() ), fireResult );
+    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection() ), fireDamages );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyDirectFire
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireResult );
+    ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireDamages );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyIndirectFire
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_AgentFireResult& fireResult )
+void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
 
     assert( dotationCategory.GetIndirectFireData() );
     if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion() ) )
-        ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireResult );
+        ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireDamages );
 }
 
 // -----------------------------------------------------------------------------

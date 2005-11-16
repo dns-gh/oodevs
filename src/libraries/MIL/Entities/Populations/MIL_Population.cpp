@@ -292,7 +292,7 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 // Name: MIL_Population::FireOnPions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_PopulationFireResults& fireResult )
+void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult )
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         (**itConcentration).FireOnPions( rIntensity, fireResult );
@@ -305,7 +305,7 @@ void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_PopulationFireResults
 // Name: MIL_Population::FireOnPion
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult )
+void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestElement( target.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 

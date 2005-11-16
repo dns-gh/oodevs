@@ -741,15 +741,6 @@ ENT_Tr::T_ConverterEtatRapFor ENT_Tr::EtatRapForConverter_[] =
     T_ConverterEtatRapFor( "", "", (E_EtatRapFor)-1 )
 };
 
-ENT_Tr::T_ConverterReglesEngagement ENT_Tr::ReglesEngagementConverter_[] =
-{
-    T_ConverterReglesEngagement( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eReglesEngagement_None ),
-    T_ConverterReglesEngagement( "tir libre", QT_TRANSLATE_NOOP( "ENT_Tr", "tir libre" ), eReglesEngagement_TirLibre ),
-    T_ConverterReglesEngagement( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "tir sur riposte" ), eReglesEngagement_TirSurRiposte ),
-    T_ConverterReglesEngagement( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "tir interdit" ), eReglesEngagement_TirInterdit ),
-    T_ConverterReglesEngagement( "", "", (E_ReglesEngagement)-1 )
-};
-
 ENT_Tr::T_ConverterEtatCombatRencontre ENT_Tr::EtatCombatRencontreConverter_[] =
 {
     T_ConverterEtatCombatRencontre( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eEtatCombatRencontre_None ),
@@ -773,6 +764,25 @@ ENT_Tr::T_ConverterDisponibiliteAuTir ENT_Tr::DisponibiliteAuTirConverter_[] =
     T_ConverterDisponibiliteAuTir( "pret au tir", QT_TRANSLATE_NOOP( "ENT_Tr", "pret au tir" ), eDisponibiliteAuTir_PretAuTir ),
     T_ConverterDisponibiliteAuTir( "indisponible", QT_TRANSLATE_NOOP( "ENT_Tr", "indisponible" ), eDisponibiliteAuTir_Indisponible ),
     T_ConverterDisponibiliteAuTir( "", "", (E_DisponibiliteAuTir)-1 )
+};
+
+ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
+{
+    T_ConverterRoe( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eRoe_None ),
+    T_ConverterRoe( "tir libre", QT_TRANSLATE_NOOP( "ENT_Tr", "tir libre" ), eRoe_TirLibre ),
+    T_ConverterRoe( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "tir sur riposte" ), eRoe_TirSurRiposte ),
+    T_ConverterRoe( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "tir interdit" ), eRoe_TirInterdit ),
+    T_ConverterRoe( "", "", (E_Roe)-1 )
+};
+
+ENT_Tr::T_ConverterRoePopulation ENT_Tr::RoePopulationConverter_[] =
+{
+    T_ConverterRoePopulation( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eRoePopulation_None ),
+    T_ConverterRoePopulation( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "tir interdit" ), eRoePopulation_TirInterdit ),
+    T_ConverterRoePopulation( "tir sommation", QT_TRANSLATE_NOOP( "ENT_Tr", "tir sommation" ), eRoePopulation_TirSommation ),
+    T_ConverterRoePopulation( "tir dissuasion", QT_TRANSLATE_NOOP( "ENT_Tr", "tir dissuasion" ), eRoePopulation_TirDissuasion ),
+    T_ConverterRoePopulation( "tir neutralisation", QT_TRANSLATE_NOOP( "ENT_Tr", "tir neutralisation" ), eRoePopulation_TirNeutralisation ),
+    T_ConverterRoePopulation( "", "", (E_RoePopulation)-1 )
 };
 
 ENT_Tr::T_ConverterUnitFatigue ENT_Tr::UnitFatigueConverter_[] =
@@ -855,6 +865,14 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
     T_ConverterPopulationAttitude( "excitee", QT_TRANSLATE_NOOP( "ENT_Tr", "excitee" ), ePopulationAttitude_Excitee ),
     T_ConverterPopulationAttitude( "agressive", QT_TRANSLATE_NOOP( "ENT_Tr", "agressive" ), ePopulationAttitude_Agressive ),
     T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
+};
+
+ENT_Tr::T_ConverterPopulationAttrErrorCode ENT_Tr::PopulationAttrErrorCodeConverter_[] =
+{
+    T_ConverterPopulationAttrErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), ePopulationAttrErrorCode_NoError ),
+    T_ConverterPopulationAttrErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), ePopulationAttrErrorCode_ErrorInvalidUnit ),
+    T_ConverterPopulationAttrErrorCode( "error invalid attribute", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid attribute" ), ePopulationAttrErrorCode_ErrorInvalidAttribute ),
+    T_ConverterPopulationAttrErrorCode( "", "", (E_PopulationAttrErrorCode)-1 )
 };
 
 
@@ -1233,6 +1251,7 @@ ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
     T_ConverterFragOrder( "Poursuivre", QT_TRANSLATE_NOOP( "ENT", "Poursuivre" ), eOrdreConduite_Poursuivre ),
     T_ConverterFragOrder( "Interrompre", QT_TRANSLATE_NOOP( "ENT", "Interrompre" ), eOrdreConduite_Interrompre ),
     T_ConverterFragOrder( "ChangerReglesEngagement", QT_TRANSLATE_NOOP( "ENT", "ChangerReglesEngagement" ), eOrdreConduite_ChangerReglesEngagement ),
+    T_ConverterFragOrder( "ChangerReglesEngagementPopulation", QT_TRANSLATE_NOOP( "ENT", "ChangerReglesEngagementPopulation" ), eOrdreConduite_ChangerReglesEngagementPopulation ),
     T_ConverterFragOrder( "Deboucher", QT_TRANSLATE_NOOP( "ENT", "Deboucher" ), eOrdreConduite_Deboucher ),
     T_ConverterFragOrder( "Decrocher", QT_TRANSLATE_NOOP( "ENT", "Decrocher" ), eOrdreConduite_Decrocher ),
     T_ConverterFragOrder( "AcquerirObjectif", QT_TRANSLATE_NOOP( "ENT", "AcquerirObjectif" ), eOrdreConduite_AcquerirObjectif ),
@@ -1326,10 +1345,11 @@ void ENT_Tr::InitTranslations()
     InitTr( AutomateStateConverter_, "ENT_Tr" );
     InitTr( UnitPostureConverter_, "ENT_Tr" );
     InitTr( EtatRapForConverter_, "ENT_Tr" );
-    InitTr( ReglesEngagementConverter_, "ENT_Tr" );
     InitTr( EtatCombatRencontreConverter_, "ENT_Tr" );
     InitTr( EtatOperationnelConverter_, "ENT_Tr" );
     InitTr( DisponibiliteAuTirConverter_, "ENT_Tr" );
+    InitTr( RoeConverter_, "ENT_Tr" );
+    InitTr( RoePopulationConverter_, "ENT_Tr" );
     InitTr( UnitFatigueConverter_, "ENT_Tr" );
     InitTr( UnitMoralConverter_, "ENT_Tr" );
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
@@ -1339,6 +1359,7 @@ void ENT_Tr::InitTranslations()
     InitTr( ActionReagirFaceAEniConverter_, "ENT_Tr" );
     InitTr( TC2GererMaterielAvantDeplacementConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
+    InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
 
     InitTr( automataMissionConverter_ );
     InitTr( unitMissionConverter_ );
@@ -1816,15 +1837,6 @@ const std::string& ENT_Tr::ConvertFromEtatRapFor( E_EtatRapFor nValue, ENT_Tr_AB
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromReglesEngagement
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromReglesEngagement( E_ReglesEngagement nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ReglesEngagementConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromEtatCombatRencontre
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1849,6 +1861,24 @@ const std::string& ENT_Tr::ConvertFromEtatOperationnel( E_EtatOperationnel nValu
 const std::string& ENT_Tr::ConvertFromDisponibiliteAuTir( E_DisponibiliteAuTir nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( DisponibiliteAuTirConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromRoe
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromRoe( E_Roe nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( RoeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromRoePopulation
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromRoePopulation( E_RoePopulation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( RoePopulationConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1930,6 +1960,15 @@ const std::string& ENT_Tr::ConvertFromTC2GererMaterielAvantDeplacement( E_TC2Ger
 const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( PopulationAttitudeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromPopulationAttrErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( PopulationAttrErrorCodeConverter_, nValue, nConverterType );
 }
 
 
@@ -2442,15 +2481,6 @@ E_EtatRapFor ENT_Tr::ConvertToEtatRapFor( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToReglesEngagement
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ReglesEngagement ENT_Tr::ConvertToReglesEngagement( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ReglesEngagementConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToEtatCombatRencontre
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2475,6 +2505,24 @@ E_EtatOperationnel ENT_Tr::ConvertToEtatOperationnel( const std::string& strName
 E_DisponibiliteAuTir ENT_Tr::ConvertToDisponibiliteAuTir( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( DisponibiliteAuTirConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToRoe
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_Roe ENT_Tr::ConvertToRoe( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( RoeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToRoePopulation
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_RoePopulation ENT_Tr::ConvertToRoePopulation( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( RoePopulationConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2556,6 +2604,15 @@ E_TC2GererMaterielAvantDeplacement ENT_Tr::ConvertToTC2GererMaterielAvantDeplace
 E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToPopulationAttrErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_PopulationAttrErrorCode ENT_Tr::ConvertToPopulationAttrErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( PopulationAttrErrorCodeConverter_, strName );
 }
 
 

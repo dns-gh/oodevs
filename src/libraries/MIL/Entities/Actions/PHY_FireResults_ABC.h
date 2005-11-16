@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "PHY_AgentFireResult.h"
+#include "PHY_FireDamages_Agent.h"
 
 class MIL_Agent_ABC;
 
@@ -32,7 +32,7 @@ public:
 
     //! @name Accessors
     //@{
-    PHY_AgentFireResult& GetAgentFireResult( const MIL_Agent_ABC& target );
+    PHY_FireDamages_Agent& GetDamages( const MIL_Agent_ABC& target );
     //@}
 
     //! @name Refs
@@ -42,15 +42,24 @@ public:
     //@}
 
 protected:
-    //! @name Types
+    //! @name Network tools
     //@{
-    typedef std::map< const MIL_Agent_ABC*, PHY_AgentFireResult > T_ResultMap;
-    typedef T_ResultMap::const_iterator                           CIT_ResultMap;
+           void Serialize              ( ASN1T_FireDamagesPions&       asn ) const;
+           void Serialize              ( ASN1T_FireDamagesPopulations& asn ) const;
+    static void CleanAfterSerialization( ASN1T_FireDamagesPions&       asn );
+    static void CleanAfterSerialization( ASN1T_FireDamagesPopulations& asn );
     //@}
 
-protected:
-    T_ResultMap results_;
-    uint        nNbrRefs_;
+private:
+    //! @name Types
+    //@{
+    typedef std::map< const MIL_Agent_ABC*, PHY_FireDamages_Agent > T_AgentDamagesMap;
+    typedef T_AgentDamagesMap::const_iterator                       CIT_AgentDamagesMap;
+    //@}
+
+private:
+    T_AgentDamagesMap agentsDamages_;
+    uint              nNbrRefs_;
 };
 
 #include "PHY_FireResults_ABC.inl"

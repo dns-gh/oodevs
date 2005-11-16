@@ -22,7 +22,7 @@
 #include "MIL_PopulationAttitude.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
-#include "Entities/Populations/Actions/PHY_PopulationFireResults.h"
+#include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -106,7 +106,7 @@ MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target 
 // Name: MIL_PopulationElement_ABC::FireOnPion
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult )
+void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
     if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
@@ -129,7 +129,7 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
 // Name: MIL_PopulationElement_ABC::FireOnPions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::FireOnPions( MT_Float rIntensity, PHY_PopulationFireResults& fireResult )
+void MIL_PopulationElement_ABC::FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
     for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )

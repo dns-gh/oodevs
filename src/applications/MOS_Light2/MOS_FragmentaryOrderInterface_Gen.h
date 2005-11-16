@@ -28,6 +28,7 @@
     void CreateOrder_Poursuivre();
     void CreateOrder_Interrompre();
     void CreateOrder_ChangerReglesEngagement();
+    void CreateOrder_ChangerReglesEngagementPopulation();
     void CreateOrder_Deboucher();
     void CreateOrder_Decrocher();
     void CreateOrder_AcquerirObjectif();

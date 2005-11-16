@@ -392,6 +392,7 @@ namespace missions
         eOrdreConduite_Poursuivre,
         eOrdreConduite_Interrompre,
         eOrdreConduite_ChangerReglesEngagement,
+        eOrdreConduite_ChangerReglesEngagementPopulation,
         eOrdreConduite_Deboucher,
         eOrdreConduite_Decrocher,
         eOrdreConduite_AcquerirObjectif,

@@ -23,7 +23,7 @@ class MIL_AgentPion;
 class PHY_Weapon;
 class PHY_DotationCategory;
 class PHY_WeaponDataType_IndirectFire;
-class PHY_IndirectFireResults;
+class PHY_FireResults_Pion;
 
 // =============================================================================
 // @class  MIL_Effect_IndirectFire
@@ -81,7 +81,7 @@ private:
           uint                           nNbrAmmoFired_;
           bool                           bIsFlying_;
           MT_Float                       rImpactTimeStep_;
-          PHY_IndirectFireResults*       pFireResult_;
+          PHY_FireResults_Pion*          pFireResult_;
 };
 
 #include "MIL_Effect_IndirectFire.inl"

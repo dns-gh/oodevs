@@ -23,6 +23,7 @@
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 
@@ -97,6 +98,8 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     , rMaxSpeed_            ( 0. )
     , pModel_               ( 0 )
     , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
+    , attritionData_        ()
+    , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), 0. )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     archive.ReadField( "MosID"                     , nID_                   );
@@ -106,8 +109,8 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
     archive.Section( "Effets" );
-    InitializeSlowDownData     ( archive );
-    InitializePionAttritionData( archive );
+    InitializeSlowDownData( archive );
+    InitializeFireData    ( archive );
     archive.EndSection(); // Effets
     
     std::string strModel;
@@ -129,7 +132,7 @@ MIL_PopulationType::~MIL_PopulationType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::InitializeSlowDownEffectData
+// Name: MIL_PopulationType::InitializeSlowDownData
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
@@ -186,13 +189,40 @@ void MIL_PopulationType::InitializeSlowDownData( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::InitializePionAttritionData
+// Name: MIL_PopulationType::InitializeFireData
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-void MIL_PopulationType::InitializePionAttritionData( MIL_InputArchive& archive )
+void MIL_PopulationType::InitializeFireData( MIL_InputArchive& archive )
 {
     archive.Section( "Tir" );
+
+    archive.Section( "Tireur" );
     attritionData_.Initialize( archive );
+    archive.EndSection(); // Tireur
+
+    archive.Section( "Cible" ); 
+    if( archive.BeginList( "ReglesEngagementTireur", MIL_InputArchive::eNothing ) )
+    {
+        while( archive.NextListElement() )
+        {
+            archive.Section( "RegleEngagementTireur" );
+
+            std::string strRoe;
+            archive.ReadAttribute( "nom", strRoe );
+            const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
+            if( !pRoe )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown population roe '%s'", strRoe.c_str() ), archive.GetContext() );
+            
+            assert( damageData_.size() > pRoe->GetID() );
+
+            archive.ReadField( "SurfaceAttrition", damageData_[ pRoe->GetID() ], CheckValueGreaterOrEqual( 0. ) );
+
+            archive.EndSection(); // RegleEngagementTireur
+        }
+        archive.EndList(); // ReglesEngagementTireur
+    }
+    archive.EndSection(); // Cible
+
     archive.EndSection(); // Tir
 }
 

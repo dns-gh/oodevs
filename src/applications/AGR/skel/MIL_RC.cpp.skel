@@ -18,6 +18,7 @@ $AGR_MIL_RCs_Includes$
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 
 MIL_RC::T_RCMap MIL_RC::rcs_;
 
@@ -49,6 +50,11 @@ const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_    
 const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_        = 0;
 const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_                = 0;
+const MIL_RC_UniteDetectee*                     MIL_RC::pRcUniteDetectee_                      = 0;
+const MIL_RC_UniteAmieReconnue*                 MIL_RC::pRcUniteAmieReconnue_                  = 0;
+const MIL_RC_UniteEnnemieReconnue*              MIL_RC::pRcUniteEnnemieReconnue_               = 0;
+const MIL_RC_UniteNeutreReconnue*               MIL_RC::pRcUniteNeutreReconnue_                = 0;
+const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -86,9 +92,11 @@ void MIL_RC::Initialize()
     pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];
     pRcPlusDeCarburant_                   =                                            rcs_[ eRC_PlusDeCarburant                   ];
     pRcTerrainDifficile_                  =                                            rcs_[ eRC_TerrainDifficile                  ];
-
-    // Internes Sim                                       
-//    rcs_[ eRC_MissionTerminee                            ] = new MIL_RC_MissionTerminee                ( eRC_MissionTerminee );      
+    pRcUniteDetectee_                     = (MIL_RC_UniteDetectee*)                    rcs_[ eRC_UniteDetectee                     ];
+    pRcUniteAmieReconnue_                 = (MIL_RC_UniteAmieReconnue*)                rcs_[ eRC_UniteAmieReconnue                 ];
+    pRcUniteEnnemieReconnue_              = (MIL_RC_UniteEnnemieReconnue*)             rcs_[ eRC_UniteEnnemieReconnue              ];
+    pRcUniteNeutreReconnue_               = (MIL_RC_UniteNeutreReconnue*)              rcs_[ eRC_UniteNeutreReconnue               ];
+    pRcObjetDetecte_                      = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                      ];
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +105,7 @@ void MIL_RC::Initialize()
 // -----------------------------------------------------------------------------
 void MIL_RC::Terminate()
 {
-    // Voir pb RC statiques et non statiques pour destruction
+    //$$ Voir pb RC statiques et non statiques pour destruction
 }
 
 // =============================================================================
@@ -152,6 +160,17 @@ void MIL_RC::Send( const MIL_AgentPion& sender, E_RcType nRcType, DIA_Parameters
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 void MIL_RC::Send( const MIL_Automate& sender, E_RcType nRcType, DIA_Parameters& /*parameters*/ ) const
+{
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nRcType );
+    asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RC::Send
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_RC::Send( const MIL_Population& sender, E_RcType nRcType, DIA_Parameters& /*parameters*/ ) const
 {
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nRcType );

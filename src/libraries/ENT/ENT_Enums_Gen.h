@@ -794,16 +794,6 @@ enum E_EtatRapFor
 };
 
 
-enum E_ReglesEngagement
-{
-    eReglesEngagement_None,
-    eReglesEngagement_TirLibre,
-    eReglesEngagement_TirSurRiposte,
-    eReglesEngagement_TirInterdit,
-    eNbrReglesEngagement
-};
-
-
 enum E_EtatCombatRencontre
 {
     eEtatCombatRencontre_None,
@@ -829,6 +819,27 @@ enum E_DisponibiliteAuTir
     eDisponibiliteAuTir_PretAuTir,
     eDisponibiliteAuTir_Indisponible,
     eNbrDisponibiliteAuTir
+};
+
+
+enum E_Roe
+{
+    eRoe_None,
+    eRoe_TirLibre,
+    eRoe_TirSurRiposte,
+    eRoe_TirInterdit,
+    eNbrRoe
+};
+
+
+enum E_RoePopulation
+{
+    eRoePopulation_None,
+    eRoePopulation_TirInterdit,
+    eRoePopulation_TirSommation,
+    eRoePopulation_TirDissuasion,
+    eRoePopulation_TirNeutralisation,
+    eNbrRoePopulation
 };
 
 
@@ -920,6 +931,15 @@ enum E_PopulationAttitude
     ePopulationAttitude_Excitee,
     ePopulationAttitude_Agressive,
     eNbrPopulationAttitude
+};
+
+
+enum E_PopulationAttrErrorCode
+{
+    ePopulationAttrErrorCode_NoError,
+    ePopulationAttrErrorCode_ErrorInvalidUnit,
+    ePopulationAttrErrorCode_ErrorInvalidAttribute,
+    eNbrPopulationAttrErrorCode
 };
 
 
@@ -1299,6 +1319,7 @@ enum E_FragOrder
     eOrdreConduite_Poursuivre,
     eOrdreConduite_Interrompre,
     eOrdreConduite_ChangerReglesEngagement,
+    eOrdreConduite_ChangerReglesEngagementPopulation,
     eOrdreConduite_Deboucher,
     eOrdreConduite_Decrocher,
     eOrdreConduite_AcquerirObjectif,

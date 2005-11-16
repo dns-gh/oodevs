@@ -72,7 +72,7 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const ASN1T_FireResult& asnMsg );
+    void Initialize( const ASN1T_FireDamagesPion& asnMsg );
     //@}
 
     //! @name Accessors

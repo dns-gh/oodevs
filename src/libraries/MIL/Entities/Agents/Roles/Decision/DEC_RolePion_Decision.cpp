@@ -15,6 +15,7 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/Pion/MIL_PionMissionType.h"
@@ -62,12 +63,13 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MT_RoleContainer& role, MIL_AgentP
     , pPion_                    ( &pion )
     , DIA_Engine                ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_        ( pion, pion.GetType().GetFunctionTable() )
-    , nForceRatioState_         ( eForceRatioStateNone  )
-    , nRulesOfEngagementState_  ( eRoeStateNone         )
-    , nCloseCombatState_        ( eCloseCombatStateNone )
-    , nOperationalState_        ( eOpStateOperational   )
-    , nIndirectFireAvailability_( eFireAvailabilityNone )
-    , bStateHasChanged_         ( true                  )
+    , nForceRatioState_         ( eForceRatioStateNone         )
+    , nRulesOfEngagementState_  ( eRoeStateNone                )
+    , nCloseCombatState_        ( eCloseCombatStateNone        )
+    , nOperationalState_        ( eOpStateOperational          )
+    , nIndirectFireAvailability_( eFireAvailabilityNone        )
+    , pRoePopulation_           ( &PHY_RoePopulation::none_    )
+    , bStateHasChanged_         ( true                         )
 {
     RegisterUserFunctionCaller( diaFunctionCaller_ );
     
@@ -105,13 +107,13 @@ DEC_RolePion_Decision::DEC_RolePion_Decision()
     : pPion_                    ( 0 )
     , DIA_Engine                ( *DIA_TypeManager::Instance().GetType( "T_Pion" ), "" )
     , diaFunctionCaller_        ( *(MIL_AgentPion*)0, *(DIA_FunctionTable< MIL_AgentPion >*)1 ) // $$$$ JVT : Eurkkk
-    , nForceRatioState_         ( eForceRatioStateNone   )
-    , nRulesOfEngagementState_  ( eRoeStateNone          )
-    , nCloseCombatState_        ( eCloseCombatStateNone  )
-    , nOperationalState_        ( eOpStateOperational    )
-    , nIndirectFireAvailability_( eFireAvailabilityNone  )
-    , bStateHasChanged_         ( true                   )
-    , paths_                    ()
+    , nForceRatioState_         ( eForceRatioStateNone      )
+    , nRulesOfEngagementState_  ( eRoeStateNone             )
+    , nCloseCombatState_        ( eCloseCombatStateNone     )
+    , nOperationalState_        ( eOpStateOperational       )
+    , nIndirectFireAvailability_( eFireAvailabilityNone     )
+    , pRoePopulation_           ( &PHY_RoePopulation::none_ )
+    , bStateHasChanged_         ( true                      )
 {
 }
 
@@ -136,6 +138,9 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 {
+    assert( pRoePopulation_ );
+    assert( pPion_ );
+
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
          >> pPion_
          >> nForceRatioState_
@@ -143,9 +148,11 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
          >> nCloseCombatState_
          >> nOperationalState_
          >> nIndirectFireAvailability_;
-    
-    assert( pPion_ );
-    
+
+    uint nRoePopulationID;
+    file >> nRoePopulationID;
+    pRoePopulation_ = PHY_RoePopulation::Find( nRoePopulationID );
+       
     uint nPionTypeID;
     file >> nPionTypeID;
           
@@ -208,6 +215,7 @@ void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) c
          << nCloseCombatState_
          << nOperationalState_
          << nIndirectFireAvailability_
+         << pRoePopulation_->GetID()
          << pPion_->GetType().GetID()
          << const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIANameIdx_     ).ToString()  // $$$$ JVT : Beark
          << static_cast< DEC_AutomateDecision* >( const_cast< DEC_RolePion_Decision& >( *this ).GetVariable( nDIAAutomateIdx_ ).ToObject() ) // $$$$ JVT : Beark Arrrg
@@ -327,6 +335,20 @@ void DEC_RolePion_Decision::NotifyAutomateChanged()
     GetVariable( nDIAAutomateIdx_ ).SetValue( pPion_->GetAutomate().GetDecision() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::NotifyRoePopulationChanged
+// Created: NLD 2005-11-15
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation& roe )
+{
+    assert( pRoePopulation_ );
+    if( roe != *pRoePopulation_ )
+    {
+        pRoePopulation_   = &roe;
+        bStateHasChanged_ = true;
+    }
+}
+
 // =============================================================================
 // UPDATE
 // =============================================================================
@@ -366,17 +388,21 @@ void DEC_RolePion_Decision::UpdateDecision()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.rapport_de_forcePresent              = 1;
-    msg.GetAsnMsg().m.regles_d_engagementPresent           = 1;
+    assert( pRoePopulation_ );
+
+    msg.GetAsnMsg().m.rapport_de_forcePresent              = 1;    
     msg.GetAsnMsg().m.combat_de_rencontrePresent           = 1;
     msg.GetAsnMsg().m.etat_operationnelPresent             = 1;
     msg.GetAsnMsg().m.disponibilite_au_tir_indirectPresent = 1;
+    msg.GetAsnMsg().m.roePresent                           = 1;
+    msg.GetAsnMsg().m.roe_populationPresent                = 1;
 
     msg.GetAsnMsg().rapport_de_force              = (ASN1T_EnumEtatRapFor)nForceRatioState_;
-    msg.GetAsnMsg().regles_d_engagement           = (ASN1T_EnumReglesEngagement)nRulesOfEngagementState_;
     msg.GetAsnMsg().combat_de_rencontre           = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
     msg.GetAsnMsg().etat_operationnel             = (ASN1T_EnumEtatOperationnel)nOperationalState_;
     msg.GetAsnMsg().disponibilite_au_tir_indirect = (ASN1T_EnumDisponibiliteAuTir)nIndirectFireAvailability_;
+    msg.GetAsnMsg().roe                           = (ASN1T_EnumRoe)nRulesOfEngagementState_;
+    msg.GetAsnMsg().roe_population                = pRoePopulation_->GetAsnID();
 }
 
 // -----------------------------------------------------------------------------

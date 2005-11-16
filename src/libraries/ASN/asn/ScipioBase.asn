@@ -54,8 +54,7 @@ ListPoint        ::= SEQUENCE OF Point
 --
 OID                 ::= INTEGER (0..max-uint32)
 ListOID             ::= SEQUENCE OF OID
-TirIndirect         ::= OID
-TirDirect           ::= OID
+TirPion             ::= OID
 TirPopulation       ::= OID
 Agent               ::= OID
 Automate            ::= OID

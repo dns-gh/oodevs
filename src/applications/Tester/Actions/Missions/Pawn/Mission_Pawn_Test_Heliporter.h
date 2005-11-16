@@ -38,7 +38,7 @@ namespace TEST {
     @endcode
 */
 // Created: SBO 2005-08-08
-// Generated: 2005-08-26 - 18:35:00
+// Generated: 
 // =============================================================================
 class Mission_Pawn_Test_Heliporter : public Mission_Pawn_ABC
 {

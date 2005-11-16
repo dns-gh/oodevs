@@ -30,9 +30,9 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
-#include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -935,14 +935,14 @@ void PHY_RolePion_Composantes::ApplyExplosion( const MIL_RealObjectType& objectT
     T_ComposantePionVector composantes = composantes_;
     std::random_shuffle( composantes.begin(), composantes.end() );
 
-    PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *pPion_ );
 
     for( CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
         {
-            composante.ApplyExplosion( objectType, agentFireResult );
+            composante.ApplyExplosion( objectType, fireDamages );
             return;
         }
     }
@@ -956,12 +956,12 @@ void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& do
 {
     assert( pPion_ );
     
-    PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *pPion_ );
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
-            composante.ApplyIndirectFire( dotationCategory, agentFireResult );
+            composante.ApplyIndirectFire( dotationCategory, fireDamages );
     }
 }
 
@@ -974,11 +974,11 @@ void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, 
     assert( pPion_ );
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
 
-    PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *pPion_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
 
     if( compTargetPion.CanBeFired() )
-        compTargetPion.ApplyDirectFire( dotationCategory, agentFireResult );
+        compTargetPion.ApplyDirectFire( dotationCategory, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
@@ -990,11 +990,11 @@ void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarg
     assert( pPion_ );
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
 
-    PHY_AgentFireResult& agentFireResult = fireResult.GetAgentFireResult( *pPion_ );
+    PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *pPion_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
 
     if( compTargetPion.CanBeFired() )
-        compTargetPion.ApplyPopulationFire( populationType, populationAttitude, agentFireResult );
+        compTargetPion.ApplyPopulationFire( populationType, populationAttitude, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
@@ -1012,7 +1012,7 @@ void PHY_RolePion_Composantes::Neutralize()
 // Name: PHY_RolePion_Composantes::WoundLoadedHumans
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_AgentFireResult& fireResult )
+void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages )
 {
     if( !GetRole< PHY_RoleAction_Loading >().IsLoaded() )
         return;
@@ -1040,7 +1040,7 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
         if( composante.CanBeLoaded() )
         {
             nNbrHumansToWound -= std::min( nNbrHumansToWound, composante.GetNbrUsableHumans() );
-            composante.ApplyHumansWounds( newState, fireResult );
+            composante.ApplyHumansWounds( newState, fireDamages );
         }
     }
 }

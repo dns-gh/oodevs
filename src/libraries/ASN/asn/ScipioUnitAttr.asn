@@ -105,12 +105,21 @@ EnumEtatRapFor ::= ENUMERATED
     defavorable (3)
 }
 
-EnumReglesEngagement ::= ENUMERATED
+EnumRoe ::= ENUMERATED
 {
     none           (0),       
     tir-libre      (1),
     tir-sur-riposte(2),
     tir-interdit   (3)
+}
+
+EnumRoePopulation ::= ENUMERATED
+{
+    none              (0),
+    tir-interdit      (1),
+    tir-sommation     (2),
+    tir-dissuasion    (3),
+    tir-neutralisation(4)
 }
 
 EnumEtatCombatRencontre ::= ENUMERATED
@@ -169,10 +178,11 @@ MsgUnitAttributes ::= SEQUENCE
     pion-transporteur             Agent                   OPTIONAL, -- '0' quand aucun transporteur
     
     rapport-de-force              EnumEtatRapFor          OPTIONAL,
-    regles-d-engagement           EnumReglesEngagement    OPTIONAL,
     combat-de-rencontre           EnumEtatCombatRencontre OPTIONAL,
     etat-operationnel             EnumEtatOperationnel    OPTIONAL,
     disponibilite-au-tir-indirect EnumDisponibiliteAuTir  OPTIONAL,
+    roe                           EnumRoe                 OPTIONAL,
+    roe-population                EnumRoePopulation       OPTIONAL,
     
     fatigue                       EnumUnitFatigue         OPTIONAL,
     moral                         EnumUnitMoral           OPTIONAL,

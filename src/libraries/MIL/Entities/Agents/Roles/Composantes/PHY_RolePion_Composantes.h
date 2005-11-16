@@ -31,7 +31,7 @@ class PHY_ComposanteState;
 class PHY_DirectFireData;
 class PHY_IndirectFireData;
 class PHY_SmokeData;
-class PHY_AgentFireResult;
+class PHY_FireDamages_Agent;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
 class HLA_UpdateFunctor;
@@ -232,7 +232,7 @@ public:
 
     //! @name Composante reserved
     //@{
-    void WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_AgentFireResult& fireResult );
+    void WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages );
     //@}
 
 private:

@@ -18,7 +18,7 @@
 
 class PHY_RoleAction_DirectFiring;
 class PHY_RolePion_Perceiver;
-class PHY_ControlZoneFireResults;
+class PHY_FireResults_Default;
 class MIL_ControlZone;
 class MIL_AgentPion;
 
@@ -47,7 +47,7 @@ private:
     PHY_RolePion_Perceiver&      rolePerceiver_;
     PHY_RoleAction_DirectFiring& roleDirectFiring_;
     MIL_ControlZone*             pZoneControlled_;
-    PHY_ControlZoneFireResults*  pFireResult_;
+    PHY_FireResults_Default*     pFireResult_;
     void*                        pPerceptionZoneID_;
 };
 

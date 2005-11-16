@@ -8,7 +8,7 @@ ScipioFire DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, OID FROM ScipioBase;
 
-FireResultHuman ::= SEQUENCE
+FireDamagePionHuman ::= SEQUENCE
 {
     rang                        EnumHumanRank,
     nb-non-blesses              INTEGER, -- NB : toutes les valeurs peuvent être négatives
@@ -19,7 +19,7 @@ FireResultHuman ::= SEQUENCE
     nb-blesses-urgence-extreme  INTEGER
 }
 
-FireResultEquipement ::= SEQUENCE
+FireDamagePionEquipment ::= SEQUENCE
 {
     type-equipement  TypeEquipement,
     nb-disponibles   INTEGER,
@@ -27,44 +27,49 @@ FireResultEquipement ::= SEQUENCE
     nb-reparables    INTEGER
 }
 
-FireResult ::= SEQUENCE
+FireDamagesPion ::= SEQUENCE
 {
-    oid-cible               Agent,
-    resultats-humains       SEQUENCE OF FireResultHuman,
-    resultats-equipements   SEQUENCE OF FireResultEquipement
+    cible       Agent,
+    humains     SEQUENCE OF FireDamagePionHuman,
+    equipements SEQUENCE OF FireDamagePionEquipment
 }
 
--- Direct
-MsgStartDirectFire ::= SEQUENCE
+FireDamagesPopulation ::= SEQUENCE
 {
-    oid-tir     TirDirect,
-    oid-src     Agent,
-    oid-dst     Agent
+    cible       Population,
+    nb-morts    INTEGER
 }
 
-MsgStopDirectFire ::= SEQUENCE
+FireDamagesPions       ::= SEQUENCE OF FireDamagesPion
+FireDamagesPopulations ::= SEQUENCE OF FireDamagesPopulation
+
+-- Tir pion
+MsgStartPionFire ::= SEQUENCE
 {
-    oid-tir     TirDirect,
-    resultat    FireResult
+    oid-tir     TirPion,
+    tireur      Agent,
+    cible       CHOICE
+    {
+        pion       Agent,
+        population Population,
+        position   CoordUTM
+    },
+    type        ENUMERATED
+    {
+        direct,
+        indirect
+    },
+    munition    TypeDotation OPTIONAL
 }
 
--- Indirect
-MsgStartIndirectFire ::= SEQUENCE
+MsgStopPionFire ::= SEQUENCE
 {
-    oid-tir     TirIndirect,
-    oid-src     Agent,
-    position    CoordUTM,
-    munition    TypeDotation
+    oid-tir            TirPion,
+    degats-pions       FireDamagesPions,
+    degats-populations FireDamagesPopulations
 }
 
-                  
-MsgStopIndirectFire ::= SEQUENCE
-{
-    oid-tir     TirIndirect,
-    resultats   SEQUENCE OF FireResult
-}
-
--- Tir population -> Pion
+-- Tir population
 MsgStartPopulationFire ::= SEQUENCE
 {
     oid-tir     TirPopulation,
@@ -73,17 +78,19 @@ MsgStartPopulationFire ::= SEQUENCE
 
 MsgStopPopulationFire ::= SEQUENCE
 {
-    oid-tir     TirPopulation,
-    resultats   SEQUENCE OF FireResult
+    oid-tir      TirPopulation,
+    degats-pions FireDamagesPions
 }
 
 -- Explosion mine
 MsgExplosion ::= SEQUENCE
 {
-    oid-objet   OID,
-    resultats   SEQUENCE OF FireResult 
+    oid-objet          OID,
+    degats-pions       FireDamagesPions,
+    degats-populations FireDamagesPopulations
 }
 
+-- Effets de tirs
 EnumFireEffectType ::= ENUMERATED
 {
     fumigene    (0),

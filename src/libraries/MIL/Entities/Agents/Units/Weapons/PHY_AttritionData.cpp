@@ -51,7 +51,6 @@ PHY_AttritionData::PHY_AttritionData( MIL_InputArchive& archive )
     if( rReparableWithoutEvacuationBound_ > 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of attrition percentages is out of bound (%f > 1)", rReparableWithoutEvacuationBound_ ), archive.GetContext() );
 
-
     // Score
     rScore_ = rDestroyed + ( rReparableWithEvacuation / 2. ) + ( rReparableWithoutEvacuation / 4. );
     assert( rScore_ <= 1. );

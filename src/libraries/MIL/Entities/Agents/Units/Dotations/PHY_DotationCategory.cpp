@@ -31,7 +31,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , rWeight_           ( 0. )
     , rVolume_           ( 0. ) 
 {
-    archive.ReadField( "MosID"                   , nMosID_   );
+    archive.ReadField( "MosID", nMosID_ );
 
     InitializePackagingData   ( archive );
     InitializeAttritions      ( archive );

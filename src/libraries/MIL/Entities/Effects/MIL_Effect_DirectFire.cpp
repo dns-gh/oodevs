@@ -13,8 +13,8 @@
 
 #include "MIL_Effect_DirectFire.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Actions/PHY_FireResults_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_DirectFire constructor

@@ -14,11 +14,11 @@
 #include "PHY_ActionControlZone.h"
 
 #include "PHY_RoleAction_DirectFiring.h"
-#include "PHY_ControlZoneFireResults.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Objects/MIL_ControlZone.h"
 #include "Entities/Objects/MIL_VirtualObjectType.h"
+#include "Entities/Actions/PHY_FireResults_Default.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"

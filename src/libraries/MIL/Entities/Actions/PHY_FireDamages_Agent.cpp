@@ -1,17 +1,17 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/Firing/PHY_AgentFireResult.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/Firing/PHY_FireDamages_Agent.cpp $
 // $Author: Nld $
 // $Modtime: 12/04/05 17:19 $
 // $Revision: 6 $
-// $Workfile: PHY_AgentFireResult.cpp $
+// $Workfile: PHY_FireDamages_Agent.cpp $
 //
 // *****************************************************************************
 
 #include "MIL_pch.h"
 
-#include "PHY_AgentFireResult.h"
+#include "PHY_FireDamages_Agent.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
@@ -21,10 +21,10 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AgentFireResult constructor
+// Name: PHY_FireDamages_Agent constructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-PHY_AgentFireResult::PHY_AgentFireResult()
+PHY_FireDamages_Agent::PHY_FireDamages_Agent()
     : humanResults_( PHY_HumanRank::GetHumanRanks().size() )
 {
     const uint nNbrWounds = PHY_HumanWound::GetHumanWounds().size();
@@ -33,10 +33,10 @@ PHY_AgentFireResult::PHY_AgentFireResult()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AgentFireResult destructor
+// Name: PHY_FireDamages_Agent destructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-PHY_AgentFireResult::~PHY_AgentFireResult()
+PHY_FireDamages_Agent::~PHY_FireDamages_Agent()
 {
 
 }
@@ -46,10 +46,10 @@ PHY_AgentFireResult::~PHY_AgentFireResult()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AgentFireResult::NotifyComposanteStateChanged
+// Name: PHY_FireDamages_Agent::NotifyComposanteStateChanged
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_AgentFireResult::NotifyComposanteStateChanged( const PHY_Composante_ABC& composante, const PHY_ComposanteState& oldState, const PHY_ComposanteState& newState )
+void PHY_FireDamages_Agent::NotifyComposanteStateChanged( const PHY_Composante_ABC& composante, const PHY_ComposanteState& oldState, const PHY_ComposanteState& newState )
 {
     T_ComposanteStates& composanteStates = composanteResults_[ &composante.GetType() ];
     composanteStates.resize( PHY_ComposanteState::GetNbrStates(), 0 );
@@ -59,10 +59,10 @@ void PHY_AgentFireResult::NotifyComposanteStateChanged( const PHY_Composante_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AgentFireResult::NotifyHumanWoundChanged
+// Name: PHY_FireDamages_Agent::NotifyHumanWoundChanged
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_AgentFireResult::NotifyHumanWoundChanged( const PHY_Human& human, const PHY_HumanWound& oldWound )
+void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const PHY_Human& human, const PHY_HumanWound& oldWound )
 {
     T_HumansPerWoundVector& humanWounds = humanResults_[ human.GetRank().GetID() ];
     -- humanWounds[       oldWound  .GetID() ];
@@ -74,25 +74,25 @@ void PHY_AgentFireResult::NotifyHumanWoundChanged( const PHY_Human& human, const
 // =============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: PHY_AgentFireResult::Serialize
+// Name: PHY_FireDamages_Agent::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_AgentFireResult::Serialize( const MIL_Agent_ABC& target, ASN1T_FireResult& asn ) const
+void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, ASN1T_FireDamagesPion& asn ) const
 {
-    asn.oid_cible = target.GetID();
+    asn.cible = target.GetID();
 
     // Composantes
-    asn.resultats_equipements.n = composanteResults_.size();
-    if( asn.resultats_equipements.n )
+    asn.equipements.n = composanteResults_.size();
+    if( asn.equipements.n )
     {
-        asn.resultats_equipements.elem = new ASN1T_FireResultEquipement[ composanteResults_.size() ]; 
+        asn.equipements.elem = new ASN1T_FireDamagePionEquipment[ composanteResults_.size() ]; 
         uint i = 0;
         for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult, ++i )
         {
             const PHY_ComposanteType_ABC& type   = *itResult->first;
             const T_ComposanteStates&      states =  itResult->second;
 
-            ASN1T_FireResultEquipement& asnEquipement = asn.resultats_equipements.elem[i];
+            ASN1T_FireDamagePionEquipment& asnEquipement = asn.equipements.elem[i];
             asnEquipement.type_equipement = type.GetMosID();
             asnEquipement.nb_disponibles   = states[ PHY_ComposanteState::undamaged_.GetID() ];
             asnEquipement.nb_reparables    = states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ];
@@ -101,15 +101,15 @@ void PHY_AgentFireResult::Serialize( const MIL_Agent_ABC& target, ASN1T_FireResu
     }
 
     // Humans
-    asn.resultats_humains.n    = PHY_HumanRank::GetHumanRanks().size();
-    asn.resultats_humains.elem = new ASN1T_FireResultHuman[ asn.resultats_humains.n ]; 
+    asn.humains.n    = PHY_HumanRank::GetHumanRanks().size();
+    asn.humains.elem = new ASN1T_FireDamagePionHuman[ asn.humains.n ]; 
 
     uint i = 0;
     for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it, ++i )
     {
         const PHY_HumanRank& rank = *it->second;
 
-        ASN1T_FireResultHuman& personnel = asn.resultats_humains.elem[ i ];
+        ASN1T_FireDamagePionHuman& personnel = asn.humains.elem[ i ];
 
         const T_HumansPerWoundVector& wounds = humanResults_[ rank.GetID() ];
 
@@ -124,14 +124,14 @@ void PHY_AgentFireResult::Serialize( const MIL_Agent_ABC& target, ASN1T_FireResu
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AgentFireResult::CleanAfterSerialization
+// Name: PHY_FireDamages_Agent::CleanAfterSerialization
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_AgentFireResult::CleanAfterSerialization( ASN1T_FireResult& asn )
+void PHY_FireDamages_Agent::CleanAfterSerialization( ASN1T_FireDamagesPion& asn )
 {
-    if( asn.resultats_equipements.n > 0 )    
-        delete [] asn.resultats_equipements.elem;
+    if( asn.equipements.n > 0 )    
+        delete [] asn.equipements.elem;
 
-    if( asn.resultats_humains.n > 0 )
-        delete [] asn.resultats_humains.elem;
+    if( asn.humains.n > 0 )
+        delete [] asn.humains.elem;
 }

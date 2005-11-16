@@ -1529,6 +1529,10 @@
         <source>Population FaireMouvement</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ChangerReglesEngagementPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>
@@ -3334,6 +3338,18 @@
     </message>
     <message>
         <source>indisponible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir sommation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir dissuasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir neutralisation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

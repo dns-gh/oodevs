@@ -192,7 +192,7 @@ CR-FinInstallation                          ::= NULL
 CR-PretPourConduiteTir                      ::= NULL
 CR-ReceptionOrdreDeFeu                      ::= NULL
 CR-PretAuTir                                ::= NULL
-CR-ObservationTirIndirect                   ::= TirIndirect -- OID du tir observé
+CR-ObservationTirIndirect                   ::= TirPion -- OID du tir observé
 CR-ZoneImplantationOccupee                  ::= NULL
 CR-InstallationSurZoneImplantation          ::= NULL
 

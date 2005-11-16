@@ -62,6 +62,7 @@
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFireOnlyLoadable.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFireOnlyCarrier.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionControlZone.h"
+//#include "Entities/Agents/Actions/Firing/PopulationFiring/PHY_ActionPopulationFire.h"
 #include "Entities/Agents/Actions/Transport/PHY_ActionTransportLoad.h"
 #include "Entities/Agents/Actions/Transport/PHY_ActionTransportUnload.h"
 #include "Entities/Agents/Actions/Loading/PHY_ActionLoad.h"
@@ -275,6 +276,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_AgentPion                      >, "DEC_PauseAction"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_AgentPion                      >, "DEC_ReprendAction"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMove                     >, "DEC_StartDeplacement"                     );
+//    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionPopulationFire           >, "DEC_StartTirSurPopulation"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFire               >, "DEC_StartTirDirect"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFireOnlyLoadable   >, "DEC_StartTirDirectDebarques"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFireOnlyCarrier    >, "DEC_StartTirDirectTransporteurs"          );

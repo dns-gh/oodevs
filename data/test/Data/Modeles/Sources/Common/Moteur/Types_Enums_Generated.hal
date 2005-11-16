@@ -5,7 +5,9 @@
 
 typedef enum E_TypeMissionPopulation
 {
-    eMission_Population_FaireMouvement 
+    eMission_Population_FaireMouvement,
+
+    eNbrMissionPopulation
 };
 
 typedef enum E_TypeMissionAutomate
@@ -374,6 +376,7 @@ typedef enum E_TypeOrdreConduite
     eOrdreConduite_Poursuivre,
     eOrdreConduite_Interrompre,
     eOrdreConduite_ChangerReglesEngagement,
+    eOrdreConduite_ChangerReglesEngagementPopulation,
     eOrdreConduite_Deboucher,
     eOrdreConduite_Decrocher,
     eOrdreConduite_AcquerirObjectif,
@@ -407,4 +410,3 @@ typedef enum E_TypeOrdreConduite
 
     eNbrOrdreConduite
 };
-

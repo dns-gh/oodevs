@@ -48,6 +48,11 @@ typedef struct Rep_OrderConduite_ChangerReglesEngagement : Rep_OrdreConduite
 id orderConduiteChangerReglesEngagement_;
 };
 
+typedef struct Rep_OrderConduite_ChangerReglesEngagementPopulation : Rep_OrdreConduite
+{
+id orderConduiteChangerReglesEngagementPopulation_;
+};
+
 typedef struct Rep_OrderConduite_Deboucher : Rep_OrdreConduite
 {
 };

@@ -22,8 +22,8 @@
 #include "MIL_AgentServer.h"
 
 MIL_MOSIDManager                 MIL_IDManager::units_;
-MIL_MOSIDManager                 MIL_IDManager::directFireResults_;
-MIL_MOSIDManager                 MIL_IDManager::indirectFireResults_;
+MIL_MOSIDManager                 MIL_IDManager::fireResultsPion_;
+MIL_MOSIDManager                 MIL_IDManager::fireResultsPopulation_;
 MIL_MOSIDManager                 MIL_IDManager::limas_;
 MIL_MOSIDManager                 MIL_IDManager::limits_;
 MIL_MOSIDManager                 MIL_IDManager::orders_;
@@ -32,7 +32,6 @@ MIL_MOSIDManager                 MIL_IDManager::effectsWeather_;
 MIL_MOSIDManager                 MIL_IDManager::maintenanceComposanteStates_;
 MIL_MOSIDManager                 MIL_IDManager::medicalHumanStates_;
 MIL_MOSIDManager                 MIL_IDManager::supplyStates_;
-MIL_MOSIDManager                 MIL_IDManager::populationFireResults_;
 MIL_MOSIDManager                 MIL_IDManager::populations_;
 MIL_MOSIDManager                 MIL_IDManager::populationConcentrations_;
 MIL_MOSIDManager                 MIL_IDManager::populationFlows_;
@@ -70,8 +69,8 @@ void MIL_IDManager::Initialize( MIL_InputArchive& archive )
         idsFile.EndSection(); // Classe
 
              if( sCaseInsensitiveEqual()( strName, "Unite"                                  ) )  units_                             .SetClassID( nClassID );
-        else if( sCaseInsensitiveEqual()( strName, "TirDirect"                              ) )  directFireResults_                 .SetClassID( nClassID );
-        else if( sCaseInsensitiveEqual()( strName, "TirIndirect"                            ) )  indirectFireResults_               .SetClassID( nClassID );
+        else if( sCaseInsensitiveEqual()( strName, "TirPion"                                ) )  fireResultsPion_                   .SetClassID( nClassID );
+        else if( sCaseInsensitiveEqual()( strName, "TirPopulation"                          ) )  fireResultsPopulation_             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Lima"                                   ) )  limas_                             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Limite"                                 ) )  limits_                            .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Ordre"                                  ) )  orders_                            .SetClassID( nClassID );
@@ -80,7 +79,6 @@ void MIL_IDManager::Initialize( MIL_InputArchive& archive )
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogMaintenance"               ) )  maintenanceComposanteStates_       .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogSante"                     ) )  medicalHumanStates_                .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogRavitaillement"            ) )  supplyStates_                      .SetClassID( nClassID );
-        else if( sCaseInsensitiveEqual()( strName, "TirPopulation"                          ) )  populationFireResults_             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Population"                             ) )  populations_                       .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "PopulationConcentration"                ) )  populationConcentrations_          .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "PopulationFlux"                         ) )  populationFlows_                   .SetClassID( nClassID );

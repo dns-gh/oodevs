@@ -1,16 +1,16 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/Firing/PHY_AgentFireResult.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Actions/Firing/PHY_FireDamages_Agent.h $
 // $Author: Nld $
 // $Modtime: 12/04/05 17:19 $
 // $Revision: 5 $
-// $Workfile: PHY_AgentFireResult.h $
+// $Workfile: PHY_FireDamages_Agent.h $
 //
 // *****************************************************************************
 
-#ifndef __PHY_AgentFireResult_h_
-#define __PHY_AgentFireResult_h_
+#ifndef __PHY_FireDamages_Agent_h_
+#define __PHY_FireDamages_Agent_h_
 
 #include "MIL.h"
 
@@ -24,14 +24,14 @@ class PHY_ComposanteState;
 struct ASN1T_FireResult;
 
 // =============================================================================
-// @class  PHY_AgentFireResult
+// @class  PHY_FireDamages_Agent
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_AgentFireResult
+class PHY_FireDamages_Agent
 {
 public:
-     PHY_AgentFireResult();
-    ~PHY_AgentFireResult();
+     PHY_FireDamages_Agent();
+    ~PHY_FireDamages_Agent();
 
     //! @name Notifications
     //@{
@@ -41,8 +41,8 @@ public:
 
     //! @name Network
     //@{
-           void Serialize              ( const MIL_Agent_ABC& target, ASN1T_FireResult& asn ) const;
-    static void CleanAfterSerialization( ASN1T_FireResult& asn );
+           void Serialize              ( const MIL_Agent_ABC& target, ASN1T_FireDamagesPion& asn ) const;
+    static void CleanAfterSerialization( ASN1T_FireDamagesPion& asn );
     //@}
 
 private:
@@ -63,6 +63,6 @@ private:
     T_HumansPerRankVector humanResults_;
 };
 
-#include "PHY_AgentFireResult.inl"
+#include "PHY_FireDamages_Agent.inl"
 
-#endif // __PHY_AgentFireResult_h_
+#endif // __PHY_FireDamages_Agent_h_

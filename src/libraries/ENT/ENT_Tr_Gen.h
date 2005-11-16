@@ -88,10 +88,11 @@ public:
     static const std::string& ConvertFromAutomateState( E_AutomateState, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitPosture( E_UnitPosture, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatRapFor( E_EtatRapFor, E_Conversion = eToSim );
-    static const std::string& ConvertFromReglesEngagement( E_ReglesEngagement, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatCombatRencontre( E_EtatCombatRencontre, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatOperationnel( E_EtatOperationnel, E_Conversion = eToSim );
     static const std::string& ConvertFromDisponibiliteAuTir( E_DisponibiliteAuTir, E_Conversion = eToSim );
+    static const std::string& ConvertFromRoe( E_Roe, E_Conversion = eToSim );
+    static const std::string& ConvertFromRoePopulation( E_RoePopulation, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitFatigue( E_UnitFatigue, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitMoral( E_UnitMoral, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
@@ -101,6 +102,7 @@ public:
     static const std::string& ConvertFromActionReagirFaceAEni( E_ActionReagirFaceAEni, E_Conversion = eToSim );
     static const std::string& ConvertFromTC2GererMaterielAvantDeplacement( E_TC2GererMaterielAvantDeplacement, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
 
     static const std::string& ConvertFromAutomataMission  ( E_AutomataMission  , E_Conversion = eToSim );
     static const std::string& ConvertFromUnitMission      ( E_UnitMission      , E_Conversion = eToSim );
@@ -160,10 +162,11 @@ public:
     static E_AutomateState ConvertToAutomateState( const std::string& );
     static E_UnitPosture ConvertToUnitPosture( const std::string& );
     static E_EtatRapFor ConvertToEtatRapFor( const std::string& );
-    static E_ReglesEngagement ConvertToReglesEngagement( const std::string& );
     static E_EtatCombatRencontre ConvertToEtatCombatRencontre( const std::string& );
     static E_EtatOperationnel ConvertToEtatOperationnel( const std::string& );
     static E_DisponibiliteAuTir ConvertToDisponibiliteAuTir( const std::string& );
+    static E_Roe ConvertToRoe( const std::string& );
+    static E_RoePopulation ConvertToRoePopulation( const std::string& );
     static E_UnitFatigue ConvertToUnitFatigue( const std::string& );
     static E_UnitMoral ConvertToUnitMoral( const std::string& );
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
@@ -173,6 +176,7 @@ public:
     static E_ActionReagirFaceAEni ConvertToActionReagirFaceAEni( const std::string& );
     static E_TC2GererMaterielAvantDeplacement ConvertToTC2GererMaterielAvantDeplacement( const std::string& );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
+    static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
 
     static E_AutomataMission   ConvertToAutomataMission  ( const std::string& );
     static E_UnitMission       ConvertToUnitMission      ( const std::string& );
@@ -233,10 +237,11 @@ private:
     typedef ENT_Tr::converter<E_AutomateState> T_ConverterAutomateState;
     typedef ENT_Tr::converter<E_UnitPosture> T_ConverterUnitPosture;
     typedef ENT_Tr::converter<E_EtatRapFor> T_ConverterEtatRapFor;
-    typedef ENT_Tr::converter<E_ReglesEngagement> T_ConverterReglesEngagement;
     typedef ENT_Tr::converter<E_EtatCombatRencontre> T_ConverterEtatCombatRencontre;
     typedef ENT_Tr::converter<E_EtatOperationnel> T_ConverterEtatOperationnel;
     typedef ENT_Tr::converter<E_DisponibiliteAuTir> T_ConverterDisponibiliteAuTir;
+    typedef ENT_Tr::converter<E_Roe> T_ConverterRoe;
+    typedef ENT_Tr::converter<E_RoePopulation> T_ConverterRoePopulation;
     typedef ENT_Tr::converter<E_UnitFatigue> T_ConverterUnitFatigue;
     typedef ENT_Tr::converter<E_UnitMoral> T_ConverterUnitMoral;
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
@@ -246,6 +251,7 @@ private:
     typedef ENT_Tr::converter<E_ActionReagirFaceAEni> T_ConverterActionReagirFaceAEni;
     typedef ENT_Tr::converter<E_TC2GererMaterielAvantDeplacement> T_ConverterTC2GererMaterielAvantDeplacement;
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
+    typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
 
     typedef ENT_Tr::converter<E_AutomataMission>   T_ConverterAutomataMission;
     typedef ENT_Tr::converter<E_UnitMission>       T_ConverterUnitMission;
@@ -305,10 +311,11 @@ private:
     static T_ConverterAutomateState AutomateStateConverter_ [];
     static T_ConverterUnitPosture UnitPostureConverter_ [];
     static T_ConverterEtatRapFor EtatRapForConverter_ [];
-    static T_ConverterReglesEngagement ReglesEngagementConverter_ [];
     static T_ConverterEtatCombatRencontre EtatCombatRencontreConverter_ [];
     static T_ConverterEtatOperationnel EtatOperationnelConverter_ [];
     static T_ConverterDisponibiliteAuTir DisponibiliteAuTirConverter_ [];
+    static T_ConverterRoe RoeConverter_ [];
+    static T_ConverterRoePopulation RoePopulationConverter_ [];
     static T_ConverterUnitFatigue UnitFatigueConverter_ [];
     static T_ConverterUnitMoral UnitMoralConverter_ [];
     static T_ConverterUnitExperience UnitExperienceConverter_ [];
@@ -318,6 +325,7 @@ private:
     static T_ConverterActionReagirFaceAEni ActionReagirFaceAEniConverter_ [];
     static T_ConverterTC2GererMaterielAvantDeplacement TC2GererMaterielAvantDeplacementConverter_ [];
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
+    static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
 
     static T_ConverterAutomataMission   automataMissionConverter_[];
     static T_ConverterUnitMission       unitMissionConverter_[];

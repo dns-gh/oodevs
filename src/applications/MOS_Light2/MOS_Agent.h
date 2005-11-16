@@ -205,7 +205,7 @@ public:
     void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
 
     // fire results
-    void OnReceiveMsgStopFire( const ASN1T_FireResult& asnMsg );
+    void OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg );
     void DeleteAllFireResults();
     //@}
 
@@ -349,7 +349,7 @@ public:
 
     // Etat decisionnel
     E_EtatRapFor            nFightRateState_;
-    E_ReglesEngagement      nRulesOfEngagementState_;
+    E_Roe                   nRulesOfEngagementState_;
     E_EtatCombatRencontre   nCloseCombatState_;
     E_EtatOperationnel      nOpState_;
     E_DisponibiliteAuTir    nIndirectFireAvailability_;

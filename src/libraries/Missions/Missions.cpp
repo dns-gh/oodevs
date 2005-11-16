@@ -369,6 +369,7 @@
 #include "Conduite\MIL_OrderConduite_Poursuivre.cpp"
 #include "Conduite\MIL_OrderConduite_Interrompre.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerReglesEngagement.cpp"
+#include "Conduite\MIL_OrderConduite_ChangerReglesEngagementPopulation.cpp"
 #include "Conduite\MIL_OrderConduite_Deboucher.cpp"
 #include "Conduite\MIL_OrderConduite_Decrocher.cpp"
 #include "Conduite\MIL_OrderConduite_AcquerirObjectif.cpp"
@@ -800,6 +801,7 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Poursuivre>( "Poursuivre", eOrdreConduite_Poursuivre, T_MsgOrderConduite_order_conduite_order_conduite_poursuivre, "Rep_OrderConduite_Poursuivre", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_poursuivre );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Interrompre>( "Interrompre", eOrdreConduite_Interrompre, T_MsgOrderConduite_order_conduite_order_conduite_interrompre, "Rep_OrderConduite_Interrompre", true, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagement>( "ChangerReglesEngagement", eOrdreConduite_ChangerReglesEngagement, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement, "Rep_OrderConduite_ChangerReglesEngagement", true, true );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagementPopulation>( "ChangerReglesEngagementPopulation", eOrdreConduite_ChangerReglesEngagementPopulation, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population, "Rep_OrderConduite_ChangerReglesEngagementPopulation", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Deboucher>( "Deboucher", eOrdreConduite_Deboucher, T_MsgOrderConduite_order_conduite_order_conduite_deboucher, "Rep_OrderConduite_Deboucher", false, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_deboucher );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Decrocher>( "Decrocher", eOrdreConduite_Decrocher, T_MsgOrderConduite_order_conduite_order_conduite_decrocher, "Rep_OrderConduite_Decrocher", false, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_decrocher );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_AcquerirObjectif>( "AcquerirObjectif", eOrdreConduite_AcquerirObjectif, T_MsgOrderConduite_order_conduite_order_conduite_acquerir_objectif, "Rep_OrderConduite_AcquerirObjectif", false, false );

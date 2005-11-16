@@ -1654,91 +1654,64 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectDestruction( const ASN1T_MsgObject
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStartDirectFire
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire
 // Created: NLD 2003-04-30
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgStartDirectFire( const ASN1T_MsgStartDirectFire& asnMsg )
+void MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionFire& asnMsg )
 {
     std::stringstream strOutputMsg;
-    strOutputMsg << "StartDirectFire - ID: " << asnMsg.oid_tir
-                 << " - ID source " << asnMsg.oid_src
-                 << " - ID dest "   << asnMsg.oid_dst;
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
+    strOutputMsg << "StartPionFire - ID: " << asnMsg.oid_tir
+                 << " - ID source " << asnMsg.tireur;
 
     MOS_AgentManager& agentManager = MOS_App::GetApp().GetAgentManager();
-    MOS_Agent* pAgentSrc = agentManager.FindAgent( asnMsg.oid_src );
-    MOS_Agent* pAgentDst = agentManager.FindAgent( asnMsg.oid_dst );
+    MOS_Agent* pAgentSrc = agentManager.FindAgent( asnMsg.tireur );
+    assert( pAgentSrc );
 
-    assert( pAgentDst != 0 && pAgentSrc != 0 );
-    agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pAgentDst );
-//    QSound::play( "conflict.wav" );
+    if( asnMsg.m.munitionPresent )
+        strOutputMsg << " - Munition : " << MOS_App::GetApp().GetResourceName( asnMsg.munition );
+
+    if( asnMsg.cible.t == T_MsgStartPionFire_cible_pion )
+    {
+        strOutputMsg << " - ID cible " << asnMsg.cible.u.pion;
+        
+        MOS_Agent* pAgentDst = agentManager.FindAgent( asnMsg.cible.u.pion );
+        assert( pAgentDst );
+        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pAgentDst );
+    }
+    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_position )
+    {
+        std::string strTmp( (const char*)asnMsg.cible.u.position->data, asnMsg.cible.u.position->numocts );
+        MT_Vector2D vPos;
+        MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( strTmp, vPos );
+        strOutputMsg << " - Position " << strTmp;
+        agentManager.AddIndirectConflict( asnMsg.oid_tir, *pAgentSrc, vPos );
+    }
+    else if( asnMsg.cible.t == T_MsgStartPionFire_cible_population )
+    {
+        // $$$$ TODO
+    }
+
+    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );   
 }
 
-
 //-----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStartIndirectFire
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStopPionFire
 // Created: NLD 2003-04-30
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgStartIndirectFire( const ASN1T_MsgStartIndirectFire& asnMsg )
+void MOS_AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& asnMsg )
 {
     std::stringstream strOutputMsg;
-
-    strOutputMsg << "StartIndirectFire - ID: " << asnMsg.oid_tir << " - ID source " << asnMsg.oid_src;
-    std::string strTmp( (const char*)asnMsg.position.data, asnMsg.position.numocts );
-    strOutputMsg << " - Pos dest " << strTmp;
-    strOutputMsg << " - Munition : " << MOS_App::GetApp().GetResourceName( asnMsg.munition );
-    MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );
-
-    MOS_AgentManager& agentManager = MOS_App::GetApp().GetAgentManager();
-    MOS_Agent* pAgentSrc = agentManager.FindAgent( asnMsg.oid_src );
-    assert( pAgentSrc != 0 );
-
-    MT_Vector2D vPos;
-    MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( strTmp, vPos );
-
-    agentManager.AddIndirectConflict( asnMsg.oid_tir, *pAgentSrc, vPos );
-//    QSound::play( "indirectconflict.wav" );
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStopDirectFire
-// Created: NLD 2003-04-30
-//-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgStopDirectFire( const ASN1T_MsgStopDirectFire& asnMsg )
-{
-    std::stringstream strOutputMsg;
-    strOutputMsg << "StopDirectFire - ID: " << asnMsg.oid_tir;
+    strOutputMsg << "StopPionFire - ID: " << asnMsg.oid_tir;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
 
     // fire results
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
     assert( pAgent );
-    pAgent->OnReceiveMsgStopFire( asnMsg.resultat );
+    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
+        pAgent->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
 
     MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
-
-
-//-----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStopIndirectFire
-// Created: NLD 2003-04-30
-//-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgStopIndirectFire( const ASN1T_MsgStopIndirectFire& asnMsg )
-{
-    std::stringstream strOutputMsg;
-    strOutputMsg << "StopIndirectFire - ID: " << asnMsg.oid_tir;
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
-    // fire results
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
-    assert( pAgent );
-    for( uint i = 0; i < asnMsg.resultats.n; ++i )
-        pAgent->OnReceiveMsgStopFire( asnMsg.resultats.elem[ i ] );
-
-    MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
-}
-
 
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgStartFireEffect
@@ -1781,8 +1754,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
     // fire results
     MOS_Object_ABC* pObject = MOS_App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet );
     assert( pObject );
-    for( uint i = 0; i < asnMsg.resultats.n; ++i )
-        pObject->OnReceiveMsgExplosion( asnMsg.resultats.elem[ i ] );
+    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
+        pObject->OnReceiveMsgExplosion( asnMsg.degats_pions.elem[ i ] );
 
     MOS_App::GetApp().NotifyObjectExplosion( *pObject );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
@@ -2024,10 +1997,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
         case T_MsgsSimMos_msg_unit_dotations:                       OnReceiveMsgUnitDotations             ( *asnMsg.u.msg_unit_dotations                      ); break;
         case T_MsgsSimMos_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *asnMsg.u.msg_unit_pathfind                       ); break;
 
-        case T_MsgsSimMos_msg_start_direct_fire:                    OnReceiveMsgStartDirectFire           ( *asnMsg.u.msg_start_direct_fire                   ); break;
-        case T_MsgsSimMos_msg_start_indirect_fire:                  OnReceiveMsgStartIndirectFire         ( *asnMsg.u.msg_start_indirect_fire                 ); break;
-        case T_MsgsSimMos_msg_stop_direct_fire:                     OnReceiveMsgStopDirectFire            ( *asnMsg.u.msg_stop_direct_fire                    ); break;
-        case T_MsgsSimMos_msg_stop_indirect_fire:                   OnReceiveMsgStopIndirectFire          ( *asnMsg.u.msg_stop_indirect_fire                  ); break;
+        case T_MsgsSimMos_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *asnMsg.u.msg_start_pion_fire                     ); break;
+        case T_MsgsSimMos_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *asnMsg.u.msg_stop_pion_fire                      ); break;
+//        case T_MsgsSimMos_msg_start_population_fire:
+//        case T_MsgsSimMos_msg_stop_population_fire:
+
         case T_MsgsSimMos_msg_explosion:                            OnReceiveMsgExplosion                 ( *asnMsg.u.msg_explosion                           ); break;
         case T_MsgsSimMos_msg_cr:                                   OnReceiveMsgCR                        ( *asnMsg.u.msg_cr                                  ); break;
         case T_MsgsSimMos_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *asnMsg.u.msg_start_fire_effect ); break;

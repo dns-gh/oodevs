@@ -19,6 +19,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
 #include "Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/RC/MIL_RC.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
@@ -373,14 +374,16 @@ void DEC_AutomateDecision::Reset()
 void DEC_AutomateDecision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     msg.GetAsnMsg().m.rapport_de_forcePresent    = 1;
-    msg.GetAsnMsg().m.regles_d_engagementPresent = 1;
+    msg.GetAsnMsg().m.roePresent                 = 1;
     msg.GetAsnMsg().m.combat_de_rencontrePresent = 1;
     msg.GetAsnMsg().m.etat_operationnelPresent   = 1;
+    msg.GetAsnMsg().m.roe_populationPresent      = 1;
 
-    msg.GetAsnMsg().rapport_de_force     = (ASN1T_EnumEtatRapFor)nForceRatioState_;
-    msg.GetAsnMsg().regles_d_engagement  = (ASN1T_EnumReglesEngagement)nRulesOfEngagementState_;
-    msg.GetAsnMsg().combat_de_rencontre  = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
-    msg.GetAsnMsg().etat_operationnel    = (ASN1T_EnumEtatOperationnel)nOperationalState_;
+    msg.GetAsnMsg().rapport_de_force      = (ASN1T_EnumEtatRapFor)nForceRatioState_;
+    msg.GetAsnMsg().combat_de_rencontre   = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
+    msg.GetAsnMsg().etat_operationnel     = (ASN1T_EnumEtatOperationnel)nOperationalState_;
+    msg.GetAsnMsg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
+    msg.GetAsnMsg().roe_population        = PHY_RoePopulation::none_.GetAsnID();
 }
 
 // -----------------------------------------------------------------------------

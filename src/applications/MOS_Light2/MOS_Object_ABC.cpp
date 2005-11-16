@@ -285,7 +285,7 @@ void MOS_Object_ABC::InitializeObjectIds( MOS_InputArchive& archive )
 // Name: MOS_Object_ABC::OnReceiveMsgExplosion
 // Created: SBO 2005-09-07
 // -----------------------------------------------------------------------------
-void MOS_Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireResult& asnMsg )
+void MOS_Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& asnMsg )
 {
     MOS_FireResult& explosionResult = *new MOS_FireResult();
     explosionResult.Initialize( asnMsg );

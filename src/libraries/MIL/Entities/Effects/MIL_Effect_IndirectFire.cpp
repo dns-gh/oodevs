@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireResults.h"
+#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -129,7 +129,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
     assert( pWeaponDotationCategory_ && pWeaponDotationCategory_->GetIndirectFireData() );
 
     if( !pFireResult_ )
-        pFireResult_ = new PHY_IndirectFireResults( firer_, vTargetPosition_, *pWeaponDotationCategory_ );
+        pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, *pWeaponDotationCategory_ );
 
     assert( !bIsFlying_ );
 

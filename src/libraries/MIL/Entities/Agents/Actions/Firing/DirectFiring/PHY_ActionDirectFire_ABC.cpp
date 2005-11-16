@@ -15,7 +15,7 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
-#include "PHY_DirectFireResults.h"
+#include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------

@@ -98,6 +98,9 @@ void MOS_FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_ChangerReglesEngagement :
              CreateOrder_ChangerReglesEngagement();
              break;
+        case eOrdreConduite_ChangerReglesEngagementPopulation :
+             CreateOrder_ChangerReglesEngagementPopulation();
+             break;
         case eOrdreConduite_Deboucher :
              CreateOrder_Deboucher();
              break;
@@ -285,11 +288,27 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement()
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumReglesEngagement >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement", false );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "None", EnumReglesEngagement::none );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir libre", EnumReglesEngagement::tir_libre );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir sur riposte", EnumReglesEngagement::tir_sur_riposte );
-    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir interdit", EnumReglesEngagement::tir_interdit );
+    MOS_ParamComboBox< ASN1T_EnumRoe >* pSelector_order_conduite_changer_regles_engagement = &CreateVarList( asnMission.order_conduite_changer_regles_engagement, "Order conduite changer regles engagement", false );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "None", EnumRoe::none );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir libre", EnumRoe::tir_libre );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir sur riposte", EnumRoe::tir_sur_riposte );
+    pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir interdit", EnumRoe::tir_interdit );
+#undef asnMission
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagementPopulation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagementPopulation()
+{
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population;
+#define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
+    MOS_ParamComboBox< ASN1T_EnumRoe >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population", false );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumRoe::none );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir libre", EnumRoe::tir_libre );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir sur riposte", EnumRoe::tir_sur_riposte );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir interdit", EnumRoe::tir_interdit );
 #undef asnMission
 }
 

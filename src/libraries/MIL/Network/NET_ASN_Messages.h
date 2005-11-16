@@ -202,11 +202,9 @@ NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( LimaCreation                      , lima_
 NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( LimaDestruction                   , lima_destruction                      )
 
 // Fire
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartDirectFire    , start_direct_fire     )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartIndirectFire  , start_indirect_fire   )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartPionFire      , start_pion_fire       )
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartPopulationFire, start_population_fire )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopDirectFire     , stop_direct_fire      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopIndirectFire   , stop_indirect_fire    )
+NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopPionFire       , stop_pion_fire        )
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopPopulationFire , stop_population_fire  )
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( Explosion          , explosion             )
 NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartFireEffect    , start_fire_effect     )

@@ -61,24 +61,23 @@ private:
     //@}
 
 public:
-    static MIL_MOSIDManager  units_;
-    static MIL_MOSIDManager  directFireResults_;
-    static MIL_MOSIDManager  indirectFireResults_;
-    static MIL_MOSIDManager  populationFireResults_;
-    static MIL_MOSIDManager  limas_;
-    static MIL_MOSIDManager  limits_;
-    static MIL_MOSIDManager  orders_;
-    static MIL_MOSIDManager  knowledgesAgent_;
-    static MIL_MOSIDManager  effectsWeather_;
-    static MIL_MOSIDManager  maintenanceComposanteStates_;
-    static MIL_MOSIDManager  medicalHumanStates_;
-    static MIL_MOSIDManager  supplyStates_;
-    static MIL_MOSIDManager  populations_;
-    static MIL_MOSIDManager  populationConcentrations_;
-    static MIL_MOSIDManager  populationFlows_;
-    static MIL_MOSIDManager  knowledgePopulations_;
-    static MIL_MOSIDManager  knowledgePopulationConcentrations_;
-    static MIL_MOSIDManager  knowledgePopulationFlows_;
+    static MIL_MOSIDManager units_;
+    static MIL_MOSIDManager fireResultsPion_;
+    static MIL_MOSIDManager fireResultsPopulation_;
+    static MIL_MOSIDManager limas_;
+    static MIL_MOSIDManager limits_;
+    static MIL_MOSIDManager orders_;
+    static MIL_MOSIDManager knowledgesAgent_;
+    static MIL_MOSIDManager effectsWeather_;
+    static MIL_MOSIDManager maintenanceComposanteStates_;
+    static MIL_MOSIDManager medicalHumanStates_;
+    static MIL_MOSIDManager supplyStates_;
+    static MIL_MOSIDManager populations_;
+    static MIL_MOSIDManager populationConcentrations_;
+    static MIL_MOSIDManager populationFlows_;
+    static MIL_MOSIDManager knowledgePopulations_;
+    static MIL_MOSIDManager knowledgePopulationConcentrations_;
+    static MIL_MOSIDManager knowledgePopulationFlows_;
 
 private:
     static T_ObjectIDManager objectNameToType_;

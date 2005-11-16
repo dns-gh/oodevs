@@ -243,7 +243,7 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     pOldStanceLabel_  ->setText( MOS_Tools::ToString( agent.GetOldStance() ) );
     pStanceLabel_     ->setText( strStance );
 
-    pROELabel_                     ->setText( ENT_Tr::ConvertFromReglesEngagement   ( agent.nRulesOfEngagementState_ ).c_str() );
+    pROELabel_                     ->setText( ENT_Tr::ConvertFromRoe                ( agent.nRulesOfEngagementState_ ).c_str() );
     pCloseCombatLabel_             ->setText( ENT_Tr::ConvertFromEtatCombatRencontre( agent.nCloseCombatState_ ).c_str() );
     pFightRateLabel_               ->setText( ENT_Tr::ConvertFromEtatRapFor         ( agent.nFightRateState_ ).c_str() );
     pOpStateLabel_                 ->setText( ENT_Tr::ConvertFromEtatOperationnel   ( agent.nOpState_ ).c_str() );

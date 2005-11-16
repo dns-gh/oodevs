@@ -34,7 +34,7 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class DEC_PopulationDecision;
 class PHY_Volume;
-class PHY_PopulationFireResults;
+class PHY_FireResults_Population;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -86,8 +86,8 @@ public:
     //@{
     void     Move          ( const MT_Vector2D& destination );
 
-    void     FireOnPions   ( MT_Float rIntensity, PHY_PopulationFireResults& fireResult );
-    void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_PopulationFireResults& fireResult );
+    void     FireOnPions   ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
+    void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
 
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     //@}

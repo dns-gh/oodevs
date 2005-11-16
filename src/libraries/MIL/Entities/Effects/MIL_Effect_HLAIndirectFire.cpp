@@ -20,7 +20,7 @@
 #include "MIL_Effect_HLAIndirectFire.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Actions/Firing/PHY_FireResults_ABC.h"
+#include "Entities/Actions/PHY_FireResults_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_HLAIndirectFire constructor
@@ -48,7 +48,7 @@ MIL_Effect_HLAIndirectFire::~MIL_Effect_HLAIndirectFire()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_HLAIndirectFire::Execute()
 {
-    PHY_FireResults_ABC* pFireResult = new PHY_FireResults_ABC();
+    PHY_FireResults_ABC* pFireResult = new PHY_FireResults_ABC(); //$$$ BOF
     pFireResult->IncRef();
     target_.GetRole< PHY_RoleInterface_Composantes >().ApplyIndirectFire( ammunition_, *pFireResult );
     pFireResult->DecRef();

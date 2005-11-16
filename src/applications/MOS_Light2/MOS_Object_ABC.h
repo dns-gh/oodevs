@@ -91,7 +91,7 @@ public:
     virtual void WriteODB(       MT_XXmlOutputArchive&  archive ) const;
 
     // explosion results
-    void OnReceiveMsgExplosion    ( const ASN1T_FireResult& asnMsg );
+    void OnReceiveMsgExplosion    ( const ASN1T_FireDamagesPion& asnMsg );
     void DeleteAllExplosionResults();
     //@}
 
