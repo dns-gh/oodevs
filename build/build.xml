@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 <project name="scipio" default="all">
 
-    <property file="build.properties"/>
-    <property file="${user.home}/build.properties"/>
-    <property file="//install/masa/common/dev/common/build.properties"/> <!-- TMP not portable; takes several seconds if not found -->
-    <import file="${import.file}"/>
+    <import file="//install/masa/common/dev/common/tools.xml"/>
 
     <!--
     ============================================================================
