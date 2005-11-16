@@ -83,7 +83,7 @@
 
     <!-- SCIPIO -->
     <target name="applications.SCIPIO" description="build SCIPIO executables"
-            depends="application.SIM,application.ADN,application.MOS_Light,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
+            depends="application.SIM,application.ADN,application.MOS_Light2,application.Tester,application.HLA_Manager,application.AGR,application.LAU,application.LAU_Mos_Part,application.ScriptCompiler"/>
 
     <target name="application.TIC_XmlExporter" description="build TIC_XmlExporter executable" depends="library.TIC_Export,library.MT_Tools_Scipio">
         <build-app name="TIC_XmlExporter"
@@ -122,20 +122,6 @@
                          qtmain,qt-mt333,xerces-c_2"
                    pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
-        </build-app>
-    </target>
-
-    <target name="application.MOS_Light" description="build MOS_Light executable" depends="library.ASN,library.ENT,library.GFX,library.MT_Tools_Scipio">
-        <build-app name="MOS_Light"
-                   subsystem="gui"
-                   libs="MT_Tools,MT_IO,MT_Patterns,MT_Memory,MT_Logger,MT_Thread,MT_Time,MT_Archive,MT_XmlTools,MT_Qt,
-                         NEK,DIN,DIN_ConnectionService,DIN_MessageService,
-                         MT_Tools_SCIPIO,ASN,GFX,ENT,
-                         geocoord,graphics,pathfind,terrain,
-                         asn1per,qtmain,qt-mt333,xerces-c_2">
-            <includepath path="${include.dir}/ASN"/>
-            <syslibset libs="gdi32,user32,wsock32,winmm,opengl32"/>
-            <defineset define="MOS_USE_INLINE"/>
         </build-app>
     </target>
 
@@ -257,7 +243,6 @@
         <clean name="TIC_XmlExporter"/>
         <clean name="SIM"/>
         <clean name="ADN"/>
-        <clean name="MOS_Light"/>
         <clean name="MOS_Light2"/>
         <clean name="Tester"/>
         <clean name="HLA_Manager"/>
