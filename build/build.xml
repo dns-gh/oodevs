@@ -280,7 +280,7 @@
     ============================================================================
     -->
     <target name="test" depends="" description="run all tests">
-        <exec executable="${basedir}/${bin.dir}/release/applications/SIM/SIM.exe" dir="${run.dir}" failonerror="true">
+        <exec executable="${bin.dir}/release/applications/SIM/SIM.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-conffile"/>
             <arg value="${data.dir}/test/scipio.xml"/>
             <arg value="-test"/>
