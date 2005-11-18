@@ -147,7 +147,7 @@
                          NEK,DIN,DIN_ConnectionService,DIN_MessageService,
                          MT_Tools_SCIPIO,ASN,geocoord,
                          asn1per,xerces-c_2"
-                   excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp">
+                   excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,user32,wsock32,winmm"/>
         </build-app>
