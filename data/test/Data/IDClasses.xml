@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Classes>
     <Classe nom="Unite"                                 id="1"   />
-    <Classe nom="TirDirect"                             id="127" />
-    <Classe nom="TirIndirect"                           id="128" />
+    <Classe nom="TirPion"                               id="127" />
     <Classe nom="TirPopulation"                         id="128" />
     <Classe nom="Lima"                                  id="137" />
     <Classe nom="Limite"                                id="138" />
