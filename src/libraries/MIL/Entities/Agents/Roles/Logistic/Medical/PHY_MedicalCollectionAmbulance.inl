@@ -16,7 +16,7 @@
 inline
 uint PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 {
-    return consigns_.empty();
+    return consigns_.size();
 }
 
 // -----------------------------------------------------------------------------

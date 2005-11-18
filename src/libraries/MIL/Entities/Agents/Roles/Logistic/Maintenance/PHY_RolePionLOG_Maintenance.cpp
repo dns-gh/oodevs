@@ -421,21 +421,21 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::GetAvailablityScoreForRepair
+// Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailablityScoreForRepair( PHY_MaintenanceComposanteState& composanteState )
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState )
 {
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse );
+    GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse, composanteState.GetComposanteBreakdown() );
     uint nNbrRepairersAvailable = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrRepairersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     
-    return nNbrRepairersAvailable - consigns_.size();    
+    return nNbrRepairersAvailable;
 }
 
 // =============================================================================

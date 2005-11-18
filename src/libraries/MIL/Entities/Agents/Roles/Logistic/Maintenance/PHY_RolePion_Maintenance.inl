@@ -40,11 +40,11 @@ bool PHY_RolePion_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComposa
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Maintenance::GetAvailablityScoreForRepair
+// Name: PHY_RolePion_Maintenance::GetAvailabilityScoreForRepair
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 inline
-int PHY_RolePion_Maintenance::GetAvailablityScoreForRepair( PHY_MaintenanceComposanteState& /*composanteState*/ )
+int PHY_RolePion_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& /*composanteState*/ )
 {
     return std::numeric_limits< int >::min();
 }

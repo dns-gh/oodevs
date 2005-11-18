@@ -115,9 +115,11 @@ public:
     bool                            HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
     PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& composanteType ) const;
     void                            GetHaulersUse                        ( T_ComposanteUseMap& composanteUse ) const; 
+
     bool                            HasUsableRepairer                    ( const PHY_Breakdown& breakdown ) const;
     PHY_ComposantePion*             GetAvailableRepairer                 ( const PHY_Breakdown& breakdown ) const;    
     void                            GetRepairersUse                      ( T_ComposanteUseMap& composanteUse ) const; 
+    void                            GetRepairersUse                      ( T_ComposanteUseMap& composanteUse, const PHY_Breakdown& breakdown ) const; 
     //@}
 
     //! @name Logistic - Medical
@@ -137,12 +139,15 @@ public:
 
     void                   GetDoctorsUse                   ( T_ComposanteUseMap& composanteUse ) const;
     PHY_ComposantePion*    GetAvailableDoctorForDiagnosing () const; 
+
     bool                   HasUsableDoctorForSorting       () const;
     PHY_ComposantePion*    GetAvailableDoctorForSorting    () const;
     void                   GetDoctorsUseForSorting         ( T_ComposanteUseMap& composanteUse ) const;
+
     bool                   HasUsableDoctorForHealing       () const;
-    bool                   HasUsableDoctorForHealing       ( const PHY_Human& human ) const;    
+    bool                   HasUsableDoctorForHealing       ( const PHY_Human& human ) const;       
     PHY_ComposantePion*    GetAvailableDoctorForHealing    ( const PHY_Human& human ) const;
+    void                   GetDoctorsUseForHealing         ( T_ComposanteUseMap& composanteUse, const PHY_Human& human ) const;
     //@}
 
     //! @name Logistic - Supply

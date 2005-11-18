@@ -64,9 +64,10 @@ public:
     virtual PHY_MedicalHumanState* HandleHumanForEvacuation        ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
     virtual bool                   HandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage
     virtual void                   HandleHumanForSorting           ( const PHY_MedicalCollectionAmbulance& ambulance, PHY_MedicalHumanState& humanState );
-    virtual int                    GetAvailablityScoreForSorting   ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
+    virtual int                    GetAvailabilityScoreForSorting  ( const PHY_MedicalCollectionAmbulance& ambulance ) const;
     virtual void                   ReserveForSorting               ( const PHY_MedicalCollectionAmbulance& ambulance );
     virtual void                   CancelReservationForSorting     ( const PHY_MedicalCollectionAmbulance& ambulance );
+    virtual int                    GetAvailabilityScoreForHealing  ( PHY_MedicalHumanState& humanState );
     virtual bool                   HandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
 
     PHY_MedicalEvacuationAmbulance* GetAvailableEvacuationAmbulance( PHY_MedicalEvacuationConsign& consign );

@@ -588,10 +588,10 @@ void PHY_RolePionLOG_Medical::HandleHumanForSorting( const PHY_MedicalCollection
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Medical::GetAvailablityScoreForSorting
+// Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailablityScoreForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) const
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/ ) const
 {
     if( !bSystemEnabled_ || !HasUsableDoctorForSorting() )
         return std::numeric_limits< int >::min();
@@ -603,15 +603,16 @@ int PHY_RolePionLOG_Medical::GetAvailablityScoreForSorting( const PHY_MedicalCol
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
 
-    int nScore = nNbrDoctorsAvailable - consigns_.size();
+/*    int nScore = nNbrDoctorsAvailable - consigns_.size();
     if( HasUsableDoctorForHealing() )
     {
         if( ambulance.IsAnEmergency() )
             nScore += 100;
         else
             nScore -= 5;
-    }
+    }*/
 
+    int nScore = nNbrDoctorsAvailable;
     for( CIT_CollectionAmbulancesSet itReservation = reservations_.begin(); itReservation != reservations_.end(); ++itReservation )
         nScore -= (**itReservation).GetNbrHumans();
 
@@ -630,6 +631,24 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
     PHY_MedicalHealingConsign* pConsign = new PHY_MedicalHealingConsign( *this, humanState );
     InsertConsign( *pConsign );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing
+// Created: NLD 2005-11-18
+// -----------------------------------------------------------------------------
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanState& humanState )
+{
+    if( !bSystemEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
+        return std::numeric_limits< int >::min();
+
+    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+    GetRole< PHY_RolePion_Composantes >().GetDoctorsUseForHealing( composanteUse, humanState.GetHuman() );
+    uint nNbrDoctorAvailable = 0;
+    for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+        nNbrDoctorAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
+    
+    return nNbrDoctorAvailable;
 }
 
 // =============================================================================

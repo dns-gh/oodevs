@@ -340,7 +340,7 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceCompo
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         PHY_RolePion_Maintenance& roleMaintenance = (**itPion).GetRole< PHY_RolePion_Maintenance >();
-        const int nNewScore = roleMaintenance.GetAvailablityScoreForRepair( composanteState );
+        const int nNewScore = roleMaintenance.GetAvailabilityScoreForRepair( composanteState );
         if( nNewScore > nScore )
         {
             nScore                   = nNewScore;
@@ -413,7 +413,7 @@ PHY_RolePion_Medical* MIL_AutomateLOG::MedicalReserveForSorting( PHY_MedicalColl
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         PHY_RolePion_Medical& roleMedical = (**itPion).GetRole< PHY_RolePion_Medical >();
-        const int nNewScore = roleMedical.GetAvailablityScoreForSorting( ambulance );
+        const int nNewScore = roleMedical.GetAvailabilityScoreForSorting( ambulance );
         if( nNewScore > nScore )
         {
             nScore               = nNewScore;
@@ -433,13 +433,20 @@ PHY_RolePion_Medical* MIL_AutomateLOG::MedicalReserveForSorting( PHY_MedicalColl
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MedicalHandleHumanForHealing( PHY_MedicalHumanState& humanState )
 {
-    const T_PionVector& pions  = GetPions();
+    int nScore = std::numeric_limits< int >::min();
+    PHY_RolePion_Medical* pSelectedRoleMedical = 0;
+    const T_PionVector& pions = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
-        if( (**itPion).GetRole< PHY_RolePion_Medical >().HandleHumanForHealing( humanState ) )
-            return true;
+        PHY_RolePion_Medical& roleMedical = (**itPion).GetRole< PHY_RolePion_Medical >();
+        const int nNewScore = roleMedical.GetAvailabilityScoreForHealing( humanState );
+        if( nNewScore > nScore )
+        {
+            nScore               = nNewScore;
+            pSelectedRoleMedical = &roleMedical;
+        }
     }
-    return false;
+    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForHealing( humanState ) : false;
 }
 
 // -----------------------------------------------------------------------------

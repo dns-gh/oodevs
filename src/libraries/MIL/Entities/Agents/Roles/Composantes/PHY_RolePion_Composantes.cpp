@@ -1173,6 +1173,26 @@ void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUs
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetRepairersUse
+// Created: NLD 2005-11-18
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetRepairersUse( T_ComposanteUseMap& composanteUse, const PHY_Breakdown& breakdown ) const
+{
+    composanteUse.clear();
+    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        if( (**itComposante).GetType().CanRepair( breakdown ) && (**itComposante).GetState().IsUsable() )
+        {
+            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+
+            ++ data.nNbrAvailable_;
+            if( !(**itComposante).CanRepair( breakdown ) )
+                ++ data.nNbrUsed_;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::SendLogisticChangedState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
@@ -1863,6 +1883,26 @@ PHY_ComposantePion* PHY_RolePion_Composantes::GetAvailableDoctorForHealing( cons
             return *it;
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetDoctorsUseForHealing
+// Created: NLD 2005-11-18
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetDoctorsUseForHealing( T_ComposanteUseMap& composanteUse, const PHY_Human& human ) const
+{
+     composanteUse.clear();
+    for( CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        if( (**itComposante).GetType().CanHealHuman( human ) && (**itComposante).GetState().IsUsable() )
+        {
+            T_ComposanteUse& data = composanteUse[ &(**itComposante).GetType() ];
+
+            ++ data.nNbrAvailable_;
+            if( !(**itComposante).CanHealHuman( human ) )
+                ++ data.nNbrUsed_;
+        }
+    }
 }
 
 // =============================================================================

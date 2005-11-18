@@ -50,11 +50,11 @@ void PHY_RolePion_Medical::HandleHumanForSorting( const PHY_MedicalCollectionAmb
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Medical::GetAvailablityScoreForSorting
+// Name: PHY_RolePion_Medical::GetAvailabilityScoreForSorting
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-int PHY_RolePion_Medical::GetAvailablityScoreForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/ ) const
+int PHY_RolePion_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/ ) const
 {
     return std::numeric_limits< int >::min();
 }
@@ -85,6 +85,16 @@ inline
 bool PHY_RolePion_Medical::HandleHumanForHealing( PHY_MedicalHumanState& /*humanState*/ )
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::GetAvailabilityScoreForHealing
+// Created: NLD 2005-11-18
+// -----------------------------------------------------------------------------
+inline
+int PHY_RolePion_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanState& /*humanState*/ )
+{
+    return std::numeric_limits< int >::min();
 }
 
 // -----------------------------------------------------------------------------

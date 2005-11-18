@@ -62,7 +62,7 @@ public:
     virtual bool                            HandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState );
     virtual bool                            HandleComposanteForRepair   ( PHY_MaintenanceComposanteState& composanteState );
 
-    virtual int                             GetAvailablityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
+    virtual int                             GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState );
     //@}
 
     //! @name Tools
