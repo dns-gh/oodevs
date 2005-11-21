@@ -32,10 +32,11 @@ std::string                     ADN_Project_Data::FileInfos::szUntitled_  ="Unti
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Project_Data::SimInfos::SimInfos()
-: bAutoStart_( 0 )
-, nTimeStep_( 0 )
-, nTimeFactor_( 0 )
+: bAutoStart_   ( 0 )
+, nTimeStep_    ( 0 )
+, nTimeFactor_  ( 0 )
 , nAutosaveTime_( 0 )
+, nNbrMax_      ( 0 )
 {
 }
 
@@ -147,6 +148,12 @@ ADN_Project_Data::DataInfos::DataInfos()
 , szWeather_()
 , szHealth_()
 , szIDs_()
+, szHumanFactors_()
+, szBreakdowns_ ()
+, szKnowledgeGroups_()
+, szLog_()
+, szSupply_()
+, szCom_()
 , szODB_()
 , szPathfinder_()
 , szMissions_()
@@ -414,6 +421,7 @@ ADN_Project_Data::ADN_Project_Data()
 , dataInfos_     ()
 , netInfos_      ()
 , pathfinderInfo_()
+, szFile_        ()
 {
 }
 
@@ -469,11 +477,12 @@ void ADN_Project_Data::Reset()
     defaultScipioFile.SetData( (char*)LockResource( LoadResource(GetModuleHandle(NULL),
                          FindResource(GetModuleHandle(NULL),MAKEINTRESOURCE(IDR_XML_SCIPIO),"xml"))));  
     this->ReadArchive( defaultScipioFile );
-
+/*
     ADN_XmlInput_Helper defaultNetworkFile;
     defaultNetworkFile.SetData( (char*)LockResource( LoadResource(GetModuleHandle(NULL),
         FindResource(GetModuleHandle(NULL),MAKEINTRESOURCE(IDR_XML_RESEAU),"xml"))));  
     netInfos_.ReadArchive( defaultNetworkFile );
+*/
 }
 
 
@@ -587,6 +596,8 @@ void ADN_Project_Data::Save()
     MT_TextOutputArchive idsOutput;
     const char* szIds = (char*)LockResource( 
             LoadResource( GetModuleHandle(NULL), FindResource( GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_XML_IDS_CLASSES), "xml" )));
+
+    std::cout << szIds << std::endl;
     idsOutput.GetOutputStream() << szIds;
 
     std::string szIdsFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + dataInfos_.szIDs_.GetData();

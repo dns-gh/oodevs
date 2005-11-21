@@ -48,8 +48,8 @@
     <Classe nom="terrain largage"               id="210" />
     <Classe nom="zone interdite tir"            id="215" />
     <Classe nom="zone interdite mouvement"      id="215" />
-    <Classe nom="zone implantation mortier"     id="167" />  
-    <Classe nom="Population"                    id="3"   />          
-    <Classe nom="PopulationConcentration"       id="3"   />          
-    <Classe nom="PopulationFlux"                id="3"   />          
+    <Classe nom="zone implantation mortier"     id="167" />
+    <Classe nom="Population"                    id="3"   />
+    <Classe nom="PopulationConcentration"       id="3"   />
+    <Classe nom="PopulationFlux"                id="3"   />
 </Classes>

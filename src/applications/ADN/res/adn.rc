@@ -27,9 +27,9 @@ LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
 //
 
 IDR_XML_SCIPIO          XML                     "scipio.xml"
-IDR_XML_IDS_CLASSES     XML                     "idclasses.xml"
 IDR_XML_RESEAU          XML                     "reseau.xml"
 IDR_XML_TERRAIN         XML                     "terrain.xml"
+IDR_XML_IDS_CLASSES     XML                     "idclasses.xml"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
