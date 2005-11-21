@@ -156,9 +156,9 @@ MOS_AgentKnowledgePanel::~MOS_AgentKnowledgePanel()
 // -----------------------------------------------------------------------------
 void MOS_AgentKnowledgePanel::OnUpdate()
 {
-    if( GetSelectedGtia( selectedItem_ ) == 0 )
+    /*if( GetSelectedGtia( selectedItem_ ) == 0 )
         OnClearSelection();
-    else
+    else*/
         UpdateList();
 }
 
@@ -409,12 +409,15 @@ void MOS_AgentKnowledgePanel::OnKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowl
         MT_ValuedListViewItem<MOS_AgentKnowledge*>* pCastItem = (MT_ValuedListViewItem<MOS_AgentKnowledge*>*)pItem;
         if( pCastItem->GetValue() == &knowledge )
         {
+            if ( pSelectedKnowledge_ == &knowledge )
+                pSelectedKnowledge_ = 0;
             delete pCastItem;
-            return;
+            break;
         }
 
         pItem = pItem->nextSibling();
     }
+    UpdateSelected();
 }
 
 
