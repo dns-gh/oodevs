@@ -242,6 +242,28 @@ public:
 
 
 //*****************************************************************************
+    class PopulationInfos
+        : public ADN_Ref_ABC
+    {
+        MT_COPYNOTALLOWED( PopulationInfos )
+
+    public:
+        PopulationInfos();
+        ~PopulationInfos();
+
+        std::string GetItemName();
+        void        CopyFrom( PopulationInfos& populationInfo );
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+    
+    public:
+        ADN_Type_String strName_;
+        ADN_Type_Double rDensity_;
+        ADN_Type_Double rModifier_;
+    };
+
+//*****************************************************************************
     class TargetInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -265,6 +287,7 @@ public:
         ADN_Type_String                                           strName_;  //!< For code convenience, not for editing.
         ADN_Type_Double                                           rDistanceDetection_;
         T_ModificatorPostureInfos_Vector                          vModifStance_;
+        PopulationInfos                                           populationInfos_;
 
     public:
         class Cmp : public std::unary_function< TargetInfos* , bool >
@@ -283,7 +306,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<TargetInfos> T_TargetsInfos_Vector;
     typedef T_TargetsInfos_Vector::iterator  IT_TargetsInfos_Vector;
-
 
 //*****************************************************************************
     class SensorInfos
@@ -320,6 +342,7 @@ public:
         T_ModificatorPostureInfos_Vector        vModifStance_;
         T_ModificatorPostureInfos_Vector        vModifTargetStance_;
         T_ModificatorEnvironmentInfos_Vector    vModifEnvironments_;
+        PopulationInfos                         populationInfos_;
 
 
         ADN_Type_Bool                           bCanDetectObjects_;

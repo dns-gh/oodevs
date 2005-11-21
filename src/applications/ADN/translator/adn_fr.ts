@@ -13,6 +13,30 @@
         <source>Automata compositions</source>
         <translation type="obsolete">Composition des automates</translation>
     </message>
+    <message>
+        <source>Scipio Adaptation Tool</source>
+        <translation type="obsolete">Outil d&apos;adaptation Scipio</translation>
+    </message>
+    <message>
+        <source>Scipio Adaptation Tool - No Project</source>
+        <translation type="obsolete">Outil d&apos;adaptation Scipio - Aucun projet</translation>
+    </message>
+    <message>
+        <source>Scipio Adaptation Tool - </source>
+        <translation type="obsolete">Outil d&apos;adaptation Scipio - </translation>
+    </message>
+    <message>
+        <source>Invalid password</source>
+        <translation type="obsolete">Mot de passe invalide</translation>
+    </message>
+    <message>
+        <source>The password you entered is not valid. Please try again.</source>
+        <translation type="obsolete">Le mot de passe est incorrect. Veuillez réessayer.</translation>
+    </message>
+    <message>
+        <source>Save changes to project %1?</source>
+        <translation type="obsolete">Enregistrer les modifications du projet %1 ?</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AiEngine_GUI</name>
@@ -4160,6 +4184,22 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>/ha</source>
         <translation>/ha</translation>
+    </message>
+    <message>
+        <source>Population modifiers</source>
+        <translation>Modificateurs population</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation>Densité</translation>
+    </message>
+    <message>
+        <source>people/m&#xb2;</source>
+        <translation>hommes/m²</translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation>Modificateur</translation>
     </message>
 </context>
 <context>

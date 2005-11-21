@@ -80,6 +80,8 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eTargets]->Connect( &pInfos->vTargets_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePopulationDensity]->Connect( &pInfos->populationInfos_.rDensity_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePopulationModifier]->Connect( &pInfos->populationInfos_.rModifier_, bConnect );
 
     // Order is important.
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectAgents]->Connect( &pInfos->bCanDetectAgents_, bConnect );

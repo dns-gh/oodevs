@@ -320,7 +320,11 @@ void ADN_MainWindow::OpenProject( const char* szFilename )
 
     try
     {
-        workspace_.Load(ADN_Tools::Replace(szFilename,'\\','/'));
+        //workspace_.Load(ADN_Tools::Replace(szFilename,'\\','/'));  // $$$$ SBO 2005-11-18: Does not work on network
+        if( szFilename[ 0 ] == '/' && szFilename[ 1 ] == '/' )
+            workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ) );
+        else
+            workspace_.Load( szFilename );
     }
     catch( ADN_Exception_ABC& exception )
     {

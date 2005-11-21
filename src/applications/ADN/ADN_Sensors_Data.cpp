@@ -338,10 +338,11 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( MT_OutputArchive_A
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos::TargetInfos()
-: ADN_Ref_ABC()
+: ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
-, ptrObject_(ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
-, rDistanceDetection_( 0 )
+, ptrObject_          ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
+, rDistanceDetection_ ( 0 )
+, populationInfos_    ()
 {
     // Reference connection
     BindExistenceTo(&ptrObject_);
@@ -394,10 +395,11 @@ std::string ADN_Sensors_Data::TargetInfos::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos* ADN_Sensors_Data::TargetInfos::CreateCopy()
 {
-    TargetInfos* pNew = new TargetInfos();
-    pNew->ptrObject_ = ptrObject_.GetData();
-    pNew->strName_ = strName_.GetData();
+    TargetInfos* pNew         = new TargetInfos();
+    pNew->ptrObject_          = ptrObject_.GetData();
+    pNew->strName_            = strName_.GetData();
     pNew->rDistanceDetection_ = rDistanceDetection_.GetData();
+    pNew->populationInfos_.CopyFrom( populationInfos_ );
     for( IT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
     {
         ModificatorPostureInfos* pNewModif = new ModificatorPostureInfos( (*it)->eType_ );
@@ -431,6 +433,9 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "DD", rDistanceDetection_ );
 
     input.Section( "ModificateursDeDistance" );
+
+    populationInfos_.ReadArchive( input );
+
     input.Section( "PosturesSource" );
     for( IT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
         (*it)->ReadArchive( input );
@@ -454,6 +459,9 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "DD", rDistanceDetection_.GetData() );
 
     output.Section( "ModificateursDeDistance" );
+    
+    populationInfos_.WriteArchive( output );
+
     output.Section( "PosturesSource" );
     for( IT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
         (*it)->WriteArchive( output );
@@ -463,6 +471,78 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.EndSection(); // Objet
 }
 
+// =============================================================================
+// ADN_Sensor_Data::PopulationInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::PopulationInfos::PopulationInfos
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::PopulationInfos::PopulationInfos()
+    : ADN_Ref_ABC()
+    , strName_   ()
+    , rDensity_  ( 0. )
+    , rModifier_ ( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::PopulationInfos::~PopulationInfos
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::PopulationInfos::~PopulationInfos()
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::PopulationInfos::GetItemName
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+std::string ADN_Sensors_Data::PopulationInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::PopulationInfos::CopyFrom
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::PopulationInfos::CopyFrom( PopulationInfos& populationInfo )
+{
+    rDensity_  = populationInfo.rDensity_ .GetData();
+    rModifier_ = populationInfo.rModifier_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::PopulationInfos::ReadArchive
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "PresencePopulation" );
+    input.ReadAttribute( "densitePopulation", rDensity_  );
+    input.ReadAttribute( "modificateur"     , rModifier_ );
+    input.EndSection(); // PresencePopulation
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::PopulationInfos::WriteArchive
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::PopulationInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "PresencePopulation" );
+    output.WriteAttribute( "densitePopulation", rDensity_.GetData()  );
+    output.WriteAttribute( "modificateur"     , rModifier_.GetData() );
+    output.EndSection(); // PresencePopulation
+}
+
+// =============================================================================
+// ADN_Sensor_Data::SensorInfos
+// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::SensorInfos
@@ -486,6 +566,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , vModifEnvironments_( false )
 , vModifStance_( false )
 , vModifTargetStance_( false )
+, populationInfos_ ()
 {
 
     strName_.SetDataName( "le nom" );
@@ -599,15 +680,15 @@ std::string ADN_Sensors_Data::SensorInfos::GetItemName()
 ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
 {
     ADN_Sensors_Data::SensorInfos* pCopy = new ADN_Sensors_Data::SensorInfos();
-    pCopy->rDistProximity_ = rDistProximity_.GetData();
-    pCopy->rDistDetection_ = rDistDetection_.GetData();
-    pCopy->rDistReco_ = rDistReco_.GetData();
-    pCopy->rDistIdent_ = rDistIdent_.GetData();
-    pCopy->rAngle_ = rAngle_.GetData();
-    pCopy->bCanScan_ = bCanScan_.GetData();
-    pCopy->bCanDetectAgents_ = bCanDetectAgents_.GetData();
+    pCopy->rDistProximity_    = rDistProximity_.GetData();
+    pCopy->rDistDetection_    = rDistDetection_.GetData();
+    pCopy->rDistReco_         = rDistReco_.GetData();
+    pCopy->rDistIdent_        = rDistIdent_.GetData();
+    pCopy->rAngle_            = rAngle_.GetData();
+    pCopy->bCanScan_          = bCanScan_.GetData();
+    pCopy->bCanDetectAgents_  = bCanDetectAgents_.GetData();
     pCopy->bCanDetectObjects_ = bCanDetectObjects_.GetData();
-
+    pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
     for( T_TargetsInfos_Vector::iterator itTarget = vTargets_.begin(); itTarget != vTargets_.end(); ++itTarget )
     {
@@ -696,6 +777,8 @@ void ADN_Sensors_Data::SensorInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
         input.Section( "ModificateursDeDistance" );
 
+        populationInfos_.ReadArchive( input );
+
         input.Section( "VolumesCible" );
         for( IT_ModificatorSizeInfos_Vector it1 = vModifSizes_.begin(); it1 != vModifSizes_.end(); ++it1 )
             (*it1)->ReadArchive( input );
@@ -776,6 +859,8 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( MT_OutputArchive_ABC& output )
         output.EndSection(); // DistancesDeBase
 
         output.Section( "ModificateursDeDistance" );
+
+        populationInfos_.WriteArchive( output );
 
         output.Section( "VolumesCible" );
         for( IT_ModificatorSizeInfos_Vector it1 = vModifSizes_.begin(); it1 != vModifSizes_.end(); ++it1 )

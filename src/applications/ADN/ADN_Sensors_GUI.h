@@ -51,6 +51,8 @@ public:
         eTargets,
         eCanDetectAgents,
         eCanDetectObjects,
+        ePopulationDensity,
+        ePopulationModifier,
         eNbrGuiElements
     };
 
@@ -58,6 +60,8 @@ public:
     {
         eObjDistDetect,
         eObjModifStances,
+        eObjPopulationDensity,
+        eObjPopulationModifier,
         eNbrObjGuiElements
     };
 

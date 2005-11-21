@@ -150,19 +150,31 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ), pAgentDetectionModifiersGroup2 );
     vConnectors[eModifTargetStances] = &pTargetStance->GetConnector();
 
+    // Population modifiers
+    QGroupBox* pPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population modifiers" ), pAgentParamGroupBox );
+
+    builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Density" ) , vConnectors[ePopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Modifier" ), vConnectors[ePopulationModifier], 0, eGreaterEqualZero );
+
     // Object detection parameters
     ADN_GroupBox* pObjectParamGroupBox = new ADN_GroupBox( 0, Qt::Vertical, tr( "Can detect objects" ), pSensorGroupBox );
     vConnectors[eCanDetectObjects] = &pObjectParamGroupBox->GetConnector();
 
     ADN_Sensors_TargetsListView* pTargetListView = new ADN_Sensors_TargetsListView( pObjectParamGroupBox );
     vConnectors[eTargets] = &pTargetListView->GetConnector();
-    T_ConnectorVector vTargetConnectors( 2, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vTargetConnectors( eNbrObjGuiElements, (ADN_Connector_ABC*)0 );
 
     QGroupBox* pTargetParamsGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Parameters" ), pObjectParamGroupBox );
 
     // Detection
     QWidget* pHolder = builder.AddFieldHolder( pTargetParamsGroupBox );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Detection distance" ), vTargetConnectors[eObjDistDetect], tr( "m" ), eGreaterEqualZero );
+
+    // Population modifiers
+    QGroupBox* pObjPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population modifiers" ), pTargetParamsGroupBox );
+
+    builder.AddField<ADN_EditLine_Double>( pObjPopulationModifiersGroup, tr( "Density" ) , vTargetConnectors[eObjPopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pObjPopulationModifiersGroup, tr( "Modifier" ), vTargetConnectors[eObjPopulationModifier], 0, eGreaterEqualZero );
 
     ADN_Sensors_Postures_GUI* pObjPostures = new ADN_Sensors_Postures_GUI( tr( "Stance" ), pTargetParamsGroupBox );
     vTargetConnectors[eObjModifStances] = &pObjPostures->GetConnector();
@@ -196,10 +208,12 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pAGroupLayout->setAlignment( Qt::AlignTop );
     pAGroupLayout->addWidget( pParamHolder, 0, 0 );
     pAGroupLayout->addWidget( pDistancesGroupBox, 1, 0 );
+    pAGroupLayout->addMultiCellWidget( pPopulationModifiersGroup     , 0, 1, 2, 2 );
     pAGroupLayout->addMultiCellWidget( pAgentDetectionModifiersGroup2, 0, 1, 1, 1 );
-    pAGroupLayout->addMultiCellWidget( pAgentDetectionModifiersGroup, 2, 2, 0, 1 );
+    pAGroupLayout->addMultiCellWidget( pAgentDetectionModifiersGroup , 2, 2, 0, 2 );
     pAGroupLayout->setColStretch( 0, 1 );
-    pAGroupLayout->setColStretch( 1, 3 );
+    pAGroupLayout->setColStretch( 1, 2 );
+    pAGroupLayout->setColStretch( 2, 1 );
 
     QHBoxLayout* pOGroupLayout = new QHBoxLayout( pObjectParamGroupBox->layout(), 5 );
     pOGroupLayout->setAlignment( Qt::AlignTop );
