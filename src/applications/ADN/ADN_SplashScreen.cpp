@@ -32,6 +32,16 @@ ADN_SplashScreen::ADN_SplashScreen( const QPixmap& pixmap, WFlags f )
 {
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_SplashScreen constructor
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+ADN_SplashScreen::ADN_SplashScreen()
+: QSplashScreen            ()
+, ADN_ProgressIndicator_ABC()
+, textColor_               ( Qt::black )
+{
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen destructor
@@ -76,7 +86,8 @@ void ADN_SplashScreen::Increment( int /*n*/ )
 // -----------------------------------------------------------------------------
 void ADN_SplashScreen::Increment( const char* szText, int /*n*/ )
 {
-    this->message( szText, AlignBottom | AlignHCenter, textColor_ );
+    if( IsValid() )
+        this->message( szText, AlignBottom | AlignHCenter, textColor_ );
     qApp->processEvents();
 }
 
@@ -87,5 +98,15 @@ void ADN_SplashScreen::Increment( const char* szText, int /*n*/ )
 // -----------------------------------------------------------------------------
 void ADN_SplashScreen::Reset( const char* szMsg )
 {
-    this->message( szMsg, AlignBottom | AlignHCenter, textColor_ );
+    if( IsValid() )
+        this->message( szMsg, AlignBottom | AlignHCenter, textColor_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_SplashScreen::IsValid
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+bool ADN_SplashScreen::IsValid() const
+{
+    return !pixmap()->isNull();
 }

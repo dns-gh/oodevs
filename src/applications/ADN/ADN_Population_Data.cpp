@@ -79,7 +79,7 @@ void ADN_Population_Data::FireEffectProtectionInfos::ReadArchive( ADN_XmlInput_H
 void ADN_Population_Data::FireEffectProtectionInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     // do not save unspecified protection hit factor
-    if(    rDestruction_.GetData()              == 0.
+    if( rDestruction_.GetData()                 == 0.
         && rFixableWithEvacuation_.GetData()    == 0.
         && rFixableWithoutEvacuation_.GetData() == 0. )
         return;
@@ -146,14 +146,8 @@ ADN_Population_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAtt
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FireEffectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
-//    input.Section( "Attitude" );
-//
-//    std::string strAttitude;
-//    input.ReadAttribute( "nom", strAttitude );
-//    E_PopulationAttitude nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-//    assert( nAttitude == nAttitude_ );
-
-    input.Section( "Intensite" );
+    if( !input.Section( "Intensite", ADN_XmlInput_Helper::eNothing ) )
+        return;
     input.ReadAttribute( "densitePopulation", rIntensityDensity_ );
     input.ReadAttribute( "intensite"        , rIntensityFactor_  );
     input.EndSection(); // Intensite
@@ -166,10 +160,7 @@ void ADN_Population_Data::FireEffectInfos::ReadArchive( ADN_XmlInput_Helper& inp
         assert( itProtection != vProtectionInfos_.end() );
         (*itProtection)->ReadArchive( input );
     }
-
     input.EndList(); // ProtectionsPions
-
-//    input.EndSection(); // Attitude
 }
 
 // -----------------------------------------------------------------------------
@@ -178,8 +169,9 @@ void ADN_Population_Data::FireEffectInfos::ReadArchive( ADN_XmlInput_Helper& inp
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FireEffectInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
+    if( rIntensityDensity_.GetData() == 0. && rIntensityFactor_.GetData() == 0. )
+        return;
     output.Section( "Attitude" );
-
     output.Section( "Intensite" );
     output.WriteAttribute( "densitePopulation", rIntensityDensity_.GetData() );
     output.WriteAttribute( "intensite"        , rIntensityFactor_.GetData()  );
@@ -191,7 +183,6 @@ void ADN_Population_Data::FireEffectInfos::WriteArchive( MT_OutputArchive_ABC& o
     for( IT_FireEffectProtectionInfosVector it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
         (*it)->WriteArchive( output );
     output.EndList(); // ProtectionsPions
-
     output.EndSection(); // Attitude
 }
 
@@ -219,6 +210,75 @@ std::string ADN_Population_Data::FireEffectInfos::GetNodeName()
 std::string ADN_Population_Data::FireEffectInfos::GetItemName()
 {
     return strName_.GetData();
+}
+
+// =============================================================================
+// ADN_Population_Data::FireEffectRoeInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_RoePopulation nRoe )
+: ADN_Ref_ABC         ()
+, ADN_DataTreeNode_ABC()
+, nRoe_               ( nRoe )
+, strName_            ( ENT_Tr::ConvertFromRoePopulation( nRoe ) )
+, rAttritionSurface_  ( 0. )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectRoeInfos::~FireEffectRoeInfos
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+ADN_Population_Data::FireEffectRoeInfos::~FireEffectRoeInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectRoeInfos::GetNodeName
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::FireEffectRoeInfos::GetNodeName()
+{
+    return std::string();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectRoeInfos::GetItemName
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::FireEffectRoeInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectRoeInfos::ReadArchive
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::FireEffectRoeInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.ReadField( "SurfaceAttrition", rAttritionSurface_ );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::FireEffectRoeInfos::WriteArchive
+// Created: SBO 2005-11-21
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    // do not write ROE with attrition surface == 0
+    if( rAttritionSurface_.GetData() == 0. )
+        return;
+    output.Section( "RegleEngagementTireur" );
+    output.WriteAttribute( "nom", ENT_Tr::ConvertFromRoePopulation( nRoe_ ) );
+    output.WriteField( "SurfaceAttrition", rAttritionSurface_.GetData() );
+    output.EndSection(); // RegleEngagementTireur
 }
 
 // =============================================================================
@@ -329,13 +389,6 @@ ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nA
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::SpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
-//    input.Section( "Attitude" );
-//
-//    std::string strAttitude;
-//    input.ReadAttribute( "nom", strAttitude );
-//    E_PopulationAttitude nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-//    assert( nAttitude == nAttitude_ );
-
     input.BeginList( "VolumesPions" );
     ADN_Categories_Data::T_SizeInfos_Vector& sizeInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
     for( ADN_Categories_Data::T_SizeInfos_Vector::iterator it = sizeInfos.begin(); it != sizeInfos.end(); ++it )
@@ -346,8 +399,6 @@ void ADN_Population_Data::SpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& in
     }
 
     input.EndList(); // VolumesPions
-
-//    input.EndSection(); // Attitude
 }
 
 // -----------------------------------------------------------------------------
@@ -411,6 +462,7 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
 , rMoveSpeed_            ( 0. )
 , vSpeedEffectInfos_     ()
 , vFireEffectInfos_      ()
+, vFireEffectRoeInfos_   ()
 {
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
@@ -421,6 +473,12 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
         FireEffectInfos* pFireNew = new FireEffectInfos( ( E_PopulationAttitude )i );
         std::auto_ptr< FireEffectInfos > spFireNew( pFireNew );
         vFireEffectInfos_.AddItem( spFireNew.release() );
+    }
+    for( int i = 0; i < eNbrRoePopulation; ++i )
+    {
+        FireEffectRoeInfos* pFireRoeNew = new FireEffectRoeInfos( ( E_RoePopulation )i );
+        std::auto_ptr< FireEffectRoeInfos > spFireRoeNew( pFireRoeNew );
+        vFireEffectRoeInfos_.AddItem( spFireRoeNew.release() );
     }
     this->BindExistenceTo( &ptrModel_ );
 }
@@ -497,34 +555,58 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( ADN_XmlInput_Helper& inp
     if( input.BeginList( "Attitudes", ADN_XmlInput_Helper::eNothing ) )
     {
         while( input.NextListElement() )
-        {
-            input.Section( "Attitude" );
-            std::string strAttitude;
-            input.ReadAttribute( "nom", strAttitude );
-            uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-            vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
-            input.EndSection(); // Attitude
-        }
+            if( input.Section( "Attitude", ADN_XmlInput_Helper::eNothing ) )
+            {
+                std::string strAttitude;
+                input.ReadAttribute( "nom", strAttitude );
+                uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+                if( nAttitude == (E_PopulationAttitude)-1 )
+                    throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population attitude." ).ascii() );
+                vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
+                input.EndSection(); // Attitude
+            }
         input.EndList(); // Attitudes
     }
     input.EndSection(); // Ralentissement
 
     input.Section( "Tir" );
+    input.Section( "Tireur" );
     if( input.BeginList( "Attitudes", ADN_XmlInput_Helper::eNothing ) )
     {
         while( input.NextListElement() )
-        {
-            input.Section( "Attitude" );
-            std::string strAttitude;
-            input.ReadAttribute( "nom", strAttitude );
-            uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-            vFireEffectInfos_[ nAttitude ]->ReadArchive( input );
-            input.EndSection(); // Attitude
-        }
+            if( input.Section( "Attitude", ADN_XmlInput_Helper::eNothing ) )
+            {
+                std::string strAttitude;
+                input.ReadAttribute( "nom", strAttitude );
+                uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+                if( nAttitude == (E_PopulationAttitude)-1 )
+                    throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population attitude." ).ascii() );
+                vFireEffectInfos_[ nAttitude ]->ReadArchive( input );
+                input.EndSection(); // Attitude
+            }
         input.EndList(); // Attitudes
     }
-    input.EndSection(); // Tir
+    input.EndSection(); // Tireur
 
+    input.Section( "Cible" );
+    if( input.BeginList( "ReglesEngagementTireur", ADN_XmlInput_Helper::eNothing ) )
+    {
+        while( input.NextListElement() )
+            if( input.Section( "RegleEngagementTireur", ADN_XmlInput_Helper::eNothing ) )
+            {
+                std::string strROE;
+                input.ReadAttribute( "nom", strROE );
+                uint nROE = ENT_Tr::ConvertToRoePopulation( strROE );
+                if( nROE == (E_RoePopulation)-1 )
+                    throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid population ROE." ).ascii() );
+                vFireEffectRoeInfos_[ nROE ]->ReadArchive( input );
+                input.EndSection(); // RegleEngagementTireur
+            }
+        input.EndList(); // ReglesEngagementTireur
+    }
+    input.EndSection(); // Cible
+
+    input.EndSection(); // Tir
     input.EndSection(); // Effets
     input.EndSection(); // Population
 }
@@ -556,14 +638,22 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( MT_OutputArchive_ABC& o
     output.EndSection(); // Ralentissement
 
     output.Section( "Tir" );
+    output.Section( "Tireur" );
     output.BeginList( "Attitudes", vFireEffectInfos_.size() );
     for( IT_FireEffectInfosVector it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output.EndList(); // Attitudes
+    output.EndSection(); // Tireur
+
+    output.Section( "Cible" );
+    output.BeginList( "ReglesEngagementTireur", vFireEffectRoeInfos_.size() );
+    for( IT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output.EndList(); // ReglesEngagementTireur
+    output.EndSection(); // Cible
+
     output.EndSection(); // Tir
-
     output.EndSection(); // Effets
-
     output.EndSection(); // Population
 }
 

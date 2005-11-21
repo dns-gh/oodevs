@@ -38,7 +38,8 @@ class ADN_SplashScreen
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_SplashScreen( const QPixmap& pixmap = QPixmap(), WFlags f = 0 );
+     ADN_SplashScreen( const QPixmap& pixmap, WFlags f = 0 );
+     ADN_SplashScreen();
     ~ADN_SplashScreen();
     //@}
 
@@ -53,6 +54,11 @@ public:
     void Increment( int n = 1 );
     void Increment( const char* szText, int n = 1 );
     void Reset( const char* szMsg = 0 );
+    //@}
+
+    //! @name Accessors
+    //@{
+    bool IsValid() const;
     //@}
 
 private:

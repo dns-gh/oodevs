@@ -113,6 +113,32 @@ public:
     typedef T_FireEffectInfosVector::iterator     IT_FireEffectInfosVector;
 
 // *****************************************************************************
+    class FireEffectRoeInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( FireEffectRoeInfos )
+
+    public:
+         FireEffectRoeInfos( E_RoePopulation nRoe );
+        ~FireEffectRoeInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_String strName_;
+        E_RoePopulation nRoe_;
+        ADN_Type_Double rAttritionSurface_;
+    };
+
+    typedef ADN_Type_Vector_ABC<FireEffectRoeInfos>  T_FireEffectRoeInfosVector;
+    typedef T_FireEffectRoeInfosVector::iterator     IT_FireEffectRoeInfosVector;
+
+// *****************************************************************************
     class SpeedEffectVolumeInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
@@ -209,6 +235,7 @@ public:
 
         T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
         T_FireEffectInfosVector                               vFireEffectInfos_;
+        T_FireEffectRoeInfosVector                            vFireEffectRoeInfos_;
     };
 
     typedef ADN_Type_Vector_ABC<PopulationInfos>  T_PopulationInfosVector;

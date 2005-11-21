@@ -27,10 +27,10 @@ const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoeP
 void PHY_RoePopulation::Initialize()
 {
     roePopulations_[ none_.GetName()  ] = &none_;
-    roePopulations_[ "Interdit"       ] = new PHY_RoePopulation( "Interdit"      , eInterdit      , EnumRoePopulation::tir_interdit       );
-    roePopulations_[ "Sommation"      ] = new PHY_RoePopulation( "Sommation"     , eSommation     , EnumRoePopulation::tir_sommation      ); 
-    roePopulations_[ "Dissuasion"     ] = new PHY_RoePopulation( "Dissuasion"    , eDissuasion    , EnumRoePopulation::tir_dissuasion     );
-    roePopulations_[ "Neutralisation" ] = new PHY_RoePopulation( "Neutralisation", eNeutralisation, EnumRoePopulation::tir_neutralisation );
+    roePopulations_[ "tir interdit"       ] = new PHY_RoePopulation( "Interdit"      , eInterdit      , EnumRoePopulation::tir_interdit       );
+    roePopulations_[ "tir sommation"      ] = new PHY_RoePopulation( "Sommation"     , eSommation     , EnumRoePopulation::tir_sommation      ); 
+    roePopulations_[ "tir dissuasion"     ] = new PHY_RoePopulation( "Dissuasion"    , eDissuasion    , EnumRoePopulation::tir_dissuasion     );
+    roePopulations_[ "tir neutralisation" ] = new PHY_RoePopulation( "Neutralisation", eNeutralisation, EnumRoePopulation::tir_neutralisation );
 }
 
 // -----------------------------------------------------------------------------

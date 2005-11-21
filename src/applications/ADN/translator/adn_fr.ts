@@ -3574,6 +3574,14 @@ Assurez vous que le fichier existe.</translation>
         <source>Fixable without evacuation</source>
         <translation>Réparable sans évacuation</translation>
     </message>
+    <message>
+        <source>Population -&gt; Agent</source>
+        <translation>Population -&gt; Agent</translation>
+    </message>
+    <message>
+        <source>Agent -&gt; Population</source>
+        <translation>Agent -&gt; Population</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>

@@ -56,6 +56,7 @@ public:
         eFireEffectDestruction,
         eFireEffectFixableWithEvacuation,
         eFireEffectFixableWithoutEvacuation,
+        eFireEffectRoe,
         eNbrGuiElements
     };
 

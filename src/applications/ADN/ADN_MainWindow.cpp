@@ -87,9 +87,9 @@ ADN_MainWindow::~ADN_MainWindow()
 void ADN_MainWindow::Build()
 {
     ADN_SplashScreen splashScreen( QPixmap( "ADN.jpg" ) );
-    splashScreen.show();
+    if( splashScreen.IsValid() )
+        splashScreen.show();
     workspace_.SetProgressIndicator( &splashScreen );
-
     // Main widget
     QVBox* pBox = new QVBox( this );
     setCentralWidget( pBox );

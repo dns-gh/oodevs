@@ -24,6 +24,7 @@
 #include <qgroupbox.h>
 #include <qdialog.h>
 #include <qvbox.h>
+#include <qgrid.h>
 
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
@@ -37,6 +38,7 @@
 #include "ADN_Population_SpeedEffect_Volume_ListView.h"
 #include "ADN_Population_FireEffect_Attitude_ListView.h"
 #include "ADN_Population_FireEffect_Protection_ListView.h"
+#include "ADN_Population_FireEffectRoe_GUI.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
@@ -131,7 +133,9 @@ void ADN_Population_GUI::Build()
 
     // Fire effects
     //@{
-    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Fire effects" ), pGroup );
+    QGroupBox* pFireEffectGlobalGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Fire effects" ), pGroup );
+
+    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population -> Agent" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Population_FireEffect_Attitude_ListView( pFireEffectGroup );
     vInfosConnectors[eFireEffectAttitude] = &pFireEffectAttitudeList->GetConnector();
 
@@ -154,6 +158,13 @@ void ADN_Population_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pFireEffectProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectFixableWithoutEvacuation], 0, eGreaterEqualZero );
     //@}
 
+    // Fire Roe effects
+    //@{
+    QGroupBox* pFireEffectRoeGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Agent -> Population" ), pFireEffectGlobalGroup );
+    ADN_Population_FireEffectRoe_GUI* pFireEffectRoe = new ADN_Population_FireEffectRoe_GUI( pFireEffectRoeGroup );
+    vInfosConnectors[eFireEffectRoe] = &pFireEffectRoe->GetConnector();
+    //@}
+
     builder.AddStretcher( pGroup, Qt::Vertical );
 
     pPopulationList         ->SetItemConnectors( vInfosConnectors );
@@ -167,8 +178,13 @@ void ADN_Population_GUI::Build()
     pMainLayout->addWidget( pPopulationList, 1 );
     pMainLayout->addWidget( pMainBox, 3 );
 
+    QGridLayout* pFireEffectLayout = new QGridLayout( pFireEffectGlobalGroup->layout(), 1, 4, 5 );
+    pFireEffectLayout->addWidget( pFireEffectGroup   , 0, 0 );
+    pFireEffectLayout->addWidget( pFireEffectRoeGroup, 0, 3 );
+    pFireEffectLayout->setColStretch( 0, 3 );
+    pFireEffectLayout->setColStretch( 3, 1 );
+
     //QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 6 );
     //pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
     //builder.AddStretcher( pGroupLayout, Qt::Vertical );
 }
-
