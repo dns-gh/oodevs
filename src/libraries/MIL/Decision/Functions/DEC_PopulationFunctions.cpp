@@ -48,3 +48,4 @@ void DEC_PopulationFunctions::ResetPionMaxSpeed( DIA_Call_ABC& /*call*/, MIL_Pop
 {
     callerPopulation.ResetPionMaxSpeed();
 }
+

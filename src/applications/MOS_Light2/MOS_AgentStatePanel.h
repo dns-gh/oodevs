@@ -70,6 +70,7 @@ private:
     QLabel*    pStanceLabel_;
 
     QLabel*    pROELabel_;
+    QLabel*    pROEPopulationLabel_;
     QLabel*    pCloseCombatLabel_;
     QLabel*    pFightRateLabel_;
     QLabel*    pOpStateLabel_;

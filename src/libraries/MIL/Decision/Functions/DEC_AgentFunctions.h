@@ -60,11 +60,12 @@ public:
     static void EnableHumanTransportersNow        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
 
     // Etat décisionnel
-    static void NotifyForceRatioStateChanged         ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void NotifyRulesOfEngagementStateChanged  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void NotifyCloseCombatStateChanged        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void NotifyOperationalStateChanged        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void NotifyIndirectFireAvailabilityChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyForceRatioStateChanged                 ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyRulesOfEngagementStateChanged          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyRulesOfEngagementPopulationStateChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyCloseCombatStateChanged                ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyOperationalStateChanged                ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void NotifyIndirectFireAvailabilityChanged        ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
 
     // Etat des facteurs humains
     static void GetHumanFactorTiredness ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -104,6 +105,7 @@ public:
     static void DisableReloadingDurationModification( DIA_Call_ABC& call, MIL_AgentPion& callerAgent ); 
     static void EnableInvulnerability               ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void DisableInvulnerability              ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void GetRoePopulation                    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
    
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

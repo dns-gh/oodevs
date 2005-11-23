@@ -142,6 +142,7 @@ void MOS_Agent::Initialize()
     nSpeed_                       = 0;
     nFightRateState_              = eEtatRapFor_None;
     nRulesOfEngagementState_      = eRoe_None;
+    nRulesOfEngagementPopulationState_ = eRoePopulation_None;
     nCloseCombatState_            = eEtatCombatRencontre_None;
     bLoadingState_                = true;
     bHumanTransportersReady_      = true;
@@ -477,6 +478,9 @@ void MOS_Agent::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 
     if( asnMsg.m.roePresent )
         nRulesOfEngagementState_ = (E_Roe)asnMsg.roe;
+
+    if( asnMsg.m.roe_populationPresent )
+        nRulesOfEngagementPopulationState_ = (E_RoePopulation)asnMsg.roe_population;
 
     if( asnMsg.m.combat_de_rencontrePresent )
         nCloseCombatState_ = (E_EtatCombatRencontre)asnMsg.combat_de_rencontre;

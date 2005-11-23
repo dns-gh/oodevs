@@ -75,10 +75,11 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_AgentPion&      GetPion         () const;
-    DIA_BehaviorPart&   GetBehaviorPart () const;
-    DIA_Knowledge_Part& GetKnowledgePart() const;
-    bool                HasStateChanged () const; // Etat decisionnel
+          MIL_AgentPion&      GetPion         () const;
+          DIA_BehaviorPart&   GetBehaviorPart () const;
+          DIA_Knowledge_Part& GetKnowledgePart() const;
+          bool                HasStateChanged () const; // Etat decisionnel
+    const PHY_RoePopulation&  GetRoePopulation() const;
     //@}
 
     //! @name Network

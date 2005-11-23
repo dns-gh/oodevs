@@ -241,7 +241,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     
     // Commun orders.
     //$$$$ Hard coded value!
-    for( uint i = 0; i <= eOrdreConduite_ChangerReglesEngagement; ++i )
+    for( uint i = 0; i <= eOrdreConduite_ChangerReglesEngagementPopulation; ++i )
     {
         int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( i ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         pFragOrdersMenu->setItemParameter( nId, i );
@@ -450,6 +450,7 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
     switch( (E_FragOrder)nOrderId )
     {
         case eOrdreConduite_ChangerReglesEngagement:
+        case eOrdreConduite_ChangerReglesEngagementPopulation:
         case eOrdreConduite_ChangerPositionDebarquement:
         case eOrdreConduite_AcquerirObjectif:
         case eOrdreConduite_Pion_ChangerDePosition:

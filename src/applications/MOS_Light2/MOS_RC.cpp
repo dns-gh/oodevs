@@ -193,7 +193,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_debut_installation : strMsg << "debut installation"; break;
         case T_MsgCR_cr_cr_fin_installation : strMsg << "fin installation"; break;
         case T_MsgCR_cr_cr_pret_pour_conduite_tir : strMsg << "pret pour conduite tir"; break;
-        case T_MsgCR_cr_cr_observation_tir_indirect : strMsg << "observation tir indirect" << " - TirIndirect : " << " " << asnMsg.cr.u.cr_observation_tir_indirect; break;
+        case T_MsgCR_cr_cr_observation_tir_indirect : strMsg << "observation tir indirect" << " - TirPion : " << " " << asnMsg.cr.u.cr_observation_tir_indirect; break;
         case T_MsgCR_cr_cr_zone_implantation_occupee : strMsg << "zone implantation occupee"; break;
         case T_MsgCR_cr_cr_installation_sur_zone_implantation : strMsg << "installation sur zone implantation"; break;
         case T_MsgCR_cr_cr_reception_ordre_de_feu : strMsg << "reception ordre de feu"; break;

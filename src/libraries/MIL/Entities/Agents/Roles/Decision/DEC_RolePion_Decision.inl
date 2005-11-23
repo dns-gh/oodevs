@@ -135,3 +135,14 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
         bStateHasChanged_  = true;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetRoePopulation
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+inline
+const PHY_RoePopulation& DEC_RolePion_Decision::GetRoePopulation() const
+{
+    assert( pRoePopulation_ );
+    return *pRoePopulation_;
+}

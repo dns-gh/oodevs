@@ -243,8 +243,8 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug                                 , "DEC_Debug"            );
 
     // Effects
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetPionMaxSpeed                       , "DEC_Population_RalentissementPion_ChangeVitesse"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::ResetPionMaxSpeed                     , "DEC_Population_RalentissementPion_VitesseParDefaut" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetPionMaxSpeed  , "DEC_Population_RalentissementPion_ChangeVitesse"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::ResetPionMaxSpeed, "DEC_Population_RalentissementPion_VitesseParDefaut" );
 } 
 
 // =============================================================================

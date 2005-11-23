@@ -304,11 +304,12 @@ void MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagementPopulatio
 {
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population;
 #define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
-    MOS_ParamComboBox< ASN1T_EnumRoe >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population", false );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumRoe::none );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir libre", EnumRoe::tir_libre );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir sur riposte", EnumRoe::tir_sur_riposte );
-    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir interdit", EnumRoe::tir_interdit );
+    MOS_ParamComboBox< ASN1T_EnumRoePopulation >* pSelector_order_conduite_changer_regles_engagement_population = &CreateVarList( asnMission.order_conduite_changer_regles_engagement_population, "Order conduite changer regles engagement population", false );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "None", EnumRoePopulation::none );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir interdit", EnumRoePopulation::tir_interdit );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir sommation", EnumRoePopulation::tir_sommation );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir dissuasion", EnumRoePopulation::tir_dissuasion );
+    pSelector_order_conduite_changer_regles_engagement_population->AddItem( "Tir neutralisation", EnumRoePopulation::tir_neutralisation );
 #undef asnMission
 }
 

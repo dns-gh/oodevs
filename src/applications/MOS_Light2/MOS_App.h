@@ -109,7 +109,7 @@ public:
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMaintenanceConsign& consign );
-    
+
     void NotifyGtiaCreated( MOS_Gtia& gtia );
     void NotifyGtiaDeleted( MOS_Gtia& gtia );
 

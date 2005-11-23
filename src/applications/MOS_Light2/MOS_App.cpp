@@ -680,6 +680,8 @@ void MOS_App::NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign )
     emit AgentUpdated( consign.GetPion() );
     if( consign.GetPionLogHandling() )
         emit AgentUpdated( *consign.GetPionLogHandling() );
+    if( consign.GetPionLogConvoying() )
+        emit AgentUpdated( *consign.GetPionLogConvoying() );
 }
 
 // -----------------------------------------------------------------------------

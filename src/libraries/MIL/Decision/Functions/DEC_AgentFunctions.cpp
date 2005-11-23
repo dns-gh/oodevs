@@ -25,6 +25,7 @@
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -529,6 +530,17 @@ void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( DIA_Call_ABC& call
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged
+// Created: SBO 2005-11-22
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( call.GetParameter( 0 ).ToId() );
+    assert( pRoe );
+    callerAgent.GetRole< DEC_RolePion_Decision >().NotifyRoePopulationChanged( *pRoe );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyOperationalStateChanged
 // Created: NLD 2005-07-26
 // -----------------------------------------------------------------------------
@@ -816,4 +828,14 @@ void DEC_AgentFunctions::EnableInvulnerability( DIA_Call_ABC& call, MIL_AgentPio
 void DEC_AgentFunctions::DisableInvulnerability( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Population >().DisableInvulnerability();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetRoePopulation
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::GetRoePopulation( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+{
+    const PHY_RoePopulation& roe = callerAgent.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
+    call.GetResult().SetValue( (int)roe.GetID() );
 }

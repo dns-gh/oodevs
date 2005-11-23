@@ -122,6 +122,9 @@ MOS_AgentStatePanel::MOS_AgentStatePanel( QWidget* pParent )
     new QLabel( tr( "RoE:" ), pAIGroupBox );
     pROELabel_ = new QLabel( pAIGroupBox );
 
+    new QLabel( tr( "RoE Population:" ), pAIGroupBox );
+    pROEPopulationLabel_ = new QLabel( pAIGroupBox );
+
     new QLabel( tr( "Rapport de force:" ), pAIGroupBox );
     pFightRateLabel_ = new QLabel( pAIGroupBox );
 
@@ -244,6 +247,7 @@ void MOS_AgentStatePanel::OnAgentUpdated( MOS_Agent& agent )
     pStanceLabel_     ->setText( strStance );
 
     pROELabel_                     ->setText( ENT_Tr::ConvertFromRoe                ( agent.nRulesOfEngagementState_ ).c_str() );
+    pROEPopulationLabel_           ->setText( ENT_Tr::ConvertFromRoePopulation      ( agent.nRulesOfEngagementPopulationState_ ).c_str() );
     pCloseCombatLabel_             ->setText( ENT_Tr::ConvertFromEtatCombatRencontre( agent.nCloseCombatState_ ).c_str() );
     pFightRateLabel_               ->setText( ENT_Tr::ConvertFromEtatRapFor         ( agent.nFightRateState_ ).c_str() );
     pOpStateLabel_                 ->setText( ENT_Tr::ConvertFromEtatOperationnel   ( agent.nOpState_ ).c_str() );
@@ -338,6 +342,7 @@ void MOS_AgentStatePanel::OnClearSelection()
     pStanceLabel_                ->setText( "" );
 
     pROELabel_                   ->setText( "" );
+    pROEPopulationLabel_         ->setText( "" );
     pCloseCombatLabel_           ->setText( "" );
     pFightRateLabel_             ->setText( "" );
     pOpStateLabel_               ->setText( "" );

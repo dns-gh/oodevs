@@ -350,6 +350,7 @@ public:
     // Etat decisionnel
     E_EtatRapFor            nFightRateState_;
     E_Roe                   nRulesOfEngagementState_;
+    E_RoePopulation         nRulesOfEngagementPopulationState_;
     E_EtatCombatRencontre   nCloseCombatState_;
     E_EtatOperationnel      nOpState_;
     E_DisponibiliteAuTir    nIndirectFireAvailability_;

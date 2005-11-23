@@ -595,7 +595,15 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementCreati
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( const ASN1T_MsgLogMaintenanceTraitementEquipementDestruction& asnMsg )
 {
+    MOS_LogMaintenanceConsign* pConsign = MOS_App::GetApp().GetAgentManager().FindMaintenanceConsign( asnMsg.oid_consigne );
+    assert( pConsign );
+    MOS_Agent& agent           = pConsign->GetPion();
+    MOS_Agent* pAgentHandling  = pConsign->GetPionLogHandling();
     MOS_App::GetApp().GetAgentManager().DeleteMaintenanceConsign( asnMsg.oid_consigne );
+    MOS_App::GetApp().NotifyAgentUpdated( agent );
+    if( pAgentHandling )
+        MOS_App::GetApp().NotifyAgentUpdated( *pAgentHandling );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -637,7 +645,14 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainCreation( const 
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgLogSanteTraitementHumainDestruction( const ASN1T_MsgLogSanteTraitementHumainDestruction& asnMsg )
 {
+    MOS_LogMedicalConsign* pConsign = MOS_App::GetApp().GetAgentManager().FindMedicalConsign( asnMsg.oid_consigne );
+    assert( pConsign );
+    MOS_Agent& agent          = pConsign->GetPion();
+    MOS_Agent* pAgentHandling = pConsign->GetPionLogHandling();
     MOS_App::GetApp().GetAgentManager().DeleteMedicalConsign( asnMsg.oid_consigne );
+    MOS_App::GetApp().NotifyAgentUpdated( agent );
+    if( pAgentHandling )
+        MOS_App::GetApp().NotifyAgentUpdated( *pAgentHandling );
 }
 
 // -----------------------------------------------------------------------------
@@ -679,7 +694,17 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementCreation( con
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( const ASN1T_MsgLogRavitaillementTraitementDestruction& asnMsg )
 {
+    MOS_LogSupplyConsign* pConsign = MOS_App::GetApp().GetAgentManager().FindSupplyConsign( asnMsg.oid_consigne );
+    assert( pConsign );
+    MOS_Agent& agent           = pConsign->GetPion();
+    MOS_Agent* pAgentHandling  = pConsign->GetPionLogHandling();
+    MOS_Agent* pAgentConvoying = pConsign->GetPionLogConvoying();
     MOS_App::GetApp().GetAgentManager().DeleteSupplyConsign( asnMsg.oid_consigne );
+    MOS_App::GetApp().NotifyAgentUpdated( agent );
+    if( pAgentHandling )
+        MOS_App::GetApp().NotifyAgentUpdated( *pAgentHandling );
+    if( pAgentConvoying )
+        MOS_App::GetApp().NotifyAgentUpdated( *pAgentConvoying );
 }
 
 // -----------------------------------------------------------------------------

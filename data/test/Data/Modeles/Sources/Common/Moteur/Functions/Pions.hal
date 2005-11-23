@@ -155,6 +155,7 @@ signatures
     R                                       A::DEC_Agent_DureeRecuperationTranporteurs   (); // En minutes
     R                                       A::DEC_Agent_DureeRecuperationTranporteursSurPosition( U /*T_Point*/ ); // En minutes
     B                                       A::DEC_Agent_TransporteursPret               ();
+    I /*E_EtatROEPopulation*/               A::DEC_Agent_RoePopulation                   ();
                                             
     // Effets population
     V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();
@@ -171,6 +172,7 @@ signatures
     // Etats décisionnel                    
     V                                       A::DEC_Agent_ChangeEtatRapportDeForce        ( I /*E_EtatRapportDeForce*/ );
     V                                       A::DEC_Agent_ChangeEtatROE                   ( I /*E_EtatROE*/ );
+    V                                       A::DEC_Agent_ChangeEtatROEPopulation         ( I /*E_EtatROEPopulation*/ );
     V                                       A::DEC_Agent_ChangeEtatCombatDeRencontre     ( I /*E_EtatCombatDeRencontre*/ );
     V                                       A::DEC_Agent_ChangeEtatOperationnel          ( I /*E_EtatOperationnel*/ );
     V                                       A::DEC_Agent_ChangeDisponibiliteAuTirIndirect( I /*E_DisponibiliteAuTir*/ );    

@@ -382,6 +382,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsRefugee          , "DEC_Agent_EstRefugie"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMilita           , "DEC_Agent_EstMilice"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosture         , "DEC_Agent_NiveauInstallation"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetRoePopulation   , "DEC_Agent_RoePopulation"                    );
  
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeLeftForMoving  , "DEC_Agent_AutonomieEnDeplacement"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeToMoveDistance , "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" );
@@ -490,11 +491,12 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::AutomateSetMissionLimaFlag                 , "DEC_Automate_SetMissionLimaFlag" );
 
     // Etat décisionnel
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged         , "DEC_Agent_ChangeEtatRapportDeForce"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged  , "DEC_Agent_ChangeEtatROE"                    ); 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyCloseCombatStateChanged        , "DEC_Agent_ChangeEtatCombatDeRencontre"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyOperationalStateChanged        , "DEC_Agent_ChangeEtatOperationnel"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged, "DEC_Agent_ChangeDisponibiliteAuTirIndirect" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyForceRatioStateChanged                 , "DEC_Agent_ChangeEtatRapportDeForce"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged          , "DEC_Agent_ChangeEtatROE"                    ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged, "DEC_Agent_ChangeEtatROEPopulation"          ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyCloseCombatStateChanged                , "DEC_Agent_ChangeEtatCombatDeRencontre"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyOperationalStateChanged                , "DEC_Agent_ChangeEtatOperationnel"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged        , "DEC_Agent_ChangeDisponibiliteAuTirIndirect" );
 
     // Facteurs humains
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetHumanFactorTiredness , "DEC_FacteurHumain_Fatigue"    );  

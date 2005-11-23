@@ -11,7 +11,8 @@ IMPORTS EnumOrderErrorCode      FROM ScipioOrder
 IMPORTS MissionGenObject        FROM ScipioAutomateMission_GEN
 IMPORTS MaintenancePriorites    FROM ScipioLogMaintenance
 IMPORTS SantePriorites          FROM ScipioLogSante
-IMPORTS EnumReglesEngagement    FROM ScipioUnitAttr;
+IMPORTS EnumRoe                 FROM ScipioUnitAttr
+IMPORTS EnumRoePopulation       FROM ScipioUnitAttr;
 
 ----------------------------------------------------------------------------
 -- Ordres de conduite pions/automates
@@ -21,7 +22,7 @@ OrderConduite-EnleverTenueNBC                   ::= NULL                 -- Disp
 OrderConduite-PasserEnSilenceRadio              ::= NULL                 -- Dispo même sans mission
 OrderConduite-ArreterSilenceRadio               ::= NULL                 -- Dispo même sans mission
 OrderConduite-ChangerReglesEngagement           ::= EnumRoe              -- Dispo même sans mission
-OrderConduite-ChangerReglesEngagementPopulation ::= EnumRoe              -- Dispo même sans mission
+OrderConduite-ChangerReglesEngagementPopulation ::= EnumRoePopulation    -- Dispo même sans mission
 OrderConduite-PasserEnSilenceRadar              ::= NULL                 -- Dispo même sans mission
 OrderConduite-ArreterSilenceRadar               ::= NULL                 -- Dispo même sans mission
 OrderConduite-RecupererTransporteurs            ::= NULL                 -- Dispo même sans mission, Infanterie : récupération des VABs
