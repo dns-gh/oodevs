@@ -112,6 +112,16 @@ void MIL_Population::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg,
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgOrderConduite
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+inline
+void MIL_Population::OnReceiveMsgOrderConduite( ASN1T_MsgOrderConduite& msg, MIL_MOSContextID nCtx )
+{
+    orderManager_.OnReceiveMsgOrderConduite( msg, nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::SetPionMaxSpeed
 // Created: NLD 2005-10-24
 // -----------------------------------------------------------------------------

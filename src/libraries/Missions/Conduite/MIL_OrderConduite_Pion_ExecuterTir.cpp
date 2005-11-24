@@ -36,8 +36,8 @@ void MIL_OrderConduite_Pion_ExecuterTir::InitializeDIA( const MIL_OrderConduiteT
 // Name: MIL_OrderConduite_Pion_ExecuterTir constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Pion_ExecuterTir::MIL_OrderConduite_Pion_ExecuterTir( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Pion_ExecuterTir::MIL_OrderConduite_Pion_ExecuterTir( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

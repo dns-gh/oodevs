@@ -38,8 +38,8 @@ void MIL_OrderConduite_Automate_ActiverObstacle::InitializeDIA( const MIL_OrderC
 // Name: MIL_OrderConduite_Automate_ActiverObstacle constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Automate_ActiverObstacle::MIL_OrderConduite_Automate_ActiverObstacle( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Automate_ActiverObstacle::MIL_OrderConduite_Automate_ActiverObstacle( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }
@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ActiverObstacle::Initialize(
         return nCode; 
 
     const ASN1T_OrderConduite_Automate_ActiverObstacle& asnMission = asnMsg.u.order_conduite_automate_activer_obstacle;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission, GetVariable( nDIAOrderConduiteAutomateActiverObstacleIdx_ ), knowledgeGroup_.GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission, GetVariable( nDIAOrderConduiteAutomateActiverObstacleIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;

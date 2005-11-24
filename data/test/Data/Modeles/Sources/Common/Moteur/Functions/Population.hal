@@ -19,6 +19,7 @@ signatures
     // Effets sur les pions
     V              A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
     V              A::DEC_Population_RalentissementPion_VitesseParDefaut();
+    V              A::DEC_Population_ChangerAttitude( I /* E_AttitudePopulation */ );
 
     // Test / debug 
     V  A::DEC_Debug( X );

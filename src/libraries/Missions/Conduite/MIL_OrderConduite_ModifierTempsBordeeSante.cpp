@@ -38,8 +38,8 @@ void MIL_OrderConduite_ModifierTempsBordeeSante::InitializeDIA( const MIL_OrderC
 // Name: MIL_OrderConduite_ModifierTempsBordeeSante constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_ModifierTempsBordeeSante::MIL_OrderConduite_ModifierTempsBordeeSante( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_ModifierTempsBordeeSante::MIL_OrderConduite_ModifierTempsBordeeSante( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

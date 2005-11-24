@@ -4,3 +4,18 @@
 
 include "Common/Moteur/Functions/Population.hal";
 
+signatures
+{
+}
+
+functions
+{
+    none EVT_DEC_OrdreConduite( Rep_OrdreConduite ordreConduite )
+    {
+        DEC_Debug( "EVT_DEC_OrdreConduite : " + EnumToString( ordreConduite.eOrdre_, E_TypeOrdreConduite ) + " Hint : " + ordreConduite.szHint_ );
+    
+        // ajout a la liste des ordres recus
+        DIA_AddToCategory( "ordres_recus", ordreConduite );
+        DEC_Debug( "Adding order to list" );
+    }
+}

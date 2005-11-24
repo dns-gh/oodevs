@@ -326,6 +326,19 @@ MT_Float MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
         return 0.;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetAttitude
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+void MIL_Population::SetAttitude( const MIL_PopulationAttitude& attitude )
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        (**itConcentration).SetAttitude( attitude );
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        (**itFlow).SetAttitude( attitude );
+}
+
 // =============================================================================
 // FLOWS / CONCENTRATION MANAGEMENT
 // =============================================================================

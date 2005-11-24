@@ -59,3 +59,4 @@
     void CreateOrder_Automate_TC2_GererMaterielAvantDeplacement();
     void CreateOrder_Automate_ActiverObstacle();
     void CreateOrder_Automate_TransfererRenforts();
+    void CreateOrder_Population_ChangerAttitude();

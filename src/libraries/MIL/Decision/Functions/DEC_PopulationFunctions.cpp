@@ -13,6 +13,7 @@
 #include "DEC_PopulationFunctions.h"
 
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
 
@@ -49,3 +50,13 @@ void DEC_PopulationFunctions::ResetPionMaxSpeed( DIA_Call_ABC& /*call*/, MIL_Pop
     callerPopulation.ResetPionMaxSpeed();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::SetAttitude
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::SetAttitude( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+{
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( call.GetParameter( 0 ).ToId() );
+    assert( pAttitude );
+    callerPopulation.SetAttitude( *pAttitude );
+}

@@ -124,6 +124,7 @@ private:
 signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
+
 private:
       enum E_PhaseSelection
     {

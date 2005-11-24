@@ -423,6 +423,7 @@ namespace missions
         eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement,
         eOrdreConduite_Automate_ActiverObstacle,
         eOrdreConduite_Automate_TransfererRenforts,
+        eOrdreConduite_Population_ChangerAttitude,
 
         eNbrOrderConduite
     };

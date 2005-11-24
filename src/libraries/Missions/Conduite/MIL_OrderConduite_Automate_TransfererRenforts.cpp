@@ -40,8 +40,8 @@ void MIL_OrderConduite_Automate_TransfererRenforts::InitializeDIA( const MIL_Ord
 // Name: MIL_OrderConduite_Automate_TransfererRenforts constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Automate_TransfererRenforts::MIL_OrderConduite_Automate_TransfererRenforts( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Automate_TransfererRenforts::MIL_OrderConduite_Automate_TransfererRenforts( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

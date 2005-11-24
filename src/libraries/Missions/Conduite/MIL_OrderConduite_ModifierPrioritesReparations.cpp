@@ -38,8 +38,8 @@ void MIL_OrderConduite_ModifierPrioritesReparations::InitializeDIA( const MIL_Or
 // Name: MIL_OrderConduite_ModifierPrioritesReparations constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_ModifierPrioritesReparations::MIL_OrderConduite_ModifierPrioritesReparations( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_ModifierPrioritesReparations::MIL_OrderConduite_ModifierPrioritesReparations( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

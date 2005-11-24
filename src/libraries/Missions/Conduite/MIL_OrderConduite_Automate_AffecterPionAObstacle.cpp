@@ -40,8 +40,8 @@ void MIL_OrderConduite_Automate_AffecterPionAObstacle::InitializeDIA( const MIL_
 // Name: MIL_OrderConduite_Automate_AffecterPionAObstacle constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Automate_AffecterPionAObstacle::MIL_OrderConduite_Automate_AffecterPionAObstacle( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Automate_AffecterPionAObstacle::MIL_OrderConduite_Automate_AffecterPionAObstacle( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

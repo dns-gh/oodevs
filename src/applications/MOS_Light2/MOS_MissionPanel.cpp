@@ -135,18 +135,31 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Populat
     const MOS_AgentModel::T_MissionVector& missions = population.GetModel().GetAvailableMissions();
     for( MOS_AgentModel::CIT_MissionVector it = missions.begin(); it != missions.end(); ++it )
     {
-        int nId = pPopulationMenu->insertItem( ENT_Tr::ConvertFromPopulationMission( E_PopulationMission( *it ) ).c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
+        int nId = pPopulationMenu->insertItem( ENT_Tr::ConvertFromPopulationMission( E_PopulationMission( *it ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
         pPopulationMenu->setItemParameter( nId, (int)*it );
     }
 
     // Add the unit mission menu.
     popupMenu.insertItem( tr( "Missions Population" ), pPopulationMenu );
 
+    // Create and fill the fragmentary orders menu.
+    QPopupMenu* pFragOrdersMenu = new QPopupMenu( &popupMenu );
+    
+    // Commun orders.
+    //$$$$ Hard coded value!
+    for( uint i = eOrdreConduite_Population_ChangerAttitude; i < eNbrFragOrder; ++i )
+    {
+        int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( i ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrderPopulation( int ) ) );
+        pFragOrdersMenu->setItemParameter( nId, i );
+    }
+
+    int nFragId = popupMenu.insertItem( tr( "Ordres de conduite" ), pFragOrdersMenu );
+
     // Add the magic orders if playing as controller.
     if( MOS_MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
     {
         QPopupMenu* pMagicOrdersMenu = new QPopupMenu( &popupMenu );
-        pMagicOrdersMenu->insertItem( tr( "Téléportation" )               , this, SLOT( PopulationMagicMove() ) );
+        pMagicOrdersMenu->insertItem( tr( "Téléportation" ), this, SLOT( PopulationMagicMove() ) );
 
         QPopupMenu* pAttitudeMenu = new QPopupMenu();
         pAttitudeMenu->setCheckable( true );
@@ -210,7 +223,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     const MOS_AgentModel::T_MissionVector& missions = agent.GetModelPion()->GetAvailableMissions();
     for( MOS_AgentModel::CIT_MissionVector it = missions.begin(); it != missions.end(); ++it )
     {
-        int nId = pUnitMenu->insertItem( ENT_Tr::ConvertFromUnitMission( E_UnitMission( *it ) ).c_str(), this, SLOT( ActivateUnitMission( int ) ) );
+        int nId = pUnitMenu->insertItem( ENT_Tr::ConvertFromUnitMission( E_UnitMission( *it ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateUnitMission( int ) ) );
         pUnitMenu->setItemParameter( nId, (int)*it );
     }
 
@@ -227,7 +240,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         const MOS_AgentModel::T_MissionVector& missions = agent.GetModelAutomate()->GetAvailableMissions();
         for( MOS_AgentModel::CIT_MissionVector it = missions.begin(); it != missions.end(); ++it )
         {
-            int nId = pAutomataMenu->insertItem( ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( *it ) ).c_str(), this, SLOT( ActivateAutomataMission( int ) ) );
+            int nId = pAutomataMenu->insertItem( ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( *it ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateAutomataMission( int ) ) );
             pAutomataMenu->setItemParameter( nId, (int)*it );
         }
 
@@ -243,7 +256,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     //$$$$ Hard coded value!
     for( uint i = 0; i <= eOrdreConduite_ChangerReglesEngagementPopulation; ++i )
     {
-        int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( i ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
+        int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( i ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         pFragOrdersMenu->setItemParameter( nId, i );
     }
 
@@ -251,7 +264,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     const MOS_AgentModel::T_FragOrderSet& fragOrders = agent.GetModelPion()->GetAvailableFragOrders();
     for( MOS_AgentModel::CIT_FragOrderSet itFrag = fragOrders.begin(); itFrag != fragOrders.end(); ++itFrag )
     {
-        int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *itFrag ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
+        int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *itFrag ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         pFragOrdersMenu->setItemParameter( nId, (int)(*itFrag) );
     }
 
@@ -263,7 +276,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
             pFragOrdersMenu->insertSeparator();
         for( MOS_AgentModel::CIT_FragOrderSet itFrag2 = fragOrders2.begin(); itFrag2 != fragOrders2.end(); ++itFrag2 )
         {
-            int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *itFrag2 ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
+            int nId = pFragOrdersMenu->insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *itFrag2 ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
             pFragOrdersMenu->setItemParameter( nId, (int)(*itFrag2) );
         }
     }
@@ -339,7 +352,7 @@ void MOS_MissionPanel::FillFragmentaryOrderPopup( QPopupMenu& popupMenu, MOS_RC&
     const MOS_RC::T_FragOrderVector& orderList = rc.GetFragOrders();
     for( MOS_RC::CIT_FragOrderVector it = orderList.begin(); it != orderList.end(); ++it )
     {
-        int nId = popupMenu.insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *it ) ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
+        int nId = popupMenu.insertItem( ENT_Tr::ConvertFromFragOrder( E_FragOrder( *it ), ENT_Tr::eToApp ).c_str(), this, SLOT( ActivateFragmentaryOrder( int ) ) );
         popupMenu.setItemParameter( nId, (int)(*it) );
     }
 }
@@ -488,7 +501,44 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
             asnMsg.Send( 65 );
 
             QString strMsg( tr( "Ordre de conduite %1 pour agent %2" ) );
-            strMsg = strMsg.arg( ENT_Tr::ConvertFromFragOrder( E_FragOrder( (uint)nOrderId ) ).c_str(), pPopupAgent_->GetID() );
+            strMsg = strMsg.arg( ENT_Tr::ConvertFromFragOrder( E_FragOrder( (uint)nOrderId ), ENT_Tr::eToApp ).c_str(), pPopupAgent_->GetID() );
+
+            MT_LOG_INFO( strMsg.ascii(), eSent, 0 );
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::ActivateFragmentaryOrderPopulation
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::ActivateFragmentaryOrderPopulation( int nOrderId )
+{
+    hide();
+    delete pMissionInterface_;
+    pMissionInterface_ = 0;
+
+    switch( (E_FragOrder)nOrderId )
+    {
+        case eOrdreConduite_Population_ChangerAttitude:
+        {
+            pMissionInterface_ = new MOS_FragmentaryOrderInterface( *pPopupPopulation_, (uint)nOrderId, *this );
+
+            this->setWidget( pMissionInterface_ );
+            this->show();
+            return;
+        }
+        default:
+        {
+            MOS_ASN_MsgOrderConduite asnMsg;
+            asnMsg.GetAsnMsg().unit_id  = pPopupPopulation_->GetID();
+            asnMsg.GetAsnMsg().order_id = 43;
+            asnMsg.GetAsnMsg().order_conduite.t =  (uint)nOrderId +1;  // +1 because of ASN/enum stupidity
+            asnMsg.Send( 65 );
+
+            QString strMsg( tr( "Ordre de conduite %1 pour population %2" ) );
+            strMsg = strMsg.arg( ENT_Tr::ConvertFromFragOrder( E_FragOrder( (uint)nOrderId ), ENT_Tr::eToApp ).c_str(), pPopupPopulation_->GetID() );
 
             MT_LOG_INFO( strMsg.ascii(), eSent, 0 );
             return;

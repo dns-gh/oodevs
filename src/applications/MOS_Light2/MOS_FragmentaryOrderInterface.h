@@ -39,7 +39,7 @@ class MOS_FragmentaryOrderInterface : public MOS_MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MOS_FragmentaryOrderInterface( MOS_Agent& agent, uint nMissionId, MOS_MissionPanel& parentPanel );
+     MOS_FragmentaryOrderInterface( MOS_Agent_ABC& agent, uint nMissionId, MOS_MissionPanel& parentPanel );
     ~MOS_FragmentaryOrderInterface();
     //@}
 

@@ -50,6 +50,13 @@ public:
     void OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOrder& asnMsg, MIL_MOSContextID nContext );    
     //@}
 
+    //! @name Conduite
+    //@{
+    void OnReceiveMsgOrderConduite     ( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveOrderConduite        ( DIA_Parameters& diaParams );
+    void SendOrderConduiteRequestsToDIA( DIA_Variable_ABC& diaOrderList, DIA_Variable_ABC& diaStrHint );
+    //@}
+
     //! @name Misc
     //@{
     void CancelAllOrders();
@@ -61,6 +68,7 @@ private:
     //@{
     static void SendMsgOrderManagement   ( uint nOrderID, ASN1T_EnumOrderState nOrderState );
     static void SendMsgPopulationOrderAck( const ASN1T_MsgPopulationOrder& asnMsgPopulationOrder, ASN1T_EnumOrderErrorCode nErrorCode, MIL_MOSContextID nContext );
+           bool LaunchOrderConduite      ( MIL_OrderConduite_ABC& orderConduite );
     //@}
     
 private:

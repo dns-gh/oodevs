@@ -29,7 +29,7 @@ class MIL_OrderConduite_ABC : public DIA_Representation
     MT_COPYNOTALLOWED( MIL_OrderConduite_ABC );
 
 public:
-             MIL_OrderConduite_ABC( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+             MIL_OrderConduite_ABC( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~MIL_OrderConduite_ABC();
 
     //! @name Initialization
@@ -52,7 +52,7 @@ public:
     //@}
 
 protected:
-    const MIL_KnowledgeGroup& knowledgeGroup_;
+    const MIL_KnowledgeGroup* pKnowledgeGroup_;
 
 private:
     const MIL_OrderConduiteType& type_;

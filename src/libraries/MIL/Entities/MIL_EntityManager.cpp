@@ -975,17 +975,23 @@ void MIL_EntityManager::OnReceiveMsgOrderConduite( ASN1T_MsgOrderConduite& asnMs
     MIL_Automate* pAutomate = FindAutomate( asnMsg.unit_id );
     if( !pAutomate || !pAutomate->IsEmbraye() )
     {
-        MIL_AgentPion* pPion = FindAgentPion( asnMsg.unit_id );
-        if( !pPion )
+        MIL_Population* pPopulation = FindPopulation( asnMsg.unit_id );
+        if( !pPopulation )
         {
-            NET_ASN_MsgOrderConduiteAck asnReplyMsg;
-            asnReplyMsg.GetAsnMsg().unit_id     = asnMsg.unit_id;
-            asnReplyMsg.GetAsnMsg().order_id    = asnMsg.order_id;
-            asnReplyMsg.GetAsnMsg().error_code  = EnumOrderErrorCode::error_invalid_unit;
-            asnReplyMsg.Send( nCtx );
-            return;
+            MIL_AgentPion* pPion = FindAgentPion( asnMsg.unit_id );
+            if( !pPion )
+            {
+                NET_ASN_MsgOrderConduiteAck asnReplyMsg;
+                asnReplyMsg.GetAsnMsg().unit_id     = asnMsg.unit_id;
+                asnReplyMsg.GetAsnMsg().order_id    = asnMsg.order_id;
+                asnReplyMsg.GetAsnMsg().error_code  = EnumOrderErrorCode::error_invalid_unit;
+                asnReplyMsg.Send( nCtx );
+                return;
+            }
+            pPion->OnReceiveMsgOrderConduite( asnMsg, nCtx );
         }
-        pPion->OnReceiveMsgOrderConduite( asnMsg, nCtx );
+        else
+            pPopulation->OnReceiveMsgOrderConduite( asnMsg, nCtx );
     }
     else
         pAutomate->OnReceiveMsgOrderConduite( asnMsg, nCtx );

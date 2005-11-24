@@ -17,13 +17,6 @@
 #include "MOS_Options.h"
 
 // =============================================================================
-/** @class  MOS_LogisticToolbar
-    @brief  MOS_LogisticToolbar
-    @par    Using example
-    @code
-    MOS_LogisticToolbar;
-    @endcode
-*/
 // Created: HME 2005-11-02
 // =============================================================================
 class MOS_LogisticToolbar : public QToolBar
@@ -54,9 +47,5 @@ private:
     QToolButton* pRealTimeLogButton_;
 
 };
-
-
-
-#include "MOS_LogisticToolbar.inl"
 
 #endif // __MOS_LogisticToolbar_h_

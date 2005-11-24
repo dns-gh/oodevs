@@ -27,14 +27,14 @@
 #include "MOS_ASN_Messages.h"
 #include "MOS_ASN_Types.h"
 #include "MOS_MissionPanel.h"
-#include "MOS_Agent.h"
+#include "MOS_Agent_ABC.h"
 #include "MOS_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface constructor
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-MOS_FragmentaryOrderInterface::MOS_FragmentaryOrderInterface( MOS_Agent& agent, uint nMissionId, MOS_MissionPanel& parentPanel )
+MOS_FragmentaryOrderInterface::MOS_FragmentaryOrderInterface( MOS_Agent_ABC& agent, uint nMissionId, MOS_MissionPanel& parentPanel )
     : MOS_MissionInterface_ABC( agent, parentPanel )
     , nMissionId_             ( nMissionId )
 {

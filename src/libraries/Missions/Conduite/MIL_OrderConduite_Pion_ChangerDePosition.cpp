@@ -38,8 +38,8 @@ void MIL_OrderConduite_Pion_ChangerDePosition::InitializeDIA( const MIL_OrderCon
 // Name: MIL_OrderConduite_Pion_ChangerDePosition constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Pion_ChangerDePosition::MIL_OrderConduite_Pion_ChangerDePosition( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Pion_ChangerDePosition::MIL_OrderConduite_Pion_ChangerDePosition( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

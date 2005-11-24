@@ -42,8 +42,8 @@ void MIL_OrderConduite_Pion_AppliquerFeux::InitializeDIA( const MIL_OrderConduit
 // Name: MIL_OrderConduite_Pion_AppliquerFeux constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Pion_AppliquerFeux::MIL_OrderConduite_Pion_AppliquerFeux( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Pion_AppliquerFeux::MIL_OrderConduite_Pion_AppliquerFeux( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

@@ -32,6 +32,7 @@ public:
 
     static void SetPionMaxSpeed  ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void ResetPionMaxSpeed( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+    static void SetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     //@}    
 };
 

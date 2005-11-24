@@ -400,6 +400,7 @@
 #include "Conduite\MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_ActiverObstacle.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_TransfererRenforts.cpp"
+#include "Conduite\MIL_OrderConduite_Population_ChangerAttitude.cpp"
 
 
 using namespace missions;
@@ -832,5 +833,6 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement>( "Automate TC2 GererMaterielAvantDeplacement", eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement, T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_ActiverObstacle>( "Automate ActiverObstacle", eOrdreConduite_Automate_ActiverObstacle, T_MsgOrderConduite_order_conduite_order_conduite_automate_activer_obstacle, "Rep_OrderConduite_Automate_ActiverObstacle", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_TransfererRenforts>( "Automate TransfererRenforts", eOrdreConduite_Automate_TransfererRenforts, T_MsgOrderConduite_order_conduite_order_conduite_automate_transferer_renforts, "Rep_OrderConduite_Automate_TransfererRenforts", false, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Population_ChangerAttitude>( "Population ChangerAttitude", eOrdreConduite_Population_ChangerAttitude, T_MsgOrderConduite_order_conduite_order_conduite_population_changer_attitude, "Rep_OrderConduite_Population_ChangerAttitude", true, true );
 
 }

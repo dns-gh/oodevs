@@ -5,8 +5,9 @@ max_activations     =   10;
 actuators = deplacement, ordre;
 
 default Default()
-{    
- 
+{
+    
+    behavior BEH_GererOrdreConduite(); 
 }
 
 behavior BEH_Defaut( id nDummy )
@@ -68,3 +69,35 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
     }    
 }
 // 22 + 53 
+
+behavior BEH_GererOrdreConduite()
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+            DEC_Debug( "init ordres popu" );
+        
+    	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
+    	DEC_Debug( "glouglou" );
+    	with ( x in ordres_recus)
+    	{
+    		Rep_OrdreConduite ordre = x;
+			switch ( ordre.eOrdre_ )
+			{
+                case eOrdreConduite_Population_ChangerAttitude:
+                {
+                    Rep_OrderConduite_Population_ChangerAttitude ordreAtt = ordre;
+                    DEC_Debug( "changement attitude" );
+                    DEC_Population_ChangerAttitude( ordreAtt.orderConduitePopulationChangerAttitude_ );
+            		// on a finit de traiter l'ordre, on le supprime
+            		DIA_RemoveFromCategory( "ordres_recus", ordre );
+            		DIA_DeleteRepresentation( ordre );
+                    break;
+                }
+            }
+        }
+    }
+    on spontaneous end:
+    {
+    }  
+}

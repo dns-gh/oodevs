@@ -42,8 +42,8 @@ void MIL_OrderConduite_Pion_TransfererVSRAM::InitializeDIA( const MIL_OrderCondu
 // Name: MIL_OrderConduite_Pion_TransfererVSRAM constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Pion_TransfererVSRAM::MIL_OrderConduite_Pion_TransfererVSRAM( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Pion_TransfererVSRAM::MIL_OrderConduite_Pion_TransfererVSRAM( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

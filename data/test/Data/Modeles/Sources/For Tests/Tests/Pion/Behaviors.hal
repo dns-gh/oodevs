@@ -175,7 +175,6 @@ behavior BEH_GererOrdreConduite()
                 }
                 case eOrdreConduite_ChangerReglesEngagementPopulation:
                 {
-                    DEC_Debug( "roooooooarrrr" );
                     Rep_OrderConduite_ChangerReglesEngagementPopulation ordreROE = ordre;
                     DEC_Agent_ChangeEtatROEPopulation( ordreROE.orderConduiteChangerReglesEngagementPopulation_ );
             		// on a finit de traiter l'ordre, on le supprime

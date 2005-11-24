@@ -1,34 +1,34 @@
 // *****************************************************************************
 //
 // $Created: AGR $
-// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderConduite_Pion_Skeleton.h $
+// $Archive: /MVW_v10/Build/SDK/AGR/src/AGR_OrderConduite_Population_Skeleton.h $
 // $Author: Nld $
 // $Modtime: 19/10/04 14:30 $
 // $Revision: 3 $
-// $Workfile: AGR_OrderConduite_Pion_Skeleton.h $
+// $Workfile: AGR_OrderConduite_Population_Skeleton.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_OrderConduite_Interrompre_h_
-#define __MIL_OrderConduite_Interrompre_h_
+#ifndef __MIL_OrderConduite_Population_ChangerAttitude_h_
+#define __MIL_OrderConduite_Population_ChangerAttitude_h_
 
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "TER/TER_Localisation.h"
 
 // =============================================================================
-/** @class  MIL_OrderConduite_Interrompre
-    @brief  MIL_OrderConduite_Interrompre
+/** @class  MIL_OrderConduite_Population_ChangerAttitude
+    @brief  MIL_OrderConduite_Population_ChangerAttitude
 */
 // Created: AGR 
 // =============================================================================
-class MIL_OrderConduite_Interrompre : public MIL_OrderConduite_ABC
+class MIL_OrderConduite_Population_ChangerAttitude : public MIL_OrderConduite_ABC
 {
-    MT_COPYNOTALLOWED( MIL_OrderConduite_Interrompre );
+    MT_COPYNOTALLOWED( MIL_OrderConduite_Population_ChangerAttitude );
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderConduite_Interrompre( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
-    virtual ~MIL_OrderConduite_Interrompre();
+             MIL_OrderConduite_Population_ChangerAttitude( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
+    virtual ~MIL_OrderConduite_Population_ChangerAttitude();
     //@}
 
     //-------------------------------------------------------------------------
@@ -44,7 +44,8 @@ public:
 private:
 
 private:
+    static int nDIAOrderConduitePopulationChangerAttitudeIdx_;
 
 };
 
-#endif // __MIL_OrderConduite_Interrompre_h_
+#endif // __MIL_OrderConduite_Population_ChangerAttitude_h_

@@ -16,9 +16,9 @@
 template < class OrderConduite >
 struct sOrderConduiteCreator
 {
-    static MIL_OrderConduite_ABC& Create( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
+    static MIL_OrderConduite_ABC& Create( const MIL_KnowledgeGroup* pKnowledgeGroup, const MIL_OrderConduiteType& type )
     {
-        return *new OrderConduite( knowledgeGroup, type );
+        return *new OrderConduite( type, pKnowledgeGroup );
     }
 };
 
@@ -119,7 +119,17 @@ bool MIL_OrderConduiteType::IsAvailableWithoutMission() const
 inline
 MIL_OrderConduite_ABC& MIL_OrderConduiteType::InstanciateOrderConduite( const MIL_KnowledgeGroup& knowledgeGroup ) const
 {
-    return orderConduiteAllocator_( knowledgeGroup, *this );
+    return orderConduiteAllocator_( &knowledgeGroup, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderConduiteType::MIL_OrderConduiteType::InstanciateOrderConduite
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+inline
+MIL_OrderConduite_ABC& MIL_OrderConduiteType::InstanciateOrderConduite() const
+{
+    return orderConduiteAllocator_( 0, *this );
 }
 
 // -----------------------------------------------------------------------------

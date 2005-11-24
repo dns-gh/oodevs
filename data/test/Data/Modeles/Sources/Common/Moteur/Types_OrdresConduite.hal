@@ -204,3 +204,8 @@ T_Pion pionATransferer_;
 T_Automate automateARenforcer_;
 };
 
+typedef struct Rep_OrderConduite_Population_ChangerAttitude : Rep_OrdreConduite
+{
+id orderConduitePopulationChangerAttitude_;
+};
+

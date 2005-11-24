@@ -25,7 +25,7 @@ class MIL_OrderConduite_Automate_RealiserVariantement : public MIL_OrderConduite
 {
     MT_COPYNOTALLOWED( MIL_OrderConduite_Automate_RealiserVariantement );
 public:
-             MIL_OrderConduite_Automate_RealiserVariantement( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+             MIL_OrderConduite_Automate_RealiserVariantement( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~MIL_OrderConduite_Automate_RealiserVariantement();
     //@}
 

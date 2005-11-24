@@ -36,8 +36,8 @@ void MIL_OrderConduite_PasserEnSilenceRadar::InitializeDIA( const MIL_OrderCondu
 // Name: MIL_OrderConduite_PasserEnSilenceRadar constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_PasserEnSilenceRadar::MIL_OrderConduite_PasserEnSilenceRadar( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_PasserEnSilenceRadar::MIL_OrderConduite_PasserEnSilenceRadar( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

@@ -57,6 +57,7 @@ public:
     //! @name Operations
     //@{
     MIL_OrderConduite_ABC&        InstanciateOrderConduite       ( const MIL_KnowledgeGroup& knowledgeGroup ) const;
+    MIL_OrderConduite_ABC&        InstanciateOrderConduite       () const;
     MIL_OrderConduiteRequest_ABC& InstanciateOrderConduiteRequest() const;
     bool operator==( const MIL_OrderConduiteType& rhs ) const;
     //@}
@@ -73,7 +74,7 @@ private:
     typedef std::map< std::string, const MIL_OrderConduiteType* > T_OrderConduiteFromNameMap;
     typedef T_OrderConduiteFromNameMap::const_iterator            CIT_OrderConduiteFromNameMap;
 
-    typedef MIL_OrderConduite_ABC&(* T_OrderConduiteAllocator )( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+    typedef MIL_OrderConduite_ABC&(* T_OrderConduiteAllocator )( const MIL_KnowledgeGroup* pKnowledgeGroup, const MIL_OrderConduiteType& type );
     typedef void(* T_DiaInitializer )( const MIL_OrderConduiteType& type );
     //@}
 

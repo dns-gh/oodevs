@@ -191,6 +191,9 @@ void MOS_FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_Automate_TransfererRenforts :
              CreateOrder_Automate_TransfererRenforts();
              break;
+        case eOrdreConduite_Population_ChangerAttitude :
+             CreateOrder_Population_ChangerAttitude();
+             break;
 
         default:
             assert( false );
@@ -667,5 +670,21 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Automate_TransfererRenforts()
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_transferer_renforts = &asnMission;
     CreateAgent( asnMission.pion_a_transferer, "Pion a transferer", false );
     CreateAutomate( asnMission.automate_a_renforcer, "Automate a renforcer", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_FragmentaryOrderInterface::CreateOrder_Population_ChangerAttitude
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_FragmentaryOrderInterface::CreateOrder_Population_ChangerAttitude()
+{
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_population_changer_attitude;
+#define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
+    MOS_ParamComboBox< ASN1T_EnumPopulationAttitude >* pSelector_order_conduite_population_changer_attitude = &CreateVarList( asnMission.order_conduite_population_changer_attitude, "Order conduite population changer attitude", false );
+    pSelector_order_conduite_population_changer_attitude->AddItem( "Calme", EnumPopulationAttitude::calme );
+    pSelector_order_conduite_population_changer_attitude->AddItem( "Agitee", EnumPopulationAttitude::agitee );
+    pSelector_order_conduite_population_changer_attitude->AddItem( "Excitee", EnumPopulationAttitude::excitee );
+    pSelector_order_conduite_population_changer_attitude->AddItem( "Agressive", EnumPopulationAttitude::agressive );
+#undef asnMission
 }
 

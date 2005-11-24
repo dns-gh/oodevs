@@ -1,7 +1,7 @@
 precache_on_type = true;
 precache_on_represented_object = true;
 
-knowledge_categories = ;
+knowledge_categories = ordres_recus;
 
 init
 {

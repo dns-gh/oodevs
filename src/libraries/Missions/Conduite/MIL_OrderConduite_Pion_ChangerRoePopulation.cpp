@@ -10,48 +10,46 @@
 // *****************************************************************************
 
 #include "Missions_pch.h"
-#include "MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM.h"
+#include "MIL_OrderConduite_Pion_ChangerRoePopulation.h"
 
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::nDIAPionRenforceIdx_ = 0 ;
-int MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::nDIANbrAmbulancesIdx_ = 0 ;
+int MIL_OrderConduite_Pion_ChangerRoePopulation::nDIAOrderConduitePionChangerRoePopulationIdx_ = 0 ;
 
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::InitializeDIA
+// Name: MIL_OrderConduite_Pion_ChangerRoePopulation::InitializeDIA
 // Created: AGR 
 //-----------------------------------------------------------------------------
 // static
-void MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::InitializeDIA( const MIL_OrderConduiteType& type )
+void MIL_OrderConduite_Pion_ChangerRoePopulation::InitializeDIA( const MIL_OrderConduiteType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetConduiteDIATypeName() );
-    nDIAPionRenforceIdx_ = DEC_Tools::InitializeDIAField( "pionRenforce_", diaType );
-    nDIANbrAmbulancesIdx_ = DEC_Tools::InitializeDIAField( "nbrAmbulances_", diaType );
+    nDIAOrderConduitePionChangerRoePopulationIdx_ = DEC_Tools::InitializeDIAField( "orderConduitePionChangerRoePopulation_", diaType );
 
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM constructor
+// Name: MIL_OrderConduite_Pion_ChangerRoePopulation constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
-    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
+MIL_OrderConduite_Pion_ChangerRoePopulation::MIL_OrderConduite_Pion_ChangerRoePopulation( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
+    : MIL_OrderConduite_ABC( knowledgeGroup, type )
 {
     // NOTHING
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM destructor
+// Name: MIL_OrderConduite_Pion_ChangerRoePopulation destructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::~MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM()
+MIL_OrderConduite_Pion_ChangerRoePopulation::~MIL_OrderConduite_Pion_ChangerRoePopulation()
 {
     // NOTHING
 }
@@ -61,32 +59,29 @@ MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::~MIL_OrderConduite_Pion_Reprendr
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::Initialize
+// Name: MIL_OrderConduite_Pion_ChangerRoePopulation::Initialize
 // Created: AGR 
 // -----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_ChangerRoePopulation::Initialize( const ASN1T_MsgOrderConduite_order_conduite& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_OrderConduite_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode; 
 
-    const ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM& asnMission = *asnMsg.u.order_conduite_pion_reprendre_aux_ordres_vs_ram;
-    if( !NET_ASN_Tools::CopyAgent( asnMission.pion_renforce, GetVariable( nDIAPionRenforceIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyNumeric( asnMission.nbr_ambulances, GetVariable( nDIANbrAmbulancesIdx_ ) ) )
+    const ASN1T_OrderConduite_Pion_ChangerRoePopulation& asnMission = asnMsg.u.order_conduite_pion_changer_roe_population;
+    if( !NET_ASN_Tools::CopyEnumeration( asnMission, GetVariable( nDIAOrderConduitePionChangerRoePopulationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::Initialize
+// Name: MIL_OrderConduite_Pion_ChangerRoePopulation::Initialize
 // Created: AGR 
 // -----------------------------------------------------------------------------
-void MIL_OrderConduite_Pion_ReprendreAuxOrdresVSRAM::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
+void MIL_OrderConduite_Pion_ChangerRoePopulation::Initialize( DIA_Parameters& diaParams, uint nCurDIAParamIdx )
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyAgent( diaParams[nCurDIAParamIdx++], GetVariable( nDIAPionRenforceIdx_));
-    NET_ASN_Tools::CopyNumeric( diaParams[nCurDIAParamIdx++], GetVariable( nDIANbrAmbulancesIdx_));
+    NET_ASN_Tools::CopyEnumeration( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduitePionChangerRoePopulationIdx_));
 
 }

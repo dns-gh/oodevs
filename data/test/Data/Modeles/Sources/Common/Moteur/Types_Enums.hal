@@ -90,6 +90,14 @@ typedef enum E_EtatROEPopulation
     eEtatROEPopulation_TirNeutralisation    
 };
 
+typedef enum E_AttitudePopulation
+{
+    eAttitudePopulation_Calme,
+    eAttitudePopulation_Agitee,
+    eAttitudePopulation_Excitee,
+    eAttitudePopulation_Agressive
+};
+
 typedef enum E_EtatCombatDeRencontre
 {
     eEtatCombatDeRencontre_None,

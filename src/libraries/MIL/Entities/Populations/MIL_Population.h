@@ -90,6 +90,7 @@ public:
     void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
 
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    void     SetAttitude   ( const MIL_PopulationAttitude& attitude );
     //@}
 
     //! @name Tools
@@ -101,6 +102,7 @@ public:
     //! @name Network 
     //@{
     void OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgOrderConduite  ( ASN1T_MsgOrderConduite& msg, MIL_MOSContextID nCtx );
     void SendCreation               () const;
     void SendFullState              () const;
     void UpdateNetwork              () const;    

@@ -40,9 +40,10 @@ void MIL_OrderConduite_ABC::InitializeDIA()
 // Name: MIL_OrderConduite_ABC constructor
 // Created: NLD 2003-01-08
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_ABC::MIL_OrderConduite_ABC( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
+
+MIL_OrderConduite_ABC::MIL_OrderConduite_ABC( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
     : DIA_Representation( "", *DIA_TypeManager::Instance().GetType( type.GetConduiteDIATypeName() ) )
-    , knowledgeGroup_   ( knowledgeGroup )
+    , pKnowledgeGroup_  ( pKnowledgeGroup )
     , type_             ( type )
 {
     eventParameters_.SetOwnerShip( true );

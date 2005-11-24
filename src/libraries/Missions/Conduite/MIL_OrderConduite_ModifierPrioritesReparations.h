@@ -27,7 +27,7 @@ class MIL_OrderConduite_ModifierPrioritesReparations : public MIL_OrderConduite_
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderConduite_ModifierPrioritesReparations( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+             MIL_OrderConduite_ModifierPrioritesReparations( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~MIL_OrderConduite_ModifierPrioritesReparations();
     //@}
 

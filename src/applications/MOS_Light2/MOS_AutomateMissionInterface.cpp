@@ -42,10 +42,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AutomateMissionInterface constructor
-/** @param  agent 
-    @param  mission 
-    @param  parentPanel 
-*/
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
 MOS_AutomateMissionInterface::MOS_AutomateMissionInterface( MOS_Agent& agent, uint nMissionId, MOS_MissionPanel& parentPanel )

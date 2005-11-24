@@ -62,7 +62,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    uint nMissionId_;
+    uint                      nMissionId_;
     MOS_ASN_MsgAutomateOrder* pASNMsgOrder_;
     MOS_ParamLimits*          pParamLimits_;
     //@}

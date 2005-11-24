@@ -75,6 +75,7 @@ private slots:
     void ActivatePopulationMission( int nMissionId );
     void ActivateAutomataMission( int nMissionId );
     void ActivateFragmentaryOrder( int nOrderId );
+    void ActivateFragmentaryOrderPopulation( int nOrderId );
 
     void MagicMove();
     void MagicMoveDone();

@@ -38,8 +38,8 @@ void MIL_OrderConduite_ModifierPrioritesTactiquesBlesses::InitializeDIA( const M
 // Name: MIL_OrderConduite_ModifierPrioritesTactiquesBlesses constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_ModifierPrioritesTactiquesBlesses::MIL_OrderConduite_ModifierPrioritesTactiquesBlesses( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_ModifierPrioritesTactiquesBlesses::MIL_OrderConduite_ModifierPrioritesTactiquesBlesses( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

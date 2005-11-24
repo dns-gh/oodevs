@@ -38,8 +38,8 @@ void MIL_OrderConduite_Automate_DesequiperSiteFranchissement::InitializeDIA( con
 // Name: MIL_OrderConduite_Automate_DesequiperSiteFranchissement constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Automate_DesequiperSiteFranchissement::MIL_OrderConduite_Automate_DesequiperSiteFranchissement( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_Automate_DesequiperSiteFranchissement::MIL_OrderConduite_Automate_DesequiperSiteFranchissement( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }
@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_DesequiperSiteFranchissement
         return nCode; 
 
     const ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement& asnMission = *asnMsg.u.order_conduite_automate_desequiper_site_franchissement;
-    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), knowledgeGroup_.GetKSQuerier() ) )
+    if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;

@@ -25,7 +25,7 @@ class MIL_OrderConduite_$OrderName$ : public MIL_OrderConduite_ABC
 {
     MT_COPYNOTALLOWED( MIL_OrderConduite_$OrderName$ );
 public:
-             MIL_OrderConduite_$OrderName$( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+             MIL_OrderConduite_$OrderName$( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~MIL_OrderConduite_$OrderName$();
     //@}
 

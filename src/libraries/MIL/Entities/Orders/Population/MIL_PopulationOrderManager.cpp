@@ -16,16 +16,12 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
-//#include "Entities/Agents/MIL_AgentPion.h"
-//#include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
-//#include "Entities/Orders/Pion/MIL_PionMissionType.h"
 #include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
 #include "Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduiteRequest_ABC.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 #include "Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "Decision/DEC_ModelPopulation.h"
-//#include "Decision/DEC_ModelPion.h"
 #include "Network/NET_ASN_Messages.h"
 
 //-----------------------------------------------------------------------------
@@ -146,6 +142,86 @@ void MIL_PopulationOrderManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPop
     pMission_->Start();
     SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
     bNewMissionStarted_ = true;
+}
+
+// =============================================================================
+// CONDUITE
+// =============================================================================
+
+//-----------------------------------------------------------------------------
+// Name: MIL_PopulationOrderManager::OnReceiveMsgOrderConduite
+// Created: NLD 2003-01-09
+//-----------------------------------------------------------------------------
+void MIL_PopulationOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx )
+{
+    NET_ASN_MsgOrderConduiteAck asnReplyMsg;
+    asnReplyMsg.GetAsnMsg().unit_id  = asnMsg.unit_id;
+    asnReplyMsg.GetAsnMsg().order_id = asnMsg.order_id;
+
+    // Create the order conduite
+    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( asnMsg.order_conduite );
+    if( !pOrderConduiteType )
+    {
+        asnReplyMsg.GetAsnMsg().error_code = EnumOrderErrorCode::error_invalid_order_conduite;
+        asnReplyMsg.Send( nCtx );
+        return;
+    }
+    MIL_OrderConduite_ABC& orderConduite = pOrderConduiteType->InstanciateOrderConduite();
+    ASN1T_EnumOrderErrorCode nCode = orderConduite.Initialize( asnMsg.order_conduite );
+    if( nCode != EnumOrderErrorCode::no_error )
+    {
+        asnReplyMsg.GetAsnMsg().error_code = nCode;
+        asnReplyMsg.Send( nCtx );
+        delete &orderConduite;
+        return;
+    }
+
+    if( !LaunchOrderConduite( orderConduite ) )
+    {
+        asnReplyMsg.GetAsnMsg().error_code = EnumOrderErrorCode::error_invalid_order_conduite;
+        asnReplyMsg.Send( nCtx );
+        delete &orderConduite;
+        return;
+    }
+
+    asnReplyMsg.GetAsnMsg().error_code = EnumOrderErrorCode::no_error;
+    asnReplyMsg.Send( nCtx );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_PopulationOrderManager::OnReceiveOrderConduite
+// Created: NLD 2003-04-15
+//-----------------------------------------------------------------------------
+void MIL_PopulationOrderManager::OnReceiveOrderConduite( DIA_Parameters& diaParams )
+{
+    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( diaParams[1].ToId() ); // param 0 is the current population
+    assert( pOrderConduiteType );
+    MIL_OrderConduite_ABC& orderConduite = pOrderConduiteType->InstanciateOrderConduite();
+    orderConduite.Initialize( diaParams, 2 );
+    if( !LaunchOrderConduite( orderConduite ) )
+    {
+        MT_LOG_ERROR( "Invalid order conduite", 2, "MIL_OrderManager_ABC::OnReceivePopulationOrderConduite" );
+        delete &orderConduite;
+        return;
+    }
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_PopulationOrderManager::LaunchOrderConduite
+// Created: NLD 2003-01-09
+//-----------------------------------------------------------------------------
+bool MIL_PopulationOrderManager::LaunchOrderConduite( MIL_OrderConduite_ABC& orderConduite )
+{
+    DEC_PopulationDecision& decision = population_.GetDecision();
+
+    const DEC_ModelPopulation& model = population_.GetType().GetModel();
+    if(     orderConduite.GetType().IsAvailableWithoutMission() || ( pMission_ && orderConduite.GetType().IsAvailableForAllMissions() ) 
+        ||  ( pMission_ && model.IsOrderConduiteAvailableForMission( pMission_->GetType(), orderConduite.GetType() ) ) )
+    {
+        orderConduite.Launch( decision, "" );
+        return true;
+    }
+    return false;
 }
 
 //=============================================================================

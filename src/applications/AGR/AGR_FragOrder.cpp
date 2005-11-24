@@ -25,6 +25,8 @@
 #include "AGR_Workspace.h"
 #include "AGR_Member.h"
 
+#include <boost/algorithm/string.hpp>
+
 // -----------------------------------------------------------------------------
 // Name: AGR_FragOrder constructor
 // Created: AGE 2004-09-15
@@ -35,7 +37,16 @@ AGR_FragOrder::AGR_FragOrder( const std::string& strAsnName, const std::string& 
     , bAvailableForAllMissions_ ( false )
     , bAvailableWithoutMissions_( false )
 {
-    bOrderForAutomata_ = ( strAsnName.substr( 14, 8 ) == "Automate" );
+    if( strAsnName.substr( 14, 8 ) == "Automate" )
+        eFragOrderTarget_ = eFragOrderAutomate;
+    else if( strAsnName.substr( 14, 10 ) == "Population" )
+    {
+        eFragOrderTarget_ = eFragOrderPopulation;
+        bAvailableForAllMissions_  = true; //$$$ à voir
+        bAvailableWithoutMissions_ = true;
+    }
+    else
+        eFragOrderTarget_ = eFragOrderPion;
 
     ////
     if(     strAsnName == "OrderConduite_AttendreSePoster" 
@@ -173,8 +184,10 @@ void AGR_FragOrder::GenerateMilClassHeader( const AGR_Workspace& workspace, cons
 {
     const std::string strOrderBaseName = BaseName();
     std::string strBaseHeaderFile;
-    if( bOrderForAutomata_ )
+    if( eFragOrderTarget_ == eFragOrderAutomate )
         strBaseHeaderFile = AGR_SKEL_DIR "AGR_OrderConduite_Automate_Skeleton.h";
+    else if( eFragOrderTarget_ == eFragOrderPopulation )
+        strBaseHeaderFile = AGR_SKEL_DIR "AGR_OrderConduite_Population_Skeleton.h";
     else
         strBaseHeaderFile = AGR_SKEL_DIR "AGR_OrderConduite_Pion_Skeleton.h";
 
@@ -215,8 +228,10 @@ void AGR_FragOrder::GenerateMilClassHeader( const AGR_Workspace& workspace, cons
 void AGR_FragOrder::GenerateMilClassCpp( const AGR_Workspace& workspace, const std::string& strOutputPath ) const
 {
     std::string strBaseCppFile;
-    if( bOrderForAutomata_ )
+    if( eFragOrderTarget_ == eFragOrderAutomate )
         strBaseCppFile = AGR_SKEL_DIR "AGR_OrderConduite_Automate_Skeleton.cpp";
+    else if( eFragOrderTarget_ == eFragOrderPopulation )
+        strBaseCppFile = AGR_SKEL_DIR "AGR_OrderConduite_Population_Skeleton.cpp";
     else
         strBaseCppFile = AGR_SKEL_DIR "AGR_OrderConduite_Pion_Skeleton.cpp";
 
@@ -253,7 +268,7 @@ void AGR_FragOrder::GenerateMilClassCpp( const AGR_Workspace& workspace, const s
         strStaticMemberInit += "int MIL_OrderConduite_" + BaseName() + "::" + member.DIAIndexName() + " = 0 ;\n";
         strStaticMemberScriptInit += member.DIAInitialisationCode();
         strAsnMemberInit += member.ASNInitialisationCode();
-        if( ! bOrderForAutomata_ )
+        if( eFragOrderTarget_ != eFragOrderAutomate ) //$$$ population?
             strDIAMemberInit        += member.DIAParametersInitialisationCode();
     }
 
@@ -404,7 +419,7 @@ std::string AGR_FragOrder::DIATypeName() const
 // -----------------------------------------------------------------------------
 std::string AGR_FragOrder::KnowledgeAccessor() const
 {
-    return "knowledgeGroup_.GetKSQuerier()";
+    return "pKnowledgeGroup_->GetKSQuerier()";
 }
 
 // -----------------------------------------------------------------------------
@@ -434,10 +449,37 @@ std::string AGR_FragOrder::MilFilePathName() const
 // -----------------------------------------------------------------------------
 std::string AGR_FragOrder::HumanName() const
 {
+/*
     std::string strResult = BaseName();
     for( unsigned int i = 0; i < strResult.size(); ++i )
         if( strResult.at(i) == '_' )
             strResult.at(i) = ' ';
+    return strResult;
+*/
+    std::string strResult = BaseName();
+    
+    int nPos = strResult.find( '_' );
+    if( nPos != strResult.npos )
+    {
+        std::string strTarget = strResult.substr( 0, nPos );
+        if(    strTarget == "Automate" 
+            || strTarget == "Pion"
+            || strTarget == "Population" )
+            strResult.insert( nPos, ":" );
+    }
+
+    boost::replace_all( strResult, "_", " " );
+
+    std::string::iterator prevIt = strResult.begin();
+    for( std::string::iterator it = strResult.begin(); it != strResult.end(); )
+    {
+        if( boost::is_upper()( *it ) && boost::is_lower()( *prevIt ) )
+            it = strResult.insert( it, ' ' );
+
+        prevIt = it;
+        ++it;
+    }
+    boost::trim( strResult );
     return strResult;
 }
 

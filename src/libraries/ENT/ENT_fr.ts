@@ -1155,23 +1155,23 @@
     </message>
     <message>
         <source>MettreTenueNBC</source>
-        <translation>MettreTenueNBC</translation>
+        <translation type="obsolete">MettreTenueNBC</translation>
     </message>
     <message>
         <source>EnleverTenueNBC</source>
-        <translation>EnleverTenueNBC</translation>
+        <translation type="obsolete">EnleverTenueNBC</translation>
     </message>
     <message>
         <source>PasserEnSilenceRadio</source>
-        <translation>PasserEnSilenceRadio</translation>
+        <translation type="obsolete">PasserEnSilenceRadio</translation>
     </message>
     <message>
         <source>ArreterSilenceRadio</source>
-        <translation>ArreterSilenceRadio</translation>
+        <translation type="obsolete">ArreterSilenceRadio</translation>
     </message>
     <message>
         <source>AttendreSePoster</source>
-        <translation>AttendreSePoster</translation>
+        <translation type="obsolete">AttendreSePoster</translation>
     </message>
     <message>
         <source>Poursuivre</source>
@@ -1183,7 +1183,7 @@
     </message>
     <message>
         <source>ChangerReglesEngagement</source>
-        <translation>ChangerReglesEngagement</translation>
+        <translation type="obsolete">ChangerReglesEngagement</translation>
     </message>
     <message>
         <source>Deboucher</source>
@@ -1199,83 +1199,83 @@
     </message>
     <message>
         <source>Pion ChangerDePosition</source>
-        <translation>Pion ChangerDePosition</translation>
+        <translation type="obsolete">Pion ChangerDePosition</translation>
     </message>
     <message>
         <source>Pion Contourner</source>
-        <translation>Pion Contourner</translation>
+        <translation type="obsolete">Pion Contourner</translation>
     </message>
     <message>
         <source>Pion EnvoyerVehicule</source>
-        <translation>Pion EnvoyerVehicule</translation>
+        <translation type="obsolete">Pion EnvoyerVehicule</translation>
     </message>
     <message>
         <source>Pion ActiverObstacle</source>
-        <translation>Pion ActiverObstacle</translation>
+        <translation type="obsolete">Pion ActiverObstacle</translation>
     </message>
     <message>
         <source>Pion AppliquerFeux</source>
-        <translation>Pion AppliquerFeux</translation>
+        <translation type="obsolete">Pion AppliquerFeux</translation>
     </message>
     <message>
         <source>Pion ExecuterTir</source>
-        <translation>Pion ExecuterTir</translation>
+        <translation type="obsolete">Pion ExecuterTir</translation>
     </message>
     <message>
         <source>Pion Emettre</source>
-        <translation>Pion Emettre</translation>
+        <translation type="obsolete">Pion Emettre</translation>
     </message>
     <message>
         <source>Pion StopperEmission</source>
-        <translation>Pion StopperEmission</translation>
+        <translation type="obsolete">Pion StopperEmission</translation>
     </message>
     <message>
         <source>Pion RenforcerEnVSRAM</source>
-        <translation>Pion RenforcerEnVSRAM</translation>
+        <translation type="obsolete">Pion RenforcerEnVSRAM</translation>
     </message>
     <message>
         <source>Pion TransfererVSRAM</source>
-        <translation>Pion TransfererVSRAM</translation>
+        <translation type="obsolete">Pion TransfererVSRAM</translation>
     </message>
     <message>
         <source>Pion ReprendreAuxOrdresVSRAM</source>
-        <translation>Pion ReprendreAuxOrdresVSRAM</translation>
+        <translation type="obsolete">Pion ReprendreAuxOrdresVSRAM</translation>
     </message>
     <message>
         <source>ModifierTempsBordeeMaintenance</source>
-        <translation>ModifierTempsBordeeMaintenance</translation>
+        <translation type="obsolete">ModifierTempsBordeeMaintenance</translation>
     </message>
     <message>
         <source>ModifierTempsBordeeSante</source>
-        <translation>ModifierTempsBordeeSante</translation>
+        <translation type="obsolete">ModifierTempsBordeeSante</translation>
     </message>
     <message>
         <source>ModifierPrioritesReparations</source>
-        <translation>ModifierPrioritesReparations</translation>
+        <translation type="obsolete">ModifierPrioritesReparations</translation>
     </message>
     <message>
         <source>ModifierPrioritesBlesses</source>
-        <translation>ModifierPrioritesBlesses</translation>
+        <translation type="obsolete">ModifierPrioritesBlesses</translation>
     </message>
     <message>
         <source>Automate RealiserVariantement</source>
-        <translation>Automate RealiserVariantement</translation>
+        <translation type="obsolete">Automate RealiserVariantement</translation>
     </message>
     <message>
         <source>Automate DesequiperSiteFranchissement</source>
-        <translation>Automate DesequiperSiteFranchissement</translation>
+        <translation type="obsolete">Automate DesequiperSiteFranchissement</translation>
     </message>
     <message>
         <source>Automate ReagirFaceAEni</source>
-        <translation>Automate ReagirFaceAEni</translation>
+        <translation type="obsolete">Automate ReagirFaceAEni</translation>
     </message>
     <message>
         <source>Automate AffecterPionAObstacle</source>
-        <translation>Automate AffecterPionAObstacle</translation>
+        <translation type="obsolete">Automate AffecterPionAObstacle</translation>
     </message>
     <message>
         <source>Automate ReconnaitreZoneImplantation</source>
-        <translation>Automate ReconnaitreZoneImplantation</translation>
+        <translation type="obsolete">Automate ReconnaitreZoneImplantation</translation>
     </message>
     <message>
         <source>Automate ASA DefendreItineraire</source>
@@ -1451,11 +1451,7 @@
     </message>
     <message>
         <source>Automate TC2 GererMaterielAvantDeplacement</source>
-        <translation>Automate TC2 GererMaterielAvantDeplacement</translation>
-    </message>
-    <message>
-        <source>Automate ActiverObstacle</source>
-        <translation></translation>
+        <translation type="obsolete">Automate TC2 GererMaterielAvantDeplacement</translation>
     </message>
     <message>
         <source>Automate GEN RealiserCampPrisonniers</source>
@@ -1571,7 +1567,7 @@
     </message>
     <message>
         <source>AcquerirObjectif</source>
-        <translation>AcquerirObjectif</translation>
+        <translation type="obsolete">AcquerirObjectif</translation>
     </message>
     <message>
         <source>Brouiller</source>
@@ -1588,14 +1584,6 @@
     <message>
         <source>Pion SeFaireTransporter</source>
         <translation>Pion SeFaireTransporter</translation>
-    </message>
-    <message>
-        <source>ModifierPrioritesTactiquesReparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ModifierPrioritesTactiquesBlesses</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Automate ALAT DetruireNeutraliserDansZone</source>
@@ -1630,18 +1618,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PasserEnSilenceRadar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ArreterSilenceRadar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate TransfererRenforts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automate Generique</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1650,19 +1626,159 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>RecupererTransporteurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ChangerPositionDebarquement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Population FaireMouvement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ChangerReglesEngagementPopulation</source>
+        <source>Mettre Tenue NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enlever Tenue NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passer En Silence Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arreter Silence Radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passer En Silence Radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arreter Silence Radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recuperer Transporteurs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attendre Se Poster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changer Regles Engagement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changer Regles Engagement Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Acquerir Objectif</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changer Position Debarquement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Temps Bordee Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Temps Bordee Sante</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Reparations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Blesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Tactiques Reparations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Tactiques Blesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Changer De Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Contourner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Envoyer Vehicule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Activer Obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Appliquer Feux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Executer Tir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Emettre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Stopper Emission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Renforcer En VSRAM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Transferer VSRAM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion: Reprendre Aux Ordres VSRAM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Realiser Variantement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Desequiper Site Franchissement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Reagir Face AEni</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Affecter Pion AObstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Reconnaitre Zone Implantation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: TC2 Gerer Materiel Avant Deplacement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Activer Obstacle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate: Transferer Renforts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population: Changer Attitude</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

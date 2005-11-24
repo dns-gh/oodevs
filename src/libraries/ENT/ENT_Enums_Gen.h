@@ -894,6 +894,25 @@ enum E_UnitAttrErrorCode
 };
 
 
+enum E_PopulationAttitude
+{
+    ePopulationAttitude_Calme,
+    ePopulationAttitude_Agitee,
+    ePopulationAttitude_Excitee,
+    ePopulationAttitude_Agressive,
+    eNbrPopulationAttitude
+};
+
+
+enum E_PopulationAttrErrorCode
+{
+    ePopulationAttrErrorCode_NoError,
+    ePopulationAttrErrorCode_ErrorInvalidUnit,
+    ePopulationAttrErrorCode_ErrorInvalidAttribute,
+    eNbrPopulationAttrErrorCode
+};
+
+
 enum E_TypeMunitionTirIndirect
 {
     eTypeMunitionTirIndirect_Explosif,
@@ -921,25 +940,6 @@ enum E_TC2GererMaterielAvantDeplacement
     eTC2GererMaterielAvantDeplacement_DetruireMaterielsEnReparation,
     eTC2GererMaterielAvantDeplacement_ReparerMaterielsSurPlace,
     eNbrTC2GererMaterielAvantDeplacement
-};
-
-
-enum E_PopulationAttitude
-{
-    ePopulationAttitude_Calme,
-    ePopulationAttitude_Agitee,
-    ePopulationAttitude_Excitee,
-    ePopulationAttitude_Agressive,
-    eNbrPopulationAttitude
-};
-
-
-enum E_PopulationAttrErrorCode
-{
-    ePopulationAttrErrorCode_NoError,
-    ePopulationAttrErrorCode_ErrorInvalidUnit,
-    ePopulationAttrErrorCode_ErrorInvalidAttribute,
-    eNbrPopulationAttrErrorCode
 };
 
 
@@ -1350,6 +1350,7 @@ enum E_FragOrder
     eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement,
     eOrdreConduite_Automate_ActiverObstacle,
     eOrdreConduite_Automate_TransfererRenforts,
+    eOrdreConduite_Population_ChangerAttitude,
 
     eNbrFragOrder
 };

@@ -7,12 +7,12 @@ ScipioOrderConduite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH, Agent, KnowledgeObject FROM ScipioBase
 IMPORTS Itineraire, Point, Direction, Segment, TypeEquipement, ListAgent, EnumTempsBordee FROM ScipioBase
-IMPORTS EnumOrderErrorCode      FROM ScipioOrder
-IMPORTS MissionGenObject        FROM ScipioAutomateMission_GEN
-IMPORTS MaintenancePriorites    FROM ScipioLogMaintenance
-IMPORTS SantePriorites          FROM ScipioLogSante
-IMPORTS EnumRoe                 FROM ScipioUnitAttr
-IMPORTS EnumRoePopulation       FROM ScipioUnitAttr;
+IMPORTS EnumOrderErrorCode         FROM ScipioOrder
+IMPORTS MissionGenObject           FROM ScipioAutomateMission_GEN
+IMPORTS MaintenancePriorites       FROM ScipioLogMaintenance
+IMPORTS SantePriorites             FROM ScipioLogSante
+IMPORTS EnumRoe, EnumRoePopulation FROM ScipioUnitAttr
+IMPORTS EnumPopulationAttitude     FROM ScipioPopulation;
 
 ----------------------------------------------------------------------------
 -- Ordres de conduite pions/automates
@@ -53,6 +53,11 @@ OrderConduite-Pion-Emettre                      ::= NULL
 OrderConduite-Pion-StopperEmission			    ::= NULL
 OrderConduite-Pion-EnvoyerVehicule              ::= NULL
 OrderConduite-Pion-ChangerDePosition            ::= Point
+
+---------------------------------------
+-- Ordres de conduite population
+---------------------------------------
+OrderConduite-Population-ChangerAttitude        ::= EnumPopulationAttitude
 
 EnumTypeMunitionTirIndirect ::= ENUMERATED
 {
@@ -206,7 +211,8 @@ MsgOrderConduite ::= SEQUENCE
         order-conduite-automate-reconnaitre-zone-implantation           OrderConduite-Automate-ReconnaitreZoneImplantation,
         order-conduite-automate-tc2-gerer-materiel-avant-deplacement    OrderConduite-Automate-TC2-GererMaterielAvantDeplacement,
         order-conduite-automate-activer-obstacle                        OrderConduite-Automate-ActiverObstacle,
-        order-conduite-automate-transferer-renforts                     OrderConduite-Automate-TransfererRenforts
+        order-conduite-automate-transferer-renforts                     OrderConduite-Automate-TransfererRenforts,
+        order-conduite-population-changer-attitude						OrderConduite-Population-ChangerAttitude
     }
 }
 

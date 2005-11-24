@@ -39,6 +39,17 @@ class AGR_FragOrder : public AGR_Class
 {
 
 public:
+    //! @name Enums
+    //@{
+    enum E_FragOrderTarget
+    {
+        eFragOrderPion,
+        eFragOrderAutomate,
+        eFragOrderPopulation
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              AGR_FragOrder( const std::string& strAsnName, const std::string& strModuleName );
@@ -106,11 +117,11 @@ private:
 private:
     //! @name Member data
     //@{
-    bool bAvailableForAllMissions_;
-    bool bAvailableWithoutMissions_;
-    bool bOrderForAutomata_;
-    std::string strDemandLowName_;
-    E_OrderType nFragOrderType_;
+    bool              bAvailableForAllMissions_;
+    bool              bAvailableWithoutMissions_;
+    E_FragOrderTarget eFragOrderTarget_;
+    std::string       strDemandLowName_;
+    E_OrderType       nFragOrderType_;
     //@}
 };
 

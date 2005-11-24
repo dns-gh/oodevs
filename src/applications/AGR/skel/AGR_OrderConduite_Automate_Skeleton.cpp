@@ -35,8 +35,8 @@ $StaticMemberScriptInit$
 // Name: MIL_OrderConduite_$OrderName$ constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_$OrderName$::MIL_OrderConduite_$OrderName$( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_$OrderName$::MIL_OrderConduite_$OrderName$( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

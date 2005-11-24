@@ -36,8 +36,8 @@ void MIL_OrderConduite_EnleverTenueNBC::InitializeDIA( const MIL_OrderConduiteTy
 // Name: MIL_OrderConduite_EnleverTenueNBC constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_EnleverTenueNBC::MIL_OrderConduite_EnleverTenueNBC( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type )
-    : MIL_OrderConduite_ABC( knowledgeGroup, type )
+MIL_OrderConduite_EnleverTenueNBC::MIL_OrderConduite_EnleverTenueNBC( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+    : MIL_OrderConduite_ABC( type, pKnowledgeGroup )
 {
     // NOTHING
 }

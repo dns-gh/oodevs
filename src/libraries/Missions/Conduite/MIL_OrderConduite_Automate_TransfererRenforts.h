@@ -25,7 +25,7 @@ class MIL_OrderConduite_Automate_TransfererRenforts : public MIL_OrderConduite_A
 {
     MT_COPYNOTALLOWED( MIL_OrderConduite_Automate_TransfererRenforts );
 public:
-             MIL_OrderConduite_Automate_TransfererRenforts( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+             MIL_OrderConduite_Automate_TransfererRenforts( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~MIL_OrderConduite_Automate_TransfererRenforts();
     //@}
 

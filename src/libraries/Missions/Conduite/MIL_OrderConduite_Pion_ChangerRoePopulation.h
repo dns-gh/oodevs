@@ -9,26 +9,26 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_OrderConduite_Interrompre_h_
-#define __MIL_OrderConduite_Interrompre_h_
+#ifndef __MIL_OrderConduite_Pion_ChangerRoePopulation_h_
+#define __MIL_OrderConduite_Pion_ChangerRoePopulation_h_
 
 #include "MIL/Entities/Orders/Conduite/MIL_OrderConduite_ABC.h"
 #include "TER/TER_Localisation.h"
 
 // =============================================================================
-/** @class  MIL_OrderConduite_Interrompre
-    @brief  MIL_OrderConduite_Interrompre
+/** @class  MIL_OrderConduite_Pion_ChangerRoePopulation
+    @brief  MIL_OrderConduite_Pion_ChangerRoePopulation
 */
 // Created: AGR 
 // =============================================================================
-class MIL_OrderConduite_Interrompre : public MIL_OrderConduite_ABC
+class MIL_OrderConduite_Pion_ChangerRoePopulation : public MIL_OrderConduite_ABC
 {
-    MT_COPYNOTALLOWED( MIL_OrderConduite_Interrompre );
+    MT_COPYNOTALLOWED( MIL_OrderConduite_Pion_ChangerRoePopulation );
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderConduite_Interrompre( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup );
-    virtual ~MIL_OrderConduite_Interrompre();
+             MIL_OrderConduite_Pion_ChangerRoePopulation( const MIL_KnowledgeGroup& knowledgeGroup, const MIL_OrderConduiteType& type );
+    virtual ~MIL_OrderConduite_Pion_ChangerRoePopulation();
     //@}
 
     //-------------------------------------------------------------------------
@@ -44,7 +44,8 @@ public:
 private:
 
 private:
+    static int nDIAOrderConduitePionChangerRoePopulationIdx_;
 
 };
 
-#endif // __MIL_OrderConduite_Interrompre_h_
+#endif // __MIL_OrderConduite_Pion_ChangerRoePopulation_h_

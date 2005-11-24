@@ -98,11 +98,11 @@ public:
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
     static const std::string& ConvertFromSetAutomateModeErrorCode( E_SetAutomateModeErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitAttrErrorCode( E_UnitAttrErrorCode, E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
+    static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromActionReagirFaceAEni( E_ActionReagirFaceAEni, E_Conversion = eToSim );
     static const std::string& ConvertFromTC2GererMaterielAvantDeplacement( E_TC2GererMaterielAvantDeplacement, E_Conversion = eToSim );
-    static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
-    static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
 
     static const std::string& ConvertFromAutomataMission  ( E_AutomataMission  , E_Conversion = eToSim );
     static const std::string& ConvertFromUnitMission      ( E_UnitMission      , E_Conversion = eToSim );
@@ -172,11 +172,11 @@ public:
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
     static E_SetAutomateModeErrorCode ConvertToSetAutomateModeErrorCode( const std::string& );
     static E_UnitAttrErrorCode ConvertToUnitAttrErrorCode( const std::string& );
+    static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
+    static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_ActionReagirFaceAEni ConvertToActionReagirFaceAEni( const std::string& );
     static E_TC2GererMaterielAvantDeplacement ConvertToTC2GererMaterielAvantDeplacement( const std::string& );
-    static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
-    static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
 
     static E_AutomataMission   ConvertToAutomataMission  ( const std::string& );
     static E_UnitMission       ConvertToUnitMission      ( const std::string& );
@@ -247,11 +247,11 @@ private:
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
     typedef ENT_Tr::converter<E_SetAutomateModeErrorCode> T_ConverterSetAutomateModeErrorCode;
     typedef ENT_Tr::converter<E_UnitAttrErrorCode> T_ConverterUnitAttrErrorCode;
+    typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
+    typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
     typedef ENT_Tr::converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
     typedef ENT_Tr::converter<E_ActionReagirFaceAEni> T_ConverterActionReagirFaceAEni;
     typedef ENT_Tr::converter<E_TC2GererMaterielAvantDeplacement> T_ConverterTC2GererMaterielAvantDeplacement;
-    typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
-    typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
 
     typedef ENT_Tr::converter<E_AutomataMission>   T_ConverterAutomataMission;
     typedef ENT_Tr::converter<E_UnitMission>       T_ConverterUnitMission;
@@ -321,11 +321,11 @@ private:
     static T_ConverterUnitExperience UnitExperienceConverter_ [];
     static T_ConverterSetAutomateModeErrorCode SetAutomateModeErrorCodeConverter_ [];
     static T_ConverterUnitAttrErrorCode UnitAttrErrorCodeConverter_ [];
+    static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
+    static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
     static T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_ [];
     static T_ConverterActionReagirFaceAEni ActionReagirFaceAEniConverter_ [];
     static T_ConverterTC2GererMaterielAvantDeplacement TC2GererMaterielAvantDeplacementConverter_ [];
-    static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
-    static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
 
     static T_ConverterAutomataMission   automataMissionConverter_[];
     static T_ConverterUnitMission       unitMissionConverter_[];
