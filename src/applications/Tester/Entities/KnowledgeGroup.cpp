@@ -95,7 +95,7 @@ T_IdVector& KnowledgeGroup::GetTestParam_Knowledges( uint nNbr ) const
     // return the list of known enemies
     T_IdVector& targets = *new T_IdVector();
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); nNbr > 0 && it != knownPawns_.end(); ++it )
-        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat().GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
+        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
         {
             targets.push_back( it->second->GetId() );
             --nNbr;
@@ -111,7 +111,7 @@ T_EntityId KnowledgeGroup::GetTestParam_Knowledge() const
 {
     // return the first enemy known
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )
-        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat().GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
+        if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
             return it->second->GetId();
     return 0;
 }

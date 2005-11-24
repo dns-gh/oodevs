@@ -94,9 +94,9 @@ const Position& Automat::GetPosition() const
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
 inline
-const Automat& Automat::GetAutomat() const
+const Automat* Automat::GetAutomat() const
 {
-    return *this;
+    return this;
 }
 
 } // end namespace TEST

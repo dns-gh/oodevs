@@ -38,6 +38,7 @@
 //#include "TestSets/TestSet_PawnMissions.h"
 #include "TestSets/TestSet_AllPawnMissions.h"
 #include "TestSets/TestSet_AllAutomatMissions.h"
+#include "TestSets/TestSet_AllPopulationMissions.h"
 
 using namespace TEST;
 
@@ -86,10 +87,15 @@ void Run()
     MT_LOG_REGISTER_LOGGER( fileLogger );
 
     TestSet_ABC* pTestSet;
-    if( config.MustTestAutomat() )
+    if( config.MustTestAutomats() )
     {
         pTestSet = new TestSet_AllAutomatMissions( config.GetIterationNumber() );
         MT_LOG_INFO_MSG( "Testing automat missions" );
+    }
+    else if( config.MustTestPopulations() )
+    {
+        pTestSet = new TestSet_AllPopulationMissions( config.GetIterationNumber() );
+        MT_LOG_INFO_MSG( "Testing population missions" );
     }
     else
     {

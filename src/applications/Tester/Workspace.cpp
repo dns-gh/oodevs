@@ -29,6 +29,7 @@
 #include "Actions/Scheduler.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
 #include "Actions/Missions/Mission_Automat_Type.h"
+#include "Actions/Missions/Mission_Population_Type.h"
 #include "TestSets/TestSet_ABC.h"
 
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
@@ -65,6 +66,7 @@ Workspace::Workspace( TestSet_ABC& testSet, const Config& config )
 
     Mission_Pawn_Type::Initialize();
     Mission_Automat_Type::Initialize();
+    Mission_Population_Type::Initialize();
     LoadScipioConfigFile( config.GetConfigFile() );
 
     std::string strTacticalLineFile;
@@ -110,7 +112,6 @@ void Workspace::Update()
     }
     catch( std::exception& exception )
     {
-        MT_LOG_ERROR_MSG( "Network error - " << exception.what() );
         throw;
     }
 }
@@ -136,17 +137,18 @@ void Workspace::LoadScipioConfigFile( const std::string& strScipioConfigFile )
         archive.Open      ( strFile );
         archive.Section   ( "Donnees" );
 
-        std::string       strFileName, strFileName2, strFileName3;
+        std::string       strFileName, strFileName2, strFileName3, strFileName4;
 
         // entity position manager
         archive.ReadField( "Terrain"  , strFileName );
         pPositionManager_     = new PositionManager( strFileName );
         pTacticalLineManager_ = new TacticalLineManager( *pPositionManager_ );
 
-        archive.ReadField( "Decisionnel", strFileName );
-        archive.ReadField( "Pions"      , strFileName2  );
+        archive.ReadField( "Decisionnel", strFileName  );
+        archive.ReadField( "Pions"      , strFileName2 );
         archive.ReadField( "Automates"  , strFileName3 );
-        pTypeManager_         = new TypeManager( strFileName, strFileName2, strFileName3 );
+        archive.ReadField( "Populations", strFileName4 );
+        pTypeManager_         = new TypeManager( strFileName, strFileName2, strFileName3, strFileName4 );
         pEntityManager_       = new EntityManager();
 
         archive.EndSection(); // Donnees

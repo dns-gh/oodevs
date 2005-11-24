@@ -99,13 +99,23 @@ uint Config::GetTimeFactor() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::MustTestAutomat
+// Name: Config::MustTestAutomats
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
 inline
-bool Config::MustTestAutomat() const
+bool Config::MustTestAutomats() const
 {
-    return bTestAutomat_;
+    return eTestedEntities_ == eAutomats;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::MustTestPopulations
+// Created: SBO 2005-08-24
+// -----------------------------------------------------------------------------
+inline
+bool Config::MustTestPopulations() const
+{
+    return eTestedEntities_ == ePopulations;
 }
 
 // -----------------------------------------------------------------------------

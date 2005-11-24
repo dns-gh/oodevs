@@ -23,23 +23,28 @@
 #include "Tester_pch.h"
 #include "TypeManager.h"
 #include "Entities/PawnType.h"
+#include "Entities/PopulationType.h"
 #include "Entities/AutomatType.h"
 #include "Entities/PawnModel.h"
 #include "Entities/AutomatModel.h"
+#include "Entities/PopulationModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: TypeManager constructor
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
-TypeManager::TypeManager( const std::string& strModelFile, const std::string& strPawnTypeFile, const std::string& strAutomatTypeFile )
-    : automatTypes_  ()
-    , automatModels_ ()
-    , pawnTypes_     ()
-    , pawnModels_    ()
+TypeManager::TypeManager( const std::string& strModelFile, const std::string& strPawnTypeFile, const std::string& strAutomatTypeFile, const std::string& strPopulationTypeFile )
+    : automatTypes_     ()
+    , automatModels_    ()
+    , pawnTypes_        ()
+    , pawnModels_       ()
+    , populationTypes_  ()
+    , populationModels_ ()
 {
-    LoadModels       ( strModelFile       );
-    LoadPawnTypes    ( strPawnTypeFile    );
-    LoadAutomatTypes ( strAutomatTypeFile );
+    LoadModels         ( strModelFile          );
+    LoadPawnTypes      ( strPawnTypeFile       );
+    LoadAutomatTypes   ( strAutomatTypeFile    );
+    LoadPopulationTypes( strPopulationTypeFile );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,6 +61,10 @@ TypeManager::~TypeManager()
         delete it->second;
     pawnTypes_.clear();
 
+    for( CIT_PopulationTypeMap it = populationTypes_.begin(); it != populationTypes_.end(); ++it )
+        delete it->second;
+    populationTypes_.clear();
+
     for( CIT_AutomatModelMap it = automatModels_.begin(); it != automatModels_.end(); ++it )
         delete it->second;
     automatModels_.clear();
@@ -64,6 +73,9 @@ TypeManager::~TypeManager()
         delete it->second;
     pawnModels_.clear();
 
+    for( CIT_PopulationModelMap it = populationModels_.begin(); it != populationModels_.end(); ++it )
+        delete it->second;
+    populationModels_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -167,6 +179,56 @@ void TypeManager::LoadPawnTypes( const std::string& strConfigFile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TypeManager::LoadPopulationTypes
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void TypeManager::LoadPopulationTypes( const std::string& strConfigFile )
+{
+    try
+    {
+        std::string         strCurrentDir = MT_GetCurrentDir();
+        std::string         strDir;
+        std::string         strFile;
+        MT_ExtractFilePath  ( strConfigFile, strDir  );
+        MT_ExtractFileName  ( strConfigFile, strFile );
+        MT_ChangeDir        ( strDir );
+
+        XmlInputArchive    archive;
+        
+        uint16             nPopulationTypesLoaded = 0;
+
+        archive.Open       ( strFile );
+
+        archive.BeginList  ( "Populations" );
+        while( archive.NextListElement() )
+        {
+            archive.Section( "Population" );
+
+            std::string strName;
+            archive.ReadAttribute( "nom", strName );
+
+            PopulationType* pPopulationType = new PopulationType( *this, strName, archive );
+            populationTypes_[ pPopulationType->GetName() ] = pPopulationType;
+
+            archive.EndSection(); // Population
+
+            nPopulationTypesLoaded++;
+        }
+        archive.EndList    (); // Populations
+
+        archive.Close      ();
+        MT_ChangeDir        ( strCurrentDir );
+
+        MT_LOG_INFO_MSG( nPopulationTypesLoaded << " Population types loaded" );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_LOG_ERROR_MSG( exception.what() );
+        throw;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TypeManager::LoadModels
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
@@ -189,8 +251,9 @@ void TypeManager::LoadModels( const std::string& strConfigFile )
         std::string strFileName;
         archive.ReadField ( "Modeles", strFileName );
 
-        LoadPawnModels   ( strFileName );
-        LoadAutomatModels( strFileName );
+        LoadPawnModels      ( strFileName );
+        LoadAutomatModels   ( strFileName );
+        LoadPopulationModels( strFileName );
 
         archive.EndSection(); // DirectIA
 
@@ -305,6 +368,56 @@ void TypeManager::LoadPawnModels( const std::string& strConfigFile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TypeManager::LoadPopulationModels
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+void TypeManager::LoadPopulationModels( const std::string& strConfigFile )
+{
+    try
+    {
+        std::string         strCurrentDir = MT_GetCurrentDir();
+        std::string         strDir;
+        std::string         strFile;
+        MT_ExtractFilePath  ( strConfigFile, strDir  );
+        MT_ExtractFileName  ( strConfigFile, strFile );
+        MT_ChangeDir        ( strDir );
+
+        XmlInputArchive    archive;
+        
+        uint16             nPopulationModelsLoaded = 0;
+
+        archive.Open       ( strFile );
+
+        archive.BeginList  ( "Populations" );
+        while( archive.NextListElement() )
+        {
+            archive.Section( "Modele" );
+
+            std::string strName;
+            archive.ReadAttribute( "nom", strName );
+
+            PopulationModel* pPopulationModel = new PopulationModel( strName, archive );
+            populationModels_.insert( std::make_pair( strName, pPopulationModel ) );
+
+            archive.EndSection(); // Modele
+
+            nPopulationModelsLoaded++;
+        }
+        archive.EndList    (); // Pions
+
+        archive.Close      ();
+        MT_ChangeDir        ( strCurrentDir );
+
+        MT_LOG_INFO_MSG( nPopulationModelsLoaded << " Population models loaded" );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MT_LOG_ERROR_MSG( exception.what() );
+        throw;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
@@ -352,6 +465,28 @@ const PawnType* TypeManager::FindPawnType( ASN1T_TypePion asnId ) const
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
+const PopulationType* TypeManager::FindPopulationType( const std::string& strName ) const
+{
+    CIT_PopulationTypeMap it = populationTypes_.find( strName );
+    return it == populationTypes_.end() ? 0 : it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TypeManager::Find
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+const PopulationType* TypeManager::FindPopulationType( ASN1T_TypePion asnId ) const
+{
+    for( CIT_PopulationTypeMap it = populationTypes_.begin(); it != populationTypes_.end(); ++it )
+        if( ( *it ).second->GetId() == asnId )
+            return ( *it ).second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TypeManager::Find
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
 const AutomatModel* TypeManager::FindAutomatModel( const std::string& strModel ) const
 {
     CIT_AutomatModelMap it = automatModels_.find( strModel );
@@ -368,6 +503,18 @@ const PawnModel* TypeManager::FindPawnModel( const std::string& strModel ) const
 {
     CIT_PawnModelMap it = pawnModels_.find( strModel );
     if( it != pawnModels_.end() )
+        return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TypeManager::Find
+// Created: SBO 2005-08-11
+// -----------------------------------------------------------------------------
+const PopulationModel* TypeManager::FindPopulationModel( const std::string& strModel ) const
+{
+    CIT_PopulationModelMap it = populationModels_.find( strModel );
+    if( it != populationModels_.end() )
         return it->second;
     return 0;
 }

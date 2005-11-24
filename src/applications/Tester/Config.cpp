@@ -38,7 +38,6 @@ Config::Config( const std::string& strFile )
     , strConfigFile_       ( "./scipio.xml" )
     , nPort_               ( 10000 )
     , nTimeFactor_         ( 40 )
-    , bTestAutomat_        ( true )
     , nPeriod_             ( 180 )
     , nRecompletionPeriod_ ( 180 )
     , nItNumber_           ( 1 )
@@ -49,6 +48,7 @@ Config::Config( const std::string& strFile )
     , bRecover_            ( false )
     , nRecoveryTick_       ( 0 )
     , strRecoveryFile_     ( "./test_recover.xml" )
+    , eTestedEntities_     ( ePawns )
 {
     LoadConfigFile( strFile );
 }
@@ -93,7 +93,12 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.EndSection(); // Sim
 
         archive.Section( "Actions" );
-        archive.ReadField( "TestAutomats"          , bTestAutomat_        );
+        archive.ReadField( "Entities", strTmp );
+        if( !stricmp( strTmp.c_str(), "automats" ) )
+            eTestedEntities_ = eAutomats;
+        else if( !stricmp( strTmp.c_str(), "populations" ) )
+            eTestedEntities_ = ePopulations;
+
         archive.ReadField( "Period"                , nPeriod_             );
         archive.ReadField( "NumberOfSameMissions"  , nItNumber_           );
         archive.ReadField( "IntervalOfSameMissions", nItInterval_         );

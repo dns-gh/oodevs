@@ -31,12 +31,57 @@ namespace DIN
 namespace TEST
 {
     class Workspace;
+    class PopulationType;
 
 // =============================================================================
 // Created: SBO 2005-05-11
 // =============================================================================
 class Population : public Testable_Entity
 {
+
+private:
+
+    class Concentration
+    {
+    public:
+        //! @name Constructor/Destructor
+        //@{
+         Concentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg );
+        ~Concentration();
+        //@}
+
+        //! @name Operations
+        //@{
+        void OnUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
+        //@} 
+
+    public:
+        Position position_;
+    };
+
+    typedef std::vector< Concentration* >         T_ConcentrationVector;
+    typedef T_ConcentrationVector::const_iterator CIT_ConcentrationVector;
+
+    class Flow
+    {
+    public:
+        //! @name Constructor/Destructor
+        //@{
+         Flow( const ASN1T_MsgPopulationFluxCreation& asnMsg );
+        ~Flow();
+        //@}
+
+        //! @name Operations
+        //@{
+        void OnUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg );
+        //@} 
+
+    public:
+        T_PositionVector shape_;
+    };
+
+    typedef std::vector< Flow* >         T_FlowVector;
+    typedef T_FlowVector::const_iterator CIT_FlowVector;
 
 public:
     //! @name Constructors/Destructor
@@ -48,11 +93,21 @@ public:
     //! @name Accessors
     //@{
     virtual       T_EntityId   GetId       () const;
+    virtual const Position&    GetPosition () const;
 	        const std::string& GetName     () const;
     //@}
 
     //! @name Messages handlers
     //@{
+    void OnUpdate                ( const ASN1T_MsgPopulationUpdate&                   asnMsg );
+    
+    void OnConcentrationCreated  ( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
+    void OnConcentrationUpdated  ( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
+    void OnConcentrationDestroyed( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
+
+    void OnFlowCreated           ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
+    void OnFlowUpdated           ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
+    void OnFlowDestroyed         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
     //@}
 
     //! @name Operations
@@ -76,8 +131,12 @@ private:
 private:
     //! @name Member data
     //@{
-    T_EntityId       nId_;
-	std::string      strName_;
+    T_EntityId            nId_;
+	std::string           strName_;
+    const PopulationType* pType_;
+
+    T_ConcentrationVector concentrations_;
+    T_FlowVector          flows_;
     //@}
 };
 

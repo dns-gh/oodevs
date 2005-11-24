@@ -30,6 +30,7 @@
 #include "Entities/Automat.h"
 #include "Entities/Pawn.h"
 #include "Entities/Object.h"
+#include "Entities/Population.h"
 
 #include "Types/TacticalLineManager.h"
 #include "Types/TacticalLines/TacticalLine_Limit.h"
@@ -321,6 +322,9 @@ void MessageManager::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& inpu
         case T_MsgsSimMos_msg_object_knowledge_creation:     OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.u.msg_object_knowledge_creation    ); break; 
         case T_MsgsSimMos_msg_object_knowledge_update:       OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.u.msg_object_knowledge_update      ); break; 
         case T_MsgsSimMos_msg_object_knowledge_destruction:  OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.u.msg_object_knowledge_destruction ); break; 
+
+        case T_MsgsSimMos_msg_population_creation:           OnReceiveMsgPopulationCreation        ( *asnMsg.u.msg_population_creation          ); break;
+        case T_MsgsSimMos_msg_population_update:             OnReceiveMsgPopulationUpdate          ( *asnMsg.u.msg_population_update            ); break;
         default:
 			;
 	}
@@ -679,6 +683,106 @@ void MessageManager::OnReceiveMsgObjectDestruction( const ASN1T_MsgObjectDestruc
     else
         MT_LOG_ERROR_MSG( "TEST -> MM - Deleting object with ID#" << asnMsg << " which does not exist" );
 }
+
+// =============================================================================
+// POPULATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationCreation
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationCreation( const ASN1T_MsgPopulationCreation& asnMsg )
+{
+    if( !workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population ) )
+    {
+        Population& population = *new Population( workspace_, asnMsg );
+        workspace_.GetEntityManager().Register( population );
+    }
+    else
+        MT_LOG_ERROR_MSG( "TEST -> MM - Population with ID#" << asnMsg.oid_population << " already created" );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationUpdate
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnUpdate( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationConcentrationCreation
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnConcentrationCreated( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationConcentrationUpdate
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnConcentrationUpdated( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationConcentrationDestruction
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnConcentrationDestroyed( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationFlowCreation
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationFlowCreation( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnFlowCreated( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationFlowUpdate
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationFlowUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnFlowUpdated( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationFlowDestruction
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationFlowDestruction( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+{
+    Population* pPopulation = workspace_.GetEntityManager().FindPopulation( asnMsg.oid_population );
+    assert( pPopulation );
+    pPopulation->OnFlowDestroyed( asnMsg );
+}
+
+// =============================================================================
+// KNOWLEDGE
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgUnitKnowledgeCreation

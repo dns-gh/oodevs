@@ -57,7 +57,8 @@ public:
     const std::string& GetRecoveryFile      () const;
     uint               GetPort              () const;
     uint               GetTimeFactor        () const;
-    bool               MustTestAutomat      () const;
+    bool               MustTestAutomats     () const;
+    bool               MustTestPopulations  () const;
     uint               GetPeriod            () const;
     uint               GetIterationNumber   () const;
     uint               GetIterationInterval () const;
@@ -80,23 +81,34 @@ private:
     //@}
 
 private:
+    //! @name Enum
+    //@{
+    enum E_TestableEntities
+    {
+        ePawns,
+        eAutomats,
+        ePopulations
+    };
+    //@}
+
+private:
     //! @name Member data
     //@{
-    std::string strServer_;
-    std::string strConfigFile_;
-    std::string strRandomSeedFile_;
-    bool        bRecover_;
-    uint        nRecoveryTick_;
-    std::string strRecoveryFile_;
-    uint        nPort_;
-    uint        nTimeFactor_;
-    bool        bTestAutomat_;
-    uint        nPeriod_;
-    uint        nItNumber_;
-    uint        nItInterval_;
-    uint        nMaxMissionPerTick_;
-    uint        nRecompletionPeriod_;
-    std::string strLogFile_;
+    std::string        strServer_;
+    std::string        strConfigFile_;
+    std::string        strRandomSeedFile_;
+    bool               bRecover_;
+    uint               nRecoveryTick_;
+    std::string        strRecoveryFile_;
+    uint               nPort_;
+    uint               nTimeFactor_;
+    uint               nPeriod_;
+    uint               nItNumber_;
+    uint               nItInterval_;
+    uint               nMaxMissionPerTick_;
+    uint               nRecompletionPeriod_;
+    std::string        strLogFile_;
+    E_TestableEntities eTestedEntities_;
     //@}
 };
 

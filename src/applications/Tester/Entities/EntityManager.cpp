@@ -25,6 +25,7 @@
 #include "Entities/Automat.h"
 #include "Entities/Pawn.h"
 #include "Entities/Object.h"
+#include "Entities/Population.h"
 #include "Entities/Testable_Entity.h"
 #include "Actions/Scheduler.h"
 
@@ -37,6 +38,7 @@ using namespace TEST;
 EntityManager::EntityManager()
     : automats_        ()
     , pawns_           ()
+    , populations_     ()
     , teams_           ()
     , knowledgeGroups_ ()
     , objects_         ()
@@ -196,6 +198,29 @@ void EntityManager::Unregister( Object& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityManager::FindPopulation
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+Population* EntityManager::FindPopulation( T_EntityId nId ) const
+{
+	CIT_PopulationMap it;
+    it = populations_.find( nId );
+	if ( it != populations_.end() )
+		return ( *it ).second;
+	return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityManager::Register
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void EntityManager::Register( Population& population )
+{
+    bool bOut = populations_.insert( std::make_pair( population.GetId(), &population ) ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityManager::ScheduleAllPawnMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
@@ -224,6 +249,20 @@ void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler, bool bPara
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityManager::ScheduleAllPopulationMissions
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void EntityManager::ScheduleAllPopulationMissions( Scheduler& scheduler, bool bParallel /*= false*/, uint nIteration /*= 1*/ ) const
+{
+    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+    {
+        if( bParallel )
+            scheduler.ResetExecutionTick();
+        it->second->ScheduleAllMissions( scheduler, nIteration );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityManager::GetTestParam_AgentList
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
@@ -232,7 +271,7 @@ T_IdVector& EntityManager::GetTestParam_AgentList( uint nNbr, const Testable_Ent
     T_IdVector& agents = *new T_IdVector();
     for( CIT_PawnMap it = pawns_.begin(); nNbr > 0 && it != pawns_.end(); ++it )
         if( it->first != target.GetId() && 
-            it->second->GetAutomat().GetKnowledgeGroup().GetId() == target.GetAutomat().GetKnowledgeGroup().GetId() )
+            it->second->GetAutomat()->GetKnowledgeGroup().GetId() == target.GetAutomat()->GetKnowledgeGroup().GetId() )
         {
             agents.push_back( it->first );
             --nNbr;
@@ -249,7 +288,7 @@ T_IdVector& EntityManager::GetTestParam_AutomateList( uint nNbr, const Testable_
     T_IdVector& automats = *new T_IdVector();
     for( CIT_AutomatMap it = automats_.begin(); nNbr > 0 && it != automats_.end(); ++it )
         if( it->first != target.GetId() &&
-            it->second->GetAutomat().GetKnowledgeGroup().GetId() == target.GetAutomat().GetKnowledgeGroup().GetId() )
+            it->second->GetAutomat()->GetKnowledgeGroup().GetId() == target.GetAutomat()->GetKnowledgeGroup().GetId() )
         {
             automats.push_back( it->first );
             --nNbr;

@@ -54,6 +54,15 @@ Testable_Entity::~Testable_Entity()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Testable_Entity::GetAutomat
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+const Automat* Testable_Entity::GetAutomat() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_ID
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
@@ -89,7 +98,9 @@ T_IdVector& Testable_Entity::GetTestParam_AgentList() const
 // -----------------------------------------------------------------------------
 T_EntityId Testable_Entity::GetTestParam_Automate() const
 {
-    return GetAutomat().GetId();
+    if( !GetAutomat() )
+        throw std::runtime_error( "Trying to get \"automat\" for an entity with no Automat" );
+    return GetAutomat()->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +119,9 @@ T_IdVector& Testable_Entity::GetTestParam_AutomateList() const
 // -----------------------------------------------------------------------------
 T_EntityId Testable_Entity::GetTestParam_AgentKnowledge() const
 {
-    return GetAutomat().GetKnowledgeGroup().GetTestParam_Knowledge();
+    if( !GetAutomat() )
+        throw std::runtime_error( "Trying to get \"agent knowledge\" for an entity with no Automat/Knowledge group" );
+    return GetAutomat()->GetKnowledgeGroup().GetTestParam_Knowledge();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +131,9 @@ T_EntityId Testable_Entity::GetTestParam_AgentKnowledge() const
 T_IdVector& Testable_Entity::GetTestParam_AgentKnowledgeList() const
 {
     // get up to 5 knowledges (enemies)
-    return GetAutomat().GetKnowledgeGroup().GetTestParam_Knowledges( 5 );
+    if( !GetAutomat() )
+        throw std::runtime_error( "Trying to get \"agent knowledge list\" for an entity with no Automat/Knowledge group" );
+    return GetAutomat()->GetKnowledgeGroup().GetTestParam_Knowledges( 5 );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +142,9 @@ T_IdVector& Testable_Entity::GetTestParam_AgentKnowledgeList() const
 // -----------------------------------------------------------------------------
 T_EntityId Testable_Entity::GetTestParam_ObjectKnowledge() const
 {
-    return GetAutomat().GetTeam().GetTestParam_Object();
+    if( !GetAutomat() )
+        throw std::runtime_error( "Trying to get \"object knowledge\" for an entity with no Automat/Knowledge group" );
+    return GetAutomat()->GetTeam().GetTestParam_Object();
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +153,9 @@ T_EntityId Testable_Entity::GetTestParam_ObjectKnowledge() const
 // -----------------------------------------------------------------------------
 T_IdVector& Testable_Entity::GetTestParam_ObjectKnowledgeList() const
 {
-    return GetAutomat().GetTeam().GetTestParam_Objects();
+    if( !GetAutomat() )
+        throw std::runtime_error( "Trying to get \"object knowledge list\" for an entity with no Automat/Knowledge group" );
+    return GetAutomat()->GetTeam().GetTestParam_Objects();
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +336,8 @@ T_EntityId Testable_Entity::GetTestParam_LeftLimit()
     if( nLeftLimit_ == 0 )
         nLeftLimit_ = workspace_.GetTacticalLineManager().GetNextLimitId();
     // at least world border limits should exist
-    assert( nLeftLimit_ );
+    if( !nLeftLimit_ )
+        throw std::runtime_error( "Unable to generate required limit parameter" );
     return nLeftLimit_;
 }
 
@@ -331,6 +351,7 @@ T_EntityId Testable_Entity::GetTestParam_RightLimit()
     if( nRightLimit_ == 0 )
         nRightLimit_ = workspace_.GetTacticalLineManager().GetNextLimitId();
     // at least world border limits should exist
-    assert( nRightLimit_ );
+    if( !nRightLimit_ )
+        throw std::runtime_error( "Unable to generate required limit parameter" );
     return nRightLimit_;
 }

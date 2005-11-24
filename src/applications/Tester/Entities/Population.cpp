@@ -18,12 +18,80 @@
 
 #include "Tester_pch.h"
 #include "Entities/Population.h"
+#include "Types/TypeManager.h"
+#include "Types/Entities/PopulationType.h"
+#include "Types/Entities/PopulationModel.h"
 #include "Tools/Position.h"
+#include "Tools/PositionManager.h"
 #include "Actions/Scheduler.h"
 #include "Actions/Missions/Mission_Population_Type.h"
 #include "Workspace.h"
 
 using namespace TEST;
+
+// =============================================================================
+// CONCENTRATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Population::Concentration
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+Population::Concentration::Concentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+: position_ ( (const char*)asnMsg.position.data )
+{
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Population::~Concentration
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+Population::Concentration::~Concentration()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::OnUpdate
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::Concentration::OnUpdate( const ASN1T_MsgPopulationConcentrationUpdate& /*asnMsg*/ )
+{
+}
+
+// =============================================================================
+// FLOW
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Population::Flow::Flow
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+Population::Flow::Flow( const ASN1T_MsgPopulationFluxCreation& /*asnMsg*/ )
+: shape_ ()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Flow::~Flow
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+Population::Flow::~Flow()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Flow::OnUpdate
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::Flow::OnUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+{
+    if( asnMsg.m.fluxPresent )
+    {
+        shape_.clear();
+        for( uint i = 0; i < asnMsg.flux.vecteur_point.n; ++i )
+            shape_.push_back( new Position( (const char*)asnMsg.flux.vecteur_point.elem[ i ].data ) );
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: Population::Population
@@ -33,6 +101,7 @@ Population::Population( const Workspace& workspace, const ASN1T_MsgPopulationCre
     : Testable_Entity ( workspace )
     , nId_            ( asnMsg.oid_population )
     , strName_        ( asnMsg.nom )
+    , pType_          ( workspace.GetTypeManager().FindPopulationType( asnMsg.type_population ) )
 {
 }
 
@@ -48,8 +117,97 @@ Population::~Population()
 // Name: Population::SendMagicAction
 // Created: SBO 2005-09-01
 // -----------------------------------------------------------------------------
-void Population::SendMagicAction( int action ) const
+void Population::SendMagicAction( int /*action*/ ) const
 {
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetPosition
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+const Position& Population::GetPosition() const
+{
+    if( concentrations_.size() > 0 )
+        return ( *concentrations_.begin() )->position_;
+    return *new Position();
+}
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+// Name: Population::OnUpdate
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnUpdate( const ASN1T_MsgPopulationUpdate& /*asnMsg*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::OnConcentrationCreated
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnConcentrationCreated( const ASN1T_MsgPopulationConcentrationCreation& asnMsg )
+{
+    if( !concentrations_[ asnMsg.oid_concentration ] )
+        concentrations_[ asnMsg.oid_concentration ] = new Concentration( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::OnConcentrationUpdated
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnConcentrationUpdated( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+{
+    if( concentrations_[ asnMsg.oid_concentration ] )
+        concentrations_[ asnMsg.oid_concentration ]->OnUpdate( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Population::OnConcentrationDestroyed
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnConcentrationDestroyed( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg )
+{
+    if( concentrations_[ asnMsg.oid_concentration ] )
+        delete concentrations_[ asnMsg.oid_concentration ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::OnFlowCreated
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnFlowCreated( const ASN1T_MsgPopulationFluxCreation& asnMsg )
+{
+    if( !flows_[ asnMsg.oid_flux ] )
+        flows_[ asnMsg.oid_flux ] = new Flow( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Population::OnFlowUpdated
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnFlowUpdated( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
+{
+    if( flows_[ asnMsg.oid_flux ] )
+        flows_[ asnMsg.oid_flux ]->OnUpdate( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Population::OnFlowDestroyed
+// Created: SBO 2005-11-24
+// -----------------------------------------------------------------------------
+void Population::OnFlowDestroyed( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
+{
+    if( flows_[ asnMsg.oid_flux ] )
+        delete flows_[ asnMsg.oid_flux ];
 }
 
 //-----------------------------------------------------------------------------
@@ -62,8 +220,8 @@ void Population::SendMagicAction( int action ) const
 // -----------------------------------------------------------------------------
 void Population::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 */ )
 {
-//    assert( pType_ );
-//    pType_->GetModel().ScheduleAllMissions( *this, scheduler, nIteration );
+    assert( pType_ );
+    pType_->GetModel().ScheduleAllMissions( *this, scheduler, nIteration );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +230,7 @@ void Population::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* =
 // -----------------------------------------------------------------------------
 void Population::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ )
 {
-//    assert( pType_ );
-//    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName, nIteration );
+    assert( pType_ );
+    pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName, nIteration );
 }
 

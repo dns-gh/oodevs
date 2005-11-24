@@ -57,7 +57,7 @@ public:
     //@{
     virtual       T_EntityId GetId      () const = 0;
     virtual const Position&  GetPosition() const = 0;
-    virtual const Automat&   GetAutomat () const = 0;
+    virtual const Automat*   GetAutomat () const;
     //@}
 
     //! @name Test Parameters

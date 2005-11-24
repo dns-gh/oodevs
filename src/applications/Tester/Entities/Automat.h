@@ -55,7 +55,7 @@ public:
     //@{
     virtual       T_EntityId      GetId            () const;
     virtual const Position&       GetPosition      () const;
-    virtual const Automat&        GetAutomat       () const;
+    virtual const Automat*        GetAutomat       () const;
 
             const AutomatType&    GetType          () const;
 	        const Team&           GetTeam          () const;

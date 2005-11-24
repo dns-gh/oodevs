@@ -16,69 +16,62 @@
 //
 // *****************************************************************************
 
-#ifndef __PawnModel_h_
-#define __PawnModel_h_
+#ifndef __PopulationModel_h_
+#define __PopulationModel_h_
 
 #ifdef __GNUG__
 #   pragma interface
 #endif
 
 #include "Types.h"
-#include "Actions/Missions/Mission_Pawn_Type.h"
+#include "Actions/Missions/Mission_Population_Type.h"
 
 namespace TEST {
 
     class Scheduler;
-    class Pawn;
+    class Population;
 
 // =============================================================================
-/** @class  PawnModel
-    @brief  PawnModel
-    @par    Using example
-    @code
-    PawnModel;
-    @endcode
-*/
 // Created: SBO 2005-08-11
 // =============================================================================
-class PawnModel
+class PopulationModel
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PawnModel( const std::string& strName, XmlInputArchive& archive );
-    virtual ~PawnModel();
+             PopulationModel( const std::string& strName, XmlInputArchive& archive );
+    virtual ~PopulationModel();
     //@}
 
     //! @name Accessors
     //@{
-    void ScheduleAllMissions( Pawn& pawn, Scheduler& scheduler, uint nIteration = 1 ) const;
-    void ScheduleMission    ( Pawn& pawn, Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 ) const;
+    void ScheduleAllMissions( Population& population, Scheduler& scheduler, uint nIteration = 1 ) const;
+    void ScheduleMission    ( Population& population, Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    PawnModel( const PawnModel& );            //!< Copy constructor
-    PawnModel& operator=( const PawnModel& ); //!< Assignment operator
+    PopulationModel( const PopulationModel& );            //!< Copy constructor
+    PopulationModel& operator=( const PopulationModel& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< const Mission_Pawn_Type* > T_MissionPawnTypeVector;
-    typedef T_MissionPawnTypeVector::const_iterator CIT_MissionPawnTypeVector;
+    typedef std::vector< const Mission_Population_Type* > T_MissionPopulationTypeVector;
+    typedef T_MissionPopulationTypeVector::const_iterator CIT_MissionPopulationTypeVector;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string             strName_;
-    T_MissionPawnTypeVector missionTypes_;
+    std::string                   strName_;
+    T_MissionPopulationTypeVector missionTypes_;
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __PawnModel_h_
+#endif // __PopulationModel_h_

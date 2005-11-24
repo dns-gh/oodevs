@@ -35,13 +35,6 @@ namespace TEST
     class Workspace;
 
 // =============================================================================
-/** @class  Pawn
-    @brief  Pawn
-    @par    Using example
-    @code
-    Pawn;
-    @endcode
-*/
 // Created: SBO 2005-05-11
 // =============================================================================
 class Pawn : public Testable_Entity
@@ -59,7 +52,7 @@ public:
     //@{
     virtual       T_EntityId   GetId       () const;
     virtual const Position&    GetPosition () const;
-    virtual const Automat&     GetAutomat  () const;
+    virtual const Automat*     GetAutomat  () const;
 
 	        const std::string& GetName     () const;
             const PawnType&    GetType     () const;

@@ -40,13 +40,6 @@ namespace TEST
     class NetworkManager;
 
 // =============================================================================
-/** @class  MessageManager
-    @brief  MessageManager
-    @par    Using example
-    @code
-    MessageManager;
-    @endcode
-*/
 // Created: SBO 2005-05-09
 // =============================================================================
 class MessageManager
@@ -150,6 +143,17 @@ private:
     void OnReceiveMsgObjectCreation           ( const ASN1T_MsgObjectCreation& asnMsg );
     void OnReceiveMsgObjectUpdate             ( const ASN1T_MsgObjectUpdate& asnMsg );
     void OnReceiveMsgObjectDestruction        ( const ASN1T_MsgObjectDestruction& asnMsg );
+
+    void OnReceiveMsgPopulationCreation       ( const ASN1T_MsgPopulationCreation&    asnMsg );
+    void OnReceiveMsgPopulationUpdate         ( const ASN1T_MsgPopulationUpdate&      asnMsg );
+
+    void OnReceiveMsgPopulationConcentrationCreation   ( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
+    void OnReceiveMsgPopulationConcentrationUpdate     ( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
+    void OnReceiveMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
+
+    void OnReceiveMsgPopulationFlowCreation            ( const ASN1T_MsgPopulationFluxCreation&             asnMsg );
+    void OnReceiveMsgPopulationFlowUpdate              ( const ASN1T_MsgPopulationFluxUpdate&               asnMsg );
+    void OnReceiveMsgPopulationFlowDestruction         ( const ASN1T_MsgPopulationFluxDestruction&          asnMsg );
     //@}
 
     //! @name Knowledge

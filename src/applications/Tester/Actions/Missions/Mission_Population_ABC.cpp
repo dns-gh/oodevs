@@ -57,16 +57,17 @@ Mission_Population_ABC::~Mission_Population_ABC()
 // -----------------------------------------------------------------------------
 void Mission_Population_ABC::Serialize()
 {
-    //$$$ TODO
+    ASN_Tools::CopyID( pTarget_->GetId()                  , asnMsg_.GetAsnMsg().oid_unite_executante );
+    ASN_Tools::CopyID( idManager_.GetFreeIdentifier()     , asnMsg_.GetAsnMsg().order_id             );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Mission_Population_ABC::Send
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Mission_Population_ABC::Send( const Scheduler& scheduler )
+void Mission_Population_ABC::Send( const Scheduler& /*scheduler*/ )
 {
-    //$$$ TODO
+    asnMsg_.Send( 56 );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,5 +76,5 @@ void Mission_Population_ABC::Send( const Scheduler& scheduler )
 // -----------------------------------------------------------------------------
 void Mission_Population_ABC::Clean()
 {
-    // TODO
+    // NOTHING
 }

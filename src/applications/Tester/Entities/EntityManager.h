@@ -30,15 +30,9 @@ namespace TEST
     class Object;
     class Scheduler;
     class Testable_Entity;
+    class Population;
 
 // =============================================================================
-/** @class  EntityManager
-    @brief  EntityManager
-    @par    Using example
-    @code
-    EntityManager;
-    @endcode
-*/
 // Created: SBO 2005-05-11
 // =============================================================================
 class EntityManager
@@ -58,6 +52,7 @@ public:
     void            Register          ( Pawn&           pawn           );
     void            Register          ( Team&           team           );
     void            Register          ( KnowledgeGroup& knowledgeGroup );
+    void            Register          ( Population&     population     );
     void            Register          ( Object&         object         );
     void            Unregister        ( Object&         object         );
     Automat*        FindAutomat       ( T_EntityId      nId            ) const;
@@ -65,12 +60,14 @@ public:
     Team*           FindTeam          ( T_EntityId      nId            ) const;
     KnowledgeGroup* FindKnowledgeGroup( T_EntityId      nId            ) const;
     Object*         FindObject        ( T_EntityId      nId            ) const;
+    Population*     FindPopulation    ( T_EntityId      nId            ) const;
     //@}
 
     //! @name Scheduling
     //@{
-    void ScheduleAllPawnMissions   ( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
-    void ScheduleAllAutomatMissions( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
+    void ScheduleAllPawnMissions      ( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
+    void ScheduleAllAutomatMissions   ( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
+    void ScheduleAllPopulationMissions( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
     //@}
 
     //! @name Test parameters
@@ -88,6 +85,9 @@ private:
     typedef std::map< T_EntityId, Pawn* >    T_PawnMap;
 	typedef T_PawnMap::const_iterator        CIT_PawnMap;
 
+    typedef std::map< T_EntityId, Population* >    T_PopulationMap;
+	typedef T_PopulationMap::const_iterator        CIT_PopulationMap;
+
 	typedef std::map< T_EntityId, Team* >    T_TeamMap;
 	typedef T_TeamMap::const_iterator        CIT_TeamMap;
 
@@ -103,6 +103,7 @@ private:
     //@{
     T_AutomatMap         automats_;
     T_PawnMap            pawns_;
+    T_PopulationMap      populations_;
     T_TeamMap            teams_;
     T_KnowledgeGroupMap  knowledgeGroups_;
     T_ObjectMap          objects_;

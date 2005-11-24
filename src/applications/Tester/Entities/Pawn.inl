@@ -69,10 +69,10 @@ const PawnType& Pawn::GetType() const
 // Created: SBO 2005-05-25
 // -----------------------------------------------------------------------------
 inline
-const Automat& Pawn::GetAutomat() const
+const Automat* Pawn::GetAutomat() const
 {
-    assert( pAutomat_ );
-    return *pAutomat_;
+    assert( pAutomat_ ); // Pawn should have an automat
+    return pAutomat_;
 }
 
 //-----------------------------------------------------------------------------
