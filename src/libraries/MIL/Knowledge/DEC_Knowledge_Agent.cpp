@@ -34,7 +34,7 @@
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Agent, "DEC_Knowledge_Agent" )
 
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
-MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByEtatOps_          = 0.2; // 20%
+MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
 MT_Float         DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
 
 // -----------------------------------------------------------------------------
@@ -600,11 +600,11 @@ void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
     rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByRelevance_ * rRelevance_) + rMaxDangerosityDegradationByRelevance_ ) );
 
     // Etat opérationel
-    const MT_Float rEtatOps = dataRecognition_.GetEtatOps();
-    if( rEtatOps == 0. ) // L'unité est morte
+    const MT_Float rOpState = dataRecognition_.GetOperationalState();
+    if( rOpState == 0. ) // L'unité est morte
         rDangerosity = 0;
     else
-        rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByEtatOps_ * rEtatOps ) + rMaxDangerosityDegradationByEtatOps_ ) );
+        rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByOpState_ * rOpState ) + rMaxDangerosityDegradationByOpState_) );
 
     // Source is neutralized
     assert( pAgentKnown_ );

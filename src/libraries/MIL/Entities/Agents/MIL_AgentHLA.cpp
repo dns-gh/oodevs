@@ -86,15 +86,6 @@ const MIL_AgentType_ABC& MIL_AgentHLA::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentHLA::GetEtatOps
-// Created: AGE 2004-11-09
-// -----------------------------------------------------------------------------
-MT_Float MIL_AgentHLA::GetEtatOps() const
-{
-    return GetRole< PHY_RoleHLA_Composantes >().GetEtatOps();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA::IsDead
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------

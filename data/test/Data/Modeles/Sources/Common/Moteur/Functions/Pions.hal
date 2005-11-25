@@ -137,6 +137,7 @@ signatures
     B                                       A::DEC_Agent_EstTransporte                   ();
     B                                       A::DEC_Agent_EstPC                           ();
     R                                       A::DEC_Agent_EtatOps                         (); // Retourne une valeur entre 0 et 1
+    R                                       A::DEC_Agent_EtatOpsMajeur                   (); // Retourne une valeur entre 0 et 1
     B                                       A::DEC_Agent_PeutConstruireObjet             ( I /*E_TypeObject*/ );
     B                                       A::DEC_Agent_PeutConstruireContournementObjet( I /*E_TypeObject*/ );
     B                                       A::DEC_Agent_PeutDetruireObjet               ( I /*E_TypeObject*/ );

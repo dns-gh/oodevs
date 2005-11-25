@@ -192,11 +192,11 @@ void DEC_Workspace::InitializeConfig( MIL_InputArchive& archive )
     DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_ = nTmp / 100.;
     
     archive.ReadField( "DegradationMaxParEtatOps", nTmp, CheckValueBound( 0, 100 ) );
-    DEC_Knowledge_Agent      ::rMaxDangerosityDegradationByEtatOps_ = nTmp / 100.;
-    PHY_RolePion_Composantes::rMaxDangerosityDegradationByEtatOps_ = nTmp / 100.;
+    DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
+    PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
 
     archive.ReadField( "DegradationMaxParEtatNeutralise", nTmp, CheckValueBound( 0, 100 ) );
-    DEC_Knowledge_Agent      ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
+    DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
     archive.EndSection(); // Dangerosite
@@ -204,14 +204,14 @@ void DEC_Workspace::InitializeConfig( MIL_InputArchive& archive )
     // EtatOpsEtatOps
     archive.Section( "EtatOps" );
 
-    archive.ReadField( "PoidsComposantesNonMajeures", PHY_RolePion_Composantes::rEtatOpsWeightNonMajorComposante_, CheckValueBound( 0., 1. ) );
-    archive.ReadField( "PoidsComposantesMajeures"   , PHY_RolePion_Composantes::rEtatOpsWeightMajorComposante_   , CheckValueBound( 0., 1. ) );
+    archive.ReadField( "PoidsComposantesNonMajeures", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_, CheckValueBound( 0., 1. ) );
+    archive.ReadField( "PoidsComposantesMajeures"   , PHY_RolePion_Composantes::rOpStateWeightMajorComposante_   , CheckValueBound( 0., 1. ) );
 
     // $$$ Optionnel pour compat v0.110.x
-    if( !archive.ReadField( "PoidsPersonnel", PHY_RolePion_Composantes::rEtatOpsWeightHumans_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
-        PHY_RolePion_Composantes::rEtatOpsWeightHumans_ = 1. - ( PHY_RolePion_Composantes::rEtatOpsWeightMajorComposante_ + PHY_RolePion_Composantes::rEtatOpsWeightNonMajorComposante_ );
+    if( !archive.ReadField( "PoidsPersonnel", PHY_RolePion_Composantes::rOpStateWeightHumans_, CheckValueBound( 0., 1. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing ) )
+        PHY_RolePion_Composantes::rOpStateWeightHumans_ = 1. - ( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ );
 
-    if( PHY_RolePion_Composantes::rEtatOpsWeightHumans_ + PHY_RolePion_Composantes::rEtatOpsWeightMajorComposante_ + PHY_RolePion_Composantes::rEtatOpsWeightNonMajorComposante_ != 1. )
+    if( PHY_RolePion_Composantes::rOpStateWeightHumans_ + PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1", archive.GetContext() );
     archive.EndSection(); // EtatOps
 

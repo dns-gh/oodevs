@@ -214,13 +214,13 @@ void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( T_ComposanteVector& t
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleHLA_Composantes::GetEtatOps
+// Name: PHY_RoleHLA_Composantes::GetOperationalState
 // Created: AGE 2004-12-13
 // -----------------------------------------------------------------------------
-float PHY_RoleHLA_Composantes::GetEtatOps() const
+MT_Float PHY_RoleHLA_Composantes::GetOperationalState() const
 {
     unsigned int nCurrentElements = 0;
-    unsigned int nMaxElements = 0;
+    unsigned int nMaxElements     = 0;
     for( CIT_Composantes it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         assert( *it );

@@ -34,7 +34,7 @@ using namespace DIN;
 MIL_Limit::MIL_Limit()
     : nID_       ( (uint)-1 )
     , nLevel_    ( EnumNatureLevel::ooo )
-    , bDestroyed_( false )
+    , bDestroyed_   ( false )
 {
     // NOTHING
 }

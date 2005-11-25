@@ -453,7 +453,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionNBCProtected                         , "DEC_Automate_PionEstEnTenueProtectionNBC"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionMoving                               , "DEC_Automate_PionEstEnMouvement"                               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPionNeutralized                          , "DEC_Automate_PionEstNeutralise"                                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionEtatOps                             , "DEC_Automate_PionEtatOps"                                      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionOperationalState                    , "DEC_Automate_PionEtatOps"                                      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionMajorOperationalState               , "DEC_Automate_PionEtatOpsMajeur"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionPosition                            , "DEC_Automate_PionPosition"                                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::GetPionDirection                           , "DEC_Automate_PionDirection"                                    );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::MakePionRelievePion                        , "DEC_Automate_PionRelevePion"                                   );

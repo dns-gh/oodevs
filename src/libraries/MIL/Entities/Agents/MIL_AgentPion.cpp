@@ -587,15 +587,6 @@ MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
     return pAutomate_->GetKnowledgeGroup();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::GetEtatOps
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-MT_Float MIL_AgentPion::GetEtatOps() const
-{
-    return GetRole< PHY_RolePion_Composantes >().GetEtatOps();
-}
-
 // =============================================================================
 // KNOWLEDGE
 // =============================================================================

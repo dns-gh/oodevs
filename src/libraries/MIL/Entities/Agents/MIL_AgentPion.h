@@ -72,15 +72,14 @@ public:
           DEC_RolePion_Decision&        GetDecision               (); //$$$ Dérolifier DEC_RolePion_Decision
     const DEC_RolePion_Decision&        GetDecision               () const; //$$$ Dérolifier DEC_RolePion_Decision
     
-    virtual MIL_Army&                 GetArmy          () const;
-            MIL_KnowledgeGroup&       GetKnowledgeGroup() const;
-    virtual const MIL_Automate&       GetAutomate      () const;
-    virtual       MIL_Automate&       GetAutomate      ();
-    virtual const MIL_AgentTypePion&  GetType          () const;
-    virtual MT_Float                  GetEtatOps       () const;
-    virtual bool                      IsDead           () const;
-    virtual bool                      IsNeutralized    () const;
-    virtual bool                      IsPC             () const;
+    virtual MIL_Army&                 GetArmy            () const;
+            MIL_KnowledgeGroup&       GetKnowledgeGroup  () const;
+    virtual const MIL_Automate&       GetAutomate        () const;
+    virtual       MIL_Automate&       GetAutomate        ();
+    virtual const MIL_AgentTypePion&  GetType            () const;
+    virtual bool                      IsDead             () const;
+    virtual bool                      IsNeutralized      () const;
+    virtual bool                      IsPC               () const;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
 

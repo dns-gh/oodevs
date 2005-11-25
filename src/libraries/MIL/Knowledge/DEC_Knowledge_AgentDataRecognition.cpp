@@ -27,13 +27,13 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataRecognition, "DEC_Knowledge_Agen
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
-    : nTimeLastUpdate_  ( 0 )
-    , pArmy_            ( 0 )
-    , bIsPC_            ( false )
-    , rEtatOps_         ( std::numeric_limits< MT_Float >::max() )
-    , pAgentType_       ( 0 )
-    , bEtatOpsUpdated_  ( false )
-    , bAgentTypeUpdated_( false )
+    : nTimeLastUpdate_          ( 0 )
+    , pArmy_                    ( 0 )
+    , bIsPC_                    ( false )
+    , rOperationalState_        ( std::numeric_limits< MT_Float >::max() )
+    , pAgentType_               ( 0 )
+    , bOperationalStateChanged_ ( false )
+    , bAgentTypeUpdated_        ( false )
 {
 }
     
@@ -57,7 +57,7 @@ DEC_Knowledge_AgentDataRecognition::~DEC_Knowledge_AgentDataRecognition()
 void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> nTimeLastUpdate_
-         >> rEtatOps_
+         >> rOperationalState_
          >> composantes_
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> bIsPC_;
@@ -66,7 +66,7 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::FindPionType( nID );
     
-    file >> bEtatOpsUpdated_
+    file >> bOperationalStateChanged_
          >> bAgentTypeUpdated_;
 }
 
@@ -77,12 +77,12 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
 void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << nTimeLastUpdate_
-         << rEtatOps_
+         << rOperationalState_
          << composantes_
          << pArmy_
          << bIsPC_
          << ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 )
-         << bEtatOpsUpdated_
+         << bOperationalStateChanged_
          << bAgentTypeUpdated_;
 }
 
@@ -96,8 +96,8 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataRecognition::Prepare()
 {
-    bEtatOpsUpdated_   = false;
-    bAgentTypeUpdated_ = false;
+    bOperationalStateChanged_ = false;
+    bAgentTypeUpdated_        = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,11 +110,11 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
 
-    MT_Float rNewEtatOps = data.GetEtatOps();
-    if( rEtatOps_ != rNewEtatOps )
+    MT_Float rNewOpState = data.GetOperationalState();
+    if( rOperationalState_ != rNewOpState )
     {
-        rEtatOps_        = rNewEtatOps;
-        bEtatOpsUpdated_ = true;
+        rOperationalState_        = rNewOpState;
+        bOperationalStateChanged_ = true;
     }
 
     composantes_ = data.GetComposantes();
@@ -160,10 +160,10 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataRecognition::SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
 {
-    if( bEtatOpsUpdated_ )
+    if( bOperationalStateChanged_ )
     {
         asnMsg.m.etat_opPresent = 1;
-        asnMsg.etat_op = std::max( 0, std::min( 100, (int)( rEtatOps_ * 100. ) ) );
+        asnMsg.etat_op = std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) );
     }
 
     if( bAgentTypeUpdated_ )
@@ -193,7 +193,7 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( ASN1T_MsgUnitKnowledgeUp
         return;
 
     asnMsg.m.etat_opPresent = 1;
-    asnMsg.etat_op = std::max( 0, std::min( 100, (int)( rEtatOps_ * 100. ) ) );
+    asnMsg.etat_op = std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) );
 
     assert( pArmy_ );
     assert( pAgentType_ );

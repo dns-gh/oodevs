@@ -28,7 +28,7 @@ template< typename T > inline void PHY_RolePion_Composantes::Apply( T& functor )
 inline
 bool PHY_RolePion_Composantes::HasChanged() const
 {
-    return nNbrComposanteChanged_ != 0 || bLendsChanged_ || bEtatOpsChanged_;
+    return nNbrComposanteChanged_ != 0 || bLendsChanged_ || bOperationalStateChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,13 +52,23 @@ const PHY_ComposantePion* PHY_RolePion_Composantes::GetMajorComposante() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetEtatOps
+// Name: PHY_RolePion_Composantes::GetOperationalState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_RolePion_Composantes::GetEtatOps() const
+MT_Float PHY_RolePion_Composantes::GetOperationalState() const
 {
-    return rEtatOps_;
+    return rOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMajorOperationalState
+// Created: NLD 2005-11-25
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_RolePion_Composantes::GetMajorOperationalState() const
+{
+    return rMajorOperationalState_;
 }
 
 // -----------------------------------------------------------------------------

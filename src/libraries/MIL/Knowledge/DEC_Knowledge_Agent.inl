@@ -132,13 +132,13 @@ const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel() cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Agent::GetEtatOps
+// Name: DEC_Knowledge_Agent::GetOperationalState
 // Created: NLD 2004-04-14
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Knowledge_Agent::GetEtatOps() const
+MT_Float DEC_Knowledge_Agent::GetOperationalState() const
 {
-    return dataRecognition_.GetEtatOps();
+    return dataRecognition_.GetOperationalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ MT_Float DEC_Knowledge_Agent::GetEtatOps() const
 inline
 bool DEC_Knowledge_Agent::IsDead() const
 {
-    return dataRecognition_.GetEtatOps() <= 0.;
+    return dataRecognition_.GetOperationalState() <= 0.;
 }
 
 // -----------------------------------------------------------------------------

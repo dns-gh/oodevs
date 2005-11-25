@@ -16,17 +16,17 @@
 inline
 bool DEC_Knowledge_AgentDataRecognition::HasChanged() const
 {
-    return bEtatOpsUpdated_ || bAgentTypeUpdated_;
+    return bOperationalStateChanged_ || bAgentTypeUpdated_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataRecognition::GetEtatOps
+// Name: DEC_Knowledge_AgentDataRecognition::GetOperationalState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Knowledge_AgentDataRecognition::GetEtatOps() const
+MT_Float DEC_Knowledge_AgentDataRecognition::GetOperationalState() const
 {
-    return rEtatOps_ == std::numeric_limits< MT_Float >::max() ? 1. : rEtatOps_;
+    return rOperationalState_ == std::numeric_limits< MT_Float >::max() ? 1. : rOperationalState_;
 }
 
 // -----------------------------------------------------------------------------

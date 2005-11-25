@@ -212,10 +212,11 @@ public:
 
     //! @name Accessors
     //@{          
-          bool           HasChanged() const;
-          bool           IsUsable  () const;  
-          MT_Float       GetEtatOps() const;
-    const MIL_AgentPion& GetPion   () const;
+    virtual       MT_Float       GetOperationalState     () const;
+                  bool           HasChanged              () const;
+                  bool           IsUsable                () const;  
+                  MT_Float       GetMajorOperationalState() const;
+            const MIL_AgentPion& GetPion                 () const;    
     //@}
 
     //! @name Network
@@ -284,8 +285,8 @@ private:
 
     //! @name Tools
     //@{
-    void UpdateEtatOps        ();
-    void UpdateMajorComposante();
+    void UpdateOperationalStates();
+    void UpdateMajorComposante  ();
 
     void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, bool bIsMajor, T_ComposanteTypeProperties& properties );
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, bool bIsMajor, T_ComposanteTypeProperties& properties );
@@ -301,8 +302,9 @@ private:
     bool                   bLendsChanged_;
     T_ComposanteTypeMap    composanteTypes_;
     uint                   nNbrComposanteChanged_;
-    MT_Float               rEtatOps_;
-    bool                   bEtatOpsChanged_;    
+    MT_Float               rMajorOperationalState_;
+    MT_Float               rOperationalState_;
+    bool                   bOperationalStateChanged_;    
     PHY_ComposantePion*    pMajorComposante_;
     uint                   nNeutralizationEndTimeStep_;
 
@@ -318,11 +320,11 @@ private:
     uint                            nTickRcMaintenanceQuerySent_;
 
 public:
-    static MT_Float rEtatOpsWeightNonMajorComposante_;
-    static MT_Float rEtatOpsWeightMajorComposante_;
-    static MT_Float rEtatOpsWeightHumans_;
+    static MT_Float rOpStateWeightNonMajorComposante_;
+    static MT_Float rOpStateWeightMajorComposante_;
+    static MT_Float rOpStateWeightHumans_;
     static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
-    static MT_Float rMaxDangerosityDegradationByEtatOps_;
+    static MT_Float rMaxDangerosityDegradationByOpState_;
 };
 
 #include "PHY_RolePion_Composantes.inl"

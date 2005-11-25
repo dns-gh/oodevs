@@ -51,13 +51,13 @@ const MIL_AgentType_ABC* DEC_Knowledge_AgentPerceptionDataRecognition::GetAgentT
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetEtatOps
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetEtatOps() const
+MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState() const
 {
-    return rEtatOps_;
+    return rOperationalState_;
 }
 
 // -----------------------------------------------------------------------------

@@ -48,17 +48,17 @@ public:
 
     //! @name Accessors
     //@{
-          uint                         GetTimeLastUpdate() const;
-          MT_Float                     GetEtatOps       () const;
-    const T_KnowledgeComposanteVector& GetComposantes   () const;
-    const MIL_Army*                    GetArmy          () const;
-          bool                         IsPC             () const;
-    const MIL_AgentType_ABC*           GetAgentType     () const;
+          uint                         GetTimeLastUpdate  () const;
+          MT_Float                     GetOperationalState() const;
+    const T_KnowledgeComposanteVector& GetComposantes     () const;
+    const MIL_Army*                    GetArmy            () const;
+          bool                         IsPC               () const;
+    const MIL_AgentType_ABC*           GetAgentType       () const;
     //@}
 
 private:
           uint                         nTimeLastUpdate_;
-          MT_Float                     rEtatOps_;
+          MT_Float                     rOperationalState_;
           T_KnowledgeComposanteVector  composantes_;
     const MIL_Army*                    pArmy_ ;
           bool                         bIsPC_;

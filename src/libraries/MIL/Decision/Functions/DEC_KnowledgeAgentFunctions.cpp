@@ -31,10 +31,10 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::GetEtatOps
+// Name: DEC_KnowledgeAgentFunctions::GetOperationalState
 // Created: NLD 2004-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::GetEtatOps( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_KnowledgeAgentFunctions::GetOperationalState( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
     DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
     if( !pKnowledge )
@@ -45,7 +45,7 @@ void DEC_KnowledgeAgentFunctions::GetEtatOps( DIA_Call_ABC& call, const MIL_Agen
     }
 
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (float)pKnowledge->GetEtatOps() );
+    call.GetResult().SetValue( (float)pKnowledge->GetOperationalState() );
 }
 
 // -----------------------------------------------------------------------------

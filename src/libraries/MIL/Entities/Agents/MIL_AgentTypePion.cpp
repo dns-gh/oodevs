@@ -360,28 +360,29 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::SetPosture     , "DEC_PostureForTest"     ); //$$ Used for test only
 
     // Pion accessors    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsPC               , "DEC_Agent_EstPC"                            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsTransported      , "DEC_Agent_EstTransporte"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsFlying           , "DEC_Agent_EstEnVol"                         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::SetFlyingHeight    , "DEC_Agent_HauteurDeVol"                     );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMoving           , "DEC_Agent_EstEnMouvement"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetEtatOps         , "DEC_Agent_EtatOps"                          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanConstructObject , "DEC_Agent_PeutConstruireObjet"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanBypassObject    , "DEC_Agent_PeutConstruireContournementObjet" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanDestroyObject   , "DEC_Agent_PeutDetruireObjet"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanMineObject      , "DEC_Agent_PeutValoriserObjet"               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanActivateObject  , "DEC_Agent_PeutActiverObjet"                 );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableDiscreteMode , "DEC_Agent_ActiverModeDiscret"               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableDiscreteMode, "DEC_Agent_DesactiverModeDiscret"            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsNeutralized      , "DEC_Agent_EstNeutralise"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsAutomateEmbraye  , "DEC_Agent_AutomateEstEmbraye"               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosition        , "DEC_Agent_Position"                         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetDirection       , "DEC_Agent_Direction"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsSurrendered      , "DEC_Agent_SEstRendu"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsPrisoner         , "DEC_Agent_EstPrisonnier"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsRefugee          , "DEC_Agent_EstRefugie"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMilita           , "DEC_Agent_EstMilice"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosture         , "DEC_Agent_NiveauInstallation"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsPC                    , "DEC_Agent_EstPC"                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsTransported           , "DEC_Agent_EstTransporte"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsFlying                , "DEC_Agent_EstEnVol"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::SetFlyingHeight         , "DEC_Agent_HauteurDeVol"                     );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMoving                , "DEC_Agent_EstEnMouvement"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetOperationalState     , "DEC_Agent_EtatOps"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetMajorOperationalState, "DEC_Agent_EtatOpsMajeur"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanConstructObject      , "DEC_Agent_PeutConstruireObjet"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanBypassObject         , "DEC_Agent_PeutConstruireContournementObjet" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanDestroyObject        , "DEC_Agent_PeutDetruireObjet"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanMineObject           , "DEC_Agent_PeutValoriserObjet"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::CanActivateObject       , "DEC_Agent_PeutActiverObjet"                 );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableDiscreteMode      , "DEC_Agent_ActiverModeDiscret"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableDiscreteMode     , "DEC_Agent_DesactiverModeDiscret"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsNeutralized           , "DEC_Agent_EstNeutralise"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsAutomateEmbraye       , "DEC_Agent_AutomateEstEmbraye"               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosition             , "DEC_Agent_Position"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetDirection            , "DEC_Agent_Direction"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsSurrendered           , "DEC_Agent_SEstRendu"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsPrisoner              , "DEC_Agent_EstPrisonnier"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsRefugee               , "DEC_Agent_EstRefugie"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMilita                , "DEC_Agent_EstMilice"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosture              , "DEC_Agent_NiveauInstallation"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetRoePopulation   , "DEC_Agent_RoePopulation"                    );
  
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeLeftForMoving  , "DEC_Agent_AutonomieEnDeplacement"                  );
@@ -414,7 +415,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableInvulnerability              , "DEC_Agent_DesactiverInvulnerabilitePopulation"                  );
 
     // Agent knowledges accessors    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetEtatOps                                , "DEC_ConnaissanceAgent_EtatOps"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetOperationalState                       , "DEC_ConnaissanceAgent_EtatOps"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetSpeed       < MIL_AgentPion >          , "DEC_ConnaissanceAgent_Vitesse"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetPosition    < MIL_AgentPion >          , "DEC_ConnaissanceAgent_Position"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsFlying       < MIL_AgentPion >          , "DEC_ConnaissanceAgent_EstEnVol"                        );

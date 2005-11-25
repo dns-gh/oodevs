@@ -66,7 +66,8 @@ public:
     static void IsPionNeutralized                           ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
     static void IsPointInPionFuseau                         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void MakePionRelievePion                         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void GetPionEtatOps                              ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
+    static void GetPionOperationalState                     ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
+    static void GetPionMajorOperationalState                ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
     static void GetPionPosition                             ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate ); 
     static void GetPionDirection                            ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void CanPionRelievePion                          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );

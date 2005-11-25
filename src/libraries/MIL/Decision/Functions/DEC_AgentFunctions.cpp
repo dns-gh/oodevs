@@ -13,6 +13,7 @@
 #include "DEC_AgentFunctions.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
@@ -223,12 +224,21 @@ void DEC_AgentFunctions::IsAutomateEmbraye( DIA_Call_ABC& call, const MIL_AgentP
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetEtatOps
+// Name: DEC_AgentFunctions::GetOperationalState
 // Created: NLD 2004-04-16
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::GetEtatOps( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::GetOperationalState( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (float)callerAgent.GetEtatOps() );
+    call.GetResult().SetValue( (float)callerAgent.GetRole< PHY_RolePion_Composantes >().GetOperationalState() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetMajorOperationalState
+// Created: NLD 2005-11-25
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::GetMajorOperationalState( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    call.GetResult().SetValue( (float)callerAgent.GetRole< PHY_RolePion_Composantes >().GetMajorOperationalState() );
 }
 
 // -----------------------------------------------------------------------------

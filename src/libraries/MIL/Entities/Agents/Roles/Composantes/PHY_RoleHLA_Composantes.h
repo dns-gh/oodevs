@@ -66,8 +66,8 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsNeutralized() const;
-    float GetEtatOps() const;
+            bool     IsNeutralized      () const;
+    virtual MT_Float GetOperationalState() const;
     //@}
 
     //! @name Modifiers
@@ -90,9 +90,9 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Composantes composantes_;
+    T_Composantes               composantes_;
     HLA_InteractionManager_ABC& interactionManager_;
-    bool bNeutralized_;
+    bool                        bNeutralized_;
     //@}
 };
 

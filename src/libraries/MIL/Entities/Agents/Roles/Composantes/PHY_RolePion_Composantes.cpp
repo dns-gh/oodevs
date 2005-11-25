@@ -39,11 +39,11 @@
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
 
-MT_Float PHY_RolePion_Composantes::rEtatOpsWeightNonMajorComposante_             = 0.;
-MT_Float PHY_RolePion_Composantes::rEtatOpsWeightMajorComposante_                = 0.;
-MT_Float PHY_RolePion_Composantes::rEtatOpsWeightHumans_                         = 0.;
+MT_Float PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
+MT_Float PHY_RolePion_Composantes::rOpStateWeightMajorComposante_                = 0.;
+MT_Float PHY_RolePion_Composantes::rOpStateWeightHumans_                         = 0.;
 MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
-MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByEtatOps_          = 0.;
+MT_Float PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_          = 0.;
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Composantes, "PHY_RolePion_Composantes" )
 
@@ -99,8 +99,9 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MT_RoleContainer& role, MIL_
     , nNbrUndamagedNonMajorComposantes_( 0 )
     , nNbrMajorComposantes_            ( 0 )
     , nNbrNonMajorComposantes_         ( 0 )
-    , rEtatOps_                        ( 0 )
-    , bEtatOpsChanged_                 ( false )
+    , rOperationalState_               ( 0. )
+    , rMajorOperationalState_          ( 0. )
+    , bOperationalStateChanged_        ( false )
     , pMajorComposante_                ( 0 )
     , nNeutralizationEndTimeStep_      ( 0 )
     , bLendsChanged_                   ( false )
@@ -128,8 +129,9 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , nNbrUndamagedNonMajorComposantes_ ( 0 )
     , nNbrMajorComposantes_             ( 0 )
     , nNbrNonMajorComposantes_          ( 0 )
-    , rEtatOps_                         ( 0. )
-    , bEtatOpsChanged_                  ( false )
+    , rOperationalState_                ( 0. )
+    , rMajorOperationalState_           ( 0. )
+    , bOperationalStateChanged_         ( false )
     , pMajorComposante_                 ( 0 )
     , nNeutralizationEndTimeStep_       ( 0 )
     , maintenanceComposanteStates_      ()
@@ -267,7 +269,8 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
          & nNbrUndamagedNonMajorComposantes_
          & nNbrMajorComposantes_            
          & nNbrNonMajorComposantes_         
-         & rEtatOps_
+         & rOperationalState_
+         & rMajorOperationalState_
          & pMajorComposante_
          & nNeutralizationEndTimeStep_
          & maintenanceComposanteStates_
@@ -539,31 +542,36 @@ void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, uint nNbr 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::UpdateEtatOps
+// Name: PHY_RolePion_Composantes::UpdateOperationalStates
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::UpdateEtatOps()
+void PHY_RolePion_Composantes::UpdateOperationalStates()
 {
     if( !HasChanged() && !GetRole< PHY_RolePion_Humans >().HasChanged() )
         return;
 
-    MT_Float rNewEtatOps = rEtatOps_;
+
+    MT_Float rNewOpState = rOperationalState_;
 
     // Pas de composantes majeures explicites
     if( nNbrMajorComposantes_ == 0 )
     {
-        if( nNbrNonMajorComposantes_ == 0 )
-            rNewEtatOps = 0.;
-        else
-            rNewEtatOps = (MT_Float)nNbrUndamagedNonMajorComposantes_ / (MT_Float)nNbrNonMajorComposantes_ * ( 1. - rEtatOpsWeightHumans_ );
+        MT_Float rRatioNonMajorComposantes = 0.;
+        if( nNbrNonMajorComposantes_ != 0 )
+            rRatioNonMajorComposantes = (MT_Float)nNbrUndamagedNonMajorComposantes_ / (MT_Float)nNbrNonMajorComposantes_;
+
+        rMajorOperationalState_ = rRatioNonMajorComposantes;
+        rNewOpState             = rRatioNonMajorComposantes * ( 1. - rOpStateWeightHumans_ );
     }
     // Pas de composantes non majeures (unité homogène)
     else if( nNbrNonMajorComposantes_ == 0 )
     {
-        if( nNbrMajorComposantes_ == 0 )
-            rNewEtatOps = 0.;
-        else
-            rNewEtatOps = (MT_Float)nNbrUndamagedMajorComposantes_ / (MT_Float)nNbrMajorComposantes_ * ( 1. - rEtatOpsWeightHumans_ );
+        MT_Float rRatioMajorComposantes = 0.;
+        if( nNbrMajorComposantes_ != 0 )
+            rRatioMajorComposantes = (MT_Float)nNbrUndamagedMajorComposantes_ / (MT_Float)nNbrMajorComposantes_;
+
+        rMajorOperationalState_ = rRatioMajorComposantes;
+        rNewOpState             = rRatioMajorComposantes * ( 1. - rOpStateWeightHumans_ );
     }
     // Pion hétérogène
     else
@@ -571,23 +579,25 @@ void PHY_RolePion_Composantes::UpdateEtatOps()
         const MT_Float rRatioMajorComposantes    = (MT_Float)nNbrUndamagedMajorComposantes_    / (MT_Float)nNbrMajorComposantes_;
         const MT_Float rRatioNonMajorComposantes = (MT_Float)nNbrUndamagedNonMajorComposantes_ / (MT_Float)nNbrNonMajorComposantes_;
 
-        rNewEtatOps =   rRatioMajorComposantes    * rEtatOpsWeightMajorComposante_
-                      + rRatioNonMajorComposantes * rEtatOpsWeightNonMajorComposante_;
+        rMajorOperationalState_ = rRatioMajorComposantes;
+        rNewOpState             = rRatioMajorComposantes    * rOpStateWeightMajorComposante_
+                                + rRatioNonMajorComposantes * rOpStateWeightNonMajorComposante_;
     }    
 
+    // Impact des humains sur état ops
     if( GetRole< PHY_RolePion_Humans >().GetNbrHumans() > 0 )
     {
         const MT_Float rRatioHumans = (MT_Float)GetRole< PHY_RolePion_Humans >().GetNbrFullyAliveHumans() / (MT_Float)GetRole< PHY_RolePion_Humans >().GetNbrHumans();
-        rNewEtatOps += rRatioHumans * rEtatOpsWeightHumans_;
+        rNewOpState += rRatioHumans * rOpStateWeightHumans_;
     }
     else
-        rNewEtatOps /= ( 1. - rEtatOpsWeightHumans_ ); // Le poids des 'humains' doit être nul
+        rNewOpState /= ( 1. - rOpStateWeightHumans_ ); // Le poids des 'humains' doit être nul
 
-    assert( rNewEtatOps >= 0. && rNewEtatOps <= 1. );
-    if( rNewEtatOps != rEtatOps_ )
+    assert( rNewOpState >= 0. && rNewOpState <= 1. );
+    if( rNewOpState != rOperationalState_ )
     {
-        bEtatOpsChanged_ = true;
-        rEtatOps_        = rNewEtatOps;
+        bOperationalStateChanged_ = true;
+        rOperationalState_        = rNewOpState;
     }
 }
 
@@ -622,8 +632,8 @@ void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         (**it).Update();
 
-    UpdateEtatOps        ();
-    UpdateMajorComposante();
+    UpdateOperationalStates();
+    UpdateMajorComposante  ();
 }
 
 // -----------------------------------------------------------------------------
@@ -638,8 +648,8 @@ void PHY_RolePion_Composantes::Clean()
             it->second.bHasChanged_ = false;
         nNbrComposanteChanged_ = 0;
     }
-    bLendsChanged_   = false;
-    bEtatOpsChanged_ = false;
+    bLendsChanged_            = false;
+    bOperationalStateChanged_ = false;
 
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         (**it).Clean();
@@ -1336,7 +1346,7 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitDotations& asn ) co
 void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     msg.GetAsnMsg().m.etat_operationnel_brutPresent = 1;
-    msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rEtatOps_ * 100. );
+    msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
 }
 
 // -----------------------------------------------------------------------------
@@ -1479,9 +1489,8 @@ MT_Float PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_Agent& ta
         rDangerosity = std::max( rDangerosity, (**itComposante).GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
 
     // Etat opérationel
-    const MT_Float rEtatOps = GetEtatOps();
-    rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByEtatOps_ * rEtatOps ) + rMaxDangerosityDegradationByEtatOps_ ) );
-    if( rEtatOps == 0. ) // L'unité est morte
+    rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByOpState_ * rOperationalState_ ) + rMaxDangerosityDegradationByOpState_ ) );
+    if( rOperationalState_ == 0. ) // L'unité est morte
         rDangerosity = 0;
 
     // Source is neutralized

@@ -34,7 +34,8 @@ public:
     static void IsMoving                  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsTransported             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsNeutralized             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );            
-    static void GetEtatOps                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetOperationalState       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMajorOperationalState  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPosition               ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetDirection              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void ActivateBlackout          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

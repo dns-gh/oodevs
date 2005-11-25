@@ -26,11 +26,11 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerceptionDataRecognition, "DEC_Know
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerceptionDataRecognition::DEC_Knowledge_AgentPerceptionDataRecognition()
-    : nTimeLastUpdate_( 0 )
-    , rEtatOps_       ( 1. )
-    , pArmy_          ( 0 )
-    , bIsPC_          ( false )
-    , pAgentType_     ( 0 )
+    : nTimeLastUpdate_  ( 0 )
+    , rOperationalState_( 1. )
+    , pArmy_            ( 0 )
+    , bIsPC_            ( false )
+    , pAgentType_       ( 0 )
 {
 }
     
@@ -53,7 +53,7 @@ DEC_Knowledge_AgentPerceptionDataRecognition::~DEC_Knowledge_AgentPerceptionData
 void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> nTimeLastUpdate_
-         >> rEtatOps_
+         >> rOperationalState_
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> bIsPC_
          >> composantes_;
@@ -70,7 +70,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
 void DEC_Knowledge_AgentPerceptionDataRecognition::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << nTimeLastUpdate_
-         << rEtatOps_
+         << rOperationalState_
          << pArmy_
          << bIsPC_
          << composantes_
@@ -98,8 +98,8 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::Update( const MIL_Agent_ABC& 
     composantes_.clear();
     agentPerceived.GetRole< PHY_RoleInterface_Composantes >().BuildKnowledgeComposantes( composantes_ );
 
-    rEtatOps_   =  agentPerceived.GetEtatOps();
-    pArmy_      = &agentPerceived.GetArmy();
-    bIsPC_      =  agentPerceived.IsPC();
-    pAgentType_ = &agentPerceived.GetType();
+    rOperationalState_ =  agentPerceived.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
+    pArmy_             = &agentPerceived.GetArmy();
+    bIsPC_             =  agentPerceived.IsPC();
+    pAgentType_        = &agentPerceived.GetType();
 }

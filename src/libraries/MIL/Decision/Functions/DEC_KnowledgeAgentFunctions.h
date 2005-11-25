@@ -25,7 +25,7 @@ class DEC_KnowledgeAgentFunctions
 public:
     //! @name Functions
     //@{
-    static void GetEtatOps                            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetOperationalState                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNatureWeapon                       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNatureAtlas                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMaxPerceptionLevelForKnowledgeGroup( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

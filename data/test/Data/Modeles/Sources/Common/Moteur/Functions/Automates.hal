@@ -114,6 +114,7 @@ signatures
     B                                A::DEC_Automate_PionEstEnMouvement                              ( A /*T_Pion*/ );
     B                                A::DEC_Automate_PionEstNeutralise                               ( A /*T_Pion*/ );
     R                                A::DEC_Automate_PionEtatOps                                     ( A /*T_Pion*/ );
+    R                                A::DEC_Automate_PionEtatOpsMajeur                               ( A /*T_Pion*/ );
     U /*T_Point*/                    A::DEC_Automate_PionPosition                                    ( A /*T_Pion*/ );
     U /*T_Direction*/                A::DEC_Automate_PionDirection                                   ( A /*T_Pion*/ );
     B                                A::DEC_Automate_PionRelevePion                                  ( A /*T_Pion*/, A /*T_Pion*/ );

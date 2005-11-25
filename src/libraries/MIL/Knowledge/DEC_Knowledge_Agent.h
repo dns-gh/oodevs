@@ -51,7 +51,7 @@ class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 public:
     // Parameters - $$$ Changer - ne devrait pas être public
     static MT_Float rMaxDangerosityDegradationByRelevance_;
-    static MT_Float rMaxDangerosityDegradationByEtatOps_;
+    static MT_Float rMaxDangerosityDegradationByOpState_;
     static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
 
 public:
@@ -104,7 +104,7 @@ public:
     const MT_Vector2D&                   GetPosition              () const;
     const MT_Vector2D&                   GetDirection             () const;
           MT_Float                       GetSpeed                 () const;
-          MT_Float                       GetEtatOps               () const;
+          MT_Float                       GetOperationalState      () const;
           MIL_Agent_ABC&                 GetAgentKnown            () const;
     const PHY_NatureWeapon&              GetNatureWeapon          () const;
     const PHY_NatureAtlas&               GetNatureAtlas           () const;

@@ -63,14 +63,14 @@ public:
 
     //! @name Accessors
     //@{
-          uint                         GetTimeLastUpdate() const;
-          MT_Float                     GetEtatOps       () const;
-    const T_KnowledgeComposanteVector& GetComposantes   () const;
-    const MIL_Army*                    GetArmy          () const;
-    const PHY_NatureWeapon&            GetNatureWeapon  () const;
-    const PHY_NatureAtlas&             GetNatureAtlas   () const;
-    const MIL_AgentType_ABC*           GetAgentType     () const;
-          bool                         IsPC             () const;
+          uint                         GetTimeLastUpdate  () const;
+          MT_Float                     GetOperationalState() const;
+    const T_KnowledgeComposanteVector& GetComposantes     () const;
+    const MIL_Army*                    GetArmy            () const;
+    const PHY_NatureWeapon&            GetNatureWeapon    () const;
+    const PHY_NatureAtlas&             GetNatureAtlas     () const;
+    const MIL_AgentType_ABC*           GetAgentType       () const;
+          bool                         IsPC               () const;
     //@}
 
 private:
@@ -81,14 +81,14 @@ private:
 
 private:
           uint                         nTimeLastUpdate_;
-          MT_Float                     rEtatOps_;
+          MT_Float                     rOperationalState_;
           T_KnowledgeComposanteVector  composantes_;
     const MIL_Army*                    pArmy_;
           bool                         bIsPC_;
     const MIL_AgentType_ABC*           pAgentType_; // For 'natures'
 
     // Network
-    bool bEtatOpsUpdated_;
+    bool bOperationalStateChanged_;
     bool bAgentTypeUpdated_;
 };
 

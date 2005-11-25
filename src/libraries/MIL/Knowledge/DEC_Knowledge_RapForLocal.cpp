@@ -53,7 +53,7 @@ void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_Knowl
     for( CIT_KnowledgeAgentVector itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
     {
         DEC_Knowledge_Agent& knowledgeEnemy = **itEnemy;
-        MT_Float rDangerosity = knowledgeEnemy.GetDangerosity( pion ) * knowledgeEnemy.GetEtatOps();
+        MT_Float rDangerosity = knowledgeEnemy.GetDangerosity( pion ) * knowledgeEnemy.GetOperationalState();
         if( rDangerosity != 0. )
         {
             rTotalFightScoreEnemy += rDangerosity;
@@ -69,7 +69,7 @@ void DEC_Knowledge_RapForLocal::Update( const MIL_AgentPion& pion, const T_Knowl
             DEC_Knowledge_Agent& knowledgeFriend = **itFriend;
             MT_Float rTotalDangerosity = 0.;
             for( CIT_KnowledgeAgentVector itAgentEnemy = agentLocalEnemies.begin(); itAgentEnemy != agentLocalEnemies.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * knowledgeFriend.GetEtatOps() );
+                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * knowledgeFriend.GetOperationalState() );
             rTotalFightScoreFriend += ( rTotalDangerosity / agentLocalEnemies.size() );
         }
     }

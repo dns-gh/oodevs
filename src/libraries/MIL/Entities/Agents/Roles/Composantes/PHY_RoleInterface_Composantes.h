@@ -61,6 +61,7 @@ public:
     virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes         ) const = 0;
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const = 0;
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const = 0;
+    virtual       MT_Float             GetOperationalState        () const = 0;
     //@}
 
     //! @name Fire

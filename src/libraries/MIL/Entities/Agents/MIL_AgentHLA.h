@@ -39,7 +39,6 @@ public:
     //@{
     virtual MIL_Army&                 GetArmy          () const;
     virtual const MIL_AgentType_ABC&  GetType          () const;
-    virtual MT_Float                  GetEtatOps       () const;
     virtual bool                      IsDead           () const;
     virtual bool                      IsNeutralized    () const;
     virtual bool                      IsPC             () const;

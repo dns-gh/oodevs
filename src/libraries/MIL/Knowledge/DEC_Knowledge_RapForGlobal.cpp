@@ -63,7 +63,7 @@ void DEC_Knowledge_RapForGlobal::Update( const MIL_Automate& automate, const T_K
         {
             if( (*itPion)->IsDead() )
                 continue;
-            rTotalDangerosity += ( knowledgeEnemy.GetDangerosity( **itPion ) * knowledgeEnemy.GetEtatOps() );
+            rTotalDangerosity += ( knowledgeEnemy.GetDangerosity( **itPion ) * knowledgeEnemy.GetOperationalState() );
             ++nNbrPionAlive;
         }
 
@@ -82,7 +82,7 @@ void DEC_Knowledge_RapForGlobal::Update( const MIL_Automate& automate, const T_K
             DEC_Knowledge_Agent& knowledgeFriend = **itFriend;
             MT_Float rTotalDangerosity = 0.;
             for( CIT_KnowledgeAgentVector itAgentEnemy = automateLocalEnemies.begin(); itAgentEnemy != automateLocalEnemies.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * knowledgeFriend.GetEtatOps() );
+                rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy ) * knowledgeFriend.GetOperationalState() );
             rTotalFightScoreFriend += ( rTotalDangerosity / automateLocalEnemies.size() );
         }
     }

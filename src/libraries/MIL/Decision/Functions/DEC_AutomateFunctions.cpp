@@ -16,6 +16,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
@@ -548,10 +549,10 @@ void DEC_AutomateFunctions::IsPointInPionFuseau( DIA_Call_ABC& call, const MIL_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::GetPionEtatOps
+// Name: DEC_AutomateFunctions::GetPionOperationalState
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::GetPionEtatOps( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
+void DEC_AutomateFunctions::GetPionOperationalState( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
 {
     assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
     
@@ -560,7 +561,23 @@ void DEC_AutomateFunctions::GetPionEtatOps( DIA_Call_ABC& call, const MIL_Automa
     assert( pPion );
 //    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
     
-    call.GetResult().SetValue( (float)pPion->GetPion().GetEtatOps() );    
+    call.GetResult().SetValue( (float)pPion->GetPion().GetRole< PHY_RolePion_Composantes >().GetOperationalState() );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetPionMajorOperationalState
+// Created: NLD 2005-11-25
+// -----------------------------------------------------------------------------
+void DEC_AutomateFunctions::GetPionMajorOperationalState( DIA_Call_ABC& call, const MIL_Automate& /*callerAutomate*/ )
+{
+    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
+    
+    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
+    
+    assert( pPion );
+//    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
+    
+    call.GetResult().SetValue( (float)pPion->GetPion().GetRole< PHY_RolePion_Composantes >().GetMajorOperationalState() );    
 }
 
 // -----------------------------------------------------------------------------
