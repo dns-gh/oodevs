@@ -475,11 +475,14 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
         }
     }
     //... or a tactical line
-    MOS_TacticalLine_ABC* pLine = GetLineAtPos( vGLPos, rDistancePerPixel );
-    if( pLine != 0 )
+    if( MOS_MainWindow::GetMainWindow().GetOptions().nDrawTacticalLines_ != MOS_Options::eOff )
     {
-        selectedElement_ = MOS_SelectedElement( *pLine );
-        return;
+        MOS_TacticalLine_ABC* pLine = GetLineAtPos( vGLPos, rDistancePerPixel );
+        if( pLine != 0 )
+        {
+            selectedElement_ = MOS_SelectedElement( *pLine );
+            return;
+        }
     }
 
     selectedElement_ = MOS_SelectedElement();   
