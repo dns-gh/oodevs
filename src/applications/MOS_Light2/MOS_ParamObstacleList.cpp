@@ -215,11 +215,12 @@ void MOS_ParamObstacleList::OnDeleteSelectedItem()
 {
     assert( pObstacleEditor_ != 0 && pListView_->selectedItem() != 0 );
 
-    ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pListView_->selectedItem())->GetValue().first;
-    pListView_->setSelected( pListView_->selectedItem(), false );
-
+    T_ListItem* pItem = (T_ListItem*)pListView_->selectedItem();
+    ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
+    pListView_->setSelected( pItem, false );
     delete pAsnObject;
-    delete pListView_->selectedItem();
+    delete pItem;
+    pSelectedItem_ = 0;
 }
 
 
@@ -238,4 +239,5 @@ void MOS_ParamObstacleList::OnClearList()
         delete pAsnObject;
         delete pListView_->firstChild();
     }
+    pSelectedItem_ = 0;
 }
