@@ -137,6 +137,7 @@ void NET_AS_MOSServerConnectionMgr::OnConnectionLost( DIN_Server& /*server*/, DI
     MT_LOG_INFO_MSG( MT_FormatString( "AS <- MOS - Connection to %s lost (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
     agentServer_.GetMessageMgr().Disable( link );
     RemoveConnection( link );
+    agentServer_.GetMessageMgr().DeleteMessagesFrom( link );
     // $$$$ AGE 2005-06-23: MsgManager.TrashMessagesFrom( link );
 }
 

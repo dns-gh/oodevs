@@ -123,6 +123,36 @@ void NET_AS_MOSServerMsgMgr::SendMsgToAll( uint nMsgID, DIN_BufferedMessage& msg
     SendMsgToAllMosLight( nMsgID, msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: NET_AS_MOSServerMsgMgr::DeleteMessagesFrom
+// Created: SBO 2005-11-28
+// -----------------------------------------------------------------------------
+void NET_AS_MOSServerMsgMgr::DeleteMessagesFrom( DIN_Link& dinLink )
+{
+    {
+        MT_CriticalSectionLocker lockerList( ctlListCriticalSection_ );
+        for( T_MessageControllerVector::iterator it = messageControllerList_.begin(); it != messageControllerList_.end(); )
+            if( (**it).GetLink() == &dinLink )
+            {
+                delete *it;
+                it = messageControllerList_.erase( it );
+            }
+            else
+                ++it;
+    }
+    {
+        MT_CriticalSectionLocker lockerWithCtxList( ctlWithCtxListCriticalSection_ );
+        for( T_MessageWithCtxControllerVector::iterator it = messageWithCtxControllerList_.begin(); it != messageWithCtxControllerList_.end(); ++it )
+            if( (**it).GetLink() == &dinLink )
+            {
+                delete *it;
+                it = messageWithCtxControllerList_.erase( it );
+            }
+            else
+                ++it;
+    }
+}
+
 //=============================================================================
 // MESSAGES : MISC
 //=============================================================================

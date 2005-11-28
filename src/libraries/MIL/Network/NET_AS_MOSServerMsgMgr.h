@@ -81,7 +81,8 @@ public:
     
     //! @name Messages tools 
     //@{
-    DIN::DIN_BufferedMessage BuildMessage();
+    DIN::DIN_BufferedMessage BuildMessage      ();
+    void                     DeleteMessagesFrom( DIN::DIN_Link& dinLink );
     //@}
     
     //! @name Message sending
