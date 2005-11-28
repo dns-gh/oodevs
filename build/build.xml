@@ -105,7 +105,7 @@
                          MT_Tools_Scipio,TER,ASN,MIL,Missions,
                          boost_thread-vc71-mt-1_32,libboost_serialization-vc71-mt-1_32,libboost_filesystem-vc71-mt-1_32,
                          asn1per,xerces-c_2">
-			      <syslibset libs="advapi32,user32,wsock32,winmm,dbghelp"/>
+			      <syslibset libs="advapi32,user32,wsock32,winmm,dbghelp,psapi"/>
             <includepath path="${libraries.dir}/MIL"/>
             <includepath path="${include.dir}/ASN"/>
             <defineset define="_WIN32_WINNT=0x0400"/> <!-- for 'IsDebuggerPresent()' -->
