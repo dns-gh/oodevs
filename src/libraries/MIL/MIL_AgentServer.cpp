@@ -32,6 +32,7 @@
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
 
 #include "tools/thread/Thread.h"
+#include "tools/win32/ProcessMonitor.h"
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
@@ -42,25 +43,26 @@ MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 //-----------------------------------------------------------------------------
 MIL_AgentServer::MIL_AgentServer( const MIL_Config& config )
     : MT_Timer_ABC             ()
-    , config_                  ( config )
     , nSimState_               ( eSimLoading )
+    , config_                  ( config )
     , nTimeStepDuration_       ( 1 )
     , nTimeFactor_             ( 1 )
+    , nCurrentTimeStep_        ( 1 )
     , nSimTime_                ( 0 )
     , nCurrentTimeStepRealTime_( 0 )
-    , nCurrentTimeStep_        ( 1 )
-    , timerManager_            ()
+    , nSimStartTime_           ( MIL_Tools::GetRealTime() )
+    , pEntityManager_          ( 0 )
     , pWorkspaceDIA_           ( 0 )
+    , pMeteoDataManager_       ( 0 )
+    , timerManager_            ()
     , pLimaManager_            ( new MIL_LimaManager() )
     , pLimitManager_           ( new MIL_LimitManager() )
-    , pMeteoDataManager_       ( 0 )
     , pPathFindManager_        ( 0 )
-    , pAgentServer_            ( 0 )
-    , pFederate_               ( 0 )
     , pProfilerMgr_            ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
     , pCheckPointManager_      ( 0 )
-    , pEntityManager_          ( 0 )
-    , nSimStartTime_           ( MIL_Tools::GetRealTime() )
+    , pAgentServer_            ( 0 )
+    , pFederate_               ( 0 )
+    , pProcessMonitor_         ( new ProcessMonitor() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -126,7 +128,8 @@ MIL_AgentServer::~MIL_AgentServer()
 //    delete pAgentServer_;
 //    delete pProfilerMgr_;
 //    delete pCheckPointManager_;
-//    MT_LOG_INFO_MSG( "Terminating Terrain" );
+    delete pProcessMonitor_;
+    //    MT_LOG_INFO_MSG( "Terminating Terrain" );
 //    TER_World::DestroyWorld();
 }
 
@@ -371,7 +374,9 @@ void MIL_AgentServer::MainSimLoop()
 
     pEntityManager_   ->Update();
     pMeteoDataManager_->Update();
-    MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms %.2fms %.2fms %.2fms - PathFind : %d short - %d long\n", nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "**************** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms %.2fms %.2fms %.2fms - PathFind : %d short - %d long", nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests() ) );
+    if( pProcessMonitor_->MonitorProcess() )
+        MT_LOG_INFO_MSG( MT_FormatString( "**************** System Status : Memory : %dB (%dB), Virtual Memory : %dB (%dB)\n", pProcessMonitor_->GetMemory(), pProcessMonitor_->GetMaxMemory(), pProcessMonitor_->GetVirtualMemory(), pProcessMonitor_->GetMaxVirtualMemory() ) );
 
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();

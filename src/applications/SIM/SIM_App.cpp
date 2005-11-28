@@ -13,6 +13,7 @@
 
 #include "SIM_App.h"
 #include <ctime>
+#include <signal.h>
 #include "SIM_NetworkLogger.h"
 
 #include "MIL/MIL_AgentServer.h"
@@ -23,6 +24,7 @@
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
 bool SIM_App::bCrashWithCoreDump_ = false;
+bool SIM_App::bUserInterrupt_     = false;
 
 //-----------------------------------------------------------------------------
 // Name: SIM_App constructor
@@ -68,6 +70,15 @@ SIM_App::~SIM_App()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SIM_App::UserInterruptHandler
+// Created: SBO 2005-11-25
+// -----------------------------------------------------------------------------
+void SIM_App::UserInterruptHandler( int /*nContext*/ )
+{
+    bUserInterrupt_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SIM_App::Initialize
 // Created: NLD 2004-01-27
 // -----------------------------------------------------------------------------
@@ -78,7 +89,9 @@ void SIM_App::Initialize()
 
     missions::RegisterMissions();
 
-    MIL_AgentServer::CreateWorkspace( startupConfig_ );   
+    MIL_AgentServer::CreateWorkspace( startupConfig_ );
+    
+    signal( SIGINT, &UserInterruptHandler );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +110,7 @@ void SIM_App::Cleanup()
 void SIM_App::Run()
 {
     bool bRun = true;
-    while( bRun )
+    while( bRun && !bUserInterrupt_ )
     {            
         MIL_AgentServer::E_SimState nSimState = MIL_AgentServer::GetWorkspace().Update(); 
         bRun = ( nSimState != MIL_AgentServer::eSimStopped );

@@ -41,11 +41,13 @@ private:
     void Initialize();
     void Run       (); 
     void Cleanup   ();
-    int Test       ();
+    int  Test      ();
     bool ParseCmdArgs( int nArgc, char* pArgv[], MIL_Config& startupConfig );
 
-    std::string Wrap( const std::string& content, const std::string& prefix ) const;
-    bool IsAlreadyWrapped( const std::string& content ) const;
+    std::string Wrap                ( const std::string& content, const std::string& prefix ) const;
+    bool        IsAlreadyWrapped    ( const std::string& content ) const;
+
+    static void UserInterruptHandler( int nContext );
     //@}
     
 private:
@@ -57,7 +59,8 @@ private:
     SIM_NetworkLogger* pNetworkLogger_;
 
     static bool bCrashWithCoreDump_;
-    bool bTestMode_;
+    static bool bUserInterrupt_;
+    bool        bTestMode_;
     //@}
 };
 

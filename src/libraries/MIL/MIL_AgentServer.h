@@ -12,7 +12,6 @@
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
 
-
 class MIL_LimaManager;
 class MIL_LimitManager;
 class MIL_Agent_ABC;
@@ -29,6 +28,8 @@ class PHY_MeteoDataManager;
 class MIL_ProfilerMgr;
 
 class HLA_Federate;
+
+class ProcessMonitor;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -162,6 +163,8 @@ private:
     MIL_CheckPointManager*       pCheckPointManager_;
     NET_AgentServer*             pAgentServer_;
     HLA_Federate*                pFederate_;
+
+    ProcessMonitor*              pProcessMonitor_;
 
     long lastStep_;
     
