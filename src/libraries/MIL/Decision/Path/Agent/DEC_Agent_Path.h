@@ -91,7 +91,7 @@ private:
 
     void InsertPointAvant        ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent );
     void InsertPointAvant        ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant );    
-    void InsertPoint             ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint );
+    bool InsertPoint             ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint );
     void InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant );
 
     void InsertLima       ( const MIL_Lima& );

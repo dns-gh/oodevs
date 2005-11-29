@@ -734,9 +734,6 @@ bool PHY_ComposantePion::CanBeUsed() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposantePion::CanBeUsedForMove() const
 {
-    if( bUsedForLogistic_ )
-        return false;
-
     assert( pRole_ );
 
     const PHY_RolePion_Transported& roleTransported = pRole_->GetPion().GetRole< PHY_RolePion_Transported >();
@@ -747,7 +744,6 @@ bool PHY_ComposantePion::CanBeUsedForMove() const
         return !pRole_->GetPion().GetRole< PHY_RoleAction_Loading >().IsLoaded();
     else   
         return !roleTransported.HasHumanTransportersToRecover();
-
 }
 
 // -----------------------------------------------------------------------------

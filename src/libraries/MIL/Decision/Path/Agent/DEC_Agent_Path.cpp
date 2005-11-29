@@ -322,13 +322,19 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
 // Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
+bool DEC_Agent_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
 {
     static MT_Float rDist = 500.;
     if( rDistSinceLastPoint > rDist )
     {
         resultList_.insert( itCurrent, &spottedPathPoint );
         rDistSinceLastPoint = 0.;
+        return true;
+    }
+    else 
+    {
+        delete &spottedPathPoint;
+        return false;
     }
 }
 
@@ -338,8 +344,8 @@ void DEC_Agent_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPo
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
 {
-    InsertPoint     ( spottedPathPoint, itCurrent, rDistSinceLastPoint      );
-    InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
+    if( InsertPoint( spottedPathPoint, itCurrent, rDistSinceLastPoint ) )
+        InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
 }
 
 //-----------------------------------------------------------------------------
