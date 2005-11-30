@@ -155,15 +155,16 @@ void MOS_Team::DestroyAllObjectKnowledges()
 // Name: MOS_Team::OnReceiveMsgObjectKnowledgeCreation
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void MOS_Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
+bool MOS_Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
 {
     if( objectKnowledges_.find( asnMsg.oid_connaissance ) != objectKnowledges_.end() )
-        return;
+        return false;
 
     MOS_ObjectKnowledge* pObjectKnowledge = new MOS_ObjectKnowledge( asnMsg, *this );
     objectKnowledges_.insert( std::make_pair( pObjectKnowledge->GetID(), pObjectKnowledge ) );
 
     MOS_App::GetApp().NotifyObjectKnowledgeCreated( *this, *pObjectKnowledge );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

@@ -109,10 +109,10 @@ void MOS_Gtia::WriteODB( MT_OutputArchive_ABC& archive )
 // Name: MOS_Gtia::OnReceiveMsgUnitKnowledgeCreation
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void MOS_Gtia::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
+bool MOS_Gtia::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
 {
     if( agentKnowledges_.find( asnMsg.oid_connaissance ) != agentKnowledges_.end() )
-        return;
+        return false;
 
     MOS_AgentKnowledge* pAgentKnowledge = new MOS_AgentKnowledge( asnMsg, *this );
     agentKnowledges_.insert( std::make_pair( pAgentKnowledge->GetID(), pAgentKnowledge ) );
@@ -121,6 +121,7 @@ void MOS_Gtia::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCr
     //$$$$ Pas terrible, je tente plutot de limiter les appels au notifications de
     //$$$$ MOS_App dans le code reseau mais bon...
     MOS_App::GetApp().NotifyAgentKnowledgeCreated( *this, *pAgentKnowledge );
+    return true;
 }
 
 
@@ -191,14 +192,15 @@ MOS_AgentKnowledge* MOS_Gtia::FindKnowledgeOnAgent( const MOS_Agent& agent )
 // Name: MOS_Gtia::OnReceiveMsgPopulationKnowledgeCreation
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void MOS_Gtia::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+bool MOS_Gtia::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
 {
     if( populationKnowledges_.find( asnMsg.oid_connaissance ) != populationKnowledges_.end() )
-        return;
+        return false;
 
     MOS_PopulationKnowledge* pKnowledge = new MOS_PopulationKnowledge( asnMsg );
     populationKnowledges_.insert( std::make_pair( pKnowledge->GetID(), pKnowledge ) );
     MOS_App::GetApp().NotifyPopulationKnowledgeCreated( *this, *pKnowledge );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

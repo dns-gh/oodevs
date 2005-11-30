@@ -93,10 +93,10 @@ public:
 
     //! @name Network events
     //@{
-    void OnReceiveMsgUnitKnowledgeCreation         ( const ASN1T_MsgUnitKnowledgeCreation&          asnMsg );
+    bool OnReceiveMsgUnitKnowledgeCreation         ( const ASN1T_MsgUnitKnowledgeCreation&          asnMsg );
     void OnReceiveMsgUnitKnowledgeUpdate           ( const ASN1T_MsgUnitKnowledgeUpdate&            asnMsg );
     void OnReceiveMsgUnitKnowledgeDestruction      ( const ASN1T_MsgUnitKnowledgeDestruction&       asnMsg );
-    void OnReceiveMsgPopulationKnowledgeCreation   ( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
+    bool OnReceiveMsgPopulationKnowledgeCreation   ( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
     void OnReceiveMsgPopulationKnowledgeUpdate     ( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
     void OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
     //@}

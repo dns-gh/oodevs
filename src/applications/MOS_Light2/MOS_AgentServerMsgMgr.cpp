@@ -1448,7 +1448,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUn
 {
     MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
     assert( pGtia );
-    pGtia->OnReceiveMsgUnitKnowledgeCreation( asnMsg );
+    if( !pGtia->OnReceiveMsgUnitKnowledgeCreation( asnMsg ) )
+        QMessageBox::critical( 0, "MOSLight 2", "Duplicate agent knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
 
 
@@ -1484,7 +1485,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_Msg
 {
     MOS_Team* pTeam = MOS_App::GetApp().GetAgentManager().FindTeam( asnMsg.oid_camp_possesseur );
     assert( pTeam );
-    pTeam->OnReceiveMsgObjectKnowledgeCreation( asnMsg );
+    if( !pTeam->OnReceiveMsgObjectKnowledgeCreation( asnMsg ) )
+        QMessageBox::critical( 0, "MOSLight 2", "Duplicate object knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
 
 
@@ -1523,7 +1525,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T
 {
     MOS_Gtia* pGtia = MOS_App::GetApp().GetAgentManager().FindGtia( asnMsg.oid_groupe_possesseur );
     assert( pGtia );
-    pGtia->OnReceiveMsgPopulationKnowledgeCreation( asnMsg );
+    if( !pGtia->OnReceiveMsgPopulationKnowledgeCreation( asnMsg ) )
+        QMessageBox::critical( 0, "MOSLight 2", "Duplicate population knowledge #" + QString::number( asnMsg.oid_connaissance ) );
 }
     
 // -----------------------------------------------------------------------------
