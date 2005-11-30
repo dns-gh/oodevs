@@ -1923,7 +1923,6 @@ void MOS_GLTool::DrawRect( const MT_Vector2D& point1, const MT_Vector2D& point2,
 void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 {
     static const MOS_RawVisionData& data = MOS_App::GetApp().GetRawVisionData();
-    static MT_Float rAngle = 0;
 
     MT_Float rSize = 600.;
 
@@ -1943,13 +1942,21 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
     if( MOS_App::GetApp().Is3D() )
     {
-        // rotate according to view frustrum // $$$$ AGE 2005-05-10:
-        glRotatef( 90, 1, 0, 0 );
-        glRotatef( rAngle+=0.05, 0, 1, 0 );
+        float modelview[ 16 ];
+	    glPushMatrix();
+	    glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
+	    // undo all rotations
+	    for( uint i = 0; i < 3; i++ ) 
+	        for( uint j = 0; j < 3; j++ )
+                modelview[ i * 4 + j ] = ( i == j ) ? 1.0 : 0.0;
+	    glLoadMatrixf( modelview );
     }
 
     GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nRawOpState_ );
     GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.levelSymbolName_, -1 );
+
+    if( MOS_App::GetApp().Is3D() )
+        glPopMatrix();
 
     if( agent.IsAutomate() )
     {
