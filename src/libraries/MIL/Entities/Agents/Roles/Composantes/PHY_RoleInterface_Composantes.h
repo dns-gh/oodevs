@@ -62,6 +62,7 @@ public:
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const = 0;
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const = 0;
     virtual       MT_Float             GetOperationalState        () const = 0;
+    virtual       MT_Float             GetMajorOperationalState   () const = 0;
     //@}
 
     //! @name Fire

@@ -380,6 +380,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::IsPrisoner                       < MIL_Automate >, "DEC_ConnaissanceAgent_EstPrisonnier"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetDangerosityOnPion             < MIL_Automate >, "DEC_ConnaissanceAgent_DangerositeSurPion"                );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions ::GetDangerosityOnKnowledge        < MIL_Automate >, "DEC_ConnaissanceAgent_DangerositeSurConnaissance"        );   
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetOperationalState               < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOps"                           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetMajorOperationalState          < MIL_Automate >, "DEC_ConnaissanceAgent_EtatOpsMajeur"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                 < MIL_Automate >, "DEC_ConnaissanceObjet_EstValide"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsPrepared                       < MIL_Automate >, "DEC_ConnaissanceObjet_EstPrepare"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                       < MIL_Automate >, "DEC_ConnaissanceObjet_EstContourne"                      );

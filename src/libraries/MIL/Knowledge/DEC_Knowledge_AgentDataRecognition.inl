@@ -30,6 +30,16 @@ MT_Float DEC_Knowledge_AgentDataRecognition::GetOperationalState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState() const
+{
+    return rMajorOperationalState_ == std::numeric_limits< MT_Float >::max() ? 1. : rMajorOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::GetComposantes
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------

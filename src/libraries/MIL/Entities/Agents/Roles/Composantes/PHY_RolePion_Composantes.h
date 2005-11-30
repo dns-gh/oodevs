@@ -213,9 +213,9 @@ public:
     //! @name Accessors
     //@{          
     virtual       MT_Float       GetOperationalState     () const;
+    virtual       MT_Float       GetMajorOperationalState() const;
                   bool           HasChanged              () const;
-                  bool           IsUsable                () const;  
-                  MT_Float       GetMajorOperationalState() const;
+                  bool           IsUsable                () const;                    
             const MIL_AgentPion& GetPion                 () const;    
     //@}
 

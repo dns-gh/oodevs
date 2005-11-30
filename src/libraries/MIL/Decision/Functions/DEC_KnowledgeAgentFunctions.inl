@@ -12,6 +12,43 @@
 #include "DEC_FunctionsTools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetOperationalState
+// Created: NLD 2004-04-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_KnowledgeAgentFunctions::GetOperationalState( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( (float)pKnowledge->GetOperationalState() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetMajorOperationalState
+// Created: NLD 2004-04-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_KnowledgeAgentFunctions::GetMajorOperationalState( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)0. );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( (float)pKnowledge->GetMajorOperationalState() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetSpeed

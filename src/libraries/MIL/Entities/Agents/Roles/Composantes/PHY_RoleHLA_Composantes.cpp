@@ -234,6 +234,15 @@ MT_Float PHY_RoleHLA_Composantes::GetOperationalState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Composantes::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+MT_Float PHY_RoleHLA_Composantes::GetMajorOperationalState() const
+{
+    return GetOperationalState(); //$$$ HLA POURRI
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Composantes::IsNeutralized
 // Created: AGE 2004-11-22
 // -----------------------------------------------------------------------------

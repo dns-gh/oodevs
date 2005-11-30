@@ -66,8 +66,9 @@ public:
 
     //! @name Accessors
     //@{
-            bool     IsNeutralized      () const;
-    virtual MT_Float GetOperationalState() const;
+            bool     IsNeutralized           () const;
+    virtual MT_Float GetOperationalState     () const;
+    virtual MT_Float GetMajorOperationalState() const;
     //@}
 
     //! @name Modifiers

@@ -105,6 +105,7 @@ public:
     const MT_Vector2D&                   GetDirection             () const;
           MT_Float                       GetSpeed                 () const;
           MT_Float                       GetOperationalState      () const;
+          MT_Float                       GetMajorOperationalState () const;
           MIL_Agent_ABC&                 GetAgentKnown            () const;
     const PHY_NatureWeapon&              GetNatureWeapon          () const;
     const PHY_NatureAtlas&               GetNatureAtlas           () const;

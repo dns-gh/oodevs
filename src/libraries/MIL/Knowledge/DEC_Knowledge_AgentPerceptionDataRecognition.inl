@@ -61,6 +61,16 @@ MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState() con
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState() const
+{
+    return rMajorOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetComposantes
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------

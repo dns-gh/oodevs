@@ -181,6 +181,7 @@ signatures
     // Connaissance agent                   
     R                                       A::DEC_ConnaissanceAgent_Vitesse                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
     R                                       A::DEC_ConnaissanceAgent_EtatOps                        ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
+    R                                       A::DEC_ConnaissanceAgent_EtatOpsMajeur                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
     U /*T_Point*/                           A::DEC_ConnaissanceAgent_Position                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceAgent_EstEnVol                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     I /*E_NatureAtlasType*/                 A::DEC_ConnaissanceAgent_NatureAtlas                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );

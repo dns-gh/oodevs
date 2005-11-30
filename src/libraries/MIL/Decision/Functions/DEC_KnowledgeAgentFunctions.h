@@ -25,7 +25,6 @@ class DEC_KnowledgeAgentFunctions
 public:
     //! @name Functions
     //@{
-    static void GetOperationalState                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNatureWeapon                       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNatureAtlas                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMaxPerceptionLevelForKnowledgeGroup( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -42,6 +41,8 @@ public:
     template< typename T > static void GetDangerosityOnKnowledge( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetSpeed                 ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetPosition              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetOperationalState      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetMajorOperationalState ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsFlying                 ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsKnowledgeValid         ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsSurrendered            ( DIA_Call_ABC& call, const T& caller );

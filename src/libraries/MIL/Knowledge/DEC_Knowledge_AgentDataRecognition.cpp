@@ -31,6 +31,7 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
     , pArmy_                    ( 0 )
     , bIsPC_                    ( false )
     , rOperationalState_        ( std::numeric_limits< MT_Float >::max() )
+    , rMajorOperationalState_   ( std::numeric_limits< MT_Float >::max() ) 
     , pAgentType_               ( 0 )
     , bOperationalStateChanged_ ( false )
     , bAgentTypeUpdated_        ( false )
@@ -58,6 +59,7 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
 {
     file >> nTimeLastUpdate_
          >> rOperationalState_
+         >> rMajorOperationalState_
          >> composantes_
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> bIsPC_;
@@ -78,6 +80,7 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
 {
     file << nTimeLastUpdate_
          << rOperationalState_
+         << rMajorOperationalState_
          << composantes_
          << pArmy_
          << bIsPC_
@@ -116,6 +119,8 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
         rOperationalState_        = rNewOpState;
         bOperationalStateChanged_ = true;
     }
+
+    rMajorOperationalState_ = data.GetMajorOperationalState();
 
     composantes_ = data.GetComposantes();
 

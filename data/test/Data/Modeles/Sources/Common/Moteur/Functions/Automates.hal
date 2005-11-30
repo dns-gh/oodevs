@@ -60,6 +60,8 @@ signatures
     V                                A::DEC_Connaissances_PartageConnaissancesDansZoneAvec     ( A /*T_Automate*/, U /*centre du cercle de la zone*/, R /*rayon du cercle de la zone*/ );    
     S /*T_ListeConnaissancesObjet*/  A::DEC_Connaissances_Objets                               ( * /*E_TypeObjects*/ );
     S /*T_ListeConnaissancesAgent*/  A::DEC_Connaissances_AmisDansZone                         ( U /*T_Localisation*/ );
+    R                                A::DEC_ConnaissanceAgent_EtatOps                          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1
+    R                                A::DEC_ConnaissanceAgent_EtatOpsMajeur                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne une valeur entre 0 et 1    
     R                                A::DEC_ConnaissanceAgent_Vitesse                          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); 
     U /*T_Point*/                    A::DEC_ConnaissanceAgent_Position                         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                A::DEC_ConnaissanceAgent_EstEnVol                         ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );

@@ -26,11 +26,12 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentPerceptionDataRecognition, "DEC_Know
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerceptionDataRecognition::DEC_Knowledge_AgentPerceptionDataRecognition()
-    : nTimeLastUpdate_  ( 0 )
-    , rOperationalState_( 1. )
-    , pArmy_            ( 0 )
-    , bIsPC_            ( false )
-    , pAgentType_       ( 0 )
+    : nTimeLastUpdate_       ( 0 )
+    , rOperationalState_     ( 1. )
+    , rMajorOperationalState_( 1. )
+    , pArmy_                 ( 0 )
+    , bIsPC_                 ( false )
+    , pAgentType_            ( 0 )
 {
 }
     
@@ -54,6 +55,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
 {
     file >> nTimeLastUpdate_
          >> rOperationalState_
+         >> rMajorOperationalState_
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> bIsPC_
          >> composantes_;
@@ -71,6 +73,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::save( MIL_CheckPointOutArchiv
 {
     file << nTimeLastUpdate_
          << rOperationalState_
+         << rMajorOperationalState_
          << pArmy_
          << bIsPC_
          << composantes_
@@ -98,8 +101,10 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::Update( const MIL_Agent_ABC& 
     composantes_.clear();
     agentPerceived.GetRole< PHY_RoleInterface_Composantes >().BuildKnowledgeComposantes( composantes_ );
 
-    rOperationalState_ =  agentPerceived.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
-    pArmy_             = &agentPerceived.GetArmy();
-    bIsPC_             =  agentPerceived.IsPC();
-    pAgentType_        = &agentPerceived.GetType();
+    const PHY_RoleInterface_Composantes& roleComposantes = agentPerceived.GetRole< PHY_RoleInterface_Composantes >();
+    rOperationalState_      =  roleComposantes.GetOperationalState     ();
+    rMajorOperationalState_ =  roleComposantes.GetMajorOperationalState();
+    pArmy_                  = &agentPerceived.GetArmy();
+    bIsPC_                  =  agentPerceived.IsPC();
+    pAgentType_             = &agentPerceived.GetType();
 }

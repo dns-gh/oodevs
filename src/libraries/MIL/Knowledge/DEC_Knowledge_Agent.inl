@@ -142,6 +142,16 @@ MT_Float DEC_Knowledge_Agent::GetOperationalState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetMajorOperationalState
+// Created: NLD 2005-11-30
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Knowledge_Agent::GetMajorOperationalState() const
+{
+    return dataRecognition_.GetMajorOperationalState();  
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::IsDead
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------

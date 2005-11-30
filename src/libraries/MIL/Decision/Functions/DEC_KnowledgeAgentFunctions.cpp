@@ -31,24 +31,6 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::GetOperationalState
-// Created: NLD 2004-04-14
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::GetOperationalState( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (float)0. );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (float)pKnowledge->GetOperationalState() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetNatureWeapon
 // Created: NLD 2004-03-31
 // -----------------------------------------------------------------------------
