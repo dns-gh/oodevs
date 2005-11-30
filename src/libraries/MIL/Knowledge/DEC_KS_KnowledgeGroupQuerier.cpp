@@ -165,7 +165,8 @@ public:
 
     void operator() ( DEC_Knowledge_Agent& knowledge )
     {
-        if( knowledge.IsSurrendered() )
+        assert( pKnowledgeGroup_ );
+        if( knowledge.IsSurrendered() && ( !knowledge.GetArmy() || *knowledge.GetArmy() != pKnowledgeGroup_->GetArmy() ) )
             pContainer_->push_back( (void*)knowledge.GetID() );
     }
 
