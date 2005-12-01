@@ -23,6 +23,8 @@ class DEC_RolePion_Decision;
 class DEC_Rep_PathPoint :   public DEC_PathPoint
                           , public DIA_Representation
 {
+    MT_COPYNOTALLOWED( DEC_Rep_PathPoint )
+
 public:
     //-------------------------------------------------------------------------
     /** @name Types */
@@ -44,27 +46,20 @@ public:
     DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType = "Rep_Point" );
     virtual ~DEC_Rep_PathPoint();
     
-    //-------------------------------------------------------------------------
-    /** @name Init */
-    //-------------------------------------------------------------------------
+    //! @name Init
     //@{
     static void InitializeDIA();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     E_TypePoint        GetTypePoint() const;
     const TerrainData& GetTypeTerrain() const;
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name DIA */
-    //-------------------------------------------------------------------------
+    //! @name DIA
     //@{
-    void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
-    void RemoveFromDIA( DEC_RolePion_Decision& agent ) const;
+    void SendToDIA( DEC_RolePion_Decision& agent ) const;
     //@}
 
     //! @name Debug
@@ -72,18 +67,12 @@ public:
     virtual void Dump() const;
     //@}
    
-protected:
-    DEC_Rep_PathPoint( const DEC_Rep_PathPoint& );
-
-private:
-    const DEC_Rep_PathPoint& operator=( const DEC_Rep_PathPoint& );
-
 private:
     E_TypePoint    nTypePoint_;
     TerrainData    nTypeTerrain_;
 
-    mutable DIA_Parameters diaParameters_; //$$$
-    mutable bool           bAlreadySent_;
+    mutable DIA_Parameters          diaParameters_; //$$$
+    mutable DEC_RolePion_Decision*  pSentToDiaAgent_;
 
 public:
     static int nDIAPointIdx_;

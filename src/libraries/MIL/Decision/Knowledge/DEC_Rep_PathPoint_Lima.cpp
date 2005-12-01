@@ -41,18 +41,6 @@ DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const T
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Lima constructor
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const DEC_Rep_PathPoint_Lima& rhs )
-    : DEC_Rep_PathPoint( rhs )
-    , lima_            ( rhs.lima_ )
-{
-    SetValue( nDIAIdxTypeLima_, (int)lima_.GetLimaFunction() );
-    SetValue( nDIAIdxLima_    , (void*)&lima_                );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Lima destructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------

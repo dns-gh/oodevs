@@ -27,7 +27,6 @@ class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
     MT_COPYNOTALLOWED( DEC_Rep_PathPoint_Front )
 
 public:
-
     explicit DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
     virtual ~DEC_Rep_PathPoint_Front();
 
@@ -38,8 +37,7 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA    ( DEC_RolePion_Decision& agent ) const;
-    virtual void RemoveFromDIA( DEC_RolePion_Decision& agent ) const;
+    virtual void SendToDIA( DEC_RolePion_Decision& agent ) const;
     //@}
 
     //! @name Debug
@@ -50,8 +48,8 @@ public:
 private:
     DEC_Rep_PathPoint& destPoint_;
 
-    mutable DIA_Parameters diaParameters_;
-    mutable bool           bAlreadySent_;
+    mutable DIA_Parameters          diaParameters_;
+    mutable DEC_RolePion_Decision*  pSentToDiaAgent_;
 
 private:
     static int nDIAPointIdx_;

@@ -38,19 +38,6 @@ DEC_PathPoint::DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjec
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_PathPoint constructor
-// Created: JDY 03-02-19
-//-----------------------------------------------------------------------------
-DEC_PathPoint::DEC_PathPoint( const DEC_PathPoint& pathPoint )
-    : vPos_(pathPoint.vPos_)
-    , nType_(pathPoint.nType_)
-    , nObjectTypes_(pathPoint.nObjectTypes_ )
-    , nObjectTypesToNextPoint_(pathPoint.nObjectTypesToNextPoint_)
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_PathPoint destructor
 // Created: DFT 02-03-04
 // Last modified: JVT 02-09-17

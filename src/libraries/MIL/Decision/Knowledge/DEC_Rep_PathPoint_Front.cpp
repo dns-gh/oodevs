@@ -28,30 +28,12 @@ int DEC_Rep_PathPoint_Front::nDIADestIdx_  = 0;
 DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
     : DEC_PathPoint     ( vPos )
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
-    , bAlreadySent_     ( false )
     , destPoint_        ( dest )
+    , pSentToDiaAgent_  ( 0 )
 {
     SetValue      ( nDIAPointIdx_    , (void*)&vPos_ );  
     SetValue      ( nDIAClsIdx_      , eAvantPoint   );     
     SetObjectValue( nDIADestIdx_     , &destPoint_   );
-
-    diaParameters_.SetOwnerShip( true );
-    diaParameters_.AddParam( new DIA_Variable_Object() );  //$$$$$ Gestion mémoire
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Front constructor
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const DEC_Rep_PathPoint_Front& rhs )
-    : DEC_PathPoint     ( rhs.vPos_ )
-    , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( "Rep_AvantPoint" ) )
-    , destPoint_        ( rhs.destPoint_ )
-{
-    SetValue      ( nDIAPointIdx_, (void*)&vPos_ );  
-    SetValue      ( nDIAClsIdx_  , eAvantPoint   );     
-    SetObjectValue( nDIADestIdx_ , &destPoint_   );
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );  //$$$$$ Gestion mémoire
@@ -63,7 +45,11 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const DEC_Rep_PathPoint_Front&
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 {
-    
+    if( pSentToDiaAgent_ )
+    {
+        pSentToDiaAgent_->GetKnowledgePart().RemoveFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
+        pSentToDiaAgent_->GetBehaviorPart ().RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );    
+    }
 }
 
 
@@ -86,25 +72,14 @@ void DEC_Rep_PathPoint_Front::InitializeDIA()
 //-----------------------------------------------------------------------------
 void DEC_Rep_PathPoint_Front::SendToDIA( DEC_RolePion_Decision& agent ) const
 {
-    if ( bAlreadySent_ )
+    if( pSentToDiaAgent_ )
         return;
 
     diaParameters_.GetParameter( 0 ).SetValue( const_cast< DEC_Rep_PathPoint_Front& >( *this )  );
     DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
     if( pResult ) 
         delete pResult;
-    bAlreadySent_ = true;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Front::RemoveFromDIA
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::RemoveFromDIA( DEC_RolePion_Decision& agent ) const
-{
-    agent.GetKnowledgePart().RemoveFromCategory( "points_interressants", const_cast< DEC_Rep_PathPoint_Front* >( this ) );
-    agent.GetBehaviorPart ().RemoveAllReferencesOf( *this, agent.GetContext() );    
+    pSentToDiaAgent_ = &agent;
 }
 
 // -----------------------------------------------------------------------------

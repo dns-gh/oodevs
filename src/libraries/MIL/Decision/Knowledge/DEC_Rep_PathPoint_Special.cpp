@@ -38,17 +38,6 @@ DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const MT_Vector2D& vPos, E
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint_Special constructor
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Special::DEC_Rep_PathPoint_Special( const DEC_Rep_PathPoint_Special& rhs )
-    : DEC_Rep_PathPoint     ( rhs )
-    , nTypePointParticulier_( rhs.nTypePointParticulier_ )
-{
-    SetValue( nDIAIdxTypePart_, nTypePointParticulier_ );     
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Special destructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------

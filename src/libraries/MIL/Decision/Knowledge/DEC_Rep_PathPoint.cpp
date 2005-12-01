@@ -42,7 +42,7 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
     , DIA_Representation( "$$$ nom tmp", *DIA_TypeManager::Instance().GetType( szDIARepType ) )
     , nTypePoint_       ( nTypePoint )
     , nTypeTerrain_     ( nTypeTerrain )
-    , bAlreadySent_   ( false )
+    , pSentToDiaAgent_  ( 0 )
 {
     assert( nType_ != eTypePointPath );
 
@@ -55,33 +55,16 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint constructor
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-DEC_Rep_PathPoint::DEC_Rep_PathPoint( const DEC_Rep_PathPoint& rhs )
-    : DEC_PathPoint     ( rhs.vPos_ )
-    , DIA_Representation( "$$$ nom tmp", rhs.DIA_TypedObject::GetType() )
-    , nTypePoint_       ( rhs.nTypePoint_ )
-    , nTypeTerrain_     ( rhs.nTypeTerrain_ )
-    , bAlreadySent_   ( false )
-{
-    assert( nType_ != eTypePointPath );
-
-    SetValue( nDIAPointIdx_, (void*)&vPos_ );  
-    SetValue( nDIAClsIdx_  , ePoint        );     
-    SetValue( nDIATypeIdx_ , nTypePoint_   );     
-
-    diaParameters_.SetOwnerShip( true );
-    diaParameters_.AddParam( new DIA_Variable_Object() );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint destructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
-
+    if( pSentToDiaAgent_ )
+    {
+        pSentToDiaAgent_->GetKnowledgePart().RemoveFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
+        pSentToDiaAgent_->GetBehaviorPart ().RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -90,7 +73,7 @@ DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 //-----------------------------------------------------------------------------
 void DEC_Rep_PathPoint::SendToDIA( DEC_RolePion_Decision& agent ) const
 {
-    if ( bAlreadySent_ )
+    if( pSentToDiaAgent_ )
         return;
         
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
@@ -98,17 +81,8 @@ void DEC_Rep_PathPoint::SendToDIA( DEC_RolePion_Decision& agent ) const
     DIA_Variable_ABC* pResult = agent.ExecuteScriptFunction( "EVT_DEC_Point", diaParameters_ );
     if( pResult ) 
         delete pResult;
-    bAlreadySent_ = true;
-}
 
-//-----------------------------------------------------------------------------
-// Name: DEC_Rep_PathPoint::RemoveFromDIA
-// Created: AGN 03-01-13
-//-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::RemoveFromDIA( DEC_RolePion_Decision& agent ) const
-{
-    agent.GetKnowledgePart().RemoveFromCategory   ( "points_interressants", const_cast< DEC_Rep_PathPoint* >( this ) );
-    agent.GetBehaviorPart ().RemoveAllReferencesOf( *this, agent.GetContext() );
+    pSentToDiaAgent_ = &agent;
 }
 
 // -----------------------------------------------------------------------------

@@ -24,6 +24,8 @@ class DEC_RolePion_Decision;
 //*****************************************************************************
 class DEC_PathPoint
 {
+    MT_COPYNOTALLOWED( DEC_PathPoint )
+
 public:
     //-------------------------------------------------------------------------
     /** @name Types */
@@ -45,7 +47,6 @@ public:
 
 public:
     DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
-    DEC_PathPoint( const DEC_PathPoint& pathPoint );
     virtual ~DEC_PathPoint();
 
     //! @name Accessors

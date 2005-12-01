@@ -33,13 +33,8 @@ DEC_PathResult::DEC_PathResult()
 //-----------------------------------------------------------------------------
 DEC_PathResult::~DEC_PathResult()
 {
-    // $$$$ NLD 2005-09-29: const_cast pour DIA
-//    DEC_RolePion_Decision& roleDecision = const_cast< MIL_AgentPion& >( queryMaker_ ).GetRole< DEC_RolePion_Decision >();
-    for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
-    {
-//        (*itPoint)->RemoveFromDIA( roleDecision ); $$$$
+    for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
         delete *itPoint;
-    }
     resultList_.clear();
 }
 
