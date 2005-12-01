@@ -67,49 +67,51 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumTypeLo
     // always same first point
     loc.points_.push_back( pNode );
 
+    Position* pNodeTmp;
+
     switch( loc.eType_ )
     {
     case EnumTypeLocalisation::point:
         break;
     case EnumTypeLocalisation::circle:
         // 5km radius point
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
-        loc.points_.push_back( pNode );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
+        loc.points_.push_back( pNodeTmp );
         break;
     case EnumTypeLocalisation::ellipse:
         // 2km small axis
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX(), pNode->GetSimY() + 2000 );
-        loc.points_.push_back( pNode );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX(), pNode->GetSimY() + 2000 );
+        loc.points_.push_back( pNodeTmp );
         // 5km big axis
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
-        loc.points_.push_back( pNode );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
+        loc.points_.push_back( pNodeTmp );
         break;
     case EnumTypeLocalisation::line:
         // line second point 5km to the right
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
-        loc.points_.push_back( pNode );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() );
+        loc.points_.push_back( pNodeTmp );
         break;
     case EnumTypeLocalisation::polygon:
         // triangle
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() + 5000, pNode->GetSimY() + 2000 );
-        loc.points_.push_back( pNode );
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() + 6000, pNode->GetSimY() + 3000 );
-        loc.points_.push_back( pNode );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() - 3000, pNode->GetSimY() + 2000 );
+        loc.points_.push_back( pNodeTmp );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 3000, pNode->GetSimY() + 3000 );
+        loc.points_.push_back( pNodeTmp );
         break;
     case EnumTypeLocalisation::sector:
         // 90° sector around North ( 315° -> 45° )
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() - 3000, pNode->GetSimY() + 3000 );
-        loc.points_.push_back( pNode );
-        pNode = new Position();
-        pNode->SetSimCoordinates( pNode->GetSimX() + 3000, pNode->GetSimY() + 3000 );
-        loc.points_.push_back( pNode );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() - 3000, pNode->GetSimY() + 3000 );
+        loc.points_.push_back( pNodeTmp );
+        pNodeTmp = new Position();
+        pNodeTmp->SetSimCoordinates( pNode->GetSimX() + 3000, pNode->GetSimY() + 3000 );
+        loc.points_.push_back( pNodeTmp );
         break;
     default:
         assert( false );
