@@ -19,7 +19,7 @@ signatures
     // Effets sur les pions
     V                                         A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
     V                                         A::DEC_Population_RalentissementPion_VitesseParDefaut();
-    V                                         A::DEC_Population_ChangerAttitude( I /* E_AttitudePopulation */ );
+    V                                         A::DEC_Population_ChangerAttitude                    ( I /* E_AttitudePopulation */ );
     
     // Connaissance
     I /*E_EtatROEPopulation*/                 A::DEC_ConnaissanceAgent_RoePopulation  (  U /* T_Population_ConnaissanceAgent */ );
