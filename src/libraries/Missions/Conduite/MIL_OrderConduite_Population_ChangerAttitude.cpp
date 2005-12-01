@@ -38,7 +38,7 @@ void MIL_OrderConduite_Population_ChangerAttitude::InitializeDIA( const MIL_Orde
 // Name: MIL_OrderConduite_Population_ChangerAttitude constructor
 // Created: AGR 
 //-----------------------------------------------------------------------------
-MIL_OrderConduite_Population_ChangerAttitude::MIL_OrderConduite_Population_ChangerAttitude( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* pKnowledgeGroup )
+MIL_OrderConduite_Population_ChangerAttitude::MIL_OrderConduite_Population_ChangerAttitude( const MIL_OrderConduiteType& type, const MIL_KnowledgeGroup* /*pKnowledgeGroup*/ )
     : MIL_OrderConduite_ABC( type, 0 )
 {
     // NOTHING

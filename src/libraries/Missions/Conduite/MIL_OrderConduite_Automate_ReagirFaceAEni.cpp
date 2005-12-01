@@ -71,6 +71,8 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ReagirFaceAEni::Initialize( 
         return nCode; 
 
     const ASN1T_OrderConduite_Automate_ReagirFaceAEni& asnMission = *asnMsg.u.order_conduite_automate_reagir_face_a_eni;
+    if( !pKnowledgeGroup_ )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pKnowledgeGroup_->GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.action, GetVariable( nDIAActionIdx_ ) ) )
