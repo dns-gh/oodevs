@@ -2114,15 +2114,16 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
         rSize *= 2;
 
     GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nRawOpState_, agent.IsAutomate() && agent.IsEmbraye() );
-    GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.levelSymbolName_, -1 );
+    if( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
+        GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.levelSymbolName_, -1 );
 
     if( MOS_App::GetApp().Is3D() )
         glPopMatrix();
 
     if( agent.IsAutomate() && agent.IsAggregated() )
-        GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color , true, "O", -1 );
-    else if ( agent.IsAutomate() )
         GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color , true, "W", -1 );
+    else if ( agent.IsAutomate() )
+        GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color , true, "O", -1 );
 
     glPopMatrix();
 
