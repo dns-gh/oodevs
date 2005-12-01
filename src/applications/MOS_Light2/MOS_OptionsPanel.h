@@ -46,6 +46,7 @@ private slots:
     //@{
     void OnCheckpoint();
     void Apply       ();
+    void OnDisplayRC ();
     //@}
 
 private:
@@ -60,6 +61,11 @@ private:
     QCheckBox* pAutoSaveLoadCheckbox_;
 
     QCheckBox* pDrawObjectIcons_;
+
+    QCheckBox* pDrawHoveredInfo_;
+
+    QCheckBox* pDisplayRCOnMap_;
+    QCheckBox* pDisplayMessagesOnMap_;
 
     //@}
 };

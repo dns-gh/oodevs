@@ -526,11 +526,11 @@ bool GFX_Tools::IsInsideGLAgent( const MT_Vector2D& vPosAgent, MT_Float rSize, c
 }
 
 
-//-----------------------------------------------------------------------------
-// Name: GFX_Tools::CreateGLAgent
-// Created: FBD 02-12-13
-//-----------------------------------------------------------------------------
-void GFX_Tools::CreateGLAgentShadow( MT_Vector2D vPos, MT_Float rSize, MT_Float rSizeShadow, MT_Float rStrengthShadow, const GFX_Color& color, bool bCenter, const std::string& sUnit, MT_Float rPercentLife )
+// -----------------------------------------------------------------------------
+// Name: GFX_Tools::CreateGLAgentShadow
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void GFX_Tools::CreateGLAgentShadow( MT_Vector2D vPos, MT_Float rSize, MT_Float rSizeShadow, MT_Float rStrengthShadow, const GFX_Color& color, bool bCenter, const std::string& sUnit, MT_Float rPercentLife , bool bBackground )
 {
     if( rPercentLife >= 0 )
     {
@@ -542,15 +542,19 @@ void GFX_Tools::CreateGLAgentShadow( MT_Vector2D vPos, MT_Float rSize, MT_Float 
         if ( bCenter )
 		    glTranslatef( -( vSize.rX_ / 2.f ), 0.0, 0.0 );
         MT_Rect rectBackLife( vSize.rX_*0.05, 0, vSize.rX_*0.95, vSize.rY_ );
+        
+        GFX_Color backgroundColor = GFX_Color( 255, 255, 255, 0.4 );
         // On trace le fond de la life
-        GFX_Color colorBackLife( 255., 255., 255., 0.4 );
-        CreateGLRectPoly( rectBackLife, colorBackLife  );
+        if( bBackground)
+        {
+            backgroundColor = GFX_Color( 255, 255, 0.0, 0.4 );
+            CreateGLRectPoly( rectBackLife, backgroundColor  );
+        }
         
         // On trace la life
         MT_Float rHeight = ( rectBackLife.GetTop() - rectBackLife.GetBottom() ) * rPercentLife / 100.;
         MT_Rect rectLife( rectBackLife.GetLeft(), rectBackLife.GetBottom(), rectBackLife.GetRight(), rectBackLife.GetBottom() + rHeight );
-        colorBackLife.SetAlpha( 0.5 );
-        CreateGLRectPoly( rectLife, colorBackLife );
+        CreateGLRectPoly( rectLife, backgroundColor );
         glPopMatrix();
     }
 
@@ -560,6 +564,7 @@ void GFX_Tools::CreateGLAgentShadow( MT_Vector2D vPos, MT_Float rSize, MT_Float 
     fontAPP6FR_.PrintLine( vPos, rSize, rSizeShadow, colorShape.GetShadow( rStrengthShadow ), bCenter, sUnit.c_str() );
     fontAPP6FR_.Print( vPos, rSize, colorShape, bCenter, sUnit.c_str() );
 }
+
 
 
 

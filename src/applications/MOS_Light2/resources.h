@@ -103,5 +103,11 @@ DECLARE_ICON( objectTypeBarricade );
 DECLARE_ICON( objectTypeAirePoser );
 DECLARE_ICON( objectTypeAireLogistique );
 DECLARE_ICON( objectTypeAbattis );
+DECLARE_ICON( cadenas );
+DECLARE_ICON( cadenas_ouvert );
+DECLARE_ICON( talkie );
+DECLARE_ICON( talkie_interdit );
+DECLARE_ICON( brouillage );
+DECLARE_ICON( radars_on );
 
 #endif // __demo_resources_h_

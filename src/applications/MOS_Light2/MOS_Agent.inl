@@ -612,3 +612,13 @@ bool MOS_Agent::IsLogisticRavitaillement() const
         (  !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLT Ravitaillement" )
         || !strcmp( pTypeAutomate_->GetType().c_str(), "Automate LOG BLD Ravitaillement" ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::IsAggregated
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+inline
+bool  MOS_Agent::IsAggregated() const
+{
+    return bAggregated_;
+}

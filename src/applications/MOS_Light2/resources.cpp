@@ -113,6 +113,12 @@
 #include "res/objectTypeAirePoser.xpm"
 #include "res/objectTypeAireLogistique.xpm"
 #include "res/objectTypeAbattis.xpm"
+#include "res/cadenas.xpm"
+#include "res/cadenas_ouvert.xpm"
+#include "res/talkie.xpm"
+#include "res/talkie_interdit.xpm"
+#include "res/brouillage.xpm"
+#include "res/radars_on.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

@@ -134,6 +134,10 @@ public:
         objectTypeAirePoser,
         objectTypeAireLogistique,
         objectTypeAbattis,
+        radars_on,
+        cadenas,
+        talkie_interdit,
+        brouillage,
         eNbrIcons
     };
 

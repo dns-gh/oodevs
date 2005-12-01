@@ -109,6 +109,9 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
     pDisplayTimer_ = new QTimer( this );
     connect( pDisplayTimer_, SIGNAL( timeout()), this, SLOT( UpdateDisplay() ) );
     pDisplayTimer_->start(250);
+
+    //remember the current tick duration
+    connect( this, SIGNAL( SpeedChanged( int ) ),  this, SLOT( OnSpeedChanged( int ) ) );
 }
 
 
@@ -1090,6 +1093,15 @@ void MOS_App::NotifyPopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_App::OnSpeedChanged
+// Created: HME 2005-11-29
+// -----------------------------------------------------------------------------
+void MOS_App::OnSpeedChanged( int nTickDuration )
+{
+    nTickDuration_ = nTickDuration;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyPopulationFlowKnowledgeCreated
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
@@ -1114,4 +1126,13 @@ void MOS_App::NotifyPopulationFlowKnowledgeUpdated( MOS_Gtia& gtia, MOS_Populati
 void MOS_App::NotifyPopulationFlowKnowledgeDeleted( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
 {
     emit PopulationFlowKnowledgeDeleted( gtia, knowledge );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::GetTickDuration
+// Created: HME 2005-11-29
+// -----------------------------------------------------------------------------
+uint MOS_App::GetTickDuration() const
+{
+    return nTickDuration_;
 }

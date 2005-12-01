@@ -59,8 +59,16 @@ bool MOS_DefaultMapEventHandler::IsAgentAtPos( const MOS_Agent& agent, const MT_
 {
     //$$$ evil hard coded values! Sure thing they are evil ! Naughty evil values !
     const MT_Vector2D& posAgent = agent.GetPos();
-    MT_Rect agentRect( posAgent.rX_ - 300, posAgent.rY_, posAgent.rX_ + 300, posAgent.rY_ + 300 );
-    return agentRect.IsInside( vGLPos );
+    if( agent.IsAutomate() && agent.IsAggregated() )
+    {
+        MT_Rect agentRect( posAgent.rX_ - 600, posAgent.rY_, posAgent.rX_ + 600, posAgent.rY_ + 600);
+        return agentRect.IsInside( vGLPos );
+    }
+    else
+    {    
+        MT_Rect agentRect( posAgent.rX_ - 300, posAgent.rY_, posAgent.rX_ + 300, posAgent.rY_ + 300 );
+        return agentRect.IsInside( vGLPos );
+    }
 }
 
 

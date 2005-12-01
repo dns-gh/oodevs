@@ -71,6 +71,7 @@ private:
 
 private slots:
     void ToggleAutomate();
+    void ToggleAggregation();
     void ActivateUnitMission( int nMissionId );
     void ActivatePopulationMission( int nMissionId );
     void ActivateAutomataMission( int nMissionId );

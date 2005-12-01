@@ -172,6 +172,7 @@ void MOS_AgentCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const M
 
     selectedElement_ = context.selectedElement_;
     popupMenu.insertItem( selectedElement_.pAgent_->IsEmbraye() ? tr( "Débrayer automate" ) : tr( "Embrayer automate" ), this, SLOT( ToggleAutomate() ) );
+    popupMenu.insertItem( selectedElement_.pAgent_->IsAggregated() ? tr( "Désaggréger l'automate" ) : tr( "Aggréger l'automate" ), this, SLOT( ToggleAggregation() ) );
     popupMenu.insertItem( "Liens Logistiques" , this , SLOT( LogisticLinksDialog() ) );
     if ( selectedElement_.pAgent_->IsLogisticRavitaillement() 
         && ( selectedElement_.pAgent_->IsLogisticBLT() || selectedElement_.pAgent_->IsLogisticBLD() ) )
@@ -211,6 +212,17 @@ void MOS_AgentCreationPanel::ToggleAutomate()
     MOS_App::GetApp().NotifyAgentUpdated( *selectedElement_.pAgent_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentCreationPanel::ToggleAggregation
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void MOS_AgentCreationPanel::ToggleAggregation()
+{
+    if( selectedElement_.pAgent_->IsAggregated() )
+        selectedElement_.pAgent_->SetAggregation( false );
+    else
+        selectedElement_.pAgent_->SetAggregation( true );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentCreationPanel::LogisticLinksDialog

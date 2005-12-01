@@ -64,6 +64,7 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
 
     connect( this, SIGNAL( ElementSelected( MOS_SelectedElement& ) ),               &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ) );
     connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
+    connect( this, SIGNAL( ElementHovered( MOS_SelectedElement& ) ),                 &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementHovered( MOS_SelectedElement& ) ) );
 
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ),                           this,   SLOT( ClearSelection() ) );
@@ -201,6 +202,11 @@ bool MOS_DefaultMapEventHandler::OnMouseMove( const MOS_MapMouseEvent& mouseEven
            return true;
         }
     }
+    
+    //deal with over events, the test is only here for performance
+    if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayHoveredInfo_ )
+        HoverElementAtPos( mouseEvent.GetMapPos(), mouseEvent.GetDistancePerPixel() ) ;
+    
     vOldMousePos_ = mouseEvent.GetMapPos();
     return false;
 }
@@ -642,6 +648,28 @@ bool MOS_DefaultMapEventHandler::IsPopulationConcentrationAtPos( const MOS_Popul
 bool MOS_DefaultMapEventHandler::IsPopulationFlowAtPos( const MOS_PopulationFlow& flow, const MT_Vector2D& vGLPos, float rDistancePerPixel ) const
 {
     return MOS_Tools::PointNearLine( vGLPos, flow.GetFlow(), 9.0 * rDistancePerPixel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::HoverElementAtPos
+// Created: HME 2005-11-24
+// -----------------------------------------------------------------------------
+void MOS_DefaultMapEventHandler::HoverElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+{
+    MOS_Agent* pAgent = 0;
+    GetAgentAtPos( pAgent, vGLPos );
+    if( pAgent )
+    {
+        hoveredElement_ = MOS_SelectedElement( *pAgent );
+        emit ElementHovered( hoveredElement_ );
+        return;
+    }  
+    if ( hoveredElement_.IsAMapElementSelected() )
+    {
+        hoveredElement_ = MOS_SelectedElement();
+        emit ElementHovered( hoveredElement_ );
+        return;
+    }
 }
 
 // -----------------------------------------------------------------------------

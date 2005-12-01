@@ -40,7 +40,7 @@ public:
     /** @name Tools*/
     //-------------------------------------------------------------------------
     //@{
-    static void CreateGLAgentShadow   ( MT_Vector2D vPos, MT_Float rSize, MT_Float rSizeShadow, MT_Float rStrengthShadow, const GFX_Color& color, bool bCenter, const std::string& sUnit, MT_Float rPercentLife );
+    static void CreateGLAgentShadow   ( MT_Vector2D vPos, MT_Float rSize, MT_Float rSizeShadow, MT_Float rStrengthShadow, const GFX_Color& color, bool bCenter, const std::string& sUnit, MT_Float rPercentLife, bool bBackground = false  );
     static bool IsInsideGLAgent       ( const MT_Vector2D& vPosAgent, MT_Float rSize, const std::string& sUnit, const MT_Vector2D& vPos );
     static void CreateGLLines         ( CT_LinePtrVector&     lineVector    , MT_Float rWidth, const GFX_Color& color );
     static void CreateGLLines         ( CT_PointVector&       pointVector   , MT_Float rWidth, const GFX_Color& color );

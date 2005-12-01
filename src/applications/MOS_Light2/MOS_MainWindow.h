@@ -84,6 +84,8 @@ public:
     const T_MapEventFilterVector& GetMapEvents() const;
 
     MOS_Options& GetOptions() const;
+
+    QGLWidget* GetQGLWidget( bool b3Dmode ) const;
     //@}
 
 public slots:
@@ -96,6 +98,7 @@ public slots:
 
 signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );
+    void ElementHovered( MOS_SelectedElement& hoveredElement );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
     void CenterOnPoint( const MT_Vector2D& vPoint );
     void TeamChanged();

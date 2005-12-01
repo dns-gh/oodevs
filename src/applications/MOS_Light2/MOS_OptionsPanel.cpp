@@ -69,7 +69,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     // Display panel
     QWidget* pDisplayPanel = new QWidget( pTabWidget );
     pTabWidget->addTab( pDisplayPanel, tr( "Affichage" ) );
-    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 3, 2, 5 );
+    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 6, 2, 5 );
     pSubLayout2->setMargin( 5 );
 
     QLabel* pL2 = new QLabel( tr( "Taille police" ), pDisplayPanel );
@@ -78,11 +78,23 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
 
     pSubLayout2->addWidget( pL2, 1, 0 );
     pSubLayout2->addWidget( pFontSpinbox_, 1, 1 );
-    pSubLayout2->setRowStretch( 3, 10 );
+    pSubLayout2->setRowStretch( 6, 10 );
 
     pDrawObjectIcons_ = new QCheckBox( tr( "Afficher les icones des objets"), pDisplayPanel );
     pDrawObjectIcons_->setChecked( options.bDrawObjetIcons_ );
     pSubLayout2->addWidget( pDrawObjectIcons_, 2, 0 );
+
+    pDrawHoveredInfo_ = new QCheckBox( tr( "Afficher des informations au survol des pions" ), pDisplayPanel );
+    pDrawHoveredInfo_->setChecked( options.bDisplayHoveredInfo_ );
+    pSubLayout2->addWidget( pDrawHoveredInfo_, 3, 0 );
+
+    pDisplayRCOnMap_ = new QCheckBox( tr("Afficher les RC sur la carte"), pDisplayPanel );
+    pDisplayRCOnMap_->setChecked( options.bDisplayRConMap_ );
+    pSubLayout2->addWidget( pDisplayRCOnMap_, 4, 0 );
+
+    pDisplayMessagesOnMap_ = new QCheckBox( tr("Afficher aussi les messages"), pDisplayPanel );
+    pDisplayMessagesOnMap_->setChecked( options.bDisplayMessagesOnMap_ );
+    pSubLayout2->addWidget( pDisplayMessagesOnMap_, 5, 0 );
 
     // Other panel
     QWidget* pOtherPanel = new QWidget( pTabWidget );
@@ -114,6 +126,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     connect( pOkButton, SIGNAL( clicked() ), parentWidget(), SLOT( hide() ) );
     connect( pApplyButton, SIGNAL( clicked() ), this, SLOT( Apply() ) );
     connect( pCancelButton, SIGNAL( clicked() ), parentWidget(), SLOT( hide() ) );
+    connect( pDisplayRCOnMap_, SIGNAL( clicked() ), this, SLOT( OnDisplayRC() ) );
 }
 
 
@@ -159,5 +172,20 @@ void MOS_OptionsPanel::Apply()
     options.bOpenTreeToItem_ = pAutoOpenCheckbox_->isChecked();
     options.bSaveLoadTacticalLines_ = pAutoSaveLoadCheckbox_->isChecked();
     options.bDrawObjetIcons_ = pDrawObjectIcons_->isChecked();
+    options.bDisplayHoveredInfo_ = pDrawHoveredInfo_->isChecked();
+    options.bDisplayRConMap_ = pDisplayRCOnMap_->isChecked();
+    options.bDisplayMessagesOnMap_ = pDisplayMessagesOnMap_->isChecked();
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_OptionsPanel::OnDisplayRC
+// Created: HME 2005-11-29
+// -----------------------------------------------------------------------------
+void MOS_OptionsPanel::OnDisplayRC()
+{
+    if( pDisplayRCOnMap_->isChecked() )
+        pDisplayMessagesOnMap_->setEnabled( true );
+    else
+        pDisplayMessagesOnMap_->setEnabled( false );
 }

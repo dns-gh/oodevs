@@ -59,6 +59,7 @@ private:
     MT_ValuedComboBox< ASN1T_EnumUnitFatigue >*     pTirednessCombo_;
     MT_ValuedComboBox< ASN1T_EnumUnitMoral >*       pMoralCombo_;
     MT_ValuedComboBox< ASN1T_EnumUnitExperience >*  pExperienceCombo_;
+    QCheckBox*                                      pAllUnitsCheckBox_;
     //@}
 };
 

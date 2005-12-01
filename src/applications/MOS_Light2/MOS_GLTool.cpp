@@ -82,6 +82,7 @@
 #include "MOS_LogSupplyConsign.h"
 
 #include "MT_GLFont.h"
+#include "MT_GLToolTip.h"
 #undef min
 #undef max
 #include "geometry/Types.h"
@@ -164,7 +165,11 @@ void MOS_GLTool::Draw( MT_Rect& viewRect, float rClicksPerPix )
         iconIds_[objectTypeAirePoser]                       = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeAirePoser  ) );
         iconIds_[objectTypeAireLogistique]                  = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeAireLogistique  ) );
         iconIds_[objectTypeAbattis]                         = MOS_GLTool::InitializeIcon( QImage( xpm_objectTypeAbattis  ) );
-  
+        iconIds_[cadenas]                                   = MOS_GLTool::InitializeIcon( QImage( xpm_cadenas ) );
+        iconIds_[talkie_interdit]                           = MOS_GLTool::InitializeIcon( QImage( xpm_talkie_interdit ) );
+        iconIds_[brouillage]                                = MOS_GLTool::InitializeIcon( QImage( xpm_brouillage ) );
+        iconIds_[radars_on]                                 = MOS_GLTool::InitializeIcon( QImage( xpm_radars_on ) );
+
         iconLocations_[eGasIcon]                            = MT_Vector2D( -2.7, 2.3 );
         iconLocations_[eAmmoIcon]                           = MT_Vector2D( -2.7, 1.3 );
         iconLocations_[eNbcIcon]                            = MT_Vector2D( -2.7, 0.3 );
@@ -419,7 +424,9 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         // If not in controller view, avoid drawing the enemy units.
         if( nPlayedTeam != MOS_Options::eController && nPlayedTeam != (int)(itAgent->second->GetTeam().GetIdx()) )
             continue;
-        Draw( *(itAgent->second), eNormal );
+        // Draw the unit if not aggregated
+        if( itAgent->second->IsAutomate() || (! itAgent->second->GetParent()->IsEmbraye())  || (! itAgent->second->GetParent()->IsAggregated()))
+            Draw( *(itAgent->second), eNormal );
     }
 
     // Draw all populations.
@@ -435,7 +442,10 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     glLineWidth( 4 );
     glColor4d( MOS_COLOR_CONFLICT );
     for( MOS_AgentManager::IT_ConflictMap itC = manager.conflictMap_.begin(); itC != manager.conflictMap_.end(); ++itC )
-        DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_ != 0 ? (*itC).second.pDirectFireTarget_->vPos_ : (*itC).second.vIndirectFireTarget_, 300.0 ); // $$$$ AGE 2005-03-22:
+        if( (*itC).second.pDirectFireTarget_  )
+            DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->vPos_ , 300.0 ); // $$$$ AGE 2005-03-22:
+        else
+            DrawArc( (*itC).second.pOrigin_->GetPos(), (*itC).second.vIndirectFireTarget_, 300.0 * rClicksPerPix_ , true );
 
     //Draw the real time logistic actions
     if ( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
@@ -567,11 +577,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             DrawIcon( eGasIcon, agent.vPos_ );
     }
 
-    // Draw the 'embrayé' button if necessary
-    if( agent.IsEmbraye() || ( agent.pParent_ != 0 && agent.pParent_->IsEmbraye() ) )
-        DrawAutomataStatus( agent, nState );
-
-
+    
     //// Draw specific NBC parameters
     if( agent.bNbcProtectionSuitWorn_ )
     {
@@ -584,6 +590,35 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
     {
         glColor4d( MOS_COLOR_WHITE );
         DrawIcon( eSkullIcon, agent.GetPos() );
+    }
+
+    
+    //embrayage
+    if( (! agent.IsAutomate()) && agent.pParent_->IsEmbraye() )
+    {
+        glColor4d( MOS_COLOR_WHITE );
+        DrawIcon( cadenas, agent.GetPos() + MT_Vector2D( - 200 , 270  ) );
+    }
+    
+    //radars on
+    if( agent.bRadarEnabled_ )
+    {
+        glColor4d( MOS_COLOR_WHITE );
+        DrawIcon( radars_on, agent.GetPos() + MT_Vector2D(  200 , 270  ) );
+    }
+
+    //jamming
+    if( agent.bCommJammed_ )
+    {
+        glColor4d( MOS_COLOR_WHITE );
+        DrawIcon( brouillage, agent.GetPos() + MT_Vector2D(  200 , 50  ) );
+    }
+
+    //radio silence
+    if( agent. bRadioSilence_ )
+    {
+        glColor4d( MOS_COLOR_WHITE );
+        DrawIcon( talkie_interdit, agent.GetPos() + MT_Vector2D(  120 , 50  ) );
     }
 
     // Vision cones
@@ -635,7 +670,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             //DrawCircle( agent.GetPos() + translation, 300, false );
         }
     }
-    // Draw the logitic links of the selected automata
+    // Draw the logistic links of the selected automata
     if ( agent.IsAutomate() && (
         MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eOn
         || ( nState == eSelected && (MOS_MainWindow::GetMainWindow().GetOptions().nDisplayLogLinks_ == MOS_Options::eAuto ))))
@@ -667,7 +702,33 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             offset += 100.0;
         }
     }
-
+    //Draw the RC tooltips
+    if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_ )
+    {
+        QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
+        const MOS_Agent::T_ReportVector& reports = agent.GetReports();
+        bool bTodo = false;
+        MT_GLToolTip tooltip = MT_GLToolTip( pWidget );
+        tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
+        uint duration = 4 * MOS_App::GetApp().GetTickDuration(); //4 seconds
+        for( MOS_Agent::RCIT_ReportVector it = reports.rbegin(); it < reports.rend(); ++it )
+        {
+            int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
+            if( ((*it)->GetType() == MOS_Report_ABC::eRC 
+                  || (*it)->GetType() == MOS_Report_ABC::eWarning 
+                  || (*it)->GetType() == MOS_Report_ABC::eEvent 
+                  || ( (*it)->GetType() == MOS_Report_ABC::eMessage && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayMessagesOnMap_ ))
+                && time  < duration )
+            {     
+                bTodo = true;
+                tooltip.AddLine( (*it)->GetStrippedTitle(), 128.0 * time / duration , 128.0 * time / duration , 128.0 * time / duration, 1.0 , true );
+            }
+            else if ( time  > 4 )
+                break;
+        }
+        if( bTodo )
+            tooltip.Draw( viewRect_, agent.GetPos(), rClicksPerPix_ );
+    }
     
     
 }
@@ -1072,11 +1133,11 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
 {
-    if( knowledge.nAttrUpdated_ & MOS_ObjectKnowledge::eUpdated_RealObject && knowledge.pRealObject_ != 0 )
+    if( knowledge.bIsPerceived_ && knowledge.pRealObject_ != 0 )
     {
         Draw( *knowledge.pRealObject_, nState );
     }
-    else if( knowledge.nAttrUpdated_ & MOS_ObjectKnowledge::eUpdated_Localisation )
+    else
     {
         glLineWidth( 1 );
         if( nState == eSelected )
@@ -1589,6 +1650,102 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         Draw( *eventHandler.selectedElement_.pObjectKnowledge_, eSelected );
     if( eventHandler.selectedElement_.pLine_ != 0 )
         Draw( * eventHandler.selectedElement_.pLine_, eSelected, eventHandler.selectedElement_.nLinePoint_);
+    
+    //Draw an info box under the mouse if a pawn is Hovered  
+    if( ! MOS_App::GetApp().IsODBEdition()
+        && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayHoveredInfo_
+        && eventHandler.hoveredElement_.pAgent_ 
+        && eventHandler.hoveredElement_.pAgent_ != eventHandler.selectedElement_.pAgent_  )
+    {
+        QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
+        MT_Float zoom = rClicksPerPix_; 
+        MOS_Agent* pAgent = eventHandler.hoveredElement_.pAgent_;
+        const MT_Vector2D posAgent = eventHandler.hoveredElement_.pAgent_->GetPos();
+        MT_Vector2D pos = MT_Vector2D( posAgent.rX_, posAgent.rY_ );
+
+        GFX_Color color( 0.0, 0.0, 0.0, 1.0 ); //color of the text
+        
+        //create a ToolTip
+        MT_GLToolTip toolTip = MT_GLToolTip( pWidget );
+        
+        //write the name of the pawn
+        QString strName =  pAgent->GetName().c_str();
+        if ( pAgent->bNeutralized_ )
+            strName = QString("Neutralisé: ") + strName;
+        else if ( pAgent->GetRawOpState() == eEtatOperationnel_DetruitTotalement )
+            strName = QString("Détruit totalement: ") + strName;
+        else if ( pAgent->GetRawOpState() == eEtatOperationnel_DetruitTactiquement )
+            strName = QString("Détruit tactiquement: ") + strName;
+        else if ( pAgent->bSurrendered_ )
+            strName = QString("Rendu: ") + strName;
+        else if ( pAgent->bPrisoner_ )
+            strName = QString("Prisonnier: ") + strName;
+        
+        if ( pAgent->bPrisoner_ || pAgent->bSurrendered_ )
+            color.SetRGB( 128.0, 0.0, 128.0 );
+        else if ( pAgent->bNeutralized_ 
+                  || pAgent->GetRawOpState() == eEtatOperationnel_DetruitTactiquement )
+            color.SetRGB( 255.0, 128.0 , 0.0 );
+        else if ( pAgent->GetRawOpState() == eEtatOperationnel_DetruitTotalement  )
+            color.SetRGB( 255.0, 0.0, 0.0 );
+        else
+            color.SetRGB( 255.0, 255.0, 0.0 );
+
+        toolTip.AddLine( strName, color ,true, 1.3 );
+
+        //write the current mission
+        if( pAgent->GetCurrentMission() != 0 )
+        {
+            QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)pAgent->GetCurrentMission() ).c_str() );
+            color.SetRGB( 255.0, 255.0, 255.0 );
+            toolTip.AddLine( strMission, color );
+        }
+        
+        //write the decisional state and the RapFor of the pawn
+        QString strRapFor = QString( "Rapport de force " ) + ENT_Tr::ConvertFromEtatRapFor( pAgent->nFightRateState_ ).c_str();
+        if ( pAgent->nCloseCombatState_  != eEtatCombatRencontre_None )
+            strRapFor = QString(ENT_Tr::ConvertFromEtatCombatRencontre( pAgent->nCloseCombatState_ ).c_str()).upper() 
+                        + QString( ", " ) 
+                        + strRapFor;  
+
+        if ( pAgent->nFightRateState_ == eEtatRapFor_Defavorable )
+            color.SetRGB( 255.0, 154.0, 154.0 );
+        else
+            color.SetRGB( 204.0, 255, 204.0 );
+
+        toolTip.AddLine( strRapFor, color );
+        
+        //write the ROE and the stance of the pawn
+        QString strROE = QString( "%1 %2 %" ).arg( ENT_Tr::ConvertFromUnitPosture( pAgent->GetStance() ).c_str(), QString::number( pAgent->nPostureCompletionPourcentage_ ) )
+                        + QString( ", ROE: " ) 
+                        + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str());
+        
+        color.SetRGB( 255.0, 255.0, 255.0 );
+        
+        toolTip.AddLine( strROE, color );
+        
+        //write the 5 last RCs
+        toolTip.AddLine( QString(""), color );
+        const MOS_Agent::T_ReportVector& reports = pAgent->GetReports();
+        uint i = 0;
+        for( MOS_Agent::RCIT_ReportVector it = reports.rbegin(); it < reports.rend(); ++it )
+        {
+            ++i;
+            //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
+            if ( (*it)->IsRCType() )
+            {
+                const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
+                const QString strTitle = (*it)->GetStrippedTitle().c_str();
+                toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 150.0 , 150.0 , 150.0, 1.0 , false );
+            }
+            if ( i > 5 )
+                break;
+        }
+        
+        //draw the tooltip
+        toolTip.Draw( viewRect_, pos, zoom  );
+    }
+
 }
 
 
@@ -1952,7 +2109,11 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 	    glLoadMatrixf( modelview );
     }
 
-    GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nRawOpState_ );
+    //aggregated mode ?
+    if( agent.IsAutomate() && agent.IsAggregated() )
+        rSize *= 2;
+
+    GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nRawOpState_, agent.IsAutomate() && agent.IsEmbraye() );
     GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.levelSymbolName_, -1 );
 
     if( MOS_App::GetApp().Is3D() )

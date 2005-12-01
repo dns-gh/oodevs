@@ -33,8 +33,8 @@ MOS_ChangeHumanFactorsDialog::MOS_ChangeHumanFactorsDialog( QWidget* pParent )
     : QDialog( pParent, "Facteurs Humains" )
 {
 //    resize( 260, 100 );
-    QGridLayout* pLayout = new QGridLayout( this, 4, 2, 4 );
-    pLayout->setRowStretch( 5, 1 );
+    QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
+    pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
     
     pLayout->addWidget( new QLabel( tr( "Fatigue:" ), this ), 1, 0, Qt::AlignLeft );
@@ -49,6 +49,9 @@ MOS_ChangeHumanFactorsDialog::MOS_ChangeHumanFactorsDialog( QWidget* pParent )
     pExperienceCombo_ = new MT_ValuedComboBox< ASN1T_EnumUnitExperience >( this );
     pLayout->addWidget( pExperienceCombo_, 3, 1, Qt::AlignRight );
 
+    pAllUnitsCheckBox_ = new QCheckBox( tr( "Toute les unitées" ), this );
+    pLayout->addWidget( pAllUnitsCheckBox_, 4, 0, Qt::AlignLeft );
+
     Populate( MOS_Tiredness::GetTirednesses(), *pTirednessCombo_ );
     Populate( MOS_Morale::GetMorales(), *pMoralCombo_ );
     Populate( MOS_Experience::GetExperiences(), *pExperienceCombo_ );
@@ -59,7 +62,7 @@ MOS_ChangeHumanFactorsDialog::MOS_ChangeHumanFactorsDialog( QWidget* pParent )
     pButtonLayout->addWidget( pOKButton     );
     pButtonLayout->addWidget( pCancelButton );
     pOKButton->setDefault( TRUE );
-    pLayout->addMultiCellLayout( pButtonLayout, 4, 4, 0, 1, Qt::AlignCenter );
+    pLayout->addMultiCellLayout( pButtonLayout, 5, 5, 0, 1, Qt::AlignCenter );
 
     connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( pCancelButton, SIGNAL( clicked() ), SLOT( hide() ) );
@@ -84,6 +87,10 @@ void MOS_ChangeHumanFactorsDialog::SetAgent( const MOS_Agent& agent )
     pTirednessCombo_->SetCurrentItem( agent.GetTiredness().GetAsnID() );
     pMoralCombo_->SetCurrentItem( agent.GetMorale().GetAsnID() );
     pExperienceCombo_->SetCurrentItem( agent.GetExperience().GetAsnID() );
+    if ( pAgent_->IsAutomate() )
+        pAllUnitsCheckBox_->show();
+    else
+        pAllUnitsCheckBox_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,6 +104,12 @@ void MOS_ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     if( ! pAgent_ )
         RUNTIME_ERROR;
+    if ( pAgent_->IsAutomate() && pAllUnitsCheckBox_->isChecked() )
+    {
+        const MOS_Agent::T_AgentVector& children = const_cast< MOS_Agent* >(pAgent_)->GetChildren();       
+        for( MOS_Agent::CIT_AgentVector it = children.begin(); it != children.end(); ++it )
+            SendMessage( (*it)->GetID(), fatigue, moral, experience );
+    }
     SendMessage( pAgent_->GetID(), fatigue, moral, experience );
     hide();
 }

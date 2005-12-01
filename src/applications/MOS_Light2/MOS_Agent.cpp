@@ -56,6 +56,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgAutomateCreation& asnMsg )
 	, nLogMaintenanceSuperior_ ( 0 )
 	, nLogMedicalSuperior_ ( 0 )
 	, nLogSupplySuperior_ ( 0 )
+    , nCurrentMission_    ( 0 )
 {
     Initialize();
     sName_ = asnMsg.nom;
@@ -94,6 +95,7 @@ MOS_Agent::MOS_Agent( const ASN1T_MsgPionCreation& asnMsg )
 	, nLogMaintenanceSuperior_ ( 0 )
 	, nLogMedicalSuperior_ ( 0 )
 	, nLogSupplySuperior_ ( 0 )
+    , nCurrentMission_    ( 0 )
 {
     Initialize();
 	sName_ = asnMsg.nom;
@@ -123,6 +125,7 @@ MOS_Agent::MOS_Agent( bool bGenerateId )
 	, nLogMaintenanceSuperior_ ( 0 )
 	, nLogMedicalSuperior_ ( 0 )
 	, nLogSupplySuperior_ ( 0 )
+    , nCurrentMission_    ( 0 )
 {
     Initialize();
 }
@@ -167,6 +170,7 @@ void MOS_Agent::Initialize()
     pMaintenanceData_             = 0;
     pSupplyData_                  = ( new MOS_Agent::T_SupplyData() );
     pTypeAutomate_				  = 0;
+    bAggregated_                  = false;
 }
 
 
@@ -1265,3 +1269,31 @@ void MOS_Agent::InitializeStocks()
         pSupplyData_->stocks_ = pTypePion_->GetStocks();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMission
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnReceiveMission( const ASN1T_MsgPionOrder& asnMsg )
+{
+    nCurrentMission_ = asnMsg.mission.t;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetCurrentMission
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+int MOS_Agent::GetCurrentMission() const
+{
+    return nCurrentMission_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::Aggregate
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void  MOS_Agent::SetAggregation( bool bAgg)
+{
+    bAggregated_ = bAgg;
+}
+

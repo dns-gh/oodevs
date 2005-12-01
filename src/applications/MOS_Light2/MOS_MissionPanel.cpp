@@ -327,6 +327,7 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
     {
         popupMenu.insertSeparator();
         popupMenu.insertItem( agent.IsEmbraye() ? tr( "Débrayer automate" ) : tr( "Embrayer automate" ), this, SLOT( ToggleAutomate() ) );
+        popupMenu.insertItem( agent.IsAggregated() ? tr( "Désaggréger l'automate" ) : tr( "Aggréger l'automate" ), this, SLOT( ToggleAggregation() ) );
         popupMenu.insertSeparator();
         if( MOS_MainWindow::GetMainWindow().GetOptions().bControllerMode_ )
             popupMenu.insertItem( tr( "Liens logistiques" ), this, SLOT( MagicChangeLogisticLinks() ) );
@@ -388,6 +389,18 @@ void MOS_MissionPanel::ToggleAutomate()
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::ToggleAggregation
+// Created: HME 2005-11-30
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::ToggleAggregation()
+{
+    if( pPopupAgent_->IsAggregated() )
+        pPopupAgent_->SetAggregation( false );
+    else
+        pPopupAgent_->SetAggregation( true );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionPanel::ActivateUnitMission

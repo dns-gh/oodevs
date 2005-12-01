@@ -1239,6 +1239,9 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT&
         strOutputMsg2 << "Pion " << asnPionOrder.oid_unite_executante
                      << " - Mission " << asnPionOrder.mission.t << endl;
 
+        MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( asnPionOrder.oid_unite_executante );
+        pAgent->OnReceiveMission( asnPionOrder );
+
     }
     MT_LOG_INFO( strOutputMsg.str(), eReceived, strOutputMsg2.str().c_str() );
 }
@@ -1253,6 +1256,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asn
     std::stringstream strOutputMsg;
     strOutputMsg << "PionOrder - Mission " << asnMsg.mission.t;
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( asnMsg.oid_unite_executante );
+    pAgent->OnReceiveMission( asnMsg );
 }
 
 

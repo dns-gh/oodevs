@@ -94,7 +94,8 @@ private:
 
     //! @name Helpers
     //@{
-    void                         SelectElementAtPos             ( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    void SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    void HoverElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
     bool                         GetAgentAtPos                  ( MOS_Agent*&, const MT_Vector2D& vGLPos );
     bool                         IsAgentAtPos                   ( const MOS_Agent&   agent, const MT_Vector2D& vGLPos );
@@ -123,6 +124,7 @@ private:
 
 signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );
+    void ElementHovered( MOS_SelectedElement& hoveredElement );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
 
 private:
@@ -141,6 +143,8 @@ private:
     //! @name Member data
     //@{
     MOS_SelectedElement selectedElement_;
+
+    MOS_SelectedElement hoveredElement_;
 
     QPopupMenu* pPopupMenu_;
 

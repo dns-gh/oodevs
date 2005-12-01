@@ -97,9 +97,10 @@ public:
     typedef T_VisionConeVector::iterator                            IT_VisionConeVector;
     typedef T_VisionConeVector::const_iterator                      CIT_VisionConeVector;
 
-    typedef std::vector< MOS_Report_ABC* >     T_ReportVector;
-    typedef T_ReportVector::iterator           IT_ReportVector;
-    typedef T_ReportVector::const_iterator     CIT_ReportVector;
+    typedef std::vector< MOS_Report_ABC* >          T_ReportVector;
+    typedef T_ReportVector::iterator                IT_ReportVector;
+    typedef T_ReportVector::const_iterator          CIT_ReportVector;
+    typedef T_ReportVector::const_reverse_iterator  RCIT_ReportVector;
 
     typedef std::vector< uint >                 T_NbcAgentVector;
     typedef T_NbcAgentVector::const_iterator    CIT_NbcAgentVector;
@@ -203,6 +204,9 @@ public:
     //! @name Reports
     //@{
     void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
+	int  MOS_Agent::GetCurrentMission() const;
+	void OnReceiveMission                ( const ASN1T_MsgPionOrder& asnMsg );
+
 
     // fire results
     void OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg );
@@ -268,6 +272,9 @@ public:
     void ReadODB( MOS_InputArchive& archive, bool bAutomate );
     void WriteODB( MT_XXmlOutputArchive& archive );
     //@}
+	//aggregation
+    bool  IsAggregated() const;
+    void SetAggregation( bool bAgg );
 
 public:
     //! @name Types
@@ -302,6 +309,7 @@ public:
     MT_Vector2D					vPos_;
     bool						bAutomate_;
     bool						bEmbraye_;
+    bool                    bAggregated_;
     int							nAltitude_;
     int							nDirection_;
 
@@ -427,6 +435,8 @@ public:
     uint nLogMaintenanceSuperior_;
     uint nLogMedicalSuperior_;
     uint nLogSupplySuperior_;
+
+    int nCurrentMission_;
 
 private:
     static MIL_AgentID nMaxId_;

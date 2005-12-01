@@ -83,6 +83,9 @@ public:
     E_State nDisplayLogLinks_;
     E_State nDisplayMissingLogLinks_;
     bool    bDisplayRealTimeLog_;
+    bool    bDisplayHoveredInfo_;
+    bool    bDisplayRConMap_;
+    bool    bDisplayMessagesOnMap_;
 
     MT_Float rGridStep_;
 

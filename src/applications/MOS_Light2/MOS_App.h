@@ -163,6 +163,7 @@ public:
     MOS_Meteo_Manager& GetWeatherManager() const;
     MOS_MainWindow&    GetMainWindow    () const;
     uint               GetTime          () const;
+    uint               GetTickDuration  () const;
     //@}
 
     void SetSplashText( const QString& strText );
@@ -249,6 +250,7 @@ signals:
 private slots:
     void UpdateData();
     void UpdateDisplay();
+    void OnSpeedChanged( int nTickDuration );
 
 private:
     void InitializeRawVisionData( MOS_InputArchive& scipioArchive );
@@ -286,6 +288,7 @@ private:
     QSplashScreen*     pSplashScreen_;
 
     uint               nTimeSeconds_;
+    uint               nTickDuration_;
 
     T_MosId_String_Map equipementNameMap_;
     T_MosId_String_Map resourcesNameMap_;

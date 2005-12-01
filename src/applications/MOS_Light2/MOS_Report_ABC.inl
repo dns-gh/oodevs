@@ -37,7 +37,20 @@ const std::string& MOS_Report_ABC::GetTitle() const
 {
     return strTitle_;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Report_ABC::GetStrippedTitle
+// Created: HME 2005-11-29
+// -----------------------------------------------------------------------------
+inline
+const std::string MOS_Report_ABC::GetStrippedTitle() const
+{
+    std::string strTitle = strTitle_;
+    uint pos = strTitle_.find( " - " );
+    if( pos >= 0 && pos < strTitle.size() )
+        strTitle.resize( pos );
+    return strTitle;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Report_ABC::GetTime
