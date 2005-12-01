@@ -76,7 +76,7 @@ public:
     //@{
           uint                GetID             () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
-    const MIL_Population&     GetPopulationKnown() const;
+          MIL_Population&     GetPopulationKnown() const;
           MT_Float            GetDangerosity    ( const MIL_AgentPion& target ) const;
           bool                IsRecon           () const;
     //@}

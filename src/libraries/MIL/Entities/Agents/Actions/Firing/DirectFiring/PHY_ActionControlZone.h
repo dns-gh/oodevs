@@ -51,6 +51,4 @@ private:
     void*                        pPerceptionZoneID_;
 };
 
-#include "PHY_ActionControlZone.inl"
-
 #endif // __PHY_ActionControlZone_h_

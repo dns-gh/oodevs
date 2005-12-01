@@ -188,3 +188,13 @@ MT_Float MIL_PopulationElement_ABC::PullHumans( MT_Float rNbr )
     rNbrAliveHumans_ -= rNbrTmp;
     return rNbrTmp;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::IsDead
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationElement_ABC::IsDead() const
+{
+    return rNbrAliveHumans_ == 0.;
+}

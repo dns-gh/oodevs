@@ -24,6 +24,7 @@ class PHY_FireResults_Pion;
 class PHY_FireResults_Default;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
+class MIL_Population;
 class MIL_ControlZone;
 
 // =============================================================================
@@ -58,9 +59,13 @@ public:
 
     //! @name Operations
     //@{
-    int  Fire         ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
-    void FireSuspended( uint nTargetKnowledgeID );
-    void FireZone     ( const MIL_ControlZone& zone, PHY_FireResults_Default*& pFireResult );
+    int  FirePopulation         ( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
+    void FirePopulationSuspended( uint nTargetKnowledgeID );
+
+    int  FirePion               ( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    void FirePionSuspended      ( uint nTargetKnowledgeID );
+
+    void FireZone               ( const MIL_ControlZone& zone, PHY_FireResults_Default*& pFireResult );
     //@}
 
     //! @name Return codes
@@ -86,8 +91,9 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_Agent_ABC* GetTarget( uint nTargetKnowledgeID );
-    void           Fire     ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
+    MIL_Agent_ABC*  GetAgentTarget     ( uint nTargetKnowledgeID );
+    MIL_Population* GetPopulationTarget( uint nTargetKnowledgeID );
+    void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     //@}
 
 private:

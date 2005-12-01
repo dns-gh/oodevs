@@ -24,11 +24,12 @@ class PHY_RolePion_Posture;
 class PHY_RoleInterface_Posture;
 class PHY_WeaponType;
 class PHY_DotationCategory;
-class MIL_AgentPion;
-class MIL_Agent_ABC;
 class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_FireResults_ABC;
+class MIL_AgentPion;
+class MIL_Agent_ABC;
+class MIL_PopulationElement_ABC;
 
 // =============================================================================
 // @class  PHY_WeaponDataType_DirectFire
@@ -49,6 +50,7 @@ public:
     MT_Float GetMaxRangeToFireOn( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOn( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     void     Fire               ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
+    void     Fire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
 private:

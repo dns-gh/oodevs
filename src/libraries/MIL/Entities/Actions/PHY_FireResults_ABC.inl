@@ -20,6 +20,16 @@ PHY_FireDamages_Agent& PHY_FireResults_ABC::GetDamages( const MIL_Agent_ABC& tar
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_FireResults_ABC::GetDamages
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+inline
+PHY_FireDamages_Population& PHY_FireResults_ABC::GetDamages( const MIL_Population& target )
+{
+    return populationsDamages_[ &target ];
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_FireResults_ABC::IncRef
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------

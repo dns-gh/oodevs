@@ -15,6 +15,7 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -26,18 +27,33 @@
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target )
     : PHY_FireResults_ABC()
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
-    , firer_             ( firer )
-    , pTarget_           ( &target )
-    , targetPosition_    ()
-    , pDotationCategory_ ( 0 )
 {
     NET_ASN_MsgStartPionFire asnMsg;
     asnMsg.GetAsnMsg().m.munitionPresent = 0;
     asnMsg.GetAsnMsg().oid_tir           = nID_;
-    asnMsg.GetAsnMsg().tireur            = firer_.GetID();
+    asnMsg.GetAsnMsg().tireur            = firer.GetID();
     asnMsg.GetAsnMsg().type              = MsgStartPionFire_type::direct;
     asnMsg.GetAsnMsg().cible.t           = T_MsgStartPionFire_cible_pion;
     asnMsg.GetAsnMsg().cible.u.pion      = target.GetID();    
+    
+    asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireResults_Pion constructor
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target )
+    : PHY_FireResults_ABC()
+    , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
+{
+    NET_ASN_MsgStartPionFire asnMsg;
+    asnMsg.GetAsnMsg().m.munitionPresent  = 0;
+    asnMsg.GetAsnMsg().oid_tir            = nID_;
+    asnMsg.GetAsnMsg().tireur             = firer.GetID();
+    asnMsg.GetAsnMsg().type               = MsgStartPionFire_type::direct;
+    asnMsg.GetAsnMsg().cible.t            = T_MsgStartPionFire_cible_population;
+    asnMsg.GetAsnMsg().cible.u.population = target.GetID();    
     
     asnMsg.Send();
 }
@@ -49,20 +65,16 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
     : PHY_FireResults_ABC()
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
-    , firer_             ( firer )
-    , pTarget_           ( 0 )
-    , targetPosition_    ( targetPosition )
-    , pDotationCategory_ ( &dotationCategory )
 {
     NET_ASN_MsgStartPionFire asnMsg;
     asnMsg.GetAsnMsg().m.munitionPresent = 1;
     asnMsg.GetAsnMsg().oid_tir           = nID_;
-    asnMsg.GetAsnMsg().tireur            = firer_.GetID();
+    asnMsg.GetAsnMsg().tireur            = firer.GetID();
     asnMsg.GetAsnMsg().type              = MsgStartPionFire_type::indirect;
     asnMsg.GetAsnMsg().cible.t           = T_MsgStartPionFire_cible_position;
     asnMsg.GetAsnMsg().cible.u.position  = new ASN1T_CoordUTM();
     asnMsg.GetAsnMsg().munition          = dotationCategory.GetMosID();
-    NET_ASN_Tools::WritePoint( targetPosition_, *asnMsg.GetAsnMsg().cible.u.position );
+    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg.GetAsnMsg().cible.u.position );
 
     asnMsg.Send();
 

@@ -16,10 +16,14 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
-#include "Entities/Actions/PHY_FireResults_Default.h"
 #include "Entities/Objects/MIL_ControlZone.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Actions/PHY_FireResults_Default.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RoleAction_DirectFiring, "PHY_RoleAction_DirectFiring" )
@@ -71,10 +75,10 @@ void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_DirectFiring::GetTarget
+// Name: PHY_RoleAction_DirectFiring::GetAgentTarget
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_Agent_ABC* PHY_RoleAction_DirectFiring::GetTarget( uint nTargetKnowledgeID )
+MIL_Agent_ABC* PHY_RoleAction_DirectFiring::GetAgentTarget( uint nTargetKnowledgeID )
 {
     assert( pPion_ );
     
@@ -82,15 +86,27 @@ MIL_Agent_ABC* PHY_RoleAction_DirectFiring::GetTarget( uint nTargetKnowledgeID )
     return pKnowledge ? &pKnowledge->GetAgentKnown() : 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::GetPopulationTarget
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKnowledgeID )
+{
+    assert( pPion_ );
+    
+    DEC_Knowledge_Population* pKnowledge = pPion_->GetKSQuerier().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+    return pKnowledge ? &pKnowledge->GetPopulationKnown() : 0;
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_DirectFiring::Fire
+// Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::Fire( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
+void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_RoleInterface_Composantes::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
 {
     assert( pPion_ );
 
@@ -143,12 +159,12 @@ void PHY_RoleAction_DirectFiring::Fire( PHY_DirectFireData& firerWeapons, MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_DirectFiring::Fire
+// Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
+int PHY_RoleAction_DirectFiring::FirePion( uint nTargetKnowledgeID, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
-    MIL_Agent_ABC* pTarget = GetTarget( nTargetKnowledgeID );
+    MIL_Agent_ABC* pTarget = GetAgentTarget( nTargetKnowledgeID );
     if( !pTarget )
         return eImpossible;
 
@@ -184,17 +200,17 @@ int PHY_RoleAction_DirectFiring::Fire( uint nTargetKnowledgeID, PHY_DirectFireDa
         return eEnemyDestroyed;
 
     assert( targets.size() == nNbrWeaponsUsable );    
-    Fire( firerWeapons, *pTarget, targets, *pFireResult );
+    FirePion( firerWeapons, *pTarget, targets, *pFireResult );
     return eRunning;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_DirectFiring::FireSuspended
+// Name: PHY_RoleAction_DirectFiring::FirePionSuspended
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FireSuspended( uint nTargetKnowledgeID )
+void PHY_RoleAction_DirectFiring::FirePionSuspended( uint nTargetKnowledgeID )
 {
-    MIL_Agent_ABC* pTarget = GetTarget( nTargetKnowledgeID );
+    MIL_Agent_ABC* pTarget = GetAgentTarget( nTargetKnowledgeID );
     if ( pTarget )
     {
         assert( pPion_ );
@@ -235,4 +251,72 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_ControlZone& zone, PHY_Fir
         
         firerWeapons.ReleaseWeapon( *pCompFirer, *pFirerWeapon );
     } 
+}
+
+// =============================================================================
+// FIRE POPULATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::FirePopulation
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult )
+{
+    assert( pPion_ );
+    MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
+    if( !pTarget )
+        return eImpossible;
+
+    if( pTarget->IsDead() )
+        return eEnemyDestroyed;
+
+    MIL_PopulationElement_ABC* pPopulationElement = pTarget->GetClosestAliveElement( *pPion_ );
+    if( !pPopulationElement )
+        return eEnemyDestroyed;
+   
+    if( !pFireResult )
+        pFireResult = new PHY_FireResults_Pion( *pPion_, *pTarget );
+
+    // Firers
+    PHY_DirectFireData firerWeapons( *pPion_, PHY_DirectFireData::eFireAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ );
+    GetRole< PHY_RolePion_Composantes >().FillDirectFireData( firerWeapons );
+
+    const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
+    if( nNbrWeaponsUsable == 0 )
+    {
+        if( firerWeapons.HasWeaponsNotReady() )
+            return eRunning;
+        if( firerWeapons.HasWeaponsAndNoAmmo() )
+            return eNoAmmo;
+        return eNoCapacity;
+    }
+
+    pPion_ ->NotifyAttacking ( *pTarget );
+    pTarget->NotifyAttackedBy( *pPion_  );
+
+    // Tir
+    PHY_ComposantePion* pFirer       = 0;
+    PHY_Weapon*         pFirerWeapon = 0;
+    while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
+    {
+        pFirerWeapon->DirectFire( *pPion_, *pPopulationElement, *pFireResult ); 
+        firerWeapons.ReleaseWeapon( *pFirer, *pFirerWeapon );
+    }
+
+    return eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_DirectFiring::FirePopulationSuspended
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_DirectFiring::FirePopulationSuspended( uint nTargetKnowledgeID )
+{
+    MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
+    if ( pTarget )
+    {
+        assert( pPion_ );
+        pTarget->NotifyAttackedBy( *pPion_ );
+    }
 }

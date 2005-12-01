@@ -602,11 +602,15 @@ void MIL_EntityManager::UpdateKnowledges()
 {
     profiler_.Start();
 
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->UpdateKnowledges();
+    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
+        it->second->UpdateKnowledges();
+    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+        it->second->UpdateKnowledges();
 
-    for( itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->CleanKnowledges();
+    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
+        it->second->CleanKnowledges();
+    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+        it->second->CleanKnowledges();
 
     rKnowledgesTime_ = profiler_.Stop();
 }

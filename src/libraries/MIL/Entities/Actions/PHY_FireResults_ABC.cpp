@@ -69,7 +69,15 @@ void PHY_FireResults_ABC::CleanAfterSerialization( ASN1T_FireDamagesPions& asn )
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::Serialize( ASN1T_FireDamagesPopulations& asn ) const
 {
-    asn.n = 0;;
+    asn.n = populationsDamages_.size();
+    if( !populationsDamages_.empty() )
+    {
+        ASN1T_FireDamagesPopulation* pDamages = new ASN1T_FireDamagesPopulation[ populationsDamages_.size() ]; 
+        uint i = 0;
+        for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
+            it->second.Serialize( *it->first, pDamages[ i++ ] );
+        asn.elem = pDamages;
+    }
 }
     
 // -----------------------------------------------------------------------------
@@ -78,4 +86,8 @@ void PHY_FireResults_ABC::Serialize( ASN1T_FireDamagesPopulations& asn ) const
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::CleanAfterSerialization( ASN1T_FireDamagesPopulations& asn )
 {
+    for( uint n = 0; n < asn.n; ++n )  
+        PHY_FireDamages_Population::CleanAfterSerialization( asn.elem[ n ] );
+    if( asn.n > 0 )
+        delete [] asn.elem;
 }

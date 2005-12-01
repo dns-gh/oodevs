@@ -12,11 +12,23 @@ default Default()
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
     
     E_ValiditeRequete   nValidite;
+    
+    persistent T_Action              popuFire;
+    persistent E_EtatActionTirDirect nTirDirectState;
+    
+    if( popuFire != 0 )
+    {
+        DEC_StopAction( popuFire );
+        popuFire = 0;
+    }
     with( x in popus )
     {
         DEC_ConnaissancePopulation_Reconnaitre( x, nValidite );
         float dangerosite = DEC_ConnaissancePopulation_Dangerosite( x, nValidite );
         DEC_Debug( "Dangerosite : " + FloatToString( dangerosite ) );
+        
+        if( popuFire == 0 )
+            popuFire = DEC_StartTirSurPopulation( nTirDirectState, x );
     }        
     
     popus = DEC_Connaissances_PopulationsPrenantAPartie();

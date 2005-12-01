@@ -54,7 +54,6 @@ public:
     void save( boost::archive::binary_oarchive&, const uint ) const;
     //@}
 
-
     //! @name Accessors
     //@{
     bool HasDelayedPerceptions() const;

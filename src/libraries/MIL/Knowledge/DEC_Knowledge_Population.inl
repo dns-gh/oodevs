@@ -35,7 +35,7 @@ const MIL_KnowledgeGroup& DEC_Knowledge_Population::GetKnowledgeGroup() const
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
 inline
-const MIL_Population& DEC_Knowledge_Population::GetPopulationKnown() const
+MIL_Population& DEC_Knowledge_Population::GetPopulationKnown() const
 {
     assert( pPopulationKnown_ );
     return *pPopulationKnown_;

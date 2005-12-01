@@ -22,6 +22,7 @@ class DEC_Knowledge_RapForLocal;
 class DEC_Knowledge_RapForGlobal;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Population;
 class MIL_RealObject_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
@@ -83,9 +84,10 @@ public:
     MT_Float                    GetRapForLocalValue     () const;
     //@}
 
-    //! @name Gtia level
+    //! @name Knowledge group level
     //@{
-    DEC_Knowledge_Agent*  GetKnowledgeAgentFromID( uint nID ) const;
+    DEC_Knowledge_Agent*      GetKnowledgeAgentFromID     ( uint nID ) const;
+    DEC_Knowledge_Population* GetKnowledgePopulationFromID( uint nID ) const;
     //@}
 
     //! @name Team level

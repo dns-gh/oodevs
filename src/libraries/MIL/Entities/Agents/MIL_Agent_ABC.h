@@ -20,6 +20,7 @@ class MIL_Army;
 class MIL_KnowledgeGroup;
 class MIL_AgentType_ABC;
 class MIL_AgentPion;
+class MIL_Population;
 class DEC_Knowledge_Agent;
 
 // =============================================================================
@@ -58,6 +59,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyAttackedBy( MIL_AgentPion& pion ) = 0;
+    virtual void NotifyAttackedBy( MIL_Population& population ) = 0;
     //@}
 
     //! @name Knowledge

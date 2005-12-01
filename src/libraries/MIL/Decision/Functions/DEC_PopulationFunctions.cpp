@@ -14,7 +14,12 @@
 
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "Entities/Populations/DEC_PopulationKnowledge.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Tools.h"
+#include "Decision/DEC_Tools.h"
 #include "MIL_AgentServer.h"
 
 //-----------------------------------------------------------------------------
@@ -59,4 +64,34 @@ void DEC_PopulationFunctions::SetAttitude( DIA_Call_ABC& call, MIL_Population& c
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( call.GetParameter( 0 ).ToId() );
     assert( pAttitude );
     callerPopulation.SetAttitude( *pAttitude );
+}
+
+// =============================================================================
+// KNOWLEDGE
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
+{
+    assert( DEC_Tools::CheckTypePopulationConnaissanceAgent( call.GetParameter( 0 ) ) );
+    uint nID = ( uint )call.GetParameter( 0 ).ToPtr();
+    const MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
+    assert( pAgent  );
+    call.GetResult().SetValue( (int)pAgent->GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetPionsAttacking
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetPionsAttacking( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    T_PopulationKnowledgeAgentDiaIDVector attackers;
+    callerPopulation.GetKnowledge().GetPionsAttacking( attackers );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( attackers, DEC_Tools::GetTypePopulationConnaissanceAgent() );
 }

@@ -1016,6 +1016,16 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::NotifyAttackedBy
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::NotifyAttackedBy( MIL_Population& attacker )
+{
+    //$$$ RCs ??
+    pKsFire_->NotifyAttackedBy( attacker );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::NotifyAttacking
 // Created: NLD 2005-03-30
 // -----------------------------------------------------------------------------
@@ -1029,6 +1039,14 @@ void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target ) const
         MIL_RC::pRcTirSurCampAmi_->Send( *this, MIL_RC::eRcTypeEvent, target );
 }            
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::NotifyAttacking
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::NotifyAttacking( MIL_Population& target ) const
+{
+    //$$$ CRS ??
+}
 
 // =============================================================================
 // $$$ DEGUEU - VOIR AVEC LES MODELISATEURS

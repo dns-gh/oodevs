@@ -17,6 +17,17 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetKnowledge
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+inline
+const DEC_PopulationKnowledge& MIL_Population::GetKnowledge() const
+{
+    assert( pKnowledge_ );
+    return *pKnowledge_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetDefaultAttitude
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
@@ -143,3 +154,4 @@ void MIL_Population::ResetPionMaxSpeed()
     bPionMaxSpeedOverloaded_ = false;
     rOverloadedPionMaxSpeed_ = 0.;
 }
+

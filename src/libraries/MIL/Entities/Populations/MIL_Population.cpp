@@ -24,6 +24,7 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationDecision.h"
+#include "DEC_PopulationKnowledge.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -44,6 +45,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     , nID_                    ( nID )
     , pArmy_                  ( 0 )
     , strName_                ( type.GetName() )
+    , pKnowledge_             ( 0 )
     , pDecision_              ( 0 )
     , orderManager_           ( *this )
     , pDefaultAttitude_       ( 0 )
@@ -68,7 +70,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     if( !pDefaultAttitude_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude", archive.GetContext() );
 
-    pDecision_ = new DEC_PopulationDecision( *this );
+    pKnowledge_ = new DEC_PopulationKnowledge();
+    pDecision_  = new DEC_PopulationDecision( *this );
     
     concentrations_.push_back( new MIL_PopulationConcentration( *this, archive ) );    
 }
@@ -83,6 +86,7 @@ MIL_Population::MIL_Population()
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
     , strName_                ()
+    , pKnowledge_             ()
     , pDecision_              ( 0 )
     , orderManager_           ( *this )
     , pDefaultAttitude_       ( 0 )
@@ -99,6 +103,7 @@ MIL_Population::MIL_Population()
 MIL_Population::~MIL_Population()
 {
     delete pDecision_;
+    delete pKnowledge_;
 }
 
 // =============================================================================
@@ -132,7 +137,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> trashedConcentrations_
          >> trashedFlows_
          >> bPionMaxSpeedOverloaded_
-         >> rOverloadedPionMaxSpeed_;
+         >> rOverloadedPionMaxSpeed_
+         >> pKnowledge_;
 
     pDecision_ = new DEC_PopulationDecision( *this );
 }
@@ -155,12 +161,47 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << trashedConcentrations_
          << trashedFlows_
          << bPionMaxSpeedOverloaded_
-         << rOverloadedPionMaxSpeed_;
+         << rOverloadedPionMaxSpeed_
+         << pKnowledge_;
+}
+
+// =============================================================================
+// NOTIFICATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::NotifyAttackedBy
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void MIL_Population::NotifyAttackedBy( MIL_Agent_ABC& attacker )
+{
+    assert( pKnowledge_ );
+    pKnowledge_->NotifyAttackedBy( attacker );
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateKnowledges
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateKnowledges()
+{
+    assert( pKnowledge_ );
+    pKnowledge_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::CleanKnowledges
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+void MIL_Population::CleanKnowledges()
+{
+    assert( pKnowledge_ );
+    pKnowledge_->Clean();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::UpdateDecision
@@ -231,16 +272,38 @@ void MIL_Population::Clean()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::IsDead
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+bool MIL_Population::IsDead() const
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        if( !(**itConcentration).IsDead() )
+            return false;
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        if( !(**itFlow).IsDead() )
+            return false;
+
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetClosestElement
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-MIL_PopulationElement_ABC* MIL_Population::GetClosestElement( const MT_Vector2D& position ) const
+MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Agent_ABC& reference ) const
 {
+    const MT_Vector2D& position = reference.GetRole< PHY_RoleInterface_Location >().GetPosition();
+
     MIL_PopulationElement_ABC* pClosestElement = 0;
     MT_Float                   rMinDistance    = std::numeric_limits< MT_Float >::max();
 
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
+        if( (**itConcentration).IsDead() )
+            continue;
+
         MT_Vector2D nearestPoint;
 
         if( !(**itConcentration).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
@@ -255,6 +318,9 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestElement( const MT_Vector2D&
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
     {
+        if( (**itFlow).IsDead() )
+            continue;
+
         MT_Vector2D nearestPoint;
 
         if( !(**itFlow).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
@@ -269,7 +335,6 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestElement( const MT_Vector2D&
 
     return pClosestElement;
 }
-
 
 // =============================================================================
 // ACTIONS
@@ -307,7 +372,7 @@ void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_FireResults_Populatio
 // -----------------------------------------------------------------------------
 void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
-    MIL_PopulationElement_ABC* pClosestElement = GetClosestElement( target.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
 
     if( pClosestElement )
         pClosestElement->FireOnPion( rIntensity, target, fireResult );
@@ -319,7 +384,7 @@ void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY
 // -----------------------------------------------------------------------------
 MT_Float MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 {
-    MIL_PopulationElement_ABC* pClosestElement = GetClosestElement( target.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
     if( pClosestElement )
         return pClosestElement->GetDangerosity( target );
     else

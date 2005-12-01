@@ -20,7 +20,11 @@
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/Populations/MIL_PopulationType.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "MIL_AgentServer.h"
 
@@ -188,6 +192,34 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
             break;
     }
     return bHasFired;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Weapon::DirectFire
+// Created: NLD 2004-10-06
+// -----------------------------------------------------------------------------
+bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, PHY_FireResults_ABC& fireResult )
+{
+    assert( type_.CanDirectFire() && IsReady() );
+
+    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const uint nNextTimeStep    = nCurrentTimeStep + 1;
+    if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
+        rNextTimeStepToFire_ = nCurrentTimeStep;
+        
+    if( (uint)rNextTimeStepToFire_ < nNextTimeStep )
+    {
+        const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
+        const MT_Float rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
+        const uint     nKilledHumans  = (uint)ceil( rDamageSurface * target.GetDensity() );
+
+        uint nNbrAmmoToFire = (uint)firer.GetRole< PHY_RolePion_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );
+
+        type_.DirectFire( firer, target, nNbrAmmoToFire, fireResult );
+
+        rNextTimeStepToFire_ += type_.GetBurstDuration();
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------

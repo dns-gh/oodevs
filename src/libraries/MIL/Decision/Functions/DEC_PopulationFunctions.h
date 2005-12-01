@@ -30,9 +30,14 @@ public:
 //    static void DebugDrawPoints( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
 //    static void DebugDrawPoint ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
 
+    // Effects
     static void SetPionMaxSpeed  ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void ResetPionMaxSpeed( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void SetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
+
+    // Knowledge
+    static void GetKnowledgeAgentRoePopulation( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void GetPionsAttacking             ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     //@}    
 };
 

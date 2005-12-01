@@ -56,13 +56,13 @@
 #include "Entities/Agents/Actions/Objects/PHY_ActionAnimateObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkObject.h"
 #include "Entities/Agents/Actions/Moving/PHY_ActionMove.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFire.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Knowledge.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFireOnlyLoadable.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFireOnlyCarrier.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePopulation.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePion.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionOnlyLoadable.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePionOnlyCarrier.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionControlZone.h"
-//#include "Entities/Agents/Actions/Firing/PopulationFiring/PHY_ActionPopulationFire.h"
 #include "Entities/Agents/Actions/Transport/PHY_ActionTransportLoad.h"
 #include "Entities/Agents/Actions/Transport/PHY_ActionTransportUnload.h"
 #include "Entities/Agents/Actions/Loading/PHY_ActionLoad.h"
@@ -272,30 +272,30 @@ void MIL_AgentTypePion::InitializeModel( MIL_InputArchive& archive )
 void MIL_AgentTypePion::InitializeDiaFunctions()
 {
     // Actions
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_AgentPion                      >, "DEC_StopAction"                           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_AgentPion                      >, "DEC_PauseAction"                          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_AgentPion                      >, "DEC_ReprendAction"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMove                     >, "DEC_StartDeplacement"                     );
-//    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionPopulationFire           >, "DEC_StartTirSurPopulation"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFire               >, "DEC_StartTirDirect"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFireOnlyLoadable   >, "DEC_StartTirDirectDebarques"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFireOnlyCarrier    >, "DEC_StartTirDirectTransporteurs"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position    >, "DEC_StartTirIndirectSurPosition"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Knowledge   >, "DEC_StartTirIndirectSurConnaissance"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject          >, "DEC_StartCreerObjet"                      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject            >, "DEC_StartPreparerObjet"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDestroyObject            >, "DEC_StartDetruireObjet"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMineObject               >, "DEC_StartValoriserObjet"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDemineObject             >, "DEC_StartDevaloriserObjet"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionBypassObject             >, "DEC_StartCreerContournementObjet"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject             >, "DEC_StartOccuperObjet"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject         >, "DEC_StartReprendreTravauxObjet"           );  
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject            >, "DEC_StartAnimerObjet"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone              >, "DEC_StartControlerZone"                   );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionLoad                     >, "DEC_StartEmbarquement"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionUnload                   >, "DEC_StartDebarquement"                    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionRecoverHumanTransporters >, "DEC_StartAttenteTransporteurs"            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionRecoverHumanTransporters >, "DEC_StartAttenteTransporteursSurPosition" );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StopAction   < MIL_AgentPion                        >, "DEC_StopAction"                           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::SuspendAction< MIL_AgentPion                        >, "DEC_PauseAction"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::ResumeAction < MIL_AgentPion                        >, "DEC_ReprendAction"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMove                       >, "DEC_StartDeplacement"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePopulation       >, "DEC_StartTirSurPopulation"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePion             >, "DEC_StartTirDirect"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionOnlyLoadable >, "DEC_StartTirDirectDebarques"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDirectFirePionOnlyCarrier  >, "DEC_StartTirDirectTransporteurs"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Position      >, "DEC_StartTirIndirectSurPosition"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Knowledge     >, "DEC_StartTirIndirectSurConnaissance"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject            >, "DEC_StartCreerObjet"                      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject              >, "DEC_StartPreparerObjet"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDestroyObject              >, "DEC_StartDetruireObjet"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionMineObject                 >, "DEC_StartValoriserObjet"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionDemineObject               >, "DEC_StartDevaloriserObjet"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionBypassObject               >, "DEC_StartCreerContournementObjet"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject               >, "DEC_StartOccuperObjet"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject           >, "DEC_StartReprendreTravauxObjet"           );  
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject              >, "DEC_StartAnimerObjet"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone                >, "DEC_StartControlerZone"                   );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionLoad                       >, "DEC_StartEmbarquement"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionUnload                     >, "DEC_StartDebarquement"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionRecoverHumanTransporters   >, "DEC_StartAttenteTransporteurs"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_ActionRecoverHumanTransporters   >, "DEC_StartAttenteTransporteursSurPosition" );    
 
     // Embarquement / débarquement
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsLoaded                          , "DEC_Agent_EstEmbarque"                              );
@@ -383,7 +383,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsRefugee               , "DEC_Agent_EstRefugie"                       );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMilita                , "DEC_Agent_EstMilice"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosture              , "DEC_Agent_NiveauInstallation"               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetRoePopulation   , "DEC_Agent_RoePopulation"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetRoePopulation        , "DEC_Agent_RoePopulation"                    );
  
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeLeftForMoving  , "DEC_Agent_AutonomieEnDeplacement"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeToMoveDistance , "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" );

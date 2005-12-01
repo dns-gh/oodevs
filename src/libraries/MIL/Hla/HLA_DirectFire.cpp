@@ -27,7 +27,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
-#include "Entities/Effects/MIL_Effect_DirectFire.h"
+#include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_AgentServer.h"
@@ -124,7 +124,7 @@ void HLA_DirectFire::ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agen
     std::random_shuffle( typeTargets.begin(), typeTargets.end() );
     if( ! typeTargets.empty() )
     {
-        MIL_Effect_DirectFire* pFire = new MIL_Effect_DirectFire( ammunition, target, *typeTargets.front(), fireResult );
+        MIL_Effect_DirectFirePion* pFire = new MIL_Effect_DirectFirePion( ammunition, target, *typeTargets.front(), fireResult );
         MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pFire );
     }
 }

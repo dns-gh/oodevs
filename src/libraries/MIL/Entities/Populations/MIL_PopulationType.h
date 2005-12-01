@@ -20,6 +20,7 @@ class MIL_Population;
 class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_Protection;
+class PHY_RoePopulation;
 class DEC_ModelPopulation;
 
 // =============================================================================
@@ -60,8 +61,11 @@ public:
     //@{
           MT_Float           GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
           MT_Float           GetPionReloadingTimeFactor( MT_Float rPopulationDensity ) const;
+
     const PHY_AttritionData& GetAttritionData          ( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
           MT_Float           GetPH                     ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
+
+          MT_Float           GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
     //@}
 
 private:

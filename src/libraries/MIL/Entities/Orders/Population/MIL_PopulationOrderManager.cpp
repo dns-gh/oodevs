@@ -189,24 +189,6 @@ void MIL_PopulationOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrder
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PopulationOrderManager::OnReceiveOrderConduite
-// Created: NLD 2003-04-15
-//-----------------------------------------------------------------------------
-void MIL_PopulationOrderManager::OnReceiveOrderConduite( DIA_Parameters& diaParams )
-{
-    const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::FindOrderConduiteType( diaParams[1].ToId() ); // param 0 is the current population
-    assert( pOrderConduiteType );
-    MIL_OrderConduite_ABC& orderConduite = pOrderConduiteType->InstanciateOrderConduite();
-    orderConduite.Initialize( diaParams, 2 );
-    if( !LaunchOrderConduite( orderConduite ) )
-    {
-        MT_LOG_ERROR( "Invalid order conduite", 2, "MIL_OrderManager_ABC::OnReceivePopulationOrderConduite" );
-        delete &orderConduite;
-        return;
-    }
-}
-
-//-----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager::LaunchOrderConduite
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------

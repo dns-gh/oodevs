@@ -23,7 +23,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
-#include "Entities/Effects/MIL_Effect_DirectFire.h"
+#include "Entities/Effects/MIL_Effect_DirectFirePion.h"
+#include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_AgentServer.h"
@@ -230,7 +231,16 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
             return;
     }
 
-    MIL_Effect_DirectFire* pEffect = new MIL_Effect_DirectFire( weaponType_.GetDotationCategory(), target, compTarget, fireResult );
+    MIL_Effect_DirectFirePion* pEffect = new MIL_Effect_DirectFirePion( weaponType_.GetDotationCategory(), target, compTarget, fireResult );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::Fire
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& /*firer*/, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+{
+    MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nNbrAmmoReserved, fireResult );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+}

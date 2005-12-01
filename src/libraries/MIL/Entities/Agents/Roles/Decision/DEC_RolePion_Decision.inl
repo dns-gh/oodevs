@@ -62,6 +62,17 @@ bool DEC_RolePion_Decision::HasStateChanged() const
     return bStateHasChanged_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetRoePopulation
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+inline
+const PHY_RoePopulation& DEC_RolePion_Decision::GetRoePopulation() const
+{
+    assert( pRoePopulation_ );
+    return *pRoePopulation_;
+}
+
 // =============================================================================
 // NOTIFICATIONS
 // =============================================================================
@@ -134,15 +145,4 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
         nOperationalState_ = nState;
         bStateHasChanged_  = true;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::GetRoePopulation
-// Created: SBO 2005-11-23
-// -----------------------------------------------------------------------------
-inline
-const PHY_RoePopulation& DEC_RolePion_Decision::GetRoePopulation() const
-{
-    assert( pRoePopulation_ );
-    return *pRoePopulation_;
 }

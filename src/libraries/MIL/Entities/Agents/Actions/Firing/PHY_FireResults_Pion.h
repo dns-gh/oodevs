@@ -18,6 +18,7 @@
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
+class MIL_Population;
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -30,6 +31,7 @@ class PHY_FireResults_Pion : public PHY_FireResults_ABC
 
 public:
     PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Agent_ABC& target );
+    PHY_FireResults_Pion( const MIL_AgentPion& firer, const MIL_Population& target );
     PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_FireResults_Pion();
 
@@ -39,12 +41,7 @@ public:
     //@}
 
 private:
-    const uint                  nID_;
-    const MIL_AgentPion&        firer_;
-
-    const MIL_Agent_ABC*        pTarget_;
-    const MT_Vector2D           targetPosition_;
-    const PHY_DotationCategory* pDotationCategory_;
+    const uint nID_;
 };
 
 #include "PHY_FireResults_Pion.inl"

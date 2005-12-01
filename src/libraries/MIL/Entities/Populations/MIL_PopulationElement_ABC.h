@@ -31,6 +31,7 @@ class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_Volume;
 class PHY_FireResults_Population;
+class PHY_FireResults_ABC;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -62,6 +63,7 @@ public:
     void     FireOnPions   ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
     void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    void     ApplyFire     ( uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
     //@}
 
     //! @name Accessors
@@ -72,6 +74,7 @@ public:
           MT_Float                GetNbrAliveHumans() const;
           MT_Float                GetNbrDeadHumans () const;
           MT_Float                GetDensity       () const;
+          bool                    IsDead           () const;
 
     virtual const TER_Localisation& GetLocation () const = 0;
     //@}

@@ -1,16 +1,16 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFire_ABC.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/Firing/DirectFiring/PHY_ActionDirectFirePion_ABC.h $
 // $Author: Nld $
 // $Modtime: 28/10/04 9:49 $
 // $Revision: 2 $
-// $Workfile: PHY_ActionDirectFire_ABC.h $
+// $Workfile: PHY_ActionDirectFirePion_ABC.h $
 //
 // *****************************************************************************
 
-#ifndef __PHY_ActionDirectFire_ABC_h_
-#define __PHY_ActionDirectFire_ABC_h_
+#ifndef __PHY_ActionDirectFirePion_ABC_h_
+#define __PHY_ActionDirectFirePion_ABC_h_
 
 #include "MIL.h"
 
@@ -22,19 +22,19 @@ class PHY_AmmoDotationClass;
 class MIL_AgentPion;
 
 // =============================================================================
-// @class  PHY_ActionDirectFire_ABC
+// @class  PHY_ActionDirectFirePion_ABC
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionDirectFire_ABC : public PHY_Action_ABC
+class PHY_ActionDirectFirePion_ABC : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDirectFire_ABC )
+    MT_COPYNOTALLOWED( PHY_ActionDirectFirePion_ABC )
 
 public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionDirectFire_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType );
-    virtual ~PHY_ActionDirectFire_ABC();
+    PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType );
+    virtual ~PHY_ActionDirectFirePion_ABC();
 
     //! @name Operations
     //@{
@@ -53,6 +53,4 @@ private:
           PHY_FireResults_Pion*                      pFireResult_;
 };
 
-#include "PHY_ActionDirectFire_ABC.inl"
-
-#endif // __PHY_ActionDirectFire_ABC_h_
+#endif // __PHY_ActionDirectFirePion_ABC_h_

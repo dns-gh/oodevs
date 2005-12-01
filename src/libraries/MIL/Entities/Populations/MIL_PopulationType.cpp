@@ -20,6 +20,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/Functions/DEC_PopulationFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
+#include "Decision/Functions/DEC_MiscFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
@@ -239,8 +240,17 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPions >, "DEC_StartTirSurPions" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::StartAction  < PHY_Population_ActionFireOnPion  >, "DEC_StartTirSurPion"  );
 
+    // Knowledge
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, "DEC_ConnaissanceAgent_RoePopulation"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetPionsAttacking             , "DEC_Connaissances_PionsPrenantAPartie" );
+
     // Debug
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug                                 , "DEC_Debug"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug, "DEC_Debug" );
+
+    // RC
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Population >, "DEC_RC"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Message    < MIL_Population >, "DEC_Message" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Population >, "DEC_Warning" );
 
     // Effects
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetPionMaxSpeed  , "DEC_Population_RalentissementPion_ChangeVitesse"    );
@@ -291,3 +301,12 @@ MT_Float MIL_PopulationType::GetPionReloadingTimeFactor( MT_Float rPopulationDen
     return std::max( 1., rPopulationDensity * rEffectReloadingTimeFactor_ / rEffectReloadingTimeDensity_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetDamageSurface
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationType::GetDamageSurface( const PHY_RoePopulation& roeFirer ) const
+{
+    assert( damageData_.size() > roeFirer.GetID() );
+    return damageData_[ roeFirer.GetID() ];
+}

@@ -25,6 +25,7 @@ class PHY_RoleInterface_Posture;
 class MIL_Effect_IndirectFire;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
+class MIL_PopulationElement_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_Composante_ABC;
 class PHY_FireResults_ABC;
@@ -68,6 +69,7 @@ public:
     //! @name Operations
     //@{
     void     IndirectFire       ( MIL_AgentPion& firer, MIL_Effect_IndirectFire& effect, uint nNbrAmmoReserved ) const;
+    void     DirectFire         ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     void     DirectFire         ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     ThrowSmoke         ( MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmo ) const;
 

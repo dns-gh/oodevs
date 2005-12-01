@@ -131,7 +131,9 @@ public:
     //@{
             void MagicMove       ( const MT_Vector2D& vNewPos );    
             void NotifyAttacking ( MIL_Agent_ABC& target ) const;
+            void NotifyAttacking ( MIL_Population& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
+    virtual void NotifyAttackedBy( MIL_Population& population );
             void ChangeAutomate  ( MIL_Automate& newAutomate );
             void Surrender       ();
     //@}

@@ -88,6 +88,9 @@
                 </Tireur>
                 <Cible>
                     <ReglesEngagementTireur>
+                        <RegleEngagementTireur nom="none">
+                            <SurfaceAttrition>10</SurfaceAttrition> 
+                        </RegleEngagementTireur>                        
                         <RegleEngagementTireur nom="tir sommation">
                             <SurfaceAttrition>0</SurfaceAttrition> 
                         </RegleEngagementTireur>

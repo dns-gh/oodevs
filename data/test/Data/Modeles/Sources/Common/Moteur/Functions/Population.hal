@@ -4,24 +4,33 @@
 signatures
 {
     // Actions
-    V              A::DEC_StopAction   ( U /*T_Action*/ );
-    V              A::DEC_PauseAction  ( U /*T_Action*/ );
-    V              A::DEC_ReprendAction( U /*T_Action*/ );        
-
-
-    // Déplacement
-    U /*T_Action*/ A::DEC_StartDeplacement( U /*T_Point*/ );
-    
-    // Tir
-    U /*T_Action*/ A::DEC_StartTirSurPions( R /* intensite */ );
-    U /*T_Action*/ A::DEC_StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
-    
+    V                                         A::DEC_StopAction   ( U /*T_Action*/ );
+    V                                         A::DEC_PauseAction  ( U /*T_Action*/ );
+    V                                         A::DEC_ReprendAction( U /*T_Action*/ );        
+                              
+                              
+    // Déplacement            
+    U /*T_Action*/                            A::DEC_StartDeplacement( U /*T_Point*/ );
+                                            
+    // Tir                                  
+    U /*T_Action*/                            A::DEC_StartTirSurPions( R /* intensite */ );
+    U /*T_Action*/                            A::DEC_StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
+                                            
     // Effets sur les pions
-    V              A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
-    V              A::DEC_Population_RalentissementPion_VitesseParDefaut();
-    V              A::DEC_Population_ChangerAttitude( I /* E_AttitudePopulation */ );
-
+    V                                         A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
+    V                                         A::DEC_Population_RalentissementPion_VitesseParDefaut();
+    V                                         A::DEC_Population_ChangerAttitude( I /* E_AttitudePopulation */ );
+    
+    // Connaissance
+    I /*E_EtatROEPopulation*/                 A::DEC_ConnaissanceAgent_RoePopulation  (  U /* T_Population_ConnaissanceAgent */ );
+    S /*T_ListePopulationConnaissancesAgent*/ A::DEC_Connaissances_PionsPrenantAPartie(); 
+    
+    // RC
+    V                                         A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                         A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                         A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );    
+    
     // Test / debug 
-    V  A::DEC_Debug( X );
+    V                                         A::DEC_Debug( X );
 }
 

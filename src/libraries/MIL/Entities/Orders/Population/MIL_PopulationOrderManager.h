@@ -52,9 +52,7 @@ public:
 
     //! @name Conduite
     //@{
-    void OnReceiveMsgOrderConduite     ( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx );
-    void OnReceiveOrderConduite        ( DIA_Parameters& diaParams );
-    void SendOrderConduiteRequestsToDIA( DIA_Variable_ABC& diaOrderList, DIA_Variable_ABC& diaStrHint );
+    void OnReceiveMsgOrderConduite( const ASN1T_MsgOrderConduite& asnMsg, MIL_MOSContextID nCtx );
     //@}
 
     //! @name Misc

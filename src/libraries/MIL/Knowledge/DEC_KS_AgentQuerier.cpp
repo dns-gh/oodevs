@@ -168,6 +168,16 @@ DEC_Knowledge_Agent* DEC_KS_AgentQuerier::GetKnowledgeAgentFromID( uint nID ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetKnowledgePopulationFromID
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KS_AgentQuerier::GetKnowledgePopulationFromID( uint nID ) const
+{
+    assert( pPion_ );
+    return pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgePopulationFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentQuerier::GetKnowledgeObjectFromID
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------
@@ -202,7 +212,7 @@ public:
 
     void operator() ( DEC_Knowledge_AgentPerception& knowledge )
     {
-        if( knowledge.IsAttacker() )
+        if( !knowledge.IsAttacker() )
             return;
 
         DEC_Knowledge_Agent* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgeAgent( knowledge );
@@ -435,7 +445,7 @@ public:
 
     void operator() ( DEC_Knowledge_PopulationPerception& knowledge )
     {
-        if( knowledge.IsAttacker() )
+        if( !knowledge.IsAttacker() )
             return;
 
         DEC_Knowledge_Population* pKnowledge = pPion_->GetKnowledgeGroup().GetKSQuerier().GetKnowledgePopulation( knowledge );

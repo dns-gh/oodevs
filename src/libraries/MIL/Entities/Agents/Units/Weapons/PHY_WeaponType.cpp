@@ -233,6 +233,16 @@ void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PH
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::DirectFire
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+{
+    assert( pDirectFireData_ );
+    pDirectFireData_->Fire( firer, target, nNbrAmmoReserved, fireResult );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------

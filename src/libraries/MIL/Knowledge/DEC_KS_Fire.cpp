@@ -31,8 +31,7 @@ DEC_KS_Fire::DEC_KS_Fire( DEC_KnowledgeBlackBoard& blackBoard, MIL_AgentPion& ag
     : DEC_KnowledgeSource_ABC ( blackBoard       )
     , pAgentInteracting_      ( &agentInteracting )
     , pionsAttacking_         ()
-    , concentrationsAttacking_()
-    , flowsAttacking_         ()
+    , populationsAttacking_   ()
 {
     assert( pBlackBoard_ );
     pBlackBoard_->AddToScheduler( *this );
@@ -80,21 +79,11 @@ void DEC_KS_Fire::Talk()
     pionsAttacking_.clear();
 
     // Population
-    for( CIT_ConcentrationSet itAttacker = concentrationsAttacking_.begin(); itAttacker != concentrationsAttacking_.end(); ++itAttacker )
+    for( CIT_PopulationSet itAttacker = populationsAttacking_.begin(); itAttacker != populationsAttacking_.end(); ++itAttacker )
     {
-        MIL_PopulationConcentration& concentration = **itAttacker;
-        DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( concentration.GetPopulation() );
+        DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( **itAttacker );
         if( pKnowledge )
             pKnowledge->NotifyAttacker();
     }
-    concentrationsAttacking_.clear();
-
-    for( CIT_FlowSet itAttacker = flowsAttacking_.begin(); itAttacker != flowsAttacking_.end(); ++itAttacker )
-    {
-        MIL_PopulationFlow& flow = **itAttacker;
-        DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( flow.GetPopulation() );
-        if( pKnowledge )
-            pKnowledge->NotifyAttacker();
-    }
-    flowsAttacking_.clear();
+    populationsAttacking_.clear();
 }

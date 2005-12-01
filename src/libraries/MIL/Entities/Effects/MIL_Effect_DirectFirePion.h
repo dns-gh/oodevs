@@ -1,16 +1,16 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Effects/MIL_Effect_DirectFire.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Effects/MIL_Effect_DirectFirePion.h $
 // $Author: Age $
 // $Modtime: 29/11/04 14:56 $
 // $Revision: 3 $
-// $Workfile: MIL_Effect_DirectFire.h $
+// $Workfile: MIL_Effect_DirectFirePion.h $
 //
 // *****************************************************************************
 
-#ifndef __MIL_Effect_DirectFire_h_
-#define __MIL_Effect_DirectFire_h_
+#ifndef __MIL_Effect_DirectFirePion_h_
+#define __MIL_Effect_DirectFirePion_h_
 
 #include "MIL.h"
 
@@ -22,16 +22,16 @@ class PHY_FireResults_ABC;
 class MIL_Agent_ABC;
 
 // =============================================================================
-// @class  MIL_Effect_DirectFire
+// @class  MIL_Effect_DirectFirePion
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_Effect_DirectFire : public MIL_Effect_ABC
+class MIL_Effect_DirectFirePion : public MIL_Effect_ABC
 {
-    MT_COPYNOTALLOWED( MIL_Effect_DirectFire )
+    MT_COPYNOTALLOWED( MIL_Effect_DirectFirePion )
 
 public:
-             MIL_Effect_DirectFire( const PHY_DotationCategory& dotationCategory, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult );
-    virtual ~MIL_Effect_DirectFire();
+             MIL_Effect_DirectFirePion( const PHY_DotationCategory& dotationCategory, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult );
+    virtual ~MIL_Effect_DirectFirePion();
 
     //! @name Operations
     //@{
@@ -45,6 +45,6 @@ private:
           PHY_FireResults_ABC&  fireResult_;
 };
 
-#include "MIL_Effect_DirectFire.inl"
+#include "MIL_Effect_DirectFirePion.inl"
 
-#endif // __MIL_Effect_DirectFire_h_
+#endif // __MIL_Effect_DirectFirePion_h_

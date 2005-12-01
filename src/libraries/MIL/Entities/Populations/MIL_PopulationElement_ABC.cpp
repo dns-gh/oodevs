@@ -109,6 +109,7 @@ MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target 
 void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
+    assert( pPopulation_ );
     if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
         return;
 
@@ -116,6 +117,8 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
     target.GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
     if( compTargets.empty() )
         return;
+
+    target.NotifyAttackedBy( *pPopulation_ );
 
     const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
     if ( !( randomGenerator_.rand_oi() <= rPH * rIntensity ) ) 
@@ -139,6 +142,25 @@ void MIL_PopulationElement_ABC::FireOnPions( MT_Float rIntensity, PHY_FireResult
             continue;
         FireOnPion( rIntensity, target, fireResult );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyFire
+// Created: NLD 2005-11-16
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyFire( uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult )
+{
+    assert( pPopulation_ );
+
+    MT_Float rTmp = std::min( rNbrAliveHumans_, (MT_Float)nNbrAmmoFired );
+    if( rTmp == 0. )
+        return;
+
+    rNbrDeadHumans_  += rTmp;
+    rNbrAliveHumans_ -= rTmp;
+    bHumansUpdated_ = true;
+
+    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( (uint)rTmp );
 }
 
 // -----------------------------------------------------------------------------

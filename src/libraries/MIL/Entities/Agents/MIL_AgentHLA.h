@@ -51,6 +51,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyAttackedBy( MIL_AgentPion& pion );
+    virtual void NotifyAttackedBy( MIL_Population& population );
     //@}
 
     //! @name Knowledge

@@ -33,6 +33,7 @@ class MIL_Army;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class DEC_PopulationDecision;
+class DEC_PopulationKnowledge;
 class PHY_Volume;
 class PHY_FireResults_Population;
 
@@ -61,10 +62,11 @@ public:
           MT_Float                    GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
     const MIL_Army&                   GetArmy              () const;
-          
+    const DEC_PopulationKnowledge&    GetKnowledge         () const;
+          bool                        IsDead               () const;          
     //@}
 
-    //! @name Pion effects
+    //! @name Effects on pions
     //@{
     MT_Float GetPionMaxSpeed  ( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
     void     SetPionMaxSpeed  ( MT_Float rSpeed );
@@ -73,24 +75,30 @@ public:
     MT_Float GetPionReloadingTimeFactor( MT_Float rDensity ) const;
     //@}
 
+    //! @name Notifications
+    //@{
+    void NotifyAttackedBy( MIL_Agent_ABC& attacker );
+    //@}
+
     //! @name Operations
     //@{
-    void UpdateDecision();
-    void UpdateState   ();
-    void UpdateNetwork ();
-
-    void Clean();
+    void UpdateKnowledges();
+    void CleanKnowledges ();
+    void UpdateDecision  ();
+    void UpdateState     ();
+    void UpdateNetwork   ();
+    void Clean           ();
     //@}
 
     //! @name Actions
     //@{
     void     Move          ( const MT_Vector2D& destination );
-
     void     FireOnPions   ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
     void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
-
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     void     SetAttitude   ( const MIL_PopulationAttitude& attitude );
+
+    MIL_PopulationElement_ABC* GetClosestAliveElement( const MIL_Agent_ABC& reference ) const;
     //@}
 
     //! @name Tools
@@ -132,11 +140,6 @@ private:
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
     //@}
 
-    //! @name Tools
-    //@{
-    MIL_PopulationElement_ABC* GetClosestElement( const MT_Vector2D& position ) const;
-    //@}
-
 private:
     //! @name Types
     //@{
@@ -168,6 +171,7 @@ private:
           T_ConcentrationVector      trashedConcentrations_;
           T_FlowVector               trashedFlows_;
 
+          DEC_PopulationKnowledge*   pKnowledge_;
           DEC_PopulationDecision*    pDecision_;
           MIL_PopulationOrderManager orderManager_;
 

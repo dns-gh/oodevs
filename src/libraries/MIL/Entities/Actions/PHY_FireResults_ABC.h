@@ -15,8 +15,10 @@
 #include "MIL.h"
 
 #include "PHY_FireDamages_Agent.h"
+#include "PHY_FireDamages_Population.h"
 
 class MIL_Agent_ABC;
+class MIL_Population;
 
 // =============================================================================
 // @class  PHY_FireResults_ABC
@@ -32,7 +34,8 @@ public:
 
     //! @name Accessors
     //@{
-    PHY_FireDamages_Agent& GetDamages( const MIL_Agent_ABC& target );
+    PHY_FireDamages_Agent&      GetDamages( const MIL_Agent_ABC&  target );
+    PHY_FireDamages_Population& GetDamages( const MIL_Population& target );
     //@}
 
     //! @name Refs
@@ -55,11 +58,15 @@ private:
     //@{
     typedef std::map< const MIL_Agent_ABC*, PHY_FireDamages_Agent > T_AgentDamagesMap;
     typedef T_AgentDamagesMap::const_iterator                       CIT_AgentDamagesMap;
+
+    typedef std::map< const MIL_Population*, PHY_FireDamages_Population > T_PopulationDamagesMap;
+    typedef T_PopulationDamagesMap::const_iterator                        CIT_PopulationDamagesMap;
     //@}
 
 private:
-    T_AgentDamagesMap agentsDamages_;
-    uint              nNbrRefs_;
+    T_AgentDamagesMap      agentsDamages_;
+    T_PopulationDamagesMap populationsDamages_;
+    uint                   nNbrRefs_;
 };
 
 #include "PHY_FireResults_ABC.inl"

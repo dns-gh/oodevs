@@ -62,6 +62,10 @@ typedef T_ComposanteVolumeSet::const_iterator CIT_ComposanteVolumeSet;
 typedef std::vector< DEC_Knowledge_AgentComposante >    T_KnowledgeComposanteVector;
 typedef T_KnowledgeComposanteVector::iterator           IT_KnowledgeComposanteVector;
 typedef T_KnowledgeComposanteVector::const_iterator     CIT_KnowledgeComposanteVector;
+
+typedef std::vector< void* >                                   T_PopulationKnowledgeAgentDiaIDVector;
+typedef T_PopulationKnowledgeAgentDiaIDVector::iterator        IT_PopulationKnowledgeAgentDiaIDVector;
+typedef T_PopulationKnowledgeAgentDiaIDVector::const_iterator  CIT_PopulationKnowledgeAgentDiaIDVector;
 //@}
 
 //! @name DIA Queries
