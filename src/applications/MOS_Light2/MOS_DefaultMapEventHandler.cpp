@@ -77,6 +77,9 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
     connect( &MOS_App::GetApp(), SIGNAL( TacticalLineDeleted( MOS_TacticalLine_ABC& ) ), this, SLOT( OnTacticalLineDeleted( MOS_TacticalLine_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( AgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ), this, SLOT( OnAgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ), this, SLOT( OnObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ) );
+
+    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
+
 }
 
 
@@ -137,12 +140,16 @@ bool MOS_DefaultMapEventHandler::eventFilter( QObject* /*pSender*/, QEvent* pEve
 bool MOS_DefaultMapEventHandler::OnMousePress( const MOS_MapMouseEvent& mouseEvent )
 {
     vOldMousePos_ = mouseEvent.GetMapPos();
-    bool bAutomata = mouseEvent.state() == ShiftButton;
-    if( mouseEvent.button() == LeftButton && ( mouseEvent.state() ==  NoButton || mouseEvent.state() == ShiftButton ) )
+    bool bAutomata = mouseEvent.state() == ShiftButton || mouseEvent.state() == AltButton;
+    if( mouseEvent.button() == LeftButton && ( mouseEvent.state() ==  NoButton || mouseEvent.state() == ShiftButton || mouseEvent.state() == AltButton ) )
     {
         SelectElementAtPos( mouseEvent.GetMapPos(), mouseEvent.GetDistancePerPixel(), bAutomata );
-
-        // Disconnect and connect to avoid having the signal come back to us.
+        //if needed center on the automata
+        if( selectedElement_.pAgent_ && bAutomata && mouseEvent.state() == AltButton )
+        {
+            emit CenterOnPoint( selectedElement_.pAgent_->GetPos() );
+        }
+        //connect and connect to avoid having the signal come back to us.
         disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
         emit ElementSelected( selectedElement_ );
         connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );

@@ -126,6 +126,7 @@ signals:
     void ElementSelected( MOS_SelectedElement& selectedElement );
     void ElementHovered( MOS_SelectedElement& hoveredElement );
     void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
+    void CenterOnPoint( const MT_Vector2D& );
 
 private:
       enum E_PhaseSelection
