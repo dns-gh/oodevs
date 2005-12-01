@@ -75,7 +75,7 @@ void DEC_PopulationKnowledge::Clean()
 // Name: DEC_PopulationKnowledge::GetPionsAttacking
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-//void DEC_PopulationKnowledge::GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const
+void DEC_PopulationKnowledge::GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const
 {
     container.clear();
     for( CIT_AgentSet it = attackers_.begin(); it != attackers_.end(); ++it )
