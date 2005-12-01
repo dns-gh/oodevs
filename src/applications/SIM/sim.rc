@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -27,18 +27,18 @@ LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -47,7 +47,6 @@ END
 #endif    // APSTUDIO_INVOKED
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -70,18 +69,14 @@ BEGIN
     BEGIN
         BLOCK "040c04b0"
         BEGIN
-            VALUE "Comments", "\0"
-            VALUE "CompanyName", "MASA\0"
-            VALUE "FileDescription", "SIM\0"
-            VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "SIM\0"
-            VALUE "LegalCopyright", "Copyright © 2004 Masa\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "SIM.exe\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "MASA SIM\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
-            VALUE "SpecialBuild", "\0"
+            VALUE "CompanyName", "MASA"
+            VALUE "FileDescription", "SIM"
+            VALUE "FileVersion", "1.1"
+            VALUE "InternalName", "SIM"
+            VALUE "LegalCopyright", "Copyright © 2005 Masa"
+            VALUE "OriginalFilename", "SIM.exe"
+            VALUE "ProductName", "Scipio"
+            VALUE "ProductVersion", "1.1"
         END
     END
     BLOCK "VarFileInfo"
@@ -89,8 +84,6 @@ BEGIN
         VALUE "Translation", 0x40c, 1200
     END
 END
-
-#endif    // !_MAC
 
 #endif    // French (France) resources
 /////////////////////////////////////////////////////////////////////////////
