@@ -1696,7 +1696,8 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         //write the current mission
         if( pAgent->GetCurrentMission() != 0 )
         {
-            QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)pAgent->GetCurrentMission() ).c_str() );
+            //ok, not proud of it...
+            QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)( pAgent->GetCurrentMission() - 1 ) ).c_str() );
             color.SetRGB( 255.0, 255.0, 255.0 );
             toolTip.AddLine( strMission, color );
         }

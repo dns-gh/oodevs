@@ -546,10 +546,9 @@ void GFX_Tools::CreateGLAgentShadow( MT_Vector2D vPos, MT_Float rSize, MT_Float 
         GFX_Color backgroundColor = GFX_Color( 255, 255, 255, 0.4 );
         // On trace le fond de la life
         if( bBackground)
-        {
             backgroundColor = GFX_Color( 255, 255, 0.0, 0.4 );
-            CreateGLRectPoly( rectBackLife, backgroundColor  );
-        }
+
+        CreateGLRectPoly( rectBackLife, backgroundColor  );
         
         // On trace la life
         MT_Float rHeight = ( rectBackLife.GetTop() - rectBackLife.GetBottom() ) * rPercentLife / 100.;
