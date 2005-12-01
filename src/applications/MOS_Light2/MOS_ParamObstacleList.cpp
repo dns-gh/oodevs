@@ -120,6 +120,11 @@ bool MOS_ParamObstacleList::CheckValidity()
 // -----------------------------------------------------------------------------
 void MOS_ParamObstacleList::WriteMsg( std::stringstream& strMsg )
 {
+    if( pSelectedItem_ != 0 && pObstacleEditor_ != 0 )
+    {
+        std::stringstream strDummy;
+        pObstacleEditor_->WriteMsg( strDummy );
+    }
     uint nNbrChilds = pListView_->childCount();
     strMsg << pListView_->header()->label( 0 ).latin1() << ": " << nNbrChilds << " obstacles.";
     asnObjectList_.n    = nNbrChilds;
@@ -156,7 +161,8 @@ void MOS_ParamObstacleList::OnSelectionChanged( QListViewItem* pItem )
         assert( pObstacleEditor_ != 0 );
         std::stringstream strDummy;
         pObstacleEditor_->WriteMsg( strDummy );
-        ((T_ListItem*)pSelectedItem_)->GetValue().second = pObstacleEditor_->GetPointList();
+        T_ListItem* pListItem = ( T_ListItem* )pSelectedItem_;
+        pListItem->GetValue().second = pObstacleEditor_->GetPointList();
 
         delete pObstacleEditor_;
         pObstacleEditor_ = 0;
@@ -167,7 +173,7 @@ void MOS_ParamObstacleList::OnSelectionChanged( QListViewItem* pItem )
         return;
 
     ASN1T_MissionGenObject* pAsnObject = ((T_ListItem*)pItem)->GetValue().first;
-    pObstacleEditor_ = new MOS_ParamObstacle( *pAsnObject, "Obstacle", "Obstacle", this, true );
+    pObstacleEditor_ = new MOS_ParamObstacle( *pAsnObject, "Obstacle", "Obstacle", this, true, true );
     pObstacleEditor_->show();
     //$$$$ pas de tr.
 }
@@ -198,7 +204,7 @@ void MOS_ParamObstacleList::OnRequestPopup( QListViewItem* pItem, const QPoint& 
 void MOS_ParamObstacleList::OnNewObstacle()
 {
     ASN1T_MissionGenObject* pObject = new ASN1T_MissionGenObject();
-    pObject->pos_obstacle.type = EnumTypeLocalisation::polygon;
+    pObject->pos_obstacle.type = EnumTypeLocalisation::point;
     pObject->pos_obstacle.vecteur_point.n = 0;
     pObject->pos_obstacle.vecteur_point.elem = 0;
     T_Item item( pObject, T_PointVector() );

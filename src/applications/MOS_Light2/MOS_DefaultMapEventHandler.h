@@ -94,7 +94,7 @@ private:
 
     //! @name Helpers
     //@{
-    void SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
+    void SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel, bool bAutomata = false );
     void HoverElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel );
 
     bool                         GetAgentAtPos                  ( MOS_Agent*&, const MT_Vector2D& vGLPos );

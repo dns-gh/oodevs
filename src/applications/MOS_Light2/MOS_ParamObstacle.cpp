@@ -79,7 +79,10 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
         asnObject.pos_obstacle.type = EnumTypeLocalisation::point;
 
     new QLabel( tr( "Localisation:" ), this );
-    pLocation_ = new MOS_ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, bOutsideData );
+    bool bOutsideDataLocalisation = false;
+    if ( asnObject_.pos_obstacle.vecteur_point.n != 0 )
+        bOutsideDataLocalisation = true;
+    pLocation_ = new MOS_ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, bOptional, bOutsideDataLocalisation );
     //$$$$ pas de tr sur "Localisation:";
 }
 

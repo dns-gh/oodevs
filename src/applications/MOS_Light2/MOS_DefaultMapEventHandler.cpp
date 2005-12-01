@@ -137,9 +137,10 @@ bool MOS_DefaultMapEventHandler::eventFilter( QObject* /*pSender*/, QEvent* pEve
 bool MOS_DefaultMapEventHandler::OnMousePress( const MOS_MapMouseEvent& mouseEvent )
 {
     vOldMousePos_ = mouseEvent.GetMapPos();
-    if( mouseEvent.button() == LeftButton && mouseEvent.state() == NoButton )
+    bool bAutomata = mouseEvent.state() == ShiftButton;
+    if( mouseEvent.button() == LeftButton && ( mouseEvent.state() ==  NoButton || mouseEvent.state() == ShiftButton ) )
     {
-        SelectElementAtPos( mouseEvent.GetMapPos(), mouseEvent.GetDistancePerPixel() );
+        SelectElementAtPos( mouseEvent.GetMapPos(), mouseEvent.GetDistancePerPixel(), bAutomata );
 
         // Disconnect and connect to avoid having the signal come back to us.
         disconnect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
@@ -385,7 +386,7 @@ void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, M
 // Name: MOS_DefaultMapEventHandler::SelectElementAtPos
 // Created: APE 2004-05-05
 // -----------------------------------------------------------------------------
-void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
+void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel , bool bAutomata )
 {
     //state machine for selection of things, the selection will loop over all overlapped things
     int nBeginningState = nSelectionState;
@@ -404,7 +405,10 @@ void MOS_DefaultMapEventHandler::SelectElementAtPos( const MT_Vector2D& vGLPos, 
         case ePhaseSelectionAgent:
             if ( !GetAgentAtPos( pAgent, vGLPos ) && pAgent )
             {
-                selectedElement_ = MOS_SelectedElement( *pAgent );
+                if( bAutomata && ( ! pAgent->IsAutomate() ) )
+                    selectedElement_ = MOS_SelectedElement( *pAgent->GetParent() );
+                else
+                    selectedElement_ = MOS_SelectedElement( *pAgent );
                 return;
             }
             nSelectionState = ePhaseSelectionObject;
