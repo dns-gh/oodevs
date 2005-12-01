@@ -50,6 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string KnowledgeAccessor() const = 0;
+    virtual std::string KnowledgeAccessorCheck() const = 0;
     virtual std::string ASNPrefixedName( const AGR_Member& mamber ) const;
     virtual std::string Mos2ASNPrefixedName( const AGR_Member& mamber ) const;
 

@@ -50,7 +50,9 @@ AGR_KnowledgeAgentType::~AGR_KnowledgeAgentType()
 // -----------------------------------------------------------------------------
 std::string AGR_KnowledgeAgentType::ASNInitialisationCode( const AGR_Member& member ) const
 {
-    std::string strResult( "    if( !" );
+    std::string strResult;
+    strResult += member.OwnerClass().KnowledgeAccessorCheck();
+    strResult += "    if( !";
     strResult += "NET_ASN_Tools::CopyAgentKnowledge( " + member.ASNPrefixedName();
     strResult += ", GetVariable( ";
     strResult += member.DIAIndexName() + " )";
@@ -65,7 +67,8 @@ std::string AGR_KnowledgeAgentType::ASNInitialisationCode( const AGR_Member& mem
 // -----------------------------------------------------------------------------
 std::string AGR_KnowledgeAgentType::SerializationCode( const AGR_Member& member ) const
 {
-    return "    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( " + member.DIAIndexName() + " )"
+    return member.OwnerClass().KnowledgeAccessorCheck()
+         + "    NET_ASN_Tools::CopyAgentKnowledge( GetVariable( " + member.DIAIndexName() + " )"
          + ", asnMission." + member.ASNName() + 
          + ", " + member.OwnerClass().KnowledgeAccessor() + " );\n";
 }

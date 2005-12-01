@@ -81,6 +81,7 @@ public:
 
 
     virtual std::string KnowledgeAccessor() const;
+    virtual std::string KnowledgeAccessorCheck() const;
     //@}
 
     //! @name Accessors

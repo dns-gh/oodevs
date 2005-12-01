@@ -50,7 +50,8 @@ AGR_KnowledgeObjectListType::~AGR_KnowledgeObjectListType()
 // -----------------------------------------------------------------------------
 std::string AGR_KnowledgeObjectListType::SerializationCode( const AGR_Member& member ) const
 {
-    return "    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( " + member.DIAIndexName() + " )"
+    return member.OwnerClass().KnowledgeAccessorCheck()
+         + "    NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( " + member.DIAIndexName() + " )"
          + ", asnMission." + member.ASNName() + 
          + ", " + member.OwnerClass().KnowledgeAccessor() + " );\n";
 }
@@ -62,7 +63,9 @@ std::string AGR_KnowledgeObjectListType::SerializationCode( const AGR_Member& me
 // -----------------------------------------------------------------------------
 std::string AGR_KnowledgeObjectListType::ASNInitialisationCode( const AGR_Member& member ) const
 {
-    std::string strResult( "    if( !" );
+    std::string strResult;
+    strResult += member.OwnerClass().KnowledgeAccessorCheck();
+    strResult += "    if( !";
     strResult += "NET_ASN_Tools::CopyObjectKnowledgeList( " + member.ASNPrefixedName();
     strResult += ", GetVariable( ";
     strResult += member.DIAIndexName() + " )";

@@ -553,6 +553,15 @@ std::string AGR_Mission::KnowledgeAccessor() const
     return strAccessor;
 }
 
+// -----------------------------------------------------------------------------
+// Name: AGR_Mission::KnowledgeAccessorCheck
+// Created: SBO 2005-12-01
+// -----------------------------------------------------------------------------
+std::string AGR_Mission::KnowledgeAccessorCheck() const
+{
+    return std::string();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::MilFileName

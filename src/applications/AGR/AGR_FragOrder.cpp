@@ -423,6 +423,17 @@ std::string AGR_FragOrder::KnowledgeAccessor() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AGR_FragOrder::KnowledgeAccessorCheck
+// Created: SBO 2005-12-01
+// -----------------------------------------------------------------------------
+std::string AGR_FragOrder::KnowledgeAccessorCheck() const
+{
+    std::string strResult( "    if( !pKnowledgeGroup_ )\n" );
+    strResult += "        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
+    return strResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AGR_FragOrder::ASNPrefixedName
 // Created: AGE 2004-09-17
 // -----------------------------------------------------------------------------

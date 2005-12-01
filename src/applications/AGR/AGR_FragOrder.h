@@ -79,6 +79,7 @@ public:
     virtual std::string EnumName() const;
 
     virtual std::string KnowledgeAccessor() const;
+    virtual std::string KnowledgeAccessorCheck() const;
     virtual std::string ASNPrefixedName( const AGR_Member& member ) const;
     virtual std::string Mos2ASNPrefixedName( const AGR_Member& mamber ) const;
 
