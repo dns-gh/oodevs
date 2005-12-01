@@ -2440,8 +2440,12 @@ namespace
         colors.insert( std::make_pair( "vert",    GFX_Color( 000, 255, 000 ) ) );
         colors.insert( std::make_pair( "cyan",    GFX_Color( 000, 255, 255 ) ) );
         colors.insert( std::make_pair( "magenta", GFX_Color( 255, 000, 255 ) ) );
+        colors.insert( std::make_pair( "orange",  GFX_Color( 255, 150, 10 ) ) );
+        colors.insert( std::make_pair( "marron",  GFX_Color( 139, 69, 19 ) ) );
         colors.insert( std::make_pair( "jaune",   GFX_Color( 255, 255, 000 ) ) );
         colors.insert( std::make_pair( "gris",    GFX_Color( 100, 100, 100 ) ) );
+        colors.insert( std::make_pair( "noir",    GFX_Color( 0, 0, 0 ) ) );
+        colors.insert( std::make_pair( "cobalt",    GFX_Color( 0, 0, 128 ) ) );
         colors.insert( std::make_pair( "",        GFX_Color( 255, 100, 255 ) ) );
 
         return colors;
@@ -2461,7 +2465,28 @@ namespace
         synonyms[ "glaise" ] = "rouge";
         synonyms[ "humus" ] = "rouge";
         synonyms[ "tourbe" ] = "rouge";
-
+        synonyms[ "amarante" ] = "rouge";
+        synonyms[ "amarantes" ] = "rouge";
+        synonyms[ "aniline" ] = "rouge";
+        synonyms[ "anilines" ] = "rouge";
+        synonyms[ "brique" ] = "rouge";
+        synonyms[ "briques" ] = "rouge";
+        synonyms[ "carmin" ] = "rouge";
+        synonyms[ "carmins" ] = "rouge";
+        synonyms[ "cerise" ] = "rouge";
+        synonyms[ "cerises" ] = "rouge";
+        synonyms[ "corail" ] = "rouge";
+        synonyms[ "coraux" ] = "rouge";
+        synonyms[ "corails" ] = "rouge";
+        synonyms[ "garance" ] = "rouge";
+        synonyms[ "garances" ] = "rouge";
+        synonyms[ "grenat" ] = "rouge";
+        synonyms[ "grenats" ] = "rouge";
+        synonyms[ "pourpre" ] = "rouge";
+        synonyms[ "pourpres" ] = "rouge";
+        synonyms[ "vermeil" ] = "rouge";
+        synonyms[ "vermeils" ] = "rouge";
+        
         synonyms[ "bleu"   ] = "bleu";
         synonyms[ "bleus"   ] = "bleu";
         synonyms[ "blue"   ] = "bleu";
@@ -2479,7 +2504,129 @@ namespace
         synonyms[ "neutres" ] = "gris";
         synonyms[ "neutral" ] = "gris";
         synonyms[ "neutrals" ] = "gris";
+        synonyms[ "argent" ] = "gris";
+        synonyms[ "argents" ] = "gris";
+        synonyms[ "silver" ] = "gris";
+        synonyms[ "silvers" ] = "gris";
+        synonyms[ "platine" ] = "gris";
+        synonyms[ "platines" ] = "gris";
 
+        synonyms[ "cobalt" ] = "cobalt";
+        synonyms[ "azur" ] = "cobalt";
+        synonyms[ "ardoise" ] = "cobalt";
+        synonyms[ "cobalts" ] = "cobalt";
+        synonyms[ "azurs" ] = "cobalt";
+        synonyms[ "ardoises" ] = "cobalt";
+
+        synonyms[ "turquoise" ] = "cyan";
+        synonyms[ "cyan" ] = "cyan";
+        synonyms[ "turquoises" ] = "cyan";
+        synonyms[ "cyans" ] = "cyan";
+
+        synonyms[ "orange" ] = "orange";
+        synonyms[ "oranges" ] = "orange";
+        synonyms[ "orange" ] = "orange";
+        synonyms[ "orange" ] = "orange";
+        synonyms[ "ocre" ] = "orange";
+        synonyms[ "ocres" ] = "orange";
+        synonyms[ "cuivre" ] = "orange";
+        synonyms[ "cuivres" ] = "orange";
+
+        synonyms[ "vert" ] = "vert";
+        synonyms[ "verts" ] = "vert";
+        synonyms[ "green" ] = "vert";
+        synonyms[ "greens" ] = "vert";
+        synonyms[ "amande" ] = "vert";
+        synonyms[ "amandes" ] = "vert";
+        synonyms[ "émeraudes" ] = "vert";
+        synonyms[ "émeraude" ] = "vert";
+        synonyms[ "jade" ] = "vert";
+        synonyms[ "jades" ] = "vert";
+        synonyms[ "mélèze" ] = "vert";
+        synonyms[ "mélèzes" ] = "vert";
+        synonyms[ "olive" ] = "vert";
+        synonyms[ "olives" ] = "vert";
+
+
+        synonyms[ "marron" ] = "marron";
+        synonyms[ "marrons" ] = "marron";
+        synonyms[ "maroon" ] = "marron";
+        synonyms[ "maroons" ] = "marron";
+        synonyms[ "brown" ] = "marron";
+        synonyms[ "browns" ] = "marron";
+        synonyms[ "acajou" ] = "marron";
+        synonyms[ "acajous" ] = "marron";
+        synonyms[ "auburn" ] = "marron";
+        synonyms[ "auburns" ] = "marron";
+        synonyms[ "bruns" ] = "marron";
+        synonyms[ "brun" ] = "marron";
+        synonyms[ "caramel" ] = "marron";
+        synonyms[ "caramels" ] = "marron";
+        synonyms[ "chataigne" ] = "marron";
+        synonyms[ "chataignes" ] = "marron";
+        synonyms[ "mordorés" ] = "marron";
+        synonyms[ "mordorés" ] = "marron";
+        synonyms[ "noisettes" ] = "marron";
+        synonyms[ "noisettes" ] = "marron";
+
+        synonyms[ "noir" ] = "noir";
+        synonyms[ "noirs" ] = "noirs";
+        synonyms[ "black" ] = "noir";
+        synonyms[ "blacks" ] = "noir";
+        synonyms[ "chocolat" ] = "noir";
+        synonyms[ "chocolats" ] = "noir";
+        synonyms[ "bitume" ] = "noir";
+        synonyms[ "cachou" ] = "noir";
+        synonyms[ "bitumes" ] = "noir";
+        synonyms[ "cachous" ] = "noir";
+        synonyms[ "charbon" ] = "noir";
+        synonyms[ "carbone" ] = "noir";
+        synonyms[ "ébène" ] = "noir";
+        synonyms[ "ivoire" ] = "noir";
+        synonyms[ "jais" ] = "noir";
+        synonyms[ "réglisse" ] = "noir";
+        synonyms[ "charbons" ] = "noir";
+        synonyms[ "carbones" ] = "noir";
+        synonyms[ "ébènes" ] = "noir";
+        synonyms[ "ivoires" ] = "noir";
+        synonyms[ "réglisses" ] = "noir";
+
+        synonyms[ "jaune" ] = "jaune";
+        synonyms[ "jaunes" ] = "jaune";
+        synonyms[ "gold" ] = "jaune";
+        synonyms[ "yellow" ] = "jaune";
+        synonyms[ "golds" ] = "jaune";
+        synonyms[ "yellows" ] = "jaune";
+        synonyms[ "or" ] = "jaune";
+        synonyms[ "ors" ] = "jaune";
+        synonyms[ "topaze" ] = "jaune";
+        synonyms[ "soufre" ] = "jaune";
+        synonyms[ "safran" ] = "jaune";
+        synonyms[ "mimoza" ] = "jaune";
+        synonyms[ "citron" ] = "jaune";
+        synonyms[ "chrome" ] = "jaune";
+        synonyms[ "blé" ] = "jaune";
+        synonyms[ "ambre" ] = "jaune";
+        synonyms[ "topazes" ] = "jaune";
+        synonyms[ "soufres" ] = "jaune";
+        synonyms[ "safrans" ] = "jaune";
+        synonyms[ "mimozas" ] = "jaune";
+        synonyms[ "citrons" ] = "jaune";
+        synonyms[ "chromes" ] = "jaune";
+        synonyms[ "blés" ] = "jaune";
+        synonyms[ "ambres" ] = "jaune";
+        synonyms[ "sable" ] = "jaune";
+        synonyms[ "sables" ] = "jaune";
+
+        synonyms[ "fuchsia" ] = "magenta";
+        synonyms[ "fuchsias" ] = "magenta";
+        synonyms[ "magenta" ] = "magenta";
+        synonyms[ "magentas" ] = "magenta";
+        synonyms[ "rose" ] = "magenta";
+        synonyms[ "roses" ] = "magenta";
+        synonyms[ "mauve" ] = "magenta";
+        synonyms[ "mauves" ] = "magenta";
+        
         synonyms[ "inconnu" ] = "";
         return synonyms;
     }
