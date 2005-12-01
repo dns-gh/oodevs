@@ -39,6 +39,12 @@ class PHY_FireResults_ABC;
 class MIL_PopulationElement_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::pair< MT_Float /*alive humans*/, MT_Float /*dead humans*/ > T_Humans;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationElement_ABC( MIL_Population& population, uint nID );
@@ -53,9 +59,13 @@ public:
 
     //! @name Modifiers
     //@{
-    void     SetAttitude( const MIL_PopulationAttitude& attitude );
-    MT_Float PushHumans ( MT_Float rNbr );
-    MT_Float PullHumans ( MT_Float rNbr );
+    void SetAttitude( const MIL_PopulationAttitude& attitude );
+    //@}
+
+    //! @name Humans management
+    //@{
+    void     PushHumans ( const T_Humans& humans );
+    T_Humans PullHumans ( MT_Float rNbr );
     //@}
 
     //! @name Actions
@@ -73,6 +83,7 @@ public:
           uint                    GetID            () const;
           MT_Float                GetNbrAliveHumans() const;
           MT_Float                GetNbrDeadHumans () const;
+          MT_Float                GetNbrHumans     () const;
           MT_Float                GetDensity       () const;
           bool                    IsDead           () const;
 
@@ -104,11 +115,8 @@ protected:
     //@{
     void UpdateDensity   ();
     void UpdateCollisions();
-
-    void SetNbrAliveHumans( MT_Float rNbr );
-    void SetNbrDeadHumans ( MT_Float rNbr );
     //@}
-
+ 
     //! @name Network
     //@{
     bool HasAttitudeChanged() const;
@@ -132,7 +140,7 @@ private:
           MIL_Population*         pPopulation_;
           MT_Float                rNbrAliveHumans_;
           MT_Float                rNbrDeadHumans_;
-          MT_Float                rDensity_;
+          MT_Float                rDensity_; // Alive humans density
     const MIL_PopulationAttitude* pAttitude_;
 
           T_AgentVector           collidingAgents_;

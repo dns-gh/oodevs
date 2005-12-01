@@ -51,7 +51,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     MT_Float rNbrHumans;
     archive.ReadField( "NombreHumains", rNbrHumans, CheckValueGreater( 0. ) );
-    SetNbrAliveHumans( rNbrHumans );
+    PushHumans( T_Humans( rNbrHumans, 0. ) );
         
     UpdateLocation();
     UpdateDensity ();
@@ -72,7 +72,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 {
     UpdateLocation();
     UpdateDensity ();
-    SendCreation();
+    SendCreation  ();
 }
 
 // -----------------------------------------------------------------------------

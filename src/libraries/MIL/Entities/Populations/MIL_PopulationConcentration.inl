@@ -85,5 +85,5 @@ const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
 inline
 bool MIL_PopulationConcentration::IsValid() const
 {
-    return GetNbrAliveHumans() > 0. || !pushingFlows_.empty();
+    return GetNbrHumans() > 0. || !pushingFlows_.empty();
 }

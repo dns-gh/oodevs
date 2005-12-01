@@ -224,10 +224,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         pDestConcentration_->RegisterPushingFlow( *this );
     }
     if( pDestConcentration_ )
-    {
-        const MT_Float rNbrHumansPushed = pDestConcentration_->PushHumans( std::min( rNbrHumans, GetNbrAliveHumans() ) );
-        PullHumans( rNbrHumansPushed );
-    }
+        pDestConcentration_->PushHumans( PullHumans( rNbrHumans ) );
 
     // Tail management
     if( pSourceConcentration_ )
@@ -294,8 +291,9 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::IsValid() const
 {
-    return   GetNbrAliveHumans() > 0. 
-        || ( GetNbrAliveHumans() == 0. && ( pSourceConcentration_ && pSourceConcentration_->GetPosition() == GetHeadPosition() ) );
+    return GetNbrHumans() > 0. || pSourceConcentration_;
+//    return   GetNbrAliveHumans() > 0. 
+//        || ( GetNbrAliveHumans() == 0. && ( pSourceConcentration_ && pSourceConcentration_->GetPosition() == GetHeadPosition() ) );
 //    return !pDestConcentration_ || pSourceConcentration_ || GetHeadPosition() != GetTailPosition(); //$$$ tester uniquement rNbrAliveHumans ? 
 }
 

@@ -110,6 +110,16 @@ MT_Float MIL_PopulationElement_ABC::GetNbrDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetNbrHumans
+// Created: NLD 2005-12-01
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_PopulationElement_ABC::GetNbrHumans() const
+{
+    return rNbrDeadHumans_ + rNbrAliveHumans_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::UpdateDensity
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
@@ -140,40 +150,43 @@ void MIL_PopulationElement_ABC::SetAttitude( const MIL_PopulationAttitude& attit
 // Name: MIL_PopulationElement_ABC::SetNbrAliveHumans
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-inline
-void MIL_PopulationElement_ABC::SetNbrAliveHumans( MT_Float rNbr )
-{
-    if( rNbrAliveHumans_ == rNbr )
-        return;
-
-    rNbrAliveHumans_ = rNbr;
-    bHumansUpdated_  = true;
-}
+//inline
+//void MIL_PopulationElement_ABC::SetNbrAliveHumans( MT_Float rNbr )
+//{
+//    if( rNbrAliveHumans_ == rNbr )
+//        return;
+//
+//    rNbrAliveHumans_ = rNbr;
+//    bHumansUpdated_  = true;
+//}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::SetNbrDeadHumans
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-inline
-void MIL_PopulationElement_ABC::SetNbrDeadHumans( MT_Float rNbr )
-{
-    if( rNbrDeadHumans_ == rNbr )
-        return;
-
-    rNbrDeadHumans_ = rNbr;
-    bHumansUpdated_  = true;
-}
+//inline
+//void MIL_PopulationElement_ABC::SetNbrDeadHumans( MT_Float rNbr )
+//{
+//    if( rNbrDeadHumans_ == rNbr )
+//        return;
+//
+//    rNbrDeadHumans_ = rNbr;
+//    bHumansUpdated_  = true;
+//}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::PushHumans
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_PopulationElement_ABC::PushHumans( MT_Float rNbr )
+void MIL_PopulationElement_ABC::PushHumans( const T_Humans& humans )
 {
+    if( humans.first == 0. && humans.second == 0. )
+        return;
+
     bHumansUpdated_ = true;
-    rNbrAliveHumans_ += rNbr;
-    return rNbr;
+    rNbrAliveHumans_ += humans.first;
+    rNbrDeadHumans_  += humans.second;
 }
 
 // -----------------------------------------------------------------------------
@@ -181,12 +194,18 @@ MT_Float MIL_PopulationElement_ABC::PushHumans( MT_Float rNbr )
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_PopulationElement_ABC::PullHumans( MT_Float rNbr )
+MIL_PopulationElement_ABC::T_Humans MIL_PopulationElement_ABC::PullHumans( MT_Float rNbr )
 {
-    bHumansUpdated_ = true;
-    const MT_Float rNbrTmp = std::min( rNbr, rNbrAliveHumans_ );
-    rNbrAliveHumans_ -= rNbrTmp;
-    return rNbrTmp;
+    const MT_Float rNbrAlive = std::min( rNbr, rNbrAliveHumans_ );
+    rNbrAliveHumans_ -= rNbrAlive;
+
+    const MT_Float rNbrDead = std::min( rNbr - rNbrAlive, rNbrDeadHumans_ );
+    rNbrDeadHumans_ -= rNbrDead;
+
+    if( rNbrAlive > 0. || rNbrDead > 0. )
+        bHumansUpdated_ = true;
+
+    return T_Humans( rNbrAlive, rNbrDead );
 }
 
 // -----------------------------------------------------------------------------

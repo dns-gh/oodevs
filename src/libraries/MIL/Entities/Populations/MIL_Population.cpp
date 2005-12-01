@@ -567,7 +567,7 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagic
 // -----------------------------------------------------------------------------
 ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
 {
-    MT_Vector2D vPosTmp;
+    /*MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
 
     // create a new concentration at the right position (we could also take the first in list and move it...)
@@ -596,7 +596,7 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_M
     concentrations_.push_back( pNewConcentration );
 
     pDecision_->Reset();
-    orderManager_.CancelAllOrders();
+    orderManager_.CancelAllOrders();*/
     return EnumPopulationAttrErrorCode::no_error;
 }
 
