@@ -50,6 +50,4 @@ private:
 
 
 
-#include "MT_GLToolTipLine.inl"
-
 #endif // __MT_GLToolTipLine_h_

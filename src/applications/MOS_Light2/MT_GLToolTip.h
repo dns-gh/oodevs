@@ -59,6 +59,5 @@ private:
 };
 
 
-#include "MT_GLToolTip.inl"
 
 #endif // __MT_GLToolTip_h_

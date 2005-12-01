@@ -2119,11 +2119,10 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
     if( MOS_App::GetApp().Is3D() )
         glPopMatrix();
 
-    if( agent.IsAutomate() )
-    {
-        // $$$$ AGE 2005-04-08: Don't ask about "O"
+    if( agent.IsAutomate() && agent.IsAggregated() )
         GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color , true, "O", -1 );
-    };
+    else if ( agent.IsAutomate() )
+        GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color , true, "W", -1 );
 
     glPopMatrix();
 
