@@ -119,6 +119,8 @@
 #include "res/talkie_interdit.xpm"
 #include "res/brouillage.xpm"
 #include "res/radars_on.xpm"
+#include "res/aggregate.xpm"
+#include "res/desaggregate.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

@@ -32,10 +32,12 @@ public:
     //@}
 
 private slots:
-    void OnAutoSetLogisticLinks();
+    //void OnAutoSetLogisticLinks();
     void OnLogisticLinks( float rValue );
     void OnMissingLogisticLinks( float rValue );
     void OnRealTimeLog();
+    void OnAggregateAll();
+    void OnDesaggregateAll();
 
 private:
     void FillButton( MT_ToolListButton& button, MOS_Options::E_State nState );
@@ -43,8 +45,10 @@ private:
 
 private:
 
-    QToolButton* pAutoSetLogisticLinksButton_;
+    //QToolButton* pAutoSetLogisticLinksButton_;
     QToolButton* pRealTimeLogButton_;
+    QToolButton*  pAggregateAllButton_;
+    QToolButton*  pDesaggregateAllButton_;
 
 };
 

@@ -109,5 +109,7 @@ DECLARE_ICON( talkie );
 DECLARE_ICON( talkie_interdit );
 DECLARE_ICON( brouillage );
 DECLARE_ICON( radars_on );
+DECLARE_ICON( aggregate );
+DECLARE_ICON( desaggregate );
 
 #endif // __demo_resources_h_
