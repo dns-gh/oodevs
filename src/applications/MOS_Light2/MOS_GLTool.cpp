@@ -1672,10 +1672,10 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         QString strName =  pAgent->GetName().c_str();
         if ( pAgent->bNeutralized_ )
             strName = QString("Neutralisé: ") + strName;
-        else if ( pAgent->GetRawOpState() == eEtatOperationnel_DetruitTotalement )
-            strName = QString("Détruit totalement: ") + strName;
-        else if ( pAgent->GetRawOpState() == eEtatOperationnel_DetruitTactiquement )
-            strName = QString("Détruit tactiquement: ") + strName;
+        else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTotalement )
+            strName = QString( ENT_Tr::ConvertFromEtatOperationnel( pAgent->nOpState_ ).c_str() ) + QString( " " ) + strName;
+        else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTactiquement )
+            strName = QString( ENT_Tr::ConvertFromEtatOperationnel( pAgent->nOpState_ ).c_str() ) + QString( " " ) + strName;
         else if ( pAgent->bSurrendered_ )
             strName = QString("Rendu: ") + strName;
         else if ( pAgent->bPrisoner_ )
@@ -1684,9 +1684,9 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         if ( pAgent->bPrisoner_ || pAgent->bSurrendered_ )
             color.SetRGB( 128.0, 0.0, 128.0 );
         else if ( pAgent->bNeutralized_ 
-                  || pAgent->GetRawOpState() == eEtatOperationnel_DetruitTactiquement )
+                  || pAgent->nOpState_ == eEtatOperationnel_DetruitTactiquement )
             color.SetRGB( 255.0, 128.0 , 0.0 );
-        else if ( pAgent->GetRawOpState() == eEtatOperationnel_DetruitTotalement  )
+        else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTotalement  )
             color.SetRGB( 255.0, 0.0, 0.0 );
         else
             color.SetRGB( 255.0, 255.0, 0.0 );
