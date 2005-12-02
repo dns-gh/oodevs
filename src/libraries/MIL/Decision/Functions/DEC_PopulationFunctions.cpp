@@ -66,6 +66,15 @@ void DEC_PopulationFunctions::SetAttitude( DIA_Call_ABC& call, MIL_Population& c
     callerPopulation.SetAttitude( *pAttitude );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetAttitude
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetAttitude( DIA_Call_ABC& call, MIL_Population& callerPopulation )
+{
+    call.GetResult().SetValue( (int)callerPopulation.GetAttitude().GetID() );
+}
+
 // =============================================================================
 // KNOWLEDGE
 // =============================================================================
@@ -94,4 +103,17 @@ void DEC_PopulationFunctions::GetPionsAttacking( DIA_Call_ABC& call, const MIL_P
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( attackers, DEC_Tools::GetTypePopulationConnaissanceAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetPionsSecuring
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetPionsSecuring( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    T_PopulationKnowledgeAgentDiaIDVector securers;
+    callerPopulation.GetKnowledge().GetPionsSecuring( securers );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( securers, DEC_Tools::GetTypePopulationConnaissanceAgent() );
 }

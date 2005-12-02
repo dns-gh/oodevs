@@ -7,11 +7,10 @@ signatures
     V                                         A::DEC_StopAction   ( U /*T_Action*/ );
     V                                         A::DEC_PauseAction  ( U /*T_Action*/ );
     V                                         A::DEC_ReprendAction( U /*T_Action*/ );        
-                              
-                              
+
     // Déplacement            
     U /*T_Action*/                            A::DEC_StartDeplacement( U /*T_Point*/ );
-                                            
+
     // Tir                                  
     U /*T_Action*/                            A::DEC_StartTirSurPions( R /* intensite */ );
     U /*T_Action*/                            A::DEC_StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
@@ -20,10 +19,12 @@ signatures
     V                                         A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
     V                                         A::DEC_Population_RalentissementPion_VitesseParDefaut();
     V                                         A::DEC_Population_ChangerAttitude                    ( I /* E_AttitudePopulation */ );
+    I /* E_AttitudePopulation */              A::DEC_Population_Attitude                           ();
     
     // Connaissance
     I /*E_EtatROEPopulation*/                 A::DEC_ConnaissanceAgent_RoePopulation  (  U /* T_Population_ConnaissanceAgent */ );
     S /*T_ListePopulationConnaissancesAgent*/ A::DEC_Connaissances_PionsPrenantAPartie(); 
+    S /*T_ListePopulationConnaissancesAgent*/ A::DEC_Connaissances_PionsSecurisant    (); 
     
     // RC
     V                                         A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );

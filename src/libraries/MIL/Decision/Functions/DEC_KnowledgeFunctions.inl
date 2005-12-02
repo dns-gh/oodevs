@@ -87,3 +87,17 @@ void DEC_KnowledgeFunctions::GetFriendsInZone( DIA_Call_ABC& call, const T& call
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissanceAgent() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetPopulations
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgeFunctions::GetPopulations( DIA_Call_ABC& call, const T& caller )
+{
+    T_KnowledgePopulationDiaIDVector knowledges;
+    caller.GetKSQuerier().GetPopulations( knowledges );
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypeConnaissancePopulation() );
+}

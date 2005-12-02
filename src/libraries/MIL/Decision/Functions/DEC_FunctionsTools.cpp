@@ -58,6 +58,3 @@ DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_V
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
     return caller.GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
 }
-
-
-

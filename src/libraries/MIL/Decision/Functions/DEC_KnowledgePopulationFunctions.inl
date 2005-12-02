@@ -30,3 +30,21 @@ void DEC_KnowledgePopulationFunctions::IsRecon( DIA_Call_ABC& call, const T& cal
     call.GetResult().SetValue( pKnowledge->IsRecon() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgePopulationFunctions::IsInZone
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_KnowledgePopulationFunctions::IsInZone( DIA_Call_ABC& call, const T& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 1 ) ) );
+    const TER_Localisation* pLoc = call.GetParameter( 1 ).ToUserPtr( pLoc );
+    assert( pLoc );
+    call.GetResult().SetValue( pKnowledge->IsInZone( *pLoc ) );
+}

@@ -166,17 +166,27 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
 }
 
 // =============================================================================
-// NOTIFICATIONS
+// EFFECTS FROM PIONS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::NotifyAttackedBy
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-void MIL_Population::NotifyAttackedBy( MIL_Agent_ABC& attacker )
+void MIL_Population::NotifyAttackedBy( const MIL_Agent_ABC& attacker )
 {
     assert( pKnowledge_ );
     pKnowledge_->NotifyAttackedBy( attacker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::Secure
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void MIL_Population::Secure( const MIL_AgentPion& securer )
+{
+    assert( pKnowledge_ );
+    pKnowledge_->NotifySecuredBy( securer );
 }
 
 // =============================================================================
@@ -289,6 +299,23 @@ bool MIL_Population::IsDead() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::IsInZone
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+bool MIL_Population::IsInZone( const TER_Localisation& loc ) const
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        if( (**itConcentration).IsInZone( loc ) )
+            return true;
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        if( (**itFlow).IsInZone( loc ) )
+            return true;
+
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetClosestElement
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
@@ -334,6 +361,19 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Age
     }
 
     return pClosestElement;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetAttitude
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
+{
+    if( !concentrations_.empty() )
+        return concentrations_.front()->GetAttitude();
+    if( !flows_.empty() )
+        return flows_.front()->GetAttitude();
+    return GetDefaultAttitude();
 }
 
 // =============================================================================

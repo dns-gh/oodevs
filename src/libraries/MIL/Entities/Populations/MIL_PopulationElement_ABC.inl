@@ -146,33 +146,6 @@ void MIL_PopulationElement_ABC::SetAttitude( const MIL_PopulationAttitude& attit
         pAttitude_ = &attitude;
     }
 }
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::SetNbrAliveHumans
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-//inline
-//void MIL_PopulationElement_ABC::SetNbrAliveHumans( MT_Float rNbr )
-//{
-//    if( rNbrAliveHumans_ == rNbr )
-//        return;
-//
-//    rNbrAliveHumans_ = rNbr;
-//    bHumansUpdated_  = true;
-//}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::SetNbrDeadHumans
-// Created: NLD 2005-11-03
-// -----------------------------------------------------------------------------
-//inline
-//void MIL_PopulationElement_ABC::SetNbrDeadHumans( MT_Float rNbr )
-//{
-//    if( rNbrDeadHumans_ == rNbr )
-//        return;
-//
-//    rNbrDeadHumans_ = rNbr;
-//    bHumansUpdated_  = true;
-//}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::PushHumans
@@ -216,4 +189,14 @@ inline
 bool MIL_PopulationElement_ABC::IsDead() const
 {
     return rNbrAliveHumans_ == 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::IsInZone
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationElement_ABC::IsInZone( const TER_Localisation& loc ) const
+{
+    return GetLocation().IsIntersecting( loc );
 }

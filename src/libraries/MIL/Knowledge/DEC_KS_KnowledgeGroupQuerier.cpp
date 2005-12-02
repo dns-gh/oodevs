@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_KS_ArmyQuerier.h"
@@ -302,6 +303,40 @@ void DEC_KS_KnowledgeGroupQuerier::GetFriendsInZone( T_KnowledgeAgentDiaIDVector
     pBlackBoard_->ApplyOnKnowledgesAgent( functor );     
 }
 
+// -----------------------------------------------------------------------------
+// Name: sPopulationKnowledgesInserter
+// Created: NLD 2004-04-06
+// -----------------------------------------------------------------------------
+class sPopulationKnowledgesInserter
+{
+public:
+    sPopulationKnowledgesInserter( T_KnowledgePopulationDiaIDVector& container )
+        : pContainer_( &container )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_Population& knowledge )
+    {
+        pContainer_->push_back( (void*)knowledge.GetID() );
+    }
+
+private:
+    T_KnowledgePopulationDiaIDVector* pContainer_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeGroupQuerier::GetPopulations
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_KS_KnowledgeGroupQuerier::GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const
+{
+    container.clear();
+    assert( pKnowledgeGroup_ );
+    sPopulationKnowledgesInserter functor( container );
+
+    assert( pBlackBoard_ );
+    pBlackBoard_->ApplyOnKnowledgesPopulation( functor );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_KnowledgeGroupQuerier::GetKnowledgeAgent

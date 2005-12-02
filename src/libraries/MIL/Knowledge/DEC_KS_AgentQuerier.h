@@ -79,6 +79,7 @@ public:
     void                  GetPopulationsColliding      ( T_KnowledgePopulationCollisionVector& container ) const;
     void                  GetPopulationsColliding      ( T_KnowledgePopulationDiaIDVector&     container ) const;
     void                  GetPopulationsAttacking      ( T_KnowledgePopulationDiaIDVector&     container ) const;
+    void                  GetPopulations               ( T_KnowledgePopulationDiaIDVector&     container ) const;
     
     DEC_Knowledge_RapForLocal&  GetKnowledgeRapForLocal () const;
     MT_Float                    GetRapForLocalValue     () const;

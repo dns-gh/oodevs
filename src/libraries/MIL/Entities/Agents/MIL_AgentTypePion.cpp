@@ -459,7 +459,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     // Population knowledges accessors
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsRecon                      < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstReconnu"                   );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDangerosity                                , "DEC_ConnaissancePopulation_Dangerosite"                  );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDangerosity                                , "DEC_ConnaissancePopulation_Dangerosite"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsInZone                     < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstDansZone"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Secure                                        , "DEC_ConnaissancePopulation_Securiser"                    );
     
     // Global knowledge
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetRapForLocal                                          , "DEC_RapportDeForceLocal"                            );
@@ -475,8 +477,10 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetClosestObject                                        , "DEC_Connaissances_ObjetLePlusProche"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulationsColliding                                 , "DEC_Connaissances_CollisionsPopulations"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulationsAttacking                                 , "DEC_Connaissances_PopulationsPrenantAPartie"        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulations                         < MIL_AgentPion >, "DEC_Connaissances_Populations"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesWith                    < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesAvec"         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith              < MIL_AgentPion >, "DEC_Connaissances_PartageConnaissancesDansZoneAvec" );
+
 
     // Ordres de conduite
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::WaitForOrder       < MIL_AgentPion >, "DEC_AttenteOrdre"       );

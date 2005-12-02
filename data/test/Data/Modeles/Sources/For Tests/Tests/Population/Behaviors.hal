@@ -16,19 +16,19 @@ behavior BEH_Defaut( id nDummy )
     {              
         persistent T_Action actionFire;
         
+        
+        DEC_Debug( "Attitude : " + EnumToString( DEC_Population_Attitude(), E_AttitudePopulation ) );
+        
         if( actionFire != 0 )
         {
             DEC_StopAction( actionFire );
             actionFire = 0;
         }
-        
-        
+                
         if( DIA_ModuleBegins() )
         {
           //  actionFire = DEC_StartTirSurPions();
         }
-        
-       
         
         T_ListePopulationConnaissancesAgent attackers = DEC_Connaissances_PionsPrenantAPartie();
         if( DIA_Size( attackers ) > 0 )
@@ -37,6 +37,12 @@ behavior BEH_Defaut( id nDummy )
             DEC_Debug( "ROE 1er pion prenant à partie : " + EnumToString( DEC_ConnaissanceAgent_RoePopulation( DEC_UserTypeList_GetAt( attackers, 0 ) ), E_EtatROEPopulation ) );
             
             actionFire = DEC_StartTirSurPion( 1, DEC_UserTypeList_GetAt( attackers, 0 ) );
+        }
+
+        T_ListePopulationConnaissancesAgent securers = DEC_Connaissances_PionsSecurisant();
+        if( DIA_Size( securers ) > 0 )
+        {
+            DEC_Debug( "Sécurisé par " + FloatToString( DIA_Size( securers ) ) + " pions" );
         }
     }
     

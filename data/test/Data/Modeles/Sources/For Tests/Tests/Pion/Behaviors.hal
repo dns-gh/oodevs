@@ -35,7 +35,6 @@ default Default()
     if( DIA_Size( popus ) > 0 )
         DEC_Debug( "Pris à partie par " + FloatToString( DIA_Size( popus ) ) + " populations" );
     
-            
 
     //DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTotalement ); 
     persistent float i = 0;
@@ -530,6 +529,17 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         }
         else
             DEC_Debug( "MIS_Pion_Test_CreateObject : pas de connaissance retournée" );
+        
+        // connaissance popu / securisation
+        E_ValiditeRequete              nFusse;
+        T_ListeConnaissancesPopulation popus = DEC_Connaissances_Populations();
+     
+        with( x in popus )
+        {
+            if( DEC_ConnaissancePopulation_EstDansZone( x, mission.forme_ ) )
+                DEC_ConnaissancePopulation_Securiser( x, nFusse );
+        }
+        
     }
     on spontaneous end:
     {
@@ -635,15 +645,15 @@ action ACT_1( id nDummy ) using deplacement
     {
         if( DIA_ModuleBegins() )
             DEC_Debug( "ACT_1 DIA_ModuleBegins" );
-        DEC_Debug( "ACT_1 when selected" );        
+        DEC_Debug( "ACT_1 when selected" );
     }
     on focus loss:
     {
-        DEC_Debug( "ACT_1 on focus loss" );        
+        DEC_Debug( "ACT_1 on focus loss" );
     }
     on spontaneous end:
     {
-        DEC_Debug( "ACT_1 on spontaneous end" );        
+        DEC_Debug( "ACT_1 on spontaneous end" );
     }
 }
 

@@ -151,6 +151,10 @@ signatures
     U /*T_Point*/                    A::DEC_PositionCampRefugies                    ();
     V                                A::DEC_Automate_ChangeEtatPriseEnCompteRefugies( B /*pris en compte*/ );
 
+    // Connaissance Populations
+    B                                    A::DEC_ConnaissancePopulation_EstDansZone( U /*T_ConnaissancePopulation*/, U /*T_Localisation*/ );
+    S /*T_ListeConnaissancesPopulation*/ A::DEC_Connaissances_Populations         ();
+
     // Debug
     V                                A::DEC_DebugAffichePoint ( U /*T_Point*/ );
     V                                A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );

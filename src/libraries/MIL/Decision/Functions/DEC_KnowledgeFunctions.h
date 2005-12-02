@@ -43,6 +43,7 @@ public:
     template< typename T > static void ShareKnowledgesInZoneWith( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetObjects               ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetFriendsInZone         ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetPopulations           ( DIA_Call_ABC& call, const T& caller );
     //@}
 };
 

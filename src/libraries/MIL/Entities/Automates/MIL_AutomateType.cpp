@@ -25,6 +25,7 @@
 #include "Decision/Functions/DEC_KnowledgeFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
+#include "Decision/Functions/DEC_KnowledgePopulationFunctions.h"
 #include "Decision/Functions/DEC_MiscFunctions.h"
 #include "Decision/Functions/DEC_PathFunctions.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
@@ -396,6 +397,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetObjects                       < MIL_Automate >, "DEC_Connaissances_Objets"                                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetFriendsInZone                 < MIL_Automate >, "DEC_Connaissances_AmisDansZone"                          );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetRapForGlobal                                  , "DEC_RapportDeForceGlobal"                                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions      ::GetPopulations                   < MIL_Automate >, "DEC_Connaissances_Populations"                           );
     
     // RCS
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Automate >, "DEC_RC"      );
@@ -488,6 +490,9 @@ void MIL_AutomateType::InitializeDiaFunctions()
     // Refugies
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ObjectFunctions  ::GetRefugeeCampPosition          , "DEC_PositionCampRefugies" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyRefugeeManagedStateChanged, "DEC_Automate_ChangeEtatPriseEnCompteRefugies" );
+
+    // Populations
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsInZone< MIL_Automate >, "DEC_ConnaissancePopulation_EstDansZone" );
 }
 
 

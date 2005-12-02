@@ -230,6 +230,8 @@ signatures
     V                                       A::DEC_ConnaissancePopulation_Reconnaitre                 ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissancePopulation_EstReconnu                  ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     R                                       A::DEC_ConnaissancePopulation_Dangerosite                 ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
+    B                                       A::DEC_ConnaissancePopulation_EstDansZone                 ( U /*T_ConnaissancePopulation*/, U /*T_Localisation*/ );
+    V                                       A::DEC_ConnaissancePopulation_Securiser                   ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
                                             
     // Requêtes connaissance globale           
     V                                       A::DEC_Connaissances_PartageConnaissancesAvec        ( A /*T_Automate*/, R /*delai en minutes*/ );    
@@ -238,7 +240,8 @@ signatures
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_CollisionsPopulations           ();
-    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPrenantAPartie            (); 
+    S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPrenantAPartie            ();
+    S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_Populations                     (); 
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_PopulationsPrenantAPartie       (); 
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AmisDansZone                    ( U /*T_Localisation*/ ); 
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPercus                    ();

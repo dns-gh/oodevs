@@ -17,6 +17,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 class MIL_Agent_ABC;
+class MIL_AgentPion;
 
 // =============================================================================
 // @class  DEC_PopulationKnowledge
@@ -25,6 +26,13 @@ class MIL_Agent_ABC;
 class DEC_PopulationKnowledge
 {
     MT_COPYNOTALLOWED( DEC_PopulationKnowledge )
+
+public:
+    //! @name Types
+    //@{
+    typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
+    typedef T_AgentSet::const_iterator       CIT_AgentSet;
+    //@}
 
 public:
      DEC_PopulationKnowledge();
@@ -38,8 +46,10 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyAttackedBy ( MIL_Agent_ABC& attacker );
+    void NotifyAttackedBy ( const MIL_Agent_ABC& attacker );
     void GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
+    void NotifySecuredBy  ( const MIL_Agent_ABC& securer );
+    void GetPionsSecuring ( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
     //@}
 
     //! @name CheckPoints
@@ -48,15 +58,11 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< MIL_Agent_ABC* > T_AgentSet;
-    typedef T_AgentSet::const_iterator CIT_AgentSet;
-    //@}
-
-private:
     T_AgentSet attackers_; 
     T_AgentSet newAttackers_;
+
+    T_AgentSet securers_;
+    T_AgentSet newSecurers_;
 };
 
 #include "DEC_PopulationKnowledge.inl"

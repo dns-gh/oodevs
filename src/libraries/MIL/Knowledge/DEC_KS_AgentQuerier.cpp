@@ -467,6 +467,16 @@ void DEC_KS_AgentQuerier::GetPopulationsAttacking( T_KnowledgePopulationDiaIDVec
     pBlackBoard_->ApplyOnKnowledgesPopulationPerception( functor );              
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetPopulations
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_KS_AgentQuerier::GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const
+{
+    assert( pPion_ );
+    pPion_->GetKnowledgeGroup().GetKSQuerier().GetPopulations( container );
+}
+
 //------------------------------------------------------------------------------
 // Name: DEC_KS_AgentQuerier::GetKnowledgeRapForLocal
 // Created: NLD 2004-04-07

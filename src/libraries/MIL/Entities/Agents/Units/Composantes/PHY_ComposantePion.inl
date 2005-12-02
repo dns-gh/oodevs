@@ -384,7 +384,7 @@ inline
 bool PHY_ComposantePion::CanTransportHumans() const
 {
     assert( pType_ );
-    return pState_->CanTransport() && pType_->CanTransportHumans() && CanBeUsed();
+    return pState_->CanTransport() && pType_->CanTransportHumans() && CanBeUsed(); //$$$ && !bLoadable_ ??
 }
 
 // -----------------------------------------------------------------------------
@@ -405,7 +405,7 @@ bool PHY_ComposantePion::CanTransport() const
 inline
 bool PHY_ComposantePion::CanBeLoaded() const
 {
-    return pState_->IsUsable() && bLoadable_; //$$$$
+    return pState_->IsUsable() && bLoadable_; //$$$$ CanBeUsed() ??
 }
 
 // -----------------------------------------------------------------------------
@@ -415,7 +415,7 @@ bool PHY_ComposantePion::CanBeLoaded() const
 inline
 bool PHY_ComposantePion::CanBeTransported() const
 {
-    return pState_->IsUsable(); //$$$$
+    return pState_->IsUsable(); //$$$$ CanBeUsed() ??
 }
 
 // -----------------------------------------------------------------------------

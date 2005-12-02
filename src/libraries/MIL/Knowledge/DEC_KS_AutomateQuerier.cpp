@@ -82,5 +82,15 @@ void DEC_KS_AutomateQuerier::GetObjects( T_KnowledgeObjectDiaIDVector& container
 void DEC_KS_AutomateQuerier::GetFriendsInZone( T_KnowledgeAgentDiaIDVector&   container, const TER_Localisation& zone ) const
 {
     assert( pAutomate_ );
-    pAutomate_->GetKnowledgeGroup().GetKSQuerier().GetFriendsInZone( container, zone );    
+    pAutomate_->GetKnowledgeGroup().GetKSQuerier().GetFriendsInZone( container, zone );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AutomateQuerier::GetPopulations
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_KS_AutomateQuerier::GetPopulations( T_KnowledgePopulationDiaIDVector& container ) const
+{
+    assert( pAutomate_ );
+    pAutomate_->GetKnowledgeGroup().GetKSQuerier().GetPopulations( container );
 }

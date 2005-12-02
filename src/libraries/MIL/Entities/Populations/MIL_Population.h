@@ -61,9 +61,11 @@ public:
           MT_Float                    GetMaxSpeed          () const;
           MT_Float                    GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
+    const MIL_PopulationAttitude&     GetAttitude          () const;
     const MIL_Army&                   GetArmy              () const;
     const DEC_PopulationKnowledge&    GetKnowledge         () const;
-          bool                        IsDead               () const;          
+          bool                        IsDead               () const;
+          bool                        IsInZone             ( const TER_Localisation& loc ) const;
     //@}
 
     //! @name Effects on pions
@@ -75,9 +77,10 @@ public:
     MT_Float GetPionReloadingTimeFactor( MT_Float rDensity ) const;
     //@}
 
-    //! @name Notifications
+    //! @name Effects from pions
     //@{
-    void NotifyAttackedBy( MIL_Agent_ABC& attacker );
+    void NotifyAttackedBy( const MIL_Agent_ABC& attacker );
+    void Secure          ( const MIL_AgentPion& securer  );
     //@}
 
     //! @name Operations

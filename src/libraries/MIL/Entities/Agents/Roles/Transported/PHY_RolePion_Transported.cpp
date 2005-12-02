@@ -244,7 +244,7 @@ struct sTransporterComposantePresent
 
     void operator () ( const PHY_ComposantePion& composante )
     {
-        bComposantePresent_ |= ( composante.GetState().IsUsable() && !composante.CanBeLoaded() );
+        bComposantePresent_ |= ( composante.GetState().IsUsable() && !composante.CanBeLoaded() ); //?? Utiliser CanTransportHumans()
     }
 
     bool bComposantePresent_;

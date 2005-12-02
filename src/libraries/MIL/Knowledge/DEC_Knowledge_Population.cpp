@@ -225,6 +225,17 @@ bool DEC_Knowledge_Population::Clean()
     return concentrations_.empty() && flows_.empty();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Secure
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Secure( const MIL_AgentPion& pionSecuring )
+{
+    assert( pPopulationKnown_ );
+    pPopulationKnown_->Secure( pionSecuring );
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================
@@ -262,6 +273,18 @@ MT_Float DEC_Knowledge_Population::GetDangerosity( const MIL_AgentPion& target )
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetDangerosity( target );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::IsInZone
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Population::IsInZone( const TER_Localisation& loc ) const
+{
+    assert( pPopulationKnown_ );
+    return pPopulationKnown_->IsInZone( loc );
+}
+
+
 
 // =============================================================================
 // NETWORK

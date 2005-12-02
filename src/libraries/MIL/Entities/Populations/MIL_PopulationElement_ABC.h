@@ -86,6 +86,7 @@ public:
           MT_Float                GetNbrHumans     () const;
           MT_Float                GetDensity       () const;
           bool                    IsDead           () const;
+          bool                    IsInZone         ( const TER_Localisation& loc ) const;
 
     virtual const TER_Localisation& GetLocation () const = 0;
     //@}

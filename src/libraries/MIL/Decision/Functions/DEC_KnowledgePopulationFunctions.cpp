@@ -51,3 +51,19 @@ void DEC_KnowledgePopulationFunctions::GetDangerosity( DIA_Call_ABC& call, const
     const MT_Float rDangerosity = pKnowledge->GetDangerosity( caller );
     call.GetResult().SetValue( (float)( rDangerosity + 1. ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::Secure
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::Secure( DIA_Call_ABC& call, const MIL_AgentPion& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        return;
+    }
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    pKnowledge->Secure( caller );
+}

@@ -243,6 +243,7 @@ void MIL_PopulationType::InitializeDiaFunctions()
     // Knowledge
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, "DEC_ConnaissanceAgent_RoePopulation"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetPionsAttacking             , "DEC_Connaissances_PionsPrenantAPartie" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetPionsSecuring              , "DEC_Connaissances_PionsSecurisant"     );
 
     // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug, "DEC_Debug" );
@@ -255,7 +256,8 @@ void MIL_PopulationType::InitializeDiaFunctions()
     // Effects
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetPionMaxSpeed  , "DEC_Population_RalentissementPion_ChangeVitesse"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::ResetPionMaxSpeed, "DEC_Population_RalentissementPion_VitesseParDefaut" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetAttitude      , "DEC_Population_ChangerAttitude" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::SetAttitude      , "DEC_Population_ChangerAttitude"                     );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetAttitude      , "DEC_Population_Attitude"                            );
 } 
 
 // =============================================================================

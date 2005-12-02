@@ -70,6 +70,7 @@ public:
     bool Clean  ();
 
     void Recon  ();
+    void Secure ( const MIL_AgentPion& pionSecuring );
     //@}
 
     //! @name Accessors
@@ -79,6 +80,7 @@ public:
           MIL_Population&     GetPopulationKnown() const;
           MT_Float            GetDangerosity    ( const MIL_AgentPion& target ) const;
           bool                IsRecon           () const;
+          bool                IsInZone          ( const TER_Localisation& loc ) const;
     //@}
 
     //! @name Network operations

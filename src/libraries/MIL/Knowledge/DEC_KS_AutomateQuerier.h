@@ -47,8 +47,9 @@ public:
     //@{
     DEC_Knowledge_RapForGlobal& GetKnowledgeRapForGlobal() const;
     MT_Float                    GetRapForGlobalValue    () const;
-    void                        GetObjects              ( T_KnowledgeObjectDiaIDVector&  container, const MIL_RealObjectTypeFilter& filter ) const;
-    void                        GetFriendsInZone        ( T_KnowledgeAgentDiaIDVector&   container, const TER_Localisation& zone ) const;
+    void                        GetObjects              ( T_KnowledgeObjectDiaIDVector&     container, const MIL_RealObjectTypeFilter& filter ) const;
+    void                        GetFriendsInZone        ( T_KnowledgeAgentDiaIDVector&      container, const TER_Localisation& zone ) const;
+    void                        GetPopulations          ( T_KnowledgePopulationDiaIDVector& container ) const;
     //@}
 
 private:

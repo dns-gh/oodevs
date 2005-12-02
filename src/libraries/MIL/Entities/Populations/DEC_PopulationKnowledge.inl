@@ -14,7 +14,17 @@
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
 inline
-void DEC_PopulationKnowledge::NotifyAttackedBy( MIL_Agent_ABC& attacker )
+void DEC_PopulationKnowledge::NotifyAttackedBy( const MIL_Agent_ABC& attacker )
 {
     newAttackers_.insert( & attacker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::NotifySecuredBy
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+inline
+void DEC_PopulationKnowledge::NotifySecuredBy( const MIL_Agent_ABC& securer )
+{
+    newSecurers_.insert( & securer );
 }
