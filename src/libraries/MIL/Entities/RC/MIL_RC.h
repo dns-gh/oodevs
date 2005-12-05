@@ -90,7 +90,7 @@ public:
     static const MIL_RC_UniteAmieReconnue*                  pRcUniteAmieReconnue_;
     static const MIL_RC_UniteEnnemieReconnue*               pRcUniteEnnemieReconnue_;
     static const MIL_RC_UniteNeutreReconnue*                pRcUniteNeutreReconnue_;
-    static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;
+    static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;   
     //@}
    
 public:
@@ -265,7 +265,7 @@ protected:
         eRC_DebutInstallation,
         eRC_FinInstallation,
         eRC_PretPourConduiteTir,
-        eRC_ObservationTirIndirect, // Parametre : TirIndirect
+        eRC_ObservationTirIndirect, // Parametre : TirPion
         eRC_ZoneImplantationOccupee,
         eRC_InstallationSurZoneImplantation,
         eRC_ReceptionOrdreDeFeu,

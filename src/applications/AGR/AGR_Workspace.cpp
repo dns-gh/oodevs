@@ -551,7 +551,7 @@ void AGR_Workspace::ReadStringFile( const std::string& strFileName, std::string&
 {
     std::ifstream ifs( strFileName.c_str() );
     if( !ifs )
-        throw std::exception( ( "Error opening " + strFileName + " for reading." ).c_str() );
+        throw std::exception( std::string( "Error opening " + strFileName + " for reading." ).c_str() );
     strResult = std::string( std::istreambuf_iterator<char>( ifs ), std::istreambuf_iterator<char>() );
 }
 
@@ -568,7 +568,7 @@ void AGR_Workspace::WriteStringInFile( const std::string& strToWrite, const std:
 {
     std::ofstream ofs( strFileName.c_str() );
     if( ! ofs.is_open() )
-        throw std::exception( ( "Error opening " + strFileName + " for writing." ).c_str() );
+        throw std::exception( std::string( "Error opening " + strFileName + " for writing." ).c_str() );
     ofs << strToWrite;
 }
 

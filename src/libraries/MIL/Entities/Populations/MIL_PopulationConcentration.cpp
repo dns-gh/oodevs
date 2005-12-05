@@ -295,7 +295,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
 void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
-    file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
+    file << boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
 
     file << position_
          << location_

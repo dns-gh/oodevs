@@ -57,6 +57,7 @@
 #include "MIL_ZoneForbiddenFire.h"
 #include "MIL_ZoneForbiddenMove.h"
 #include "MIL_ZoneImplantationMortier.h"
+#include "MIL_Installation.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 
@@ -101,6 +102,7 @@ const MIL_RealObjectType& MIL_RealObjectType::terrainLargage_           = *new M
 const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenFire_        = *new MIL_RealObjectType( "zone interdite tir"        , eObjectTypeZoneForbiddenFire      , EnumObjectType::zone_interdite_tir       , &MIL_ZoneForbiddenFire          ::Create, eIgnore );
 const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenMove_        = *new MIL_RealObjectType( "zone interdite mouvement"  , eObjectTypeZoneForbiddenMove      , EnumObjectType::zone_interdite_mouvement , &MIL_ZoneForbiddenMove          ::Create, eHate   );
 const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationMortier_  = *new MIL_RealObjectType( "zone implantation mortier" , eObjectTypeZoneImplantationMortier, EnumObjectType::zone_implantation_mortier, &MIL_ZoneImplantationMortier    ::Create, eAvoid  );
+const MIL_RealObjectType& MIL_RealObjectType::installation_             = *new MIL_RealObjectType( "installation"              , eObjectTypeInstallation           , EnumObjectType::installation             , &MIL_Installation               ::Create, eIgnore );
 
 // =============================================================================
 // MANAGER
@@ -148,10 +150,11 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
     objectTypes_[ campRefugies_           .GetID() ] = &campRefugies_           ;
     objectTypes_[ itineraireLogistique_   .GetID() ] = &itineraireLogistique_   ;
     objectTypes_[ posteControle_          .GetID() ] = &posteControle_          ;
-    objectTypes_[ terrainLargage_         .GetID() ] = &terrainLargage_         ;    
-    objectTypes_[ zoneForbiddenFire_      .GetID() ] = &zoneForbiddenFire_      ;    
-    objectTypes_[ zoneForbiddenMove_      .GetID() ] = &zoneForbiddenMove_      ;    
-    objectTypes_[ zoneImplantationMortier_.GetID() ] = &zoneImplantationMortier_;    
+    objectTypes_[ terrainLargage_         .GetID() ] = &terrainLargage_         ;
+    objectTypes_[ zoneForbiddenFire_      .GetID() ] = &zoneForbiddenFire_      ;
+    objectTypes_[ zoneForbiddenMove_      .GetID() ] = &zoneForbiddenMove_      ;
+    objectTypes_[ zoneImplantationMortier_.GetID() ] = &zoneImplantationMortier_;
+    objectTypes_[ installation_           .GetID() ] = &installation_;
 
     pObjectTypesToAvoid_ = new MIL_RealObjectTypeFilter();
 

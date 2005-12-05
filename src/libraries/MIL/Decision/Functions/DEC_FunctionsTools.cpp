@@ -17,7 +17,9 @@
 #include "Knowledge/DEC_KS_ArmyQuerier.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Decision/DEC_Tools.h"
+#include "MIL_AgentServer.h"
 
 // =============================================================================
 // TOOLS
@@ -57,4 +59,31 @@ DEC_Knowledge_Object* DEC_FunctionsTools::GetKnowledgeObjectFromDia( const DIA_V
 
     uint nKnowledgeID_ = (uint)diaVar.ToPtr();
     return caller.GetKSQuerier().GetKnowledgeObjectFromID( nKnowledgeID_ ); 
+}
+
+
+// =============================================================================
+// POPULATION
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FunctionsTools::GetPopulationKnowledgeAgentFromDia
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+MIL_AgentPion* DEC_FunctionsTools::GetPopulationKnowledgeAgentFromDia( const DIA_Variable_ABC& diaVar )
+{
+    assert( DEC_Tools::CheckTypePopulationConnaissanceAgent( diaVar ) );
+    uint nID = ( uint )diaVar.ToPtr();
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+MIL_RealObject_ABC* DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( const DIA_Variable_ABC& diaVar )
+{
+    assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( diaVar ) );
+    uint nID = ( uint )diaVar.ToPtr();
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().FindRealObject( nID );
 }

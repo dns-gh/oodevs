@@ -199,7 +199,7 @@ private:
         eRC_DebutInstallation,
         eRC_FinInstallation,
         eRC_PretPourConduiteTir,
-        eRC_ObservationTirIndirect, // Parametre : TirIndirect
+        eRC_ObservationTirIndirect, // Parametre : TirPion
         eRC_ZoneImplantationOccupee,
         eRC_InstallationSurZoneImplantation,
         eRC_ReceptionOrdreDeFeu,

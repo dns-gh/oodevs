@@ -36,10 +36,16 @@ public:
     static void SetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
     static void GetAttitude      ( DIA_Call_ABC& call, MIL_Population& callerPopulation );
 
-    // Knowledge
+    // Knowledge agents
     static void GetKnowledgeAgentRoePopulation( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     static void GetPionsAttacking             ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     static void GetPionsSecuring              ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+
+    // Knowledge objects
+    static void GetKnowledgeObjectLocalisation( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void IsKnowledgeObjectValid        ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void GetObjectsInZone              ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void DamageObject                  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     //@}    
 };
 

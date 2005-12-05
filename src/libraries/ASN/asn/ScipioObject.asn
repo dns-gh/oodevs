@@ -60,7 +60,8 @@ EnumObjectType ::= ENUMERATED
     zone-interdite-mouvement    (34),
     zone-interdite-tir          (35),
     zone-implantation-mortier   (36),
-    pont-flottant-discontinu    (37)
+    pont-flottant-discontinu    (37),
+    installation                (38)
 }
 
 EnumObjectErrorCode ::= ENUMERATED
@@ -141,6 +142,7 @@ MsgObjectCreation ::= SEQUENCE
     oid                         OID,
     type                        EnumObjectType,
     localisation                Localisation,
+    nom                         VisibleString,
     camp                        OID,
     oid-objet-planifie          OID                OPTIONAL,
     attributs-specifiques       AttrObjectSpecific OPTIONAL,
@@ -181,6 +183,7 @@ MagicActionCreateObject ::= SEQUENCE
     camp                    OID, 
     type                    EnumObjectType,
     localisation            Localisation,
+    nom                     VisibleString      OPTIONAL,    
     attributs-specifiques   AttrObjectSpecific OPTIONAL
 }
 

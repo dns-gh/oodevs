@@ -201,6 +201,12 @@ MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
         case T_Mission_Pion_mission_pion_decrocher : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_decrocher; break;
         case T_Mission_Pion_mission_pion_stationner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_stationner; break;
         case T_Mission_Pion_mission_pion_se_faire_transporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_se_faire_transporter; break;
+        case T_Mission_Pion_mission_pion_interdire_franchissement_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_interdire_franchissement_population; break;
+        case T_Mission_Pion_mission_pion_filter_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_filter_population; break;
+        case T_Mission_Pion_mission_pion_renseigner_sur_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_renseigner_sur_population; break;
+        case T_Mission_Pion_mission_pion_canaliser_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_population; break;
+        case T_Mission_Pion_mission_pion_securiser_population_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_population_dans_zone; break;
+        case T_Mission_Pion_mission_pion_securiser_zone_contre_menaces_asymetriques : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_menaces_asymetriques; break;
         case T_Mission_Pion_mission_pion_generique : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_generique; break;
         case T_Mission_Pion_mission_pion_milice_provoquer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_milice_provoquer; break;
         case T_Mission_Pion_mission_pion_milice_prendre_et_tenir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_milice_prendre_et_tenir; break;
@@ -415,6 +421,12 @@ void MOS_UnitMissionInterface::CreateInterface()
         case eMission_Pion_Decrocher : CreateMission_Decrocher(); break;
         case eMission_Pion_Stationner : CreateMission_Stationner(); break;
         case eMission_Pion_SeFaireTransporter : CreateMission_SeFaireTransporter(); break;
+        case eMission_Pion_InterdireFranchissementPopulation : CreateMission_InterdireFranchissementPopulation(); break;
+        case eMission_Pion_FilterPopulation : CreateMission_FilterPopulation(); break;
+        case eMission_Pion_RenseignerSurPopulation : CreateMission_RenseignerSurPopulation(); break;
+        case eMission_Pion_CanaliserPopulation : CreateMission_CanaliserPopulation(); break;
+        case eMission_Pion_SecuriserPopulationDansZone : CreateMission_SecuriserPopulationDansZone(); break;
+        case eMission_Pion_SecuriserZoneContreMenacesAsymetriques : CreateMission_SecuriserZoneContreMenacesAsymetriques(); break;
         case eMission_Pion_Generique : CreateMission_Generique(); break;
         case eMission_Pion_MILICE_Provoquer : CreateMission_MILICE_Provoquer(); break;
         case eMission_Pion_MILICE_PrendreEtTenir : CreateMission_MILICE_PrendreEtTenir(); break;
@@ -2229,6 +2241,7 @@ void MOS_UnitMissionInterface::CreateMission_INF_DetruireEmbuscade()
     pSelector_nature_obstacle->AddItem( "Zone interdite tir", EnumObjectType::zone_interdite_tir );
     pSelector_nature_obstacle->AddItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
     pSelector_nature_obstacle->AddItem( "Pont flottant discontinu", EnumObjectType::pont_flottant_discontinu );
+    pSelector_nature_obstacle->AddItem( "Installation", EnumObjectType::installation );
 }
 
 // -----------------------------------------------------------------------------
@@ -2779,6 +2792,7 @@ void MOS_UnitMissionInterface::CreateMission_Test_CreateObject()
     pSelector_type->AddItem( "Zone interdite tir", EnumObjectType::zone_interdite_tir );
     pSelector_type->AddItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
     pSelector_type->AddItem( "Pont flottant discontinu", EnumObjectType::pont_flottant_discontinu );
+    pSelector_type->AddItem( "Installation", EnumObjectType::installation );
     CreateNumeric( asnMission.param, "Param", false );
 }
 
@@ -3019,6 +3033,78 @@ void MOS_UnitMissionInterface::CreateMission_SeFaireTransporter()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_InterdireFranchissementPopulation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_InterdireFranchissementPopulation()
+{
+    ASN1T_Mission_Pion_InterdireFranchissementPopulation& asnMission = *new ASN1T_Mission_Pion_InterdireFranchissementPopulation();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_interdire_franchissement_population;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_interdire_franchissement_population = &asnMission;
+    CreateLocation( asnMission.ligne, "Ligne", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_FilterPopulation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_FilterPopulation()
+{
+    ASN1T_Mission_Pion_FilterPopulation& asnMission = *new ASN1T_Mission_Pion_FilterPopulation();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_filter_population;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_filter_population = &asnMission;
+    CreatePoint( asnMission.point, "Point", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_RenseignerSurPopulation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_RenseignerSurPopulation()
+{
+    ASN1T_Mission_Pion_RenseignerSurPopulation& asnMission = *new ASN1T_Mission_Pion_RenseignerSurPopulation();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_renseigner_sur_population;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_renseigner_sur_population = &asnMission;
+    CreatePoint( asnMission.point, "Point", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_CanaliserPopulation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_CanaliserPopulation()
+{
+    ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *new ASN1T_Mission_Pion_CanaliserPopulation();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_canaliser_population;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_population = &asnMission;
+    CreatePoint( asnMission.point, "Point", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_SecuriserPopulationDansZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_SecuriserPopulationDansZone()
+{
+    ASN1T_Mission_Pion_SecuriserPopulationDansZone& asnMission = *new ASN1T_Mission_Pion_SecuriserPopulationDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_securiser_population_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_population_dans_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_SecuriserZoneContreMenacesAsymetriques
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_SecuriserZoneContreMenacesAsymetriques()
+{
+    ASN1T_Mission_Pion_SecuriserZoneContreMenacesAsymetriques& asnMission = *new ASN1T_Mission_Pion_SecuriserZoneContreMenacesAsymetriques();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_securiser_zone_contre_menaces_asymetriques;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_menaces_asymetriques = &asnMission;
+    CreateLocation( asnMission.zone, "Zone", false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_UnitMissionInterface::CreateMission_Generique
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -3110,6 +3196,7 @@ void MOS_UnitMissionInterface::CreateMission_MILICE_DetruireEmbuscade()
     pSelector_nature_obstacle->AddItem( "Zone interdite tir", EnumObjectType::zone_interdite_tir );
     pSelector_nature_obstacle->AddItem( "Zone implantation mortier", EnumObjectType::zone_implantation_mortier );
     pSelector_nature_obstacle->AddItem( "Pont flottant discontinu", EnumObjectType::pont_flottant_discontinu );
+    pSelector_nature_obstacle->AddItem( "Installation", EnumObjectType::installation );
 }
 
 // -----------------------------------------------------------------------------

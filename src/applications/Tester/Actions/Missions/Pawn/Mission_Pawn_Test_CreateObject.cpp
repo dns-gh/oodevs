@@ -63,7 +63,7 @@ void Mission_Pawn_Test_CreateObject::Serialize()
     const Location& forme_ = pTarget_->GetTestParam_Location();
 
     ASN_Tools::CopyLocation( forme_, asnMission.forme );
-    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 37 ), asnMission.type );
+    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 38 ), asnMission.type );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric( 0, 4294967295 ), asnMission.param );
 
     delete &forme_;

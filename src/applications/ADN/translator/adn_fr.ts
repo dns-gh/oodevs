@@ -2459,6 +2459,38 @@
         <source>Population FaireMouvement</source>
         <translation>Population FaireMouvement</translation>
     </message>
+    <message>
+        <source>Pion InterdireFranchissementPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion FilterPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion RenseignerSurPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion CanaliserPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserZoneContreMenacesAsymetriques</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population Manifester</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population CommettreExactions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>

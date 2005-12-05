@@ -460,13 +460,13 @@ std::string AGR_FragOrder::MilFilePathName() const
 // -----------------------------------------------------------------------------
 std::string AGR_FragOrder::HumanName() const
 {
-/*
-    std::string strResult = BaseName();
+ /*   std::string strResult = BaseName();
     for( unsigned int i = 0; i < strResult.size(); ++i )
         if( strResult.at(i) == '_' )
             strResult.at(i) = ' ';
-    return strResult;
-*/
+    return strResult;*/
+
+    
     std::string strResult = BaseName();
     
     int nPos = strResult.find( '_' );

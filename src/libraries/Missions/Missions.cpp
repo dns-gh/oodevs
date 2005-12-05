@@ -334,6 +334,12 @@
 #include "Pion\MIL_PionMission_Decrocher.cpp"
 #include "Pion\MIL_PionMission_Stationner.cpp"
 #include "Pion\MIL_PionMission_SeFaireTransporter.cpp"
+#include "Pion\MIL_PionMission_InterdireFranchissementPopulation.cpp"
+#include "Pion\MIL_PionMission_FilterPopulation.cpp"
+#include "Pion\MIL_PionMission_RenseignerSurPopulation.cpp"
+#include "Pion\MIL_PionMission_CanaliserPopulation.cpp"
+#include "Pion\MIL_PionMission_SecuriserPopulationDansZone.cpp"
+#include "Pion\MIL_PionMission_SecuriserZoneContreMenacesAsymetriques.cpp"
 #include "Pion\MIL_PionMission_Generique.cpp"
 #include "Pion\MIL_PionMission_MILICE_Provoquer.cpp"
 #include "Pion\MIL_PionMission_MILICE_PrendreEtTenir.cpp"
@@ -358,6 +364,8 @@
 #include "Pion\MIL_PionMission_RENS_ROIM_CL289_RenseignerSur.cpp"
 #include "Pion\MIL_PionMission_TRANS_EtablirGererLiaison.cpp"
 #include "Population\MIL_PopulationMission_FaireMouvement.cpp"
+#include "Population\MIL_PopulationMission_Manifester.cpp"
+#include "Population\MIL_PopulationMission_CommettreExactions.cpp"
 #include "Conduite\MIL_OrderConduite_MettreTenueNBC.cpp"
 #include "Conduite\MIL_OrderConduite_EnleverTenueNBC.cpp"
 #include "Conduite\MIL_OrderConduite_PasserEnSilenceRadio.cpp"
@@ -424,6 +432,8 @@ void missions::RegisterMissions()
 void missions::RegisterPopulationMissions()
 {
     MIL_PopulationMissionType::RegisterMission< MIL_PopulationMission_FaireMouvement>( "Population FaireMouvement", eMission_Population_FaireMouvement, T_Mission_Population_mission_population_faire_mouvement, "T_Mission_Population_FaireMouvement", "MIS_Population_FaireMouvement");
+    MIL_PopulationMissionType::RegisterMission< MIL_PopulationMission_Manifester>( "Population Manifester", eMission_Population_Manifester, T_Mission_Population_mission_population_manifester, "T_Mission_Population_Manifester", "MIS_Population_Manifester");
+    MIL_PopulationMissionType::RegisterMission< MIL_PopulationMission_CommettreExactions>( "Population CommettreExactions", eMission_Population_CommettreExactions, T_Mission_Population_mission_population_commettre_exactions, "T_Mission_Population_CommettreExactions", "MIS_Population_CommettreExactions");
 
 }
 
@@ -759,6 +769,12 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_Decrocher>( "Pion Decrocher", eMission_Pion_Decrocher, T_Mission_Pion_mission_pion_decrocher, "T_Mission_Pion_Decrocher", "MIS_Pion_Decrocher");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_Stationner>( "Pion Stationner", eMission_Pion_Stationner, T_Mission_Pion_mission_pion_stationner, "T_Mission_Pion_Stationner", "MIS_Pion_Stationner");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_SeFaireTransporter>( "Pion SeFaireTransporter", eMission_Pion_SeFaireTransporter, T_Mission_Pion_mission_pion_se_faire_transporter, "T_Mission_Pion_SeFaireTransporter", "MIS_Pion_SeFaireTransporter");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_InterdireFranchissementPopulation>( "Pion InterdireFranchissementPopulation", eMission_Pion_InterdireFranchissementPopulation, T_Mission_Pion_mission_pion_interdire_franchissement_population, "T_Mission_Pion_InterdireFranchissementPopulation", "MIS_Pion_InterdireFranchissementPopulation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_FilterPopulation>( "Pion FilterPopulation", eMission_Pion_FilterPopulation, T_Mission_Pion_mission_pion_filter_population, "T_Mission_Pion_FilterPopulation", "MIS_Pion_FilterPopulation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_RenseignerSurPopulation>( "Pion RenseignerSurPopulation", eMission_Pion_RenseignerSurPopulation, T_Mission_Pion_mission_pion_renseigner_sur_population, "T_Mission_Pion_RenseignerSurPopulation", "MIS_Pion_RenseignerSurPopulation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_CanaliserPopulation>( "Pion CanaliserPopulation", eMission_Pion_CanaliserPopulation, T_Mission_Pion_mission_pion_canaliser_population, "T_Mission_Pion_CanaliserPopulation", "MIS_Pion_CanaliserPopulation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_SecuriserPopulationDansZone>( "Pion SecuriserPopulationDansZone", eMission_Pion_SecuriserPopulationDansZone, T_Mission_Pion_mission_pion_securiser_population_dans_zone, "T_Mission_Pion_SecuriserPopulationDansZone", "MIS_Pion_SecuriserPopulationDansZone");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_SecuriserZoneContreMenacesAsymetriques>( "Pion SecuriserZoneContreMenacesAsymetriques", eMission_Pion_SecuriserZoneContreMenacesAsymetriques, T_Mission_Pion_mission_pion_securiser_zone_contre_menaces_asymetriques, "T_Mission_Pion_SecuriserZoneContreMenacesAsymetriques", "MIS_Pion_SecuriserZoneContreMenacesAsymetriques");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_Generique>( "Pion Generique", eMission_Pion_Generique, T_Mission_Pion_mission_pion_generique, "T_Mission_Pion_Generique", "MIS_Pion_Generique");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_Provoquer>( "Pion MILICE Provoquer", eMission_Pion_MILICE_Provoquer, T_Mission_Pion_mission_pion_milice_provoquer, "T_Mission_Pion_MILICE_Provoquer", "MIS_Pion_MILICE_Provoquer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_PrendreEtTenir>( "Pion MILICE PrendreEtTenir", eMission_Pion_MILICE_PrendreEtTenir, T_Mission_Pion_mission_pion_milice_prendre_et_tenir, "T_Mission_Pion_MILICE_PrendreEtTenir", "MIS_Pion_MILICE_PrendreEtTenir");

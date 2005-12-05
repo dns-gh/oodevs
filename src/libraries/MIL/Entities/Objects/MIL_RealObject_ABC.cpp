@@ -56,6 +56,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
     , xAttrToUpdateForHLA_               ( eAttrUpdate_All )
     , nID_                               ( 0 )
     , nMosPlannedID_                     ( (uint)-1 )
+    , strName_                           ()
     , rConstructionPercentage_           ( 0. )
     , rMiningPercentage_                 ( 0. )
     , rBypassPercentage_                 ( 0. )
@@ -85,6 +86,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC()
     , xAttrToUpdateForHLA_               ( eAttrUpdate_All )
     , nID_                               ( 0 )
     , nMosPlannedID_                     ( (uint)-1 )
+    , strName_                           ()
     , rConstructionPercentage_           ( 0. )
     , rMiningPercentage_                 ( 0. )
     , rBypassPercentage_                 ( 0. )
@@ -143,6 +145,7 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
          >> xAttrToUpdateForHLA_
          >> nID_
          >> nMosPlannedID_
+         >> strName_
          >> rConstructionPercentage_
          >> rMiningPercentage_
          >> rBypassPercentage_
@@ -177,6 +180,7 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << xAttrToUpdateForHLA_
          << nID_
          << nMosPlannedID_
+         << strName_
          << rConstructionPercentage_
          << rMiningPercentage_
          << rBypassPercentage_
@@ -222,14 +226,21 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
 // Name: MIL_RealObject_ABC::InitializeCommon
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::InitializeCommon( MIL_Army& army, const TER_Localisation& localisation, uint nID, uint nMosPlannedID )
+void MIL_RealObject_ABC::InitializeCommon( MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID )
 {
+    assert( pType_ );
+
     MIL_Object_ABC::Initialize( army, localisation );
 
     nCurrentNbrDotationForConstruction_ = 0;
     nCurrentNbrDotationForMining_       = 0;
     nMosPlannedID_                      = nMosPlannedID;
     nID_                                = nID;
+    strName_                            = strName;
+
+    if( strName_.empty() )
+        strName_ = pType_->GetName();
+
     InitializeAvoidanceLocalisation();
 }
 
@@ -252,7 +263,11 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_
     if( !NET_ASN_Tools::ReadLocation( asnCreateObject.localisation, localisation ) )
         return EnumObjectErrorCode::error_invalid_localisation;
 
-    InitializeCommon( *pArmy, localisation, nID );
+    std::string strName;
+    if( asnCreateObject.m.nomPresent ) 
+        strName = asnCreateObject.nom;
+
+    InitializeCommon( *pArmy, localisation, nID, strName );
     GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 
     return EnumObjectErrorCode::no_error;
@@ -272,7 +287,7 @@ bool MIL_RealObject_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaParamete
     assert( pLocalisation );
 
     assert( pType_ );
-    InitializeCommon( army, *pLocalisation, pType_->GetIDManager().GetFreeSimID(), nMosPlannedID );
+    InitializeCommon( army, *pLocalisation, pType_->GetIDManager().GetFreeSimID(), "", nMosPlannedID );
     return true;
 }
 
@@ -302,7 +317,11 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
     localisation.Read( archive );
     archive.EndSection(); // Forme
 
-    InitializeCommon( *pArmy, localisation, nID );
+    // Nom
+    std::string strName;
+    archive.ReadField( "nom", strName, MIL_InputArchive::eNothing );
+
+    InitializeCommon( *pArmy, localisation, nID, strName );
     GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 
@@ -313,7 +332,7 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
 void MIL_RealObject_ABC::Initialize( MIL_Army& army, const TER_Localisation& localisation )
 {
     assert( pType_ );
-    InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID() );
+    InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID(), "" );
     GetArmy().GetKSObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *this );
 }
 

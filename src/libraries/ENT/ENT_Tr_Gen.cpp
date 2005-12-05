@@ -426,6 +426,7 @@ ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
     T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite tir" ), eObjectType_ZoneInterditeTir ),
     T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation mortier" ), eObjectType_ZoneImplantationMortier ),
     T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant discontinu" ), eObjectType_PontFlottantDiscontinu ),
+    T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "installation" ), eObjectType_Installation ),
     T_ConverterObjectType( "", "", (E_ObjectType)-1 )
 };
 
@@ -1204,6 +1205,12 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion Decrocher", QT_TRANSLATE_NOOP( "ENT", "Pion Decrocher" ), eMission_Pion_Decrocher ),
     T_ConverterUnitMission( "Pion Stationner", QT_TRANSLATE_NOOP( "ENT", "Pion Stationner" ), eMission_Pion_Stationner ),
     T_ConverterUnitMission( "Pion SeFaireTransporter", QT_TRANSLATE_NOOP( "ENT", "Pion SeFaireTransporter" ), eMission_Pion_SeFaireTransporter ),
+    T_ConverterUnitMission( "Pion InterdireFranchissementPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion InterdireFranchissementPopulation" ), eMission_Pion_InterdireFranchissementPopulation ),
+    T_ConverterUnitMission( "Pion FilterPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion FilterPopulation" ), eMission_Pion_FilterPopulation ),
+    T_ConverterUnitMission( "Pion RenseignerSurPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion RenseignerSurPopulation" ), eMission_Pion_RenseignerSurPopulation ),
+    T_ConverterUnitMission( "Pion CanaliserPopulation", QT_TRANSLATE_NOOP( "ENT", "Pion CanaliserPopulation" ), eMission_Pion_CanaliserPopulation ),
+    T_ConverterUnitMission( "Pion SecuriserPopulationDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion SecuriserPopulationDansZone" ), eMission_Pion_SecuriserPopulationDansZone ),
+    T_ConverterUnitMission( "Pion SecuriserZoneContreMenacesAsymetriques", QT_TRANSLATE_NOOP( "ENT", "Pion SecuriserZoneContreMenacesAsymetriques" ), eMission_Pion_SecuriserZoneContreMenacesAsymetriques ),
     T_ConverterUnitMission( "Pion Generique", QT_TRANSLATE_NOOP( "ENT", "Pion Generique" ), eMission_Pion_Generique ),
     T_ConverterUnitMission( "Pion MILICE Provoquer", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE Provoquer" ), eMission_Pion_MILICE_Provoquer ),
     T_ConverterUnitMission( "Pion MILICE PrendreEtTenir", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE PrendreEtTenir" ), eMission_Pion_MILICE_PrendreEtTenir ),
@@ -1234,6 +1241,8 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
 ENT_Tr::T_ConverterPopulationMission ENT_Tr::populationMissionConverter_[] =
 {
     T_ConverterPopulationMission( "Population FaireMouvement", QT_TRANSLATE_NOOP( "ENT", "Population FaireMouvement" ), eMission_Population_FaireMouvement ),
+    T_ConverterPopulationMission( "Population Manifester", QT_TRANSLATE_NOOP( "ENT", "Population Manifester" ), eMission_Population_Manifester ),
+    T_ConverterPopulationMission( "Population CommettreExactions", QT_TRANSLATE_NOOP( "ENT", "Population CommettreExactions" ), eMission_Population_CommettreExactions ),
 
     T_ConverterPopulationMission( "", "", (E_PopulationMission)-1  )
 };

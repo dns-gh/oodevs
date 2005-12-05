@@ -66,7 +66,7 @@ void Mission_Pawn_INF_DetruireEmbuscade::Serialize()
     ASN_Tools::CopyPoint( positionEmbuscade_, asnMission.position_embuscade );
     ASN_Tools::CopyPoint( positionRegroupement_, asnMission.position_regroupement );
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.ennemi );
-    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 37 ), asnMission.nature_obstacle );
+    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 38 ), asnMission.nature_obstacle );
 
     delete &positionEmbuscade_;
     delete &positionRegroupement_;

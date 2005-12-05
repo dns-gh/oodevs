@@ -10,11 +10,15 @@ IMPORTS OID, Point, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH
 IMPORTS Itineraire, Direction, Segment, ListAgent, ListOID FROM ScipioBase
 IMPORTS EnumOrderErrorCode FROM ScipioOrder
 
-IMPORTS Mission-Population-FaireMouvement FROM ScipioPopulationMission;
+IMPORTS Mission-Population-FaireMouvement,
+        Mission-Population-Manifester,
+        Mission-Population-CommettreExactions FROM ScipioPopulationMission;
 
 Mission-Population ::= CHOICE
 {
-    mission-population-faire-mouvement Mission-Population-FaireMouvement
+    mission-population-faire-mouvement      Mission-Population-FaireMouvement,
+    mission-population-manifester           Mission-Population-Manifester,
+    mission-population-commettre-exactions  Mission-Population-CommettreExactions 
 }
 
 MsgPopulationOrder ::= SEQUENCE

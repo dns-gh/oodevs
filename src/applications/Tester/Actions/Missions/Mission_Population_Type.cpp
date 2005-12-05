@@ -24,6 +24,8 @@
 #include "Mission_Population_Type.h"
 
 #include "Population/Mission_Population_FaireMouvement.cpp"
+#include "Population/Mission_Population_Manifester.cpp"
+#include "Population/Mission_Population_CommettreExactions.cpp"
 
 
 using namespace TEST;
@@ -57,6 +59,8 @@ Mission_Population_Type::~Mission_Population_Type()
 void Mission_Population_Type::Initialize()
 {
     Register< Mission_Population_FaireMouvement >( "Population FaireMouvement" );
+    Register< Mission_Population_Manifester >( "Population Manifester" );
+    Register< Mission_Population_CommettreExactions >( "Population CommettreExactions" );
 
 }
     

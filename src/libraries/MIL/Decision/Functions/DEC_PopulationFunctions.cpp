@@ -17,10 +17,11 @@
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/MIL_EntityManager.h"
+#include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_RealObjectTypeFilter.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
-#include "MIL_AgentServer.h"
+#include "DEC_FunctionsTools.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::Debug
@@ -76,7 +77,7 @@ void DEC_PopulationFunctions::GetAttitude( DIA_Call_ABC& call, MIL_Population& c
 }
 
 // =============================================================================
-// KNOWLEDGE
+// KNOWLEDGE AGENTS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -85,9 +86,7 @@ void DEC_PopulationFunctions::GetAttitude( DIA_Call_ABC& call, MIL_Population& c
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
 {
-    assert( DEC_Tools::CheckTypePopulationConnaissanceAgent( call.GetParameter( 0 ) ) );
-    uint nID = ( uint )call.GetParameter( 0 ).ToPtr();
-    const MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
+    const MIL_AgentPion* pAgent = DEC_FunctionsTools::GetPopulationKnowledgeAgentFromDia( call.GetParameter( 0 ) );
     assert( pAgent  );
     call.GetResult().SetValue( (int)pAgent->GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID() );
 }
@@ -116,4 +115,92 @@ void DEC_PopulationFunctions::GetPionsSecuring( DIA_Call_ABC& call, const MIL_Po
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
     diaObjectList.SetValueUserType( securers, DEC_Tools::GetTypePopulationConnaissanceAgent() );
+}
+
+// =============================================================================
+// KNOWLEDGE OBJECTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetObjectsInZone
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetObjectsInZone( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+
+    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 1 );
+
+    const TER_Localisation* pZone = call.GetParameter( 0 ).ToUserPtr( pZone );
+    assert( pZone );
+
+    T_PopulationKnowledgeObjectDiaIDVector knowledges;
+
+    TER_Object_ABC::T_ObjectVector objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( *pZone, objects );
+    for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
+    {
+        MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
+        if( !object.IsReal() )
+            continue;
+        MIL_RealObject_ABC& realObject = static_cast< MIL_RealObject_ABC& >( object );
+        if( !realObject.CanBePerceived() || !objectsFilter.Test( realObject.GetType() ) )
+            continue;
+
+        knowledges.push_back( (void*)realObject.GetID() );
+    }
+
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( call.GetResult() );
+    diaObjectList.SetValueUserType( knowledges, DEC_Tools::GetTypePopulationConnaissanceObjet() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetKnowledgeObjectLocalisation
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetKnowledgeObjectLocalisation( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
+{
+    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !pObject || !pObject->CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( (void*)&pObject->GetLocalisation(), &DEC_Tools::GetTypeLocalisation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::IsKnowledgeObjectValid
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::IsKnowledgeObjectValid( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
+{
+    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !pObject || !pObject->CanBePerceived() )
+        call.GetResult().SetValue( false );
+    else
+        call.GetResult().SetValue( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::DamageObject
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !pObject || !pObject->CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+
+    float rDamageFactor = call.GetParameter( 2 ).ToFloat();
+    pObject->Destroy( rDamageFactor );
 }

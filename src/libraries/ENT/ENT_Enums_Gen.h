@@ -447,6 +447,7 @@ enum E_ObjectType
     eObjectType_ZoneInterditeTir,
     eObjectType_ZoneImplantationMortier,
     eObjectType_PontFlottantDiscontinu,
+    eObjectType_Installation,
     eNbrObjectType
 };
 
@@ -1272,6 +1273,12 @@ enum E_UnitMission
     eMission_Pion_Decrocher,
     eMission_Pion_Stationner,
     eMission_Pion_SeFaireTransporter,
+    eMission_Pion_InterdireFranchissementPopulation,
+    eMission_Pion_FilterPopulation,
+    eMission_Pion_RenseignerSurPopulation,
+    eMission_Pion_CanaliserPopulation,
+    eMission_Pion_SecuriserPopulationDansZone,
+    eMission_Pion_SecuriserZoneContreMenacesAsymetriques,
     eMission_Pion_Generique,
     eMission_Pion_MILICE_Provoquer,
     eMission_Pion_MILICE_PrendreEtTenir,
@@ -1302,6 +1309,8 @@ enum E_UnitMission
 enum E_PopulationMission
 {
     eMission_Population_FaireMouvement,
+    eMission_Population_Manifester,
+    eMission_Population_CommettreExactions,
 
     eNbrPopulationMission
 };

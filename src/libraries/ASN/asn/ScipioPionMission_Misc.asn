@@ -149,7 +149,6 @@ Mission-Pion-PlastronEnnemi ::= SEQUENCE
     }
 }
 
-
 Mission-Pion-FaireMouvement ::= SEQUENCE
 {
     itineraire  Itineraire
@@ -185,6 +184,39 @@ Mission-Pion-Stationner ::= SEQUENCE
 Mission-Pion-SeFaireTransporter ::= SEQUENCE
 {
 	point-embarquement Point
+}
+
+
+-- Population
+
+Mission-Pion-InterdireFranchissementPopulation ::= SEQUENCE
+{
+    ligne Line
+}
+
+Mission-Pion-FilterPopulation ::= SEQUENCE
+{
+    point Point
+}
+
+Mission-Pion-RenseignerSurPopulation ::= SEQUENCE
+{
+    point Point
+}
+
+Mission-Pion-CanaliserPopulation ::= SEQUENCE
+{
+    point Point
+}
+
+Mission-Pion-SecuriserPopulationDansZone ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-SecuriserZoneContreMenacesAsymetriques ::= SEQUENCE
+{
+    zone Polygon
 }
 
 -- MILICE

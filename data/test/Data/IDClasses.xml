@@ -49,6 +49,7 @@
     <Classe nom="zone interdite tir"                    id="215" />
     <Classe nom="zone interdite mouvement"              id="215" />
     <Classe nom="zone implantation mortier"             id="167" />
+    <Classe nom="installation"                          id="215" />
     <Classe nom="Population"                            id="2" />
     <Classe nom="PopulationConcentration"               id="2" />
     <Classe nom="PopulationFlux"                        id="2" />

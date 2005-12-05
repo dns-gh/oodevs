@@ -89,6 +89,7 @@ public:
     static const MIL_RealObjectType& zoneForbiddenFire_;
     static const MIL_RealObjectType& zoneForbiddenMove_;
     static const MIL_RealObjectType& zoneImplantationMortier_;
+    static const MIL_RealObjectType& installation_;
     //@}
 
 public:
@@ -178,6 +179,7 @@ protected:
         eObjectTypeZoneForbiddenFire        = 35,
         eObjectTypeZoneImplantationMortier  = 36,
         eObjectTypePontFlottantDiscontinu   = 37,
+        eObjectTypeInstallation             = 38
     };
 
     enum E_SpeedPolicy

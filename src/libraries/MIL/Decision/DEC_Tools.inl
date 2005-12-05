@@ -219,6 +219,17 @@ bool DEC_Tools::CheckTypePopulationConnaissanceAgent( const DIA_Variable_ABC& di
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypePopulationConnaissanceObjet
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypePopulationConnaissanceObjet( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypePopulationConnaissanceObjet_ );
+    return diaVariable.GetType() == *pTypePopulationConnaissanceObjet_;
+}
+    
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeID
 // Created: NLD 2004-10-20
 // -----------------------------------------------------------------------------
@@ -550,3 +561,15 @@ const DIA_TypeDef& DEC_Tools::GetTypePopulationConnaissanceAgent()
     assert( pTypePopulationConnaissanceAgent_ );
     return *pTypePopulationConnaissanceAgent_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypePopulationConnaissanceObjet
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypePopulationConnaissanceObjet()
+{
+    assert( pTypePopulationConnaissanceObjet_ );
+    return *pTypePopulationConnaissanceObjet_;
+}
+

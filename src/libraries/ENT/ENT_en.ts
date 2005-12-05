@@ -1537,6 +1537,38 @@
         <source>Population: Changer Attitude</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pion InterdireFranchissementPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion FilterPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion RenseignerSurPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion CanaliserPopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserZoneContreMenacesAsymetriques</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population Manifester</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population CommettreExactions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>
@@ -3354,6 +3386,10 @@
     </message>
     <message>
         <source>tir neutralisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>installation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

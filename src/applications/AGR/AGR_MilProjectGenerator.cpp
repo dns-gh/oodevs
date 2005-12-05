@@ -166,9 +166,13 @@ void AGR_MilProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& work
     for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )
     {
         const AGR_FragOrder& order = **it;
-        strIncludeList     += "#include \"" + order.MilFilePathName() + ".cpp\"\n";
+
+        std::string strXmlName = order.Name().substr( std::string( "OrderConduite_" ).size() );
+        workspace.ReplaceInString( strXmlName, "_", " " );
+
+        strIncludeList += "#include \"" + order.MilFilePathName() + ".cpp\"\n";
         strOrderRegistrationList += "    MIL_OrderConduiteType::RegisterOrderConduite< " + order.MilFileName() + ">"
-                                  + "( \"" + order.HumanName() + "\""
+                                  + "( \"" + strXmlName + "\""
                                   + ", " + order.EnumName()
                                   + ", " + order.ASNTypeName()
                                   + ", \"" + order.DIATypeName() + "\""

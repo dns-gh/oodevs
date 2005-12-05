@@ -61,6 +61,8 @@ public:
     static bool CheckTypeListeConnaissancesPopulation       ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePopulationConnaissanceAgent        ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListePopulationConnaissancesAgent  ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypePopulationConnaissanceObjet        ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListePopulationConnaissancesObjet  ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePerceptionPoint                    ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePerceptionLocalisation             ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePerceptionRadar                    ( const DIA_Variable_ABC& diaVariable );
@@ -78,6 +80,7 @@ public:
     static const DIA_TypeDef& GetTypeConnaissanceObjet              ();
     static const DIA_TypeDef& GetTypeConnaissancePopulation         ();
     static const DIA_TypeDef& GetTypePopulationConnaissanceAgent    ();
+    static const DIA_TypeDef& GetTypePopulationConnaissanceObjet    ();
     static const DIA_TypeDef& GetTypeListePoints                    ();
     static const DIA_TypeDef& GetTypeItineraire                     ();
     static const DIA_TypeDef& GetTypeAction                         ();
@@ -108,6 +111,7 @@ private:
     static const DIA_TypeDef* pTypeConnaissancePopulation_;
     static const DIA_TypeDef* pTypeConnaissanceAgent_;
     static const DIA_TypeDef* pTypePopulationConnaissanceAgent_;
+    static const DIA_TypeDef* pTypePopulationConnaissanceObjet_;
     static const DIA_TypeDef* pTypeID_;
     static const DIA_TypeDef* pTypeAction_;
     static const DIA_TypeDef* pTypePion_;

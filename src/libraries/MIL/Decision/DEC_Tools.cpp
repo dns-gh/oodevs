@@ -23,6 +23,7 @@ const DIA_TypeDef* DEC_Tools::pTypeConnaissanceObjet_             = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissanceAgent_             = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissancePopulation_        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceAgent_   = 0;
+const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceObjet_   = 0;
 const DIA_TypeDef* DEC_Tools::pTypeID_                            = 0;
 const DIA_TypeDef* DEC_Tools::pTypeAction_                        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePion_                          = 0;
@@ -55,6 +56,7 @@ void DEC_Tools::InitializeDIA()
     pTypeConnaissanceAgent_             = &GetDIAType( "T_ConnaissanceAgent"            );
     pTypeConnaissancePopulation_        = &GetDIAType( "T_ConnaissancePopulation"       );
     pTypePopulationConnaissanceAgent_   = &GetDIAType( "T_Population_ConnaissanceAgent" );
+    pTypePopulationConnaissanceObjet_   = &GetDIAType( "T_Population_ConnaissanceObjet" );
     pTypeID_                            = &GetDIAType( "T_ID"                           );
     pTypeAction_                        = &GetDIAType( "T_Action"                       );
     pTypePion_                          = &GetDIAType( "T_Pion"                         );
@@ -162,6 +164,24 @@ bool DEC_Tools::CheckTypeListePopulationConnaissancesAgent( const DIA_Variable_A
     for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
     {
         if( !CheckTypePopulationConnaissanceAgent( **it ) )
+            return false;
+    }
+    return true;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeListePopulationConnaissancesObjet
+// Created: NLD 2005-11-10
+// -----------------------------------------------------------------------------
+bool DEC_Tools::CheckTypeListePopulationConnaissancesObjet( const DIA_Variable_ABC& diaVariable )
+{
+    if( diaVariable.Type() != eSelection )
+        return false;
+
+    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
+    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
+    {
+        if( !CheckTypePopulationConnaissanceObjet( **it ) )
             return false;
     }
     return true;    

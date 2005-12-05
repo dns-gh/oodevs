@@ -37,6 +37,12 @@ enum E_SMission
     eSMission_Pion_Decrocher,
     eSMission_Pion_Stationner,
     eSMission_Pion_SeFaireTransporter,
+    eSMission_Pion_InterdireFranchissementPopulation,
+    eSMission_Pion_FilterPopulation,
+    eSMission_Pion_RenseignerSurPopulation,
+    eSMission_Pion_CanaliserPopulation,
+    eSMission_Pion_SecuriserPopulationDansZone,
+    eSMission_Pion_SecuriserZoneContreMenacesAsymetriques,
     eSMission_Pion_Generique,
     eSMission_Pion_TRANS_EtablirGererLiaison,
 
@@ -499,6 +505,8 @@ enum E_SMission
     eSMission_Population_Common_Debut,
 
     eSMission_Population_FaireMouvement,
+    eSMission_Population_Manifester,
+    eSMission_Population_CommettreExactions,
 
     eSMission_Population_Common_Fin,
 

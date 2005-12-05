@@ -205,7 +205,7 @@ private:
     //! @name Tools
     //@{
     void InitializeAvoidanceLocalisation();
-    void InitializeCommon               ( MIL_Army& army, const TER_Localisation& localisation, uint nID, uint nMosPlannedID = 0 );
+    void InitializeCommon               ( MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID = 0 );
 
     void ChangeConstructionPercentage   ( MT_Float rNewConstructionPercentage );
     void ChangeMiningPercentage         ( MT_Float rNewMiningPercentage       );
@@ -228,6 +228,7 @@ private:
     const MIL_RealObjectType* pType_;
     uint                      nID_;
     uint                      nMosPlannedID_;
+    std::string               strName_;
 
     // State
     MT_Float rConstructionPercentage_;

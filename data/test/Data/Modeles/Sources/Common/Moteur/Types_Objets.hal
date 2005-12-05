@@ -49,4 +49,5 @@ typedef enum E_TypeObject
     eTypeObjectZoneInterditeTir         = 35,    
     eTypeObjectZoneImplantationMortier  = 36,
     eTypeObjectPontFlottantDiscontinu   = 37, 
+    eTypeObjectInstallation             = 38
 };

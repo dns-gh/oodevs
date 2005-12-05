@@ -18,3 +18,5 @@
 
 
     void CreateMission_FaireMouvement();
+    void CreateMission_Manifester();
+    void CreateMission_CommettreExactions();

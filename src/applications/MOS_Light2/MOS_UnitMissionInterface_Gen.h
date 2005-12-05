@@ -193,6 +193,12 @@
     void CreateMission_Decrocher();
     void CreateMission_Stationner();
     void CreateMission_SeFaireTransporter();
+    void CreateMission_InterdireFranchissementPopulation();
+    void CreateMission_FilterPopulation();
+    void CreateMission_RenseignerSurPopulation();
+    void CreateMission_CanaliserPopulation();
+    void CreateMission_SecuriserPopulationDansZone();
+    void CreateMission_SecuriserZoneContreMenacesAsymetriques();
     void CreateMission_Generique();
     void CreateMission_MILICE_Provoquer();
     void CreateMission_MILICE_PrendreEtTenir();

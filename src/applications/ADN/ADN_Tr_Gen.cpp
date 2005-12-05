@@ -338,6 +338,12 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Pion Decrocher", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion Decrocher"), eSMission_Pion_Decrocher ),
     T_ConverterSMission("Pion Stationner", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion Stationner"), eSMission_Pion_Stationner ),
     T_ConverterSMission("Pion SeFaireTransporter", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion SeFaireTransporter"), eSMission_Pion_SeFaireTransporter ),
+    T_ConverterSMission("Pion InterdireFranchissementPopulation", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion InterdireFranchissementPopulation"), eSMission_Pion_InterdireFranchissementPopulation ),
+    T_ConverterSMission("Pion FilterPopulation", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion FilterPopulation"), eSMission_Pion_FilterPopulation ),
+    T_ConverterSMission("Pion RenseignerSurPopulation", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion RenseignerSurPopulation"), eSMission_Pion_RenseignerSurPopulation ),
+    T_ConverterSMission("Pion CanaliserPopulation", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion CanaliserPopulation"), eSMission_Pion_CanaliserPopulation ),
+    T_ConverterSMission("Pion SecuriserPopulationDansZone", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion SecuriserPopulationDansZone"), eSMission_Pion_SecuriserPopulationDansZone ),
+    T_ConverterSMission("Pion SecuriserZoneContreMenacesAsymetriques", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion SecuriserZoneContreMenacesAsymetriques"), eSMission_Pion_SecuriserZoneContreMenacesAsymetriques ),
     T_ConverterSMission("Pion Generique", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion Generique"), eSMission_Pion_Generique ),
     T_ConverterSMission("Pion MILICE Provoquer", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion MILICE Provoquer"), eSMission_Pion_MILICE_Provoquer ),
     T_ConverterSMission("Pion MILICE PrendreEtTenir", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion MILICE PrendreEtTenir"), eSMission_Pion_MILICE_PrendreEtTenir ),
@@ -362,6 +368,8 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Pion RENS ROIM CL289 RenseignerSur", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion RENS ROIM CL289 RenseignerSur"), eSMission_Pion_RENS_ROIM_CL289_RenseignerSur ),
     T_ConverterSMission("Pion TRANS EtablirGererLiaison", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion TRANS EtablirGererLiaison"), eSMission_Pion_TRANS_EtablirGererLiaison ),
     T_ConverterSMission("Population FaireMouvement", QT_TRANSLATE_NOOP( "ADN_Enums", "Population FaireMouvement"), eSMission_Population_FaireMouvement ),
+    T_ConverterSMission("Population Manifester", QT_TRANSLATE_NOOP( "ADN_Enums", "Population Manifester"), eSMission_Population_Manifester ),
+    T_ConverterSMission("Population CommettreExactions", QT_TRANSLATE_NOOP( "ADN_Enums", "Population CommettreExactions"), eSMission_Population_CommettreExactions ),
 
     T_ConverterSMission( ""           , ""                                           , (E_SMission)-1  )
 };

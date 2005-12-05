@@ -1073,6 +1073,36 @@ typedef struct T_Mission_Pion_SeFaireTransporter : T_Mission_Pion
 T_Point pointEmbarquement_;
 };
 
+typedef struct T_Mission_Pion_InterdireFranchissementPopulation : T_Mission_Pion
+{
+T_Localisation ligne_;
+};
+
+typedef struct T_Mission_Pion_FilterPopulation : T_Mission_Pion
+{
+T_Point point_;
+};
+
+typedef struct T_Mission_Pion_RenseignerSurPopulation : T_Mission_Pion
+{
+T_Point point_;
+};
+
+typedef struct T_Mission_Pion_CanaliserPopulation : T_Mission_Pion
+{
+T_Point point_;
+};
+
+typedef struct T_Mission_Pion_SecuriserPopulationDansZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_SecuriserZoneContreMenacesAsymetriques : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
 typedef struct T_Mission_Pion_Generique : T_Mission_Pion
 {
 T_ListeLocalisations zones_;

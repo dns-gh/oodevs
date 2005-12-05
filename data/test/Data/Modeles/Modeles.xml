@@ -139,6 +139,7 @@
       <File>For Tests\Tests\Population\Files.hal</File>
       <Missions>
         <Mission nom="Population FaireMouvement"/> 
+        <Mission nom="Population CommettreExactions"/> 
       </Missions>
     </Modele>
   </Populations>

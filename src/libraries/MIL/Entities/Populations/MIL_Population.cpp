@@ -123,7 +123,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
     pType_ = MIL_PopulationType::Find( nTypeID );
     assert( pType_ );
 
-    file >> nID_
+    file >> const_cast< uint& >( nID_ )
          >> const_cast< MIL_Army*& >( pArmy_ )
          >> strName_;
 

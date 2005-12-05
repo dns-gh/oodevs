@@ -554,6 +554,18 @@
         <Construction categorie="pont flottant de la mort" type="mine"/>
       </Dotations>
     </Objet>
+    
+    <Objet type="installation">
+      <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <PeutEtrePrepare>false</PeutEtrePrepare>
+      <PeutEtreValorise>false</PeutEtreValorise>
+      <PeutEtreContourne>false</PeutEtreContourne>
+      <VitesseParDefaut>-1</VitesseParDefaut>
+      <VitesseParDefautQuandContourne>-1</VitesseParDefautQuandContourne>
+      <HauteurMaxInteraction>0</HauteurMaxInteraction>
+      <NombreAnimateursMax>0</NombreAnimateursMax>
+      <ModeImpactSurVitessePion type="AuPlusLent"/>
+    </Objet>    
   </ObjetsReels>
 
   <ObjetsVirtuels>

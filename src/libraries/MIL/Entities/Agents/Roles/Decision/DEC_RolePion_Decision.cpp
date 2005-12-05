@@ -138,9 +138,6 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( pRoePopulation_ );
-    assert( pPion_ );
-
     file >> boost::serialization::base_object< MT_Role_ABC >( *this )
          >> pPion_
          >> nForceRatioState_
@@ -148,10 +145,12 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
          >> nCloseCombatState_
          >> nOperationalState_
          >> nIndirectFireAvailability_;
+    assert( pPion_ );
 
     uint nRoePopulationID;
     file >> nRoePopulationID;
     pRoePopulation_ = PHY_RoePopulation::Find( nRoePopulationID );
+    assert( pRoePopulation_ );
        
     uint nPionTypeID;
     file >> nPionTypeID;
@@ -159,6 +158,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::FindPionType( nPionTypeID );
     assert( pType );
     
+
     diaFunctionCaller_.DIA_FunctionCaller< MIL_AgentPion >::DIA_FunctionCaller( *pPion_, pType->GetFunctionTable() );
 
     RegisterUserFunctionCaller( diaFunctionCaller_ );

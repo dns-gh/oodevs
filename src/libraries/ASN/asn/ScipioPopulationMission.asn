@@ -13,4 +13,14 @@ Mission-Population-FaireMouvement ::= SEQUENCE
     destination Point
 }
 
+Mission-Population-Manifester  ::= SEQUENCE
+{
+    destination Point
+}
+
+Mission-Population-CommettreExactions ::= SEQUENCE
+{
+    zone Polygon
+}
+
 END -- ScipioPopulationMission
