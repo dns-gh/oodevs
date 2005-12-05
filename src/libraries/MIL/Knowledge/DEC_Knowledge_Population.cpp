@@ -288,11 +288,11 @@ bool DEC_Knowledge_Population::IsInZone( const TER_Localisation& loc ) const
 // Name: DEC_Knowledge_Population::GetClosestPoint
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Knowledge_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
-{
-    assert( pPopulationKnown_ );
-    return pPopulationKnown_->GetClosestPoint( refPos );
-}
+//MT_Vector2D DEC_Knowledge_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
+//{
+//    assert( pPopulationKnown_ );
+//    return pPopulationKnown_->GetClosestPoint( refPos );
+//}
 
 // =============================================================================
 // NETWORK
