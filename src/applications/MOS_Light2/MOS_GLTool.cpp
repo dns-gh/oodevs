@@ -1121,7 +1121,7 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
     {
         E_Icon objectIcon = IconOfObjectType( (E_ObjectType) object.GetType() );
         if ( objectIcon != eNoneIcon && p.size() > 0 )
-            DrawIcon( objectIcon, *(--p.end()), 300 );
+            DrawIcon( objectIcon, *(--p.end()), 900 );
     }
     
 }
