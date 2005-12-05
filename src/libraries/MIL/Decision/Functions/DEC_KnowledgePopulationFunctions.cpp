@@ -67,3 +67,23 @@ void DEC_KnowledgePopulationFunctions::Secure( DIA_Call_ABC& call, const MIL_Age
     call.GetParameter( 1 ).SetValue( eQueryValid );
     pKnowledge->Secure( caller );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::ClosestPoint
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::ClosestPoint( DIA_Call_ABC& call, const MIL_AgentPion& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (void*)0, DEC_Tools::GetTypePoint() );GetParameter( 1 ).SetValue( eQueryInvalid );
+        return;
+    }
+    
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    const TER_Localisation* pLoc = call.GetParameter( 1 ).ToUserPtr( pLoc );
+    assert( pLoc );
+    call.GetResult().SetValue( pKnowledge->IsInZone( *pLoc ) );
+}
