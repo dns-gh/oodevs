@@ -57,7 +57,7 @@ MOS_AgentServerMsgMgr::MOS_AgentServerMsgMgr( MOS_AgentServerController& control
     pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgInit                );
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
 
-    pMessageService_->RegisterReceivedMessage( eMsgUnitTrace                             , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitTrace           );
+    pMessageService_->RegisterReceivedMessage( eMsgTrace                                 , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgTrace                );
     pMessageService_->RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitVisionCones     );
     pMessageService_->RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgUnitInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, & MOS_AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
@@ -240,17 +240,17 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/,
 
 
 //-----------------------------------------------------------------------------
-// Name: MOS_AgentServerMsgMgr::OnReceiveMsgUnitTrace
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgTrace
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgUnitTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
+void MOS_AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
     MIL_AgentID nAgentID;
     input >> nAgentID;
 
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
-    assert( pAgent );
-    pAgent->OnReceiveTraceMsg( input );
+    if( pAgent )
+        pAgent->OnReceiveTraceMsg( input );
 }
 
 // -----------------------------------------------------------------------------

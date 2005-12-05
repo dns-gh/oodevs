@@ -16,7 +16,7 @@ behavior BEH_Defaut( id nDummy )
     {              
         persistent T_Action actionFire;
         
-        
+        DEC_Trace( "aelkruzer" );
         DEC_Debug( "Attitude : " + EnumToString( DEC_Population_Attitude(), E_AttitudePopulation ) );
         
         if( actionFire != 0 )

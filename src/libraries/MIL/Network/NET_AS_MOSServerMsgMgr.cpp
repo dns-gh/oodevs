@@ -230,12 +230,12 @@ void NET_AS_MOSServerMsgMgr::SendMsgArmy( DIN::DIN_BufferedMessage& msg )
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgUnitTrace
+// Name: NET_AS_MOSServerMsgMgr::SendMsgTrace
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgUnitTrace( DIN_BufferedMessage& msg )
+void NET_AS_MOSServerMsgMgr::SendMsgTrace( DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgUnitTrace, msg );
+    SendMsgToAllMosLight( eMsgTrace, msg );
 }
 
 //-----------------------------------------------------------------------------

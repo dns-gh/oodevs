@@ -130,7 +130,7 @@ void DEC_AutomateFunctions::Trace( DIA_Call_ABC& call, const MIL_Automate& calle
     dinMsg << (uint32)callerAutomate.GetID();
     dinMsg << msg;
 
-    msgMgr.SendMsgUnitTrace( dinMsg );
+    msgMgr.SendMsgTrace( dinMsg );
 }
 
 //-----------------------------------------------------------------------------

@@ -252,7 +252,10 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DamageObject                  , "DEC_ConnaissanceObjet_Degrader"     );   
 
     // Debug
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug, "DEC_Debug" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DebugDrawPoint , "DEC_DebugAffichePoint"  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DebugDrawPoints, "DEC_DebugAffichePoints" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Debug          , "DEC_Debug"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::Trace          , "DEC_Trace"              );
 
     // RC
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_Population >, "DEC_RC"      );

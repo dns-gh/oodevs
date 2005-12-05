@@ -359,7 +359,7 @@ void DEC_AgentFunctions::Trace( DIA_Call_ABC& call, const MIL_AgentPion& callerA
     dinMsg << (uint32)callerAgent.GetID();
     dinMsg << msg;
 
-    msgMgr.SendMsgUnitTrace( dinMsg );
+    msgMgr.SendMsgTrace( dinMsg );
 }
 
 //-----------------------------------------------------------------------------

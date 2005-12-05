@@ -54,7 +54,7 @@ public:
         eMsgSimMosWithContext                      = 1,
 
         eMsgUnitVisionCones                        = 1004,
-        eMsgUnitTrace                              = 1005,
+        eMsgTrace                                  = 1005,
         eMsgInit                                   = 1007,
         eMsgProfilingValues                        = 1008,
         eMsgUnitInterVisibility                    = 1009,
@@ -95,7 +95,7 @@ public:
     void SendMsgArmy                                  ( DIN::DIN_BufferedMessage& msg );
 
     void SendMsgInit                                  ( NET_AS_MOSServer& mosServer, DIN::DIN_BufferedMessage& msg );
-    void SendMsgUnitTrace                             ( DIN::DIN_BufferedMessage& msg );
+    void SendMsgTrace                                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitVisionCones                       ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitInterVisibility                   ( DIN::DIN_BufferedMessage& msg );
     void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );

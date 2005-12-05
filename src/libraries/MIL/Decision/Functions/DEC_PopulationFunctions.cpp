@@ -19,6 +19,8 @@
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectTypeFilter.h"
+#include "Network/NET_AS_MOSServerMsgMgr.h"
+#include "Network/NET_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
 #include "DEC_FunctionsTools.h"
@@ -34,6 +36,64 @@ void DEC_PopulationFunctions::Debug( DIA_Call_ABC& call, const MIL_Population& c
 
     std::string msg( call.GetParameter( 0 ).ToString() );
     MT_LOG_INFO_MSG( MT_FormatString( "Population %d says : [%s]", callerPopulation.GetID(), msg.c_str() ).c_str() );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::Trace
+// Created: NLD 2003-01-29
+//-----------------------------------------------------------------------------
+void DEC_PopulationFunctions::Trace( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    std::string msg( call.GetParameter( 0 ).ToString() );
+
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << (uint32)callerPopulation.GetID();
+    dinMsg << msg;
+
+    msgMgr.SendMsgTrace( dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::DebugDrawPoints
+// Created: NLD 2005-03-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::DebugDrawPoints( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    assert( DEC_Tools::CheckTypeListePoints( call.GetParameter( 0 ) ) );
+
+    T_PointVector* pPoints = call.GetParameter( 0 ).ToUserPtr( pPoints );
+    assert( pPoints );
+
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << (uint32)callerPopulation.GetID();
+    dinMsg << (uint32)pPoints->size();
+    for( CIT_PointVector itPoint = pPoints->begin(); itPoint != pPoints->end(); ++itPoint )
+        dinMsg << *itPoint;
+    msgMgr.SendMsgDebugDrawPoints( dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::DebugDrawPoint
+// Created: NLD 2005-03-22
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::DebugDrawPoint( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
+
+    const MT_Vector2D* pPoint = call.GetParameter( 0 ).ToUserPtr( pPoint );
+    assert( pPoint );
+
+    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    DIN::DIN_BufferedMessage dinMsg = msgMgr.BuildMessage();
+    
+    dinMsg << (uint32)callerPopulation.GetID();
+    dinMsg << (uint32)1;
+    dinMsg << *pPoint;
+    msgMgr.SendMsgDebugDrawPoints( dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +249,7 @@ void DEC_PopulationFunctions::IsKnowledgeObjectValid( DIA_Call_ABC& call, const 
 // Name: DEC_PopulationFunctions::DamageObject
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Population& /*callerPopulation*/ )
 {
     MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
     if( !pObject || !pObject->CanBePerceived() )

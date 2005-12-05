@@ -56,7 +56,7 @@ public:
         eMsgSimMosWithContext                      = 1,
 
         eMsgUnitVisionCones                        = 1004,
-        eMsgUnitTrace                              = 1005,
+        eMsgTrace                                  = 1005,
         eMsgInit                                   = 1007,
         eMsgProfilingValues                        = 1008,
         eMsgUnitInterVisibility                    = 1009,
@@ -127,7 +127,7 @@ private:
     // Debug
     void OnReceiveMsgInit                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgUnitTrace                             ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgTrace                                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgObjectInterVisibility                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
