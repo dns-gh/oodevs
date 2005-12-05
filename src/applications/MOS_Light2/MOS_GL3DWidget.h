@@ -93,8 +93,6 @@ private:
 
 private:
     MT_Rect      viewport_;
-    MT_Vector2D  vCenter_;
-    MT_Float     rZoom_;
     MT_Float     rMetersPerPixel_;
     E_RulerState nRulerState_;
     MT_Vector2D  vRulerStartPos_;
@@ -106,8 +104,8 @@ private:
     //! @name Member data
     //@{
     MT_GLDrawer* pGLDrawer_;
-    float rZFactor_;
-    QTimer* pTimer_;
+    float        rZFactor_;
+    QTimer*      pTimer_;
     //@}
 };
 

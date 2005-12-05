@@ -138,6 +138,12 @@ void MOS_GL3DWidget::keyPressEvent( QKeyEvent* pEvent )
         rZFactor_ *= 0.9f;
         SetZRatio( rZFactor_ );
     }
+    else if( pEvent->key() == Qt::Key_Home )
+    {
+        CenterOn( geometry::Point3f( MOS_App::GetApp().GetWorld().GetRect().GetWidth () / 2, 
+                                     MOS_App::GetApp().GetWorld().GetRect().GetHeight() / 2,
+                                     MOS_App::GetApp().GetWorld().GetRect().GetWidth () / 2 ) );
+    }
     Widget3D::keyPressEvent( pEvent );
 }
 

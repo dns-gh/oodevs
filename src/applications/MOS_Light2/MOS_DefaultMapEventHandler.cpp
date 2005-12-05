@@ -329,6 +329,7 @@ void MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted( MOS_Populatio
     if( selectedElement_.pPopulationConcentration_ == &concentration )
     {
         selectedElement_ = MOS_SelectedElement();
+        selectedElement_.pPopulation_ = const_cast< MOS_Population* >( &concentration.GetPopulation() );
         emit ElementSelected( selectedElement_ );
     }
 }
@@ -342,6 +343,7 @@ void MOS_DefaultMapEventHandler::OnPopulationFlowDeleted( MOS_PopulationFlow& fl
     if( selectedElement_.pPopulationFlow_ == &flow )
     {
         selectedElement_ = MOS_SelectedElement();
+        selectedElement_.pPopulation_ = const_cast< MOS_Population* >( &flow.GetPopulation() );
         emit ElementSelected( selectedElement_ );
     }    
 }

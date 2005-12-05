@@ -41,7 +41,7 @@
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement()
 {
-    this->Init();
+    Init();
 }
 
 
@@ -51,7 +51,7 @@ MOS_SelectedElement::MOS_SelectedElement()
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_Agent& agent )
 {
-    this->Init();
+    Init();
     pAgent_ = &agent;
 }
 
@@ -61,7 +61,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Agent& agent )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_Population& population )
 {
-	this->Init();
+	Init();
 	pPopulation_ = &population;
 }
 
@@ -71,7 +71,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Population& population )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentration& populationConcentration )
 {
-    this->Init();
+    Init();
     pPopulationConcentration_ = &populationConcentration;
 }
     
@@ -81,7 +81,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentration& populatio
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlow& populationFlow )
 {
-    this->Init();
+    Init();
     pPopulationFlow_ = &populationFlow;
 }
 
@@ -91,7 +91,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlow& populationFlow )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_Gtia& gtia )
 {
-    this->Init();
+    Init();
     pGtia_ = &gtia;
 }
 
@@ -102,7 +102,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Gtia& gtia )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_Team& team )
 {
-    this->Init();
+    Init();
     pTeam_ = &team;
 }
 
@@ -113,7 +113,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Team& team )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_Object_ABC& object )
 {
-    this->Init();
+    Init();
     pObject_ = &object;
 }
 
@@ -124,7 +124,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_Object_ABC& object )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_AgentKnowledge& agentKnowledge )
 {
-    this->Init();
+    Init();
     pAgentKnowledge_ = &agentKnowledge;
 }
 
@@ -135,7 +135,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_AgentKnowledge& agentKnowledge )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_ObjectKnowledge& objectKnowledge )
 {
-    this->Init();
+    Init();
     pObjectKnowledge_ = &objectKnowledge;
 }
 
@@ -145,7 +145,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_ObjectKnowledge& objectKnowledge )
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationKnowledge& populationKnowledge )
 {
-    this->Init();
+    Init();
     pPopulationKnowledge_ = &populationKnowledge;
 }
 
@@ -155,7 +155,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationKnowledge& populationKno
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentrationKnowledge& populationConcentrationKnowledge )
 {
-    this->Init();
+    Init();
     pPopulationConcentrationKnowledge_ = &populationConcentrationKnowledge;
 }
     
@@ -165,7 +165,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentrationKnowledge& 
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlowKnowledge& populationFlowKnowledge )
 {
-    this->Init();
+    Init();
     pPopulationFlowKnowledge_ = &populationFlowKnowledge;
 }
 
@@ -175,7 +175,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlowKnowledge& populatio
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_TacticalLine_ABC& line, int nLinePoint )
 {
-    this->Init();
+    Init();
     pLine_ = &line;
     nLinePoint_ = nLinePoint;
 }
@@ -187,7 +187,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_TacticalLine_ABC& line, int nLineP
 // -----------------------------------------------------------------------------
 MOS_SelectedElement::MOS_SelectedElement( MOS_RC& rc )
 {
-    this->Init();
+    Init();
     pRC_ = &rc;
 }
 
