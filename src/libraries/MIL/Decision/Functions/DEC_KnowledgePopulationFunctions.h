@@ -29,6 +29,7 @@ public:
                            static void Recon         ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
     template< typename T > static void IsRecon       ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void IsInZone      ( DIA_Call_ABC& call, const T& caller );
+                           static void ClosestPoint  ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
                            static void Secure        ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
     //@}
 };

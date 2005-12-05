@@ -81,6 +81,7 @@ public:
           MT_Float            GetDangerosity    ( const MIL_AgentPion& target ) const;
           bool                IsRecon           () const;
           bool                IsInZone          ( const TER_Localisation& loc ) const;
+          MT_Vector2D         GetClosestPoint   ( const MT_Vector2D& refPos ) const;
     //@}
 
     //! @name Network operations

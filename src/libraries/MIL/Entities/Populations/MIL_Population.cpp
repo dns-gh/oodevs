@@ -298,6 +298,10 @@ bool MIL_Population::IsDead() const
     return true;
 }
 
+// =============================================================================
+// GEOMETRY
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::IsInZone
 // Created: NLD 2005-12-02
@@ -313,6 +317,51 @@ bool MIL_Population::IsInZone( const TER_Localisation& loc ) const
             return true;
 
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetClosestPoint
+// Created: NLD 2005-12-05
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
+{
+    MT_Vector2D closestPoint;
+    MT_Float    rMinDistance = std::numeric_limits< MT_Float >::max();
+
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    {
+        if( (**itConcentration).IsDead() )
+            continue;
+
+        MT_Vector2D nearestPointTmp;
+
+        if( !(**itConcentration).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
+            continue;
+        MT_Float rDistance = refPos.Distance( nearestPointTmp );
+        if( rDistance < rMinDistance )
+        {
+            rMinDistance = rDistance;
+            closestPoint = nearestPointTmp;
+        }
+    }
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    {
+        if( (**itFlow).IsDead() )
+            continue;
+
+        MT_Vector2D nearestPointTmp;
+
+        if( !(**itFlow).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
+            continue;
+        MT_Float rDistance = refPos.Distance( nearestPointTmp );
+        if( rDistance < rMinDistance )
+        {
+            rMinDistance = rDistance;
+            closestPoint = nearestPointTmp;
+        }
+    }
+    return closestPoint;
 }
 
 // -----------------------------------------------------------------------------

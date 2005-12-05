@@ -12,6 +12,7 @@
 #include "MIL_pch.h"
 #include "DEC_KnowledgePopulationFunctions.h"
 
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
@@ -67,7 +68,7 @@ void DEC_KnowledgePopulationFunctions::Secure( DIA_Call_ABC& call, const MIL_Age
     call.GetParameter( 1 ).SetValue( eQueryValid );
     pKnowledge->Secure( caller );
 }
-/*
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::ClosestPoint
 // Created: NLD 2005-12-05
@@ -78,14 +79,13 @@ void DEC_KnowledgePopulationFunctions::ClosestPoint( DIA_Call_ABC& call, const M
     if( !pKnowledge )
     {
         call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (void*)0, DEC_Tools::GetTypePoint() );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return;
     }
 
     call.GetParameter( 1 ).SetValue( eQueryValid );
 
-    pKnowledge->
+    MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RolePion_Location >().GetPosition() ) ); //$$$ RAM
 
-    call.GetResult().SetValue( (void*)0, DEC_Tools::GetTypePoint() );
+    call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
-*/

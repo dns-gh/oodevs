@@ -65,7 +65,12 @@ public:
     const MIL_Army&                   GetArmy              () const;
     const DEC_PopulationKnowledge&    GetKnowledge         () const;
           bool                        IsDead               () const;
-          bool                        IsInZone             ( const TER_Localisation& loc ) const;
+    //@}
+
+    //! @name Geometry
+    //@{
+    bool        IsInZone       ( const TER_Localisation& loc ) const;
+    MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
     //@}
 
     //! @name Effects on pions

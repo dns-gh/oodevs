@@ -536,6 +536,9 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
      
         with( x in popus )
         {
+            T_Point pPt = DEC_ConnaissancePopulation_PointPlusProche( x, nFusse );
+            DEC_Debug( "Pt plus proche : " + DEC_PointToString( pPt ) );
+            DEC_Geometrie_DetruirePoint( pPt );
             if( DEC_ConnaissancePopulation_EstDansZone( x, mission.forme_ ) )
                 DEC_ConnaissancePopulation_Securiser( x, nFusse );
         }
