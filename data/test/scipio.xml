@@ -35,7 +35,7 @@
     <Logistique>Data/Logistique.xml</Logistique>
     <Ravitaillement>Data/Ravitaillement.xml</Ravitaillement>
     <Communications>Data/Communications.xml</Communications>
-    <ODB>Data/ODB.xml</ODB>
+    <ODB>Data/ODB/ODB_Vide.xml</ODB>
     <Pathfind>Data/Pathfind.xml</Pathfind>
     <Missions>Data/Missions.xml</Missions>
     <HLA>Data/HLA.xml</HLA>

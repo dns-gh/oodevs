@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<ODB>
+
+  <Armees>
+    <Armee id="2621442" nom="bleu">
+      <GroupesConnaissance>
+        <GroupeConnaissance id="0" type="Standard"/>
+        <GroupeConnaissance id="1" type="Standard"/>
+        <GroupeConnaissance id="2" type="Standard"/>
+        <GroupeConnaissance id="3" type="Standard"/>
+        <GroupeConnaissance id="4" type="Standard"/>
+      </GroupesConnaissance>
+      <Diplomatie>
+        <Armee nom="rouge" relation="ennemi"/>
+        <Armee nom="blanc" relation="neutre"/>
+      </Diplomatie>
+    </Armee>
+    <Armee id="2621443" nom="rouge">
+      <GroupesConnaissance>
+        <GroupeConnaissance id="5" type="Standard"/>
+        <GroupeConnaissance id="6" type="Standard"/>
+        <GroupeConnaissance id="7" type="Standard"/>
+      </GroupesConnaissance>
+      <Diplomatie>
+        <Armee nom="bleu" relation="ennemi"/>
+        <Armee nom="blanc" relation="neutre"/>
+      </Diplomatie>
+    </Armee>
+    <Armee id="2621445" nom="blanc">
+      <GroupesConnaissance/>
+      <Diplomatie>
+        <Armee nom="rouge" relation="neutre"/>
+        <Armee nom="bleu" relation="neutre"/>
+      </Diplomatie>
+    </Armee>
+  </Armees>
+
+  <Automates/>
+  <Pions/>
+  <Populations/>
+  <Objets/>
+
+</ODB>
+
