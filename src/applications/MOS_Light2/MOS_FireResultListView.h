@@ -58,9 +58,11 @@ private slots:
     //@}
 
 private:
-    //! @name Operations
+    //! @name Helpers
     //@{
-    void OnFireResultCreated( const T_FireResults& fireResults );
+    void OnFireResultCreated ( const T_FireResults& fireResults );
+    void BuildEquipmentResult( const MOS_FireResult& result, QListViewItem& parentItem );
+    void BuildHumanResult    ( const MOS_FireResult& result, QListViewItem& parentItem );
     //@}
 
 private:

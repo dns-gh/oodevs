@@ -35,12 +35,12 @@ using namespace DIN;
 // Name: MOS_Trace constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-MOS_Trace::MOS_Trace( MOS_Agent_ABC& agent )
+MOS_Trace::MOS_Trace( MOS_Agent_ABC& agent, DIN_Input& input )
     : MOS_Report_ABC( agent.GetPos() )
 {
     eType_ = MOS_Report_ABC::eTrace;
+    input >> strTitle_;
 }
- 
 
 //-----------------------------------------------------------------------------
 // Name: MOS_Trace destructor
@@ -50,12 +50,3 @@ MOS_Trace::~MOS_Trace()
 {
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: MOS_Trace::Initialize
-// Created: NLD 2002-10-07
-//-----------------------------------------------------------------------------
-void MOS_Trace::Initialize( DIN_Input& input )
-{   
-    input >> strTitle_;
-}

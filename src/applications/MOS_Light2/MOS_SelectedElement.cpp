@@ -73,6 +73,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationConcentration& populatio
 {
     Init();
     pPopulationConcentration_ = &populationConcentration;
+    pPopulation_              = const_cast< MOS_Population* >( &populationConcentration.GetPopulation() );
 }
     
 // -----------------------------------------------------------------------------
@@ -83,6 +84,7 @@ MOS_SelectedElement::MOS_SelectedElement( MOS_PopulationFlow& populationFlow )
 {
     Init();
     pPopulationFlow_ = &populationFlow;
+    pPopulation_     = const_cast< MOS_Population* >( &populationFlow.GetPopulation() );
 }
 
 // -----------------------------------------------------------------------------

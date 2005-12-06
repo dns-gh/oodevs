@@ -80,9 +80,9 @@ public:
 
     typedef struct
     {
-        MOS_Agent* pOrigin_;
-        MOS_Agent* pDirectFireTarget_;
-        MT_Vector2D vIndirectFireTarget_;
+        MOS_Agent*     pOrigin_;
+        MOS_Agent_ABC* pDirectFireTarget_;
+        MT_Vector2D    vIndirectFireTarget_;
     } T_Conflict;
 
     typedef std::map< uint, T_Conflict >    T_ConflictMap;
@@ -176,9 +176,9 @@ public:
     /** @name Conflicts */
     //-------------------------------------------------------------------------
     //@{
-    void AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent& target );
+    void AddDirectConflict  ( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent_ABC&     target );
     void AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, const MT_Vector2D& vTarget );
-    void DeleteConflict( ASN1T_OID nConflictID );
+    void DeleteConflict     ( ASN1T_OID nConflictID );
     //@}
 
     //-------------------------------------------------------------------------

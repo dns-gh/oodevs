@@ -52,13 +52,14 @@ public:
 
     //! @name Reports
     //@{
-    virtual T_ReportVector& GetReports();
-    virtual void            DeleteAllRCs();
-    virtual void            DeleteAllTraces();
-    virtual void            DeleteReport( MOS_Report_ABC& );
+    virtual T_ReportVector& GetReports                 ();
+    virtual void            DeleteAllRCs               ();
+    virtual void            DeleteAllTraces            ();
+    virtual void            DeleteReport               ( MOS_Report_ABC& );
 
-    virtual void            OnReceiveMsgCR       ( const ASN1T_MsgCR& msg );
-    virtual void            OnReceiveTraceMsg    ( DIN::DIN_Input& input );
+    virtual void            OnReceiveMsgCR             ( const ASN1T_MsgCR& msg );
+    virtual void            OnReceiveTraceMsg          ( DIN::DIN_Input&    msg );
+    virtual void            OnReceiveDebugDrawPointsMsg( DIN::DIN_Input&    msg );
     //@}
 
     //! @name Knowledge

@@ -18,7 +18,6 @@
 #include "MOS_World.h"
 #include "MOS_Report_ABC.h"
 #include "MOS_RC.h"
-#include "MOS_Trace.h"
 #include "MOS_Net_Def.h"
 #include "MOS_ASN_Messages.h"
 #include "MOS_AgentKnowledge.h"
@@ -390,25 +389,6 @@ void MOS_Agent::OnReceiveMsgObjectInterVisibility( DIN::DIN_Input& input )
         objectsPerceived_.insert( pObject ); break;
     default:
         assert( false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::OnReceiveDebugDrawPointsMsg
-// Created: NLD 2005-03-22
-// -----------------------------------------------------------------------------
-void MOS_Agent::OnReceiveDebugDrawPointsMsg( DIN_Input& msg )
-{
-    uint32 nTmp;
-    msg >> nTmp;
-
-    reportPoints_.clear();
-    reportPoints_.reserve( nTmp );
-    for( uint i = 0; i < nTmp; ++i )
-    {
-        MT_Vector2D vPos;
-        msg >> vPos;
-        reportPoints_.push_back( vPos );
     }
 }
 
@@ -1234,9 +1214,7 @@ void MOS_Agent::TerminateConsign( MOS_LogMedicalConsign& consign )
 // -----------------------------------------------------------------------------
 void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg )
 {
-    MOS_FireResult& fireResult = *new MOS_FireResult();
-    fireResult.Initialize( asnMsg );
-    fireResults_.push_back( &fireResult );
+    fireResults_.push_back( new MOS_FireResult( asnMsg ) );
     if( fireResults_.size() > 20 )
         fireResults_.erase( fireResults_.begin() );
 }

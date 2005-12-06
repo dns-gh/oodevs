@@ -12,10 +12,6 @@
 #ifndef __MOS_Trace_h_
 #define __MOS_Trace_h_
 
-#ifdef __GNUG__
-#    pragma interface
-#endif
-
 #include "MOS_Report_ABC.h"
 
 class MOS_Agent_ABC;
@@ -30,15 +26,9 @@ class MOS_Trace : public MOS_Report_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-     MOS_Trace( MOS_Agent_ABC& agent );
+     MOS_Trace( MOS_Agent_ABC& agent, DIN::DIN_Input& input );
     ~MOS_Trace();
     //@}
-
-    //! @name Operations
-    //@{
-    void Initialize( DIN::DIN_Input& input );
-    //@}
-
 };
 
 

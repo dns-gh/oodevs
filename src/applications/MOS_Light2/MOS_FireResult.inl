@@ -21,7 +21,7 @@
 // Created: SBO 2005-08-31
 // -----------------------------------------------------------------------------
 inline
-const MOS_Agent& MOS_FireResult::GetTarget() const
+const MOS_Agent_ABC& MOS_FireResult::GetTarget() const
 {
     assert( pTarget_ );
     return *pTarget_;
@@ -45,4 +45,14 @@ inline
 const MOS_FireResult::T_FireResultHumans& MOS_FireResult::GetHumans() const
 {
     return humans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_FireResult::GetDead
+// Created: SBO 2005-12-05
+// -----------------------------------------------------------------------------
+inline
+uint MOS_FireResult::GetDead() const
+{
+    return nDead_;
 }

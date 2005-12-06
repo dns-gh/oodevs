@@ -13,6 +13,7 @@
 #include "MOS_RC.h"
 #include "MOS_App.h"
 #include "MOS_Trace.h"
+#include "MOS_Net_Def.h"
 
 using namespace DIN;
 
@@ -99,9 +100,27 @@ void MOS_Agent_ABC::OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg )
 //-----------------------------------------------------------------------------
 void MOS_Agent_ABC::OnReceiveTraceMsg( DIN_Input& msg )
 {
-    MOS_Trace& trace = *new MOS_Trace( *this );
-    trace.Initialize( msg );
+    MOS_Trace& trace = *new MOS_Trace( *this, msg );
     reportVector_.push_back( &trace );
 
     MOS_App::GetApp().NotifyReportCreated( *this, trace );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::OnReceiveDebugDrawPointsMsg
+// Created: SBO 2005-12-05
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnReceiveDebugDrawPointsMsg( DIN::DIN_Input& msg )
+{
+    uint32 nTmp;
+    msg >> nTmp;
+
+    reportPoints_.clear();
+    reportPoints_.reserve( nTmp );
+    for( uint i = 0; i < nTmp; ++i )
+    {
+        MT_Vector2D vPos;
+        msg >> vPos;
+        reportPoints_.push_back( vPos );
+    }
 }

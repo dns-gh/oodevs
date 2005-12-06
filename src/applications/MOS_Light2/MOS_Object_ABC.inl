@@ -26,6 +26,15 @@ uint MOS_Object_ABC::GetID() const
     return nID_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::GetName
+// Created: SBO 2005-12-06
+// -----------------------------------------------------------------------------
+inline
+const std::string& MOS_Object_ABC::GetName() const
+{
+    return strName_;
+}
 
 //-----------------------------------------------------------------------------
 // Name: MOS_Object_ABC::GetType

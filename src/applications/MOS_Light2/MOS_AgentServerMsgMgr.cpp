@@ -245,12 +245,12 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/,
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
-    MIL_AgentID nAgentID;
-    input >> nAgentID;
+    uint32 nID;
+    input >> nID;
 
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
-    if( pAgent )
-        pAgent->OnReceiveTraceMsg( input );
+    MOS_Agent_ABC* pTarget = MOS_App::GetApp().GetAgentManager().FindAllAgent( nID );
+    assert( pTarget );
+    pTarget->OnReceiveTraceMsg( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -1707,9 +1707,9 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionF
     {
         strOutputMsg << " - ID cible " << asnMsg.cible.u.pion;
         
-        MOS_Agent* pAgentDst = agentManager.FindAgent( asnMsg.cible.u.pion );
-        assert( pAgentDst );
-        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pAgentDst );
+        MOS_Agent* pTarget = agentManager.FindAgent( asnMsg.cible.u.pion );
+        assert( pTarget );
+        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
     }
     else if( asnMsg.cible.t == T_MsgStartPionFire_cible_position )
     {
@@ -1721,7 +1721,11 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionF
     }
     else if( asnMsg.cible.t == T_MsgStartPionFire_cible_population )
     {
-        // $$$$ TODO
+        strOutputMsg << " - ID cible " << asnMsg.cible.u.population;
+        
+        MOS_Population* pTarget = agentManager.FindPopulation( asnMsg.cible.u.population );
+        assert( pTarget );
+        agentManager.AddDirectConflict( asnMsg.oid_tir, *pAgentSrc, *pTarget );
     }
 
     MT_LOG_INFO( strOutputMsg.str(), eReceived, 0 );   
@@ -1792,6 +1796,24 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
 
     MOS_App::GetApp().NotifyObjectExplosion( *pObject );
     MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStartPopulationFire
+// Created: SBO 2005-12-05
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPopulationFire& asnMsg )
+{
+    // $$$$ SBO 2005-12-05: TODO
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentServerMsgMgr::OnReceiveMsgStopPopulationFire
+// Created: SBO 2005-12-05
+// -----------------------------------------------------------------------------
+void MOS_AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopulationFire&  asnMsg )
+{
+    // $$$$ SBO 2005-12-05: TODO
 }
 
 // -----------------------------------------------------------------------------

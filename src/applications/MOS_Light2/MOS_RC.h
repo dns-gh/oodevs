@@ -55,9 +55,9 @@ public:
     //@}
 
 private:
-    std::string ObjectKnowledgeLink( ASN1T_OID nId );
-    std::string AgentKnowledgeLink( ASN1T_OID nId );
-    std::string AgentLink( ASN1T_OID nId );
+    const std::string ObjectKnowledgeLink( ASN1T_OID nId ) const;
+    const std::string AgentKnowledgeLink ( ASN1T_OID nId ) const;
+    const std::string AgentLink          ( ASN1T_OID nId ) const;
 
 private:
     MOS_Agent_ABC&      agent_;

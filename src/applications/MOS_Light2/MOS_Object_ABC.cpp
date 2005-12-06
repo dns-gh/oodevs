@@ -40,6 +40,7 @@ MOS_Object_ABC::T_Managers  MOS_Object_ABC::managers_;
 // -----------------------------------------------------------------------------
 MOS_Object_ABC::MOS_Object_ABC( ASN1T_EnumObjectType eType )
     : nID_                           ( 0 )
+    , strName_                       ( ENT_Tr::ConvertFromObjectType( ( E_ObjectType )eType, ENT_Tr::eToTr ) )
     , nType_                         ( eType )
     , pTeam_                         ( 0 )
     , rConstructionPercentage_       ( 0.0 )
@@ -61,6 +62,7 @@ MOS_Object_ABC::MOS_Object_ABC( ASN1T_EnumObjectType eType )
 // -----------------------------------------------------------------------------
 MOS_Object_ABC::MOS_Object_ABC( const ASN1T_MsgObjectCreation& asnMsg )
     : nID_                           ( asnMsg.oid )
+    , strName_                       ( asnMsg.nom )
     , nType_                         ( asnMsg.type )
     , pTeam_                         ( MOS_App::GetApp().GetAgentManager().FindTeam( asnMsg.camp ) )
     , rConstructionPercentage_       ( 0.0 )
@@ -176,6 +178,11 @@ void MOS_Object_ABC::ReadODB( MOS_InputArchive& archive )
     pTeam_ = MOS_App::GetApp().GetAgentManager().FindTeam( strTeam );
     assert( pTeam_ != 0 );
 
+    if( !archive.ReadField( "Nom", strName_, MOS_InputArchive::eNothing ) )
+    {
+        strName_ = ENT_Tr::ConvertFromObjectType( ( E_ObjectType )nType_, ENT_Tr::eToTr );
+    }
+
     archive.Section( "Forme" );
     archive.Section( "Localisation" );
 
@@ -287,9 +294,7 @@ void MOS_Object_ABC::InitializeObjectIds( MOS_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void MOS_Object_ABC::OnReceiveMsgExplosion( const ASN1T_FireDamagesPion& asnMsg )
 {
-    MOS_FireResult& explosionResult = *new MOS_FireResult();
-    explosionResult.Initialize( asnMsg );
-    explosionResults_.push_back( &explosionResult );
+    explosionResults_.push_back( new MOS_FireResult( asnMsg ) );
     if( explosionResults_.size() > 20 )
         explosionResults_.erase( explosionResults_.begin() );
 }

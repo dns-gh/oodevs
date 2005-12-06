@@ -443,7 +443,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     glColor4d( MOS_COLOR_CONFLICT );
     for( MOS_AgentManager::IT_ConflictMap itC = manager.conflictMap_.begin(); itC != manager.conflictMap_.end(); ++itC )
         if( (*itC).second.pDirectFireTarget_  )
-            DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->vPos_ , 300.0 ); // $$$$ AGE 2005-03-22:
+            DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->GetPos(), 300.0 ); // $$$$ AGE 2005-03-22:
         else
             DrawArc( (*itC).second.pOrigin_->GetPos(), (*itC).second.vIndirectFireTarget_, 300.0 * rClicksPerPix_ , true );
 

@@ -251,11 +251,13 @@ private:
     void OnReceiveMsgCR( const ASN1T_MsgCR& asnMsg );
 
     // Tirs
-    void OnReceiveMsgStartPionFire         ( const ASN1T_MsgStartPionFire& asnMsg   );
-    void OnReceiveMsgStopPionFire          ( const ASN1T_MsgStopPionFire& asnMsg    );
-    void OnReceiveMsgExplosion             ( const ASN1T_MsgExplosion& asnMsg );
-    void OnReceiveMsgStartFireEffect       ( const ASN1T_MsgStartFireEffect& asnMsg );
-    void OnReceiveMsgStopFireEffect        ( const ASN1T_MsgStopFireEffect& asnMsg );
+    void OnReceiveMsgStartPionFire         ( const ASN1T_MsgStartPionFire&       asnMsg );
+    void OnReceiveMsgStopPionFire          ( const ASN1T_MsgStopPionFire&        asnMsg );
+    void OnReceiveMsgExplosion             ( const ASN1T_MsgExplosion&           asnMsg );
+    void OnReceiveMsgStartFireEffect       ( const ASN1T_MsgStartFireEffect&     asnMsg );
+    void OnReceiveMsgStopFireEffect        ( const ASN1T_MsgStopFireEffect&      asnMsg );
+    void OnReceiveMsgStartPopulationFire   ( const ASN1T_MsgStartPopulationFire& asnMsg );
+    void OnReceiveMsgStopPopulationFire    ( const ASN1T_MsgStopPopulationFire&  asnMsg );
 	
 	// Population
 	void OnMsgPopulationCreation				( const ASN1T_MsgPopulationCreation& asnMsg );

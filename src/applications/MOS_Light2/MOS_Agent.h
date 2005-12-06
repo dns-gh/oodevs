@@ -191,7 +191,6 @@ public:
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
     void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
-    void OnReceiveDebugDrawPointsMsg                       ( DIN::DIN_Input& msg   );
 
     void OnAttributeUpdated    ( const ASN1T_MsgUnitAttributes&            asnMsg );
     void OnAttributeUpdated    ( const ASN1T_MsgUnitDotations&             asnMsg );

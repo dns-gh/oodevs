@@ -27,8 +27,6 @@
 
 class MOS_Agent_ABC;
 class MOS_Report_ABC;
-class MOS_RC;
-class MOS_Trace;
 class MOS_ActionContext;
 class MOS_SelectedElement;
 class MOS_ReportFilterOptions;
@@ -63,15 +61,15 @@ private slots:
     //@{
     void OnReportCreated( MOS_Agent_ABC& agent, MOS_Report_ABC& report );
 
-    void OnClick( QListViewItem*, const QPoint&, int );
+    void OnClick        ( QListViewItem*, const QPoint&, int );
     void OnRequestCenter();
-    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol );
-    void OnClearAll();
-    void OnClearTrace();
-    void OnClearUpTo();
+    void OnRequestPopup ( QListViewItem* pItem, const QPoint& pos, int nCol );
+    void OnClearAll     ();
+    void OnClearTrace   ();
+    void OnClearUpTo    ();
 
     void NotifyReadingReports();
-    void OnOptionsChanged();
+    void OnOptionsChanged    ();
     //@}
 
 private:
@@ -80,33 +78,37 @@ private:
     void hideEvent( QHideEvent* pEvent );
     void showEvent( QShowEvent* pEvent );
 
-    MOS_Report_ABC& GetItemValue( QListViewItem& item );
-    bool InterpretLink( const QString& strLink, const QString& strKeyword, int& nResultId );
+    MOS_Report_ABC& GetItemValue ( QListViewItem& item );
+    bool            InterpretLink( const QString& strLink, const QString& strKeyword, int& nResultId );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void ElementSelected( MOS_SelectedElement& selectedElement );
-    void CenterOnPoint( const MT_Vector2D& vPoint );
-    void NewPopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context );
-    void ReadingReports( MOS_Agent_ABC& agent );
+    void CenterOnPoint  ( const MT_Vector2D& vPoint );
+    void NewPopupMenu   ( QPopupMenu& popupMenu, const MOS_ActionContext& context );
+    void ReadingReports ( MOS_Agent_ABC& agent );
     //@}
 
 private:
     //! @name Types
     //@{
-    enum { eRichItem = 1000, eItem = 1001 };
-    typedef MT_ValuedListViewItem< MOS_Report_ABC*, eItem > T_ReportItem;
+    enum
+    { 
+        eRichItem = 1000,
+        eItem = 100
+    };
+    typedef MT_ValuedListViewItem    < MOS_Report_ABC*, eItem >     T_ReportItem;
     typedef MT_ValuedRichListViewItem< MOS_Report_ABC*, eRichItem > T_RichReportItem;
     //@}
     
     //! @name Member data
     //@{
     const MOS_ReportFilterOptions& filter_;
-    MOS_Agent_ABC* pAgent_;
-    QPopupMenu* pPopupMenu_;
-    QListViewItem* pPopupItem_;
+    MOS_Agent_ABC*                 pAgent_;
+    QPopupMenu*                    pPopupMenu_;
+    QListViewItem*                 pPopupItem_;
     //@}
 };
 

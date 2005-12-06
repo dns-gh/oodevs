@@ -26,13 +26,6 @@
 class MOS_Team;
 
 // =============================================================================
-/** @class  MOS_Object_ABC
-    @brief  MOS_Object_ABC
-    @par    Using example
-    @code
-    MOS_Object_ABC;
-    @endcode
-*/
 // Created: SBO 2005-09-02
 // =============================================================================
 class MOS_Object_ABC
@@ -58,6 +51,7 @@ public:
     //! @name Accessors
     //@{
     uint                       GetID                          () const;
+    const std::string&         GetName                        () const;
     ASN1T_EnumObjectType       GetType                        () const;
     const MOS_Team&            GetTeam                        () const;
     bool                       IsPrepared                     () const;
@@ -113,6 +107,7 @@ private:
     //! @name Member data
     //@{
     uint                       nID_;
+    std::string                strName_;
     MOS_Team*                  pTeam_;
 
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;

@@ -144,14 +144,10 @@ MOS_Team* MOS_AgentManager::FindTeam( const std::string& strName ) const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::AddDirectConflict
-/** @param  nConflictID 
-    @param  origin 
-    @param  target 
-*/
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 inline
-void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent& target )
+void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent_ABC& target )
 {
     T_Conflict conflict;
     conflict.pOrigin_ = &origin;
@@ -162,13 +158,8 @@ void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& orig
     MOS_App::GetApp().NotifyAgentConflictStarted( origin );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::AddIndirectConflict
-/** @param  nConflictID 
-    @param  origin 
-    @param  vTarget 
-*/
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 inline

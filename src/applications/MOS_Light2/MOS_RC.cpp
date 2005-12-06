@@ -49,7 +49,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     switch( asnMsg.cr.t )
     {
     
-            case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
+        case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
         case T_MsgCR_cr_cr_mission_impossible : strMsg << "mission impossible"; break;
@@ -310,7 +310,7 @@ void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
 // Name: MOS_RC::ObjectKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
+const std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId ) const
 {
     std::stringstream str;
     str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
@@ -322,7 +322,7 @@ std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
 // Name: MOS_RC::AgentKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
+const std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId ) const
 {
     std::stringstream str;
     str << "<a href=\"AgentKnowledge:" << nId << "\">" << nId << "</a>";
@@ -334,7 +334,7 @@ std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
 // Name: MOS_RC::AgentLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string MOS_RC::AgentLink( ASN1T_OID nId )
+const std::string MOS_RC::AgentLink( ASN1T_OID nId ) const
 {
     MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAllAgent( nId );
     if( pAgent == 0 )

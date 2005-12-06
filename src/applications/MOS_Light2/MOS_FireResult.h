@@ -22,20 +22,13 @@
 #include "MOS_Types.h"
 #include "MOS_ASN_Types.h"
 
-class MOS_Agent;
+class MOS_Agent_ABC;
 class MOS_FireResult;
 
 typedef std::vector< MOS_FireResult* > T_FireResults;
 typedef T_FireResults::const_iterator  CIT_FireResults;
 
 // =============================================================================
-/** @class  MOS_FireResult
-    @brief  MOS_FireResult
-    @par    Using example
-    @code
-    MOS_FireResult;
-    @endcode
-*/
 // Created: SBO 2005-08-30
 // =============================================================================
 class MOS_FireResult
@@ -45,16 +38,7 @@ class MOS_FireResult
 public:
     //! @name Types
     //@{
-    typedef struct
-    {
-        int nBlessesUrgence1;
-        int nBlessesUrgence2;
-        int nBlessesUrgence3;
-        int nBlessesUrgenceExtreme;
-        int nMorts;
-        int nNonBlesses;
-
-    } T_FireResultHuman;
+    typedef std::vector< uint >                    T_FireResultHuman;
 
     typedef std::vector< std::string >             T_FireResultEquipments;
     typedef T_FireResultEquipments::const_iterator CIT_FireResultEquipments;
@@ -66,28 +50,34 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MOS_FireResult();
+    explicit MOS_FireResult( const ASN1T_FireDamagesPion&       asnMsg );
+    explicit MOS_FireResult( const ASN1T_FireDamagesPopulation& asnMsg );
     virtual ~MOS_FireResult();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Initialize( const ASN1T_FireDamagesPion& asnMsg );
     //@}
 
     //! @name Accessors
     //@{
-    const MOS_Agent&              GetTarget    () const;
+    const MOS_Agent_ABC&          GetTarget    () const;
+
+    // target = agent
     const T_FireResultEquipments& GetEquipments() const;
     const T_FireResultHumans&     GetHumans    () const;
+
+    // target = population
+          uint                    GetDead      () const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    MOS_Agent*                 pTarget_;
+    const MOS_Agent_ABC*       pTarget_;
+
+    // target = agent
     T_FireResultEquipments     equipments_;
     T_FireResultHumans         humans_;
+
+    // target = population
+    uint                       nDead_;
     //@}
 };
 

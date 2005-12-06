@@ -94,6 +94,7 @@ private:
     QGroupBox* pGenericGroup_;
 
     QLabel*    pIdLabel_;
+    QLabel*    pNameLabel_;
     QLabel*    pObjectTypeLabel_;
     QLabel*    pPositionLabel_;
     QSpinBox*  pPercentBuiltEdit_;

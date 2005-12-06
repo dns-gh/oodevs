@@ -181,6 +181,7 @@ void MOS_ObjectPanel::OnUpdate()
 void MOS_ObjectPanel::OnClearSelection()
 {
     pIdLabel_                   ->setText( "-" );
+    pNameLabel_                 ->setText( "-" );
     pObjectTypeLabel_           ->setText( "-" );
     pPositionLabel_             ->setText( "-" );
     pPercentBuiltEdit_          ->setValue( 0 );
@@ -209,6 +210,7 @@ void MOS_ObjectPanel::InitializeGeneric( QWidget* pParent )
     pGenericGroup_ = new QGroupBox( 2, Qt::Horizontal, tr( "Informations" ), pParent );
 
     AddRow( tr( "Id:" )                   , pIdLabel_                  , pGenericGroup_ );
+    AddRow( tr( "Nom:" )                  , pNameLabel_                , pGenericGroup_ );
     AddRow( tr( "Type:" )                 , pObjectTypeLabel_          , pGenericGroup_ );
     AddRow( tr( "Position:" )             , pPositionLabel_            , pGenericGroup_ );
     AddRow( tr( "Construction:" )         , pPercentBuiltEdit_         , pGenericGroup_ );
@@ -293,7 +295,8 @@ void MOS_ObjectPanel::InitializeItineraireLogistique( QWidget* pParent )
 // -----------------------------------------------------------------------------
 void MOS_ObjectPanel::UpdateGeneric( MOS_Object_ABC& object )
 {
-    pIdLabel_->setText( QString::number( object.GetID() ) );
+    pIdLabel_  ->setText( QString::number( object.GetID() ) );
+    pNameLabel_->setText( object.GetName().c_str() );
 
     std::string strPos;
     MOS_App::GetApp().GetWorld().SimToMosMgrsCoord( object.GetCenter(), strPos );

@@ -45,8 +45,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-03-10
 // -----------------------------------------------------------------------------
 MOS_ReportListView::MOS_ReportListView( QWidget* pParent, const MOS_ReportFilterOptions& filter )
@@ -330,8 +328,6 @@ void MOS_ReportListView::OnClearTrace()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::OnClearUpTo
-/** @param  nTime 
-*/
 // Created: APE 2004-05-10
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::OnClearUpTo()
@@ -349,15 +345,17 @@ void MOS_ReportListView::OnClearUpTo()
 
     clear();
     if ( pAgent_ != 0 )
-        SetAgent( pAgent_ );
+    {
+        MOS_Agent_ABC* pAgent = pAgent_;
+        pAgent_ = 0;
+        SetAgent( pAgent );
+    }
 }
 
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ReportListView::hideEvent
-/** @param  pEvent 
-*/
 // Created: APE 2004-06-17
 // -----------------------------------------------------------------------------
 void MOS_ReportListView::hideEvent( QHideEvent* pEvent )

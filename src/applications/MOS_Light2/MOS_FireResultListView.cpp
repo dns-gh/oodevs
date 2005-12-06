@@ -100,62 +100,57 @@ void MOS_FireResultListView::OnFireResultCreated( const T_FireResults& fireResul
     {
         QListViewItem* pParentItem = new QListViewItem( this );
         pParentItem->setText( 0, ( *it )->GetTarget().GetName().c_str() );
-        QListViewItem* pEquiItem = new QListViewItem( pParentItem );
-        pEquiItem->setText( 0, tr( "Equipements (dispo, indispo, réparable)" ) );
-        for( MOS_FireResult::CIT_FireResultEquipments itEqui = ( *it )->GetEquipments().begin(); itEqui != ( *it )->GetEquipments().end(); ++itEqui )
-        {
-            QListViewItem* pItem = new QListViewItem( pEquiItem );
-            pItem->setText( 0, ( *itEqui ).c_str() );
-        }
-        QListViewItem* pHumanItem = new QListViewItem( pParentItem );
-        pHumanItem->setText( 0, tr( "Humains (officier, ss-officier, mdr)" ) );
 
-        MOS_FireResult::T_FireResultHuman& off   = *( *it )->GetHumans().find( 0 )->second;
-        MOS_FireResult::T_FireResultHuman& ssoff = *( *it )->GetHumans().find( 1 )->second;
-        MOS_FireResult::T_FireResultHuman& mdr   = *( *it )->GetHumans().find( 2 )->second;
-        
+        if( ( *it )->GetEquipments().size() > 0 || ( *it )->GetHumans().size() > 0 )
         {
-            QListViewItem* pItem = new QListViewItem( pHumanItem );
-            std::stringstream ss;
-            ss  << "blesses urgence 1 - [" << off.nBlessesUrgence1 << " " << ssoff.nBlessesUrgence1 << " " << mdr.nBlessesUrgence1 << "]";
-            pItem->setText( 0, ss.str().c_str() );
+            BuildEquipmentResult( **it, *pParentItem );
+            BuildHumanResult    ( **it, *pParentItem );
         }
+        else
+        {
+            QListViewItem* pItem = new QListViewItem( pParentItem );
+            pItem->setText( 0, tr( "Morts: " ) + QString::number( ( *it )->GetDead() ) );
+        }
+    }
+}
 
-        {
-            QListViewItem* pItem = new QListViewItem( pHumanItem );
-            std::stringstream ss;
-            ss  << "blesses urgence 2 - [" << off.nBlessesUrgence2 << " " << ssoff.nBlessesUrgence2 << " " << mdr.nBlessesUrgence2 << "]";
-            pItem->setText( 0, ss.str().c_str() );
-        }
+// -----------------------------------------------------------------------------
+// Name: MOS_FireResultListView::BuildEquipmentResult
+// Created: SBO 2005-12-05
+// -----------------------------------------------------------------------------
+void MOS_FireResultListView::BuildEquipmentResult( const MOS_FireResult& result, QListViewItem& parentItem )
+{
+    QListViewItem* pEquiItem = new QListViewItem( &parentItem );
+    pEquiItem->setText( 0, tr( "Equipements (dispo, indispo, réparable)" ) );
+    for( MOS_FireResult::CIT_FireResultEquipments itEqui = result.GetEquipments().begin(); itEqui != result.GetEquipments().end(); ++itEqui )
+    {
+        QListViewItem* pItem = new QListViewItem( pEquiItem );
+        pItem->setText( 0, ( *itEqui ).c_str() );
+    }
+}
 
-        {
-            QListViewItem* pItem = new QListViewItem( pHumanItem );
-            std::stringstream ss;
-            ss  << "blesses urgence 2 - [" << off.nBlessesUrgence3 << " " << ssoff.nBlessesUrgence3 << " " << mdr.nBlessesUrgence3 << "]";
-            pItem->setText( 0, ss.str().c_str() );
-        }
+// -----------------------------------------------------------------------------
+// Name: MOS_FireResultListView::BuildHumanResult
+// Created: SBO 2005-12-05
+// -----------------------------------------------------------------------------
+void MOS_FireResultListView::BuildHumanResult( const MOS_FireResult& result, QListViewItem& parentItem )
+{
+    QListViewItem* pHumanItem = new QListViewItem( &parentItem );
+    pHumanItem->setText( 0, tr( "Humains (officier, ss-officier, mdr)" ) );
 
-        {
-            QListViewItem* pItem = new QListViewItem( pHumanItem );
-            std::stringstream ss;
-            ss  << "blesses urgence extreme - [" << off.nBlessesUrgenceExtreme << " " << ssoff.nBlessesUrgenceExtreme << " " << mdr.nBlessesUrgenceExtreme << "]";
-            pItem->setText( 0, ss.str().c_str() );
-        }
+    const MOS_FireResult::T_FireResultHuman& off   = *result.GetHumans().find( 0 )->second;
+    const MOS_FireResult::T_FireResultHuman& ssoff = *result.GetHumans().find( 1 )->second;
+    const MOS_FireResult::T_FireResultHuman& mdr   = *result.GetHumans().find( 2 )->second;
+    
+    for( uint i = 0; i < off.size(); ++i )
+    {
+        QListViewItem* pItem = new QListViewItem( pHumanItem );
+        std::stringstream ss;
+        ss << ENT_Tr::ConvertFromHumanWound( ( E_HumanWound )i, ENT_Tr::eToTr )
+           << " - [" << off[ i ] << " " << ssoff[ i ] << " " << mdr[ i ] << "]";
+        pItem->setText( 0, ss.str().c_str() );
 
-        {
-            QListViewItem* pItem = new QListViewItem( pHumanItem );
-            std::stringstream ss;
-            ss  << "morts - [" << off.nMorts << " " << ssoff.nMorts << " " << mdr.nMorts << "]";
-            pItem->setText( 0, ss.str().c_str() );
-        }
-
-        {
-            QListViewItem* pItem = new QListViewItem( pHumanItem );
-            std::stringstream ss;
-            ss  << "non blesses - [" << off.nNonBlesses << " " << ssoff.nNonBlesses << " " << mdr.nNonBlesses << "]";
-            pItem->setText( 0, ss.str().c_str() );
-        }
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------
