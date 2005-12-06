@@ -1220,6 +1220,17 @@ void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg )
 }
     
 // -----------------------------------------------------------------------------
+// Name: MOS_Agent::OnReceiveMsgStopFire
+// Created: SBO 2005-12-06
+// -----------------------------------------------------------------------------
+void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireDamagesPopulation& asnMsg )
+{
+    fireResults_.push_back( new MOS_FireResult( asnMsg ) );
+    if( fireResults_.size() > 20 )
+        fireResults_.erase( fireResults_.begin() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_Agent::DeleteAllFireResults
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------

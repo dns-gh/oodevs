@@ -1746,6 +1746,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFir
     assert( pAgent );
     for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
         pAgent->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
+    for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
+        pAgent->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
 
     MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }

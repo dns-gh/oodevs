@@ -208,7 +208,8 @@ public:
 
 
     // fire results
-    void OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg );
+    void OnReceiveMsgStopFire( const ASN1T_FireDamagesPion&       asnMsg );
+    void OnReceiveMsgStopFire( const ASN1T_FireDamagesPopulation& asnMsg );
     void DeleteAllFireResults();
     //@}
 
