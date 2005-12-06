@@ -74,6 +74,7 @@ public:
     void SetType        ( ASN1T_EnumObjectType nType );
     */
     void SetID          ( uint nID );
+    void SetName        ( const std::string& strName );
     void SetTeam        ( MOS_Team& team );
     void SetLocalisation( ASN1T_EnumTypeLocalisation nType, const T_PointVector& pointVector );
     //@}

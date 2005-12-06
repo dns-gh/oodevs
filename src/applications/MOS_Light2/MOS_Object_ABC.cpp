@@ -40,7 +40,7 @@ MOS_Object_ABC::T_Managers  MOS_Object_ABC::managers_;
 // -----------------------------------------------------------------------------
 MOS_Object_ABC::MOS_Object_ABC( ASN1T_EnumObjectType eType )
     : nID_                           ( 0 )
-    , strName_                       ( ENT_Tr::ConvertFromObjectType( ( E_ObjectType )eType, ENT_Tr::eToTr ) )
+    , strName_                       ( ENT_Tr::ConvertFromObjectType( ( E_ObjectType )eType ) )
     , nType_                         ( eType )
     , pTeam_                         ( 0 )
     , rConstructionPercentage_       ( 0.0 )
@@ -180,7 +180,7 @@ void MOS_Object_ABC::ReadODB( MOS_InputArchive& archive )
 
     if( !archive.ReadField( "Nom", strName_, MOS_InputArchive::eNothing ) )
     {
-        strName_ = ENT_Tr::ConvertFromObjectType( ( E_ObjectType )nType_, ENT_Tr::eToTr );
+        strName_ = ENT_Tr::ConvertFromObjectType( ( E_ObjectType )nType_ );
     }
 
     archive.Section( "Forme" );
@@ -222,6 +222,9 @@ void MOS_Object_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
     archive.WriteAttribute( "type", ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType_ ) );
     archive.WriteAttribute( "id", nID_ );
     archive.WriteField( "Armee", pTeam_->GetName() );
+
+    if( !strName_.empty() && strName_ != ENT_Tr::ConvertFromObjectType( (E_ObjectType)nType_ ) )
+        archive.WriteField( "Nom", strName_ );
 
     archive.Section( "Forme" );
     archive.Section( "Localisation" );

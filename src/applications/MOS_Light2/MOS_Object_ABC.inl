@@ -173,8 +173,6 @@ ASN1T_EnumTypeLocalisation MOS_Object_ABC::GetLocationType() const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Object_ABC::SetID
-/** @param  nID 
-*/
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 inline
@@ -182,11 +180,19 @@ void MOS_Object_ABC::SetID( uint nID )
 {
     nID_ = nID;
 }
-    
+ 
+// -----------------------------------------------------------------------------
+// Name: MOS_Object_ABC::SetName
+// Created: SBO 2005-12-06
+// -----------------------------------------------------------------------------
+inline
+void MOS_Object_ABC::SetName( const std::string& strName )
+{
+    strName_ = strName;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MOS_Object_ABC::SetTeam
-/** @param  team 
-*/
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 inline

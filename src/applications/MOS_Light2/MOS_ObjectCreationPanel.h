@@ -36,8 +36,6 @@ class QTable;
 class MOS_Agent;
 
 // =============================================================================
-/** @class  MOS_ObjectCreationPanel
-*/
 // Created: APE 2004-06-04
 // =============================================================================
 class MOS_ObjectCreationPanel : public QWidget, public MOS_MapEventFilter_ABC
@@ -101,6 +99,7 @@ private:
     ASN1T_Localisation                         asnLocation_;
 	MOS_ParamAgent*                            pAgent_;
 	ASN1T_Agent                                asnAgent_;
+    QLineEdit*                                 pNameEdit_;
 
     // NBC parameters
     QStringList*               pNBCAgentsStringList_;

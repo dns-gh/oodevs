@@ -49,8 +49,6 @@
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectCreationPanel constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-06-04
 // -----------------------------------------------------------------------------
 MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
@@ -58,7 +56,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     , MOS_MapEventFilter_ABC( false )
     , pParent_( pParent )
 {
-    QGridLayout* pLayout = new QGridLayout( this, 6, 2, 4 );
+    QGridLayout* pLayout = new QGridLayout( this, 7, 2, 4 );
 //    pLayout->setRowSpacing( 3, 8 );
     pLayout->setRowStretch( 5, 1 );
     pLayout->setRowStretch( 2, 0 );
@@ -73,9 +71,13 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pObjectTypeCombo_ = new MT_ValuedComboBox< ASN1T_EnumObjectType >( this );
     pLayout->addWidget( pObjectTypeCombo_, 1, 1, Qt::AlignRight );
 
-    pLayout->addWidget( new QLabel( tr( "Emplacement:" ), this ), 2, 0, Qt::AlignLeft );
+    pLayout->addWidget( new QLabel( tr( "Nom:" ), this ), 2, 0, Qt::AlignLeft );
+    pNameEdit_ = new QLineEdit( this );
+    pLayout->addWidget( pNameEdit_, 2, 1, Qt::AlignRight );
+
+    pLayout->addWidget( new QLabel( tr( "Emplacement:" ), this ), 3, 0, Qt::AlignLeft );
     pLocation_ = new MOS_ParamLocation( asnLocation_, "", "Emplacement nouvel objet", this, false );
-    pLayout->addWidget( pLocation_, 2, 1, Qt::AlignRight );
+    pLayout->addWidget( pLocation_, 3, 1, Qt::AlignRight );
     //@}
 
     //! @name NBC parameters
@@ -84,7 +86,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pNBCParamsGroup_->setFlat( true );
     pNBCParamsGroup_->setInsideMargin( 0 );
     pNBCParamsGroup_->setMargin( 0 );
-    pLayout->addMultiCellWidget( pNBCParamsGroup_, 3, 3, 0, 1 );
+    pLayout->addMultiCellWidget( pNBCParamsGroup_, 4, 4, 0, 1 );
 
     new QLabel( tr( "Type:" ), pNBCParamsGroup_ );
     pNBCTypeCombo_ = new MT_ValuedComboBox< uint >( pNBCParamsGroup_ );
@@ -104,7 +106,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pROTAParamsGroup_->setFlat( true );
     pROTAParamsGroup_->setInsideMargin( 0 );
     pROTAParamsGroup_->setMargin( 0 );
-    pLayout->addMultiCellWidget( pROTAParamsGroup_, 3, 3, 0, 1 );
+    pLayout->addMultiCellWidget( pROTAParamsGroup_, 4, 4, 0, 1 );
 
     QGroupBox* pDangerGroup = new QGroupBox( 2, Qt::Horizontal, pROTAParamsGroup_ );
     pDangerGroup->setFlat( true );
@@ -128,7 +130,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pCrossingParamsGroup_->setFlat( true );
     pCrossingParamsGroup_->setInsideMargin( 0 );
     pCrossingParamsGroup_->setMargin( 0 );
-    pLayout->addMultiCellWidget( pCrossingParamsGroup_, 4, 4, 0, 1 );
+    pLayout->addMultiCellWidget( pCrossingParamsGroup_, 5, 5, 0, 1 );
 
     new QLabel( tr( "Largeur:" ), pCrossingParamsGroup_ );
     pCrossingWidthEdit_ = new QSpinBox( 0, 10000, 1, pCrossingParamsGroup_ );
@@ -148,7 +150,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pCrossingParamsGroup_->setFlat( true );
     pCrossingParamsGroup_->setInsideMargin( 0 );
     pCrossingParamsGroup_->setMargin( 0 );
-    pLayout->addMultiCellWidget( pTC2Group_, 5, 5, 0, 1 );
+    pLayout->addMultiCellWidget( pTC2Group_, 6, 6, 0, 1 );
 	pAgent_ = new MOS_ParamAgent( asnAgent_ , "Tc2: ", "Tc2", pTC2Group_, false );
     //@}
 
@@ -158,7 +160,7 @@ MOS_ObjectCreationPanel::MOS_ObjectCreationPanel( QTabWidget* pParent )
     pLogRouteGroup_->setFlat( true );
     pLogRouteGroup_->setInsideMargin( 0 );
     pLogRouteGroup_->setMargin( 0 );
-    pLayout->addMultiCellWidget( pLogRouteGroup_, 4, 4, 0, 1 );
+    pLayout->addMultiCellWidget( pLogRouteGroup_, 5, 5, 0, 1 );
 
     new QLabel( tr( "Débit:" )        , pLogRouteGroup_ );
     pLogRouteFlow_      = new QSpinBox( 0, 10000, 1, pLogRouteGroup_ );
@@ -225,9 +227,6 @@ MOS_ObjectCreationPanel::~MOS_ObjectCreationPanel()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_ObjectCreationPanel::FillRemotePopupMenu
-/** @param  popupMenu 
-    @param  context 
-*/
 // Created: APE 2004-06-07
 // -----------------------------------------------------------------------------
 void MOS_ObjectCreationPanel::FillRemotePopupMenu( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -303,6 +302,9 @@ void MOS_ObjectCreationPanel::OnOk()
         
         uint nID =  MOS_Object_ABC::GetIDManagerForObjectType( nType ).GetFreeIdentifier();
         pObject->SetID( nID );
+
+        if( !pNameEdit_->text().isEmpty() )
+            pObject->SetName( pNameEdit_->text().ascii() );
         
         pObject->SetLocalisation( pLocation_->GetType(), pLocation_->GetPointList() );
         pLocation_->Clear();
@@ -369,6 +371,12 @@ void MOS_ObjectCreationPanel::OnOk()
 
     asnMsg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_create_object;
     asnMsg.GetAsnMsg().action.u.create_object   = &asnAction;
+
+    if( !pNameEdit_->text().isEmpty() )
+    {
+        asnMsg.GetAsnMsg().action.u.create_object->m.nomPresent = 1;
+        asnMsg.GetAsnMsg().action.u.create_object->nom = pNameEdit_->text().ascii();
+    }
 
     ASN1T_AttrObjectNuageNBC attributsNuageNBC;
     if( asnAction.type == EnumObjectType::nuage_nbc )
