@@ -354,6 +354,7 @@ void MIL_RealObject_ABC::SendMsgConstruction()
     assert( pType_ );
 
     asnMsg.GetAsnMsg().oid  = nID_;
+    asnMsg.GetAsnMsg().nom  = strName_.c_str(); // !! pointeur sur const char*
     asnMsg.GetAsnMsg().type = pType_->GetAsnID();
     asnMsg.GetAsnMsg().camp = GetArmy().GetID();
     

@@ -20,7 +20,9 @@
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Population::PHY_FireDamages_Population()
+    : nNbrKilledHumans_ ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +31,7 @@ PHY_FireDamages_Population::PHY_FireDamages_Population()
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Population::~PHY_FireDamages_Population()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
