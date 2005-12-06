@@ -94,22 +94,41 @@ void MOS_FireResultListView::SetObject( MOS_Object_ABC* pObject )
 // -----------------------------------------------------------------------------
 void MOS_FireResultListView::OnFireResultCreated( const T_FireResults& fireResults )
 {
-    clear();
+    const MOS_FireResult* pSelectedValue = 0;
+          bool            bOpenState = false;
+    if( selectedItem() != 0 )
+    {
+        pSelectedValue = ( ( MT_ValuedListViewItem< const MOS_FireResult* >* )selectedItem() )->GetValue();
+        bOpenState = selectedItem()->isOpen();
+    }
 
+
+    clear();
     for( CIT_FireResults it = fireResults.begin(); it != fireResults.end(); ++it )
     {
+        MT_ValuedListViewItem< const MOS_FireResult* >* pParentItem = new MT_ValuedListViewItem< const MOS_FireResult* >( *it, this, ( *it )->GetTarget().GetName().c_str() );
+        /*
         QListViewItem* pParentItem = new QListViewItem( this );
         pParentItem->setText( 0, ( *it )->GetTarget().GetName().c_str() );
+        */
 
+        // agent => agent damages
         if( ( *it )->GetEquipments().size() > 0 || ( *it )->GetHumans().size() > 0 )
         {
             BuildEquipmentResult( **it, *pParentItem );
             BuildHumanResult    ( **it, *pParentItem );
         }
+        // agent => population damages
         else
         {
             QListViewItem* pItem = new QListViewItem( pParentItem );
             pItem->setText( 0, tr( "Morts: " ) + QString::number( ( *it )->GetDead() ) );
+        }
+        // try to reselect previous element if possible
+        if( pSelectedValue && *it == pSelectedValue )
+        {
+            setSelected( pParentItem, true );
+            pParentItem->setOpen( bOpenState );
         }
     }
 }
