@@ -815,22 +815,22 @@ void MOS_App::NotifyAgentRefueled( MOS_Agent& agent )
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_App::NotifyAgentConflictStarted
+// Name: MOS_App::NotifyConflictStarted
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyAgentConflictStarted( MOS_Agent& agent )
+void MOS_App::NotifyConflictStarted( MOS_Agent_ABC& origin )
 {
-    emit AgentConflictStarted( agent );
+    emit ConflictStarted( origin );
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_App::NotifyAgentConflictEnded
+// Name: MOS_App::NotifyConflictEnded
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyAgentConflictEnded( MOS_Agent& agent )
+void MOS_App::NotifyConflictEnded( MOS_Agent_ABC& origin )
 {
-    emit AgentConflictEnded( agent );
+    emit ConflictEnded( origin );
 }
 
 // -----------------------------------------------------------------------------

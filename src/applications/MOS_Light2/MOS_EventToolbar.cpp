@@ -29,8 +29,8 @@
 #include "MOS_AgentManager.h"
 #include "MOS_Agent_ABC.h"
 #include "MOS_Agent.h"
+#include "MOS_Population.h"
 #include "MOS_MainWindow.h"
-//#include "MOS_Report_ABC.h"
 #include "MOS_Team.h"
 #include "MOS_EventToolButton.h"
 #include "MOS_ActionContext.h"
@@ -42,8 +42,6 @@ DECLARE_ICON( conflict );
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-09-21
 // -----------------------------------------------------------------------------
 MOS_EventToolbar::MOS_EventToolbar( QMainWindow* pParent )
@@ -62,12 +60,12 @@ MOS_EventToolbar::MOS_EventToolbar( QMainWindow* pParent )
     MOS_EventToolButton* pB3 = new MOS_EventToolButton( MAKE_ICON( msg ), "Général", this );
     pB3->SetSignalsSlots( this, SIGNAL( ReportCreated( int ) ), SIGNAL( ReadingReports( int ) ), SLOT( FocusOnAgent( int, bool ) ) );
 
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentConflictStarted( MOS_Agent& ) ),                      this, SLOT( OnConflictStarted( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentConflictEnded  ( MOS_Agent& ) ),                      this, SLOT( OnConflictEnded  ( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentOutOfGas       ( MOS_Agent& ) ),                      this, SLOT( OnAgentOutOfGas  ( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( AgentRefueled       ( MOS_Agent& ) ),                      this, SLOT( OnAgentRefueled  ( MOS_Agent& ) ) );
-    connect( &MOS_App::GetApp(),               SIGNAL( ReportCreated       ( MOS_Agent_ABC&, MOS_Report_ABC& ) ), this, SLOT( OnReportCreated  ( MOS_Agent_ABC& ) ) );
-    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports      ( MOS_Agent_ABC& ) ),                  this, SLOT( OnReadingReports ( MOS_Agent_ABC& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( ConflictStarted( MOS_Agent_ABC& ) ),                  this, SLOT( OnConflictStarted( MOS_Agent_ABC& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( ConflictEnded  ( MOS_Agent_ABC& ) ),                  this, SLOT( OnConflictEnded  ( MOS_Agent_ABC& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( AgentOutOfGas  ( MOS_Agent& ) ),                      this, SLOT( OnAgentOutOfGas  ( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( AgentRefueled  ( MOS_Agent& ) ),                      this, SLOT( OnAgentRefueled  ( MOS_Agent& ) ) );
+    connect( &MOS_App::GetApp(),               SIGNAL( ReportCreated  ( MOS_Agent_ABC&, MOS_Report_ABC& ) ), this, SLOT( OnReportCreated  ( MOS_Agent_ABC& ) ) );
+    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ReadingReports ( MOS_Agent_ABC& ) ),                  this, SLOT( OnReadingReports ( MOS_Agent_ABC& ) ) );
 
     connect( &MOS_App::GetApp(),               SIGNAL( ConnexionStatusChanged( bool ) ),                        this, SLOT( ClearSubscriptions() ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( TeamChanged() ),                                         this, SLOT( OnTeamChanged() ) );
@@ -88,9 +86,6 @@ MOS_EventToolbar::~MOS_EventToolbar()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_EventToolbar::FillRemotePopup
-/** @param  popupMenu 
-    @param  context 
-    */
 // Created: APE 2004-09-29
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::FillRemotePopup( QPopupMenu& popupMenu, const MOS_ActionContext& context )
@@ -198,9 +193,9 @@ void MOS_EventToolbar::OnAgentRefueled( MOS_Agent& agent )
 // Name: MOS_EventToolbar::OnConflictStarted
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
-void MOS_EventToolbar::OnConflictStarted( MOS_Agent& agent )
+void MOS_EventToolbar::OnConflictStarted( MOS_Agent_ABC& origin )
 {
-    emit ConflictStarted( agent.GetID() );
+    emit ConflictStarted( origin.GetID() );
 }
 
 
@@ -208,9 +203,9 @@ void MOS_EventToolbar::OnConflictStarted( MOS_Agent& agent )
 // Name: MOS_EventToolbar::OnConflictEnded
 // Created: APE 2004-10-04
 // -----------------------------------------------------------------------------
-void MOS_EventToolbar::OnConflictEnded( MOS_Agent& agent )
+void MOS_EventToolbar::OnConflictEnded( MOS_Agent_ABC& origin )
 {
-    emit ConflictEnded( agent.GetID() );
+    emit ConflictEnded( origin.GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,10 +238,26 @@ void MOS_EventToolbar::OnReadingReports( MOS_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MOS_EventToolbar::FocusOnAgent( int nId, bool bCenter )
 {
+    MOS_Agent_ABC*      pOrigin = 0;
+    MOS_SelectedElement newSelection;
+
     MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nId );
-    assert( pAgent != 0 );
-    MOS_SelectedElement message( *pAgent );
-    emit ElementSelected( message );
-    if( bCenter )
-        emit CenterOnPoint( pAgent->GetPos() );
+    if( pAgent )
+    {
+        newSelection.pAgent_ = pAgent;
+        pOrigin = pAgent;
+    }
+    else
+    {
+        MOS_Population* pPopulation = MOS_App::GetApp().GetAgentManager().FindPopulation( nId );
+        if( pPopulation )
+        {
+            newSelection.pPopulation_ = pPopulation;
+            pOrigin = pPopulation;
+        }
+
+    }
+    emit ElementSelected( newSelection );
+    if( bCenter && pOrigin )
+        emit CenterOnPoint( pOrigin->GetPos() );
 }

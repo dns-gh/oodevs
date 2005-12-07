@@ -80,7 +80,7 @@ public:
 
     typedef struct
     {
-        MOS_Agent*     pOrigin_;
+        MOS_Agent_ABC* pOrigin_;
         MOS_Agent_ABC* pDirectFireTarget_;
         MT_Vector2D    vIndirectFireTarget_;
     } T_Conflict;
@@ -172,18 +172,15 @@ public:
 	CT_PopulationMap&	GetPopulationList	();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Conflicts */
-    //-------------------------------------------------------------------------
+    //! @name Conflicts
     //@{
-    void AddDirectConflict  ( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent_ABC&     target );
-    void AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, const MT_Vector2D& vTarget );
-    void DeleteConflict     ( ASN1T_OID nConflictID );
+    void           AddDirectConflict  ( ASN1T_OID nConflictID, MOS_Agent_ABC& origin, MOS_Agent_ABC&     target );
+    void           AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent_ABC& origin, const MT_Vector2D& vTarget );
+    void           DeleteConflict     ( ASN1T_OID nConflictID );
+    MOS_Agent_ABC* FindConflictOrigin ( ASN1T_OID nConflictID );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Logistic */
-    //-------------------------------------------------------------------------
+    //! @name Logistic
     //@{
     void RegisterConsign( MOS_LogMaintenanceConsign& consign );
     void RegisterConsign( MOS_LogMedicalConsign& consign );
@@ -192,7 +189,6 @@ public:
     MOS_LogMaintenanceConsign* FindMaintenanceConsign( ASN1T_OID nConsignId );
     MOS_LogMedicalConsign*     FindMedicalConsign( ASN1T_OID nConsignId );
     MOS_LogSupplyConsign*      FindSupplyConsign( ASN1T_OID nConsignId );
-    MOS_Agent*                 FindConflictOrigin( ASN1T_OID nConflictID );
 
     const T_MaintenanceConsigns&        GetMaintenanceConsigns() const;
     const T_MedicalConsigns&            GetMedicalConsigns() const;

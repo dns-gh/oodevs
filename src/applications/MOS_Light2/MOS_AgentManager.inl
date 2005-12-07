@@ -64,7 +64,7 @@ MOS_Gtia* MOS_AgentManager::FindGtia( uint nID )
     for( IT_TeamMap it = teamMap_.begin(); it != teamMap_.end(); ++it )
     {
         MOS_Gtia* pResult = it->second->FindGtia( nID );
-        if( pResult != 0 )
+        if( pResult )
             return pResult;
     }
 
@@ -92,10 +92,8 @@ inline
 MOS_Team* MOS_AgentManager::FindTeamFromIdx( uint nIdx ) const
 {
     for( CIT_TeamMap itTeam = teamMap_.begin(); itTeam != teamMap_.end(); ++itTeam )
-    {
         if( itTeam->second->GetIdx() == nIdx )
             return itTeam->second;
-    }
     return 0;
 }
 
@@ -125,19 +123,14 @@ MOS_Team* MOS_AgentManager::FindTeam( uint nID ) const
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindTeam
-/** @param  strName 
-    @return 
-    */
 // Created: APE 2004-08-31
 // -----------------------------------------------------------------------------
 inline
 MOS_Team* MOS_AgentManager::FindTeam( const std::string& strName ) const
 {
     for( MOS_AgentManager::CIT_TeamMap it = teamMap_.begin(); it != teamMap_.end(); ++it )
-    {
         if( (*it).second->GetName() == strName )
             return (*it).second;
-    }
     return 0;
 }
 
@@ -147,7 +140,7 @@ MOS_Team* MOS_AgentManager::FindTeam( const std::string& strName ) const
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 inline
-void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, MOS_Agent_ABC& target )
+void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent_ABC& origin, MOS_Agent_ABC& target )
 {
     T_Conflict conflict;
     conflict.pOrigin_ = &origin;
@@ -155,7 +148,7 @@ void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& orig
 
     if( ! conflictMap_.insert( std::make_pair( nConflictID, conflict ) ).second )
         RUNTIME_ERROR;
-    MOS_App::GetApp().NotifyAgentConflictStarted( origin );
+    MOS_App::GetApp().NotifyConflictStarted( origin );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +156,7 @@ void MOS_AgentManager::AddDirectConflict( ASN1T_OID nConflictID, MOS_Agent& orig
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 inline
-void MOS_AgentManager::AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& origin, const MT_Vector2D& vTarget )
+void MOS_AgentManager::AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent_ABC& origin, const MT_Vector2D& vTarget )
 {
     T_Conflict conflict;
     conflict.pOrigin_ = &origin;
@@ -172,14 +165,12 @@ void MOS_AgentManager::AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent& or
 
     if( ! conflictMap_.insert( std::make_pair( nConflictID, conflict ) ).second )
         RUNTIME_ERROR;
-    MOS_App::GetApp().NotifyAgentConflictStarted( origin );
+    MOS_App::GetApp().NotifyConflictStarted( origin );
 }
 
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::DeleteConflict
-/** @param  nConflictID 
-*/
 // Created: APE 2004-10-01
 // -----------------------------------------------------------------------------
 inline
@@ -188,26 +179,21 @@ void MOS_AgentManager::DeleteConflict( ASN1T_OID nConflictID )
     IT_ConflictMap it = conflictMap_.find( nConflictID );
     if( it != conflictMap_.end() )
     {
-        MOS_App::GetApp().NotifyAgentConflictEnded( *(*it).second.pOrigin_ );
+        MOS_App::GetApp().NotifyConflictEnded( *(*it).second.pOrigin_ );
         conflictMap_.erase( it );
     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindConflictOrigin
-/** @param  nConsignId 
-    @return 
-*/
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
 inline
-MOS_Agent* MOS_AgentManager::FindConflictOrigin( ASN1T_OID nConflictID )
+MOS_Agent_ABC* MOS_AgentManager::FindConflictOrigin( ASN1T_OID nConflictID )
 {
     IT_ConflictMap it = conflictMap_.find( nConflictID );
     if( it != conflictMap_.end() )
-    {
         return it->second.pOrigin_;
-    }
     return 0;
 }
 

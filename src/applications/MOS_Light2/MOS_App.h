@@ -121,9 +121,9 @@ public:
     void NotifyAgentOutOfGas( MOS_Agent& agent );
     void NotifyAgentRefueled( MOS_Agent& agent );
 
-    void NotifyAgentConflictStarted( MOS_Agent&      agent  );
-    void NotifyAgentConflictEnded  ( MOS_Agent&      agent  );
-    void NotifyObjectExplosion     ( MOS_Object_ABC& object );
+    void NotifyConflictStarted( MOS_Agent_ABC&  origin );
+    void NotifyConflictEnded  ( MOS_Agent_ABC&  origin );
+    void NotifyObjectExplosion( MOS_Object_ABC& object );
 
     void NotifyAgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void NotifyAgentKnowledgeUpdated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
@@ -219,9 +219,9 @@ signals:
     void AgentOutOfGas( MOS_Agent& agent );
     void AgentRefueled( MOS_Agent& agent );
 
-    void AgentConflictStarted( MOS_Agent&  agent  );
-    void AgentConflictEnded  ( MOS_Agent&  agent  );
-    void ObjectExplosion     ( MOS_Object_ABC& object );
+    void ConflictStarted( MOS_Agent_ABC&  origin );
+    void ConflictEnded  ( MOS_Agent_ABC&  origin );
+    void ObjectExplosion( MOS_Object_ABC& object );
 
     void AgentKnowledgeCreated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void AgentKnowledgeUpdated( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );

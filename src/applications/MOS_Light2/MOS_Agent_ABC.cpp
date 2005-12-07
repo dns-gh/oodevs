@@ -14,6 +14,7 @@
 #include "MOS_App.h"
 #include "MOS_Trace.h"
 #include "MOS_Net_Def.h"
+#include "MOS_FireResult.h"
 
 using namespace DIN;
 
@@ -22,6 +23,9 @@ using namespace DIN;
 // Created: HME 2005-10-05
 // -----------------------------------------------------------------------------
 MOS_Agent_ABC::MOS_Agent_ABC()
+: reportVector_ ()
+, reportPoints_ ()
+, fireResults_  ()
 {
 }
 // -----------------------------------------------------------------------------
@@ -30,7 +34,14 @@ MOS_Agent_ABC::MOS_Agent_ABC()
 // -----------------------------------------------------------------------------
 MOS_Agent_ABC::~MOS_Agent_ABC()
 {
+    DeleteAllRCs();
+    DeleteAllTraces();
+    fireResults_.clear();
 }
+
+// =============================================================================
+// REPORTS Trace/RCs...
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent_ABC::DeleteAllRCs
@@ -123,4 +134,41 @@ void MOS_Agent_ABC::OnReceiveDebugDrawPointsMsg( DIN::DIN_Input& msg )
         msg >> vPos;
         reportPoints_.push_back( vPos );
     }
+}
+
+// =============================================================================
+// FIRE RESULTS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::OnReceiveMsgStopFire
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg )
+{
+    fireResults_.push_back( new MOS_FireResult( asnMsg ) );
+    if( fireResults_.size() > 20 )
+        fireResults_.erase( fireResults_.begin() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::OnReceiveMsgStopFire
+// Created: SBO 2005-12-06
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::OnReceiveMsgStopFire( const ASN1T_FireDamagesPopulation& asnMsg )
+{
+    fireResults_.push_back( new MOS_FireResult( asnMsg ) );
+    if( fireResults_.size() > 20 )
+        fireResults_.erase( fireResults_.begin() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent_ABC::DeleteAllFireResults
+// Created: SBO 2005-08-30
+// -----------------------------------------------------------------------------
+void MOS_Agent_ABC::DeleteAllFireResults()
+{
+    for( CIT_FireResults it = fireResults_.begin(); it != fireResults_.end(); ++it )
+        delete *it;
+    fireResults_.clear();
 }

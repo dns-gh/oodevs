@@ -20,13 +20,11 @@
 #include "MOS_ASN_Types.h"
 #include "MOS_AgentComposition.h"
 #include "MOS_IDManager.h"
-#include "MOS_FireResult.h"
 
 #include "MT_Tools/MT_Quad.h"
 
 #include "MOS_Agent_ABC.h"
 
-class MOS_Report_ABC;
 class MOS_ObjectKnowledge;
 class MOS_AgentKnowledge;
 class MOS_AgentModel;
@@ -97,11 +95,6 @@ public:
     typedef T_VisionConeVector::iterator                            IT_VisionConeVector;
     typedef T_VisionConeVector::const_iterator                      CIT_VisionConeVector;
 
-    typedef std::vector< MOS_Report_ABC* >          T_ReportVector;
-    typedef T_ReportVector::iterator                IT_ReportVector;
-    typedef T_ReportVector::const_iterator          CIT_ReportVector;
-    typedef T_ReportVector::const_reverse_iterator  RCIT_ReportVector;
-
     typedef std::vector< uint >                 T_NbcAgentVector;
     typedef T_NbcAgentVector::const_iterator    CIT_NbcAgentVector;
 
@@ -152,7 +145,6 @@ public:
     uint                        GetTransporter     () const;
     int                         GetContamination   () const;
     bool                        IsOutOfGas         () const;
-    const T_FireResults&        GetFireResult      () const;
     const MOS_Experience&       GetExperience      () const;
     const MOS_Tiredness&        GetTiredness       () const;
     const MOS_Morale&           GetMorale          () const;
@@ -205,12 +197,6 @@ public:
     void OnReceiveMsgWaitForOrderConduite( const ASN1T_MsgAttenteOrdreConduite& asnMsg );
 	int  MOS_Agent::GetCurrentMission() const;
 	void OnReceiveMission                ( const ASN1T_MsgPionOrder& asnMsg );
-
-
-    // fire results
-    void OnReceiveMsgStopFire( const ASN1T_FireDamagesPion&       asnMsg );
-    void OnReceiveMsgStopFire( const ASN1T_FireDamagesPopulation& asnMsg );
-    void DeleteAllFireResults();
     //@}
 
     //! @name Vision
@@ -313,8 +299,6 @@ public:
     int							nAltitude_;
     int							nDirection_;
 
-    T_ReportVector				reportVector_;
-
     T_PointVector				pathFindVector_;
     T_PointVector				oldPathVector_;
 
@@ -331,9 +315,6 @@ public:
 
     T_PopulationCollisionMap    populationCollisions_;
     
-    std::vector< MT_Vector2D >	reportPoints_;
-    T_FireResults				fireResults_;
-
     T_SurfaceVector				surfaces_;
     T_VisionResultMap			surfaceVision_;
     MT_Float					rElongationFactor_;

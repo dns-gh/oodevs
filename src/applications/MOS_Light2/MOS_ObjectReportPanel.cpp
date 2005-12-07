@@ -81,5 +81,5 @@ void MOS_ObjectReportPanel::OnUpdate()
 // -----------------------------------------------------------------------------
 void MOS_ObjectReportPanel::OnClearSelection()
 {
-    pFireResultListView_->SetAgent( 0 );
+    pFireResultListView_->SetObject( 0 );
 }

@@ -16,6 +16,7 @@
 
 #include "MOS_Types.h"
 #include "MOS_ASN_Types.h"
+#include "MOS_FireResult.h"
 
 class MOS_Report_ABC;
 class MOS_AgentKnowledge;
@@ -52,14 +53,27 @@ public:
 
     //! @name Reports
     //@{
-    virtual T_ReportVector& GetReports                 ();
-    virtual void            DeleteAllRCs               ();
-    virtual void            DeleteAllTraces            ();
-    virtual void            DeleteReport               ( MOS_Report_ABC& );
+    T_ReportVector& GetReports       ();
+    void            DeleteAllRCs     ();
+    void            DeleteAllTraces  ();
+    void            DeleteReport     ( MOS_Report_ABC& );
 
-    virtual void            OnReceiveMsgCR             ( const ASN1T_MsgCR& msg );
-    virtual void            OnReceiveTraceMsg          ( DIN::DIN_Input&    msg );
-    virtual void            OnReceiveDebugDrawPointsMsg( DIN::DIN_Input&    msg );
+    void            OnReceiveMsgCR   ( const ASN1T_MsgCR& msg );
+    void            OnReceiveTraceMsg( DIN::DIN_Input&    msg );
+    //@}
+
+    //! @name Debug draw points
+    //@{
+    const std::vector< MT_Vector2D >& GetDebugDrawPoints         () const;
+    void                              OnReceiveDebugDrawPointsMsg( DIN::DIN_Input& msg );
+    //@}
+
+    //! @name Fire results
+    //@{
+    const T_FireResults& GetFireResult       () const;
+    void                 OnReceiveMsgStopFire( const ASN1T_FireDamagesPion&       asnMsg );
+    void                 OnReceiveMsgStopFire( const ASN1T_FireDamagesPopulation& asnMsg );
+    void                 DeleteAllFireResults();
     //@}
 
     //! @name Knowledge
@@ -67,9 +81,12 @@ public:
     virtual MOS_AgentKnowledge*  FindAgentKnowledge( uint nId ) = 0;
     //@}
 
-private:
+protected:
     T_ReportVector				reportVector_;
+
+private:
     std::vector< MT_Vector2D >	reportPoints_;
+    T_FireResults				fireResults_;
     
 };
 

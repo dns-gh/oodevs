@@ -16,7 +16,6 @@
 #include "MOS_MOSServer.h"
 #include "MOS_AgentManager.h"
 #include "MOS_World.h"
-#include "MOS_Report_ABC.h"
 #include "MOS_RC.h"
 #include "MOS_Net_Def.h"
 #include "MOS_ASN_Messages.h"
@@ -33,7 +32,6 @@
 #include "MOS_Experience.h"
 #include "MOS_Tiredness.h"
 #include "MOS_Morale.h"
-#include "MOS_FireResult.h"
 #include "MOS_Population.h"
 #include "MOS_PopulationConcentration.h"
 #include "MOS_PopulationFlow.h"
@@ -179,7 +177,6 @@ void MOS_Agent::Initialize()
 //-----------------------------------------------------------------------------
 MOS_Agent::~MOS_Agent()
 {
-    MT_DELETEOWNED( reportVector_ );
     delete pMaintenanceData_;
     delete pMedicalData_;
     delete pSupplyData_;
@@ -1207,40 +1204,6 @@ void MOS_Agent::TerminateConsign( MOS_LogMedicalConsign& consign )
 {
     handledMedical_.erase( &consign );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::OnReceiveMsgStopFire
-// Created: SBO 2005-08-30
-// -----------------------------------------------------------------------------
-void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireDamagesPion& asnMsg )
-{
-    fireResults_.push_back( new MOS_FireResult( asnMsg ) );
-    if( fireResults_.size() > 20 )
-        fireResults_.erase( fireResults_.begin() );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::OnReceiveMsgStopFire
-// Created: SBO 2005-12-06
-// -----------------------------------------------------------------------------
-void MOS_Agent::OnReceiveMsgStopFire( const ASN1T_FireDamagesPopulation& asnMsg )
-{
-    fireResults_.push_back( new MOS_FireResult( asnMsg ) );
-    if( fireResults_.size() > 20 )
-        fireResults_.erase( fireResults_.begin() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MOS_Agent::DeleteAllFireResults
-// Created: SBO 2005-08-30
-// -----------------------------------------------------------------------------
-void MOS_Agent::DeleteAllFireResults()
-{
-    for( CIT_FireResults it = fireResults_.begin(); it != fireResults_.end(); ++it )
-        delete *it;
-    fireResults_.clear();
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::InitializeStocks

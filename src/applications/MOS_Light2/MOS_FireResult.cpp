@@ -57,6 +57,7 @@ MOS_FireResult::MOS_FireResult( const ASN1T_FireDamagesPion& asnMsg )
     for( uint i = 0; i < asnMsg.humains.n; ++i )
     {
         T_FireResultHuman& result = *new T_FireResultHuman();
+        result.reserve( 6 );
         result[ eHumanWound_BlesseUrgence1 ]       = asnMsg.humains.elem[ i ].nb_blesses_urgence_1;
         result[ eHumanWound_BlesseUrgence2 ]       = asnMsg.humains.elem[ i ].nb_blesses_urgence_2;
         result[ eHumanWound_BlesseUrgence3 ]       = asnMsg.humains.elem[ i ].nb_blesses_urgence_3;

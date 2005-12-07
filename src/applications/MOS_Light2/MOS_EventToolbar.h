@@ -31,13 +31,6 @@ class MOS_EventToolButton;
 
 
 // =============================================================================
-/** @class  MOS_EventToolbar
-    @brief  MOS_EventToolbar
-    @par    Using example
-    @code
-    MOS_EventToolbar;
-    @endcode
-*/
 // Created: APE 2004-09-21
 // =============================================================================
 class MOS_EventToolbar : public QToolBar
@@ -64,11 +57,11 @@ private slots:
     void OnAgentOutOfGas( MOS_Agent& agent );
     void OnAgentRefueled( MOS_Agent& agent );
 
-    void OnConflictStarted( MOS_Agent& agent );
-    void OnConflictEnded( MOS_Agent& agent );
+    void OnConflictStarted( MOS_Agent_ABC& origin );
+    void OnConflictEnded  ( MOS_Agent_ABC& origin );
 
-    void OnReportCreated( MOS_Agent_ABC& agent );
-    void OnReadingReports( MOS_Agent_ABC& agent );
+    void OnReportCreated  ( MOS_Agent_ABC& agent );
+    void OnReadingReports ( MOS_Agent_ABC& agent );
 
     void FocusOnAgent( int nId, bool bCenter );
     //@}

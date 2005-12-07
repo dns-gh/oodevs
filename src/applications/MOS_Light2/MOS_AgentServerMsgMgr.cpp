@@ -1705,7 +1705,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionF
 
     if( asnMsg.cible.t == T_MsgStartPionFire_cible_pion )
     {
-        strOutputMsg << " - ID cible " << asnMsg.cible.u.pion;
+        strOutputMsg << " - ID pion cible " << asnMsg.cible.u.pion;
         
         MOS_Agent* pTarget = agentManager.FindAgent( asnMsg.cible.u.pion );
         assert( pTarget );
@@ -1721,7 +1721,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionF
     }
     else if( asnMsg.cible.t == T_MsgStartPionFire_cible_population )
     {
-        strOutputMsg << " - ID cible " << asnMsg.cible.u.population;
+        strOutputMsg << " - ID population cible " << asnMsg.cible.u.population;
         
         MOS_Population* pTarget = agentManager.FindPopulation( asnMsg.cible.u.population );
         assert( pTarget );
@@ -1737,17 +1737,17 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartPionFire( const ASN1T_MsgStartPionF
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& asnMsg )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "StopPionFire - ID: " << asnMsg.oid_tir;
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+    MT_LOG_INFO( "StopPionFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
 
     // fire results
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
-    assert( pAgent );
+    MOS_Agent_ABC* pOrigin = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
+
+    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when MOS_Light2 is disconnected after a StartFire
+        return;
     for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
-        pAgent->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
+        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
     for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
-        pAgent->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
+        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
 
     MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
@@ -1758,10 +1758,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFir
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFireEffect& asnMsg )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "Start ammunition meteo effect - ID: " << asnMsg.oid_effet << " Type:" << asnMsg.type;
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
+    MT_LOG_INFO( "Start ammunition meteo effect - ID: " << asnMsg.oid_effet << " Type:" << asnMsg.type, eReceived, 0 );
     MOS_App::GetApp().GetWeatherManager().RegisterAmmoMeteoEffect( asnMsg );
 }
 
@@ -1772,10 +1769,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartFireEffect( const ASN1T_MsgStartFir
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireEffect& asnMsg )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "Stop ammunition meteo effect - ID: " << asnMsg;
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
-
+    MT_LOG_INFO( "Stop ammunition meteo effect - ID: " << asnMsg, eReceived, 0 );
     MOS_App::GetApp().GetWeatherManager().UnregisterAmmoMeteoEffect( asnMsg );
 }
 
@@ -1786,10 +1780,6 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStopFireEffect( const ASN1T_MsgStopFireE
 //-----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asnMsg )
 {
-    std::stringstream strOutputMsg;
-    strOutputMsg << "Explosion"
-                 << " - ID objet " << asnMsg.oid_objet;
-
     // fire results
     MOS_Object_ABC* pObject = MOS_App::GetApp().GetObjectManager().FindObject( asnMsg.oid_objet );
     assert( pObject );
@@ -1797,7 +1787,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
         pObject->OnReceiveMsgExplosion( asnMsg.degats_pions.elem[ i ] );
 
     MOS_App::GetApp().NotifyObjectExplosion( *pObject );
-    MT_LOG_INFO( strOutputMsg.str().c_str(), eReceived, 0 );
+    MT_LOG_INFO( "Explosion" << " - ID objet " << asnMsg.oid_objet, eReceived, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1806,7 +1796,15 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgExplosion( const ASN1T_MsgExplosion& asn
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStartPopulationFire& asnMsg )
 {
-    // $$$$ SBO 2005-12-05: TODO
+    std::stringstream strOutputMsg;
+    strOutputMsg << "StartPopulationFire - ID: " << asnMsg.oid_tir
+                 << " - ID source " << asnMsg.oid_src;
+
+    MOS_AgentManager& agentManager = MOS_App::GetApp().GetAgentManager();
+    MOS_Population* pPopulationSrc = agentManager.FindPopulation( asnMsg.oid_src );
+    assert( pPopulationSrc );
+
+    agentManager.AddIndirectConflict( asnMsg.oid_tir, *pPopulationSrc, pPopulationSrc->GetPos() );
 }
     
 // -----------------------------------------------------------------------------
@@ -1815,7 +1813,21 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgStartPopulationFire( const ASN1T_MsgStar
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopulationFire&  asnMsg )
 {
-    // $$$$ SBO 2005-12-05: TODO
+    MT_LOG_INFO( "StopPopulationFire - ID: " << asnMsg.oid_tir, eReceived, 0 );
+
+    // fire results
+    MOS_Agent_ABC* pOrigin = MOS_App::GetApp().GetAgentManager().FindConflictOrigin( asnMsg.oid_tir );
+
+    if( !pOrigin ) // $$$$ SBO 2005-12-06: happens when MOS_Light2 is disconnected after a StartFire
+        return;
+    for( uint i = 0; i < asnMsg.degats_pions.n; ++i )
+        pOrigin->OnReceiveMsgStopFire( asnMsg.degats_pions.elem[ i ] );
+    /* population => population
+    for( uint i = 0; i < asnMsg.degats_populations.n; ++i )
+        pAgent->OnReceiveMsgStopFire( asnMsg.degats_populations.elem[ i ] );
+    */
+
+    MOS_App::GetApp().GetAgentManager().DeleteConflict( asnMsg.oid_tir );
 }
 
 // -----------------------------------------------------------------------------
@@ -1978,7 +1990,7 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulation
 // Name: MOS_AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck
 // Created: SBO 2005-11-02
 // -----------------------------------------------------------------------------
-void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID nCtx )
+void MOS_AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPopulationMagicActionAck& asnMsg, MIL_MOSContextID /*nCtx*/ )
 {
     std::stringstream strOutputMsg;
     strOutputMsg << "PopulationMagicActionAck - Code: " << MOS_Tools::ToString( asnMsg.error_code );
@@ -2056,8 +2068,8 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Inpu
 
         case T_MsgsSimMos_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *asnMsg.u.msg_start_pion_fire                     ); break;
         case T_MsgsSimMos_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *asnMsg.u.msg_stop_pion_fire                      ); break;
-//        case T_MsgsSimMos_msg_start_population_fire:
-//        case T_MsgsSimMos_msg_stop_population_fire:
+        case T_MsgsSimMos_msg_start_population_fire:                OnReceiveMsgStartPopulationFire       ( *asnMsg.u.msg_start_population_fire               ); break;
+        case T_MsgsSimMos_msg_stop_population_fire:                 OnReceiveMsgStopPopulationFire        ( *asnMsg.u.msg_stop_population_fire                ); break;
 
         case T_MsgsSimMos_msg_explosion:                            OnReceiveMsgExplosion                 ( *asnMsg.u.msg_explosion                           ); break;
         case T_MsgsSimMos_msg_cr:                                   OnReceiveMsgCR                        ( *asnMsg.u.msg_cr                                  ); break;

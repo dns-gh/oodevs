@@ -58,7 +58,7 @@ void MOS_ReportPanel::OnUpdate()
 {
     if( selectedItem_.pAgent_ != 0 )
         OnAgentUpdated( *selectedItem_.pAgent_ );
-    if( selectedItem_.pPopulation_ != 0 )
+    else if( selectedItem_.pPopulation_ != 0 )
         OnAgentUpdated( *selectedItem_.pPopulation_ );   
     else
         OnClearSelection();
@@ -72,8 +72,8 @@ void MOS_ReportPanel::OnAgentUpdated( MOS_Agent& agent )
 {
     if( ShouldDisplay( agent ) )
     {
-        pReportListView_->SetAgent( selectedItem_.pAgent_ );
-        pFireResultListView_->SetAgent( selectedItem_.pAgent_ );
+        pReportListView_    ->SetAgent ( selectedItem_.pAgent_ );
+        pFireResultListView_->SetOrigin( selectedItem_.pAgent_ );
     }
 }
 
@@ -85,7 +85,8 @@ void MOS_ReportPanel::OnAgentUpdated( MOS_Population& population )
 {
     if( ShouldDisplay( population ) )
     {
-        pReportListView_->SetAgent( selectedItem_.pPopulation_ );
+        pReportListView_    ->SetAgent ( selectedItem_.pPopulation_ );
+        pFireResultListView_->SetOrigin( selectedItem_.pPopulation_ );
     }
 }
 
@@ -95,6 +96,6 @@ void MOS_ReportPanel::OnAgentUpdated( MOS_Population& population )
 // -----------------------------------------------------------------------------
 void MOS_ReportPanel::OnClearSelection()
 {
-    pReportListView_->SetAgent( 0 );
-    pFireResultListView_->SetAgent( 0 );
+    pReportListView_    ->SetAgent ( 0 );
+    pFireResultListView_->SetOrigin( 0 );
 }

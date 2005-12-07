@@ -711,7 +711,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         MT_GLToolTip tooltip = MT_GLToolTip( pWidget );
         tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
         uint duration = 4 * MOS_App::GetApp().GetTickDuration(); //4 seconds
-        for( MOS_Agent::RCIT_ReportVector it = reports.rbegin(); it < reports.rend(); ++it )
+        for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
         {
             int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
             if( ((*it)->GetType() == MOS_Report_ABC::eRC 
@@ -1691,7 +1691,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         else
             color.SetRGB( 255.0, 255.0, 0.0 );
 
-        toolTip.AddLine( strName, color ,true, 1.3 );
+        toolTip.AddLine( strName, color ,true, 1.3f );
 
         //write the current mission
         if( pAgent->GetCurrentMission() != 0 )
@@ -1727,9 +1727,9 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         
         //write the 5 last RCs
         toolTip.AddLine( QString(""), color );
-        const MOS_Agent::T_ReportVector& reports = pAgent->GetReports();
+        const MOS_Agent_ABC::T_ReportVector& reports = pAgent->GetReports();
         uint i = 0;
-        for( MOS_Agent::RCIT_ReportVector it = reports.rbegin(); it < reports.rend(); ++it )
+        for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
         {
             ++i;
             //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
@@ -2135,15 +2135,16 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 //    for( std::vector< MT_Vector2D >::const_iterator it = agent.reportPoints_.begin(); it != agent.reportPoints_.end(); ++it )
 //        DrawCross( *it, MOS_GL_CROSSSIZE, 4.0 );
 
-    if( !agent.reportPoints_.empty() )
+    std::vector< MT_Vector2D > debugPoints = agent.GetDebugDrawPoints();
+    if( !debugPoints.empty() )
     {
         GFX_Color color( 0, 255, 0, 1 );
         color.SetGLColor();
 
-        std::vector< MT_Vector2D >::const_iterator itCur  = agent.reportPoints_.begin();
+        std::vector< MT_Vector2D >::const_iterator itCur  = debugPoints.begin();
         std::vector< MT_Vector2D >::const_iterator itNext = itCur;
         ++ itNext;
-        for( ; itNext != agent.reportPoints_.end(); ++itCur, ++itNext )
+        for( ; itNext != debugPoints.end(); ++itCur, ++itNext )
             DrawLine( *itCur, *itNext );
 
         DrawCross( *itCur, MOS_GL_CROSSSIZE, 4.0 );
