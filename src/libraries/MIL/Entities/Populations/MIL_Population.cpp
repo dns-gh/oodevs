@@ -51,6 +51,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     , pDefaultAttitude_       ( 0 )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
+    , bHasDoneMagicMove_      ( false )
 {
     archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
 
@@ -92,6 +93,7 @@ MIL_Population::MIL_Population()
     , pDefaultAttitude_       ( 0 )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
+    , bHasDoneMagicMove_      ( false )
 {
     // NOTHING
 }
@@ -138,7 +140,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
          >> trashedFlows_
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
-         >> pKnowledge_;
+         >> pKnowledge_
+         >> bHasDoneMagicMove_;
 
     pDecision_ = new DEC_PopulationDecision( *this );
 }
@@ -162,7 +165,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
          << trashedFlows_
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
-         << pKnowledge_;
+         << pKnowledge_
+         << bHasDoneMagicMove_;
 }
 
 // =============================================================================
@@ -229,6 +233,8 @@ void MIL_Population::UpdateDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateState()
 {
+    orderManager_.Update();
+
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         delete *it;
     trashedConcentrations_.clear();
@@ -275,6 +281,8 @@ void MIL_Population::Clean()
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).Clean();
+
+    bHasDoneMagicMove_ = false;
 }
 
 // =============================================================================
@@ -580,56 +588,6 @@ MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::SendCreation
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-void MIL_Population::SendCreation() const
-{
-    NET_ASN_MsgPopulationCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_population  = nID_;
-    asnMsg.GetAsnMsg().type_population = pType_->GetID();
-    asnMsg.GetAsnMsg().oid_camp        = pArmy_->GetID();
-    asnMsg.GetAsnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
-    asnMsg.Send();
-
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).SendCreation();
-
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).SendCreation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::SendFullState
-// Created: NLD 2005-09-28
-// -----------------------------------------------------------------------------
-void MIL_Population::SendFullState() const
-{
-    NET_ASN_MsgPopulationUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_population = nID_;
-    asnMsg.Send();
-
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).SendFullState();
-
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).SendFullState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::UpdateNetwork
-// Created: NLD 2005-10-04
-// -----------------------------------------------------------------------------
-void MIL_Population::UpdateNetwork()
-{
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).SendChangedState();
-
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).SendChangedState();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
@@ -656,36 +614,21 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagic
 // -----------------------------------------------------------------------------
 ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_MagicActionPopulationMoveTo& asn )
 {
-    /*MT_Vector2D vPosTmp;
+    MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
 
-    // create a new concentration at the right position (we could also take the first in list and move it...)
-    MIL_PopulationConcentration* pNewConcentration = new MIL_PopulationConcentration( *this, vPosTmp );
-
-    // merge all concentrations into new
-    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
-    {
-        MIL_PopulationConcentration* pConcentration = *itConcentration;
-        pNewConcentration->PushHumans( pConcentration->GetNbrAliveHumans() ); // what about dead people?
-        pConcentration->PullHumans( pConcentration->GetNbrAliveHumans() );
-        itConcentration = concentrations_.erase( itConcentration );
-        trashedConcentrations_.push_back( pConcentration );
-    }
+   // merge all concentrations into new
+    T_ConcentrationVector concentrations = concentrations_;
+    for( IT_ConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
+        (**it).MagicMove( vPosTmp );
 
     // merge all flows into new concentration
-    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
-    {
-        MIL_PopulationFlow* pFlow = *itFlow;
-        pNewConcentration->PushHumans( pFlow->GetNbrAliveHumans() ); // what about dead people?
-        pFlow->PullHumans( pFlow->GetNbrAliveHumans() );
-        itFlow = flows_.erase( itFlow );
-        trashedFlows_.push_back( pFlow );
-    }
-
-    concentrations_.push_back( pNewConcentration );
+    for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        (**it).MagicMove( vPosTmp );
 
     pDecision_->Reset();
-    orderManager_.CancelAllOrders();*/
+    orderManager_.CancelAllOrders();
+    bHasDoneMagicMove_ = true;
     return EnumPopulationAttrErrorCode::no_error;
 }
 
@@ -695,19 +638,11 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_M
 // -----------------------------------------------------------------------------
 ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgDestroyAll()
 {
-    // kill everybody in every concentration
-    for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-    {
-        MIL_PopulationConcentration* pConcentration = *itConcentration;
-        pConcentration->PullHumans( pConcentration->GetNbrAliveHumans() );
-    }
+    for( IT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        (**it).KillAllHumans();
 
-    // kill everybody in every flow
-    for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-    {
-        MIL_PopulationFlow* pFlow = *itFlow;
-        pFlow->PullHumans( pFlow->GetNbrAliveHumans() );
-    }
+    for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        (**it).KillAllHumans();
 
     pDecision_->Reset();
     orderManager_.CancelAllOrders();
@@ -755,4 +690,66 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgChangeAttitude( AS
             ( **it ).SetAttitude( *pAttitude );
     }
     return EnumPopulationAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SendCreation
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+void MIL_Population::SendCreation() const
+{
+    NET_ASN_MsgPopulationCreation asnMsg;
+    asnMsg.GetAsnMsg().oid_population  = nID_;
+    asnMsg.GetAsnMsg().type_population = pType_->GetID();
+    asnMsg.GetAsnMsg().oid_camp        = pArmy_->GetID();
+    asnMsg.GetAsnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
+    asnMsg.Send();
+
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        (**it).SendCreation();
+    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+        (**it).SendCreation();
+
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        (**it).SendCreation();
+    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        (**it).SendCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SendFullState
+// Created: NLD 2005-09-28
+// -----------------------------------------------------------------------------
+void MIL_Population::SendFullState() const
+{
+    NET_ASN_MsgPopulationUpdate asnMsg;
+    asnMsg.GetAsnMsg().oid_population = nID_;
+    asnMsg.Send();
+
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        (**it).SendFullState();
+    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+        (**it).SendFullState();
+
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        (**it).SendFullState();
+    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        (**it).SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateNetwork
+// Created: NLD 2005-10-04
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateNetwork()
+{
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        (**it).SendChangedState();
+    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+        (**it).SendChangedState();
+
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        (**it).SendChangedState();
+    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        (**it).SendChangedState();
 }

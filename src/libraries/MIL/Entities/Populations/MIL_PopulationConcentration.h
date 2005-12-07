@@ -49,12 +49,14 @@ public:
             bool Update(); // Return false if the concentration must be deleted
     virtual void Clean ();
 
-    bool IsValid() const; // false = will be deleted
+    bool IsValid       () const; // false = will be deleted
+    bool CanBePerceived() const;
     //@}
 
     //! @name Actions
     //@{
-    void Move( const MT_Vector2D& destination );
+    void MagicMove( const MT_Vector2D& destination );
+    void Move     ( const MT_Vector2D& destination );
     //@}
 
     //! @name Flows management

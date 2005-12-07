@@ -14,15 +14,16 @@
 
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
-#include "MIL_AgentServer.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Tools/MIL_IDManager.h"
+#include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationConcentration, "DEC_Knowledge_PopulationConcentration" )
 
@@ -210,20 +211,24 @@ void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
         return;
     }
 
+    assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
+
+    // Magic move de la population percue
+    if( pConcentrationKnown_ && pConcentrationKnown_->GetPopulation().HasDoneMagicMove() ) 
+        ChangeRelevance( 0. );
+   
+    // Degradation : effacement au bout de X minutes
+    const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
+    ChangeRelevance( rRelevance );
+    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+
     // L'objet réel va être détruit
     if( pConcentrationKnown_ && !pConcentrationKnown_->IsValid() )
     {
         pConcentrationKnown_       = 0;
         bRealConcentrationUpdated_ = true;
     }
-
-    assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
-    
-    // Degradation : effacement au bout de X minutes
-    const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
-    const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
-    ChangeRelevance( rRelevance );
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }
 
 // =============================================================================

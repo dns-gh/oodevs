@@ -273,3 +273,23 @@ MT_Float MIL_PopulationFlow::GetSpeed() const
 {
     return rSpeed_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::IsValid
+// Created: NLD 2005-10-13
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationFlow::IsValid() const
+{
+    return GetNbrHumans() > 0. || pSourceConcentration_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanBePerceived
+// Created: NLD 2005-12-07
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationFlow::CanBePerceived() const
+{
+    return IsValid();
+}

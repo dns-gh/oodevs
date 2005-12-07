@@ -182,6 +182,21 @@ MIL_PopulationElement_ABC::T_Humans MIL_PopulationElement_ABC::PullHumans( MT_Fl
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::KillAllHumans
+// Created: NLD 2005-12-06
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationElement_ABC::KillAllHumans()
+{
+    if( rNbrAliveHumans_ == 0. )
+        return;
+
+    rNbrDeadHumans_ += rNbrAliveHumans_;
+    rNbrAliveHumans_ = 0.;
+    bHumansUpdated_  = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::IsDead
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
@@ -199,4 +214,14 @@ inline
 bool MIL_PopulationElement_ABC::IsInZone( const TER_Localisation& loc ) const
 {
     return GetLocation().IsIntersecting( loc );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ClearCollisions
+// Created: NLD 2005-12-06
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationElement_ABC::ClearCollisions()
+{
+    collidingAgents_.clear();
 }

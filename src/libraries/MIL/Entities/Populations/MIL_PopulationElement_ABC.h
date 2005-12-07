@@ -64,8 +64,9 @@ public:
 
     //! @name Humans management
     //@{
-    void     PushHumans ( const T_Humans& humans );
-    T_Humans PullHumans ( MT_Float rNbr );
+    void     PushHumans   ( const T_Humans& humans );
+    T_Humans PullHumans   ( MT_Float rNbr );
+    void     KillAllHumans();
     //@}
 
     //! @name Actions
@@ -116,6 +117,7 @@ protected:
     //@{
     void UpdateDensity   ();
     void UpdateCollisions();
+    void ClearCollisions ();
     //@}
  
     //! @name Network

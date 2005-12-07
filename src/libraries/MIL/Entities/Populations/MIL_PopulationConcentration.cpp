@@ -96,11 +96,10 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::~MIL_PopulationConcentration()
 {
-    //assert( !pPullingFlow_ );
-    //assert( pushingFlows_.empty() );
+    assert( !pPullingFlow_ );
+    assert( pushingFlows_.empty() );
 
     SendDestruction();
-
 } 
 
 // =============================================================================
@@ -113,7 +112,7 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::Update()
 {
-    //$$$$ nNbrDeadHumans_ 
+    ClearCollisions();
     if( !IsValid() )
     {
         if( pPullingFlow_ )
@@ -161,6 +160,25 @@ void MIL_PopulationConcentration::NotifyCollision( MIL_Agent_ABC& agent )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::MagicMove
+// Created: NLD 2005-12-06
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::MagicMove( const MT_Vector2D& destination )
+{
+    if( position_ != destination )
+    {
+        MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
+        newConcentration.PushHumans( PullHumans( GetNbrHumans() ) );
+    }
+
+    if( pPullingFlow_ )
+    {
+        pPullingFlow_->UnregisterSourceConcentration( *this );
+        pPullingFlow_ = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::Move
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
@@ -187,6 +205,16 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
     return position_.Distance( position ) <= rPrecision;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::RegisterPushingFlow
+// Created: NLD 2005-10-05
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
+{
+    bool bOut = pushingFlows_.insert( &flow ).second;
+    assert( bOut );
+    SetAttitude( flow.GetAttitude() );   
+}
 
 // =============================================================================
 // NETWORK

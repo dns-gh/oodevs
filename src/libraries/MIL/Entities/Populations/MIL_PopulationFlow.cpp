@@ -57,6 +57,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , bDirectionUpdated_       ( true )
     , bSpeedUpdated_           ( true )
 {
+    SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
     SendCreation  ();
 }
@@ -90,8 +91,8 @@ MIL_PopulationFlow::MIL_PopulationFlow()
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::~MIL_PopulationFlow()
 {
-    //assert( !pSourceConcentration_ );
-    //assert( !pDestConcentration_   );    
+    assert( !pSourceConcentration_ );
+    assert( !pDestConcentration_   );    
 
     SendDestruction();
 }
@@ -99,6 +100,28 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
 // =============================================================================
 // ACTIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::MagicMove
+// Created: NLD 2005-12-06
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::MagicMove( const MT_Vector2D& destination )
+{
+    MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
+    newConcentration.PushHumans( PullHumans( GetNbrHumans() ) );
+
+    if( pDestConcentration_ )
+    {
+        pDestConcentration_->UnregisterPushingFlow( *this );
+        pDestConcentration_ = 0;
+    }
+
+    if( pSourceConcentration_ )
+    {
+        pSourceConcentration_->UnregisterPushingFlow( *this );
+        pSourceConcentration_ = 0;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::Move
@@ -245,7 +268,8 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::Update()
 {
-    // Destruction
+    ClearCollisions();
+
     if( !IsValid() )
     {
         if( pDestConcentration_ )
@@ -284,18 +308,6 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // =============================================================================
 // ACCESSORS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::IsValid
-// Created: NLD 2005-10-13
-// -----------------------------------------------------------------------------
-bool MIL_PopulationFlow::IsValid() const
-{
-    return GetNbrHumans() > 0. || pSourceConcentration_;
-//    return   GetNbrAliveHumans() > 0. 
-//        || ( GetNbrAliveHumans() == 0. && ( pSourceConcentration_ && pSourceConcentration_->GetPosition() == GetHeadPosition() ) );
-//    return !pDestConcentration_ || pSourceConcentration_ || GetHeadPosition() != GetTailPosition(); //$$$ tester uniquement rNbrAliveHumans ? 
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetMaxSpeed

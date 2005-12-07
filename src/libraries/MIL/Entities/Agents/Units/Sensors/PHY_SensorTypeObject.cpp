@@ -73,8 +73,7 @@ PHY_SensorTypeObject::~PHY_SensorTypeObject()
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_AgentPion& perceiver, const MIL_RealObject_ABC& target, MT_Float rSensorHeight ) const
 {
-    if( !target.CanBePerceived() )
-        return PHY_PerceptionLevel::notSeen_;
+    assert( target.CanBePerceived() );
 
     assert( objectData_.size()  > target.GetType().GetID() );
     const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];

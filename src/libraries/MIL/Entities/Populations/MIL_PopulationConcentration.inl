@@ -47,17 +47,6 @@ bool MIL_PopulationConcentration::HasChanged() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationConcentration::RegisterPushingFlow
-// Created: NLD 2005-10-05
-// -----------------------------------------------------------------------------
-inline
-void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
-{
-    bool bOut = pushingFlows_.insert( &flow ).second;
-    assert( bOut );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::UnregisterPushingFlow
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
@@ -86,4 +75,14 @@ inline
 bool MIL_PopulationConcentration::IsValid() const
 {
     return GetNbrHumans() > 0. || !pushingFlows_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::CanBePerceived
+// Created: NLD 2005-12-07
+// -----------------------------------------------------------------------------
+inline
+bool MIL_PopulationConcentration::CanBePerceived() const
+{
+    return IsValid();
 }

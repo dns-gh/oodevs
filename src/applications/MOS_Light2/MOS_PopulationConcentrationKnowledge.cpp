@@ -37,12 +37,17 @@ MOS_PopulationConcentrationKnowledge::MOS_PopulationConcentrationKnowledge( cons
     pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
     assert( pPopulationKnowledge_ );
     const MOS_Population& population = pPopulationKnowledge_->GetPopulation();
-    pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
 
+    if( asnMsg.oid_concentration_reelle == 0 )
+        pConcentration_ = 0;
+    else
+    {
+        pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
+        assert( pConcentration_ );
+    }
+    
     MOS_App::GetApp().GetWorld().MosToSimMgrsCoord( (const char*)asnMsg.position.data, position_ );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationConcentrationKnowledge::~MOS_PopulationConcentrationKnowledge
@@ -70,7 +75,13 @@ void MOS_PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConc
     if( asnMsg.m.oid_concentration_reellePresent )
     {
         const MOS_Population& population = pPopulationKnowledge_->GetPopulation();
-        pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
+        if( asnMsg.oid_concentration_reelle == 0 )
+            pConcentration_ = 0;
+        else
+        {
+            pConcentration_ = population.FindConcentration( asnMsg.oid_concentration_reelle );
+            assert( pConcentration_ );
+        }
     }
     if( asnMsg.m.pertinencePresent )
         rRelevance_ = asnMsg.pertinence;

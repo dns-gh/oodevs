@@ -21,6 +21,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -272,19 +273,22 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollisi
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
-{
+{      
+    MT_Float rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() ) 
+        rMaxLifeTime = 0.;
+
+    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
+    {
+        if( (*it->second).UpdateRelevance( rMaxLifeTime ) )
+            bFlowPartsUpdated_ = true;
+    }
+
     // L'objet réel va être détruit
     if( pFlowKnown_ && !pFlowKnown_->IsValid() )
     {
         pFlowKnown_       = 0;
         bRealFlowUpdated_ = true;
-    }
-    
-    const MT_Float rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
-    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
-    {
-        if( (*it->second).UpdateRelevance( rMaxLifeTime ) )
-            bFlowPartsUpdated_ = true;
     }
 }
 

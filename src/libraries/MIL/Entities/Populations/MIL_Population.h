@@ -65,6 +65,7 @@ public:
     const MIL_Army&                   GetArmy              () const;
     const DEC_PopulationKnowledge&    GetKnowledge         () const;
           bool                        IsDead               () const;
+          bool                        HasDoneMagicMove     () const;
     //@}
 
     //! @name Geometry
@@ -186,6 +187,9 @@ private:
           // Pion effects
           bool                       bPionMaxSpeedOverloaded_;
           MT_Float                   rOverloadedPionMaxSpeed_;
+
+          // Misc
+          bool                       bHasDoneMagicMove_;
 };
 
 #include "MIL_Population.inl"

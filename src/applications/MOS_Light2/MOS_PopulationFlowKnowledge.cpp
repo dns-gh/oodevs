@@ -93,7 +93,14 @@ MOS_PopulationFlowKnowledge::MOS_PopulationFlowKnowledge( const ASN1T_MsgPopulat
     pPopulationKnowledge_ = pGtia_->FindPopulationKnowledge( asnMsg.oid_connaissance_population );
     assert( pPopulationKnowledge_ );
     const MOS_Population& population = pPopulationKnowledge_->GetPopulation();
-    pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
+    
+    if( asnMsg.oid_flux_reel == 0 )
+        pFlow_ = 0;
+    else
+    {
+        pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
+        assert( pFlow_ );
+    }
 }
 
 
@@ -129,7 +136,13 @@ void MOS_PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledge
     {
         assert( pPopulationKnowledge_ );
         const MOS_Population& population = pPopulationKnowledge_->GetPopulation();
-        pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
+        if( asnMsg.oid_flux_reel == 0 )
+            pFlow_ = 0;
+        else
+        {
+            pFlow_ = population.FindFlow( asnMsg.oid_flux_reel );
+            assert( pFlow_ );
+        }
     }
     if( asnMsg.m.portions_fluxPresent )
     {

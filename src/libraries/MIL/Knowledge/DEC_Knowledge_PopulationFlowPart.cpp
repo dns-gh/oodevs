@@ -135,12 +135,17 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
         return ChangeRelevance( 0. );
 
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
-    
-    // Degradation : effacement au bout de X minutes
-    const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
-    const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
+
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
-    return ChangeRelevance( rRelevance );
+    if( rMaxLifeTime == 0. )
+        return ChangeRelevance( 0. );
+    else
+    {
+        // Degradation : effacement au bout de X minutes
+        const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
+        const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );       
+        return ChangeRelevance( rRelevance );
+    }
 }
 
 // -----------------------------------------------------------------------------

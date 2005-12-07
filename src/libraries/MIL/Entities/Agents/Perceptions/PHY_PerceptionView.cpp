@@ -91,7 +91,6 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Agen
             }
         }
     }
-
     return *pBestLevel;
 }
 
@@ -175,7 +174,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Obje
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_RealObject_ABC& target ) const
 {
-    if( !bIsEnabled_ )
+    if( !bIsEnabled_ || !target.CanBePerceived() )
         return PHY_PerceptionLevel::notSeen_;
 
     if( perceiver_.IsIdentified( target ) )
@@ -225,7 +224,7 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationFlow& flow, T_PointVector& shape ) const
 {
-    if( !bIsEnabled_ )
+    if( !bIsEnabled_ || !flow.CanBePerceived() )
         return PHY_PerceptionLevel::notSeen_;
 
     const PHY_PerceptionSurfaceAgent* pBestSurface = 0;
@@ -272,7 +271,7 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_PopulationFlow
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConcentration& target ) const
 {
-    if( !bIsEnabled_ )
+    if( !bIsEnabled_ || !target.CanBePerceived() )
         return PHY_PerceptionLevel::notSeen_;
 
     if( perceiver_.IsIdentified( target ) )

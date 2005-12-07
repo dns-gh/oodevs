@@ -155,3 +155,12 @@ void MIL_Population::ResetPionMaxSpeed()
     rOverloadedPionMaxSpeed_ = 0.;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::HasDoneMagicMove
+// Created: NLD 2005-12-07
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Population::HasDoneMagicMove() const
+{
+    return bHasDoneMagicMove_;
+}

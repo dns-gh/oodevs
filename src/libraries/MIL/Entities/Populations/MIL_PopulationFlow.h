@@ -50,12 +50,14 @@ public:
     bool Update();
     void Clean ();
 
-    bool IsValid() const; // false = will be deleted
+    bool IsValid       () const; // false = will be deleted
+    bool CanBePerceived() const;
     //@}
 
     //! @name Actions
     //@{
-    void Move( const MT_Vector2D& destination );
+    void MagicMove( const MT_Vector2D& destination );
+    void Move     ( const MT_Vector2D& destination );
     //@}
 
     //! @name Accessors
@@ -68,7 +70,7 @@ public:
 
     //! @name Concentration management
     //@{
-    void UnregisterSourceConcentration   ( MIL_PopulationConcentration& concentration );
+    void UnregisterSourceConcentration( MIL_PopulationConcentration& concentration );
     //@}
 
     //! @name Network

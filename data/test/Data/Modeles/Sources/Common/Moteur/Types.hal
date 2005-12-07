@@ -22,7 +22,7 @@ typedef UserType T_ConnaissancePopulation;          // Type C++ : uint d'index s
 typedef UserType T_Population_ConnaissanceAgent;    // Type C++ : id de MIL_Agent_ABC (connaissances agents pour les entités population)
 typedef UserType T_Population_ConnaissanceObjet;    // Type C++ : id de MIL_RealObject_ABC (connaissances objets pour les entités population)
 typedef UserType T_ID;                              // Type C++ : uint directement dans l'adresse du pointeur
-typedef UserType T_Action;                          // Type C++ : PHY2_Action_ABC
+typedef UserType T_Action;                          // Type C++ : PHY_Action_ABC
 typedef UserType T_PerceptionPoint;
 typedef UserType T_PerceptionLocalisation;
 typedef UserType T_PerceptionRadar;
