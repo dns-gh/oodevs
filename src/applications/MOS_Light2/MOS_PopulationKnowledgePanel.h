@@ -33,6 +33,7 @@ class MOS_PopulationFlowKnowledge;
 class MOS_ActionContext;
 class MOS_SelectedElement;
 class QCheckBox;
+class QTable;
 
 // =============================================================================
 // Created: SBO 2005-10-19
@@ -146,6 +147,9 @@ private:
     QLabel*    pFlowDeadHumans_;
     QLabel*    pFlowAttitude_;
     QLabel*    pFlowPerceived_;
+    QGroupBox* pFlowPartBox_;
+    QLabel*    pFlowPartNbr_;
+    QTable*    pFlowPartTable_;
 
     QPopupMenu* pPopupMenu_;
     //@}

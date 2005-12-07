@@ -148,6 +148,7 @@ void MOS_PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledge
     {
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
             flowParts_.value_.push_back( new FlowPart( asnMsg.portions_flux.elem[ i ] ) );
+        flowParts_.bIsValid_ = true;
     }
 //    if( asnMsg.m.pertinencePresent )
 //        rRelevance_ = asnMsg.pertinence;

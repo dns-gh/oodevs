@@ -40,6 +40,8 @@
 #include "MOS_PopulationFlowKnowledge.h"
 #include "MOS_ActionContext.h"
 
+#include <qtable.h>
+
 // -----------------------------------------------------------------------------
 // Name: MOS_PopulationKnowledgePanel constructor
 // Created: SBO 2005-10-19
@@ -127,7 +129,23 @@ MOS_PopulationKnowledgePanel::MOS_PopulationKnowledgePanel( QWidget* pParent )
     new QLabel( tr( "Percu:" ), pFlowBox_ );
     pFlowPerceived_ = new QLabel( pFlowBox_ );
 
+    new QLabel( tr( "Portions connues:" ), pFlowBox_ );
+    pFlowPartNbr_ = new QLabel( pFlowBox_ );
+
     pFlowBox_->hide();
+
+    pFlowPartBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Portions de flux" ), this );
+    pFlowPartTable_ = new QTable( 0, 2, pFlowPartBox_ );
+    pFlowPartTable_->horizontalHeader()->setLabel( 0, tr( "#" ) );
+    pFlowPartTable_->horizontalHeader()->setLabel( 1, tr( "Pertinence" ) );
+    pFlowPartTable_->setColumnWidth   ( 0, 20 );
+    pFlowPartTable_->setColumnReadOnly( 0, true );
+    pFlowPartTable_->setColumnReadOnly( 1, true );
+    pFlowPartTable_->setLeftMargin( 0 );
+    pFlowPartTable_->setShowGrid( false );
+    pFlowPartTable_->setMaximumHeight( 100 );
+
+    pFlowPartBox_->hide();
 
     // Perception Agents
     pPerceptionListView_ = new QListView( this );
@@ -273,6 +291,7 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
     pTeamLabel_                ->setText( "-" );
     pConcentrationBox_         ->hide   ();
     pFlowBox_                  ->hide   ();
+    pFlowPartBox_              ->hide   ();
 
     if( pSelectedKnowledge_ == 0 )
         return;
@@ -315,8 +334,35 @@ void MOS_PopulationKnowledgePanel::UpdateSelected()
         pFlowDeadHumans_ ->setText( pSelectedFlowKnowledge_->IsValidNbrDeadHumans()  ? QString::number( pSelectedFlowKnowledge_->GetNbrDeadHumans() )                          : tr( "n/d" ) );
         pFlowAttitude_   ->setText( pSelectedFlowKnowledge_->IsValidAttitude()       ? ENT_Tr::ConvertFromPopulationAttitude( pSelectedFlowKnowledge_->GetAttitude() ).c_str() : tr( "n/d" ) );
         pFlowPerceived_  ->setText( pSelectedFlowKnowledge_->IsValidPerceived()      ? pSelectedFlowKnowledge_->IsPerceived() ? tr( "Oui" ) : tr( "Non" )                      : tr( "n/d" ) );
+        pFlowPartNbr_    ->setText( pSelectedFlowKnowledge_->IsValidFlowParts()      ? QString::number( pSelectedFlowKnowledge_->GetFlowParts().size() )                       : tr( "n/d" ) );
 
-        pFlowBox_->show();        
+        pFlowBox_->show();
+
+        if( pSelectedFlowKnowledge_->IsValidFlowParts() && pSelectedFlowKnowledge_->GetFlowParts().size() > 0 )
+        {
+            const MOS_PopulationFlowKnowledge::T_FlowParts& parts = pSelectedFlowKnowledge_->GetFlowParts();
+            pFlowPartTable_->setNumRows( parts.size() );
+            uint nNbr = 0;
+            for( MOS_PopulationFlowKnowledge::CIT_FlowParts it = parts.begin(); it != parts.end(); ++it, ++nNbr )
+            {
+                // try to recycle previous cells
+                if( pFlowPartTable_->item( nNbr, 0 ) )
+                {
+                    pFlowPartTable_->item( nNbr, 0 )->setText( QString::number( nNbr ) );
+                    pFlowPartTable_->item( nNbr, 1 )->setText( QString::number( ( *it )->GetRelevance() ) );
+                }
+                else
+                {
+                    QTableItem* pItem = new QTableItem( pFlowPartTable_, QTableItem::EditType::Never );
+                    pItem->setText( QString::number( nNbr ) );
+                    pFlowPartTable_->setItem( nNbr, 0, pItem );
+                    pItem = new QTableItem( pFlowPartTable_, QTableItem::EditType::Never );
+                    pItem->setText( QString::number( ( *it )->GetRelevance() ) );
+                    pFlowPartTable_->setItem( nNbr, 1, pItem );
+                }
+            }
+            pFlowPartBox_->show();
+        }
     }
 }
 
@@ -545,10 +591,10 @@ void MOS_PopulationKnowledgePanel::OnFlowKnowledgeCreated( MOS_Gtia& gtia, MOS_P
 // -----------------------------------------------------------------------------
 void MOS_PopulationKnowledgePanel::OnFlowKnowledgeUpdated( MOS_Gtia& gtia, MOS_PopulationFlowKnowledge& knowledge )
 {
-//    if( &gtia != GetSelectedGtia() )
-//        return;
-//    if( pSelectedFlowKnowledge_ == &knowledge )
-//        UpdateSelected();
+    if( &gtia != GetSelectedGtia() )
+        return;
+    if( pSelectedFlowKnowledge_ == &knowledge )
+        UpdateSelected();
 }
     
 // -----------------------------------------------------------------------------

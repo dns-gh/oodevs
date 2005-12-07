@@ -781,7 +781,15 @@ void MOS_GLTool::Draw( MOS_PopulationFlow& flow, E_State nState /*= eNormal*/ )
     DrawPath( flow );
     color.SetAlpha( 0.9 );
     color.SetGLColor();
-    DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
+    MT_Vector2D topLeft( flow.GetHeadPosition() );
+    topLeft.rX_ -= 50;
+    topLeft.rY_ -= 50;
+    MT_Vector2D bottomRight( flow.GetHeadPosition() );
+    bottomRight.rX_ += 50;
+    bottomRight.rY_ += 50;
+
+    DrawRect( topLeft, bottomRight, true );
+    //DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
     glLineWidth( 5.0 );
     DrawLine( flow.GetFlow() );
     //glLineWidth( 1.0 );
