@@ -47,7 +47,7 @@ ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( ADN_C
 , rFixableWithEvacuation_    ( 0. )
 , rFixableWithoutEvacuation_ ( 0. )
 {
-    this->BindExistenceTo( &ptrProtection_ );
+    BindExistenceTo( &ptrProtection_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -526,6 +526,14 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::PopulationInfos::Crea
     pCopy->rConcentrationDensity_ = rConcentrationDensity_.GetData();
     pCopy->rMoveDensity_          = rMoveDensity_.GetData();
     pCopy->rMoveSpeed_            = rMoveSpeed_.GetData();
+
+    for( int i = 0; i < eNbrPopulationAttitude; ++i )
+    {
+        pCopy->vSpeedEffectInfos_[ i ] = vSpeedEffectInfos_[ i ];
+        pCopy->vFireEffectInfos_ [ i ] = vFireEffectInfos_ [ i ];
+    }
+    for( int i = 0; i < eNbrRoePopulation; ++i )
+        pCopy->vFireEffectRoeInfos_[ i ] = vFireEffectRoeInfos_[ i ];
 
     return pCopy;
 }
