@@ -38,7 +38,6 @@ public:
             const T_PointVector& GetItineraire      () const;
             const MT_Vector2D&   GetTailPosition    () const;
             const MT_Vector2D&   GetHeadPosition    () const;
-                  MT_Float       GetDensity         () const;
 	virtual const std::string&   GetName            () const;
     virtual const MT_Vector2D&   GetPos             () const;
     //@}
@@ -59,7 +58,6 @@ private:
 	T_PointVector	  flow_;
 	int				  nDirection_;
 	int				  nSpeed_;
-    MT_Float          rDensity_;
     //@}
 };
 

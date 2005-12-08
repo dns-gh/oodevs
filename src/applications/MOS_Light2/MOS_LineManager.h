@@ -12,14 +12,10 @@
 #ifndef __MOS_LineManager_h_
 #define __MOS_LineManager_h_
 
-#include "MOS_Lima.h"
-#include "MOS_Limit.h"
-
+#include "MOS_Types.h"
+#include "MOS_TacticalLine_ABC.h"
 
 // =============================================================================
-/** @class  MOS_LineManager
-    @brief  Manages the limits and limas.
-*/
 // Created: APE 2004-03-12
 // =============================================================================
 class MOS_LineManager
@@ -27,9 +23,7 @@ class MOS_LineManager
     MT_COPYNOTALLOWED( MOS_LineManager );
 
 public:
-    //-------------------------------------------------------------------------
-    /** @name Types */
-    //-------------------------------------------------------------------------
+    //! @name Types
     //@{
     typedef std::set< MOS_TacticalLine_ABC* >         T_TacticalLineSet;
     typedef const T_TacticalLineSet                   CT_TacticalLineSet;
@@ -39,32 +33,41 @@ public:
     //@}
 
 public:
+    //! @name Constructor/Destructor
+    //@{
      MOS_LineManager();
     ~MOS_LineManager();
+    //@}
     
-    //-------------------------------------------------------------------------
-    /** @name  */
-    //-------------------------------------------------------------------------
+    //! @name Operations
     //@{
     void RegisterLine( MOS_TacticalLine_ABC& line );
     void DeleteLine  ( MIL_LineID nLineID );
-    void DeleteAll  ();
     void OnDeconnexion();
 
-    MOS_TacticalLine_ABC* FindLine( MIL_LineID nLineID );
-    CT_TacticalLineSet& GetLineList();
+    MOS_TacticalLine_ABC* FindLine   ( MIL_LineID nLineID );
+    CT_TacticalLineSet&   GetLineList();
 
-    bool UpdateToSim();
+    bool UpdateToSim        ();
+    void UseSimTacticalLines();
+    bool NeedSaving         ();
     //@}
 
     //! @name In/Out
     //@{
-    void Read( MT_InputArchive_ABC& archive );
+    void Read ( MT_InputArchive_ABC& archive );
     void Write( MT_OutputArchive_ABC& archive ) const;
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void DeleteAll();
+    //@}
+
+private:
     T_TacticalLineSet lineSet_;
+    bool              bUseSimTacticalLines_;
 };
 
 #   include "MOS_LineManager.inl"

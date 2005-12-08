@@ -1081,7 +1081,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreat
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
-        MOS_App::GetApp().GetLineManager().DeleteAll();
+        MOS_App::GetApp().GetLineManager().UseSimTacticalLines();
     }
 
     MOS_Limit* pLimit = new MOS_Limit( asnMsg );
@@ -1114,7 +1114,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreatio
     if( bReceivingState_  && bUseMosLimits_ )
     {
         bUseMosLimits_ = false;
-        MOS_App::GetApp().GetLineManager().DeleteAll();
+        MOS_App::GetApp().GetLineManager().UseSimTacticalLines();
     }
 
     MOS_Lima* pLimit = new MOS_Lima( asnMsg );

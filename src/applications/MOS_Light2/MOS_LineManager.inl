@@ -43,3 +43,15 @@ void MOS_LineManager::DeleteAll()
     lineSet_.clear();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_LineManager::NeedSaving
+// Created: SBO 2005-12-08
+// -----------------------------------------------------------------------------
+inline
+bool MOS_LineManager::NeedSaving()
+{
+    for( CIT_TacticalLineSet it = lineSet_.begin(); it != lineSet_.end(); ++it )
+        if( (*it)->IsCreatedByMos() )
+            return true;
+    return !bUseSimTacticalLines_;
+}

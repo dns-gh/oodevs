@@ -37,7 +37,7 @@ public:
     //@{
 	virtual const MT_Vector2D& GetPos    () const;
 	virtual const std::string& GetName   () const;
-            MT_Float           GetDensity() const;
+    virtual MT_Float           GetDensity() const;
             MT_Float           GetArea   () const;
     //@}
 

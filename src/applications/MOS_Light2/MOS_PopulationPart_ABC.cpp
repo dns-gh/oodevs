@@ -21,6 +21,7 @@ MOS_PopulationPart_ABC::MOS_PopulationPart_ABC( uint nID, const MOS_Population& 
     , nLivingHumans_( persons )
     , nDeadHumans_  ( 0 )
     , attitude_     ( attitude )
+    , rDensity_     ( 0. )
 {
 }
 

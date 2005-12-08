@@ -16,16 +16,16 @@
 #include "MOS_Light2_pch.h"
 #include "MOS_LineManager.h"
 
-#include "MOS_App.h"
-#include "MOS_MOSServer.h"
-#include "MOS_AgentServerController.h"
-#include "MOS_AgentServerMsgMgr.h"
+#include "MOS_Lima.h"
+#include "MOS_Limit.h"
 
 //-----------------------------------------------------------------------------
 // Name: MOS_LineManager constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
 MOS_LineManager::MOS_LineManager()
+: lineSet_              ()
+, bUseSimTacticalLines_ ( false )
 {
 }
 
@@ -36,7 +36,17 @@ MOS_LineManager::MOS_LineManager()
 //-----------------------------------------------------------------------------
 MOS_LineManager::~MOS_LineManager()
 {
-    this->DeleteAll();
+    DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LineManager::UseSimTacticalLines
+// Created: SBO 2005-12-08
+// -----------------------------------------------------------------------------
+void MOS_LineManager::UseSimTacticalLines()
+{
+    DeleteAll();
+    bUseSimTacticalLines_ = true;
 }
 
 
@@ -91,7 +101,7 @@ void MOS_LineManager::OnDeconnexion()
             continue;
         }
 
-        (*it)->SetState( MOS_TacticalLine_ABC::eStateCreated );
+        (*it)->SetState       ( MOS_TacticalLine_ABC::eStateCreated );
         (*it)->SetNetworkState( MOS_TacticalLine_ABC::eNetworkStateNotRegistered );
         ++it;
     }
@@ -131,8 +141,6 @@ bool MOS_LineManager::UpdateToSim()
 
 // -----------------------------------------------------------------------------
 // Name: MOS_LineManager::Read
-/** @param  archive 
-*/
 // Created: APE 2004-07-26
 // -----------------------------------------------------------------------------
 void MOS_LineManager::Read( MT_InputArchive_ABC& archive )
@@ -165,8 +173,6 @@ void MOS_LineManager::Read( MT_InputArchive_ABC& archive )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_LineManager::Write
-/** @param  archive 
-*/
 // Created: APE 2004-07-26
 // -----------------------------------------------------------------------------
 void MOS_LineManager::Write( MT_OutputArchive_ABC& archive ) const

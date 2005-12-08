@@ -34,6 +34,8 @@
 #include "MOS_ActionContext.h"
 #include "MOS_TacticalLine_ABC.h"
 #include "MOS_LineManager.h"
+#include "MOS_Limit.h"
+#include "MOS_Lima.h"
 #include "MOS_Tools.h"
 #include "MOS_GLTool.h"
 #include "MOS_Options.h"

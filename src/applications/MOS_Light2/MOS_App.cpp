@@ -130,22 +130,25 @@ MOS_App::~MOS_App()
     delete pDisplayTimer_;
 
     // Save the tactical lines to file.
-    const std::string strInitialDir = MT_GetCurrentDir();
-    MT_ChangeDir( strRootDirectory_ );
-    MT_XXmlOutputArchive archive;
-    pLineManager_->Write( archive );
-    while( ! archive.WriteToFile( "TacticalLines.xml" ) )
+    if( pLineManager_->NeedSaving() )
     {
-        int nResult = QMessageBox::warning( 0, 
-            tr("Erreur d'écriture fichier"),
-            tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
-            "Vérifiez qu'il ne soit pas portegé en écriture"),
-            QMessageBox::Retry,
-            QMessageBox::Abort );
-        if( nResult == QMessageBox::Abort )
-            break;
+        const std::string strInitialDir = MT_GetCurrentDir();
+        MT_ChangeDir( strRootDirectory_ );
+        MT_XXmlOutputArchive archive;
+        pLineManager_->Write( archive );
+        while( ! archive.WriteToFile( "TacticalLines.xml" ) )
+        {
+            int nResult = QMessageBox::warning( 0, 
+                tr("Erreur d'écriture fichier"),
+                tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
+                "Vérifiez qu'il ne soit pas portegé en écriture"),
+                QMessageBox::Retry,
+                QMessageBox::Abort );
+            if( nResult == QMessageBox::Abort )
+                break;
+        }
+        MT_ChangeDir( strInitialDir );
     }
-    MT_ChangeDir( strInitialDir );
 }
 
 

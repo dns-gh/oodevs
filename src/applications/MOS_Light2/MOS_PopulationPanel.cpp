@@ -43,15 +43,12 @@ MOS_PopulationPanel::MOS_PopulationPanel( QWidget* pParent )
     new QLabel( tr( "Morts:" ), pInfoGroupBox );
     pDeadLabel_ = new QLabel( pInfoGroupBox );
 
-    new QLabel( tr( "Attitude:" ), pInfoGroupBox );
-    pAttitudeLabel_ = new QLabel( pInfoGroupBox );
-
     pPartsListView_ = new QListView( this );
     pPartsListView_->addColumn( tr( "Morceau" ) );
     pPartsListView_->addColumn( tr( "Hommes vivants" ) );
     pPartsListView_->addColumn( tr( "Hommes morts" ) );
     pPartsListView_->addColumn( tr( "Attitude" ) );
-    pPartsListView_->addColumn( tr( "Densité" ) );
+    pPartsListView_->addColumn( tr( "Densité vivants" ) );
 
     connect( this, SIGNAL( ElementSelected( MOS_SelectedElement& ) ), &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ) );
     connect( pPartsListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
@@ -74,7 +71,6 @@ void MOS_PopulationPanel::OnClearSelection()
     pNameLabel_    ->setText( "" );
     pLivingLabel_  ->setText( "" );
     pDeadLabel_    ->setText( "" );
-    pAttitudeLabel_->setText( "" );
     pPartsListView_->clear();
 }
 

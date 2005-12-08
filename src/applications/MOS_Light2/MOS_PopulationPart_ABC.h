@@ -38,8 +38,9 @@ public:
     E_PopulationAttitude    GetAttitude      () const;
     const MOS_Population&   GetPopulation    () const;
 
-    virtual const std::string& GetName() const = 0;
-    virtual const MT_Vector2D& GetPos () const = 0;
+    virtual const std::string& GetName   () const = 0;
+    virtual const MT_Vector2D& GetPos    () const = 0;
+    virtual       MT_Float     GetDensity() const;
     //@}
 
 protected:
@@ -48,6 +49,7 @@ protected:
           int                  nLivingHumans_;
           int                  nDeadHumans_;
           E_PopulationAttitude attitude_;
+          MT_Float             rDensity_; // living density
 };
 
 #include "MOS_PopulationPart_ABC.inl"

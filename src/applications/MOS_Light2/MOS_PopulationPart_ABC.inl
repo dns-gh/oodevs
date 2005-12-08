@@ -57,3 +57,12 @@ E_PopulationAttitude MOS_PopulationPart_ABC::GetAttitude() const
     return  attitude_ ;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationPart_ABC::GetDensity
+// Created: NLD 2005-10-28
+// -----------------------------------------------------------------------------
+inline
+MT_Float MOS_PopulationPart_ABC::GetDensity() const
+{
+    return rDensity_;
+}

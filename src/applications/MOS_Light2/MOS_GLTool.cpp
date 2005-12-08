@@ -1637,12 +1637,12 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
         Draw( *eventHandler.selectedElement_.pAgentKnowledge_, eSelected );
 
     // Population
-    if( eventHandler.selectedElement_.pPopulation_ != 0 )
-        Draw( *eventHandler.selectedElement_.pPopulation_, eSelected );
     if( eventHandler.selectedElement_.pPopulationConcentration_ != 0 )
         Draw( *eventHandler.selectedElement_.pPopulationConcentration_, eSelected );
-    if( eventHandler.selectedElement_.pPopulationFlow_ != 0 )
+    else if( eventHandler.selectedElement_.pPopulationFlow_ != 0 )
         Draw( *eventHandler.selectedElement_.pPopulationFlow_, eSelected );
+    else if( eventHandler.selectedElement_.pPopulation_ != 0 )
+        Draw( *eventHandler.selectedElement_.pPopulation_, eSelected );
 
     if( eventHandler.selectedElement_.pPopulationKnowledge_ != 0 )
         Draw( *eventHandler.selectedElement_.pPopulationKnowledge_, eSelected );
