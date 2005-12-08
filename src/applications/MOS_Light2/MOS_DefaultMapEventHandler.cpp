@@ -306,6 +306,8 @@ void MOS_DefaultMapEventHandler::ClearSelection()
 {
     selectedElement_ = MOS_SelectedElement();
     emit ElementSelected( selectedElement_ );
+    hoveredElement_  = MOS_SelectedElement();
+    emit ElementHovered ( hoveredElement_ );
 }
 
 
