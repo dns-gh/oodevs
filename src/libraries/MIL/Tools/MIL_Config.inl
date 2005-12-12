@@ -239,3 +239,23 @@ void MIL_Config::SetUsePathDebug( bool bUse )
 {
     bUsePathDebug_ = bUse;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::SetDataTestMode
+// Created: SBO 2005-12-12
+// -----------------------------------------------------------------------------
+inline
+void MIL_Config::SetDataTestMode( bool bEnabled )
+{
+    bDataTestMode_ = bEnabled;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsDataTestMode
+// Created: SBO 2005-12-12
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsDataTestMode() const
+{
+    return bDataTestMode_;
+}

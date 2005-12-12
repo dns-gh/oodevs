@@ -39,6 +39,7 @@ public:
           bool         IsProfilingEnabled         () const;
     const std::string& GetCheckPointFileName      () const;
     const std::string& GetConfigFileName          () const;
+          bool         IsDataTestMode             () const;
     
           bool         UseCheckPoint    () const;
           bool         UseCheckPointCRC () const;
@@ -65,6 +66,7 @@ public:
     void SetUseDiaDebugServer          ( bool bUse );
     void SetProfilingEnabled           ( bool bEnabled );
     void SetUseCheckPointCRC           ( bool bUse );
+    void SetDataTestMode               ( bool bEnabled );
     //@}
 
 private:
@@ -88,6 +90,7 @@ private:
     bool                bProfilingEnabled_;
     bool                bUsePathDebug_;
     T_CRCMap            CRCMap_;
+    bool                bDataTestMode_;
 };
 
 #   include "MIL_Config.inl"

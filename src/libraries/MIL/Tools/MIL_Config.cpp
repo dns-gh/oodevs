@@ -30,7 +30,8 @@ MIL_Config::MIL_Config()
     , bUseCheckPointCRC_           ( true )
     , bUsePathDebug_               ( false )
     , strConfFile_                 ( "scipio.xml" )
-    , strRootDirectory_            ( MT_GetCurrentDir() )    
+    , strRootDirectory_            ( MT_GetCurrentDir() )
+    , bDataTestMode_               ( false )
 {
 }
 

@@ -188,7 +188,8 @@ void MIL_AgentServer::ReadStaticData( MIL_InputArchive& archive )
 
     MIL_EntityManager::Initialize( archive );
 
-    ReadPathFindData( archive );
+    if( !config_.IsDataTestMode() )
+        ReadPathFindData( archive );
     ReadHLA( archive );
 
     archive.EndSection(); // Donnees

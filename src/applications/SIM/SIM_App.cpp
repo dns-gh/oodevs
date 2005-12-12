@@ -359,6 +359,11 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
         {
             bTestMode_ = true;
         }
+        else if ( stricmp( ppArgv[nArgNbr], "-testdata" ) == 0 )
+        {
+            startupConfig_.SetDataTestMode( true );
+            bTestMode_ = true;
+        }
 
         else if( stricmp( ppArgv[nArgNbr], "-?"     ) == 0 ||
                  stricmp( ppArgv[nArgNbr], "--help" ) == 0 )
