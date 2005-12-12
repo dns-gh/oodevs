@@ -107,6 +107,20 @@ public:
         ADN_Type_Double                   rIntensityDensity_;
         ADN_Type_Double                   rIntensityFactor_;
         T_FireEffectProtectionInfosVector vProtectionInfos_;
+
+    public:
+        class CmpAttitude : public std::unary_function< FireEffectInfos* , bool >
+        {
+        public:
+            CmpAttitude(E_PopulationAttitude val) : val_(val) {}
+            ~CmpAttitude(){}
+
+            bool operator()( FireEffectInfos* tgtnfos ) const 
+            {   return tgtnfos->nAttitude_ == val_;}
+
+        private:
+            E_PopulationAttitude val_;
+        };
     };
 
     typedef ADN_Type_Vector_ABC<FireEffectInfos>  T_FireEffectInfosVector;

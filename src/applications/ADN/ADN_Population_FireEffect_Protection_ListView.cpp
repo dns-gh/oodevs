@@ -26,6 +26,7 @@ ADN_Population_FireEffect_Protection_ListView::ADN_Population_FireEffect_Protect
 {
     // Add one column.
     addColumn( tr( "Protections" ) );
+    setSortColumn( -1 );
     setResizeMode( QListView::AllColumns );
 
     // Connector creation

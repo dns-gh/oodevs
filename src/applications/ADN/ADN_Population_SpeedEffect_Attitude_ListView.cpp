@@ -26,6 +26,7 @@ ADN_Population_SpeedEffect_Attitude_ListView::ADN_Population_SpeedEffect_Attitud
 {
     // Add one column.
     addColumn( tr( "Attitudes" ) );
+    setSortColumn( -1 );
     setResizeMode( QListView::AllColumns );
 
     // Connector creation

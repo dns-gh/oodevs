@@ -56,20 +56,9 @@ ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( ADN_C
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FireEffectProtectionInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
-    if( !input.Section( "ProtectionPion", ADN_XmlInput_Helper::eNothing ) )
-        return;
-
-    std::string strProtection;
-    input.ReadAttribute( "nom", strProtection );
-    ADN_Categories_Data::ArmorInfos* pProtection = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strProtection );
-    assert( pProtection != 0 );
-    ptrProtection_ = pProtection;
-
     input.ReadField( "Destruction"            , rDestruction_              );
     input.ReadField( "ReparableAvecEvacuation", rFixableWithEvacuation_    );
     input.ReadField( "ReparableSansEvacuation", rFixableWithoutEvacuation_ );
-
-    input.EndSection(); // ProtectionPion
 }
 
 // -----------------------------------------------------------------------------
@@ -153,12 +142,17 @@ void ADN_Population_Data::FireEffectInfos::ReadArchive( ADN_XmlInput_Helper& inp
     input.EndSection(); // Intensite
 
     input.BeginList( "ProtectionsPions" );
-    ADN_Categories_Data::T_ArmorInfos_Vector& protectionInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
-    for( ADN_Categories_Data::T_ArmorInfos_Vector::iterator it = protectionInfos.begin(); it != protectionInfos.end(); ++it )
+    while( input.NextListElement() )
     {
-        IT_FireEffectProtectionInfosVector itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),FireEffectProtectionInfos::CmpRef(*it));
+        input.Section( "ProtectionPion" );
+        std::string strProtection;
+        input.ReadAttribute( "nom", strProtection );
+
+        IT_FireEffectProtectionInfosVector itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),
+                                                                        ADN_Tools::NameCmp<FireEffectProtectionInfos>(strProtection) );
         assert( itProtection != vProtectionInfos_.end() );
         (*itProtection)->ReadArchive( input );
+        input.EndSection(); // ProtectionPion
     }
     input.EndList(); // ProtectionsPions
 }
@@ -306,19 +300,8 @@ ADN_Population_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Categor
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::SpeedEffectVolumeInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
-    if( !input.Section( "VolumePion", ADN_XmlInput_Helper::eNothing ) )
-        return;
-
-    std::string strVolume;
-    input.ReadAttribute( "nom", strVolume );
-    ADN_Categories_Data::SizeInfos* pVolume = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strVolume );
-    assert( pVolume != 0 );
-    ptrVolume_ = pVolume;
-
     input.ReadAttribute( "densitePopulation", rDensity_  );
     input.ReadAttribute( "vitesseMaximale"  , rMaxSpeed_ );
-
-    input.EndSection(); // VolumePion
 }
 
 // -----------------------------------------------------------------------------
@@ -390,14 +373,17 @@ ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nA
 void ADN_Population_Data::SpeedEffectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.BeginList( "VolumesPions" );
-    ADN_Categories_Data::T_SizeInfos_Vector& sizeInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
-    for( ADN_Categories_Data::T_SizeInfos_Vector::iterator it = sizeInfos.begin(); it != sizeInfos.end(); ++it )
+    while( input.NextListElement() )
     {
-        IT_SpeedEffectVolumeInfosVector itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),SpeedEffectVolumeInfos::CmpRef(*it));
+        input.Section( "VolumePion" );
+        std::string strVolume;
+        input.ReadAttribute( "nom", strVolume );
+        IT_SpeedEffectVolumeInfosVector itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),
+                                                                 ADN_Tools::NameCmp<SpeedEffectVolumeInfos>(strVolume) );
         assert( itVolume != vVolumeInfos_.end() );
         (*itVolume)->ReadArchive( input );
+        input.EndSection(); // VolumePion
     }
-
     input.EndList(); // VolumesPions
 }
 

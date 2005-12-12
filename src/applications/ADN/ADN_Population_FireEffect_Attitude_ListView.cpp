@@ -26,6 +26,7 @@ ADN_Population_FireEffect_Attitude_ListView::ADN_Population_FireEffect_Attitude_
 {
     // Add one column.
     addColumn( tr( "Attitudes" ) );
+    setSortColumn( -1 );
     setResizeMode( QListView::AllColumns );
 
     // Connector creation
