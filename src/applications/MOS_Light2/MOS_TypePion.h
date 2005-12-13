@@ -30,25 +30,30 @@ class MOS_Nature;
 class MOS_TypePion
 {
     MT_COPYNOTALLOWED( MOS_TypePion );
+
 public:
-         typedef std::map< MIL_AgentID, uint >       T_ResourceQty_Map;
+    typedef std::map< MIL_AgentID, uint >       T_ResourceQty_Map;
+
 public:
-              MOS_TypePion( const std::string& strName, const MOS_Nature& nature );
-              MOS_TypePion( const std::string& strName, MOS_InputArchive& archive );
-             ~MOS_TypePion();
+    //! @name Constructor/Destructor
+    //@{
+     MOS_TypePion( const std::string& strName, const MOS_Nature& nature );
+     MOS_TypePion( const std::string& strName, MOS_InputArchive& archive );
+    ~MOS_TypePion();
+    //@}
 
     //! @name Accessors
     //@{
-    const std::string&    GetName () const;
-          uint            GetID   () const;
-    const MOS_AgentModel& GetModel() const;
-    char                  GetSymbol() const;
-    T_ResourceQty_Map     GetStocks() const;
-    char                  GetLevelSymbol() const;
-          bool            IsLogistic    () const;
-          bool            HasMaintenance() const;
-          bool            HasMedical    () const;
-          bool            HasSupply     () const;
+    const std::string&       GetName       () const;
+          uint               GetID         () const;
+    const MOS_AgentModel&    GetModel      () const;
+    char                     GetSymbol     () const;
+    const T_ResourceQty_Map& GetStocks     () const;
+    char                     GetLevelSymbol() const;
+          bool               IsLogistic    () const;
+          bool               HasMaintenance() const;
+          bool               HasMedical    () const;
+          bool               HasSupply     () const;
     //@}
 
 private:

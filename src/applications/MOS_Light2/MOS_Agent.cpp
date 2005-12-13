@@ -858,8 +858,6 @@ void MOS_Agent::OnSuperiorChanged( MOS_Agent& newSuperior )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::OnSuperiorChanged
-/** @param  superior
-*/
 // Created: APE 2004-10-29
 // -----------------------------------------------------------------------------
 void MOS_Agent::OnSuperiorChanged( MOS_Gtia& superior )
@@ -874,8 +872,6 @@ void MOS_Agent::OnSuperiorChanged( MOS_Gtia& superior )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::ReadODB
-/** @param  archive
-*/
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
 void MOS_Agent::ReadODB( MOS_InputArchive& archive, bool bAutomata )
@@ -989,8 +985,6 @@ void MOS_Agent::ReadODB( MOS_InputArchive& archive, bool bAutomata )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Agent::WriteODB
-/** @param  archive
-*/
 // Created: APE 2004-08-30
 // -----------------------------------------------------------------------------
 void MOS_Agent::WriteODB( MT_XXmlOutputArchive& archive )
@@ -1214,7 +1208,7 @@ void MOS_Agent::InitializeStocks()
     if ( pTypePion_ == 0 )
         return;
     if ( pSupplyData_ )
-            pSupplyData_->stocks_ = pTypePion_->GetStocks();
+        pSupplyData_->stocks_ = pTypePion_->GetStocks();
     else
     {
         pSupplyData_ = new T_SupplyData();
@@ -1244,7 +1238,7 @@ int MOS_Agent::GetCurrentMission() const
 // Name: MOS_Agent::Aggregate
 // Created: HME 2005-11-30
 // -----------------------------------------------------------------------------
-void  MOS_Agent::SetAggregation( bool bAgg)
+void  MOS_Agent::SetAggregation( bool bAgg )
 {
     bAggregated_ = bAgg;
 }

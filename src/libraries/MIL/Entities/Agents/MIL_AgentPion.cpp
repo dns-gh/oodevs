@@ -835,6 +835,18 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActi
         }
     }
 
+    if( asn.m.stocksPresent )
+    {
+        PHY_RolePion_Supply& roleSupply = GetRole< PHY_RolePion_Supply >();
+        for( uint i = 0; i < asn.stocks.n; ++i )
+        {
+            const ASN1T_RecompletementStock& asnStock = asn.stocks.elem[ i ];
+            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id );
+            if( pDotationCategory )
+                roleSupply.ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible );
+        }
+    }
+
     return EnumUnitAttrErrorCode::no_error;
 }
 

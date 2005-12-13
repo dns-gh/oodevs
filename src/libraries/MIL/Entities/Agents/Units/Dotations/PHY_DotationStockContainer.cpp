@@ -259,6 +259,18 @@ void PHY_DotationStockContainer::Resupply()
         it->second->Resupply();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::ResupplyStocks
+// Created: SBO 2005-12-12
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category, MT_Float rNbr )
+{
+    CIT_StockMap it = stocks_.find( &category );
+    if( it == stocks_.end() )
+        return;
+    it->second->Supply( rNbr - it->second->GetValue() ); // set to rNbr
+}
+
 // =============================================================================
 // LOG
 // =============================================================================

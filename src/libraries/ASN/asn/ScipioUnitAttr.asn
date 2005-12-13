@@ -233,12 +233,19 @@ RecompletementPersonnel ::= SEQUENCE
     nombre-disponible INTEGER
 }
 
+RecompletementStock ::= SEQUENCE
+{
+    ressource-id        TypeDotation,
+    quantite-disponible INTEGER (0..max-uint32)
+}
+
 MagicActionRecompletementPartiel ::= SEQUENCE
 {
     equipements SEQUENCE OF RecompletementEquipement        OPTIONAL,
     personnels  SEQUENCE OF RecompletementPersonnel         OPTIONAL,    
     dotations   SEQUENCE OF RecompletementDotation          OPTIONAL,
-    munitions   SEQUENCE OF RecompletementDotationMunition  OPTIONAL
+    munitions   SEQUENCE OF RecompletementDotationMunition  OPTIONAL,
+    stocks      SEQUENCE OF RecompletementStock             OPTIONAL
 }
 
 MsgUnitMagicAction ::= SEQUENCE

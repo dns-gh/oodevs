@@ -32,15 +32,19 @@ class MOS_LogisticSupplyRecompletionDialog : public QDialog
     MT_COPYNOTALLOWED( MOS_LogisticSupplyRecompletionDialog );
 
 public:
+    //! @name Constructor/Destructor
+    //@{
      MOS_LogisticSupplyRecompletionDialog( QWidget* pParent = 0 );
     ~MOS_LogisticSupplyRecompletionDialog();
+    //@}
 
+    //! @name Modifiers
+    //@{
     void SetAgent( const MOS_Agent& agent );
+    //@}
 
 private slots:
-    //-------------------------------------------------------------------------
-    /** @name Main methods */
-    //-------------------------------------------------------------------------
+    //! @name Operations
     //@{
     void Validate               ();
     void Reject                 ();
@@ -49,7 +53,7 @@ private slots:
     void OnMunitionFamilyChanged( int nRow, int nCol );
     void OnEquipmentChanged     ( int nRow, int nCol );
     void OnPersonalChanged      ( int nRow, int nCol );
-    //void OnMunitionChanged      ( int nRow, int nCol );
+    void OnStockChanged         ( int nRow, int nCol );
     //@}
 
 private:
@@ -71,10 +75,9 @@ private:
     QGroupBox*       pDotationsGroupBox_;
     QTable*          pDotationsTable_;
     QTable*          pMunitionsFamilyTable_;
-    /*
-    QTable*          pMunitionsTable_;
-    QStringList*     pMunitionsStringList_;
-    */
+
+    QGroupBox*       pStockGroupBox_;
+    QTable*          pStockTable_;
 };
 
 #endif // __MOS_LogisticSupplyRecompletionDialog_h_

@@ -50,6 +50,7 @@ public:
     void     RemoveReservation( const PHY_DotationCategory& category, MT_Float rNbr );
     void     AddCapacity      ( const PHY_DotationCapacity& capacity );
     void     Resupply         ();
+    void     Resupply         ( const PHY_DotationCategory& category, MT_Float rNbr );
     //@}
 
     //! @name Accessors

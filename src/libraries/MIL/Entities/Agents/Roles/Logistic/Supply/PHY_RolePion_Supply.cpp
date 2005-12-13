@@ -166,6 +166,15 @@ void PHY_RolePion_Supply::ResupplyStocks()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ResupplyStocks
+// Created: SBO 2005-12-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Supply::ResupplyStocks( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: phy_rolepion_supply::CanContainStock
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------

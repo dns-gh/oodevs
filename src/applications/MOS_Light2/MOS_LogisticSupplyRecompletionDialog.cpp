@@ -29,12 +29,11 @@
 MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWidget* pParent  )
     : QDialog                ( pParent, "Recompletement" )
     , pAgent_                ( 0 )
-//    , pMunitionsStringList_ ( 0 )
-//    , pMunitionsTable_      ( 0 )
     , pEquipmentsTable_      ( 0 )
     , pEquipmentsStringList_ ( 0 )
     , pDotationsTable_       ( 0 )
     , pPersonalsTable_       ( 0 )
+    , pStockTable_           ( 0 )
 {
     resize( 280, 430 );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -93,17 +92,23 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
     pMunitionsFamilyTable_->setLeftMargin( 0 );
     pMunitionsFamilyTable_->setShowGrid( false );
 
-/*
-    // munitions
-    pMunitionsTable_ = new QTable( 0, 2, pDotationsGroupBox_ );
-    pMunitionsTable_->horizontalHeader()->setLabel( 0, tr( "Munition" ) );
-    pMunitionsTable_->horizontalHeader()->setLabel( 1, tr( "Quantité" ) );
-    pMunitionsTable_->setColumnWidth( 0, pMunitionsTable_->columnWidth( 0 ) + 20 );
-    pMunitionsTable_->setColumnWidth( 1, 60 );
-    pMunitionsTable_->setLeftMargin( 0 );
-    pMunitionsTable_->setShowGrid( false );
-*/
     pMainLayout->addWidget( pDotationsGroupBox_ );
+
+    // Stocks
+    pStockGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Stocks" ), this );
+    pStockGroupBox_->setFlat( true );
+
+    pStockTable_ = new QTable( 0, 3, pStockGroupBox_ );
+    pStockTable_->horizontalHeader()->setLabel( 0, "" );
+    pStockTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
+    pStockTable_->horizontalHeader()->setLabel( 2, tr( "Quantité" ) );
+    pStockTable_->setColumnWidth( 0, 20 );
+    pStockTable_->setColumnWidth( 2, 60 );
+    pStockTable_->setColumnReadOnly( 1, true );
+    pStockTable_->setLeftMargin( 0 );
+    pStockTable_->setShowGrid( false );
+
+    pMainLayout->addWidget( pStockGroupBox_ );
 
     // ok / cancel butons
     QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
@@ -116,11 +121,11 @@ MOS_LogisticSupplyRecompletionDialog::MOS_LogisticSupplyRecompletionDialog( QWid
     connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( pCancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 
-    connect( pDotationsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnDotationChanged( int, int ) ) );
+    connect( pDotationsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnDotationChanged      ( int, int ) ) );
     connect( pMunitionsFamilyTable_, SIGNAL( valueChanged( int, int ) ), SLOT( OnMunitionFamilyChanged( int, int ) ) );
-    connect( pEquipmentsTable_     , SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged( int, int ) ) );
-    connect( pPersonalsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnPersonalChanged( int, int ) ) );
-    //connect( pMunitionsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnMunitionChanged( int, int ) ) );
+    connect( pEquipmentsTable_     , SIGNAL( valueChanged( int, int ) ), SLOT( OnEquipmentChanged     ( int, int ) ) );
+    connect( pPersonalsTable_      , SIGNAL( valueChanged( int, int ) ), SLOT( OnPersonalChanged      ( int, int ) ) );
+    connect( pStockTable_          , SIGNAL( valueChanged( int, int ) ), SLOT( OnStockChanged         ( int, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,23 +223,26 @@ void MOS_LogisticSupplyRecompletionDialog::SetAgent( const MOS_Agent& agent )
     }
     pMunitionsFamilyTable_->setMinimumHeight( pMunitionsFamilyTable_->rowHeight( 0 ) * 5 );
 
-    /*
-    // intialize munition table
-    // use empty element to determine if a munition type is specified
-    pMunitionsStringList_ = new QStringList();
-    pMunitionsStringList_->append( "" );
-
-    const T_ResourceQty_Map& ressources = agent.GetComposition().resources_;
-    for( CIT_ResourceQty_Map it = ressources.begin(); it != ressources.end(); ++it )
+    if( agent.pSupplyData_ )
     {
-        const std::string strRessourceName = MOS_App::GetApp().GetResourceName( it->first );
-        pMunitionsStringList_->append( strRessourceName.c_str() );
+        T_ResourceQty_Map& supplyMap = agent.pSupplyData_->stocks_;
+        pStockTable_->setNumRows( 0 );
+        pStockTable_->setMinimumHeight( pStockTable_->rowHeight( 0 ) * 5 );
+        for( CIT_ResourceQty_Map it = supplyMap.begin(); it != supplyMap.end(); ++it )
+        {
+            uint nPos = pStockTable_->numRows();
+            pStockTable_->insertRows( nPos, 1 );
+            pStockTable_->setItem( nPos, 0, new QCheckTableItem( pStockTable_, 0 ) );
+            pStockTable_->setText( nPos, 1, MOS_App::GetApp().GetResourceName( it->first ).c_str() );
+            pStockTable_->setText( nPos, 2, QString::number( it->second ) );
+        }
+        if( supplyMap.size() > 0 )
+            pStockGroupBox_->show();
+        else
+            pStockGroupBox_->hide();
     }
-    pMunitionsTable_->setNumRows( 0 );
-    pMunitionsTable_->insertRows( 0, 1 );
-    pMunitionsTable_->setItem( 0, 0, new QComboTableItem( pMunitionsTable_, *pMunitionsStringList_ ) );
-    pMunitionsTable_->setText( 0, 1, "0" );
-    */
+    else
+        pStockGroupBox_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -389,29 +397,44 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
         }
     }   
     }
-/*
-    // Munitions
-    if( pMunitionsTable_->numRows() > 1 )
+
+    // Stocks
     {
-        asnMagicAction.m.munitionsPresent = 1;
+    uint nNbrResources = 0;
+    for( int nRow = 0; nRow < pStockTable_->numRows(); ++nRow )
+    {
+        QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pStockTable_->item( nRow, 0 ) );
+        assert( pCheckTableItem );
+        if( pCheckTableItem->isChecked() )
+            ++ nNbrResources;
+    }
+    if( nNbrResources > 0 )
+    {   
+        asnMagicAction.stocks.n        = nNbrResources;
+        asnMagicAction.m.stocksPresent = 1;
+
+        ASN1T_RecompletementStock* pAsnStocks = new ASN1T_RecompletementStock[ nNbrResources ];
+        asnMagicAction.stocks.elem = pAsnStocks;
         uint nAsnIdx = 0;
-        ASN1T_RecompletementDotationMunition* pAsnMunitions = new ASN1T_RecompletementDotationMunition[ pMunitionsTable_->numRows() - 1 ];
-        for( uint nRow = 0; nRow < pMunitionsTable_->numRows() - 1; ++nRow )
+        for( int nRow = 0; nRow < pStockTable_->numRows(); ++nRow )
         {
-            QComboTableItem* pMunitionItem   = static_cast< QComboTableItem* >( pMunitionsTable_->item( nRow, 0 ) );
-            QTableItem*      pPercentageItem = pDotationsTable_->item( nRow, 1 );
+            QCheckTableItem* pItemCheckBox = static_cast< QCheckTableItem* >( pStockTable_->item( nRow, 0 ) );
+            QTableItem*      pItem         = pStockTable_->item( nRow, 1 );
+            QTableItem*      pQttyItem     = pStockTable_->item( nRow, 2 );
 
-            assert( pMunitionItem );
-            assert( pPercentageItem );
+            assert( pItemCheckBox );
+            if( !pItemCheckBox->isChecked() )
+                continue;
 
-            ASN1T_RecompletementDotationMunition& asnDotation = pAsnMunitions[ nAsnIdx ++ ];
-            asnDotation.munition_type = (ASN1T_EnumMunitionType)ENT_Tr::ConvertToMunitionType( pMunitionItem->currentText().ascii() );                
-            asnDotation.pourcentage   = pPercentageItem->text().toUInt();
+            assert( pItem );            
+            assert( pQttyItem );
+
+            ASN1T_RecompletementStock& asnStock = pAsnStocks[ nAsnIdx ++ ];
+            asnStock.ressource_id        = (ASN1T_TypeDotation)MOS_App::GetApp().GetRessourceID( pItem->text().ascii() );
+            asnStock.quantite_disponible = pQttyItem->text().toUInt();
         }
-
-        asnMagicAction.munitions.n    = pMunitionsTable_->numRows() - 1;
-        asnMagicAction.munitions.elem = pAsnMunitions;
-    }*/
+    } 
+    }
 
     asnMsg.Send( 687 );
 
@@ -426,7 +449,10 @@ void MOS_LogisticSupplyRecompletionDialog::Validate()
 
     if( asnMagicAction.m.personnelsPresent && asnMagicAction.personnels.n > 0 )
         delete [] asnMagicAction.personnels.elem;
-    
+
+    if( asnMagicAction.m.stocksPresent && asnMagicAction.stocks.n > 0 )
+        delete [] asnMagicAction.stocks.elem;
+
     pAgent_ = 0;
     hide();
 }
@@ -544,45 +570,17 @@ void MOS_LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCo
     }
 }
 
-/*
 // -----------------------------------------------------------------------------
-// Name: MOS_LogisticSupplyRecompletionDialog::OnMunitionChanged
-// Created: SBO 2005-07-28
+// Name: MOS_LogisticSupplyRecompletionDialog::OnStockChanged
+// Created: SBO 2005-12-12
 // -----------------------------------------------------------------------------
-void MOS_LogisticSupplyRecompletionDialog::OnMunitionChanged( int nRow, int nCol )
+void MOS_LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
 {
-    // do only if "munition" field has been changed
-    if( nCol != 0 )
+    // do only if "quantity" field has been changed
+    if( nCol != 2 )
         return;
-    QComboTableItem* pComboTableItem = static_cast< QComboTableItem* >( pMunitionsTable_->item( nRow, 0 ) );
-    assert( pComboTableItem );
-
-    if( pComboTableItem->currentItem() == 0 )
-    {
-        // if not last row, delete empty row
-        if( nRow != pMunitionsTable_->numRows() - 1 )
-        {
-            pMunitionsTable_->removeRow( nRow );
-            // select last row quantity field
-            pMunitionsTable_->setCurrentCell( pMunitionsTable_->numRows() - 1, 1 );
-        }
-    }
-    else
-    {
-        // if last row is set, add a new row to table
-        if( nRow == pMunitionsTable_->numRows() - 1 )
-        {
-            // need to save combo box selected element before to insert a line
-            int nCurrentItem = pComboTableItem->currentItem();
-            uint nPos = nRow + 1;
-            pMunitionsTable_->insertRows( nPos, 1 );
-            pMunitionsTable_->setItem( nPos, 0, new QComboTableItem( pMunitionsTable_, *pMunitionsStringList_ ) );
-            pMunitionsTable_->setText( nPos, 1, "0" );
-            // need to set again the combo box selected element
-            pComboTableItem->setCurrentItem( nCurrentItem );
-        }
-        // select quantity field
-        pMunitionsTable_->setCurrentCell( nRow, 1 );
-    }
+    // check the checkbox on the same row, first cell
+    QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( pStockTable_->item( nRow, 0 ) );
+    assert( pCheckTableItem );
+    pCheckTableItem->setChecked( true );
 }
-*/

@@ -208,6 +208,15 @@ void PHY_RolePionLOG_Supply::ResupplyStocks()
     pStocks_->Resupply();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::ResupplyStocks
+// Created: SBO 2005-12-12
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::ResupplyStocks( const PHY_DotationCategory& category, MT_Float rNbr )
+{
+    assert( pStocks_ );
+    pStocks_->Resupply( category, rNbr );
+}
 
 // =============================================================================
 // STOCK MANAGEMENT
