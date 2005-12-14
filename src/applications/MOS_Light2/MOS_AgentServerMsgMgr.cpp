@@ -251,6 +251,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgTrace( DIN_Link& /*linkFrom*/, DIN_Input
     MOS_Agent_ABC* pTarget = MOS_App::GetApp().GetAgentManager().FindAllAgent( nID );
     assert( pTarget );
     pTarget->OnReceiveTraceMsg( input );
+
 }
 
 // -----------------------------------------------------------------------------

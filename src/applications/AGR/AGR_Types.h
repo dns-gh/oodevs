@@ -29,6 +29,7 @@
 #include "AGR_KnowledgeAgentType.h"
 #include "AGR_KnowledgeObjectListType.h"
 #include "AGR_KnowledgeObjectType.h"
+#include "AGR_KnowledgePopulationType.h"
 #include "AGR_OIDType.h"
 #include "AGR_PointType.h"
 #include "AGR_PolygonType.h"

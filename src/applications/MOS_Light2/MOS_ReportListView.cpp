@@ -95,6 +95,7 @@ void MOS_ReportListView::SetAgent( MOS_Agent_ABC* pAgent )
         return;
 
     // Before we change the displayed reports, mark the old ones as read.
+    
     QListViewItem* pItem = firstChild();
     while( pItem != 0 )
     {
@@ -102,6 +103,7 @@ void MOS_ReportListView::SetAgent( MOS_Agent_ABC* pAgent )
         report.SetNew( false );
         pItem = pItem->nextSibling();
     }
+    
 
     clear();
     pPopupMenu_->hide();

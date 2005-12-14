@@ -49,7 +49,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     switch( asnMsg.cr.t )
     {
     
-        case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
+            case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
         case T_MsgCR_cr_cr_mission_impossible : strMsg << "mission impossible"; break;
@@ -238,6 +238,38 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_objet_detecte : strMsg << "objet detecte" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_objet_detecte ); break;
         case T_MsgCR_cr_cr_trace : strMsg << "trace" << " - message : " << " " << asnMsg.cr.u.cr_trace; break;
         case T_MsgCR_cr_cr_trace_id : strMsg << "trace id" << " - float : " << " " << asnMsg.cr.u.cr_trace_id; break;
+        case T_MsgCR_cr_cr_tir_interdit_sur_population : strMsg << "tir interdit sur population"; break;
+        case T_MsgCR_cr_cr_tir_sommation_sur_population : strMsg << "tir sommation sur population"; break;
+        case T_MsgCR_cr_cr_tir_dissuasion_sur_population : strMsg << "tir dissuasion sur population"; break;
+        case T_MsgCR_cr_cr_tir_neutralisation_sur_population : strMsg << "tir neutralisation sur population"; break;
+        case T_MsgCR_cr_cr_population_detectee : strMsg << "population detectee" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_population_detectee ); break;
+        case T_MsgCR_cr_cr_prise_a_partie_par_population : strMsg << "prise a partie par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_prise_a_partie_par_population ); break;
+        case T_MsgCR_cr_cr_riposte_sur_population : strMsg << "riposte sur population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_sur_population ); break;
+        case T_MsgCR_cr_cr_population_dangereuse_a_proximite : strMsg << "population dangereuse a proximite"; break;
+        case T_MsgCR_cr_cr_esquive_de_la_population : strMsg << "esquive de la population"; break;
+        case T_MsgCR_cr_cr_decrochage_face_a_population : strMsg << "decrochage face a population"; break;
+        case T_MsgCR_cr_cr_mise_en_place_controle_de_foule : strMsg << "mise en place controle de foule"; break;
+        case T_MsgCR_cr_cr_mise_en_place_filtrage : strMsg << "mise en place filtrage"; break;
+        case T_MsgCR_cr_cr_animation_barrage : strMsg << "animation barrage"; break;
+        case T_MsgCR_cr_cr_animation_canalisation : strMsg << "animation canalisation"; break;
+        case T_MsgCR_cr_cr_collecte_renseignements_sur_populations : strMsg << "collecte renseignements sur populations"; break;
+        case T_MsgCR_cr_cr_population_totalement_reconnue : strMsg << "population totalement reconnue"; break;
+        case T_MsgCR_cr_cr_attitude_calme : strMsg << "attitude calme"; break;
+        case T_MsgCR_cr_cr_attitude_agitee : strMsg << "attitude agitee"; break;
+        case T_MsgCR_cr_cr_attitude_excitee : strMsg << "attitude excitee"; break;
+        case T_MsgCR_cr_cr_attitude_agressive : strMsg << "attitude agressive"; break;
+        case T_MsgCR_cr_cr_aggravation_attitude : strMsg << "aggravation attitude"; break;
+        case T_MsgCR_cr_cr_affrontement_avec_forces_ennemies : strMsg << "affrontement avec forces ennemies"; break;
+        case T_MsgCR_cr_cr_population_temporairement_controlee : strMsg << "population temporairement controlee"; break;
+        case T_MsgCR_cr_cr_population_temporairement_repoussee : strMsg << "population temporairement repoussee"; break;
+        case T_MsgCR_cr_cr_reprise_des_affrontements : strMsg << "reprise des affrontements"; break;
+        case T_MsgCR_cr_cr_recuperation_progressive : strMsg << "recuperation progressive" << " - float : " << " " << asnMsg.cr.u.cr_recuperation_progressive; break;
+        case T_MsgCR_cr_cr_agression_de_population : strMsg << "agression de population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_de_population ); break;
+        case T_MsgCR_cr_cr_agression_par_population : strMsg << "agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_par_population ); break;
+        case T_MsgCR_cr_cr_riposte_contre_agression_par_population : strMsg << "riposte contre agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_agression_par_population ); break;
+        case T_MsgCR_cr_cr_attaque_installation : strMsg << "attaque installation" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_attaque_installation ); break;
+        case T_MsgCR_cr_cr_en_stationnement : strMsg << "en stationnement"; break;
+        case T_MsgCR_cr_cr_execution_attentat : strMsg << "execution attentat"; break;
 
 /*    case T_MsgCR_cr_cr_preparation_mission                           : 
         {
@@ -310,7 +342,7 @@ void MOS_RC::Initialize( const ASN1T_MsgAttenteOrdreConduite& asnMsg )
 // Name: MOS_RC::ObjectKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-const std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId ) const
+std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
     std::stringstream str;
     str << "<a href=\"ObjectKnowledge:" << nId << "\">" << nId << "</a>";
@@ -322,19 +354,29 @@ const std::string MOS_RC::ObjectKnowledgeLink( ASN1T_OID nId ) const
 // Name: MOS_RC::AgentKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-const std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId ) const
+std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
     std::stringstream str;
     str << "<a href=\"AgentKnowledge:" << nId << "\">" << nId << "</a>";
     return str.str();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_RC::PopulationKnowledgeLink
+// Created: APE 2004-09-09
+// -----------------------------------------------------------------------------
+std::string MOS_RC::PopulationKnowledgeLink( ASN1T_OID nId )
+{
+    std::stringstream str;
+    str << "<a href=\"PopulationKnowledge:" << nId << "\">" << nId << "</a>";
+    return str.str();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_RC::AgentLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-const std::string MOS_RC::AgentLink( ASN1T_OID nId ) const
+std::string MOS_RC::AgentLink( ASN1T_OID nId )
 {
     MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAllAgent( nId );
     if( pAgent == 0 )

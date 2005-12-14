@@ -65,6 +65,7 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_KnowledgeAgentType() );
     typeList_.push_back( new AGR_KnowledgeObjectListType() );
     typeList_.push_back( new AGR_KnowledgeObjectType() );
+    typeList_.push_back( new AGR_KnowledgePopulationType() );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Line", "Location", "TER_Localisation", "T_Localisation", "Location", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListLocalisation", "LocationList", "", "T_ListeLocalisations", "T_LocationVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListPoint", "PointList", "T_PointVector", "T_ListePoints", "T_PositionVector", true ) );

@@ -310,6 +310,38 @@ protected:
         eRC_ObjetDetecte, // Parametre : T_ConnaissanceObjet
         eRC_Trace, // Parametre : message
         eRC_TraceID, // Parametre : float
+        eRC_TirInterditSurPopulation,
+        eRC_TirSommationSurPopulation,
+        eRC_TirDissuasionSurPopulation,
+        eRC_TirNeutralisationSurPopulation,
+        eRC_PopulationDetectee, // Parametre : T_ConnaissancePopulation
+        eRC_PriseAPartieParPopulation, // Parametre : T_ConnaissancePopulation
+        eRC_RiposteSurPopulation, // Parametre : T_ConnaissancePopulation
+        eRC_PopulationDangereuseAProximite,
+        eRC_EsquiveDeLaPopulation,
+        eRC_DecrochageFaceAPopulation,
+        eRC_MiseEnPlaceControleDeFoule,
+        eRC_MiseEnPlaceFiltrage,
+        eRC_AnimationBarrage,
+        eRC_AnimationCanalisation,
+        eRC_CollecteRenseignementsSurPopulations,
+        eRC_PopulationTotalementReconnue,
+        eRC_AttitudeCalme,
+        eRC_AttitudeAgitee,
+        eRC_AttitudeExcitee,
+        eRC_AttitudeAgressive,
+        eRC_AggravationAttitude,
+        eRC_AffrontementAvecForcesEnnemies,
+        eRC_PopulationTemporairementControlee,
+        eRC_PopulationTemporairementRepoussee,
+        eRC_RepriseDesAffrontements,
+        eRC_RecuperationProgressive, // Parametre : float
+        eRC_AgressionDePopulation, // Parametre : T_ConnaissancePopulation
+        eRC_AgressionParPopulation, // Parametre : T_ConnaissancePopulation
+        eRC_RiposteContreAgressionParPopulation, // Parametre : T_ConnaissancePopulation
+        eRC_AttaqueInstallation, // Parametre : T_ConnaissanceObjet
+        eRC_EnStationnement,
+        eRC_ExecutionAttentat,
         eNbr
 
     };

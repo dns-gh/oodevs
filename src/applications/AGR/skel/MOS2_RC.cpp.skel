@@ -140,6 +140,16 @@ std::string MOS_RC::AgentKnowledgeLink( ASN1T_OID nId )
     return str.str();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_RC::PopulationKnowledgeLink
+// Created: APE 2004-09-09
+// -----------------------------------------------------------------------------
+std::string MOS_RC::PopulationKnowledgeLink( ASN1T_OID nId )
+{
+    std::stringstream str;
+    str << "<a href=\"PopulationKnowledge:" << nId << "\">" << nId << "</a>";
+    return str.str();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_RC::AgentLink

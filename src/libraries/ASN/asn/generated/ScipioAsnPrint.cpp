@@ -3948,6 +3948,17 @@ void ASN1C_Population::Print (ASN1ConstCharPtr name)
    asn1Print_Population (name, &msgData);
 }
 
+void asn1Print_KnowledgePopulation (ASN1ConstCharPtr name, ASN1T_KnowledgePopulation* pvalue)
+{
+   asn1Print_OID (name, pvalue);
+}
+
+void ASN1C_KnowledgePopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_KnowledgePopulation (name, &msgData);
+}
+
 void asn1Print_ListAutomate (ASN1ConstCharPtr name, ASN1T_ListAutomate* pvalue)
 {
    char namebuf[512];
@@ -6421,6 +6432,334 @@ void ASN1C_CR_ObjetDetecte::Print (ASN1ConstCharPtr name)
    asn1Print_CR_ObjetDetecte (name, &msgData);
 }
 
+void asn1Print_CR_TirInterditSurPopulation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_TirInterditSurPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_TirInterditSurPopulation (name);
+}
+
+void asn1Print_CR_TirSommationSurPopulation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_TirSommationSurPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_TirSommationSurPopulation (name);
+}
+
+void asn1Print_CR_TirDissuasionSurPopulation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_TirDissuasionSurPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_TirDissuasionSurPopulation (name);
+}
+
+void asn1Print_CR_TirNeutralisationSurPopulation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_TirNeutralisationSurPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_TirNeutralisationSurPopulation (name);
+}
+
+void asn1Print_CR_PopulationDetectee (ASN1ConstCharPtr name, ASN1T_CR_PopulationDetectee* pvalue)
+{
+   asn1Print_KnowledgePopulation (name, pvalue);
+}
+
+void ASN1C_CR_PopulationDetectee::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_PopulationDetectee (name, &msgData);
+}
+
+void asn1Print_CR_PriseAPartieParPopulation (ASN1ConstCharPtr name, ASN1T_CR_PriseAPartieParPopulation* pvalue)
+{
+   asn1Print_KnowledgePopulation (name, pvalue);
+}
+
+void ASN1C_CR_PriseAPartieParPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_PriseAPartieParPopulation (name, &msgData);
+}
+
+void asn1Print_CR_RiposteSurPopulation (ASN1ConstCharPtr name, ASN1T_CR_RiposteSurPopulation* pvalue)
+{
+   asn1Print_KnowledgePopulation (name, pvalue);
+}
+
+void ASN1C_CR_RiposteSurPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_RiposteSurPopulation (name, &msgData);
+}
+
+void asn1Print_CR_PopulationDangereuseAProximite (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_PopulationDangereuseAProximite::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_PopulationDangereuseAProximite (name);
+}
+
+void asn1Print_CR_EsquiveDeLaPopulation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_EsquiveDeLaPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_EsquiveDeLaPopulation (name);
+}
+
+void asn1Print_CR_DecrochageFaceAPopulation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_DecrochageFaceAPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_DecrochageFaceAPopulation (name);
+}
+
+void asn1Print_CR_MiseEnPlaceControleDeFoule (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_MiseEnPlaceControleDeFoule::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_MiseEnPlaceControleDeFoule (name);
+}
+
+void asn1Print_CR_MiseEnPlaceFiltrage (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_MiseEnPlaceFiltrage::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_MiseEnPlaceFiltrage (name);
+}
+
+void asn1Print_CR_AnimationBarrage (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AnimationBarrage::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AnimationBarrage (name);
+}
+
+void asn1Print_CR_AnimationCanalisation (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AnimationCanalisation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AnimationCanalisation (name);
+}
+
+void asn1Print_CR_CollecteRenseignementsSurPopulations (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_CollecteRenseignementsSurPopulations::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_CollecteRenseignementsSurPopulations (name);
+}
+
+void asn1Print_CR_PopulationTotalementReconnue (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_PopulationTotalementReconnue::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_PopulationTotalementReconnue (name);
+}
+
+void asn1Print_CR_AttitudeCalme (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AttitudeCalme::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AttitudeCalme (name);
+}
+
+void asn1Print_CR_AttitudeAgitee (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AttitudeAgitee::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AttitudeAgitee (name);
+}
+
+void asn1Print_CR_AttitudeExcitee (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AttitudeExcitee::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AttitudeExcitee (name);
+}
+
+void asn1Print_CR_AttitudeAgressive (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AttitudeAgressive::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AttitudeAgressive (name);
+}
+
+void asn1Print_CR_AggravationAttitude (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AggravationAttitude::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AggravationAttitude (name);
+}
+
+void asn1Print_CR_AffrontementAvecForcesEnnemies (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_AffrontementAvecForcesEnnemies::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AffrontementAvecForcesEnnemies (name);
+}
+
+void asn1Print_CR_PopulationTemporairementControlee (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_PopulationTemporairementControlee::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_PopulationTemporairementControlee (name);
+}
+
+void asn1Print_CR_PopulationTemporairementRepoussee (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_PopulationTemporairementRepoussee::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_PopulationTemporairementRepoussee (name);
+}
+
+void asn1Print_CR_RepriseDesAffrontements (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_RepriseDesAffrontements::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_RepriseDesAffrontements (name);
+}
+
+void asn1Print_CR_RecuperationProgressive (ASN1ConstCharPtr name, ASN1T_CR_RecuperationProgressive* pvalue)
+{
+   rtPrintInteger (name, *pvalue);
+}
+
+void ASN1C_CR_RecuperationProgressive::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_RecuperationProgressive (name, &msgData);
+}
+
+void asn1Print_CR_AgressionDePopulation (ASN1ConstCharPtr name, ASN1T_CR_AgressionDePopulation* pvalue)
+{
+   asn1Print_KnowledgePopulation (name, pvalue);
+}
+
+void ASN1C_CR_AgressionDePopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AgressionDePopulation (name, &msgData);
+}
+
+void asn1Print_CR_AgressionParPopulation (ASN1ConstCharPtr name, ASN1T_CR_AgressionParPopulation* pvalue)
+{
+   asn1Print_KnowledgePopulation (name, pvalue);
+}
+
+void ASN1C_CR_AgressionParPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AgressionParPopulation (name, &msgData);
+}
+
+void asn1Print_CR_RiposteContreAgressionParPopulation (ASN1ConstCharPtr name, ASN1T_CR_RiposteContreAgressionParPopulation* pvalue)
+{
+   asn1Print_KnowledgePopulation (name, pvalue);
+}
+
+void ASN1C_CR_RiposteContreAgressionParPopulation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_RiposteContreAgressionParPopulation (name, &msgData);
+}
+
+void asn1Print_CR_AttaqueInstallation (ASN1ConstCharPtr name, ASN1T_CR_AttaqueInstallation* pvalue)
+{
+   asn1Print_KnowledgeObject (name, pvalue);
+}
+
+void ASN1C_CR_AttaqueInstallation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_AttaqueInstallation (name, &msgData);
+}
+
+void asn1Print_CR_EnStationnement (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_EnStationnement::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_EnStationnement (name);
+}
+
+void asn1Print_CR_ExecutionAttentat (ASN1ConstCharPtr name)
+{
+}
+
+void ASN1C_CR_ExecutionAttentat::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_CR_ExecutionAttentat (name);
+}
+
 void asn1Print_EnumTypeCR (ASN1ConstCharPtr name, ASN1T_EnumTypeCR* pvalue)
 {
    printf ("%s = ", name);
@@ -7231,6 +7570,142 @@ void asn1Print_MsgCR_cr (ASN1ConstCharPtr name, ASN1T_MsgCR_cr* pvalue)
       case 189:
          sprintf (namebuf, "%s.u.cr_trace_id", name);
          asn1Print_CR_TraceID (namebuf, &pvalue->u.cr_trace_id);
+         break;
+
+      case 190:
+         sprintf (namebuf, "%s.u.cr_tir_interdit_sur_population", name);
+         break;
+
+      case 191:
+         sprintf (namebuf, "%s.u.cr_tir_sommation_sur_population", name);
+         break;
+
+      case 192:
+         sprintf (namebuf, "%s.u.cr_tir_dissuasion_sur_population", name);
+         break;
+
+      case 193:
+         sprintf (namebuf, "%s.u.cr_tir_neutralisation_sur_population", name);
+         break;
+
+      case 194:
+         sprintf (namebuf, "%s.u.cr_population_detectee", name);
+         asn1Print_CR_PopulationDetectee (namebuf, &pvalue->u.cr_population_detectee);
+         break;
+
+      case 195:
+         sprintf (namebuf, "%s.u.cr_prise_a_partie_par_population", name);
+         asn1Print_CR_PriseAPartieParPopulation (namebuf, &pvalue->u.cr_prise_a_partie_par_population);
+         break;
+
+      case 196:
+         sprintf (namebuf, "%s.u.cr_riposte_sur_population", name);
+         asn1Print_CR_RiposteSurPopulation (namebuf, &pvalue->u.cr_riposte_sur_population);
+         break;
+
+      case 197:
+         sprintf (namebuf, "%s.u.cr_population_dangereuse_a_proximite", name);
+         break;
+
+      case 198:
+         sprintf (namebuf, "%s.u.cr_esquive_de_la_population", name);
+         break;
+
+      case 199:
+         sprintf (namebuf, "%s.u.cr_decrochage_face_a_population", name);
+         break;
+
+      case 200:
+         sprintf (namebuf, "%s.u.cr_mise_en_place_controle_de_foule", name);
+         break;
+
+      case 201:
+         sprintf (namebuf, "%s.u.cr_mise_en_place_filtrage", name);
+         break;
+
+      case 202:
+         sprintf (namebuf, "%s.u.cr_animation_barrage", name);
+         break;
+
+      case 203:
+         sprintf (namebuf, "%s.u.cr_animation_canalisation", name);
+         break;
+
+      case 204:
+         sprintf (namebuf, "%s.u.cr_collecte_renseignements_sur_populations", name);
+         break;
+
+      case 205:
+         sprintf (namebuf, "%s.u.cr_population_totalement_reconnue", name);
+         break;
+
+      case 206:
+         sprintf (namebuf, "%s.u.cr_attitude_calme", name);
+         break;
+
+      case 207:
+         sprintf (namebuf, "%s.u.cr_attitude_agitee", name);
+         break;
+
+      case 208:
+         sprintf (namebuf, "%s.u.cr_attitude_excitee", name);
+         break;
+
+      case 209:
+         sprintf (namebuf, "%s.u.cr_attitude_agressive", name);
+         break;
+
+      case 210:
+         sprintf (namebuf, "%s.u.cr_aggravation_attitude", name);
+         break;
+
+      case 211:
+         sprintf (namebuf, "%s.u.cr_affrontement_avec_forces_ennemies", name);
+         break;
+
+      case 212:
+         sprintf (namebuf, "%s.u.cr_population_temporairement_controlee", name);
+         break;
+
+      case 213:
+         sprintf (namebuf, "%s.u.cr_population_temporairement_repoussee", name);
+         break;
+
+      case 214:
+         sprintf (namebuf, "%s.u.cr_reprise_des_affrontements", name);
+         break;
+
+      case 215:
+         sprintf (namebuf, "%s.u.cr_recuperation_progressive", name);
+         asn1Print_CR_RecuperationProgressive (namebuf, &pvalue->u.cr_recuperation_progressive);
+         break;
+
+      case 216:
+         sprintf (namebuf, "%s.u.cr_agression_de_population", name);
+         asn1Print_CR_AgressionDePopulation (namebuf, &pvalue->u.cr_agression_de_population);
+         break;
+
+      case 217:
+         sprintf (namebuf, "%s.u.cr_agression_par_population", name);
+         asn1Print_CR_AgressionParPopulation (namebuf, &pvalue->u.cr_agression_par_population);
+         break;
+
+      case 218:
+         sprintf (namebuf, "%s.u.cr_riposte_contre_agression_par_population", name);
+         asn1Print_CR_RiposteContreAgressionParPopulation (namebuf, &pvalue->u.cr_riposte_contre_agression_par_population);
+         break;
+
+      case 219:
+         sprintf (namebuf, "%s.u.cr_attaque_installation", name);
+         asn1Print_CR_AttaqueInstallation (namebuf, &pvalue->u.cr_attaque_installation);
+         break;
+
+      case 220:
+         sprintf (namebuf, "%s.u.cr_en_stationnement", name);
+         break;
+
+      case 221:
+         sprintf (namebuf, "%s.u.cr_execution_attentat", name);
          break;
 
       default:;

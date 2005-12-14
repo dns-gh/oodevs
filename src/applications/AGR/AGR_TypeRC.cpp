@@ -102,7 +102,7 @@ AGR_TypeRC::AGR_TypeRC( const std::string& strName, MT_XXmlInputArchive& input, 
         input.ReadAttribute( "base", strType );
         pType_ = workspace.FindType( strType );
         if( !pType_ )
-            throw std::exception( "Unable to determine type for RC" );
+            throw std::exception( "Unable to determine type for RC"  );
         input.EndSection(); // "xsd:restriction"a
     }
     else if( strSubSection == "xsd:sequence" )

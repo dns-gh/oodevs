@@ -61,6 +61,7 @@ Automate            ::= OID
 Population          ::= OID
 KnowledgeAgent      ::= OID
 KnowledgeObject     ::= OID
+KnowledgePopulation ::= OID
 ListAutomate        ::= SEQUENCE OF Automate 
 ListAgent           ::= SEQUENCE OF Agent
 ListKnowledgeAgent  ::= SEQUENCE OF KnowledgeAgent
