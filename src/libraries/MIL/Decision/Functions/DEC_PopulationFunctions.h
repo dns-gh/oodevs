@@ -42,10 +42,12 @@ public:
     static void GetPionsSecuring              ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
 
     // Knowledge objects
-    static void GetKnowledgeObjectLocalisation( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void IsKnowledgeObjectValid        ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void GetObjectsInZone              ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
-    static void DamageObject                  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void GetKnowledgeObjectLocalisation  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void IsKnowledgeObjectValid          ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void GetObjectsInZone                ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void DamageObject                    ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void GetKnowledgeObjectDistance      ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void GetKnowledgeObjectClosestPoint  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     //@}    
 };
 

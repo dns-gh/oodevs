@@ -647,6 +647,33 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Localisation::ComputeNearestPoint
+// Created: SBO 2005-12-13
+// -----------------------------------------------------------------------------
+bool TER_Localisation::ComputeNearestPoint( const TER_Localisation& localisation, MT_Vector2D& vResult, MT_Float& rMinDistance ) const
+{
+    const T_PointVector& points = localisation.GetPoints();
+    rMinDistance = std::numeric_limits< MT_Float >::max();
+
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    {
+        MT_Vector2D nearestPointTmp;
+        if( ComputeNearestPoint( *it, nearestPointTmp ) )
+        {
+            MT_Float rDistance = it->Distance( nearestPointTmp );
+            if( rDistance < rMinDistance )
+            {
+                rMinDistance = rDistance;
+                vResult = *it;
+            }
+        }
+        else
+            return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Localisation::GetPointsClippedByPolygon
 // Created: NLD 2003-08-20
 // -----------------------------------------------------------------------------

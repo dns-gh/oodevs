@@ -262,10 +262,9 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN::DIN_Link& /*linkFr
     MIL_AgentID nAgentID;
     input >> nAgentID;
 
-    MOS_Agent* pAgent = MOS_App::GetApp().GetAgentManager().FindAgent( nAgentID );
+    MOS_Agent_ABC* pAgent = MOS_App::GetApp().GetAgentManager().FindAllAgent( nAgentID );
     if( pAgent )
         pAgent->OnReceiveDebugDrawPointsMsg( input );
-
 }
 
 //-----------------------------------------------------------------------------

@@ -70,8 +70,10 @@ public:
 
     //! @name Geometry
     //@{
-    bool        IsInZone       ( const TER_Localisation& loc ) const;
-    MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
+    bool        IsInZone       ( const TER_Localisation& loc    ) const;
+    MT_Vector2D GetClosestPoint( const MT_Vector2D&      refPos ) const;
+    MT_Vector2D GetClosestPoint( const TER_Localisation& loc    ) const;
+    MT_Float    GetDistanceTo  ( const TER_Localisation& loc    ) const;
     //@}
 
     //! @name Effects on pions
@@ -149,6 +151,16 @@ private:
     ASN1T_EnumPopulationAttrErrorCode OnReceiveMsgChangeAttitude( ASN1T_MagicActionPopulationChangeAttitude& asn );
     //@}
 
+    //! @name Network
+    //@{    
+    void SendDestruction() const;    
+    //@}
+
+    //! @name Helpers
+    //@{
+    void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, MT_Float& rMinDistance ) const;
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -159,12 +171,6 @@ private:
     typedef std::vector< MIL_PopulationFlow* >          T_FlowVector;
     typedef T_FlowVector::iterator                      IT_FlowVector;
     typedef T_FlowVector::const_iterator                CIT_FlowVector;
-    //@}
-
-private:
-    //! @name Network
-    //@{    
-    void SendDestruction() const;    
     //@}
 
 private:

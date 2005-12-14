@@ -109,6 +109,10 @@ behavior MIS_Population_CommettreExactions( T_Mission_Population_CommettreExacti
             {
                 E_ValiditeRequete nFusse;
                 DEC_Debug( "Exaction en cours !" );
+                float rDistance = DEC_ConnaissanceObjet_Distance( x, nFusse );
+                DEC_Debug( "Distance objet = " + FloatToString( rDistance ) );
+                T_Point closestPoint = DEC_ConnaissanceObjet_PointPlusProche( x, nFusse );
+                DEC_DebugAffichePoint( closestPoint );
                 DEC_ConnaissanceObjet_Degrader( x, nFusse, 0.03 );
             }
           }

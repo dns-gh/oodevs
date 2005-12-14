@@ -264,3 +264,40 @@ void DEC_PopulationFunctions::DamageObject( DIA_Call_ABC& call, const MIL_Popula
     float rDamageFactor = call.GetParameter( 2 ).ToFloat();
     pObject->Destroy( rDamageFactor );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetKnowledgeObjectDistance
+// Created: SBO 2005-12-13
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetKnowledgeObjectDistance( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !pObject || !pObject->CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint
+// Created: SBO 2005-12-13
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !pObject || !pObject->CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pObject->GetLocalisation() ) );
+    call.GetResult().SetValue( (void*)pPoint, &DEC_Tools::GetTypePoint() );
+}

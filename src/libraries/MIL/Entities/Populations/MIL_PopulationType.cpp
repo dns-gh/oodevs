@@ -246,10 +246,12 @@ void MIL_PopulationType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetPionsSecuring              , "DEC_Connaissances_PionsSecurisant"     );
 
     // Knowledge objects
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation, "DEC_ConnaissanceObjet_Localisation" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::IsKnowledgeObjectValid        , "DEC_ConnaissanceObjet_EstValide"    );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetObjectsInZone              , "DEC_Connaissances_ObjetsDansZone"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DamageObject                  , "DEC_ConnaissanceObjet_Degrader"     );   
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation, "DEC_ConnaissanceObjet_Localisation"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::IsKnowledgeObjectValid        , "DEC_ConnaissanceObjet_EstValide"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetObjectsInZone              , "DEC_Connaissances_ObjetsDansZone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DamageObject                  , "DEC_ConnaissanceObjet_Degrader"        );   
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectDistance    , "DEC_ConnaissanceObjet_Distance"        ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint, "DEC_ConnaissanceObjet_PointPlusProche" ); 
 
     // Debug
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_PopulationFunctions::DebugDrawPoint , "DEC_DebugAffichePoint"  );

@@ -746,6 +746,21 @@ void MOS_GLTool::Draw( MOS_Population& population, E_State nState /*= eNormal*/ 
     //Draw flows
     for( MOS_Population::CIT_FlowMap it = population.flowMap_.begin(); it != population.flowMap_.end(); ++it )
         Draw( *it->second, nState );
+
+    const std::vector< MT_Vector2D >& debugPoints = population.GetDebugDrawPoints();
+    if( !debugPoints.empty() )
+    {
+        GFX_Color color( 0, 255, 0, 1 );
+        color.SetGLColor();
+
+        std::vector< MT_Vector2D >::const_iterator itCur  = debugPoints.begin();
+        std::vector< MT_Vector2D >::const_iterator itNext = itCur;
+        ++ itNext;
+        for( ; itNext != debugPoints.end(); ++itCur, ++itNext )
+            DrawLine( *itCur, *itNext );
+
+        DrawCross( *itCur, MOS_GL_CROSSSIZE, 4.0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -2143,7 +2158,7 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 //    for( std::vector< MT_Vector2D >::const_iterator it = agent.reportPoints_.begin(); it != agent.reportPoints_.end(); ++it )
 //        DrawCross( *it, MOS_GL_CROSSSIZE, 4.0 );
 
-    std::vector< MT_Vector2D > debugPoints = agent.GetDebugDrawPoints();
+    const std::vector< MT_Vector2D >& debugPoints = agent.GetDebugDrawPoints();
     if( !debugPoints.empty() )
     {
         GFX_Color color( 0, 255, 0, 1 );

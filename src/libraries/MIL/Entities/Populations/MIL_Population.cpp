@@ -421,6 +421,72 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetClosestPointAndDistance
+// Created: SBO 2005-12-13
+// -----------------------------------------------------------------------------
+void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, MT_Float& rMinDistance ) const
+{
+    rMinDistance = std::numeric_limits< MT_Float >::max();
+
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+    {
+        if( (**itConcentration).IsDead() )
+            continue;
+
+        MT_Vector2D nearestPointTmp;
+        MT_Float    rDistance;
+        if( !(**itConcentration).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
+            continue;
+
+        if( rDistance < rMinDistance )
+        {
+            rMinDistance = rDistance;
+            closestPoint = nearestPointTmp;
+        }                
+    }
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+    {
+        if( (**itFlow).IsDead() )
+            continue;
+
+        MT_Vector2D nearestPointTmp;
+        MT_Float    rDistance;
+        if( !(**itFlow).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
+            continue;
+        if( rDistance < rMinDistance )
+        {
+            rMinDistance = rDistance;
+            closestPoint = nearestPointTmp;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetClosestPoint
+// Created: SBO 2005-12-13
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_Population::GetClosestPoint( const TER_Localisation& loc ) const
+{
+    MT_Vector2D closestPoint;
+    MT_Float    rMinDistance;
+    GetClosestPointAndDistance( loc, closestPoint, rMinDistance );
+    return closestPoint;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDistanceTo
+// Created: SBO 2005-12-13
+// -----------------------------------------------------------------------------
+MT_Float MIL_Population::GetDistanceTo( const TER_Localisation& loc ) const
+{
+    MT_Vector2D closestPoint;
+    MT_Float    rMinDistance;
+    GetClosestPointAndDistance( loc, closestPoint, rMinDistance );
+    return rMinDistance;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetAttitude
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
