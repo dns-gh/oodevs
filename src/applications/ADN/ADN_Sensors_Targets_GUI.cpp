@@ -80,6 +80,7 @@ ADN_Sensors_Targets_GUI::ADN_Sensors_Targets_GUI(QWidget * parent )
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setColumnStretchable(2,true);
+    setMaximumWidth( 300 );
     
     horizontalHeader()->setLabel(0, tr( "Objects"));
     horizontalHeader()->setLabel(1, tr( "Detection time (s)"));

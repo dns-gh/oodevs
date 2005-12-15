@@ -82,6 +82,7 @@ ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
+    setMaximumWidth( 300 );
     
     horizontalHeader()->setLabel(0, tr( "Volumes" ) );
     horizontalHeader()->setLabel(1, tr( "Modificators (%)" ) );

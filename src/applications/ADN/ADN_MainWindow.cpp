@@ -90,6 +90,7 @@ void ADN_MainWindow::Build()
     if( splashScreen.IsValid() )
         splashScreen.show();
     workspace_.SetProgressIndicator( &splashScreen );
+
     // Main widget
     QVBox* pBox = new QVBox( this );
     setCentralWidget( pBox );
@@ -167,7 +168,11 @@ void ADN_MainWindow::Build()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::AddPage( const QString& strPageName, QWidget& page )
 {
-    pTab_->addTab( &page, strPageName );
+    QScrollView* sv = new QScrollView( pTab_ );
+    sv->addChild( &page );
+    sv->setResizePolicy( QScrollView::AutoOneFit );
+    page.reparent( sv->viewport(), QPoint( 0, 0 ) );
+    pTab_->addTab( sv, strPageName );
 }
 
 
