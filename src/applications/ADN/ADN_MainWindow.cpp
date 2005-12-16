@@ -67,6 +67,7 @@ ADN_MainWindow::ADN_MainWindow()
 , bNeedSave_        ( false )
 , strAdminPassword_ ( "" )
 {
+    setMinimumSize( 640, 480 );
     setCaption( tr( "Scipio Adaptation Tool - No Project" ) );
 }
 
