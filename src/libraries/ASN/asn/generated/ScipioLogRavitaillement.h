@@ -100,12 +100,15 @@ EXTERN void asn1Print_MsgLogRavitaillementTraitementCreation (ASN1ConstCharPtr n
 
 struct EXTERN EnumLogRavitaillementTraitementEtat {
    enum Root {
-      convoi_consitution = 0,
-      convoi_chargement = 1,
-      convoi_deplacement_aller = 2,
-      convoi_dechargement = 3,
-      convoi_deplacement_retour = 4,
-      termine = 5
+      convoi_en_attente_camions = 0,
+      convoi_en_attente_chef_convoi = 1,
+      convoi_constitution = 2,
+      convoi_deplacement_vers_point_chargement = 3,
+      convoi_chargement = 4,
+      convoi_deplacement_vers_point_dechargement = 5,
+      convoi_dechargement = 6,
+      convoi_deplacement_retour = 7,
+      termine = 8
    } ;
 } ;
 
@@ -134,21 +137,24 @@ EXTERN void asn1Print_EnumLogRavitaillementTraitementEtat (ASN1ConstCharPtr name
 
 typedef struct EXTERN ASN1T_MsgLogRavitaillementTraitementUpdate {
    struct {
-      unsigned oid_pion_log_traitantPresent : 1;
-      unsigned oid_pion_convoiPresent : 1;
+      unsigned oid_automate_log_traitantPresent : 1;
+      unsigned oid_automate_log_fournissant_moyens_convoiPresent : 1;
+      unsigned oid_pion_convoyantPresent : 1;
       unsigned etatPresent : 1;
       unsigned dotationsPresent : 1;
    } m;
    ASN1T_OID  oid_consigne;
    ASN1T_Automate  oid_automate;
-   ASN1T_Agent  oid_pion_log_traitant;
-   ASN1T_Agent  oid_pion_convoi;
+   ASN1T_Automate  oid_automate_log_traitant;
+   ASN1T_Automate  oid_automate_log_fournissant_moyens_convoi;
+   ASN1T_Agent  oid_pion_convoyant;
    ASN1T_EnumLogRavitaillementTraitementEtat  etat;
    ASN1T__SeqOfDemandeDotation  dotations;
 
    ASN1T_MsgLogRavitaillementTraitementUpdate () {
-      m.oid_pion_log_traitantPresent = 0;
-      m.oid_pion_convoiPresent = 0;
+      m.oid_automate_log_traitantPresent = 0;
+      m.oid_automate_log_fournissant_moyens_convoiPresent = 0;
+      m.oid_pion_convoyantPresent = 0;
       m.etatPresent = 0;
       m.dotationsPresent = 0;
    }

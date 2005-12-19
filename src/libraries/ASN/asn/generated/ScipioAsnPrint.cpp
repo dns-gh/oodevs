@@ -9957,12 +9957,15 @@ void asn1Print_EnumLogRavitaillementTraitementEtat (ASN1ConstCharPtr name, ASN1T
 {
    printf ("%s = ", name);
    switch (*pvalue) {
-      case 0: printf ("convoi_consitution\n"); break;
-      case 1: printf ("convoi_chargement\n"); break;
-      case 2: printf ("convoi_deplacement_aller\n"); break;
-      case 3: printf ("convoi_dechargement\n"); break;
-      case 4: printf ("convoi_deplacement_retour\n"); break;
-      case 5: printf ("termine\n"); break;
+      case 0: printf ("convoi_en_attente_camions\n"); break;
+      case 1: printf ("convoi_en_attente_chef_convoi\n"); break;
+      case 2: printf ("convoi_constitution\n"); break;
+      case 3: printf ("convoi_deplacement_vers_point_chargement\n"); break;
+      case 4: printf ("convoi_chargement\n"); break;
+      case 5: printf ("convoi_deplacement_vers_point_dechargement\n"); break;
+      case 6: printf ("convoi_dechargement\n"); break;
+      case 7: printf ("convoi_deplacement_retour\n"); break;
+      case 8: printf ("termine\n"); break;
       default: printf ("???\n");
    }
 }
@@ -9977,8 +9980,9 @@ void asn1Print_MsgLogRavitaillementTraitementUpdate (ASN1ConstCharPtr name, ASN1
 {
    char namebuf[512];
 
-   printf ("%s.m.oid_pion_log_traitantPresent = %d\n", name, (int)pvalue->m.oid_pion_log_traitantPresent);
-   printf ("%s.m.oid_pion_convoiPresent = %d\n", name, (int)pvalue->m.oid_pion_convoiPresent);
+   printf ("%s.m.oid_automate_log_traitantPresent = %d\n", name, (int)pvalue->m.oid_automate_log_traitantPresent);
+   printf ("%s.m.oid_automate_log_fournissant_moyens_convoiPresent = %d\n", name, (int)pvalue->m.oid_automate_log_fournissant_moyens_convoiPresent);
+   printf ("%s.m.oid_pion_convoyantPresent = %d\n", name, (int)pvalue->m.oid_pion_convoyantPresent);
    printf ("%s.m.etatPresent = %d\n", name, (int)pvalue->m.etatPresent);
    printf ("%s.m.dotationsPresent = %d\n", name, (int)pvalue->m.dotationsPresent);
    sprintf (namebuf, "%s.oid_consigne", name);
@@ -9987,14 +9991,19 @@ void asn1Print_MsgLogRavitaillementTraitementUpdate (ASN1ConstCharPtr name, ASN1
    sprintf (namebuf, "%s.oid_automate", name);
    asn1Print_Automate (namebuf, &pvalue->oid_automate);
 
-   if (pvalue->m.oid_pion_log_traitantPresent) {
-      sprintf (namebuf, "%s.oid_pion_log_traitant", name);
-      asn1Print_Agent (namebuf, &pvalue->oid_pion_log_traitant);
+   if (pvalue->m.oid_automate_log_traitantPresent) {
+      sprintf (namebuf, "%s.oid_automate_log_traitant", name);
+      asn1Print_Automate (namebuf, &pvalue->oid_automate_log_traitant);
    }
 
-   if (pvalue->m.oid_pion_convoiPresent) {
-      sprintf (namebuf, "%s.oid_pion_convoi", name);
-      asn1Print_Agent (namebuf, &pvalue->oid_pion_convoi);
+   if (pvalue->m.oid_automate_log_fournissant_moyens_convoiPresent) {
+      sprintf (namebuf, "%s.oid_automate_log_fournissant_moyens_convoi", name);
+      asn1Print_Automate (namebuf, &pvalue->oid_automate_log_fournissant_moyens_convoi);
+   }
+
+   if (pvalue->m.oid_pion_convoyantPresent) {
+      sprintf (namebuf, "%s.oid_pion_convoyant", name);
+      asn1Print_Agent (namebuf, &pvalue->oid_pion_convoyant);
    }
 
    if (pvalue->m.etatPresent) {

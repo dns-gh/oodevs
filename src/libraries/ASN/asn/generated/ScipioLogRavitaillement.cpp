@@ -325,16 +325,19 @@ EXTERN int asn1PE_EnumLogRavitaillementTraitementEtat (ASN1CTXT* ctxt_p, ASN1T_E
    rtdiag ("asn1PE_EnumLogRavitaillementTraitementEtat: start\n");
 
    switch (value) {
-      case EnumLogRavitaillementTraitementEtat::convoi_consitution: ui = 0; break;
-      case EnumLogRavitaillementTraitementEtat::convoi_chargement: ui = 1; break;
-      case EnumLogRavitaillementTraitementEtat::convoi_deplacement_aller: ui = 2; break;
-      case EnumLogRavitaillementTraitementEtat::convoi_dechargement: ui = 3; break;
-      case EnumLogRavitaillementTraitementEtat::convoi_deplacement_retour: ui = 4; break;
-      case EnumLogRavitaillementTraitementEtat::termine: ui = 5; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_en_attente_camions: ui = 0; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_en_attente_chef_convoi: ui = 1; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_constitution: ui = 2; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_chargement: ui = 3; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_chargement: ui = 4; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_dechargement: ui = 5; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_dechargement: ui = 6; break;
+      case EnumLogRavitaillementTraitementEtat::convoi_deplacement_retour: ui = 7; break;
+      case EnumLogRavitaillementTraitementEtat::termine: ui = 8; break;
       default: return LOG_ASN1ERR (ctxt_p, ASN_E_INVENUM);
    }
 
-   stat = pe_ConsUnsigned (ctxt_p, ui, 0, 5);
+   stat = pe_ConsUnsigned (ctxt_p, ui, 0, 8);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    rtdiag ("asn1PE_EnumLogRavitaillementTraitementEtat: end\n");
@@ -355,16 +358,19 @@ EXTERN int asn1PD_EnumLogRavitaillementTraitementEtat (ASN1CTXT* ctxt_p, ASN1T_E
 
    rtdiag ("asn1PD_EnumLogRavitaillementTraitementEtat: start\n");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 5);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 8);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    switch (ui) {
-      case 0: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_consitution; break;
-      case 1: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_chargement; break;
-      case 2: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_deplacement_aller; break;
-      case 3: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_dechargement; break;
-      case 4: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_deplacement_retour; break;
-      case 5: *pvalue = EnumLogRavitaillementTraitementEtat::termine; break;
+      case 0: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_en_attente_camions; break;
+      case 1: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_en_attente_chef_convoi; break;
+      case 2: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_constitution; break;
+      case 3: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_chargement; break;
+      case 4: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_chargement; break;
+      case 5: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_deplacement_vers_point_dechargement; break;
+      case 6: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_dechargement; break;
+      case 7: *pvalue = EnumLogRavitaillementTraitementEtat::convoi_deplacement_retour; break;
+      case 8: *pvalue = EnumLogRavitaillementTraitementEtat::termine; break;
       default: return LOG_ASN1ERR (ctxt_p, ASN_E_INVENUM);
    }
 
@@ -395,16 +401,23 @@ EXTERN int asn1PE_MsgLogRavitaillementTraitementUpdate (ASN1CTXT* ctxt_p, ASN1T_
 
    rtdiag ("asn1PE_MsgLogRavitaillementTraitementUpdate: start\n");
 
-   PU_NEWFIELD (ctxt_p, "oid_pion_log_traitantPresent");
+   PU_NEWFIELD (ctxt_p, "oid_automate_log_traitantPresent");
 
-   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.oid_pion_log_traitantPresent);
+   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.oid_automate_log_traitantPresent);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_SETBITCOUNT (ctxt_p);
 
-   PU_NEWFIELD (ctxt_p, "oid_pion_convoiPresent");
+   PU_NEWFIELD (ctxt_p, "oid_automate_log_fournissant_moyens_convoiPresent");
 
-   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.oid_pion_convoiPresent);
+   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.oid_automate_log_fournissant_moyens_convoiPresent);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   PU_NEWFIELD (ctxt_p, "oid_pion_convoyantPresent");
+
+   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->m.oid_pion_convoyantPresent);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_SETBITCOUNT (ctxt_p);
@@ -439,22 +452,32 @@ EXTERN int asn1PE_MsgLogRavitaillementTraitementUpdate (ASN1CTXT* ctxt_p, ASN1T_
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
-   /* encode oid_pion_log_traitant */
+   /* encode oid_automate_log_traitant */
 
-   if (pvalue->m.oid_pion_log_traitantPresent) {
-      PU_PUSHNAME (ctxt_p, "oid_pion_log_traitant");
+   if (pvalue->m.oid_automate_log_traitantPresent) {
+      PU_PUSHNAME (ctxt_p, "oid_automate_log_traitant");
 
-      stat = asn1PE_Agent (ctxt_p, pvalue->oid_pion_log_traitant);
+      stat = asn1PE_Automate (ctxt_p, pvalue->oid_automate_log_traitant);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
       PU_POPNAME (ctxt_p);
    }
 
-   /* encode oid_pion_convoi */
+   /* encode oid_automate_log_fournissant_moyens_convoi */
 
-   if (pvalue->m.oid_pion_convoiPresent) {
-      PU_PUSHNAME (ctxt_p, "oid_pion_convoi");
+   if (pvalue->m.oid_automate_log_fournissant_moyens_convoiPresent) {
+      PU_PUSHNAME (ctxt_p, "oid_automate_log_fournissant_moyens_convoi");
 
-      stat = asn1PE_Agent (ctxt_p, pvalue->oid_pion_convoi);
+      stat = asn1PE_Automate (ctxt_p, pvalue->oid_automate_log_fournissant_moyens_convoi);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+      PU_POPNAME (ctxt_p);
+   }
+
+   /* encode oid_pion_convoyant */
+
+   if (pvalue->m.oid_pion_convoyantPresent) {
+      PU_PUSHNAME (ctxt_p, "oid_pion_convoyant");
+
+      stat = asn1PE_Agent (ctxt_p, pvalue->oid_pion_convoyant);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
       PU_POPNAME (ctxt_p);
    }
@@ -502,19 +525,27 @@ EXTERN int asn1PD_MsgLogRavitaillementTraitementUpdate (ASN1CTXT* ctxt_p, ASN1T_
 
    memset (&pvalue->m, 0, sizeof(pvalue->m));
 
-   PU_NEWFIELD (ctxt_p, "oid_pion_log_traitantPresent");
+   PU_NEWFIELD (ctxt_p, "oid_automate_log_traitantPresent");
 
    stat = pd_bit (ctxt_p, &optbit);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else pvalue->m.oid_pion_log_traitantPresent = optbit;
+   else pvalue->m.oid_automate_log_traitantPresent = optbit;
 
    PU_SETBITCOUNT (ctxt_p);
 
-   PU_NEWFIELD (ctxt_p, "oid_pion_convoiPresent");
+   PU_NEWFIELD (ctxt_p, "oid_automate_log_fournissant_moyens_convoiPresent");
 
    stat = pd_bit (ctxt_p, &optbit);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else pvalue->m.oid_pion_convoiPresent = optbit;
+   else pvalue->m.oid_automate_log_fournissant_moyens_convoiPresent = optbit;
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   PU_NEWFIELD (ctxt_p, "oid_pion_convoyantPresent");
+
+   stat = pd_bit (ctxt_p, &optbit);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   else pvalue->m.oid_pion_convoyantPresent = optbit;
 
    PU_SETBITCOUNT (ctxt_p);
 
@@ -552,23 +583,34 @@ EXTERN int asn1PD_MsgLogRavitaillementTraitementUpdate (ASN1CTXT* ctxt_p, ASN1T_
 
    PU_POPNAME (ctxt_p);
 
-   /* decode oid_pion_log_traitant */
+   /* decode oid_automate_log_traitant */
 
-   if (pvalue->m.oid_pion_log_traitantPresent) {
-      PU_PUSHNAME (ctxt_p, "oid_pion_log_traitant");
+   if (pvalue->m.oid_automate_log_traitantPresent) {
+      PU_PUSHNAME (ctxt_p, "oid_automate_log_traitant");
 
-      stat = asn1PD_Agent (ctxt_p, &pvalue->oid_pion_log_traitant);
+      stat = asn1PD_Automate (ctxt_p, &pvalue->oid_automate_log_traitant);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
       PU_POPNAME (ctxt_p);
    }
 
-   /* decode oid_pion_convoi */
+   /* decode oid_automate_log_fournissant_moyens_convoi */
 
-   if (pvalue->m.oid_pion_convoiPresent) {
-      PU_PUSHNAME (ctxt_p, "oid_pion_convoi");
+   if (pvalue->m.oid_automate_log_fournissant_moyens_convoiPresent) {
+      PU_PUSHNAME (ctxt_p, "oid_automate_log_fournissant_moyens_convoi");
 
-      stat = asn1PD_Agent (ctxt_p, &pvalue->oid_pion_convoi);
+      stat = asn1PD_Automate (ctxt_p, &pvalue->oid_automate_log_fournissant_moyens_convoi);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_POPNAME (ctxt_p);
+   }
+
+   /* decode oid_pion_convoyant */
+
+   if (pvalue->m.oid_pion_convoyantPresent) {
+      PU_PUSHNAME (ctxt_p, "oid_pion_convoyant");
+
+      stat = asn1PD_Agent (ctxt_p, &pvalue->oid_pion_convoyant);
       if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
       PU_POPNAME (ctxt_p);
