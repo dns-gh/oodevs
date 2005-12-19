@@ -1852,7 +1852,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
                 color.SetRGB( 255.0, 150.0, 10.0 );
             else if( pPopulation->GetAttitude() == ePopulationAttitude_Agressive )
                 color.SetRGB( 255.0, 0, 0 );
-            toolTip.AddLine( ENT_Tr::ConvertFromPopulationAttitude( pPopulation->GetAttitude() ), color ,true, 1.3f );
+            toolTip.AddLine( ENT_Tr::ConvertFromPopulationAttitude( pPopulation->GetAttitude() ), color );
             
             //write the dead and living peoples
             QString strPeople = QString( "Vivants: " ) + QString::number( pPopulation->GetLivingHumans() )+ QString( ", Morts: " ) + QString::number( pPopulation->GetDeadHumans() );
