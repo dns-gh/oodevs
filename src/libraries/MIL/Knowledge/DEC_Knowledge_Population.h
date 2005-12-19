@@ -78,10 +78,12 @@ public:
           uint                GetID             () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
           MIL_Population&     GetPopulationKnown() const;
-          MT_Float            GetDangerosity    ( const MIL_AgentPion& target ) const;
+          MT_Float            GetDangerosity    ( const MIL_AgentPion&    target        ) const;
           bool                IsRecon           () const;
-          bool                IsInZone          ( const TER_Localisation& loc ) const;
-          MT_Vector2D         GetClosestPoint   ( const MT_Vector2D& refPos ) const;
+          bool                IsInZone          ( const TER_Localisation& loc           ) const;
+          MT_Vector2D         GetClosestPoint   ( const MT_Vector2D&      refPos        ) const;
+          MT_Vector2D         GetSecuringPoint  ( const MIL_Agent_ABC&    securingAgent ) const;
+          MT_Vector2D         GetSafetyPosition ( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
     //@}
 
     //! @name Network operations

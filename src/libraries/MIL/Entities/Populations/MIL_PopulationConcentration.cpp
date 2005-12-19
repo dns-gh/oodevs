@@ -24,6 +24,8 @@
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -214,6 +216,23 @@ void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow 
     bool bOut = pushingFlows_.insert( &flow ).second;
     assert( bOut );
     SetAttitude( flow.GetAttitude() );   
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetSafetyPosition
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+{
+    const MT_Vector2D& agentPosition = agent.GetRole< PHY_RolePion_Location >().GetPosition();
+    MT_Vector2D evadeDirection = ( agentPosition - position_).Normalize();
+
+    if( evadeDirection.IsZero() )
+        evadeDirection = -agent.GetDirDanger();
+
+    MT_Vector2D safetyPos = agentPosition + evadeDirection * ( location_.GetCircleRadius() + rMinDistance );
+    TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
+    return safetyPos;
 }
 
 // =============================================================================

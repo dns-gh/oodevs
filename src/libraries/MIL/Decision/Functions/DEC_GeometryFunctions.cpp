@@ -19,6 +19,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
@@ -676,6 +677,29 @@ void DEC_GeometryFunctions::ComputeSafetyPosition( DIA_Call_ABC& call, const MIL
 
     MT_Vector2D* pResult = new MT_Vector2D( vSafetyPos ); // $$ RAM
     call.GetResult().SetValue( pResult, &DEC_Tools::GetTypePoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( call.GetParameter( 0 ) ) );
+
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
+        return;
+    }
+    call.GetParameter( 2 ).SetValue( eQueryValid );
+
+    MT_Float rMinDistance = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
+
+    MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) );
+    call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
 
 // -----------------------------------------------------------------------------

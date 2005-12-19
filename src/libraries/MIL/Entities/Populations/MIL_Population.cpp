@@ -487,6 +487,30 @@ MT_Float MIL_Population::GetDistanceTo( const TER_Localisation& loc ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetSecuringPoint
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
+{
+    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( securingAgent );
+    if( !pClosestElement )
+        return MT_Vector2D();
+    return pClosestElement->GetSecuringPoint( securingAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetSafetyPosition
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+{
+    MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( agent );
+    if( !pClosestElement )
+        return MT_Vector2D();
+    return pClosestElement->GetSafetyPosition( agent, rMinDistance );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetAttitude
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------

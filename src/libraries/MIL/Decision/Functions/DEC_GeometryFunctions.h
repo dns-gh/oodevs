@@ -73,6 +73,7 @@ public:
                            static void ComputeSupportPosition                   ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeAmbushPosition                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeSafetyPosition                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
+                           static void ComputeSafetyPositionWithPopulation      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
                            static void ComputeSafetyPositionWithObjective       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent   );
     template< typename T > static void ComputeDestPoint                         ( DIA_Call_ABC& call, const T&              caller       );
                            static void ComputeDestPointForPion                  ( DIA_Call_ABC& call, MIL_Automate& callerAutomate       );

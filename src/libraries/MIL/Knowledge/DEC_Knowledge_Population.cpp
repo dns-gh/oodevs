@@ -294,6 +294,26 @@ MT_Vector2D DEC_Knowledge_Population::GetClosestPoint( const MT_Vector2D& refPos
     return pPopulationKnown_->GetClosestPoint( refPos );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetSecuringPoint
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_Knowledge_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const
+{
+    assert( pPopulationKnown_ );
+    return pPopulationKnown_->GetSecuringPoint( securingAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetSafetyPosition
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_Knowledge_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+{
+    assert( pPopulationKnown_ );
+    return pPopulationKnown_->GetSafetyPosition( agent, rMinDistance );
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================

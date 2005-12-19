@@ -70,7 +70,9 @@ public:
     const MT_Vector2D& GetPosition   () const;
           bool         IsNearPosition( const MT_Vector2D& position ) const;
 
-    virtual const TER_Localisation& GetLocation() const;
+    virtual const TER_Localisation& GetLocation      () const;
+    virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
+    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const;
     //@}
 
     //! @name Network

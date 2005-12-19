@@ -24,6 +24,8 @@
 #include "MIL_PopulationAttitude.h"
 #include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
@@ -325,6 +327,26 @@ MT_Float MIL_PopulationFlow::GetMaxSpeed() const
 void MIL_PopulationFlow::SendRC( const MIL_RC& rc ) const
 {
     rc.Send( GetPopulation(), MIL_RC::eRcTypeWarning );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetSafetyPosition
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+{
+    const MT_Vector2D& agentPosition = agent.GetRole< PHY_RolePion_Location >().GetPosition();
+    MT_Vector2D nearestPointOnFlow;
+    GetLocation().ComputeNearestPoint( agentPosition, nearestPointOnFlow );
+
+    MT_Vector2D evadeDirection = ( agentPosition - nearestPointOnFlow).Normalize();
+
+    if( evadeDirection.IsZero() )
+        evadeDirection = -agent.GetDirDanger();
+
+    MT_Vector2D safetyPos = agentPosition + evadeDirection * rMinDistance;
+    TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
+    return safetyPos;
 }
 
 // =============================================================================

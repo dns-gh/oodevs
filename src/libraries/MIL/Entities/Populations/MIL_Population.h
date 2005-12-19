@@ -70,10 +70,12 @@ public:
 
     //! @name Geometry
     //@{
-    bool        IsInZone       ( const TER_Localisation& loc    ) const;
-    MT_Vector2D GetClosestPoint( const MT_Vector2D&      refPos ) const;
-    MT_Vector2D GetClosestPoint( const TER_Localisation& loc    ) const;
-    MT_Float    GetDistanceTo  ( const TER_Localisation& loc    ) const;
+    bool        IsInZone         ( const TER_Localisation& loc           ) const;
+    MT_Vector2D GetClosestPoint  ( const MT_Vector2D&      refPos        ) const;
+    MT_Vector2D GetClosestPoint  ( const TER_Localisation& loc           ) const;
+    MT_Float    GetDistanceTo    ( const TER_Localisation& loc           ) const;
+    MT_Vector2D GetSecuringPoint ( const MIL_Agent_ABC&    securingAgent ) const;
+    MT_Vector2D GetSafetyPosition( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
     //@}
 
     //! @name Effects on pions

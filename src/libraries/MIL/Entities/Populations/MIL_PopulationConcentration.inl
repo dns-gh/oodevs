@@ -68,6 +68,16 @@ const TER_Localisation& MIL_PopulationConcentration::GetLocation() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetSecuringPoint
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+inline
+MT_Vector2D MIL_PopulationConcentration::GetSecuringPoint( const MIL_Agent_ABC& /*securingAgent*/ ) const
+{
+    return position_; // $$$$ SBO 2005-12-16: should maybe return a random point into concentration
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::IsValid
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

@@ -463,6 +463,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsInZone                     < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstDansZone"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::ClosestPoint                                  , "DEC_ConnaissancePopulation_PointPlusProche"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Secure                                        , "DEC_ConnaissancePopulation_Securiser"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::SecuringPoint                                 , "DEC_ConnaissancePopulation_PointSecurisation"            );
     
     // Global knowledge
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetRapForLocal                                          , "DEC_RapportDeForceLocal"                            );
@@ -518,6 +519,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeSupportPosition                                  , "DEC_Geometrie_CalculerPositionAppui"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeAmbushPosition                                   , "DEC_Geometrie_CalculerPositionEmbuscade"                 );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeSafetyPosition                                   , "DEC_Geometrie_CalculerPositionSurete"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation                     , "DEC_Geometrie_CalculerPositionSureteAvecPopulation"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeSafetyPositionWithObjective                      , "DEC_Geometrie_CalculerPositionSureteAvecObjectif"        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_AgentPion> , "DEC_Geometrie_CalculePointProcheLocalisationDansFuseau"  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_AgentPion >, "DEC_Geometrie_CalculeBarycentreLocalisationDansFuseau"   );

@@ -70,6 +70,26 @@ void DEC_KnowledgePopulationFunctions::Secure( DIA_Call_ABC& call, const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::SecuringPoint
+// Created: SBO 2005-12-16
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::SecuringPoint( DIA_Call_ABC& call, const MIL_AgentPion& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
+        return;
+    }
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+
+    MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetSecuringPoint( caller ) );
+
+    call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::ClosestPoint
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
