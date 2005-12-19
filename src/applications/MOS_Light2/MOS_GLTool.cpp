@@ -776,7 +776,13 @@ void MOS_GLTool::Draw( MOS_PopulationConcentration& concentration, E_State nStat
         color.AddRGB( 50, 100, 50 );
     color.SetAlpha( 0.9 );
     color.SetGLColor();
-    MT_Float rSurface = concentration.GetLivingHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
+    MT_Float rSurface = ( concentration.GetLivingHumans() + concentration.GetDeadHumans() ) 
+                      /   concentration.GetPopulation().GetType().GetConcentrationDensity();
+    // draw whole population
+    DrawCircle( concentration.GetPos(), std::sqrt( rSurface / MT_PI ), true );
+    // draw dead people above
+    glColor4d( MOS_COLOR_BLACK );
+    rSurface = concentration.GetDeadHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
     DrawCircle( concentration.GetPos(), std::sqrt( rSurface / MT_PI ), true );
 }
     
@@ -807,7 +813,47 @@ void MOS_GLTool::Draw( MOS_PopulationFlow& flow, E_State nState /*= eNormal*/ )
     //DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
     glLineWidth( 5.0 );
     DrawLine( flow.GetFlow() );
-    //glLineWidth( 1.0 );
+
+    // draw dead people
+    if( flow.GetDeadHumans() > 0 )
+    {
+        // process total length of flow
+        CIT_PointVector itStart = flow.GetFlow().begin();
+        CIT_PointVector itEnd   = flow.GetFlow().begin(); ++itEnd;
+        MT_Float rFlowLength = 0.;
+        for( ; itEnd != flow.GetFlow().end(); ++itStart, ++itEnd )
+            rFlowLength += itStart->Distance( *itEnd );
+
+        // process dead length
+        MT_Float rDeadLength = rFlowLength * flow.GetDeadHumans() / ( flow.GetLivingHumans() + flow.GetDeadHumans() );
+        
+        // create point list
+        T_PointVector deads;
+        itStart = flow.GetFlow().begin();
+        itEnd   = flow.GetFlow().begin(); ++itEnd;
+        MT_Float rItLength = 0.;
+        MT_Float rNextLength = 0.;
+        deads.push_back( *itStart );
+        for( ; itEnd != flow.GetFlow().end(); ++itStart, ++itEnd )
+        {
+            rNextLength = itStart->Distance( *itEnd );
+            if( rNextLength + rItLength >= rDeadLength )
+            {
+                // find point
+                MT_Float rRemainingLength = rDeadLength - rItLength;
+                MT_Vector2D lastPoint = ( *itEnd - *itStart ) * ( rRemainingLength / rNextLength ) + *itStart;
+                deads.push_back( lastPoint );
+                break;
+            }
+            else
+            {
+                rItLength += rNextLength;
+                deads.push_back( *itEnd );
+            }
+        }
+        glColor4d( MOS_COLOR_BLACK );
+        DrawLine( deads );
+    }
 }
 
 // -----------------------------------------------------------------------------
