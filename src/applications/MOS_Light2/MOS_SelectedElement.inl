@@ -24,5 +24,8 @@
 inline
 bool MOS_SelectedElement::IsAMapElementSelected() const
 {
-    return pAgent_ != 0 || pObject_ != 0 || pLine_ != 0 || pAgentKnowledge_ != 0;
+    return pAgent_ != 0 || pObject_ != 0 || pLine_ != 0 || pAgentKnowledge_ != 0 
+            || pObjectKnowledge_ != 0 || pPopulationConcentration_ != 0 
+            || pPopulationConcentrationKnowledge_ != 0 || pPopulationFlow_ != 0 
+            || pPopulationFlowKnowledge_ != 0 || pPopulation_ != 0 || pPopulationKnowledge_ != 0;
 }

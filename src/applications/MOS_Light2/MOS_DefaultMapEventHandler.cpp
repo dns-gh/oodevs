@@ -673,14 +673,63 @@ bool MOS_DefaultMapEventHandler::IsPopulationFlowAtPos( const MOS_PopulationFlow
 // -----------------------------------------------------------------------------
 void MOS_DefaultMapEventHandler::HoverElementAtPos( const MT_Vector2D& vGLPos, float rDistancePerPixel )
 {
-    MOS_Agent* pAgent = 0;
-    GetAgentAtPos( pAgent, vGLPos );
-    if( pAgent )
+
+    if( MOS_MainWindow::GetMainWindow().GetOptions().nPlayedTeam_ != MOS_Options::eController )
     {
-        hoveredElement_ = MOS_SelectedElement( *pAgent );
-        emit ElementHovered( hoveredElement_ );
-        return;
-    }  
+        MOS_AgentKnowledge* pAgentKnowledge = 0;
+        GetAgentKnowledgeAtPos( pAgentKnowledge, vGLPos );
+        if( pAgentKnowledge )
+        {
+            hoveredElement_ = MOS_SelectedElement( *pAgentKnowledge );
+            emit ElementHovered( hoveredElement_ );
+            return;
+        }
+        MOS_ObjectKnowledge* pObjectKnowledge = 0;
+        GetObjectKnowledgeAtPos( pObjectKnowledge, vGLPos, rDistancePerPixel );
+        if( pObjectKnowledge )
+        {
+            hoveredElement_ = MOS_SelectedElement( *pObjectKnowledge );
+            emit ElementHovered( hoveredElement_ );
+            return;
+        }
+    }
+    else
+    {
+        MOS_Agent* pAgent = 0;
+        GetAgentAtPos( pAgent, vGLPos );
+        if( pAgent )
+        {
+            hoveredElement_ = MOS_SelectedElement( *pAgent );
+            emit ElementHovered( hoveredElement_ );
+            return;
+        }
+        MOS_PopulationConcentration* pPopulationConcentration = 0;
+        GetPopulationConcentrationAtPos( pPopulationConcentration, vGLPos );
+        if( pPopulationConcentration )
+        {
+            hoveredElement_ = MOS_SelectedElement( *pPopulationConcentration );
+            emit ElementHovered( hoveredElement_ );
+            return;
+        }
+        MOS_PopulationFlow* pPopulationFlow = 0;
+        GetPopulationFlowAtPos( pPopulationFlow, vGLPos, rDistancePerPixel );
+        if( pPopulationFlow )
+        {
+            hoveredElement_ = MOS_SelectedElement( *pPopulationFlow );
+            emit ElementHovered( hoveredElement_ );
+            return;
+        }
+        MOS_Object_ABC* pObject = 0;
+        GetObjectAtPos( pObject, vGLPos, rDistancePerPixel );
+        if( pObject )
+        {
+            hoveredElement_ = MOS_SelectedElement( *pObject );
+            emit ElementHovered( hoveredElement_ );
+            return;
+        }
+    }
+
+    //If nothing is overed
     if ( hoveredElement_.IsAMapElementSelected() )
     {
         hoveredElement_ = MOS_SelectedElement();

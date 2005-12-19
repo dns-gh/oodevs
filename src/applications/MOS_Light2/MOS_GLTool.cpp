@@ -856,6 +856,8 @@ void MOS_GLTool::Draw( MOS_PopulationFlow& flow, E_State nState /*= eNormal*/ )
         glColor4d( MOS_COLOR_BLACK );
         DrawLine( deads );
     }
+
+
 }
 
 // -----------------------------------------------------------------------------
@@ -1722,102 +1724,192 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
     if( eventHandler.selectedElement_.pLine_ != 0 )
         Draw( * eventHandler.selectedElement_.pLine_, eSelected, eventHandler.selectedElement_.nLinePoint_);
     
-    //Draw an info box under the mouse if a pawn is Hovered  
+    //Draw an info box under the mouse if a pawn is Hovered
     if( ! MOS_App::GetApp().IsODBEdition()
-        && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayHoveredInfo_
-        && eventHandler.hoveredElement_.pAgent_ 
-        && eventHandler.hoveredElement_.pAgent_ != eventHandler.selectedElement_.pAgent_  )
+        && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayHoveredInfo_ )
     {
-        QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
-        MT_Float zoom = rClicksPerPix_; 
-        MOS_Agent* pAgent = eventHandler.hoveredElement_.pAgent_;
-        const MT_Vector2D posAgent = eventHandler.hoveredElement_.pAgent_->GetPos();
-        MT_Vector2D pos = MT_Vector2D( posAgent.rX_, posAgent.rY_ );
-
-        GFX_Color color( 0.0, 0.0, 0.0, 1.0 ); //color of the text
-        
-        //create a ToolTip
-        MT_GLToolTip toolTip = MT_GLToolTip( pWidget );
-        
-        //write the name of the pawn
-        QString strName =  pAgent->GetName().c_str();
-        if ( pAgent->bNeutralized_ )
-            strName = QString("Neutralisé: ") + strName;
-        else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTotalement )
-            strName = QString( ENT_Tr::ConvertFromEtatOperationnel( pAgent->nOpState_ ).c_str() ) + QString( " " ) + strName;
-        else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTactiquement )
-            strName = QString( ENT_Tr::ConvertFromEtatOperationnel( pAgent->nOpState_ ).c_str() ) + QString( " " ) + strName;
-        else if ( pAgent->bSurrendered_ )
-            strName = QString("Rendu: ") + strName;
-        else if ( pAgent->bPrisoner_ )
-            strName = QString("Prisonnier: ") + strName;
-        
-        if ( pAgent->bPrisoner_ || pAgent->bSurrendered_ )
-            color.SetRGB( 128.0, 0.0, 128.0 );
-        else if ( pAgent->bNeutralized_ 
-                  || pAgent->nOpState_ == eEtatOperationnel_DetruitTactiquement )
-            color.SetRGB( 255.0, 128.0 , 0.0 );
-        else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTotalement  )
-            color.SetRGB( 255.0, 0.0, 0.0 );
-        else
-            color.SetRGB( 255.0, 255.0, 0.0 );
-
-        toolTip.AddLine( strName, color ,true, 1.3f );
-
-        //write the current mission
-        if( pAgent->GetCurrentMission() != 0 )
+        if( eventHandler.hoveredElement_.pAgent_ 
+            && eventHandler.hoveredElement_.pAgent_ != eventHandler.selectedElement_.pAgent_  )
         {
-            //ok, not proud of it...
-            QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)( pAgent->GetCurrentMission() - 1 ) ).c_str() );
-            color.SetRGB( 255.0, 255.0, 255.0 );
-            toolTip.AddLine( strMission, color );
-        }
-        
-        //write the decisional state and the RapFor of the pawn
-        QString strRapFor = QString( "Rapport de force " ) + ENT_Tr::ConvertFromEtatRapFor( pAgent->nFightRateState_ ).c_str();
-        if ( pAgent->nCloseCombatState_  != eEtatCombatRencontre_None )
-            strRapFor = QString(ENT_Tr::ConvertFromEtatCombatRencontre( pAgent->nCloseCombatState_ ).c_str()).upper() 
-                        + QString( ", " ) 
-                        + strRapFor;  
+            QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
+            MT_Float zoom = rClicksPerPix_; 
+            MOS_Agent* pAgent = eventHandler.hoveredElement_.pAgent_;
+            const MT_Vector2D posAgent = eventHandler.hoveredElement_.pAgent_->GetPos();
+            MT_Vector2D pos = MT_Vector2D( posAgent.rX_, posAgent.rY_ );
 
-        if ( pAgent->nFightRateState_ == eEtatRapFor_Defavorable )
-            color.SetRGB( 255.0, 154.0, 154.0 );
-        else
-            color.SetRGB( 204.0, 255, 204.0 );
+            GFX_Color color( 0.0, 0.0, 0.0, 1.0 ); //color of the text
+            
+            //create a ToolTip
+            MT_GLToolTip toolTip = MT_GLToolTip( pWidget );
+            
+            //write the name of the pawn
+            QString strName =  pAgent->GetName().c_str();
+            if ( pAgent->bNeutralized_ )
+                strName = QString("Neutralisé: ") + strName;
+            else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTotalement )
+                strName = QString( ENT_Tr::ConvertFromEtatOperationnel( pAgent->nOpState_ ).c_str() ) + QString( " " ) + strName;
+            else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTactiquement )
+                strName = QString( ENT_Tr::ConvertFromEtatOperationnel( pAgent->nOpState_ ).c_str() ) + QString( " " ) + strName;
+            else if ( pAgent->bSurrendered_ )
+                strName = QString("Rendu: ") + strName;
+            else if ( pAgent->bPrisoner_ )
+                strName = QString("Prisonnier: ") + strName;
+            
+            if ( pAgent->bPrisoner_ || pAgent->bSurrendered_ )
+                color.SetRGB( 128.0, 0.0, 128.0 );
+            else if ( pAgent->bNeutralized_ 
+                    || pAgent->nOpState_ == eEtatOperationnel_DetruitTactiquement )
+                color.SetRGB( 255.0, 128.0 , 0.0 );
+            else if ( pAgent->nOpState_ == eEtatOperationnel_DetruitTotalement  )
+                color.SetRGB( 255.0, 0.0, 0.0 );
+            else
+                color.SetRGB( 255.0, 255.0, 0.0 );
 
-        toolTip.AddLine( strRapFor, color );
-        
-        //write the ROE and the stance of the pawn
-        QString strROE = QString( "%1 %2 %" ).arg( ENT_Tr::ConvertFromUnitPosture( pAgent->GetStance() ).c_str(), QString::number( pAgent->nPostureCompletionPourcentage_ ) )
-                        + QString( ", ROE: " ) 
-                        + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str());
-        
-        color.SetRGB( 255.0, 255.0, 255.0 );
-        
-        toolTip.AddLine( strROE, color );
-        
-        //write the 5 last RCs
-        toolTip.AddLine( QString(""), color );
-        const MOS_Agent_ABC::T_ReportVector& reports = pAgent->GetReports();
-        uint i = 0;
-        for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
-        {
-            ++i;
-            //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
-            if ( (*it)->IsRCType() )
+            toolTip.AddLine( strName, color ,true, 1.3f );
+
+            //write the current mission
+            if( pAgent->GetCurrentMission() != 0 )
             {
-                const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
-                const QString strTitle = (*it)->GetStrippedTitle().c_str();
-                toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 150.0 , 150.0 , 150.0, 1.0 , false );
+                //ok, not proud of it...
+                QString strMission = QString( "MISSION: " ) + QString( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)( pAgent->GetCurrentMission() - 1 ) ).c_str() );
+                color.SetRGB( 255.0, 255.0, 255.0 );
+                toolTip.AddLine( strMission, color );
             }
-            if ( i > 5 )
-                break;
-        }
-        
-        //draw the tooltip
-        toolTip.Draw( viewRect_, pos, zoom  );
-    }
+            
+            //write the decisional state and the RapFor of the pawn
+            QString strRapFor = QString( "Rapport de force " ) + ENT_Tr::ConvertFromEtatRapFor( pAgent->nFightRateState_ ).c_str();
+            if ( pAgent->nCloseCombatState_  != eEtatCombatRencontre_None )
+                strRapFor = QString(ENT_Tr::ConvertFromEtatCombatRencontre( pAgent->nCloseCombatState_ ).c_str()).upper() 
+                            + QString( ", " ) 
+                            + strRapFor;  
 
+            if ( pAgent->nFightRateState_ == eEtatRapFor_Defavorable )
+                color.SetRGB( 255.0, 154.0, 154.0 );
+            else
+                color.SetRGB( 204.0, 255, 204.0 );
+
+            toolTip.AddLine( strRapFor, color );
+            
+            //write the ROE and the stance of the pawn
+            QString strROE = QString( "%1 %2 %" ).arg( ENT_Tr::ConvertFromUnitPosture( pAgent->GetStance() ).c_str(), QString::number( pAgent->nPostureCompletionPourcentage_ ) )
+                            + QString( ", ROE: " ) 
+                            + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str());
+            
+            color.SetRGB( 255.0, 255.0, 255.0 );
+            
+            toolTip.AddLine( strROE, color );
+            
+            //write the 5 last RCs
+            toolTip.AddLine( QString(""), color );
+            const MOS_Agent_ABC::T_ReportVector& reports = pAgent->GetReports();
+            uint i = 0;
+            for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
+            {
+                ++i;
+                //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
+                if ( (*it)->IsRCType() )
+                {
+                    const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
+                    const QString strTitle = (*it)->GetStrippedTitle().c_str();
+                    toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 150.0 , 150.0 , 150.0, 1.0 , false );
+                }
+                if ( i > 5 )
+                    break;
+            }
+            
+            //draw the tooltip
+            toolTip.Draw( viewRect_, pos, zoom  );
+        }
+        else if ( ( eventHandler.hoveredElement_.pPopulationConcentration_ 
+            && eventHandler.hoveredElement_.pPopulationConcentration_ != eventHandler.selectedElement_.pPopulationConcentration_  )
+            || ( eventHandler.hoveredElement_.pPopulationFlow_ 
+            && eventHandler.hoveredElement_.pPopulationFlow_ != eventHandler.selectedElement_.pPopulationFlow_  ) )
+        {
+            QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
+            MT_Float zoom = rClicksPerPix_;
+            MOS_PopulationPart_ABC* pPopulation = 0;
+            if( eventHandler.hoveredElement_.pPopulationConcentration_ )
+                pPopulation = eventHandler.hoveredElement_.pPopulationConcentration_;
+            else
+                pPopulation = eventHandler.hoveredElement_.pPopulationFlow_;
+            const MT_Vector2D pos = pPopulation->GetPos();
+
+            GFX_Color color( 0.0, 0.0, 0.0, 1.0 ); //color of the text
+            
+            //create a ToolTip
+            MT_GLToolTip toolTip = MT_GLToolTip( pWidget );
+            
+            //write the name of the population
+            color.SetRGB( 255.0, 255.0, 255.0 );
+            toolTip.AddLine( QString( pPopulation->GetPopulation().GetName().c_str() ), color ,true, 1.3f );
+
+            //write the attitude
+            if( pPopulation->GetAttitude() == ePopulationAttitude_Calme )
+                color.SetRGB( 0, 255.0, 0 );
+            else if( pPopulation->GetAttitude() == ePopulationAttitude_Agitee )
+                color.SetRGB( 255.0, 255.0, 0 );
+            else if( pPopulation->GetAttitude() == ePopulationAttitude_Excitee )
+                color.SetRGB( 255.0, 150.0, 10.0 );
+            else if( pPopulation->GetAttitude() == ePopulationAttitude_Agressive )
+                color.SetRGB( 255.0, 0, 0 );
+            toolTip.AddLine( ENT_Tr::ConvertFromPopulationAttitude( pPopulation->GetAttitude() ), color ,true, 1.3f );
+            
+            //write the dead and living peoples
+            QString strPeople = QString( "Vivants: " ) + QString::number( pPopulation->GetLivingHumans() )+ QString( ", Morts: " ) + QString::number( pPopulation->GetDeadHumans() );
+            color.SetRGB( 255, 255, 255 );
+            toolTip.AddLine( strPeople, color );
+
+            //write the 5 last RCs
+            toolTip.AddLine( QString(""), color );
+            MOS_Population& pop = const_cast< MOS_Population& >( pPopulation->GetPopulation() );
+            const MOS_Agent_ABC::T_ReportVector& reports = pop.GetReports();
+            uint i = 0;
+            for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
+            {
+                ++i;
+                //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
+                if ( (*it)->IsRCType() )
+                {
+                    const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
+                    const QString strTitle = (*it)->GetStrippedTitle().c_str();
+                    toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 150.0 , 150.0 , 150.0, 1.0 , false );
+                }
+                if ( i > 5 )
+                    break;
+            }
+            
+            //draw the tooltip
+            toolTip.Draw( viewRect_, pos, zoom  );
+        }
+        else if( eventHandler.hoveredElement_.pObject_ 
+            && eventHandler.hoveredElement_.pObject_ != eventHandler.selectedElement_.pObject_  )
+        {
+            QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
+            MT_Float zoom = rClicksPerPix_;
+            MOS_Object_ABC* pObject = eventHandler.hoveredElement_.pObject_;
+            const MT_Vector2D pos = pObject->GetCenter();
+
+            GFX_Color color( 0.0, 0.0, 0.0, 1.0 ); //color of the text
+            
+            //create a ToolTip
+            MT_GLToolTip toolTip = MT_GLToolTip( pWidget );
+            
+            //write the name of the object
+            color.SetRGB( 255.0, 255.0, 255.0 );
+            toolTip.AddLine( QString( pObject->GetName().c_str() ), color ,true, 1.3f );
+
+            //write the Construction level
+            QString strEtat = QString( "Niveau de construction: " ) + QString::number( pObject->GetConstructionPercentage() ) + QString( "%" );
+            QString strEtat2 = QString( "Valorisation: " ) + QString::number( pObject->GetValorizationPercentage() ) + QString( "%" );
+            QString strEtat3 = QString( "Contournement: " ) + QString::number( pObject->GetBypassConstructionPercentage() ) + QString( "%" );
+
+            toolTip.AddLine( strEtat, color );
+            toolTip.AddLine( strEtat2, color );
+            toolTip.AddLine( strEtat3, color );
+
+            toolTip.Draw( viewRect_, pos, zoom  );
+        }
+     }
 }
 
 
