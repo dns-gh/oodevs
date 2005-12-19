@@ -56,7 +56,6 @@ private:
     void AffectRequestsToAutomate( MIL_AutomateLOG& supplyingAutomate );
     bool ApplyQuotas             ();
     void ActivateSupply          ( PHY_SupplyStockState*& pStockSupplyState );
-    void AddStockPushedFlow      ( PHY_DotationStock& stock );
     //@}
 
 private:

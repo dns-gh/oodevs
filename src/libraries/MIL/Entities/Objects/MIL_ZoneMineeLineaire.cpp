@@ -103,6 +103,6 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeLineaire::Initialize( uint nID, const ASN
 void MIL_ZoneMineeLineaire::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentMovingInside( agent );
-    if( !IsBypassed() && CanInteractWithAgent( agent ) )
+    if( !IsBypassed() && CanInteractWith( agent ) )
         ApplyAttrition( agent );
 }

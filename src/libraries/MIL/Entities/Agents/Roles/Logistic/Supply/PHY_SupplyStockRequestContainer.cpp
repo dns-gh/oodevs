@@ -56,15 +56,44 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         if( !pDotationCategory )
             continue;
 
+        MT_Float rTotalValue = asnStock.quantite_disponible;
+
+        typedef std::vector< std::pair< PHY_DotationStock*, MT_Float > > T_PionStockVector;
+        typedef T_PionStockVector::iterator                              IT_PionStockVector;
+        typedef T_PionStockVector::const_iterator                        CIT_PionStockVector;
+
+        T_PionStockVector pionStocks;
         for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
         {
             PHY_DotationStock* pStock = (**itPion).GetRole< PHY_RolePion_Supply >().GetStock( *pDotationCategory );
             if( pStock )
-                AddStockPushedFlow( *pStock );
+                pionStocks.push_back( std::make_pair( pStock, 0. ) );
         }
-        IT_RequestMap itRequest = requests_.find( pDotationCategory );
-        if( itRequest != requests_.end() )
-            itRequest->second.SetStockPushedFlowValue( asnStock.quantite_disponible );
+
+        if( pionStocks.empty() )
+            continue;
+
+        // Priority for pions needing supply
+        for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end() && rTotalValue > 0.; ++it )
+        {
+            const PHY_DotationStock& stock = *it->first;
+            const MT_Float rAffectedValue = std::min( rTotalValue, std::max( 0., stock.GetCapacity() - stock.GetValue() ) );
+            rTotalValue -= rAffectedValue;
+            it->second += rAffectedValue;
+        }
+
+        // Overhead
+        if( rTotalValue > 0. )
+        {
+            const MT_Float rAffecterValue = rTotalValue / pionStocks.size();
+            for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end(); ++it )
+                it->second += rAffecterValue;
+        }
+
+        // Request creation
+        PHY_SupplyStockRequest& request = requests_[ pDotationCategory ];
+        for( CIT_PionStockVector it = pionStocks.begin(); it != pionStocks.end(); ++it )
+            request.AddStock( *it->first, it->second );
     }
 }
 
@@ -107,16 +136,6 @@ void PHY_SupplyStockRequestContainer::AddStock( PHY_DotationStock& stock )
 
     PHY_SupplyStockRequest& request = requests_[ &stock.GetCategory() ];
     request.AddStock( stock );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequestContainer::AddStockPushedFlow
-// Created: NLD 2005-02-04
-// -----------------------------------------------------------------------------
-void PHY_SupplyStockRequestContainer::AddStockPushedFlow( PHY_DotationStock& stock )
-{
-    PHY_SupplyStockRequest& request = requests_[ &stock.GetCategory() ];
-    request.AddStockPushedFlow( stock );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,13 +192,11 @@ void PHY_SupplyStockRequestContainer::ActivateSupply( PHY_SupplyStockState*& pSt
 
         if( !pStockSupplyState )
         {
-            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_ );
+            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, bPushedFlow_ );
             request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState );
         }
 
         request.ReserveStocks();
-        if( !bPushedFlow_ )
-            suppliedAutomate_.ConsumeQuota( request.GetDotationCategory(), request.GetTotalReservedValue() );
         pStockSupplyState->AddRequest( request );
     }
 

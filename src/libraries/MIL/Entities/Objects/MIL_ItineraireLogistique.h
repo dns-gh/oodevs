@@ -77,7 +77,7 @@ private:
 
     //! @name Tools
     //@{
-    virtual bool CanInteractWithAgent( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
     //@}
 
 private:

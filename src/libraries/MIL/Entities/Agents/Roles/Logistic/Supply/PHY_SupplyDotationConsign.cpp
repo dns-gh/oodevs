@@ -23,14 +23,14 @@ BOOST_CLASS_EXPORT_GUID( PHY_SupplyDotationConsign, "PHY_SupplyDotationConsign" 
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState )
-    : PHY_SupplyConsign_ABC( supplyingAutomate )
+    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyingAutomate )
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
 {
     pConvoy_ = new PHY_DotationConvoy( *this ); 
 
     pSupplyState_->SetConsign( this );
-    EnterStateConvoyForming();
+    EnterStateConvoyWaitingForCommander();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +58,7 @@ PHY_SupplyDotationConsign::~PHY_SupplyDotationConsign()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::serialize
 // Created: JVT 2005-04-11
@@ -97,6 +98,36 @@ void PHY_SupplyDotationConsign::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationConsign::RemoveConvoyedMerchandise
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationConsign::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+{
+    assert( pSupplyState_ );
+    pSupplyState_->RemoveConvoyedMerchandise( dotationCategory, rNbrDotations );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationConsign::AddConvoyedMerchandise
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationConsign::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+{
+    assert( pSupplyState_ );
+    pSupplyState_->AddConvoyedMerchandise( dotationCategory, rNbrDotations );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationConsign::CancelMerchandiseOverheadReservation
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationConsign::CancelMerchandiseOverheadReservation()
+{
+    assert( pSupplyState_ );
+    pSupplyState_->CancelMerchandiseOverheadReservation();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::GetSuppliedAutomate
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
@@ -112,23 +143,45 @@ const MIL_Automate* PHY_SupplyDotationConsign::GetSuppliedAutomate() const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationConsign::EnterStateConvoyWaitingForCommander
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationConsign::EnterStateConvoyWaitingForCommander()
+{
+    nTimer_ = 0;
+    SetState( eConvoyWaitingForCommander );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationConsign::EnterStateConvoyWaitingForTransporters
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationConsign::EnterStateConvoyWaitingForTransporters()
+{
+    nTimer_ = 0;
+    SetState( eConvoyWaitingForTransporters );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::EnterStateConvoyForming
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationConsign::EnterStateConvoyForming()
 {
-    nTimer_ = 0;
+    assert( pConvoy_ );
+    nTimer_ = pConvoy_->GetFormingTime();
     SetState( eConvoyForming );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationConsign::DoConvoyForming
-// Created: NLD 2005-01-24
+// Name: PHY_SupplyDotationConsign::EnterStateConvoyGoingToLoadingPoint
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool PHY_SupplyDotationConsign::DoConvoyForming()
+void PHY_SupplyDotationConsign::EnterStateConvoyGoingToLoadingPoint()
 {
     assert( pConvoy_ );
-    return pConvoy_->Form();
+    nTimer_ = pConvoy_->GetTravelTimeToLoadingPoint();
+    SetState( eConvoyGoingToLoadingPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,18 +194,18 @@ void PHY_SupplyDotationConsign::EnterStateConvoyLoading()
     nTimer_ = pConvoy_->GetLoadingTime();
     SetState( eConvoyLoading );
 }
-   
+
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationConsign::EnterStateConvoyGoingTo
-// Created: NLD 2005-01-24
+// Name: PHY_SupplyDotationConsign::EnterStateConvoyGoingToUnloadingPoint
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void PHY_SupplyDotationConsign::EnterStateConvoyGoingTo()
+void PHY_SupplyDotationConsign::EnterStateConvoyGoingToUnloadingPoint()
 {
     assert( pConvoy_ );
-    nTimer_ = pConvoy_->GetTravelTime();
-    SetState( eConvoyGoingTo );
+    nTimer_ = pConvoy_->GetTravelTimeToUnloadingPoint();
+    SetState( eConvoyGoingToUnloadingPoint );
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyDotationConsign::EnterStateConvoyUnloading
 // Created: NLD 2005-01-24
@@ -165,14 +218,14 @@ void PHY_SupplyDotationConsign::EnterStateConvoyUnloading()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationConsign::EnterStateConvoyGoingFrom
-// Created: NLD 2005-01-24
+// Name: PHY_SupplyDotationConsign::EnterStateConvoyGoingBackToFormingPoint
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void PHY_SupplyDotationConsign::EnterStateConvoyGoingFrom()
+void PHY_SupplyDotationConsign::EnterStateConvoyGoingBackToFormingPoint()
 {
     assert( pConvoy_ );
-    nTimer_ = pConvoy_->GetTravelTime();
-    SetState( eConvoyGoingFrom );
+    nTimer_ = pConvoy_->GetTravelTimeToFormingPoint();
+    SetState( eConvoyGoingBackToFormingPoint );
 
     DoSupply();
 }
@@ -197,17 +250,22 @@ void PHY_SupplyDotationConsign::EnterStateFinished()
 // -----------------------------------------------------------------------------
 bool PHY_SupplyDotationConsign::Update()
 {
+    assert( pConvoy_ );
+
     if ( --nTimer_ > 0 )
         return GetState() == eFinished;
 
     switch( GetState() )
     {
-        case eConvoyForming   : if( DoConvoyForming() ) EnterStateConvoyLoading  (); break;
-        case eConvoyLoading   :                         EnterStateConvoyGoingTo  (); break;
-        case eConvoyGoingTo   :                         EnterStateConvoyUnloading(); break;
-        case eConvoyUnloading :                         EnterStateConvoyGoingFrom(); break;
-        case eConvoyGoingFrom :                         EnterStateFinished       (); break;
-        case eFinished        :                                                      break;
+        case eConvoyWaitingForCommander     : if( pConvoy_->ReserveCommander   () )  EnterStateConvoyWaitingForTransporters (); break;
+        case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters() )  EnterStateConvoyForming                (); break;
+        case eConvoyForming                 :                                        EnterStateConvoyGoingToLoadingPoint    (); break;
+        case eConvoyGoingToLoadingPoint     :                                        EnterStateConvoyLoading                (); break;
+        case eConvoyLoading                 :                                        EnterStateConvoyGoingToUnloadingPoint  (); break;
+        case eConvoyGoingToUnloadingPoint   :                                        EnterStateConvoyUnloading              (); break;
+        case eConvoyUnloading               :                                        EnterStateConvoyGoingBackToFormingPoint(); break;
+        case eConvoyGoingBackToFormingPoint :                                        EnterStateFinished                     (); break;
+        case eFinished                      :                                                                                   break;
         default:
             assert( false );
     }

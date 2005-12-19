@@ -62,7 +62,7 @@ void MIL_ZoneBrouillageBrod::serialize( Archive& file, const uint )
 void MIL_ZoneBrouillageBrod::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( CanInteractWithAgent( agent ) )
+    if( CanInteractWith( agent ) )
         agent.GetRole< PHY_RoleInterface_Communications >().Jam( *this );
 }
 

@@ -32,8 +32,9 @@
 MOS_LogSupplyConsign::MOS_LogSupplyConsign( const ASN1T_MsgLogRavitaillementTraitementCreation& asn )
     : nID_              ( asn.oid_consigne )
     , pion_             ( *MOS_App::GetApp().GetAgentManager().FindAgent( asn.oid_automate ) )
-    , pPionLogHandling_ ( 0 )
+    , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_( 0 )
+    , pAutomateLogProvidingConvoyResources_( 0 )
     , nState_           ( eFinished )
 {
     assert( &pion_ );
@@ -55,8 +56,8 @@ MOS_LogSupplyConsign::MOS_LogSupplyConsign( const ASN1T_MsgLogRavitaillementTrai
 MOS_LogSupplyConsign::~MOS_LogSupplyConsign()
 {
     pion_.RemoveConsign( *this );
-    if( pPionLogHandling_ )
-        pPionLogHandling_->TerminateConsign( *this );
+    if( pAutomateLogHandling_ )
+        pAutomateLogHandling_->TerminateConsign( *this );
     if( pPionLogConvoying_ )
         pPionLogConvoying_->TerminateConsign( *this );
 }
@@ -73,32 +74,43 @@ void MOS_LogSupplyConsign::OnReceiveMsgUpdate( const ASN1T_MsgLogRavitaillementT
 {
     assert( pion_.GetID() == asn.oid_automate );
 
-    if( asn.m.oid_pion_log_traitantPresent )
+    if( asn.m.oid_automate_log_traitantPresent )
     {
-        if( pPionLogHandling_ )
-            pPionLogHandling_->TerminateConsign( *this );
-        if( asn.oid_pion_log_traitant != 0 )
+        if( pAutomateLogHandling_ )
+            pAutomateLogHandling_->TerminateConsign( *this );
+        if( asn.oid_automate_log_traitant != 0 )
         {
-            pPionLogHandling_ = MOS_App::GetApp().GetAgentManager().FindAgent( asn.oid_pion_log_traitant );
-            assert( pPionLogHandling_ );
-            pPionLogHandling_->HandleConsign( *this );
+            pAutomateLogHandling_ = MOS_App::GetApp().GetAgentManager().FindAgent( asn.oid_automate_log_traitant );
+            assert( pAutomateLogHandling_ );
+            pAutomateLogHandling_->HandleConsign( *this );
         }        
         else 
-            pPionLogHandling_ = 0;
+            pAutomateLogHandling_ = 0;
     }
     
-    if( asn.m.oid_pion_convoiPresent )
+    if( asn.m.oid_pion_convoyantPresent )
     {
         if( pPionLogConvoying_ )
             pPionLogConvoying_->TerminateConsign( *this );
-        if( asn.oid_pion_convoi != 0 )
+        if( asn.oid_pion_convoyant != 0 )
         {
-            pPionLogConvoying_ = MOS_App::GetApp().GetAgentManager().FindAgent( asn.oid_pion_convoi );
+            pPionLogConvoying_ = MOS_App::GetApp().GetAgentManager().FindAgent( asn.oid_pion_convoyant );
             assert( pPionLogConvoying_ );
             pPionLogConvoying_->HandleConsign( *this );
         }        
         else 
             pPionLogConvoying_ = 0;
+    }
+
+    if( asn.m.oid_automate_log_fournissant_moyens_convoiPresent )
+    {
+        if( asn.oid_automate_log_fournissant_moyens_convoi != 0 )
+        {
+            pAutomateLogProvidingConvoyResources_ = MOS_App::GetApp().GetAgentManager().FindAgent( asn.oid_automate_log_fournissant_moyens_convoi );
+            assert( pAutomateLogProvidingConvoyResources_ );
+        }
+        else
+            pAutomateLogProvidingConvoyResources_ = 0;
     }
 
     if( asn.m.etatPresent )

@@ -385,7 +385,7 @@ MIL_AgentPion::~MIL_AgentPion()
 bool MIL_AgentPion::IsDead() const
 {
     return     !GetRole< PHY_RolePion_Humans      >().IsUsable()
-            || !GetRole< PHY_RolePion_Composantes >().IsUsable();
+            && !GetRole< PHY_RolePion_Composantes >().IsUsable();
 }
 
 // -----------------------------------------------------------------------------

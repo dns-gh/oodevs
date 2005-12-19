@@ -66,10 +66,13 @@ public:
     static void PionSupplyDisableSystem    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void AutomateSupplyEnableSystem ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void AutomateSupplyDisableSystem( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
-
-    static void ConvoyIsSupplyDone         ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void ConvoyGetSuppliedAutomate  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
-    static void ConvoyEndMission           ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    
+    static void ConvoyIsLoadingDone        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ConvoyIsUnloadingDone      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ConvoyGetFormingPoint      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ConvoyGetLoadingPoint      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );  
+    static void ConvoyGetUnloadingPoint    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ConvoyEndMission           ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
 
     static void AutomateRequestSupply      ( DIA_Call_ABC& call, MIL_Automate&  callerAutomate );
     static void PionRequestSupply          ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );

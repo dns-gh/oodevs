@@ -66,6 +66,15 @@ void PHY_RolePion_Medical::Update( bool /*bIsDead*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Medical::UpdateLogistic
+// Created: NLD 2004-10-04
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Medical::UpdateLogistic( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Medical::Clean
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------

@@ -37,11 +37,14 @@ public:
     //@{
     enum E_State
     {
+        eConvoyWaitingForTransporters,
+        eConvoyWaitingForCommander,
         eConvoyForming,
+        eConvoyGoingToLoadingPoint,
         eConvoyLoading,
-        eConvoyGoingTo,
+        eConvoyGoingToUnloadingPoint,
         eConvoyUnloading,
-        eConvoyGoingFrom,
+        eConvoyGoingBackToFormingPoint,
         eFinished
     };
 
@@ -64,8 +67,9 @@ public:
     //@{
           uint           GetID              () const;
           MOS_Agent&     GetPion            () const;
-          MOS_Agent*     GetPionLogHandling () const;
+          MOS_Agent*     GetAutomateLogHandling () const;
           MOS_Agent*     GetPionLogConvoying() const;
+          MOS_Agent*     GetAutomateLogProvidingConvoyResources() const;
           E_State        GetState           () const;
     const T_DotationMap& GetDotations       () const;
     //@}
@@ -78,8 +82,9 @@ public:
 private:
     uint              nID_;
     MOS_Agent&        pion_;
-    MOS_Agent*        pPionLogHandling_;
+    MOS_Agent*        pAutomateLogHandling_;
     MOS_Agent*        pPionLogConvoying_;
+    MOS_Agent*        pAutomateLogProvidingConvoyResources_;
     E_State           nState_;
     T_DotationMap     dotations_;
 };

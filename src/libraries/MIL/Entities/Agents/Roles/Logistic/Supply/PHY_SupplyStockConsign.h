@@ -40,15 +40,22 @@ public:
     //! @name Operations
     //@{
     virtual bool Update             (); 
-            bool ConvoySupply       (); // Ravitaillement déclenché par scripts
-            void ConvoyEndMission   ();
-            bool IsSupplyDone       () const;
-            void RemoveConvoyedStock( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+
+    // Scripts events
+    bool IsLoadingDone      () const;
+    bool IsUnloadingDone    () const;
+    bool ConvoyLoad         ();
+    bool ConvoyUnload       ();
+    void ConvoyEndMission   ();
+
+    virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
+    virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    virtual void CancelMerchandiseOverheadReservation();
     //@}
 
     //! @name Accessors
     //@{
-    virtual       void          GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
     virtual const MIL_Automate* GetSuppliedAutomate() const;
     //@}
 
@@ -60,13 +67,15 @@ public:
 private:
     //! @name Operations
     //@{
-    void EnterStateConvoyForming  ();
-    bool DoConvoyForming          ();
-    void EnterStateConvoyLoading  ();
-    void EnterStateConvoyGoingTo  ();
-    void EnterStateConvoyUnloading();
-    void EnterStateConvoyGoingFrom();
-    void EnterStateFinished       ();
+    void EnterStateConvoyWaitingForCommander    ();
+    void EnterStateConvoyWaitingForTransporters ();
+    void EnterStateConvoyForming                ();
+    void EnterStateConvoyGoingToLoadingPoint    ();
+    void EnterStateConvoyLoading                ();
+    void EnterStateConvoyGoingToUnloadingPoint  ();
+    void EnterStateConvoyUnloading              ();
+    void EnterStateConvoyGoingBackToFormingPoint();
+    void EnterStateFinished                     ();
 
     void DoSupply();
     //@}

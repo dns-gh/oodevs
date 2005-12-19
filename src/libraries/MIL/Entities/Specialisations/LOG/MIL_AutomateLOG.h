@@ -32,6 +32,8 @@ class PHY_SupplyStockRequestContainer;
 class PHY_SupplyDotationRequestContainer;
 class PHY_SupplyConsign_ABC;
 
+template < typename T > class PHY_ActionLogistic;
+
 // =============================================================================
 // @class  MIL_AutomateLOG
 // Created: JVT 2004-08-03
@@ -64,6 +66,8 @@ public:
 
     //! @name Operations
     //@{
+            void UpdateLogistic();
+
     virtual void UpdateNetwork() const;
     virtual void UpdateState  ();
     virtual void Clean        ();
@@ -132,6 +136,10 @@ private:
     typedef std::list< PHY_SupplyConsign_ABC* >  T_SupplyConsignList;
     typedef T_SupplyConsignList::iterator        IT_SupplyConsignList;
     typedef T_SupplyConsignList::const_iterator  CIT_SupplyConsignList;
+
+    typedef std::set< PHY_SupplyStockState* >     T_SupplyStockStateSet;
+    typedef T_SupplyStockStateSet::iterator       IT_SupplyStockStateSet;
+    typedef T_SupplyStockStateSet::const_iterator CIT_SupplyStockStateSet;
     //@}
 
 private:
@@ -143,6 +151,8 @@ private:
     void             ReadSupplyData             ( MIL_InputArchive& archive );
     void             ReadDotationQuotaCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType );
     void             SendQuotas                 () const;
+    bool             IsSupplyInProgress         ( const PHY_DotationCategory& dotationCategory ) const;
+    void             RemoveSupplyStockState     ( const PHY_SupplyStockState& supplyState );
     //@}
 
     //! @name Network tools
@@ -161,9 +171,12 @@ private:
     T_DotationQuotaMap    stockQuotas_;
     bool                  bQuotasHaveChanged_;
     bool                  bStockSupplyNeeded_;
-    PHY_SupplyStockState* pStockSupplyState_;
+    PHY_SupplyStockState* pExplicitStockSupplyState_;
+    T_SupplyStockStateSet pushedFlowsSupplyStates_;
 
     uint                  nTickRcStockSupplyQuerySent_;
+
+    PHY_ActionLogistic< MIL_AutomateLOG >* pLogisticAction_;
 };
 
 #include "MIL_AutomateLOG.inl"

@@ -46,6 +46,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , location_                      ()
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
+    , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
 {
     // Position
     std::string strPosition;
@@ -71,6 +72,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , location_                      ()
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
+    , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
 {
     UpdateLocation();
     UpdateDensity ();
@@ -88,6 +90,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration()
     , location_                      ()
     , pPullingFlow_                  ( 0 )
     , pushingFlows_                  ()
+    , rPullingFlowsDensity_          ( 0. )
 {
     // NOTHING
 }
@@ -332,7 +335,8 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
     file >> position_
          >> location_
          >> pPullingFlow_
-         >> pushingFlows_;
+         >> pushingFlows_
+         >> rPullingFlowsDensity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -347,5 +351,6 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const ui
     file << position_
          << location_
          << pPullingFlow_
-         << pushingFlows_;
+         << pushingFlows_
+         << rPullingFlowsDensity_;
 }

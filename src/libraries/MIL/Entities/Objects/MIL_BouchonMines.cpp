@@ -80,7 +80,7 @@ bool MIL_BouchonMines::Initialize( MIL_Army& army, DIA_Parameters& diaParameters
 void MIL_BouchonMines::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentMovingInside( agent );
-    if( !IsBypassed() && CanInteractWithAgent( agent ) )
+    if( !IsBypassed() && CanInteractWith( agent ) )
         ApplyAttrition( agent );
 }
 

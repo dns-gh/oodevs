@@ -17,6 +17,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MIL_AutomateLOG.h"
 
+template < typename T > class PHY_ActionLogistic;
+
 // =============================================================================
 // @class  MIL_AgentPionType
 // Created: JVT 2004-08-03
@@ -42,6 +44,14 @@ public:
     virtual const MIL_AutomateLOG& GetAutomate() const;
     virtual       MIL_AutomateLOG& GetAutomate();
     //@}
+
+    //! @name Operations
+    //@{
+    void UpdateLogistic(); // Called by the 'PHY_ActionLogistic' action 
+    //@}
+
+private:
+    PHY_ActionLogistic< MIL_AgentPionLOG_ABC >* pLogisticAction_;
 };
 
 #include "MIL_AgentPionLOG_ABC.inl"

@@ -666,6 +666,9 @@ void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
 
+    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
+        itAutomate->second->UpdateActions();
+
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->UpdateActions();
 
@@ -697,7 +700,7 @@ void MIL_EntityManager::UpdateStates()
 {
     profiler_.Start();
 
-    // !! Automate avant Pions
+    // !! Automate avant Pions (?? => LOG ??)
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->UpdateState();
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )

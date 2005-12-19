@@ -266,6 +266,15 @@ void PHY_RolePionLOG_Supply::Update( bool /*bIsDead*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::UpdateLogistic
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::UpdateLogistic( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::Clean
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------

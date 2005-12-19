@@ -115,14 +115,11 @@ void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 bool PHY_StockConvoy::Form()
 {
-    if( !PHY_Convoy_ABC::Form() )
-        return false;
-
     assert( pConvoyAgentType_ );
     assert( !pPionConvoy_ );
     assert( pConsign_ );
     
-    pPionConvoy_ = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pConvoyAgentType_, pConsign_->GetSupplyingAutomate(), pConsign_->GetSupplyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() );
+    pPionConvoy_ = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate(), pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() );
     pPionConvoy_->GetRole< PHY_RolePion_Supply >().AssignConvoy( *this );
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
         it->second->LendTo( *pPionConvoy_ );
@@ -163,13 +160,43 @@ void PHY_StockConvoy::DesactivateConvoyMission()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_StockConvoy::Supply
-// Created: NLD 2005-02-10
+// Name: PHY_StockConvoy::Load
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool PHY_StockConvoy::Supply()
+bool PHY_StockConvoy::Load()
 {
     assert( pConsign_ );
-    return pConsign_->ConvoySupply();
+    return pConsign_->ConvoyLoad();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_StockConvoy::Unload
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_StockConvoy::Unload()
+{
+    assert( pConsign_ );
+    return pConsign_->ConvoyUnload();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_StockConvoy::IsLoadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_StockConvoy::IsLoadingDone() const
+{
+    assert( pConsign_ );
+    return pConsign_->IsLoadingDone();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_StockConvoy::IsUnloadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_StockConvoy::IsUnloadingDone() const
+{
+    assert( pConsign_ );
+    return pConsign_->IsUnloadingDone();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,31 +209,5 @@ void PHY_StockConvoy::EndMission()
     return pConsign_->ConvoyEndMission();
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_StockConvoy::IsSupplyDone
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-bool PHY_StockConvoy::IsSupplyDone() const
-{
-    assert( pConsign_ );
-    return pConsign_->IsSupplyDone();
-}
 
-// =============================================================================
-// EVENTS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_StockConvoy::NotifyComposanteChanged
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-void PHY_StockConvoy::NotifyComposanteChanged( PHY_ComposantePion& composante )
-{
-    CIT_ConveyorMap itConveyor = conveyors_.find( &composante );
-    if( itConveyor == conveyors_.end() )
-        return;
-
-    assert( pConsign_ );
-    itConveyor->second->NotifyComposanteChanged( *pConsign_ );
-}
  

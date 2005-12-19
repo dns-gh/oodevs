@@ -244,12 +244,12 @@ void MIL_ItineraireLogistique::Serialize( HLA_UpdateFunctor& functor ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ItineraireLogistique::CanInteractWithAgent
+// Name: MIL_ItineraireLogistique::CanInteractWith
 // Created: NLD 2005-02-18
 // -----------------------------------------------------------------------------
-bool MIL_ItineraireLogistique::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_ItineraireLogistique::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
     if( !bEquipped_ )
         return false;
-    return MIL_RealObject_ABC::CanInteractWithAgent( agent );
+    return MIL_RealObject_ABC::CanInteractWith( agent );
 }

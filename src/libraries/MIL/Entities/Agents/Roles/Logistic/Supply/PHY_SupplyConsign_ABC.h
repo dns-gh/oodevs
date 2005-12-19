@@ -27,7 +27,7 @@ class PHY_SupplyConsign_ABC
     MT_COPYNOTALLOWED( PHY_SupplyConsign_ABC )
 
 public:
-             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate );
+             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, MIL_AutomateLOG& convoyingAutomate );
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
 
@@ -47,15 +47,20 @@ public:
 
     //! @name Accessors
     //@{
-                  MIL_AutomateLOG& GetSupplyingAutomate  () const;
-    virtual const MIL_Automate*    GetSuppliedAutomate   () const = 0;
-    virtual       void             GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const = 0;
+                  MIL_AutomateLOG& GetSupplyingAutomate                () const;
+                  MIL_AutomateLOG& GetConvoyingAutomate                () const;
+    virtual const MIL_Automate*    GetSuppliedAutomate                 () const = 0;
+    virtual       void             GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const = 0;
+    virtual       void             RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual       void             AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual       void             CancelMerchandiseOverheadReservation() = 0;
     //@}
 
     //! @name Network
     //@{
             void SendChangedState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const;
     virtual void SendFullState   ( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn ) const;
+    static  void SendDefaultState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn );
     //@}
 
 protected:
@@ -63,11 +68,14 @@ protected:
     //@{
     enum E_State
     {
+        eConvoyWaitingForTransporters,
+        eConvoyWaitingForCommander,
         eConvoyForming,
+        eConvoyGoingToLoadingPoint,
         eConvoyLoading,
-        eConvoyGoingTo,
+        eConvoyGoingToUnloadingPoint,
         eConvoyUnloading,
-        eConvoyGoingFrom,
+        eConvoyGoingBackToFormingPoint,
         eFinished
     };
     //@}
@@ -78,10 +86,11 @@ protected:
     E_State GetState() const;
     void    SetState( E_State nNewState );    
     void    DoSupply();
-    //@}
+    //@} 
 
 private:
     MIL_AutomateLOG* pSupplyingAutomate_;
+    MIL_AutomateLOG* pConvoyingAutomate_;
     E_State          nState_;
     bool             bHasChanged_;
 

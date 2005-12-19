@@ -49,24 +49,25 @@ public:
     
     //! @name Operations
     //@{
-    virtual bool Form();
+    bool Form();
     //@}
 
-    //! @name Real convoy operations
+    //! @name 'Real' convoy operations
     //@{
     const MIL_AgentPion* GetPionConvoy           () const;
           void           ActivateConvoyMission   ();
           void           DesactivateConvoyMission();
-          bool           Supply                  ();
-          void           EndMission              ();
-          bool           IsSupplyDone            () const;
     //@}
 
-    //! @name Events
+    //! @name Script operations
     //@{
-    void NotifyComposanteChanged( PHY_ComposantePion& composante );
+    bool Load           ();
+    bool Unload         ();
+    void EndMission     ();
+    bool IsLoadingDone  () const;
+    bool IsUnloadingDone() const;
     //@}
-    
+   
 private:
     PHY_SupplyStockConsign* pConsign_;
     MIL_AgentPion*          pPionConvoy_;

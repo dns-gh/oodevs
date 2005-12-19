@@ -1,26 +1,26 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoySupply.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyLoad.cpp $
 // $Author: Nld $
 // $Modtime: 10/02/05 10:59 $
 // $Revision: 1 $
-// $Workfile: PHY_ActionConvoySupply.cpp $
+// $Workfile: PHY_ActionConvoyLoad.cpp $
 //
 // *****************************************************************************
 
 #include "MIL_pch.h"
 
-#include "PHY_ActionConvoySupply.h"
+#include "PHY_ActionConvoyLoad.h"
 
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionConvoySupply constructor
+// Name: PHY_ActionConvoyLoad constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConvoySupply::PHY_ActionConvoySupply( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
+PHY_ActionConvoyLoad::PHY_ActionConvoyLoad( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
     : PHY_Action_ABC( pion, diaCall )
     , role_         ( pion.GetRole< PHY_RolePion_Supply >() )
     , diaReturnCode_( diaCall.GetParameter( 0 ) )
@@ -29,10 +29,10 @@ PHY_ActionConvoySupply::PHY_ActionConvoySupply( MIL_AgentPion& pion, DIA_Call_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionConvoySupply destructor
+// Name: PHY_ActionConvoyLoad destructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConvoySupply::~PHY_ActionConvoySupply()
+PHY_ActionConvoyLoad::~PHY_ActionConvoyLoad()
 {
     diaReturnCode_.SetValue( true );
 }
@@ -42,20 +42,20 @@ PHY_ActionConvoySupply::~PHY_ActionConvoySupply()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionConvoySupply::Execute
+// Name: PHY_ActionConvoyLoad::Execute
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-void PHY_ActionConvoySupply::Execute()
+void PHY_ActionConvoyLoad::Execute()
 {   
-    bool bResult = role_.ConvoySupply();
+    bool bResult = role_.ConvoyLoad();
     diaReturnCode_.SetValue( bResult );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionConvoySupply::ExecuteSuspended
+// Name: PHY_ActionConvoyLoad::ExecuteSuspended
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_ActionConvoySupply::ExecuteSuspended()
+void PHY_ActionConvoyLoad::ExecuteSuspended()
 {
     // NOTHING
 }

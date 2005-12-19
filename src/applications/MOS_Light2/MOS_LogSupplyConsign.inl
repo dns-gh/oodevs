@@ -37,13 +37,13 @@ MOS_Agent& MOS_LogSupplyConsign::GetPion() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_LogSupplyConsign::GetPionLogHandling
+// Name: MOS_LogSupplyConsign::GetAutomateLogHandling
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
 inline
-MOS_Agent* MOS_LogSupplyConsign::GetPionLogHandling() const
+MOS_Agent* MOS_LogSupplyConsign::GetAutomateLogHandling() const
 {
-    return pPionLogHandling_;
+    return pAutomateLogHandling_;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,4 +74,14 @@ inline
 const MOS_LogSupplyConsign::T_DotationMap& MOS_LogSupplyConsign::GetDotations() const
 {
     return dotations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_LogSupplyConsign::GetAutomateLogProvidingConvoyResources
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+inline
+MOS_Agent* MOS_LogSupplyConsign::GetAutomateLogProvidingConvoyResources() const
+{
+    return pAutomateLogProvidingConvoyResources_;
 }

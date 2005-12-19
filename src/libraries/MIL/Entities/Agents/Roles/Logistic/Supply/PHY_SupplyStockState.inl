@@ -28,10 +28,20 @@ void PHY_SupplyStockState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
 inline
-const MIL_AutomateLOG& PHY_SupplyStockState::GetSuppliedAutomate() const
+MIL_AutomateLOG& PHY_SupplyStockState::GetSuppliedAutomate() const
 {
     assert( pSuppliedAutomate_ );
     return *pSuppliedAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::IsPushedFlow
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+inline
+bool PHY_SupplyStockState::IsPushedFlow() const
+{
+    return bPushedFlow_;
 }
 
 // -----------------------------------------------------------------------------

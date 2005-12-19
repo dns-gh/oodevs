@@ -61,6 +61,17 @@ MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetSupplyingAutomate() const
     return *pSupplyingAutomate_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyConsign_ABC::GetConvoyingAutomate
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+inline
+MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetConvoyingAutomate() const
+{
+    assert( pConvoyingAutomate_ );
+    return *pConvoyingAutomate_;
+}
+
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
@@ -72,6 +83,7 @@ template< typename Archive >
 void PHY_SupplyConsign_ABC::serialize( Archive& file, const uint )
 {
     file & pSupplyingAutomate_
+         & pConvoyingAutomate_
          & nTimer_
          & nState_;
 }

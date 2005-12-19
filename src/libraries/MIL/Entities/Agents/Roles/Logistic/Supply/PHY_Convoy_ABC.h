@@ -44,23 +44,33 @@ public:
              PHY_Convoy_ABC();
     virtual ~PHY_Convoy_ABC();
 
-    //! @name 
+    //! @name Checkpoints
     //@{
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
     
     //! @name Operations
     //@{
-    virtual bool Form();
-    //@}
+    bool ReserveCommander   ();
+    bool ReserveTransporters();
+    //@}                
 
     //! @name Accessors
     //@{
     const MIL_Automate* GetSuppliedAutomate() const;
-    uint                GetLoadingTime     () const;
-    uint                GetUnloadingTime   () const;
+          uint          GetFormingTime     () const;
+          uint          GetLoadingTime     () const;
+          uint          GetUnloadingTime   () const;
+    const MT_Vector2D&  GetLoadingPoint    () const;
+    const MT_Vector2D&  GetUnloadingPoint  () const;
+    const MT_Vector2D&  GetFormingPoint    () const;
     //@}
 
+    //! @name Events
+    //@{
+    void NotifyConveyorDestroyed( PHY_ComposantePion& composante );
+   //@}
+ 
 public:
     //! @name Types
     //@{
@@ -69,10 +79,14 @@ public:
     //@}
 
 protected:
-    const PHY_SupplyConsign_ABC* pConsign_;
-          T_ConveyorMap          conveyors_;
-          PHY_ComposantePion*    pCommanderComp_;
-          MIL_AgentPion*         pCommanderPion_;
+    PHY_SupplyConsign_ABC* pConsign_;
+    T_ConveyorMap          conveyors_;
+    PHY_ComposantePion*    pCommanderComp_;
+    MIL_AgentPion*         pCommanderPion_;
+
+    MT_Vector2D            formingPoint_;
+    MT_Vector2D            loadingPoint_;
+    MT_Vector2D            unloadingPoint_;
 
 private:
     //! @name Tools
@@ -87,9 +101,6 @@ private:
     static void InitializeConvoyMission ( MIL_InputArchive& archive );
     static void InitializeFormingTimes  ( MIL_InputArchive& archive );
     //@}
-
-private:
-    uint nFormingTime_;
 
 protected:
     static       MT_InterpolatedFunction< MT_Float > formingTime_;

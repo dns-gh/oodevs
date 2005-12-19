@@ -17,7 +17,7 @@
 class PHY_ComposantePion;
 class MIL_AgentPion;
 class PHY_DotationCategory;
-class PHY_SupplyStockConsign;
+class PHY_SupplyConsign_ABC;
 
 // =============================================================================
 // @class  PHY_Conveyor
@@ -34,8 +34,9 @@ public:
 
     //! @name Dotations
     //@{
-    MT_Float ConvoyDotations( const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy ); // Return the nb convoyed
-    bool     IsFull         () const;
+    MT_Float Convoy                 ( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy ); // Return the nb convoyed
+    bool     IsFull                 () const;
+    void     NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign );
     //@}
 
     //! @name Lend
@@ -49,7 +50,7 @@ public:
     uint GetLoadingTime         () const;
     uint GetUnloadingTime       () const;
     uint ApproximateTravelTime  ( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );
-    void NotifyComposanteChanged( PHY_SupplyStockConsign& stockConsign );
+    
     //@}
 
     //! @name Serialization

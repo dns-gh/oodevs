@@ -100,21 +100,30 @@ void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
 // TOOLS
 //=============================================================================
 // ----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::CanCollideWithAgent
+// Name: MIL_Object_ABC::CanCollideWithEntity
 // Created: NLD 2003-09-02
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanCollideWithAgent( const MIL_Agent_ABC& /*agent*/ ) const
+bool MIL_Object_ABC::CanCollideWithEntity() const
 {
     return !IsMarkedForDestruction();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::CanInteractWithAgent
+// Name: MIL_Object_ABC::CanInteractWith
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& /*agent*/ ) const
 {
-    return CanCollideWithAgent( agent );
+    return CanCollideWithEntity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::CanInteractWith
+// Created: NLD 2005-12-10
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::CanInteractWith( const MIL_Population& /*population*/ ) const
+{
+    return CanCollideWithEntity();
 }
 
 // =============================================================================
@@ -127,7 +136,7 @@ bool MIL_Object_ABC::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    if( !CanCollideWithAgent( agent ) )
+    if( !CanCollideWithEntity() )
         return;
 
     if( agentInsideSet_.insert( &agent ).second )
@@ -152,7 +161,7 @@ void MIL_Object_ABC::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 {
-    if( !CanCollideWithAgent( agent ) )
+    if( !CanCollideWithEntity() )
         return;
 
     if( agentInsideSet_.insert( &agent ).second )

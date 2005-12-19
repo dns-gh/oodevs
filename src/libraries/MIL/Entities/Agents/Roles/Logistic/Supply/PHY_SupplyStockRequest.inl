@@ -9,32 +9,3 @@
 //
 // *****************************************************************************
 
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequest::GetSupplyingAutomate
-// Created: NLD 2005-02-02
-// -----------------------------------------------------------------------------
-inline
-MIL_AutomateLOG* PHY_SupplyStockRequest::GetSupplyingAutomate() const
-{
-    return pSupplyingAutomate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequest::GetTotalRequestedValue
-// Created: NLD 2005-02-02
-// -----------------------------------------------------------------------------
-inline
-MT_Float PHY_SupplyStockRequest::GetTotalRequestedValue() const
-{
-    return rTotalRequestedValue_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockRequest::GetTotalReservedValue
-// Created: NLD 2005-02-04
-// -----------------------------------------------------------------------------
-inline
-MT_Float PHY_SupplyStockRequest::GetTotalReservedValue() const
-{
-    return rTotalReservedValue_;
-}

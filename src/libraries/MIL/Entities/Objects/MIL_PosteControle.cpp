@@ -63,7 +63,7 @@ void MIL_PosteControle::ProcessAgentInside( MIL_Agent_ABC& agent )
     MIL_RealObject_ABC::ProcessAgentInside( agent );
 
     const T_AgentSet& animators = GetAnimators();
-    if( !CanInteractWithAgent( agent ) || GetConstructionPercentage() < 1. || animators.empty() )
+    if( !CanInteractWith( agent ) || GetConstructionPercentage() < 1. || animators.empty() )
         return;
     
     //$$$$$ NotifyAgentExternalPerception() A GICLER  - remplacer par perception::AddPerceptionLocalisationBlabla()

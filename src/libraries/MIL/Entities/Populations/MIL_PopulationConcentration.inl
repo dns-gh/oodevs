@@ -96,3 +96,24 @@ bool MIL_PopulationConcentration::CanBePerceived() const
 {
     return IsValid();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetPullingFlowsDensity
+// Created: NLD 2005-12-11
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
+{
+    return rPullingFlowsDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::SetPullingFlowsDensity
+// Created: NLD 2005-12-11
+// -----------------------------------------------------------------------------
+inline
+void MIL_PopulationConcentration::SetPullingFlowsDensity( MT_Float rValue )
+{
+    assert( rValue > 0. );
+    rPullingFlowsDensity_ = rValue;
+}

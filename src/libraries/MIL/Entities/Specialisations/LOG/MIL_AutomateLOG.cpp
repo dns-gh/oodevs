@@ -27,6 +27,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/RC/MIL_RC_AllocationConsentieBientotEpuisee.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -44,9 +45,11 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
     , stockQuotas_                ()
     , supplyConsigns_             ()
     , bStockSupplyNeeded_         ( false )
-    , pStockSupplyState_          ( 0 )
+    , pExplicitStockSupplyState_  ( 0 )
+    , pushedFlowsSupplyStates_    ()
     , bQuotasHaveChanged_         ( false )
     , nTickRcStockSupplyQuerySent_( 0 )
+    , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
     
 }
@@ -63,9 +66,11 @@ MIL_AutomateLOG::MIL_AutomateLOG()
     , stockQuotas_                ()
     , supplyConsigns_             ()
     , bStockSupplyNeeded_         ( false )
-    , pStockSupplyState_          ( 0 )
+    , pExplicitStockSupplyState_  ( 0 )
+    , pushedFlowsSupplyStates_    ()
     , bQuotasHaveChanged_         ( false )
     , nTickRcStockSupplyQuerySent_( 0 )
+    , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
 }
 
@@ -75,8 +80,8 @@ MIL_AutomateLOG::MIL_AutomateLOG()
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::~MIL_AutomateLOG()
 {
+    delete pLogisticAction_;
 }
-
 
 // =============================================================================
 // CHEKPOINTS
@@ -138,7 +143,8 @@ void MIL_AutomateLOG::serialize( Archive& file, const uint )
          & stockQuotas_
          & supplyConsigns_
          & bStockSupplyNeeded_
-         & pStockSupplyState_
+         & pExplicitStockSupplyState_
+         & pushedFlowsSupplyStates_
          & nTickRcStockSupplyQuerySent_;
 }
     
@@ -627,12 +633,11 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyCommander( PHY_ComposantePion*& pC
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::UpdateState
-// Created: NLD 2005-01-27
+// Name: MIL_AutomateLOG::UpdateLogistic
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::UpdateState()
+void MIL_AutomateLOG::UpdateLogistic()
 {
-    MIL_Automate::UpdateState();
     for( IT_SupplyConsignList it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
     {
         if( (**it).Update() )
@@ -643,13 +648,22 @@ void MIL_AutomateLOG::UpdateState()
         else
             ++it;            
     }
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::UpdateState
+// Created: NLD 2005-01-27
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::UpdateState()
+{
+    MIL_Automate::UpdateState();
+    
     // Supply system (TC2->BLD->BLT)
-    if( !bStockSupplyNeeded_ || pStockSupplyState_ || !pSupplySuperior_ )
+    if( !bStockSupplyNeeded_ || pExplicitStockSupplyState_ || !pSupplySuperior_ )
         return;
 
     PHY_SupplyStockRequestContainer supplyRequests( *this );   
-    bStockSupplyNeeded_ = !supplyRequests.Execute( *pSupplySuperior_, pStockSupplyState_ );
+    bStockSupplyNeeded_ = !supplyRequests.Execute( *pSupplySuperior_, pExplicitStockSupplyState_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -660,8 +674,27 @@ void MIL_AutomateLOG::Clean()
 {
     MIL_Automate::Clean();
     bQuotasHaveChanged_ = false;
-    if( pStockSupplyState_ )
-        pStockSupplyState_->Clean();
+    if( pExplicitStockSupplyState_ )
+        pExplicitStockSupplyState_->Clean();
+    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
+        (**it).Clean();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::IsSupplyInProgress
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
+{
+    if( pExplicitStockSupplyState_ && pExplicitStockSupplyState_->IsSupplying( dotationCategory ) )
+        return true;
+    
+    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
+    {
+        if( (**it).IsSupplying( dotationCategory ) )
+            return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -673,7 +706,7 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
     if( bStockSupplyNeeded_ )
         return;
 
-    if( pStockSupplyState_ && pStockSupplyState_->IsSupplying( dotationCategory ) )
+    if( IsSupplyInProgress( dotationCategory ) )
         return;
 
     bStockSupplyNeeded_ = true;
@@ -686,14 +719,30 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::RemoveSupplyStockState
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::RemoveSupplyStockState( const PHY_SupplyStockState& supplyState )
+{
+    if( &supplyState == pExplicitStockSupplyState_ )
+    {
+        pExplicitStockSupplyState_ = 0;
+        return;
+    }
+
+    IT_SupplyStockStateSet it = pushedFlowsSupplyStates_.find( const_cast< PHY_SupplyStockState* >( &supplyState ) );
+    assert( it != pushedFlowsSupplyStates_.end() );
+    pushedFlowsSupplyStates_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::NotifyStockSupplied
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
 {
     MIL_RC::pRcRavitaillementStockEffectue_->Send( *this, MIL_RC::eRcTypeOperational );
-    assert( &supplyState == pStockSupplyState_ );
-    pStockSupplyState_   = 0;    
+    RemoveSupplyStockState( supplyState );
 }
 
 // -----------------------------------------------------------------------------
@@ -702,8 +751,8 @@ void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplySta
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::NotifyStockSupplyCanceled( const PHY_SupplyStockState& supplyState )
 {
-    assert( &supplyState == pStockSupplyState_ );
-    pStockSupplyState_  = 0;
+    //$$$ MIL_RC::
+    RemoveSupplyStockState( supplyState );
     bStockSupplyNeeded_ = true;
 }
 
@@ -730,8 +779,10 @@ MIL_AutomateLOG* MIL_AutomateLOG::GetLogisticAutomate( uint nID )
 void MIL_AutomateLOG::UpdateNetwork() const
 {
     MIL_Automate::UpdateNetwork();
-    if( pStockSupplyState_ )
-        pStockSupplyState_->SendChangedState();
+    if( pExplicitStockSupplyState_ )
+        pExplicitStockSupplyState_->SendChangedState();
+    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
+        (**it).SendChangedState();
 
     if( bQuotasHaveChanged_ )
         SendQuotas();
@@ -771,8 +822,10 @@ void MIL_AutomateLOG::SendQuotas() const
 void MIL_AutomateLOG::SendFullState() const
 {
     MIL_Automate::SendFullState();
-    if( pStockSupplyState_ )
-        pStockSupplyState_->SendFullState();
+    if( pExplicitStockSupplyState_ )
+        pExplicitStockSupplyState_->SendFullState();
+    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
+        (**it).SendFullState();
     SendQuotas();
 }
 
@@ -923,19 +976,15 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
         return;
     }
 
-    if( pStockSupplyState_ )
-    {
-        asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementPousserFluxAck::error_ravitaillement_en_cours;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
-
     PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks );
-    supplyRequests.Execute( *pSupplySuperior_, pStockSupplyState_ );
+
+    PHY_SupplyStockState* pSupplyState = 0;
+    supplyRequests.Execute( *pSupplySuperior_, pSupplyState );
+    if( pSupplyState )
+        pushedFlowsSupplyStates_.insert( pSupplyState );
 
     asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementPousserFluxAck::no_error;
     asnReplyMsg.Send( nCtx );
-    bQuotasHaveChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

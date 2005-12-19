@@ -38,7 +38,7 @@ bool PHY_RolePion_Composantes::HasChanged() const
 inline
 bool PHY_RolePion_Composantes::IsUsable() const
 {
-    return nNbrUsableComposantes_ > 0; 
+    return nNbrUsableComposantes_ > 0 || !lentComposantes_.empty();
 }
 
 // -----------------------------------------------------------------------------

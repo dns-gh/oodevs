@@ -44,8 +44,9 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Update( bool bIsDead );
-    virtual void Clean ();
+    virtual void Update        ( bool bIsDead );
+    virtual void UpdateLogistic( bool bIsDead );
+    virtual void Clean         ();
     //@}
 
     //! @name Init
@@ -84,12 +85,17 @@ public:
 
     //! @name Convoy
     //@{
-    virtual       void          AssignConvoy             ( PHY_StockConvoy& convoy );
-    virtual       void          UnassignConvoy           ( PHY_StockConvoy& convoy );
-    virtual       bool          ConvoySupply             () const;
-    virtual       bool          ConvoyIsSupplyDone       () const;
-    virtual const MIL_Automate* ConvoyGetSuppliedAutomate() const;
-    virtual       void          ConvoyEndMission         ();
+    virtual       void               AssignConvoy           ( PHY_StockConvoy& convoy );
+    virtual       void               UnassignConvoy         ( PHY_StockConvoy& convoy );
+
+    virtual       bool               ConvoyLoad             () const;
+    virtual       bool               ConvoyUnload           () const;
+    virtual       bool               ConvoyIsLoadingDone    () const;
+    virtual       bool               ConvoyIsUnloadingDone  () const;
+    virtual       const MT_Vector2D* ConvoyGetFormingPoint  () const; 
+    virtual       const MT_Vector2D* ConvoyGetLoadingPoint  () const; 
+    virtual       const MT_Vector2D* ConvoyGetUnloadingPoint() const; 
+    virtual       void               ConvoyEndMission       ();
     //@}
 
     //! @name Network

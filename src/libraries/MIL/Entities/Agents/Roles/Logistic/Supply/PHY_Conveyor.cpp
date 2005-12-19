@@ -125,29 +125,31 @@ void PHY_Conveyor::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Conveyor::ConvoyDotations
+// Name: PHY_Conveyor::Convoy
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
-MT_Float PHY_Conveyor::ConvoyDotations( const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy )
+MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy )
 {
     MT_Float rVolumeToConvoy = std::min( rVolumeCapacity_, rNbrToConvoy * dotationCategory.GetVolume() );
     MT_Float rWeightToConvoy = std::min( rWeightCapacity_, rNbrToConvoy * dotationCategory.GetWeight() );
 
     MT_Float rNbrConvoyed = 0.;
-    if( rVolumeToConvoy > rWeightToConvoy )
+    if( rWeightToConvoy > rVolumeToConvoy )
     {
-        rNbrConvoyed      = rWeightToConvoy / dotationCategory.GetWeight();
+        rNbrConvoyed      = std::min( rNbrToConvoy, rWeightToConvoy / dotationCategory.GetWeight() ); // min for precision errors
         rWeightCapacity_ -= rWeightToConvoy;
         rVolumeCapacity_ -= ( rNbrConvoyed * dotationCategory.GetVolume() );
     }
     else
     {
-        rNbrConvoyed      = rVolumeToConvoy / dotationCategory.GetVolume();                
+        rNbrConvoyed      = std::min( rNbrToConvoy, rVolumeToConvoy / dotationCategory.GetVolume() ); // min for precision errors
         rVolumeCapacity_ -= rVolumeToConvoy;
         rWeightCapacity_ -= ( rNbrConvoyed * dotationCategory.GetWeight() );               
     }
 
     dotationsConvoyed_[ &dotationCategory ] += rNbrConvoyed;
+
+    consign.AddConvoyedMerchandise( dotationCategory, rNbrConvoyed );
 
     return rNbrConvoyed;
 }
@@ -181,13 +183,13 @@ void PHY_Conveyor::UndoLend()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Conveyor::NotifyComposanteChanged
+// Name: PHY_Conveyor::NotifyConveyorDestroyed
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
-void PHY_Conveyor::NotifyComposanteChanged( PHY_SupplyStockConsign& stockConsign )
+void PHY_Conveyor::NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign )
 {
     for( CIT_DotationMap it = dotationsConvoyed_.begin(); it != dotationsConvoyed_.end(); ++it )
-        stockConsign.RemoveConvoyedStock( *it->first, it->second );
+        consign.RemoveConvoyedMerchandise( *it->first, it->second );
     dotationsConvoyed_.clear();
 }
 

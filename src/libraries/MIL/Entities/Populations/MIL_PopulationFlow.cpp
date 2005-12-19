@@ -27,6 +27,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -104,6 +105,30 @@ MIL_PopulationFlow::~MIL_PopulationFlow()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::ComputePath
+// Created: NLD 2005-12-11
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
+{
+    if( pCurrentPath_ )
+    {
+        pCurrentPath_->Cancel();
+        pCurrentPath_->DecRef();
+        pCurrentPath_ = 0;
+    }
+
+    pCurrentPath_ = new DEC_Population_Path( *this, destination );
+    pCurrentPath_->IncRef();
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pCurrentPath_ );
+
+    if( pDestConcentration_ )
+    {
+        pDestConcentration_->UnregisterPushingFlow( *this );
+        pDestConcentration_ = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::MagicMove
 // Created: NLD 2005-12-06
 // -----------------------------------------------------------------------------
@@ -134,23 +159,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
     if( destination != destination_ )
     {
         destination_ = destination;
-
-        if( pCurrentPath_ )
-        {
-            pCurrentPath_->Cancel();
-            pCurrentPath_->DecRef();
-            pCurrentPath_ = 0;
-        }
-
-        pCurrentPath_ = new DEC_Population_Path( *this, destination_ );
-        pCurrentPath_->IncRef();
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( *pCurrentPath_ );
-
-        if( pDestConcentration_ )
-        {
-            pDestConcentration_->UnregisterPushingFlow( *this );
-            pDestConcentration_ = 0;
-        }
+        ComputePath( destination_ );
     }
 
     assert( pCurrentPath_ );
@@ -235,11 +244,26 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float /*rWalkedDistance*/ )
 {
+    const MT_Float rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+
+    //$$ TMP
+    MT_Float rNbrHumans = 0.;
+    if( pSourceConcentration_ )
+        rNbrHumans = rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity();
+    else
+    {
+        const MT_Float rArea = GetLocation().GetArea();
+        if( rArea )
+            rNbrHumans = rWalkedDistance * ( GetNbrHumans() / rArea );
+        else
+            rNbrHumans = GetNbrHumans();
+    }
+
+    if( rNbrHumans == 0. )
+        return;
+
     SetDirection( direction );
     SetSpeed    ( rSpeed    );
-    const MT_Float rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
-    const MT_Float rNbrHumans      = rWalkedDistance * GetPopulation().GetDefaultFlowDensity(); // Nombre d'humains deplacés
-    // $$$ GetDensity() ??
 
     // Head management
     SetHeadPosition( position );
@@ -262,6 +286,17 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
 
     if( bFlowShapeUpdated_ || HasHumansChanged() )
         UpdateDensity();
+
+    //$$$ TEST 
+    if( bSplit_ && !pDestConcentration_ )
+    {
+        ComputePath( GetHeadPosition() );
+
+        pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
+        pDestConcentration_->SetPullingFlowsDensity( 1. );
+        pDestConcentration_->RegisterPushingFlow( *this );
+        pDestConcentration_->Move( destination_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -305,6 +340,24 @@ void MIL_PopulationFlow::UpdateLocation()
 void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 {
     agent.GetRole< PHY_RoleInterface_Location >().NotifyPopulationCollision( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::NotifyMovingOutsideObject
+// Created: NLD 2005-12-10
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
+{
+	bSplit_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanObjectInteractWith
+// Created: NLD 2005-10-03
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) const
+{
+    return object.CanInteractWith( GetPopulation() );
 }
 
 // =============================================================================

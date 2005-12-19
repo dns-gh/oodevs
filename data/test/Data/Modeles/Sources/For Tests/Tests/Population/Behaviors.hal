@@ -68,7 +68,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
             actionMove = DEC_StartDeplacement( mission.destination_ );
             actionFire = DEC_StartTirSurPions( 1 );
         }
-        
+     /*   
         if( rDummy == 53 )
         {
             DEC_StopAction( actionMove );
@@ -76,7 +76,7 @@ behavior MIS_Population_FaireMouvement( T_Mission_Population_FaireMouvement miss
             actionMove = DEC_StartDeplacement( pointFusse );
             
         }
-        ++ rDummy;
+        ++ rDummy;*/
     }
 
     on spontaneous end:

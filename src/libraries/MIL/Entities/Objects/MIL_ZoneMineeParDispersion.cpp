@@ -114,6 +114,6 @@ void MIL_ZoneMineeParDispersion::Initialize( MIL_Army& army, const TER_Localisat
 void MIL_ZoneMineeParDispersion::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentMovingInside( agent );
-    if( !IsBypassed() && CanInteractWithAgent( agent ) )
+    if( !IsBypassed() && CanInteractWith( agent ) )
         ApplyAttrition( agent );
 }

@@ -26,9 +26,10 @@ BOOST_CLASS_EXPORT_GUID( PHY_SupplyStockState, "PHY_SupplyStockState" )
 // Name: PHY_SupplyStockState::PHY_SupplyStockState
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate )
+PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow )
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( &suppliedAutomate )
+    , bPushedFlow_       ( bPushedFlow )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
@@ -43,6 +44,7 @@ PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate )
 PHY_SupplyStockState::PHY_SupplyStockState()
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( 0 )
+    , bPushedFlow_       ( false )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
@@ -123,6 +125,7 @@ void PHY_SupplyStockState::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
          & pSuppliedAutomate_
+         & bPushedFlow_
          & pConsign_
          & requests_;
 }
@@ -143,6 +146,44 @@ void PHY_SupplyStockState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& con
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::RemoveConvoyedMerchandise
+// Created: NLD 2005-02-10
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+{
+    IT_RequestMap it = requests_.find( &dotationCategory );
+    if( it == requests_.end() )
+        return;
+    
+    it->second.RemoveConvoyedMerchandise( rNbrDotations );
+    bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::AddConvoyedMerchandise
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+{
+    IT_RequestMap it = requests_.find( &dotationCategory );
+    if( it == requests_.end() )
+        return;
+    
+    it->second.AddConvoyedMerchandise( rNbrDotations );
+    bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::CancelMerchandiseOverheadReservation
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyStockState::CancelMerchandiseOverheadReservation()
+{
+    for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
+        it->second.CancelMerchandiseOverheadReservation();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockState::Supply
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
@@ -151,7 +192,11 @@ void PHY_SupplyStockState::Supply() const
     assert( pSuppliedAutomate_ );
     pSuppliedAutomate_->NotifyStockSupplied( *this );
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
+    {
         it->second.Supply();
+        if( !bPushedFlow_ )
+            pSuppliedAutomate_->ConsumeQuota( it->second.GetDotationCategory(), it->second.GetTotalConvoyedValue() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -164,20 +209,6 @@ void PHY_SupplyStockState::CancelSupply()
     pSuppliedAutomate_->NotifyStockSupplyCanceled( *this );
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         it->second.Cancel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::RemoveConvoyedStock
-// Created: NLD 2005-02-10
-// -----------------------------------------------------------------------------
-void PHY_SupplyStockState::RemoveConvoyedStock( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
-{
-    IT_RequestMap it = requests_.find( &dotationCategory );
-    if( it == requests_.end() )
-        return;
-    
-    it->second.RemoveConvoyedStock( rNbrDotations );
-        bRequestsChanged_ = true;
 }
 
 // =============================================================================
@@ -212,7 +243,6 @@ void PHY_SupplyStockState::SendMsgCreation() const
     delete [] asn.GetAsnMsg().dotations.elem;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockState::SendFullState
 // Created: NLD 2004-12-29
@@ -228,14 +258,7 @@ void PHY_SupplyStockState::SendFullState() const
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
-    {
-        asn.GetAsnMsg().m.oid_pion_log_traitantPresent = 1;
-        asn.GetAsnMsg().m.oid_pion_convoiPresent       = 1;
-        asn.GetAsnMsg().m.etatPresent                  = 1;
-        asn.GetAsnMsg().oid_pion_convoi                = 0;
-        asn.GetAsnMsg().oid_pion_log_traitant          = 0;
-        asn.GetAsnMsg().etat                           = EnumLogRavitaillementTraitementEtat::termine;
-    }
+        PHY_SupplyConsign_ABC::SendDefaultState( asn );
     asn.Send();
 }
 
@@ -259,12 +282,7 @@ void PHY_SupplyStockState::SendChangedState() const
         if( pConsign_ )
             pConsign_->SendChangedState( asn );
         else
-        {
-            asn.GetAsnMsg().m.oid_pion_log_traitantPresent = 1;
-            asn.GetAsnMsg().m.etatPresent                  = 1;
-            asn.GetAsnMsg().oid_pion_log_traitant          = 0;
-            asn.GetAsnMsg().etat                           = EnumLogRavitaillementTraitementEtat::termine;
-        }
+            PHY_SupplyConsign_ABC::SendDefaultState( asn );
     }
 
     if( bRequestsChanged_ )

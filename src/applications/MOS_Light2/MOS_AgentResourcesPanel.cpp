@@ -144,7 +144,7 @@ void MOS_AgentResourcesPanel::OnAgentUpdated( MOS_Agent& agent )
         QListViewItem* pItem = lends_[ n4 ];
         const MOS_AgentComposition::T_Lend& lend = composition.lends_[ n4 ];
         pItem->setText( 0, QString::number( lend.nBorrowerId_ ) );
-        pItem->setText( 1, MOS_App::GetApp().GetResourceName( lend.nBorrowerId_ ).c_str() );
+        pItem->setText( 1, MOS_App::GetApp().GetEquipmentName( lend.nEquipment_ ).c_str() );
         pItem->setText( 2, QString::number( lend.nQuantity_ ) );
     }
 }

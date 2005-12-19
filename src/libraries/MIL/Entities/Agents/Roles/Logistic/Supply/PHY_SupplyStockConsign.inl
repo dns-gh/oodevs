@@ -10,12 +10,22 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockConsign::IsSupplyDone
-// Created: NLD 2005-02-10
+// Name: PHY_SupplyStockConsign::IsLoadingDone
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
 inline
-bool PHY_SupplyStockConsign::IsSupplyDone() const
+bool PHY_SupplyStockConsign::IsLoadingDone() const
 {
-    return GetState() == eConvoyGoingFrom;
+    return GetState() == eConvoyGoingToUnloadingPoint;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockConsign::IsUnloadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+inline
+bool PHY_SupplyStockConsign::IsUnloadingDone() const
+{
+    return GetState() == eConvoyGoingBackToFormingPoint;
 }
 

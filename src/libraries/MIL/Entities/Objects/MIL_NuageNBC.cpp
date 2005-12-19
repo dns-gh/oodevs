@@ -186,7 +186,7 @@ void MIL_NuageNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
 
-    if( CanInteractWithAgent( agent ) )
+    if( CanInteractWith( agent ) )
         agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
 }
 
@@ -198,7 +198,7 @@ void MIL_NuageNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
 
-    if( CanInteractWithAgent( agent ) )
+    if( CanInteractWith( agent ) )
         agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
 }
 

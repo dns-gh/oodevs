@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 
+#include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Orders/Automate/MIL_AutomateOrderManager.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard.h"
 #include "Knowledge/DEC_KS_AutomateQuerier.h"
@@ -38,7 +39,7 @@ class NET_ASN_MsgAutomateCreation;
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_Automate
+class MIL_Automate : public PHY_Actor
 {
     MT_COPYNOTALLOWED( MIL_Automate )
 

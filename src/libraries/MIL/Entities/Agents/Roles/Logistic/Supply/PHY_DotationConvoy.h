@@ -44,8 +44,16 @@ public:
     //@}
 
     //! @name Operations
+    //@{    
+    uint GetTravelTimeToLoadingPoint  () const;
+    uint GetTravelTimeToUnloadingPoint() const;
+    uint GetTravelTimeToFormingPoint  () const;
+    //@}
+
+private:
+    //! @name Tools
     //@{
-    uint GetTravelTime   () const;
+    uint GetTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     //@}
 };
 

@@ -24,18 +24,20 @@ MOS_LogSupplyConsign_ListView_Item::MOS_LogSupplyConsign_ListView_Item( QListVie
     : QListViewItem                ( pParent, "Fusse" )
     , pConsign_                    ( &consign )
     , pListViewItemPion_           ( 0 )
-    , pListViewItemLogPionHandling_( 0 )
+    , pListViewItemLogAutomateHandling_( 0 )
+    , pListViewItemLogAutomateProvidingConvoyResources_( 0 )
     , pListViewItemState_          ( 0 )
     , pListViewItemDotations_      ( 0 )
 {
     // Label
     setText( 0, tr( "Consigne " ) + itostring( pConsign_->GetID() ).c_str() );
 
-    pListViewItemPion_             = new QListViewItem( this                                , tr( "ID Automate demandeur : " ) + consign.GetPion().GetName().c_str() );
-    pListViewItemLogPionHandling_  = new QListViewItem( this, pListViewItemPion_            , tr( "Pas de pion log. traitant la consigne" ) );
-    pListViewItemLogPionConvoying_ = new QListViewItem( this, pListViewItemLogPionHandling_ , tr( "Pas de pion log. convoyant la consigne" ) );
-    pListViewItemState_            = new QListViewItem( this, pListViewItemLogPionConvoying_, "" );
-    pListViewItemDotations_        = new QListViewItem( this, pListViewItemState_           , tr( "Dotations demandées/accordées" ) );
+    pListViewItemPion_                                = new QListViewItem( this                                                    , tr( "ID Automate demandeur : " ) + consign.GetPion().GetName().c_str() );
+    pListViewItemLogAutomateHandling_                 = new QListViewItem( this, pListViewItemPion_                                , tr( "Pas d'automate log traitant la consigne" ) );
+    pListViewItemLogAutomateProvidingConvoyResources_ = new QListViewItem( this, pListViewItemLogAutomateHandling_                 , tr( "Pas d'automate log fournissant les moyens (camions/chef) du convoi" ) );
+    pListViewItemLogPionConvoying_                    = new QListViewItem( this, pListViewItemLogAutomateProvidingConvoyResources_ , tr( "Pas de pion convoi" ) );
+    pListViewItemState_                               = new QListViewItem( this, pListViewItemLogPionConvoying_                    , "" );
+    pListViewItemDotations_                           = new QListViewItem( this, pListViewItemState_                               , tr( "Dotations demandées/accordées" ) );
 
     Update();
     setOpen( true );
@@ -56,15 +58,20 @@ MOS_LogSupplyConsign_ListView_Item::~MOS_LogSupplyConsign_ListView_Item()
 //-----------------------------------------------------------------------------
 void MOS_LogSupplyConsign_ListView_Item::Update()
 {
-    if( pConsign_->GetPionLogHandling() )
-        pListViewItemLogPionHandling_->setText( 0, tr( "Pion log. traitant la consigne : " ) + pConsign_->GetPionLogHandling()->GetName().c_str() );
+    if( pConsign_->GetAutomateLogHandling() )
+        pListViewItemLogAutomateHandling_->setText( 0, tr( "Automate traitant la consigne : " ) + pConsign_->GetAutomateLogHandling()->GetName().c_str() );
     else
-        pListViewItemLogPionHandling_->setText( 0, tr( "Pas de pion log. traitant la consigne" ) );
+        pListViewItemLogAutomateHandling_->setText( 0, tr( "Pas d'automate traitant la consigne" ) );
 
     if( pConsign_->GetPionLogConvoying() )
-        pListViewItemLogPionConvoying_->setText( 0, tr( "Pion log. convoyant la consigne : " ) + pConsign_->GetPionLogConvoying()->GetName().c_str() );
+        pListViewItemLogPionConvoying_->setText( 0, tr( "Convoi : " ) + pConsign_->GetPionLogConvoying()->GetName().c_str() );
     else
-        pListViewItemLogPionConvoying_->setText( 0, tr( "Pas de pion log. convoyant la consigne" ) );
+        pListViewItemLogPionConvoying_->setText( 0, tr( "Pas de convoi" ) );
+
+    if( pConsign_->GetAutomateLogProvidingConvoyResources() )
+        pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Automate fournissant les moyens (camions/chef) du convoi : " ) + pConsign_->GetAutomateLogProvidingConvoyResources()->GetName().c_str() );
+    else
+        pListViewItemLogAutomateProvidingConvoyResources_->setText( 0, tr( "Pas d'automate fournissant les moyens (camions/chef) du convoi" ) );
 
     MOS_LogSupplyConsign::E_State nState = pConsign_->GetState();
 
@@ -72,11 +79,17 @@ void MOS_LogSupplyConsign_ListView_Item::Update()
 
     switch( nState ) 
     {     
+        case MOS_LogSupplyConsign::eConvoyWaitingForCommander    : strState = tr( "Convoi en attente d'un chef de convoi" ); break;
+        case MOS_LogSupplyConsign::eConvoyWaitingForTransporters: strState = tr( "Convoi en attente de camions" ); break;
         case MOS_LogSupplyConsign::eConvoyForming    : strState = tr( "Convoi en cours de constitution" ); break;
+        
+        case MOS_LogSupplyConsign::eConvoyGoingToLoadingPoint: strState = tr( "Convoi en déplacement vers point de chargement" ); break;
         case MOS_LogSupplyConsign::eConvoyLoading    : strState = tr( "Convoi en cours de chargement" ); break;
-        case MOS_LogSupplyConsign::eConvoyGoingTo    : strState = tr( "Convoi en route" ); break;
+        
+        case MOS_LogSupplyConsign::eConvoyGoingToUnloadingPoint: strState = tr( "Convoi en déplacement vers point de déchargement" ); break;
         case MOS_LogSupplyConsign::eConvoyUnloading  : strState = tr( "Convoi en cours de déchargement" ); break;
-        case MOS_LogSupplyConsign::eConvoyGoingFrom  : strState = tr( "Convoi en retour" ); break;
+        
+        case MOS_LogSupplyConsign::eConvoyGoingBackToFormingPoint  : strState = tr( "Convoi en retour" ); break;
         case MOS_LogSupplyConsign::eFinished         : strState = tr( "Terminé" ); break;
         default:
             assert( false );

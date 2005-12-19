@@ -1,16 +1,16 @@
 // *****************************************************************************
 //
 // $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoySupply.h $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyUnload.h $
 // $Author: Nld $
 // $Modtime: 10/02/05 10:50 $
 // $Revision: 1 $
-// $Workfile: PHY_ActionConvoySupply.h $
+// $Workfile: PHY_ActionConvoyUnload.h $
 //
 // *****************************************************************************
 
-#ifndef __PHY_ActionConvoySupply_h_
-#define __PHY_ActionConvoySupply_h_
+#ifndef __PHY_ActionConvoyUnload_h_
+#define __PHY_ActionConvoyUnload_h_
 
 #include "MIL.h"
 
@@ -20,19 +20,19 @@ class PHY_RolePion_Supply;
 class MIL_AgentPion;
 
 // =============================================================================
-// @class  PHY_ActionConvoySupply
+// @class  PHY_ActionConvoyUnload
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_ActionConvoySupply : public PHY_Action_ABC
+class PHY_ActionConvoyUnload : public PHY_Action_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionConvoySupply )
+    MT_COPYNOTALLOWED( PHY_ActionConvoyUnload )
 
 public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-    PHY_ActionConvoySupply( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
-    virtual ~PHY_ActionConvoySupply();
+    PHY_ActionConvoyUnload( MIL_AgentPion& pion, DIA_Call_ABC& diaCall );
+    virtual ~PHY_ActionConvoyUnload();
 
     //! @name Operations
     //@{
@@ -45,6 +45,6 @@ private:
     DIA_Variable_ABC&    diaReturnCode_;
 };
 
-#include "PHY_ActionConvoySupply.inl"
+#include "PHY_ActionConvoyUnload.inl"
 
-#endif // __PHY_ActionConvoySupply_h_
+#endif // __PHY_ActionConvoyUnload_h_

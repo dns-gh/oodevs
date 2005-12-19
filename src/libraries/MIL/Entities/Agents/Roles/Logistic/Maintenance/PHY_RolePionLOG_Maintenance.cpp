@@ -446,7 +446,16 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
 // Name: PHY_RolePionLOG_Maintenance::Update
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::Update( bool bIsDead )
+void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::UpdateLogistic
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool bIsDead )
 {
     if( bIsDead )
         return; 

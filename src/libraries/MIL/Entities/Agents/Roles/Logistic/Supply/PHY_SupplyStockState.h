@@ -30,7 +30,7 @@ class PHY_SupplyStockState : public PHY_SupplyState_ABC
     MT_COPYNOTALLOWED( PHY_SupplyStockState )
 
 public:
-     PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate );
+     PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );
      PHY_SupplyStockState();
     ~PHY_SupplyStockState();
 
@@ -39,16 +39,24 @@ public:
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
+    //! @name Accessors
+    //@{
+    bool             IsPushedFlow       () const;
+    bool             IsSupplying        ( const PHY_DotationCategory& dotationCategory ) const;
+    MIL_AutomateLOG& GetSuppliedAutomate() const;
+    //@}
+
     //! @name Operations
     //@{
-          void             AddRequest         ( const PHY_SupplyStockRequest& request );
-          void             GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
-    const MIL_AutomateLOG& GetSuppliedAutomate() const;
-          bool             IsSupplying        ( const PHY_DotationCategory& dotationCategory ) const;
-          void             RemoveConvoyedStock   ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void AddRequest                          ( const PHY_SupplyStockRequest& request );
+    
+    void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
+    void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void CancelMerchandiseOverheadReservation();
 
-          void             Supply      () const;
-          void             CancelSupply();
+    void Supply      () const;
+    void CancelSupply();
     //@}
 
     //! @name Consign
@@ -79,11 +87,12 @@ public:
     //@}
 
 private:
-    MIL_AutomateLOG*       pSuppliedAutomate_;
-    PHY_SupplyConsign_ABC* pConsign_;
-    bool                   bConsignChanged_;
-    bool                   bRequestsChanged_;
-    T_RequestMap           requests_;
+          MIL_AutomateLOG*       pSuppliedAutomate_;
+    const bool                   bPushedFlow_;
+          PHY_SupplyConsign_ABC* pConsign_;
+          bool                   bConsignChanged_;
+          bool                   bRequestsChanged_;
+          T_RequestMap           requests_;
 };
 
 #include "PHY_SupplyStockState.inl"

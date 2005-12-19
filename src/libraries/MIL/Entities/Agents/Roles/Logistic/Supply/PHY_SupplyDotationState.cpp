@@ -30,7 +30,8 @@ PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& suppliedAutomate
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( &suppliedAutomate )
     , pConsign_          ( 0 )
-    , bHasChanged_       ( true )
+    , bConsignChanged_   ( true )
+    , bRequestsChanged_  ( true )
     , requests_          ()
 {
 }
@@ -43,7 +44,8 @@ PHY_SupplyDotationState::PHY_SupplyDotationState()
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( 0 )
     , pConsign_          ( 0 )
-    , bHasChanged_       ( true )
+    , bConsignChanged_   ( true )
+    , bRequestsChanged_  ( true )
     , requests_          ()
 {
 }
@@ -64,7 +66,8 @@ PHY_SupplyDotationState::~PHY_SupplyDotationState()
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::Clean()
 {
-    bHasChanged_ = false;
+    bConsignChanged_  = false;
+    bRequestsChanged_ = false;
     if( pConsign_ )
         pConsign_->Clean();
 }
@@ -140,13 +143,50 @@ void PHY_SupplyDotationState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyDotationState::Supply
+// Name: PHY_SupplyDotationState::RemoveConvoyedMerchandise
+// Created: NLD 2005-02-10
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationState::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+{
+    IT_RequestMap it = requests_.find( &dotationCategory );
+    if( it == requests_.end() )
+        return;
+    
+    it->second.RemoveConvoyedMerchandise( rNbrDotations );
+    bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::AddConvoyedMerchandise
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationState::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+{
+    IT_RequestMap it = requests_.find( &dotationCategory );
+    if( it == requests_.end() )
+        return;
+    
+    it->second.AddConvoyedMerchandise( rNbrDotations );
+    bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::CancelMerchandiseOverheadReservation
+// Created: NLD 2005-12-15
+// -----------------------------------------------------------------------------
+void PHY_SupplyDotationState::CancelMerchandiseOverheadReservation()
+{
+    for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
+        it->second.CancelMerchandiseOverheadReservation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::Supply
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::Supply() const
 {
-    assert( pSuppliedAutomate_ );
-    
+    assert( pSuppliedAutomate_ );   
     pSuppliedAutomate_->NotifyDotationSupplied( *this );
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         it->second.Supply();
@@ -199,12 +239,7 @@ void PHY_SupplyDotationState::SendFullState() const
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
-    {
-        asn.GetAsnMsg().m.oid_pion_log_traitantPresent = 1;
-        asn.GetAsnMsg().m.etatPresent                  = 1;
-        asn.GetAsnMsg().oid_pion_log_traitant          = 0;
-        asn.GetAsnMsg().etat                           = EnumLogRavitaillementTraitementEtat::termine;
-    }
+        PHY_SupplyConsign_ABC::SendDefaultState( asn );
     asn.Send();
 }
 
@@ -214,7 +249,7 @@ void PHY_SupplyDotationState::SendFullState() const
 // -----------------------------------------------------------------------------
 void PHY_SupplyDotationState::SendChangedState() const
 {
-    if( !( bHasChanged_ || ( pConsign_ && pConsign_->HasChanged() ) ) )
+    if( !( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) || bRequestsChanged_ ) )
         return;
 
     assert( pSuppliedAutomate_ );
@@ -222,16 +257,36 @@ void PHY_SupplyDotationState::SendChangedState() const
     NET_ASN_MsgLogRavitaillementTraitementUpdate asn;
     asn.GetAsnMsg().oid_consigne = nID_;
     asn.GetAsnMsg().oid_automate = pSuppliedAutomate_->GetID();
-    if( pConsign_ )
-        pConsign_->SendChangedState( asn );
-    else
+
+    if( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) )
     {
-        asn.GetAsnMsg().m.oid_pion_log_traitantPresent = 1;
-        asn.GetAsnMsg().m.etatPresent                  = 1;
-        asn.GetAsnMsg().oid_pion_log_traitant          = 0;
-        asn.GetAsnMsg().etat                           = EnumLogRavitaillementTraitementEtat::termine;
+        if( pConsign_ )
+            pConsign_->SendChangedState( asn );
+        else
+            PHY_SupplyConsign_ABC::SendDefaultState( asn );
     }
+
+    if( bRequestsChanged_ )
+    {
+        assert( !requests_.empty() );
+
+        asn.GetAsnMsg().m.dotationsPresent = 1;
+
+        ASN1T_DemandeDotation* pAsnRequests = new ASN1T_DemandeDotation[ requests_.size() ];
+        uint i = 0;
+        for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it, ++i )
+        {
+            ASN1T_DemandeDotation& asnDemande = pAsnRequests[ i ];
+            it->second.Serialize( asnDemande );
+        }
+
+        asn.GetAsnMsg().dotations.n    = requests_.size();
+        asn.GetAsnMsg().dotations.elem = pAsnRequests;   
+    }
+
     asn.Send();
+    if( asn.GetAsnMsg().m.dotationsPresent && asn.GetAsnMsg().dotations.n > 0 )
+        delete [] asn.GetAsnMsg().dotations.elem;
 }
     
 // -----------------------------------------------------------------------------

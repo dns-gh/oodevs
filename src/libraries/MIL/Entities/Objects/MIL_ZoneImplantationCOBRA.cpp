@@ -49,7 +49,7 @@ MIL_ZoneImplantationCOBRA::~MIL_ZoneImplantationCOBRA()
 void MIL_ZoneImplantationCOBRA::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( CanInteractWithAgent( agent ) )
+    if( CanInteractWith( agent ) )
         agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
 }
 

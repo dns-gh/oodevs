@@ -42,12 +42,16 @@ public:
 
     //! @name Operations
     //@{
-          void          AddRequest         ( const PHY_SupplyDotationRequest& request );
-          void          GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
-    const MIL_Automate& GetSuppliedAutomate() const;
-          bool          IsSupplying        ( const PHY_DotationCategory& dotationCategory ) const;
-
-          void          Supply             () const;
+          void          AddRequest            ( const PHY_SupplyDotationRequest& request );
+    const MIL_Automate& GetSuppliedAutomate   () const;
+          bool          IsSupplying           ( const PHY_DotationCategory& dotationCategory ) const;
+          
+          void          GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
+          void          RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+          void          AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+          void          CancelMerchandiseOverheadReservation();
+          
+          void          Supply() const;
     //@}
 
     //! @name Consign
@@ -73,13 +77,15 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_SupplyDotationRequest > T_RequestMap;
+    typedef T_RequestMap::iterator                                             IT_RequestMap;
     typedef T_RequestMap::const_iterator                                       CIT_RequestMap;
     //@}
 
 private:
     MIL_Automate*          pSuppliedAutomate_;
     PHY_SupplyConsign_ABC* pConsign_;
-    bool                   bHasChanged_;
+    bool                   bConsignChanged_;
+    bool                   bRequestsChanged_;
     T_RequestMap           requests_;
 };
 

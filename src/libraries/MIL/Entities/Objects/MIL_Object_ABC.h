@@ -18,6 +18,7 @@
 
 class MIL_Agent_ABC;
 class MIL_Army;
+class MIL_Population;
 class TER_Localisation;
 
 //=============================================================================
@@ -54,7 +55,8 @@ public:
 
     //! @name Events
     //@{
-    virtual bool CanInteractWithAgent( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWith( const MIL_Agent_ABC& agent       ) const;
+    virtual bool CanInteractWith( const MIL_Population& population ) const;
 
     void NotifyAgentMovingInside ( MIL_Agent_ABC& agent );
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
@@ -89,9 +91,9 @@ protected:
 
     //! @name Tools
     //@{
-    virtual bool      CanCollideWithAgent( const MIL_Agent_ABC& agent ) const;
-    const T_AgentSet& GetAgentsInside    () const;
-    virtual void      UpdateLocalisation ( const TER_Localisation& newLocalisation ); 
+    virtual bool      CanCollideWithEntity() const;
+    const T_AgentSet& GetAgentsInside     () const;
+    virtual void      UpdateLocalisation  ( const TER_Localisation& newLocalisation ); 
     //@}
 
 private:

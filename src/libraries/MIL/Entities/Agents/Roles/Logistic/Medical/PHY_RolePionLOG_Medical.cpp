@@ -659,7 +659,16 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanSta
 // Name: PHY_RolePionLOG_Medical::Update
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::Update( bool bIsDead )
+void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::UpdateLogistic
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Medical::UpdateLogistic( bool bIsDead )
 {
     if( bIsDead )
         return;

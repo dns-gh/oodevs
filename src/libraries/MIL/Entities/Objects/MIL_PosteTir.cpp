@@ -75,7 +75,7 @@ void MIL_PosteTir::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
 
-    if( !CanInteractWithAgent( agent ) || GetConstructionPercentage() < 1. )
+    if( !CanInteractWith( agent ) || GetConstructionPercentage() < 1. )
         return;
 
     if( GetOccupier() == &agent )

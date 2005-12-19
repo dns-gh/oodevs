@@ -380,46 +380,55 @@ behavior BEH_MoveToTmp( T_Point point )
 }
 
 behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
-{
+{   
     when updated:
     {
-        persistent E_TestConvoyerStep nStep = eTestConvoyerStep_DeplacementAller;
-        persistent T_Action           supplyAction = 0;
+        persistent E_TestConvoyerStep nStep                   = eTestConvoyerStep_DeplacementVersPointChargement;
+        persistent T_Action           supplyAction            = 0;
         persistent bool               bSupplyActionReturnCode = false;
-        persistent T_Point            pointDeRavitaillement;
-        persistent T_Point            pointDeRetour;
     
         if( DIA_ModuleBegins() )
-        {   
-            T_Pion pc = DEC_Pion_PionPCDeAutomate( myself.automate_ );
-            pointDeRetour = pc.DEC_Agent_Position();                
-                        
-            if( DEC_Ravitaillement_Convoi_RavitaillementEffectue() )   
+        {                   
+            if( DEC_Ravitaillement_Convoi_DechargementEffectue() )
                 nStep = eTestConvoyerStep_DeplacementRetour;
+            else if( DEC_Ravitaillement_Convoi_ChargementEffectue() )
+                nStep = eTestConvoyerStep_DeplacementVersPointDechargement;
             else
-            {
-                nStep = eTestConvoyerStep_DeplacementAller;
-                T_Automate automateARavitailler = DEC_Ravitaillement_Convoi_AutomateARavitailler();
-                if( automateARavitailler == 0 )
-                    halt;               
-                T_Pion pc2 = DEC_Pion_PionPCDeAutomate( automateARavitailler );
-                pointDeRavitaillement = pc2.DEC_Agent_Position();                
-            }
+                nStep = eTestConvoyerStep_DeplacementVersPointChargement;
         }
         
         DEC_Debug( "MIS_Pion_LOG_Convoyer : " + EnumToString( nStep, E_TestConvoyerStep ) );
         
-        if( nStep == eTestConvoyerStep_DeplacementAller )
+        if( nStep == eTestConvoyerStep_DeplacementVersPointChargement )
         {
-            behavior BEH_MoveToTmp( pointDeRavitaillement );
-            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), pointDeRavitaillement ) )
-                nStep = eTestConvoyerStep_Ravitaillement; 
+            behavior BEH_MoveToTmp( DEC_Ravitaillement_Convoi_PointChargement() );
+            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_PointChargement() ) )
+                nStep = eTestConvoyerStep_Chargement; 
         }
         
-        if( nStep == eTestConvoyerStep_Ravitaillement )
+        if( nStep == eTestConvoyerStep_Chargement )
         {
             if( supplyAction == 0 )
-                supplyAction = DEC_Ravitaillement_Convoi_StartRavitailler( bSupplyActionReturnCode );
+                supplyAction = DEC_Ravitaillement_Convoi_StartCharger( bSupplyActionReturnCode );
+            if( bSupplyActionReturnCode )
+            {
+                DEC_StopAction( supplyAction );
+                supplyAction = 0;
+                nStep = eTestConvoyerStep_DeplacementVersPointDechargement;
+            }           
+        }
+        
+        if( nStep == eTestConvoyerStep_DeplacementVersPointDechargement )
+        {
+            behavior BEH_MoveToTmp( DEC_Ravitaillement_Convoi_PointDechargement() );
+            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_PointDechargement() ) )
+                nStep = eTestConvoyerStep_Dechargement; 
+        }
+        
+        if( nStep == eTestConvoyerStep_Dechargement )
+        {
+            if( supplyAction == 0 )
+                supplyAction = DEC_Ravitaillement_Convoi_StartDecharger( bSupplyActionReturnCode );
             if( bSupplyActionReturnCode )
             {
                 DEC_StopAction( supplyAction );
@@ -430,8 +439,8 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
         
         if( nStep == eTestConvoyerStep_DeplacementRetour )
         {
-            behavior BEH_MoveToTmp( pointDeRetour );
-            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), pointDeRetour ) )
+            behavior BEH_MoveToTmp( DEC_Ravitaillement_Convoi_PointRetour() );
+            if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_PointRetour() ) )
                 DEC_Ravitaillement_Convoi_FinMission();
         }
     }

@@ -826,7 +826,7 @@ void DEC_AgentFunctions::DisableReloadingDurationModification( DIA_Call_ABC& /*c
 // Name: DEC_AgentFunctions::EnableInvulnerability
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableInvulnerability( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::EnableInvulnerability( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Population >().EnableInvulnerability();
 }
@@ -835,7 +835,7 @@ void DEC_AgentFunctions::EnableInvulnerability( DIA_Call_ABC& call, MIL_AgentPio
 // Name: DEC_AgentFunctions::DisableInvulnerability
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableInvulnerability( DIA_Call_ABC& call, MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::DisableInvulnerability( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Population >().DisableInvulnerability();
 }

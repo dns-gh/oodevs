@@ -648,10 +648,10 @@ void MIL_RealObject_ABC::Serialize( HLA_UpdateFunctor& functor ) const
 //=============================================================================
 
 // ----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::CanInteractWithAgent
+// Name: MIL_RealObject_ABC::CanInteractWith
 // Created: NLD 2003-09-02
 // -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::CanInteractWithAgent( const MIL_Agent_ABC& agent ) const
+bool MIL_RealObject_ABC::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
     if( bPrepared_ || rConstructionPercentage_ == 0 )
         return false;
@@ -659,7 +659,19 @@ bool MIL_RealObject_ABC::CanInteractWithAgent( const MIL_Agent_ABC& agent ) cons
     if( agent.GetRole< PHY_RoleInterface_Location >().GetHeight() > pType_->GetMaxInteractionHeight() )
         return false;
 
-    return MIL_Object_ABC::CanInteractWithAgent( agent ); // NB : Call MIL_Object_ABC::CanCollideWithAgent()
+    return MIL_Object_ABC::CanInteractWith( agent ); // NB : Call MIL_Object_ABC::CanCollideWithEntity()
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::CanInteractWith
+// Created: NLD 2005-12-10
+// -----------------------------------------------------------------------------
+bool MIL_RealObject_ABC::CanInteractWith( const MIL_Population& population ) const
+{
+    if( bPrepared_ || rConstructionPercentage_ == 0 )
+        return false;
+
+    return MIL_Object_ABC::CanInteractWith( population ); // NB : Call MIL_Object_ABC::CanCollideWithEntity()
 }
 
 // -----------------------------------------------------------------------------

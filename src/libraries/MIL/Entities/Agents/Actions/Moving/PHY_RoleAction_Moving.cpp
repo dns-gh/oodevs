@@ -351,7 +351,7 @@ bool PHY_RoleAction_Moving::ComputeFutureObjectCollisions( const MIL_RealObjectT
     const MT_Float               rHeight      = roleLocation.GetHeight();
     for( IT_KnowledgeObjectVector it = knowledges.begin(); it != knowledges.end(); )
     {          
-        if( rHeight > (**it).GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWithAgent()
+        if( rHeight > (**it).GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
             it = knowledges.erase( it );
         else 
             ++it;
@@ -514,7 +514,7 @@ bool PHY_RoleAction_Moving::CanMove() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
-    return object.CanInteractWithAgent( *pPion_ );
+    return object.CanInteractWith( *pPion_ );
 }
 
 // -----------------------------------------------------------------------------

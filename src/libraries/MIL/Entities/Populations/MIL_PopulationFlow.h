@@ -136,6 +136,7 @@ private:
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasResources         ();
     virtual void SendRC               ( const MIL_RC& rc ) const;
+            void ComputePath          ( const MT_Vector2D& destination );
     //@}
 
     //! @name Network
@@ -162,6 +163,9 @@ private:
     bool bFlowShapeUpdated_;
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
+
+    // Split
+    bool bSplit_;
 };
 
 #include "MIL_PopulationFlow.inl"

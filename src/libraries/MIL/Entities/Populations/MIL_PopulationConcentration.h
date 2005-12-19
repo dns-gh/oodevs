@@ -61,14 +61,16 @@ public:
 
     //! @name Flows management
     //@{
-    void RegisterPushingFlow  ( MIL_PopulationFlow& flow );
-    void UnregisterPushingFlow( MIL_PopulationFlow& flow );
+    void     RegisterPushingFlow  ( MIL_PopulationFlow& flow );
+    void     UnregisterPushingFlow( MIL_PopulationFlow& flow );
+    MT_Float GetPullingFlowsDensity() const;
+    void     SetPullingFlowsDensity( MT_Float rValue );
     //@}
 
     //! @name Accessors
     //@{
-    const MT_Vector2D& GetPosition   () const;
-          bool         IsNearPosition( const MT_Vector2D& position ) const;
+    const MT_Vector2D& GetPosition           () const;
+          bool         IsNearPosition        ( const MT_Vector2D& position ) const;
 
     virtual const TER_Localisation& GetLocation      () const;
     virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
@@ -122,6 +124,8 @@ private:
 
     MIL_PopulationFlow*     pPullingFlow_;
     T_FlowSet               pushingFlows_;
+
+    MT_Float                rPullingFlowsDensity_;
 };
 
 #include "MIL_PopulationConcentration.inl"

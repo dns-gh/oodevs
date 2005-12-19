@@ -155,6 +155,18 @@
                 <Armee>bleu</Armee>
                 <GroupeConnaissance>1</GroupeConnaissance>
                 <TC2 automate="5000000"/>
+                <Logistique>
+                    <Ravitaillement automate="5000020">
+                    <Quotas>
+                            <Dotation nom="carburant">
+                                <Categories>    
+                                    <Categorie nom="gasoil" quota="600000"/>
+                                </Categories>        
+                            </Dotation>
+                    
+                      </Quotas>
+                     </Ravitaillement>
+                </Logistique>
                 
             </LiensHierarchiques>            
             <Position>31TBN9902580746</Position>           
@@ -182,7 +194,7 @@
                 <GroupeConnaissance>1</GroupeConnaissance>
                 <TC2 automate="5000000"/>
             </LiensHierarchiques>            
-            <Position>31TBN9902580746</Position>           
+            <Position>31TBN9996078882</Position>           
         </Automate>
         
         <Automate id="5000003" type="BLD Sante">
@@ -205,9 +217,20 @@
                 <GroupeConnaissance>1</GroupeConnaissance>
                 <TC2 automate="5000000"/>
             </LiensHierarchiques>            
-            <Position>31TBN9902580746</Position>           
+            <Position>31TBN9996078882</Position>           
         </Automate>        
        
+         <Automate id="5000020" type="BLD Ravitaillement">
+            <Embraye>false</Embraye>
+            <LiensHierarchiques>
+                <Armee>bleu</Armee>
+                <GroupeConnaissance>1</GroupeConnaissance>
+                <TC2 automate="5000000"/>
+                
+            </LiensHierarchiques>            
+            <Position>31TBN9996078882</Position>           
+        </Automate>
+        
                
         <Automate id="5000007" type="Compagnie GEN Lourde">
             <LiensHierarchiques>
@@ -259,28 +282,28 @@
             <LiensHierarchiques>
                 <Automate>5000005</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>
         
         <Pion id="6000001" type="Cie Reparation BLT - EA" >
             <LiensHierarchiques>
                 <Automate>5000005</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>
         
         <Pion id="6000002" type="Cie Reparation BLT - M" >
             <LiensHierarchiques>
                 <Automate>5000005</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                
         
         <Pion id="6000003" type="Cie Reparation BLT - M" >
             <LiensHierarchiques>
                 <Automate>5000005</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                
         
         <Pion id="6000004" type="Secteur tri BLD" >
@@ -326,37 +349,37 @@
             <LiensHierarchiques>
                 <Automate>5000006</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                
         <Pion id="6000011" type="Secteur soin chirurgical BLT" >
             <LiensHierarchiques>
                 <Automate>5000006</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                
         <Pion id="6000012" type="Secteur soin mental BLT" >
             <LiensHierarchiques>
                 <Automate>5000006</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                
         <Pion id="6000013" type="Secteur soin NBC BLT" >
             <LiensHierarchiques>
                 <Automate>5000006</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                
         <Pion id="6000014" type="Secteur tri/soin BLT" >
             <LiensHierarchiques>
                 <Automate>5000006</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                                                      
         <Pion id="6000015" type="Groupe evacuation sante BLT" >
             <LiensHierarchiques>
                 <Automate>5000006</Automate>
             </LiensHierarchiques>
-            <Position>31TBN9902580746</Position>
+            <Position>31TBN9996078882</Position>
         </Pion>                 
         
 
@@ -400,6 +423,29 @@
                 <Automate>5000004</Automate>
             </LiensHierarchiques>
             <Position>31TBN9902580746</Position>
+        </Pion>     
+        
+        
+                
+        <Pion id="6000069" type="Pion RAV commandement" >
+            <LiensHierarchiques>
+                <Automate>5000020</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>  
+        
+        <Pion id="6000070" type="Pion RAV camions" >
+            <LiensHierarchiques>
+                <Automate>5000020</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
+        </Pion>           
+        
+        <Pion id="6000071" type="Pion RAV stocks" >
+            <LiensHierarchiques>
+                <Automate>5000020</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9996078882</Position>
         </Pion>     
         
                

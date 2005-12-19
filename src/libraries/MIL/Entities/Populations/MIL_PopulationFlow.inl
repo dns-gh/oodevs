@@ -81,11 +81,11 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& /*object*/ )
 // Name: MIL_PopulationFlow::NotifyMovingOutsideObject
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-inline
-void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& /*object*/ )
-{
-    // NOTHING
-}
+//inline
+//void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& /*object*/ )
+//{
+//    // NOTHING
+//}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::NotifyEnvironmentChanged
@@ -117,16 +117,6 @@ bool MIL_PopulationFlow::CanMove() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::CanObjectInteractWith
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-inline
-bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& /*object*/ ) const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::HasResources
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
@@ -151,6 +141,8 @@ void MIL_PopulationFlow::Clean()
     bDirectionUpdated_ = false;
     bSpeedUpdated_     = false;
     bHeadMoveFinished_ = false;
+
+    bSplit_ = false;
 }
 
 // -----------------------------------------------------------------------------

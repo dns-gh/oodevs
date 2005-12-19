@@ -50,7 +50,9 @@ private:
     MOS_LogSupplyConsign* pConsign_;
 
     QListViewItem* pListViewItemPion_;
-    QListViewItem* pListViewItemLogPionHandling_;
+    
+    QListViewItem* pListViewItemLogAutomateHandling_;
+    QListViewItem* pListViewItemLogAutomateProvidingConvoyResources_;
     QListViewItem* pListViewItemLogPionConvoying_;
     QListViewItem* pListViewItemState_;
     QListViewItem* pListViewItemDotations_;

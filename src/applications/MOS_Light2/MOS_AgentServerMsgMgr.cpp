@@ -697,7 +697,7 @@ void MOS_AgentServerMsgMgr::OnReceiveMsgLogRavitaillementTraitementDestruction( 
     MOS_LogSupplyConsign* pConsign = MOS_App::GetApp().GetAgentManager().FindSupplyConsign( asnMsg.oid_consigne );
     assert( pConsign );
     MOS_Agent& agent           = pConsign->GetPion();
-    MOS_Agent* pAgentHandling  = pConsign->GetPionLogHandling();
+    MOS_Agent* pAgentHandling  = pConsign->GetAutomateLogHandling();
     MOS_Agent* pAgentConvoying = pConsign->GetPionLogConvoying();
     MOS_App::GetApp().GetAgentManager().DeleteSupplyConsign( asnMsg.oid_consigne );
     MOS_App::GetApp().NotifyAgentUpdated( agent );

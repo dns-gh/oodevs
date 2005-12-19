@@ -19,8 +19,8 @@ void PHY_SupplyDotationState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
     if( pConsign == pConsign_ )
         return;
         
-    pConsign_    = pConsign;
-    bHasChanged_ = true;
+    pConsign_        = pConsign;
+    bConsignChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,5 +52,5 @@ inline
 void PHY_SupplyDotationState::AddRequest( const PHY_SupplyDotationRequest& request )
 {
     requests_[ &request.GetDotationCategory() ] = request;
-    bHasChanged_ = true;
+    bRequestsChanged_ = true;
 }

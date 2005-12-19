@@ -65,6 +65,15 @@ void PHY_RolePion_Supply::Update( bool /*bIsDead*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::UpdateLogistic
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Supply::UpdateLogistic( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::Clean
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
@@ -233,19 +242,46 @@ void PHY_RolePion_Supply::UnassignConvoy( PHY_StockConvoy& /*convoy*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::ConvoyIsSupplyDone
-// Created: NLD 2005-02-10
+// Name: PHY_RolePion_Supply::ConvoyIsLoadingDone
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Supply::ConvoyIsSupplyDone() const
+bool PHY_RolePion_Supply::ConvoyIsLoadingDone() const
 {
     return true;
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::ConvoyGetSuppliedAutomate
-// Created: NLD 2005-02-10
+// Name: PHY_RolePion_Supply::ConvoyIsUnloadingDone
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-const MIL_Automate* PHY_RolePion_Supply::ConvoyGetSuppliedAutomate() const
+bool PHY_RolePion_Supply::ConvoyIsUnloadingDone() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ConvoyGetFormingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+const MT_Vector2D* PHY_RolePion_Supply::ConvoyGetFormingPoint() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ConvoyGetLoadingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+const MT_Vector2D* PHY_RolePion_Supply::ConvoyGetLoadingPoint() const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ConvoyGetUnloadingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+const MT_Vector2D* PHY_RolePion_Supply::ConvoyGetUnloadingPoint() const
 {
     return 0;
 }
@@ -260,14 +296,22 @@ void PHY_RolePion_Supply::ConvoyEndMission()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Supply::ConvoySupply
+// Name: PHY_RolePion_Supply::ConvoyLoad
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Supply::ConvoySupply() const
+bool PHY_RolePion_Supply::ConvoyLoad() const
 {
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ConvoyUnload
+// Created: NLD 2005-02-10
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Supply::ConvoyUnload() const
+{
+    return true;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Supply::NotifyComposanteChanged

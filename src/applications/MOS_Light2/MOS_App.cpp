@@ -684,8 +684,8 @@ void MOS_App::NotifyPopulationUpdated( MOS_Population& population )
 void MOS_App::NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign )
 {
     emit AgentUpdated( consign.GetPion() );
-    if( consign.GetPionLogHandling() )
-        emit AgentUpdated( *consign.GetPionLogHandling() );
+    if( consign.GetAutomateLogHandling() )
+        emit AgentUpdated( *consign.GetAutomateLogHandling() );
     if( consign.GetPionLogConvoying() )
         emit AgentUpdated( *consign.GetPionLogConvoying() );
 }

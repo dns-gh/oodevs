@@ -41,8 +41,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( bool bIsDead );
-    virtual void Clean ();
+    virtual void Update        ( bool bIsDead );
+    virtual void UpdateLogistic( bool bIsDead );
+    virtual void Clean         ();
     //@}
 
     //! @name Main

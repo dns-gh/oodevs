@@ -14,18 +14,14 @@
 
 #include "MIL.h"
 
-class PHY_DotationCategory;
-class PHY_Dotation;
-class PHY_RolePion_Supply;
-class MIL_AutomateLOG;
-
-struct ASN1T_DemandeDotation;
+#include "PHY_SupplyRequest_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_Dotation.h"
 
 // =============================================================================
 // @class  PHY_SupplyDotationRequest
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_SupplyDotationRequest
+class PHY_SupplyDotationRequest : public PHY_SupplyRequest_ABC< PHY_Dotation >
 {
 public:
      PHY_SupplyDotationRequest();
@@ -38,46 +34,8 @@ public:
     
     //! @name Operations
     //@{
-    void     AddDotation              ( PHY_Dotation& dotation );
-    MT_Float Supply                   () const;
-    bool     AffectAutomate           ( MIL_AutomateLOG& supplyingAutomate );
-    bool     HasReachedSupplyThreshold() const;
-    void     ReserveStocks            ();
+    void AddDotation( PHY_Dotation& dotation );
     //@}
-
-    //! @name Accessors
-    //@{
-    const PHY_DotationCategory& GetDotationCategory  () const;
-          MIL_AutomateLOG*      GetSupplyingAutomate () const;
-          MT_Float              GetTotalReservedValue() const;          
-    //@}
-
-    //! @name Network
-    //@{
-    void Serialize( ASN1T_DemandeDotation& asn ) const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    struct sDotationRequest
-    {
-        PHY_Dotation* pDotation_;       // == le pion demandeur
-        MT_Float      rRequestedValue_;
-    
-        template< typename Archive > void serialize( Archive&, const uint );
-    };
-    
-    typedef std::vector< sDotationRequest > T_RequestVector;
-    typedef T_RequestVector::const_iterator CIT_RequestVector;
-    //@}
-
-private:
-    T_RequestVector      requests_;
-    MT_Float             rTotalRequestedValue_;   
-    MIL_AutomateLOG*     pSupplyingAutomate_;
-    PHY_RolePion_Supply* pStockPion_;
-    MT_Float             rTotalReservedValue_;   
 };
 
 #include "PHY_SupplyDotationRequest.inl"

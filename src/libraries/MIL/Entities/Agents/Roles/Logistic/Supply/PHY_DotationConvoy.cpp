@@ -66,16 +66,40 @@ void PHY_DotationConvoy::serialize( Archive& file, const uint )
 // Name: PHY_DotationConvoy::GetTravelTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-uint PHY_DotationConvoy::GetTravelTime() const
+uint PHY_DotationConvoy::GetTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const
 {
     uint nTravelTime = 0;
 
-    assert( pConsign_ && pConsign_->GetSuppliedAutomate() );
-    const MT_Vector2D vStartPos = pConsign_->GetSupplyingAutomate() .GetAlivePionsBarycenter();
-    const MT_Vector2D vEndPos   = pConsign_->GetSuppliedAutomate ()->GetAlivePionsBarycenter();
-
     for ( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
-        nTravelTime = std::max( nTravelTime, it->second->ApproximateTravelTime( vStartPos, vEndPos ) );
+        nTravelTime = std::max( nTravelTime, it->second->ApproximateTravelTime( startPos, endPos ) );
 
     return nTravelTime;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConvoy::GetTravelTimeToLoadingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+uint PHY_DotationConvoy::GetTravelTimeToLoadingPoint() const
+{
+    return GetTravelTime( GetFormingPoint(), GetLoadingPoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConvoy::GetTravelTimeToUnloadingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+uint PHY_DotationConvoy::GetTravelTimeToUnloadingPoint() const
+{
+    return GetTravelTime( GetLoadingPoint(), GetUnloadingPoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationConvoy::GetTravelTimeToFormingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+uint PHY_DotationConvoy::GetTravelTimeToFormingPoint() const
+{
+    return GetTravelTime( GetUnloadingPoint(), GetFormingPoint() );
+}
+

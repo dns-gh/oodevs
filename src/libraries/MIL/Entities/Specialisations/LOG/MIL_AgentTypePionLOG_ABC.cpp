@@ -16,7 +16,8 @@
 #include "Decision/Functions/DEC_ActionFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoySupply.h"
+#include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyLoad.h"
+#include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyUnload.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendComposante.h"
 
 // -----------------------------------------------------------------------------
@@ -43,10 +44,15 @@ MIL_AgentTypePionLOG_ABC::MIL_AgentTypePionLOG_ABC( const std::string& strName, 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionSupplyEnableSystem , "DEC_Ravitaillement_ActiverChaine"      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::PionSupplyDisableSystem, "DEC_Ravitaillement_DesactiverChaine"   );
 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsSupplyDone                   , "DEC_Ravitaillement_Convoi_RavitaillementEffectue" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetSuppliedAutomate            , "DEC_Ravitaillement_Convoi_AutomateARavitailler"   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyEndMission                     , "DEC_Ravitaillement_Convoi_FinMission"             );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoySupply >, "DEC_Ravitaillement_Convoi_StartRavitailler"       );
+    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsLoadingDone                  , "DEC_Ravitaillement_Convoi_ChargementEffectue"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyIsUnloadingDone                , "DEC_Ravitaillement_Convoi_DechargementEffectue" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetFormingPoint                , "DEC_Ravitaillement_Convoi_PointRetour"          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetLoadingPoint                , "DEC_Ravitaillement_Convoi_PointChargement"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyGetUnloadingPoint              , "DEC_Ravitaillement_Convoi_PointDechargement"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ConvoyEndMission                     , "DEC_Ravitaillement_Convoi_FinMission"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoyLoad   >, "DEC_Ravitaillement_Convoi_StartCharger"         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions  ::StartAction< PHY_ActionConvoyUnload >, "DEC_Ravitaillement_Convoi_StartDecharger"       );
 }
 
 // -----------------------------------------------------------------------------

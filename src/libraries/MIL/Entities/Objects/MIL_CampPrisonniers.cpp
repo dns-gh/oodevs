@@ -126,7 +126,7 @@ ASN1T_EnumObjectErrorCode MIL_CampPrisonniers::Initialize( uint nID, const ASN1T
 void MIL_CampPrisonniers::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-    if( pTC2_ && CanInteractWithAgent( agent ) )
+    if( pTC2_ && CanInteractWith( agent ) )
         agent.GetRole< PHY_RoleInterface_Surrender >().NotifyInsidePrisonerCamp( *this );
 }
     
@@ -137,7 +137,7 @@ void MIL_CampPrisonniers::ProcessAgentInside( MIL_Agent_ABC& agent )
 void MIL_CampPrisonniers::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    if( pTC2_ && CanInteractWithAgent( agent ) )
+    if( pTC2_ && CanInteractWith( agent ) )
         agent.GetRole< PHY_RoleInterface_Surrender >().NotifyInsidePrisonerCamp( *this );
 }
 

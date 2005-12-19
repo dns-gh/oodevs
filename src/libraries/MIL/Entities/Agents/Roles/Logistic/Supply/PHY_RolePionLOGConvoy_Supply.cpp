@@ -29,7 +29,6 @@ PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MT_RoleContainer& ro
     , pPion_             ( &pion )
     , pConvoy_           ( 0 )
 {
-
 }
 
 
@@ -117,39 +116,88 @@ void PHY_RolePionLOGConvoy_Supply::UnassignConvoy( PHY_StockConvoy& convoy )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoySupply
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyLoad
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOGConvoy_Supply::ConvoySupply() const
+bool PHY_RolePionLOGConvoy_Supply::ConvoyLoad() const
 {
     if( !pConvoy_ )
         return true;
 
-    return pConvoy_->Supply();
+    return pConvoy_->Load();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsSupplyDone
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyUnload
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOGConvoy_Supply::ConvoyIsSupplyDone() const
+bool PHY_RolePionLOGConvoy_Supply::ConvoyUnload() const
+{
+    if( !pConvoy_ )
+        return true;
+
+    return pConvoy_->Unload();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsLoadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOGConvoy_Supply::ConvoyIsLoadingDone() const
 {
     if( !pConvoy_ )
         return true;
     
-    return pConvoy_->IsSupplyDone();
+    return pConvoy_->IsLoadingDone();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone() const
+{
+    if( !pConvoy_ )
+        return true;
+   
+    return pConvoy_->IsUnloadingDone();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSuppliedAutomate
-// Created: NLD 2005-02-10
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetFormingPoint
+// Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-const MIL_Automate* PHY_RolePionLOGConvoy_Supply::ConvoyGetSuppliedAutomate() const
+const MT_Vector2D* PHY_RolePionLOGConvoy_Supply::ConvoyGetFormingPoint() const
 {
     if( !pConvoy_ )
         return 0;
+   
+    return &pConvoy_->GetFormingPoint();
+}
 
-    return pConvoy_->GetSuppliedAutomate();
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetLoadingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+const MT_Vector2D* PHY_RolePionLOGConvoy_Supply::ConvoyGetLoadingPoint() const
+{
+    if( !pConvoy_ )
+        return 0;
+   
+    return &pConvoy_->GetLoadingPoint();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetUnloadingPoint
+// Created: NLD 2005-12-16
+// -----------------------------------------------------------------------------
+const MT_Vector2D* PHY_RolePionLOGConvoy_Supply::ConvoyGetUnloadingPoint() const
+{
+    if( !pConvoy_ )
+        return 0;
+   
+    return &pConvoy_->GetUnloadingPoint();
 }
 
 // -----------------------------------------------------------------------------
@@ -175,5 +223,5 @@ void PHY_RolePionLOGConvoy_Supply::NotifyComposanteChanged( PHY_ComposantePion& 
     if( !pConvoy_ || composante.GetState() != PHY_ComposanteState::dead_ )
         return;
 
-    pConvoy_->NotifyComposanteChanged( composante );
+    pConvoy_->NotifyConveyorDestroyed( composante );
 }

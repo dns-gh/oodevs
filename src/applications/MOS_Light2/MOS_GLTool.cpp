@@ -515,12 +515,14 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
             const MOS_LogSupplyConsign* con = itRav->second;
             switch( con->GetState() )
             {
-            case MOS_LogSupplyConsign::eConvoyGoingTo :
+            
+            case MOS_LogSupplyConsign::eConvoyGoingToLoadingPoint :
+            case MOS_LogSupplyConsign::eConvoyGoingToUnloadingPoint :
                 {
                     glLineStipple( 1, MOS_GLTool::stipplePattern_[ (nFrame_  % 16) ] );
                     break;
                 }
-            case MOS_LogSupplyConsign::eConvoyGoingFrom :
+            case MOS_LogSupplyConsign::eConvoyGoingBackToFormingPoint:
                 {
                     glLineStipple( 1, MOS_GLTool::stipplePattern_[ ((15 - nFrame_)  % 16) ] );
                     break;
@@ -531,7 +533,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawArc( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 20.0, true );
+            DrawArc( con->GetAutomateLogHandling()->GetPos() ,con->GetPion().GetPos(), 20.0, true );
         }
         glDisable( GL_LINE_STIPPLE );
     }
