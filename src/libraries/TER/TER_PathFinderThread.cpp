@@ -179,10 +179,10 @@ namespace
         return builder.Result();
     };
 
-    class NodeFinder
+    class NodeCircleFinder
     {
     public:
-        NodeFinder( TER_NodeFunctor_ABC& functor, const MT_Vector2D& vCenter, MT_Float rRadius )
+        NodeCircleFinder( TER_NodeFunctor_ABC& functor, const MT_Vector2D& vCenter, MT_Float rRadius )
             : functor_( functor )
             , center_( vCenter )
             , rSquareRadius_( rRadius * rRadius ) {};
@@ -194,7 +194,7 @@ namespace
             return true;
         }
     private:
-        NodeFinder& operator=( const NodeFinder& );
+        NodeCircleFinder& operator=( const NodeCircleFinder& );
         TER_NodeFunctor_ABC& functor_;
         MT_Vector2D center_;
         MT_Float rSquareRadius_;
@@ -207,7 +207,7 @@ namespace
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
 {
-    NodeFinder finder( bestNodeFunction, vCenter, rRadius );
+    NodeCircleFinder finder( bestNodeFunction, vCenter, rRadius );
     pPathfinder_->ApplyOnNodesInCircle( MakePoint( vCenter ), float( rRadius ), finder );
 }
 
