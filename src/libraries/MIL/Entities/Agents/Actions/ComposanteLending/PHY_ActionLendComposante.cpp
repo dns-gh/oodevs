@@ -22,7 +22,7 @@
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
 PHY_ActionLendComposante::PHY_ActionLendComposante( MIL_AgentPion& pion, DIA_Call_ABC& call )
-    : PHY_Action_ABC    ( pion, call)
+    : PHY_Action_ABC    ( pion, call )
     , role_             ( pion.GetRole< PHY_RolePion_Composantes >() )
     , nNbrComposantes_  ( (uint)call.GetParameter( 1 ).ToFloat() )
     , pTarget_          ( 0 )

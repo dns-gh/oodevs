@@ -22,10 +22,10 @@
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC    ( pion, diaCall )
-    , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
-    , nKnowledgeID_      ( (uint)diaCall.GetParameter( 1 ).ToPtr() )
+    : PHY_Action_ABC( pion, diaCall )
+    , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
+    , diaReturnCode_( diaCall.GetParameter( 0 ) )
+    , nKnowledgeID_ ( (uint)diaCall.GetParameter( 1 ).ToPtr() )
 {    
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 1 ) ) );
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );

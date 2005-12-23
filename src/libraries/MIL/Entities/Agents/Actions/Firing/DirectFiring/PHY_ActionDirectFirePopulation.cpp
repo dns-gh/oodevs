@@ -23,11 +23,11 @@
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC              ( pion )
-    , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , diaReturnCode_              (       diaCall.GetParameter( 0 )         )
-    , nTargetKnowledgeID_         ( (uint)diaCall.GetParameter( 1 ).ToPtr  () )
-    , pFireResult_                ( 0 )  
+    : PHY_Action_ABC     ( pion, diaCall)
+    , role_              ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
+    , diaReturnCode_     (       diaCall.GetParameter( 0 )         )
+    , nTargetKnowledgeID_( (uint)diaCall.GetParameter( 1 ).ToPtr  () )
+    , pFireResult_       ( 0 )  
 {
     assert( DEC_Tools::CheckTypeConnaissancePopulation( diaCall.GetParameter( 1 ) ) );
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );

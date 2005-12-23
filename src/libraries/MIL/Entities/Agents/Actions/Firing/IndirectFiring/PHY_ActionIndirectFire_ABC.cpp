@@ -22,7 +22,7 @@
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC       ( pion )
+    : PHY_Action_ABC       ( pion, diaCall )
     , role_                ( pion.GetRole< PHY_RoleAction_IndirectFiring >() )
     , diaReturnCode_       ( diaCall.GetParameter( 0 ) )
     , pIndirectWeaponClass_( PHY_IndirectFireDotationClass::Find( diaCall.GetParameter( 1 ).ToId() ) )

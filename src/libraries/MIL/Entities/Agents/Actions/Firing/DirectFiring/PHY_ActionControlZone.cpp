@@ -30,7 +30,7 @@
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC    ( pion )
+    : PHY_Action_ABC    ( pion, diaCall )
     , rolePerceiver_    ( pion.GetRole< PHY_RolePion_Perceiver      >() )
     , roleDirectFiring_ ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pFireResult_      ( 0 )  

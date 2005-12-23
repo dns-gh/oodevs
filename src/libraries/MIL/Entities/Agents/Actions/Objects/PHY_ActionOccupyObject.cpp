@@ -22,9 +22,9 @@
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC    ( pion, diaCall )
-    , role_             ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , nKnowledgeID_     ( (uint)diaCall.GetParameter( 0 ).ToPtr() )
+    : PHY_Action_ABC( pion, diaCall )
+    , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
+    , nKnowledgeID_ ( (uint)diaCall.GetParameter( 0 ).ToPtr() )
 {    
     assert( DEC_Tools::CheckTypeConnaissanceObjet( diaCall.GetParameter( 0 ) ) );
     role_.StartOccupyingObject( nKnowledgeID_ );

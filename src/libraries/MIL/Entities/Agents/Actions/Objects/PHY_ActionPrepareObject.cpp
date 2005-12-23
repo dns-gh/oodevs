@@ -25,7 +25,7 @@
 // Prepared: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, DIA_Call_ABC& diaCall )
-    : PHY_Action_ABC    ( pion, diaCall )
+    : PHY_Action_ABC     ( pion, diaCall )
     , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
     , diaReturnCode_     ( diaCall.GetParameter( 0 ) )
     , diaReturnKnowledge_( diaCall.GetParameter( 1 ) )
