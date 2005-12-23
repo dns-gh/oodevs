@@ -262,6 +262,7 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
     if( bSectionJustEnded_ )
     {
         // Pop last point
+        delete resultList_.back();
         resultList_.pop_back();
         bSectionJustEnded_ = false;
     }
