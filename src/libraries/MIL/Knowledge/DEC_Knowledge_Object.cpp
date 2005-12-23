@@ -32,7 +32,6 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Object, "DEC_Knowledge_Object" )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_RealObject_ABC& objectKnown )
-<<<<<<< .working
     : DEC_Knowledge_ABC                 ()
     , pArmyKnowing_                     ( &armyKnowing )
     , pObjectKnown_                     ( &objectKnown )
