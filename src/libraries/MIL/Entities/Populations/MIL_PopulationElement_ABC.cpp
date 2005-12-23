@@ -92,7 +92,6 @@ MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target 
     if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
         return 0.;
 
-    // Get back the most dangerous composante type of the target (from our point of view ...)
     const PHY_ComposantePion* pTargetComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
     if( !pTargetComposante )
         return 0.;

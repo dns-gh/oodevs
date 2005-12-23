@@ -108,6 +108,7 @@ protected:
         eAttr_CurrentPerceptionLevel         = 0x00000200,
         eAttr_MaxPerceptionLevel             = 0x00000400,
         eAttr_Specific                       = 0x00000800,
+        eAttr_Dotations                      = 0x00001000,
         eAttr_AllAttributes                  = 0xFFFFFFFF
     };
     //@}
@@ -179,6 +180,8 @@ private:
     uint              nMiningPercentage_;
     uint              nBypassPercentage_;
     bool              bIsPrepared_;
+    uint              nNbrDotationForConstruction_;
+    uint              nNbrDotationForMining_;            
 
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;

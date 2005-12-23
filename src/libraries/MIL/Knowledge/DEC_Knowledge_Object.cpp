@@ -16,6 +16,7 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/RC/MIL_RC_ObjetDetecte.h"
@@ -31,6 +32,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_Object, "DEC_Knowledge_Object" )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_RealObject_ABC& objectKnown )
+<<<<<<< .working
     : DEC_Knowledge_ABC                 ()
     , pArmyKnowing_                     ( &armyKnowing )
     , pObjectKnown_                     ( &objectKnown )
@@ -43,6 +45,8 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_Rea
     , nMiningPercentage_                ( 0 )
     , nBypassPercentage_                ( 0 )
     , bIsPrepared_                      ( objectKnown.IsPrepared() ) //$$$ A CHIER ....
+    , nNbrDotationForConstruction_      ( 0 )
+    , nNbrDotationForMining_            ( 0 )                
     , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_              ( &PHY_PerceptionLevel::notSeen_ )
@@ -71,6 +75,8 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , nMiningPercentage_               ( 0 )
     , nBypassPercentage_               ( 0 )
     , bIsPrepared_                     ( false )
+    , nNbrDotationForConstruction_     ( 0 )
+    , nNbrDotationForMining_           ( 0 )            
     , pCurrentPerceptionLevel_         ( 0 )
     , pPreviousPerceptionLevel_        ( 0 )
     , pMaxPerceptionLevel_             ( 0 )
@@ -119,7 +125,9 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
          >> nConstructionPercentage_
          >> nMiningPercentage_
          >> nBypassPercentage_
-         >> bIsPrepared_;
+         >> bIsPrepared_
+         >> nNbrDotationForConstruction_
+         >> nNbrDotationForMining_;
          
     uint nPerceptionID;
     file >> nPerceptionID;
@@ -167,6 +175,8 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
          << nMiningPercentage_
          << nBypassPercentage_
          << bIsPrepared_
+         << nNbrDotationForConstruction_
+         << nNbrDotationForMining_
          << pCurrentPerceptionLevel_->GetID()
          << pPreviousPerceptionLevel_->GetID()
          << pMaxPerceptionLevel_->GetID()
@@ -259,6 +269,18 @@ void DEC_Knowledge_Object::UpdateStates()
     {
         bIsPrepared_ = pObjectKnown_->IsPrepared();
         NotifyAttributeUpdated( eAttr_IsPrepared );
+    }
+
+    if( pObjectKnown_->GetNbrDotationForConstruction() != nNbrDotationForConstruction_ )
+    {
+        nNbrDotationForConstruction_ = pObjectKnown_->GetNbrDotationForConstruction();
+        NotifyAttributeUpdated( eAttr_Dotations );
+    }
+
+    if( pObjectKnown_->GetNbrDotationForMining() != nNbrDotationForMining_ )
+    {
+        nNbrDotationForMining_ = pObjectKnown_->GetNbrDotationForMining();
+        NotifyAttributeUpdated( eAttr_Dotations );
     }
 }
 
@@ -495,6 +517,7 @@ void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowle
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const
 {
+    assert( pObjectType_ );
     if( *pMaxPerceptionLevel_ == PHY_PerceptionLevel::notSeen_ )
         return;
 
@@ -521,6 +544,20 @@ void DEC_Knowledge_Object::BuildMsgStates( ASN1T_MsgObjectKnowledgeUpdate& asnMs
         asnMsg.m.en_preparationPresent = 1;
         asnMsg.en_preparation = bIsPrepared_;
     }     
+
+    if( IsAttributeUpdated( eAttr_Dotations ) )
+    {
+        if( pObjectType_->GetDotationCategoryForConstruction() )
+        {
+            asnMsg.m.nb_dotation_constructionPresent = 1;
+            asnMsg.nb_dotation_construction          = nNbrDotationForConstruction_;
+        }
+        if( pObjectType_->GetDotationCategoryForMining() )
+        {
+            asnMsg.m.nb_dotation_valorisationPresent = 1;
+            asnMsg.nb_dotation_valorisation          = nNbrDotationForMining_;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -593,6 +630,18 @@ void DEC_Knowledge_Object::SendMsgCreation() const
         asnMsg.GetAsnMsg().oid_objet_reel = pObjectKnown_->GetID();
     else
         asnMsg.GetAsnMsg().oid_objet_reel = 0;
+
+    if( pObjectType_->GetDotationCategoryForConstruction() )
+    {
+        asnMsg.GetAsnMsg().m.type_dotation_constructionPresent = 1;
+        asnMsg.GetAsnMsg().type_dotation_construction          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
+    }
+
+    if( pObjectType_->GetDotationCategoryForMining() )
+    {
+        asnMsg.GetAsnMsg().m.type_dotation_valorisationPresent = 1;
+        asnMsg.GetAsnMsg().type_dotation_valorisation          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
+    }
     
     asnMsg.Send();
 }

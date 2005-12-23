@@ -44,6 +44,11 @@ public:
     virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asn );
     //@}
 
+    //! @name Knowledge
+    //@{
+    virtual DEC_Knowledge_Object& CreateKnowledge( const MIL_Army& teamKnowing );
+    //@}
+
     //! @name Accessors
     //@{
     MIL_AutomateLOG& GetTC2() const;

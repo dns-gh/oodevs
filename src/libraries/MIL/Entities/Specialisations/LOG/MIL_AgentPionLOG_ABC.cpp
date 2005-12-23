@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOG_ABC, "MIL_AgentPionLOG_ABC" )
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
-    : MIL_AgentPion( type, nID, archive )
+    : MIL_AgentPion   ( type, nID, archive )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     if( !GetAutomate().GetType().IsLogistic() )
@@ -38,7 +38,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint 
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPion( automate, archive )
+    : MIL_AgentPion   ( automate, archive )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     if ( !automate.GetType().IsLogistic() )
@@ -50,7 +50,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( MIL_Automate& automate, MIL_InputArc
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    : MIL_AgentPion( type, nID, automate, vPosition )
+    : MIL_AgentPion   ( type, nID, automate, vPosition )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     assert( automate.GetType().IsLogistic() );
@@ -61,7 +61,7 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint 
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC()
-    : MIL_AgentPion()
+    : MIL_AgentPion   ()
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
 }

@@ -19,6 +19,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Knowledge/DEC_Knowledge_ObjectCampRefugies.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_CampRefugies, "MIL_CampRefugies" )
@@ -152,6 +153,19 @@ void MIL_CampRefugies::ProcessAgentExiting( MIL_Agent_ABC& agent )
         agent.GetRole< PHY_RoleInterface_Refugee >().NotifyOutsideRefugeeCamp( *this );
 }
 
+// =============================================================================
+// KNOWLEDGE
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CampRefugies::CreateKnowledge
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object& MIL_CampRefugies::CreateKnowledge( const MIL_Army& teamKnowing )
+{
+    return *new DEC_Knowledge_ObjectCampRefugies( teamKnowing, *this );
+}
+   
 // =============================================================================
 // NETWORK
 // =============================================================================

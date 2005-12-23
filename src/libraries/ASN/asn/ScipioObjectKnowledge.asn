@@ -17,10 +17,12 @@ IMPORTS EnumObjectType, AttrObjectSpecific FROM ScipioObject;
 -- SIM -> MOS
 MsgObjectKnowledgeCreation ::= SEQUENCE
 {
-    oid-connaissance           OID, 
-    oid-camp-possesseur        OID, 
-    oid-objet-reel             OID, -- id de l'objet réel pointé par la connaissance
-    type                       EnumObjectType
+    oid-connaissance            OID, 
+    oid-camp-possesseur         OID, 
+    oid-objet-reel              OID, -- id de l'objet réel pointé par la connaissance
+    type                        EnumObjectType,
+    type-dotation-construction  TypeDotation OPTIONAL,
+    type-dotation-valorisation  TypeDotation OPTIONAL    
 }
 
 MsgObjectKnowledgeUpdate ::= SEQUENCE
@@ -36,7 +38,9 @@ MsgObjectKnowledgeUpdate ::= SEQUENCE
     en-preparation             BOOLEAN            OPTIONAL,
     est-percu                  BOOLEAN            OPTIONAL,
     attributs-specifiques      AttrObjectSpecific OPTIONAL,
-    perception-par-compagnie   SEQUENCE OF OID    OPTIONAL  -- Liste des compagnies percevant l'objet
+    perception-par-compagnie   SEQUENCE OF OID    OPTIONAL, -- Liste des compagnies percevant l'objet
+    nb-dotation-construction   INTEGER            OPTIONAL,
+    nb-dotation-valorisation   INTEGER            OPTIONAL
 }
 
 MsgObjectKnowledgeDestruction ::= SEQUENCE

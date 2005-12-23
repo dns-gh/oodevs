@@ -19,6 +19,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Knowledge/DEC_Knowledge_ObjectCampPrisonniers.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_CampPrisonniers, "MIL_CampPrisonniers" )
@@ -152,6 +153,18 @@ void MIL_CampPrisonniers::ProcessAgentExiting( MIL_Agent_ABC& agent )
         agent.GetRole< PHY_RoleInterface_Surrender >().NotifyOutsidePrisonerCamp( *this );
 }
 
+// =============================================================================
+// KNOWLEDGE
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CampPrisonniers::CreateKnowledge
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object& MIL_CampPrisonniers::CreateKnowledge( const MIL_Army& teamKnowing )
+{
+    return *new DEC_Knowledge_ObjectCampPrisonniers( teamKnowing, *this );
+}
 
 // =============================================================================
 // NETWORK

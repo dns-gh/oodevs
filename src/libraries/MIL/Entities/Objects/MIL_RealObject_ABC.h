@@ -95,6 +95,8 @@ public:
     bool CanBeActivated                    () const;
     uint GetDotationNeededForConstruction  ( MT_Float rDeltaPercentage ) const;
     uint GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
+    uint GetNbrDotationForConstruction     () const;
+    uint GetNbrDotationForMining           () const;
     //@}
 
     //! @name Occupation

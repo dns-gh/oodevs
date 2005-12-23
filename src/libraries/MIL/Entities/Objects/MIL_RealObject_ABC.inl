@@ -231,6 +231,26 @@ uint MIL_RealObject_ABC::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPerc
     return nCurrentNbrDotationForConstruction_ - (uint)( rNewPercentage * nFullNbrDotationForConstruction_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetNbrDotationForConstruction
+// Created: NLD 2005-12-23
+// -----------------------------------------------------------------------------
+inline
+uint MIL_RealObject_ABC::GetNbrDotationForConstruction() const
+{
+    return nCurrentNbrDotationForConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::GetNbrDotationForMining
+// Created: NLD 2005-12-23
+// -----------------------------------------------------------------------------
+inline
+uint MIL_RealObject_ABC::GetNbrDotationForMining() const
+{
+    return nCurrentNbrDotationForMining_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_RealObject_ABC::ChangeConstructionPercentage
 // Created: NLD 2003-05-20
