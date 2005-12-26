@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_LOG_TransporterUniteChars_h_
-#define __MIL_PionMission_LOG_TransporterUniteChars_h_
+#ifndef __MIL_PionMission_LOG_TransporterUnite_h_
+#define __MIL_PionMission_LOG_TransporterUnite_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_LOG_TransporterUniteChars: public MIL_PionMission_ABC
+class MIL_PionMission_LOG_TransporterUnite: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_LOG_TransporterUniteChars )
+    MT_COPYNOTALLOWED( MIL_PionMission_LOG_TransporterUnite )
 
 public:
 
-             MIL_PionMission_LOG_TransporterUniteChars( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_LOG_TransporterUniteChars();
+             MIL_PionMission_LOG_TransporterUnite( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_LOG_TransporterUnite();
 
     //! @name Init
     //@{
@@ -55,4 +55,4 @@ private:
 };
 
 
-#endif // __MIL_PionMission_LOG_TransporterUniteChars_h_
+#endif // __MIL_PionMission_LOG_TransporterUnite_h_

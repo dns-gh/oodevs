@@ -124,7 +124,7 @@
     void CreateMission_LOG_AppuyerMouvement();
     void CreateMission_LOG_ReconnaitreItineraire();
     void CreateMission_LOG_Surveiller();
-    void CreateMission_LOG_TransporterFormationBlindee();
+    void CreateMission_LOG_TransporterUnites();
     void CreateMission_LOG_AppuyerMouvementDansZone();
     void CreateMission_LOG_MettreEnOeuvreZoneStationnement();
     void CreateMission_LOG_AppuyerFranchissementDansZone();

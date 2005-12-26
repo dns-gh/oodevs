@@ -52,7 +52,13 @@ AGR_HalGenerator::~AGR_HalGenerator()
 void AGR_HalGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
     //$$$$
-    MT_MakeDir( strOutputPath + "/Data_Moteur/" );
+    MT_MakeDir( strOutputPath + "/data" );
+    MT_MakeDir( strOutputPath + "/data/test" );
+    MT_MakeDir( strOutputPath + "/data/test/Data" );
+    MT_MakeDir( strOutputPath + "/data/test/Data/Modeles" );
+    MT_MakeDir( strOutputPath + "/data/test/Data/Modeles/Sources" );
+    MT_MakeDir( strOutputPath + "/data/test/Data/Modeles/Sources/Common" );
+    MT_MakeDir( strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur" );
     std::cout << "Generating script file" << std::endl;
     GenerateMissionEnumFile  ( workspace, strOutputPath );
     GenerateMissionScriptFile( workspace, strOutputPath );
@@ -95,7 +101,7 @@ void AGR_HalGenerator::GenerateMissionEnumFile( const AGR_Workspace& workspace, 
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumeration$", strOrderEnumeration );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "Data_Moteur/Types_Enums_Generated.hal" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur/Types_Enums_Generated.hal" );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +131,7 @@ void AGR_HalGenerator::GenerateMissionScriptFile( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$Missions$", strMissionPion );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "Data_Moteur/Types_Missions_Pion.hal" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur/Types_Missions_Pion.hal" );
 
     strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "Types_Missions_Automate_Skeleton.hal", strBaseContent );
@@ -133,7 +139,7 @@ void AGR_HalGenerator::GenerateMissionScriptFile( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$Missions$", strMissionAutomate );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "Data_Moteur/Types_Missions_Automate.hal" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur/Types_Missions_Automate.hal" );
 
     strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "Types_Missions_Population_Skeleton.hal", strBaseContent );
@@ -141,7 +147,7 @@ void AGR_HalGenerator::GenerateMissionScriptFile( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$Missions$", strMissionPopulation );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "Data_Moteur/Types_Missions_Population.hal" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur/Types_Missions_Population.hal" );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +167,7 @@ void AGR_HalGenerator::GenerateOrderConduiteScriptFile( const AGR_Workspace& wor
     workspace.ReadStringFile( AGR_SKEL_DIR "Types_OrderConduites_Skeleton.hal", strBaseContent );
     workspace.ReplaceInString( strBaseContent, "$Orders$", strFragOrder );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "Data_Moteur/Types_OrdresConduite.hal" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur/Types_OrdresConduite.hal" );
 }
 
 
@@ -188,5 +194,5 @@ void AGR_HalGenerator::GenerateRCEnumFile( const AGR_Workspace& workspace, const
     }   
     strTmp << "    eNbr" << std::endl;
     workspace.ReplaceInString( strBaseContent, "$AGR_HAL_EnumRcs$", strTmp.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/Data_Moteur/Types_RC.hal" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/data/test/Data/Modeles/Sources/Common/Moteur/Types_RC.hal" );
 }

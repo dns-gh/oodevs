@@ -85,7 +85,7 @@ void AGR_MosGenerator::GenerateMosMissionHeaderFiles( const AGR_Workspace& works
     workspace.ReplaceInString( strBaseContent, "$MissionCreatorDeclarations$", strPionFunctionDeclaration );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/MOS_Light/MOS_MissionPion.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/MOS_Light/MOS_MissionPion.h" );
 
     strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_MissionAutomate_Skeleton.h", strBaseContent );
@@ -93,7 +93,7 @@ void AGR_MosGenerator::GenerateMosMissionHeaderFiles( const AGR_Workspace& works
     workspace.ReplaceInString( strBaseContent, "$MissionCreatorDeclarations$", strAutomateFunctionDeclaration );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "MOS_Light/MOS_MissionAutomate.h" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/MOS_Light/MOS_MissionAutomate.h" );
 
     strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_MissionPopulation_Skeleton.h", strBaseContent );
@@ -156,7 +156,7 @@ void AGR_MosGenerator::GenerateMosMissionCppFiles( const AGR_Workspace& workspac
     workspace.ReplaceInString( strBaseContent, "$MissionCreatorImplementations$", strMissionFunctionsPion );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light/MOS_MissionPion.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/MOS_Light/MOS_MissionPion.cpp" );
 
     strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_MissionAutomate_Skeleton.cpp", strBaseContent );
@@ -166,7 +166,7 @@ void AGR_MosGenerator::GenerateMosMissionCppFiles( const AGR_Workspace& workspac
     workspace.ReplaceInString( strBaseContent, "$MissionCreatorImplementations$", strMissionFunctionsAutomate );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "MOS_Light/MOS_MissionAutomate.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/MOS_Light/MOS_MissionAutomate.cpp" );
 
     strBaseContent = "";
     workspace.ReadStringFile( AGR_SKEL_DIR "AGR_MOS_MissionPopulation_Skeleton.cpp", strBaseContent );
@@ -203,7 +203,7 @@ void AGR_MosGenerator::GenerateMosMissionConverter( const AGR_Workspace& workspa
     workspace.ReplaceInString( strBaseContent, "$MissionConverterList$", strConverterList );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "MOS_Light/MOS_MissionConverter.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/applications/MOS_Light/MOS_MissionConverter.cpp" );
 }
 
 
@@ -228,5 +228,5 @@ void AGR_MosGenerator::GenerateMosRcs( const AGR_Workspace& workspace, const std
     }
 
     workspace.ReplaceInString( strBaseContent, "$AGR_MOS_RC$", strTmp.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/MOS_Light/MOS_RC.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications//MOS_Light/MOS_RC.cpp" );
 }

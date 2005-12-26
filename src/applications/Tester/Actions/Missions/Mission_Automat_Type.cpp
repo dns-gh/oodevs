@@ -130,7 +130,7 @@
 #include "Automat/Mission_Automat_LOG_AppuyerMouvement.cpp"
 #include "Automat/Mission_Automat_LOG_ReconnaitreItineraire.cpp"
 #include "Automat/Mission_Automat_LOG_Surveiller.cpp"
-#include "Automat/Mission_Automat_LOG_TransporterFormationBlindee.cpp"
+#include "Automat/Mission_Automat_LOG_TransporterUnites.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerMouvementDansZone.cpp"
 #include "Automat/Mission_Automat_LOG_MettreEnOeuvreZoneStationnement.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerFranchissementDansZone.cpp"
@@ -303,7 +303,7 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_LOG_AppuyerMouvement >( "Automate LOG AppuyerMouvement" );
     Register< Mission_Automat_LOG_ReconnaitreItineraire >( "Automate LOG ReconnaitreItineraire" );
     Register< Mission_Automat_LOG_Surveiller >( "Automate LOG Surveiller" );
-    Register< Mission_Automat_LOG_TransporterFormationBlindee >( "Automate LOG TransporterFormationBlindee" );
+    Register< Mission_Automat_LOG_TransporterUnites >( "Automate LOG TransporterUnites" );
     Register< Mission_Automat_LOG_AppuyerMouvementDansZone >( "Automate LOG AppuyerMouvementDansZone" );
     Register< Mission_Automat_LOG_MettreEnOeuvreZoneStationnement >( "Automate LOG MettreEnOeuvreZoneStationnement" );
     Register< Mission_Automat_LOG_AppuyerFranchissementDansZone >( "Automate LOG AppuyerFranchissementDansZone" );

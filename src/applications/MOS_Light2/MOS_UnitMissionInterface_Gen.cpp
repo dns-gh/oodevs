@@ -174,7 +174,7 @@ MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
         case T_Mission_Pion_mission_pion_log_preparer_bascule : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_preparer_bascule; break;
         case T_Mission_Pion_mission_pion_log_appuyer_mouvement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_appuyer_mouvement; break;
         case T_Mission_Pion_mission_pion_log_reconnaitre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_reconnaitre_itineraire; break;
-        case T_Mission_Pion_mission_pion_log_transporter_unite_chars : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_transporter_unite_chars; break;
+        case T_Mission_Pion_mission_pion_log_transporter_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_transporter_unite; break;
         case T_Mission_Pion_mission_pion_log_reconnaitre_zone_contaminee : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_reconnaitre_zone_contaminee; break;
         case T_Mission_Pion_mission_pion_log_appuyer_mouvement_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_appuyer_mouvement_dans_zone; break;
         case T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_mettre_en_oeuvre_zone_stationnement; break;
@@ -394,7 +394,7 @@ void MOS_UnitMissionInterface::CreateInterface()
         case eMission_Pion_LOG_PreparerBascule : CreateMission_LOG_PreparerBascule(); break;
         case eMission_Pion_LOG_AppuyerMouvement : CreateMission_LOG_AppuyerMouvement(); break;
         case eMission_Pion_LOG_ReconnaitreItineraire : CreateMission_LOG_ReconnaitreItineraire(); break;
-        case eMission_Pion_LOG_TransporterUniteChars : CreateMission_LOG_TransporterUniteChars(); break;
+        case eMission_Pion_LOG_TransporterUnite : CreateMission_LOG_TransporterUnite(); break;
         case eMission_Pion_LOG_ReconnaitreZoneContaminee : CreateMission_LOG_ReconnaitreZoneContaminee(); break;
         case eMission_Pion_LOG_AppuyerMouvementDansZone : CreateMission_LOG_AppuyerMouvementDansZone(); break;
         case eMission_Pion_LOG_MettreEnOeuvreZoneStationnement : CreateMission_LOG_MettreEnOeuvreZoneStationnement(); break;
@@ -2593,14 +2593,14 @@ void MOS_UnitMissionInterface::CreateMission_LOG_ReconnaitreItineraire()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_LOG_TransporterUniteChars
+// Name: MOS_UnitMissionInterface::CreateMission_LOG_TransporterUnite
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_LOG_TransporterUniteChars()
+void MOS_UnitMissionInterface::CreateMission_LOG_TransporterUnite()
 {
-    ASN1T_Mission_Pion_LOG_TransporterUniteChars& asnMission = *new ASN1T_Mission_Pion_LOG_TransporterUniteChars();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_transporter_unite_chars;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_transporter_unite_chars = &asnMission;
+    ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *new ASN1T_Mission_Pion_LOG_TransporterUnite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_transporter_unite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_transporter_unite = &asnMission;
     CreateAgentList( asnMission.unites_a_transporter, "Unites a transporter", false );
     CreatePoint( asnMission.point_rendez_vous, "Point rendez vous", false );
     CreatePoint( asnMission.point_destination, "Point destination", false );

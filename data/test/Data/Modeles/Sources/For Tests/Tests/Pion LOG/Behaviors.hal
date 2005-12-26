@@ -379,6 +379,13 @@ behavior BEH_MoveToTmp( T_Point point )
     }    
 }
 
+action ACT_RC( E_TypeRC rc )
+{
+    if( DIA_ModuleBegins() )
+        DEC_RC( rc );
+}
+
+
 behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
 {   
     when updated:
@@ -401,6 +408,7 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
         
         if( nStep == eTestConvoyerStep_DeplacementVersPointChargement )
         {
+            action ACT_RC( eRC_Convoi_DeplacementVersPointChargement );        
             behavior BEH_MoveToTmp( DEC_Ravitaillement_Convoi_PointChargement() );
             if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_PointChargement() ) )
                 nStep = eTestConvoyerStep_Chargement; 
@@ -408,10 +416,12 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
         
         if( nStep == eTestConvoyerStep_Chargement )
         {
+            action ACT_RC( eRC_Convoi_ChargementEnCours );
             if( supplyAction == 0 )
                 supplyAction = DEC_Ravitaillement_Convoi_StartCharger( bSupplyActionReturnCode );
             if( bSupplyActionReturnCode )
             {
+                DEC_RC( eRC_Convoi_ChargementEffectue );
                 DEC_StopAction( supplyAction );
                 supplyAction = 0;
                 nStep = eTestConvoyerStep_DeplacementVersPointDechargement;
@@ -420,6 +430,7 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
         
         if( nStep == eTestConvoyerStep_DeplacementVersPointDechargement )
         {
+            action ACT_RC( eRC_Convoi_DeplacementVersPointDechargement );
             behavior BEH_MoveToTmp( DEC_Ravitaillement_Convoi_PointDechargement() );
             if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_PointDechargement() ) )
                 nStep = eTestConvoyerStep_Dechargement; 
@@ -427,10 +438,12 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
         
         if( nStep == eTestConvoyerStep_Dechargement )
         {
+            action ACT_RC( eRC_Convoi_DechargementEnCours );
             if( supplyAction == 0 )
                 supplyAction = DEC_Ravitaillement_Convoi_StartDecharger( bSupplyActionReturnCode );
             if( bSupplyActionReturnCode )
             {
+                DEC_RC( eRC_Convoi_DechargementEffectue );
                 DEC_StopAction( supplyAction );
                 supplyAction = 0;
                 nStep = eTestConvoyerStep_DeplacementRetour;
@@ -439,9 +452,13 @@ behavior MIS_Pion_LOG_Convoyer( T_Mission_Pion_LOG_Convoyer mission, id nDummy )
         
         if( nStep == eTestConvoyerStep_DeplacementRetour )
         {
+            action ACT_RC( eRC_Convoi_Retour );
             behavior BEH_MoveToTmp( DEC_Ravitaillement_Convoi_PointRetour() );
             if( DEC_Geometrie_PositionsEgales( DEC_Agent_Position(), DEC_Ravitaillement_Convoi_PointRetour() ) )
+            {
                 DEC_Ravitaillement_Convoi_FinMission();
+                action ACT_RC( eRC_RavitaillementStockEffectue );
+            }
         }
     }
     on spontaneous end:

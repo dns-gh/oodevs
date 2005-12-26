@@ -166,7 +166,7 @@
     void CreateMission_LOG_PreparerBascule();
     void CreateMission_LOG_AppuyerMouvement();
     void CreateMission_LOG_ReconnaitreItineraire();
-    void CreateMission_LOG_TransporterUniteChars();
+    void CreateMission_LOG_TransporterUnite();
     void CreateMission_LOG_ReconnaitreZoneContaminee();
     void CreateMission_LOG_AppuyerMouvementDansZone();
     void CreateMission_LOG_MettreEnOeuvreZoneStationnement();

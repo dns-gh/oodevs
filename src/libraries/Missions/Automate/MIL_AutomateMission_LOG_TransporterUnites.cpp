@@ -11,23 +11,23 @@
 
 #include "Missions_pch.h"
 
-#include "MIL_AutomateMission_LOG_TransporterFormationBlindee.h"
+#include "MIL_AutomateMission_LOG_TransporterUnites.h"
 #include "MIL/Entities/Orders/Automate/MIL_AutomateMissionType.h"
 #include "MIL/Entities/Automates/MIL_Automate.h"
 #include "MIL/Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAUnitesATransporterIdx_ = 0 ;
-int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAPointRendezVousIdx_ = 0 ;
-int MIL_AutomateMission_LOG_TransporterFormationBlindee::nDIAPointDestinationIdx_ = 0 ;
+int MIL_AutomateMission_LOG_TransporterUnites::nDIAUnitesATransporterIdx_ = 0 ;
+int MIL_AutomateMission_LOG_TransporterUnites::nDIAPointRendezVousIdx_ = 0 ;
+int MIL_AutomateMission_LOG_TransporterUnites::nDIAPointDestinationIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_LOG_TransporterFormationBlindee constructor
+// Name: MIL_AutomateMission_LOG_TransporterUnites constructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_AutomateMission_LOG_TransporterFormationBlindee::MIL_AutomateMission_LOG_TransporterFormationBlindee( MIL_Automate& automate, const MIL_AutomateMissionType& type )
+MIL_AutomateMission_LOG_TransporterUnites::MIL_AutomateMission_LOG_TransporterUnites( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
 {
     // NOTHING
@@ -35,10 +35,10 @@ MIL_AutomateMission_LOG_TransporterFormationBlindee::MIL_AutomateMission_LOG_Tra
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_LOG_TransporterFormationBlindee destructor
+// Name: MIL_AutomateMission_LOG_TransporterUnites destructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_AutomateMission_LOG_TransporterFormationBlindee::~MIL_AutomateMission_LOG_TransporterFormationBlindee()
+MIL_AutomateMission_LOG_TransporterUnites::~MIL_AutomateMission_LOG_TransporterUnites()
 {
     // NOTHING
 }
@@ -48,11 +48,11 @@ MIL_AutomateMission_LOG_TransporterFormationBlindee::~MIL_AutomateMission_LOG_Tr
 //=============================================================================
    
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::InitializeDIA
+// Name: MIL_AutomateMission_LOG_TransporterUnites::InitializeDIA
 // Created: NLD 2003-04-10
 //-----------------------------------------------------------------------------
 // static
-void MIL_AutomateMission_LOG_TransporterFormationBlindee::InitializeDIA( const MIL_AutomateMissionType& type )
+void MIL_AutomateMission_LOG_TransporterUnites::InitializeDIA( const MIL_AutomateMissionType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAUnitesATransporterIdx_ = DEC_Tools::InitializeDIAField( "unitesATransporter_", diaType );
@@ -62,16 +62,16 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::InitializeDIA( const M
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::Initialize
+// Name: MIL_AutomateMission_LOG_TransporterUnites::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterFormationBlindee::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterUnites::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_AutomateMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
-    const ASN1T_Mission_Automate_LOG_TransporterFormationBlindee& asnMission = *asnMsg.mission.u.mission_automate_log_transporter_formation_blindee;
+    const ASN1T_Mission_Automate_LOG_TransporterUnites& asnMission = *asnMsg.mission.u.mission_automate_log_transporter_unites;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_transporter, GetVariable( nDIAUnitesATransporterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_rendez_vous, pointRendezVous_, GetVariable( nDIAPointRendezVousIdx_ ) ) )
@@ -86,7 +86,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterFormationBlindee::In
 // Name: MIL_AutomateMission_ABC::Terminate
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_LOG_TransporterFormationBlindee::Terminate()
+void MIL_AutomateMission_LOG_TransporterUnites::Terminate()
 {
     NET_ASN_Tools::ResetPoint( pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) );
 
@@ -98,16 +98,16 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::Terminate()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize
+// Name: MIL_AutomateMission_LOG_TransporterUnites::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_LOG_TransporterUnites::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
     MIL_AutomateMission_ABC::Serialize( asnMsg );
     
-    ASN1T_Mission_Automate_LOG_TransporterFormationBlindee& asnMission = *new ASN1T_Mission_Automate_LOG_TransporterFormationBlindee();
-    asnMsg.mission.t                           = T_Mission_Automate_mission_automate_log_transporter_formation_blindee;
-    asnMsg.mission.u.mission_automate_log_transporter_formation_blindee  = &asnMission;
+    ASN1T_Mission_Automate_LOG_TransporterUnites& asnMission = *new ASN1T_Mission_Automate_LOG_TransporterUnites();
+    asnMsg.mission.t                           = T_Mission_Automate_mission_automate_log_transporter_unites;
+    asnMsg.mission.u.mission_automate_log_transporter_unites  = &asnMission;
 
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesATransporterIdx_ ), asnMission.unites_a_transporter );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRendezVousIdx_ ), asnMission.point_rendez_vous );
@@ -116,13 +116,13 @@ void MIL_AutomateMission_LOG_TransporterFormationBlindee::Serialize( ASN1T_MsgAu
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_LOG_TransporterFormationBlindee::CleanAfterSerialization
+// Name: MIL_AutomateMission_LOG_TransporterUnites::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_LOG_TransporterFormationBlindee::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_LOG_TransporterUnites::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
-    assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_log_transporter_formation_blindee );
-    ASN1T_Mission_Automate_LOG_TransporterFormationBlindee& asnMission = *asnMsg.mission.u.mission_automate_log_transporter_formation_blindee;
+    assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_log_transporter_unites );
+    ASN1T_Mission_Automate_LOG_TransporterUnites& asnMission = *asnMsg.mission.u.mission_automate_log_transporter_unites;
 
     NET_ASN_Tools::Delete( asnMission.unites_a_transporter );
     NET_ASN_Tools::Delete( asnMission.point_rendez_vous );

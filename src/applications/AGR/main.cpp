@@ -72,7 +72,6 @@ int main( int /*argc*/, char** /*argv*/ )
         generators.push_back( new AGR_MilRCGenerator() );
         generators.push_back( new AGR_Mos2Generator() );
         generators.push_back( new AGR_HalGenerator() );
-        generators.push_back( new AGR_MosGenerator() );
         generators.push_back( new AGR_EnumGenerator() );
         generators.push_back( new AGR_Adn2Generator() );
         generators.push_back( new AGR_FichesMissionsGenerator() );

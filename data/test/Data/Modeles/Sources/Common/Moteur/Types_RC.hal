@@ -118,6 +118,17 @@ typedef enum E_TypeRC
     eRC_RavitaillementDotationsEffectue,
     eRC_RavitaillementStockEffectue,
     eRC_HumainRetourDeSante,
+    eRC_VSRAM_PretEnCours,
+    eRC_VSRAM_PretAnnule,
+    eRC_VSRAM_PretEffectue,
+    eRC_VSRAM_RecuperationEffectuee,
+    eRC_Convoi_DeplacementVersPointChargement,
+    eRC_Convoi_ChargementEnCours,
+    eRC_Convoi_ChargementEffectue,
+    eRC_Convoi_DeplacementVersPointDechargement,
+    eRC_Convoi_DechargementEnCours,
+    eRC_Convoi_DechargementEffectue,
+    eRC_Convoi_Retour,
     eRC_EnCoursRavitaillement,
     eRC_RavitaillementTermine,
     eRC_HelicoptereEnObservation,
@@ -153,6 +164,7 @@ typedef enum E_TypeRC
     eRC_PremierCoupParti,
     eRC_TirExecute,
     eRC_TirHorsDePortee,
+    eRC_TirImpossiblePlusDeMunitions,
     eRC_TirAnnule,
     eRC_ChangementDePosition,
     eRC_DebutInstallation,
@@ -169,6 +181,7 @@ typedef enum E_TypeRC
     eRC_PresenceEnnemiRendu,
     eRC_OrientationEnnemiRenduVersCampPrisonniers,
     eRC_PasDeCampPrisonniersDisponible,
+    eRC_Rendu,
     eRC_TirDansZoneInterdite,
     eRC_TirSurCampAmi, // Parametre : T_Pion
     eRC_TireParCampAmi, // Parametre : T_Pion
@@ -200,9 +213,44 @@ typedef enum E_TypeRC
     eRC_UniteAmieReconnue, // Parametre : T_ConnaissanceAgent
     eRC_UniteEnnemieReconnue, // Parametre : T_ConnaissanceAgent
     eRC_UniteNeutreReconnue, // Parametre : T_ConnaissanceAgent
+    eRC_UniteAmieIdentifiee, // Parametre : T_ConnaissanceAgent
+    eRC_UniteEnnemieIdentifiee, // Parametre : T_ConnaissanceAgent
+    eRC_UniteNeutreIdentifiee, // Parametre : T_ConnaissanceAgent
     eRC_ObjetDetecte, // Parametre : T_ConnaissanceObjet
     eRC_Trace, // Parametre : message
     eRC_TraceID, // Parametre : float
+    eRC_TirInterditSurPopulation,
+    eRC_TirSommationSurPopulation,
+    eRC_TirDissuasionSurPopulation,
+    eRC_TirNeutralisationSurPopulation,
+    eRC_PopulationDetectee, // Parametre : T_ConnaissancePopulation
+    eRC_PriseAPartieParPopulation, // Parametre : T_ConnaissancePopulation
+    eRC_RiposteSurPopulation, // Parametre : T_ConnaissancePopulation
+    eRC_PopulationDangereuseAProximite,
+    eRC_EsquiveDeLaPopulation,
+    eRC_DecrochageFaceAPopulation,
+    eRC_MiseEnPlaceControleDeFoule,
+    eRC_MiseEnPlaceFiltrage,
+    eRC_AnimationBarrage,
+    eRC_AnimationCanalisation,
+    eRC_CollecteRenseignementsSurPopulations,
+    eRC_PopulationTotalementReconnue,
+    eRC_AttitudeCalme,
+    eRC_AttitudeAgitee,
+    eRC_AttitudeExcitee,
+    eRC_AttitudeAgressive,
+    eRC_AggravationAttitude,
+    eRC_AffrontementAvecForcesEnnemies,
+    eRC_PopulationTemporairementControlee,
+    eRC_PopulationTemporairementRepoussee,
+    eRC_RepriseDesAffrontements,
+    eRC_RecuperationProgressive, // Parametre : float
+    eRC_AgressionDePopulation, // Parametre : T_ConnaissancePopulation
+    eRC_AgressionParPopulation, // Parametre : T_ConnaissancePopulation
+    eRC_RiposteContreAgressionParPopulation, // Parametre : T_ConnaissancePopulation
+    eRC_AttaqueInstallation, // Parametre : T_ConnaissanceObjet
+    eRC_EnStationnement,
+    eRC_ExecutionAttentat,
     eNbr
 
 };

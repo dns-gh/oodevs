@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Automat_LOG_TransporterFormationBlindee_h_
-#define __Mission_Automat_LOG_TransporterFormationBlindee_h_
+#ifndef __Mission_Automat_LOG_TransporterUnites_h_
+#define __Mission_Automat_LOG_TransporterUnites_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Automat;
 
 // =============================================================================
-/** @class  Mission_Automat_LOG_TransporterFormationBlindee
-    @brief  Mission_Automat_LOG_TransporterFormationBlindee
+/** @class  Mission_Automat_LOG_TransporterUnites
+    @brief  Mission_Automat_LOG_TransporterUnites
     @par    Using example
     @code
-    Mission_Automat_LOG_TransporterFormationBlindee;
+    Mission_Automat_LOG_TransporterUnites;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Automat_LOG_TransporterFormationBlindee : public Mission_Automat_ABC
+class Mission_Automat_LOG_TransporterUnites : public Mission_Automat_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Automat_LOG_TransporterFormationBlindee( Automat& target );
-    virtual ~Mission_Automat_LOG_TransporterFormationBlindee();
+             Mission_Automat_LOG_TransporterUnites( Automat& target );
+    virtual ~Mission_Automat_LOG_TransporterUnites();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Automat_LOG_TransporterFormationBlindee( const Mission_Automat_LOG_TransporterFormationBlindee& );            //!< Copy constructor
-    Mission_Automat_LOG_TransporterFormationBlindee& operator=( const Mission_Automat_LOG_TransporterFormationBlindee& ); //!< Assignment operator
+    Mission_Automat_LOG_TransporterUnites( const Mission_Automat_LOG_TransporterUnites& );            //!< Copy constructor
+    Mission_Automat_LOG_TransporterUnites& operator=( const Mission_Automat_LOG_TransporterUnites& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Automat_LOG_TransporterFormationBlindee_h_
+#endif // __Mission_Automat_LOG_TransporterUnites_h_

@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_LOG_TransporterUniteChars_h_
-#define __Mission_Pawn_LOG_TransporterUniteChars_h_
+#ifndef __Mission_Pawn_LOG_TransporterUnite_h_
+#define __Mission_Pawn_LOG_TransporterUnite_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_LOG_TransporterUniteChars
-    @brief  Mission_Pawn_LOG_TransporterUniteChars
+/** @class  Mission_Pawn_LOG_TransporterUnite
+    @brief  Mission_Pawn_LOG_TransporterUnite
     @par    Using example
     @code
-    Mission_Pawn_LOG_TransporterUniteChars;
+    Mission_Pawn_LOG_TransporterUnite;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_LOG_TransporterUniteChars : public Mission_Pawn_ABC
+class Mission_Pawn_LOG_TransporterUnite : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_LOG_TransporterUniteChars( Pawn& target );
-    virtual ~Mission_Pawn_LOG_TransporterUniteChars();
+             Mission_Pawn_LOG_TransporterUnite( Pawn& target );
+    virtual ~Mission_Pawn_LOG_TransporterUnite();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_LOG_TransporterUniteChars( const Mission_Pawn_LOG_TransporterUniteChars& );            //!< Copy constructor
-    Mission_Pawn_LOG_TransporterUniteChars& operator=( const Mission_Pawn_LOG_TransporterUniteChars& ); //!< Assignment operator
+    Mission_Pawn_LOG_TransporterUnite( const Mission_Pawn_LOG_TransporterUnite& );            //!< Copy constructor
+    Mission_Pawn_LOG_TransporterUnite& operator=( const Mission_Pawn_LOG_TransporterUnite& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_LOG_TransporterUniteChars_h_
+#endif // __Mission_Pawn_LOG_TransporterUnite_h_

@@ -49,11 +49,13 @@ AGR_MilMissionGenerator::~AGR_MilMissionGenerator()
 // -----------------------------------------------------------------------------
 void AGR_MilMissionGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/Missions" );
-    MT_MakeDir( strOutputPath + "/Missions/Pion" );
-    MT_MakeDir( strOutputPath + "/Missions/Automate" );
-    MT_MakeDir( strOutputPath + "/Missions/Population" );
-    MT_MakeDir( strOutputPath + "/Missions/Conduite" );
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/libraries" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Pion" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Automate" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Population" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Conduite" );
 
     std::cout << "Generating MIL mission files" << std::endl;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )

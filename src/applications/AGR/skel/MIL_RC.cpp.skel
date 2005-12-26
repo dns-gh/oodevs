@@ -54,7 +54,11 @@ const MIL_RC_UniteDetectee*                     MIL_RC::pRcUniteDetectee_       
 const MIL_RC_UniteAmieReconnue*                 MIL_RC::pRcUniteAmieReconnue_                  = 0;
 const MIL_RC_UniteEnnemieReconnue*              MIL_RC::pRcUniteEnnemieReconnue_               = 0;
 const MIL_RC_UniteNeutreReconnue*               MIL_RC::pRcUniteNeutreReconnue_                = 0;
+const MIL_RC_UniteAmieIdentifiee*               MIL_RC::pRcUniteAmieIdentifiee_                = 0;
+const MIL_RC_UniteEnnemieIdentifiee*            MIL_RC::pRcUniteEnnemieIdentifiee_             = 0;
+const MIL_RC_UniteNeutreIdentifiee*             MIL_RC::pRcUniteNeutreIdentifiee_              = 0;
 const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
+const MIL_RC*                                   MIL_RC::pRcRendu_                              = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -96,7 +100,11 @@ void MIL_RC::Initialize()
     pRcUniteAmieReconnue_                 = (MIL_RC_UniteAmieReconnue*)                rcs_[ eRC_UniteAmieReconnue                 ];
     pRcUniteEnnemieReconnue_              = (MIL_RC_UniteEnnemieReconnue*)             rcs_[ eRC_UniteEnnemieReconnue              ];
     pRcUniteNeutreReconnue_               = (MIL_RC_UniteNeutreReconnue*)              rcs_[ eRC_UniteNeutreReconnue               ];
+    pRcUniteAmieIdentifiee_               = (MIL_RC_UniteAmieIdentifiee*)              rcs_[ eRC_UniteAmieIdentifiee               ];
+    pRcUniteEnnemieIdentifiee_            = (MIL_RC_UniteEnnemieIdentifiee*)           rcs_[ eRC_UniteEnnemieIdentifiee            ];
+    pRcUniteNeutreIdentifiee_             = (MIL_RC_UniteNeutreIdentifiee*)            rcs_[ eRC_UniteNeutreIdentifiee             ];
     pRcObjetDetecte_                      = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                      ];
+    pRcRendu_                             =                                            rcs_[ eRC_Rendu                             ];
 }
 
 // -----------------------------------------------------------------------------

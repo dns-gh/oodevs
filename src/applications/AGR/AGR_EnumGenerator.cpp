@@ -52,7 +52,9 @@ AGR_EnumGenerator::~AGR_EnumGenerator()
 // -----------------------------------------------------------------------------
 void AGR_EnumGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/ENT" );
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/libraries" );
+    MT_MakeDir( strOutputPath + "/src/libraries/ENT" );
     std::cout << "Generating enums file" << std::endl;
     GenerateEnumFile( workspace, strOutputPath );
     GenerateTranslatorHeader( workspace, strOutputPath );
@@ -118,7 +120,7 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
     workspace.ReplaceInString( strBaseContent, "$PopulationMissionEnumList$", strPopulationMissionList );
     workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strUnitMissionList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strFragOrderList );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "ENT/ENT_Enums_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Enums_Gen.h" );
 }
 
 
@@ -163,7 +165,7 @@ void AGR_EnumGenerator::GenerateTranslatorHeader( const AGR_Workspace& workspace
     workspace.ReplaceInString( strBaseContent, "$ConvertToFunctions$", strConvertToFunctions.str() );
     workspace.ReplaceInString( strBaseContent, "$Typdefs$", strTypedefs.str() );
     workspace.ReplaceInString( strBaseContent, "$Converters$", strConverters.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "ENT/ENT_Tr_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Tr_Gen.h" );
 }
 
 
@@ -305,7 +307,7 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$UnitMissionConverterList$", strUnitMissionConverterList );
     workspace.ReplaceInString( strBaseContent, "$FragOrderConverterList$", strFragOrderConverterList );
     workspace.ReplaceInString( strBaseContent, "$InitTr$", strInitTr.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "ENT/ENT_Tr_Gen.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/ENT/ENT_Tr_Gen.cpp" );
 }
 
 

@@ -49,7 +49,9 @@ AGR_Adn2Generator::~AGR_Adn2Generator()
 // -----------------------------------------------------------------------------
 void AGR_Adn2Generator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/ADN" );
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/applications" );
+    MT_MakeDir( strOutputPath + "/src/applications/ADN" );
     std::cout << "Generating Adn2 files" << std::endl;
     GenerateAdn2EnumFile        ( workspace, strOutputPath );
     GenerateAdn2MissionConverter( workspace, strOutputPath );
@@ -199,7 +201,7 @@ void AGR_Adn2Generator::GenerateAdn2EnumFile( const AGR_Workspace& workspace, co
     workspace.ReplaceInString( strBaseContent, "$TestMission$", strMissionTest );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "ADN/ADN_Enums_Gen.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/ADN/ADN_Enums_Gen.h" );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +228,7 @@ void AGR_Adn2Generator::GenerateAdn2MissionConverter( const AGR_Workspace& works
     workspace.ReplaceInString( strBaseContent, "$MissionConverterList$", strConverterList );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "ADN/ADN_Tr_Gen.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/ADN/ADN_Tr_Gen.cpp" );
 }
 
 // -----------------------------------------------------------------------------

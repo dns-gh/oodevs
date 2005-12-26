@@ -153,6 +153,17 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_ravitaillement_dotations_effectue : strMsg << "ravitaillement dotations effectue"; break;
         case T_MsgCR_cr_cr_ravitaillement_stock_effectue : strMsg << "ravitaillement stock effectue"; break;
         case T_MsgCR_cr_cr_humain_retour_de_sante : strMsg << "humain retour de sante"; break;
+        case T_MsgCR_cr_cr_vsram_pret_en_cours : strMsg << "vsram_ pret en cours"; break;
+        case T_MsgCR_cr_cr_vsram_pret_annule : strMsg << "vsram_ pret annule"; break;
+        case T_MsgCR_cr_cr_vsram_pret_effectue : strMsg << "vsram_ pret effectue"; break;
+        case T_MsgCR_cr_cr_vsram_recuperation_effectuee : strMsg << "vsram_ recuperation effectuee"; break;
+        case T_MsgCR_cr_cr_convoi_deplacement_vers_point_chargement : strMsg << "convoi_ deplacement vers point chargement"; break;
+        case T_MsgCR_cr_cr_convoi_chargement_en_cours : strMsg << "convoi_ chargement en cours"; break;
+        case T_MsgCR_cr_cr_convoi_chargement_effectue : strMsg << "convoi_ chargement effectue"; break;
+        case T_MsgCR_cr_cr_convoi_deplacement_vers_point_dechargement : strMsg << "convoi_ deplacement vers point dechargement"; break;
+        case T_MsgCR_cr_cr_convoi_dechargement_en_cours : strMsg << "convoi_ dechargement en cours"; break;
+        case T_MsgCR_cr_cr_convoi_dechargement_effectue : strMsg << "convoi_ dechargement effectue"; break;
+        case T_MsgCR_cr_cr_convoi_retour : strMsg << "convoi_ retour"; break;
         case T_MsgCR_cr_cr_en_cours_ravitaillement : strMsg << "en cours ravitaillement"; break;
         case T_MsgCR_cr_cr_ravitaillement_termine : strMsg << "ravitaillement termine"; break;
         case T_MsgCR_cr_cr_helicoptere_en_observation : strMsg << "helicoptere en observation"; break;
@@ -188,6 +199,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_premier_coup_parti : strMsg << "premier coup parti"; break;
         case T_MsgCR_cr_cr_tir_execute : strMsg << "tir execute"; break;
         case T_MsgCR_cr_cr_tir_hors_de_portee : strMsg << "tir hors de portee"; break;
+        case T_MsgCR_cr_cr_tir_impossible_plus_de_munitions : strMsg << "tir impossible plus de munitions"; break;
         case T_MsgCR_cr_cr_tir_annule : strMsg << "tir annule"; break;
         case T_MsgCR_cr_cr_changement_de_position : strMsg << "changement de position"; break;
         case T_MsgCR_cr_cr_debut_installation : strMsg << "debut installation"; break;
@@ -204,6 +216,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_presence_ennemi_rendu : strMsg << "presence ennemi rendu"; break;
         case T_MsgCR_cr_cr_orientation_ennemi_rendu_vers_camp_prisonniers : strMsg << "orientation ennemi rendu vers camp prisonniers"; break;
         case T_MsgCR_cr_cr_pas_de_camp_prisonniers_disponible : strMsg << "pas de camp prisonniers disponible"; break;
+        case T_MsgCR_cr_cr_rendu : strMsg << "rendu"; break;
         case T_MsgCR_cr_cr_tir_dans_zone_interdite : strMsg << "tir dans zone interdite"; break;
         case T_MsgCR_cr_cr_tir_sur_camp_ami : strMsg << "tir sur camp ami" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_camp_ami ); break;
         case T_MsgCR_cr_cr_tire_par_camp_ami : strMsg << "tire par camp ami" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_ami ); break;
@@ -235,6 +248,9 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_unite_amie_reconnue : strMsg << "unite amie reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_amie_reconnue ); break;
         case T_MsgCR_cr_cr_unite_ennemie_reconnue : strMsg << "unite ennemie reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_ennemie_reconnue ); break;
         case T_MsgCR_cr_cr_unite_neutre_reconnue : strMsg << "unite neutre reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_neutre_reconnue ); break;
+        case T_MsgCR_cr_cr_unite_amie_identifiee : strMsg << "unite amie identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_amie_identifiee ); break;
+        case T_MsgCR_cr_cr_unite_ennemie_identifiee : strMsg << "unite ennemie identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_ennemie_identifiee ); break;
+        case T_MsgCR_cr_cr_unite_neutre_identifiee : strMsg << "unite neutre identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_neutre_identifiee ); break;
         case T_MsgCR_cr_cr_objet_detecte : strMsg << "objet detecte" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_objet_detecte ); break;
         case T_MsgCR_cr_cr_trace : strMsg << "trace" << " - message : " << " " << asnMsg.cr.u.cr_trace; break;
         case T_MsgCR_cr_cr_trace_id : strMsg << "trace id" << " - float : " << " " << asnMsg.cr.u.cr_trace_id; break;

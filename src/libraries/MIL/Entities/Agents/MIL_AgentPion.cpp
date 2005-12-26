@@ -893,6 +893,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMagicSurrender()
 {
+    MIL_RC::pRcRendu_->Send( *this, MIL_RC::eRcTypeOperational );
     GetRole< PHY_RolePion_Surrender >().Surrender();
     orderManager_.CancelAllOrders();
     UpdatePhysicalState();

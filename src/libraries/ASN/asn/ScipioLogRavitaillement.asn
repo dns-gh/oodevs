@@ -25,22 +25,26 @@ MsgLogRavitaillementTraitementCreation ::= SEQUENCE
 
 EnumLogRavitaillementTraitementEtat ::= ENUMERATED
 { 
-    convoi-consitution       (0),
-    convoi-chargement        (1),
-    convoi-deplacement-aller (2),
-    convoi-dechargement      (3),
-    convoi-deplacement-retour(4),
-    termine                  (5)
+    convoi-en-attente-camions                   (0),
+    convoi-en-attente-chef-convoi               (1),
+    convoi-constitution                         (2),
+    convoi-deplacement-vers-point-chargement    (3),
+    convoi-chargement                           (4),
+    convoi-deplacement-vers-point-dechargement  (5),
+    convoi-dechargement                         (6),
+    convoi-deplacement-retour                   (7),
+    termine                                     (8)
 }
 
 MsgLogRavitaillementTraitementUpdate ::= SEQUENCE
 {
-    oid-consigne          OID,
-    oid-automate          Automate,
-    oid-pion-log-traitant Agent                               OPTIONAL, -- pion LOG gérant le ravitaillement, 0 si aucun pion (demande passée à la BLIAT par exemple)
-    oid-pion-convoi       Agent                               OPTIONAL,
-    etat                  EnumLogRavitaillementTraitementEtat OPTIONAL,
-    dotations             SEQUENCE OF DemandeDotation         OPTIONAL
+    oid-consigne                                OID,
+    oid-automate                                Automate,                                     -- automate demandeur
+    oid-automate-log-traitant                   Automate                            OPTIONAL, -- automate LOG gérant le ravitaillement, 0 si aucun automate
+    oid-automate-log-fournissant-moyens-convoi  Automate                            OPTIONAL, -- automate LOG fournissant les moyens de constitution des convois
+    oid-pion-convoyant                          Agent                               OPTIONAL, -- pion LOG convoyant le rav
+    etat                                        EnumLogRavitaillementTraitementEtat OPTIONAL,
+    dotations                                   SEQUENCE OF DemandeDotation         OPTIONAL
 }
 
 MsgLogRavitaillementTraitementDestruction ::= SEQUENCE

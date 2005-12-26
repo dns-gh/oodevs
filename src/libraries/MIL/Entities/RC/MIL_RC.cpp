@@ -42,6 +42,9 @@
 #include "MIL_RC_UniteAmieReconnue.h"
 #include "MIL_RC_UniteEnnemieReconnue.h"
 #include "MIL_RC_UniteNeutreReconnue.h"
+#include "MIL_RC_UniteAmieIdentifiee.h"
+#include "MIL_RC_UniteEnnemieIdentifiee.h"
+#include "MIL_RC_UniteNeutreIdentifiee.h"
 #include "MIL_RC_ObjetDetecte.h"
 #include "MIL_RC_Trace.h"
 #include "MIL_RC_TraceID.h"
@@ -94,7 +97,11 @@ const MIL_RC_UniteDetectee*                     MIL_RC::pRcUniteDetectee_       
 const MIL_RC_UniteAmieReconnue*                 MIL_RC::pRcUniteAmieReconnue_                  = 0;
 const MIL_RC_UniteEnnemieReconnue*              MIL_RC::pRcUniteEnnemieReconnue_               = 0;
 const MIL_RC_UniteNeutreReconnue*               MIL_RC::pRcUniteNeutreReconnue_                = 0;
+const MIL_RC_UniteAmieIdentifiee*               MIL_RC::pRcUniteAmieIdentifiee_                = 0;
+const MIL_RC_UniteEnnemieIdentifiee*            MIL_RC::pRcUniteEnnemieIdentifiee_             = 0;
+const MIL_RC_UniteNeutreIdentifiee*             MIL_RC::pRcUniteNeutreIdentifiee_              = 0;
 const MIL_RC_ObjetDetecte*                      MIL_RC::pRcObjetDetecte_                       = 0;
+const MIL_RC*                                   MIL_RC::pRcRendu_                              = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC::Initialize
@@ -208,6 +215,17 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_RavitaillementDotationsEffectue ] = new MIL_RC( eRC_RavitaillementDotationsEffectue, T_MsgCR_cr_cr_ravitaillement_dotations_effectue );
 	rcs_[ eRC_RavitaillementStockEffectue ] = new MIL_RC( eRC_RavitaillementStockEffectue, T_MsgCR_cr_cr_ravitaillement_stock_effectue );
 	rcs_[ eRC_HumainRetourDeSante ] = new MIL_RC( eRC_HumainRetourDeSante, T_MsgCR_cr_cr_humain_retour_de_sante );
+	rcs_[ eRC_VSRAM_PretEnCours ] = new MIL_RC( eRC_VSRAM_PretEnCours, T_MsgCR_cr_cr_vsram_pret_en_cours );
+	rcs_[ eRC_VSRAM_PretAnnule ] = new MIL_RC( eRC_VSRAM_PretAnnule, T_MsgCR_cr_cr_vsram_pret_annule );
+	rcs_[ eRC_VSRAM_PretEffectue ] = new MIL_RC( eRC_VSRAM_PretEffectue, T_MsgCR_cr_cr_vsram_pret_effectue );
+	rcs_[ eRC_VSRAM_RecuperationEffectuee ] = new MIL_RC( eRC_VSRAM_RecuperationEffectuee, T_MsgCR_cr_cr_vsram_recuperation_effectuee );
+	rcs_[ eRC_Convoi_DeplacementVersPointChargement ] = new MIL_RC( eRC_Convoi_DeplacementVersPointChargement, T_MsgCR_cr_cr_convoi_deplacement_vers_point_chargement );
+	rcs_[ eRC_Convoi_ChargementEnCours ] = new MIL_RC( eRC_Convoi_ChargementEnCours, T_MsgCR_cr_cr_convoi_chargement_en_cours );
+	rcs_[ eRC_Convoi_ChargementEffectue ] = new MIL_RC( eRC_Convoi_ChargementEffectue, T_MsgCR_cr_cr_convoi_chargement_effectue );
+	rcs_[ eRC_Convoi_DeplacementVersPointDechargement ] = new MIL_RC( eRC_Convoi_DeplacementVersPointDechargement, T_MsgCR_cr_cr_convoi_deplacement_vers_point_dechargement );
+	rcs_[ eRC_Convoi_DechargementEnCours ] = new MIL_RC( eRC_Convoi_DechargementEnCours, T_MsgCR_cr_cr_convoi_dechargement_en_cours );
+	rcs_[ eRC_Convoi_DechargementEffectue ] = new MIL_RC( eRC_Convoi_DechargementEffectue, T_MsgCR_cr_cr_convoi_dechargement_effectue );
+	rcs_[ eRC_Convoi_Retour ] = new MIL_RC( eRC_Convoi_Retour, T_MsgCR_cr_cr_convoi_retour );
 	rcs_[ eRC_EnCoursRavitaillement ] = new MIL_RC( eRC_EnCoursRavitaillement, T_MsgCR_cr_cr_en_cours_ravitaillement );
 	rcs_[ eRC_RavitaillementTermine ] = new MIL_RC( eRC_RavitaillementTermine, T_MsgCR_cr_cr_ravitaillement_termine );
 	rcs_[ eRC_HelicoptereEnObservation ] = new MIL_RC( eRC_HelicoptereEnObservation, T_MsgCR_cr_cr_helicoptere_en_observation );
@@ -243,6 +261,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_PremierCoupParti ] = new MIL_RC( eRC_PremierCoupParti, T_MsgCR_cr_cr_premier_coup_parti );
 	rcs_[ eRC_TirExecute ] = new MIL_RC( eRC_TirExecute, T_MsgCR_cr_cr_tir_execute );
 	rcs_[ eRC_TirHorsDePortee ] = new MIL_RC( eRC_TirHorsDePortee, T_MsgCR_cr_cr_tir_hors_de_portee );
+	rcs_[ eRC_TirImpossiblePlusDeMunitions ] = new MIL_RC( eRC_TirImpossiblePlusDeMunitions, T_MsgCR_cr_cr_tir_impossible_plus_de_munitions );
 	rcs_[ eRC_TirAnnule ] = new MIL_RC( eRC_TirAnnule, T_MsgCR_cr_cr_tir_annule );
 	rcs_[ eRC_ChangementDePosition ] = new MIL_RC( eRC_ChangementDePosition, T_MsgCR_cr_cr_changement_de_position );
 	rcs_[ eRC_DebutInstallation ] = new MIL_RC( eRC_DebutInstallation, T_MsgCR_cr_cr_debut_installation );
@@ -259,6 +278,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_PresenceEnnemiRendu ] = new MIL_RC( eRC_PresenceEnnemiRendu, T_MsgCR_cr_cr_presence_ennemi_rendu );
 	rcs_[ eRC_OrientationEnnemiRenduVersCampPrisonniers ] = new MIL_RC( eRC_OrientationEnnemiRenduVersCampPrisonniers, T_MsgCR_cr_cr_orientation_ennemi_rendu_vers_camp_prisonniers );
 	rcs_[ eRC_PasDeCampPrisonniersDisponible ] = new MIL_RC( eRC_PasDeCampPrisonniersDisponible, T_MsgCR_cr_cr_pas_de_camp_prisonniers_disponible );
+	rcs_[ eRC_Rendu ] = new MIL_RC( eRC_Rendu, T_MsgCR_cr_cr_rendu );
 	rcs_[ eRC_TirDansZoneInterdite ] = new MIL_RC( eRC_TirDansZoneInterdite, T_MsgCR_cr_cr_tir_dans_zone_interdite );
 	rcs_[ eRC_TirSurCampAmi ] = new MIL_RC_TirSurCampAmi( eRC_TirSurCampAmi, T_MsgCR_cr_cr_tir_sur_camp_ami );
 	rcs_[ eRC_TireParCampAmi ] = new MIL_RC_TireParCampAmi( eRC_TireParCampAmi, T_MsgCR_cr_cr_tire_par_camp_ami );
@@ -290,6 +310,9 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_UniteAmieReconnue ] = new MIL_RC_UniteAmieReconnue( eRC_UniteAmieReconnue, T_MsgCR_cr_cr_unite_amie_reconnue );
 	rcs_[ eRC_UniteEnnemieReconnue ] = new MIL_RC_UniteEnnemieReconnue( eRC_UniteEnnemieReconnue, T_MsgCR_cr_cr_unite_ennemie_reconnue );
 	rcs_[ eRC_UniteNeutreReconnue ] = new MIL_RC_UniteNeutreReconnue( eRC_UniteNeutreReconnue, T_MsgCR_cr_cr_unite_neutre_reconnue );
+	rcs_[ eRC_UniteAmieIdentifiee ] = new MIL_RC_UniteAmieIdentifiee( eRC_UniteAmieIdentifiee, T_MsgCR_cr_cr_unite_amie_identifiee );
+	rcs_[ eRC_UniteEnnemieIdentifiee ] = new MIL_RC_UniteEnnemieIdentifiee( eRC_UniteEnnemieIdentifiee, T_MsgCR_cr_cr_unite_ennemie_identifiee );
+	rcs_[ eRC_UniteNeutreIdentifiee ] = new MIL_RC_UniteNeutreIdentifiee( eRC_UniteNeutreIdentifiee, T_MsgCR_cr_cr_unite_neutre_identifiee );
 	rcs_[ eRC_ObjetDetecte ] = new MIL_RC_ObjetDetecte( eRC_ObjetDetecte, T_MsgCR_cr_cr_objet_detecte );
 	rcs_[ eRC_Trace ] = new MIL_RC_Trace( eRC_Trace, T_MsgCR_cr_cr_trace );
 	rcs_[ eRC_TraceID ] = new MIL_RC_TraceID( eRC_TraceID, T_MsgCR_cr_cr_trace_id );
@@ -357,7 +380,11 @@ void MIL_RC::Initialize()
     pRcUniteAmieReconnue_                 = (MIL_RC_UniteAmieReconnue*)                rcs_[ eRC_UniteAmieReconnue                 ];
     pRcUniteEnnemieReconnue_              = (MIL_RC_UniteEnnemieReconnue*)             rcs_[ eRC_UniteEnnemieReconnue              ];
     pRcUniteNeutreReconnue_               = (MIL_RC_UniteNeutreReconnue*)              rcs_[ eRC_UniteNeutreReconnue               ];
+    pRcUniteAmieIdentifiee_               = (MIL_RC_UniteAmieIdentifiee*)              rcs_[ eRC_UniteAmieIdentifiee               ];
+    pRcUniteEnnemieIdentifiee_            = (MIL_RC_UniteEnnemieIdentifiee*)           rcs_[ eRC_UniteEnnemieIdentifiee            ];
+    pRcUniteNeutreIdentifiee_             = (MIL_RC_UniteNeutreIdentifiee*)            rcs_[ eRC_UniteNeutreIdentifiee             ];
     pRcObjetDetecte_                      = (MIL_RC_ObjetDetecte*)                     rcs_[ eRC_ObjetDetecte                      ];
+    pRcRendu_                             =                                            rcs_[ eRC_Rendu                             ];
 }
 
 // -----------------------------------------------------------------------------

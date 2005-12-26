@@ -50,10 +50,15 @@ AGR_MilProjectGenerator::~AGR_MilProjectGenerator()
 // -----------------------------------------------------------------------------
 void AGR_MilProjectGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/Missions" );
-    MT_MakeDir( strOutputPath + "/Missions/Pion" );
-    MT_MakeDir( strOutputPath + "/Missions/Automate" );
-    MT_MakeDir( strOutputPath + "/Missions/Conduite" );
+    MT_MakeDir( strOutputPath + "/build" );
+    MT_MakeDir( strOutputPath + "/build/vc71" );
+
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/libraries" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Pion" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Automate" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Conduite" );
     MT_MakeDir( strOutputPath + "/Missions/Population" );
 
     std::cout << "Generating MIL project files" << std::endl;
@@ -125,7 +130,7 @@ void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& 
     workspace.ReplaceInString( strBaseContent, "$PionFileList$", strPionFileList );
     workspace.ReplaceInString( strBaseContent, "$ConduiteFileList$", strConduiteFileList );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/Missions/Missions.vcproj" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/build/vc71/Missions.vcproj" );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +196,7 @@ void AGR_MilProjectGenerator::GenerateMissionsCPPFile( const AGR_Workspace& work
     workspace.ReplaceInString( strBaseContent, "$PionMissionsRegistration$", strPionRegistrationList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteRegistration$", strOrderRegistrationList );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/Missions/Missions.cpp" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/libraries/Missions/Missions.cpp" );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,5 +232,5 @@ void AGR_MilProjectGenerator::GenerateMissionsHeaderFile( const AGR_Workspace& w
     workspace.ReplaceInString( strBaseContent, "$PionMissionEnumList$", strPionMissionEnumList );
     workspace.ReplaceInString( strBaseContent, "$OrderConduiteEnumList$", strOrderEnumList );
 
-    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/Missions/Missions.h" );
+    workspace.WriteStringInFile( strBaseContent,  strOutputPath + "/src/libraries/Missions/Missions.h" );
 }

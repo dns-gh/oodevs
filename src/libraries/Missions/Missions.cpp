@@ -142,7 +142,7 @@
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvement.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ReconnaitreItineraire.cpp"
 #include "Automate\MIL_AutomateMission_LOG_Surveiller.cpp"
-#include "Automate\MIL_AutomateMission_LOG_TransporterFormationBlindee.cpp"
+#include "Automate\MIL_AutomateMission_LOG_TransporterUnites.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvementDansZone.cpp"
 #include "Automate\MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerFranchissementDansZone.cpp"
@@ -307,7 +307,7 @@
 #include "Pion\MIL_PionMission_LOG_PreparerBascule.cpp"
 #include "Pion\MIL_PionMission_LOG_AppuyerMouvement.cpp"
 #include "Pion\MIL_PionMission_LOG_ReconnaitreItineraire.cpp"
-#include "Pion\MIL_PionMission_LOG_TransporterUniteChars.cpp"
+#include "Pion\MIL_PionMission_LOG_TransporterUnite.cpp"
 #include "Pion\MIL_PionMission_LOG_ReconnaitreZoneContaminee.cpp"
 #include "Pion\MIL_PionMission_LOG_AppuyerMouvementDansZone.cpp"
 #include "Pion\MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement.cpp"
@@ -550,7 +550,7 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvement>( "Automate LOG AppuyerMouvement", eMission_Automate_LOG_AppuyerMouvement, T_Mission_Automate_mission_automate_log_appuyer_mouvement, "T_Mission_Automate_LOG_AppuyerMouvement", "MIS_Automate_MRT_LOG_AppuyerMouvement", "MIS_Automate_CDT_LOG_AppuyerMouvement");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ReconnaitreItineraire>( "Automate LOG ReconnaitreItineraire", eMission_Automate_LOG_ReconnaitreItineraire, T_Mission_Automate_mission_automate_log_reconnaitre_itineraire, "T_Mission_Automate_LOG_ReconnaitreItineraire", "MIS_Automate_MRT_LOG_ReconnaitreItineraire", "MIS_Automate_CDT_LOG_ReconnaitreItineraire");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_Surveiller>( "Automate LOG Surveiller", eMission_Automate_LOG_Surveiller, T_Mission_Automate_mission_automate_log_surveiller, "T_Mission_Automate_LOG_Surveiller", "MIS_Automate_MRT_LOG_Surveiller", "MIS_Automate_CDT_LOG_Surveiller");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_TransporterFormationBlindee>( "Automate LOG TransporterFormationBlindee", eMission_Automate_LOG_TransporterFormationBlindee, T_Mission_Automate_mission_automate_log_transporter_formation_blindee, "T_Mission_Automate_LOG_TransporterFormationBlindee", "MIS_Automate_MRT_LOG_TransporterFormationBlindee", "MIS_Automate_CDT_LOG_TransporterFormationBlindee");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_TransporterUnites>( "Automate LOG TransporterUnites", eMission_Automate_LOG_TransporterUnites, T_Mission_Automate_mission_automate_log_transporter_unites, "T_Mission_Automate_LOG_TransporterUnites", "MIS_Automate_MRT_LOG_TransporterUnites", "MIS_Automate_CDT_LOG_TransporterUnites");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvementDansZone>( "Automate LOG AppuyerMouvementDansZone", eMission_Automate_LOG_AppuyerMouvementDansZone, T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone, "T_Mission_Automate_LOG_AppuyerMouvementDansZone", "MIS_Automate_MRT_LOG_AppuyerMouvementDansZone", "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement>( "Automate LOG MettreEnOeuvreZoneStationnement", eMission_Automate_LOG_MettreEnOeuvreZoneStationnement, T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement, "T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement", "MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement", "MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerFranchissementDansZone>( "Automate LOG AppuyerFranchissementDansZone", eMission_Automate_LOG_AppuyerFranchissementDansZone, T_Mission_Automate_mission_automate_log_appuyer_franchissement_dans_zone, "T_Mission_Automate_LOG_AppuyerFranchissementDansZone", "MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone", "MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone");
@@ -742,7 +742,7 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_PreparerBascule>( "Pion LOG PreparerBascule", eMission_Pion_LOG_PreparerBascule, T_Mission_Pion_mission_pion_log_preparer_bascule, "T_Mission_Pion_LOG_PreparerBascule", "MIS_Pion_LOG_PreparerBascule");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_AppuyerMouvement>( "Pion LOG AppuyerMouvement", eMission_Pion_LOG_AppuyerMouvement, T_Mission_Pion_mission_pion_log_appuyer_mouvement, "T_Mission_Pion_LOG_AppuyerMouvement", "MIS_Pion_LOG_AppuyerMouvement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_ReconnaitreItineraire>( "Pion LOG ReconnaitreItineraire", eMission_Pion_LOG_ReconnaitreItineraire, T_Mission_Pion_mission_pion_log_reconnaitre_itineraire, "T_Mission_Pion_LOG_ReconnaitreItineraire", "MIS_Pion_LOG_ReconnaitreItineraire");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TransporterUniteChars>( "Pion LOG TransporterUniteChars", eMission_Pion_LOG_TransporterUniteChars, T_Mission_Pion_mission_pion_log_transporter_unite_chars, "T_Mission_Pion_LOG_TransporterUniteChars", "MIS_Pion_LOG_TransporterUniteChars");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TransporterUnite>( "Pion LOG TransporterUnite", eMission_Pion_LOG_TransporterUnite, T_Mission_Pion_mission_pion_log_transporter_unite, "T_Mission_Pion_LOG_TransporterUnite", "MIS_Pion_LOG_TransporterUnite");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_ReconnaitreZoneContaminee>( "Pion LOG ReconnaitreZoneContaminee", eMission_Pion_LOG_ReconnaitreZoneContaminee, T_Mission_Pion_mission_pion_log_reconnaitre_zone_contaminee, "T_Mission_Pion_LOG_ReconnaitreZoneContaminee", "MIS_Pion_LOG_ReconnaitreZoneContaminee");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_AppuyerMouvementDansZone>( "Pion LOG AppuyerMouvementDansZone", eMission_Pion_LOG_AppuyerMouvementDansZone, T_Mission_Pion_mission_pion_log_appuyer_mouvement_dans_zone, "T_Mission_Pion_LOG_AppuyerMouvementDansZone", "MIS_Pion_LOG_AppuyerMouvementDansZone");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement>( "Pion LOG MettreEnOeuvreZoneStationnement", eMission_Pion_LOG_MettreEnOeuvreZoneStationnement, T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement, "T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement", "MIS_Pion_LOG_MettreEnOeuvreZoneStationnement");

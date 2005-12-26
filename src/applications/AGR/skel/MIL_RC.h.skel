@@ -30,6 +30,9 @@ class MIL_RC_UniteDetectee;
 class MIL_RC_UniteAmieReconnue;  
 class MIL_RC_UniteEnnemieReconnue;
 class MIL_RC_UniteNeutreReconnue;
+class MIL_RC_UniteAmieIdentifiee;  
+class MIL_RC_UniteEnnemieIdentifiee;
+class MIL_RC_UniteNeutreIdentifiee;
 class MIL_RC_ObjetDetecte;
 
 struct ASN1T_MsgCR;
@@ -90,7 +93,11 @@ public:
     static const MIL_RC_UniteAmieReconnue*                  pRcUniteAmieReconnue_;
     static const MIL_RC_UniteEnnemieReconnue*               pRcUniteEnnemieReconnue_;
     static const MIL_RC_UniteNeutreReconnue*                pRcUniteNeutreReconnue_;
+    static const MIL_RC_UniteAmieIdentifiee*                pRcUniteAmieIdentifiee_;
+    static const MIL_RC_UniteEnnemieIdentifiee*             pRcUniteEnnemieIdentifiee_;
+    static const MIL_RC_UniteNeutreIdentifiee*              pRcUniteNeutreIdentifiee_;    
     static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;   
+    static const MIL_RC*                                    pRcRendu_;
     //@}
    
 public:

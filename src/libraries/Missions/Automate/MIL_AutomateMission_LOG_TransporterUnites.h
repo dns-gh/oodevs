@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_AutomateMission_LOG_TransporterFormationBlindee_h_
-#define __MIL_AutomateMission_LOG_TransporterFormationBlindee_h_
+#ifndef __MIL_AutomateMission_LOG_TransporterUnites_h_
+#define __MIL_AutomateMission_LOG_TransporterUnites_h_
 
 #include "MIL/Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,13 +18,13 @@
 //=============================================================================
 // Created: 
 //=============================================================================
-class MIL_AutomateMission_LOG_TransporterFormationBlindee : public MIL_AutomateMission_ABC
+class MIL_AutomateMission_LOG_TransporterUnites : public MIL_AutomateMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AutomateMission_LOG_TransporterFormationBlindee )
+    MT_COPYNOTALLOWED( MIL_AutomateMission_LOG_TransporterUnites )
 
 public:
-             MIL_AutomateMission_LOG_TransporterFormationBlindee( MIL_Automate& automate, const MIL_AutomateMissionType& type );
-    virtual ~MIL_AutomateMission_LOG_TransporterFormationBlindee();
+             MIL_AutomateMission_LOG_TransporterUnites( MIL_Automate& automate, const MIL_AutomateMissionType& type );
+    virtual ~MIL_AutomateMission_LOG_TransporterUnites();
 
     //! @name Init
     //@{
@@ -52,4 +52,4 @@ private:
 };
 
 
-#endif // __MIL_AutomateMission_LOG_TransporterFormationBlindee_h_
+#endif // __MIL_AutomateMission_LOG_TransporterUnites_h_

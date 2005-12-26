@@ -30,6 +30,9 @@ class MIL_RC_UniteDetectee;
 class MIL_RC_UniteAmieReconnue;  
 class MIL_RC_UniteEnnemieReconnue;
 class MIL_RC_UniteNeutreReconnue;
+class MIL_RC_UniteAmieIdentifiee;  
+class MIL_RC_UniteEnnemieIdentifiee;
+class MIL_RC_UniteNeutreIdentifiee;
 class MIL_RC_ObjetDetecte;
 
 struct ASN1T_MsgCR;
@@ -90,7 +93,11 @@ public:
     static const MIL_RC_UniteAmieReconnue*                  pRcUniteAmieReconnue_;
     static const MIL_RC_UniteEnnemieReconnue*               pRcUniteEnnemieReconnue_;
     static const MIL_RC_UniteNeutreReconnue*                pRcUniteNeutreReconnue_;
+    static const MIL_RC_UniteAmieIdentifiee*                pRcUniteAmieIdentifiee_;
+    static const MIL_RC_UniteEnnemieIdentifiee*             pRcUniteEnnemieIdentifiee_;
+    static const MIL_RC_UniteNeutreIdentifiee*              pRcUniteNeutreIdentifiee_;    
     static const MIL_RC_ObjetDetecte*                       pRcObjetDetecte_;   
+    static const MIL_RC*                                    pRcRendu_;
     //@}
    
 public:
@@ -225,6 +232,17 @@ protected:
         eRC_RavitaillementDotationsEffectue,
         eRC_RavitaillementStockEffectue,
         eRC_HumainRetourDeSante,
+        eRC_VSRAM_PretEnCours,
+        eRC_VSRAM_PretAnnule,
+        eRC_VSRAM_PretEffectue,
+        eRC_VSRAM_RecuperationEffectuee,
+        eRC_Convoi_DeplacementVersPointChargement,
+        eRC_Convoi_ChargementEnCours,
+        eRC_Convoi_ChargementEffectue,
+        eRC_Convoi_DeplacementVersPointDechargement,
+        eRC_Convoi_DechargementEnCours,
+        eRC_Convoi_DechargementEffectue,
+        eRC_Convoi_Retour,
         eRC_EnCoursRavitaillement,
         eRC_RavitaillementTermine,
         eRC_HelicoptereEnObservation,
@@ -260,6 +278,7 @@ protected:
         eRC_PremierCoupParti,
         eRC_TirExecute,
         eRC_TirHorsDePortee,
+        eRC_TirImpossiblePlusDeMunitions,
         eRC_TirAnnule,
         eRC_ChangementDePosition,
         eRC_DebutInstallation,
@@ -276,6 +295,7 @@ protected:
         eRC_PresenceEnnemiRendu,
         eRC_OrientationEnnemiRenduVersCampPrisonniers,
         eRC_PasDeCampPrisonniersDisponible,
+        eRC_Rendu,
         eRC_TirDansZoneInterdite,
         eRC_TirSurCampAmi, // Parametre : T_Pion
         eRC_TireParCampAmi, // Parametre : T_Pion
@@ -307,6 +327,9 @@ protected:
         eRC_UniteAmieReconnue, // Parametre : T_ConnaissanceAgent
         eRC_UniteEnnemieReconnue, // Parametre : T_ConnaissanceAgent
         eRC_UniteNeutreReconnue, // Parametre : T_ConnaissanceAgent
+        eRC_UniteAmieIdentifiee, // Parametre : T_ConnaissanceAgent
+        eRC_UniteEnnemieIdentifiee, // Parametre : T_ConnaissanceAgent
+        eRC_UniteNeutreIdentifiee, // Parametre : T_ConnaissanceAgent
         eRC_ObjetDetecte, // Parametre : T_ConnaissanceObjet
         eRC_Trace, // Parametre : message
         eRC_TraceID, // Parametre : float

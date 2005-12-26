@@ -49,11 +49,15 @@ AGR_TesterMissionGenerator::~AGR_TesterMissionGenerator()
 // -----------------------------------------------------------------------------
 void AGR_TesterMissionGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/TesterMissions" );
-    MT_MakeDir( strOutputPath + "/TesterMissions/Pawn" );
-    MT_MakeDir( strOutputPath + "/TesterMissions/Automat" );
-    MT_MakeDir( strOutputPath + "/TesterMissions/Population" );
-    MT_MakeDir( strOutputPath + "/TesterMissions/Order" );
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/applications" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Pawn" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Automat" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Population" );
+    MT_MakeDir( strOutputPath + "/src/applications/Tester/Actions/Missions/Order" );
 
     std::cout << "Generating TESTER mission files" << std::endl;
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )

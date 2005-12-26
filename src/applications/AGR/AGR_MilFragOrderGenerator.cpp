@@ -49,10 +49,12 @@ AGR_MilFragOrderGenerator::~AGR_MilFragOrderGenerator()
 // -----------------------------------------------------------------------------
 void AGR_MilFragOrderGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/Missions" );
-    MT_MakeDir( strOutputPath + "/Missions/Pion" );
-    MT_MakeDir( strOutputPath + "/Missions/Automate" );
-    MT_MakeDir( strOutputPath + "/Missions/Conduite" );
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/libraries" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Pion" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Automate" );
+    MT_MakeDir( strOutputPath + "/src/libraries/Missions/Conduite" );
 
     std::cout << "Generating MIL frag orders files" << std::endl;
     for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )

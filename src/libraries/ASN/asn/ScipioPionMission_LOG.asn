@@ -87,7 +87,7 @@ Mission-Pion-LOG-Surveiller ::= SEQUENCE
     zone Polygon
 }
 
-Mission-Pion-LOG-TransporterUniteChars ::= SEQUENCE
+Mission-Pion-LOG-TransporterUnite ::= SEQUENCE
 {
     unites-a-transporter  ListAgent,
     point-rendez-vous     Point,

@@ -144,6 +144,18 @@ CR-AllocationConsentieBientotEpuisee        ::= TypeDotation
 CR-RavitaillementDotationsEffectue          ::= NULL
 CR-RavitaillementStockEffectue              ::= NULL
 CR-HumainRetourDeSante                      ::= NULL
+CR-VSRAM-PretEnCours                        ::= NULL
+CR-VSRAM-PretAnnule                         ::= NULL
+CR-VSRAM-PretEffectue                       ::= NULL
+CR-VSRAM-RecuperationEffectuee              ::= NULL
+CR-Convoi-DeplacementVersPointChargement    ::= NULL
+CR-Convoi-ChargementEnCours                 ::= NULL
+CR-Convoi-ChargementEffectue                ::= NULL
+CR-Convoi-DeplacementVersPointDechargement  ::= NULL
+CR-Convoi-DechargementEnCours               ::= NULL
+CR-Convoi-DechargementEffectue              ::= NULL
+CR-Convoi-Retour                            ::= NULL
+
 
 -- ALAT / Transport / Embarquement
 CR-EnCoursRavitaillement                    ::= NULL
@@ -185,6 +197,7 @@ CR-RejointPlotRavitaillement                ::= NULL
 CR-PremierCoupParti                         ::= NULL
 CR-TirExecute                               ::= NULL
 CR-TirHorsDePortee                          ::= NULL
+CR-TirImpossiblePlusDeMunitions             ::= NULL
 CR-TirAnnule                                ::= NULL
 CR-ChangementDePosition                     ::= NULL
 CR-DebutInstallation                        ::= NULL
@@ -196,13 +209,14 @@ CR-ObservationTirIndirect                   ::= TirPion -- OID du tir observé
 CR-ZoneImplantationOccupee                  ::= NULL
 CR-InstallationSurZoneImplantation          ::= NULL
 
--- Population
+-- Population / reddition
 CR-PresencePopulation                        ::= NULL
 CR-OrientationPopulationVersCampRefugies     ::= NULL
 CR-PasDeCampRefugiesDisponible               ::= NULL
 CR-PresenceEnnemiRendu                       ::= NULL
 CR-OrientationEnnemiRenduVersCampPrisonniers ::= NULL
 CR-PasDeCampPrisonniersDisponible            ::= NULL
+CR-Rendu                                     ::= NULL
 
 
 -- Adaptation
@@ -243,6 +257,9 @@ CR-UniteDetectee                                         ::= KnowledgeAgent
 CR-UniteAmieReconnue                                     ::= KnowledgeAgent
 CR-UniteEnnemieReconnue                                  ::= KnowledgeAgent
 CR-UniteNeutreReconnue                                   ::= KnowledgeAgent
+CR-UniteAmieIdentifiee                                   ::= KnowledgeAgent
+CR-UniteEnnemieIdentifiee                                ::= KnowledgeAgent
+CR-UniteNeutreIdentifiee                                 ::= KnowledgeAgent
 CR-ObjetDetecte                                          ::= KnowledgeObject
 
 -- Reaction Populations
@@ -420,6 +437,17 @@ MsgCR ::= SEQUENCE
         cr-ravitaillement-dotations-effectue                            CR-RavitaillementDotationsEffectue,
         cr-ravitaillement-stock-effectue                                CR-RavitaillementStockEffectue,
         cr-humain-retour-de-sante                                       CR-HumainRetourDeSante,
+        cr-vsram-pret-en-cours                                          CR-VSRAM-PretEnCours,
+        cr-vsram-pret-annule                                            CR-VSRAM-PretAnnule,
+        cr-vsram-pret-effectue                                          CR-VSRAM-PretEffectue,
+        cr-vsram-recuperation-effectuee                                 CR-VSRAM-RecuperationEffectuee,       
+        cr-convoi-deplacement-vers-point-chargement                     CR-Convoi-DeplacementVersPointChargement,
+        cr-convoi-chargement-en-cours                                   CR-Convoi-ChargementEnCours,               
+        cr-convoi-chargement-effectue                                   CR-Convoi-ChargementEffectue,              
+        cr-convoi-deplacement-vers-point-dechargement                   CR-Convoi-DeplacementVersPointDechargement,
+        cr-convoi-dechargement-en-cours                                 CR-Convoi-DechargementEnCours,
+        cr-convoi-dechargement-effectue                                 CR-Convoi-DechargementEffectue,            
+        cr-convoi-retour                                                CR-Convoi-Retour,            
         
         -- LOG ALAT / ALAT
         cr-en-cours-ravitaillement                                      CR-EnCoursRavitaillement,
@@ -461,6 +489,7 @@ MsgCR ::= SEQUENCE
         cr-premier-coup-parti                                           CR-PremierCoupParti,                         
         cr-tir-execute                                                  CR-TirExecute,                               
         cr-tir-hors-de-portee                                           CR-TirHorsDePortee,
+        cr-tir-impossible-plus-de-munitions                             CR-TirImpossiblePlusDeMunitions,
         cr-tir-annule                                                   CR-TirAnnule,        
         cr-changement-de-position                                       CR-ChangementDePosition,                     
         cr-debut-installation                                           CR-DebutInstallation,                        
@@ -472,13 +501,14 @@ MsgCR ::= SEQUENCE
         cr-reception-ordre-de-feu                                       CR-ReceptionOrdreDeFeu, 
         cr-pret-au-tir                                                  CR-PretAuTir,  
         
-        -- population
+        -- population / reddition
         cr-presence-population                                          CR-PresencePopulation,
         cr-orientation-population-vers-camp-refugies                    CR-OrientationPopulationVersCampRefugies,
         cr-pas-de-camp-refugies-disponible                              CR-PasDeCampRefugiesDisponible,
         cr-presence-ennemi-rendu                                        CR-PresenceEnnemiRendu,
         cr-orientation-ennemi-rendu-vers-camp-prisonniers               CR-OrientationEnnemiRenduVersCampPrisonniers,
         cr-pas-de-camp-prisonniers-disponible                           CR-PasDeCampPrisonniersDisponible,
+        cr-rendu                                                        CR-Rendu,
                 
         -- evt exceptionnels
         cr-tir-dans-zone-interdite                                      CR-TirDansZoneInterdite,
@@ -514,6 +544,9 @@ MsgCR ::= SEQUENCE
         cr-unite-amie-reconnue                                          CR-UniteAmieReconnue,
         cr-unite-ennemie-reconnue                                       CR-UniteEnnemieReconnue,
         cr-unite-neutre-reconnue                                        CR-UniteNeutreReconnue,
+        cr-unite-amie-identifiee                                        CR-UniteAmieIdentifiee,
+        cr-unite-ennemie-identifiee                                     CR-UniteEnnemieIdentifiee,
+        cr-unite-neutre-identifiee                                      CR-UniteNeutreIdentifiee,        
         cr-objet-detecte                                                CR-ObjetDetecte,
         
         -- adaptation

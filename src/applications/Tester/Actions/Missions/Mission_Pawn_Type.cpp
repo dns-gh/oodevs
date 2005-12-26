@@ -172,7 +172,7 @@
 #include "Pawn/Mission_Pawn_LOG_PreparerBascule.cpp"
 #include "Pawn/Mission_Pawn_LOG_AppuyerMouvement.cpp"
 #include "Pawn/Mission_Pawn_LOG_ReconnaitreItineraire.cpp"
-#include "Pawn/Mission_Pawn_LOG_TransporterUniteChars.cpp"
+#include "Pawn/Mission_Pawn_LOG_TransporterUnite.cpp"
 #include "Pawn/Mission_Pawn_LOG_ReconnaitreZoneContaminee.cpp"
 #include "Pawn/Mission_Pawn_LOG_AppuyerMouvementDansZone.cpp"
 #include "Pawn/Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement.cpp"
@@ -409,7 +409,7 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_LOG_PreparerBascule >( "Pion LOG PreparerBascule" );
     Register< Mission_Pawn_LOG_AppuyerMouvement >( "Pion LOG AppuyerMouvement" );
     Register< Mission_Pawn_LOG_ReconnaitreItineraire >( "Pion LOG ReconnaitreItineraire" );
-    Register< Mission_Pawn_LOG_TransporterUniteChars >( "Pion LOG TransporterUniteChars" );
+    Register< Mission_Pawn_LOG_TransporterUnite >( "Pion LOG TransporterUnite" );
     Register< Mission_Pawn_LOG_ReconnaitreZoneContaminee >( "Pion LOG ReconnaitreZoneContaminee" );
     Register< Mission_Pawn_LOG_AppuyerMouvementDansZone >( "Pion LOG AppuyerMouvementDansZone" );
     Register< Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement >( "Pion LOG MettreEnOeuvreZoneStationnement" );

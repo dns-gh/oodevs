@@ -132,7 +132,7 @@ MOS_AutomateMissionInterface::~MOS_AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_log_appuyer_mouvement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement; break;
         case T_Mission_Automate_mission_automate_log_reconnaitre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_itineraire; break;
         case T_Mission_Automate_mission_automate_log_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_surveiller; break;
-        case T_Mission_Automate_mission_automate_log_transporter_formation_blindee : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_transporter_formation_blindee; break;
+        case T_Mission_Automate_mission_automate_log_transporter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_transporter_unites; break;
         case T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement_dans_zone; break;
         case T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_mettre_en_oeuvre_zone_stationnement; break;
         case T_Mission_Automate_mission_automate_log_appuyer_franchissement_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_appuyer_franchissement_dans_zone; break;
@@ -288,7 +288,7 @@ void MOS_AutomateMissionInterface::CreateInterface()
         case eMission_Automate_LOG_AppuyerMouvement : CreateMission_LOG_AppuyerMouvement(); break;
         case eMission_Automate_LOG_ReconnaitreItineraire : CreateMission_LOG_ReconnaitreItineraire(); break;
         case eMission_Automate_LOG_Surveiller : CreateMission_LOG_Surveiller(); break;
-        case eMission_Automate_LOG_TransporterFormationBlindee : CreateMission_LOG_TransporterFormationBlindee(); break;
+        case eMission_Automate_LOG_TransporterUnites : CreateMission_LOG_TransporterUnites(); break;
         case eMission_Automate_LOG_AppuyerMouvementDansZone : CreateMission_LOG_AppuyerMouvementDansZone(); break;
         case eMission_Automate_LOG_MettreEnOeuvreZoneStationnement : CreateMission_LOG_MettreEnOeuvreZoneStationnement(); break;
         case eMission_Automate_LOG_AppuyerFranchissementDansZone : CreateMission_LOG_AppuyerFranchissementDansZone(); break;
@@ -1872,14 +1872,14 @@ void MOS_AutomateMissionInterface::CreateMission_LOG_Surveiller()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_AutomateMissionInterface::CreateMission_LOG_TransporterFormationBlindee
+// Name: MOS_AutomateMissionInterface::CreateMission_LOG_TransporterUnites
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_AutomateMissionInterface::CreateMission_LOG_TransporterFormationBlindee()
+void MOS_AutomateMissionInterface::CreateMission_LOG_TransporterUnites()
 {
-    ASN1T_Mission_Automate_LOG_TransporterFormationBlindee& asnMission = *new ASN1T_Mission_Automate_LOG_TransporterFormationBlindee();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_transporter_formation_blindee;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_transporter_formation_blindee = &asnMission;
+    ASN1T_Mission_Automate_LOG_TransporterUnites& asnMission = *new ASN1T_Mission_Automate_LOG_TransporterUnites();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_transporter_unites;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_transporter_unites = &asnMission;
     CreateAgentList( asnMission.unites_a_transporter, "Unites a transporter", false );
     CreatePoint( asnMission.point_rendez_vous, "Point rendez vous", false );
     CreatePoint( asnMission.point_destination, "Point destination", false );

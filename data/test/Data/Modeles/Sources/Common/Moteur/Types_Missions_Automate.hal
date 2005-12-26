@@ -659,7 +659,7 @@ typedef struct T_Mission_Automate_LOG_Surveiller : T_Mission_Automate
 T_Localisation zone_;
 };
 
-typedef struct T_Mission_Automate_LOG_TransporterFormationBlindee : T_Mission_Automate
+typedef struct T_Mission_Automate_LOG_TransporterUnites : T_Mission_Automate
 {
 T_ListePions unitesATransporter_;
 T_Point pointRendezVous_;

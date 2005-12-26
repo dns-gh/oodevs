@@ -51,7 +51,10 @@ AGR_TicRCGenerator::~AGR_TicRCGenerator()
 // -----------------------------------------------------------------------------
 void AGR_TicRCGenerator::Generate( const AGR_Workspace& workspace, const std::string& strOutputPath )
 {
-    MT_MakeDir( strOutputPath + "/Tic" );
+    MT_MakeDir( strOutputPath + "/src" );
+    MT_MakeDir( strOutputPath + "/src/libraries" );
+    MT_MakeDir( strOutputPath + "/src/libraries/TIC" );
+    MT_MakeDir( strOutputPath + "/src/libraries/TIC/Communications" );
 
     std::cout << "Generating TIC project files" << std::endl;
     GenerateMessageRCCPPFile    ( workspace, strOutputPath );
@@ -82,7 +85,7 @@ void AGR_TicRCGenerator::GenerateMessageRCCPPFile( const AGR_Workspace& workspac
     }  
 
     workspace.ReplaceInString( strBaseContent, "$AGR_TIC_InitializeRcs$", strCodeInitialize.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/Tic/MessageReport.cpp" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "src/libraries/TIC/Communications/MessageReport.cpp" );
 
     AGR_TypeRC::Terminate();
 }
@@ -108,7 +111,7 @@ void AGR_TicRCGenerator::GenerateMessageRCHeaderFile( const AGR_Workspace& works
         strTmp << rc.GenerateMILRCClassHeader();
     }   
     workspace.ReplaceInString( strBaseContent, "$AGR_TIC_EnumRcs$", strTmp.str() );
-    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/Tic/MessageReport.h" );
+    workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/Tic/Communications/MessageReport.h" );
 }
 
 
