@@ -1094,10 +1094,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate LOG TransporterFormationBlindee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automate RENS ROEM Appuyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1135,10 +1131,6 @@
     </message>
     <message>
         <source>Pion LOG ReconnaitreItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TransporterUniteChars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1198,19 +1190,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion MILICE PrendreEtTenir</source>
+        <source>Automate ALAT DetruireNeutraliserDansZone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion MILICE DetruireEmbuscade</source>
+        <source>Automate ASA HAWK DefendreZone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion JOINT MARINE Transporter</source>
+        <source>Automate ASA HAWK DefendreSite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion JOINT AIR EffectuerRaid</source>
+        <source>Automate ASA HAWK Surveiller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1219,6 +1211,10 @@
     </message>
     <message>
         <source>Automate LOG Surveiller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate LOG TransporterUnites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1246,11 +1242,59 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Automate LOG ArmerPIAs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate SeFaireTransporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate Generique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate RENS ROIM CL289 RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate RENS ROIM SDTI RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate RENS ROEM RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate RENS RADINT RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ALAT Attaquer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASS AssurerMiseEnOeuvreSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Pion GEN RealiserCampPrisonniers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Pion GEN RealiserCampRefugies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion LOG TraiterBlesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion LOG TrierEtTraiterBlesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion LOG TransporterUnite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1286,27 +1330,51 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion RENS ROIM SDTI RenseignerSur</source>
+        <source>Pion SeFaireTransporter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion RENS ROIM CL289 RenseignerSur</source>
+        <source>Pion InterdireFranchissementPopulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate RENS ROIM CL289 RenseignerSur</source>
+        <source>Pion FilterPopulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate RENS ROIM SDTI RenseignerSur</source>
+        <source>Pion RenseignerSurPopulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate RENS ROEM RenseignerSur</source>
+        <source>Pion CanaliserPopulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate RENS RADINT RenseignerSur</source>
+        <source>Pion SecuriserPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion SecuriserZoneContreMenacesAsymetriques</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion Generique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion MILICE PrendreEtTenir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion MILICE DetruireEmbuscade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion JOINT MARINE Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion JOINT AIR EffectuerRaid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1326,63 +1394,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Brouiller</source>
+        <source>Pion RENS ROIM SDTI RenseignerSur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate LOG ArmerPIAs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate SeFaireTransporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SeFaireTransporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT DetruireNeutraliserDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Attaquer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASS AssurerMiseEnOeuvreSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TraiterBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TrierEtTraiterBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate Generique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Generique</source>
+        <source>Pion RENS ROIM CL289 RenseignerSur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Population FaireMouvement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population Manifester</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population CommettreExactions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1430,31 +1458,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Brouiller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Changer Position Debarquement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Temps Bordee Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Temps Bordee Sante</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Reparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Blesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Tactiques Reparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Tactiques Blesses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1502,6 +1510,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Modifier Temps Bordee Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Temps Bordee Sante</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Reparations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Blesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Tactiques Reparations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier Priorites Tactiques Blesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Automate: Realiser Variantement</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1537,38 +1569,6 @@
         <source>Population: Changer Attitude</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Pion InterdireFranchissementPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion FilterPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RenseignerSurPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion CanaliserPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SecuriserPopulationDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SecuriserZoneContreMenacesAsymetriques</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population Manifester</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population CommettreExactions</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ENT_Tr</name>
@@ -1585,15 +1585,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>sector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1602,10 +1606,6 @@
     </message>
     <message>
         <source>as of</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1649,10 +1649,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>detectee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>identifiee</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1661,11 +1657,59 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>detectee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>signale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>administration</source>
+        <source>munition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>carburant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>explosif</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>barbele</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>piece</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>obus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missile air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missile sol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mitraille</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1673,23 +1717,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>artillerie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aviation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>blinde</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cavalerie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>centre soutien operations aeriennes</source>
+        <source>administration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1697,15 +1725,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>deminage</source>
+        <source>centre soutien operations aeriennes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>execution loi</source>
+        <source>blinde</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>forces securite interne</source>
+        <source>aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cavalerie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1713,11 +1745,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>guerre information</source>
+        <source>deminage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>inconnue</source>
+        <source>soutien artillerie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>artillerie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1725,7 +1761,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>guerre information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forces securite interne</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>execution loi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>soutien atterrissage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>logistique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reparation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1737,6 +1793,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>renseignement militaire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>missile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1745,15 +1805,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>inconnue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>non specifiee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>none</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ravitaillement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1761,27 +1817,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>renseignement militaire</source>
+        <source>transmissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>reparation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>soutien artillerie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>soutien atterrissage</source>
+        <source>ravitaillement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tactical air control party</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transmissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1793,19 +1837,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>aeroporte</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>attaque aerienne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>chemin de fer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>chirurgie</source>
+        <source>aeroporte</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1817,15 +1853,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>courrier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>decollage atterissage vertical court</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>dentiste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>guerre electronique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1833,7 +1865,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>guerre electronique</source>
+        <source>voilure fixe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>terrestre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1849,6 +1885,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>police militaire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>motorise</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1857,15 +1897,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>patrouille cotiere</source>
+        <source>service du personnel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>police militaire</source>
+        <source>courrier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>psychologique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chemin de fer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1881,11 +1925,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>service du personnel</source>
+        <source>patrouille cotiere</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>terrestre</source>
+        <source>chirurgie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1893,15 +1937,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>voilure fixe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>leger</source>
+        <source>decollage atterissage vertical court</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>lourd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>leger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1913,6 +1957,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>soutien logistique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>combat support</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1921,7 +1969,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>soutien logistique</source>
+        <source>aerien compose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>aerien voilure fixe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>aerien plus leger que air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1933,18 +1989,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>aerien compose</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aerien plus leger que air</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aerien voilure fixe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>animal monte</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1953,19 +1997,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>maritime sous marin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>maritime surface</source>
+        <source>terrestre chemin de fer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>terrestre auto propulse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>terrestre chemin de fer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1978,6 +2014,58 @@
     </message>
     <message>
         <source>terrestre roues</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maritime sous marin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maritime surface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>civilian law enforcement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>command operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>couverture aerienne</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>joint intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>morale welfare recreation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reglage electronique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remplacement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>service mortuaire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>signals intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>theatre missile defence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>utilitaire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2021,19 +2109,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>civilian law enforcement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>command operations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contre espionnage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>couverture aerienne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2089,6 +2165,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>guerre electronique interception</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>guerre electronique brouillage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2097,15 +2177,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>guerre electronique interception</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>interrogation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>joint intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2122,10 +2194,6 @@
     </message>
     <message>
         <source>mine de contre mesure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>morale welfare recreation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2181,10 +2249,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ravitaillement blanchisserie bain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ravitaillement class i</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2193,11 +2257,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ravitaillement class iii</source>
+        <source>ravitaillement class iii aviation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ravitaillement class iii aviation</source>
+        <source>ravitaillement class iii</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2213,6 +2277,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>ravitaillement blanchisserie bain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>recherche et sauvetage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2225,31 +2293,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>reglage electronique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remplacement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>service juridique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>service mortuaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>signals intelligence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>support aerien rapproche</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>theatre missile defence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2269,10 +2317,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>transmissions radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>transmissions radio relay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2289,6 +2333,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>transmissions radio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>transport allocation des mouvements</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2297,15 +2345,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>transport missile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>transport spod spoe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>utilitaire</source>
+        <source>transport missile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2325,18 +2369,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>i</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ii</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>iii</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>o</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2346,6 +2378,18 @@
     </message>
     <message>
         <source>ooo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>i</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ii</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iii</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2369,6 +2413,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>non blesse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>blesse urgence 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2385,11 +2437,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mort</source>
+        <source>officier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>non blesse</source>
+        <source>sous officer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2397,11 +2449,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>officier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sous officer</source>
+        <source>temps 8 heures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2421,19 +2469,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>temps 8 heures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>courte portee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>longue portee</source>
+        <source>moyenne portee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>moyenne portee</source>
+        <source>longue portee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2453,10 +2497,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>double rideau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>en carre</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2465,19 +2505,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>nasse quatre sections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>nasse trois sections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid lima</source>
+        <source>nasse quatre sections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>double rideau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simple rideau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error invalid limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid lima</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2489,15 +2545,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>error unit cannot receive order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>error invalid order conduite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid order conduite parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid order initial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2505,19 +2557,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid unit</source>
+        <source>error invalid order initial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error unit cannot receive order</source>
+        <source>error invalid order conduite parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>no error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cancelled</source>
+        <source>error unit surrendered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2525,15 +2573,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>stopped</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aire poser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>barricade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2541,23 +2585,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>camp prisonniers</source>
+        <source>zone minee lineaire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>camp refugies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>destruction pont</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>destruction route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>eboulement</source>
+        <source>zone minee par dispersion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2565,23 +2597,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>itineraire logistique</source>
+        <source>abattis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>nuage nbc</source>
+        <source>barricade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>piste</source>
+        <source>eboulement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>plot ravitaillement</source>
+        <source>destruction route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>poste controle</source>
+        <source>destruction pont</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pont flottant continu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2589,23 +2625,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rota</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>site decontamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>site franchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zone brouillage brod</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zone brouillage bromure</source>
+        <source>zone protegee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2621,15 +2641,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone minee lineaire</source>
+        <source>site franchissement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone minee par dispersion</source>
+        <source>nuage nbc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone mobilite amelioree</source>
+        <source>plot ravitaillement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>site decontamination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zone brouillage brod</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rota</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2637,15 +2669,71 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>zone brouillage bromure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>aire poser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>piste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plateforme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zone mobilite amelioree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>zone poser helicoptere</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone protegee</source>
+        <source>aire logistique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>serie complementaire</source>
+        <source>itineraire logistique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>camp prisonniers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>camp refugies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>poste controle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>terrain largage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zone interdite mouvement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zone interdite tir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zone implantation mortier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pont flottant discontinu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>installation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2653,7 +2741,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>de manoeuvre</source>
+        <source>serie complementaire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2661,15 +2749,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid localisation</source>
+        <source>de manoeuvre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2677,11 +2757,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid specific attributes</source>
+        <source>error invalid id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid localisation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error missing specific attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid specific attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>prioritaire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2693,7 +2789,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>prioritaire</source>
+        <source>omnidirectionnel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>directionnel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2701,7 +2801,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>elements mobiles</source>
+        <source>continu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>discontinu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2713,7 +2817,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>deux echelons</source>
+        <source>elements mobiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2721,7 +2825,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error already paused</source>
+        <source>deux echelons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2729,7 +2833,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid time factor</source>
+        <source>error not started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2737,7 +2841,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error not started</source>
+        <source>error already paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid time factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2749,6 +2857,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pas de precipitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tempete sable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>brouillard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2757,15 +2881,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>pluie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>neige</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pas de precipitation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pluie</source>
+        <source>ligne debouche</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2777,11 +2901,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>ligne interdire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ligne objectif</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ligne coup arret</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ligne debouche</source>
+        <source>ligne recueil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2797,18 +2929,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ligne interdire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ligne objectif</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ligne recueil</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>error invalid geometry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2821,35 +2941,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>barbele</source>
+        <source>message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>carburant</source>
+        <source>operationel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>explosif</source>
+        <source>evenement exceptionnel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>munition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>piece</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>eclairant</source>
+        <source>warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fumigene</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eclairant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2862,394 +2974,6 @@
     </message>
     <message>
         <source>neutre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error error checkpoint init</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error error scenario init</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid checkpoint identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid data path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid scenario identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error sim killed by remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite pieces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite remorqueur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite reparateur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente prise en charge par niveau superieur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente retour pion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>deplacement vers chaine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>diagnostique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remorqueur chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remorqueur dechargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remorqueur deplacement aller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remorqueur deplacement retour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>retour pion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>termine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance ramassage chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance ramassage dechargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance ramassage deplacement aller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve dechargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve deplacement aller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve deplacement retour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente chargement complet ambulance ramassage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente chargement complet ambulance releve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite ambulance ramassage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite ambulance releve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite medecin pour diagnostique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite medecin pour soin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite medecin pour tri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recherche secteur soin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recherche secteur tri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>soin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>debraye</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>embraye</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture arret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture mouvement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture mouvement discret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture poste</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture poste amenage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture poste prepare genie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture poste reflexe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>defavorable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>favorable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tir interdit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tir libre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tir sur riposte</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>etat esquive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>etat fixe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>etat poursuite mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>epuise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fatigue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fanatique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mauvais</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>conscrit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>experimente</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>veteran</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error automate embraye</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>defendre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>demonter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>detruire moyens</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi consitution</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi dechargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi deplacement aller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi deplacement retour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid donneur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid receveur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error ravitaillement en cours</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>abattis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>omnidirectionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>directionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tempete sable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>grenade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error unit surrendered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>plateforme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>continu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>discontinu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>deborder materiels vers bld</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>detruire materiels en reparation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reparer materiels sur place</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aire logistique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>terrain largage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>running</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>operationel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>evenement exceptionnel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3285,51 +3009,243 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error unit not automate</source>
+        <source>error invalid scenario identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error already embraye</source>
+        <source>error error scenario init</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error already debraye</source>
+        <source>error invalid data path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone interdite mouvement</source>
+        <source>error invalid data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone interdite tir</source>
+        <source>error invalid checkpoint identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>zone implantation mortier</source>
+        <source>error error checkpoint init</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>simple rideau</source>
+        <source>error sim killed by remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>obus</source>
+        <source>deplacement vers chaine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>missile air</source>
+        <source>attente disponibilite remorqueur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>missile sol</source>
+        <source>remorqueur deplacement aller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mitraille</source>
+        <source>remorqueur chargement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>warning</source>
+        <source>remorqueur deplacement retour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remorqueur dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diagnostique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente prise en charge par niveau superieur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite pieces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite reparateur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente retour pion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>retour pion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>termine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi consitution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi deplacement aller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi deplacement retour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid donneur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid receveur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error ravitaillement en cours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite ambulance releve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve deplacement aller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente chargement complet ambulance releve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve deplacement retour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite medecin pour diagnostique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recherche secteur tri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite medecin pour tri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recherche secteur soin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite medecin pour soin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>soin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite ambulance ramassage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance ramassage chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente chargement complet ambulance ramassage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance ramassage deplacement aller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance ramassage dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>embraye</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>debraye</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture mouvement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture mouvement discret</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture arret</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture poste reflexe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture poste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture poste amenage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posture poste prepare genie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>favorable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>defavorable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>etat esquive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>etat fixe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>etat poursuite mission</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3345,11 +3261,87 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pont flottant continu</source>
+        <source>pret au tir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pont flottant discontinu</source>
+        <source>indisponible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir libre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir sur riposte</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir interdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir sommation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir dissuasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tir neutralisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fatigue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>epuise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fanatique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mauvais</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>veteran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>experimente</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conscrit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error unit not automate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error already embraye</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error already debraye</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error automate embraye</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid attribute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3369,27 +3361,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pret au tir</source>
+        <source>grenade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>indisponible</source>
+        <source>aced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tir sommation</source>
+        <source>detruire moyens</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tir dissuasion</source>
+        <source>defendre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tir neutralisation</source>
+        <source>demonter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>installation</source>
+        <source>deborder materiels vers bld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>detruire materiels en reparation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reparer materiels sur place</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
