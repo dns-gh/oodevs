@@ -119,8 +119,8 @@ public:
     virtual MT_Float GetDangerosity           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwSourceAndTarget ) const;
     virtual MT_Float GetMaxRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH               ) const;
     virtual MT_Float GetMinRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH               ) const;
-            MT_Float GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ) const;
-            MT_Float GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ) const;
+            MT_Float GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
+            MT_Float GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability ) const;
     //@}
 
     //! @name Sensors / radars

@@ -131,7 +131,7 @@ void DEC_FireFunctions::GetMaxRangeToIndirectFire( DIA_Call_ABC& call, const MIL
     
     if ( pClass )
     {
-        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pClass );
+        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pClass, true );
         
         if ( rRange < 0. ) // Pas de possibilité de tir
             call.GetResult().SetValue( -1.f );
@@ -152,7 +152,49 @@ void DEC_FireFunctions::GetMinRangeToIndirectFire( DIA_Call_ABC& call, const MIL
     
     if ( pClass )
     {
-        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pClass );
+        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pClass, true );
+
+        if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
+            call.GetResult().SetValue( -1.f );
+        else
+            call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
+    }
+    else
+        call.GetResult().SetValue( -1.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck
+// Created: JVT 2005-05-02
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
+    
+    if ( pClass )
+    {
+        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToIndirectFire( *pClass, false );
+        
+        if ( rRange < 0. ) // Pas de possibilité de tir
+            call.GetResult().SetValue( -1.f );
+        else
+            call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMeter( rRange ) );
+    }
+    else
+        call.GetResult().SetValue( -1.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck
+// Created: JVT 2005-05-02
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    const PHY_IndirectFireDotationClass* pClass = PHY_IndirectFireDotationClass::Find( call.GetParameter( 0 ).ToId() );
+    
+    if ( pClass )
+    {
+        const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToIndirectFire( *pClass, false );
 
         if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
             call.GetResult().SetValue( -1.f );

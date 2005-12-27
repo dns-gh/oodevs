@@ -558,20 +558,20 @@ MT_Float PHY_ComposantePion::GetMinRangeToFireOn( const DEC_Knowledge_AgentCompo
 // Name: PHY_ComposantePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_ComposantePion::GetMaxRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), ammoClass ) : -1.;
+    return CanFire() ? pType_->GetMaxRangeToIndirectFire( pRole_->GetPion(), ammoClass, bCheckDotationsAvailability ) : -1.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), ammoClass ) : std::numeric_limits< MT_Float >::max();
+    return CanFire() ? pType_->GetMinRangeToIndirectFire( pRole_->GetPion(), ammoClass, bCheckDotationsAvailability ) : std::numeric_limits< MT_Float >::max();
 }
 
 

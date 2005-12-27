@@ -924,12 +924,12 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer
 // Name: PHY_ComposanteTypePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = -1.;
     
     for ( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
-        rRange = std::max( rRange, it->first->GetMaxRangeToIndirectFire( firer, ammoClass ) );
+        rRange = std::max( rRange, it->first->GetMaxRangeToIndirectFire( firer, ammoClass, bCheckDotationsAvailability ) );
     return rRange;
 }
 
@@ -937,12 +937,12 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC&
 // Name: PHY_ComposanteTypePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
     
     for ( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
-        rRange = std::min( rRange, it->first->GetMinRangeToIndirectFire( firer, ammoClass ) );
+        rRange = std::min( rRange, it->first->GetMinRangeToIndirectFire( firer, ammoClass, bCheckDotationsAvailability ) );
     return rRange;
 }
 

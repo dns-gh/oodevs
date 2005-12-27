@@ -139,11 +139,17 @@ default Default()
     if( DEC_Agent_EtatOps() == 0 )
         DEC_Debug( "Shit, I'm dead" );
 
-/*    DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Explosif ) ) );
+    DEC_Debug( "Tir indirect max explosif : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Explosif ) ) );
     DEC_Debug( "Tir indirect min explosif : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Explosif ) ) );
     DEC_Debug( "Tir indirect max fumigene : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect( eObus_Fumigenes ) ) );
     DEC_Debug( "Tir indirect min fumigene : " + FloatToString( DEC_Tir_PorteeMinTirIndirect( eObus_Fumigenes ) ) );   
-    */
+
+
+    DEC_Debug( "Tir indirect max explosif sans tester dotations : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( eObus_Explosif ) ) );
+    DEC_Debug( "Tir indirect min explosif sans tester dotations : " + FloatToString( DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( eObus_Explosif ) ) );
+    DEC_Debug( "Tir indirect max fumigene sans tester dotations : " + FloatToString( DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( eObus_Fumigenes ) ) );
+    DEC_Debug( "Tir indirect min fumigene sans tester dotations : " + FloatToString( DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( eObus_Fumigenes ) ) );   
+
     
     behavior BEH_GererOrdreConduite();
 }

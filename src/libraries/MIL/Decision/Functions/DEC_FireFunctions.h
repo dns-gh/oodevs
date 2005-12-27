@@ -25,13 +25,15 @@ class DEC_FireFunctions
 public:
     //! @name Functions
     //@{
-    static void GetMaxRangeToFireOnEnemy            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMinRangeToFireOnEnemy            ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMaxRangeToFireOnEnemyWhenUnloaded( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMaxRangeToBeFiredByEnemy         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMaxRangeToIndirectFire           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMinRangeToIndirectFire           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void ThrowSmokeOnKnowledgeAgent          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void GetMaxRangeToFireOnEnemy                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMinRangeToFireOnEnemy                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMaxRangeToFireOnEnemyWhenUnloaded     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMaxRangeToBeFiredByEnemy              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMaxRangeToIndirectFire                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMinRangeToIndirectFire                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMaxRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMinRangeToIndirectFireWithoutAmmoCheck( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void ThrowSmokeOnKnowledgeAgent               ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     //@}
 };
 

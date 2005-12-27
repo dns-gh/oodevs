@@ -527,6 +527,7 @@
                     <Categories>    
                         <Categorie nom="Balle Classique 12,7">0</Categorie>
                         <Categorie nom="Obus 120 mm">0</Categorie>
+                        <!--<Categorie nom="Fusse a jupette 53mm">0</Categorie>-->
                     </Categories>                                
                 </Dotation>
                                 

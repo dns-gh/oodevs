@@ -1438,12 +1438,12 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agen
 // Name: PHY_RolePion_Composantes::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = -1.;
 
     for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( ammoClass ) );
+        rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( ammoClass, bCheckDotationsAvailability ) );
     return rRange;
 }
 
@@ -1451,12 +1451,12 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_Indirect
 // Name: PHY_RolePion_Composantes::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
 
     for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( ammoClass ) );
+        rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( ammoClass, bCheckDotationsAvailability ) );
     return rRange;
 }
 

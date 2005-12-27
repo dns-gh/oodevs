@@ -536,13 +536,15 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_AgentPion >, "DEC_Geometrie_PionDerriere"                              );    
 
     // Fire 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemy             , "DEC_Tir_PorteeMaxPourTirerSurAgent"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToFireOnEnemy             , "DEC_Tir_PorteeMinPourTirerSurAgent"         );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded , "DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy          , "DEC_Tir_PorteeMaxPourEtreTireParAgent"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToIndirectFire            , "DEC_Tir_PorteeMaxTirIndirect"               );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToIndirectFire            , "DEC_Tir_PorteeMinTirIndirect"               );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent           , "DEC_Tir_LancerFumigeneSurConnaissance"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemy                 , "DEC_Tir_PorteeMaxPourTirerSurAgent"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToFireOnEnemy                 , "DEC_Tir_PorteeMinPourTirerSurAgent"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded     , "DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent"           );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy              , "DEC_Tir_PorteeMaxPourEtreTireParAgent"                );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToIndirectFire                , "DEC_Tir_PorteeMaxTirIndirect"                         );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToIndirectFire                , "DEC_Tir_PorteeMinTirIndirect"                         );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck, "DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions" );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToIndirectFireWithoutAmmoCheck, "DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions" );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent               , "DEC_Tir_LancerFumigeneSurConnaissance"                 );
 
     // RC
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Operational< MIL_AgentPion >, "DEC_RC"      );

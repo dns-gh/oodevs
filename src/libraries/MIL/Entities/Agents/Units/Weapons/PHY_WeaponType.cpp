@@ -308,15 +308,18 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
 // Name: PHY_WeaponType::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     assert( pDotationCategory_ );
 
     if ( !pIndirectFireData_ 
       || !pDotationCategory_->GetIndirectFireData()
-      ||  pDotationCategory_->GetIndirectFireData()->GetIndirectFireDotationCategory() != ammoClass 
-      || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+      ||  pDotationCategory_->GetIndirectFireData()->GetIndirectFireDotationCategory() != ammoClass )
         return -1.;
+
+    if( bCheckDotationsAvailability && !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+        return -1.;
+        
     return pIndirectFireData_->GetMaxRange();
 }
 
@@ -324,15 +327,18 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 // Name: PHY_WeaponType::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass ) const
+MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& ammoClass, bool bCheckDotationsAvailability ) const
 {
     assert( pDotationCategory_ );
     
     if ( !pIndirectFireData_ 
       || !pDotationCategory_->GetIndirectFireData()
-      ||  pDotationCategory_->GetIndirectFireData()->GetIndirectFireDotationCategory() != ammoClass 
-      || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+      ||  pDotationCategory_->GetIndirectFireData()->GetIndirectFireDotationCategory() != ammoClass )
+      return std::numeric_limits< MT_Float >::max();
+
+    if( bCheckDotationsAvailability && !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max();
+        
     return pIndirectFireData_->GetMinRange();
 }
 
