@@ -704,12 +704,12 @@ void MOS_MissionPanel::MagicRecoverHumanTransporters()
     assert( pPopupAgent_  );
 
     MOS_ASN_MsgUnitMagicAction asnMsg;
-    asnMsg.GetAsnMsg().oid                = pPopupAgent_ ->GetAgentID();
+    asnMsg.GetAsnMsg().oid                = pPopupAgent_ ->GetID();
     asnMsg.GetAsnMsg().action.t           = T_MsgUnitMagicAction_action_recuperer_transporteurs;
     asnMsg.Send( 547 );
 
     std::stringstream strMsg;
-    strMsg << "Demande récupération transporteurs pour agent #" << pPopupAgent_->GetAgentID();
+    strMsg << "Demande récupération transporteurs pour agent #" << pPopupAgent_->GetID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 
