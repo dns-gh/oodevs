@@ -195,6 +195,7 @@ MsgUnitAttributes ::= SEQUENCE
 
 -- Actions magiques
 
+MagicActionRecupererTransporteurs   ::= NULL
 MagicActionSeRendre                 ::= NULL        
 MagicActionMoveTo                   ::= CoordUTM    -- Position
 MagicActionDestructionTotale        ::= NULL
@@ -261,7 +262,8 @@ MsgUnitMagicAction ::= SEQUENCE
         recompletement-ressources   MagicActionRecompletementRessources,
         change-facteurs-humains     MagicActionChangeFacteursHumains,
         destruction-totale          MagicActionDestructionTotale,
-        se-rendre                   MagicActionSeRendre
+        se-rendre                   MagicActionSeRendre,
+        recuperer-transporteurs     MagicActionRecupererTransporteurs
     }       
 }
 

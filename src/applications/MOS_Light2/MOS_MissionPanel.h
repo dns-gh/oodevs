@@ -85,6 +85,7 @@ private slots:
     void MagicDestroyAll();
     void MagicRecompletion();
     void MagicSurrender();
+    void MagicRecoverHumanTransporters();
     void MagicChangeDiplomatie();
     void MagicChangeLogisticLinks();
     void MagicPushFlux();

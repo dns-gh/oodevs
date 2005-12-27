@@ -317,7 +317,8 @@ void MOS_MissionPanel::FillStandardPopupMenu( QPopupMenu& popupMenu, MOS_Agent& 
         if( agent.IsAutomate() )
             pMagicOrdersMenu->insertItem( tr( "Se rendre" ), this, SLOT( MagicSurrender() ) );
 
-
+        if( !agent.AreHumanTransportersReady() )
+            pMagicOrdersMenu->insertItem( tr( "Récupérer transporteurs" ), this, SLOT( MagicRecoverHumanTransporters() ) );
 
         popupMenu.insertItem( tr( "Ordres magiques" ), pMagicOrdersMenu );
     }
@@ -691,6 +692,24 @@ void MOS_MissionPanel::MagicSurrender()
 
     std::stringstream strMsg;
     strMsg << "Demande reddition pour agent #" << pPopupAgent_->GetID();
+    MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionPanel::MagicRecoverHumanTransporters
+// Created: NLD 2005-12-27
+// -----------------------------------------------------------------------------
+void MOS_MissionPanel::MagicRecoverHumanTransporters()
+{
+    assert( pPopupAgent_  );
+
+    MOS_ASN_MsgUnitMagicAction asnMsg;
+    asnMsg.GetAsnMsg().oid                = pPopupAgent_ ->GetAgentID();
+    asnMsg.GetAsnMsg().action.t           = T_MsgUnitMagicAction_action_recuperer_transporteurs;
+    asnMsg.Send( 547 );
+
+    std::stringstream strMsg;
+    strMsg << "Demande récupération transporteurs pour agent #" << pPopupAgent_->GetAgentID();
     MT_LOG_INFO( strMsg.str().c_str(), eSent, 0 );
 }
 

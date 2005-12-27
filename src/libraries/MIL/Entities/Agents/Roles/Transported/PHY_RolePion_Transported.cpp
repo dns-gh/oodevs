@@ -133,20 +133,6 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported::DisableHumanTransporters
-// Created: JVT 2005-05-04
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos )
-{
-    if ( vHumanTransporterPosition_.IsZero() )
-    {
-        GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
-        vHumanTransporterPosition_ = vPos;
-        bHasChanged_ = true;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::UnloadFromTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
@@ -163,12 +149,28 @@ void PHY_RolePion_Transported::UnloadFromTransport( bool bTransportOnlyLoadable 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported::DisableHumanTransporters
+// Created: JVT 2005-05-04
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos )
+{
+    if ( vHumanTransporterPosition_.IsZero() )
+    {
+        GetRole< PHY_RoleAction_Loading >().ForceUnloadedState();
+        vHumanTransporterPosition_ = vPos;
+        bHasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::RecoverHumanTransporters
 // Created: NLD 2004-11-22
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::RecoverHumanTransporters()
 {
-    assert( !pTransporter_ );
+    if( pTransporter_ )
+        return;
+
     vHumanTransporterPosition_.Reset();
     bHasChanged_ = true;
 }

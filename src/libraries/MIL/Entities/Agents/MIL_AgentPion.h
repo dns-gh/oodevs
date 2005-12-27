@@ -148,14 +148,15 @@ private:
 
     //! @name Magic actions
     //@{
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgChangeHumanFactors( ASN1T_MagicActionChangeFacteursHumains& asn );
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgMagicMove         ( ASN1T_MagicActionMoveTo&                asn );
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyHumans    ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyResources ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyEquipement();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyAll       ();
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupply          ( ASN1T_MagicActionRecompletementPartiel& asn );
-    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgDestroyAll        ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgChangeHumanFactors       ( ASN1T_MagicActionChangeFacteursHumains& asn );
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgMagicMove                ( ASN1T_MagicActionMoveTo&                asn );
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyHumans           ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyResources        ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyEquipement       ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupplyAll              ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgResupply                 ( ASN1T_MagicActionRecompletementPartiel& asn );
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgDestroyAll               ();
+    ASN1T_EnumUnitAttrErrorCode OnReceiveMsgRecoverHumansTransporters();
     //@}
 
 private:

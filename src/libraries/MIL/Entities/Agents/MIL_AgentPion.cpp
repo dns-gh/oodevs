@@ -861,6 +861,16 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgDestroyAll()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters
+// Created: NLD 2005-12-27
+// -----------------------------------------------------------------------------
+ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
+{
+    GetRole< PHY_RolePion_Transported >().RecoverHumanTransporters();
+    return EnumUnitAttrErrorCode::no_error;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -871,15 +881,16 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
 
     switch( asnMsg.action.t )
     {
-        case T_MsgUnitMagicAction_action_move_to                    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgMagicMove         ( *asnMsg.action.u.move_to ); break;
-        case T_MsgUnitMagicAction_action_recompletement_personnel   : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyHumans    (); break;
-        case T_MsgUnitMagicAction_action_recompletement_ressources  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyResources (); break;
-        case T_MsgUnitMagicAction_action_recompletement_equipement  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyEquipement(); break;
-        case T_MsgUnitMagicAction_action_recompletement_total       : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyAll       (); break;
-        case T_MsgUnitMagicAction_action_recompletement_partiel     : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupply          ( *asnMsg.action.u.recompletement_partiel ); break;
-        case T_MsgUnitMagicAction_action_change_facteurs_humains    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeHumanFactors( *asnMsg.action.u.change_facteurs_humains ); break;
-        case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll        (); break;
-        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;
+        case T_MsgUnitMagicAction_action_move_to                    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgMagicMove                ( *asnMsg.action.u.move_to ); break;
+        case T_MsgUnitMagicAction_action_recompletement_personnel   : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyHumans           (); break;
+        case T_MsgUnitMagicAction_action_recompletement_ressources  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyResources        (); break;
+        case T_MsgUnitMagicAction_action_recompletement_equipement  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyEquipement       (); break;
+        case T_MsgUnitMagicAction_action_recompletement_total       : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyAll              (); break;
+        case T_MsgUnitMagicAction_action_recompletement_partiel     : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupply                 ( *asnMsg.action.u.recompletement_partiel ); break;
+        case T_MsgUnitMagicAction_action_change_facteurs_humains    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeHumanFactors       ( *asnMsg.action.u.change_facteurs_humains ); break;
+        case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll               (); break;
+        case T_MsgUnitMagicAction_action_recuperer_transporteurs    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgRecoverHumansTransporters(); break;
+        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;        
         default:
             assert( false );
     }
