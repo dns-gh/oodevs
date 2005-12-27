@@ -104,18 +104,6 @@ void PHY_RoleAction_Loading::UnloadSuspended()
     bHasBeenUpdated_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Loading::RecoverHumanTransportersSuspended
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-inline
-void PHY_RoleAction_Loading::RecoverHumanTransportersSuspended()
-{
-    if( nState_ == eRecoveringHumanTransporters )
-        ++ nEndTimeStep_;
-    bHasBeenUpdated_ = true;
-}
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================

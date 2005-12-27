@@ -467,24 +467,6 @@ void DEC_AgentFunctions::GetUnloadingTime( DIA_Call_ABC& call, const MIL_AgentPi
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetHumanTransportersRecoveringTime
-// Created: NLD 2004-10-18
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::GetHumanTransportersRecoveringTime( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    if ( call.GetParameters().GetParameters().size() < 1 )
-        call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< PHY_RolePion_Transported >().ComputeHumanTransportersRecoveringTime() ) );
-    else
-    {
-        assert( DEC_Tools::CheckTypePoint( call.GetParameter( 0 ) ) );
-        MT_Vector2D* pPos;
-        pPos = call.GetParameter( 0 ).ToUserPtr( pPos );
-        assert( pPos );
-        call.GetResult().SetValue( (float)MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< PHY_RolePion_Transported >().ComputeHumanTransportersRecoveringTime( *pPos ) ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DisableHumanTransportersNow
 // Created: JVT 2005-05-04
 // -----------------------------------------------------------------------------
@@ -494,10 +476,10 @@ void DEC_AgentFunctions::DisableHumanTransportersNow( DIA_Call_ABC& /*call*/, MI
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::EnableHumanTransportersNow
+// Name: DEC_AgentFunctions::RecoverHumanTransportersNow
 // Created: JVT 2005-05-04
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableHumanTransportersNow( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
+void DEC_AgentFunctions::RecoverHumanTransportersNow( DIA_Call_ABC& /*call*/, MIL_AgentPion& callerAgent )
 {
     callerAgent.GetRole< PHY_RolePion_Transported >().RecoverHumanTransporters();
 }

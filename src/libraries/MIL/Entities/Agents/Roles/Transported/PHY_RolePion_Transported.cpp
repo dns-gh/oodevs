@@ -177,67 +177,6 @@ void PHY_RolePion_Transported::RecoverHumanTransporters()
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::ComputeTimes
-// Created: NLD 2004-09-13
-// Modified: JVT 2005-02-03
-// -----------------------------------------------------------------------------
-struct sTransportedTimesFunctor
-{
-    sTransportedTimesFunctor( const MT_Vector2D& vSrcPos, const MT_Vector2D& vDestPos )
-        : nApproximatedTravelTime_    ( std::numeric_limits< uint >::max() )
-        , vSrcPos_                    ( vSrcPos )
-        , vDestPos_                   ( vDestPos )
-    {
-    }
-
-    void operator() ( const PHY_ComposantePion& composante )
-    {
-        if ( composante.GetState().IsUsable() && !composante.CanBeLoaded() )
-            nApproximatedTravelTime_ = std::min( nApproximatedTravelTime_, composante.ApproximateTravelTime( vSrcPos_, vDestPos_ ) );
-    }
-
-    uint nApproximatedTravelTime_;
-    
-private:
-    const MT_Vector2D& vSrcPos_;
-    const MT_Vector2D& vDestPos_;
-    
-    MT_COPYNOTALLOWED( sTransportedTimesFunctor );
-};
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported::ComputeHumanTransportersRecoveringTime
-// Created: NLD 2004-09-13
-// Modified: JVT 2005-02-03
-// -----------------------------------------------------------------------------
-uint PHY_RolePion_Transported::ComputeHumanTransportersRecoveringTime() const
-{
-    if ( vHumanTransporterPosition_.IsZero() )
-        return 0;
-
-    sTransportedTimesFunctor func( vHumanTransporterPosition_, GetRole< PHY_RolePion_Location >().GetPosition() );
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
- 
-    return func.nApproximatedTravelTime_ == std::numeric_limits< uint >::max() ? 0 : func.nApproximatedTravelTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported::ComputeHumanTransportersRecoveringTime
-// Created: JVT 2005-05-04
-// -----------------------------------------------------------------------------
-uint PHY_RolePion_Transported::ComputeHumanTransportersRecoveringTime( const MT_Vector2D& vRecoveringPosition ) const
-{
-    if ( vHumanTransporterPosition_.IsZero() )
-        return 0;
-        
-    sTransportedTimesFunctor func( vHumanTransporterPosition_, vRecoveringPosition );
-    GetRole< PHY_RolePion_Composantes >().Apply( func );
- 
-    return func.nApproximatedTravelTime_ == std::numeric_limits< uint >::max() ? 0 : func.nApproximatedTravelTime_;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Transported::ComputeTimes
 // Created: JVT 2005-02-03
 // -----------------------------------------------------------------------------
 struct sTransporterComposantePresent

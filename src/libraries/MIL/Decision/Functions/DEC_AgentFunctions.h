@@ -55,10 +55,9 @@ public:
     static void IsLoaded                          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );          
     static void GetLoadingTime                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetUnloadingTime                  ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetHumanTransportersRecoveringTime( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void AreHumanTransportersReady         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void DisableHumanTransportersNow       ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableHumanTransportersNow        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
+    static void RecoverHumanTransportersNow       ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
 
     // Etat décisionnel
     static void NotifyForceRatioStateChanged                 ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );

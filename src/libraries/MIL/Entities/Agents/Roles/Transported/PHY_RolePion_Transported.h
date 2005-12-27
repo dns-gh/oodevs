@@ -55,11 +55,9 @@ public:
     void CancelTransport    ();
     
     
-    bool HasHumanTransportersReady             () const;
-    uint ComputeHumanTransportersRecoveringTime() const;
-    uint ComputeHumanTransportersRecoveringTime( const MT_Vector2D& vRecoveringPosition ) const;
-    void DisableHumanTransporters              ( const MT_Vector2D& vPosition );
-    void RecoverHumanTransporters              ();
+    bool HasHumanTransportersReady() const;
+    void DisableHumanTransporters ( const MT_Vector2D& vPosition );
+    void RecoverHumanTransporters ();
     //@}
 
     //! @name Accessors

@@ -60,9 +60,6 @@ public:
     int  Unload         ();
     void UnloadSuspended();
 
-    int  RecoverHumanTransporters         ( const MT_Vector2D& vRecoveringPosition );
-    void RecoverHumanTransportersSuspended();
-
     void CheckConsistency  (); // Appelé quand l'état des composantes d'un pion change
     void ForceUnloadedState();
     //@}
@@ -96,7 +93,6 @@ private:
     {
         eLoading,
         eUnloading,
-        eRecoveringHumanTransporters,
         eNothing
     };
     //@}

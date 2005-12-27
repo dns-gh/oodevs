@@ -226,38 +226,6 @@ int PHY_RoleAction_Loading::Unload()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Loading::RecoverHumanTransporters
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-int PHY_RoleAction_Loading::RecoverHumanTransporters( const MT_Vector2D& vRecoveringPosition )
-{
-    bHasBeenUpdated_ = true;
-
-    PHY_RolePion_Transported& roleTransported = GetRole< PHY_RolePion_Transported >();
-
-    if( !roleTransported.HasHumanTransportersToRecover() )
-        return eEnd;
-
-    if( nState_ == eNothing )
-    {
-        nEndTimeStep_ = (uint)roleTransported.ComputeHumanTransportersRecoveringTime( vRecoveringPosition ) + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-        nState_       = eRecoveringHumanTransporters;
-    }
-
-    if( nState_ == eRecoveringHumanTransporters )
-    {
-        if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
-        {
-            nState_ = eNothing;
-            roleTransported.RecoverHumanTransporters();
-            return eEnd;
-        }
-        return eRunning;
-    }
-    return eErrorLoadUnloadInSameTime;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::CheckConsistency
 // Created: NLD 2004-10-07
 // -----------------------------------------------------------------------------
@@ -298,7 +266,6 @@ void PHY_RoleAction_Loading::CheckConsistency()
             SetLoadedState();
     }
 }
-
 
 // =============================================================================
 // NETWORK
