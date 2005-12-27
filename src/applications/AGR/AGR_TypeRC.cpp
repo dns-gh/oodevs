@@ -515,6 +515,55 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_FinMesure" ] = "eReportMission";
 	rcTypes_[ "eRC_FinInstallation" ] = "eReportMission";
     rcTypes_[ "eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles" ] = "eReportScipio";
+	rcTypes_[ "eRC_VSRAM_PretEnCours" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_VSRAM_PretAnnule" ] = "eReportLogisticSituation";    
+	rcTypes_[ "eRC_VSRAM_PretEffectue" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_VSRAM_RecuperationEffectuee" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_DeplacementVersPointChargement" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_ChargementEnCours" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_ChargementEffectue" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_DeplacementVersPointDechargement" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_DechargementEnCours" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_DechargementEffectue" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_Convoi_Retour" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_TirImpossiblePlusDeMunitions" ] = "eReportArtillery";
+	rcTypes_[ "eRC_Rendu" ] = "eReportMission";
+	rcTypes_[ "eRC_UniteAmieIdentifiee" ] = "eReportEnemy";
+	rcTypes_[ "eRC_UniteEnnemieIdentifiee" ] = "eReportEnemy";
+	rcTypes_[ "eRC_UniteNeutreIdentifiee" ] = "eReportEnemy";
+
+	rcTypes_[ "eRC_TirInterditSurPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_TirSommationSurPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_TirDissuasionSurPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_TirNeutralisationSurPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationDetectee" ] = "eReportMission";
+	rcTypes_[ "eRC_PriseAPartieParPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_RiposteSurPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationDangereuseAProximite" ] = "eReportMission";
+	rcTypes_[ "eRC_EsquiveDeLaPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_DecrochageFaceAPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_MiseEnPlaceControleDeFoule" ] = "eReportMission";
+	rcTypes_[ "eRC_MiseEnPlaceFiltrage" ] = "eReportMission";
+	rcTypes_[ "eRC_AnimationBarrage" ] = "eReportMission";
+	rcTypes_[ "eRC_AnimationCanalisation" ] = "eReportMission";
+	rcTypes_[ "eRC_CollecteRenseignementsSurPopulations" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationTotalementReconnue" ] = "eReportMission";
+	rcTypes_[ "eRC_AttitudeCalme" ] = "eReportMission";
+	rcTypes_[ "eRC_AttitudeAgitee" ] = "eReportMission";
+	rcTypes_[ "eRC_AttitudeExcitee" ] = "eReportMission";
+	rcTypes_[ "eRC_AttitudeAgressive" ] = "eReportMission";
+	rcTypes_[ "eRC_AggravationAttitude" ] = "eReportMission";
+	rcTypes_[ "eRC_AffrontementAvecForcesEnnemies" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationTemporairementControlee" ] = "eReportMission";
+	rcTypes_[ "eRC_PopulationTemporairementRepoussee" ] = "eReportMission";
+	rcTypes_[ "eRC_RepriseDesAffrontements" ] = "eReportMission";
+	rcTypes_[ "eRC_RecuperationProgressive" ] = "eReportMission";
+	rcTypes_[ "eRC_AgressionDePopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_AgressionParPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_RiposteContreAgressionParPopulation" ] = "eReportMission";
+	rcTypes_[ "eRC_AttaqueInstallation" ] = "eReportMission";
+	rcTypes_[ "eRC_EnStationnement" ] = "eReportMission";
+	rcTypes_[ "eRC_ExecutionAttentat" ] = "eReportMission";
 }
     
 // -----------------------------------------------------------------------------
