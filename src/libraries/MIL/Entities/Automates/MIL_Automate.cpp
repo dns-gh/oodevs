@@ -224,13 +224,14 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
 
     if( pRefugeeCamp_ )
     {
+        Embraye();
         MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType().InstanciateMission( *this );
         mission.Initialize();
         mission.Prepare   ();
         orderManager_.OnReceiveAutomateOrder( mission );
     }
 
-    if( bPrisoner_ )
+    if( bPrisoner_ && bEmbraye_ )
     {
         MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetSurrenderingMissionType().InstanciateMission( *this );
         mission.Initialize();
