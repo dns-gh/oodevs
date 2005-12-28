@@ -107,7 +107,6 @@ MT_Float MIL_Tools::ConvertSecondsToSim( MT_Float v )  // s    -> DeltaT
     return v / MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertMinutesToSim
 // Created: JVT 03-01-08
@@ -117,8 +116,6 @@ MT_Float MIL_Tools::ConvertMinutesToSim( MT_Float v )  // min  -> DeltaT
 {
     return ConvertSecondsToSim( 60. * v );
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertHoursToSim

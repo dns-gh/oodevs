@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "MT/MT_Time/MT_Timer_ABC.h"
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
@@ -27,7 +26,7 @@
 // =============================================================================
 // Created: NLD 2003-08-05
 // =============================================================================
-class MIL_CheckPointManager : public MT_Timer_ABC
+class MIL_CheckPointManager
 {
     MT_COPYNOTALLOWED( MIL_CheckPointManager )
     
@@ -36,24 +35,18 @@ public:
      MIL_CheckPointManager( MIL_InputArchive& );
     ~MIL_CheckPointManager();
 
-    //-------------------------------------------------------------------------
-    /** @name Main */
-    //-------------------------------------------------------------------------
+    //! @name Main
     //@{
-    void LoadCheckPoint(       std::string  strCheckPointPath );
-    void SaveCheckPoint( const std::string& strCheckPointName );
+    void Update        ();
+    void LoadCheckPoint( std::string strCheckPointPath );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     MT_Float GetCheckPointFrequency() const;
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Network */
-    //-------------------------------------------------------------------------
+    //! @name Network
     //@{
     void OnReceiveMsgCheckPointSaveNow     ( const ASN1T_MsgCtrlCheckPointSaveNow&      asnMsg );
     void OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgCtrlCheckPointSetFrequency& asnMsg );
@@ -67,18 +60,13 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
-private:
-    //-------------------------------------------------------------------------
-    /** @name Timer */
-    //-------------------------------------------------------------------------
-    //@{
-    void OnTimer();
-    //@}
-    
+private:   
     //! @name Tools
     //@{
-    void ManageOldCheckPoints( const std::string& newName );
-    void SaveCheckPoint      ( const std::string& strName, const std::string& strPath );
+    void ManageOldCheckPoints ( const std::string& newName );
+    void SaveCheckPoint       ( const std::string& strCheckPointName );
+    void SaveCheckPoint       ( const std::string& strName, const std::string& strPath );
+    void SetNextCheckPointTick( uint nTick );
     //@}
     
     //! @name Tools
@@ -99,6 +87,9 @@ private:
     
 private:
     MT_Float             rCheckPointsFrequency_; // Minutes
+
+    uint                 nLastCheckPointTick_;
+    uint                 nNextCheckPointTick_;
     
     uint                 nMaxCheckPointNbr_;
     T_CheckPointsQueue   currentCheckPoints_;

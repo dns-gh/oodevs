@@ -93,7 +93,6 @@ void MIL_AgentServer::Initialize( MIL_InputArchive& archive )
         pEntityManager_->RegisterLocalAgents( *pFederate_ );
 
     timerManager_.Register( *this );
-    timerManager_.Register( *pCheckPointManager_ );
 
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
@@ -109,7 +108,6 @@ void MIL_AgentServer::Initialize( MIL_InputArchive& archive )
 MIL_AgentServer::~MIL_AgentServer()
 {
     MT_LOG_INFO_MSG( "Terminating Simulation..." );
-    timerManager_.Unregister( *pCheckPointManager_ );
     timerManager_.Unregister( *this );
 
     MT_LOG_INFO_MSG( "Terminating HLA" );
@@ -391,6 +389,8 @@ void MIL_AgentServer::MainSimLoop()
         pFederate_->Step();
 
     pEntityManager_->Clean();
+
+    pCheckPointManager_->Update();
 }
 
 //=============================================================================
