@@ -417,7 +417,7 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
-        MIL_RC::pRcDemandeRavitaillement_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
+        MIL_RC::pRcDemandeRavitaillementDotations_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
     nTickRcDotationSupplyQuerySent_ = nCurrentTick;
 }
 

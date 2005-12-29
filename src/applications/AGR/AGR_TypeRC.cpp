@@ -385,7 +385,10 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_SituationLogDefavorable" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_SectionDeployee" ] = "eReportMission";
 	rcTypes_[ "eRC_MaterielRetourDeMaintenance" ] = "eReportLogisticSituation";
-	rcTypes_[ "eRC_DemandeRavitaillement" ] = "eReportLogisticSituation";
+	rcTypes_[ "eRC_DemandeRavitaillementDotations" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_DemandeRavitaillementStock" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_SeuilLogistiqueDotationDepasse" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_SeuilLogistiqueStockDepasse" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_DemandeEvacuationSanitaire" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_DemandeEvacuationMateriel" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_AllocationConsentieBientotEpuisee" ] = "eReportLogisticSituation";
@@ -477,6 +480,8 @@ void AGR_TypeRC::Initialize()
 	rcTypes_[ "eRC_MaterielRepareSurPlace" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_RavitaillementDotationsEffectue" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_RavitaillementStockEffectue" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_RavitaillementDotationsAnnule" ] = "eReportLogisticSituation";
+    rcTypes_[ "eRC_RavitaillementStockAnnule" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_HumainRetourDeSante" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_NonOperationnel" ] = "eReportLogisticSituation";
 	rcTypes_[ "eRC_Operationnel" ] = "eReportLogisticSituation";

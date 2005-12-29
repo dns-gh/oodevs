@@ -137,12 +137,17 @@ CR-SectionDeployee                          ::= NULL
 CR-ANouveauDisponibleApresReparation        ::= NULL
 CR-MaterielRepareSurPlace                   ::= NULL
 CR-MaterielRetourDeMaintenance              ::= NULL
-CR-DemandeRavitaillement                    ::= NULL
+CR-DemandeRavitaillementDotations           ::= NULL
+CR-DemandeRavitaillementStock               ::= NULL
 CR-DemandeEvacuationSanitaire               ::= NULL
 CR-DemandeEvacuationMateriel                ::= NULL
 CR-AllocationConsentieBientotEpuisee        ::= TypeDotation
+CR-SeuilLogistiqueDotationDepasse           ::= TypeDotation
+CR-SeuilLogistiqueStockDepasse              ::= TypeDotation
 CR-RavitaillementDotationsEffectue          ::= NULL
 CR-RavitaillementStockEffectue              ::= NULL
+CR-RavitaillementDotationsAnnule            ::= NULL
+CR-RavitaillementStockAnnule                ::= NULL
 CR-HumainRetourDeSante                      ::= NULL
 CR-VSRAM-PretEnCours                        ::= NULL
 CR-VSRAM-PretAnnule                         ::= NULL
@@ -430,12 +435,17 @@ MsgCR ::= SEQUENCE
         cr-a-nouveau-disponible-apres-reparation                        CR-ANouveauDisponibleApresReparation,
         cr-materiel-retour-de-maintenance                               CR-MaterielRetourDeMaintenance,
         cr-materiel-repare-sur-place                                    CR-MaterielRepareSurPlace,
-        cr-demande-ravitaillement                                       CR-DemandeRavitaillement,
+        cr-demande-ravitaillement-dotations                             CR-DemandeRavitaillementDotations,
+        cr-demande-ravitaillement-stock                                 CR-DemandeRavitaillementStock,
         cr-demande-evacuation-sanitaire                                 CR-DemandeEvacuationSanitaire,
         cr-demande-evacuation-materiel                                  CR-DemandeEvacuationMateriel,
         cr-allocation-consentie-bientot-epuisee                         CR-AllocationConsentieBientotEpuisee,
+        cr-seuil-logistique-dotation-depasse                            CR-SeuilLogistiqueDotationDepasse,
+        cr-seuil-logistique-stock-depasse                               CR-SeuilLogistiqueStockDepasse,
         cr-ravitaillement-dotations-effectue                            CR-RavitaillementDotationsEffectue,
         cr-ravitaillement-stock-effectue                                CR-RavitaillementStockEffectue,
+        cr-ravitaillement-dotations-annule                              CR-RavitaillementDotationsAnnule,
+        cr-ravitaillement-stock-annule                                  CR-RavitaillementStockAnnule,
         cr-humain-retour-de-sante                                       CR-HumainRetourDeSante,
         cr-vsram-pret-en-cours                                          CR-VSRAM-PretEnCours,
         cr-vsram-pret-annule                                            CR-VSRAM-PretAnnule,

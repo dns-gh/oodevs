@@ -89,7 +89,7 @@ public:
 
     //! @name Logistic - supply
     //@{
-    void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory ) const;
+    void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
     void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const;
     void ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
     //@}

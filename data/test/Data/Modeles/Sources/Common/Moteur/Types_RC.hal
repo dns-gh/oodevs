@@ -111,12 +111,17 @@ typedef enum E_TypeRC
     eRC_ANouveauDisponibleApresReparation,
     eRC_MaterielRetourDeMaintenance,
     eRC_MaterielRepareSurPlace,
-    eRC_DemandeRavitaillement,
+    eRC_DemandeRavitaillementDotations,
+    eRC_DemandeRavitaillementStock,
     eRC_DemandeEvacuationSanitaire,
     eRC_DemandeEvacuationMateriel,
     eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
+    eRC_SeuilLogistiqueDotationDepasse, // Parametre : TypeDotation
+    eRC_SeuilLogistiqueStockDepasse, // Parametre : TypeDotation
     eRC_RavitaillementDotationsEffectue,
     eRC_RavitaillementStockEffectue,
+    eRC_RavitaillementDotationsAnnule,
+    eRC_RavitaillementStockAnnule,
     eRC_HumainRetourDeSante,
     eRC_VSRAM_PretEnCours,
     eRC_VSRAM_PretAnnule,

@@ -28,6 +28,8 @@
 #include "MIL_RC_EchecRenforcement.h"
 #include "MIL_RC_ObstacleEnAttenteActivation.h"
 #include "MIL_RC_AllocationConsentieBientotEpuisee.h"
+#include "MIL_RC_SeuilLogistiqueDotationDepasse.h"
+#include "MIL_RC_SeuilLogistiqueStockDepasse.h"
 #include "MIL_RC_TransportUnitePasPrete.h"
 #include "MIL_RC_TransportUnitePrete.h"
 #include "MIL_RC_UniteDecontaminee.h"
@@ -72,7 +74,8 @@ const MIL_RC*                                   MIL_RC::pRcANouveauDisponibleApr
 const MIL_RC*                                   MIL_RC::pRcMaterielRepareSurPlace_             = 0;
 const MIL_RC*                                   MIL_RC::pRcMaterielRetourDeMaintenance_        = 0;
 const MIL_RC_ObservationTirIndirect*            MIL_RC::pRcObservationTirIndirect_             = 0;
-const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillement_              = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillementDotations_     = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillementStocks_        = 0;
 const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationSanitaire_         = 0;
 const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationMateriel_          = 0;
 const MIL_RC*                                   MIL_RC::pRcDecesBlesse_                        = 0;
@@ -92,6 +95,10 @@ const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_     
 const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                   = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_        = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsAnnule_      = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementStockAnnule_          = 0;
+const MIL_RC_SeuilLogistiqueStockDepasse*       MIL_RC::pRcSeuilLogistiqueStockDepasse_        = 0;
+const MIL_RC_SeuilLogistiqueDotationDepasse*    MIL_RC::pRcSeuilLogistiqueDotationDepasse_     = 0;
 const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_                = 0;
 const MIL_RC_UniteDetectee*                     MIL_RC::pRcUniteDetectee_                      = 0;
 const MIL_RC_UniteAmieReconnue*                 MIL_RC::pRcUniteAmieReconnue_                  = 0;
@@ -208,12 +215,17 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_ANouveauDisponibleApresReparation ] = new MIL_RC( eRC_ANouveauDisponibleApresReparation, T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation );
 	rcs_[ eRC_MaterielRetourDeMaintenance ] = new MIL_RC( eRC_MaterielRetourDeMaintenance, T_MsgCR_cr_cr_materiel_retour_de_maintenance );
 	rcs_[ eRC_MaterielRepareSurPlace ] = new MIL_RC( eRC_MaterielRepareSurPlace, T_MsgCR_cr_cr_materiel_repare_sur_place );
-	rcs_[ eRC_DemandeRavitaillement ] = new MIL_RC( eRC_DemandeRavitaillement, T_MsgCR_cr_cr_demande_ravitaillement );
+	rcs_[ eRC_DemandeRavitaillementDotations ] = new MIL_RC( eRC_DemandeRavitaillementDotations, T_MsgCR_cr_cr_demande_ravitaillement_dotations );
+	rcs_[ eRC_DemandeRavitaillementStock ] = new MIL_RC( eRC_DemandeRavitaillementStock, T_MsgCR_cr_cr_demande_ravitaillement_stock );
 	rcs_[ eRC_DemandeEvacuationSanitaire ] = new MIL_RC( eRC_DemandeEvacuationSanitaire, T_MsgCR_cr_cr_demande_evacuation_sanitaire );
 	rcs_[ eRC_DemandeEvacuationMateriel ] = new MIL_RC( eRC_DemandeEvacuationMateriel, T_MsgCR_cr_cr_demande_evacuation_materiel );
 	rcs_[ eRC_AllocationConsentieBientotEpuisee ] = new MIL_RC_AllocationConsentieBientotEpuisee( eRC_AllocationConsentieBientotEpuisee, T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee );
+	rcs_[ eRC_SeuilLogistiqueDotationDepasse ] = new MIL_RC_SeuilLogistiqueDotationDepasse( eRC_SeuilLogistiqueDotationDepasse, T_MsgCR_cr_cr_seuil_logistique_dotation_depasse );
+	rcs_[ eRC_SeuilLogistiqueStockDepasse ] = new MIL_RC_SeuilLogistiqueStockDepasse( eRC_SeuilLogistiqueStockDepasse, T_MsgCR_cr_cr_seuil_logistique_stock_depasse );
 	rcs_[ eRC_RavitaillementDotationsEffectue ] = new MIL_RC( eRC_RavitaillementDotationsEffectue, T_MsgCR_cr_cr_ravitaillement_dotations_effectue );
 	rcs_[ eRC_RavitaillementStockEffectue ] = new MIL_RC( eRC_RavitaillementStockEffectue, T_MsgCR_cr_cr_ravitaillement_stock_effectue );
+	rcs_[ eRC_RavitaillementDotationsAnnule ] = new MIL_RC( eRC_RavitaillementDotationsAnnule, T_MsgCR_cr_cr_ravitaillement_dotations_annule );
+	rcs_[ eRC_RavitaillementStockAnnule ] = new MIL_RC( eRC_RavitaillementStockAnnule, T_MsgCR_cr_cr_ravitaillement_stock_annule );
 	rcs_[ eRC_HumainRetourDeSante ] = new MIL_RC( eRC_HumainRetourDeSante, T_MsgCR_cr_cr_humain_retour_de_sante );
 	rcs_[ eRC_VSRAM_PretEnCours ] = new MIL_RC( eRC_VSRAM_PretEnCours, T_MsgCR_cr_cr_vsram_pret_en_cours );
 	rcs_[ eRC_VSRAM_PretAnnule ] = new MIL_RC( eRC_VSRAM_PretAnnule, T_MsgCR_cr_cr_vsram_pret_annule );
@@ -349,7 +361,13 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_EnStationnement ] = new MIL_RC( eRC_EnStationnement, T_MsgCR_cr_cr_en_stationnement );
 	rcs_[ eRC_ExecutionAttentat ] = new MIL_RC( eRC_ExecutionAttentat, T_MsgCR_cr_cr_execution_attentat );
 	
-
+    
+    pRcDemandeRavitaillementDotations_    =                                            rcs_[ eRC_DemandeRavitaillementDotations    ];
+    pRcDemandeRavitaillementStocks_       =                                            rcs_[ eRC_DemandeRavitaillementStock        ];
+    pRcSeuilLogistiqueStockDepasse_       = (MIL_RC_SeuilLogistiqueStockDepasse*)      rcs_[ eRC_SeuilLogistiqueStockDepasse       ];
+    pRcSeuilLogistiqueDotationDepasse_    = (MIL_RC_SeuilLogistiqueDotationDepasse*)   rcs_[ eRC_SeuilLogistiqueDotationDepasse    ];
+    pRcRavitaillementDotationsAnnule_     =                                            rcs_[ eRC_RavitaillementDotationsAnnule     ];
+    pRcRavitaillementStockAnnule_         =                                            rcs_[ eRC_RavitaillementStockAnnule         ];
     pRcRavitaillementDotationsEffectue_   =                                            rcs_[ eRC_RavitaillementDotationsEffectue   ];
     pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
     pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
@@ -358,7 +376,6 @@ void MIL_RC::Initialize()
     pRcMaterielRetourDeMaintenance_       =                                            rcs_[ eRC_MaterielRetourDeMaintenance       ];
     pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
     pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];
-    pRcDemandeRavitaillement_             =                                            rcs_[ eRC_DemandeRavitaillement             ];
     pRcDemandeEvacuationSanitaire_        =                                            rcs_[ eRC_DemandeEvacuationSanitaire        ];
     pRcDemandeEvacuationMateriel_         =                                            rcs_[ eRC_DemandeEvacuationMateriel         ];
     pRcDecesBlesse_                       =                                            rcs_[ eRC_DecesBlesse                       ];
@@ -371,6 +388,7 @@ void MIL_RC::Initialize()
     pRcTireParCampNeutre_                 = (MIL_RC_TireParCampNeutre*)                rcs_[ eRC_TireParCampNeutre                 ];
     pRcTirSurCivil_                       = (MIL_RC_TirSurCivil*)                      rcs_[ eRC_TirSurCivil                       ];
     pRcTireParCivil_                      = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                      ];
+    pRcDestructionPC_                     =                                            rcs_[ eRC_DestructionPC                     ];
     pRcAllocationConsentieBientotEpuisee_ = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee ];
     pRcMissionImpossible_                 =                                            rcs_[ eRC_MissionImpossible                 ];
     pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];

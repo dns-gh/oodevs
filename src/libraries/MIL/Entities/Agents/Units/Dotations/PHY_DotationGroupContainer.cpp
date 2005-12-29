@@ -334,10 +334,10 @@ void PHY_DotationGroupContainer::ConsumeFireReservations()
 // Name: PHY_DotationGroupContainer::NotifySupplyNeeded
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const
+void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {   
     assert( pRoleDotation_ );
-    pRoleDotation_->NotifySupplyNeeded( dotationCategory );
+    pRoleDotation_->NotifySupplyNeeded( dotationCategory, bNewNeed );
 }
 
 // -----------------------------------------------------------------------------

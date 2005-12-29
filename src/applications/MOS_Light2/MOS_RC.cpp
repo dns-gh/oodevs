@@ -146,12 +146,17 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation : strMsg << "a nouveau disponible apres reparation"; break;
         case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance"; break;
         case T_MsgCR_cr_cr_materiel_repare_sur_place : strMsg << "materiel repare sur place"; break;
-        case T_MsgCR_cr_cr_demande_ravitaillement : strMsg << "demande ravitaillement"; break;
+        case T_MsgCR_cr_cr_demande_ravitaillement_dotations : strMsg << "demande ravitaillement dotations"; break;
+        case T_MsgCR_cr_cr_demande_ravitaillement_stock : strMsg << "demande ravitaillement stock"; break;
         case T_MsgCR_cr_cr_demande_evacuation_sanitaire : strMsg << "demande evacuation sanitaire"; break;
         case T_MsgCR_cr_cr_demande_evacuation_materiel : strMsg << "demande evacuation materiel"; break;
         case T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee : strMsg << "allocation consentie bientot epuisee" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_allocation_consentie_bientot_epuisee; break;
+        case T_MsgCR_cr_cr_seuil_logistique_dotation_depasse : strMsg << "seuil logistique dotation depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_dotation_depasse; break;
+        case T_MsgCR_cr_cr_seuil_logistique_stock_depasse : strMsg << "seuil logistique stock depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_stock_depasse; break;
         case T_MsgCR_cr_cr_ravitaillement_dotations_effectue : strMsg << "ravitaillement dotations effectue"; break;
         case T_MsgCR_cr_cr_ravitaillement_stock_effectue : strMsg << "ravitaillement stock effectue"; break;
+        case T_MsgCR_cr_cr_ravitaillement_dotations_annule : strMsg << "ravitaillement dotations annule"; break;
+        case T_MsgCR_cr_cr_ravitaillement_stock_annule : strMsg << "ravitaillement stock annule"; break;
         case T_MsgCR_cr_cr_humain_retour_de_sante : strMsg << "humain retour de sante"; break;
         case T_MsgCR_cr_cr_vsram_pret_en_cours : strMsg << "vsram_ pret en cours"; break;
         case T_MsgCR_cr_cr_vsram_pret_annule : strMsg << "vsram_ pret annule"; break;

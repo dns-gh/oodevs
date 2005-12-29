@@ -25,6 +25,7 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
+#include "Entities/RC/MIL_RC_SeuilLogistiqueDotationDepasse.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Dotations, "PHY_RolePion_Dotations" )
@@ -353,9 +354,13 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 // Name: PHY_RolePion_Dotations::NotifySupplyNeeded
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const
+void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
     assert( pPion_ );   
+
+    if( bNewNeed )
+        MIL_RC::pRcSeuilLogistiqueDotationDepasse_->Send( *pPion_, MIL_RC::eRcTypeOperational, dotationCategory );
+
     pPion_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
 }
 

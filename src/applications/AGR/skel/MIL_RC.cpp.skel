@@ -29,7 +29,8 @@ const MIL_RC*                                   MIL_RC::pRcANouveauDisponibleApr
 const MIL_RC*                                   MIL_RC::pRcMaterielRepareSurPlace_             = 0;
 const MIL_RC*                                   MIL_RC::pRcMaterielRetourDeMaintenance_        = 0;
 const MIL_RC_ObservationTirIndirect*            MIL_RC::pRcObservationTirIndirect_             = 0;
-const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillement_              = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillementDotations_     = 0;
+const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillementStocks_        = 0;
 const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationSanitaire_         = 0;
 const MIL_RC*                                   MIL_RC::pRcDemandeEvacuationMateriel_          = 0;
 const MIL_RC*                                   MIL_RC::pRcDecesBlesse_                        = 0;
@@ -49,6 +50,10 @@ const MIL_RC*                                   MIL_RC::pRcPlusDeCarburant_     
 const MIL_RC*                                   MIL_RC::pRcTerrainDifficile_                   = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsEffectue_    = 0;
 const MIL_RC*                                   MIL_RC::pRcRavitaillementStockEffectue_        = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementDotationsAnnule_      = 0;
+const MIL_RC*                                   MIL_RC::pRcRavitaillementStockAnnule_          = 0;
+const MIL_RC_SeuilLogistiqueStockDepasse*       MIL_RC::pRcSeuilLogistiqueStockDepasse_        = 0;
+const MIL_RC_SeuilLogistiqueDotationDepasse*    MIL_RC::pRcSeuilLogistiqueDotationDepasse_     = 0;
 const MIL_RC*                                   MIL_RC::pRcHumainRetourDeSante_                = 0;
 const MIL_RC_UniteDetectee*                     MIL_RC::pRcUniteDetectee_                      = 0;
 const MIL_RC_UniteAmieReconnue*                 MIL_RC::pRcUniteAmieReconnue_                  = 0;
@@ -70,6 +75,12 @@ void MIL_RC::Initialize()
 
     $AGR_MIL_RCs_Initialize$
 
+    pRcDemandeRavitaillementDotations_    =                                            rcs_[ eRC_DemandeRavitaillementDotations    ];
+    pRcDemandeRavitaillementStocks_       =                                            rcs_[ eRC_DemandeRavitaillementStock        ];
+    pRcSeuilLogistiqueStockDepasse_       = (MIL_RC_SeuilLogistiqueStockDepasse*)      rcs_[ eRC_SeuilLogistiqueStockDepasse       ];
+    pRcSeuilLogistiqueDotationDepasse_    = (MIL_RC_SeuilLogistiqueDotationDepasse*)   rcs_[ eRC_SeuilLogistiqueDotationDepasse    ];
+    pRcRavitaillementDotationsAnnule_     =                                            rcs_[ eRC_RavitaillementDotationsAnnule     ];
+    pRcRavitaillementStockAnnule_         =                                            rcs_[ eRC_RavitaillementStockAnnule         ];
     pRcRavitaillementDotationsEffectue_   =                                            rcs_[ eRC_RavitaillementDotationsEffectue   ];
     pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
     pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
@@ -78,7 +89,6 @@ void MIL_RC::Initialize()
     pRcMaterielRetourDeMaintenance_       =                                            rcs_[ eRC_MaterielRetourDeMaintenance       ];
     pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
     pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];
-    pRcDemandeRavitaillement_             =                                            rcs_[ eRC_DemandeRavitaillement             ];
     pRcDemandeEvacuationSanitaire_        =                                            rcs_[ eRC_DemandeEvacuationSanitaire        ];
     pRcDemandeEvacuationMateriel_         =                                            rcs_[ eRC_DemandeEvacuationMateriel         ];
     pRcDecesBlesse_                       =                                            rcs_[ eRC_DecesBlesse                       ];
@@ -91,6 +101,7 @@ void MIL_RC::Initialize()
     pRcTireParCampNeutre_                 = (MIL_RC_TireParCampNeutre*)                rcs_[ eRC_TireParCampNeutre                 ];
     pRcTirSurCivil_                       = (MIL_RC_TirSurCivil*)                      rcs_[ eRC_TirSurCivil                       ];
     pRcTireParCivil_                      = (MIL_RC_TireParCivil*)                     rcs_[ eRC_TireParCivil                      ];
+    pRcDestructionPC_                     =                                            rcs_[ eRC_DestructionPC                     ];
     pRcAllocationConsentieBientotEpuisee_ = (MIL_RC_AllocationConsentieBientotEpuisee*)rcs_[ eRC_AllocationConsentieBientotEpuisee ];
     pRcMissionImpossible_                 =                                            rcs_[ eRC_MissionImpossible                 ];
     pRcUniteDecontaminee_                 = (MIL_RC_UniteDecontaminee*)                rcs_[ eRC_UniteDecontaminee                 ];

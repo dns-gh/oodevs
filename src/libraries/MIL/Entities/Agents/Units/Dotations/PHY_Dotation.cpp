@@ -64,6 +64,7 @@ PHY_Dotation::~PHY_Dotation()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation::load
 // Created: JVT 2005-03-31
@@ -140,13 +141,15 @@ void PHY_Dotation::SetValue( MT_Float rValue )
         pGroup_->NotifyDotationChanged( *this );
     }
     
+    const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     rValue_ = rValue;
 
     if ( HasReachedSupplyThreshold() )
     {
         assert( pGroup_ );
         assert( pCategory_ );
-        pGroup_->NotifySupplyNeeded( *pCategory_ );
+
+        pGroup_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
     }
 }
 

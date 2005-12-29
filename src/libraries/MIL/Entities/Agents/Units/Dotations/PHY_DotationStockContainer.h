@@ -70,7 +70,7 @@ public:
 
     //! @name Supply
     //@{
-    void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const;
+    void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
     void FillSupplyRequest ( PHY_SupplyStockRequestContainer& supplyRequest ) const;
     //@}
 

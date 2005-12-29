@@ -34,6 +34,8 @@ class MIL_RC_UniteAmieIdentifiee;
 class MIL_RC_UniteEnnemieIdentifiee;
 class MIL_RC_UniteNeutreIdentifiee;
 class MIL_RC_ObjetDetecte;
+class MIL_RC_SeuilLogistiqueStockDepasse;
+class MIL_RC_SeuilLogistiqueDotationDepasse;
 
 struct ASN1T_MsgCR;
 
@@ -67,11 +69,16 @@ public:
     static const MIL_RC*                                    pRcMaterielRepareSurPlace_;
     static const MIL_RC*                                    pRcMaterielRetourDeMaintenance_;
     static const MIL_RC_ObservationTirIndirect*             pRcObservationTirIndirect_;
-    static const MIL_RC*                                    pRcDemandeRavitaillement_;
+    static const MIL_RC*                                    pRcDemandeRavitaillementStocks_;
+    static const MIL_RC*                                    pRcDemandeRavitaillementDotations_;
     static const MIL_RC*                                    pRcDemandeEvacuationSanitaire_;
     static const MIL_RC*                                    pRcDemandeEvacuationMateriel_;
     static const MIL_RC*                                    pRcRavitaillementDotationsEffectue_;
     static const MIL_RC*                                    pRcRavitaillementStockEffectue_;
+    static const MIL_RC*                                    pRcRavitaillementDotationsAnnule_;
+    static const MIL_RC*                                    pRcRavitaillementStockAnnule_;
+    static const MIL_RC_SeuilLogistiqueStockDepasse*        pRcSeuilLogistiqueStockDepasse_;
+    static const MIL_RC_SeuilLogistiqueDotationDepasse*     pRcSeuilLogistiqueDotationDepasse_;
     static const MIL_RC*                                    pRcHumainRetourDeSante_;
     static const MIL_RC*                                    pRcDecesBlesse_;
     static const MIL_RC*                                    pRcDecesBlessePendantTransport_;
@@ -225,12 +232,17 @@ protected:
         eRC_ANouveauDisponibleApresReparation,
         eRC_MaterielRetourDeMaintenance,
         eRC_MaterielRepareSurPlace,
-        eRC_DemandeRavitaillement,
+        eRC_DemandeRavitaillementDotations,
+        eRC_DemandeRavitaillementStock,
         eRC_DemandeEvacuationSanitaire,
         eRC_DemandeEvacuationMateriel,
         eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
+        eRC_SeuilLogistiqueDotationDepasse, // Parametre : TypeDotation
+        eRC_SeuilLogistiqueStockDepasse, // Parametre : TypeDotation
         eRC_RavitaillementDotationsEffectue,
         eRC_RavitaillementStockEffectue,
+        eRC_RavitaillementDotationsAnnule,
+        eRC_RavitaillementStockAnnule,
         eRC_HumainRetourDeSante,
         eRC_VSRAM_PretEnCours,
         eRC_VSRAM_PretAnnule,

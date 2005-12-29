@@ -714,7 +714,7 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
-        MIL_RC::pRcDemandeRavitaillement_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
+        MIL_RC::pRcDemandeRavitaillementStocks_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
 
@@ -751,7 +751,7 @@ void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplySta
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::NotifyStockSupplyCanceled( const PHY_SupplyStockState& supplyState )
 {
-    //$$$ MIL_RC::
+    MIL_RC::pRcRavitaillementStockAnnule_->Send( *this, MIL_RC::eRcTypeOperational );
     RemoveSupplyStockState( supplyState );
     bStockSupplyNeeded_ = true;
 }

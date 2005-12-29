@@ -66,7 +66,7 @@ public:
 
     //! @name Stock supply
     //@{
-            void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const;
+            void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
     virtual void FillSupplyRequest ( PHY_SupplyStockRequestContainer& supplyRequest ) const;
     virtual void ResupplyStocks    ();
     virtual void ResupplyStocks    ( const PHY_DotationCategory& category, MT_Float rNbr );

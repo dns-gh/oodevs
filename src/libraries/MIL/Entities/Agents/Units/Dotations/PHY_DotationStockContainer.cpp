@@ -279,10 +279,10 @@ void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category,
 // Name: PHY_DotationStockContainer::NotifySupplyNeeded
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const
+void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {   
     assert( pRoleSupply_ );
-    pRoleSupply_->NotifySupplyNeeded( dotationCategory );
+    pRoleSupply_->NotifySupplyNeeded( dotationCategory, bNewNeed );
 }
 
 // -----------------------------------------------------------------------------

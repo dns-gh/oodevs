@@ -40,10 +40,10 @@ void PHY_DotationGroup::NotifyDotationChanged( const PHY_Dotation& dotation )
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
 inline
-void PHY_DotationGroup::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const
+void PHY_DotationGroup::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
     assert( pGroupContainer_ );
-    pGroupContainer_->NotifySupplyNeeded( dotationCategory );
+    pGroupContainer_->NotifySupplyNeeded( dotationCategory, bNewNeed );
 }
 
 // -----------------------------------------------------------------------------

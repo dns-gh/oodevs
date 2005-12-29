@@ -21,6 +21,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/RC/MIL_RC_SeuilLogistiqueStockDepasse.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
@@ -182,9 +183,13 @@ void PHY_RolePionLOG_Supply::StopUsingForLogistic( PHY_ComposantePion& composant
 // Name: PHY_RolePionLOG_Supply::NotifySupplyNeeded
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory ) const
+void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
     assert( pPion_ );   
+    
+    if( bNewNeed )
+        MIL_RC::pRcSeuilLogistiqueStockDepasse_->Send( *pPion_, MIL_RC::eRcTypeOperational, dotationCategory );
+
     pPion_->GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
 
