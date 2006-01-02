@@ -21,6 +21,7 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
@@ -31,6 +32,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
@@ -830,4 +832,22 @@ void DEC_AgentFunctions::GetRoePopulation( DIA_Call_ABC& call, MIL_AgentPion& ca
 {
     const PHY_RoePopulation& roe = callerAgent.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
     call.GetResult().SetValue( (int)roe.GetID() );
+}
+
+// =============================================================================
+// ASY
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetKilledOfficers
+// Created: SBO 2005-12-21
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::GetKilledOfficers( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    MT_Float rTotal = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrHumans( PHY_HumanRank::officier_ );
+    MT_Float rAlive = callerAgent.GetRole< PHY_RolePion_Humans >().GetNbrAliveHumans( PHY_HumanRank::officier_ );
+    MT_Float rRatio = 1.;
+    if( rTotal > 0. )
+        rRatio = rAlive / rTotal;
+    call.GetResult().SetValue( (float)rRatio );
 }

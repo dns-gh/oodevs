@@ -41,6 +41,7 @@ public:
     static void ActivateBlackout          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void DeactivateBlackout        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
     static void GetPosture                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetKilledOfficers         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
         
     static void CanConstructObject        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void CanBypassObject           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

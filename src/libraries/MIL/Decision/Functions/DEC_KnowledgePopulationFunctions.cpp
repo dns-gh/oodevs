@@ -109,3 +109,20 @@ void DEC_KnowledgePopulationFunctions::ClosestPoint( DIA_Call_ABC& call, const M
 
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::Exterminate
+// Created: SBO 2005-12-22
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::Exterminate( DIA_Call_ABC& call, const MIL_AgentPion& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 2 ).SetValue( eQueryInvalid );
+        return;
+    }
+    call.GetParameter( 2 ).SetValue( eQueryValid );
+    const MT_Float rSurface = call.GetParameter( 1 ).ToFloat();
+    pKnowledge->Exterminate( caller, rSurface );
+}

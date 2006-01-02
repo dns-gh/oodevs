@@ -85,6 +85,7 @@ public:
     void WoundHumans  ( const PHY_HumanRank& rank, uint nNbr );
     void HealHumans   ( const PHY_HumanRank& rank, uint nNbr );    
     void HealAllHumans();
+    void KillOfficers ();
     //@}
 
     //! @name Composantes management

@@ -236,6 +236,16 @@ void DEC_Knowledge_Population::Secure( const MIL_AgentPion& pionSecuring )
     pPopulationKnown_->Secure( pionSecuring );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Exterminate
+// Created: SBO 2005-12-22
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface )
+{
+    assert( pPopulationKnown_ );
+    pPopulationKnown_->Exterminate( exterminator, rSurface );
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================

@@ -251,3 +251,19 @@ void DEC_KnowledgeAgentFunctions::IsPerceivingAgent( DIA_Call_ABC& call, const M
     call.GetResult().SetValue( bResult );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::KillOfficers
+// Created: SBO 2005-12-21
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::KillOfficers( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
+        return;
+    }
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    pKnowledge->KillOfficers();
+}

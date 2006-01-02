@@ -197,6 +197,25 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::Exterminate
+// Created: SBO 2005-12-22
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_PopulationElement_ABC::Exterminate( MT_Float rSurface )
+{
+    assert( rDensity_ != 0 );
+    MT_Float rKills = rSurface / rDensity_;
+
+    if( rKills > rNbrAliveHumans_ )
+        rKills = rNbrAliveHumans_;
+
+    rNbrDeadHumans_  += rKills;
+    rNbrAliveHumans_ -= rKills;
+    bHumansUpdated_   = true;
+    return rKills * rDensity_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::IsDead
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------

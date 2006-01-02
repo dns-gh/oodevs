@@ -379,6 +379,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::IsMilita                , "DEC_Agent_EstMilice"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetPosture              , "DEC_Agent_NiveauInstallation"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetRoePopulation        , "DEC_Agent_RoePopulation"                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::GetKilledOfficers       , "DEC_Agent_OfficiersTues"                    );
  
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeLeftForMoving  , "DEC_Agent_AutonomieEnDeplacement"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::TimeToMoveDistance , "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" );
@@ -436,6 +437,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::Unlock                                    < MIL_AgentPion >, "DEC_ConnaissanceAgent_Deverrouiller"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsInSameDirection                                          , "DEC_ConnaissanceAgent_EstDansDirection"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsInDetectionCone                                          , "DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone"      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::KillOfficers                                               , "DEC_ConnaissanceAgent_TuerOfficiers"                   );
 
     // Object knowledges accessors
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                 < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstValide"                         );
@@ -459,7 +461,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::ClosestPoint                                  , "DEC_ConnaissancePopulation_PointPlusProche"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Secure                                        , "DEC_ConnaissancePopulation_Securiser"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::SecuringPoint                                 , "DEC_ConnaissancePopulation_PointSecurisation"            );
-    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Exterminate                                   , "DEC_ConnaissancePopulation_Exterminer"                   );
+        
     // Global knowledge
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetRapForLocal                                          , "DEC_RapportDeForceLocal"                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetAgentsAttacking                                      , "DEC_Connaissances_AgentsPrenantAPartie"             );

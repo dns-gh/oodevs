@@ -233,7 +233,7 @@ MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion&
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetDirDanger();
 
-    MT_Vector2D safetyPos = agentPosition + evadeDirection * ( location_.GetCircleRadius() + rMinDistance );
+    MT_Vector2D safetyPos = location_.GetCircleCenter() + evadeDirection * ( location_.GetCircleRadius() + rMinDistance );
     TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
     return safetyPos;
 }

@@ -36,6 +36,7 @@ public:
     static void IsPerceivingAgent                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsInSameDirection                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsInDetectionCone                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void KillOfficers                          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
     template< typename T > static void GetDangerosityOnPion     ( DIA_Call_ABC& call, const T& caller );
     template< typename T > static void GetDangerosityOnKnowledge( DIA_Call_ABC& call, const T& caller );

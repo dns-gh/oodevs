@@ -806,6 +806,16 @@ void DEC_Knowledge_Agent::Unlock()
     bLocked_ = false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::KillOfficers
+// Created: SBO 2005-12-21
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::KillOfficers()
+{
+    assert( pAgentKnown_ );
+    pAgentKnown_->GetRole< PHY_RolePion_Composantes >().KillOfficers();
+}
+
 // =============================================================================
 // PERCEPTION
 // =============================================================================

@@ -397,7 +397,7 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, M
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetDirDanger();
 
-    MT_Vector2D safetyPos = agentPosition + evadeDirection * rMinDistance;
+    MT_Vector2D safetyPos = nearestPointOnFlow + evadeDirection * rMinDistance;
     TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
     return safetyPos;
 }

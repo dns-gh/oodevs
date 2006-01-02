@@ -69,8 +69,9 @@ public:
 
     bool Clean  ();
 
-    void Recon  ();
-    void Secure ( const MIL_AgentPion& pionSecuring );
+    void Recon      ();
+    void Secure     ( const MIL_AgentPion& pionSecuring );
+    void Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface );
     //@}
 
     //! @name Accessors

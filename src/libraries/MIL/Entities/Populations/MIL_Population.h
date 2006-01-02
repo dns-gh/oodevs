@@ -91,6 +91,7 @@ public:
     //@{
     void NotifyAttackedBy( const MIL_Agent_ABC& attacker );
     void Secure          ( const MIL_AgentPion& securer  );
+    void Exterminate     ( const MIL_AgentPion& exterminator, MT_Float rSurface );
     //@}
 
     //! @name Operations

@@ -58,7 +58,9 @@ public:
     bool IsUsable              () const;
     uint GetNbrUsableHumans    () const;
     uint GetNbrHumans          () const;
+    uint GetNbrHumans          ( const PHY_HumanRank& rank ) const;
     uint GetNbrFullyAliveHumans() const;
+    uint GetNbrAliveHumans     ( const PHY_HumanRank& rank ) const;
     //@}
 
     //! @name Notifications

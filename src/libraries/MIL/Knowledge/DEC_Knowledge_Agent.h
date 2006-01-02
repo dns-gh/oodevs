@@ -130,6 +130,7 @@ public:
     MT_Float GetMaxRangeToFireOn( const MIL_AgentPion& target, MT_Float rWantedPH ) const;
     void     Lock               ();
     void     Unlock             ();
+    void     KillOfficers       ();
     //@}
 
 public:

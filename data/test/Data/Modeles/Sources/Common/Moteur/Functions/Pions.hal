@@ -154,6 +154,7 @@ signatures
     R                                       A::DEC_Agent_DureeDebarquement               (); // En minutes         
     B                                       A::DEC_Agent_TransporteursPret               ();
     I /*E_EtatROEPopulation*/               A::DEC_Agent_RoePopulation                   ();
+    R /* ratio alive/total */               A::DEC_Agent_OfficiersTues                   ();
                                             
     // Effets population
     V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();
@@ -201,6 +202,7 @@ signatures
     V                                       A::DEC_ConnaissanceAgent_Deverrouiller                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceAgent_EstDansDirection               ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/ );
     B                                       A::DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone     ( U /*T_ConnaissanceAgent*/ , U /*T_Direction*/, R /*angle en degré*/ );
+    V                                       A::DEC_ConnaissanceAgent_TuerOfficiers                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
                                             
     // Interceptions                        
     U /*T_Point*/                           A::DEC_Agent_PositionInterception    ( U /*T_ConnaissanceAgent*/ );                                                            // Attention, le résultat peut être nul
@@ -229,6 +231,7 @@ signatures
     U /*T_Point*/                           A::DEC_ConnaissancePopulation_PointPlusProche             ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     V                                       A::DEC_ConnaissancePopulation_Securiser                   ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     U /*T_Point*/                           A::DEC_ConnaissancePopulation_PointSecurisation           ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
+    V                                       A::DEC_ConnaissancePopulation_Exterminer                  ( U /*T_ConnaissancePopulation*/, R /*surface exterminée*/, I /*E_ValiditeRequete&*/ );
                                             
     // Requêtes connaissance globale           
     V                                       A::DEC_Connaissances_PartageConnaissancesAvec        ( A /*T_Automate*/, R /*delai en minutes*/ );    

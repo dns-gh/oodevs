@@ -193,6 +193,23 @@ void MIL_Population::Secure( const MIL_AgentPion& securer )
     pKnowledge_->NotifySecuredBy( securer );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::Exterminate
+// Created: SBO 2005-12-22
+// -----------------------------------------------------------------------------
+void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface )
+{
+    MIL_PopulationElement_ABC* pElement;
+    while( rSurface > 0. )
+    {
+        pElement = GetClosestAliveElement( exterminator );
+        if( !pElement )
+            break;
+        rSurface -= pElement->Exterminate( rSurface );
+    }
+    NotifyAttackedBy( exterminator );
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

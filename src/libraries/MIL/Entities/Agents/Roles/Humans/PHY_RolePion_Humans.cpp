@@ -200,6 +200,26 @@ void PHY_RolePion_Humans::Clean()
         (**it).Clean();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::GetNbrHumans
+// Created: SBO 2005-12-21
+// -----------------------------------------------------------------------------
+uint PHY_RolePion_Humans::GetNbrHumans( const PHY_HumanRank& rank ) const
+{
+    const T_HumanData& humanData = humansData_[ rank.GetID() ];
+    return humanData.nNbrTotal_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::GetNbrAliveHumans
+// Created: SBO 2005-12-21
+// -----------------------------------------------------------------------------
+uint PHY_RolePion_Humans::GetNbrAliveHumans( const PHY_HumanRank& rank ) const
+{
+    const T_HumanData& humanData = humansData_[ rank.GetID() ];
+    return humanData.nNbrOperational_;
+}
+
 // =============================================================================
 // NOTIFICATIONS
 // =============================================================================
