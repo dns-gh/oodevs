@@ -135,8 +135,8 @@ CR-EchecRenforcement                        ::= SEQUENCE
 -- Log                                      
 CR-SectionDeployee                          ::= NULL
 CR-ANouveauDisponibleApresReparation        ::= NULL
-CR-MaterielRepareSurPlace                   ::= NULL
-CR-MaterielRetourDeMaintenance              ::= NULL
+CR-MaterielRepareSurPlace                   ::= TypeEquipement
+CR-MaterielRetourDeMaintenance              ::= TypeEquipement
 CR-DemandeRavitaillementDotations           ::= NULL
 CR-DemandeRavitaillementStock               ::= NULL
 CR-DemandeEvacuationSanitaire               ::= NULL

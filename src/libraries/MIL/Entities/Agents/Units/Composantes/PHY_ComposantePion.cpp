@@ -37,7 +37,8 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/RC/MIL_RC_MaterielRepareSurPlace.h"
+#include "Entities/RC/MIL_RC_MaterielRetourDeMaintenance.h"
 
 MT_Random PHY_ComposantePion::random_;
 
@@ -702,7 +703,8 @@ void PHY_ComposantePion::NotifyHandledByMaintenance()
 void PHY_ComposantePion::NotifyRepairedByMaintenance()
 {
     assert( pRole_ );
-    MIL_RC::pRcMaterielRetourDeMaintenance_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
+    assert( pType_ );
+    MIL_RC::pRcMaterielRetourDeMaintenance_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational, *pType_ );
     pRole_->NotifyComposanteRepaired();    
     ReinitializeState( PHY_ComposanteState::undamaged_ );    
 }
@@ -796,7 +798,8 @@ void PHY_ComposantePion::Update()
     // Réparation automatique
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nAutoRepairTimeStep_ )
     {                
-        MIL_RC::pRcMaterielRepareSurPlace_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational );
+        assert( pType_ );
+        MIL_RC::pRcMaterielRepareSurPlace_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational, *pType_ );
         pRole_->NotifyComposanteRepaired();
         ReinitializeState( PHY_ComposanteState::undamaged_ );        
     }

@@ -4696,17 +4696,18 @@ int ASN1C_CR_ANouveauDisponibleApresReparation::Decode ()
 /**************************************************************/
 
 ASN1C_CR_MaterielRepareSurPlace::ASN1C_CR_MaterielRepareSurPlace (
-   ASN1MessageBuffer& msgBuf) :
-   ASN1CType(msgBuf)
+   ASN1MessageBuffer& msgBuf, ASN1T_CR_MaterielRepareSurPlace& data) :
+   ASN1CType(msgBuf), msgData(data)
 {}
 
-EXTERN int asn1PE_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p)
+EXTERN int asn1PE_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRepareSurPlace value)
 {
    int stat = ASN_OK;
 
    rtdiag ("asn1PE_CR_MaterielRepareSurPlace: start\n");
 
-   /* NULL */
+   stat = asn1PE_TypeEquipement (ctxt_p, value);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    rtdiag ("asn1PE_CR_MaterielRepareSurPlace: end\n");
    return (stat);
@@ -4715,17 +4716,18 @@ EXTERN int asn1PE_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p)
 int ASN1C_CR_MaterielRepareSurPlace::Encode ()
 {
    mMsgBuf.Init ();
-   int stat = asn1PE_CR_MaterielRepareSurPlace (mpContext->GetPtr());
+   int stat = asn1PE_CR_MaterielRepareSurPlace (mpContext->GetPtr(), msgData);
    return stat;
 }
 
-EXTERN int asn1PD_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p)
+EXTERN int asn1PD_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRepareSurPlace* pvalue)
 {
    int stat = ASN_OK;
 
    rtdiag ("asn1PD_CR_MaterielRepareSurPlace: start\n");
 
-   /* NULL */
+   stat = asn1PD_TypeEquipement (ctxt_p, pvalue);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    rtdiag ("asn1PD_CR_MaterielRepareSurPlace: end\n");
 
@@ -4734,7 +4736,7 @@ EXTERN int asn1PD_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p)
 
 int ASN1C_CR_MaterielRepareSurPlace::Decode ()
 {
-   return asn1PD_CR_MaterielRepareSurPlace (mpContext->GetPtr());
+   return asn1PD_CR_MaterielRepareSurPlace (mpContext->GetPtr(), &msgData);
 }
 
 /**************************************************************/
@@ -4744,17 +4746,18 @@ int ASN1C_CR_MaterielRepareSurPlace::Decode ()
 /**************************************************************/
 
 ASN1C_CR_MaterielRetourDeMaintenance::ASN1C_CR_MaterielRetourDeMaintenance (
-   ASN1MessageBuffer& msgBuf) :
-   ASN1CType(msgBuf)
+   ASN1MessageBuffer& msgBuf, ASN1T_CR_MaterielRetourDeMaintenance& data) :
+   ASN1CType(msgBuf), msgData(data)
 {}
 
-EXTERN int asn1PE_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p)
+EXTERN int asn1PE_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRetourDeMaintenance value)
 {
    int stat = ASN_OK;
 
    rtdiag ("asn1PE_CR_MaterielRetourDeMaintenance: start\n");
 
-   /* NULL */
+   stat = asn1PE_TypeEquipement (ctxt_p, value);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    rtdiag ("asn1PE_CR_MaterielRetourDeMaintenance: end\n");
    return (stat);
@@ -4763,17 +4766,18 @@ EXTERN int asn1PE_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p)
 int ASN1C_CR_MaterielRetourDeMaintenance::Encode ()
 {
    mMsgBuf.Init ();
-   int stat = asn1PE_CR_MaterielRetourDeMaintenance (mpContext->GetPtr());
+   int stat = asn1PE_CR_MaterielRetourDeMaintenance (mpContext->GetPtr(), msgData);
    return stat;
 }
 
-EXTERN int asn1PD_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p)
+EXTERN int asn1PD_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRetourDeMaintenance* pvalue)
 {
    int stat = ASN_OK;
 
    rtdiag ("asn1PD_CR_MaterielRetourDeMaintenance: start\n");
 
-   /* NULL */
+   stat = asn1PD_TypeEquipement (ctxt_p, pvalue);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    rtdiag ("asn1PD_CR_MaterielRetourDeMaintenance: end\n");
 
@@ -4782,7 +4786,7 @@ EXTERN int asn1PD_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p)
 
 int ASN1C_CR_MaterielRetourDeMaintenance::Decode ()
 {
-   return asn1PD_CR_MaterielRetourDeMaintenance (mpContext->GetPtr());
+   return asn1PD_CR_MaterielRetourDeMaintenance (mpContext->GetPtr(), &msgData);
 }
 
 /**************************************************************/
@@ -12857,7 +12861,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
       case 96:
          PU_PUSHNAME (ctxt_p, "u.cr_materiel_retour_de_maintenance");
 
-         stat = asn1PE_CR_MaterielRetourDeMaintenance (ctxt_p);
+         stat = asn1PE_CR_MaterielRetourDeMaintenance (ctxt_p, pvalue->u.cr_materiel_retour_de_maintenance);
          if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
          PU_POPNAME (ctxt_p);
 
@@ -12867,7 +12871,7 @@ EXTERN int asn1PE_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
       case 97:
          PU_PUSHNAME (ctxt_p, "u.cr_materiel_repare_sur_place");
 
-         stat = asn1PE_CR_MaterielRepareSurPlace (ctxt_p);
+         stat = asn1PE_CR_MaterielRepareSurPlace (ctxt_p, pvalue->u.cr_materiel_repare_sur_place);
          if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
          PU_POPNAME (ctxt_p);
 
@@ -15415,7 +15419,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
       case 95:
          PU_PUSHNAME (ctxt_p, "u.cr_materiel_retour_de_maintenance");
 
-         stat = asn1PD_CR_MaterielRetourDeMaintenance (ctxt_p);
+         stat = asn1PD_CR_MaterielRetourDeMaintenance (ctxt_p, &pvalue->u.cr_materiel_retour_de_maintenance);
          if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
          PU_POPNAME (ctxt_p);
@@ -15426,7 +15430,7 @@ EXTERN int asn1PD_MsgCR_cr (ASN1CTXT* ctxt_p, ASN1T_MsgCR_cr* pvalue)
       case 96:
          PU_PUSHNAME (ctxt_p, "u.cr_materiel_repare_sur_place");
 
-         stat = asn1PD_CR_MaterielRepareSurPlace (ctxt_p);
+         stat = asn1PD_CR_MaterielRepareSurPlace (ctxt_p, &pvalue->u.cr_materiel_repare_sur_place);
          if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
          PU_POPNAME (ctxt_p);

@@ -109,8 +109,8 @@ typedef enum E_TypeRC
     eRC_FinAmenagementBerges,
     eRC_SectionDeployee,
     eRC_ANouveauDisponibleApresReparation,
-    eRC_MaterielRetourDeMaintenance,
-    eRC_MaterielRepareSurPlace,
+    eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement
+    eRC_MaterielRepareSurPlace, // Parametre : TypeEquipement
     eRC_DemandeRavitaillementDotations,
     eRC_DemandeRavitaillementStock,
     eRC_DemandeEvacuationSanitaire,
@@ -253,7 +253,7 @@ typedef enum E_TypeRC
     eRC_AgressionDePopulation, // Parametre : T_ConnaissancePopulation
     eRC_AgressionParPopulation, // Parametre : T_ConnaissancePopulation
     eRC_RiposteContreAgressionParPopulation, // Parametre : T_ConnaissancePopulation
-    eRC_AttaqueInstallation, 
+    eRC_AttaqueInstallation,
     eRC_EnStationnement,
     eRC_ExecutionAttentat,
     eNbr

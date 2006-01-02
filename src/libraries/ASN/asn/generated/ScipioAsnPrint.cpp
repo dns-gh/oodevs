@@ -5474,24 +5474,26 @@ void ASN1C_CR_ANouveauDisponibleApresReparation::Print (ASN1ConstCharPtr name)
    asn1Print_CR_ANouveauDisponibleApresReparation (name);
 }
 
-void asn1Print_CR_MaterielRepareSurPlace (ASN1ConstCharPtr name)
+void asn1Print_CR_MaterielRepareSurPlace (ASN1ConstCharPtr name, ASN1T_CR_MaterielRepareSurPlace* pvalue)
 {
+   asn1Print_TypeEquipement (name, pvalue);
 }
 
 void ASN1C_CR_MaterielRepareSurPlace::Print (ASN1ConstCharPtr name)
 
 {
-   asn1Print_CR_MaterielRepareSurPlace (name);
+   asn1Print_CR_MaterielRepareSurPlace (name, &msgData);
 }
 
-void asn1Print_CR_MaterielRetourDeMaintenance (ASN1ConstCharPtr name)
+void asn1Print_CR_MaterielRetourDeMaintenance (ASN1ConstCharPtr name, ASN1T_CR_MaterielRetourDeMaintenance* pvalue)
 {
+   asn1Print_TypeEquipement (name, pvalue);
 }
 
 void ASN1C_CR_MaterielRetourDeMaintenance::Print (ASN1ConstCharPtr name)
 
 {
-   asn1Print_CR_MaterielRetourDeMaintenance (name);
+   asn1Print_CR_MaterielRetourDeMaintenance (name, &msgData);
 }
 
 void asn1Print_CR_DemandeRavitaillementDotations (ASN1ConstCharPtr name)
@@ -7394,10 +7396,12 @@ void asn1Print_MsgCR_cr (ASN1ConstCharPtr name, ASN1T_MsgCR_cr* pvalue)
 
       case 96:
          sprintf (namebuf, "%s.u.cr_materiel_retour_de_maintenance", name);
+         asn1Print_CR_MaterielRetourDeMaintenance (namebuf, &pvalue->u.cr_materiel_retour_de_maintenance);
          break;
 
       case 97:
          sprintf (namebuf, "%s.u.cr_materiel_repare_sur_place", name);
+         asn1Print_CR_MaterielRepareSurPlace (namebuf, &pvalue->u.cr_materiel_repare_sur_place);
          break;
 
       case 98:

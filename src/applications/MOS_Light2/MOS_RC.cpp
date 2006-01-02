@@ -144,8 +144,8 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_fin_amenagement_berges : strMsg << "fin amenagement berges"; break;
         case T_MsgCR_cr_cr_section_deployee : strMsg << "section deployee"; break;
         case T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation : strMsg << "a nouveau disponible apres reparation"; break;
-        case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance"; break;
-        case T_MsgCR_cr_cr_materiel_repare_sur_place : strMsg << "materiel repare sur place"; break;
+        case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance" << " - TypeEquipement : " << " " << asnMsg.cr.u.cr_materiel_retour_de_maintenance; break;
+        case T_MsgCR_cr_cr_materiel_repare_sur_place : strMsg << "materiel repare sur place" << " - TypeEquipement : " << " " << asnMsg.cr.u.cr_materiel_repare_sur_place; break;
         case T_MsgCR_cr_cr_demande_ravitaillement_dotations : strMsg << "demande ravitaillement dotations"; break;
         case T_MsgCR_cr_cr_demande_ravitaillement_stock : strMsg << "demande ravitaillement stock"; break;
         case T_MsgCR_cr_cr_demande_evacuation_sanitaire : strMsg << "demande evacuation sanitaire"; break;

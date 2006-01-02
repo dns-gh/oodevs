@@ -27,6 +27,8 @@
 #include "MIL_RC_ReussiteRenforcement.h"
 #include "MIL_RC_EchecRenforcement.h"
 #include "MIL_RC_ObstacleEnAttenteActivation.h"
+#include "MIL_RC_MaterielRetourDeMaintenance.h"
+#include "MIL_RC_MaterielRepareSurPlace.h"
 #include "MIL_RC_AllocationConsentieBientotEpuisee.h"
 #include "MIL_RC_SeuilLogistiqueDotationDepasse.h"
 #include "MIL_RC_SeuilLogistiqueStockDepasse.h"
@@ -70,8 +72,8 @@ MIL_RC::T_RCMap MIL_RC::rcs_;
 const MIL_RC*                                   MIL_RC::pRcMissionImpossible_                  = 0;
 const MIL_RC*                                   MIL_RC::pRcEnCoursDeFranchissement_            = 0;
 const MIL_RC*                                   MIL_RC::pRcANouveauDisponibleApresReparation_  = 0;
-const MIL_RC*                                   MIL_RC::pRcMaterielRepareSurPlace_             = 0;
-const MIL_RC*                                   MIL_RC::pRcMaterielRetourDeMaintenance_        = 0;
+const MIL_RC_MaterielRepareSurPlace*            MIL_RC::pRcMaterielRepareSurPlace_             = 0;
+const MIL_RC_MaterielRetourDeMaintenance*       MIL_RC::pRcMaterielRetourDeMaintenance_        = 0;
 const MIL_RC_ObservationTirIndirect*            MIL_RC::pRcObservationTirIndirect_             = 0;
 const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillementDotations_     = 0;
 const MIL_RC*                                   MIL_RC::pRcDemandeRavitaillementStocks_        = 0;
@@ -212,8 +214,8 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_FinAmenagementBerges ] = new MIL_RC( eRC_FinAmenagementBerges, T_MsgCR_cr_cr_fin_amenagement_berges );
 	rcs_[ eRC_SectionDeployee ] = new MIL_RC( eRC_SectionDeployee, T_MsgCR_cr_cr_section_deployee );
 	rcs_[ eRC_ANouveauDisponibleApresReparation ] = new MIL_RC( eRC_ANouveauDisponibleApresReparation, T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation );
-	rcs_[ eRC_MaterielRetourDeMaintenance ] = new MIL_RC( eRC_MaterielRetourDeMaintenance, T_MsgCR_cr_cr_materiel_retour_de_maintenance );
-	rcs_[ eRC_MaterielRepareSurPlace ] = new MIL_RC( eRC_MaterielRepareSurPlace, T_MsgCR_cr_cr_materiel_repare_sur_place );
+	rcs_[ eRC_MaterielRetourDeMaintenance ] = new MIL_RC_MaterielRetourDeMaintenance( eRC_MaterielRetourDeMaintenance, T_MsgCR_cr_cr_materiel_retour_de_maintenance );
+	rcs_[ eRC_MaterielRepareSurPlace ] = new MIL_RC_MaterielRepareSurPlace( eRC_MaterielRepareSurPlace, T_MsgCR_cr_cr_materiel_repare_sur_place );
 	rcs_[ eRC_DemandeRavitaillementDotations ] = new MIL_RC( eRC_DemandeRavitaillementDotations, T_MsgCR_cr_cr_demande_ravitaillement_dotations );
 	rcs_[ eRC_DemandeRavitaillementStock ] = new MIL_RC( eRC_DemandeRavitaillementStock, T_MsgCR_cr_cr_demande_ravitaillement_stock );
 	rcs_[ eRC_DemandeEvacuationSanitaire ] = new MIL_RC( eRC_DemandeEvacuationSanitaire, T_MsgCR_cr_cr_demande_evacuation_sanitaire );
@@ -371,8 +373,8 @@ void MIL_RC::Initialize()
     pRcRavitaillementStockEffectue_       =                                            rcs_[ eRC_RavitaillementStockEffectue       ];
     pRcHumainRetourDeSante_               =                                            rcs_[ eRC_HumainRetourDeSante               ];
     pRcANouveauDisponibleApresReparation_ =                                            rcs_[ eRC_ANouveauDisponibleApresReparation ];
-    pRcMaterielRepareSurPlace_            =                                            rcs_[ eRC_MaterielRepareSurPlace            ];
-    pRcMaterielRetourDeMaintenance_       =                                            rcs_[ eRC_MaterielRetourDeMaintenance       ];
+    pRcMaterielRepareSurPlace_            = (MIL_RC_MaterielRepareSurPlace*)           rcs_[ eRC_MaterielRepareSurPlace            ];
+    pRcMaterielRetourDeMaintenance_       = (MIL_RC_MaterielRetourDeMaintenance*)      rcs_[ eRC_MaterielRetourDeMaintenance       ];
     pRcEnCoursDeFranchissement_           =                                            rcs_[ eRC_EnCoursDeFranchissement           ];
     pRcObservationTirIndirect_            = (MIL_RC_ObservationTirIndirect*)           rcs_[ eRC_ObservationTirIndirect            ];
     pRcDemandeEvacuationSanitaire_        =                                            rcs_[ eRC_DemandeEvacuationSanitaire        ];

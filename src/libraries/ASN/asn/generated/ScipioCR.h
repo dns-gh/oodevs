@@ -1975,19 +1975,22 @@ EXTERN void asn1Print_CR_ANouveauDisponibleApresReparation (ASN1ConstCharPtr nam
 /*                                                            */
 /**************************************************************/
 
+typedef ASN1T_TypeEquipement ASN1T_CR_MaterielRepareSurPlace;
+
 class EXTERN ASN1C_CR_MaterielRepareSurPlace : public ASN1CType {
 public:
+   ASN1T_CR_MaterielRepareSurPlace& msgData;
    ASN1C_CR_MaterielRepareSurPlace (
-      ASN1MessageBuffer& msgBuf);
+      ASN1MessageBuffer& msgBuf, ASN1T_CR_MaterielRepareSurPlace& data);
    int Encode ();
    int Decode ();
    void Print (ASN1ConstCharPtr name);
 } ;
 
-EXTERN int asn1PE_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p);
-EXTERN int asn1PD_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p);
+EXTERN int asn1PE_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRepareSurPlace value);
+EXTERN int asn1PD_CR_MaterielRepareSurPlace (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRepareSurPlace* pvalue);
 
-EXTERN void asn1Print_CR_MaterielRepareSurPlace (ASN1ConstCharPtr name);
+EXTERN void asn1Print_CR_MaterielRepareSurPlace (ASN1ConstCharPtr name, ASN1T_CR_MaterielRepareSurPlace* pvalue);
 
 /**************************************************************/
 /*                                                            */
@@ -1995,19 +1998,22 @@ EXTERN void asn1Print_CR_MaterielRepareSurPlace (ASN1ConstCharPtr name);
 /*                                                            */
 /**************************************************************/
 
+typedef ASN1T_TypeEquipement ASN1T_CR_MaterielRetourDeMaintenance;
+
 class EXTERN ASN1C_CR_MaterielRetourDeMaintenance : public ASN1CType {
 public:
+   ASN1T_CR_MaterielRetourDeMaintenance& msgData;
    ASN1C_CR_MaterielRetourDeMaintenance (
-      ASN1MessageBuffer& msgBuf);
+      ASN1MessageBuffer& msgBuf, ASN1T_CR_MaterielRetourDeMaintenance& data);
    int Encode ();
    int Decode ();
    void Print (ASN1ConstCharPtr name);
 } ;
 
-EXTERN int asn1PE_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p);
-EXTERN int asn1PD_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p);
+EXTERN int asn1PE_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRetourDeMaintenance value);
+EXTERN int asn1PD_CR_MaterielRetourDeMaintenance (ASN1CTXT* ctxt_p, ASN1T_CR_MaterielRetourDeMaintenance* pvalue);
 
-EXTERN void asn1Print_CR_MaterielRetourDeMaintenance (ASN1ConstCharPtr name);
+EXTERN void asn1Print_CR_MaterielRetourDeMaintenance (ASN1ConstCharPtr name, ASN1T_CR_MaterielRetourDeMaintenance* pvalue);
 
 /**************************************************************/
 /*                                                            */
@@ -5395,7 +5401,9 @@ typedef struct EXTERN ASN1T_MsgCR_cr {
       /* t = 94 */
       /* t = 95 */
       /* t = 96 */
+      ASN1T_CR_MaterielRetourDeMaintenance  cr_materiel_retour_de_maintenance;
       /* t = 97 */
+      ASN1T_CR_MaterielRepareSurPlace  cr_materiel_repare_sur_place;
       /* t = 98 */
       /* t = 99 */
       /* t = 100 */

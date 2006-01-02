@@ -36,6 +36,8 @@ class MIL_RC_UniteNeutreIdentifiee;
 class MIL_RC_ObjetDetecte;
 class MIL_RC_SeuilLogistiqueStockDepasse;
 class MIL_RC_SeuilLogistiqueDotationDepasse;
+class MIL_RC_MaterielRepareSurPlace;
+class MIL_RC_MaterielRetourDeMaintenance;
 
 struct ASN1T_MsgCR;
 
@@ -66,8 +68,8 @@ public:
     //@{    
     static const MIL_RC*                                    pRcEnCoursDeFranchissement_;
     static const MIL_RC*                                    pRcANouveauDisponibleApresReparation_;
-    static const MIL_RC*                                    pRcMaterielRepareSurPlace_;
-    static const MIL_RC*                                    pRcMaterielRetourDeMaintenance_;
+    static const MIL_RC_MaterielRepareSurPlace*             pRcMaterielRepareSurPlace_;
+    static const MIL_RC_MaterielRetourDeMaintenance*        pRcMaterielRetourDeMaintenance_;
     static const MIL_RC_ObservationTirIndirect*             pRcObservationTirIndirect_;
     static const MIL_RC*                                    pRcDemandeRavitaillementStocks_;
     static const MIL_RC*                                    pRcDemandeRavitaillementDotations_;
@@ -230,8 +232,8 @@ protected:
         eRC_FinAmenagementBerges,
         eRC_SectionDeployee,
         eRC_ANouveauDisponibleApresReparation,
-        eRC_MaterielRetourDeMaintenance,
-        eRC_MaterielRepareSurPlace,
+        eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement
+        eRC_MaterielRepareSurPlace, // Parametre : TypeEquipement
         eRC_DemandeRavitaillementDotations,
         eRC_DemandeRavitaillementStock,
         eRC_DemandeEvacuationSanitaire,

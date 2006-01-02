@@ -150,8 +150,8 @@ private:
         eRC_FinAmenagementBerges,
         eRC_SectionDeployee,
         eRC_ANouveauDisponibleApresReparation,
-        eRC_MaterielRetourDeMaintenance,
-        eRC_MaterielRepareSurPlace,
+        eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement
+        eRC_MaterielRepareSurPlace, // Parametre : TypeEquipement
         eRC_DemandeRavitaillementDotations,
         eRC_DemandeRavitaillementStock,
         eRC_DemandeEvacuationSanitaire,

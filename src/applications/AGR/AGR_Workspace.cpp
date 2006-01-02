@@ -77,6 +77,7 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:MaintenancePriorites", "MaintenancePriorities", "T_MaintenancePriorityVector", "T_MaintenancePriorites", "", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:SantePriorites", "MedicalPriorities", "T_MedicalPriorityVector", "T_SantePriorites", "", true ) );
 
+    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TypeEquipement", "TypeEquipement", "TypeEquipement", "TypeEquipement", "TypeEquipement", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TypeDotation", "TypeDotation", "TypeDotation", "TypeDotation", "TypeDotation", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TirPion", "TirPion", "TirPion", "TirPion", "TirPion", true ) );
     typeList_.push_back( new AGR_Type_ABC( "xsd::string", "message", "message", "message", "message", true ) );
