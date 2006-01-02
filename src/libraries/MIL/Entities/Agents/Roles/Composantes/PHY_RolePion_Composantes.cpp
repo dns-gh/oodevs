@@ -31,12 +31,9 @@
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Entities/Effects/MIL_Effect_KillOfficers.h"
-#include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Messages.h"
@@ -542,17 +539,6 @@ void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, uint nNbr 
         if( itCurrentComp == composantes.end() )
             itCurrentComp = composantes.begin();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::KillOfficers
-// Created: SBO 2005-12-21
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::KillOfficers()
-{
-    assert( pPion_ );
-    MIL_Effect_KillOfficers* pEffect = new MIL_Effect_KillOfficers( *pPion_ );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
 }
 
 // -----------------------------------------------------------------------------

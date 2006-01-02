@@ -20,6 +20,8 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Effects/MIL_Effect_KillOfficers.h"
+#include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/RC/MIL_RC.h"
 #include "Entities/RC/MIL_RC_UniteDetectee.h"
 #include "Entities/RC/MIL_RC_UniteAmieReconnue.h"
@@ -29,6 +31,7 @@
 #include "Entities/RC/MIL_RC_UniteEnnemieIdentifiee.h"
 #include "Entities/RC/MIL_RC_UniteNeutreIdentifiee.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_ASN_Messages.h"
@@ -813,7 +816,8 @@ void DEC_Knowledge_Agent::Unlock()
 void DEC_Knowledge_Agent::KillOfficers()
 {
     assert( pAgentKnown_ );
-    pAgentKnown_->GetRole< PHY_RolePion_Composantes >().KillOfficers();
+    MIL_Effect_KillOfficers* pEffect = new MIL_Effect_KillOfficers( *pAgentKnown_ );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
 }
 
 // =============================================================================
