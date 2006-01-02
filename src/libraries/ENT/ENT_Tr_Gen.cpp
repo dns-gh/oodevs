@@ -663,9 +663,12 @@ ENT_Tr::T_ConverterLogMaintenanceTraitementEtat ENT_Tr::LogMaintenanceTraitement
 
 ENT_Tr::T_ConverterLogRavitaillementTraitementEtat ENT_Tr::LogRavitaillementTraitementEtatConverter_[] =
 {
-    T_ConverterLogRavitaillementTraitementEtat( "convoi consitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi consitution" ), eLogRavitaillementTraitementEtat_ConvoiConsitution ),
+    T_ConverterLogRavitaillementTraitementEtat( "convoi en attente camions", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi en attente camions" ), eLogRavitaillementTraitementEtat_ConvoiEnAttenteCamions ),
+    T_ConverterLogRavitaillementTraitementEtat( "convoi en attente chef convoi", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi en attente chef convoi" ), eLogRavitaillementTraitementEtat_ConvoiEnAttenteChefConvoi ),
+    T_ConverterLogRavitaillementTraitementEtat( "convoi constitution", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi constitution" ), eLogRavitaillementTraitementEtat_ConvoiConstitution ),
+    T_ConverterLogRavitaillementTraitementEtat( "convoi deplacement vers point chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement vers point chargement" ), eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement ),
     T_ConverterLogRavitaillementTraitementEtat( "convoi chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi chargement" ), eLogRavitaillementTraitementEtat_ConvoiChargement ),
-    T_ConverterLogRavitaillementTraitementEtat( "convoi deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement aller" ), eLogRavitaillementTraitementEtat_ConvoiDeplacementAller ),
+    T_ConverterLogRavitaillementTraitementEtat( "convoi deplacement vers point dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement vers point dechargement" ), eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointDechargement ),
     T_ConverterLogRavitaillementTraitementEtat( "convoi dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi dechargement" ), eLogRavitaillementTraitementEtat_ConvoiDechargement ),
     T_ConverterLogRavitaillementTraitementEtat( "convoi deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "convoi deplacement retour" ), eLogRavitaillementTraitementEtat_ConvoiDeplacementRetour ),
     T_ConverterLogRavitaillementTraitementEtat( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogRavitaillementTraitementEtat_Termine ),
@@ -1217,6 +1220,12 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion MILICE DetruireEmbuscade", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE DetruireEmbuscade" ), eMission_Pion_MILICE_DetruireEmbuscade ),
     T_ConverterUnitMission( "Pion JOINT MARINE Transporter", QT_TRANSLATE_NOOP( "ENT", "Pion JOINT MARINE Transporter" ), eMission_Pion_JOINT_MARINE_Transporter ),
     T_ConverterUnitMission( "Pion JOINT AIR EffectuerRaid", QT_TRANSLATE_NOOP( "ENT", "Pion JOINT AIR EffectuerRaid" ), eMission_Pion_JOINT_AIR_EffectuerRaid ),
+    T_ConverterUnitMission( "Pion ASY SInfiltrer", QT_TRANSLATE_NOOP( "ENT", "Pion ASY SInfiltrer" ), eMission_Pion_ASY_SInfiltrer ),
+    T_ConverterUnitMission( "Pion ASY CommettreAttentatContrePopulation", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreAttentatContrePopulation" ), eMission_Pion_ASY_CommettreAttentatContrePopulation ),
+    T_ConverterUnitMission( "Pion ASY CommettreAttentatContreForcesArmees", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreAttentatContreForcesArmees" ), eMission_Pion_ASY_CommettreAttentatContreForcesArmees ),
+    T_ConverterUnitMission( "Pion ASY CommettreAttentatContreInstallation", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreAttentatContreInstallation" ), eMission_Pion_ASY_CommettreAttentatContreInstallation ),
+    T_ConverterUnitMission( "Pion ASY CommettreExactionsSurPopulationDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreExactionsSurPopulationDansZone" ), eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone ),
+    T_ConverterUnitMission( "Pion ASY Renseigner", QT_TRANSLATE_NOOP( "ENT", "Pion ASY Renseigner" ), eMission_Pion_ASY_Renseigner ),
     T_ConverterUnitMission( "Pion NBC AnimerUnPlotDeDecontamination", QT_TRANSLATE_NOOP( "ENT", "Pion NBC AnimerUnPlotDeDecontamination" ), eMission_Pion_NBC_AnimerUnPlotDeDecontamination ),
     T_ConverterUnitMission( "Pion NBC ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion NBC ReconnaitreItineraire" ), eMission_Pion_NBC_ReconnaitreItineraire ),
     T_ConverterUnitMission( "Pion NBC ReconnaitreZone", QT_TRANSLATE_NOOP( "ENT", "Pion NBC ReconnaitreZone" ), eMission_Pion_NBC_ReconnaitreZone ),

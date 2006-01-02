@@ -26,9 +26,7 @@ typedef enum E_TestTransportStep
 
 typedef enum E_TestConvoyerStep
 {
-    eTestConvoyerStep_DeplacementVersPointChargement,
-    eTestConvoyerStep_Chargement,
-    eTestConvoyerStep_DeplacementVersPointDechargement,
-    eTestConvoyerStep_Dechargement,
+    eTestConvoyerStep_DeplacementAller,
+    eTestConvoyerStep_Ravitaillement,
     eTestConvoyerStep_DeplacementRetour
 };

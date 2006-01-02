@@ -287,6 +287,18 @@ enum E_SMission
 
     eSMission_Pion_JOINT_Fin,
 
+    // ASY
+    eSMission_Pion_ASY_Debut,
+
+    eSMission_Pion_ASY_SInfiltrer,
+    eSMission_Pion_ASY_CommettreAttentatContrePopulation,
+    eSMission_Pion_ASY_CommettreAttentatContreForcesArmees,
+    eSMission_Pion_ASY_CommettreAttentatContreInstallation,
+    eSMission_Pion_ASY_CommettreExactionsSurPopulationDansZone,
+    eSMission_Pion_ASY_Renseigner,
+
+    eSMission_Pion_ASY_Fin,
+
     // 
     // MISSIONS AUTOMATE
     // 
@@ -491,11 +503,17 @@ enum E_SMission
 
     eSMission_Automate_MILICE_Fin,
 
-    // NBC
+    // JOINT
     eSMission_Automate_JOINT_Debut,
 
 
     eSMission_Automate_JOINT_Fin,
+
+    // ASY
+    eSMission_Automate_ASY_Debut,
+
+
+    eSMission_Automate_ASY_Fin,
 
     // 
     // MISSIONS AUTOMATE

@@ -16,6 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Entities/MIL_Army.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Recon
@@ -108,6 +109,24 @@ void DEC_KnowledgePopulationFunctions::ClosestPoint( DIA_Call_ABC& call, const M
     MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RolePion_Location >().GetPosition() ) ); //$$$ RAM
 
     call.GetResult().SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsEnemy
+// Created: HME 2005-12-29
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_AgentPion& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+    
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( caller.GetArmy().IsAnEnemy( *pKnowledge ) );
 }
 
 // -----------------------------------------------------------------------------

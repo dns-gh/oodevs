@@ -40,6 +40,7 @@
 #include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
 #include "Entities/Specialisations/CIRCULATION/MIL_AgentTypePionCIRCULATION.h"
 #include "Entities/Specialisations/MILICE/MIL_AgentTypePionMILICE.h"
+#include "Entities/Specialisations/ASY/MIL_AgentTypePionASY.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AgentTypePionREFUGIE.h"
 #include "Entities/Specialisations/LOG/TC2/MIL_AgentTypePionLOGTC2.h"
 #include "Entities/Specialisations/LOG/Medical/MIL_AgentTypePionLOGMedical.h"
@@ -114,6 +115,7 @@ void MIL_AgentTypePion::Initialize( MIL_InputArchive& archive )
     pionTypeAllocators_[ "Pion CIRCULATION"            ] = &MIL_AgentTypePionCIRCULATION    ::Create; 
     pionTypeAllocators_[ "Pion JOINT"                  ] = &MIL_AgentTypePion               ::Create; 
     pionTypeAllocators_[ "Pion MILICE"                 ] = &MIL_AgentTypePionMILICE         ::Create; 
+    pionTypeAllocators_[ "Pion ASY"                    ] = &MIL_AgentTypePionASY            ::Create;
     pionTypeAllocators_[ "Pion REFUGIE"                ] = &MIL_AgentTypePionREFUGIE        ::Create; 
 
     std::set< uint > ids_;
@@ -461,8 +463,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::ClosestPoint                                  , "DEC_ConnaissancePopulation_PointPlusProche"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Secure                                        , "DEC_ConnaissancePopulation_Securiser"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::SecuringPoint                                 , "DEC_ConnaissancePopulation_PointSecurisation"            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsEnemy                                       , "DEC_ConnaissancePopulation_EstEnnemi"                    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Exterminate                                   , "DEC_ConnaissancePopulation_Exterminer"                   );
-        
+    
     // Global knowledge
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetRapForLocal                                          , "DEC_RapportDeForceLocal"                            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetAgentsAttacking                                      , "DEC_Connaissances_AgentsPrenantAPartie"             );

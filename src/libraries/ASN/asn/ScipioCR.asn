@@ -6,7 +6,7 @@
 
 ScipioCR DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS EnumUnitIdentificationLevel, KnowledgeAgent, KnowledgeObject, KnowledgePopulation, Agent, OID, CoordUTM, Line, max-uint64, 
+IMPORTS Objet, EnumUnitIdentificationLevel, KnowledgeAgent, KnowledgeObject, KnowledgePopulation, Agent, OID, CoordUTM, Line, max-uint64, 
         max-uint32, max-uint16, max-uint8 FROM ScipioBase
 IMPORTS EnumTypeLima FROM ScipioLimaLimite;
 
@@ -299,7 +299,7 @@ CR-RecuperationProgressive                               ::= INTEGER
 CR-AgressionDePopulation                                 ::= KnowledgePopulation
 CR-AgressionParPopulation                                ::= KnowledgePopulation
 CR-RiposteContreAgressionParPopulation                   ::= KnowledgePopulation
-CR-AttaqueInstallation                                   ::= KnowledgeObject
+CR-AttaqueInstallation                                   ::= NULL
 CR-EnStationnement                                       ::= NULL
 
 -- Menaces Asymetriques

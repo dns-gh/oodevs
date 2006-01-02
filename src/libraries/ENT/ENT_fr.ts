@@ -1821,6 +1821,30 @@
         <source>Population: Changer Attitude</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pion ASY SInfiltrer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreExactionsSurPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY Renseigner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreAttentatContrePopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreAttentatContreForcesArmees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreAttentatContreInstallation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>
@@ -3341,15 +3365,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>convoi consitution</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>convoi chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>convoi deplacement aller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3642,6 +3658,26 @@
     </message>
     <message>
         <source>reparer materiels sur place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi en attente camions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi en attente chef convoi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi constitution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi deplacement vers point chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoi deplacement vers point dechargement</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

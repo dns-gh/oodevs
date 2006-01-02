@@ -126,6 +126,7 @@ enum E_AgentTypePion
     eAgentTypePionREFUGIE,
     eAgentTypePionMILICE,
     eAgentTypePionJOINT,
+    eAgentTypePionASY,
 
     eNbrAgentTypePion
 };
@@ -152,6 +153,7 @@ enum E_AgentTypeAutomate
     eAgentTypeAutomateREFUGIE,
     eAgentTypeAutomateMILICE,
     eAgentTypeAutomateJOINT,
+    eAgentTypeAutomateASY,
 
     eNbrAgentTypeAutomate
 };

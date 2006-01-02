@@ -77,6 +77,7 @@ public:
     //! @name Accessors
     //@{
           uint                GetID             () const;
+    const MIL_Army&           GetArmy           () const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup () const;
           MIL_Population&     GetPopulationKnown() const;
           MT_Float            GetDangerosity    ( const MIL_AgentPion&    target        ) const;

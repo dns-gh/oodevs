@@ -24,6 +24,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Decision/DEC_Tools.h"
 #include "DEC_FunctionsTools.h"
+#include "Entities/MIL_Army.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::Debug
@@ -300,4 +301,22 @@ void DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( DIA_Call_ABC& call
     call.GetParameter( 1 ).SetValue( eQueryValid );
     MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pObject->GetLocalisation() ) );
     call.GetResult().SetValue( (void*)pPoint, &DEC_Tools::GetTypePoint() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::IsEnemy
+// Created: HME 2005-12-29
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::IsEnemy( DIA_Call_ABC& call, const MIL_Population& callerPopulation )
+{
+    const MIL_RealObject_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( call.GetParameter( 0 ) );
+    if( !pObject || !pObject->CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+    
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    call.GetResult().SetValue( callerPopulation.GetArmy().IsAnEnemy( pObject->GetArmy() ) );
 }

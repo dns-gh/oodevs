@@ -20,6 +20,7 @@
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -290,6 +291,15 @@ E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Agent& knowledge ) const
         return eTristate_DontKnow;
 
     return IsAnEnemy( *pArmy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::IsAnEnemy
+// Created: HME 2005-12-29
+// -----------------------------------------------------------------------------
+E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Population& knowledge ) const
+{
+    return IsAnEnemy( knowledge.GetArmy() );
 }
 
 // -----------------------------------------------------------------------------

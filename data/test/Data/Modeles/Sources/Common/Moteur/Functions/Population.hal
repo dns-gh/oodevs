@@ -32,6 +32,7 @@ signatures
     V                                         A::DEC_ConnaissanceObjet_Degrader       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/, R /*facteur de degradation 0..1*/ );
     R                                         A::DEC_ConnaissanceObjet_Distance       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
     U /*T_Point*/                             A::DEC_ConnaissanceObjet_PointPlusProche( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+    I /*E_Tristate*/                          A::DEC_ConnaissanceObjet_EstEnnemi( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete*/ );
         
     // RC
     V                                         A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );

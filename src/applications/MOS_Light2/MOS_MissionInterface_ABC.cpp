@@ -39,6 +39,7 @@
 #include "MOS_ParamAgentType.h"
 #include "MOS_ParamAgentKnowledge.h"
 #include "MOS_ParamAgentKnowledgeList.h"
+#include "MOS_ParamPopulationKnowledge.h"
 #include "MOS_ParamObjectKnowledge.h"
 #include "MOS_ParamObjectKnowledgeList.h"
 #include "MOS_ParamObstacle.h"
@@ -275,6 +276,7 @@ void MOS_MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgen
 }
 
 
+
 // -----------------------------------------------------------------------------
 // Name: MOS_MissionInterface_ABC::CreateObjectKnowledge
 // Created: APE 2004-04-30
@@ -361,4 +363,13 @@ void MOS_MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePri
 void MOS_MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, const std::string& strName, bool bOptional )
 {
     paramVector_.push_back( new MOS_ParamHumanWoundList( asn, strName, this, bOptional ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_MissionInterface_ABC::CreatePopulationKnowledge
+// Created: HME 2005-12-22
+// -----------------------------------------------------------------------------
+void MOS_MissionInterface_ABC::CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn, const std::string& strName, bool bOptional )
+{
+    paramVector_.push_back( new MOS_ParamPopulationKnowledge( asn, agent_, strName, strName, this, bOptional ) );
 }

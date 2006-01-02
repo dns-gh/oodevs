@@ -81,6 +81,11 @@ $MiliceMisssionPion$
 $JointMisssionPion$
     eSMission_Pion_JOINT_Fin,
 
+    // ASY
+    eSMission_Pion_ASY_Debut,
+$AsyMisssionPion$
+    eSMission_Pion_ASY_Fin,
+
     // 
     // MISSIONS AUTOMATE
     // 
@@ -135,10 +140,15 @@ $NbcMisssionAutomate$
 $MiliceMisssionAutomate$
     eSMission_Automate_MILICE_Fin,
 
-    // NBC
+    // JOINT
     eSMission_Automate_JOINT_Debut,
 $JointMisssionAutomate$
     eSMission_Automate_JOINT_Fin,
+
+    // ASY
+    eSMission_Automate_ASY_Debut,
+$AsyMisssionAutomate$
+    eSMission_Automate_ASY_Fin,
 
     // 
     // MISSIONS AUTOMATE

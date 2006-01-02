@@ -22,6 +22,7 @@ class DEC_KS_NetworkUpdater;
 class DEC_KS_ArmyQuerier;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Population;
 class MIL_KnowledgeGroup;
 class MIL_EntityManager;
 struct ASN1T_MsgChangeDiplomatie;
@@ -67,14 +68,15 @@ public:
 
     //! @name Operations
     //@{
-    bool       IsPerceived( const DEC_Knowledge_Object& knowledge ) const;
-    E_Tristate IsAFriend  ( const DEC_Knowledge_Agent & knowledge ) const;
-    E_Tristate IsAFriend  ( const MIL_Army& army )                  const;
-    E_Tristate IsAnEnemy  ( const DEC_Knowledge_Agent & knowledge ) const;
-    E_Tristate IsAnEnemy  ( const MIL_Army& army                  ) const;
-    E_Tristate IsNeutral  ( const MIL_Army& army                  ) const;
-    bool       operator== ( const MIL_Army& rhs )                   const;
-    bool       operator!= ( const MIL_Army& rhs )                   const;
+    bool       IsPerceived( const DEC_Knowledge_Object& knowledge )      const;
+    E_Tristate IsAFriend  ( const DEC_Knowledge_Agent & knowledge )      const;
+    E_Tristate IsAFriend  ( const MIL_Army& army )                       const;
+    E_Tristate IsAnEnemy  ( const DEC_Knowledge_Agent& knowledge       ) const;
+    E_Tristate IsAnEnemy  ( const DEC_Knowledge_Population & knowledge ) const;
+    E_Tristate IsAnEnemy  ( const MIL_Army& army )                       const;
+    E_Tristate IsNeutral  ( const MIL_Army& army )                       const;
+    bool       operator== ( const MIL_Army& rhs )                        const;
+    bool       operator!= ( const MIL_Army& rhs )                        const;
     //@}
 
     //! @name Knowledge

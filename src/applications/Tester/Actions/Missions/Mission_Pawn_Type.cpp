@@ -211,6 +211,12 @@
 #include "Pawn/Mission_Pawn_MILICE_DetruireEmbuscade.cpp"
 #include "Pawn/Mission_Pawn_JOINT_MARINE_Transporter.cpp"
 #include "Pawn/Mission_Pawn_JOINT_AIR_EffectuerRaid.cpp"
+#include "Pawn/Mission_Pawn_ASY_SInfiltrer.cpp"
+#include "Pawn/Mission_Pawn_ASY_CommettreAttentatContrePopulation.cpp"
+#include "Pawn/Mission_Pawn_ASY_CommettreAttentatContreForcesArmees.cpp"
+#include "Pawn/Mission_Pawn_ASY_CommettreAttentatContreInstallation.cpp"
+#include "Pawn/Mission_Pawn_ASY_CommettreExactionsSurPopulationDansZone.cpp"
+#include "Pawn/Mission_Pawn_ASY_Renseigner.cpp"
 #include "Pawn/Mission_Pawn_NBC_AnimerUnPlotDeDecontamination.cpp"
 #include "Pawn/Mission_Pawn_NBC_ReconnaitreItineraire.cpp"
 #include "Pawn/Mission_Pawn_NBC_ReconnaitreZone.cpp"
@@ -448,6 +454,12 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_MILICE_DetruireEmbuscade >( "Pion MILICE DetruireEmbuscade" );
     Register< Mission_Pawn_JOINT_MARINE_Transporter >( "Pion JOINT MARINE Transporter" );
     Register< Mission_Pawn_JOINT_AIR_EffectuerRaid >( "Pion JOINT AIR EffectuerRaid" );
+    Register< Mission_Pawn_ASY_SInfiltrer >( "Pion ASY SInfiltrer" );
+    Register< Mission_Pawn_ASY_CommettreAttentatContrePopulation >( "Pion ASY CommettreAttentatContrePopulation" );
+    Register< Mission_Pawn_ASY_CommettreAttentatContreForcesArmees >( "Pion ASY CommettreAttentatContreForcesArmees" );
+    Register< Mission_Pawn_ASY_CommettreAttentatContreInstallation >( "Pion ASY CommettreAttentatContreInstallation" );
+    Register< Mission_Pawn_ASY_CommettreExactionsSurPopulationDansZone >( "Pion ASY CommettreExactionsSurPopulationDansZone" );
+    Register< Mission_Pawn_ASY_Renseigner >( "Pion ASY Renseigner" );
     Register< Mission_Pawn_NBC_AnimerUnPlotDeDecontamination >( "Pion NBC AnimerUnPlotDeDecontamination" );
     Register< Mission_Pawn_NBC_ReconnaitreItineraire >( "Pion NBC ReconnaitreItineraire" );
     Register< Mission_Pawn_NBC_ReconnaitreZone >( "Pion NBC ReconnaitreZone" );

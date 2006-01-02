@@ -374,7 +374,7 @@ protected:
         eRC_AgressionDePopulation, // Parametre : T_ConnaissancePopulation
         eRC_AgressionParPopulation, // Parametre : T_ConnaissancePopulation
         eRC_RiposteContreAgressionParPopulation, // Parametre : T_ConnaissancePopulation
-        eRC_AttaqueInstallation, // Parametre : T_ConnaissanceObjet
+        eRC_AttaqueInstallation,
         eRC_EnStationnement,
         eRC_ExecutionAttentat,
         eNbr

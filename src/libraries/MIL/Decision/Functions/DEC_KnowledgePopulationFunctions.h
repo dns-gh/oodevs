@@ -32,6 +32,7 @@ public:
                            static void ClosestPoint  ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
                            static void Secure        ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
                            static void SecuringPoint ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void IsEnemy       ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
                            static void Exterminate   ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
     //@}
 };

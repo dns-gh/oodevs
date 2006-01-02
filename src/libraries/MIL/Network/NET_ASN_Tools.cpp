@@ -21,9 +21,11 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Objects/MIL_RealObject_ABC.h"
 
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Knowledge/DEC_KS_KnowledgeGroupQuerier.h"
 
@@ -372,7 +374,16 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& as
     }
     return true;        
 }
-     
+
+//-----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::ReadPopulationKnowledge
+// Created: HME 05-12-22
+//-----------------------------------------------------------------------------
+DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asnPopulation, const DEC_KS_KnowledgeGroupQuerier& knowledge )
+{
+    return knowledge.GetKnowledgePopulationFromID( asnPopulation );
+}
+
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadGDH
 // Created: NLD 2004-01-15
@@ -2408,8 +2419,115 @@ void NET_ASN_Tools::ResetEnumeration( DIA_Variable_ABC& dia )
     dia.SetValue( 0 );
 }
 
+// =============================================================================
+// MISSION PARAMETERS : KNOWLEDGE POPULATION DIA - SIM - ASN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyKnowledgePopulation
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge )
+{
+    DEC_Knowledge_Population* pKnowledge = NET_ASN_Tools::ReadPopulationKnowledge( asn, knowledge );
+    if( !pKnowledge ) 
+        return false;
+
+    dia.SetValue( (void*)pKnowledge->GetID(), &DEC_Tools::GetTypeConnaissancePopulation() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyKnowledgePopulation
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyPopulationKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge )
+{
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( dia ) );
+
+    uint nDiaID = (uint)dia.ToPtr();
+    DEC_Knowledge_Population* pKnowledge = knowledge.GetKnowledgePopulationFromID( nDiaID );
+    if( !pKnowledge )
+        return false;
+    
+    asn = pKnowledge->GetID();
+    return true;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyKnowledgePopulation
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyPopulationKnowledge( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaFrom ) );
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaTo ) );
+    assert( &diaFrom != &diaTo );
+    diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypeConnaissancePopulation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::ResetDiaKnowledgePopulation
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::ResetPopulationKnowledge( DIA_Variable_ABC& dia )
+{
+    dia.SetValue( (void*)0, &DEC_Tools::GetTypeConnaissancePopulation() );
+}
+
+// =============================================================================
+// MISSION PARAMETERS : POPULATION OBJECT KNOWLEDGE DIA - SIM - ASN
+// =============================================================================
+/*
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyPopulationObjectKnowledge
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyPopulationObjectKnowledge( const ASN1T_Objet& asn, DIA_Variable_ABC& dia )
+{
+    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().FindRealObject( asn );
+    if( !pObject ) 
+        return false;
+
+    dia.SetValue( (void*)pObject->GetID(), &DEC_Tools::GetTypePopulationConnaissanceObjet() );
+    return true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyPopulationObjectKnowledge
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyPopulationObjectKnowledge( const DIA_Variable_ABC& dia, ASN1T_Objet& asn )
+{
+    assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( dia ) );
+    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().FindRealObject( ( uint )dia.ToPtr() );
+    if( !pObject ) 
+        return false;
+    
+    asn = pObject->GetID();
+    return true;    
+}
+    
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyPopulationObjectKnowledge
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyPopulationObjectKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( diaFrom ) );
+    assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( diaTo   ) );
+    assert( &diaFrom != &diaTo );
+    diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypePopulationConnaissanceObjet() );
+}    
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::ResetPopulationObjectKnowledge
+// Created: HME 05-12-22
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::ResetPopulationObjectKnowledge( DIA_Variable_ABC& dia )
+{
+    dia.SetValue( (void*)0, &DEC_Tools::GetTypePopulationConnaissanceObjet() );
+}
 
 
-
-
-
+*/

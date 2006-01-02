@@ -57,7 +57,6 @@
 #include "MIL_RC_AgressionDePopulation.h"
 #include "MIL_RC_AgressionParPopulation.h"
 #include "MIL_RC_RiposteContreAgressionParPopulation.h"
-#include "MIL_RC_AttaqueInstallation.h"
 
 
 #include "Entities/Automates/MIL_Automate.h"
@@ -357,11 +356,11 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_AgressionDePopulation ] = new MIL_RC_AgressionDePopulation( eRC_AgressionDePopulation, T_MsgCR_cr_cr_agression_de_population );
 	rcs_[ eRC_AgressionParPopulation ] = new MIL_RC_AgressionParPopulation( eRC_AgressionParPopulation, T_MsgCR_cr_cr_agression_par_population );
 	rcs_[ eRC_RiposteContreAgressionParPopulation ] = new MIL_RC_RiposteContreAgressionParPopulation( eRC_RiposteContreAgressionParPopulation, T_MsgCR_cr_cr_riposte_contre_agression_par_population );
-	rcs_[ eRC_AttaqueInstallation ] = new MIL_RC_AttaqueInstallation( eRC_AttaqueInstallation, T_MsgCR_cr_cr_attaque_installation );
+	rcs_[ eRC_AttaqueInstallation ] = new MIL_RC( eRC_AttaqueInstallation, T_MsgCR_cr_cr_attaque_installation );
 	rcs_[ eRC_EnStationnement ] = new MIL_RC( eRC_EnStationnement, T_MsgCR_cr_cr_en_stationnement );
 	rcs_[ eRC_ExecutionAttentat ] = new MIL_RC( eRC_ExecutionAttentat, T_MsgCR_cr_cr_execution_attentat );
 	
-    
+
     pRcDemandeRavitaillementDotations_    =                                            rcs_[ eRC_DemandeRavitaillementDotations    ];
     pRcDemandeRavitaillementStocks_       =                                            rcs_[ eRC_DemandeRavitaillementStock        ];
     pRcSeuilLogistiqueStockDepasse_       = (MIL_RC_SeuilLogistiqueStockDepasse*)      rcs_[ eRC_SeuilLogistiqueStockDepasse       ];

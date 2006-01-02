@@ -108,7 +108,6 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const uint 
          << bIsRecon_;
 }
 
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -388,3 +387,4 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
     for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient();
 }
+

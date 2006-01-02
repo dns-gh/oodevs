@@ -205,6 +205,12 @@
     void CreateMission_MILICE_DetruireEmbuscade();
     void CreateMission_JOINT_MARINE_Transporter();
     void CreateMission_JOINT_AIR_EffectuerRaid();
+    void CreateMission_ASY_SInfiltrer();
+    void CreateMission_ASY_CommettreAttentatContrePopulation();
+    void CreateMission_ASY_CommettreAttentatContreForcesArmees();
+    void CreateMission_ASY_CommettreAttentatContreInstallation();
+    void CreateMission_ASY_CommettreExactionsSurPopulationDansZone();
+    void CreateMission_ASY_Renseigner();
     void CreateMission_NBC_AnimerUnPlotDeDecontamination();
     void CreateMission_NBC_ReconnaitreItineraire();
     void CreateMission_NBC_ReconnaitreZone();

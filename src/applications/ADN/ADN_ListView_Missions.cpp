@@ -140,6 +140,10 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         QCheckListItem* pSubPion0 = new QCheckListItem( pPion, "ABC", QCheckListItem::CheckBoxController );
         FillList( pSubPion0, eSMission_Pion_ABC_Debut, eSMission_Pion_ABC_Fin );
 
+        //ASY
+        QCheckListItem* pSubPion00 = new QCheckListItem( pPion, "ASY", QCheckListItem::CheckBoxController );
+        FillList( pSubPion00, eSMission_Pion_ASY_Debut, eSMission_Pion_ASY_Fin );
+
         // INF
         QCheckListItem* pSubPion1 = new QCheckListItem( pPion, "INF", QCheckListItem::CheckBoxController );
         FillList( pSubPion1, eSMission_Pion_INF_Debut, eSMission_Pion_INF_Fin );
@@ -183,6 +187,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 
         ApplyModifications( pPion );
         ApplyModifications( pSubPion0 );
+        ApplyModifications( pSubPion00 );
         ApplyModifications( pSubPion1 );
         ApplyModifications( pSubPion2 );
         ApplyModifications( pSubPion3 );
@@ -205,6 +210,10 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
         QCheckListItem* pSubAutomate0 = new QCheckListItem( pAutomate, "ABC", QCheckListItem::CheckBoxController );
         FillList( pSubAutomate0, eSMission_Automate_ABC_Debut, eSMission_Automate_ABC_Fin );
 
+        // ASY
+        QCheckListItem* pSubAutomate00 = new QCheckListItem( pAutomate, "ASY", QCheckListItem::CheckBoxController );
+        FillList( pSubAutomate00, eSMission_Automate_ASY_Debut, eSMission_Automate_ASY_Fin );
+        
         // INF
         QCheckListItem* pSubAutomate1 = new QCheckListItem( pAutomate, "INF", QCheckListItem::CheckBoxController );
         FillList( pSubAutomate1, eSMission_Automate_INF_Debut, eSMission_Automate_INF_Fin );
@@ -248,6 +257,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 
         ApplyModifications( pAutomate );
         ApplyModifications( pSubAutomate0 );
+        ApplyModifications( pSubAutomate00 );
         ApplyModifications( pSubAutomate1 );
         ApplyModifications( pSubAutomate2 );
         ApplyModifications( pSubAutomate3 );

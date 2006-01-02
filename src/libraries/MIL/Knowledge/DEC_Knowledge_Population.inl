@@ -61,3 +61,13 @@ void DEC_Knowledge_Population::Recon()
     bIsRecon_ = true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetArmy
+// Created: HME 2005-12-29
+// -----------------------------------------------------------------------------
+inline
+const MIL_Army& DEC_Knowledge_Population::GetArmy() const
+{
+    assert( pArmy_ );
+    return *pArmy_;
+}

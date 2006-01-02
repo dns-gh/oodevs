@@ -20,6 +20,7 @@
 class TER_Localisation;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
+class DEC_Knowledge_Population;
 class MT_Ellipse;
 class DEC_AutomateDecision;
 class DEC_RolePion_Decision;
@@ -56,6 +57,24 @@ public:
     static bool CopyAgentKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static void CopyAgentKnowledgeList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     static void ResetAgentKnowledgeList( DIA_Variable_ABC& dia );
+    //@}
+
+    //! @name Mission parameters tools : Knowledge Population DIA - SIM - ASN
+    //@{
+    static bool CopyPopulationKnowledge ( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static bool CopyPopulationKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
+    static void CopyPopulationKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
+    static void ResetPopulationKnowledge( DIA_Variable_ABC& dia );
+    //@}
+
+    //! @name Mission parameters tools : Population object knowldege DIA - SIM - ASN
+    //@{
+    /*    
+    static bool CopyPopulationObjectKnowledge ( const ASN1T_Objet& asn, DIA_Variable_ABC& dia );
+    static bool CopyPopulationObjectKnowledge ( const DIA_Variable_ABC& dia, ASN1T_Objet& asn );
+    static void CopyPopulationObjectKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
+    static void ResetPopulationObjectKnowledge( DIA_Variable_ABC& dia );
+    */
     //@}
 
     //! @name Mission parameters tools : Agent / Automate / Pion
@@ -249,36 +268,38 @@ private:
     static bool                  ReadPointList     ( const ASN1T_ListPoint&        asn, T_PointVector& pointVector );
     static bool                  ReadPathList      ( const ASN1T_ListItineraire&   asn, T_ItinerairePtrVector& itineraireVector );
 
-    static DEC_RolePion_Decision*  ReadAgent              ( const ASN1T_Agent&               asn );
-    static bool                    ReadAgentList          ( const ASN1T_ListAgent&           asn, T_ObjectVector& unitList );
-    static DEC_AutomateDecision*   ReadAutomate           ( const ASN1T_Agent&               asn );
-    static bool                    ReadAutomateList       ( const ASN1T_ListAutomate&        asn, T_ObjectVector& unitList );
-    static DEC_Knowledge_Agent*    ReadAgentKnowledge     ( const ASN1T_KnowledgeAgent&      asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static bool                    ReadAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent&  asn, T_KnowledgeAgentDiaIDVector& knowledgeList, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static DEC_Knowledge_Object*   ReadObjectKnowledge    ( const ASN1T_KnowledgeObject&     asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static bool                    ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static uint                    ReadGDH                ( const ASN1T_GDH&                 asn );
+    static DEC_RolePion_Decision*       ReadAgent              ( const ASN1T_Agent&               asn );
+    static bool                         ReadAgentList          ( const ASN1T_ListAgent&           asn, T_ObjectVector& unitList );
+    static DEC_AutomateDecision*        ReadAutomate           ( const ASN1T_Agent&               asn );
+    static bool                         ReadAutomateList       ( const ASN1T_ListAutomate&        asn, T_ObjectVector& unitList );
+    static DEC_Knowledge_Agent*         ReadAgentKnowledge     ( const ASN1T_KnowledgeAgent&      asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static bool                         ReadAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent&  asn, T_KnowledgeAgentDiaIDVector& knowledgeList, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+
+    static DEC_Knowledge_Object*        ReadObjectKnowledge    ( const ASN1T_KnowledgeObject&     asn, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static bool                         ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static uint                         ReadGDH                ( const ASN1T_GDH&                 asn );
     //@}
     
     // @name Encoding tools
     //@{
-    static void WriteLine               ( const TER_Localisation& localisation, ASN1T_Line&         asn );
-    static void WritePolygon            ( const TER_Localisation& localisation, ASN1T_Polygon&      asn );
+    static void WriteLine                       ( const TER_Localisation& localisation, ASN1T_Line&         asn );
+    static void WritePolygon                    ( const TER_Localisation& localisation, ASN1T_Polygon&      asn );
 
-    static void WriteLocationList       ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );
-    static void WritePolygonList        ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListPolygon&      asn );
-    static void WritePathList           ( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn );
-    static void WritePointList          ( const T_PointVector& pointVector, ASN1T_ListPoint& asn );
+    static void WriteLocationList               ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );
+    static void WritePolygonList                ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListPolygon&      asn );
+    static void WritePathList                   ( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn );
+    static void WritePointList                  ( const T_PointVector& pointVector, ASN1T_ListPoint& asn );
 
-    static void WriteAgent              ( const DEC_RolePion_Decision&        pion      , ASN1T_Agent&     asn );
-    static void WriteAutomate           ( const DEC_AutomateDecision&         automate  , ASN1T_Agent&     asn );
-    static void WriteAgentList          ( const T_ObjectVector&               unitList  , ASN1T_ListAgent& asn );   
-    static void WriteAutomateList       ( const T_ObjectVector&               unitList  , ASN1T_ListAutomate& asn );   
-    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , ASN1T_KnowledgeAgent&      asnKnowledge );
-    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , ASN1T_KnowledgeObject&     asnKnowledge );
-    static void WriteAgentKnowledgeList ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_ListKnowledgeAgent&  asnListKnowledge, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const DEC_KS_KnowledgeGroupQuerier& knowledge );
-    
+    static void WriteAgent                      ( const DEC_RolePion_Decision&        pion      , ASN1T_Agent&     asn );
+    static void WriteAutomate                   ( const DEC_AutomateDecision&         automate  , ASN1T_Agent&     asn );
+    static void WriteAgentList                  ( const T_ObjectVector&               unitList  , ASN1T_ListAgent& asn );   
+    static void WriteAutomateList               ( const T_ObjectVector&               unitList  , ASN1T_ListAutomate& asn );   
+    static void WriteAgentKnowledge             ( const DEC_Knowledge_Agent&          knowledge , ASN1T_KnowledgeAgent&      asnKnowledge );
+    static void WriteObjectKnowledge            ( const DEC_Knowledge_Object&         knowledge , ASN1T_KnowledgeObject&     asnKnowledge );
+    static void WriteAgentKnowledgeList         ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_ListKnowledgeAgent&  asnListKnowledge, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+    static void WriteObjectKnowledgeList        ( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const DEC_KS_KnowledgeGroupQuerier& knowledge );
+
     static void WriteGDH                ( ASN1T_GDH& asnGDH );
     static void WriteGDH                ( uint nRealTimeSec, ASN1T_GDH& asnGDH );
     //@}

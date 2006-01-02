@@ -47,31 +47,37 @@ MIL_RC_RiposteContreAgressionParPopulation::~MIL_RC_RiposteContreAgressionParPop
 // Name: MIL_RC_RiposteContreAgressionParPopulation destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_AgentPion& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/  ) const
+void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_AgentPion& sender, E_RcType nType, DIA_Parameters& diaParams  ) const
 {
-    assert( false );
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaParams[ 1 ] ) );
+    
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population, sender.GetKnowledgeGroup().GetKSQuerier() );
+    asnMsg.Send();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC_RiposteContreAgressionParPopulation destructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_Automate& /*sender*/, E_RcType /*nType*/, DIA_Parameters& /*diaParams*/ ) const
+void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_Automate& sender, E_RcType nType, DIA_Parameters& diaParams ) const
 {
-    assert( false );
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( diaParams[ 1 ] ) );
+    
+    NET_ASN_MsgCR asnMsg;
+    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population, sender.GetKnowledgeGroup().GetKSQuerier() );
+    asnMsg.Send();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RC_RiposteContreAgressionParPopulation::Send
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_Population& sender, E_RcType nType, DIA_Parameters& diaParams ) const
+void MIL_RC_RiposteContreAgressionParPopulation::Send( const MIL_Population& /*sender*/, E_RcType /*nType*/, DIA_Parameters& diaParams ) const
 {
     assert( DEC_Tools::CheckTypeConnaissancePopulation( diaParams[ 1 ] ) );
-    
-    NET_ASN_MsgCR asnMsg;
-    FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyID( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_agression_par_population );
-    asnMsg.Send();
+    assert( false );    
 }
 

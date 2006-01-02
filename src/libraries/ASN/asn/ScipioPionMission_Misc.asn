@@ -6,7 +6,7 @@
 
 ScipioPionMission_Misc DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
+IMPORTS ListAgent, Agent, KnowledgeAgent, KnowledgePopulation, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
         max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
 IMPORTS EnumObjectType FROM ScipioObject;
 
@@ -217,6 +217,49 @@ Mission-Pion-SecuriserPopulationDansZone ::= SEQUENCE
 Mission-Pion-SecuriserZoneContreMenacesAsymetriques ::= SEQUENCE
 {
     zone Polygon
+}
+
+-- ASY
+Mission-Pion-ASY-SInfiltrer ::= SEQUENCE
+{
+    itineraire  Itineraire
+}
+
+Mission-Pion-ASY-CommettreAttentatContrePopulation ::= SEQUENCE
+{
+    itineraire                  Itineraire,
+    point-repli                 Point,
+    population-cible            KnowledgePopulation
+}
+
+Mission-Pion-ASY-CommettreAttentatContreForcesArmees ::= SEQUENCE
+{
+    itineraire                  Itineraire,
+    point-repli                 Point,
+    type-attentat-forces-armees ENUMERATED
+    {
+        assasinat-officier,
+        destruction-composante-majeure
+    },
+    unite-cible                 KnowledgeAgent
+}
+
+Mission-Pion-ASY-CommettreAttentatContreInstallation ::= SEQUENCE
+{
+    itineraire                  Itineraire,
+    point-repli                 Point,
+    installation-cible          KnowledgeObject
+}
+
+
+Mission-Pion-ASY-CommettreExactionsSurPopulationDansZone ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-ASY-Renseigner ::= SEQUENCE
+{
+    destinataire                Automate
 }
 
 -- MILICE

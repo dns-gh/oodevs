@@ -52,34 +52,34 @@ ListPoint        ::= SEQUENCE OF Point
 --
 -- Types
 --
-OID                 ::= INTEGER (0..max-uint32)
-ListOID             ::= SEQUENCE OF OID
-TirPion             ::= OID
-TirPopulation       ::= OID
-Agent               ::= OID
-Automate            ::= OID
-Population          ::= OID
-KnowledgeAgent      ::= OID
-KnowledgeObject     ::= OID
-KnowledgePopulation ::= OID
-ListAutomate        ::= SEQUENCE OF Automate 
-ListAgent           ::= SEQUENCE OF Agent
-ListKnowledgeAgent  ::= SEQUENCE OF KnowledgeAgent
-ListKnowledgeObject ::= SEQUENCE OF KnowledgeObject
-TypeEquipement      ::= OID
-TypeDotation        ::= OID
-TypePanne           ::= OID
-TypePion            ::= OID
-TypeAutomate        ::= OID
-TypePopulation      ::= OID
-Pourcentage         ::= INTEGER(0..100)
-PourcentageLibre    ::= INTEGER(0..max-uint32)
-Hauteur             ::= INTEGER(0..max-uint32)
-Altitude            ::= INTEGER(0..max-uint32)
-Vitesse             ::= INTEGER(0..max-uint32)
-Angle               ::= INTEGER(0..360)
-Direction           ::= INTEGER(0..<360)
-GDH                 ::= SEQUENCE 
+OID                     ::= INTEGER (0..max-uint32)
+ListOID                 ::= SEQUENCE OF OID
+TirPion                 ::= OID
+TirPopulation           ::= OID
+Agent                   ::= OID
+Automate                ::= OID
+Population              ::= OID
+KnowledgeAgent          ::= OID
+KnowledgeObject         ::= OID
+KnowledgePopulation     ::= OID
+ListAutomate            ::= SEQUENCE OF Automate 
+ListAgent               ::= SEQUENCE OF Agent
+ListKnowledgeAgent      ::= SEQUENCE OF KnowledgeAgent
+ListKnowledgeObject     ::= SEQUENCE OF KnowledgeObject
+TypeEquipement          ::= OID
+TypeDotation            ::= OID
+TypePanne               ::= OID
+TypePion                ::= OID
+TypeAutomate            ::= OID
+TypePopulation          ::= OID
+Pourcentage             ::= INTEGER(0..100)
+PourcentageLibre        ::= INTEGER(0..max-uint32)
+Hauteur                 ::= INTEGER(0..max-uint32)
+Altitude                ::= INTEGER(0..max-uint32)
+Vitesse                 ::= INTEGER(0..max-uint32)
+Angle                   ::= INTEGER(0..360)
+Direction               ::= INTEGER(0..<360)
+GDH                     ::= SEQUENCE 
 {
     datation        INTEGER (0..max-uint32),
     qualificatif    EnumGDH_Qualificatif 

@@ -205,7 +205,13 @@ IMPORTS Mission-Pion-Test-MoveTo,
         Mission-Pion-MILICE-PrendreEtTenir,
         Mission-Pion-MILICE-DetruireEmbuscade,
         Mission-Pion-JOINT-MARINE-Transporter,
-        Mission-Pion-JOINT-AIR-EffectuerRaid FROM ScipioPionMission_Misc
+        Mission-Pion-JOINT-AIR-EffectuerRaid,
+        Mission-Pion-ASY-SInfiltrer,
+        Mission-Pion-ASY-CommettreAttentatContrePopulation,
+        Mission-Pion-ASY-CommettreAttentatContreInstallation,
+        Mission-Pion-ASY-CommettreAttentatContreForcesArmees,
+        Mission-Pion-ASY-CommettreExactionsSurPopulationDansZone,
+        Mission-Pion-ASY-Renseigner FROM ScipioPionMission_Misc
         
 IMPORTS Mission-Pion-NBC-AnimerUnPlotDeDecontamination,
         Mission-Pion-NBC-ReconnaitreItineraire,
@@ -434,7 +440,13 @@ Mission-Pion ::= CHOICE
     mission-pion-rens-roim-mettre-en-oeuvre                             Mission-Pion-RENS-ROIM-MettreEnOeuvre,     
     mission-pion-rens-roim-sdti-renseigner-sur                          Mission-Pion-RENS-ROIM-SDTI-RenseignerSur,
     mission-pion-rens-roim-cl289-renseigner-sur                         Mission-Pion-RENS-ROIM-CL289-RenseignerSur,
-    mission-pion-trans-etablir-gerer-liaison                            Mission-Pion-TRANS-EtablirGererLiaison
+    mission-pion-trans-etablir-gerer-liaison                            Mission-Pion-TRANS-EtablirGererLiaison,
+    mission-pion-asy-sinfiltrer                                         Mission-Pion-ASY-SInfiltrer,
+    mission-pion-asy-commettre-attentatContrePopulation                 Mission-Pion-ASY-CommettreAttentatContrePopulation,
+    mission-pion-asy-commettre-attentatContreForcesArmees               Mission-Pion-ASY-CommettreAttentatContreForcesArmees,
+    mission-pion-asy-commettre-attentatContreInstallation               Mission-Pion-ASY-CommettreAttentatContreInstallation,
+    mission-pion-asy-commettre-exactions-sur-population-dans-zone       Mission-Pion-ASY-CommettreExactionsSurPopulationDansZone,
+    mission-pion-asy-renseigner                                         Mission-Pion-ASY-Renseigner
 }
 
 MsgPionOrder ::= SEQUENCE

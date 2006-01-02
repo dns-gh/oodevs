@@ -2499,6 +2499,30 @@
         <source>Population CommettreExactions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pion ASY SInfiltrer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreExactionsSurPopulationDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY Renseigner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreAttentatContrePopulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreAttentatContreForcesArmees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY CommettreAttentatContreInstallation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -5156,6 +5180,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>ecoute radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ASY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ASY</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -288,7 +288,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_agression_de_population : strMsg << "agression de population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_de_population ); break;
         case T_MsgCR_cr_cr_agression_par_population : strMsg << "agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_par_population ); break;
         case T_MsgCR_cr_cr_riposte_contre_agression_par_population : strMsg << "riposte contre agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_agression_par_population ); break;
-        case T_MsgCR_cr_cr_attaque_installation : strMsg << "attaque installation" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_attaque_installation ); break;
+        case T_MsgCR_cr_cr_attaque_installation : strMsg << "attaque installation"; break;
         case T_MsgCR_cr_cr_en_stationnement : strMsg << "en stationnement"; break;
         case T_MsgCR_cr_cr_execution_attentat : strMsg << "execution attentat"; break;
 

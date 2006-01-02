@@ -77,7 +77,8 @@ void MIL_AutomateType::Initialize( MIL_InputArchive& archive )
     automateTypeAllocators_[ "Automate JOINT"                  ] = &MIL_AutomateType       ::Create; 
     automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create; 
     automateTypeAllocators_[ "Automate REFUGIE"                ] = &MIL_AutomateTypeREFUGIE::Create; 
-    automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create; 
+    automateTypeAllocators_[ "Automate MILICE"                 ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate ASY"                    ] = &MIL_AutomateType       ::Create;
     
     std::set< uint > ids_;
     archive.BeginList( "Automates" );

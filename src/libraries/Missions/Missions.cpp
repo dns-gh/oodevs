@@ -346,6 +346,12 @@
 #include "Pion\MIL_PionMission_MILICE_DetruireEmbuscade.cpp"
 #include "Pion\MIL_PionMission_JOINT_MARINE_Transporter.cpp"
 #include "Pion\MIL_PionMission_JOINT_AIR_EffectuerRaid.cpp"
+#include "Pion\MIL_PionMission_ASY_SInfiltrer.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreAttentatContrePopulation.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreAttentatContreForcesArmees.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreAttentatContreInstallation.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone.cpp"
+#include "Pion\MIL_PionMission_ASY_Renseigner.cpp"
 #include "Pion\MIL_PionMission_NBC_AnimerUnPlotDeDecontamination.cpp"
 #include "Pion\MIL_PionMission_NBC_ReconnaitreItineraire.cpp"
 #include "Pion\MIL_PionMission_NBC_ReconnaitreZone.cpp"
@@ -781,6 +787,12 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_DetruireEmbuscade>( "Pion MILICE DetruireEmbuscade", eMission_Pion_MILICE_DetruireEmbuscade, T_Mission_Pion_mission_pion_milice_detruire_embuscade, "T_Mission_Pion_MILICE_DetruireEmbuscade", "MIS_Pion_MILICE_DetruireEmbuscade");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_JOINT_MARINE_Transporter>( "Pion JOINT MARINE Transporter", eMission_Pion_JOINT_MARINE_Transporter, T_Mission_Pion_mission_pion_joint_marine_transporter, "T_Mission_Pion_JOINT_MARINE_Transporter", "MIS_Pion_JOINT_MARINE_Transporter");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_JOINT_AIR_EffectuerRaid>( "Pion JOINT AIR EffectuerRaid", eMission_Pion_JOINT_AIR_EffectuerRaid, T_Mission_Pion_mission_pion_joint_air_effectuer_raid, "T_Mission_Pion_JOINT_AIR_EffectuerRaid", "MIS_Pion_JOINT_AIR_EffectuerRaid");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_SInfiltrer>( "Pion ASY SInfiltrer", eMission_Pion_ASY_SInfiltrer, T_Mission_Pion_mission_pion_asy_sinfiltrer, "T_Mission_Pion_ASY_SInfiltrer", "MIS_Pion_ASY_SInfiltrer");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContrePopulation>( "Pion ASY CommettreAttentatContrePopulation", eMission_Pion_ASY_CommettreAttentatContrePopulation, T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation, "T_Mission_Pion_ASY_CommettreAttentatContrePopulation", "MIS_Pion_ASY_CommettreAttentatContrePopulation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContreForcesArmees>( "Pion ASY CommettreAttentatContreForcesArmees", eMission_Pion_ASY_CommettreAttentatContreForcesArmees, T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees, "T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees", "MIS_Pion_ASY_CommettreAttentatContreForcesArmees");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContreInstallation>( "Pion ASY CommettreAttentatContreInstallation", eMission_Pion_ASY_CommettreAttentatContreInstallation, T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation, "T_Mission_Pion_ASY_CommettreAttentatContreInstallation", "MIS_Pion_ASY_CommettreAttentatContreInstallation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone>( "Pion ASY CommettreExactionsSurPopulationDansZone", eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone, T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone, "T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone", "MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_Renseigner>( "Pion ASY Renseigner", eMission_Pion_ASY_Renseigner, T_Mission_Pion_mission_pion_asy_renseigner, "T_Mission_Pion_ASY_Renseigner", "MIS_Pion_ASY_Renseigner");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_AnimerUnPlotDeDecontamination>( "Pion NBC AnimerUnPlotDeDecontamination", eMission_Pion_NBC_AnimerUnPlotDeDecontamination, T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination, "T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination", "MIS_Pion_NBC_AnimerUnPlotDeDecontamination");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_ReconnaitreItineraire>( "Pion NBC ReconnaitreItineraire", eMission_Pion_NBC_ReconnaitreItineraire, T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire, "T_Mission_Pion_NBC_ReconnaitreItineraire", "MIS_Pion_NBC_ReconnaitreItineraire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_ReconnaitreZone>( "Pion NBC ReconnaitreZone", eMission_Pion_NBC_ReconnaitreZone, T_Mission_Pion_mission_pion_nbc_reconnaitre_zone, "T_Mission_Pion_NBC_ReconnaitreZone", "MIS_Pion_NBC_ReconnaitreZone");

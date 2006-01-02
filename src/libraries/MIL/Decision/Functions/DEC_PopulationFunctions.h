@@ -48,6 +48,7 @@ public:
     static void DamageObject                    ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     static void GetKnowledgeObjectDistance      ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     static void GetKnowledgeObjectClosestPoint  ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
+    static void IsEnemy                         ( DIA_Call_ABC& call, const MIL_Population& callerPopulation );
     //@}    
 };
 

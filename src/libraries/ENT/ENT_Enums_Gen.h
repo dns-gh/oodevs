@@ -709,9 +709,12 @@ enum E_LogMaintenanceTraitementEtat
 
 enum E_LogRavitaillementTraitementEtat
 {
-    eLogRavitaillementTraitementEtat_ConvoiConsitution,
+    eLogRavitaillementTraitementEtat_ConvoiEnAttenteCamions,
+    eLogRavitaillementTraitementEtat_ConvoiEnAttenteChefConvoi,
+    eLogRavitaillementTraitementEtat_ConvoiConstitution,
+    eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement,
     eLogRavitaillementTraitementEtat_ConvoiChargement,
-    eLogRavitaillementTraitementEtat_ConvoiDeplacementAller,
+    eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointDechargement,
     eLogRavitaillementTraitementEtat_ConvoiDechargement,
     eLogRavitaillementTraitementEtat_ConvoiDeplacementRetour,
     eLogRavitaillementTraitementEtat_Termine,
@@ -1285,6 +1288,12 @@ enum E_UnitMission
     eMission_Pion_MILICE_DetruireEmbuscade,
     eMission_Pion_JOINT_MARINE_Transporter,
     eMission_Pion_JOINT_AIR_EffectuerRaid,
+    eMission_Pion_ASY_SInfiltrer,
+    eMission_Pion_ASY_CommettreAttentatContrePopulation,
+    eMission_Pion_ASY_CommettreAttentatContreForcesArmees,
+    eMission_Pion_ASY_CommettreAttentatContreInstallation,
+    eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone,
+    eMission_Pion_ASY_Renseigner,
     eMission_Pion_NBC_AnimerUnPlotDeDecontamination,
     eMission_Pion_NBC_ReconnaitreItineraire,
     eMission_Pion_NBC_ReconnaitreZone,
