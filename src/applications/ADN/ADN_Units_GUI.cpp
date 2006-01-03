@@ -190,7 +190,7 @@ void ADN_Units_GUI::Build()
     // Dotations
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary Dotations" ), pGroup );
     vInfosConnectors[eHasTC1] = &pDotationsGroup->GetConnector();
-    ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( true, pDotationsGroup );
+    ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, pDotationsGroup );
     vInfosConnectors[eContenancesTC1] = &pDotations->GetConnector();
 
 

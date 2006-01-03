@@ -586,6 +586,9 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     }
 
     bTC1_ = contenancesTC1_.ReadArchive( "ContenanceTC1", input, true );
+    // $$$$ SBO 2006-01-03: Hack to reset TC1 normalized consumptions...
+    for( ADN_Composantes_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
+        (*it)->rNormalizedConsumption_ = 0.;
     bStock_ = stock_.ReadArchive( "Stocks", input, true );
 
     input.Section( "TempsMiseEnPosture" );
