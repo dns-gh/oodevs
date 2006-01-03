@@ -28,6 +28,7 @@ QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[]
 DECLARE_ICON( fileopen );
 DECLARE_ICON( filesave );
 DECLARE_ICON( filenew  );
+DECLARE_ICON( testdata );
 
 
 

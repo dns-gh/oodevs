@@ -18,6 +18,7 @@
 #include "ADN_Callback.h"
 
 class ADN_Workspace;
+class ADN_Config;
 class ADN_Table;
 
 class QWidget;
@@ -68,6 +69,8 @@ private slots:
     void SaveAsProject();
     void ExportHtml();
     void CloseProject();
+    void TestData();
+    void ConfigureDataTest();
 
     bool SelectOpenMode();
 
@@ -91,11 +94,13 @@ private:
     const QString strAdminPassword_;
 
     ADN_Workspace&          workspace_;
+    ADN_Config&             config_;
     
     QTabWidget*             pTab_;
 
     QPopupMenu*             pProjectMenu_;
     QPopupMenu*             pCoheranceTablesMenu_;
+    QPopupMenu*             pConfigurationMenu_;
     QPopupMenu*             pHelpMenu_;
 
     QAction*                pActionSave_;

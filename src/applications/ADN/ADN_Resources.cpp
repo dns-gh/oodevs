@@ -134,6 +134,7 @@ static StaticInitImages_example staticImages;
 #include "res/fileopen.xpm"
 #include "res/filesave.xpm"
 #include "res/filenew.xpm"
+#include "res/testdata.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

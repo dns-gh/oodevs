@@ -14,6 +14,7 @@
 #include "moc_ADN_MainWindow.cpp"
 
 #include "ADN_Workspace.h"
+#include "ADN_Config.h"
 #include "ADN_Resources.h"
 #include "ADN_Tools.h"
 #include "ADN_Table.h"
@@ -25,6 +26,7 @@
 #include "ADN_Xml_Exception.h"
 
 #include "ADN_OpenMode_Dialog.h"
+#include "ADN_RunProcessDialog.h"
 
 #include "ADN_Project_Data.h"
 
@@ -58,6 +60,7 @@
 ADN_MainWindow::ADN_MainWindow()
 : QMainWindow       ()
 , workspace_        ( ADN_Workspace::GetWorkspace() )
+, config_           ( *new ADN_Config() )
 , rIdSaveAs_        ( 0 )
 , rIdClose_         ( 0 )
 , nIdChangeOpenMode_( 0 )
@@ -107,7 +110,10 @@ void ADN_MainWindow::Build()
 
     QAction* pProjectSaveAction = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), CTRL+Key_S, this, "save" );
     connect( pProjectSaveAction, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
-    pActionSave_=pProjectSaveAction;
+    pActionSave_ = pProjectSaveAction;
+
+    QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
+    connect( pProjectTestDataAction, SIGNAL( activated() ), this, SLOT( TestData() ) );
 
 // $$$ UNDO DISABLED
 //    QAction* pUndoAction = QtUndoManager::manager()->createUndoAction( this );
@@ -117,9 +123,11 @@ void ADN_MainWindow::Build()
 
     // Project toolbar
     QToolBar * pToolBar = new QToolBar( this );
-    pProjectNewAction->addTo( pToolBar );
-    pProjectLoadAction->addTo( pToolBar );
-    pProjectSaveAction->addTo( pToolBar );
+    pProjectNewAction     ->addTo( pToolBar );
+    pProjectLoadAction    ->addTo( pToolBar );
+    pProjectSaveAction    ->addTo( pToolBar );
+    pProjectTestDataAction->addTo( pToolBar );
+
 // $$$ UNDO DISABLED
 //    pToolBar->addSeparator();
 //    pUndoAction->addTo( pToolBar );
@@ -140,6 +148,11 @@ void ADN_MainWindow::Build()
     // Coherance tables menu
     pCoheranceTablesMenu_ = new QPopupMenu( this );
     menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
+
+    // Configuration menu
+    pConfigurationMenu_ = new QPopupMenu( this );
+    menuBar()->insertItem( tr( "Confi&guration" ), pConfigurationMenu_ );
+    pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
 
     // Help menu
     pHelpMenu_ = new QPopupMenu( this );
@@ -382,7 +395,48 @@ void ADN_MainWindow::CloseProject()
     pTab_->hide();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::TestData
+// Created: SBO 2006-01-02
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::TestData()
+{
+    if( bNeedSave_ )
+    {
+        int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "Project will be saved in order to execute data test." ), QMessageBox::Ok, QMessageBox::Cancel );
+        if( nResult == QMessageBox::Cancel )
+            return;
+        SaveProject();
+    }
 
+    try
+    {
+        std::string strCommandLine = config_.GetSimPath() + " " + config_.GetSimArguments();
+        if( workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull().empty() )
+        {
+            int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "No project loaded, continue anyway?" ), QMessageBox::Yes, QMessageBox::No );
+            if( nResult == QMessageBox::No )
+                return;
+        }
+        else
+            strCommandLine += " -conffile \"" + workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull() + "\"";
+        
+        ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, strCommandLine, tr( "Running data check" ) );
+    }
+    catch( const std::exception& e )
+    {
+        QMessageBox::critical( this, tr( "Data test" ), tr( "Data test failed" ) + "\n" + e.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::ConfigureDataTest
+// Created: SBO 2006-01-02
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::ConfigureDataTest()
+{
+    config_.Configure();
+}
 
 extern const char* szVersionNumber;
 
