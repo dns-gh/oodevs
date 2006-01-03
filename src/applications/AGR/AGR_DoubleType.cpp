@@ -43,12 +43,3 @@ AGR_DoubleType::~AGR_DoubleType()
     //NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: AGR_DoubleType::MosInitialisationCode
-// Created: AGE 2004-09-14
-// -----------------------------------------------------------------------------
-std::string AGR_DoubleType::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    MOS_ValueList* pParameters_" +  member.ASNName() + "= &CreateValueList( \"\", 1, 2 );\n"
-         + "    pParameters_" + member.ASNName() + "->CreateValue( asnMission." + member.ASNName() + ", \"" + member.ASNName() + "\", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );\n";
-}

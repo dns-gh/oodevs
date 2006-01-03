@@ -238,15 +238,6 @@ std::string AGR_Member::MissionInitialisationCode() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Member::MosInitialisationCode
-// Created: AGE 2004-09-13
-// -----------------------------------------------------------------------------
-std::string AGR_Member::MosInitialisationCode() const
-{
-    return pType_->MosInitialisationCode( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_Member::Mos2InitialisationCode
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------

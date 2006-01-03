@@ -5,7 +5,6 @@
 #include "AGR_MilProjectGenerator.h"
 #include "AGR_Mos2Generator.h"
 #include "AGR_HalGenerator.h"
-#include "AGR_MosGenerator.h"
 #include "AGR_EnumGenerator.h"
 #include "AGR_Adn2Generator.h"
 #include "AGR_FichesMissionsGenerator.h"

@@ -43,16 +43,6 @@ AGR_PolygonType::~AGR_PolygonType()
     //NOTHING
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: AGR_PolygonType::MosInitialisationCode
-// Created: AGE 2004-09-14
-// -----------------------------------------------------------------------------
-std::string AGR_PolygonType::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    CreateLocation( asnMission." + member.ASNName()+ ", \"" + member.ASNName() + "\" );\n";
-}
-
 // -----------------------------------------------------------------------------
 // Name: AGR_PolygonType::Mos2InitialisationCode
 // Created: AGE 2004-09-15

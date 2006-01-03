@@ -43,12 +43,3 @@ AGR_BooleanType::~AGR_BooleanType()
     //NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: AGR_BooleanType::MosInitialisationCode
-// Created: AGE 2004-09-14
-// -----------------------------------------------------------------------------
-std::string AGR_BooleanType::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    MOS_ValueList* pParameters_" +  member.ASNName() + "= &CreateValueList( \"\", 1, 2 );\n"
-         + "    pParameters_" + member.ASNName() + "->CreateValue( asnMission." + member.ASNName() + ", \"" + member.ASNName() + "\", MOSToolValueCheck | MOSToolValueModif );\n";
-}

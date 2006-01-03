@@ -142,15 +142,6 @@ std::string AGR_Type_ABC::MissionInitialisationCode( const AGR_Member& member ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Type_ABC::MosInitialisationCode
-// Created: AGE 2004-09-13
-// -----------------------------------------------------------------------------
-std::string AGR_Type_ABC::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    Create" + strFunctionSuffix_ + "( asnMission." + member.ASNName()+ ", \"" + member.ASNName() + "\" );\n";
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_Type_ABC::Mos2InitialisationCode
 // Created: AGE 2004-09-15
 // -----------------------------------------------------------------------------

@@ -46,9 +46,9 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_AgentType() );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListAutomate", "AutomateList", "", "T_ListeAutomates", "T_IdVector", true ) );
     typeList_.push_back( new AGR_AutomateType() );
-    typeList_.push_back( new AGR_BooleanType() );
+    typeList_.push_back( new AGR_Type_ABC( "xsd:boolean", "Bool", "", "bool", "bool", false ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Direction", "Direction", "MT_Vector2D", "T_Direction", "T_Direction", false ) );
-    typeList_.push_back( new AGR_DoubleType() );
+    typeList_.push_back( new AGR_Type_ABC( "xsd:double", "Numeric", "", "float", "double", false ) );
     typeList_.push_back( new AGR_GDHType() );
     typeList_.push_back( new AGR_Type_ABC( "ListMissionGenObject", "GenObjectList", "", "T_ListeGenObjets", "T_GenObjectVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioAutomateMission_Genie:MissionGenObject", "GenObject", "", "T_GenObjet", "GenObject", true ) );

@@ -43,7 +43,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string MosInitialisationCode    ( const AGR_Member& member ) const;
     virtual std::string Mos2InitialisationCode   ( const AGR_Member& member ) const;
     //@}
 

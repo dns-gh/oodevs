@@ -58,16 +58,6 @@ AGR_IntegerType::~AGR_IntegerType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_IntegerType::MosInitialisationCode
-// Created: AGE 2004-09-14
-// -----------------------------------------------------------------------------
-std::string AGR_IntegerType::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    MOS_ValueList* pParameters_" +  member.ASNName() + "= &CreateValueList( \"\", 1, 2 );\n"
-         + "    pParameters_" + member.ASNName() + "->CreateValue( asnMission." + member.ASNName() + ", \"" + member.ASNName() + "\", MOSToolValueTitle | MOSToolValueText | MOSToolValueSlide | MOSToolValueModif );\n";
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_IntegerType::TesterSerializationCode
 // Created: AGE 2005-08-23
 // -----------------------------------------------------------------------------

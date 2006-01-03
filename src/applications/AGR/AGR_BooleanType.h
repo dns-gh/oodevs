@@ -41,11 +41,6 @@ public:
     virtual ~AGR_BooleanType();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual std::string MosInitialisationCode    ( const AGR_Member& member ) const;
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

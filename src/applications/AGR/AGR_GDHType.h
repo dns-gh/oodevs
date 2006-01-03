@@ -44,7 +44,6 @@ public:
     //! @name Operations
     //@{
     virtual std::string ASNInitialisationCode    ( const AGR_Member& member ) const;
-    virtual std::string MosInitialisationCode    ( const AGR_Member& member ) const;
     //@}
 
 private:

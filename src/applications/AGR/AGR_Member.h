@@ -58,7 +58,6 @@ public:
     std::string DIAParametersInitialisationCode() const;
     std::string MemberInitialisationCode () const;
     std::string MissionInitialisationCode() const;
-    std::string MosInitialisationCode    () const;
     std::string Mos2InitialisationCode   () const;
 
     std::string ResetCode                () const;

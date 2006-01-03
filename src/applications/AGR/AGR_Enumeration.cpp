@@ -92,23 +92,6 @@ std::string AGR_Enumeration::HumanName( const std::string& strValue ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Enumeration::MosInitialisationCode
-// Created: AGE 2004-09-14
-// -----------------------------------------------------------------------------
-std::string AGR_Enumeration::MosInitialisationCode( const AGR_Member& member ) const
-{
-    std::string strResult = "    MOS_ValueButtonList< ASN1T_" + strName_ + " >* pSelector_" + member.ASNName() + " = &CreateVarList( asnMission." + member.ASNName() + ",\"" + member.ASNName() + "\", 2, 3, false );\n";
-    for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues )
-    {
-        strResult += "    pSelector_" + member.ASNName() + "->CreateValue( \"" + *itValues + "\", " + strName_ + "::" + *itValues;
-        if( itValues == valueList_.begin() )
-            strResult += ", true";
-        strResult += " );\n";
-    }
-    return strResult;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_Enumeration::Mos2InitialisationCode
 // Created: AGE 2004-09-15
 // -----------------------------------------------------------------------------

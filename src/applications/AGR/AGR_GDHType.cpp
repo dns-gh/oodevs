@@ -60,13 +60,3 @@ std::string AGR_GDHType::ASNInitialisationCode( const AGR_Member& member ) const
     strResult += " )\n        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
     return strResult;
 }
-
-// -----------------------------------------------------------------------------
-// Name: AGR_GDHType::MosInitialisationCode
-// Created: AGE 2004-09-14
-// -----------------------------------------------------------------------------
-std::string AGR_GDHType::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    CreateGDH( asnMission." + member.ASNName()+ ", \"" + member.ASNName() + "\""
-         + ", MOSToolValueTitle | MOSToolValueTime | MOSToolValueSlide | MOSToolValueModif );\n";
-}

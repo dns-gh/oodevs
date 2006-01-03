@@ -60,12 +60,3 @@ std::string AGR_AutomateType::ASNInitialisationCode( const AGR_Member& member ) 
     strResult += " )\n        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
     return strResult;
 }
-
-// -----------------------------------------------------------------------------
-// Name: AGR_AutomateType::MosInitialisationCode
-// Created: AGE 2004-10-05
-// -----------------------------------------------------------------------------
-std::string AGR_AutomateType::MosInitialisationCode( const AGR_Member& member ) const
-{
-    return "    CreateAgent( asnMission." + member.ASNName()+ ", \"" + member.ASNName() + "\" );\n";
-}

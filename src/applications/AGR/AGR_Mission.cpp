@@ -409,61 +409,8 @@ std::string AGR_Mission::GenerateDiaDefinition() const
     return strResult;
 }
 
-
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Mission::GenerateMosImplementation
-/** @return
-*/
-// Created: AGN 2004-04-26
-// -----------------------------------------------------------------------------
-std::string AGR_Mission::GenerateMosImplementation() const
-{
-    std::string strResult;
-
-    // model : void MOS_MissionPion::CreateMission_Test_DestroyObject()
-    strResult += "void ";
-    if( eMissionType_ == eMissionAutomate )
-        strResult += "MOS_MissionAutomate::CreateMission_" + BaseName() + "()\n";
-    else if( eMissionType_ == eMissionPopulation )
-        strResult += "MOS_MissionPopulation::CreateMission_" + BaseName() + "()\n";
-    else
-        strResult += "MOS_MissionPion::CreateMission_" + BaseName() + "()\n";
-
-    strResult += "{\n";
-
-    // model : ASN1T_Mission_Pion_Test_DestroyObject& asnMission = *new ASN1T_Mission_Pion_Test_DestroyObject();
-    strResult += "    ASN1T_" + Name() + "& asnMission = *new ASN1T_" + Name() + "();\n";
-
-    // model : pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_destroy_object;
-    strResult += "    pASNMsgOrder_->GetAsnMsg().mission.t = ";
-    if( eMissionType_ == eMissionAutomate )
-        strResult += "T_Mission_Automate_" + LowName() + ";\n";
-    else if( eMissionType_ == eMissionPopulation )
-        strResult += "T_Mission_Population_" + LowName() + ";\n";
-    else
-        strResult += "T_Mission_Pion_" + LowName() + ";\n";
-
-    // model : pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_test_destroy_object = &asnMission;
-    strResult += "    pASNMsgOrder_->GetAsnMsg().mission.u." + LowName() + " = &asnMission;\n";
-
-    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
-    {
-        assert( *it );
-        const AGR_Member& member = **it;
-        strResult += member.MosInitialisationCode();
-    }
-
-    strResult += "}\n";
-
-    return strResult;
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::GenerateMos2Implementation
-/** @return
-*/
 // Created: APE 2004-04-28
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::GenerateMos2Implementation() const
