@@ -22,7 +22,6 @@
 #include "AGR_AgentType.h"
 #include "AGR_AutomateType.h"
 #include "AGR_BooleanType.h"
-#include "AGR_DoubleType.h"
 #include "AGR_GDHType.h"
 #include "AGR_IntegerType.h"
 #include "AGR_KnowledgeAgentListType.h"
