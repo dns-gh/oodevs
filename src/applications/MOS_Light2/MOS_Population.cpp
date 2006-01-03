@@ -23,7 +23,7 @@
 #include "MOS_PopulationFlow.h"
 #include "MOS_PopulationConcentration.h"
 
-MIL_AgentID MOS_Population::nMaxId_ = 7000000;
+MIL_AgentID MOS_Population::nMaxId_ = 200;
 
 // -----------------------------------------------------------------------------
 // Name: MOS_Population constructor

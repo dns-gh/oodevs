@@ -84,6 +84,7 @@ MOS_PopulationCreationPanel::MOS_PopulationCreationPanel( QTabWidget* pParent )
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
     connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const MOS_ActionContext& ) ), this,   SLOT( FillRemotePopupMenu( QPopupMenu&, const MOS_ActionContext& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this,   SLOT( OnConnexionStatusChanged( bool ) ) );
+    connect( &MOS_MainWindow::GetMainWindow(), SIGNAL( ElementSelected( MOS_SelectedElement& ) ), this,   SLOT( SetSelectedElement( MOS_SelectedElement& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,14 +129,6 @@ void MOS_PopulationCreationPanel::OnOk()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationCreationPanel::SetSelectedElement
-// Created: HME 2005-10-17
-// -----------------------------------------------------------------------------
-void MOS_PopulationCreationPanel::SetSelectedElement( MOS_SelectedElement& /*selectedElement*/ )
-{
-}
-
-// -----------------------------------------------------------------------------
 // Name: MOS_PopulationCreationPanel::OnTeamCreated
 // Created: HME 2005-10-17
 // -----------------------------------------------------------------------------
@@ -172,9 +165,10 @@ void MOS_PopulationCreationPanel::OnConnexionStatusChanged( bool bConnected )
 
 
 // -----------------------------------------------------------------------------
-// Name: MOS_PopulationCreationPanel::OnDeletePopulation
-// Created: HME 2005-10-17
+// Name: MOS_PopulationCreationPanel::SetSelectedElement
+// Created: HME 2006-01-03
 // -----------------------------------------------------------------------------
-void MOS_PopulationCreationPanel::OnDeletePopulation()
+void MOS_PopulationCreationPanel::SetSelectedElement( MOS_SelectedElement& selectedElement )
 {
+    selectedElement_ = selectedElement;
 }

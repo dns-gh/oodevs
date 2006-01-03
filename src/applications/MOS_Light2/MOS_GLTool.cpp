@@ -442,10 +442,13 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
     glLineWidth( 4 );
     glColor4d( MOS_COLOR_CONFLICT );
     for( MOS_AgentManager::IT_ConflictMap itC = manager.conflictMap_.begin(); itC != manager.conflictMap_.end(); ++itC )
-        if( (*itC).second.pDirectFireTarget_  )
-            DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->GetPos(), 300.0 ); // $$$$ AGE 2005-03-22:
-        else
-            DrawArc( (*itC).second.pOrigin_->GetPos(), (*itC).second.vIndirectFireTarget_, 300.0 * rClicksPerPix_ , true );
+        if( itC->second.pOrigin_ && (! MOS_App::GetApp().GetAgentManager().FindPopulation( itC->second.pOrigin_->GetID() ) ) )
+        {
+            if( (*itC).second.pDirectFireTarget_  )
+                DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->GetPos(), 300.0 ); // $$$$ AGE 2005-03-22:
+            else
+                DrawArc( (*itC).second.pOrigin_->GetPos(), (*itC).second.vIndirectFireTarget_, 300.0 * rClicksPerPix_ , true );
+        }
 
     //Draw the real time logistic actions
     if ( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRealTimeLog_ )
@@ -1811,7 +1814,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
                 {
                     const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
                     const QString strTitle = (*it)->GetStrippedTitle().c_str();
-                    toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 150.0 , 150.0 , 150.0, 1.0 , false );
+                    toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 220.0 , 220.0 , 220.0, 1.0 , false );
                 }
                 if ( i > 5 )
                     break;
@@ -1872,7 +1875,7 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
                 {
                     const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
                     const QString strTitle = (*it)->GetStrippedTitle().c_str();
-                    toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 150.0 , 150.0 , 150.0, 1.0 , false );
+                    toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 220.0 , 220.0 , 220.0, 1.0 , false );
                 }
                 if ( i > 5 )
                     break;

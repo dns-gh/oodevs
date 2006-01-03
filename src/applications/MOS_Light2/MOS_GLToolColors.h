@@ -27,7 +27,7 @@
 #define MOS_COLOR_SEL_WEATHER_BLEND   0.6, 0.6, 0.85, 0.25
 #define MOS_COLOR_NEW_WEATHER_BLEND   0.7, 0.5, 0.75, 0.25
 
-#define MOS_COLOR_PATH          1.0, 1.0, 1.0, 1.0
+#define MOS_COLOR_PATH          1.0, 0.8, 0.0, 1.0
 #define MOS_COLOR_OLDPATH       0.5, 0.5, 0.5, 1.0
 
 #define MOS_COLOR_BLACK         0.0, 0.0, 0.0, 1.0

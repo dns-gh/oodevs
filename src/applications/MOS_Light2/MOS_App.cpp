@@ -1139,3 +1139,12 @@ uint MOS_App::GetTickDuration() const
 {
     return nTickDuration_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationDeleted
+// Created: HME 2006-01-03
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationDeleted( MOS_Population& population )
+{
+    emit PopulationDeleted( population );
+}

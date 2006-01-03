@@ -16,12 +16,12 @@
 
 #include "MOS_Types.h"
 #include "MOS_ASN_Types.h"
+#include "MOS_SelectedElement.h"
 
 class MOS_ParamLocation;
 class MOS_ActionContext;
 class QComboBox;
 class QSpinBox;
-class MOS_SelectedElement;
 class QPopupMenu;
 class QTabWidget;
 class MOS_ActionContext;
@@ -58,9 +58,11 @@ private slots:
     void OnTeamCreated           ( MOS_Team& team );
     void OnConnexionStatusChanged( bool bConnected );
     void OnTypePopulationCreated( MOS_TypePopulation& type );
-    void OnDeletePopulation();
 
 private:
+
+    MOS_SelectedElement selectedElement_;
+
     QTabWidget *                                pParent_;
     MT_ValuedComboBox< uint >*                  pTeamCombo_;
     QSpinBox*                                   pNbPersons_;

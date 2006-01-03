@@ -76,6 +76,7 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
     connect( &MOS_App::GetApp(), SIGNAL( ObjectDeleted( MOS_Object_ABC& ) ), this, SLOT( OnObjectDeleted( MOS_Object_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationDeleted( MOS_PopulationConcentration& ) ), this, SLOT( OnPopulationConcentrationDeleted( MOS_PopulationConcentration& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowDeleted( MOS_PopulationFlow& ) ), this, SLOT( OnPopulationFlowDeleted( MOS_PopulationFlow& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationDeleted( MOS_Population& ) ), this, SLOT( OnPopulationDeleted( MOS_Population& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TacticalLineDeleted( MOS_TacticalLine_ABC& ) ), this, SLOT( OnTacticalLineDeleted( MOS_TacticalLine_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( AgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ), this, SLOT( OnAgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ), this, SLOT( OnObjectKnowledgeDeleted( MOS_Team&, MOS_ObjectKnowledge& ) ) );
@@ -394,6 +395,18 @@ void MOS_DefaultMapEventHandler::OnObjectKnowledgeDeleted( MOS_Team& /*team*/, M
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_DefaultMapEventHandler::OnPopulationDeleted
+// Created: HME 2006-01-03
+// -----------------------------------------------------------------------------
+void MOS_DefaultMapEventHandler::OnPopulationDeleted( MOS_Population& pop )
+{
+    if( selectedElement_.pPopulation_ == &pop )
+    {
+        selectedElement_ = MOS_SelectedElement();
+        emit ElementSelected( selectedElement_ );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MOS_DefaultMapEventHandler::SelectElementAtPos

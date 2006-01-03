@@ -226,3 +226,47 @@ void MOS_PopulationListView::OnTeamChanged()
     for( MOS_AgentManager::CIT_PopulationMap it = popMap.begin(); it != popMap.end(); ++it )
         AddPopulation( *(it->second) );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationListView::keyPressEvent
+// Created: HME 2006-01-03
+// -----------------------------------------------------------------------------
+void MOS_PopulationListView::keyPressEvent( QKeyEvent* pEvent )
+{
+    if( pEvent->key() == Qt::Key_Delete || pEvent->key() == Qt::Key_Backspace )
+    {
+        MOS_Population* pPopulation = this->ToPopulation( this->selectedItem() );
+        assert( pPopulation );
+        if( MOS_App::GetApp().IsODBEdition() )
+        {
+            MOS_App::GetApp().NotifyPopulationDeleted( *pPopulation );
+            RemovePopulation( *pPopulation );
+            MOS_App::GetApp().GetAgentManager().RemovePopulation( *pPopulation );
+        }
+            
+        pEvent->accept();
+        return;
+    }
+
+    QListView::keyPressEvent( pEvent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_PopulationListView::RemovePopulation
+// Created: HME 2006-01-03
+// -----------------------------------------------------------------------------
+void MOS_PopulationListView::RemovePopulation( MOS_Population& population )
+{
+    QListViewItemIterator it( this );
+    while( it.current() )
+    {
+        MT_ValuedListViewItem< MOS_Population*, eAgent>* pCastItem = (MT_ValuedListViewItem< MOS_Population*, eAgent>*)(it.current());
+        if( pCastItem->GetValue() == &population )
+        {
+            delete it.current();
+            return;
+        }
+        ++it;
+    }
+}

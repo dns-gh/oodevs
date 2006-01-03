@@ -103,6 +103,7 @@ public:
 
 	void NotifyPopulationCreated( MOS_Population& population );
 	void NotifyPopulationUpdated( MOS_Population& population );
+    void NotifyPopulationDeleted( MOS_Population& population );
     void NotifyPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
     void NotifyPopulationFlowDeleted         ( MOS_PopulationFlow&          flow          );
 
@@ -200,6 +201,7 @@ signals:
 	
 	void PopulationCreated( MOS_Population& );
 	void PopulationUpdated( MOS_Population& );
+    void PopulationDeleted( MOS_Population& );
 
     void PopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
     void PopulationFlowDeleted         ( MOS_PopulationFlow& flow );

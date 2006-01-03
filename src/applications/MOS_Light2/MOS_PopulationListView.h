@@ -59,6 +59,8 @@ public slots:
 	void AddPopulation( MOS_Population& population );
     void SetSelectedElement( MOS_SelectedElement& selectedElement );
 
+private:
+    void keyPressEvent( QKeyEvent* pEvent );
 
 private slots:
 	void OnRequestPopup( QListViewItem* pItem, const QPoint& pos, int nCol );
@@ -68,8 +70,9 @@ private slots:
     void OnTeamChanged();
 
 private:
-    MOS_Team*  ToTeam ( QListViewItem* pItem );
+    MOS_Team*       ToTeam ( QListViewItem* pItem );
 	MOS_Population* ToPopulation( QListViewItem* pItem );
+    void            RemovePopulation( MOS_Population& population );
 
 private:
     QPopupMenu* pPopupMenu_;

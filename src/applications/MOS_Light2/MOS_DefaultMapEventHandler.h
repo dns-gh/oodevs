@@ -74,6 +74,7 @@ public slots:
     void OnObjectDeleted( MOS_Object_ABC& object );
     void OnPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
     void OnPopulationFlowDeleted( MOS_PopulationFlow& flow );
+    void OnPopulationDeleted( MOS_Population& pop );
     void OnTacticalLineDeleted( MOS_TacticalLine_ABC& line );
     void OnAgentKnowledgeDeleted( MOS_Gtia& gtia, MOS_AgentKnowledge& knowledge );
     void OnObjectKnowledgeDeleted( MOS_Team& team, MOS_ObjectKnowledge& knowledge );
