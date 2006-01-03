@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "Tester_pch.h"
 #include "Testable_Entity.h"
 #include "Automat.h"
@@ -111,6 +107,17 @@ T_IdVector& Testable_Entity::GetTestParam_AutomateList() const
 {
     // get up to 5 automats ids from same knowledge group != GetId()
     return workspace_.GetEntityManager().GetTestParam_AutomateList( 5, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Testable_Entity::GetTestParam_PopulationKnowledge
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+T_EntityId Testable_Entity::GetTestParam_PopulationKnowledge() const
+{
+    if( !GetAutomat() )
+        throw std::runtime_error( "Trying to get \"population knowledge\" for an entity with no Automat/Knowledge group" );
+    return GetAutomat()->GetKnowledgeGroup().GetTestParam_KnowledgePopulation();
 }
 
 // -----------------------------------------------------------------------------

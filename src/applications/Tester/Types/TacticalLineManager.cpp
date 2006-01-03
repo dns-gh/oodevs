@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "Tester_pch.h"
 #include "TacticalLineManager.h"
 #include "TacticalLines/TacticalLine_ABC.h"

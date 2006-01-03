@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "Tester_pch.h"
 #include "AutomatModel.h"
 #include "Actions/Missions/Mission_Automat_Type.h"

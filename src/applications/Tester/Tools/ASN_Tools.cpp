@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "Tester_pch.h"
 #include "ASN_Tools.h"
 #include "Tools/Position.h"
@@ -122,6 +118,24 @@ void ASN_Tools::CopyAutomateList( const T_IdVector& ids, ASN1T_ListAutomate& asn
     uint i = 0;
     for( CIT_IdVector it = ids.begin(); it != ids.end(); ++it )
         CopyAutomate( *it, asn.elem[ i++ ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPopulation
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPopulation( uint nIdValue, ASN1T_Population& asn )
+{
+    asn = nIdValue;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ASN_Tools::CopyPopulationKnowledge
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void ASN_Tools::CopyPopulationKnowledge( uint nIdPopu, ASN1T_KnowledgePopulation& asn )
+{
+    asn = nIdPopu;
 }
 
 // -----------------------------------------------------------------------------

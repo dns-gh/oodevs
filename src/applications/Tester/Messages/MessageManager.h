@@ -163,6 +163,11 @@ private:
     void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
     void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
 
+    // population
+    void OnReceiveMsgPopulationKnowledgeCreation   ( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgPopulationKnowledgeUpdate     ( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
+
     // object
     void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
     void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );

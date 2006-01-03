@@ -19,6 +19,7 @@
 #include "Tester_pch.h"
 #include "KnowledgeGroup.h"
 #include "Knowledges/PawnKnowledge.h"
+#include "Knowledges/PopulationKnowledge.h"
 #include "Team.h"
 #include "Pawn.h"
 
@@ -83,6 +84,37 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKn
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+{
+    if( knownPopulations_.find( asnMsg.oid_connaissance ) != knownPopulations_.end() )
+        return;
+    PopulationKnowledge* pKnownPopulation = new PopulationKnowledge( entityManager_, asnMsg, *this );
+    bool bOut = knownPopulations_.insert( std::make_pair( pKnownPopulation->GetId(), pKnownPopulation ) ).second;
+    assert( bOut );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& /*asnMsg*/ )
+{
+    //$$$ TODO
+}
+    
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+{
+    knownPopulations_.erase( asnMsg.oid_connaissance );
+}
+
+// -----------------------------------------------------------------------------
 // TEST PARAMETERS
 // -----------------------------------------------------------------------------
 
@@ -113,5 +145,16 @@ T_EntityId KnowledgeGroup::GetTestParam_Knowledge() const
     for( CIT_PawnKnowledgeMap it = knownPawns_.begin(); it != knownPawns_.end(); ++it )
         if( it->second->GetRealPawn() && it->second->GetRealPawn()->GetAutomat()->GetTeam().IsAnEnemy( *pTeam_ ) == eTristate_True )
             return it->second->GetId();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::GetTestParam_KnowledgePopulation
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+T_EntityId KnowledgeGroup::GetTestParam_KnowledgePopulation() const
+{
+    if( knownPopulations_.size() > 0 )
+        return knownPopulations_.begin()->first;
     return 0;
 }

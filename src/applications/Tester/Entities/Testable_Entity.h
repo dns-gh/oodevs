@@ -77,6 +77,7 @@ public:
     virtual T_IdVector&        GetTestParam_AgentKnowledgeList () const;
     virtual T_EntityId         GetTestParam_Automate           () const;
     virtual T_IdVector&        GetTestParam_AutomateList       () const;
+    virtual T_EntityId         GetTestParam_PopulationKnowledge() const;
     virtual T_EntityId         GetTestParam_ObjectKnowledge    () const;
     virtual T_IdVector&        GetTestParam_ObjectKnowledgeList() const;
     virtual GenObject&         GetTestParam_GenObject          () const;

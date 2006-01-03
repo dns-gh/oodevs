@@ -58,6 +58,8 @@ public:
     static void CopyAgentKnowledgeList ( const T_IdVector&        ids       , ASN1T_ListKnowledgeAgent&   asn );
     static void CopyAutomate           ( uint                     nIdValue  , ASN1T_Automate&             asn );
     static void CopyAutomateList       ( const T_IdVector&        ids       , ASN1T_ListAutomate&         asn );
+    static void CopyPopulation         ( uint                     nIdValue  , ASN1T_Population&           asn );
+    static void CopyPopulationKnowledge( uint                     nIdPopu   , ASN1T_KnowledgePopulation&  asn );
     static void CopyObjectKnowledge    ( uint                     nIdObject , ASN1T_KnowledgeObject&      asn );
     static void CopyObjectKnowledgeList( const T_IdVector&        ids       , ASN1T_ListKnowledgeObject&  asn );
     static void CopyGenObject          ( const GenObject&         genObject , ASN1T_MissionGenObject&     asn );

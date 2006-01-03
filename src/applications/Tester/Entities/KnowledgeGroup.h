@@ -27,6 +27,7 @@ namespace TEST
 {
     class Team;
     class PawnKnowledge;
+    class PopulationKnowledge;
 
 // =============================================================================
 /** @class  KnowledgeGroup
@@ -58,12 +59,17 @@ public:
     void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
     void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
     void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
+
+    void OnReceiveMsgPopulationKnowledgeCreation   ( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgPopulationKnowledgeUpdate     ( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
     //@}
 
     //! @name Test Parameters
     //@{
-    T_EntityId  GetTestParam_Knowledge () const;
-    T_IdVector& GetTestParam_Knowledges( uint nNbr ) const;
+    T_EntityId  GetTestParam_Knowledge          () const;
+    T_IdVector& GetTestParam_Knowledges         ( uint nNbr ) const;
+    T_EntityId  GetTestParam_KnowledgePopulation() const;
     //@}
 
 private:
@@ -77,16 +83,20 @@ private:
     //@{
     typedef std::map< T_EntityId, PawnKnowledge* > T_PawnKnowledgeMap;
     typedef T_PawnKnowledgeMap::const_iterator     CIT_PawnKnowledgeMap;
+
+    typedef std::map< T_EntityId, PopulationKnowledge* > T_PopulationKnowledgeMap;
+    typedef T_PopulationKnowledgeMap::const_iterator     CIT_PopulationKnowledgeMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_EntityId           nId_;
-    Team*                pTeam_;
-    T_PawnKnowledgeMap   knownPawns_;
+    T_EntityId               nId_;
+    Team*                    pTeam_;
+    T_PawnKnowledgeMap       knownPawns_;
+    T_PopulationKnowledgeMap knownPopulations_;
 
-    const EntityManager& entityManager_;
+    const EntityManager&     entityManager_;
     //@}
 };
 

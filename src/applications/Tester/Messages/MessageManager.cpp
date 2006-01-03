@@ -316,6 +316,10 @@ void MessageManager::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& inpu
         case T_MsgsSimMos_msg_unit_knowledge_update:         OnReceiveMsgUnitKnowledgeUpdate       ( *asnMsg.u.msg_unit_knowledge_update        ); break;
         case T_MsgsSimMos_msg_unit_knowledge_destruction:    OnReceiveMsgUnitKnowledgeDestruction  ( *asnMsg.u.msg_unit_knowledge_destruction   ); break;
 
+        case T_MsgsSimMos_msg_population_knowledge_creation:       OnReceiveMsgPopulationKnowledgeCreation     ( *asnMsg.u.msg_population_knowledge_creation      ); break;
+        case T_MsgsSimMos_msg_population_knowledge_update:         OnReceiveMsgPopulationKnowledgeUpdate       ( *asnMsg.u.msg_population_knowledge_update        ); break;
+        case T_MsgsSimMos_msg_population_knowledge_destruction:    OnReceiveMsgPopulationKnowledgeDestruction  ( *asnMsg.u.msg_population_knowledge_destruction   ); break;
+
         case T_MsgsSimMos_msg_object_creation:               OnReceiveMsgObjectCreation            ( *asnMsg.u.msg_object_creation              ); break;
         case T_MsgsSimMos_msg_object_update:                 OnReceiveMsgObjectUpdate              ( *asnMsg.u.msg_object_update                ); break;
         case T_MsgsSimMos_msg_object_destruction:            OnReceiveMsgObjectDestruction         ( asnMsg.u.msg_object_destruction            ); break;
@@ -818,6 +822,39 @@ void MessageManager::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKn
 }
 
 // -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationKnowledgeCreation
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+{
+    KnowledgeGroup* pKGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_possesseur );
+    assert( pKGroup );
+    pKGroup->OnReceiveMsgPopulationKnowledgeCreation( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationKnowledgeUpdate
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& asnMsg )
+{
+    KnowledgeGroup* pKGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_possesseur );
+    assert( pKGroup );
+    pKGroup->OnReceiveMsgPopulationKnowledgeUpdate( asnMsg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MessageManager::OnReceiveMsgPopulationKnowledgeDestruction
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+void MessageManager::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+{
+    KnowledgeGroup* pKGroup = workspace_.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_possesseur );
+    assert( pKGroup );
+    pKGroup->OnReceiveMsgPopulationKnowledgeDestruction( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgObjectKnowledgeCreation
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
@@ -884,7 +921,7 @@ void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderA
 // Name: MessageManager::OnReceiveMsgSetAutomatModeAck
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomateModeAck& /*asnMsg*/, T_NetContextId /*nCtx*/ )
 {
     /*
     Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.unit_id );
