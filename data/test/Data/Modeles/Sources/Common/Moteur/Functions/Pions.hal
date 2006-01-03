@@ -154,6 +154,7 @@ signatures
     R                                       A::DEC_Agent_DureeDebarquement               (); // En minutes         
     B                                       A::DEC_Agent_TransporteursPret               ();
     I /*E_EtatROEPopulation*/               A::DEC_Agent_RoePopulation                   ();
+    R /* ratio alive/total */               A::DEC_Agent_OfficiersTues                   ();
                                             
     // Effets population
     V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();
@@ -231,6 +232,7 @@ signatures
     V                                       A::DEC_ConnaissancePopulation_Securiser                   ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     U /*T_Point*/                           A::DEC_ConnaissancePopulation_PointSecurisation           ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     I /*E_Tristate*/                        A::DEC_ConnaissancePopulation_EstEnnemi                   ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ ); // Retourn un E_Tristate (oui/non/nesaispas)    
+    V                                       A::DEC_ConnaissancePopulation_Exterminer                  ( U /*T_ConnaissancePopulation*/, R /*surface exterminée*/, I /*E_ValiditeRequete&*/ );    
                                             
     // Requêtes connaissance globale           
     V                                       A::DEC_Connaissances_PartageConnaissancesAvec        ( A /*T_Automate*/, R /*delai en minutes*/ );    
