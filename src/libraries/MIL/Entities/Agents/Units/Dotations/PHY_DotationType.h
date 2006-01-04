@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class PHY_DotationCategory;
+class PHY_DotationLogisticType;
 
 #include "MT_Tools/MT_Converter.h"
 
@@ -52,10 +53,11 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_DotationCategory* FindDotationCategory( const std::string& strName ) const;
-    const std::string&          GetName             () const;
-          ASN1T_EnumFamilleDotation GetAsnID            () const;
-          uint                  GetID               () const;
+    const PHY_DotationCategory*     FindDotationCategory  ( const std::string& strName ) const;
+    const std::string&              GetName               () const;
+          ASN1T_EnumFamilleDotation GetAsnID              () const;
+          uint                      GetID                 () const;
+    const PHY_DotationLogisticType& GetDefaultLogisticType() const;
     //@}
 
     //! @name Operators
@@ -88,7 +90,7 @@ private:
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumFamilleDotation nAsnID );
+     PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumFamilleDotation nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
     ~PHY_DotationType();
 
     //! @name Initialisation
@@ -102,7 +104,8 @@ private:
     const std::string               strName_;
     const E_DotationType            nType_;
     const ASN1T_EnumFamilleDotation nAsnID_;
-    T_DotationCategoryMap   dotationCategories_;
+    const PHY_DotationLogisticType& defaultLogisticType_;
+          T_DotationCategoryMap     dotationCategories_;
 
 private:
     static T_DotationTypeMap       dotationTypes_;

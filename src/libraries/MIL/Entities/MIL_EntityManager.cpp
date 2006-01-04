@@ -31,6 +31,7 @@
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Agents/Units/Postures/PHY_Posture.h"
 #include "Agents/Units/Dotations/PHY_DotationType.h"
+#include "Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
@@ -101,6 +102,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     PHY_PerceptionLevel          ::Initialize();
     PHY_RadarClass               ::Initialize();
     MIL_PopulationAttitude       ::Initialize();
+    PHY_DotationLogisticType     ::Initialize();
 
     InitializeType< PHY_LogWorkTime             >( archive, "Logistique"          );
     InitializeType< PHY_Experience              >( archive, "FacteursHumains"     );
@@ -286,6 +288,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_Convoy_ABC               ::Terminate();
     PHY_RadarType                ::Terminate();
     MIL_PopulationType           ::Terminate();
+    PHY_DotationLogisticType     ::Terminate();
 
     delete &effectManager_;
     delete pObjectManager_;

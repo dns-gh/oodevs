@@ -51,7 +51,7 @@ MOS_TypePion::MOS_TypePion( const std::string& strName, MOS_InputArchive& archiv
     }
     archive.EndList(); // Equipements
     
-    if ( archive.Section( "Stocks", MOS_InputArchive::eNothing ) )
+  /*  if ( archive.Section( "Stocks", MOS_InputArchive::eNothing ) )
     {
         archive.EndSection(); // $$$$ _RC_ HME 2005-11-03: ugly !!!
         archive.BeginList( "Stocks" );
@@ -73,7 +73,7 @@ MOS_TypePion::MOS_TypePion( const std::string& strName, MOS_InputArchive& archiv
             archive.EndSection(); //Dotation
         }
         archive.EndList(); //Stocks
-    }
+    }*/
 
     pModel_ = MOS_App::GetApp().GetAgentManager().FindModel( strModel );
     if( !pModel_ )

@@ -38,7 +38,6 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MT_RoleContainer& role, MIL_Agen
     , pStocks_           ( 0 )
 {
     pStocks_ = new PHY_DotationStockContainer( *this );
-    pion.GetType().GetUnitType().GetStockCapacities().RegisterCapacities( *pStocks_ );
 }
 
 // -----------------------------------------------------------------------------

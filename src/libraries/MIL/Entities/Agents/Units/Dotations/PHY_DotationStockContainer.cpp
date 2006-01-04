@@ -17,8 +17,10 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationStock.h"
 #include "PHY_DotationType.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
@@ -173,11 +175,7 @@ void PHY_DotationStockContainer::ReadValues( MIL_InputArchive& archive )
             if( !pDotationCategory )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
 
-            CIT_StockMap itDotationStock = stocks_.find( pDotationCategory );
-            if( itDotationStock == stocks_.end() )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation not in basic unit type", archive.GetContext() );
-
-            itDotationStock->second->ReadValue( archive );
+            AddStock( *pDotationCategory, archive );
 
             archive.EndSection(); // Categorie
         }
@@ -190,17 +188,6 @@ void PHY_DotationStockContainer::ReadValues( MIL_InputArchive& archive )
 // =============================================================================
 // OPERATIONS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationStockContainer::AddCapacity
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::AddCapacity( const PHY_DotationCapacity& capacity )
-{
-    PHY_DotationStock*& pStock = stocks_[ &capacity.GetCategory() ];
-    assert( !pStock );
-    pStock = new PHY_DotationStock( *this, capacity );
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::AddReservation
@@ -250,6 +237,22 @@ PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCateg
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::AddStock
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive )
+{
+    MT_Float rValue;
+    archive.Read( rValue, CheckValueGreaterOrEqual( 0. ) );
+
+    const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
+
+    PHY_DotationStock*& pStock = stocks_[ &category ];
+    if( !pStock )
+        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rValue );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::Resupply
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
@@ -260,15 +263,19 @@ void PHY_DotationStockContainer::Resupply()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationStockContainer::ResupplyStocks
+// Name: PHY_DotationStockContainer::Resupply
 // Created: SBO 2005-12-12
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category, MT_Float rNbr )
 {
-    CIT_StockMap it = stocks_.find( &category );
-    if( it == stocks_.end() )
-        return;
-    it->second->Supply( rNbr - it->second->GetValue() ); // set to rNbr
+    PHY_DotationStock*& pStock = stocks_[ &category ];
+    if( !pStock )
+    {
+        const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
+        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rNbr );
+    }
+    else
+        pStock->Supply( rNbr - pStock->GetValue() ); // set to rNbr
 }
 
 // =============================================================================

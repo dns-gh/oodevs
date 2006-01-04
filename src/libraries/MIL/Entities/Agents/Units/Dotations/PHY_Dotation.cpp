@@ -111,7 +111,7 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
 void PHY_Dotation::ReadValue( MIL_InputArchive& archive )
 {
     MT_Float rValue;
-    archive.Read( rValue );
+    archive.Read( rValue, CheckValueGreaterOrEqual( 0. ) );
 
     if( rValue > rCapacity_ )
     {

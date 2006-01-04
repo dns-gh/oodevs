@@ -43,6 +43,11 @@ public:
     virtual void ReadOverloading( MIL_InputArchive& archive );
     //@}
 
+    //! @name Accessors
+    //@{
+    const MIL_AgentPionLOG_ABC& GetPion() const;
+    //@}
+
     //! @name Operations
     //@{
     virtual void Update        ( bool bIsDead );

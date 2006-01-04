@@ -18,7 +18,6 @@ class PHY_DotationType;
 class PHY_DotationCategory;
 class PHY_DotationCapacity;
 class PHY_DotationGroupContainer;
-class PHY_DotationStockContainer;
 
 // =============================================================================
 // @class  PHY_DotationCapacities
@@ -36,8 +35,6 @@ public:
     //@{
     void RegisterCapacities  ( PHY_DotationGroupContainer& container ) const;
     void UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
-
-    void RegisterCapacities  ( PHY_DotationStockContainer& container ) const;
     //@}
 
 private:

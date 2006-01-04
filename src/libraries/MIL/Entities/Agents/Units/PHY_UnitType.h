@@ -20,6 +20,7 @@ class PHY_Posture;
 class PHY_ComposanteTypePion;
 class PHY_RolePion_Composantes;
 class PHY_HumanRank;
+class PHY_DotationLogisticType;
 
 // =============================================================================
 // @class  PHY_UnitType
@@ -47,13 +48,13 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_DotationCapacities&    GetStockCapacities               () const;
     const PHY_DotationCapacities&    GetTC1Capacities                 () const;
     const T_CommanderRepartitionMap& GetCommanderRepartition          () const;
           MT_Float                   GetPostureTime                   ( const PHY_Posture& posture ) const;
           MT_Float                   GetCoupDeSondeLength             () const;
           MT_Float                   GetCoupDeSondeWidth              () const;
           MT_Float                   GetCoefDecontaminationPerTimeStep() const;
+          MT_Float                   GetStockLogisticThresholdRatio   ( const PHY_DotationLogisticType& type ) const;
           bool                       CanFly                           () const;
           bool                       IsAutonomous                     () const;
     //@}
@@ -72,29 +73,33 @@ private:
     typedef T_ComposanteTypeMap::const_iterator                            CIT_ComposanteTypeMap;
 
     typedef std::vector< uint > T_PostureTimesVector;
+
+    typedef std::vector< MT_Float >                        T_StockLogisticThresholdRatios;
+    typedef T_StockLogisticThresholdRatios::const_iterator CIT_StockLogisticThresholdRatios;
     //@}
 
 private:
     //! @name Init
     //@{
-    void InitializeComposantes         ( MIL_InputArchive& archive );
-    void InitializeCommanderRepartition( MIL_InputArchive& archive );
-    void InitializePostureTimes        ( MIL_InputArchive& archive );
-    void InitializeCoupDeSonde         ( MIL_InputArchive& archive );
-    void InitializeNBC                 ( MIL_InputArchive& archive );
+    void InitializeComposantes                 ( MIL_InputArchive& archive );
+    void InitializeCommanderRepartition        ( MIL_InputArchive& archive );
+    void InitializePostureTimes                ( MIL_InputArchive& archive );
+    void InitializeCoupDeSonde                 ( MIL_InputArchive& archive );
+    void InitializeNBC                         ( MIL_InputArchive& archive );
+    void InitializeStockLogisticThresholdRatios( MIL_InputArchive& archive );
     //@}
 
 private:
-    const PHY_DotationCapacities    dotationCapacitiesTC1_;
-    const PHY_DotationCapacities    stockCapacities_;
-          T_ComposanteTypeMap       composanteTypes_;
-          T_PostureTimesVector      postureTimes_;
-          MT_Float                  rCoupDeSondeLength_;
-          MT_Float                  rCoupDeSondeWidth_;
-          T_CommanderRepartitionMap commandersRepartition_;
-          MT_Float                  rCoefDecontaminationPerTimeStep_;
-          bool                      bCanFly_;
-          bool                      bIsAutonomous_; // Drones
+    const PHY_DotationCapacities         dotationCapacitiesTC1_;
+          T_StockLogisticThresholdRatios stockLogisticThresholdRatios_;
+          T_ComposanteTypeMap            composanteTypes_;
+          T_PostureTimesVector           postureTimes_;
+          MT_Float                       rCoupDeSondeLength_;
+          MT_Float                       rCoupDeSondeWidth_;
+          T_CommanderRepartitionMap      commandersRepartition_;
+          MT_Float                       rCoefDecontaminationPerTimeStep_;
+          bool                           bCanFly_;
+          bool                           bIsAutonomous_; // Drones
 };
 
 #include "PHY_UnitType.inl"

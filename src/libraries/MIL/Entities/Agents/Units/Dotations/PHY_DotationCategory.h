@@ -20,6 +20,7 @@ class PHY_DotationType;
 class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_AmmoDotationClass;
 class PHY_Protection;
+class PHY_DotationLogisticType;
 class PHY_FireResults_ABC;
 class MIL_AgentPion;
 
@@ -37,10 +38,11 @@ public:
 
     //! @name Accessors
     //@{
-          uint                   GetMosID            () const;
-    const PHY_DotationType&      GetType             () const;
-    const std::string&           GetName             () const;
-    const PHY_AmmoDotationClass* GetAmmoDotationClass() const;
+          uint                      GetMosID            () const;
+    const PHY_DotationType&         GetType             () const;
+    const std::string&              GetName             () const;
+    const PHY_AmmoDotationClass*    GetAmmoDotationClass() const;
+    const PHY_DotationLogisticType& GetLogisticType     () const;
     //@}
 
     //! @name Fire
@@ -81,11 +83,13 @@ private:
     void InitializeAttritions      ( MIL_InputArchive& archive );
     void InitializeIndirectFireData( MIL_InputArchive& archive );
     void InitializePackagingData   ( MIL_InputArchive& archive );
+    void InitializeLogisticType    ( MIL_InputArchive& archive );
     //@}
 
 private:
-    const PHY_DotationType&      type_;
-    const PHY_AmmoDotationClass* pAmmoDotationClass_;      
+    const PHY_DotationType&         type_;
+    const PHY_AmmoDotationClass*    pAmmoDotationClass_;      
+    const PHY_DotationLogisticType* pLogisticType_;
 
     std::string strName_;
     uint        nMosID_;

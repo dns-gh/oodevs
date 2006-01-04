@@ -27,7 +27,7 @@ class PHY_DotationStock
     MT_COPYNOTALLOWED( PHY_DotationStock )
 
 public:
-     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCapacity& capacity );
+     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity );
      PHY_DotationStock();
     ~PHY_DotationStock();
 
@@ -37,11 +37,6 @@ public:
     
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
-    //@}
-
-    //! @name Init
-    //@{
-    void ReadValue( MIL_InputArchive& archive );
     //@}
 
     //! @name Accessors

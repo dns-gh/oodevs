@@ -20,16 +20,6 @@ const PHY_DotationCapacities& PHY_UnitType::GetTC1Capacities() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_UnitType::GetStockCapacities
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-inline
-const PHY_DotationCapacities& PHY_UnitType::GetStockCapacities() const
-{
-    return stockCapacities_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_UnitType::GetCommanderRepartition
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------

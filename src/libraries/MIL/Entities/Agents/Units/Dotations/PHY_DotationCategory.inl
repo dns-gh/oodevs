@@ -10,6 +10,17 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetLogisticType
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+inline
+const PHY_DotationLogisticType& PHY_DotationCategory::GetLogisticType() const
+{
+    assert( pLogisticType_ );
+    return *pLogisticType_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::GetAmmoDotationClass
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
@@ -136,3 +147,4 @@ MT_Float PHY_DotationCategory::GetVolume() const
 {
     return rVolume_;
 }
+

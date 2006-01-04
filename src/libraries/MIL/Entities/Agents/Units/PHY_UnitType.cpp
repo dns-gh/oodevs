@@ -16,6 +16,7 @@
 #include "Composantes/PHY_ComposanteTypePion.h"
 #include "Composantes/PHY_ComposantePion.h"
 #include "Humans/PHY_HumanRank.h"
+#include "Dotations/PHY_DotationLogisticType.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -35,18 +36,19 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 // -----------------------------------------------------------------------------
 PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     : dotationCapacitiesTC1_          ( "ContenanceTC1", archive )    
-    , stockCapacities_                ( "Stocks"       , archive )
+    , stockLogisticThresholdRatios_   ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), std::numeric_limits< MT_Float >::max() )
     , postureTimes_                   ( PHY_Posture::GetPostures().size(), 0 )
     , rCoupDeSondeLength_             ( 0. )
     , rCoefDecontaminationPerTimeStep_( 0. )
     , bCanFly_                        ( false )
     , bIsAutonomous_                  ( false )
 {
-    InitializeComposantes         ( archive );
-    InitializeCommanderRepartition( archive );
-    InitializePostureTimes        ( archive );
-    InitializeCoupDeSonde         ( archive );
-    InitializeNBC                 ( archive );
+    InitializeComposantes                 ( archive );
+    InitializeCommanderRepartition        ( archive );
+    InitializePostureTimes                ( archive );
+    InitializeCoupDeSonde                 ( archive );
+    InitializeNBC                         ( archive );
+    InitializeStockLogisticThresholdRatios( archive );
 
     if( archive.Section( "PeutVoler", MIL_InputArchive::eNothing ) )
     {
@@ -68,6 +70,49 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
 PHY_UnitType::~PHY_UnitType()
 {
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::InitializeStockLogisticThresholdRatios
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+void PHY_UnitType::InitializeStockLogisticThresholdRatios( MIL_InputArchive& archive )
+{
+    if( !archive.Section( "Stocks", MIL_InputArchive::eNothing ) )
+        return;
+
+    archive.BeginList( "SeuilsLogistiques" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "SeuilLogistique" );
+
+        std::string strCategory;
+        archive.ReadAttribute( "categorie", strCategory );
+
+        const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( strCategory );
+        if( !pType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown logistic dotation type", archive.GetContext() );
+
+        assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
+
+        MT_Float rThreshold = 0.;
+        archive.ReadAttribute( "seuil", rThreshold, CheckValueBound( 0., 100. ) );
+        rThreshold /= 100.;                  
+    
+        stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
+
+        archive.EndSection(); // SeuilLogistique
+    }
+    archive.EndList(); // SeuilsLogistiques
+
+    // Post check
+    for( uint i = 0; i < stockLogisticThresholdRatios_.size(); ++i )
+    {
+        if( stockLogisticThresholdRatios_[ i ] == std::numeric_limits< MT_Float >::max() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Logistic dotation type '%s' not initialized", PHY_DotationLogisticType::Find( i )->GetName().c_str() ), archive.GetContext() );
+    }
+
+    archive.EndSection(); // Stocks
 }
 
 // -----------------------------------------------------------------------------
@@ -214,6 +259,16 @@ MT_Float PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
 {
     assert( postureTimes_.size() > posture.GetID() );
     return postureTimes_[ posture.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetStockLogisticThresholdRatio
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+MT_Float PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const
+{
+    assert( stockLogisticThresholdRatios_.size() > type.GetID() );
+    return stockLogisticThresholdRatios_[ type.GetID() ];
 }
 
 // =============================================================================

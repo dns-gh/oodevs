@@ -12,9 +12,12 @@
 #include "MIL_pch.h"
 
 #include "PHY_DotationCategory.h"
+
+#include "PHY_DotationType.h"
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
 #include "PHY_IndirectFireDotationClass.h"
 #include "PHY_AmmoDotationClass.h"
+#include "PHY_DotationLogisticType.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 
 //-----------------------------------------------------------------------------
@@ -24,6 +27,7 @@
 PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, MIL_InputArchive& archive )
     : type_              ( type )
     , pAmmoDotationClass_( 0 )
+    , pLogisticType_     ( 0 )
     , strName_           ( strName )
     , nMosID_            ( 0 )
     , pIndirectFireData_ ( 0 )
@@ -36,6 +40,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     InitializePackagingData   ( archive );
     InitializeAttritions      ( archive );
     InitializeIndirectFireData( archive );
+    InitializeLogisticType    ( archive );
 
     if( !attritions_.empty() || pIndirectFireData_ )
     {
@@ -126,6 +131,21 @@ void PHY_DotationCategory::InitializeIndirectFireData( MIL_InputArchive& archive
 
     pIndirectFireData_ = &pType->InstanciateDotationCategory( *this, archive );      
     archive.EndSection(); // TirIndirect
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::InitializeLogisticType
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::InitializeLogisticType( MIL_InputArchive& archive )
+{
+    pLogisticType_ = &type_.GetDefaultLogisticType();
+
+    if( archive.Section( "TrancheD", MIL_InputArchive::eNothing ) )
+    {
+        pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
+        archive.EndSection();
+    }
 }
 
 // =============================================================================

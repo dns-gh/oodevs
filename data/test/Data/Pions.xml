@@ -60,40 +60,13 @@
       </Dotation>
     </ContenanceTC1>
     <Stocks>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="800" nom="Balle Classique 12,7" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100" nom="Obus fumigene" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100" nom="Obus eclairant" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="20" nom="Obus 120 mm" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="50" nom="Obus mine" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="0" contenance="4" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="60000" nom="gasoil" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="1e+006" nom="bouffe" seuilLogistique="10"/>
-          <Categorie consommationNormalisee="0" contenance="1e+006" nom="flotte" seuilLogistique="10"/>
-        </Categories>
-      </Dotation>
+        <SeuilsLogistiques>        
+            <SeuilLogistique categorie="Unite essence" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+            <SeuilLogistique categorie="Pieces" seuil="10"/>
+        </SeuilsLogistiques>    
     </Stocks>
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>
@@ -2230,37 +2203,13 @@
       </Dotation>
     </ContenanceTC1>
     <Stocks>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="80000" nom="Balle Classique 12,7" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus fumigene" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus eclairant" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="50000" nom="Obus mine" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="5000" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="0" contenance="4000" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="600000" nom="gasoil" seuilLogistique="90"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
+        <SeuilsLogistiques>        
+            <SeuilLogistique categorie="Unite essence" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+            <SeuilLogistique categorie="Pieces" seuil="10"/>
+        </SeuilsLogistiques>    
     </Stocks>
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>
@@ -2334,37 +2283,13 @@
       </Dotation>
     </ContenanceTC1>
     <Stocks>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="80000" nom="Balle Classique 12,7" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus fumigene" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus eclairant" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="50000" nom="Obus mine" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="5000" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="0" contenance="4000" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="600000" nom="gasoil" seuilLogistique="90"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
+        <SeuilsLogistiques>        
+            <SeuilLogistique categorie="Unite essence" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+            <SeuilLogistique categorie="Pieces" seuil="10"/>
+        </SeuilsLogistiques>    
     </Stocks>
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>
@@ -2438,37 +2363,13 @@
       </Dotation>
     </ContenanceTC1>
     <Stocks>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="80000" nom="Balle Classique 12,7" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus fumigene" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus eclairant" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="50000" nom="Obus mine" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="5000" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="0" contenance="4000" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="600000" nom="gasoil" seuilLogistique="90"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
+        <SeuilsLogistiques>        
+            <SeuilLogistique categorie="Unite essence" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+            <SeuilLogistique categorie="Pieces" seuil="10"/>
+        </SeuilsLogistiques>    
     </Stocks>
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>
@@ -2540,37 +2441,13 @@
       </Dotation>
     </ContenanceTC1>
     <Stocks>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="80000" nom="Balle Classique 12,7" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus fumigene" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus eclairant" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="50000" nom="Obus mine" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="5000" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="0" contenance="4000" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="600000" nom="gasoil" seuilLogistique="90"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
+        <SeuilsLogistiques>        
+            <SeuilLogistique categorie="Unite essence" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+            <SeuilLogistique categorie="Pieces" seuil="10"/>
+        </SeuilsLogistiques>    
     </Stocks>
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>
@@ -2644,37 +2521,13 @@
       </Dotation>
     </ContenanceTC1>
     <Stocks>
-      <Dotation nom="munition">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="80000" nom="Balle Classique 12,7" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus fumigene" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="100000" nom="Obus eclairant" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="50000" nom="Obus mine" seuilLogistique="20"/>
-          <Categorie consommationNormalisee="0" contenance="5000" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="0" contenance="4000" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="carburant">
-        <Categories>
-          <Categorie consommationNormalisee="0" contenance="600000" nom="gasoil" seuilLogistique="90"/>
-        </Categories>
-      </Dotation>
-      <Dotation nom="explosif">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="mine">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="barbele">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="piece">
-        <Categories/>
-      </Dotation>
-      <Dotation nom="ration">
-        <Categories/>
-      </Dotation>
+        <SeuilsLogistiques>        
+            <SeuilLogistique categorie="Unite essence" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+            <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+            <SeuilLogistique categorie="Pieces" seuil="10"/>
+        </SeuilsLogistiques>    
     </Stocks>
     <TempsMiseEnPosture>
       <PosteReflexe>30s</PosteReflexe>

@@ -31,3 +31,13 @@ void PHY_RolePionLOG_Supply::DisableSystem()
     bHasChanged_    = true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::GetPion
+// Created: NLD 2006-01-03
+// -----------------------------------------------------------------------------
+inline
+const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
+{
+    assert( pPion_ );
+    return *pPion_;
+}

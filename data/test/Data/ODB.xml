@@ -423,6 +423,27 @@
                 <Automate>5000004</Automate>
             </LiensHierarchiques>
             <Position>31TBN9902580746</Position>
+            
+            <Stocks>              
+                <Dotation nom="carburant">
+                    <Categories>    
+                        <Categorie nom="gasoil">10000000</Categorie>
+                    </Categories>        
+                </Dotation>
+                
+                <Dotation nom="munition">
+                    <Categories>    
+                        <Categorie nom="Missile Hot">10000000</Categorie>
+                        <Categorie nom="Balle Classique 12,7">10000000</Categorie>
+                        <Categorie nom="Obus fumigene">10000000</Categorie>
+                        <Categorie nom="Obus eclairant">10000000</Categorie>
+                        <Categorie nom="Obus 120 mm">10000000</Categorie>
+                        <Categorie nom="Obus mine">10000000</Categorie>
+                        <Categorie nom="Fusse a ailettes 50mm">10000000</Categorie>
+                        <Categorie nom="Fusse a jupette 53mm">10000000</Categorie>
+                    </Categories>        
+                </Dotation>
+            </Stocks>            
         </Pion>     
         
         
@@ -446,6 +467,27 @@
                 <Automate>5000020</Automate>
             </LiensHierarchiques>
             <Position>31TBN9996078882</Position>
+            
+            <Stocks>              
+                <Dotation nom="carburant">
+                    <Categories>    
+                        <Categorie nom="gasoil">10000000</Categorie>
+                    </Categories>        
+                </Dotation>
+                
+                <Dotation nom="munition">
+                    <Categories>    
+                        <Categorie nom="Missile Hot">10000000</Categorie>
+                        <Categorie nom="Balle Classique 12,7">10000000</Categorie>
+                        <Categorie nom="Obus fumigene">10000000</Categorie>
+                        <Categorie nom="Obus eclairant">10000000</Categorie>
+                        <Categorie nom="Obus 120 mm">10000000</Categorie>
+                        <Categorie nom="Obus mine">10000000</Categorie>
+                        <Categorie nom="Fusse a ailettes 50mm">10000000</Categorie>
+                        <Categorie nom="Fusse a jupette 53mm">10000000</Categorie>
+                    </Categories>        
+                </Dotation>
+            </Stocks>              
         </Pion>     
         
                

@@ -48,7 +48,6 @@ public:
     //@{
     MT_Float AddReservation   ( const PHY_DotationCategory& category, MT_Float rNbr );
     void     RemoveReservation( const PHY_DotationCategory& category, MT_Float rNbr );
-    void     AddCapacity      ( const PHY_DotationCapacity& capacity );
     void     Resupply         ();
     void     Resupply         ( const PHY_DotationCategory& category, MT_Float rNbr );
     //@}
@@ -82,6 +81,12 @@ public:
 
     typedef std::set< const PHY_DotationStock* > T_StockSet;
     typedef T_StockSet::const_iterator           CIT_StockSet;
+    //@}
+
+private:
+    //! @name Tools
+    //@{
+    void AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive );
     //@}
 
 private:

@@ -109,6 +109,16 @@ ASN1T_EnumFamilleDotation PHY_DotationType::GetAsnID() const
     return nAsnID_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::GetDefaultLogisticType
+// Created: NLD 2006-01-04
+// -----------------------------------------------------------------------------
+inline
+const PHY_DotationLogisticType& PHY_DotationType::GetDefaultLogisticType() const
+{
+    return defaultLogisticType_;
+}
+
 // =============================================================================
 // OPERATORS
 // =============================================================================

@@ -109,12 +109,3 @@ void PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& c
         container.RemoveCapacity( *it->second );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCapacities::RegisterCapacities
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-void PHY_DotationCapacities::RegisterCapacities( PHY_DotationStockContainer& container ) const
-{
-    for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
-        container.AddCapacity( *it->second );    
-}

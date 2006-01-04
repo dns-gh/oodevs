@@ -23,13 +23,14 @@ BOOST_CLASS_EXPORT_GUID( PHY_DotationStock, "PHY_DotationStock" )
 // Name: PHY_DotationStock constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCapacity& capacity )
-    : pStockContainer_ ( &stockContainer               )
-    , pCategory_       ( &capacity.GetCategory      () )
-    , rValue_          ( capacity.GetCapacity       () )
-    , rCapacity_       ( capacity.GetCapacity       () )
-    , rSupplyThreshold_( capacity.GetSupplyThreshold() )
+PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity )
+    : pStockContainer_ ( &stockContainer    )
+    , pCategory_       ( &dotationCategory  )
+    , rValue_          ( 0. )
+    , rCapacity_       ( rCapacity )
+    , rSupplyThreshold_( rCapacity * rSupplyThresholdRatio )
 {
+    SetValue( rCapacity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,6 +57,7 @@ PHY_DotationStock::~PHY_DotationStock()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStock::load
 // Created: JVT 2005-04-01
@@ -84,21 +86,6 @@ void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const uint ) const
          << rValue_
          << rCapacity_
          << rSupplyThreshold_;
-}
-
-// =============================================================================
-// INIT
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationStock::ReadValue
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-void PHY_DotationStock::ReadValue( MIL_InputArchive& archive )
-{
-    MT_Float rValue;
-    archive.Read( rValue );
-    SetValue( rValue );
 }
 
 // =============================================================================
