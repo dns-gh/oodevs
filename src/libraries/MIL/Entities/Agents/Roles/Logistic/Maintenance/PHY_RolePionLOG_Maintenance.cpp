@@ -429,13 +429,33 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return std::numeric_limits< int >::min();
 
+    // Parts score
+    MT_Float rRatioPartsAvailable = 0.;
+
+    const PHY_RolePion_Dotations& roleDotations = GetRole< PHY_RolePion_Dotations >();
+
+    const PHY_BreakdownType::T_PartMap& parts = composanteState.GetComposanteBreakdown().GetNeededParts();
+    for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
+    {
+        // Parts never available ...
+        if( roleDotations.GetDotationCapacity( *it->first ) <= 0. )
+            return std::numeric_limits< int >::min();
+
+        rRatioPartsAvailable += ( roleDotations.GetDotationValue( *it->first ) / it->second );
+    }
+    if( parts.empty() )
+        rRatioPartsAvailable = 1.;
+    else
+        rRatioPartsAvailable /= parts.size();
+
+    // Repairers score
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     GetRole< PHY_RolePion_Composantes >().GetRepairersUse( composanteUse, composanteState.GetComposanteBreakdown() );
     uint nNbrRepairersAvailable = 0;
     for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrRepairersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
-    
-    return nNbrRepairersAvailable;
+
+    return (uint)( nNbrRepairersAvailable * rRatioPartsAvailable );
 }
 
 // =============================================================================

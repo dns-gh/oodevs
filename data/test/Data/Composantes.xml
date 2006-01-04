@@ -609,7 +609,8 @@
     </Objets>
     <Pannes>
       <PannesAleatoires>
-        <Panne nom="Panne 5" pourcentage="100"/>
+        <!--<Panne nom="Panne 4" pourcentage="50"/>-->
+        <Panne nom="Panne 6" pourcentage="100"/>
       </PannesAleatoires>
       <PannesAttritions>
         <Panne nom="Panne 1" pourcentage="30"/>

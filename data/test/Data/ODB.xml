@@ -402,6 +402,31 @@
                 <Automate>5000002</Automate>
             </LiensHierarchiques>
             <Position>31TBN9902580746</Position>
+            
+            <Dotations>
+                <Dotation nom="piece">
+                    <Categories>    
+                        <Categorie nom="Truc pour reparer la mobilite 1">20</Categorie>
+                        <Categorie nom="Truc pour reparer la mobilite 1">20</Categorie>
+                        <Categorie nom="Truc pour reparer la mobilite 3">20</Categorie>
+                        <Categorie nom="Truc pour reparer l'electronique 1">20</Categorie>
+                    </Categories>                                
+                </Dotation>                                
+            </Dotations>            
+        </Pion>   
+        
+        <Pion id="6100017" type="Cie Reparation BLD - EA" >
+            <LiensHierarchiques>
+                <Automate>5000002</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9902580746</Position>
+        </Pion>
+        
+        <Pion id="6100018" type="Cie Reparation BLD - M" >
+            <LiensHierarchiques>
+                <Automate>5000002</Automate>
+            </LiensHierarchiques>
+            <Position>31TBN9902580746</Position>
         </Pion>   
         
         <Pion id="6000019" type="Pion RAV commandement" >
