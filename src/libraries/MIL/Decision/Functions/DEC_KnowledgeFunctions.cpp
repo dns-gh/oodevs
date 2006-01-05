@@ -150,7 +150,7 @@ void DEC_KnowledgeFunctions::GetClosestFriendObject( DIA_Call_ABC& call, const M
     MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
     
     DEC_Knowledge_Object* pKnowledge = callerAgent.GetKSQuerier().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), objectsFilter );
-    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetDiaID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
 }
 
 // -----------------------------------------------------------------------------
