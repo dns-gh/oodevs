@@ -142,6 +142,18 @@ void DEC_KnowledgeFunctions::GetClosestObject( DIA_Call_ABC& call, const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetClosestFriendObject
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetClosestFriendObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    MIL_RealObjectTypeFilter objectsFilter( call.GetParameters(), 0 );
+    
+    DEC_Knowledge_Object* pKnowledge = callerAgent.GetKSQuerier().GetClosestFriendObject( callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), objectsFilter );
+    call.GetResult().SetValue( (void*)( pKnowledge ? pKnowledge->GetDiaID() : 0 ), &DEC_Tools::GetTypeConnaissanceObjet() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetObjectsColliding
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------

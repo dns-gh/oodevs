@@ -70,6 +70,7 @@ void PHY_MaintenanceTransportConsign::serialize( Archive& file, const uint )
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceTransportConsign::Update
 // Created: NLD 2004-12-23

@@ -35,6 +35,7 @@ public:
     static void GetSurrenderedAgents         ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPerceivedAgents           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetClosestObject             ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
+    static void GetClosestFriendObject       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );    
     static void GetObjectsColliding          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPopulationsColliding      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetPopulationsAttacking      ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

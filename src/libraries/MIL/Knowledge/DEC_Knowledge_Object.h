@@ -87,6 +87,7 @@ public:
     const MIL_RealObjectType& GetType                 () const;
     const TER_Localisation&   GetLocalisation         () const;
     const TER_Localisation&   GetAvoidanceLocalisation() const;
+    const MIL_Army&           GetArmy                 () const;    
           MT_Float            GetMaxInteractionHeight () const;
     //@}
     
@@ -174,6 +175,7 @@ private:
     int nAttributesUpdated_;
 
     // Attributes
+    const MIL_Army*   pOwnerArmy_;
     TER_Localisation  localisation_;
     TER_Localisation  avoidanceLocalisation_;
     uint              nConstructionPercentage_;
@@ -193,7 +195,7 @@ private:
     uint     nTimeLastUpdate_;
     MT_Float rRelevance_;
 
-    T_AgentTypeSet  reconByAgentTypes_;
+    T_AgentTypeSet reconByAgentTypes_;
 };
 
 #include "DEC_Knowledge_Object.inl"

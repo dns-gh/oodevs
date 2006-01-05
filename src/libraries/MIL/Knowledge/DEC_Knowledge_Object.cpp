@@ -38,6 +38,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army& armyKnowing, MIL_Rea
     , pObjectType_                      ( &objectKnown.GetType() )
     , nID_                              ( pObjectType_->GetIDManager().GetFreeSimID() )
     , nAttributesUpdated_               ( eAttr_AllAttributes )
+    , pOwnerArmy_                       ( &objectKnown.GetArmy() )    
     , localisation_                     ( )
     , avoidanceLocalisation_            ( )
     , nConstructionPercentage_          ( 0 )
@@ -68,6 +69,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , pObjectKnown_                    ( 0 )
     , nID_                             ( 0 )
     , nAttributesUpdated_              ( 0 )
+    , pOwnerArmy_                      ( 0 )
     , localisation_                    ()
     , avoidanceLocalisation_           ()
     , nConstructionPercentage_         ( 0 )
@@ -119,6 +121,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
          >> pObjectKnown_
          >> const_cast< uint& >( nID_ )
          >> nAttributesUpdated_
+         >> const_cast< MIL_Army*& >( pOwnerArmy_ )
          >> localisation_
          >> avoidanceLocalisation_
          >> nConstructionPercentage_
@@ -168,6 +171,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
          << pObjectKnown_
          << nID_
          << nAttributesUpdated_
+         << pOwnerArmy_
          << localisation_
          << avoidanceLocalisation_
          << nConstructionPercentage_

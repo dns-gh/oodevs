@@ -20,6 +20,17 @@ uint DEC_Knowledge_Object::GetID() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetArmy
+// Created: NLD 2006-01-05
+// -----------------------------------------------------------------------------
+inline
+const MIL_Army& DEC_Knowledge_Object::GetArmy() const
+{
+    assert( pOwnerArmy_ );
+    return *pOwnerArmy_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::GetLocalisation
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------

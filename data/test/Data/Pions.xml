@@ -16,7 +16,8 @@
     </Nature>
     <Equipements>
       <Equipement nom="NTI TC2">3</Equipement>
-      <Equipement nom="Remorqueur">2</Equipement>
+      <Equipement nom="Remorqueur 5T">2</Equipement>
+      <Equipement nom="Remorqueur 3T">2</Equipement>
       <Equipement nom="VSB (releve)">5</Equipement>
       <Equipement nom="VSR (ramassage)">5</Equipement>
       <Equipement nom="Medecin TC2">10</Equipement>
@@ -392,7 +393,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Remorqueur">2</Equipement>
+      <Equipement nom="Remorqueur 5T">2</Equipement>
+      <Equipement nom="Remorqueur 3T">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -611,7 +613,8 @@
       <CapaciteMission type="Genie, combat"/>
     </Nature>
     <Equipements>
-      <Equipement nom="Remorqueur">2</Equipement>
+      <Equipement nom="Remorqueur 5T">2</Equipement>
+      <Equipement nom="Remorqueur 3T">2</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>

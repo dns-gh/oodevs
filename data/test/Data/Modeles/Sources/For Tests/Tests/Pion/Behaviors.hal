@@ -4,9 +4,13 @@ max_activations     =   10;
 
 actuators = deplacement, ordre;
 
+/*behavior BEH_Cock( T_ConnaissanceAgent prout )
+{
+    DEC_ConnaissanceAgent_EstValide( prout );
+}*/
+
 default Default()
 {    
-
     T_ListeConnaissancesPopulation popus = DEC_Connaissances_CollisionsPopulations();
     if( DIA_Size( popus ) > 0 )
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
@@ -37,6 +41,7 @@ default Default()
     
 
     //DEC_Agent_ChangeEtatOperationnel( eEtatOp_DetruitTotalement ); 
+
     persistent float i = 0;
         
     if( i == 10 )
@@ -427,8 +432,7 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
     {
         //T_Point cock = DEC_ListePoints_GetAt( mission.itineraire_, 0 );
         //DEC_Debug( DEC_PointToString( cock ) );
-         
-         
+                  
         //DEC_Perception_Furtivite( 0 );
         persistent T_Action                       currentAction;
         persistent E_EtatActionEmbarquerDebarquer nDebarquementReturn;
@@ -440,6 +444,9 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
 
         if( DIA_ModuleBegins() )
         {
+            DEC_Connaissances_ObjetAmiLePlusProche( eTypeObjectCampRefugies );
+    
+        
             T_Lima lima = DEC_GetLima( eTypeLima_LC );
             if( lima != 0 )
                 DEC_Automate_SetMissionLimaFlag( lima, true );

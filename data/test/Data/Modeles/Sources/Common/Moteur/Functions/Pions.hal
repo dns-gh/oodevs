@@ -240,6 +240,7 @@ signatures
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_CollisionsObjets                ();
     S /*T_ListeConnaissancesObjet*/         A::DEC_Connaissances_Objets                          ( * /*E_TypeObjects*/ );
     U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetLePlusProche               ( * /*E_TypeObjects*/ );
+    U /*T_ConnaissanceObjet*/               A::DEC_Connaissances_ObjetAmiLePlusProche            ( * /*E_TypeObjects*/ );        
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_CollisionsPopulations           ();
     S /*T_ListeConnaissancesAgent*/         A::DEC_Connaissances_AgentsPrenantAPartie            ();
     S /*T_ListeConnaissancesPopulation*/    A::DEC_Connaissances_Populations                     (); 

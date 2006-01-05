@@ -51,10 +51,11 @@ public:
     DEC_Knowledge_Object* GetKnowledgeObject ( MIL_RealObject_ABC& object ) const;
     DEC_Knowledge_Object* GetKnowledgeObject ( const DEC_Knowledge_ObjectCollision& collision ) const;
 
-    void                  GetObjects      ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter ) const;
-    void                  GetObjects      ( T_KnowledgeObjectVector&      container, const MIL_RealObjectTypeFilter& filter ) const;
-    void                  GetObjects      ( T_KnowledgeObjectVector&      container ) const;
-    DEC_Knowledge_Object* GetClosestObject( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
+    void                  GetObjects            ( T_KnowledgeObjectDiaIDVector& container, const MIL_RealObjectTypeFilter& filter ) const;
+    void                  GetObjects            ( T_KnowledgeObjectVector&      container, const MIL_RealObjectTypeFilter& filter ) const;
+    void                  GetObjects            ( T_KnowledgeObjectVector&      container ) const;
+    DEC_Knowledge_Object* GetClosestObject      ( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
+    DEC_Knowledge_Object* GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const;
     //@}
 
 private:

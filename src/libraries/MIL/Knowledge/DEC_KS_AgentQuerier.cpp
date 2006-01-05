@@ -373,6 +373,16 @@ DEC_Knowledge_Object* DEC_KS_AgentQuerier::GetClosestObject( const MT_Vector2D& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::GetClosestFriendObject
+// Created: NLD 2006-01-05
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KS_AgentQuerier::GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const
+{
+    assert( pPion_ );
+    return pPion_->GetArmy().GetKSQuerier().GetClosestFriendObject( vPos, filter );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentQuerier::GetObjectsColliding
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------

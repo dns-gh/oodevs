@@ -180,6 +180,57 @@ DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetClosestObject( const MT_Vector2D& v
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_ArmyQuerier::sClosestObjectFriendInserter
+// Created: NLD 2005-03-10
+// -----------------------------------------------------------------------------
+class sClosestObjectFriendInserter
+{
+public:
+    sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army& army, const MIL_RealObjectTypeFilter& filter )
+        : pResult_     ( 0 )
+        , pArmy_       ( &army )
+        , rClosestDist_( std::numeric_limits< MT_Float >::max() )
+        , pPos_        ( &vPos )
+        , pFilter_     ( &filter    )
+    {
+    }
+
+    void operator() ( DEC_Knowledge_Object& knowledge )
+    {
+        if( !pFilter_->Test( knowledge.GetType() ) )
+            return;
+
+        if( pArmy_->IsAFriend( knowledge.GetArmy() ) != eTristate_True )
+            return;
+
+        const MT_Float rDist = knowledge.GetLocalisation().ComputeBarycenter().Distance( *pPos_ );
+        if( rDist > rClosestDist_ )
+            return;
+        rClosestDist_ = rDist;
+        pResult_      = &knowledge;
+    }
+
+public:
+    DEC_Knowledge_Object* pResult_;
+
+private:
+          MT_Float                  rClosestDist_;
+    const MIL_Army*                 pArmy_;
+    const MT_Vector2D*              pPos_;   
+    const MIL_RealObjectTypeFilter* pFilter_;
+};
+
+DEC_Knowledge_Object* DEC_KS_ArmyQuerier::GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_RealObjectTypeFilter& filter  ) const
+{
+    assert( pArmy_ );
+    sClosestObjectFriendInserter functor( vPos, *pArmy_, filter );
+    
+    assert( pBlackBoard_ );
+    pBlackBoard_->ApplyOnKnowledgesObject( functor );
+    return functor.pResult_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_ArmyQuerier::GetKnowledgeObject
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
