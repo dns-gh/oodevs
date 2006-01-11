@@ -169,7 +169,7 @@ void MOS_GLWidget::paintGL()
     if( nRulerState_ == eExistant )
     {
         glLineWidth( 2 );
-        glColor4d( 1.0, 1.0, 1.0, 1.0 );
+        glColor4d( 0.0, 0.0, 0.0, 1.0 );
         double rDist = vRulerStartPos_.Distance( vRulerEndPos_ );
         double rMeters = rDist;
 
