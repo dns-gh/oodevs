@@ -86,6 +86,7 @@ public:
     bool    bDisplayHoveredInfo_;
     bool    bDisplayRConMap_;
     bool    bDisplayMessagesOnMap_;
+    bool    bDisplayTracesOnMap_;
 
     MT_Float rGridStep_;
 

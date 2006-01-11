@@ -721,6 +721,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
             if( ((*it)->GetType() == MOS_Report_ABC::eRC 
                   || (*it)->GetType() == MOS_Report_ABC::eWarning 
+                  || ( (*it)->GetType() == MOS_Report_ABC::eTrace && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayTracesOnMap_ )
                   || (*it)->GetType() == MOS_Report_ABC::eEvent 
                   || ( (*it)->GetType() == MOS_Report_ABC::eMessage && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayMessagesOnMap_ ))
                 && time  < duration )
@@ -732,7 +733,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
                 break;
         }
         if( bTodo )
-            tooltip.Draw( viewRect_, agent.GetPos(), rClicksPerPix_ );
+            tooltip.Draw( viewRect_, agent.GetPos() + MT_Vector2D( 250,330 ) , rClicksPerPix_ );
     }
     
     
@@ -765,6 +766,34 @@ void MOS_GLTool::Draw( MOS_Population& population, E_State nState /*= eNormal*/ 
             DrawLine( *itCur, *itNext );
 
         DrawCross( *itCur, MOS_GL_CROSSSIZE, 4.0 );
+    }
+    //Draw the RC tooltips
+    if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_ )
+    {
+        QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
+        const MOS_Agent::T_ReportVector& reports = population.GetReports();
+        bool bTodo = false;
+        MT_GLToolTip tooltip = MT_GLToolTip( pWidget );
+        tooltip.SetBackgroundColor( 255.0, 255.0, 150.0, 0.5 );
+        uint duration = 4 * MOS_App::GetApp().GetTickDuration(); //4 seconds
+        for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
+        {
+            int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
+            if( ((*it)->GetType() == MOS_Report_ABC::eRC 
+                  || (*it)->GetType() == MOS_Report_ABC::eWarning
+                  || ( (*it)->GetType() == MOS_Report_ABC::eTrace && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayTracesOnMap_ )
+                  || (*it)->GetType() == MOS_Report_ABC::eEvent 
+                  || ( (*it)->GetType() == MOS_Report_ABC::eMessage && MOS_MainWindow::GetMainWindow().GetOptions().bDisplayMessagesOnMap_ ))
+                && time  < duration )
+            {     
+                bTodo = true;
+                tooltip.AddLine( (*it)->GetStrippedTitle(), 128.0 * time / duration , 128.0 * time / duration , 128.0 * time / duration, 1.0 , true );
+            }
+            else if ( time  > 4 )
+                break;
+        }
+        if( bTodo )
+            tooltip.Draw( viewRect_, population.GetPos(), rClicksPerPix_ );
     }
 }
 
@@ -1251,15 +1280,20 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
     if( pointList.empty() )
         return;
 
-    glColor4d( 1.0, 1.0, 1.0, 1.0 );
-    glLineWidth( 2.0 );
+    glColor4d( 0.4, 0.4, 0.4, 1.0 );
+    glLineWidth( 3.0 );
+    DrawLine( pointList );
 
     if( nState == eSelected )
-        glColor4d( 0.7, 0.7, 1.0, 1.0 );
+        glColor4d( 1.0, 0.5, 0.05, 1.0 );
     else if( nState == eHighlighted )
-        glColor4d( 1.0, 0.4, 0.4, 1.0 );
+        glColor4d( 0.5, 0.0, 0.5, 1.0 );
+    else
+        glColor4d( 1.0, 1.0, 0.5, 1.0 );
 
+    glLineWidth( 1.0 );
     DrawLine( pointList );
+
 
     if( nState == eSelected )
     {
@@ -1277,16 +1311,11 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
     float rSize = 300 * (options.nFontSize_ / 10.0);
 
+    QGLWidget* pWidget = MOS_MainWindow::GetMainWindow().GetQGLWidget( MOS_App::GetApp().Is3D() );
     // $$$$ AGE 2005-05-19: 3D !
+    glColor4d( 0.0, 0.0, 0.0, 1.0 );
     if( ! MOS_App::GetApp().Is3D() )
-    {
-        glColor4d( 0.0, 0.0, 0.0, 1.0 );
-        MT_GLFont::Print( "Arial", pointList.front(), line.GetName().c_str(), rSize, 4 );
-        MT_GLFont::Print( "Arial", pointList.back(),  line.GetName().c_str(), rSize, 4 );
-        glColor4d( 1.0, 1.0, 1.0, 1.0 );
-        MT_GLFont::Print( "Arial", pointList.front(), line.GetName().c_str(), rSize );
-        MT_GLFont::Print( "Arial", pointList.back(),  line.GetName().c_str(), rSize );
-    }
+        pWidget->renderText( pointList.front().rX_, pointList.front().rY_, 0, line.GetName().c_str() );
     else
     {
         static const MOS_RawVisionData& data = MOS_App::GetApp().GetRawVisionData();
@@ -1796,7 +1825,9 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
             //write the ROE and the stance of the pawn
             QString strROE = QString( "%1 %2 %" ).arg( ENT_Tr::ConvertFromUnitPosture( pAgent->GetStance() ).c_str(), QString::number( pAgent->nPostureCompletionPourcentage_ ) )
                             + QString( ", ROE: " ) 
-                            + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str());
+                            + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str())
+                            + QString( ", ROE pop: " )
+                            + QString( ENT_Tr::ConvertFromRoePopulation( pAgent->nRulesOfEngagementPopulationState_ ).c_str() );
             
             color.SetRGB( 255.0, 255.0, 255.0 );
             

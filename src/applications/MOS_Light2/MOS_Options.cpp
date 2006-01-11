@@ -56,6 +56,7 @@ MOS_Options::MOS_Options()
     , bDisplayHoveredInfo_      ( true )
     , bDisplayRConMap_          ( true )
     , bDisplayMessagesOnMap_    ( true )
+    , bDisplayTracesOnMap_      ( false )
 {
     MT_CommandLine arguments( qApp->argc(), qApp->argv() );
     bNoList_ = arguments.IsOptionSet( "-nolist" );

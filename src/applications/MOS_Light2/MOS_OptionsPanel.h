@@ -66,6 +66,7 @@ private:
 
     QCheckBox* pDisplayRCOnMap_;
     QCheckBox* pDisplayMessagesOnMap_;
+    QCheckBox* pDisplayTracesOnMap_;
 
     //@}
 };

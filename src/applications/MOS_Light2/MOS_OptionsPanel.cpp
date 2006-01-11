@@ -69,7 +69,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     // Display panel
     QWidget* pDisplayPanel = new QWidget( pTabWidget );
     pTabWidget->addTab( pDisplayPanel, tr( "Affichage" ) );
-    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 6, 2, 5 );
+    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 7, 2, 5 );
     pSubLayout2->setMargin( 5 );
 
     QLabel* pL2 = new QLabel( tr( "Taille police" ), pDisplayPanel );
@@ -78,7 +78,7 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
 
     pSubLayout2->addWidget( pL2, 1, 0 );
     pSubLayout2->addWidget( pFontSpinbox_, 1, 1 );
-    pSubLayout2->setRowStretch( 6, 10 );
+    pSubLayout2->setRowStretch( 7, 10 );
 
     pDrawObjectIcons_ = new QCheckBox( tr( "Afficher les icones des objets"), pDisplayPanel );
     pDrawObjectIcons_->setChecked( options.bDrawObjetIcons_ );
@@ -95,6 +95,10 @@ MOS_OptionsPanel::MOS_OptionsPanel( QWidget* pParent )
     pDisplayMessagesOnMap_ = new QCheckBox( tr("Afficher aussi les messages"), pDisplayPanel );
     pDisplayMessagesOnMap_->setChecked( options.bDisplayMessagesOnMap_ );
     pSubLayout2->addWidget( pDisplayMessagesOnMap_, 5, 0 );
+
+    pDisplayTracesOnMap_ = new QCheckBox( tr("Afficher aussi les traces"), pDisplayPanel );
+    pDisplayTracesOnMap_->setChecked( options.bDisplayTracesOnMap_ );
+    pSubLayout2->addWidget( pDisplayTracesOnMap_, 6, 0 );
 
     // Other panel
     QWidget* pOtherPanel = new QWidget( pTabWidget );
@@ -175,6 +179,7 @@ void MOS_OptionsPanel::Apply()
     options.bDisplayHoveredInfo_ = pDrawHoveredInfo_->isChecked();
     options.bDisplayRConMap_ = pDisplayRCOnMap_->isChecked();
     options.bDisplayMessagesOnMap_ = pDisplayMessagesOnMap_->isChecked();
+    options.bDisplayTracesOnMap_ = pDisplayTracesOnMap_->isChecked();
 
 }
 
@@ -185,7 +190,13 @@ void MOS_OptionsPanel::Apply()
 void MOS_OptionsPanel::OnDisplayRC()
 {
     if( pDisplayRCOnMap_->isChecked() )
+    {
         pDisplayMessagesOnMap_->setEnabled( true );
+        pDisplayTracesOnMap_->setEnabled( true );
+    }
     else
+    {
         pDisplayMessagesOnMap_->setEnabled( false );
+        pDisplayTracesOnMap_->setEnabled( false );
+    }
 }
