@@ -596,6 +596,7 @@ public:
         ADN_Type_String                                                           strCodeEMAT8_;
         ADN_Type_String                                                           strCodeLFRIL_;
         ADN_Type_String                                                           strCodeNNO_;
+        ADN_Type_Enum<E_DeviceCategory, eNbrDeviceCategory>                       eDeviceCategory_; 
 
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::ArmorInfos>                 ptrArmor_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>                  ptrSize_;

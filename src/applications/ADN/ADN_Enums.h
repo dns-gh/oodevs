@@ -355,4 +355,17 @@ enum E_RadarType
     eNbrRadarType
 };
 
+enum E_DeviceCategory
+{
+    eDeviceCategory_VC1 = 0,
+    eDeviceCategory_Char = 1,
+    eDeviceCategory_Mortier = 2,
+    eDeviceCategory_Artillerie = 3,
+    eDeviceCategory_Hommes = 4,
+    eDeviceCategory_ArmesLegeres = 5,
+    eDeviceCategory_MaterielFranchissement = 6,
+    eDeviceCategory_Autres = 7,
+    eNbrDeviceCategory
+};
+
 #endif // __ADN_Enums_h_

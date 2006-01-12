@@ -108,6 +108,9 @@ void ADN_Composantes_GUI::Build()
     // Size
     builder.AddField<ADN_ComboBox_Composantes_Sizes>( pParamHolder, tr( "Volume" ), vInfosConnectors[eSize]  );
 
+    // device category
+    builder.AddEnumField<E_DeviceCategory>( pParamHolder, tr( "Device category:" ), vInfosConnectors[eDeviceCategory], ADN_Tr::ConvertFromDeviceCategory );
+
     // Weight
     builder.AddField<ADN_EditLine_Double>( pParamHolder, tr( "Weight" ), vInfosConnectors[eWeight], tr( "T" ), eGreaterZero );
 

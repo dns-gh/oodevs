@@ -52,6 +52,7 @@ public:
     static const std::string&   ConvertFromMunitionType( E_MunitionType, E_Conversion = eToSim );
     static const std::string&   ConvertFromCapacityMission( E_CapacityMission, E_Conversion = eToSim );
     static const std::string&   ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
+    static const std::string&   ConvertFromDeviceCategory( E_DeviceCategory, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
@@ -74,6 +75,7 @@ public:
     static E_MunitionType    ConvertToMunitionType     ( const std::string& );
     static E_CapacityMission ConvertToCapacityMission  ( const std::string& );
     static E_RadarType       ConvertToRadarType        ( const std::string& );
+    static E_DeviceCategory  ConvertToDeviceCategory   ( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -99,6 +101,7 @@ public:
     typedef converter<E_MunitionType>        T_ConverterMunitionType;
     typedef converter<E_CapacityMission>     T_ConverterCapacityMission;
     typedef converter<E_RadarType>           T_ConverterRadarType;
+    typedef converter<E_DeviceCategory>      T_ConverterDeviceCategory;
     //@}
 
     //! @name Convertors
@@ -121,6 +124,7 @@ public:
     static T_ConverterMunitionType      munitionTypeConverter_[];
     static T_ConverterCapacityMission   capacityMissionConverter_[];
     static T_ConverterRadarType         radarTypeConverter_[];
+    static T_ConverterDeviceCategory    deviceCategoryConverter_[];
     //@}
 };
 

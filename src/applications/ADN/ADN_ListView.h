@@ -56,7 +56,7 @@ public slots:
     void SetCurrentItem( void* pData );
 
 protected:
-    virtual void ConnectItem( bool bConnect ){}// = 0;
+    virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
    
     void keyReleaseEvent( QKeyEvent* pEvent );
 

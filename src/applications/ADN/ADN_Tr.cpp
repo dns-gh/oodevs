@@ -348,6 +348,19 @@ ADN_Tr::T_ConverterRadarType ADN_Tr::radarTypeConverter_[] =
 };
 
 
+ADN_Tr::T_ConverterDeviceCategory ADN_Tr::deviceCategoryConverter_[] =
+{
+    T_ConverterDeviceCategory( "VC1"                    , QT_TRANSLATE_NOOP("ADN_Tr" ,"VC1")                    , eDeviceCategory_VC1 ),
+    T_ConverterDeviceCategory( "Char"                   , QT_TRANSLATE_NOOP("ADN_Tr" ,"Char")                   , eDeviceCategory_Char ),
+    T_ConverterDeviceCategory( "Mortier"                , QT_TRANSLATE_NOOP("ADN_Tr" ,"Mortier")                , eDeviceCategory_Mortier ),
+    T_ConverterDeviceCategory( "Artillerie"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"Artillerie")             , eDeviceCategory_Artillerie ),
+    T_ConverterDeviceCategory( "Hommes"                 , QT_TRANSLATE_NOOP("ADN_Tr" ,"Hommes")                 , eDeviceCategory_Hommes ),
+    T_ConverterDeviceCategory( "Armes Légères"          , QT_TRANSLATE_NOOP("ADN_Tr" ,"Armes Légères")          , eDeviceCategory_ArmesLegeres ),
+    T_ConverterDeviceCategory( "Matériel Franchissement", QT_TRANSLATE_NOOP("ADN_Tr" ,"Matériel Franchissement"), eDeviceCategory_MaterielFranchissement ),
+    T_ConverterDeviceCategory( "Autres"                 , QT_TRANSLATE_NOOP("ADN_Tr" ,"Autres")                 , eDeviceCategory_Autres ),
+    T_ConverterDeviceCategory( "",  "",   (E_DeviceCategory)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromSMission
 // Created: APE 2005-02-18
@@ -525,6 +538,15 @@ const std::string& ADN_Tr::ConvertFromRadarType( E_RadarType nValue, E_Conversio
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromDeviceCategory
+// Created: SBO 2006-01-12
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromDeviceCategory( E_DeviceCategory nValue, E_Conversion nConversion )
+{
+    return ADN_Tr::InverseFindInConverter( deviceCategoryConverter_, nValue, nConversion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToSMission
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -696,6 +718,15 @@ E_RadarType ADN_Tr::ConvertToRadarType( const std::string& strName )
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToStockCategory
+// Created: SBO 2006-01-12
+// -----------------------------------------------------------------------------
+E_DeviceCategory ADN_Tr::ConvertToDeviceCategory( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( deviceCategoryConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -719,4 +750,5 @@ void ADN_Tr::InitTranslations()
     InitTr( munitionTypeConverter_, "ADN_Tr" );
     InitTr( capacityMissionConverter_, "ADN_Tr" );
     InitTr( radarTypeConverter_, "ADN_Tr" );
+    InitTr( deviceCategoryConverter_, "ADN_Tr" );
 }

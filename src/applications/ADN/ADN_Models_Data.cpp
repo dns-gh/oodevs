@@ -156,6 +156,9 @@ void ADN_Models_Data::MissionInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.Section( "Mission" );
     input.ReadAttribute( "nom", strName_ );
     nMissionType_ = ADN_Tr::ConvertToSMission( strName_.GetData() );
+    if( nMissionType_ == (E_SMission)-1 )
+        input.ThrowError( MT_FormatString( "La mission '%s' est inconnue", strName_.GetData().c_str() ) );
+
     if( input.BeginList( "OrdresConduite", ADN_XmlInput_Helper::eNothing ) )
     {
         while( input.NextListElement() )

@@ -1104,6 +1104,10 @@
         <source>%</source>
         <translation>%</translation>
     </message>
+    <message>
+        <source>Device category:</source>
+        <translation>Catégorie matériel:</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>
@@ -5670,6 +5674,34 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Automate ASY</source>
         <translation>Automate ASY</translation>
+    </message>
+    <message>
+        <source>VC1</source>
+        <translation>VC1</translation>
+    </message>
+    <message>
+        <source>Char</source>
+        <translation>Char</translation>
+    </message>
+    <message>
+        <source>Artillerie</source>
+        <translation>Artillerie</translation>
+    </message>
+    <message>
+        <source>Hommes</source>
+        <translation>Hommes</translation>
+    </message>
+    <message>
+        <source>Armes L&#xe9;g&#xe8;res</source>
+        <translation>Armes Légères</translation>
+    </message>
+    <message>
+        <source>Mat&#xe9;riel Franchissement</source>
+        <translation>Matériel Franchissement</translation>
+    </message>
+    <message>
+        <source>Autres</source>
+        <translation>Autres</translation>
     </message>
 </context>
 <context>
