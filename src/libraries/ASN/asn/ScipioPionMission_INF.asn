@@ -130,9 +130,14 @@ Mission-Pion-INF-DetruireParCoupDeMain ::= SEQUENCE
     nature-destruction  EnumMissionInfNatureObjectif
 }
 
-Mission-Pion-INF-EscorterUnConvoi ::= SEQUENCE
+Mission-Pion-INF-EscorterUnite ::= SEQUENCE
 {
-    convoi-a-escorter   Agent 
+    unite-a-escorter Agent
+}
+
+Mission-Pion-INF-EscorterUnites ::= SEQUENCE
+{
+    automate-a-escorter Automate
 }
 
 Mission-Pion-INF-RenseignerSur ::= SEQUENCE
@@ -159,6 +164,12 @@ Mission-Pion-INF-Securiser ::= SEQUENCE
 Mission-Pion-INF-RepondreAAggression ::= SEQUENCE
 {
     aggresseur KnowledgeAgent
+}
+
+Mission-Pion-INF-AppuyerSurPosition ::= SEQUENCE
+{
+	position          Point,
+    unites-a-appuyer  ListAgent   
 }
 
 

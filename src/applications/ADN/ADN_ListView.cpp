@@ -14,6 +14,9 @@
 
 #include <qpopupmenu.h>
 #include <qtooltip.h>
+#include <qpainter.h>
+#include <qprinter.h>
+#include <qpaintdevicemetrics.h>
 
 #include "ADN_ListViewItem.h"
 #include "ADN_Workspace.h"
@@ -36,6 +39,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, WFlags f )
 , pCurData_         ( 0 )
 , pObjectCreator_   ( 0 )
 , bDeletionEnabled_ ( false )
+, bPrinting_        ( false )
 {
     connect( this, SIGNAL( onItem( QListViewItem* ) ), this, SLOT( OnOnItem( QListViewItem* ) ) );
 
@@ -306,4 +310,38 @@ void ADN_ListView::OnOnItem( QListViewItem* pItem )
     QRect itemRect = this->itemRect( pItem );
     QToolTip::add( this->viewport() , itemRect, strToolTip.c_str() );
     toolTipRect_ = itemRect;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ComputeNbrPrintPages
+// Created: APE 2005-04-04
+// -----------------------------------------------------------------------------
+int ADN_ListView::ComputeNbrPrintPages( const QSize& painterSize ) const
+{
+    int nWidthInPages = ceil( (float)this->contentsWidth() / painterSize.width() );
+    int nHeightInPages = ceil( (float)this->contentsHeight() / painterSize.height() );
+    return nWidthInPages * nHeightInPages;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Print
+// Created: APE 2005-04-04
+// -----------------------------------------------------------------------------
+void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize )
+{
+    bPrinting_ = true;
+    // Ready the table.
+    clearSelection();
+
+    int nWidthInPages = ceil( (float)this->contentsWidth() / painterSize.width() );
+
+    int nY = floor( (float)nPage / nWidthInPages );
+    int nX = nPage % nWidthInPages;
+
+    painter.save();
+    painter.translate( -nX * painterSize.width(), -nY * painterSize.height() );
+    this->drawContents( &painter, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
+    painter.restore();
+    bPrinting_ = false;
 }

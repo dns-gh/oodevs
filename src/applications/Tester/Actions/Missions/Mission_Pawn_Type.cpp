@@ -80,9 +80,11 @@
 #include "Pawn/Mission_Pawn_ABC_ArmerPIA.cpp"
 #include "Pawn/Mission_Pawn_ABC_OuvrirItineraire.cpp"
 #include "Pawn/Mission_Pawn_ABC_Freiner.cpp"
-#include "Pawn/Mission_Pawn_ABC_EscorterUnConvoi.cpp"
+#include "Pawn/Mission_Pawn_ABC_EscorterUnite.cpp"
+#include "Pawn/Mission_Pawn_ABC_EscorterUnites.cpp"
 #include "Pawn/Mission_Pawn_ABC_ArmerPointDeControle.cpp"
 #include "Pawn/Mission_Pawn_ABC_OrganiserAccueilColonneRefugies.cpp"
+#include "Pawn/Mission_Pawn_ABC_AppuyerSurPosition.cpp"
 #include "Pawn/Mission_Pawn_GEN_RealiserFosseAC.cpp"
 #include "Pawn/Mission_Pawn_GEN_RealiserAbattisMine.cpp"
 #include "Pawn/Mission_Pawn_GEN_RealiserPointMine.cpp"
@@ -149,12 +151,14 @@
 #include "Pawn/Mission_Pawn_INF_OrganiserUnCheckPoint.cpp"
 #include "Pawn/Mission_Pawn_INF_Harceler.cpp"
 #include "Pawn/Mission_Pawn_INF_DetruireParCoupDeMain.cpp"
-#include "Pawn/Mission_Pawn_INF_EscorterUnConvoi.cpp"
+#include "Pawn/Mission_Pawn_INF_EscorterUnite.cpp"
+#include "Pawn/Mission_Pawn_INF_EscorterUnites.cpp"
 #include "Pawn/Mission_Pawn_INF_RenseignerSur.cpp"
 #include "Pawn/Mission_Pawn_INF_Soutenir.cpp"
 #include "Pawn/Mission_Pawn_INF_Securiser.cpp"
 #include "Pawn/Mission_Pawn_INF_Recueillir.cpp"
 #include "Pawn/Mission_Pawn_INF_RepondreAAggression.cpp"
+#include "Pawn/Mission_Pawn_INF_AppuyerSurPosition.cpp"
 #include "Pawn/Mission_Pawn_LOG_SeDeployer.cpp"
 #include "Pawn/Mission_Pawn_LOG_DistribuerMoyens.cpp"
 #include "Pawn/Mission_Pawn_LOG_TrierBlesses.cpp"
@@ -323,9 +327,11 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_ABC_ArmerPIA >( "Pion ABC ArmerPIA" );
     Register< Mission_Pawn_ABC_OuvrirItineraire >( "Pion ABC OuvrirItineraire" );
     Register< Mission_Pawn_ABC_Freiner >( "Pion ABC Freiner" );
-    Register< Mission_Pawn_ABC_EscorterUnConvoi >( "Pion ABC EscorterUnConvoi" );
+    Register< Mission_Pawn_ABC_EscorterUnite >( "Pion ABC EscorterUnite" );
+    Register< Mission_Pawn_ABC_EscorterUnites >( "Pion ABC EscorterUnites" );
     Register< Mission_Pawn_ABC_ArmerPointDeControle >( "Pion ABC ArmerPointDeControle" );
     Register< Mission_Pawn_ABC_OrganiserAccueilColonneRefugies >( "Pion ABC OrganiserAccueilColonneRefugies" );
+    Register< Mission_Pawn_ABC_AppuyerSurPosition >( "Pion ABC AppuyerSurPosition" );
     Register< Mission_Pawn_GEN_RealiserFosseAC >( "Pion GEN RealiserFosseAC" );
     Register< Mission_Pawn_GEN_RealiserAbattisMine >( "Pion GEN RealiserAbattisMine" );
     Register< Mission_Pawn_GEN_RealiserPointMine >( "Pion GEN RealiserPointMine" );
@@ -392,12 +398,14 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_INF_OrganiserUnCheckPoint >( "Pion INF OrganiserUnCheckPoint" );
     Register< Mission_Pawn_INF_Harceler >( "Pion INF Harceler" );
     Register< Mission_Pawn_INF_DetruireParCoupDeMain >( "Pion INF DetruireParCoupDeMain" );
-    Register< Mission_Pawn_INF_EscorterUnConvoi >( "Pion INF EscorterUnConvoi" );
+    Register< Mission_Pawn_INF_EscorterUnite >( "Pion INF EscorterUnite" );
+    Register< Mission_Pawn_INF_EscorterUnites >( "Pion INF EscorterUnites" );
     Register< Mission_Pawn_INF_RenseignerSur >( "Pion INF RenseignerSur" );
     Register< Mission_Pawn_INF_Soutenir >( "Pion INF Soutenir" );
     Register< Mission_Pawn_INF_Securiser >( "Pion INF Securiser" );
     Register< Mission_Pawn_INF_Recueillir >( "Pion INF Recueillir" );
     Register< Mission_Pawn_INF_RepondreAAggression >( "Pion INF RepondreAAggression" );
+    Register< Mission_Pawn_INF_AppuyerSurPosition >( "Pion INF AppuyerSurPosition" );
     Register< Mission_Pawn_LOG_SeDeployer >( "Pion LOG SeDeployer" );
     Register< Mission_Pawn_LOG_DistribuerMoyens >( "Pion LOG DistribuerMoyens" );
     Register< Mission_Pawn_LOG_TrierBlesses >( "Pion LOG TrierBlesses" );

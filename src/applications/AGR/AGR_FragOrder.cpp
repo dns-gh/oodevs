@@ -51,7 +51,8 @@ AGR_FragOrder::AGR_FragOrder( const std::string& strAsnName, const std::string& 
     ////
     if(     strAsnName == "OrderConduite_AttendreSePoster" 
         ||  strAsnName == "OrderConduite_Poursuivre" 
-        ||  strAsnName == "OrderConduite_Interrompre" )
+        ||  strAsnName == "OrderConduite_Interrompre" 
+        ||  strAsnName == "OrderConduite_ChangerAmbiance" )
     {
         bAvailableForAllMissions_  = true;
         bAvailableWithoutMissions_ = false;

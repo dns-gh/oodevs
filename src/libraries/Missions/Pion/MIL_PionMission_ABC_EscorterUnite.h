@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_ABC_EscorterUnConvoi_h_
-#define __MIL_PionMission_ABC_EscorterUnConvoi_h_
+#ifndef __MIL_PionMission_ABC_EscorterUnite_h_
+#define __MIL_PionMission_ABC_EscorterUnite_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_ABC_EscorterUnConvoi: public MIL_PionMission_ABC
+class MIL_PionMission_ABC_EscorterUnite: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_ABC_EscorterUnConvoi )
+    MT_COPYNOTALLOWED( MIL_PionMission_ABC_EscorterUnite )
 
 public:
 
-             MIL_PionMission_ABC_EscorterUnConvoi( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_ABC_EscorterUnConvoi();
+             MIL_PionMission_ABC_EscorterUnite( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_ABC_EscorterUnite();
 
     //! @name Init
     //@{
@@ -43,7 +43,7 @@ public:
     //@}
 
 private:
-    static int nDIAConvoiAEscorterIdx_;
+    static int nDIAUniteAEscorterIdx_;
 
 
 private:
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif // __MIL_PionMission_ABC_EscorterUnConvoi_h_
+#endif // __MIL_PionMission_ABC_EscorterUnite_h_

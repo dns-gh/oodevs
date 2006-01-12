@@ -54,7 +54,9 @@ MOS_AutomateMissionInterface::~MOS_AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_abc_surveiller_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_surveiller_itineraire; break;
         case T_Mission_Automate_mission_automate_abc_renseigner_sur_un_axe : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_renseigner_sur_un_axe; break;
         case T_Mission_Automate_mission_automate_abc_recueillir_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_recueillir_unite; break;
-        case T_Mission_Automate_mission_automate_abc_escorter_un_convoi : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_un_convoi; break;
+        case T_Mission_Automate_mission_automate_abc_escorter_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_unite; break;
+        case T_Mission_Automate_mission_automate_abc_escorter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_unites; break;
+        case T_Mission_Automate_mission_automate_abc_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_appuyer_sur_position; break;
         case T_Mission_Automate_mission_automate_alat_heliporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_heliporter; break;
         case T_Mission_Automate_mission_automate_alat_jalonner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_jalonner; break;
         case T_Mission_Automate_mission_automate_alat_helitransporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_helitransporter; break;
@@ -128,6 +130,9 @@ MOS_AutomateMissionInterface::~MOS_AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_inf_appuyer_un_freinage : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_appuyer_un_freinage; break;
         case T_Mission_Automate_mission_automate_inf_appuyer_une_attaque : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_appuyer_une_attaque; break;
         case T_Mission_Automate_mission_automate_inf_soutenir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_soutenir; break;
+        case T_Mission_Automate_mission_automate_inf_escorter_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_escorter_unite; break;
+        case T_Mission_Automate_mission_automate_inf_escorter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_escorter_unites; break;
+        case T_Mission_Automate_mission_automate_inf_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_appuyer_sur_position; break;
         case T_Mission_Automate_mission_automate_log_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_se_deployer; break;
         case T_Mission_Automate_mission_automate_log_appuyer_mouvement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement; break;
         case T_Mission_Automate_mission_automate_log_reconnaitre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_itineraire; break;
@@ -210,7 +215,9 @@ void MOS_AutomateMissionInterface::CreateInterface()
         case eMission_Automate_ABC_SurveillerItineraire : CreateMission_ABC_SurveillerItineraire(); break;
         case eMission_Automate_ABC_RenseignerSurUnAxe : CreateMission_ABC_RenseignerSurUnAxe(); break;
         case eMission_Automate_ABC_RecueillirUnite : CreateMission_ABC_RecueillirUnite(); break;
-        case eMission_Automate_ABC_EscorterUnConvoi : CreateMission_ABC_EscorterUnConvoi(); break;
+        case eMission_Automate_ABC_EscorterUnite : CreateMission_ABC_EscorterUnite(); break;
+        case eMission_Automate_ABC_EscorterUnites : CreateMission_ABC_EscorterUnites(); break;
+        case eMission_Automate_ABC_AppuyerSurPosition : CreateMission_ABC_AppuyerSurPosition(); break;
         case eMission_Automate_ALAT_Heliporter : CreateMission_ALAT_Heliporter(); break;
         case eMission_Automate_ALAT_Jalonner : CreateMission_ALAT_Jalonner(); break;
         case eMission_Automate_ALAT_Helitransporter : CreateMission_ALAT_Helitransporter(); break;
@@ -284,6 +291,9 @@ void MOS_AutomateMissionInterface::CreateInterface()
         case eMission_Automate_INF_AppuyerUnFreinage : CreateMission_INF_AppuyerUnFreinage(); break;
         case eMission_Automate_INF_AppuyerUneAttaque : CreateMission_INF_AppuyerUneAttaque(); break;
         case eMission_Automate_INF_Soutenir : CreateMission_INF_Soutenir(); break;
+        case eMission_Automate_INF_EscorterUnite : CreateMission_INF_EscorterUnite(); break;
+        case eMission_Automate_INF_EscorterUnites : CreateMission_INF_EscorterUnites(); break;
+        case eMission_Automate_INF_AppuyerSurPosition : CreateMission_INF_AppuyerSurPosition(); break;
         case eMission_Automate_LOG_SeDeployer : CreateMission_LOG_SeDeployer(); break;
         case eMission_Automate_LOG_AppuyerMouvement : CreateMission_LOG_AppuyerMouvement(); break;
         case eMission_Automate_LOG_ReconnaitreItineraire : CreateMission_LOG_ReconnaitreItineraire(); break;
@@ -672,15 +682,40 @@ void MOS_AutomateMissionInterface::CreateMission_ABC_RecueillirUnite()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_AutomateMissionInterface::CreateMission_ABC_EscorterUnConvoi
+// Name: MOS_AutomateMissionInterface::CreateMission_ABC_EscorterUnite
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_AutomateMissionInterface::CreateMission_ABC_EscorterUnConvoi()
+void MOS_AutomateMissionInterface::CreateMission_ABC_EscorterUnite()
 {
-    ASN1T_Mission_Automate_ABC_EscorterUnConvoi& asnMission = *new ASN1T_Mission_Automate_ABC_EscorterUnConvoi();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_escorter_un_convoi;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_un_convoi = &asnMission;
-    CreateAgent( asnMission.convoi_a_escorter, "Convoi a escorter", false );
+    ASN1T_Mission_Automate_ABC_EscorterUnite& asnMission = *new ASN1T_Mission_Automate_ABC_EscorterUnite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_escorter_unite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_unite = &asnMission;
+    CreateAgent( asnMission.unite_a_escorter, "Unite a escorter", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AutomateMissionInterface::CreateMission_ABC_EscorterUnites
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_AutomateMissionInterface::CreateMission_ABC_EscorterUnites()
+{
+    ASN1T_Mission_Automate_ABC_EscorterUnites& asnMission = *new ASN1T_Mission_Automate_ABC_EscorterUnites();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_escorter_unites;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_unites = &asnMission;
+    CreateAutomate( asnMission.automate_a_escorter, "Automate a escorter", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AutomateMissionInterface::CreateMission_ABC_AppuyerSurPosition
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_AutomateMissionInterface::CreateMission_ABC_AppuyerSurPosition()
+{
+    ASN1T_Mission_Automate_ABC_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Automate_ABC_AppuyerSurPosition();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_appuyer_sur_position;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_appuyer_sur_position = &asnMission;
+    CreateLocation( asnMission.position_installation, "Position installation", false );
+    CreateAutomate( asnMission.compagnie, "Compagnie", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1820,6 +1855,43 @@ void MOS_AutomateMissionInterface::CreateMission_INF_Soutenir()
     ASN1T_Mission_Automate_INF_Soutenir& asnMission = *new ASN1T_Mission_Automate_INF_Soutenir();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_soutenir;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_soutenir = &asnMission;
+    CreateAutomate( asnMission.compagnie, "Compagnie", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AutomateMissionInterface::CreateMission_INF_EscorterUnite
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_AutomateMissionInterface::CreateMission_INF_EscorterUnite()
+{
+    ASN1T_Mission_Automate_INF_EscorterUnite& asnMission = *new ASN1T_Mission_Automate_INF_EscorterUnite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_escorter_unite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_escorter_unite = &asnMission;
+    CreateAgent( asnMission.unite_a_escorter, "Unite a escorter", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AutomateMissionInterface::CreateMission_INF_EscorterUnites
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_AutomateMissionInterface::CreateMission_INF_EscorterUnites()
+{
+    ASN1T_Mission_Automate_INF_EscorterUnites& asnMission = *new ASN1T_Mission_Automate_INF_EscorterUnites();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_escorter_unites;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_escorter_unites = &asnMission;
+    CreateAutomate( asnMission.automate_a_escorter, "Automate a escorter", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_AutomateMissionInterface::CreateMission_INF_AppuyerSurPosition
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_AutomateMissionInterface::CreateMission_INF_AppuyerSurPosition()
+{
+    ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Automate_INF_AppuyerSurPosition();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_appuyer_sur_position;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_appuyer_sur_position = &asnMission;
+    CreateLocation( asnMission.position_installation, "Position installation", false );
     CreateAutomate( asnMission.compagnie, "Compagnie", false );
 }
 

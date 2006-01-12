@@ -82,9 +82,11 @@ MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
         case T_Mission_Pion_mission_pion_abc_armer_pia : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_armer_pia; break;
         case T_Mission_Pion_mission_pion_abc_ouvrir_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_ouvrir_itineraire; break;
         case T_Mission_Pion_mission_pion_abc_freiner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_freiner; break;
-        case T_Mission_Pion_mission_pion_abc_escorter_un_convoi : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_escorter_un_convoi; break;
+        case T_Mission_Pion_mission_pion_abc_escorter_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_escorter_unite; break;
+        case T_Mission_Pion_mission_pion_abc_escorter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_escorter_unites; break;
         case T_Mission_Pion_mission_pion_abc_armer_point_de_controle : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_armer_point_de_controle; break;
         case T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies; break;
+        case T_Mission_Pion_mission_pion_abc_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position; break;
         case T_Mission_Pion_mission_pion_gen_realiser_fosse_ac : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_fosse_ac; break;
         case T_Mission_Pion_mission_pion_gen_realiser_abattis_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_abattis_mine; break;
         case T_Mission_Pion_mission_pion_gen_realiser_point_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_point_mine; break;
@@ -151,12 +153,14 @@ MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
         case T_Mission_Pion_mission_pion_inf_organiser_un_check_point : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_organiser_un_check_point; break;
         case T_Mission_Pion_mission_pion_inf_harceler : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_harceler; break;
         case T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_detruire_par_coup_de_main; break;
-        case T_Mission_Pion_mission_pion_inf_escorter_un_convoi : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_escorter_un_convoi; break;
+        case T_Mission_Pion_mission_pion_inf_escorter_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_escorter_unite; break;
+        case T_Mission_Pion_mission_pion_inf_escorter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_escorter_unites; break;
         case T_Mission_Pion_mission_pion_inf_renseigner_sur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_renseigner_sur; break;
         case T_Mission_Pion_mission_pion_inf_soutenir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_soutenir; break;
         case T_Mission_Pion_mission_pion_inf_securiser : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_securiser; break;
         case T_Mission_Pion_mission_pion_inf_recueillir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_recueillir; break;
         case T_Mission_Pion_mission_pion_inf_repondre_a_aggression : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_repondre_a_aggression; break;
+        case T_Mission_Pion_mission_pion_inf_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_appuyer_sur_position; break;
         case T_Mission_Pion_mission_pion_log_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_se_deployer; break;
         case T_Mission_Pion_mission_pion_log_distribuer_moyens : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_distribuer_moyens; break;
         case T_Mission_Pion_mission_pion_log_trier_blesses : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_log_trier_blesses; break;
@@ -308,9 +312,11 @@ void MOS_UnitMissionInterface::CreateInterface()
         case eMission_Pion_ABC_ArmerPIA : CreateMission_ABC_ArmerPIA(); break;
         case eMission_Pion_ABC_OuvrirItineraire : CreateMission_ABC_OuvrirItineraire(); break;
         case eMission_Pion_ABC_Freiner : CreateMission_ABC_Freiner(); break;
-        case eMission_Pion_ABC_EscorterUnConvoi : CreateMission_ABC_EscorterUnConvoi(); break;
+        case eMission_Pion_ABC_EscorterUnite : CreateMission_ABC_EscorterUnite(); break;
+        case eMission_Pion_ABC_EscorterUnites : CreateMission_ABC_EscorterUnites(); break;
         case eMission_Pion_ABC_ArmerPointDeControle : CreateMission_ABC_ArmerPointDeControle(); break;
         case eMission_Pion_ABC_OrganiserAccueilColonneRefugies : CreateMission_ABC_OrganiserAccueilColonneRefugies(); break;
+        case eMission_Pion_ABC_AppuyerSurPosition : CreateMission_ABC_AppuyerSurPosition(); break;
         case eMission_Pion_GEN_RealiserFosseAC : CreateMission_GEN_RealiserFosseAC(); break;
         case eMission_Pion_GEN_RealiserAbattisMine : CreateMission_GEN_RealiserAbattisMine(); break;
         case eMission_Pion_GEN_RealiserPointMine : CreateMission_GEN_RealiserPointMine(); break;
@@ -377,12 +383,14 @@ void MOS_UnitMissionInterface::CreateInterface()
         case eMission_Pion_INF_OrganiserUnCheckPoint : CreateMission_INF_OrganiserUnCheckPoint(); break;
         case eMission_Pion_INF_Harceler : CreateMission_INF_Harceler(); break;
         case eMission_Pion_INF_DetruireParCoupDeMain : CreateMission_INF_DetruireParCoupDeMain(); break;
-        case eMission_Pion_INF_EscorterUnConvoi : CreateMission_INF_EscorterUnConvoi(); break;
+        case eMission_Pion_INF_EscorterUnite : CreateMission_INF_EscorterUnite(); break;
+        case eMission_Pion_INF_EscorterUnites : CreateMission_INF_EscorterUnites(); break;
         case eMission_Pion_INF_RenseignerSur : CreateMission_INF_RenseignerSur(); break;
         case eMission_Pion_INF_Soutenir : CreateMission_INF_Soutenir(); break;
         case eMission_Pion_INF_Securiser : CreateMission_INF_Securiser(); break;
         case eMission_Pion_INF_Recueillir : CreateMission_INF_Recueillir(); break;
         case eMission_Pion_INF_RepondreAAggression : CreateMission_INF_RepondreAAggression(); break;
+        case eMission_Pion_INF_AppuyerSurPosition : CreateMission_INF_AppuyerSurPosition(); break;
         case eMission_Pion_LOG_SeDeployer : CreateMission_LOG_SeDeployer(); break;
         case eMission_Pion_LOG_DistribuerMoyens : CreateMission_LOG_DistribuerMoyens(); break;
         case eMission_Pion_LOG_TrierBlesses : CreateMission_LOG_TrierBlesses(); break;
@@ -1393,15 +1401,27 @@ void MOS_UnitMissionInterface::CreateMission_ABC_Freiner()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_ABC_EscorterUnConvoi
+// Name: MOS_UnitMissionInterface::CreateMission_ABC_EscorterUnite
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_ABC_EscorterUnConvoi()
+void MOS_UnitMissionInterface::CreateMission_ABC_EscorterUnite()
 {
-    ASN1T_Mission_Pion_ABC_EscorterUnConvoi& asnMission = *new ASN1T_Mission_Pion_ABC_EscorterUnConvoi();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_escorter_un_convoi;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_escorter_un_convoi = &asnMission;
-    CreateAgent( asnMission.convoi_a_escorter, "Convoi a escorter", false );
+    ASN1T_Mission_Pion_ABC_EscorterUnite& asnMission = *new ASN1T_Mission_Pion_ABC_EscorterUnite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_escorter_unite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_escorter_unite = &asnMission;
+    CreateAgent( asnMission.unite_a_escorter, "Unite a escorter", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_ABC_EscorterUnites
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_ABC_EscorterUnites()
+{
+    ASN1T_Mission_Pion_ABC_EscorterUnites& asnMission = *new ASN1T_Mission_Pion_ABC_EscorterUnites();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_escorter_unites;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_escorter_unites = &asnMission;
+    CreateAutomate( asnMission.automate_a_escorter, "Automate a escorter", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1426,6 +1446,19 @@ void MOS_UnitMissionInterface::CreateMission_ABC_OrganiserAccueilColonneRefugies
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies = &asnMission;
     CreatePoint( asnMission.position_installation, "Position installation", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_ABC_AppuyerSurPosition
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_ABC_AppuyerSurPosition()
+{
+    ASN1T_Mission_Pion_ABC_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Pion_ABC_AppuyerSurPosition();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_appuyer_sur_position;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position = &asnMission;
+    CreatePoint( asnMission.position, "Position", false );
+    CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -2341,15 +2374,27 @@ void MOS_UnitMissionInterface::CreateMission_INF_DetruireParCoupDeMain()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MOS_UnitMissionInterface::CreateMission_INF_EscorterUnConvoi
+// Name: MOS_UnitMissionInterface::CreateMission_INF_EscorterUnite
 // Created: AGR
 // -----------------------------------------------------------------------------
-void MOS_UnitMissionInterface::CreateMission_INF_EscorterUnConvoi()
+void MOS_UnitMissionInterface::CreateMission_INF_EscorterUnite()
 {
-    ASN1T_Mission_Pion_INF_EscorterUnConvoi& asnMission = *new ASN1T_Mission_Pion_INF_EscorterUnConvoi();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_escorter_un_convoi;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_escorter_un_convoi = &asnMission;
-    CreateAgent( asnMission.convoi_a_escorter, "Convoi a escorter", false );
+    ASN1T_Mission_Pion_INF_EscorterUnite& asnMission = *new ASN1T_Mission_Pion_INF_EscorterUnite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_escorter_unite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_escorter_unite = &asnMission;
+    CreateAgent( asnMission.unite_a_escorter, "Unite a escorter", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_INF_EscorterUnites
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_INF_EscorterUnites()
+{
+    ASN1T_Mission_Pion_INF_EscorterUnites& asnMission = *new ASN1T_Mission_Pion_INF_EscorterUnites();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_escorter_unites;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_escorter_unites = &asnMission;
+    CreateAutomate( asnMission.automate_a_escorter, "Automate a escorter", false );
 }
 
 // -----------------------------------------------------------------------------
@@ -2411,6 +2456,19 @@ void MOS_UnitMissionInterface::CreateMission_INF_RepondreAAggression()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_repondre_a_aggression;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_repondre_a_aggression = &asnMission;
     CreateAgentKnowledge( asnMission.aggresseur, "Aggresseur", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_INF_AppuyerSurPosition
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_INF_AppuyerSurPosition()
+{
+    ASN1T_Mission_Pion_INF_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Pion_INF_AppuyerSurPosition();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_appuyer_sur_position;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_appuyer_sur_position = &asnMission;
+    CreatePoint( asnMission.position, "Position", false );
+    CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer", false );
 }
 
 // -----------------------------------------------------------------------------

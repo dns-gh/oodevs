@@ -23,6 +23,7 @@
 
 class ADN_Automata_Data;
 class ADN_Table;
+class ADN_ListView;
 
 
 // =============================================================================
@@ -60,7 +61,9 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table* CreateAutomataCompositionsTable();
+    ADN_Table*    CreateAutomataCompositionsTable  ();
+    ADN_ListView* CreateAutomataLogTable           ();
+    ADN_ListView* CreateAutomataLogTablePerDotation();
     //@}
 
 private:

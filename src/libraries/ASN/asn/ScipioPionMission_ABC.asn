@@ -107,16 +107,31 @@ Mission-Pion-ABC-OuvrirItineraire ::= SEQUENCE
 {
     itineraire       Itineraire
 }
+Mission-Pion-ABC-RenseignerSur ::= SEQUENCE
+{
+    zone Polygon
+}
+
+Mission-Pion-ABC-EscorterUnite ::= SEQUENCE
+{
+    unite-a-escorter Agent
+}
+
+Mission-Pion-ABC-EscorterUnites ::= SEQUENCE
+{
+    automate-a-escorter Automate
+}
+
+Mission-Pion-ABC-AppuyerSurPosition ::= SEQUENCE
+{
+	position          Point,
+    unites-a-appuyer  ListAgent   
+}
 
 -- Missions internes
 Mission-Pion-ABC-Freiner ::= SEQUENCE
 {
     itineraire  Itineraire
-}
-
-Mission-Pion-ABC-EscorterUnConvoi ::= SEQUENCE
-{
-    convoi-a-escorter Agent
 }
 
 END -- ScipioPionMission_ABC

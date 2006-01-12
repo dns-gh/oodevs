@@ -26,6 +26,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 
 #include "Tools/MIL_Tools.h"
 
@@ -302,6 +303,34 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
     if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
         return std::numeric_limits< MT_Float >::max(); 
     return pDirectFireData_->GetMinRangeToFireOn( targetComposanteType, rWantedPH );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetMaxRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    assert( pDotationCategory_ );
+
+    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+        return 0.;
+    const PHY_Posture& firerPosture = firer.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
+    return pDirectFireData_->GetMaxRangeToFireOnWithPosture( targetComposanteType, firerPosture, targetPosture, rWantedPH );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetMinRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    assert( pDotationCategory_ );
+
+    if( !pDirectFireData_ || !firer.GetRole< PHY_RoleInterface_Dotations >().HasDotation( *pDotationCategory_ ) )
+        return 0.;
+    const PHY_Posture& firerPosture = firer.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
+    return pDirectFireData_->GetMinRangeToFireOnWithPosture( targetComposanteType, firerPosture, targetPosture, rWantedPH );
 }
 
 // -----------------------------------------------------------------------------

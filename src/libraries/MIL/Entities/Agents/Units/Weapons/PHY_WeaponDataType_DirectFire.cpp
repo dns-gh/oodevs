@@ -177,6 +177,24 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOn( const PHY_Composant
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    return GetMaxDistanceForPH( rWantedPH, firerPosture, targetPosture, targetComposanteType.GetVolume() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    return GetMinDistanceForPH( rWantedPH, firerPosture, targetPosture, targetComposanteType.GetVolume() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire::GetDangerosity
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------

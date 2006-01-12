@@ -49,11 +49,14 @@ public:
 
     void SetDeletionEnabled( bool b );
 
+    int ComputeNbrPrintPages( const QSize& painterSize ) const;
+    void Print( int nPage, QPainter& painter, const QSize& painterSize );
+
 public slots:
     void SetCurrentItem( void* pData );
 
 protected:
-    virtual void ConnectItem( bool bConnect ) = 0;
+    virtual void ConnectItem( bool bConnect ){}// = 0;
    
     void keyReleaseEvent( QKeyEvent* pEvent );
 
@@ -84,6 +87,7 @@ protected:
     ADN_ObjectCreator_ABC* pObjectCreator_;
 
     QRect toolTipRect_;
+    bool bPrinting_;
 };
 
 

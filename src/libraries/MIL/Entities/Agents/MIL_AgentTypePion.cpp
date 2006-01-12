@@ -540,6 +540,8 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     // Fire 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemy                 , "DEC_Tir_PorteeMaxPourTirerSurAgent"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToFireOnEnemy                 , "DEC_Tir_PorteeMinPourTirerSurAgent"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture    , "DEC_Tir_PorteeMaxPourTirerSurAgentPosturesReelles"    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture    , "DEC_Tir_PorteeMinPourTirerSurAgentPosturesReelles"    );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded     , "DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent"           );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy              , "DEC_Tir_PorteeMaxPourEtreTireParAgent"                );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_FireFunctions::GetMaxRangeToIndirectFire                , "DEC_Tir_PorteeMaxTirIndirect"                         );

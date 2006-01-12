@@ -74,9 +74,11 @@
     void CreateMission_ABC_ArmerPIA();
     void CreateMission_ABC_OuvrirItineraire();
     void CreateMission_ABC_Freiner();
-    void CreateMission_ABC_EscorterUnConvoi();
+    void CreateMission_ABC_EscorterUnite();
+    void CreateMission_ABC_EscorterUnites();
     void CreateMission_ABC_ArmerPointDeControle();
     void CreateMission_ABC_OrganiserAccueilColonneRefugies();
+    void CreateMission_ABC_AppuyerSurPosition();
     void CreateMission_GEN_RealiserFosseAC();
     void CreateMission_GEN_RealiserAbattisMine();
     void CreateMission_GEN_RealiserPointMine();
@@ -143,12 +145,14 @@
     void CreateMission_INF_OrganiserUnCheckPoint();
     void CreateMission_INF_Harceler();
     void CreateMission_INF_DetruireParCoupDeMain();
-    void CreateMission_INF_EscorterUnConvoi();
+    void CreateMission_INF_EscorterUnite();
+    void CreateMission_INF_EscorterUnites();
     void CreateMission_INF_RenseignerSur();
     void CreateMission_INF_Soutenir();
     void CreateMission_INF_Securiser();
     void CreateMission_INF_Recueillir();
     void CreateMission_INF_RepondreAAggression();
+    void CreateMission_INF_AppuyerSurPosition();
     void CreateMission_LOG_SeDeployer();
     void CreateMission_LOG_DistribuerMoyens();
     void CreateMission_LOG_TrierBlesses();

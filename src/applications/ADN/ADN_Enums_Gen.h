@@ -72,9 +72,11 @@ enum E_SMission
     eSMission_Pion_ABC_ArmerPIA,
     eSMission_Pion_ABC_OuvrirItineraire,
     eSMission_Pion_ABC_Freiner,
-    eSMission_Pion_ABC_EscorterUnConvoi,
+    eSMission_Pion_ABC_EscorterUnite,
+    eSMission_Pion_ABC_EscorterUnites,
     eSMission_Pion_ABC_ArmerPointDeControle,
     eSMission_Pion_ABC_OrganiserAccueilColonneRefugies,
+    eSMission_Pion_ABC_AppuyerSurPosition,
 
     eSMission_Pion_ABC_Fin,
           
@@ -102,12 +104,14 @@ enum E_SMission
     eSMission_Pion_INF_OrganiserUnCheckPoint,
     eSMission_Pion_INF_Harceler,
     eSMission_Pion_INF_DetruireParCoupDeMain,
-    eSMission_Pion_INF_EscorterUnConvoi,
+    eSMission_Pion_INF_EscorterUnite,
+    eSMission_Pion_INF_EscorterUnites,
     eSMission_Pion_INF_RenseignerSur,
     eSMission_Pion_INF_Soutenir,
     eSMission_Pion_INF_Securiser,
     eSMission_Pion_INF_Recueillir,
     eSMission_Pion_INF_RepondreAAggression,
+    eSMission_Pion_INF_AppuyerSurPosition,
 
     eSMission_Pion_INF_Fin,
     
@@ -353,7 +357,9 @@ enum E_SMission
     eSMission_Automate_ABC_SurveillerItineraire,
     eSMission_Automate_ABC_RenseignerSurUnAxe,
     eSMission_Automate_ABC_RecueillirUnite,
-    eSMission_Automate_ABC_EscorterUnConvoi,
+    eSMission_Automate_ABC_EscorterUnite,
+    eSMission_Automate_ABC_EscorterUnites,
+    eSMission_Automate_ABC_AppuyerSurPosition,
 
     eSMission_Automate_ABC_Fin,
 
@@ -387,6 +393,9 @@ enum E_SMission
     eSMission_Automate_INF_AppuyerUnFreinage,
     eSMission_Automate_INF_AppuyerUneAttaque,
     eSMission_Automate_INF_Soutenir,
+    eSMission_Automate_INF_EscorterUnite,
+    eSMission_Automate_INF_EscorterUnites,
+    eSMission_Automate_INF_AppuyerSurPosition,
 
     eSMission_Automate_INF_Fin,
 

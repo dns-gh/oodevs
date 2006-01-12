@@ -46,7 +46,9 @@
 #include "Automate\MIL_AutomateMission_ABC_SurveillerItineraire.cpp"
 #include "Automate\MIL_AutomateMission_ABC_RenseignerSurUnAxe.cpp"
 #include "Automate\MIL_AutomateMission_ABC_RecueillirUnite.cpp"
-#include "Automate\MIL_AutomateMission_ABC_EscorterUnConvoi.cpp"
+#include "Automate\MIL_AutomateMission_ABC_EscorterUnite.cpp"
+#include "Automate\MIL_AutomateMission_ABC_EscorterUnites.cpp"
+#include "Automate\MIL_AutomateMission_ABC_AppuyerSurPosition.cpp"
 #include "Pion\MIL_PionMission_ALAT_EvacuationSanitaire.cpp"
 #include "Pion\MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur.cpp"
 #include "Pion\MIL_PionMission_ALAT_ReconnaitreContourEnnemi.cpp"
@@ -138,6 +140,9 @@
 #include "Automate\MIL_AutomateMission_INF_AppuyerUnFreinage.cpp"
 #include "Automate\MIL_AutomateMission_INF_AppuyerUneAttaque.cpp"
 #include "Automate\MIL_AutomateMission_INF_Soutenir.cpp"
+#include "Automate\MIL_AutomateMission_INF_EscorterUnite.cpp"
+#include "Automate\MIL_AutomateMission_INF_EscorterUnites.cpp"
+#include "Automate\MIL_AutomateMission_INF_AppuyerSurPosition.cpp"
 #include "Automate\MIL_AutomateMission_LOG_SeDeployer.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvement.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ReconnaitreItineraire.cpp"
@@ -215,9 +220,11 @@
 #include "Pion\MIL_PionMission_ABC_ArmerPIA.cpp"
 #include "Pion\MIL_PionMission_ABC_OuvrirItineraire.cpp"
 #include "Pion\MIL_PionMission_ABC_Freiner.cpp"
-#include "Pion\MIL_PionMission_ABC_EscorterUnConvoi.cpp"
+#include "Pion\MIL_PionMission_ABC_EscorterUnite.cpp"
+#include "Pion\MIL_PionMission_ABC_EscorterUnites.cpp"
 #include "Pion\MIL_PionMission_ABC_ArmerPointDeControle.cpp"
 #include "Pion\MIL_PionMission_ABC_OrganiserAccueilColonneRefugies.cpp"
+#include "Pion\MIL_PionMission_ABC_AppuyerSurPosition.cpp"
 #include "Pion\MIL_PionMission_GEN_RealiserFosseAC.cpp"
 #include "Pion\MIL_PionMission_GEN_RealiserAbattisMine.cpp"
 #include "Pion\MIL_PionMission_GEN_RealiserPointMine.cpp"
@@ -284,12 +291,14 @@
 #include "Pion\MIL_PionMission_INF_OrganiserUnCheckPoint.cpp"
 #include "Pion\MIL_PionMission_INF_Harceler.cpp"
 #include "Pion\MIL_PionMission_INF_DetruireParCoupDeMain.cpp"
-#include "Pion\MIL_PionMission_INF_EscorterUnConvoi.cpp"
+#include "Pion\MIL_PionMission_INF_EscorterUnite.cpp"
+#include "Pion\MIL_PionMission_INF_EscorterUnites.cpp"
 #include "Pion\MIL_PionMission_INF_RenseignerSur.cpp"
 #include "Pion\MIL_PionMission_INF_Soutenir.cpp"
 #include "Pion\MIL_PionMission_INF_Securiser.cpp"
 #include "Pion\MIL_PionMission_INF_Recueillir.cpp"
 #include "Pion\MIL_PionMission_INF_RepondreAAggression.cpp"
+#include "Pion\MIL_PionMission_INF_AppuyerSurPosition.cpp"
 #include "Pion\MIL_PionMission_LOG_SeDeployer.cpp"
 #include "Pion\MIL_PionMission_LOG_DistribuerMoyens.cpp"
 #include "Pion\MIL_PionMission_LOG_TrierBlesses.cpp"
@@ -382,6 +391,7 @@
 #include "Conduite\MIL_OrderConduite_AttendreSePoster.cpp"
 #include "Conduite\MIL_OrderConduite_Poursuivre.cpp"
 #include "Conduite\MIL_OrderConduite_Interrompre.cpp"
+#include "Conduite\MIL_OrderConduite_ChangerAmbiance.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerReglesEngagement.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerReglesEngagementPopulation.cpp"
 #include "Conduite\MIL_OrderConduite_Deboucher.cpp"
@@ -478,7 +488,9 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_SurveillerItineraire>( "Automate ABC SurveillerItineraire", eMission_Automate_ABC_SurveillerItineraire, T_Mission_Automate_mission_automate_abc_surveiller_itineraire, "T_Mission_Automate_ABC_SurveillerItineraire", "MIS_Automate_MRT_ABC_SurveillerItineraire", "MIS_Automate_CDT_ABC_SurveillerItineraire");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_RenseignerSurUnAxe>( "Automate ABC RenseignerSurUnAxe", eMission_Automate_ABC_RenseignerSurUnAxe, T_Mission_Automate_mission_automate_abc_renseigner_sur_un_axe, "T_Mission_Automate_ABC_RenseignerSurUnAxe", "MIS_Automate_MRT_ABC_RenseignerSurUnAxe", "MIS_Automate_CDT_ABC_RenseignerSurUnAxe");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_RecueillirUnite>( "Automate ABC RecueillirUnite", eMission_Automate_ABC_RecueillirUnite, T_Mission_Automate_mission_automate_abc_recueillir_unite, "T_Mission_Automate_ABC_RecueillirUnite", "MIS_Automate_MRT_ABC_RecueillirUnite", "MIS_Automate_CDT_ABC_RecueillirUnite");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_EscorterUnConvoi>( "Automate ABC EscorterUnConvoi", eMission_Automate_ABC_EscorterUnConvoi, T_Mission_Automate_mission_automate_abc_escorter_un_convoi, "T_Mission_Automate_ABC_EscorterUnConvoi", "MIS_Automate_MRT_ABC_EscorterUnConvoi", "MIS_Automate_CDT_ABC_EscorterUnConvoi");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_EscorterUnite>( "Automate ABC EscorterUnite", eMission_Automate_ABC_EscorterUnite, T_Mission_Automate_mission_automate_abc_escorter_unite, "T_Mission_Automate_ABC_EscorterUnite", "MIS_Automate_MRT_ABC_EscorterUnite", "MIS_Automate_CDT_ABC_EscorterUnite");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_EscorterUnites>( "Automate ABC EscorterUnites", eMission_Automate_ABC_EscorterUnites, T_Mission_Automate_mission_automate_abc_escorter_unites, "T_Mission_Automate_ABC_EscorterUnites", "MIS_Automate_MRT_ABC_EscorterUnites", "MIS_Automate_CDT_ABC_EscorterUnites");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_AppuyerSurPosition>( "Automate ABC AppuyerSurPosition", eMission_Automate_ABC_AppuyerSurPosition, T_Mission_Automate_mission_automate_abc_appuyer_sur_position, "T_Mission_Automate_ABC_AppuyerSurPosition", "MIS_Automate_MRT_ABC_AppuyerSurPosition", "MIS_Automate_CDT_ABC_AppuyerSurPosition");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Heliporter>( "Automate ALAT Heliporter", eMission_Automate_ALAT_Heliporter, T_Mission_Automate_mission_automate_alat_heliporter, "T_Mission_Automate_ALAT_Heliporter", "MIS_Automate_MRT_ALAT_Heliporter", "MIS_Automate_CDT_ALAT_Heliporter");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Jalonner>( "Automate ALAT Jalonner", eMission_Automate_ALAT_Jalonner, T_Mission_Automate_mission_automate_alat_jalonner, "T_Mission_Automate_ALAT_Jalonner", "MIS_Automate_MRT_ALAT_Jalonner", "MIS_Automate_CDT_ALAT_Jalonner");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Helitransporter>( "Automate ALAT Helitransporter", eMission_Automate_ALAT_Helitransporter, T_Mission_Automate_mission_automate_alat_helitransporter, "T_Mission_Automate_ALAT_Helitransporter", "MIS_Automate_MRT_ALAT_Helitransporter", "MIS_Automate_CDT_ALAT_Helitransporter");
@@ -552,6 +564,9 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_AppuyerUnFreinage>( "Automate INF AppuyerUnFreinage", eMission_Automate_INF_AppuyerUnFreinage, T_Mission_Automate_mission_automate_inf_appuyer_un_freinage, "T_Mission_Automate_INF_AppuyerUnFreinage", "MIS_Automate_MRT_INF_AppuyerUnFreinage", "MIS_Automate_CDT_INF_AppuyerUnFreinage");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_AppuyerUneAttaque>( "Automate INF AppuyerUneAttaque", eMission_Automate_INF_AppuyerUneAttaque, T_Mission_Automate_mission_automate_inf_appuyer_une_attaque, "T_Mission_Automate_INF_AppuyerUneAttaque", "MIS_Automate_MRT_INF_AppuyerUneAttaque", "MIS_Automate_CDT_INF_AppuyerUneAttaque");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_Soutenir>( "Automate INF Soutenir", eMission_Automate_INF_Soutenir, T_Mission_Automate_mission_automate_inf_soutenir, "T_Mission_Automate_INF_Soutenir", "MIS_Automate_MRT_INF_Soutenir", "MIS_Automate_CDT_INF_Soutenir");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_EscorterUnite>( "Automate INF EscorterUnite", eMission_Automate_INF_EscorterUnite, T_Mission_Automate_mission_automate_inf_escorter_unite, "T_Mission_Automate_INF_EscorterUnite", "MIS_Automate_MRT_INF_EscorterUnite", "MIS_Automate_CDT_INF_EscorterUnite");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_EscorterUnites>( "Automate INF EscorterUnites", eMission_Automate_INF_EscorterUnites, T_Mission_Automate_mission_automate_inf_escorter_unites, "T_Mission_Automate_INF_EscorterUnites", "MIS_Automate_MRT_INF_EscorterUnites", "MIS_Automate_CDT_INF_EscorterUnites");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_AppuyerSurPosition>( "Automate INF AppuyerSurPosition", eMission_Automate_INF_AppuyerSurPosition, T_Mission_Automate_mission_automate_inf_appuyer_sur_position, "T_Mission_Automate_INF_AppuyerSurPosition", "MIS_Automate_MRT_INF_AppuyerSurPosition", "MIS_Automate_CDT_INF_AppuyerSurPosition");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_SeDeployer>( "Automate LOG SeDeployer", eMission_Automate_LOG_SeDeployer, T_Mission_Automate_mission_automate_log_se_deployer, "T_Mission_Automate_LOG_SeDeployer", "MIS_Automate_MRT_LOG_SeDeployer", "MIS_Automate_CDT_LOG_SeDeployer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvement>( "Automate LOG AppuyerMouvement", eMission_Automate_LOG_AppuyerMouvement, T_Mission_Automate_mission_automate_log_appuyer_mouvement, "T_Mission_Automate_LOG_AppuyerMouvement", "MIS_Automate_MRT_LOG_AppuyerMouvement", "MIS_Automate_CDT_LOG_AppuyerMouvement");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ReconnaitreItineraire>( "Automate LOG ReconnaitreItineraire", eMission_Automate_LOG_ReconnaitreItineraire, T_Mission_Automate_mission_automate_log_reconnaitre_itineraire, "T_Mission_Automate_LOG_ReconnaitreItineraire", "MIS_Automate_MRT_LOG_ReconnaitreItineraire", "MIS_Automate_CDT_LOG_ReconnaitreItineraire");
@@ -656,9 +671,11 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_ArmerPIA>( "Pion ABC ArmerPIA", eMission_Pion_ABC_ArmerPIA, T_Mission_Pion_mission_pion_abc_armer_pia, "T_Mission_Pion_ABC_ArmerPIA", "MIS_Pion_ABC_ArmerPIA");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_OuvrirItineraire>( "Pion ABC OuvrirItineraire", eMission_Pion_ABC_OuvrirItineraire, T_Mission_Pion_mission_pion_abc_ouvrir_itineraire, "T_Mission_Pion_ABC_OuvrirItineraire", "MIS_Pion_ABC_OuvrirItineraire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_Freiner>( "Pion ABC Freiner", eMission_Pion_ABC_Freiner, T_Mission_Pion_mission_pion_abc_freiner, "T_Mission_Pion_ABC_Freiner", "MIS_Pion_ABC_Freiner");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_EscorterUnConvoi>( "Pion ABC EscorterUnConvoi", eMission_Pion_ABC_EscorterUnConvoi, T_Mission_Pion_mission_pion_abc_escorter_un_convoi, "T_Mission_Pion_ABC_EscorterUnConvoi", "MIS_Pion_ABC_EscorterUnConvoi");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_EscorterUnite>( "Pion ABC EscorterUnite", eMission_Pion_ABC_EscorterUnite, T_Mission_Pion_mission_pion_abc_escorter_unite, "T_Mission_Pion_ABC_EscorterUnite", "MIS_Pion_ABC_EscorterUnite");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_EscorterUnites>( "Pion ABC EscorterUnites", eMission_Pion_ABC_EscorterUnites, T_Mission_Pion_mission_pion_abc_escorter_unites, "T_Mission_Pion_ABC_EscorterUnites", "MIS_Pion_ABC_EscorterUnites");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_ArmerPointDeControle>( "Pion ABC ArmerPointDeControle", eMission_Pion_ABC_ArmerPointDeControle, T_Mission_Pion_mission_pion_abc_armer_point_de_controle, "T_Mission_Pion_ABC_ArmerPointDeControle", "MIS_Pion_ABC_ArmerPointDeControle");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_OrganiserAccueilColonneRefugies>( "Pion ABC OrganiserAccueilColonneRefugies", eMission_Pion_ABC_OrganiserAccueilColonneRefugies, T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies, "T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies", "MIS_Pion_ABC_OrganiserAccueilColonneRefugies");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_AppuyerSurPosition>( "Pion ABC AppuyerSurPosition", eMission_Pion_ABC_AppuyerSurPosition, T_Mission_Pion_mission_pion_abc_appuyer_sur_position, "T_Mission_Pion_ABC_AppuyerSurPosition", "MIS_Pion_ABC_AppuyerSurPosition");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserFosseAC>( "Pion GEN RealiserFosseAC", eMission_Pion_GEN_RealiserFosseAC, T_Mission_Pion_mission_pion_gen_realiser_fosse_ac, "T_Mission_Pion_GEN_RealiserFosseAC", "MIS_Pion_GEN_RealiserFosseAC");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserAbattisMine>( "Pion GEN RealiserAbattisMine", eMission_Pion_GEN_RealiserAbattisMine, T_Mission_Pion_mission_pion_gen_realiser_abattis_mine, "T_Mission_Pion_GEN_RealiserAbattisMine", "MIS_Pion_GEN_RealiserAbattisMine");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserPointMine>( "Pion GEN RealiserPointMine", eMission_Pion_GEN_RealiserPointMine, T_Mission_Pion_mission_pion_gen_realiser_point_mine, "T_Mission_Pion_GEN_RealiserPointMine", "MIS_Pion_GEN_RealiserPointMine");
@@ -725,12 +742,14 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_OrganiserUnCheckPoint>( "Pion INF OrganiserUnCheckPoint", eMission_Pion_INF_OrganiserUnCheckPoint, T_Mission_Pion_mission_pion_inf_organiser_un_check_point, "T_Mission_Pion_INF_OrganiserUnCheckPoint", "MIS_Pion_INF_OrganiserUnCheckPoint");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_Harceler>( "Pion INF Harceler", eMission_Pion_INF_Harceler, T_Mission_Pion_mission_pion_inf_harceler, "T_Mission_Pion_INF_Harceler", "MIS_Pion_INF_Harceler");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_DetruireParCoupDeMain>( "Pion INF DetruireParCoupDeMain", eMission_Pion_INF_DetruireParCoupDeMain, T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main, "T_Mission_Pion_INF_DetruireParCoupDeMain", "MIS_Pion_INF_DetruireParCoupDeMain");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_EscorterUnConvoi>( "Pion INF EscorterUnConvoi", eMission_Pion_INF_EscorterUnConvoi, T_Mission_Pion_mission_pion_inf_escorter_un_convoi, "T_Mission_Pion_INF_EscorterUnConvoi", "MIS_Pion_INF_EscorterUnConvoi");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_EscorterUnite>( "Pion INF EscorterUnite", eMission_Pion_INF_EscorterUnite, T_Mission_Pion_mission_pion_inf_escorter_unite, "T_Mission_Pion_INF_EscorterUnite", "MIS_Pion_INF_EscorterUnite");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_EscorterUnites>( "Pion INF EscorterUnites", eMission_Pion_INF_EscorterUnites, T_Mission_Pion_mission_pion_inf_escorter_unites, "T_Mission_Pion_INF_EscorterUnites", "MIS_Pion_INF_EscorterUnites");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_RenseignerSur>( "Pion INF RenseignerSur", eMission_Pion_INF_RenseignerSur, T_Mission_Pion_mission_pion_inf_renseigner_sur, "T_Mission_Pion_INF_RenseignerSur", "MIS_Pion_INF_RenseignerSur");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_Soutenir>( "Pion INF Soutenir", eMission_Pion_INF_Soutenir, T_Mission_Pion_mission_pion_inf_soutenir, "T_Mission_Pion_INF_Soutenir", "MIS_Pion_INF_Soutenir");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_Securiser>( "Pion INF Securiser", eMission_Pion_INF_Securiser, T_Mission_Pion_mission_pion_inf_securiser, "T_Mission_Pion_INF_Securiser", "MIS_Pion_INF_Securiser");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_Recueillir>( "Pion INF Recueillir", eMission_Pion_INF_Recueillir, T_Mission_Pion_mission_pion_inf_recueillir, "T_Mission_Pion_INF_Recueillir", "MIS_Pion_INF_Recueillir");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_RepondreAAggression>( "Pion INF RepondreAAggression", eMission_Pion_INF_RepondreAAggression, T_Mission_Pion_mission_pion_inf_repondre_a_aggression, "T_Mission_Pion_INF_RepondreAAggression", "MIS_Pion_INF_RepondreAAggression");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_AppuyerSurPosition>( "Pion INF AppuyerSurPosition", eMission_Pion_INF_AppuyerSurPosition, T_Mission_Pion_mission_pion_inf_appuyer_sur_position, "T_Mission_Pion_INF_AppuyerSurPosition", "MIS_Pion_INF_AppuyerSurPosition");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_SeDeployer>( "Pion LOG SeDeployer", eMission_Pion_LOG_SeDeployer, T_Mission_Pion_mission_pion_log_se_deployer, "T_Mission_Pion_LOG_SeDeployer", "MIS_Pion_LOG_SeDeployer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_DistribuerMoyens>( "Pion LOG DistribuerMoyens", eMission_Pion_LOG_DistribuerMoyens, T_Mission_Pion_mission_pion_log_distribuer_moyens, "T_Mission_Pion_LOG_DistribuerMoyens", "MIS_Pion_LOG_DistribuerMoyens");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TrierBlesses>( "Pion LOG TrierBlesses", eMission_Pion_LOG_TrierBlesses, T_Mission_Pion_mission_pion_log_trier_blesses, "T_Mission_Pion_LOG_TrierBlesses", "MIS_Pion_LOG_TrierBlesses");
@@ -829,6 +848,7 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_AttendreSePoster>( "AttendreSePoster", eOrdreConduite_AttendreSePoster, T_MsgOrderConduite_order_conduite_order_conduite_attendre_se_poster, "Rep_OrderConduite_AttendreSePoster", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_attendre_se_poster );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Poursuivre>( "Poursuivre", eOrdreConduite_Poursuivre, T_MsgOrderConduite_order_conduite_order_conduite_poursuivre, "Rep_OrderConduite_Poursuivre", true, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_poursuivre );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Interrompre>( "Interrompre", eOrdreConduite_Interrompre, T_MsgOrderConduite_order_conduite_order_conduite_interrompre, "Rep_OrderConduite_Interrompre", true, false );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerAmbiance>( "ChangerAmbiance", eOrdreConduite_ChangerAmbiance, T_MsgOrderConduite_order_conduite_order_conduite_changer_ambiance, "Rep_OrderConduite_ChangerAmbiance", true, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagement>( "ChangerReglesEngagement", eOrdreConduite_ChangerReglesEngagement, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement, "Rep_OrderConduite_ChangerReglesEngagement", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagementPopulation>( "ChangerReglesEngagementPopulation", eOrdreConduite_ChangerReglesEngagementPopulation, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population, "Rep_OrderConduite_ChangerReglesEngagementPopulation", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Deboucher>( "Deboucher", eOrdreConduite_Deboucher, T_MsgOrderConduite_order_conduite_order_conduite_deboucher, "Rep_OrderConduite_Deboucher", false, false, T_MsgAttenteOrdreConduite_ordres_conduite_element_demande_order_conduite_deboucher );

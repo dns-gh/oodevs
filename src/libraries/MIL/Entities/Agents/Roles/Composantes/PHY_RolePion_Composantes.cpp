@@ -1435,6 +1435,40 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agen
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+{
+    // Get back the most dangerous composante type of the target (from our point of view ...)
+    const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
+    if( !pTargetComposante )
+        return 0.;
+
+    MT_Float rRange = 0;
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        rRange = std::max( rRange, (**it).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetCurrentPosture(), rWantedPH ) );
+    return rRange;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+{
+    // Get The most dangerous composante type of the target
+    const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
+    if( !pTargetComposante )
+        return std::numeric_limits< MT_Float >::max();
+
+    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        rRange = std::min( rRange, (**it).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetCurrentPosture(), rWantedPH ) );
+    return rRange;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

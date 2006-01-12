@@ -106,8 +106,8 @@ private:
 
     //! @name  Position operations
     //@{
-    virtual void       ApplyMove         ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
-            void       UpdateTailPosition( const MT_Float rWalkedDistance );
+    virtual void       ApplyMove                 ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
+            void       UpdateTailPosition        ( const MT_Float rWalkedDistance );
 
     const MT_Vector2D& GetHeadPosition() const;
     const MT_Vector2D& GetTailPosition() const;
@@ -136,7 +136,9 @@ private:
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasResources         ();
     virtual void SendRC               ( const MIL_RC& rc ) const;
-            void ComputePath          ( const MT_Vector2D& destination );
+
+            void MoveToAlternateDestination( const MT_Vector2D& destination );
+            void ComputePath               ( const MT_Vector2D& destination );
     //@}
 
     //! @name Network
@@ -149,7 +151,8 @@ private:
     MIL_PopulationConcentration* pSourceConcentration_;
     MIL_PopulationConcentration* pDestConcentration_;
          
-    MT_Vector2D          destination_;
+    MT_Vector2D          primaryDestination_;
+    MT_Vector2D          alternateDestination_; // Used when the flow is splitted
     DEC_Population_Path* pCurrentPath_;
     bool                 bHeadMoveFinished_;
 

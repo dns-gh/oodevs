@@ -100,6 +100,7 @@ public:
     static const std::string& ConvertFromUnitAttrErrorCode( E_UnitAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
+    static const std::string& ConvertFromAmbianceMission( E_AmbianceMission, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromActionReagirFaceAEni( E_ActionReagirFaceAEni, E_Conversion = eToSim );
     static const std::string& ConvertFromTC2GererMaterielAvantDeplacement( E_TC2GererMaterielAvantDeplacement, E_Conversion = eToSim );
@@ -174,6 +175,7 @@ public:
     static E_UnitAttrErrorCode ConvertToUnitAttrErrorCode( const std::string& );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
+    static E_AmbianceMission ConvertToAmbianceMission( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_ActionReagirFaceAEni ConvertToActionReagirFaceAEni( const std::string& );
     static E_TC2GererMaterielAvantDeplacement ConvertToTC2GererMaterielAvantDeplacement( const std::string& );
@@ -249,6 +251,7 @@ private:
     typedef ENT_Tr::converter<E_UnitAttrErrorCode> T_ConverterUnitAttrErrorCode;
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
     typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
+    typedef ENT_Tr::converter<E_AmbianceMission> T_ConverterAmbianceMission;
     typedef ENT_Tr::converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
     typedef ENT_Tr::converter<E_ActionReagirFaceAEni> T_ConverterActionReagirFaceAEni;
     typedef ENT_Tr::converter<E_TC2GererMaterielAvantDeplacement> T_ConverterTC2GererMaterielAvantDeplacement;
@@ -323,6 +326,7 @@ private:
     static T_ConverterUnitAttrErrorCode UnitAttrErrorCodeConverter_ [];
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
     static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
+    static T_ConverterAmbianceMission AmbianceMissionConverter_ [];
     static T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_ [];
     static T_ConverterActionReagirFaceAEni ActionReagirFaceAEniConverter_ [];
     static T_ConverterTC2GererMaterielAvantDeplacement TC2GererMaterielAvantDeplacementConverter_ [];

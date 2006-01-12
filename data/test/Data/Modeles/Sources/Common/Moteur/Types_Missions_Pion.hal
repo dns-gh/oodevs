@@ -406,9 +406,14 @@ typedef struct T_Mission_Pion_ABC_Freiner : T_Mission_Pion
 T_ListePoints itineraire_;
 };
 
-typedef struct T_Mission_Pion_ABC_EscorterUnConvoi : T_Mission_Pion
+typedef struct T_Mission_Pion_ABC_EscorterUnite : T_Mission_Pion
 {
-T_Pion convoiAEscorter_;
+T_Pion uniteAEscorter_;
+};
+
+typedef struct T_Mission_Pion_ABC_EscorterUnites : T_Mission_Pion
+{
+T_Automate automateAEscorter_;
 };
 
 typedef struct T_Mission_Pion_ABC_ArmerPointDeControle : T_Mission_Pion
@@ -419,6 +424,12 @@ T_Point pointDeControle_;
 typedef struct T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies : T_Mission_Pion
 {
 T_Point positionInstallation_;
+};
+
+typedef struct T_Mission_Pion_ABC_AppuyerSurPosition : T_Mission_Pion
+{
+T_Point position_;
+T_ListePions unitesAAppuyer_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserFosseAC : T_Mission_Pion
@@ -804,9 +815,14 @@ float heureDestruction_;
 id natureDestruction_;
 };
 
-typedef struct T_Mission_Pion_INF_EscorterUnConvoi : T_Mission_Pion
+typedef struct T_Mission_Pion_INF_EscorterUnite : T_Mission_Pion
 {
-T_Pion convoiAEscorter_;
+T_Pion uniteAEscorter_;
+};
+
+typedef struct T_Mission_Pion_INF_EscorterUnites : T_Mission_Pion
+{
+T_Automate automateAEscorter_;
 };
 
 typedef struct T_Mission_Pion_INF_RenseignerSur : T_Mission_Pion
@@ -833,6 +849,12 @@ T_Point pia_;
 typedef struct T_Mission_Pion_INF_RepondreAAggression : T_Mission_Pion
 {
 T_ConnaissanceAgent aggresseur_;
+};
+
+typedef struct T_Mission_Pion_INF_AppuyerSurPosition : T_Mission_Pion
+{
+T_Point position_;
+T_ListePions unitesAAppuyer_;
 };
 
 typedef struct T_Mission_Pion_LOG_SeDeployer : T_Mission_Pion

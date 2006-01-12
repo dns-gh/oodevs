@@ -95,6 +95,9 @@ void MOS_FragmentaryOrderInterface::CreateInterface()
         case eOrdreConduite_Interrompre :
              CreateOrder_Interrompre();
              break;
+        case eOrdreConduite_ChangerAmbiance :
+             CreateOrder_ChangerAmbiance();
+             break;
         case eOrdreConduite_ChangerReglesEngagement :
              CreateOrder_ChangerReglesEngagement();
              break;
@@ -283,6 +286,20 @@ void MOS_FragmentaryOrderInterface::CreateOrder_Interrompre()
 {
     // NOTHING
 }
+// -----------------------------------------------------------------------------
+// Name: MOS_FragmentaryOrderInterface::CreateOrder_ChangerAmbiance
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_FragmentaryOrderInterface::CreateOrder_ChangerAmbiance()
+{
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_ambiance;
+#define asnMission pASNMsgOrder_->GetAsnMsg().order_conduite.u
+    MOS_ParamComboBox< ASN1T_EnumAmbianceMission >* pSelector_order_conduite_changer_ambiance = &CreateVarList( asnMission.order_conduite_changer_ambiance, "Order conduite changer ambiance", false );
+    pSelector_order_conduite_changer_ambiance->AddItem( "Surete", EnumAmbianceMission::surete );
+    pSelector_order_conduite_changer_ambiance->AddItem( "Vitesse", EnumAmbianceMission::vitesse );
+#undef asnMission
+}
+
 // -----------------------------------------------------------------------------
 // Name: MOS_FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement
 // Created: AGR

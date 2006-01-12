@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Automat_ABC_EscorterUnConvoi_h_
-#define __Mission_Automat_ABC_EscorterUnConvoi_h_
+#ifndef __Mission_Automat_INF_EscorterUnites_h_
+#define __Mission_Automat_INF_EscorterUnites_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Automat;
 
 // =============================================================================
-/** @class  Mission_Automat_ABC_EscorterUnConvoi
-    @brief  Mission_Automat_ABC_EscorterUnConvoi
+/** @class  Mission_Automat_INF_EscorterUnites
+    @brief  Mission_Automat_INF_EscorterUnites
     @par    Using example
     @code
-    Mission_Automat_ABC_EscorterUnConvoi;
+    Mission_Automat_INF_EscorterUnites;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Automat_ABC_EscorterUnConvoi : public Mission_Automat_ABC
+class Mission_Automat_INF_EscorterUnites : public Mission_Automat_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Automat_ABC_EscorterUnConvoi( Automat& target );
-    virtual ~Mission_Automat_ABC_EscorterUnConvoi();
+             Mission_Automat_INF_EscorterUnites( Automat& target );
+    virtual ~Mission_Automat_INF_EscorterUnites();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Automat_ABC_EscorterUnConvoi( const Mission_Automat_ABC_EscorterUnConvoi& );            //!< Copy constructor
-    Mission_Automat_ABC_EscorterUnConvoi& operator=( const Mission_Automat_ABC_EscorterUnConvoi& ); //!< Assignment operator
+    Mission_Automat_INF_EscorterUnites( const Mission_Automat_INF_EscorterUnites& );            //!< Copy constructor
+    Mission_Automat_INF_EscorterUnites& operator=( const Mission_Automat_INF_EscorterUnites& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Automat_ABC_EscorterUnConvoi_h_
+#endif // __Mission_Automat_INF_EscorterUnites_h_

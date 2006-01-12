@@ -49,7 +49,8 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , MIL_PopulationElement_ABC( population, MIL_IDManager::populationFlows_.GetFreeSimID() )
     , pSourceConcentration_    ( &sourceConcentration )
     , pDestConcentration_      ( 0 )
-    , destination_             ( )
+    , primaryDestination_      ()
+    , alternateDestination_    ()
     , pCurrentPath_            ( 0 )
     , bHeadMoveFinished_       ( false )
     , flowShape_               ( 2, sourceConcentration.GetPosition() )
@@ -75,7 +76,8 @@ MIL_PopulationFlow::MIL_PopulationFlow()
     , MIL_PopulationElement_ABC()
     , pSourceConcentration_    ( 0 )
     , pDestConcentration_      ( 0 )
-    , destination_             ()
+    , primaryDestination_      ()
+    , alternateDestination_    ()
     , pCurrentPath_            ( 0 )
     , bHeadMoveFinished_       ( false )
     , flowShape_               ()
@@ -151,15 +153,29 @@ void MIL_PopulationFlow::MagicMove( const MT_Vector2D& destination )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::MoveToAlternateDestination
+// Created: NLD 2006-01-02
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::MoveToAlternateDestination( const MT_Vector2D& destination )
+{
+    if( destination != alternateDestination_ )
+    {
+        alternateDestination_ = destination;
+        ComputePath( alternateDestination_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::Move
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
 {
-    if( destination != destination_ )
+    if( destination != primaryDestination_ )
     {
-        destination_ = destination;
-        ComputePath( destination_ );
+        primaryDestination_   = destination;
+        alternateDestination_ = destination;
+        ComputePath( primaryDestination_ );
     }
 
     assert( pCurrentPath_ );
@@ -290,12 +306,12 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     //$$$ TEST 
     if( bSplit_ && !pDestConcentration_ )
     {
-        ComputePath( GetHeadPosition() );
+        MoveToAlternateDestination( GetHeadPosition() );
 
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->SetPullingFlowsDensity( 1. );
         pDestConcentration_->RegisterPushingFlow( *this );
-        pDestConcentration_->Move( destination_ );
+        //pDestConcentration_->Move( destination_ ); $$ Auto next tick
     }
 }
 

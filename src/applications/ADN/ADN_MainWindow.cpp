@@ -19,6 +19,8 @@
 #include "ADN_Tools.h"
 #include "ADN_Table.h"
 #include "ADN_TableDialog.h"
+#include "ADN_ListView.h"
+#include "ADN_ListViewDialog.h"
 #include "ADN_Enums.h"
 
 #include "ADN_DataException.h"
@@ -196,10 +198,19 @@ void ADN_MainWindow::AddPage( const QString& strPageName, QWidget& page )
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>* pCallback )
 {
-    vTableRegistrations_.push_back( T_TableRegistrationItem( strTableName, pCallback ) );
-    pCoheranceTablesMenu_->insertItem( strTableName, vTableRegistrations_.size() - 1, -1 );
+    vTableRegistrations_.insert( std::make_pair( pCoheranceTablesMenu_->count(), T_TableRegistrationItem( strTableName, pCallback ) ) );
+    pCoheranceTablesMenu_->insertItem( strTableName, pCoheranceTablesMenu_->count() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::AddListView
+// Created: SBO 2006-01-04
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback )
+{
+    vListViewRegistrations_.insert( std::make_pair( pCoheranceTablesMenu_->count(), T_ListViewRegistrationItem( strTableName, pCallback ) ) );
+    pCoheranceTablesMenu_->insertItem( strTableName, pCoheranceTablesMenu_->count() );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::SetMenuEnabled
@@ -422,6 +433,7 @@ void ADN_MainWindow::TestData()
             strCommandLine += " -conffile \"" + workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull() + "\"";
         
         ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, strCommandLine, tr( "Running data check" ) );
+        delete pDialog;
     }
     catch( const std::exception& e )
     {
@@ -496,12 +508,6 @@ void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
     }
 }
 
-
-
-
-
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::SelectOpenMode
 // Created: AGN 2004-05-25
@@ -550,14 +556,34 @@ bool ADN_MainWindow::SelectOpenMode()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ShowCoheranceTable( int nId )
 {
-    assert( nId < (int)vTableRegistrations_.size() );
-    ADN_Callback_ABC<ADN_Table*>* pCallback = vTableRegistrations_[nId].second;
+    //assert( nId < (int)vTableRegistrations_.size() );
+    IT_TableRegistrationMap itTable = vTableRegistrations_.find( nId );
+    if( itTable != vTableRegistrations_.end() )
+    {
+        T_TableRegistrationItem& item = itTable->second;
+        ADN_Callback_ABC<ADN_Table*>* pCallback = item.second;
 
-    ADN_Table* pTable = (*pCallback)();
-    ADN_TableDialog* pDialog = new ADN_TableDialog( this, vTableRegistrations_[nId].first, pTable );
+        ADN_Table* pTable = (*pCallback)();
+        ADN_TableDialog* pDialog = new ADN_TableDialog( this, item.first, pTable );
 
-    pDialog->exec();
-    delete pDialog;
+        pDialog->exec();
+        delete pDialog;
+    }
+    else
+    {
+        IT_ListViewRegistrationMap itListView = vListViewRegistrations_.find( nId );
+        if( itListView != vListViewRegistrations_.end() )
+        {
+            T_ListViewRegistrationItem& item = itListView->second;
+            ADN_Callback_ABC<ADN_ListView*>* pCallback = item.second;
+
+            ADN_ListView* pListView = (*pCallback)();
+            ADN_ListViewDialog* pDialog = new ADN_ListViewDialog( this, item.first, pListView );
+
+            pDialog->exec();
+            delete pDialog;
+        }
+    }
 }
 
 

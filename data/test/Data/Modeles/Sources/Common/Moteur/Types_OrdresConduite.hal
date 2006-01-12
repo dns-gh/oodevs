@@ -43,6 +43,11 @@ typedef struct Rep_OrderConduite_Interrompre : Rep_OrdreConduite
 {
 };
 
+typedef struct Rep_OrderConduite_ChangerAmbiance : Rep_OrdreConduite
+{
+id orderConduiteChangerAmbiance_;
+};
+
 typedef struct Rep_OrderConduite_ChangerReglesEngagement : Rep_OrdreConduite
 {
 id orderConduiteChangerReglesEngagement_;

@@ -27,6 +27,8 @@ public:
     //@{
     static void GetMaxRangeToFireOnEnemy                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMinRangeToFireOnEnemy                 ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMaxRangeToFireOnEnemyActualPosture    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+    static void GetMinRangeToFireOnEnemyActualPosture    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMaxRangeToFireOnEnemyWhenUnloaded     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMaxRangeToBeFiredByEnemy              ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetMaxRangeToIndirectFire                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

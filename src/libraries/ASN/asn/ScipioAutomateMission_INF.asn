@@ -163,5 +163,21 @@ Mission-Automate-INF-Soutenir ::= SEQUENCE
 	compagnie   Automate 
 }
 
+Mission-Automate-INF-EscorterUnite ::= SEQUENCE
+{
+    unite-a-escorter Agent
+}
+
+Mission-Automate-INF-EscorterUnites ::= SEQUENCE
+{
+    automate-a-escorter Automate
+}
+
+Mission-Automate-INF-AppuyerSurPosition ::= SEQUENCE
+{
+    position-installation    Polygon,
+    compagnie                Automate
+}
+
 END -- ScipioAutomateMission_INF
 

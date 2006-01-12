@@ -556,6 +556,26 @@ MT_Float PHY_ComposantePion::GetMinRangeToFireOn( const DEC_Knowledge_AgentCompo
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetMaxRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_ComposantePion::GetMaxRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    assert( pType_ );
+    return CanFire() ? pType_->GetMaxRangeToFireOnWithPosture( pRole_->GetPion(), compTarget.GetType(), targetPosture, rWantedPH ) : 0;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetMinRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_ComposantePion::GetMinRangeToFireOnWithPosture( const DEC_Knowledge_AgentComposante& compTarget, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    assert( pType_ );
+    return CanFire() ? pType_->GetMinRangeToFireOnWithPosture( pRole_->GetPion(), compTarget.GetType(), targetPosture, rWantedPH ) : std::numeric_limits< MT_Float >::max();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

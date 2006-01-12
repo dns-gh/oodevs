@@ -52,7 +52,9 @@
 #include "Automat/Mission_Automat_ABC_SurveillerItineraire.cpp"
 #include "Automat/Mission_Automat_ABC_RenseignerSurUnAxe.cpp"
 #include "Automat/Mission_Automat_ABC_RecueillirUnite.cpp"
-#include "Automat/Mission_Automat_ABC_EscorterUnConvoi.cpp"
+#include "Automat/Mission_Automat_ABC_EscorterUnite.cpp"
+#include "Automat/Mission_Automat_ABC_EscorterUnites.cpp"
+#include "Automat/Mission_Automat_ABC_AppuyerSurPosition.cpp"
 #include "Automat/Mission_Automat_ALAT_Heliporter.cpp"
 #include "Automat/Mission_Automat_ALAT_Jalonner.cpp"
 #include "Automat/Mission_Automat_ALAT_Helitransporter.cpp"
@@ -126,6 +128,9 @@
 #include "Automat/Mission_Automat_INF_AppuyerUnFreinage.cpp"
 #include "Automat/Mission_Automat_INF_AppuyerUneAttaque.cpp"
 #include "Automat/Mission_Automat_INF_Soutenir.cpp"
+#include "Automat/Mission_Automat_INF_EscorterUnite.cpp"
+#include "Automat/Mission_Automat_INF_EscorterUnites.cpp"
+#include "Automat/Mission_Automat_INF_AppuyerSurPosition.cpp"
 #include "Automat/Mission_Automat_LOG_SeDeployer.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerMouvement.cpp"
 #include "Automat/Mission_Automat_LOG_ReconnaitreItineraire.cpp"
@@ -225,7 +230,9 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_ABC_SurveillerItineraire >( "Automate ABC SurveillerItineraire" );
     Register< Mission_Automat_ABC_RenseignerSurUnAxe >( "Automate ABC RenseignerSurUnAxe" );
     Register< Mission_Automat_ABC_RecueillirUnite >( "Automate ABC RecueillirUnite" );
-    Register< Mission_Automat_ABC_EscorterUnConvoi >( "Automate ABC EscorterUnConvoi" );
+    Register< Mission_Automat_ABC_EscorterUnite >( "Automate ABC EscorterUnite" );
+    Register< Mission_Automat_ABC_EscorterUnites >( "Automate ABC EscorterUnites" );
+    Register< Mission_Automat_ABC_AppuyerSurPosition >( "Automate ABC AppuyerSurPosition" );
     Register< Mission_Automat_ALAT_Heliporter >( "Automate ALAT Heliporter" );
     Register< Mission_Automat_ALAT_Jalonner >( "Automate ALAT Jalonner" );
     Register< Mission_Automat_ALAT_Helitransporter >( "Automate ALAT Helitransporter" );
@@ -299,6 +306,9 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_INF_AppuyerUnFreinage >( "Automate INF AppuyerUnFreinage" );
     Register< Mission_Automat_INF_AppuyerUneAttaque >( "Automate INF AppuyerUneAttaque" );
     Register< Mission_Automat_INF_Soutenir >( "Automate INF Soutenir" );
+    Register< Mission_Automat_INF_EscorterUnite >( "Automate INF EscorterUnite" );
+    Register< Mission_Automat_INF_EscorterUnites >( "Automate INF EscorterUnites" );
+    Register< Mission_Automat_INF_AppuyerSurPosition >( "Automate INF AppuyerSurPosition" );
     Register< Mission_Automat_LOG_SeDeployer >( "Automate LOG SeDeployer" );
     Register< Mission_Automat_LOG_AppuyerMouvement >( "Automate LOG AppuyerMouvement" );
     Register< Mission_Automat_LOG_ReconnaitreItineraire >( "Automate LOG ReconnaitreItineraire" );

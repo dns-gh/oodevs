@@ -852,6 +852,13 @@ ENT_Tr::T_ConverterPopulationAttrErrorCode ENT_Tr::PopulationAttrErrorCodeConver
     T_ConverterPopulationAttrErrorCode( "", "", (E_PopulationAttrErrorCode)-1 )
 };
 
+ENT_Tr::T_ConverterAmbianceMission ENT_Tr::AmbianceMissionConverter_[] =
+{
+    T_ConverterAmbianceMission( "surete", QT_TRANSLATE_NOOP( "ENT_Tr", "surete" ), eAmbianceMission_Surete ),
+    T_ConverterAmbianceMission( "vitesse", QT_TRANSLATE_NOOP( "ENT_Tr", "vitesse" ), eAmbianceMission_Vitesse ),
+    T_ConverterAmbianceMission( "", "", (E_AmbianceMission)-1 )
+};
+
 ENT_Tr::T_ConverterTypeMunitionTirIndirect ENT_Tr::TypeMunitionTirIndirectConverter_[] =
 {
     T_ConverterTypeMunitionTirIndirect( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosif" ), eTypeMunitionTirIndirect_Explosif ),
@@ -913,7 +920,9 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
     T_ConverterAutomataMission( "Automate ABC SurveillerItineraire", QT_TRANSLATE_NOOP( "ENT", "Automate ABC SurveillerItineraire" ), eMission_Automate_ABC_SurveillerItineraire ),
     T_ConverterAutomataMission( "Automate ABC RenseignerSurUnAxe", QT_TRANSLATE_NOOP( "ENT", "Automate ABC RenseignerSurUnAxe" ), eMission_Automate_ABC_RenseignerSurUnAxe ),
     T_ConverterAutomataMission( "Automate ABC RecueillirUnite", QT_TRANSLATE_NOOP( "ENT", "Automate ABC RecueillirUnite" ), eMission_Automate_ABC_RecueillirUnite ),
-    T_ConverterAutomataMission( "Automate ABC EscorterUnConvoi", QT_TRANSLATE_NOOP( "ENT", "Automate ABC EscorterUnConvoi" ), eMission_Automate_ABC_EscorterUnConvoi ),
+    T_ConverterAutomataMission( "Automate ABC EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Automate ABC EscorterUnite" ), eMission_Automate_ABC_EscorterUnite ),
+    T_ConverterAutomataMission( "Automate ABC EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Automate ABC EscorterUnites" ), eMission_Automate_ABC_EscorterUnites ),
+    T_ConverterAutomataMission( "Automate ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Automate ABC AppuyerSurPosition" ), eMission_Automate_ABC_AppuyerSurPosition ),
     T_ConverterAutomataMission( "Automate ALAT Heliporter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Heliporter" ), eMission_Automate_ALAT_Heliporter ),
     T_ConverterAutomataMission( "Automate ALAT Jalonner", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Jalonner" ), eMission_Automate_ALAT_Jalonner ),
     T_ConverterAutomataMission( "Automate ALAT Helitransporter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Helitransporter" ), eMission_Automate_ALAT_Helitransporter ),
@@ -987,6 +996,9 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
     T_ConverterAutomataMission( "Automate INF AppuyerUnFreinage", QT_TRANSLATE_NOOP( "ENT", "Automate INF AppuyerUnFreinage" ), eMission_Automate_INF_AppuyerUnFreinage ),
     T_ConverterAutomataMission( "Automate INF AppuyerUneAttaque", QT_TRANSLATE_NOOP( "ENT", "Automate INF AppuyerUneAttaque" ), eMission_Automate_INF_AppuyerUneAttaque ),
     T_ConverterAutomataMission( "Automate INF Soutenir", QT_TRANSLATE_NOOP( "ENT", "Automate INF Soutenir" ), eMission_Automate_INF_Soutenir ),
+    T_ConverterAutomataMission( "Automate INF EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Automate INF EscorterUnite" ), eMission_Automate_INF_EscorterUnite ),
+    T_ConverterAutomataMission( "Automate INF EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Automate INF EscorterUnites" ), eMission_Automate_INF_EscorterUnites ),
+    T_ConverterAutomataMission( "Automate INF AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Automate INF AppuyerSurPosition" ), eMission_Automate_INF_AppuyerSurPosition ),
     T_ConverterAutomataMission( "Automate LOG SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Automate LOG SeDeployer" ), eMission_Automate_LOG_SeDeployer ),
     T_ConverterAutomataMission( "Automate LOG AppuyerMouvement", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerMouvement" ), eMission_Automate_LOG_AppuyerMouvement ),
     T_ConverterAutomataMission( "Automate LOG ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Automate LOG ReconnaitreItineraire" ), eMission_Automate_LOG_ReconnaitreItineraire ),
@@ -1089,9 +1101,11 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion ABC ArmerPIA", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ArmerPIA" ), eMission_Pion_ABC_ArmerPIA ),
     T_ConverterUnitMission( "Pion ABC OuvrirItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion ABC OuvrirItineraire" ), eMission_Pion_ABC_OuvrirItineraire ),
     T_ConverterUnitMission( "Pion ABC Freiner", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Freiner" ), eMission_Pion_ABC_Freiner ),
-    T_ConverterUnitMission( "Pion ABC EscorterUnConvoi", QT_TRANSLATE_NOOP( "ENT", "Pion ABC EscorterUnConvoi" ), eMission_Pion_ABC_EscorterUnConvoi ),
+    T_ConverterUnitMission( "Pion ABC EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Pion ABC EscorterUnite" ), eMission_Pion_ABC_EscorterUnite ),
+    T_ConverterUnitMission( "Pion ABC EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Pion ABC EscorterUnites" ), eMission_Pion_ABC_EscorterUnites ),
     T_ConverterUnitMission( "Pion ABC ArmerPointDeControle", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ArmerPointDeControle" ), eMission_Pion_ABC_ArmerPointDeControle ),
     T_ConverterUnitMission( "Pion ABC OrganiserAccueilColonneRefugies", QT_TRANSLATE_NOOP( "ENT", "Pion ABC OrganiserAccueilColonneRefugies" ), eMission_Pion_ABC_OrganiserAccueilColonneRefugies ),
+    T_ConverterUnitMission( "Pion ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ABC AppuyerSurPosition" ), eMission_Pion_ABC_AppuyerSurPosition ),
     T_ConverterUnitMission( "Pion GEN RealiserFosseAC", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserFosseAC" ), eMission_Pion_GEN_RealiserFosseAC ),
     T_ConverterUnitMission( "Pion GEN RealiserAbattisMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserAbattisMine" ), eMission_Pion_GEN_RealiserAbattisMine ),
     T_ConverterUnitMission( "Pion GEN RealiserPointMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserPointMine" ), eMission_Pion_GEN_RealiserPointMine ),
@@ -1158,12 +1172,14 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion INF OrganiserUnCheckPoint", QT_TRANSLATE_NOOP( "ENT", "Pion INF OrganiserUnCheckPoint" ), eMission_Pion_INF_OrganiserUnCheckPoint ),
     T_ConverterUnitMission( "Pion INF Harceler", QT_TRANSLATE_NOOP( "ENT", "Pion INF Harceler" ), eMission_Pion_INF_Harceler ),
     T_ConverterUnitMission( "Pion INF DetruireParCoupDeMain", QT_TRANSLATE_NOOP( "ENT", "Pion INF DetruireParCoupDeMain" ), eMission_Pion_INF_DetruireParCoupDeMain ),
-    T_ConverterUnitMission( "Pion INF EscorterUnConvoi", QT_TRANSLATE_NOOP( "ENT", "Pion INF EscorterUnConvoi" ), eMission_Pion_INF_EscorterUnConvoi ),
+    T_ConverterUnitMission( "Pion INF EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Pion INF EscorterUnite" ), eMission_Pion_INF_EscorterUnite ),
+    T_ConverterUnitMission( "Pion INF EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Pion INF EscorterUnites" ), eMission_Pion_INF_EscorterUnites ),
     T_ConverterUnitMission( "Pion INF RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion INF RenseignerSur" ), eMission_Pion_INF_RenseignerSur ),
     T_ConverterUnitMission( "Pion INF Soutenir", QT_TRANSLATE_NOOP( "ENT", "Pion INF Soutenir" ), eMission_Pion_INF_Soutenir ),
     T_ConverterUnitMission( "Pion INF Securiser", QT_TRANSLATE_NOOP( "ENT", "Pion INF Securiser" ), eMission_Pion_INF_Securiser ),
     T_ConverterUnitMission( "Pion INF Recueillir", QT_TRANSLATE_NOOP( "ENT", "Pion INF Recueillir" ), eMission_Pion_INF_Recueillir ),
     T_ConverterUnitMission( "Pion INF RepondreAAggression", QT_TRANSLATE_NOOP( "ENT", "Pion INF RepondreAAggression" ), eMission_Pion_INF_RepondreAAggression ),
+    T_ConverterUnitMission( "Pion INF AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion INF AppuyerSurPosition" ), eMission_Pion_INF_AppuyerSurPosition ),
     T_ConverterUnitMission( "Pion LOG SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG SeDeployer" ), eMission_Pion_LOG_SeDeployer ),
     T_ConverterUnitMission( "Pion LOG DistribuerMoyens", QT_TRANSLATE_NOOP( "ENT", "Pion LOG DistribuerMoyens" ), eMission_Pion_LOG_DistribuerMoyens ),
     T_ConverterUnitMission( "Pion LOG TrierBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TrierBlesses" ), eMission_Pion_LOG_TrierBlesses ),
@@ -1268,6 +1284,7 @@ ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
     T_ConverterFragOrder( "AttendreSePoster", QT_TRANSLATE_NOOP( "ENT", "Attendre Se Poster" ), eOrdreConduite_AttendreSePoster ),
     T_ConverterFragOrder( "Poursuivre", QT_TRANSLATE_NOOP( "ENT", "Poursuivre" ), eOrdreConduite_Poursuivre ),
     T_ConverterFragOrder( "Interrompre", QT_TRANSLATE_NOOP( "ENT", "Interrompre" ), eOrdreConduite_Interrompre ),
+    T_ConverterFragOrder( "ChangerAmbiance", QT_TRANSLATE_NOOP( "ENT", "Changer Ambiance" ), eOrdreConduite_ChangerAmbiance ),
     T_ConverterFragOrder( "ChangerReglesEngagement", QT_TRANSLATE_NOOP( "ENT", "Changer Regles Engagement" ), eOrdreConduite_ChangerReglesEngagement ),
     T_ConverterFragOrder( "ChangerReglesEngagementPopulation", QT_TRANSLATE_NOOP( "ENT", "Changer Regles Engagement Population" ), eOrdreConduite_ChangerReglesEngagementPopulation ),
     T_ConverterFragOrder( "Deboucher", QT_TRANSLATE_NOOP( "ENT", "Deboucher" ), eOrdreConduite_Deboucher ),
@@ -1376,6 +1393,7 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
+    InitTr( AmbianceMissionConverter_, "ENT_Tr" );
     InitTr( TypeMunitionTirIndirectConverter_, "ENT_Tr" );
     InitTr( ActionReagirFaceAEniConverter_, "ENT_Tr" );
     InitTr( TC2GererMaterielAvantDeplacementConverter_, "ENT_Tr" );
@@ -1961,6 +1979,15 @@ const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude n
 const std::string& ENT_Tr::ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( PopulationAttrErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromAmbianceMission
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromAmbianceMission( E_AmbianceMission nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( AmbianceMissionConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2605,6 +2632,15 @@ E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& str
 E_PopulationAttrErrorCode ENT_Tr::ConvertToPopulationAttrErrorCode( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PopulationAttrErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToAmbianceMission
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_AmbianceMission ENT_Tr::ConvertToAmbianceMission( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( AmbianceMissionConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

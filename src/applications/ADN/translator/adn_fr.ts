@@ -118,6 +118,104 @@
     </message>
 </context>
 <context>
+    <name>ADN_AutomatLogCategory_ListView</name>
+    <message>
+        <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
+        <translation>Objet &gt; Automate &gt; Pion &gt; Comp</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Comp.</source>
+        <translation>Comp.</translation>
+    </message>
+    <message>
+        <source>Contenance</source>
+        <translation>Contenance</translation>
+    </message>
+    <message>
+        <source>Norm. Conso</source>
+        <translation>Conso Norm.</translation>
+    </message>
+    <message>
+        <source>Conso Move</source>
+        <translation>Conso Mouv</translation>
+    </message>
+    <message>
+        <source>Autonomy Move</source>
+        <translation>Autonomie Mouv</translation>
+    </message>
+    <message>
+        <source>Conso Engine Stopped</source>
+        <translation>Conso Moteur Arrété</translation>
+    </message>
+    <message>
+        <source>Autonomy Engine Stopped</source>
+        <translation>Autonomie Moteur Arrété</translation>
+    </message>
+    <message>
+        <source>Conso Engine Started</source>
+        <translation>Conso Moteur Démarré</translation>
+    </message>
+    <message>
+        <source>Autonomy Engine Started</source>
+        <translation>Autonomie Moteur Arrété</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_AutomatLog_ListView</name>
+    <message>
+        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
+        <translation>Automate &gt; Pion &gt; Comp &gt; Objet</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Comp.</source>
+        <translation>Comp.</translation>
+    </message>
+    <message>
+        <source>Contenance</source>
+        <translation>Contenance</translation>
+    </message>
+    <message>
+        <source>Norm. Conso</source>
+        <translation>Conso Norm.</translation>
+    </message>
+    <message>
+        <source>Conso Move</source>
+        <translation>Conso Mouv</translation>
+    </message>
+    <message>
+        <source>Autonomy Move</source>
+        <translation>Autonomie Mouv</translation>
+    </message>
+    <message>
+        <source>Conso Engine Stopped</source>
+        <translation>Conso Moteur Arrété</translation>
+    </message>
+    <message>
+        <source>Autonomy Engine Stopped</source>
+        <translation>Autonomie Moteur Arrété</translation>
+    </message>
+    <message>
+        <source>Conso Engine Started</source>
+        <translation>Conso Moteur Démarré</translation>
+    </message>
+    <message>
+        <source>Autonomy Engine Started</source>
+        <translation>Autonomie Moteur Démarré</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation>Total</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Automata_GUI</name>
     <message>
         <source>Automata</source>
@@ -214,6 +312,14 @@
     <message>
         <source>%1 x %2 [ %3 ]</source>
         <translation>%1 x %2 [ %3 ]</translation>
+    </message>
+    <message>
+        <source>Logistic per automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic per dotation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1193,7 +1299,7 @@
     </message>
     <message>
         <source>Automate ABC EscorterUnConvoi</source>
-        <translation>Automate ABC EscorterUnConvoi</translation>
+        <translation type="obsolete">Automate ABC EscorterUnConvoi</translation>
     </message>
     <message>
         <source>Pion ALAT EvacuationSanitaire</source>
@@ -1853,7 +1959,7 @@
     </message>
     <message>
         <source>Pion ABC EscorterUnConvoi</source>
-        <translation>Pion ABC EscorterUnConvoi</translation>
+        <translation type="obsolete">Pion ABC EscorterUnConvoi</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPointDeControle</source>
@@ -2129,7 +2235,7 @@
     </message>
     <message>
         <source>Pion INF EscorterUnConvoi</source>
-        <translation>Pion INF EscorterUnConvoi</translation>
+        <translation type="obsolete">Pion INF EscorterUnConvoi</translation>
     </message>
     <message>
         <source>Pion INF RenseignerSur</source>
@@ -2522,6 +2628,54 @@
     <message>
         <source>Pion ASY Renseigner</source>
         <translation>Pion ASY Renseigner</translation>
+    </message>
+    <message>
+        <source>Automate ABC EscorterUnite</source>
+        <translation>Automate ABC EscorterUnite</translation>
+    </message>
+    <message>
+        <source>Automate ABC EscorterUnites</source>
+        <translation>Automate ABC EscorterUnites</translation>
+    </message>
+    <message>
+        <source>Automate ABC AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate INF EscorterUnite</source>
+        <translation>Automate INF EscorterUnite</translation>
+    </message>
+    <message>
+        <source>Automate INF EscorterUnites</source>
+        <translation>Automate INF EscorterUnites</translation>
+    </message>
+    <message>
+        <source>Automate INF AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ABC EscorterUnite</source>
+        <translation>Pion ABC EscorterUnite</translation>
+    </message>
+    <message>
+        <source>Pion ABC EscorterUnites</source>
+        <translation>Pion ABC EscorterUnites</translation>
+    </message>
+    <message>
+        <source>Pion ABC AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion INF EscorterUnite</source>
+        <translation>Pion INF EscorterUnite</translation>
+    </message>
+    <message>
+        <source>Pion INF EscorterUnites</source>
+        <translation>Pion INF EscorterUnite</translation>
+    </message>
+    <message>
+        <source>Pion INF AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3998,6 +4152,17 @@ Quand la sous groupBox &apos;Durées spécifiques pour PCs&quot; est décochée,
     <message>
         <source> from </source>
         <translation> de </translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Rich_ListViewItem</name>
+    <message>
+        <source>m</source>
+        <translation type="obsolete">m</translation>
+    </message>
+    <message>
+        <source>s</source>
+        <translation type="obsolete">s</translation>
     </message>
 </context>
 <context>
@@ -6071,6 +6236,29 @@ Error: %3</source>
 Contexte:
 %2
 Erreur: %3</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>d</source>
+        <comment>ADN_Rich_ListViewItem</comment>
+        <translation>j</translation>
+    </message>
+    <message>
+        <source>h</source>
+        <comment>ADN_Rich_ListViewItem</comment>
+        <translation>h</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <comment>ADN_Rich_ListViewItem</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>s</source>
+        <comment>ADN_Rich_ListViewItem</comment>
+        <translation>s</translation>
     </message>
 </context>
 <context>

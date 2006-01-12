@@ -11,21 +11,22 @@
 
 #include "Missions_pch.h"
 
-#include "MIL_AutomateMission_ABC_EscorterUnConvoi.h"
+#include "MIL_AutomateMission_INF_AppuyerSurPosition.h"
 #include "MIL/Entities/Orders/Automate/MIL_AutomateMissionType.h"
 #include "MIL/Entities/Automates/MIL_Automate.h"
 #include "MIL/Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_AutomateMission_ABC_EscorterUnConvoi::nDIAConvoiAEscorterIdx_ = 0 ;
+int MIL_AutomateMission_INF_AppuyerSurPosition::nDIAPositionInstallationIdx_ = 0 ;
+int MIL_AutomateMission_INF_AppuyerSurPosition::nDIACompagnieIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC_EscorterUnConvoi constructor
+// Name: MIL_AutomateMission_INF_AppuyerSurPosition constructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_AutomateMission_ABC_EscorterUnConvoi::MIL_AutomateMission_ABC_EscorterUnConvoi( MIL_Automate& automate, const MIL_AutomateMissionType& type )
+MIL_AutomateMission_INF_AppuyerSurPosition::MIL_AutomateMission_INF_AppuyerSurPosition( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : MIL_AutomateMission_ABC( automate, type )
 {
     // NOTHING
@@ -33,10 +34,10 @@ MIL_AutomateMission_ABC_EscorterUnConvoi::MIL_AutomateMission_ABC_EscorterUnConv
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC_EscorterUnConvoi destructor
+// Name: MIL_AutomateMission_INF_AppuyerSurPosition destructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_AutomateMission_ABC_EscorterUnConvoi::~MIL_AutomateMission_ABC_EscorterUnConvoi()
+MIL_AutomateMission_INF_AppuyerSurPosition::~MIL_AutomateMission_INF_AppuyerSurPosition()
 {
     // NOTHING
 }
@@ -46,29 +47,32 @@ MIL_AutomateMission_ABC_EscorterUnConvoi::~MIL_AutomateMission_ABC_EscorterUnCon
 //=============================================================================
    
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC_EscorterUnConvoi::InitializeDIA
+// Name: MIL_AutomateMission_INF_AppuyerSurPosition::InitializeDIA
 // Created: NLD 2003-04-10
 //-----------------------------------------------------------------------------
 // static
-void MIL_AutomateMission_ABC_EscorterUnConvoi::InitializeDIA( const MIL_AutomateMissionType& type )
+void MIL_AutomateMission_INF_AppuyerSurPosition::InitializeDIA( const MIL_AutomateMissionType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
-    nDIAConvoiAEscorterIdx_ = DEC_Tools::InitializeDIAField( "convoiAEscorter_", diaType );
+    nDIAPositionInstallationIdx_ = DEC_Tools::InitializeDIAField( "positionInstallation_", diaType );
+    nDIACompagnieIdx_ = DEC_Tools::InitializeDIAField( "compagnie_", diaType );
 
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC_EscorterUnConvoi::Initialize
+// Name: MIL_AutomateMission_INF_AppuyerSurPosition::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_EscorterUnConvoi::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerSurPosition::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_AutomateMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
-    const ASN1T_Mission_Automate_ABC_EscorterUnConvoi& asnMission = *asnMsg.mission.u.mission_automate_abc_escorter_un_convoi;
-    if( !NET_ASN_Tools::CopyAgent( asnMission.convoi_a_escorter, GetVariable( nDIAConvoiAEscorterIdx_ ) ) )
+    const ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *asnMsg.mission.u.mission_automate_inf_appuyer_sur_position;
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
+    if( !NET_ASN_Tools::CopyAutomate( asnMission.compagnie, GetVariable( nDIACompagnieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -78,9 +82,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_EscorterUnConvoi::Initialize( c
 // Name: MIL_AutomateMission_ABC::Terminate
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_EscorterUnConvoi::Terminate()
+void MIL_AutomateMission_INF_AppuyerSurPosition::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAConvoiAEscorterIdx_ ) );
+    NET_ASN_Tools::ResetAutomate( GetVariable( nDIACompagnieIdx_ ) );
 
     MIL_AutomateMission_ABC::Terminate();
 }
@@ -90,30 +94,32 @@ void MIL_AutomateMission_ABC_EscorterUnConvoi::Terminate()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC_EscorterUnConvoi::Serialize
+// Name: MIL_AutomateMission_INF_AppuyerSurPosition::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_EscorterUnConvoi::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_INF_AppuyerSurPosition::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
 {
     MIL_AutomateMission_ABC::Serialize( asnMsg );
     
-    ASN1T_Mission_Automate_ABC_EscorterUnConvoi& asnMission = *new ASN1T_Mission_Automate_ABC_EscorterUnConvoi();
-    asnMsg.mission.t                           = T_Mission_Automate_mission_automate_abc_escorter_un_convoi;
-    asnMsg.mission.u.mission_automate_abc_escorter_un_convoi  = &asnMission;
+    ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Automate_INF_AppuyerSurPosition();
+    asnMsg.mission.t                           = T_Mission_Automate_mission_automate_inf_appuyer_sur_position;
+    asnMsg.mission.u.mission_automate_inf_appuyer_sur_position  = &asnMission;
 
-    NET_ASN_Tools::CopyAgent( GetVariable( nDIAConvoiAEscorterIdx_ ), asnMission.convoi_a_escorter );
+    NET_ASN_Tools::CopyPolygon( GetVariable( nDIAPositionInstallationIdx_ ), asnMission.position_installation );
+    NET_ASN_Tools::CopyAutomate( GetVariable( nDIACompagnieIdx_ ), asnMission.compagnie );
 
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC_EscorterUnConvoi::CleanAfterSerialization
+// Name: MIL_AutomateMission_INF_AppuyerSurPosition::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_EscorterUnConvoi::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_INF_AppuyerSurPosition::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
 {
-    assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_abc_escorter_un_convoi );
-    ASN1T_Mission_Automate_ABC_EscorterUnConvoi& asnMission = *asnMsg.mission.u.mission_automate_abc_escorter_un_convoi;
+    assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_inf_appuyer_sur_position );
+    ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *asnMsg.mission.u.mission_automate_inf_appuyer_sur_position;
 
+    NET_ASN_Tools::Delete( asnMission.position_installation );
 
     delete &asnMission;
 

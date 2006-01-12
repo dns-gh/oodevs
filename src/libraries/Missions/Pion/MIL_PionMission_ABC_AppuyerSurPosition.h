@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_PionMission_INF_EscorterUnConvoi_h_
-#define __MIL_PionMission_INF_EscorterUnConvoi_h_
+#ifndef __MIL_PionMission_ABC_AppuyerSurPosition_h_
+#define __MIL_PionMission_ABC_AppuyerSurPosition_h_
 
 #include "MIL/Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,14 +18,14 @@
 //*****************************************************************************
 // Created: 
 //*****************************************************************************
-class MIL_PionMission_INF_EscorterUnConvoi: public MIL_PionMission_ABC
+class MIL_PionMission_ABC_AppuyerSurPosition: public MIL_PionMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_PionMission_INF_EscorterUnConvoi )
+    MT_COPYNOTALLOWED( MIL_PionMission_ABC_AppuyerSurPosition )
 
 public:
 
-             MIL_PionMission_INF_EscorterUnConvoi( MIL_AgentPion& pion, const MIL_PionMissionType& type );
-    virtual ~MIL_PionMission_INF_EscorterUnConvoi();
+             MIL_PionMission_ABC_AppuyerSurPosition( MIL_AgentPion& pion, const MIL_PionMissionType& type );
+    virtual ~MIL_PionMission_ABC_AppuyerSurPosition();
 
     //! @name Init
     //@{
@@ -43,12 +43,14 @@ public:
     //@}
 
 private:
-    static int nDIAConvoiAEscorterIdx_;
+    static int nDIAPositionIdx_;
+    static int nDIAUnitesAAppuyerIdx_;
 
 
 private:
+    MT_Vector2D position_;
 
 };
 
 
-#endif // __MIL_PionMission_INF_EscorterUnConvoi_h_
+#endif // __MIL_PionMission_ABC_AppuyerSurPosition_h_

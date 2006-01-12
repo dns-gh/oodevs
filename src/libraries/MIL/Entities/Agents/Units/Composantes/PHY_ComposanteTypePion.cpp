@@ -921,6 +921,30 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    MT_Float rRange = 0;
+    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
+        rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFireOnWithPosture( firer, targetComposanteType, targetPosture, rWantedPH ) );
+    return rRange;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const
+{
+    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    for ( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
+        rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOnWithPosture( firer, targetComposanteType, targetPosture, rWantedPH ) );
+    return rRange;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------

@@ -27,6 +27,7 @@
     void CreateOrder_AttendreSePoster();
     void CreateOrder_Poursuivre();
     void CreateOrder_Interrompre();
+    void CreateOrder_ChangerAmbiance();
     void CreateOrder_ChangerReglesEngagement();
     void CreateOrder_ChangerReglesEngagementPopulation();
     void CreateOrder_Deboucher();

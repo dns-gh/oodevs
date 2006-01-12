@@ -37,6 +37,9 @@
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
+#include "ADN_ListView.h"
+#include "ADN_AutomatLog_ListView.h"
+#include "ADN_AutomatLogCategory_ListView.h"
 
 
 // -----------------------------------------------------------------------------
@@ -246,6 +249,23 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
     return pTable;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_GUI::CreateAutomataLogTable
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTable()
+{
+    return new ADN_AutomatLog_ListView( data_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_GUI::CreateAutomataLogTablePerDotation
+// Created: SBO 2006-01-03
+// -----------------------------------------------------------------------------
+ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
+{
+    return new ADN_AutomatLogCategory_ListView( data_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI::RegisterTable
@@ -253,5 +273,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*,ADN_Automata_GUI>( this, CreateAutomataCompositionsTable ) );
+    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*   ,ADN_Automata_GUI>( this, CreateAutomataCompositionsTable ) );
+    mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, CreateAutomataLogTable ) );
+    mainWindow.AddListView( tr( "Logistic per dotation" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, CreateAutomataLogTablePerDotation ) );
 }

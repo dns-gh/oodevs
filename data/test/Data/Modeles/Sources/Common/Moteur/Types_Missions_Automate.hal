@@ -139,9 +139,20 @@ typedef struct T_Mission_Automate_ABC_RecueillirUnite : T_Mission_Automate
 T_Localisation zoneRegroupement_;
 };
 
-typedef struct T_Mission_Automate_ABC_EscorterUnConvoi : T_Mission_Automate
+typedef struct T_Mission_Automate_ABC_EscorterUnite : T_Mission_Automate
 {
-T_Pion convoiAEscorter_;
+T_Pion uniteAEscorter_;
+};
+
+typedef struct T_Mission_Automate_ABC_EscorterUnites : T_Mission_Automate
+{
+T_Automate automateAEscorter_;
+};
+
+typedef struct T_Mission_Automate_ABC_AppuyerSurPosition : T_Mission_Automate
+{
+T_Localisation positionInstallation_;
+T_Automate compagnie_;
 };
 
 typedef struct T_Mission_Automate_ALAT_Heliporter : T_Mission_Automate
@@ -636,6 +647,22 @@ T_Automate compagnie_;
 
 typedef struct T_Mission_Automate_INF_Soutenir : T_Mission_Automate
 {
+T_Automate compagnie_;
+};
+
+typedef struct T_Mission_Automate_INF_EscorterUnite : T_Mission_Automate
+{
+T_Pion uniteAEscorter_;
+};
+
+typedef struct T_Mission_Automate_INF_EscorterUnites : T_Mission_Automate
+{
+T_Automate automateAEscorter_;
+};
+
+typedef struct T_Mission_Automate_INF_AppuyerSurPosition : T_Mission_Automate
+{
+T_Localisation positionInstallation_;
 T_Automate compagnie_;
 };
 

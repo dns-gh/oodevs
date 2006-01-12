@@ -16,8 +16,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Mission_Pawn_ABC_EscorterUnConvoi_h_
-#define __Mission_Pawn_ABC_EscorterUnConvoi_h_
+#ifndef __Mission_Pawn_ABC_EscorterUnites_h_
+#define __Mission_Pawn_ABC_EscorterUnites_h_
 
 #ifdef __GNUG__
 #   pragma interface
@@ -30,24 +30,24 @@ namespace TEST {
     class Pawn;
 
 // =============================================================================
-/** @class  Mission_Pawn_ABC_EscorterUnConvoi
-    @brief  Mission_Pawn_ABC_EscorterUnConvoi
+/** @class  Mission_Pawn_ABC_EscorterUnites
+    @brief  Mission_Pawn_ABC_EscorterUnites
     @par    Using example
     @code
-    Mission_Pawn_ABC_EscorterUnConvoi;
+    Mission_Pawn_ABC_EscorterUnites;
     @endcode
 */
 // Created: SBO 2005-08-08
 // Generated: 
 // =============================================================================
-class Mission_Pawn_ABC_EscorterUnConvoi : public Mission_Pawn_ABC
+class Mission_Pawn_ABC_EscorterUnites : public Mission_Pawn_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission_Pawn_ABC_EscorterUnConvoi( Pawn& target );
-    virtual ~Mission_Pawn_ABC_EscorterUnConvoi();
+             Mission_Pawn_ABC_EscorterUnites( Pawn& target );
+    virtual ~Mission_Pawn_ABC_EscorterUnites();
     //@}
 
 protected:
@@ -60,11 +60,11 @@ protected:
 private:
     //! @name Copy/Assignment
     //@{
-    Mission_Pawn_ABC_EscorterUnConvoi( const Mission_Pawn_ABC_EscorterUnConvoi& );            //!< Copy constructor
-    Mission_Pawn_ABC_EscorterUnConvoi& operator=( const Mission_Pawn_ABC_EscorterUnConvoi& ); //!< Assignment operator
+    Mission_Pawn_ABC_EscorterUnites( const Mission_Pawn_ABC_EscorterUnites& );            //!< Copy constructor
+    Mission_Pawn_ABC_EscorterUnites& operator=( const Mission_Pawn_ABC_EscorterUnites& ); //!< Assignment operator
     //@}
 };
 
 } // end namespace TEST
 
-#endif // __Mission_Pawn_ABC_EscorterUnConvoi_h_
+#endif // __Mission_Pawn_ABC_EscorterUnites_h_

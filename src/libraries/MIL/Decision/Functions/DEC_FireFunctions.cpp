@@ -72,6 +72,56 @@ void DEC_FireFunctions::GetMinRangeToFireOnEnemy( DIA_Call_ABC& call, const MIL_
         call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( (float)rRange ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeConnaissanceAgent( call.GetParameter( 0 ) ) );
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)-1. );
+        return;
+    }
+
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    float rWantedPH = 0.8f;
+    if( call.GetParameters().GetParameters().size() >= 3 )
+        rWantedPH = call.GetParameter( 2 ).ToFloat();
+    
+    const float rRange = MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RolePion_Composantes >().GetMaxRangeToFireOnActualPosture( *pKnowledge, rWantedPH ) );
+    call.GetResult().SetValue( rRange );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    assert( DEC_Tools::CheckTypeConnaissanceAgent( call.GetParameter( 0 ) ) );
+    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
+    if ( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (float)-1. );
+        return;
+    }
+    
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    float rWantedPH = 0.8f;
+    if ( call.GetParameters().GetParameters().size() >= 3 )
+        rWantedPH = call.GetParameter( 2 ).ToFloat();
+
+    const MT_Float rRange = callerAgent.GetRole< PHY_RolePion_Composantes >().GetMinRangeToFireOnActualPosture( *pKnowledge, rWantedPH );
+    if( rRange == std::numeric_limits< MT_Float >::max() )
+        call.GetResult().SetValue( (float)-1. );
+    else
+        call.GetResult().SetValue( MIL_Tools::ConvertSimToMeter( (float)rRange ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded

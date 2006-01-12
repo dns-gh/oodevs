@@ -14,6 +14,12 @@ IMPORTS SantePriorites             FROM ScipioLogSante
 IMPORTS EnumRoe, EnumRoePopulation FROM ScipioUnitAttr
 IMPORTS EnumPopulationAttitude     FROM ScipioPopulation;
 
+EnumAmbianceMission ::= ENUMERATED
+{
+    surete  (0),
+    vitesse (1)
+}
+
 ----------------------------------------------------------------------------
 -- Ordres de conduite pions/automates
 ----------------------------------------------------------------------------
@@ -27,9 +33,10 @@ OrderConduite-PasserEnSilenceRadar              ::= NULL                 -- Disp
 OrderConduite-ArreterSilenceRadar               ::= NULL                 -- Dispo même sans mission
 OrderConduite-RecupererTransporteurs            ::= NULL                 -- Dispo même sans mission, Infanterie : récupération des VABs
 
-OrderConduite-AttendreSePoster             ::= NULL -- Dispo pour toutes les missions
-OrderConduite-Poursuivre                   ::= NULL -- Dispo pour toutes les missions
-OrderConduite-Interrompre                  ::= NULL -- Dispo pour toutes les missions
+OrderConduite-AttendreSePoster             ::= NULL                  -- Dispo pour toutes les missions
+OrderConduite-Poursuivre                   ::= NULL                  -- Dispo pour toutes les missions
+OrderConduite-Interrompre                  ::= NULL                  -- Dispo pour toutes les missions
+OrderConduite-ChangerAmbiance              ::= EnumAmbianceMission
 
 OrderConduite-Deboucher                             ::= NULL 
 OrderConduite-Decrocher                             ::= NULL
@@ -180,6 +187,7 @@ MsgOrderConduite ::= SEQUENCE
         order-conduite-attendre-se-poster                               OrderConduite-AttendreSePoster,
         order-conduite-poursuivre                                       OrderConduite-Poursuivre,
         order-conduite-interrompre                                      OrderConduite-Interrompre,        
+        order-conduite-changer-ambiance                                 OrderConduite-ChangerAmbiance,
         order-conduite-changer-regles-engagement                        OrderConduite-ChangerReglesEngagement,
         order-conduite-changer-regles-engagement-population             OrderConduite-ChangerReglesEngagementPopulation,        
         order-conduite-deboucher                                        OrderConduite-Deboucher,

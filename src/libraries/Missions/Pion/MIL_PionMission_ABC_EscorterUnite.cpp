@@ -10,7 +10,7 @@
 // *****************************************************************************
 
 #include "Missions_pch.h"
-#include "MIL_PionMission_ABC_EscorterUnConvoi.h"
+#include "MIL_PionMission_ABC_EscorterUnite.h"
 
 #include "MIL/Entities/Orders/Pion/MIL_PionOrderManager.h"
 #include "MIL/Entities/Orders/Pion/MIL_PionMissionType.h"
@@ -20,27 +20,27 @@
 #include "MIL/Network/NET_ASN_Tools.h"
 #include "MIL/Decision/DEC_Tools.h"
 
-int MIL_PionMission_ABC_EscorterUnConvoi::nDIAConvoiAEscorterIdx_ = 0 ;
+int MIL_PionMission_ABC_EscorterUnite::nDIAUniteAEscorterIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::InitializeDIA
+// Name: MIL_PionMission_ABC_EscorterUnite::InitializeDIA
 // Created: 
 //-----------------------------------------------------------------------------
 // static
-void MIL_PionMission_ABC_EscorterUnConvoi::InitializeDIA( const MIL_PionMissionType& type )
+void MIL_PionMission_ABC_EscorterUnite::InitializeDIA( const MIL_PionMissionType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
-    nDIAConvoiAEscorterIdx_ = DEC_Tools::InitializeDIAField( "convoiAEscorter_", diaType );
+    nDIAUniteAEscorterIdx_ = DEC_Tools::InitializeDIAField( "uniteAEscorter_", diaType );
 
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi constructor
+// Name: MIL_PionMission_ABC_EscorterUnite constructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_PionMission_ABC_EscorterUnConvoi::MIL_PionMission_ABC_EscorterUnConvoi( MIL_AgentPion& pion, const MIL_PionMissionType& type )
+MIL_PionMission_ABC_EscorterUnite::MIL_PionMission_ABC_EscorterUnite( MIL_AgentPion& pion, const MIL_PionMissionType& type )
 : MIL_PionMission_ABC( pion, type )
 {
     // NOTHING    
@@ -48,27 +48,27 @@ MIL_PionMission_ABC_EscorterUnConvoi::MIL_PionMission_ABC_EscorterUnConvoi( MIL_
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi destructor
+// Name: MIL_PionMission_ABC_EscorterUnite destructor
 // Created: 
 //-----------------------------------------------------------------------------
-MIL_PionMission_ABC_EscorterUnConvoi::~MIL_PionMission_ABC_EscorterUnConvoi()
+MIL_PionMission_ABC_EscorterUnite::~MIL_PionMission_ABC_EscorterUnite()
 {
     // NOTHING
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::Initialize
+// Name: MIL_PionMission_ABC_EscorterUnite::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const ASN1T_MsgPionOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_EscorterUnite::Initialize( const ASN1T_MsgPionOrder& asnMsg )
 {
     ASN1T_EnumOrderErrorCode nCode = MIL_PionMission_ABC::Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
-    const ASN1T_Mission_Pion_ABC_EscorterUnConvoi& asnMission = *asnMsg.mission.u.mission_pion_abc_escorter_un_convoi;
-    if( !NET_ASN_Tools::CopyAgent( asnMission.convoi_a_escorter, GetVariable( nDIAConvoiAEscorterIdx_ ) ) )
+    const ASN1T_Mission_Pion_ABC_EscorterUnite& asnMission = *asnMsg.mission.u.mission_pion_abc_escorter_unite;
+    if( !NET_ASN_Tools::CopyAgent( asnMission.unite_a_escorter, GetVariable( nDIAUniteAEscorterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -76,41 +76,41 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::Initialize
+// Name: MIL_PionMission_ABC_EscorterUnite::Initialize
 // Created: 
 //-----------------------------------------------------------------------------
-bool MIL_PionMission_ABC_EscorterUnConvoi::Initialize( const MIL_AutomateMission_ABC& parentMission )
+bool MIL_PionMission_ABC_EscorterUnite::Initialize( const MIL_AutomateMission_ABC& parentMission )
 {
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAConvoiAEscorterIdx_ ) );
+    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAEscorterIdx_ ) );
 
     return true;    
 }
 
 // ------------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::Initialize
+// Name: MIL_PionMission_ABC_EscorterUnite::Initialize
 // Created: 
 // -----------------------------------------------------------------------------
-bool MIL_PionMission_ABC_EscorterUnConvoi::Initialize( MIL_PionMission_ABC& missionTmp )
+bool MIL_PionMission_ABC_EscorterUnite::Initialize( MIL_PionMission_ABC& missionTmp )
 {
     if( !MIL_PionMission_ABC::Initialize( missionTmp ) )
         return false;
-    MIL_PionMission_ABC_EscorterUnConvoi& mission = static_cast< MIL_PionMission_ABC_EscorterUnConvoi& >( missionTmp );
+    MIL_PionMission_ABC_EscorterUnite& mission = static_cast< MIL_PionMission_ABC_EscorterUnite& >( missionTmp );
 
-    NET_ASN_Tools::CopyAgent( mission.GetVariable( nDIAConvoiAEscorterIdx_ ), GetVariable( nDIAConvoiAEscorterIdx_ ) );
+    NET_ASN_Tools::CopyAgent( mission.GetVariable( nDIAUniteAEscorterIdx_ ), GetVariable( nDIAUniteAEscorterIdx_ ) );
 
     return true;
 }                                                                    
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::Terminate
+// Name: MIL_PionMission_ABC_EscorterUnite::Terminate
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_EscorterUnConvoi::Terminate()
+void MIL_PionMission_ABC_EscorterUnite::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAConvoiAEscorterIdx_ ) );
+    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAEscorterIdx_ ) );
 
     MIL_PionMission_ABC::Terminate();    
 }
@@ -120,29 +120,29 @@ void MIL_PionMission_ABC_EscorterUnConvoi::Terminate()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::Serialize
+// Name: MIL_PionMission_ABC_EscorterUnite::Serialize
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_EscorterUnConvoi::Serialize( ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionMission_ABC_EscorterUnite::Serialize( ASN1T_MsgPionOrder& asnMsg )
 {
     MIL_PionMission_ABC::Serialize( asnMsg );
     
-    ASN1T_Mission_Pion_ABC_EscorterUnConvoi& asnMission = *new ASN1T_Mission_Pion_ABC_EscorterUnConvoi();
-    asnMsg.mission.t                           = T_Mission_Pion_mission_pion_abc_escorter_un_convoi;
-    asnMsg.mission.u.mission_pion_abc_escorter_un_convoi  = &asnMission;
+    ASN1T_Mission_Pion_ABC_EscorterUnite& asnMission = *new ASN1T_Mission_Pion_ABC_EscorterUnite();
+    asnMsg.mission.t                           = T_Mission_Pion_mission_pion_abc_escorter_unite;
+    asnMsg.mission.u.mission_pion_abc_escorter_unite  = &asnMission;
 
-    NET_ASN_Tools::CopyAgent( GetVariable( nDIAConvoiAEscorterIdx_ ), asnMission.convoi_a_escorter );
+    NET_ASN_Tools::CopyAgent( GetVariable( nDIAUniteAEscorterIdx_ ), asnMission.unite_a_escorter );
 
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_EscorterUnConvoi::CleanAfterSerialization
+// Name: MIL_PionMission_ABC_EscorterUnite::CleanAfterSerialization
 // Created: 
 //-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_EscorterUnConvoi::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
+void MIL_PionMission_ABC_EscorterUnite::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
-    assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_abc_escorter_un_convoi );
-    ASN1T_Mission_Pion_ABC_EscorterUnConvoi& asnMission = *asnMsg.mission.u.mission_pion_abc_escorter_un_convoi;
+    assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_abc_escorter_unite );
+    ASN1T_Mission_Pion_ABC_EscorterUnite& asnMission = *asnMsg.mission.u.mission_pion_abc_escorter_unite;
 
 
     delete &asnMission;

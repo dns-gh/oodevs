@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_AutomateMission_ABC_EscorterUnConvoi_h_
-#define __MIL_AutomateMission_ABC_EscorterUnConvoi_h_
+#ifndef __MIL_AutomateMission_INF_EscorterUnites_h_
+#define __MIL_AutomateMission_INF_EscorterUnites_h_
 
 #include "MIL/Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
 #include "TER/TER_Localisation.h"
@@ -18,13 +18,13 @@
 //=============================================================================
 // Created: 
 //=============================================================================
-class MIL_AutomateMission_ABC_EscorterUnConvoi : public MIL_AutomateMission_ABC
+class MIL_AutomateMission_INF_EscorterUnites : public MIL_AutomateMission_ABC
 {
-    MT_COPYNOTALLOWED( MIL_AutomateMission_ABC_EscorterUnConvoi )
+    MT_COPYNOTALLOWED( MIL_AutomateMission_INF_EscorterUnites )
 
 public:
-             MIL_AutomateMission_ABC_EscorterUnConvoi( MIL_Automate& automate, const MIL_AutomateMissionType& type );
-    virtual ~MIL_AutomateMission_ABC_EscorterUnConvoi();
+             MIL_AutomateMission_INF_EscorterUnites( MIL_Automate& automate, const MIL_AutomateMissionType& type );
+    virtual ~MIL_AutomateMission_INF_EscorterUnites();
 
     //! @name Init
     //@{
@@ -43,9 +43,9 @@ public:
 private:
 
 private:
-    static int nDIAConvoiAEscorterIdx_;
+    static int nDIAAutomateAEscorterIdx_;
 
 };
 
 
-#endif // __MIL_AutomateMission_ABC_EscorterUnConvoi_h_
+#endif // __MIL_AutomateMission_INF_EscorterUnites_h_

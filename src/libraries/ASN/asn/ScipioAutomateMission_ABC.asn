@@ -156,9 +156,20 @@ Mission-Automate-ABC-RecueillirUnite ::= SEQUENCE
     zone-regroupement Polygon
 }
 
-Mission-Automate-ABC-EscorterUnConvoi ::= SEQUENCE 
+Mission-Automate-ABC-EscorterUnite ::= SEQUENCE
 {
-    convoi-a-escorter	Agent 
+    unite-a-escorter Agent
+}
+
+Mission-Automate-ABC-EscorterUnites ::= SEQUENCE
+{
+    automate-a-escorter Automate
+}
+
+Mission-Automate-ABC-AppuyerSurPosition ::= SEQUENCE
+{
+    position-installation    Polygon,
+    compagnie                Automate
 }
 
 END -- ScipioAutomateMission_ABC

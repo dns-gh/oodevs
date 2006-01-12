@@ -148,21 +148,7 @@
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
-			<Filter
-			    Name="Automate"
-			    Filter="cpp;h">
-$AutomateFileList$
-			</Filter>
-			<Filter
-			    Name="Pion"
-			    Filter="cpp;h">
-$PionFileList$
-			</Filter>
-			<Filter
-			    Name="Conduite"
-			    Filter="cpp;h">
-$ConduiteFileList$
-			</Filter>
+			
 		</Filter>
 	</Files>
 	<Globals>

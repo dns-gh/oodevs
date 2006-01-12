@@ -45,11 +45,13 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
-    MT_Float GetDangerosity     ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
-    MT_Float GetMaxRangeToFireOn( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOn( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    void     Fire               ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
+    MT_Float GetDangerosity                ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
+    MT_Float GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
+    MT_Float GetMaxRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
+    MT_Float GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
+    MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const;
+    MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const;
+    void     Fire                          ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     Fire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     //@}
 

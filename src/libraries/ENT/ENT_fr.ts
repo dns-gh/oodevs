@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>Automate ABC EscorterUnConvoi</source>
-        <translation>Automate ABC EscorterUnConvoi</translation>
+        <translation type="obsolete">Automate ABC EscorterUnConvoi</translation>
     </message>
     <message>
         <source>Automate ALAT Heliporter</source>
@@ -679,7 +679,7 @@
     </message>
     <message>
         <source>Pion ABC EscorterUnConvoi</source>
-        <translation>Pion ABC EscorterUnConvoi</translation>
+        <translation type="obsolete">Pion ABC EscorterUnConvoi</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPointDeControle</source>
@@ -959,7 +959,7 @@
     </message>
     <message>
         <source>Pion INF EscorterUnConvoi</source>
-        <translation>Pion INF EscorterUnConvoi</translation>
+        <translation type="obsolete">Pion INF EscorterUnConvoi</translation>
     </message>
     <message>
         <source>Pion INF RenseignerSur</source>
@@ -1843,6 +1843,58 @@
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContreInstallation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ABC EscorterUnite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ABC EscorterUnites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate ABC AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate INF EscorterUnite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate INF EscorterUnites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate INF AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ABC EscorterUnite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ABC EscorterUnites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ABC AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion INF EscorterUnite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion INF EscorterUnites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion INF AppuyerSurPosition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changer Ambiance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3678,6 +3730,14 @@
     </message>
     <message>
         <source>convoi deplacement vers point dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vitesse</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

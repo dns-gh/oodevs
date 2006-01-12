@@ -46,7 +46,9 @@
     void CreateMission_ABC_SurveillerItineraire();
     void CreateMission_ABC_RenseignerSurUnAxe();
     void CreateMission_ABC_RecueillirUnite();
-    void CreateMission_ABC_EscorterUnConvoi();
+    void CreateMission_ABC_EscorterUnite();
+    void CreateMission_ABC_EscorterUnites();
+    void CreateMission_ABC_AppuyerSurPosition();
     void CreateMission_ALAT_Heliporter();
     void CreateMission_ALAT_Jalonner();
     void CreateMission_ALAT_Helitransporter();
@@ -120,6 +122,9 @@
     void CreateMission_INF_AppuyerUnFreinage();
     void CreateMission_INF_AppuyerUneAttaque();
     void CreateMission_INF_Soutenir();
+    void CreateMission_INF_EscorterUnite();
+    void CreateMission_INF_EscorterUnites();
+    void CreateMission_INF_AppuyerSurPosition();
     void CreateMission_LOG_SeDeployer();
     void CreateMission_LOG_AppuyerMouvement();
     void CreateMission_LOG_ReconnaitreItineraire();

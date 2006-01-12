@@ -917,6 +917,14 @@ enum E_PopulationAttrErrorCode
 };
 
 
+enum E_AmbianceMission
+{
+    eAmbianceMission_Surete,
+    eAmbianceMission_Vitesse,
+    eNbrAmbianceMission
+};
+
+
 enum E_TypeMunitionTirIndirect
 {
     eTypeMunitionTirIndirect_Explosif,
@@ -981,7 +989,9 @@ enum E_AutomataMission
     eMission_Automate_ABC_SurveillerItineraire,
     eMission_Automate_ABC_RenseignerSurUnAxe,
     eMission_Automate_ABC_RecueillirUnite,
-    eMission_Automate_ABC_EscorterUnConvoi,
+    eMission_Automate_ABC_EscorterUnite,
+    eMission_Automate_ABC_EscorterUnites,
+    eMission_Automate_ABC_AppuyerSurPosition,
     eMission_Automate_ALAT_Heliporter,
     eMission_Automate_ALAT_Jalonner,
     eMission_Automate_ALAT_Helitransporter,
@@ -1055,6 +1065,9 @@ enum E_AutomataMission
     eMission_Automate_INF_AppuyerUnFreinage,
     eMission_Automate_INF_AppuyerUneAttaque,
     eMission_Automate_INF_Soutenir,
+    eMission_Automate_INF_EscorterUnite,
+    eMission_Automate_INF_EscorterUnites,
+    eMission_Automate_INF_AppuyerSurPosition,
     eMission_Automate_LOG_SeDeployer,
     eMission_Automate_LOG_AppuyerMouvement,
     eMission_Automate_LOG_ReconnaitreItineraire,
@@ -1157,9 +1170,11 @@ enum E_UnitMission
     eMission_Pion_ABC_ArmerPIA,
     eMission_Pion_ABC_OuvrirItineraire,
     eMission_Pion_ABC_Freiner,
-    eMission_Pion_ABC_EscorterUnConvoi,
+    eMission_Pion_ABC_EscorterUnite,
+    eMission_Pion_ABC_EscorterUnites,
     eMission_Pion_ABC_ArmerPointDeControle,
     eMission_Pion_ABC_OrganiserAccueilColonneRefugies,
+    eMission_Pion_ABC_AppuyerSurPosition,
     eMission_Pion_GEN_RealiserFosseAC,
     eMission_Pion_GEN_RealiserAbattisMine,
     eMission_Pion_GEN_RealiserPointMine,
@@ -1226,12 +1241,14 @@ enum E_UnitMission
     eMission_Pion_INF_OrganiserUnCheckPoint,
     eMission_Pion_INF_Harceler,
     eMission_Pion_INF_DetruireParCoupDeMain,
-    eMission_Pion_INF_EscorterUnConvoi,
+    eMission_Pion_INF_EscorterUnite,
+    eMission_Pion_INF_EscorterUnites,
     eMission_Pion_INF_RenseignerSur,
     eMission_Pion_INF_Soutenir,
     eMission_Pion_INF_Securiser,
     eMission_Pion_INF_Recueillir,
     eMission_Pion_INF_RepondreAAggression,
+    eMission_Pion_INF_AppuyerSurPosition,
     eMission_Pion_LOG_SeDeployer,
     eMission_Pion_LOG_DistribuerMoyens,
     eMission_Pion_LOG_TrierBlesses,
@@ -1336,6 +1353,7 @@ enum E_FragOrder
     eOrdreConduite_AttendreSePoster,
     eOrdreConduite_Poursuivre,
     eOrdreConduite_Interrompre,
+    eOrdreConduite_ChangerAmbiance,
     eOrdreConduite_ChangerReglesEngagement,
     eOrdreConduite_ChangerReglesEngagementPopulation,
     eOrdreConduite_Deboucher,
