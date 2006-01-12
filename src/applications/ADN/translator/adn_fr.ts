@@ -315,11 +315,11 @@
     </message>
     <message>
         <source>Logistic per automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique par automate</translation>
     </message>
     <message>
         <source>Logistic per dotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique par dotation</translation>
     </message>
 </context>
 <context>
@@ -2639,7 +2639,7 @@
     </message>
     <message>
         <source>Automate ABC AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate ABC AppuyerSurPosition</translation>
     </message>
     <message>
         <source>Automate INF EscorterUnite</source>
@@ -2651,7 +2651,7 @@
     </message>
     <message>
         <source>Automate INF AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate INF AppuyerSurPosition</translation>
     </message>
     <message>
         <source>Pion ABC EscorterUnite</source>
@@ -2663,7 +2663,7 @@
     </message>
     <message>
         <source>Pion ABC AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion ABC AppuyerSurPosition</translation>
     </message>
     <message>
         <source>Pion INF EscorterUnite</source>
@@ -2671,11 +2671,11 @@
     </message>
     <message>
         <source>Pion INF EscorterUnites</source>
-        <translation>Pion INF EscorterUnite</translation>
+        <translation>Pion INF EscorterUnites</translation>
     </message>
     <message>
         <source>Pion INF AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion INF AppuyerSurPosition</translation>
     </message>
 </context>
 <context>
@@ -4067,7 +4067,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Max computation time</source>
-        <translation>Temps maximum de calcul</translation>
+        <translation>Temps max de calcul</translation>
     </message>
 </context>
 <context>
