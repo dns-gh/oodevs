@@ -229,6 +229,7 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Pion ABC ArmerPointDeControle", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ABC ArmerPointDeControle"), eSMission_Pion_ABC_ArmerPointDeControle ),
     T_ConverterSMission("Pion ABC OrganiserAccueilColonneRefugies", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ABC OrganiserAccueilColonneRefugies"), eSMission_Pion_ABC_OrganiserAccueilColonneRefugies ),
     T_ConverterSMission("Pion ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ABC AppuyerSurPosition"), eSMission_Pion_ABC_AppuyerSurPosition ),
+    T_ConverterSMission("Pion ABC RASIT RenseignerSur", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ABC RASIT RenseignerSur"), eSMission_Pion_ABC_RASIT_RenseignerSur ),
     T_ConverterSMission("Pion GEN RealiserFosseAC", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion GEN RealiserFosseAC"), eSMission_Pion_GEN_RealiserFosseAC ),
     T_ConverterSMission("Pion GEN RealiserAbattisMine", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion GEN RealiserAbattisMine"), eSMission_Pion_GEN_RealiserAbattisMine ),
     T_ConverterSMission("Pion GEN RealiserPointMine", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion GEN RealiserPointMine"), eSMission_Pion_GEN_RealiserPointMine ),

@@ -107,7 +107,7 @@ Mission-Pion-ABC-OuvrirItineraire ::= SEQUENCE
 {
     itineraire       Itineraire
 }
-Mission-Pion-ABC-RenseignerSur ::= SEQUENCE
+Mission-Pion-ABC-RASIT-RenseignerSur ::= SEQUENCE
 {
     zone Polygon
 }

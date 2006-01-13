@@ -1175,6 +1175,7 @@ enum E_UnitMission
     eMission_Pion_ABC_ArmerPointDeControle,
     eMission_Pion_ABC_OrganiserAccueilColonneRefugies,
     eMission_Pion_ABC_AppuyerSurPosition,
+    eMission_Pion_ABC_RASIT_RenseignerSur,
     eMission_Pion_GEN_RealiserFosseAC,
     eMission_Pion_GEN_RealiserAbattisMine,
     eMission_Pion_GEN_RealiserPointMine,

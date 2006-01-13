@@ -76,7 +76,8 @@ IMPORTS Mission-Pion-ABC-ReconnaitreAxe,
         Mission-Pion-ABC-RenseignerSur,
         Mission-Pion-ABC-ArmerPointDeControle, 
         Mission-Pion-ABC-OrganiserAccueilColonneRefugies,
-        Mission-Pion-ABC-AppuyerSurPosition FROM ScipioPionMission_ABC
+        Mission-Pion-ABC-AppuyerSurPosition,
+        Mission-Pion-ABC-RASIT-RenseignerSur  FROM ScipioPionMission_ABC
         
 IMPORTS Mission-Pion-GEN-RealiserFosseAC,
         Mission-Pion-GEN-RealiserAbattisMine,
@@ -303,6 +304,7 @@ Mission-Pion ::= CHOICE
     mission-pion-abc-armer-point-de-controle                            Mission-Pion-ABC-ArmerPointDeControle, 
     mission-pion-abc-organiser-accueil-colonne-refugies                 Mission-Pion-ABC-OrganiserAccueilColonneRefugies,
     mission-pion-abc-appuyer-sur-position                               Mission-Pion-ABC-AppuyerSurPosition,    
+    mission-pion-abc-rasit-renseigner-sur                               Mission-Pion-ABC-RASIT-RenseignerSur,
     mission-pion-gen-realiser-fosse-ac                                  Mission-Pion-GEN-RealiserFosseAC,
     mission-pion-gen-realiser-abattis-mine                              Mission-Pion-GEN-RealiserAbattisMine,
     mission-pion-gen-realiser-point-mine                                Mission-Pion-GEN-RealiserPointMine,

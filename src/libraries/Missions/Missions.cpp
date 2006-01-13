@@ -225,6 +225,7 @@
 #include "Pion\MIL_PionMission_ABC_ArmerPointDeControle.cpp"
 #include "Pion\MIL_PionMission_ABC_OrganiserAccueilColonneRefugies.cpp"
 #include "Pion\MIL_PionMission_ABC_AppuyerSurPosition.cpp"
+#include "Pion\MIL_PionMission_ABC_RASIT_RenseignerSur.cpp"
 #include "Pion\MIL_PionMission_GEN_RealiserFosseAC.cpp"
 #include "Pion\MIL_PionMission_GEN_RealiserAbattisMine.cpp"
 #include "Pion\MIL_PionMission_GEN_RealiserPointMine.cpp"
@@ -676,6 +677,7 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_ArmerPointDeControle>( "Pion ABC ArmerPointDeControle", eMission_Pion_ABC_ArmerPointDeControle, T_Mission_Pion_mission_pion_abc_armer_point_de_controle, "T_Mission_Pion_ABC_ArmerPointDeControle", "MIS_Pion_ABC_ArmerPointDeControle");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_OrganiserAccueilColonneRefugies>( "Pion ABC OrganiserAccueilColonneRefugies", eMission_Pion_ABC_OrganiserAccueilColonneRefugies, T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies, "T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies", "MIS_Pion_ABC_OrganiserAccueilColonneRefugies");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_AppuyerSurPosition>( "Pion ABC AppuyerSurPosition", eMission_Pion_ABC_AppuyerSurPosition, T_Mission_Pion_mission_pion_abc_appuyer_sur_position, "T_Mission_Pion_ABC_AppuyerSurPosition", "MIS_Pion_ABC_AppuyerSurPosition");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_RASIT_RenseignerSur>( "Pion ABC RASIT RenseignerSur", eMission_Pion_ABC_RASIT_RenseignerSur, T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur, "T_Mission_Pion_ABC_RASIT_RenseignerSur", "MIS_Pion_ABC_RASIT_RenseignerSur");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserFosseAC>( "Pion GEN RealiserFosseAC", eMission_Pion_GEN_RealiserFosseAC, T_Mission_Pion_mission_pion_gen_realiser_fosse_ac, "T_Mission_Pion_GEN_RealiserFosseAC", "MIS_Pion_GEN_RealiserFosseAC");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserAbattisMine>( "Pion GEN RealiserAbattisMine", eMission_Pion_GEN_RealiserAbattisMine, T_Mission_Pion_mission_pion_gen_realiser_abattis_mine, "T_Mission_Pion_GEN_RealiserAbattisMine", "MIS_Pion_GEN_RealiserAbattisMine");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserPointMine>( "Pion GEN RealiserPointMine", eMission_Pion_GEN_RealiserPointMine, T_Mission_Pion_mission_pion_gen_realiser_point_mine, "T_Mission_Pion_GEN_RealiserPointMine", "MIS_Pion_GEN_RealiserPointMine");

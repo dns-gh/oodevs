@@ -79,6 +79,7 @@
     void CreateMission_ABC_ArmerPointDeControle();
     void CreateMission_ABC_OrganiserAccueilColonneRefugies();
     void CreateMission_ABC_AppuyerSurPosition();
+    void CreateMission_ABC_RASIT_RenseignerSur();
     void CreateMission_GEN_RealiserFosseAC();
     void CreateMission_GEN_RealiserAbattisMine();
     void CreateMission_GEN_RealiserPointMine();

@@ -77,6 +77,7 @@ enum E_SMission
     eSMission_Pion_ABC_ArmerPointDeControle,
     eSMission_Pion_ABC_OrganiserAccueilColonneRefugies,
     eSMission_Pion_ABC_AppuyerSurPosition,
+    eSMission_Pion_ABC_RASIT_RenseignerSur,
 
     eSMission_Pion_ABC_Fin,
           

@@ -432,6 +432,11 @@ T_Point position_;
 T_ListePions unitesAAppuyer_;
 };
 
+typedef struct T_Mission_Pion_ABC_RASIT_RenseignerSur : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
 typedef struct T_Mission_Pion_GEN_RealiserFosseAC : T_Mission_Pion
 {
 T_Localisation posObstacle_;

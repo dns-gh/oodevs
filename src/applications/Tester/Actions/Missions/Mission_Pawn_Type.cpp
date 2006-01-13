@@ -85,6 +85,7 @@
 #include "Pawn/Mission_Pawn_ABC_ArmerPointDeControle.cpp"
 #include "Pawn/Mission_Pawn_ABC_OrganiserAccueilColonneRefugies.cpp"
 #include "Pawn/Mission_Pawn_ABC_AppuyerSurPosition.cpp"
+#include "Pawn/Mission_Pawn_ABC_RASIT_RenseignerSur.cpp"
 #include "Pawn/Mission_Pawn_GEN_RealiserFosseAC.cpp"
 #include "Pawn/Mission_Pawn_GEN_RealiserAbattisMine.cpp"
 #include "Pawn/Mission_Pawn_GEN_RealiserPointMine.cpp"
@@ -332,6 +333,7 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_ABC_ArmerPointDeControle >( "Pion ABC ArmerPointDeControle" );
     Register< Mission_Pawn_ABC_OrganiserAccueilColonneRefugies >( "Pion ABC OrganiserAccueilColonneRefugies" );
     Register< Mission_Pawn_ABC_AppuyerSurPosition >( "Pion ABC AppuyerSurPosition" );
+    Register< Mission_Pawn_ABC_RASIT_RenseignerSur >( "Pion ABC RASIT RenseignerSur" );
     Register< Mission_Pawn_GEN_RealiserFosseAC >( "Pion GEN RealiserFosseAC" );
     Register< Mission_Pawn_GEN_RealiserAbattisMine >( "Pion GEN RealiserAbattisMine" );
     Register< Mission_Pawn_GEN_RealiserPointMine >( "Pion GEN RealiserPointMine" );

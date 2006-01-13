@@ -1106,6 +1106,7 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion ABC ArmerPointDeControle", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ArmerPointDeControle" ), eMission_Pion_ABC_ArmerPointDeControle ),
     T_ConverterUnitMission( "Pion ABC OrganiserAccueilColonneRefugies", QT_TRANSLATE_NOOP( "ENT", "Pion ABC OrganiserAccueilColonneRefugies" ), eMission_Pion_ABC_OrganiserAccueilColonneRefugies ),
     T_ConverterUnitMission( "Pion ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ABC AppuyerSurPosition" ), eMission_Pion_ABC_AppuyerSurPosition ),
+    T_ConverterUnitMission( "Pion ABC RASIT RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion ABC RASIT RenseignerSur" ), eMission_Pion_ABC_RASIT_RenseignerSur ),
     T_ConverterUnitMission( "Pion GEN RealiserFosseAC", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserFosseAC" ), eMission_Pion_GEN_RealiserFosseAC ),
     T_ConverterUnitMission( "Pion GEN RealiserAbattisMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserAbattisMine" ), eMission_Pion_GEN_RealiserAbattisMine ),
     T_ConverterUnitMission( "Pion GEN RealiserPointMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserPointMine" ), eMission_Pion_GEN_RealiserPointMine ),

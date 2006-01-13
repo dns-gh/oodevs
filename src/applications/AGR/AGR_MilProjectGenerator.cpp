@@ -123,7 +123,7 @@ void AGR_MilProjectGenerator::GenerateMissionsProjectFile( const AGR_Workspace& 
 
 
     std::string strBaseContent;
-//    workspace.ReadStringFile( AGR_SKEL_DIR "Missions.vcproj", strBaseContent );
+    workspace.ReadStringFile( AGR_SKEL_DIR "Missions.vcproj", strBaseContent );
 
 //    workspace.ReplaceInString( strBaseContent, "$AutomateFileList$", strAutomateFileList );
 //    workspace.ReplaceInString( strBaseContent, "$PopulationFileList$", strPopulationFileList );

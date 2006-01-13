@@ -87,6 +87,7 @@ MOS_UnitMissionInterface::~MOS_UnitMissionInterface()
         case T_Mission_Pion_mission_pion_abc_armer_point_de_controle : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_armer_point_de_controle; break;
         case T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies; break;
         case T_Mission_Pion_mission_pion_abc_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position; break;
+        case T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_rasit_renseigner_sur; break;
         case T_Mission_Pion_mission_pion_gen_realiser_fosse_ac : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_fosse_ac; break;
         case T_Mission_Pion_mission_pion_gen_realiser_abattis_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_abattis_mine; break;
         case T_Mission_Pion_mission_pion_gen_realiser_point_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_point_mine; break;
@@ -317,6 +318,7 @@ void MOS_UnitMissionInterface::CreateInterface()
         case eMission_Pion_ABC_ArmerPointDeControle : CreateMission_ABC_ArmerPointDeControle(); break;
         case eMission_Pion_ABC_OrganiserAccueilColonneRefugies : CreateMission_ABC_OrganiserAccueilColonneRefugies(); break;
         case eMission_Pion_ABC_AppuyerSurPosition : CreateMission_ABC_AppuyerSurPosition(); break;
+        case eMission_Pion_ABC_RASIT_RenseignerSur : CreateMission_ABC_RASIT_RenseignerSur(); break;
         case eMission_Pion_GEN_RealiserFosseAC : CreateMission_GEN_RealiserFosseAC(); break;
         case eMission_Pion_GEN_RealiserAbattisMine : CreateMission_GEN_RealiserAbattisMine(); break;
         case eMission_Pion_GEN_RealiserPointMine : CreateMission_GEN_RealiserPointMine(); break;
@@ -1459,6 +1461,18 @@ void MOS_UnitMissionInterface::CreateMission_ABC_AppuyerSurPosition()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position = &asnMission;
     CreatePoint( asnMission.position, "Position", false );
     CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer", false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_UnitMissionInterface::CreateMission_ABC_RASIT_RenseignerSur
+// Created: AGR
+// -----------------------------------------------------------------------------
+void MOS_UnitMissionInterface::CreateMission_ABC_RASIT_RenseignerSur()
+{
+    ASN1T_Mission_Pion_ABC_RASIT_RenseignerSur& asnMission = *new ASN1T_Mission_Pion_ABC_RASIT_RenseignerSur();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_rasit_renseigner_sur = &asnMission;
+    CreateLocation( asnMission.zone, "Zone", false );
 }
 
 // -----------------------------------------------------------------------------
