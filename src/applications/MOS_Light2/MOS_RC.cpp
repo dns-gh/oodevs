@@ -49,7 +49,7 @@ void MOS_RC::Initialize( const ASN1T_MsgCR& asnMsg )
     switch( asnMsg.cr.t )
     {
     
-            case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
+        case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
         case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
         case T_MsgCR_cr_cr_mission_impossible : strMsg << "mission impossible"; break;

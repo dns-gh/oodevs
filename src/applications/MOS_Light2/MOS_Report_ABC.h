@@ -62,6 +62,7 @@ public:
     const MT_Vector2D& GetPos  () const;
     const std::string& GetTitle() const;
     const std::string  GetStrippedTitle() const;
+    bool               IsInteresting() const;
     int                GetTime () const;
     E_Type             GetType () const;
     bool               IsRCType() const;

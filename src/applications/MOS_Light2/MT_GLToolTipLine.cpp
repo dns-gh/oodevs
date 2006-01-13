@@ -42,7 +42,7 @@ MT_GLToolTipLine::~MT_GLToolTipLine()
 void MT_GLToolTipLine::Draw( QGLWidget* pWidget, MT_Rect viewRect, MT_Vector2D pos ) const
 {
     color_.SetGLColor();
-    pWidget->renderText( pos.rX_ , pos.rY_ , 0, strText_, font_ );
+        pWidget->renderText( pos.rX_ , pos.rY_ , 0, strText_, font_ );
 }
 
 

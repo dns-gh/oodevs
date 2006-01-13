@@ -53,6 +53,23 @@ const std::string MOS_Report_ABC::GetStrippedTitle() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_Report_ABC::IsInteresting()
+// Created: HME 2006-01-13
+// -----------------------------------------------------------------------------
+inline
+bool MOS_Report_ABC::IsInteresting() const
+{
+    
+    if( strTitle_ != GetStrippedTitle()
+        || strTitle_ == "Ennemi détecté"
+        || strTitle_ == "Ennemi reconnu"
+        || strTitle_ == "Ennemi identifié" )
+        return false;
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MOS_Report_ABC::GetTime
 // Created: APE 2004-08-04
 // -----------------------------------------------------------------------------

@@ -727,7 +727,8 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
                 && time  < duration )
             {     
                 bTodo = true;
-                tooltip.AddLine( (*it)->GetStrippedTitle(), 128.0 * time / duration , 128.0 * time / duration , 128.0 * time / duration, 1.0 , true );
+                if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayIdentificationLevelOnMap_ || (*it)->IsInteresting() )
+                    tooltip.AddLine( (*it)->GetStrippedTitle(), 128.0 * time / duration , 128.0 * time / duration , 128.0 * time / duration, 1.0 , true );
             }
             else if ( time  > 4 )
                 break;
@@ -1194,7 +1195,6 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
     else
     {
         GFX_Color color = MOS_GLTool::GetColorForTeam( object.GetTeam() );
-        color.AddRGB( 100, 200, 100 );
         color.SetGLColor();
     }
 
@@ -1280,18 +1280,18 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
     if( pointList.empty() )
         return;
 
-    glColor4d( 0.4, 0.4, 0.4, 1.0 );
-    glLineWidth( 3.0 );
+    glColor4d( 1.0, 1.0, 1.0, 1.0 );
+    glLineWidth( 7.0 );
     DrawLine( pointList );
 
     if( nState == eSelected )
         glColor4d( 1.0, 0.5, 0.05, 1.0 );
     else if( nState == eHighlighted )
-        glColor4d( 0.5, 0.0, 0.5, 1.0 );
+        glColor4d( 1.0, 1.0, 0.0, 1.0 );
     else
-        glColor4d( 1.0, 1.0, 0.5, 1.0 );
+        glColor4d( 0.0, 0.0, 0.0, 1.0 );
 
-    glLineWidth( 1.0 );
+    glLineWidth( 3.0 );
     DrawLine( pointList );
 
 
@@ -2355,7 +2355,7 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 void MOS_GLTool::DrawVisionCones( MOS_Agent& agent )
 {
     glLineWidth( 1 );
-    glColor4d( MOS_COLOR_WHITE );
+    glColor4d( 1.0, 1.0, 0.0, 1.0 );
 
     for( MOS_Agent::CIT_SurfaceVector itSurface = agent.surfaces_.begin(); itSurface != agent.surfaces_.end(); ++itSurface )
         (**itSurface).Draw( agent );
@@ -2633,17 +2633,17 @@ namespace
     std::map< std::string, GFX_Color > InitializeColors()
     {
         std::map< std::string, GFX_Color > colors;
-        colors.insert( std::make_pair( "rouge",   GFX_Color( 255, 000, 000 ) ) );
-        colors.insert( std::make_pair( "bleu",    GFX_Color( 000, 000, 255 ) ) );
-        colors.insert( std::make_pair( "vert",    GFX_Color( 000, 255, 000 ) ) );
-        colors.insert( std::make_pair( "cyan",    GFX_Color( 000, 255, 255 ) ) );
+        colors.insert( std::make_pair( "rouge",   GFX_Color( 255, 50, 50 ) ) );
+        colors.insert( std::make_pair( "bleu",    GFX_Color( 100, 125, 255 ) ) );
+        colors.insert( std::make_pair( "vert",    GFX_Color( 50, 230, 50 ) ) );
+        colors.insert( std::make_pair( "cyan",    GFX_Color( 000, 230, 230 ) ) );
         colors.insert( std::make_pair( "magenta", GFX_Color( 255, 000, 255 ) ) );
         colors.insert( std::make_pair( "orange",  GFX_Color( 255, 150, 10 ) ) );
-        colors.insert( std::make_pair( "marron",  GFX_Color( 139, 69, 19 ) ) );
-        colors.insert( std::make_pair( "jaune",   GFX_Color( 255, 255, 000 ) ) );
-        colors.insert( std::make_pair( "gris",    GFX_Color( 100, 100, 100 ) ) );
-        colors.insert( std::make_pair( "noir",    GFX_Color( 0, 0, 0 ) ) );
-        colors.insert( std::make_pair( "cobalt",    GFX_Color( 0, 0, 128 ) ) );
+        colors.insert( std::make_pair( "marron",  GFX_Color( 170, 90, 40 ) ) );
+        colors.insert( std::make_pair( "jaune",   GFX_Color( 255, 220, 000 ) ) );
+        colors.insert( std::make_pair( "gris",    GFX_Color( 140, 140, 140 ) ) );
+        colors.insert( std::make_pair( "noir",    GFX_Color( 80, 80, 80 ) ) );
+        colors.insert( std::make_pair( "cobalt",  GFX_Color( 50, 50, 128 ) ) );
         colors.insert( std::make_pair( "",        GFX_Color( 255, 100, 255 ) ) );
 
         return colors;
