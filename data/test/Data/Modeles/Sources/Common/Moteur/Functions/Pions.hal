@@ -43,6 +43,8 @@ signatures
     V                                       A::DEC_Tir_LancerFumigeneSurConnaissance               ( U /*T_ConnaissanceAgent*/ );
     R                                       A::DEC_Tir_PorteeMaxPourTirerSurAgent                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
     R                                       A::DEC_Tir_PorteeMinPourTirerSurAgent                  ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMaxPourTirerSurAgentPosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
+    R                                       A::DEC_Tir_PorteeMinPourTirerSurAgentPosturesReelles   ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );    
     R                                       A::DEC_Tir_PorteeMaxPourTirerDebarqueSurAgent          ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
     R                                       A::DEC_Tir_PorteeMaxPourEtreTireParAgent               ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/, * /* ph voulu, par défaut 0.8 */ );
     R                                       A::DEC_Tir_PorteeMaxTirIndirect                        ( I /*E_TypeObus*/ );
