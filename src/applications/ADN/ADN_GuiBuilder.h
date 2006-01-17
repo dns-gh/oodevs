@@ -26,6 +26,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_CheckBox.h"
+#include "ADN_TimeField.h"
 #include "ADN_Validator.h"
 
 class ADN_FileChooser;
@@ -447,7 +448,7 @@ template<>
 inline
 void ADN_GuiBuilder::DoValidator< ADN_EditLine_String >( ADN_EditLine_String* pWidget, E_Validator nValidator )
 {
-    this->SetValidator( pWidget->GetValidator(), nValidator );
+    SetValidator( pWidget->GetValidator(), nValidator );
 }
 
 
@@ -459,7 +460,7 @@ template<>
 inline
 void ADN_GuiBuilder::DoValidator< ADN_EditLine_Int >( ADN_EditLine_Int* pWidget, E_Validator nValidator )
 {
-    this->SetValidator( pWidget->GetValidator(), nValidator );
+    SetValidator( pWidget->GetValidator(), nValidator );
 }
 
 
@@ -471,8 +472,18 @@ template<>
 inline
 void ADN_GuiBuilder::DoValidator< ADN_EditLine_Double >( ADN_EditLine_Double* pWidget, E_Validator nValidator )
 {
-    this->SetValidator( pWidget->GetValidator(), nValidator );
+    SetValidator( pWidget->GetValidator(), nValidator );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::DoValidator
+// Created: APE 2005-04-14
+// -----------------------------------------------------------------------------
+template<>
+inline
+void ADN_GuiBuilder::DoValidator< ADN_TimeField >( ADN_TimeField* pWidget, E_Validator nValidator )
+{
+    SetValidator( pWidget->GetValidator(), nValidator );
+}
 
 #endif // __ADN_GuiBuilder_h_

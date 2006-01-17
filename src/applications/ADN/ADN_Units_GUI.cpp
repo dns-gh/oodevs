@@ -101,13 +101,13 @@ void ADN_Units_GUI::Build()
     builder.SetToolTip( "Le modèle comportemental associé à l'unité." );
 
     // Decontamination delay
-    builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay] );
+    builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
 
     // Sensors reach
-    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Sensors reach" ), vInfosConnectors[eSensorsReach], tr( "m" ) );
+    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Sensors reach" ), vInfosConnectors[eSensorsReach], tr( "m" ), eGreaterEqualZero );
 
     // Weapons reach
-    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Weapons reach" ), vInfosConnectors[eWeaponsReach], tr( "m" ) );
+    builder.AddField<ADN_EditLine_Double>( pParamGroup, tr( "Weapons reach" ), vInfosConnectors[eWeaponsReach], tr( "m" ), eGreaterEqualZero );
 
     // Feedback time
     builder.AddOptionnalField<ADN_TimeField>( pParamGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasStrengthRatioFeedbackTime], vInfosConnectors[eStrengthRatioFeedbackTime] );

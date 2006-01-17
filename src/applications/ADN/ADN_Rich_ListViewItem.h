@@ -77,8 +77,8 @@ private:
     //@}
 
 private:
-    T_QColorVector backgroundColors_;
-    bool           bGrid_;
+    T_QColorVector      backgroundColors_;
+    bool                bGrid_;
     E_SortingConstraint eSortingConstraint_;
 
     static QColor warningColor_;

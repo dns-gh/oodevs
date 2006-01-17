@@ -24,16 +24,10 @@
 #include <qwidget.h>
 
 class QComboBox;
+class ADN_IntValidator;
 class ADN_TimeField_EditLine;
 
 // =============================================================================
-/** @class  ADN_TimeField
-    @brief  ADN_TimeField
-    @par    Using example
-    @code
-    ADN_TimeField;
-    @endcode
-*/
 // Created: SBO 2005-09-09
 // =============================================================================
 class ADN_TimeField 
@@ -55,6 +49,8 @@ public:
     void    setText( const QString& strText );
     //@}
 
+    ADN_IntValidator& GetValidator();
+
 signals:
     //! @name Signals
     //@{
@@ -73,9 +69,10 @@ private:
     //! @name Member data
     //@{
     ADN_TimeField_EditLine* pLineEdit_;
-    QComboBox* pComboBox_;
-    uint       nSecondsValue_;
-    bool       bFreezeSlot_;
+    QComboBox*              pComboBox_;
+    uint                    nSecondsValue_;
+    bool                    bFreezeSlot_;
+    ADN_IntValidator*       pValidator_;
     //@}
 };
 

@@ -34,6 +34,7 @@
 #include <qlayout.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
+#include <qvalidator.h>
 
 
 class ADN_TimeField_EditLine : public QLineEdit
@@ -56,6 +57,17 @@ protected:
         QLineEdit::focusInEvent( pEvent );
         bIsFocusing_ = true;
         selectAll();
+    }
+
+    void focusOutEvent( QFocusEvent* pEvent )
+    {
+        if( validator() != 0 )
+        {
+            QString strText = text();
+            validator()->fixup( strText );
+            setText( strText );
+        }
+        QLineEdit::focusOutEvent( pEvent );
     }
 
     void mouseReleaseEvent( QMouseEvent* e )
@@ -102,7 +114,8 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
     connect( pLineEdit_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnValueChanged( const QString& ) ) );
     connect( pComboBox_, SIGNAL( activated  ( const QString& ) ), this, SLOT( OnUnitChanged ( const QString& ) ) );
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
-    pLineEdit_->setValidator( new ADN_DoubleValidator( 0.0, 1000000.0, 2, pLineEdit_ ) );
+    pValidator_ = new ADN_IntValidator( 0, INT_MAX, pLineEdit_ );
+    pLineEdit_->setValidator( pValidator_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,3 +224,12 @@ void ADN_TimeField::UpdateEnableState()
         setEnabled( static_cast< ADN_Connector_String<ADN_TimeField>* >( pConnector_ )->IsConnected() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::GetValidator
+// Created: SBO 2006-01-17
+// -----------------------------------------------------------------------------
+ADN_IntValidator& ADN_TimeField::GetValidator()
+{
+    assert( pValidator_ );
+    return *pValidator_;
+}

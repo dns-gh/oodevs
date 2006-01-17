@@ -23,9 +23,9 @@ QColor ADN_Rich_ListViewItem::errorColor_  ( 255, 125, 125 );
 // Created: SBO 2006-01-04
 // -----------------------------------------------------------------------------
 ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( ADN_ListView* parent, bool bGrid )
-: QListViewItem     ( parent )
-, backgroundColors_ ()
-, bGrid_            ( bGrid )
+: QListViewItem       ( parent )
+, backgroundColors_   ()
+, bGrid_              ( bGrid )
 , eSortingConstraint_ ( eSortingConstraint_Default )
 {
     // NOTHING
