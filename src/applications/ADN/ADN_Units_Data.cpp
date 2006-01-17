@@ -136,6 +136,163 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output
     output.EndSection(); // Equipement
 }
 
+// =============================================================================
+// StockLogThresholdInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos( E_StockCategory eCategory )
+: ADN_DataTreeNode_ABC()
+, eCategory_          ( eCategory )
+, rLogThreshold_      ( 0. )
+{
+    ADN_Type_Enum< E_StockCategory, eNbrStockCategory >::SetConverter( &ADN_Tr::ConvertFromStockCategory );
+    eCategory_.SetDataName( "la catégorie de stock" );
+    eCategory_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockLogThresholdInfos::GetNodeName
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::StockLogThresholdInfos::GetNodeName()
+{
+    return std::string();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockLogThresholdInfos::GetItemName
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::StockLogThresholdInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockLogThresholdInfos::ReadArchive
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "SeuilLogistique" );
+    std::string strCategory;
+    input.ReadAttribute( "categorie", strCategory );
+    E_StockCategory eCategory = ADN_Tr::ConvertToStockCategory( strCategory );
+    if( eCategory == (E_StockCategory)-1 )
+        input.ThrowError( MT_FormatString( "La category de stock '%s' est invalide", strCategory.c_str() ) );
+    eCategory_ = eCategory;
+    input.ReadAttribute( "seuil", rLogThreshold_ );
+    input.EndSection(); // SeuilLogistique
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockLogThresholdInfos::WriteArchive
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "SeuilLogistique" );
+    output.WriteAttribute( "categorie", ADN_Tr::ConvertFromStockCategory( eCategory_.GetData() ) );
+    output.WriteAttribute( "seuil"    , rLogThreshold_.GetData() );
+    output.EndSection(); // SeuilLogistique
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockLogThresholdInfos::CreateCopy
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+ADN_Units_Data::StockLogThresholdInfos* ADN_Units_Data::StockLogThresholdInfos::CreateCopy()
+{
+    StockLogThresholdInfos* pCopy = new StockLogThresholdInfos();
+    pCopy->eCategory_     = eCategory_.GetData();
+    pCopy->rLogThreshold_ = rLogThreshold_.GetData();
+    return pCopy;
+}
+
+// =============================================================================
+// StockInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::StockInfos
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+ADN_Units_Data::StockInfos::StockInfos()
+: ADN_DataTreeNode_ABC()
+, vLogThresholds_     ()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::GetNodeName
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::StockInfos::GetNodeName()
+{
+    return std::string();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::GetItemName
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::StockInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::ReadArchive
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::StockInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    if( input.BeginList( "SeuilsLogistiques", ADN_XmlInput_Helper::eNothing ) )
+    {
+        while( input.NextListElement() )
+        {
+            std::auto_ptr< StockLogThresholdInfos > spNew( new StockLogThresholdInfos() );
+            spNew->ReadArchive( input );
+            vLogThresholds_.AddItem( spNew.release() );
+        }
+        input.EndList(); // SeuilsLogistiques
+    }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::WriteArchive
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, MT_OutputArchive_ABC& output )
+{
+    output.Section( strName );
+    if( vLogThresholds_.size() != 0 )
+    {
+        output.Section( "SeuilsLogistiques" );
+        for( IT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
+            (*it)->WriteArchive( output );
+        output.EndSection(); // SeuilsLogistiques
+    }
+    output.EndSection(); // strName
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::StockInfos::CopyFrom
+// Created: SBO 2006-01-10
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::StockInfos::CopyFrom( StockInfos& src )
+{
+    for( IT_StockLogThresholdInfos_Vector it = src.vLogThresholds_.begin(); it != src.vLogThresholds_.end(); ++it )
+        vLogThresholds_.AddItemNoEmit( (*it)->CreateCopy() );
+}
+
+// =============================================================================
+// PointInfos
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PointInfos::PointInfos
@@ -311,6 +468,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 , vPointInfos_( false )
 , bProbe_(false)
 , bStock_( false )
+, stocks_()
 , bStrengthRatioFeedbackTime_( false )
 , strengthRatioFeedbackTime_( "0s" )
 , rProbeWidth_(0)
@@ -449,7 +607,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->bTC1_ = bTC1_.GetData();
     pCopy->contenancesTC1_.CopyFrom( contenancesTC1_ );
     pCopy->bStock_ = bStock_.GetData();
-    pCopy->stock_.CopyFrom( stock_ );
+    pCopy->stocks_.CopyFrom( stocks_ );
 
     pCopy->bProbe_ = bProbe_.GetData();
     pCopy->rProbeLength_ = rProbeLength_.GetData();
@@ -589,7 +747,13 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     // $$$$ SBO 2006-01-03: Hack to reset TC1 normalized consumptions...
     for( ADN_Composantes_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
         (*it)->rNormalizedConsumption_ = 0.;
-    bStock_ = stock_.ReadArchive( "Stocks", input, true );
+
+    bStock_ = input.Section( "Stocks", ADN_XmlInput_Helper::eNothing );
+    if( bStock_.GetData() )
+    {
+        stocks_.ReadArchive( input );
+        input.EndSection(); // Stocks
+    }
 
     input.Section( "TempsMiseEnPosture" );
     for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
@@ -720,7 +884,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
     if( bTC1_.GetData() )
         contenancesTC1_.WriteArchive( "ContenanceTC1", output );
     if( bStock_.GetData() )
-        stock_.WriteArchive( "Stocks", output );
+        stocks_.WriteArchive( "Stocks", output );
 
     output.Section( "TempsMiseEnPosture" );
     for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )

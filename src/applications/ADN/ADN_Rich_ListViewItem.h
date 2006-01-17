@@ -35,6 +35,13 @@ public:
         eUnitNone,
         eUnitHour
     };
+
+    enum E_SortingConstraint
+    {
+        eSortingConstraint_Default,
+        eSortingConstraint_First,
+        eSortingConstraint_Last
+    };
     //@}
 
 public:
@@ -47,6 +54,8 @@ public:
     void SetBackgroundColor( uint nColumn, const QColor& color );
     void SetWarning        ( uint nColumn );
     void SetError          ( uint nColumn );
+
+    void OverrideSorting   ( E_SortingConstraint eConstraint );
     //@}
 
     template< typename T >
@@ -59,6 +68,7 @@ public:
 
 protected:
     virtual void paintCell( QPainter* pPainter, const QColorGroup& cg, int nColumn, int nWidth, int nAlign );
+    virtual QString key   ( int column, bool ascending ) const;
 
 private:
     //! @name types
@@ -69,6 +79,7 @@ private:
 private:
     T_QColorVector backgroundColors_;
     bool           bGrid_;
+    E_SortingConstraint eSortingConstraint_;
 
     static QColor warningColor_;
     static QColor errorColor_;
@@ -132,7 +143,7 @@ QString ADN_Rich_ListViewItem::ToString( const T& value, E_FieldUnits eUnit /*= 
             result += QString::number( seconds ) + QObject::tr( "s", "ADN_Rich_ListViewItem" );
         return result;
     }
-    return QString::number( value );
+    return QString::number( value, 'f', 2 );
 }
 
 #endif // __ADN_Rich_ListViewItem_h_

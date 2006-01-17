@@ -469,3 +469,12 @@ void ADN_Workspace::ExportHtml( const std::string& strPath )
     std::string strFileName = strPath + "/index.htm";
     mainIndexBuilder.WriteToFile( strFileName.c_str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::ResetProgressIndicator
+// Created: SBO 2006-01-13
+// -----------------------------------------------------------------------------
+void ADN_Workspace::ResetProgressIndicator()
+{
+    pProgressIndicator_->Reset();
+}

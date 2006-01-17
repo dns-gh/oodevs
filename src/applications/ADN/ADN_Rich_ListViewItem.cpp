@@ -26,6 +26,7 @@ ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( ADN_ListView* parent, bool bGrid )
 : QListViewItem     ( parent )
 , backgroundColors_ ()
 , bGrid_            ( bGrid )
+, eSortingConstraint_ ( eSortingConstraint_Default )
 {
     // NOTHING
 }
@@ -38,6 +39,7 @@ ADN_Rich_ListViewItem::ADN_Rich_ListViewItem( QListViewItem* parent, bool bGrid 
 : QListViewItem     ( parent )
 , backgroundColors_ ()
 , bGrid_            ( bGrid )
+, eSortingConstraint_ ( eSortingConstraint_Default )
 {
     // NOTHING
 }
@@ -105,4 +107,28 @@ void ADN_Rich_ListViewItem::paintCell( QPainter* pPainter, const QColorGroup& cg
         pPainter->lineTo( nWidth - 1, height() - 1 );
         //pPainter->lineTo( 0, height() - 1 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Rich_ListViewItem::OverrideSorting
+// Created: SBO 2006-01-13
+// -----------------------------------------------------------------------------
+void ADN_Rich_ListViewItem::OverrideSorting( E_SortingConstraint eConstraint )
+{
+    eSortingConstraint_ = eConstraint;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Rich_ListViewItem::key
+// Created: SBO 2006-01-13
+// -----------------------------------------------------------------------------
+QString ADN_Rich_ListViewItem::key( int column, bool /*ascending*/ ) const
+{
+    if( eSortingConstraint_ == eSortingConstraint_Default )
+        return text( column );
+    else if( eSortingConstraint_ == eSortingConstraint_First )
+        return "  " + text( column );
+    else if( eSortingConstraint_ == eSortingConstraint_Last )
+        return "zz" + text( column );
+    return text( column );
 }

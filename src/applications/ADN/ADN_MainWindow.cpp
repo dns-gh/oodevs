@@ -360,6 +360,7 @@ void ADN_MainWindow::OpenProject( const char* szFilename )
     {
         QApplication::restoreOverrideCursor();	// restore original cursor
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
+        workspace_.ResetProgressIndicator();
         return;
     }
 

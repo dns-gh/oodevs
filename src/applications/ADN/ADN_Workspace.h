@@ -97,6 +97,7 @@ public:
     ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& GetPopulation();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
+    void ResetProgressIndicator();
 
     QtUndoStack&                GetUndoStack();
 

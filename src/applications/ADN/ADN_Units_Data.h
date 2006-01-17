@@ -74,6 +74,54 @@ public:
     //*****************************************************************************
     typedef ADN_Composantes_Data::DotationInfos DotationInfos;
 
+    //*****************************************************************************
+
+    class StockLogThresholdInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( StockLogThresholdInfos )
+
+    public:
+        StockLogThresholdInfos( E_StockCategory eCategory = ( E_StockCategory )-1 );
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        StockLogThresholdInfos* CreateCopy();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_Enum< E_StockCategory, eNbrStockCategory > eCategory_;
+        ADN_Type_Double                                     rLogThreshold_;
+    };
+
+    typedef ADN_Type_Vector_ABC< StockLogThresholdInfos > T_StockLogThresholdInfos_Vector;
+    typedef T_StockLogThresholdInfos_Vector::iterator     IT_StockLogThresholdInfos_Vector;
+
+    //*****************************************************************************
+    class StockInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( StockInfos )
+
+    public:
+        StockInfos();
+
+        void CopyFrom( StockInfos& src );
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( const std::string& strName, MT_OutputArchive_ABC& output );
+
+    public:
+        T_StockLogThresholdInfos_Vector vLogThresholds_;
+    };
 
     //*****************************************************************************
     class PostureInfos
@@ -186,7 +234,7 @@ public:
         ADN_Type_Bool                                               bTC1_;
         DotationInfos                                               contenancesTC1_;
         ADN_Type_Bool                                               bStock_;
-        DotationInfos                                               stock_;
+        StockInfos                                                  stocks_;
 
         ADN_Type_Bool                                               bProbe_;
         ADN_Type_Double                                             rProbeWidth_;

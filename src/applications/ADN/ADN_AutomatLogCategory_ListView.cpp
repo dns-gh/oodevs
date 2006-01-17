@@ -72,7 +72,7 @@ void ADN_AutomatLogCategory_ListView::BuildHeaders()
     addColumn( tr( "Conso Engine Started" ) );
     addColumn( tr( "Autonomy Engine Started" ) );
     for( int i = 1; i < columns(); ++i )
-        setColumnAlignment( i, Qt::AlignCenter );
+        setColumnAlignment( i, Qt::AlignVCenter | Qt::AlignRight );
 }
     
 // -----------------------------------------------------------------------------
@@ -182,8 +182,8 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
             break;
     if( itCategory == categories.end() )
         return;
-    item.setText( eColumnContenance     , QString::number( (*itCategory)->rNbr_.GetData() ) );
-    item.setText( eColumnNormalizedConso, QString::number( (*itCategory)->rNormalizedConsumption_.GetData() ) );
+    item.setText( eColumnContenance     , QString::number( (*itCategory)->rNbr_.GetData(), 'f', 2 ) );
+    item.setText( eColumnNormalizedConso, QString::number( (*itCategory)->rNormalizedConsumption_.GetData(), 'f', 2 ) );
     compTotal_.rNbr_                   = (*itCategory)->rNbr_.GetData();
     compTotal_.rNormalizedConsumption_ = (*itCategory)->rNormalizedConsumption_.GetData();
 
@@ -198,27 +198,31 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
                 continue;
 
             double rAutonomy = 0.;
+            double rDisplayedAutonomy = std::numeric_limits< double >::max();
             if( conso.nQuantityUsedPerHour_.GetData() > 0 )
+            {
                 rAutonomy = (*itCategory)->rNbr_.GetData() / conso.nQuantityUsedPerHour_.GetData();
+                rDisplayedAutonomy = rAutonomy;
+            }
 
             if( conso.nConsumptionType_ == eMoving )
             {
-                item.SetValueGreaterThan( eColumnMoveAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-                item.setText( eColumnMoveConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
+                item.SetValueGreaterThan( eColumnMoveAutonomy, rDisplayedAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+                item.setText( eColumnMoveConso, QString::number( conso.nQuantityUsedPerHour_.GetData(), 'f', 2 ) );
                 compTotal_.rMoveAutonomy_            = rAutonomy;
                 compTotal_.rMoveQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
             }
             else if( conso.nConsumptionType_ == eEngineStopped )
             {
-                item.SetValueGreaterThan( eColumnEngineStoppedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-                item.setText( eColumnEngineStoppedConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
+                item.SetValueGreaterThan( eColumnEngineStoppedAutonomy, rDisplayedAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+                item.setText( eColumnEngineStoppedConso, QString::number( conso.nQuantityUsedPerHour_.GetData(), 'f', 2 ) );
                 compTotal_.rEngineStoppedAutonomy_            = rAutonomy;
                 compTotal_.rEngineStoppedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
             }
             else if( conso.nConsumptionType_ == eEngineStarted )
             {
-                item.SetValueGreaterThan( eColumnEngineStartedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
-                item.setText( eColumnEngineStartedConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
+                item.SetValueGreaterThan( eColumnEngineStartedAutonomy, rDisplayedAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
+                item.setText( eColumnEngineStartedConso, QString::number( conso.nQuantityUsedPerHour_.GetData(), 'f', 2 ) );
                 compTotal_.rEngineStartedAutonomy_            = rAutonomy;
                 compTotal_.rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
             }
@@ -248,11 +252,11 @@ void ADN_AutomatLogCategory_ListView::AddEntryToTotal( const T_Entry& entry, T_E
 // -----------------------------------------------------------------------------
 void ADN_AutomatLogCategory_ListView::FillTotalItem( ADN_Rich_ListViewItem& item, const T_Entry& total ) const
 {
-    item.setText( eColumnContenance     , QString::number( total.rNbr_ ) );
-    item.setText( eColumnNormalizedConso, QString::number( total.rNormalizedConsumption_ ) );
-    item.setText( eColumnMoveConso         , QString::number( total.rMoveQuantityUsedPerHour_ ) );
-    item.setText( eColumnEngineStoppedConso, QString::number( total.rEngineStoppedQuantityUsedPerHour_ ) );
-    item.setText( eColumnEngineStartedConso, QString::number( total.rEngineStartedQuantityUsedPerHour_ ) );
+    item.setText( eColumnContenance     , QString::number( total.rNbr_, 'f', 2 ) );
+    item.setText( eColumnNormalizedConso, QString::number( total.rNormalizedConsumption_, 'f', 2 ) );
+    item.setText( eColumnMoveConso         , QString::number( total.rMoveQuantityUsedPerHour_, 'f', 2 ) );
+    item.setText( eColumnEngineStoppedConso, QString::number( total.rEngineStoppedQuantityUsedPerHour_, 'f', 2 ) );
+    item.setText( eColumnEngineStartedConso, QString::number( total.rEngineStartedQuantityUsedPerHour_, 'f', 2 ) );
     
     if( total.rMoveAutonomy_ > 0. )
         item.SetValueGreaterThan( eColumnMoveAutonomy, total.rMoveAutonomy_, 2., 3., ADN_Rich_ListViewItem::eUnitHour );

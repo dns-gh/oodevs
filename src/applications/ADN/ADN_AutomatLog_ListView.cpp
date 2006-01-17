@@ -91,6 +91,7 @@ void ADN_AutomatLog_ListView::BuildBody()
         // Total Unit/Dotation
         ADN_Rich_ListViewItem* pAutomatTotalItem = new ADN_Rich_ListViewItem( pAutomatItem, true );
         pAutomatTotalItem->setText( eColumnTarget, tr( "Total" ) );
+        pAutomatTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
         // Unit
         uint nUnitInAutomat = 0;
@@ -123,6 +124,7 @@ void ADN_AutomatLog_ListView::BuildBody()
             // Total Component/Dotation
             ADN_Rich_ListViewItem* pUnitTotalItem = new ADN_Rich_ListViewItem( pUnitItem, true );
             pUnitTotalItem->setText( eColumnTarget, tr( "Total" ) );
+            pUnitTotalItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
 
             // Component
             uint nCompInUnit = 0;
@@ -319,6 +321,7 @@ void ADN_AutomatLog_ListView::FillTotalItem( QListViewItem& item, const T_Catego
     for( CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
     {
         ADN_Rich_ListViewItem* pSubItem = new ADN_Rich_ListViewItem( &item, true );
+        pSubItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );
         pSubItem->setText( eColumnTarget            , const_cast< ADN_Type_String* >( &it->first->strName_ )->GetData().c_str() );
         pSubItem->setText( eColumnContenance        , QString::number( it->second->rNbr_ ) );
         pSubItem->setText( eColumnNormalizedConso   , QString::number( it->second->rNormalizedConsumption_ ) );

@@ -20,6 +20,7 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Units_Composantes_GUI.h"
 #include "ADN_Units_Postures_GUI.h"
+#include "ADN_Units_LogThreshold_GUI.h"
 #include "ADN_Point_GUI.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Composantes_Dotations_GUI.h"
@@ -197,9 +198,8 @@ void ADN_Units_GUI::Build()
     // Stock
     pStockGroup_ = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Stock" ), pGroup );
     vInfosConnectors[eHasStock] = &pStockGroup_->GetConnector();
-    ADN_Composantes_Dotations_GUI* pStock = new ADN_Composantes_Dotations_GUI( false, pStockGroup_ );
-    vInfosConnectors[eStock] = &pStock->GetConnector();
-
+    pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( pStockGroup_ );
+    vInfosConnectors[eStock] = &pStockLogThreshold_->GetConnector();
 
     // set list units auto connectors
     pListUnits_->SetItemConnectors( vInfosConnectors );    
@@ -240,9 +240,22 @@ void ADN_Units_GUI::OnTypeChanged()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi ).c_str()
         || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2 ).c_str() )
+    {
+        // insert stock category list if not exist yet
+        ADN_Units_Data::UnitInfos* pInfos = (ADN_Units_Data::UnitInfos*)pListUnits_->GetCurrentData();
+        if( pInfos == 0 )
+            return;
+        if( pInfos->stocks_.vLogThresholds_.size() == 0 )
+        {
+            pStockLogThreshold_->InitializeLogThresholds();
+            //pInfos->stocks_.InitializeLogThresholds();
+        }
         pStockGroup_->setEnabled( true );
+    }
     else
+    {
         pStockGroup_->setEnabled( false );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -2681,6 +2681,10 @@
         <source>Pion INF AppuyerSurPosition</source>
         <translation>Pion INF AppuyerSurPosition</translation>
     </message>
+    <message>
+        <source>Pion ABC RASIT RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -5702,6 +5706,26 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Autres</source>
         <translation>Autres</translation>
+    </message>
+    <message>
+        <source>Unite essence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unite feu TD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unite feu -TD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unite vivre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pieces</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

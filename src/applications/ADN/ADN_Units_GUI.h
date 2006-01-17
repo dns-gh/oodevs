@@ -19,6 +19,7 @@ class QWidget;
 class ADN_GroupBox;
 class QComboBox;
 class ADN_ListView_Units;
+class ADN_Units_LogThreshold_GUI;
 
 
 // =============================================================================
@@ -97,6 +98,7 @@ private:
 
     QComboBox* pTypeCombo_;
     ADN_GroupBox* pStockGroup_;
+    ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
     //@}
 };
 

@@ -82,7 +82,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Units_GUI::ePointInfos]->Connect( &pInfos->vPointInfos_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eComposantes]->Connect( &pInfos->vComposantes_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eContenancesTC1]->Connect( &pInfos->contenancesTC1_.categories_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eStock]->Connect( &pInfos->stock_.categories_, bConnect );
+    vItemConnectors_[ADN_Units_GUI::eStock]->Connect( &pInfos->stocks_.vLogThresholds_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eCanProbe]->Connect( &pInfos->bProbe_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eHasTC1]->Connect( &pInfos->bTC1_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eHasStock]->Connect( &pInfos->bStock_, bConnect );

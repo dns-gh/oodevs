@@ -341,7 +341,7 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
 
     painter.save();
     painter.translate( -nX * painterSize.width(), -nY * painterSize.height() );
-    this->drawContents( &painter, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
+    QListView::drawContentsOffset( &painter, 0, 0, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
     painter.restore();
     bPrinting_ = false;
 }
