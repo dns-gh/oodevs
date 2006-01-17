@@ -222,7 +222,8 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( ADN_XmlInput_Helper& input 
     std::string strUnit;
     input.ReadAttribute( "type", strUnit );
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
-    assert( pUnit != 0 );
+    if( pUnit == 0 )
+        input.ThrowError( MT_FormatString( "Type d'unité '%s' inconnu.", strUnit.c_str() ) );
     ptrUnit_ = pUnit;
 
     input.EndSection(); // PionPC

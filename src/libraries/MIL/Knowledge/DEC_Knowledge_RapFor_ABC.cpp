@@ -77,7 +77,10 @@ void DEC_Knowledge_RapFor_ABC::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 MT_Float DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( MT_Float rBaseTimeValue )
 {
-    return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
+    if( rBaseTimeValue <= 0. )
+        return rRapForBoundMax_ - rRapForBoundMin_;
+    else
+        return ( rRapForBoundMax_ - rRapForBoundMin_ ) / rBaseTimeValue;
 }
 
 // =============================================================================
