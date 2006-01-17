@@ -36,6 +36,12 @@ typedef enum E_TypeLima
     eTypeLima_LIA    // Ligne d'identification et de recueil
 };
 
+typedef enum E_AmbianceMission
+{
+    eAmbianceMission_Surete,
+    eAmbianceMission_Vitesse
+};
+
 
 // -----------------------------------------------------------------------------
 // Retours de fonctions
