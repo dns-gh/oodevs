@@ -23,6 +23,13 @@
 #include "MOS_Light2_pch.h"
 #include "MT_RichListViewItem.h"
 
+#ifdef min
+#   undef min
+#endif
+
+#ifdef max
+#   undef max
+#endif
 
 // -----------------------------------------------------------------------------
 // Name: MT_RichListViewItem constructor
