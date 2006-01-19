@@ -13,20 +13,11 @@
 #include "MOS_Meteo.h"
 
 
-
-
 #include "MOS_App.h"
 
 #include "MT_Tools/MT_ScipioException.h"
 #include "MOS_ASN_Messages.h"
 
-#ifdef min
-#   undef min
-#endif
-
-#ifdef max
-#   undef max
-#endif
 
 MT_ObjectRecycler< MOS_Meteo > MOS_Meteo::recycler_;
 

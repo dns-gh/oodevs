@@ -23,14 +23,6 @@
 #include "MT_Tools/MT_Sector.h"
 #include "MOS_Tools.h"
 
-#ifdef max
-#   undef max
-#endif
-#ifdef min
-#   undef min
-#endif
-
-
 template< class T > inline const T& max( const T& a, const T& b ) { return a > b ? a : b; }
 template< class T > inline const T& min( const T& a, const T& b ) { return a < b ? a : b; }
 

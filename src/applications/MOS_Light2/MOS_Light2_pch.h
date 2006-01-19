@@ -99,6 +99,14 @@
 #include "GFX/GFX_Text.h"
 #include "GFX/GFX_Color.h"
 
+#ifdef min
+#   undef min
+#endif
+
+#ifdef max
+#   undef max
+#endif
+
 #include "resources.h"
 
 #include "ENT/ENT_Tr.h"

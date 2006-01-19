@@ -212,7 +212,7 @@ MT_Float MOS_SensorType::GetDistanceModificator( const MOS_Agent& agent ) const
     const MT_Float rPopulationCollisionDensity = agent.GetPopulationCollisionDensity();
           MT_Float rPopulationFactor = 1.;
     if( rPopulationCollisionDensity != 0. )
-        rPopulationFactor = min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
+        rPopulationFactor = std::min( 1., rPopulationFactor_ * rPopulationDensity_ / rPopulationCollisionDensity );
        
     return    GetPostureSourceFactor( agent ) * agent.GetElongationFactor()
             * agent.GetTiredness ().GetCoefSensorDistanceModificator()

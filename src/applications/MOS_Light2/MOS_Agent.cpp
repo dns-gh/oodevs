@@ -833,10 +833,10 @@ MT_Float MOS_Agent::GetPopulationCollisionDensity() const
         const sPopulationCollision& data = itCol->second;
 
         for( CIT_ConcentrationSet it = data.concentrations_.begin(); it != data.concentrations_.end(); ++it )
-            rDensity = max( rDensity, (**it).GetDensity() );
+            rDensity = std::max( rDensity, (**it).GetDensity() );
 
         for( CIT_FlowSet it = data.flows_.begin(); it != data.flows_.end(); ++it )
-            rDensity = max( rDensity, (**it).GetDensity() );
+            rDensity = std::max( rDensity, (**it).GetDensity() );
     }
     return rDensity;
 }
