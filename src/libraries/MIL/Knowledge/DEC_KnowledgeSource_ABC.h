@@ -33,7 +33,7 @@ class DEC_KnowledgeSource_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard& blackBoard );
+             DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard& blackBoard, uint nPriority );
              DEC_KnowledgeSource_ABC();
     virtual ~DEC_KnowledgeSource_ABC();
     //@}
@@ -50,10 +50,16 @@ public:
     virtual void Clean  ();
     //@}
 
+    //! @name Accessors
+    //@{
+    uint GetPriority() const;
+    //@}
+
 protected:
     //! @name Member data
     //@{
     DEC_KnowledgeBlackBoard* pBlackBoard_;
+    uint                     nPriority_;
     //@}
 };
 

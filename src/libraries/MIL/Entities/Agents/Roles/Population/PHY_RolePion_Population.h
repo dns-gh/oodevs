@@ -59,6 +59,8 @@ public:
             void EnableInvulnerability ();
             void DisableInvulnerability();
     virtual bool IsInvulnerable        () const;
+
+    MT_Float GetCollidingPopulationDensity() const;
     //@}
 
     //! @name Network

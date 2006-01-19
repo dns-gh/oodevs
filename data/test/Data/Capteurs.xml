@@ -107,7 +107,7 @@
           <DI>1000</DI>
         </DistancesDeBase>
         <ModificateursDeDistance>
-          <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+          <PresencePopulation densitePopulation="1" modificateur="0.5"/>
           <VolumesCible>
             <Gros>1</Gros>
             <Moyen>0.9</Moyen>
@@ -167,7 +167,7 @@
           <Objet type="bouchon mines">
             <DD>1000</DD>
             <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
               <PosturesSource>
                 <Mouvement>1</Mouvement>
                 <MouvementDiscret>0.25</MouvementDiscret>
@@ -182,7 +182,7 @@
           <Objet type="itineraire logistique">
             <DD>1000</DD>
             <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
               <PosturesSource>
                 <Mouvement>1</Mouvement>
                 <MouvementDiscret>0.25</MouvementDiscret>
@@ -197,7 +197,7 @@
           <Objet type="site franchissement">
             <DD>5000</DD>
             <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
               <PosturesSource>
                 <Mouvement>1</Mouvement>
                 <MouvementDiscret>1</MouvementDiscret>
@@ -222,7 +222,7 @@
           <DI>75</DI>
         </DistancesDeBase>
         <ModificateursDeDistance>
-          <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+          <PresencePopulation densitePopulation="1" modificateur="0.5"/>
           <VolumesCible>
             <Gros>1</Gros>
             <Moyen>0.9</Moyen>
@@ -282,7 +282,7 @@
           <Objet type="rota">
             <DD>1000</DD>
             <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
               <PosturesSource>
                 <Mouvement>1</Mouvement>
                 <MouvementDiscret>0.25</MouvementDiscret>
@@ -297,7 +297,7 @@
           <Objet type="nuage nbc">
             <DD>1000</DD>
             <ModificateursDeDistance>
-              <PresencePopulation densitePopulation="2" modificateur="0.5"/>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
               <PosturesSource>
                 <Mouvement>1</Mouvement>
                 <MouvementDiscret>0.25</MouvementDiscret>

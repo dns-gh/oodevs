@@ -25,7 +25,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_AgentKnowledgeSynthetizer::DEC_KS_AgentKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup )
-    : DEC_KnowledgeSource_ABC( blackBoard )
+    : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pKnowledgeGroup_       ( &knowledgeGroup )
 {
     assert( pBlackBoard_ );

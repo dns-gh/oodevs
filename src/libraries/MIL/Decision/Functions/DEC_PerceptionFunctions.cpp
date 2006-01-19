@@ -193,21 +193,6 @@ void DEC_PerceptionFunctions::DisableRecognitionLocalisation( DIA_Call_ABC& call
     callerAgent.GetRole< PHY_RolePion_Perceiver >().DisableRecoLocalisation( call.GetParameter( 0 ).ToPtr() );
 }
 
-
-
-
-    static void EnableRadar                         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableRadar                        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    
-
-
-    static void DisableRadarOnLocalisation          ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableTappingRadarOnLocalisation    ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableTappingRadarOnLocalisation   ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void EnableTappingOnLocalisation         ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-    static void DisableTappingOnLocalisation        ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::EnableRadarOnLocalisation
 // Created: JVT 2004-10-22

@@ -104,9 +104,9 @@ GFX_Color GFX_Color::GetShadow( MT_Float rStrength ) const
 inline
 void GFX_Color::AddRGB ( MT_Float rR, MT_Float rG, MT_Float rB )
 {
-    rRed_ = min( 255.0, rRed_ + rR );
-    rGreen_ = min( 255.0, rGreen_ + rG );
-    rBlue_ = min( 255.0, rBlue_ + rB );
+    rRed_ = std::min( (MT_Float)255.0, rRed_ + rR );
+    rGreen_ = std::min( (MT_Float)255.0, rGreen_ + rG );
+    rBlue_ = std::min( (MT_Float)255.0, rBlue_ + rB );
 }
 
 
@@ -120,15 +120,15 @@ inline
 void GFX_Color::AddInvert( MT_Float rValue )
 {
     if( rRed_ > 124 )
-        rRed_ = max( 0, rRed_ - rValue );
+        rRed_ = std::max( (MT_Float)0, rRed_ - rValue );
     else
-        rRed_ = min( 255.0, rRed_ + rValue );
+        rRed_ = std::min( (MT_Float)255.0, rRed_ + rValue );
     if( rGreen_ > 124 )
-        rGreen_ = max( 0, rGreen_ - rValue );
+        rGreen_ = std::max( (MT_Float)0, rGreen_ - rValue );
     else
-        rGreen_ = min( 255.0, rGreen_ + rValue );
+        rGreen_ = std::min( (MT_Float)255.0, rGreen_ + rValue );
     if( rBlue_ > 124 )
-        rBlue_ = max( 0, rBlue_ - rValue );
+        rBlue_ = std::max( (MT_Float)0, rBlue_ - rValue );
     else
-        rBlue_ = min( 255.0, rBlue_ + rValue );
+        rBlue_ = std::min( (MT_Float)255.0, rBlue_ + rValue );
 }

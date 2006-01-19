@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -26,8 +27,6 @@
 #include "Meteo/PHY_Lighting.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_Knowledge_PopulationCollision.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -229,12 +228,7 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
     rModificator *= source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
 
     // Population
-    T_KnowledgePopulationCollisionVector populationsColliding;
-    source.GetKSQuerier().GetPopulationsColliding( populationsColliding );
-    MT_Float rPopulationDensity = 0.;
-    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
-        rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
-
+    const MT_Float rPopulationDensity = source.GetRole< PHY_RolePion_Population >().GetCollidingPopulationDensity();
     rModificator *= GetPopulationFactor( rPopulationDensity );
 
     return rModificator;

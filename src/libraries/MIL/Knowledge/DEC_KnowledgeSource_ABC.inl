@@ -17,5 +17,16 @@ template< typename Archive >
 inline
 void DEC_KnowledgeSource_ABC::serialize( Archive& file, const uint )
 {
-    file & pBlackBoard_;
+    file & pBlackBoard_
+         & nPriority_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeSource_ABC::GetPriority
+// Created: NLD 2006-01-19
+// -----------------------------------------------------------------------------
+inline
+uint DEC_KnowledgeSource_ABC::GetPriority() const
+{
+    return nPriority_;
 }

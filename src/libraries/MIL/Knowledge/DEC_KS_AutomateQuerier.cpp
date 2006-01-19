@@ -27,8 +27,8 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_AutomateQuerier::DEC_KS_AutomateQuerier( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Automate& automate )
-    : DEC_KnowledgeSource_ABC( blackBoard )
-    , pAutomate_             ( &automate   )
+    : DEC_KnowledgeSource_ABC( blackBoard, std::numeric_limits< uint >::max() )
+    , pAutomate_             ( &automate )
 {
         
 }

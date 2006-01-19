@@ -185,7 +185,7 @@ void MT_RichListViewItem::InitializeSizes()
     for( uint i = 0; i < richText_.size(); ++i )
     {
         richText_[i]->setWidth( 10000 ); // Unlimited width
-        nHeight = max( nHeight, richText_[i]->height() );
+        nHeight = std::max( nHeight, richText_[i]->height() );
     }
     this->setHeight( nHeight );
     this->widthChanged();

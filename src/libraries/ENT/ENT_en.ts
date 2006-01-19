@@ -1633,6 +1633,14 @@
         <source>Changer Ambiance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pion ABC RASIT RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion ABC RASIT RenseignerSur</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>

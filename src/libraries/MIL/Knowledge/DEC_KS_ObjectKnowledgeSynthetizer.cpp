@@ -28,7 +28,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectKnowledgeSynthetizer::DEC_KS_ObjectKnowledgeSynthetizer( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Army& army )
-    : DEC_KnowledgeSource_ABC( blackBoard )
+    : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pArmy_                 ( &army )
 {
     assert( pBlackBoard_ );

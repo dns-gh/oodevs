@@ -25,8 +25,8 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_RapFor::DEC_KS_RapFor( DEC_KnowledgeBlackBoard& blackBoard, const MIL_KnowledgeGroup& knowledgeGroup )
-    : DEC_KnowledgeSource_ABC( blackBoard )
-    , pKnowledgeGroup_        ( &knowledgeGroup )
+    : DEC_KnowledgeSource_ABC( blackBoard, 2 )
+    , pKnowledgeGroup_       ( &knowledgeGroup )
 {
     assert( pBlackBoard_ );
     pBlackBoard_->AddToScheduler( *this );        

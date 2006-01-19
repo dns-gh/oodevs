@@ -30,13 +30,13 @@ BOOST_CLASS_EXPORT_GUID( DEC_KS_Perception, "DEC_KS_Perception" )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_Perception::DEC_KS_Perception( DEC_KnowledgeBlackBoard& blackBoard, MIL_AgentPion& agentPerceiving )
-    : DEC_KnowledgeSource_ABC        ( blackBoard )
+    : DEC_KnowledgeSource_ABC        ( blackBoard, 2 )
     , pAgentPerceiving_              ( &agentPerceiving )
     , bMakePerceptionsAvailable_     ( false )
     , bMakePerceptionsAvailableTimed_( false )
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this, true );    
+    pBlackBoard_->AddToScheduler( *this );    
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ void DEC_KS_Perception::load( boost::archive::binary_iarchive& file, const uint 
          >> bMakePerceptionsAvailableTimed_;
 
     assert( pBlackBoard_ );
-    pBlackBoard_->AddToScheduler( *this, true );    
+    pBlackBoard_->AddToScheduler( *this );    
 }
 
 // -----------------------------------------------------------------------------

@@ -72,38 +72,45 @@ TER_PathFinderThread::~TER_PathFinderThread()
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::ProcessDynamicData()
 {
-    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
+    T_DynamicDataVector tmpDynamicDataToRegister;
+    T_DynamicDataVector tmpDynamicDataToUnregister;
+    {
+        boost::mutex::scoped_lock locker( dynamicDataMutex_ );
 
-    if( !dynamicDataToRegister_.empty() )
+        tmpDynamicDataToRegister  .swap( dynamicDataToRegister_   );
+        tmpDynamicDataToUnregister.swap( dynamicDataToUnregister_ );
+    }
+
+    if( !tmpDynamicDataToRegister.empty() )
     {
         MT_Profiler profiler;
         profiler.Start();
 
-        for( CIT_DynamicDataVector it = dynamicDataToRegister_.begin(); it != dynamicDataToRegister_.end(); ++it )
+        for( CIT_DynamicDataVector it = tmpDynamicDataToRegister.begin(); it != tmpDynamicDataToRegister.end(); ++it )
         {
             TER_DynamicData* pData = *it;
             assert( pData );
             pData->RegisterDynamicData( *this );
         }
 
-        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", dynamicDataToRegister_.size(), profiler.Stop() ) );    
-        dynamicDataToRegister_.clear();
+        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", tmpDynamicDataToRegister.size(), profiler.Stop() ) );    
+        tmpDynamicDataToRegister.clear();
     }
 
-    if( !dynamicDataToUnregister_.empty() )
+    if( !tmpDynamicDataToUnregister.empty() )
     {
         MT_Profiler profiler;
         profiler.Start();
 
-        for( CIT_DynamicDataVector it = dynamicDataToUnregister_.begin(); it != dynamicDataToUnregister_.end(); ++it )
+        for( CIT_DynamicDataVector it = tmpDynamicDataToUnregister.begin(); it != tmpDynamicDataToUnregister.end(); ++it )
         {
             TER_DynamicData* pData = *it;
             assert( pData );
             pData->UnregisterDynamicData( *this );
         }
 
-        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", dynamicDataToUnregister_.size(), profiler.Stop() ) );    
-        dynamicDataToUnregister_.clear();
+        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", tmpDynamicDataToUnregister.size(), profiler.Stop() ) );    
+        tmpDynamicDataToUnregister.clear();
     }
 }   
 

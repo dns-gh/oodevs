@@ -34,8 +34,8 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_AgentQuerier::DEC_KS_AgentQuerier( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& pion )
-    : DEC_KnowledgeSource_ABC( blackBoard )
-    , pPion_                 ( &pion      )
+    : DEC_KnowledgeSource_ABC( blackBoard, std::numeric_limits< uint >::max() )
+    , pPion_                 ( &pion )
 {
         
 }

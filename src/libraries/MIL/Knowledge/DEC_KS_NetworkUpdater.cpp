@@ -26,7 +26,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_NetworkUpdater::DEC_KS_NetworkUpdater( DEC_KnowledgeBlackBoard& blackBoard )
-    : DEC_KnowledgeSource_ABC( blackBoard )
+    : DEC_KnowledgeSource_ABC( blackBoard, std::numeric_limits< uint >::max() )
 {
     pBlackBoard_->AddToScheduler( *this );
 }

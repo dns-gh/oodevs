@@ -124,6 +124,21 @@ MT_Float PHY_RolePion_Population::ModifyReloadingDuration( MT_Float rDuration ) 
     return rDuration * rFactor;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::GetCollidingPopulationDensity
+// Created: NLD 2006-01-19
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
+{
+    T_KnowledgePopulationCollisionVector populationsColliding;
+    pPion_->GetKSQuerier().GetPopulationsColliding( populationsColliding );
+    MT_Float rPopulationDensity = 0.;
+    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+        rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
+
+    return rPopulationDensity;
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================

@@ -25,7 +25,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_ArmyQuerier::DEC_KS_ArmyQuerier( DEC_KnowledgeBlackBoard& blackBoard, const MIL_Army& army )
-    : DEC_KnowledgeSource_ABC( blackBoard )
+    : DEC_KnowledgeSource_ABC( blackBoard, std::numeric_limits< uint >::max() )
     , pArmy_                 ( &army )
 {
 }

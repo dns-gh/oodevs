@@ -103,8 +103,8 @@ void MOS_Meteo_Local::SendDeleteMsg() const
 //-----------------------------------------------------------------------------
 void MOS_Meteo_Local::SetCorners( const MT_Vector2D& corner1, const MT_Vector2D& corner2 )
 {
-    vUpperLeftCorner_.rX_ = min( corner1.rX_, corner2.rX_ );
-    vLowerRightCorner_.rX_ = max( corner1.rX_, corner2.rX_ );
-    vUpperLeftCorner_.rY_ = max( corner1.rY_, corner2.rY_ );
-    vLowerRightCorner_.rY_ = min( corner1.rY_, corner2.rY_ );
+    vUpperLeftCorner_.rX_ = std::min( corner1.rX_, corner2.rX_ );
+    vLowerRightCorner_.rX_ = std::max( corner1.rX_, corner2.rX_ );
+    vUpperLeftCorner_.rY_ = std::max( corner1.rY_, corner2.rY_ );
+    vLowerRightCorner_.rY_ = std::min( corner1.rY_, corner2.rY_ );
 }

@@ -73,7 +73,7 @@ public:
 
     //! @name Knowledge sources management
     //@{
-    void AddToScheduler     ( DEC_KnowledgeSource_ABC& ks, bool bHasPriority = false );
+    void AddToScheduler     ( DEC_KnowledgeSource_ABC& ks );
     void RemoveFromScheduler( DEC_KnowledgeSource_ABC& ks );
     //@}
 

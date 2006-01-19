@@ -28,7 +28,7 @@
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_Fire::DEC_KS_Fire( DEC_KnowledgeBlackBoard& blackBoard, MIL_AgentPion& agentInteracting )
-    : DEC_KnowledgeSource_ABC ( blackBoard       )
+    : DEC_KnowledgeSource_ABC ( blackBoard, 1 )
     , pAgentInteracting_      ( &agentInteracting )
     , pionsAttacking_         ()
     , populationsAttacking_   ()

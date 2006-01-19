@@ -15,8 +15,7 @@
 
 #include "MT_Tools/MT_Polyline.h"
 
-
-TER_Polygon* TER_Polygon::empty_polygon=0;
+TER_Polygon* TER_Polygon::empty_polygon = 0;
 
 //-----------------------------------------------------------------------------
 // Name: TER_Polygon constructor
@@ -497,7 +496,7 @@ namespace
         hull.push_back( max );
     }
 
-    MT_Float CrossProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 )
+    MT_Float CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
     {
         return v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
     }
@@ -513,7 +512,7 @@ namespace
         for( CIT_PointVector it = polygon.begin(); it != polygon.end(); ++it )
         {
             const MT_Vector2D v = *it - from;
-            const MT_Float rProjection = CrossProduct( direction, v );
+            const MT_Float rProjection = CrossProductTmp( direction, v );
             if( rProjection < -1 ) // epsilon
             {
                 bFound = true;

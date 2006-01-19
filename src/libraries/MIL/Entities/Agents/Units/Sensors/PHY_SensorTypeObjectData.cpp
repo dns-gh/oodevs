@@ -20,11 +20,9 @@
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_PopulationCollision.h"
-#include "Knowledge/DEC_KS_AgentQuerier.h"
-
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -132,13 +130,8 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
     // Human factors
     rModificator *= source.GetRole< PHY_RolePion_HumanFactors >().GetSensorDistanceModificator();
 
-     // Population
-    T_KnowledgePopulationCollisionVector populationsColliding;
-    source.GetKSQuerier().GetPopulationsColliding( populationsColliding );
-    MT_Float rPopulationDensity = 0.;
-    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
-        rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
-
+    // Population
+    const MT_Float rPopulationDensity = source.GetRole< PHY_RolePion_Population >().GetCollidingPopulationDensity();
     rModificator *= GetPopulationFactor( rPopulationDensity );
 
     return rModificator;

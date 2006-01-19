@@ -164,7 +164,7 @@ void MOS_Meteo::Initialize( MOS_InputArchive& archive )
     // Densite moyenne de couverture nuageuse
     uint nVal;
     archive.ReadField( "DensiteMoyenneCouvertureNuageuse", nVal );
-    rDensiteCouvertureNuageuse_ = min( nVal, (uint)100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( nVal, (uint)100 ) / 100.;
 
     // Précipitation
     std::string strVal;
@@ -216,7 +216,7 @@ bool MOS_Meteo::Initialize( const ASN1T_MeteoAttributs& asnMsg )
     nPlafondCouvertureNuageuse_ = asnMsg.plafond_couverture_nuageuse;
 
     // Densite moyenne de couverture nuageuse
-    rDensiteCouvertureNuageuse_ = min( max( asnMsg.densite_moyenne_couverture_nuageuse, 0 ), 100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( std::max( asnMsg.densite_moyenne_couverture_nuageuse, 0 ), 100 ) / 100.;
 
     // Précipitation
     assert( asnMsg.precipitation >= 0 && asnMsg.precipitation < eNbrWeatherType );
@@ -243,5 +243,5 @@ E_LightingType MOS_Meteo::sEphemeride::GetCurrentTimeBase() const
 //-----------------------------------------------------------------------------
 void MOS_Meteo::ComputeTimeCategory( const sEphemeride& ephemeride )
 {
-    nEclairement_ = (E_LightingType)min( (uint)( eNbrLightingType - 1 ), (uint)( ephemeride.GetCurrentTimeBase() + min( (uint)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ), (uint)4 ) ) );
+    nEclairement_ = (E_LightingType)std::min( (uint)( eNbrLightingType - 1 ), (uint)( ephemeride.GetCurrentTimeBase() + std::min( (uint)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ), (uint)4 ) ) );
 }

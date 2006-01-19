@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_GUID( DEC_KS_ObjectInteraction, "DEC_KS_ObjectInteraction" )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_ObjectInteraction::DEC_KS_ObjectInteraction( DEC_KnowledgeBlackBoard& blackBoard, const MIL_AgentPion& agentInteracting )
-    : DEC_KnowledgeSource_ABC( blackBoard )
+    : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pAgentInteracting_     ( &agentInteracting )
     , objectInteractions_    ()
     , objectCollisions_      ()

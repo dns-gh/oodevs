@@ -122,12 +122,19 @@ void DEC_KnowledgeBlackBoard::Clean()
 // Name: DEC_KnowledgeBlackBoard::AddToScheduler
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard::AddToScheduler( DEC_KnowledgeSource_ABC& ks, bool bHasPriority )
+void DEC_KnowledgeBlackBoard::AddToScheduler( DEC_KnowledgeSource_ABC& newKs )
 {
-    if( bHasPriority )
-        talkingKnowledgeSources_.insert( talkingKnowledgeSources_.begin(), &ks );
-    else
-        talkingKnowledgeSources_.push_back( &ks );    
+    for( IT_KnowledgeSourceList it = talkingKnowledgeSources_.begin(); it != talkingKnowledgeSources_.end(); ++it )
+    {
+        const DEC_KnowledgeSource_ABC& curKs = (**it);
+        if( curKs.GetPriority() > newKs.GetPriority() )
+        {
+            talkingKnowledgeSources_.insert( it, &newKs );
+            return;
+        }
+    }   
+    
+    talkingKnowledgeSources_.push_back( &newKs );    
 }
 
 // -----------------------------------------------------------------------------
