@@ -20,6 +20,13 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MOS_ASN_Messages.h"
 
+#ifdef max
+#   undef max
+#endif
+
+#ifdef max
+#   undef max
+#endif
 
 MT_ObjectRecycler< MOS_Meteo > MOS_Meteo::recycler_;
 
