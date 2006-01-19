@@ -26,6 +26,8 @@ class MT_XXmlInputArchive;
 //=============================================================================
 class TER_Localisation
 {
+//    MT_BOOSTPOOLING_MEMBERS( TER_Localisation )
+
 public:
     //-------------------------------------------------------------------------
     /** @name Types */

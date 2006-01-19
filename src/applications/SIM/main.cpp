@@ -50,7 +50,6 @@ int __cdecl NoMoreMemoryHandler( unsigned int nSize )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: WriteMiniDump()
 // Created: NLD 2004-02-04

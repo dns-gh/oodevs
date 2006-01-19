@@ -22,10 +22,11 @@
 // $$$$ JVT : CRADE
 #include "../../src/libraries/MIL/CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
-//const MT_Float TER_Localisation::rPrecision_ = 0.0000001;
 const MT_Float TER_Localisation::rPrecision_ = 2;
 
 #include "TER_Localisation.inl"
+
+//MT_BOOSTPOOLING_FUNCTIONS( TER_Localisation )
 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation constructor
@@ -39,7 +40,6 @@ TER_Localisation::TER_Localisation()
 {
 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation constructor

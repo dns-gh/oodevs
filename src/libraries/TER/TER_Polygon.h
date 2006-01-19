@@ -24,35 +24,28 @@ class MT_Polyline;
 //*****************************************************************************
 class TER_Polygon
 {
+//    MT_BOOSTPOOLING_MEMBERS( TER_Polygon )
+
 public:
-    
-    //-------------------------------------------------------------------------
-    /** @name Constructors/Destructor */
-    //-------------------------------------------------------------------------
+    // @name Constructors/Destructor 
     //@{
              TER_Polygon();
     virtual ~TER_Polygon();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Operator */
-    //-------------------------------------------------------------------------
+    // @name Operator 
     //@{
     TER_Polygon &operator=( const TER_Polygon & );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Reset */
-    //-------------------------------------------------------------------------
+    // @name Reset
     //@{
     virtual void Reset( const T_PointPtrVector& points, bool bConvexHull = false );
     virtual void Reset( const T_PointVector& points, bool bConvexHull = false );
     virtual void Reset();
     //@}
     
-    //-------------------------------------------------------------------------
-    /** @name Tools */
-    //-------------------------------------------------------------------------
+    // @name Tools
     //@{
     virtual bool IsNull               () const;
             bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision = 0.1 ) const; // $$$$ AGE 2005-01-31: stoopid precision
@@ -78,17 +71,13 @@ public:
     //@}
     
 protected:
-    //-------------------------------------------------------------------------
-    /** @name */
-    //-------------------------------------------------------------------------
+    // @name 
     //@{
     TER_Polygon( const TER_Polygon& poly );
     //@}
         
 private:
-    //-------------------------------------------------------------------------
-    /** @name */
-    //-------------------------------------------------------------------------
+    // @name 
     //@{
     TER_Polygon( const T_PointPtrVector& points , bool bConvexHull = false );
     TER_Polygon( const T_PointVector& points    , bool bConvexHull = false );

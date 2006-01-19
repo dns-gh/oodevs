@@ -75,8 +75,8 @@ public:
     /** @name IN/OUT */
     //-------------------------------------------------------------------------
     //@{
-    int Write( MT_OutputArchive_ABC& ) const;
-    int Read ( MT_InputArchive_ABC& );
+//    int Write( MT_OutputArchive_ABC& ) const;
+//    int Read ( MT_InputArchive_ABC& );
     //@}
 
     //-------------------------------------------------------------------------
