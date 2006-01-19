@@ -32,6 +32,9 @@ public:
     //@{
     typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
     typedef T_AgentSet::const_iterator       CIT_AgentSet;
+
+    typedef std::vector< TER_Localisation >  T_LocationVector;
+    typedef T_LocationVector::const_iterator CIT_LocationVector;
     //@}
 
 public:
@@ -50,6 +53,10 @@ public:
     void GetPionsAttacking( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
     void NotifySecuredBy  ( const MIL_Agent_ABC& securer );
     void GetPionsSecuring ( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
+    
+          void              NotifyChanneling      ( const TER_Localisation& location );
+    const T_LocationVector& GetChannelingLocations() const;
+          bool              HasChannelingChanged  () const;
     //@}
 
     //! @name CheckPoints
@@ -63,6 +70,11 @@ private:
 
     T_AgentSet securers_;
     T_AgentSet newSecurers_;
+
+    T_LocationVector channelingLocations_;
+    T_LocationVector newChannelingLocations_;
+    bool             bNewChannelingChanged_;
+    bool             bChannelingChanged_;
 };
 
 #include "DEC_PopulationKnowledge.inl"

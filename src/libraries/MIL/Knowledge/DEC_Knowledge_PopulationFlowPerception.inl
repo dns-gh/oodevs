@@ -41,4 +41,3 @@ const DEC_Knowledge_PopulationPerception& DEC_Knowledge_PopulationFlowPerception
     assert( pPopulationKnowledge_ );
     return *pPopulationKnowledge_;
 }
-

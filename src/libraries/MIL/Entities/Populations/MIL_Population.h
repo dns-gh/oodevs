@@ -36,6 +36,7 @@ class DEC_PopulationDecision;
 class DEC_PopulationKnowledge;
 class PHY_Volume;
 class PHY_FireResults_Population;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -89,9 +90,10 @@ public:
 
     //! @name Effects from pions
     //@{
-    void NotifyAttackedBy( const MIL_Agent_ABC& attacker );
-    void Secure          ( const MIL_AgentPion& securer  );
-    void Exterminate     ( const MIL_AgentPion& exterminator, MT_Float rSurface );
+    void NotifyAttackedBy( const MIL_Agent_ABC&    attacker );
+    void Secure          ( const MIL_AgentPion&    securer  );
+    void Exterminate     ( const MIL_AgentPion&    exterminator, MT_Float rSurface );
+    void NotifyChanneling( const TER_Localisation& localisation );
     //@}
 
     //! @name Operations

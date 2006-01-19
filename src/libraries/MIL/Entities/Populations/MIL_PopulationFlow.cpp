@@ -22,6 +22,7 @@
 #include "MIL_Population.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
+#include "DEC_PopulationKnowledge.h"
 #include "Entities/RC/MIL_RC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -171,7 +172,8 @@ void MIL_PopulationFlow::MoveToAlternateDestination( const MT_Vector2D& destinat
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
 {
-    if( destination != primaryDestination_ )
+    if(  destination != primaryDestination_ 
+      || GetPopulation().GetKnowledge().HasChannelingChanged() )
     {
         primaryDestination_   = destination;
         alternateDestination_ = destination;

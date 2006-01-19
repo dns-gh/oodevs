@@ -411,6 +411,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableReloadingDurationModification, "DEC_Agent_DesactiverModificationTempsRechargementParPopulation" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::EnableInvulnerability               , "DEC_Agent_ActiverInvulnerabilitePopulation"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::DisableInvulnerability              , "DEC_Agent_DesactiverInvulnerabilitePopulation"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions::ChannelPopulations                  , "DEC_Agent_CanaliserPopulation"                                  );
 
     // Agent knowledges accessors    
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetOperationalState                       < MIL_AgentPion >, "DEC_ConnaissanceAgent_EtatOps"                         );
@@ -456,8 +457,9 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
 
     // Population knowledges accessors
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsRecon                      < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstReconnu"                   );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsRecon                      < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstReconnu"                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsPerceivedByAgent                            , "DEC_ConnaissancePopulation_EstPercueParUnite"            );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::GetDangerosity                                , "DEC_ConnaissancePopulation_Dangerosite"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::IsInZone                     < MIL_AgentPion >, "DEC_ConnaissancePopulation_EstDansZone"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::ClosestPoint                                  , "DEC_ConnaissancePopulation_PointPlusProche"              );

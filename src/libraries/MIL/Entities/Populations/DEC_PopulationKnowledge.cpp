@@ -22,10 +22,14 @@ BOOST_CLASS_EXPORT_GUID( DEC_PopulationKnowledge, "DEC_PopulationKnowledge" )
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
 DEC_PopulationKnowledge::DEC_PopulationKnowledge()
-    : attackers_   ()
-    , newAttackers_()
-    , securers_    ()
-    , newSecurers_ ()
+    : attackers_             ()
+    , newAttackers_          ()
+    , securers_              ()
+    , newSecurers_           ()
+    , channelingLocations_   ()
+    , newChannelingLocations_()
+    , bNewChannelingChanged_ ( false )
+    , bChannelingChanged_    ( false )
 {
 
 }
@@ -89,6 +93,8 @@ void DEC_PopulationKnowledge::serialize( Archive& file, const uint )
          & newAttackers_
          & securers_
          & newSecurers_;
+         //& channelingLocations_
+         //& newChannelingLocations_;
 }
 
 // =============================================================================
@@ -105,6 +111,10 @@ void DEC_PopulationKnowledge::Update()
     std::swap( attackers_, newAttackers_ );
     securers_.clear();
     std::swap( securers_, newSecurers_ );
+    channelingLocations_.clear();
+    std::swap( channelingLocations_, newChannelingLocations_ );
+    bChannelingChanged_ = bNewChannelingChanged_;
+    bNewChannelingChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------

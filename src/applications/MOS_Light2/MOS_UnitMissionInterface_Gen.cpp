@@ -3161,7 +3161,7 @@ void MOS_UnitMissionInterface::CreateMission_CanaliserPopulation()
     ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *new ASN1T_Mission_Pion_CanaliserPopulation();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_canaliser_population;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_canaliser_population = &asnMission;
-    CreatePoint( asnMission.point, "Point", false );
+    CreateLocation( asnMission.zone, "Zone", false );
 }
 
 // -----------------------------------------------------------------------------

@@ -28,3 +28,36 @@ void DEC_PopulationKnowledge::NotifySecuredBy( const MIL_Agent_ABC& securer )
 {
     newSecurers_.insert( & securer );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::GetChannelingLocations
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+inline
+const DEC_PopulationKnowledge::T_LocationVector& DEC_PopulationKnowledge::GetChannelingLocations() const
+{
+    return channelingLocations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::HasChannelingChanged
+// Created: SBO 2006-01-17
+// -----------------------------------------------------------------------------
+inline
+bool DEC_PopulationKnowledge::HasChannelingChanged() const
+{
+    return bChannelingChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::NotifyChanneling
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+inline
+void DEC_PopulationKnowledge::NotifyChanneling( const TER_Localisation& location )
+{
+    CIT_LocationVector it = std::find( channelingLocations_.begin(), channelingLocations_.end(), location );
+    if( it == channelingLocations_.end() )
+        bNewChannelingChanged_ = true;
+    newChannelingLocations_.push_back( location );
+}

@@ -158,6 +158,20 @@ bool DEC_KS_AgentQuerier::IsIdentified( const MIL_PopulationConcentration& conce
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentQuerier::IsPerceived
+// Created: SBO 2006-01-18
+// -----------------------------------------------------------------------------
+bool DEC_KS_AgentQuerier::IsPerceived( const MIL_Population& population ) const
+{
+    assert( pBlackBoard_ );
+
+    DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerception( population );
+    if( pKnowledge )
+        return pKnowledge->IsPerceived();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentQuerier::GetKnowledgeAgentFromDiaID
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------

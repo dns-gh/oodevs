@@ -37,6 +37,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_AgentServer.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -832,6 +833,19 @@ void DEC_AgentFunctions::GetRoePopulation( DIA_Call_ABC& call, MIL_AgentPion& ca
 {
     const PHY_RoePopulation& roe = callerAgent.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
     call.GetResult().SetValue( (int)roe.GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::ChannelPopulation
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::ChannelPopulations( DIA_Call_ABC& call, MIL_AgentPion& /*callerAgent*/ )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    const TER_Localisation* pLoc = call.GetParameter( 0 ).ToUserPtr( pLoc );
+    assert( pLoc );
+
+    MIL_AgentServer::GetWorkspace().GetEntityManager().ChannelPopulations( *pLoc );
 }
 
 // =============================================================================

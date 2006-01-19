@@ -206,7 +206,7 @@ Mission-Pion-RenseignerSurPopulation ::= SEQUENCE
 
 Mission-Pion-CanaliserPopulation ::= SEQUENCE
 {
-    point Point
+    zone Localisation
 }
 
 Mission-Pion-SecuriserPopulationDansZone ::= SEQUENCE

@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Tools.h"
+#include "Knowledge/DEC_KS_AgentQuerier.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Entities/MIL_Army.h"
 
@@ -144,4 +145,22 @@ void DEC_KnowledgePopulationFunctions::Exterminate( DIA_Call_ABC& call, const MI
     call.GetParameter( 2 ).SetValue( eQueryValid );
     const MT_Float rSurface = call.GetParameter( 1 ).ToFloat();
     pKnowledge->Exterminate( caller, rSurface );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsPerceivedByAgent
+// Created: SBO 2006-01-18
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( DIA_Call_ABC& call, const MIL_AgentPion& caller )
+{
+    DEC_Knowledge_Population* pKnowledge = DEC_FunctionsTools::GetKnowledgePopulationFromDia( call.GetParameter( 0 ), caller.GetKnowledgeGroup() );
+    if( !pKnowledge )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( false );
+        return;
+    }
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+    bool bIsPerceived = caller.GetKSQuerier().IsPerceived( pKnowledge->GetPopulationKnown() );
+    call.GetResult().SetValue( bIsPerceived );
 }

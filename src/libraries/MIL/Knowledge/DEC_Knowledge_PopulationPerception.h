@@ -69,6 +69,7 @@ public:
 
     void PublishKnowledges( DEC_Knowledge_Population& knowledge ) const;
     bool IsIdentified     ( const MIL_PopulationConcentration& concentration );
+    bool IsPerceived      () const; // Perception au tick courant
     //@}
 
     //! @name Attacker

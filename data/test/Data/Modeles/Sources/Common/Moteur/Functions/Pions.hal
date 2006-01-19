@@ -157,6 +157,7 @@ signatures
     B                                       A::DEC_Agent_TransporteursPret               ();
     I /*E_EtatROEPopulation*/               A::DEC_Agent_RoePopulation                   ();
     R /* ratio alive/total */               A::DEC_Agent_OfficiersTues                   ();
+    V                                       A::DEC_Agent_CanaliserPopulation             ( U /*T_Point*/ );
                                             
     // Effets population
     V                                       A::DEC_Agent_ActiverRalentissementParPopulation                  ();
@@ -228,6 +229,7 @@ signatures
     // Connaissance population
     V                                       A::DEC_ConnaissancePopulation_Reconnaitre                 ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissancePopulation_EstReconnu                  ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
+    B                                       A::DEC_ConnaissancePopulation_EstPercueParUnite           ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );
     R                                       A::DEC_ConnaissancePopulation_Dangerosite                 ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
     B                                       A::DEC_ConnaissancePopulation_EstDansZone                 ( U /*T_ConnaissancePopulation*/, U /*T_Localisation*/ );
     U /*T_Point*/                           A::DEC_ConnaissancePopulation_PointPlusProche             ( U /*T_ConnaissancePopulation*/, I /*E_ValiditeRequete&*/ );

@@ -139,6 +139,16 @@ bool DEC_Knowledge_PopulationFlowPerception::Clean()
     return shape_.empty();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::IsPerceived
+// Created: SBO 2006-01-18
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPerception::IsPerceived() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_;
+}
+
 // =============================================================================
 // ACCESSORS
 // =============================================================================

@@ -58,6 +58,7 @@
         <Mission nom="Pion Test Reinforce"/>
         <Mission nom="Pion Test Fire"/>
         <Mission nom="Pion ALAT Freiner"/>
+        <Mission nom="Pion CanaliserPopulation"/>
       </Missions>
     </Modele>
     <Modele nom="Pion Test 2">
@@ -127,19 +128,18 @@
       <Missions>
         <Mission nom="Automate Test MoveTo"/>
         <Mission nom="Automate FaireMouvementVersCampRefugies"/>
-        <Mission nom="Automate GEN RealiserSystemeObstacles"/>        
+        <Mission nom="Automate GEN RealiserSystemeObstacles"/>
       </Missions>
     </Modele>
   </Automates>
-
 
   <Populations>
     <Modele nom="Population Test">
       <DIAType>T_Population</DIAType>
       <File>For Tests\Tests\Population\Files.hal</File>
       <Missions>
-        <Mission nom="Population FaireMouvement"/> 
-        <Mission nom="Population CommettreExactions"/> 
+        <Mission nom="Population FaireMouvement"/>
+        <Mission nom="Population CommettreExactions"/>
       </Missions>
     </Modele>
   </Populations>

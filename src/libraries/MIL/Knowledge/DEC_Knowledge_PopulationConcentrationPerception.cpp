@@ -136,6 +136,16 @@ bool DEC_Knowledge_PopulationConcentrationPerception::IsIdentified()
     return *pCurrentPerceptionLevel_ == PHY_PerceptionLevel::identified_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::IsPerceived
+// Created: SBO 2006-01-18
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationConcentrationPerception::IsPerceived() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    return *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_;
+}
+
 // =============================================================================
 // ACCESSORS
 // =============================================================================

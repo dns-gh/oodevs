@@ -178,6 +178,7 @@ public:
     void           AddIndirectConflict( ASN1T_OID nConflictID, MOS_Agent_ABC& origin, const MT_Vector2D& vTarget );
     void           DeleteConflict     ( ASN1T_OID nConflictID );
     MOS_Agent_ABC* FindConflictOrigin ( ASN1T_OID nConflictID );
+    void           DeleteAllConflicts ();
     //@}
 
     //! @name Logistic

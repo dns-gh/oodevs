@@ -210,6 +210,16 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rS
     NotifyAttackedBy( exterminator );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::NotifyChanneling
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+void MIL_Population::NotifyChanneling( const TER_Localisation& localisation )
+{
+    assert( pKnowledge_ );
+    pKnowledge_->NotifyChanneling( localisation );
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

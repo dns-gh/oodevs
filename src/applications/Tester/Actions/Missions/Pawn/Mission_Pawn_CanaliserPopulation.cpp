@@ -60,11 +60,11 @@ void Mission_Pawn_CanaliserPopulation::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_canaliser_population;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_canaliser_population = &asnMission;
 
-    const Position& point_ = pTarget_->GetTestParam_Point();
+    const Location& zone_ = pTarget_->GetTestParam_Location();
 
-    ASN_Tools::CopyPoint( point_, asnMission.point );
+    ASN_Tools::CopyLocation( zone_, asnMission.zone );
 
-    delete &point_;
+    delete &zone_;
 
 }
 
@@ -77,7 +77,7 @@ void Mission_Pawn_CanaliserPopulation::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_canaliser_population );
     ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_canaliser_population;
 
-    ASN_Tools::Delete( asnMission.point );
+    ASN_Tools::Delete( asnMission.zone );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

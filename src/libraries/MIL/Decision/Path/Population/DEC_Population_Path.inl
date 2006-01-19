@@ -18,3 +18,13 @@ void DEC_Population_Path::InsertDecPoints()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetChannelers
+// Created: SBO 2006-01-16
+// -----------------------------------------------------------------------------
+inline
+const DEC_Population_Path::T_PopulationPathChannelerVector& DEC_Population_Path::GetChannelers() const
+{
+    return channelers_;
+}

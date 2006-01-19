@@ -157,6 +157,7 @@ void MOS_AgentServerConnectionMgr::OnConnectionLost( DIN_Link& link, const DIN_E
 
     //$$$ DEVRAIT ETRE CENTRALISE DANS MOS_APP
     MOS_App::GetApp().NotifyConnexionStatusChanged( false );
+    MOS_App::GetApp().GetAgentManager().DeleteAllConflicts();
     MOS_App::GetApp().GetAgentManager().DeleteAllAgents();
     MOS_App::GetApp().GetAgentManager().DeleteAllTeams();
     MOS_App::GetApp().GetLineManager ().OnDeconnexion();

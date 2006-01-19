@@ -14,9 +14,19 @@ default Default()
     T_ListeConnaissancesPopulation popus = DEC_Connaissances_CollisionsPopulations();
     if( DIA_Size( popus ) > 0 )
         DEC_Debug( "Collision avec " + FloatToString( DIA_Size( popus ) ) + " populations" );
-    
+
     E_ValiditeRequete   nValidite;
     
+    T_ListeConnaissancesPopulation pop2 = DEC_Connaissances_Populations();
+    if( DIA_Size( pop2 ) > 0 )
+    {
+        with( p in pop2 )
+        {
+            if( DEC_ConnaissancePopulation_EstPercueParUnite( p, nValidite ) )
+                DEC_Debug( "-- Population percue" );
+        }
+    }
+   
     persistent T_Action              popuFire;
     persistent E_EtatActionTirDirect nTirDirectState;
     
@@ -1025,4 +1035,18 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
 behavior MIS_Pion_ALAT_Freiner( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
 {
     
+}
+
+behavior MIS_Pion_CanaliserPopulation( T_Mission_Pion_CanaliserPopulation mission, id nDummy )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )        
+            DEC_Debug( "MIS_Pion_CanaliserPopulation" );
+        DEC_Agent_CanaliserPopulation( mission.zone_ );
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "MIS_Canaliser : on spontaneous end" );
+    }
 }

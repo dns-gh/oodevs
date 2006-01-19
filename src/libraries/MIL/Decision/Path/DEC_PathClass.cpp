@@ -20,6 +20,8 @@
 #include "DEC_PathClass.h"
 #include "Agent/DEC_Agent_Path.h"
 #include "Agent/DEC_Agent_PathfinderRule.h"
+#include "Population/DEC_Population_Path.h"
+#include "Population/DEC_Population_PathfinderRule.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Objects/MIL_RealObjectType.h"

@@ -21,6 +21,7 @@
 
 class TerrainRule_ABC;
 class DEC_Agent_Path;
+class DEC_Population_Path;
 
 // =============================================================================
 /** @class  DEC_PathClass

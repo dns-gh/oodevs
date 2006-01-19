@@ -25,15 +25,16 @@ class DEC_KnowledgePopulationFunctions
 public:
     //! @name Functions
     //@{
-                           static void GetDangerosity( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void Recon         ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-    template< typename T > static void IsRecon       ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsInZone      ( DIA_Call_ABC& call, const T& caller );
-                           static void ClosestPoint  ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void Secure        ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void SecuringPoint ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void IsEnemy       ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
-                           static void Exterminate   ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void GetDangerosity    ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void Recon             ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+    template< typename T > static void IsRecon           ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsInZone          ( DIA_Call_ABC& call, const T& caller );
+                           static void IsPerceivedByAgent( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void ClosestPoint      ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void Secure            ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void SecuringPoint     ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void IsEnemy           ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
+                           static void Exterminate       ( DIA_Call_ABC& call, const MIL_AgentPion& caller );
     //@}
 };
 

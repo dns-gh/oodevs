@@ -253,6 +253,21 @@ bool DEC_Knowledge_PopulationPerception::IsIdentified( const MIL_PopulationConce
     return it->second->IsIdentified();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::IsPerceived
+// Created: SBO 2006-01-18
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationPerception::IsPerceived() const
+{
+    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        if( it->second->IsPerceived() )
+            return true;
+
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        if( it->second->IsPerceived() )
+            return true;
+    return false;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::PublishKnowledges

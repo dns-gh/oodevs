@@ -20,11 +20,9 @@
 #define __DEC_Population_PathfinderRule_h_
 
 #include "pathfind/TerrainRule_ABC.h"
+#include "DEC_Population_Path_Channeler.h"
 
 // =============================================================================
-/** @class  DEC_Population_PathfinderRule
-    @brief  DEC_Population_PathfinderRule
-*/
 // Created: AGE 2005-03-08
 // =============================================================================
 class DEC_Population_PathfinderRule : public TerrainRule_ABC
@@ -35,6 +33,11 @@ public:
     //@{
              DEC_Population_PathfinderRule();
     virtual ~DEC_Population_PathfinderRule();
+    //@}
+
+    //! @name Cost Configuration
+    //@{
+    void AddChanneler( const DEC_Population_Path_Channeler& channeler );
     //@}
 
 private:
@@ -49,6 +52,17 @@ private:
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
     virtual float GetCost     ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
     //@}
+
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< DEC_Population_Path_Channeler >  T_PathChannelers;
+    typedef T_PathChannelers::const_iterator              CIT_PathChannelers;
+    //@}
+
+private:
+    T_PathChannelers channelers_;
 };
 
 #endif // __DEC_Population_PathfinderRule_h_

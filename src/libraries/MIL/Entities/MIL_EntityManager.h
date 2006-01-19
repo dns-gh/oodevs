@@ -27,6 +27,7 @@ class MIL_VirtualObject_ABC;
 class MIL_AgentTypePion;
 class MIL_RealObject_ABC;
 class MIL_Population;
+class TER_Localisation;
 
 class NET_AS_MOSServer;
 
@@ -137,6 +138,11 @@ public:
     //@{
     MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
     void           DestroyPion( MIL_AgentPion& pion );
+    //@}
+
+    //! @name Population channeling
+    //@{
+    void ChannelPopulations( const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints

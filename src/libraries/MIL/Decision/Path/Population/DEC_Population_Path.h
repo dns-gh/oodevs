@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "Decision/Path/DEC_PathResult.h"
+#include "Decision/Path/Population/DEC_Population_Path_Channeler.h"
 #include "MT_Tools/MT_Profiler.h"
 
 class MIL_PopulationFlow;
@@ -26,12 +27,24 @@ class MIL_PopulationFlow;
 class DEC_Population_Path : public DEC_PathResult
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< DEC_Population_Path_Channeler >    T_PopulationPathChannelerVector;
+    typedef T_PopulationPathChannelerVector::const_iterator CIT_PopulationPathChannelerVector;
+    //@}
+
+public:
      DEC_Population_Path( const MIL_PopulationFlow& flow, const MT_Vector2D& destination );
     ~DEC_Population_Path();
 
     //! @name Path calculation
     //@{
     virtual void Execute( TerrainPathfinder& pathfind );
+    //@}
+
+    //! @name Accessors
+    //@{
+    const T_PopulationPathChannelerVector& GetChannelers() const;
     //@}
 
 private:
@@ -44,8 +57,9 @@ private:
     //@}
    
 private:   
-    const MIL_PopulationFlow& flow_;
-          MT_Profiler         profiler_;   
+    const MIL_PopulationFlow&             flow_;
+          MT_Profiler                     profiler_;   
+          T_PopulationPathChannelerVector channelers_;
 };
 
 #include "DEC_Population_Path.inl"

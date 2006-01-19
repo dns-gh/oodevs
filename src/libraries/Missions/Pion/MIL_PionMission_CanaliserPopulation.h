@@ -43,11 +43,11 @@ public:
     //@}
 
 private:
-    static int nDIAPointIdx_;
+    static int nDIAZoneIdx_;
 
 
 private:
-    MT_Vector2D point_;
+    TER_Localisation zone_;
 
 };
 

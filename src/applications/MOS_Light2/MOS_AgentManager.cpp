@@ -58,6 +58,7 @@ MOS_AgentManager::MOS_AgentManager()
 //-----------------------------------------------------------------------------
 MOS_AgentManager::~MOS_AgentManager()
 {
+    DeleteAllConflicts();
     DeleteAllAgents();
     DeleteAllTeams();
 
@@ -464,6 +465,14 @@ void MOS_AgentManager::DeleteAllAgents()
     allMap_.clear();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_AgentManager::DeleteAllConflicts
+// Created: SBO 2006-01-17
+// -----------------------------------------------------------------------------
+void MOS_AgentManager::DeleteAllConflicts()
+{
+    conflictMap_.clear();
+}
 
 //-----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindAgent
@@ -827,16 +836,13 @@ void MOS_AgentManager::DeleteSupplyConsign( ASN1T_OID nConsignId )
 
 // -----------------------------------------------------------------------------
 // Name: MOS_AgentManager::FindPopulation
-/** @param  nID 
-    @return 
-*/
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-MOS_Population*		 MOS_AgentManager::FindPopulation( MIL_AgentID nID )
+MOS_Population* MOS_AgentManager::FindPopulation( MIL_AgentID nID )
 {
-	IT_PopulationMap it = populationMap_.find( nID );
-	if ( it != populationMap_.end() )
-		return it->second;
-	else
-		return 0;
+    IT_PopulationMap it = populationMap_.find( nID );
+    if ( it != populationMap_.end() )
+        return it->second;
+    else
+        return 0;
 }

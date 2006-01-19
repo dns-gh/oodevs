@@ -107,6 +107,7 @@ public:
     static void EnableInvulnerability               ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void DisableInvulnerability              ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
     static void GetRoePopulation                    ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
+    static void ChannelPopulations                  ( DIA_Call_ABC& call, MIL_AgentPion& callerAgent );
    
     // Test / debug
     static void SetPosture     ( DIA_Call_ABC& call,       MIL_AgentPion& callerAgent );

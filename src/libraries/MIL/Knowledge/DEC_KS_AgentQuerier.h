@@ -27,6 +27,7 @@ class MIL_RealObject_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_RealObjectTypeFilter;
+class MIL_Population;
 class MIL_PopulationConcentration;
 
 // =============================================================================
@@ -58,6 +59,7 @@ public:
     bool IsPerceived ( const MIL_RealObject_ABC& object ) const;
 
     bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
+    bool IsPerceived ( const MIL_Population&              population    ) const;
     
 
     void                  GetPerceivedAgents           ( T_KnowledgeAgentDiaIDVector&          container ) const;
