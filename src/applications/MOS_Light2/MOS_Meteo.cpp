@@ -20,8 +20,8 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MOS_ASN_Messages.h"
 
-#ifdef max
-#   undef max
+#ifdef min
+#   undef min
 #endif
 
 #ifdef max
