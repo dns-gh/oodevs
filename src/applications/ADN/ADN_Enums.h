@@ -367,7 +367,7 @@ enum E_StockCategory
 
 enum E_DeviceCategory
 {
-    eDeviceCategory_VC1 = 0,
+    eDeviceCategory_VCI = 0,
     eDeviceCategory_Char = 1,
     eDeviceCategory_Mortier = 2,
     eDeviceCategory_Artillerie = 3,

@@ -359,7 +359,7 @@ ADN_Tr::T_ConverterStockCategory ADN_Tr::stockCategoryConverter_[] =
 
 ADN_Tr::T_ConverterDeviceCategory ADN_Tr::deviceCategoryConverter_[] =
 {
-    T_ConverterDeviceCategory( "VC1"                    , QT_TRANSLATE_NOOP("ADN_Tr" ,"VC1")                    , eDeviceCategory_VC1 ),
+    T_ConverterDeviceCategory( "VCI"                    , QT_TRANSLATE_NOOP("ADN_Tr" ,"VCI")                    , eDeviceCategory_VCI ),
     T_ConverterDeviceCategory( "Char"                   , QT_TRANSLATE_NOOP("ADN_Tr" ,"Char")                   , eDeviceCategory_Char ),
     T_ConverterDeviceCategory( "Mortier"                , QT_TRANSLATE_NOOP("ADN_Tr" ,"Mortier")                , eDeviceCategory_Mortier ),
     T_ConverterDeviceCategory( "Artillerie"             , QT_TRANSLATE_NOOP("ADN_Tr" ,"Artillerie")             , eDeviceCategory_Artillerie ),
