@@ -499,6 +499,7 @@ void MOS_MissionPanel::ActivateFragmentaryOrder( int nOrderId )
         case eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement:
         case eOrdreConduite_Automate_ActiverObstacle:
         case eOrdreConduite_Automate_TransfererRenforts:
+        case eOrdreConduite_ChangerAmbiance:
         {
             pMissionInterface_ = new MOS_FragmentaryOrderInterface( *pPopupAgent_, (uint)nOrderId, *this );
 
