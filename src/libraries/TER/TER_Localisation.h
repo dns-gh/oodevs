@@ -16,9 +16,12 @@
 
 #include "TER_Polygon.h"
 #include "MT_Tools/MT_Polyline.h"
+#include "MT_Tools/MT_Circle.h"
 
 template< typename T > class MT_InputArchive_Logger;
 class MT_XXmlInputArchive;
+
+class MT_Circle;
 
 //=============================================================================
 // Created: NLD 2003-07-22
@@ -86,9 +89,10 @@ public:
     /** @name Geometry */
     //-------------------------------------------------------------------------
     //@{
-    const MT_Rect& GetBoundingBox() const;
-    MT_Float       GetArea       () const;
-    MT_Float       GetLength     () const;
+    const MT_Rect& GetBoundingBox               () const;
+    MT_Float       GetArea                      () const;
+    MT_Float       GetLength                    () const;
+    MT_Float       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;
 
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside

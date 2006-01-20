@@ -155,4 +155,37 @@ T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1,const MT_Vector2D& 
     return res;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MT_Circle::IntersectionArea
+// Created: SBO 2006-01-19
+// -----------------------------------------------------------------------------
+MT_Float MT_Circle::IntersectionArea( const MT_Circle& c ) const
+{
+    MT_Float d = c_.Distance( c.Center() );
+    
+    if( d == 0 || d < r_ || d < c.Radius() )
+    {
+        if( r_ > c.Radius() )
+            return MT_PI * c.Radius() * c.Radius();
+        else
+            return MT_PI * r_ * r_;
+    }
+
+    MT_Float d1 = ( d * d - c.Radius() * c.Radius() + r_ * r_ ) / ( 2. * d );
+    MT_Float r1 = r_;
+    MT_Float r2 = c.Radius();
+    if( d1 < 0 )
+    {
+        d1 = ( d * d - r_ * r_ + c.Radius() * c.Radius() ) / ( 2. * d );
+        r2 = r_;
+        r1 = c.Radius();
+    }
+    MT_Float d2 = d - d1;
+
+    MT_Float area1 = r1 * r1 * acos( d1 / r1 ) - d1 * sqrt( r1 * r1 - d1 * d1 );
+    MT_Float area2 = r2 * r2 * acos( d2 / r2 ) - d2 * sqrt( r2 * r2 - d2 * d2 );
+
+    return area1 + area2;
+}
+
 #undef square

@@ -15,7 +15,7 @@
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D MT_Circle::Center()
+MT_Vector2D MT_Circle::Center() const
 {
     return c_;
 }
@@ -27,7 +27,7 @@ MT_Vector2D MT_Circle::Center()
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Circle::Radius()
+MT_Float MT_Circle::Radius() const
 {
     return r_;
 }

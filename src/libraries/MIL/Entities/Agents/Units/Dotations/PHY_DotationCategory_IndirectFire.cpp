@@ -18,8 +18,13 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "TER/TER_Agent_ABC.h"
+#include "TER/TER_PopulationConcentration_ABC.h"
+#include "TER/TER_PopulationFlow_ABC.h"
+#include "TER/TER_PopulationManager.h"
 #include "TER/TER_World.h"
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
@@ -85,22 +90,50 @@ void PHY_DotationCategory_IndirectFire::Fire( const MIL_AgentPion& /*firer*/, co
     vFireDirection        *= ( rInterventionTypeFired * rDispersionX_ );
     vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
 
-    const MT_Ellipse attritionSurface     ( vTargetPosition, vTargetPosition + ( vFireDirection                        ),  vTargetPosition + ( vRotatedFireDirection                        ) );
-    const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
-
-    TER_Agent_ABC::T_AgentPtrVector targets;
-    TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
-    for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
     {
-        MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
+        const MT_Ellipse attritionSurface     ( vTargetPosition, vTargetPosition + ( vFireDirection                        ),  vTargetPosition + ( vRotatedFireDirection                        ) );
+        const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
 
-        if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
-            continue;
+        TER_Agent_ABC::T_AgentPtrVector targets;
+        TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
+        for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
+        {
+            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
 
-        PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
-        targetRoleComposantes.Neutralize();
-        if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
-            targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
+            if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+                continue;
+
+            PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
+            targetRoleComposantes.Neutralize();
+            if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
+                targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
+        }
+    }
+
+    const MT_Float  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
+                                                 vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
+    const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
+    {
+        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
+                             .GetListWithinCircle ( vTargetPosition, rAttritionRadius, concentrations );
+        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
+            itConcentration != concentrations.end(); ++itConcentration )
+        {
+            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
+            pElement->ApplyIndirectFire( attritionCircle, fireResult );
+        }
+    }
+
+    {
+        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager()
+                             .GetListWithinCircle ( vTargetPosition, rAttritionRadius, flows );
+        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
+        {
+            MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
+            pElement->ApplyIndirectFire( attritionCircle, fireResult );
+        }
     }
 }
 

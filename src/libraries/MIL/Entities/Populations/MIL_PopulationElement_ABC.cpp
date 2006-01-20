@@ -164,6 +164,22 @@ void MIL_PopulationElement_ABC::ApplyFire( uint nNbrAmmoFired, PHY_FireResults_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyIndirectFire
+// Created: SBO 2006-01-19
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult )
+{
+    assert( pPopulation_ );
+    MT_Float rTmp = std::min( rNbrAliveHumans_, rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) );
+
+    rNbrDeadHumans_  += rTmp;
+    rNbrAliveHumans_ -= rTmp;
+    bHumansUpdated_   = true;
+
+    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( (uint)rTmp );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::UpdateCollisions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------

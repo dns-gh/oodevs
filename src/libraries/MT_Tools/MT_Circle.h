@@ -28,8 +28,8 @@ public:
     MT_Circle(const MT_Circle& c);
     ~MT_Circle();
 
-    MT_Vector2D Center();
-    MT_Float    Radius();
+    MT_Vector2D Center() const;
+    MT_Float    Radius() const;
     MT_Vector2D PointOnCircle(MT_Float alpha);
     bool        IsTrivial() const;
     bool        Inside(const MT_Vector2D& p) const;
@@ -42,6 +42,7 @@ public:
     MT_Circle&  operator -=( const MT_Vector2D& v );
     T_PointVector Intersection( const MT_Line& line) const;
     T_PointVector Intersection( const MT_Vector2D& p1,const MT_Vector2D& p2) const;
+    MT_Float    IntersectionArea( const MT_Circle& c ) const;
 
 
 private:

@@ -72,10 +72,11 @@ public:
 
     //! @name Actions
     //@{
-    void     FireOnPions   ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
-    void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
-    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
-    void     ApplyFire     ( uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
+    void     FireOnPions      ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
+    void     FireOnPion       ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
+    MT_Float GetDangerosity   ( const MIL_AgentPion& target ) const;
+    void     ApplyFire        ( uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
+    void     ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult );
     //@}
 
     //! @name Accessors

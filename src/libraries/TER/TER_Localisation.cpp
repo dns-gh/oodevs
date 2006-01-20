@@ -1014,3 +1014,44 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
     // ici, les deux localisations sont dijointes OU localisation est inclu dans *this
     return IsInside( localisation.GetPoints().front() );
 }
+
+namespace
+{
+    MT_Float CirclesIntersectionArea( const TER_Localisation& lhs, const MT_Circle& rhs )
+    {
+        return MT_Circle( lhs.GetCircleCenter(), lhs.GetCircleRadius() ).IntersectionArea( rhs );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::GetIntersectionAreaWithCircle
+// Created: SBO 2006-01-19
+// -----------------------------------------------------------------------------
+MT_Float TER_Localisation::GetIntersectionAreaWithCircle( const MT_Circle& circle ) const
+{
+    switch( nType_ )
+    {
+    case ePolygon:
+        if( bWasCircle_ )
+            return CirclesIntersectionArea( *this, circle );
+        else // TODO
+            return 0.;
+    case eCircle:
+        return CirclesIntersectionArea( *this, circle );
+    case eLine:
+        {
+            T_PointVector shape;
+            if( ! polyline_.Intersect2DWithCircle( circle.Center(), circle.Radius(), shape ) )
+                return 0.;
+            MT_Float rDistance = 0.;
+            CIT_PointVector itCurrent = shape.begin();
+            CIT_PointVector itNext = shape.begin();
+            ++itNext;
+            for( ; itNext != shape.end(); ++itCurrent, ++itNext )
+                rDistance += itCurrent->Distance( *itNext );
+            return rDistance;
+        }
+    default:
+        return 0.;
+    }
+}
