@@ -68,18 +68,19 @@ MOS_ParamObstacle::MOS_ParamObstacle( ASN1T_MissionGenObject& asnObject, const s
     for( int n4 = 0; n4 < eNbrMissionGenPriorite; ++n4 )
         pPriorityCombo_->insertItem( ENT_Tr::ConvertFromMissionGenPriorite( ( E_MissionGenPriorite )n4 ).c_str(), n4 );
 
+    bool bOutsideDataLocalisation = false;
     if( bOutsideData )
     {
         pTypeCombo_       ->SetCurrentItem( asnObject_.type_obstacle );
         pUrgencyCombo_    ->setCurrentItem( asnObject_.urgence       );
         pPreliminaryCombo_->setCurrentItem( asnObject_.preliminaire  );
         pPriorityCombo_   ->setCurrentItem( asnObject_.priorite      );
+        bOutsideDataLocalisation = true;
     }
     else // Make sure the localization type is initialized.
         asnObject.pos_obstacle.type = EnumTypeLocalisation::point;
 
     new QLabel( tr( "Localisation:" ), this );
-    bool bOutsideDataLocalisation = false;
     if ( asnObject_.pos_obstacle.vecteur_point.n != 0 )
         bOutsideDataLocalisation = true;
     pLocation_ = new MOS_ParamLocation( asnObject_.pos_obstacle, "", strMenuText, this, bOptional, bOutsideDataLocalisation );
