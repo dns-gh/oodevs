@@ -30,7 +30,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_KnowledgeObjectListType::AGR_KnowledgeObjectListType()
-    : AGR_Type_ABC( "ScipioBase:ListKnowledgeObject", "ObjectKnowledgeList", "", "T_ListeConnaissancesObjet", "T_IdVector", true )
+    : AGR_Type_ABC( "ScipioBase:ListKnowledgeObject", "ObjectKnowledgeList", "T_ListeConnaissancesObjet", "T_IdVector", true )
 {
     //NOTHING
 }

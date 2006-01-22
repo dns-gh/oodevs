@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneInstallation_;
-
-private:
     static int nDIACompagnieAReleverIdx_;
     static int nDIAZoneInstallationIdx_;
 

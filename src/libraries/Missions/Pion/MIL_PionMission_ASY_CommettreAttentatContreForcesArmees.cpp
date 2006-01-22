@@ -74,9 +74,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASY_CommettreAttentatContreForcesArmees
         return nCode;        
 
     const ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees& asnMission = *asnMsg.mission.u.mission_pion_asy_commettre_attentatContreForcesArmees;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_repli, pointRepli_, GetVariable( nDIAPointRepliIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_repli, GetVariable( nDIAPointRepliIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type_attentat_forces_armees, GetVariable( nDIATypeAttentatForcesArmeesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -96,11 +96,7 @@ bool MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Initialize( const 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRepli_, GetVariable( nDIAPointRepliIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeAttentatForcesArmeesIdx_ ) );
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteCibleIdx_ ) );
-
+                
     return true;    
 }
 
@@ -114,8 +110,8 @@ bool MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Initialize( MIL_Pi
         return false;
     MIL_PionMission_ASY_CommettreAttentatContreForcesArmees& mission = static_cast< MIL_PionMission_ASY_CommettreAttentatContreForcesArmees& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRepliIdx_ ), pointRepli_, GetVariable( nDIAPointRepliIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRepliIdx_ ), GetVariable( nDIAPointRepliIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeAttentatForcesArmeesIdx_ ), GetVariable( nDIATypeAttentatForcesArmeesIdx_ ) );
     NET_ASN_Tools::CopyAgentKnowledge( mission.GetVariable( nDIAUniteCibleIdx_ ), GetVariable( nDIAUniteCibleIdx_ ) );
 
@@ -128,8 +124,7 @@ bool MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Initialize( MIL_Pi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Terminate()
 {
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteCibleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

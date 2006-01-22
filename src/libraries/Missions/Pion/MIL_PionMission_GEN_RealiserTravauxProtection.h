@@ -46,10 +46,6 @@ private:
     static int nDIAPosObjetIdx_;
     static int nDIAOidObjetPlanifieIdx_;
 
-
-private:
-    MT_Vector2D posObjet_;
-
 };
 
 

@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Barrer::Initialize( const ASN1T_Msg
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_Barrer& asnMission = *asnMsg.mission.u.mission_pion_abc_barrer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, GetVariable( nDIAPositionInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_Barrer::Initialize( const MIL_AutomateMission_ABC& pare
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_ABC_Barrer::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_ABC_Barrer& mission = static_cast< MIL_PionMission_ABC_Barrer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), GetVariable( nDIAPositionInstallationIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_Barrer::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Barrer::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

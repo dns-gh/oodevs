@@ -30,7 +30,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_KnowledgeObjectType::AGR_KnowledgeObjectType()
-    : AGR_Type_ABC( "ScipioBase:KnowledgeObject", "ObjectKnowledge", "", "T_ConnaissanceObjet", "uint", false )
+    : AGR_Type_ABC( "ScipioBase:KnowledgeObject", "ObjectKnowledge", "T_ConnaissanceObjet", "uint", false )
 {
     //NOTHING
 }

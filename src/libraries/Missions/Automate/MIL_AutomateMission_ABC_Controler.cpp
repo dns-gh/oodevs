@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Controler::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_Controler& asnMission = *asnMsg.mission.u.mission_automate_abc_controler;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_controler, zoneAControler_, GetVariable( nDIAZoneAControlerIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_controler, GetVariable( nDIAZoneAControlerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Controler::Initialize( const AS
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Controler::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneAControler_, GetVariable( nDIAZoneAControlerIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

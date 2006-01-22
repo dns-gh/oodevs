@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_OuvrirAxesProgression::Initiali
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_OuvrirAxesProgression::Terminate()
 {
-    NET_ASN_Tools::ResetPathList( GetVariable( nDIAAxesIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

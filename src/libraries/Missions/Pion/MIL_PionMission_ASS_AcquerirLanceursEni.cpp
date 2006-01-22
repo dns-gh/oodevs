@@ -92,10 +92,7 @@ bool MIL_PionMission_ASS_AcquerirLanceursEni::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesAObserverIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAZoneImplantationIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAMenanceRoemIdx_ ) );
-
+            
     return true;    
 }
 
@@ -122,8 +119,7 @@ bool MIL_PionMission_ASS_AcquerirLanceursEni::Initialize( MIL_PionMission_ABC& m
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_AcquerirLanceursEni::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAMenanceRoemIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

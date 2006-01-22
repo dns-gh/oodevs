@@ -72,11 +72,11 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RecueillirUnite::Initialize( co
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_RecueillirUnite& asnMission = *asnMsg.mission.u.mission_automate_inf_recueillir_unite;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_deploiement, zoneDeploiement_, GetVariable( nDIAZoneDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_deploiement, GetVariable( nDIAZoneDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.compagnie, GetVariable( nDIACompagnieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.pias, pias_, GetVariable( nDIAPiasIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.pias, GetVariable( nDIAPiasIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,8 +88,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RecueillirUnite::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RecueillirUnite::Terminate()
 {
-    NET_ASN_Tools::ResetPointList( pias_, GetVariable( nDIAPiasIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -46,11 +46,6 @@ private:
     static int nDIAItineraireIdx_;
     static int nDIAZoneIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-    TER_Localisation zone_;
-
 };
 
 

@@ -23,6 +23,11 @@ bool IsInteractive( int argc, char** argv )
     return( argc < 2 || strcmp( argv[1], "-s" ) );
 }
 
+class DIA_Type;
+void DIA_UserDeleter( void* pPtr, const DIA_Type* pType )
+{
+}
+
 std::string Wrap( const std::string& content, const std::string& prefix )
 {
     std::string result;

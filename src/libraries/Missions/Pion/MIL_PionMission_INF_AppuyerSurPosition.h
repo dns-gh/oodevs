@@ -46,10 +46,6 @@ private:
     static int nDIAPositionIdx_;
     static int nDIAUnitesAAppuyerIdx_;
 
-
-private:
-    MT_Vector2D position_;
-
 };
 
 

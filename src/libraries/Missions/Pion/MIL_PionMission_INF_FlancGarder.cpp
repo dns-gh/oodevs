@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_FlancGarder::Initialize( const ASN1
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_FlancGarder& asnMission = *asnMsg.mission.u.mission_pion_inf_flanc_garder;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgent( asnMission.unite_a_flancgarder, GetVariable( nDIAUniteAFlancgarderIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_INF_FlancGarder::Initialize( const MIL_AutomateMission_ABC&
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAFlancgarderIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_INF_FlancGarder::Initialize( MIL_PionMission_ABC& missionTm
         return false;
     MIL_PionMission_INF_FlancGarder& mission = static_cast< MIL_PionMission_INF_FlancGarder& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
     NET_ASN_Tools::CopyAgent( mission.GetVariable( nDIAUniteAFlancgarderIdx_ ), GetVariable( nDIAUniteAFlancgarderIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_INF_FlancGarder::Initialize( MIL_PionMission_ABC& missionTm
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_FlancGarder::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAFlancgarderIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

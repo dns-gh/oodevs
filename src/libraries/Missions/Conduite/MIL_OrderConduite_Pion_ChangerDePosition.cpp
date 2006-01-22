@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_ChangerDePosition::Initialize( c
         return nCode; 
 
     const ASN1T_OrderConduite_Pion_ChangerDePosition& asnMission = *asnMsg.u.order_conduite_pion_changer_de_position;
-    if( !NET_ASN_Tools::CopyPoint( asnMission, orderConduitePionChangerDePosition_, GetVariable( nDIAOrderConduitePionChangerDePositionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission, GetVariable( nDIAOrderConduitePionChangerDePositionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -82,6 +82,6 @@ void MIL_OrderConduite_Pion_ChangerDePosition::Initialize( DIA_Parameters& diaPa
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], orderConduitePionChangerDePosition_, GetVariable( nDIAOrderConduitePionChangerDePositionIdx_));
+    NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduitePionChangerDePositionIdx_));
 
 }

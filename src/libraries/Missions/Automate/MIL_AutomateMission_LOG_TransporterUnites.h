@@ -41,10 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D pointRendezVous_;
-    MT_Vector2D pointDestination_;
-
-private:
     static int nDIAUnitesATransporterIdx_;
     static int nDIAPointRendezVousIdx_;
     static int nDIAPointDestinationIdx_;

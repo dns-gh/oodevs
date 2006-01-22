@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointARenseignerIdx_;
 
-
-private:
-    MT_Vector2D pointARenseigner_;
-
 };
 
 

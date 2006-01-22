@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_AppuyerMouvement::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_AppuyerMouvement::Terminate()
 {
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesAAppuyerIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

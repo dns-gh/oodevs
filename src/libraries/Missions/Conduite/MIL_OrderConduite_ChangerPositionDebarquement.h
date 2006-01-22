@@ -42,9 +42,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D orderConduiteChangerPositionDebarquement_;
-
-private:
     static int nDIAOrderConduiteChangerPositionDebarquementIdx_;
 
 };

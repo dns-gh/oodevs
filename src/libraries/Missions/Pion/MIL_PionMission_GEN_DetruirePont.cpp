@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_DetruirePont::Initialize( const ASN
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_DetruirePont& asnMission = *asnMsg.mission.u.mission_pion_gen_detruire_pont;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_GEN_DetruirePont::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPreliminaireIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,7 +106,7 @@ bool MIL_PionMission_GEN_DetruirePont::Initialize( MIL_PionMission_ABC& missionT
         return false;
     MIL_PionMission_GEN_DetruirePont& mission = static_cast< MIL_PionMission_GEN_DetruirePont& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPreliminaireIdx_ ), GetVariable( nDIAPreliminaireIdx_ ) );
 
@@ -122,8 +119,7 @@ bool MIL_PionMission_GEN_DetruirePont::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DetruirePont::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPreliminaireIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

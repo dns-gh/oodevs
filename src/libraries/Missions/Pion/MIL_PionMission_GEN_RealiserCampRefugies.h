@@ -46,10 +46,6 @@ private:
     static int nDIACampIdx_;
     static int nDIATc2Idx_;
 
-
-private:
-    TER_Localisation camp_;
-
 };
 
 

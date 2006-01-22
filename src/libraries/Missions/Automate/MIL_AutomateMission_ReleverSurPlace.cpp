@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ReleverSurPlace::Initialize( const 
     const ASN1T_Mission_Automate_ReleverSurPlace& asnMission = *asnMsg.mission.u.mission_automate_relever_sur_place;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.compagnie_a_relever, GetVariable( nDIACompagnieAReleverIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_installation, zoneInstallation_, GetVariable( nDIAZoneInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_installation, GetVariable( nDIAZoneInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ReleverSurPlace::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ReleverSurPlace::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneInstallation_, GetVariable( nDIAZoneInstallationIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

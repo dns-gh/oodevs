@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_DefendreFerme::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_DefendreFerme& asnMission = *asnMsg.mission.u.mission_automate_inf_defendre_ferme;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.position, position_, GetVariable( nDIAPositionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.position, GetVariable( nDIAPositionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.preparer_terrain, GetVariable( nDIAPreparerTerrainIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_DefendreFerme::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_DefendreFerme::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_AppuyerDebarquementTroupesGU::Initi
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU& asnMission = *asnMsg.mission.u.mission_pion_gen_appuyer_debarquement_troupes_gu;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_appui, zoneAppui_, GetVariable( nDIAZoneAppuiIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_appui, GetVariable( nDIAZoneAppuiIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_AppuyerDebarquementTroupesGU::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zoneAppui_, GetVariable( nDIAZoneAppuiIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_GEN_AppuyerDebarquementTroupesGU::Initialize( MIL_PionMissi
         return false;
     MIL_PionMission_GEN_AppuyerDebarquementTroupesGU& mission = static_cast< MIL_PionMission_GEN_AppuyerDebarquementTroupesGU& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAppuiIdx_ ), zoneAppui_, GetVariable( nDIAZoneAppuiIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAppuiIdx_ ), GetVariable( nDIAZoneAppuiIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_AppuyerDebarquementTroupesGU::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_AppuyerDebarquementTroupesGU::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneAppui_, GetVariable( nDIAZoneAppuiIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

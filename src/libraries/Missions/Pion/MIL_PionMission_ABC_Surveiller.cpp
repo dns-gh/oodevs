@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Surveiller::Initialize( const ASN1T
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_Surveiller& asnMission = *asnMsg.mission.u.mission_pion_abc_surveiller;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position, position_, GetVariable( nDIAPositionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position, GetVariable( nDIAPositionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_Surveiller::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( position_, GetVariable( nDIAPositionIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_ABC_Surveiller::Initialize( MIL_PionMission_ABC& missionTmp
         return false;
     MIL_PionMission_ABC_Surveiller& mission = static_cast< MIL_PionMission_ABC_Surveiller& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionIdx_ ), position_, GetVariable( nDIAPositionIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionIdx_ ), GetVariable( nDIAPositionIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_Surveiller::Initialize( MIL_PionMission_ABC& missionTmp
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Surveiller::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( position_, GetVariable( nDIAPositionIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

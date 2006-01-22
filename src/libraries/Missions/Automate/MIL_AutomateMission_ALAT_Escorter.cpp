@@ -84,7 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Escorter::Initialize( const AS
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -104,8 +104,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Escorter::Initialize( const AS
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Escorter::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

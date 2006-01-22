@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROHUM_SExfiltrer::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Automate_RENS_ROHUM_SExfiltrer& asnMission = *asnMsg.mission.u.mission_automate_rens_rohum_sexfiltrer;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_de_regroupement, zoneDeRegroupement_, GetVariable( nDIAZoneDeRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_de_regroupement, GetVariable( nDIAZoneDeRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROHUM_SExfiltrer::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROHUM_SExfiltrer::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneDeRegroupement_, GetVariable( nDIAZoneDeRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

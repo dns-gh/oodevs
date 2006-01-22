@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_Fixer::Initialize( const MIL_AutomateMission_ABC& paren
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteAFixerIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_Fixer::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Fixer::Terminate()
 {
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteAFixerIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

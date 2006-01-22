@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_Surveiller::Initialize( const A
         return nCode;        
 
     const ASN1T_Mission_Automate_ASA_Surveiller& asnMission = *asnMsg.mission.u.mission_automate_asa_surveiller;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_sections, positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_sections, GetVariable( nDIAPositionsSectionsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_Surveiller::Initialize( const A
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_Surveiller::Terminate()
 {
-    NET_ASN_Tools::ResetPointList( positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

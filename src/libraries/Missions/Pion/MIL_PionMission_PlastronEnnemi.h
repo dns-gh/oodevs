@@ -47,11 +47,6 @@ private:
     static int nDIAPointMissionIdx_;
     static int nDIATypeIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-    MT_Vector2D pointMission_;
-
 };
 
 

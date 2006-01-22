@@ -46,10 +46,6 @@ private:
     static int nDIALieuRenforcementIdx_;
     static int nDIAUniteIdx_;
 
-
-private:
-    MT_Vector2D lieuRenforcement_;
-
 };
 
 

@@ -89,7 +89,7 @@ void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
     {
         if( itLima->first->GetLimaFunction() == nLimaType )
         {
-            call.GetResult().SetValue( (void*)itLima->first, &DEC_Tools::GetTypeLima() );
+            call.GetResult().SetValue( (void*)itLima->first, &DEC_Tools::GetTypeLima(), 1 );
             return;
         }
     }

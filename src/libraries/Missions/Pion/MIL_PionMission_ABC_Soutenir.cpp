@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_Soutenir::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteASoutenirIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_Soutenir::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Soutenir::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteASoutenirIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

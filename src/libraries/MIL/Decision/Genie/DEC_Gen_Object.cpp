@@ -66,8 +66,8 @@ DEC_Gen_Object::~DEC_Gen_Object()
 ASN1T_EnumOrderErrorCode DEC_Gen_Object::Initialize( const ASN1T_MissionGenObject& asn )
 {
     GetVariable( nDIATypeIdx_         ).SetValue( (int)asn.type_obstacle                                              );
-    GetVariable( nDIAMosIDIdx_        ).SetValue( (void*)asn.oid_obstacle_planifie, &DEC_Tools::GetTypeID()           );
-    GetVariable( nDIAPosIdx_          ).SetValue( (void*)&localisation_           , &DEC_Tools::GetTypeLocalisation() );
+    GetVariable( nDIAMosIDIdx_        ).SetValue( (void*)asn.oid_obstacle_planifie, &DEC_Tools::GetTypeID()          , 1 );
+    GetVariable( nDIAPosIdx_          ).SetValue( (void*)&localisation_           , &DEC_Tools::GetTypeLocalisation(), 1 );
     GetVariable( nDIAPrioriteIdx_     ).SetValue( (int)asn.priorite                                                   );
     GetVariable( nDIAUrgenceIdx_      ).SetValue( (int)asn.urgence                                                    );
     GetVariable( nDIAPreliminaireIdx_ ).SetValue( (int)asn.preliminaire                                               );

@@ -37,7 +37,7 @@ class AGR_Type_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strCPPType, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning );
+    explicit AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning, bool bRequiresReset = false );
     virtual ~AGR_Type_ABC();
     //@}
 
@@ -45,7 +45,7 @@ public:
     //@{
     virtual bool IsOfType( const std::string& strASNType ) const;
 
-    std::string Declaration                    ( const AGR_Member& member ) const;
+//    std::string Declaration                    ( const AGR_Member& member ) const;
     std::string DIAType                        ( const AGR_Member& member ) const;
     std::string DIAIndexDeclaration            ( const AGR_Member& member ) const;
     std::string DIAInitialisationCode          ( const AGR_Member& member ) const;
@@ -95,8 +95,9 @@ private:
     std::string strCPPType_;
     std::string strDIAType_;
     std::string strTesterType_;
-    bool bExplicitMember_;
+//    bool bExplicitMember_;
     bool bRequiresCleaning_;
+    bool bRequiresReset_;
     //@}
 };
 

@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zone_;
-
-private:
     static int nDIAZoneIdx_;
     static int nDIAModeDeploiementIdx_;
     static int nDIAAngleIdx_;

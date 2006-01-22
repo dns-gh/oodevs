@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneEmbarquement_;
-
-private:
     static int nDIAZoneEmbarquementIdx_;
 
 };

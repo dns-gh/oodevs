@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint& asnMission = *asnMsg.mission.u.mission_pion_inf_organiser_un_check_point;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_installation, pointInstallation_, GetVariable( nDIAPointInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_installation, GetVariable( nDIAPointInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointInstallation_, GetVariable( nDIAPointInstallationIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( MIL_PionMission_ABC&
         return false;
     MIL_PionMission_INF_OrganiserUnCheckPoint& mission = static_cast< MIL_PionMission_INF_OrganiserUnCheckPoint& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointInstallationIdx_ ), pointInstallation_, GetVariable( nDIAPointInstallationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointInstallationIdx_ ), GetVariable( nDIAPointInstallationIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_OrganiserUnCheckPoint::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointInstallation_, GetVariable( nDIAPointInstallationIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

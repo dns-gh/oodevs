@@ -48,10 +48,6 @@ private:
     static int nDIAUrgenceIdx_;
     static int nDIAPreliminaireIdx_;
 
-
-private:
-    MT_Vector2D posObstacle_;
-
 };
 
 

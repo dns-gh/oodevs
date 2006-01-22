@@ -84,8 +84,7 @@ bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( const MIL_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( MIL_PionMi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

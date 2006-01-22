@@ -82,7 +82,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Generique::Initialize( const ASN1T_MsgP
     const ASN1T_Mission_Pion_Generique& asnMission = *asnMsg.mission.u.mission_pion_generique;
     if( !NET_ASN_Tools::CopyPolygonList( asnMission.zones, GetVariable( nDIAZonesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.points, points_, GetVariable( nDIAPointsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.points, GetVariable( nDIAPointsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPathList( asnMission.itineraires, GetVariable( nDIAItinerairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -108,14 +108,7 @@ bool MIL_PionMission_Generique::Initialize( const MIL_AutomateMission_ABC& paren
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesIdx_ ) );
-    NET_ASN_Tools::ResetPointList( points_, GetVariable( nDIAPointsIdx_ ) );
-    NET_ASN_Tools::ResetPathList( GetVariable( nDIAItinerairesIdx_ ) );
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesIdx_ ) );
-    NET_ASN_Tools::ResetAutomateList( GetVariable( nDIAAutomatesIdx_ ) );
-    NET_ASN_Tools::ResetAgentKnowledgeList( GetVariable( nDIAConnaissancesAgentsIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAConnaissancesObjetsIdx_ ) );
-
+                            
     return true;    
 }
 
@@ -130,7 +123,7 @@ bool MIL_PionMission_Generique::Initialize( MIL_PionMission_ABC& missionTmp )
     MIL_PionMission_Generique& mission = static_cast< MIL_PionMission_Generique& >( missionTmp );
 
     NET_ASN_Tools::CopyPolygonList( mission.GetVariable( nDIAZonesIdx_ ), GetVariable( nDIAZonesIdx_ ) );
-    NET_ASN_Tools::CopyPointList( mission.GetVariable( nDIAPointsIdx_ ), points_, GetVariable( nDIAPointsIdx_ ) );
+    NET_ASN_Tools::CopyPointList( mission.GetVariable( nDIAPointsIdx_ ), GetVariable( nDIAPointsIdx_ ) );
     NET_ASN_Tools::CopyPathList( mission.GetVariable( nDIAItinerairesIdx_ ), GetVariable( nDIAItinerairesIdx_ ) );
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesIdx_ ), GetVariable( nDIAUnitesIdx_ ) );
     NET_ASN_Tools::CopyAutomateList( mission.GetVariable( nDIAAutomatesIdx_ ), GetVariable( nDIAAutomatesIdx_ ) );
@@ -146,8 +139,7 @@ bool MIL_PionMission_Generique::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Generique::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAConnaissancesObjetsIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

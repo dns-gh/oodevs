@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireTransporter::Initialize( con
         return nCode;        
 
     const ASN1T_Mission_Automate_SeFaireTransporter& asnMission = *asnMsg.mission.u.mission_automate_se_faire_transporter;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_embarquement, zoneEmbarquement_, GetVariable( nDIAZoneEmbarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_embarquement, GetVariable( nDIAZoneEmbarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireTransporter::Initialize( con
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_SeFaireTransporter::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneEmbarquement_, GetVariable( nDIAZoneEmbarquementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

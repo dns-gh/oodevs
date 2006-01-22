@@ -40,8 +40,6 @@ public:
     //@}
 
 private:
-$OrderMember$
-private:
 $StaticOrderMember$
 };
 

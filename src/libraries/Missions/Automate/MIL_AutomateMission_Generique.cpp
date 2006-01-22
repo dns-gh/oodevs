@@ -82,7 +82,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Generique::Initialize( const ASN1T_
     const ASN1T_Mission_Automate_Generique& asnMission = *asnMsg.mission.u.mission_automate_generique;
     if( !NET_ASN_Tools::CopyPolygonList( asnMission.zones, GetVariable( nDIAZonesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.points, points_, GetVariable( nDIAPointsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.points, GetVariable( nDIAPointsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPathList( asnMission.itineraires, GetVariable( nDIAItinerairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -104,8 +104,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Generique::Initialize( const ASN1T_
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Generique::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAConnaissancesObjetsIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initiali
         return nCode;        
 
     const ASN1T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg.mission.u.mission_pion_rens_roim_cl289_renseigner_sur;
-    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPolygonList( asnMission.zones_de_recherche, GetVariable( nDIAZonesDeRechercheIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) );
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesDeRechercheIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( MIL_PionMission_
         return false;
     MIL_PionMission_RENS_ROIM_CL289_RenseignerSur& mission = static_cast< MIL_PionMission_RENS_ROIM_CL289_RenseignerSur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAFicelleDeVoleIdx_ ), ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAFicelleDeVoleIdx_ ), GetVariable( nDIAFicelleDeVoleIdx_ ) );
     NET_ASN_Tools::CopyPolygonList( mission.GetVariable( nDIAZonesDeRechercheIdx_ ), GetVariable( nDIAZonesDeRechercheIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( MIL_PionMission_
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesDeRechercheIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

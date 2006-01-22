@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector points_;
-
-private:
     static int nDIAZonesIdx_;
     static int nDIAPointsIdx_;
     static int nDIAItinerairesIdx_;

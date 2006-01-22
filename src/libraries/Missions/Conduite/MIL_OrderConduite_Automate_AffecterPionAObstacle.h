@@ -40,8 +40,6 @@ public:
     //@}
 
 private:
-
-private:
     static int nDIAPionIdx_;
     static int nDIAObstacleIdx_;
 

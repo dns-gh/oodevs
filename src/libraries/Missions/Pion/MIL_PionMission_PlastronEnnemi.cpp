@@ -72,9 +72,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_PlastronEnnemi::Initialize( const ASN1T
         return nCode;        
 
     const ASN1T_Mission_Pion_PlastronEnnemi& asnMission = *asnMsg.mission.u.mission_pion_plastron_ennemi;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_mission, pointMission_, GetVariable( nDIAPointMissionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_mission, GetVariable( nDIAPointMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type, GetVariable( nDIATypeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_PlastronEnnemi::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointMission_, GetVariable( nDIAPointMissionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,8 +106,8 @@ bool MIL_PionMission_PlastronEnnemi::Initialize( MIL_PionMission_ABC& missionTmp
         return false;
     MIL_PionMission_PlastronEnnemi& mission = static_cast< MIL_PionMission_PlastronEnnemi& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointMissionIdx_ ), pointMission_, GetVariable( nDIAPointMissionIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointMissionIdx_ ), GetVariable( nDIAPointMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeIdx_ ), GetVariable( nDIATypeIdx_ ) );
 
     return true;
@@ -122,8 +119,7 @@ bool MIL_PionMission_PlastronEnnemi::Initialize( MIL_PionMission_ABC& missionTmp
 //-----------------------------------------------------------------------------
 void MIL_PionMission_PlastronEnnemi::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_JOINT_AIR_EffectuerRaid::Initialize( co
         return nCode;        
 
     const ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid& asnMission = *asnMsg.mission.u.mission_pion_joint_air_effectuer_raid;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,9 +88,7 @@ bool MIL_PionMission_JOINT_AIR_EffectuerRaid::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,8 +102,8 @@ bool MIL_PionMission_JOINT_AIR_EffectuerRaid::Initialize( MIL_PionMission_ABC& m
         return false;
     MIL_PionMission_JOINT_AIR_EffectuerRaid& mission = static_cast< MIL_PionMission_JOINT_AIR_EffectuerRaid& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -116,8 +114,7 @@ bool MIL_PionMission_JOINT_AIR_EffectuerRaid::Initialize( MIL_PionMission_ABC& m
 //-----------------------------------------------------------------------------
 void MIL_PionMission_JOINT_AIR_EffectuerRaid::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

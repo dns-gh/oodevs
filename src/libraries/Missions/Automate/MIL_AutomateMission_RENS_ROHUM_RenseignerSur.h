@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneAObserver_;
-
-private:
     static int nDIAZoneAObserverIdx_;
 
 };

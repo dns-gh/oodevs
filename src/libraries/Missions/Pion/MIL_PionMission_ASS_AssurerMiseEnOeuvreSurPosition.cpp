@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Ini
         return nCode;        
 
     const ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition& asnMission = *asnMsg.mission.u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_implantation, positionImplantation_, GetVariable( nDIAPositionImplantationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_implantation, GetVariable( nDIAPositionImplantationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.presence_contre_batterie, GetVariable( nDIAPresenceContreBatterieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Initialize( const MIL_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionImplantation_, GetVariable( nDIAPositionImplantationIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPresenceContreBatterieIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Initialize( MIL_PionMis
         return false;
     MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition& mission = static_cast< MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionImplantationIdx_ ), positionImplantation_, GetVariable( nDIAPositionImplantationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionImplantationIdx_ ), GetVariable( nDIAPositionImplantationIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIAPresenceContreBatterieIdx_ ), GetVariable( nDIAPresenceContreBatterieIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Initialize( MIL_PionMis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPresenceContreBatterieIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -47,10 +47,6 @@ private:
     static int nDIATypeIdx_;
     static int nDIAParamIdx_;
 
-
-private:
-    TER_Localisation forme_;
-
 };
 
 

@@ -46,10 +46,6 @@ private:
     static int nDIASiteIdx_;
     static int nDIAModeDeploiementIdx_;
 
-
-private:
-    TER_Localisation site_;
-
 };
 
 

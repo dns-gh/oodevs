@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_MILICE_PrendreEtTenir::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Pion_MILICE_PrendreEtTenir& asnMission = *asnMsg.mission.u.mission_pion_milice_prendre_et_tenir;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_prendre, pointAPrendre_, GetVariable( nDIAPointAPrendreIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_prendre, GetVariable( nDIAPointAPrendreIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( const MIL_AutomateMissio
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointAPrendre_, GetVariable( nDIAPointAPrendreIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( MIL_PionMission_ABC& mis
         return false;
     MIL_PionMission_MILICE_PrendreEtTenir& mission = static_cast< MIL_PionMission_MILICE_PrendreEtTenir& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointAPrendreIdx_ ), pointAPrendre_, GetVariable( nDIAPointAPrendreIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointAPrendreIdx_ ), GetVariable( nDIAPointAPrendreIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( MIL_PionMission_ABC& mis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_PrendreEtTenir::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointAPrendre_, GetVariable( nDIAPointAPrendreIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

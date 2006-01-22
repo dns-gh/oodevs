@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_AppuyerSurPosition::Initialize( con
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_AppuyerSurPosition& asnMission = *asnMsg.mission.u.mission_pion_abc_appuyer_sur_position;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position, position_, GetVariable( nDIAPositionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position, GetVariable( nDIAPositionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_appuyer, GetVariable( nDIAUnitesAAppuyerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_ABC_AppuyerSurPosition::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( position_, GetVariable( nDIAPositionIdx_ ) );
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesAAppuyerIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_ABC_AppuyerSurPosition::Initialize( MIL_PionMission_ABC& mi
         return false;
     MIL_PionMission_ABC_AppuyerSurPosition& mission = static_cast< MIL_PionMission_ABC_AppuyerSurPosition& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionIdx_ ), position_, GetVariable( nDIAPositionIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionIdx_ ), GetVariable( nDIAPositionIdx_ ) );
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesAAppuyerIdx_ ), GetVariable( nDIAUnitesAAppuyerIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_ABC_AppuyerSurPosition::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_AppuyerSurPosition::Terminate()
 {
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesAAppuyerIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

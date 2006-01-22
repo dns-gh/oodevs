@@ -77,7 +77,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Pion_AppliquerFeux::Initialize( const
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNumeric( asnMission.nb_IT, GetVariable( nDIANbITIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.cible, cible_, GetVariable( nDIACibleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.cible, GetVariable( nDIACibleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -92,6 +92,6 @@ void MIL_OrderConduite_Pion_AppliquerFeux::Initialize( DIA_Parameters& diaParams
 
     NET_ASN_Tools::CopyEnumeration( diaParams[nCurDIAParamIdx++], GetVariable( nDIAMunitionsIdx_));
     NET_ASN_Tools::CopyNumeric( diaParams[nCurDIAParamIdx++], GetVariable( nDIANbITIdx_));
-    NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], cible_, GetVariable( nDIACibleIdx_));
+    NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], GetVariable( nDIACibleIdx_));
 
 }

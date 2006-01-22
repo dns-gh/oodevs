@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserZoneMineeLineaire::Initiali
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RealiserZoneMineeLineaire& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_zone_minee_lineaire;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.pos_obstacle, posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_GEN_RealiserZoneMineeLineaire::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIADensiteIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,7 +106,7 @@ bool MIL_PionMission_GEN_RealiserZoneMineeLineaire::Initialize( MIL_PionMission_
         return false;
     MIL_PionMission_GEN_RealiserZoneMineeLineaire& mission = static_cast< MIL_PionMission_GEN_RealiserZoneMineeLineaire& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAPosObstacleIdx_ ), posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
     NET_ASN_Tools::CopyNumeric( mission.GetVariable( nDIADensiteIdx_ ), GetVariable( nDIADensiteIdx_ ) );
 
@@ -122,8 +119,7 @@ bool MIL_PionMission_GEN_RealiserZoneMineeLineaire::Initialize( MIL_PionMission_
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserZoneMineeLineaire::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIADensiteIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

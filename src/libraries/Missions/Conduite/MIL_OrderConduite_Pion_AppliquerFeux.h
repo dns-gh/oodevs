@@ -42,9 +42,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D cible_;
-
-private:
     static int nDIAMunitionsIdx_;
     static int nDIANbITIdx_;
     static int nDIACibleIdx_;

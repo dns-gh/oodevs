@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_SurveillerItineraire::Initializ
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_SurveillerItineraire& asnMission = *asnMsg.mission.u.mission_automate_abc_surveiller_itineraire;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_SurveillerItineraire::Initializ
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_SurveillerItineraire::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

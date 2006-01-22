@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( con
         return nCode;        
 
     const ASN1T_Mission_Pion_ASA_MISTRAL_Surveiller& asnMission = *asnMsg.mission.u.mission_pion_asa_mistral_surveiller;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_de_deploiement, pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_de_deploiement, GetVariable( nDIAPointDeDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.mode_deploiement, GetVariable( nDIAModeDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAModeDeploiementIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( MIL_PionMission_ABC& mi
         return false;
     MIL_PionMission_ASA_MISTRAL_Surveiller& mission = static_cast< MIL_PionMission_ASA_MISTRAL_Surveiller& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDeDeploiementIdx_ ), pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDeDeploiementIdx_ ), GetVariable( nDIAPointDeDeploiementIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAModeDeploiementIdx_ ), GetVariable( nDIAModeDeploiementIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_ASA_MISTRAL_Surveiller::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_Surveiller::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAModeDeploiementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

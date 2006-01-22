@@ -88,9 +88,7 @@ bool MIL_PionMission_Test_Reinforce::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARenforceIdx_ ) );
-
+        
     return true;    
 }
 
@@ -116,8 +114,7 @@ bool MIL_PionMission_Test_Reinforce::Initialize( MIL_PionMission_ABC& missionTmp
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_Reinforce::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARenforceIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

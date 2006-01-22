@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAItineraireAssautIdx_;
 
-
-private:
-    T_PointVector itineraireAssaut_;
-
 };
 
 

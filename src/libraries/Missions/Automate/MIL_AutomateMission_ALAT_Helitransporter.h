@@ -41,11 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D pointDebarquement_;
-    MT_Vector2D pointEmbarquement_;
-    MT_Vector2D pointRegroupement_;
-
-private:
     static int nDIAUnitesAHelitransporterIdx_;
     static int nDIAPointDebarquementIdx_;
     static int nDIAPointEmbarquementIdx_;

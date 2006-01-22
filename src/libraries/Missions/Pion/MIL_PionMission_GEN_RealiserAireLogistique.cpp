@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserAireLogistique::Initialize(
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RealiserAireLogistique& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_aire_logistique;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_obstacle, positionObstacle_, GetVariable( nDIAPositionObstacleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_obstacle, GetVariable( nDIAPositionObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_GEN_RealiserAireLogistique::Initialize( const MIL_AutomateM
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionObstacle_, GetVariable( nDIAPositionObstacleIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_GEN_RealiserAireLogistique::Initialize( MIL_PionMission_ABC
         return false;
     MIL_PionMission_GEN_RealiserAireLogistique& mission = static_cast< MIL_PionMission_GEN_RealiserAireLogistique& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionObstacleIdx_ ), positionObstacle_, GetVariable( nDIAPositionObstacleIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionObstacleIdx_ ), GetVariable( nDIAPositionObstacleIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_GEN_RealiserAireLogistique::Initialize( MIL_PionMission_ABC
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserAireLogistique::Terminate()
 {
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

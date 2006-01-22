@@ -48,11 +48,6 @@ private:
     static int nDIAHeureDestructionIdx_;
     static int nDIANatureDestructionIdx_;
 
-
-private:
-    MT_Vector2D objectif_;
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

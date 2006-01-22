@@ -74,9 +74,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_Heliporter::Initialize( const ASN1
     const ASN1T_Mission_Pion_Test_Heliporter& asnMission = *asnMsg.mission.u.mission_pion_test_heliporter;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.agents, GetVariable( nDIAAgentsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, GetVariable( nDIAPointDebarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -92,10 +92,7 @@ bool MIL_PionMission_Test_Heliporter::Initialize( const MIL_AutomateMission_ABC&
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAAgentsIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
-
+            
     return true;    
 }
 
@@ -110,8 +107,8 @@ bool MIL_PionMission_Test_Heliporter::Initialize( MIL_PionMission_ABC& missionTm
     MIL_PionMission_Test_Heliporter& mission = static_cast< MIL_PionMission_Test_Heliporter& >( missionTmp );
 
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAAgentsIdx_ ), GetVariable( nDIAAgentsIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointEmbarquementIdx_ ), pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDebarquementIdx_ ), pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointEmbarquementIdx_ ), GetVariable( nDIAPointEmbarquementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDebarquementIdx_ ), GetVariable( nDIAPointDebarquementIdx_ ) );
 
     return true;
 }                                                                    
@@ -122,8 +119,7 @@ bool MIL_PionMission_Test_Heliporter::Initialize( MIL_PionMission_ABC& missionTm
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_Heliporter::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

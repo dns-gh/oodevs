@@ -46,10 +46,6 @@ private:
     static int nDIAPositionIdx_;
     static int nDIAUnitesACouvrirIdx_;
 
-
-private:
-    MT_Vector2D position_;
-
 };
 
 

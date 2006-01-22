@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_FaireFranchir::Initialize( cons
     const ASN1T_Mission_Automate_GEN_FaireFranchir& asnMission = *asnMsg.mission.u.mission_automate_gen_faire_franchir;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.sites_de_franchissement, GetVariable( nDIASitesDeFranchissementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyLocation( asnMission.zone_regroupement, zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyLocation( asnMission.zone_regroupement, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_FaireFranchir::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_FaireFranchir::Terminate()
 {
-    NET_ASN_Tools::ResetLocation( zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

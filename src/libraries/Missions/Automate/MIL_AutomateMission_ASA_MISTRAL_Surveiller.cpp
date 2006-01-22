@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_MISTRAL_Surveiller::Initialize(
         return nCode;        
 
     const ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller& asnMission = *asnMsg.mission.u.mission_automate_asa_mistral_surveiller;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.mode_deploiement, GetVariable( nDIAModeDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,8 +88,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_MISTRAL_Surveiller::Initialize(
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_MISTRAL_Surveiller::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIAAngleIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D positionDeploiement_;
-
-private:
     static int nDIAPositionDeploiementIdx_;
 
 };

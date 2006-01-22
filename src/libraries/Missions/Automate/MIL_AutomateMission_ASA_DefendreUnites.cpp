@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreUnites::Initialize( con
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreUnites::Terminate()
 {
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

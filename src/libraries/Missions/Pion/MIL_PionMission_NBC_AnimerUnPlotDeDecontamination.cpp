@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Init
         return nCode;        
 
     const ASN1T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination& asnMission = *asnMsg.mission.u.mission_pion_nbc_animer_un_plot_de_decontamination;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_site_decontamination, positionSiteDecontamination_, GetVariable( nDIAPositionSiteDecontaminationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_site_decontamination, GetVariable( nDIAPositionSiteDecontaminationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Initialize( const MIL_Au
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionSiteDecontamination_, GetVariable( nDIAPositionSiteDecontaminationIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Initialize( MIL_PionMiss
         return false;
     MIL_PionMission_NBC_AnimerUnPlotDeDecontamination& mission = static_cast< MIL_PionMission_NBC_AnimerUnPlotDeDecontamination& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionSiteDecontaminationIdx_ ), positionSiteDecontamination_, GetVariable( nDIAPositionSiteDecontaminationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionSiteDecontaminationIdx_ ), GetVariable( nDIAPositionSiteDecontaminationIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Initialize( MIL_PionMiss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( positionSiteDecontamination_, GetVariable( nDIAPositionSiteDecontaminationIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

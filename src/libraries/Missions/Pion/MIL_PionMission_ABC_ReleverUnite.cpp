@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_ReleverUnite::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAReleverIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_ReleverUnite::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_ReleverUnite::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAReleverIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

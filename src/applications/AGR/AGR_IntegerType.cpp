@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_IntegerType::AGR_IntegerType()
-    : AGR_Type_ABC( "xsd:integer", "Numeric", "", "float", "int", false )
+    : AGR_Type_ABC( "xsd:integer", "Numeric", "float", "int", false )
     , nMin_( 0 )
     , nMax_( std::numeric_limits< unsigned int >::max() )
 {
@@ -41,7 +41,7 @@ AGR_IntegerType::AGR_IntegerType()
 // Created: AGE 2005-08-23
 // -----------------------------------------------------------------------------
 AGR_IntegerType::AGR_IntegerType( const std::string& strAsnType, unsigned int nMin /*= 0*/, int nMax /*= std::numeric_limits< unsigned int >::max()*/ )
-   : AGR_Type_ABC( strAsnType, "Numeric", "", "float", "int", false )
+   : AGR_Type_ABC( strAsnType, "Numeric", "float", "int", false )
    , nMin_( nMin )
    , nMax_( nMax )
 {

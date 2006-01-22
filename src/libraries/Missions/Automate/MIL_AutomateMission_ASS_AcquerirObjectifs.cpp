@@ -74,7 +74,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_AcquerirObjectifs::Initialize( 
     const ASN1T_Mission_Automate_ASS_AcquerirObjectifs& asnMission = *asnMsg.mission.u.mission_automate_ass_acquerir_objectifs;
     if( !NET_ASN_Tools::CopyPolygonList( asnMission.zones_a_observer, GetVariable( nDIAZonesAObserverIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_deploiement, positionsDeploiement_, GetVariable( nDIAPositionsDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_deploiement, GetVariable( nDIAPositionsDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.categories, GetVariable( nDIACategoriesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,8 +88,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_AcquerirObjectifs::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_AcquerirObjectifs::Terminate()
 {
-    NET_ASN_Tools::ResetNatureAtlas( GetVariable( nDIACategoriesIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

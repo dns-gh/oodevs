@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserCampPrisonniers::Initialize
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RealiserCampPrisonniers& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_camp_prisonniers;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.camp, camp_, GetVariable( nDIACampIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.camp, GetVariable( nDIACampIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.tc2, GetVariable( nDIATc2Idx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_GEN_RealiserCampPrisonniers::Initialize( const MIL_Automate
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( camp_, GetVariable( nDIACampIdx_ ) );
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIATc2Idx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_GEN_RealiserCampPrisonniers::Initialize( MIL_PionMission_AB
         return false;
     MIL_PionMission_GEN_RealiserCampPrisonniers& mission = static_cast< MIL_PionMission_GEN_RealiserCampPrisonniers& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIACampIdx_ ), camp_, GetVariable( nDIACampIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIACampIdx_ ), GetVariable( nDIACampIdx_ ) );
     NET_ASN_Tools::CopyAutomate( mission.GetVariable( nDIATc2Idx_ ), GetVariable( nDIATc2Idx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_GEN_RealiserCampPrisonniers::Initialize( MIL_PionMission_AB
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserCampPrisonniers::Terminate()
 {
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIATc2Idx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

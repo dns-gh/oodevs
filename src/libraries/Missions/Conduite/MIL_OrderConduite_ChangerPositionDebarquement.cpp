@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ChangerPositionDebarquement::Initiali
         return nCode; 
 
     const ASN1T_OrderConduite_ChangerPositionDebarquement& asnMission = *asnMsg.u.order_conduite_changer_position_debarquement;
-    if( !NET_ASN_Tools::CopyPoint( asnMission, orderConduiteChangerPositionDebarquement_, GetVariable( nDIAOrderConduiteChangerPositionDebarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission, GetVariable( nDIAOrderConduiteChangerPositionDebarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -82,6 +82,6 @@ void MIL_OrderConduite_ChangerPositionDebarquement::Initialize( DIA_Parameters& 
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], orderConduiteChangerPositionDebarquement_, GetVariable( nDIAOrderConduiteChangerPositionDebarquementIdx_));
+    NET_ASN_Tools::CopyPoint( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduiteChangerPositionDebarquementIdx_));
 
 }

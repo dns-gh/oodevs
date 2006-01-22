@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_BooleanType::AGR_BooleanType()
-    : AGR_Type_ABC( "xsd:boolean", "Bool", "", "bool", "bool", false )
+    : AGR_Type_ABC( "xsd:boolean", "Bool", "bool", "bool", false )
 {
     //NOTHING
 }

@@ -84,8 +84,7 @@ bool MIL_PionMission_ASY_Renseigner::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIADestinataireIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_ASY_Renseigner::Initialize( MIL_PionMission_ABC& missionTmp
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASY_Renseigner::Terminate()
 {
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIADestinataireIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

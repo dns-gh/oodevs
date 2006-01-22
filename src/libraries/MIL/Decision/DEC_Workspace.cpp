@@ -537,3 +537,12 @@ DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptNa
     }
     return 0;
 }
+
+
+void DIA_UserDeleter( void* pPtr, const DIA_Type* pType )
+{
+    assert( pType );
+//    printf(  "[DIA_UserDeleter] %s : %p\n", pType ? pType->GetName().c_str() : "NO TYPE !", pPtr );
+    if( pPtr )
+        DEC_Tools::ManageDeletion( pPtr, *pType );
+}

@@ -72,11 +72,11 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize
         return nCode;        
 
     const ASN1T_Mission_Pion_ASS_RATAC_AcquerirObjectifs& asnMission = *asnMsg.mission.u.mission_pion_ass_ratac_acquerir_objectifs;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_observer, zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_observer, GetVariable( nDIAZoneAObserverIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.categories, GetVariable( nDIACategoriesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -92,10 +92,7 @@ bool MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize( const MIL_Automate
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
-    NET_ASN_Tools::ResetNatureAtlas( GetVariable( nDIACategoriesIdx_ ) );
-    NET_ASN_Tools::ResetPoint( positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,9 +106,9 @@ bool MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize( MIL_PionMission_AB
         return false;
     MIL_PionMission_ASS_RATAC_AcquerirObjectifs& mission = static_cast< MIL_PionMission_ASS_RATAC_AcquerirObjectifs& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAObserverIdx_ ), zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAObserverIdx_ ), GetVariable( nDIAZoneAObserverIdx_ ) );
     NET_ASN_Tools::CopyNatureAtlas( mission.GetVariable( nDIACategoriesIdx_ ), GetVariable( nDIACategoriesIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), GetVariable( nDIAPositionDeploiementIdx_ ) );
 
     return true;
 }                                                                    
@@ -122,8 +119,7 @@ bool MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize( MIL_PionMission_AB
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

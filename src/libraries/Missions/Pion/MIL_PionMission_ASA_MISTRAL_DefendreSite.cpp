@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_MISTRAL_DefendreSite::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Pion_ASA_MISTRAL_DefendreSite& asnMission = *asnMsg.mission.u.mission_pion_asa_mistral_defendre_site;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.site, site_, GetVariable( nDIASiteIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.site, GetVariable( nDIASiteIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.mode_deploiement, GetVariable( nDIAModeDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreSite::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( site_, GetVariable( nDIASiteIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAModeDeploiementIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreSite::Initialize( MIL_PionMission_ABC& 
         return false;
     MIL_PionMission_ASA_MISTRAL_DefendreSite& mission = static_cast< MIL_PionMission_ASA_MISTRAL_DefendreSite& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASiteIdx_ ), site_, GetVariable( nDIASiteIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASiteIdx_ ), GetVariable( nDIASiteIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAModeDeploiementIdx_ ), GetVariable( nDIAModeDeploiementIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreSite::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreSite::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAModeDeploiementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

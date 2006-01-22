@@ -45,10 +45,6 @@ public:
 private:
     static int nDIASiteIdx_;
 
-
-private:
-    TER_Localisation site_;
-
 };
 
 

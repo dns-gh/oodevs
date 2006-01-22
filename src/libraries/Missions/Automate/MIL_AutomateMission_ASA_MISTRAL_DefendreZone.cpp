@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_MISTRAL_DefendreZone::Initializ
         return nCode;        
 
     const ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone& asnMission = *asnMsg.mission.u.mission_automate_asa_mistral_defendre_zone;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.mode_deploiement, GetVariable( nDIAModeDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,8 +88,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_MISTRAL_DefendreZone::Initializ
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_MISTRAL_DefendreZone::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIAAngleIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

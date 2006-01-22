@@ -46,10 +46,6 @@ private:
     static int nDIAPointAInterdireIdx_;
     static int nDIAPreparerTerrainIdx_;
 
-
-private:
-    MT_Vector2D pointAInterdire_;
-
 };
 
 

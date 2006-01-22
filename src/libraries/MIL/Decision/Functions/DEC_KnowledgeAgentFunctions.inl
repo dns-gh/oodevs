@@ -83,7 +83,7 @@ void DEC_KnowledgeAgentFunctions::GetPosition( DIA_Call_ABC& call, const T& call
         return;
     }
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (void*)&pKnowledge->GetPosition(), &DEC_Tools::GetTypePoint() );
+    call.GetResult().SetValue( (void*)&pKnowledge->GetPosition(), &DEC_Tools::GetTypePoint(), 1 );
 }
 
 // -----------------------------------------------------------------------------

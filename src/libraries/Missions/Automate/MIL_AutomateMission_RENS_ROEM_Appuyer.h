@@ -41,10 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D positionDeploiement_;
-    MT_Vector2D pointRegroupement_;
-
-private:
     static int nDIAPositionDeploiementIdx_;
     static int nDIAPointRegroupementIdx_;
 

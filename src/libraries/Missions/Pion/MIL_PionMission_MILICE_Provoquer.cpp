@@ -84,8 +84,7 @@ bool MIL_PionMission_MILICE_Provoquer::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteAProvoquerIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_MILICE_Provoquer::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_Provoquer::Terminate()
 {
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteAProvoquerIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

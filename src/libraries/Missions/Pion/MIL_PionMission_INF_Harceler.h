@@ -47,11 +47,6 @@ private:
     static int nDIAPointRegroupementIdx_;
     static int nDIANatureObjectifIdx_;
 
-
-private:
-    TER_Localisation secteur_;
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

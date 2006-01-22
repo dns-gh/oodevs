@@ -84,8 +84,7 @@ bool MIL_PionMission_INF_RepondreAAggression::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAAggresseurIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_INF_RepondreAAggression::Initialize( MIL_PionMission_ABC& m
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_RepondreAAggression::Terminate()
 {
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAAggresseurIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

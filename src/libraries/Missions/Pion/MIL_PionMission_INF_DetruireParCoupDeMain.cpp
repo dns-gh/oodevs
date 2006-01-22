@@ -74,9 +74,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_DetruireParCoupDeMain& asnMission = *asnMsg.mission.u.mission_pion_inf_detruire_par_coup_de_main;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.objectif, objectif_, GetVariable( nDIAObjectifIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.objectif, GetVariable( nDIAObjectifIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyGDH( asnMission.heure_destruction, GetVariable( nDIAHeureDestructionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -96,11 +96,7 @@ bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( objectif_, GetVariable( nDIAObjectifIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetGDH( GetVariable( nDIAHeureDestructionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANatureDestructionIdx_ ) );
-
+                
     return true;    
 }
 
@@ -114,8 +110,8 @@ bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( MIL_PionMission_ABC&
         return false;
     MIL_PionMission_INF_DetruireParCoupDeMain& mission = static_cast< MIL_PionMission_INF_DetruireParCoupDeMain& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAObjectifIdx_ ), objectif_, GetVariable( nDIAObjectifIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAObjectifIdx_ ), GetVariable( nDIAObjectifIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyGDH( mission.GetVariable( nDIAHeureDestructionIdx_ ), GetVariable( nDIAHeureDestructionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIANatureDestructionIdx_ ), GetVariable( nDIANatureDestructionIdx_ ) );
 
@@ -128,8 +124,7 @@ bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_DetruireParCoupDeMain::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANatureDestructionIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

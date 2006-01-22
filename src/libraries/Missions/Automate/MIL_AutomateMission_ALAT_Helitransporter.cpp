@@ -86,11 +86,11 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Helitransporter::Initialize( c
     const ASN1T_Mission_Automate_ALAT_Helitransporter& asnMission = *asnMsg.mission.u.mission_automate_alat_helitransporter;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_helitransporter, GetVariable( nDIAUnitesAHelitransporterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, GetVariable( nDIAPointDebarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -112,8 +112,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Helitransporter::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Helitransporter::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAAvecMaterielIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

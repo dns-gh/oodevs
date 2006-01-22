@@ -40,8 +40,6 @@ public:
     //@}
 
 private:
-
-private:
     static int nDIASiteFranchissementOriginalIdx_;
     static int nDIASiteFranchissementVarianteIdx_;
 

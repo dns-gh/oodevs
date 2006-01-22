@@ -40,8 +40,6 @@ public:
     //@}
 
 private:
-
-private:
     static int nDIAOrderConduiteAutomateTc2GererMaterielAvantDeplacementIdx_;
 
 };

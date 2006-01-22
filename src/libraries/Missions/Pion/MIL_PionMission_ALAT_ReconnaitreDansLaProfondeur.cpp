@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initi
         return nCode;        
 
     const ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& asnMission = *asnMsg.mission.u.mission_pion_alat_reconnaitre_dans_la_profondeur;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -90,9 +90,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initi
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, GetVariable( nDIAPointDislocationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyLocation( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyLocation( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -108,14 +108,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) );
-    NET_ASN_Tools::ResetLocation( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+                            
     return true;    
 }
 
@@ -129,13 +122,13 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
         return false;
     MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur& mission = static_cast< MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAAmbianceMissionIdx_ ), GetVariable( nDIAAmbianceMissionIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDislocationIdx_ ), pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) );
-    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDislocationIdx_ ), GetVariable( nDIAPointDislocationIdx_ ) );
+    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -146,8 +139,7 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
 {
-    NET_ASN_Tools::ResetLocation( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_PointType::AGR_PointType()
-    : AGR_Type_ABC( "ScipioBase:Point", "Point", "MT_Vector2D", "T_Point", "Position", true )
+    : AGR_Type_ABC( "ScipioBase:Point", "Point", "T_Point", "Position", true )
 {
     //NOTHING
 }
@@ -51,7 +51,7 @@ std::string AGR_PointType::ASNInitialisationCode( const AGR_Member& member ) con
 {
     std::string strResult( "    if( !" );
     strResult += "NET_ASN_Tools::CopyPoint( ";
-    strResult += member.ASNPrefixedName() + ", " + member.CPPName() + ", GetVariable( ";
+    strResult += member.ASNPrefixedName() + ", GetVariable( ";
     strResult += member.DIAIndexName();
     if( member.IsOptional() )
         strResult += " ), asnMission.m." + member.ASNName() + "Present )";

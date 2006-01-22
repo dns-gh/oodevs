@@ -52,12 +52,6 @@ private:
     static int nDIAPorteeActionIdx_;
     static int nDIAAvecMaterielIdx_;
 
-
-private:
-    MT_Vector2D pointDebarquement_;
-    MT_Vector2D pointEmbarquement_;
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

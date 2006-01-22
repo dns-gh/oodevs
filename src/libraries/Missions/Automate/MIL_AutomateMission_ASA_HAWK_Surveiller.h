@@ -41,10 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zone_;
-    T_PointVector positionsSections_;
-
-private:
     static int nDIAZoneIdx_;
     static int nDIAPositionsSectionsIdx_;
 

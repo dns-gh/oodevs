@@ -78,7 +78,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_MoveTo::Initialize( const ASN1T_Ms
         return nCode;        
 
     const ASN1T_Mission_Pion_Test_MoveTo& asnMission = *asnMsg.mission.u.mission_pion_test_move_to;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type_itineraire, GetVariable( nDIATypeItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -86,9 +86,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_MoveTo::Initialize( const ASN1T_Ms
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.verrouillage_vision, GetVariable( nDIAVerrouillageVisionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.vision_point, visionPoint_, GetVariable( nDIAVisionPointIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.vision_point, GetVariable( nDIAVisionPointIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyDirection( asnMission.vision_direction, visionDirection_, GetVariable( nDIAVisionDirectionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyDirection( asnMission.vision_direction, GetVariable( nDIAVisionDirectionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -104,13 +104,7 @@ bool MIL_PionMission_Test_MoveTo::Initialize( const MIL_AutomateMission_ABC& par
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeItineraireIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIADebarqueIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAVerrouillageVisionIdx_ ) );
-    NET_ASN_Tools::ResetPoint( visionPoint_, GetVariable( nDIAVisionPointIdx_ ) );
-    NET_ASN_Tools::ResetDirection( visionDirection_, GetVariable( nDIAVisionDirectionIdx_ ) );
-
+                        
     return true;    
 }
 
@@ -124,12 +118,12 @@ bool MIL_PionMission_Test_MoveTo::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_Test_MoveTo& mission = static_cast< MIL_PionMission_Test_MoveTo& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeItineraireIdx_ ), GetVariable( nDIATypeItineraireIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIADebarqueIdx_ ), GetVariable( nDIADebarqueIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAVerrouillageVisionIdx_ ), GetVariable( nDIAVerrouillageVisionIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAVisionPointIdx_ ), visionPoint_, GetVariable( nDIAVisionPointIdx_ ) );
-    NET_ASN_Tools::CopyDirection( mission.GetVariable( nDIAVisionDirectionIdx_ ), visionDirection_, GetVariable( nDIAVisionDirectionIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAVisionPointIdx_ ), GetVariable( nDIAVisionPointIdx_ ) );
+    NET_ASN_Tools::CopyDirection( mission.GetVariable( nDIAVisionDirectionIdx_ ), GetVariable( nDIAVisionDirectionIdx_ ) );
 
     return true;
 }                                                                    
@@ -140,8 +134,7 @@ bool MIL_PionMission_Test_MoveTo::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_MoveTo::Terminate()
 {
-    NET_ASN_Tools::ResetDirection( visionDirection_, GetVariable( nDIAVisionDirectionIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

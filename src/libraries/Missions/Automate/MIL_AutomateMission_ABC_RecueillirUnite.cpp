@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_RecueillirUnite::Initialize( co
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_RecueillirUnite& asnMission = *asnMsg.mission.u.mission_automate_abc_recueillir_unite;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_regroupement, zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_regroupement, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_RecueillirUnite::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_RecueillirUnite::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

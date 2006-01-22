@@ -47,10 +47,6 @@ private:
     static int nDIAOidObstaclePlanifieIdx_;
     static int nDIATypeIdx_;
 
-
-private:
-    TER_Localisation posObstacle_;
-
 };
 
 

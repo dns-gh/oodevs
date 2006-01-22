@@ -40,8 +40,6 @@ public:
     //@}
 
 private:
-
-private:
     static int nDIAPionATransfererIdx_;
     static int nDIAAutomateARenforcerIdx_;
 

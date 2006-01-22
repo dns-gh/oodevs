@@ -47,10 +47,6 @@ private:
     static int nDIAUniteAAppuyerIdx_;
     static int nDIACategoriesIdx_;
 
-
-private:
-    TER_Localisation zoneAObserver_;
-
 };
 
 

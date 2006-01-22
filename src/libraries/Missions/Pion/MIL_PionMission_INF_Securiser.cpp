@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Securiser::Initialize( const ASN1T_
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_Securiser& asnMission = *asnMsg.mission.u.mission_pion_inf_securiser;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_INF_Securiser::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_INF_Securiser::Initialize( MIL_PionMission_ABC& missionTmp 
         return false;
     MIL_PionMission_INF_Securiser& mission = static_cast< MIL_PionMission_INF_Securiser& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_INF_Securiser::Initialize( MIL_PionMission_ABC& missionTmp 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Securiser::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

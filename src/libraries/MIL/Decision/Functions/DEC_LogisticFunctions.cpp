@@ -450,7 +450,7 @@ void DEC_LogisticFunctions::ConvoyIsUnloadingDone( DIA_Call_ABC& call, const MIL
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::ConvoyGetFormingPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetFormingPoint(), &DEC_Tools::GetTypePoint() );   
+    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetFormingPoint(), &DEC_Tools::GetTypePoint(), 1 );   
 }
     
 // -----------------------------------------------------------------------------
@@ -460,7 +460,7 @@ void DEC_LogisticFunctions::ConvoyGetFormingPoint( DIA_Call_ABC& call, const MIL
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::ConvoyGetLoadingPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetLoadingPoint(), &DEC_Tools::GetTypePoint() );   
+    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetLoadingPoint(), &DEC_Tools::GetTypePoint(), 1 );   
 }
     
 // -----------------------------------------------------------------------------
@@ -469,7 +469,7 @@ void DEC_LogisticFunctions::ConvoyGetLoadingPoint( DIA_Call_ABC& call, const MIL
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::ConvoyGetUnloadingPoint( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetUnloadingPoint(), &DEC_Tools::GetTypePoint() );   
+    call.GetResult().SetValue( (void*)callerAgent.GetRole< PHY_RolePion_Supply >().ConvoyGetUnloadingPoint(), &DEC_Tools::GetTypePoint(), 1 );   
 }
 
 // -----------------------------------------------------------------------------

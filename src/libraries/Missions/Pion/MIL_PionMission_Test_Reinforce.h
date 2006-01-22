@@ -46,9 +46,6 @@ private:
     static int nDIAUniteIdx_;
     static int nDIARenforceIdx_;
 
-
-private:
-
 };
 
 

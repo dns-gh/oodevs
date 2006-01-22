@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAZoneAPrendreIdx_;
 
-
-private:
-    TER_Localisation zoneAPrendre_;
-
 };
 
 

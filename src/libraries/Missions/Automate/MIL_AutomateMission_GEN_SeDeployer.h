@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneDeploiement_;
-
-private:
     static int nDIAZoneDeploiementIdx_;
 
 };

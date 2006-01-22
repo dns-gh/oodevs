@@ -49,10 +49,6 @@ private:
     static int nDIAPorteeActionIdx_;
     static int nDIAAmbianceMissionIdx_;
 
-
-private:
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

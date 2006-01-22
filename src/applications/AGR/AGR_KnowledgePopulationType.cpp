@@ -30,7 +30,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_KnowledgePopulationType::AGR_KnowledgePopulationType()
-    : AGR_Type_ABC( "ScipioBase:KnowledgePopulation", "PopulationKnowledge", "", "T_ConnaissancePopulation", "uint", false )
+    : AGR_Type_ABC( "ScipioBase:KnowledgePopulation", "PopulationKnowledge", "T_ConnaissancePopulation", "uint", false )
 {
     //NOTHING
 }

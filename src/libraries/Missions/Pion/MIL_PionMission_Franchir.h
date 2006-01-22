@@ -46,10 +46,6 @@ private:
     static int nDIAPontFlottantIdx_;
     static int nDIAPointArriveeIdx_;
 
-
-private:
-    MT_Vector2D pointArrivee_;
-
 };
 
 

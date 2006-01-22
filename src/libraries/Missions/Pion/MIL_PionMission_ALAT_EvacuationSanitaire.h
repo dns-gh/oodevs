@@ -50,12 +50,6 @@ private:
     static int nDIARavitaillementDebutMissionIdx_;
     static int nDIAPorteeActionIdx_;
 
-
-private:
-    MT_Vector2D pointDebarquement_;
-    TER_Localisation zoneExtraction_;
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

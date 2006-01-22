@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Semparer::Initialize( const ASN
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_Semparer& asnMission = *asnMsg.mission.u.mission_automate_abc_semparer;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.objectif, objectif_, GetVariable( nDIAObjectifIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.objectif, GetVariable( nDIAObjectifIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Semparer::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Semparer::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( objectif_, GetVariable( nDIAObjectifIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

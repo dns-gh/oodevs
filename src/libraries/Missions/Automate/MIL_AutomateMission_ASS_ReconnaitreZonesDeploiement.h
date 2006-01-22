@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector positionsAReconnaitre_;
-
-private:
     static int nDIAPositionsAReconnaitreIdx_;
 
 };

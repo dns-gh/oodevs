@@ -48,11 +48,6 @@ private:
     static int nDIATypeAttentatForcesArmeesIdx_;
     static int nDIAUniteCibleIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-    MT_Vector2D pointRepli_;
-
 };
 
 

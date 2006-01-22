@@ -51,10 +51,6 @@ private:
     static int nDIAConnaissancesAgentsIdx_;
     static int nDIAConnaissancesObjetsIdx_;
 
-
-private:
-    T_PointVector points_;
-
 };
 
 

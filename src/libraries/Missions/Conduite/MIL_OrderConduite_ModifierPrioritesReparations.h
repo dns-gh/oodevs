@@ -42,9 +42,6 @@ public:
     //@}
 
 private:
-    T_MaintenancePriorityVector orderConduiteModifierPrioritesReparations_;
-
-private:
     static int nDIAOrderConduiteModifierPrioritesReparationsIdx_;
 
 };

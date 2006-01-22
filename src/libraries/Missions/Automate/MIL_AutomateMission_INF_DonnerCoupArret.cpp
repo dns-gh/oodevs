@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_DonnerCoupArret::Initialize( co
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_DonnerCoupArret& asnMission = *asnMsg.mission.u.mission_automate_inf_donner_coup_arret;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_regroupement, zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_regroupement, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.preparer_terrain, GetVariable( nDIAPreparerTerrainIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_DonnerCoupArret::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_DonnerCoupArret::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

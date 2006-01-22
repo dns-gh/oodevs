@@ -209,14 +209,14 @@ void AGR_FragOrder::GenerateMilClassHeader( const AGR_Workspace& workspace, cons
     workspace.ReplaceInString( strBaseContent, "$StaticOrderMember$", strStaticMembers );
 
     // generate the non-static member --> UserType pointers
-    std::string strDeclarations;
-    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
-    {
-        const AGR_Member& member = **it;
-        strDeclarations += member.Declaration();
-    }
-    workspace.ReplaceInString( strBaseContent, "$OrderMember$", strDeclarations );
-    workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
+//    std::string strDeclarations;
+//    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
+//    {
+//        const AGR_Member& member = **it;
+//        strDeclarations += member.Declaration();
+//    }
+//    workspace.ReplaceInString( strBaseContent, "$OrderMember$", strDeclarations );
+    //workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );
 
     std::string strResultFileName( "/src/libraries/Missions/" + MilFilePathName() + ".h" );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );    

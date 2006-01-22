@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_HAWK_DefendreZone::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Automate_ASA_HAWK_DefendreZone& asnMission = *asnMsg.mission.u.mission_automate_asa_hawk_defendre_zone;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_sections, positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.positions_sections, GetVariable( nDIAPositionsSectionsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_HAWK_DefendreZone::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_HAWK_DefendreZone::Terminate()
 {
-    NET_ASN_Tools::ResetPointList( positionsSections_, GetVariable( nDIAPositionsSectionsIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

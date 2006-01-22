@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Appuyer::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Appuyer::Terminate()
 {
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIACompagnieIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

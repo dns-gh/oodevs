@@ -47,11 +47,6 @@ private:
     static int nDIAPointRendezVousIdx_;
     static int nDIAPointDestinationIdx_;
 
-
-private:
-    MT_Vector2D pointRendezVous_;
-    MT_Vector2D pointDestination_;
-
 };
 
 

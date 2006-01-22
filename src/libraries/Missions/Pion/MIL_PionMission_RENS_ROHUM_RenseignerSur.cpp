@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROHUM_RenseignerSur::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Pion_RENS_ROHUM_RenseignerSur& asnMission = *asnMsg.mission.u.mission_pion_rens_rohum_renseigner_sur;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_observer, zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_observer, GetVariable( nDIAZoneAObserverIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_RENS_ROHUM_RenseignerSur::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_RENS_ROHUM_RenseignerSur::Initialize( MIL_PionMission_ABC& 
         return false;
     MIL_PionMission_RENS_ROHUM_RenseignerSur& mission = static_cast< MIL_PionMission_RENS_ROHUM_RenseignerSur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAObserverIdx_ ), zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAObserverIdx_ ), GetVariable( nDIAZoneAObserverIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_RENS_ROHUM_RenseignerSur::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROHUM_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

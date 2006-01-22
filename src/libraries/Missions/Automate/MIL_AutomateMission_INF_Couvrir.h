@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector objectifs_;
-
-private:
     static int nDIACompagnieIdx_;
     static int nDIAObjectifsIdx_;
 

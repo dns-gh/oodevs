@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Test_MoveTo::Initialize( const ASN1
         return nCode;        
 
     const ASN1T_Mission_Automate_Test_MoveTo& asnMission = *asnMsg.mission.u.mission_automate_test_move_to;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Test_MoveTo::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Test_MoveTo::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

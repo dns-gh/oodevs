@@ -46,11 +46,6 @@ private:
     static int nDIAPositionInstallationIdx_;
     static int nDIAPiaIdx_;
 
-
-private:
-    MT_Vector2D positionInstallation_;
-    MT_Vector2D pia_;
-
 };
 
 

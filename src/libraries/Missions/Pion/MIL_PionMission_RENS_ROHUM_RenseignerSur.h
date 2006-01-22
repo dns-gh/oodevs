@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAZoneAObserverIdx_;
 
-
-private:
-    TER_Localisation zoneAObserver_;
-
 };
 
 

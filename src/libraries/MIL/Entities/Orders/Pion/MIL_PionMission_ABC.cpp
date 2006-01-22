@@ -97,7 +97,11 @@ bool MIL_PionMission_ABC::Initialize( const MIL_AutomateMission_ABC& parentMissi
 
     nOrderID_ = MIL_IDManager::orders_.GetFreeSimID();
     
-    NET_ASN_Tools::CopyDirection( const_cast< MIL_AutomateMission_ABC& >( parentMission ).GetVariable( MIL_AutomateMission_ABC::nDIADirectionDangerIdx_ ), vDirDanger_, GetVariable( nDIADirectionDangerIdx_ ) );
+    NET_ASN_Tools::CopyDirection( const_cast< MIL_AutomateMission_ABC& >( parentMission ).GetVariable( MIL_AutomateMission_ABC::nDIADirectionDangerIdx_ ), GetVariable( nDIADirectionDangerIdx_ ) );
+    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
+    assert( pTmp );
+    vDirDanger_ = *pTmp;
+
     limaMap_ = parentMission.GetLimas ();
     fuseau_  = parentMission.GetFuseau();
     return true;
@@ -119,7 +123,11 @@ bool MIL_PionMission_ABC::Initialize( MIL_PionMission_ABC& mission )
     limaMap_ = mission.limaMap_;
 
     // Direction dangereuse
-    NET_ASN_Tools::CopyDirection( const_cast< MIL_PionMission_ABC& >( mission ).GetVariable( nDIADirectionDangerIdx_ ), vDirDanger_, GetVariable( nDIADirectionDangerIdx_ ) );
+    NET_ASN_Tools::CopyDirection( const_cast< MIL_PionMission_ABC& >( mission ).GetVariable( nDIADirectionDangerIdx_ ), GetVariable( nDIADirectionDangerIdx_ ) );
+    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
+    assert( pTmp );
+    vDirDanger_ = *pTmp;
+
     return true;
 }
 
@@ -200,8 +208,12 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC::InitializeLimas( const ASN1T_MsgPi
 ASN1T_EnumOrderErrorCode MIL_PionMission_ABC::InitializeMission( const ASN1T_MsgPionOrder& asnMsg )
 {
     // Direction dangereuse
-    if( !NET_ASN_Tools::CopyDirection ( asnMsg.direction_dangereuse, vDirDanger_, GetVariable( nDIADirectionDangerIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyDirection ( asnMsg.direction_dangereuse, GetVariable( nDIADirectionDangerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+
+    const MT_Vector2D* pTmp = GetVariable( nDIADirectionDangerIdx_ ).ToUserPtr( pTmp );
+    assert( pTmp );
+    vDirDanger_ = *pTmp;
 
     return EnumOrderErrorCode::no_error;     
 }

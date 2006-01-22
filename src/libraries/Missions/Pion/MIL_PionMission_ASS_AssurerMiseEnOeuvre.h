@@ -46,9 +46,6 @@ private:
     static int nDIAZoneImplantationIdx_;
     static int nDIAPresenceContreBatterieIdx_;
 
-
-private:
-
 };
 
 

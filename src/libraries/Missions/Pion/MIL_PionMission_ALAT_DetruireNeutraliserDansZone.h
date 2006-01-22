@@ -53,12 +53,6 @@ private:
     static int nDIAAmbianceMissionIdx_;
     static int nDIANeutraliserIdx_;
 
-
-private:
-    TER_Localisation zone_;
-    MT_Vector2D pointDislocation_;
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

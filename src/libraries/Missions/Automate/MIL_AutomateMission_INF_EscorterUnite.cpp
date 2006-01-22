@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_EscorterUnite::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_EscorterUnite::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAEscorterIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

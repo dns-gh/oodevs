@@ -46,10 +46,6 @@ private:
     static int nDIAPointADefendreIdx_;
     static int nDIAPreparerTerrainIdx_;
 
-
-private:
-    MT_Vector2D pointADefendre_;
-
 };
 
 

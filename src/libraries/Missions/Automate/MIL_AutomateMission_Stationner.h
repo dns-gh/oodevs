@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneAttente_;
-
-private:
     static int nDIAZoneAttenteIdx_;
 
 };

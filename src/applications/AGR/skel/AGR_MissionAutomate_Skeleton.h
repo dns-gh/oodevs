@@ -41,8 +41,6 @@ public:
     //@}
 
 private:
-$MissionMember$
-private:
 $StaticMissionMember$
 };
 

@@ -46,10 +46,6 @@ private:
     static int nDIAItineraireIdx_;
     static int nDIAUnitesACouvrirIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-
 };
 
 

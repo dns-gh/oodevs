@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_SDTI_RenseignerSur::Initi
         return nCode;        
 
     const ASN1T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur& asnMission = *asnMsg.mission.u.mission_automate_rens_roim_sdti_renseigner_sur;
-    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_SDTI_RenseignerSur::Initi
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_SDTI_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPath( ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

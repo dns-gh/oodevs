@@ -76,9 +76,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavit
         return nCode;        
 
     const ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& asnMission = *asnMsg.mission.u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, GetVariable( nDIAPointDebarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_regroupement, positionRegroupement_, GetVariable( nDIAPositionRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_regroupement, GetVariable( nDIAPositionRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -100,12 +100,7 @@ bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
-    NET_ASN_Tools::ResetPoint( positionRegroupement_, GetVariable( nDIAPositionRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-
+                    
     return true;    
 }
 
@@ -119,8 +114,8 @@ bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
         return false;
     MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement& mission = static_cast< MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDebarquementIdx_ ), pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionRegroupementIdx_ ), positionRegroupement_, GetVariable( nDIAPositionRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDebarquementIdx_ ), GetVariable( nDIAPointDebarquementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionRegroupementIdx_ ), GetVariable( nDIAPositionRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
@@ -134,8 +129,7 @@ bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

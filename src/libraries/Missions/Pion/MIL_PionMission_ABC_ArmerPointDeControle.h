@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointDeControleIdx_;
 
-
-private:
-    MT_Vector2D pointDeControle_;
-
 };
 
 

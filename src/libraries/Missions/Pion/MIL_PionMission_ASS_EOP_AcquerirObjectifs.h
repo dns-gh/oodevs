@@ -47,12 +47,6 @@ private:
     static int nDIAPositionInstallationIdx_;
     static int nDIAPositionDebarquementIdx_;
 
-
-private:
-    TER_Localisation zoneAObserver_;
-    MT_Vector2D positionInstallation_;
-    MT_Vector2D positionDebarquement_;
-
 };
 
 

@@ -50,11 +50,6 @@ private:
     static int nDIAPorteeActionIdx_;
     static int nDIAAmbianceMissionIdx_;
 
-
-private:
-    TER_Localisation zone_;
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

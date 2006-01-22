@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_DefendreSite::Initialize( const ASN
         return nCode;        
 
     const ASN1T_Mission_Pion_ASA_DefendreSite& asnMission = *asnMsg.mission.u.mission_pion_asa_defendre_site;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.site, site_, GetVariable( nDIASiteIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.site, GetVariable( nDIASiteIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_ASA_DefendreSite::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( site_, GetVariable( nDIASiteIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_ASA_DefendreSite::Initialize( MIL_PionMission_ABC& missionT
         return false;
     MIL_PionMission_ASA_DefendreSite& mission = static_cast< MIL_PionMission_ASA_DefendreSite& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASiteIdx_ ), site_, GetVariable( nDIASiteIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASiteIdx_ ), GetVariable( nDIASiteIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_ASA_DefendreSite::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_DefendreSite::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( site_, GetVariable( nDIASiteIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

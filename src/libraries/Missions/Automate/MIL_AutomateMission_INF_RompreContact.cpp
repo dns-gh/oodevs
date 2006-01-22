@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RompreContact::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_RompreContact& asnMission = *asnMsg.mission.u.mission_automate_inf_rompre_contact;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_regroupement, zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_regroupement, GetVariable( nDIAZoneRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RompreContact::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RompreContact::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneRegroupement_, GetVariable( nDIAZoneRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

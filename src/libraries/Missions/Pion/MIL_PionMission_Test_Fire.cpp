@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_Fire::Initialize( const ASN1T_MsgP
         return nCode;        
 
     const ASN1T_Mission_Pion_Test_Fire& asnMission = *asnMsg.mission.u.mission_pion_test_fire;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point, point_, GetVariable( nDIAPointIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point, GetVariable( nDIAPointIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.tir_indirect, GetVariable( nDIATirIndirectIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -100,12 +100,7 @@ bool MIL_PionMission_Test_Fire::Initialize( const MIL_AutomateMission_ABC& paren
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( point_, GetVariable( nDIAPointIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIATirIndirectIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAMunitionsIdx_ ) );
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIANbObusIdx_ ) );
-    NET_ASN_Tools::ResetAgentKnowledgeList( GetVariable( nDIATargetsIdx_ ) );
-
+                    
     return true;    
 }
 
@@ -119,7 +114,7 @@ bool MIL_PionMission_Test_Fire::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_Test_Fire& mission = static_cast< MIL_PionMission_Test_Fire& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), point_, GetVariable( nDIAPointIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), GetVariable( nDIAPointIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIATirIndirectIdx_ ), GetVariable( nDIATirIndirectIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAMunitionsIdx_ ), GetVariable( nDIAMunitionsIdx_ ) );
     NET_ASN_Tools::CopyNumeric( mission.GetVariable( nDIANbObusIdx_ ), GetVariable( nDIANbObusIdx_ ) );
@@ -134,8 +129,7 @@ bool MIL_PionMission_Test_Fire::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_Fire::Terminate()
 {
-    NET_ASN_Tools::ResetAgentKnowledgeList( GetVariable( nDIATargetsIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

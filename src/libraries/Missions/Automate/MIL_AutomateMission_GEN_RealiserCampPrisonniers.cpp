@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserCampPrisonniers::Initia
         return nCode;        
 
     const ASN1T_Mission_Automate_GEN_RealiserCampPrisonniers& asnMission = *asnMsg.mission.u.mission_automate_gen_realiser_camp_prisonniers;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.camp, camp_, GetVariable( nDIACampIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.camp, GetVariable( nDIACampIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.tc2, GetVariable( nDIATc2Idx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RealiserCampPrisonniers::Initia
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RealiserCampPrisonniers::Terminate()
 {
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIATc2Idx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

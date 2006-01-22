@@ -46,10 +46,6 @@ private:
     static int nDIAFicelleDeVoleIdx_;
     static int nDIAZonesDeRechercheIdx_;
 
-
-private:
-    T_PointVector ficelleDeVole_;
-
 };
 
 

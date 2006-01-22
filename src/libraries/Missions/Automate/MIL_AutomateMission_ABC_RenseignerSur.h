@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneARenseigner_;
-
-private:
     static int nDIAZoneARenseignerIdx_;
 
 };

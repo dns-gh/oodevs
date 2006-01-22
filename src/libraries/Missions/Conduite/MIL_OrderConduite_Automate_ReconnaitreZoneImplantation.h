@@ -40,9 +40,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D orderConduiteAutomateReconnaitreZoneImplantation_;
-
-private:
     static int nDIAOrderConduiteAutomateReconnaitreZoneImplantationIdx_;
 
 };

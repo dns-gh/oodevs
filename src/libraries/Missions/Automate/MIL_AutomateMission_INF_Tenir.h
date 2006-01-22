@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation position_;
-
-private:
     static int nDIAPositionIdx_;
     static int nDIAPreparerTerrainIdx_;
 

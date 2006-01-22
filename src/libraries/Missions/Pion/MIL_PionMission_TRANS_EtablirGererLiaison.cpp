@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Pion_TRANS_EtablirGererLiaison& asnMission = *asnMsg.mission.u.mission_pion_trans_etablir_gerer_liaison;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( MIL_PionMission_ABC&
         return false;
     MIL_PionMission_TRANS_EtablirGererLiaison& mission = static_cast< MIL_PionMission_TRANS_EtablirGererLiaison& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), GetVariable( nDIAPositionDeploiementIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_TRANS_EtablirGererLiaison::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

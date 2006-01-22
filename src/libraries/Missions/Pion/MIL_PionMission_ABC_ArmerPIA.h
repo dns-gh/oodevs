@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPiaIdx_;
 
-
-private:
-    MT_Vector2D pia_;
-
 };
 
 

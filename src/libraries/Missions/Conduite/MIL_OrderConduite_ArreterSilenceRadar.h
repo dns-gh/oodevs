@@ -43,8 +43,6 @@ public:
 
 private:
 
-private:
-
 };
 
 #endif // __MIL_OrderConduite_ArreterSilenceRadar_h_

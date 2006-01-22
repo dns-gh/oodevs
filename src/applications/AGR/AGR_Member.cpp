@@ -178,10 +178,10 @@ std::string AGR_Member::Normalize( const std::string& strASN ) const
 // Name: AGR_Member::Declaration
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
-std::string AGR_Member::Declaration() const
-{
-    return pType_->Declaration( *this );
-}
+//std::string AGR_Member::Declaration() const
+//{
+//    return pType_->Declaration( *this );
+//}
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Member::DIAIndexDeclaration

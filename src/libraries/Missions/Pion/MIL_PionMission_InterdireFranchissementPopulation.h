@@ -45,10 +45,6 @@ public:
 private:
     static int nDIALigneIdx_;
 
-
-private:
-    TER_Localisation ligne_;
-
 };
 
 

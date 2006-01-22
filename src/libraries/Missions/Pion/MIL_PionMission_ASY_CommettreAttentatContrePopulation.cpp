@@ -72,9 +72,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASY_CommettreAttentatContrePopulation::
         return nCode;        
 
     const ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *asnMsg.mission.u.mission_pion_asy_commettre_attentatContrePopulation;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_repli, pointRepli_, GetVariable( nDIAPointRepliIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_repli, GetVariable( nDIAPointRepliIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPopulationKnowledge( asnMission.population_cible, GetVariable( nDIAPopulationCibleIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_ASY_CommettreAttentatContrePopulation::Initialize( const MI
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRepli_, GetVariable( nDIAPointRepliIdx_ ) );
-    NET_ASN_Tools::ResetPopulationKnowledge( GetVariable( nDIAPopulationCibleIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,8 +106,8 @@ bool MIL_PionMission_ASY_CommettreAttentatContrePopulation::Initialize( MIL_Pion
         return false;
     MIL_PionMission_ASY_CommettreAttentatContrePopulation& mission = static_cast< MIL_PionMission_ASY_CommettreAttentatContrePopulation& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRepliIdx_ ), pointRepli_, GetVariable( nDIAPointRepliIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRepliIdx_ ), GetVariable( nDIAPointRepliIdx_ ) );
     NET_ASN_Tools::CopyPopulationKnowledge( mission.GetVariable( nDIAPopulationCibleIdx_ ), GetVariable( nDIAPopulationCibleIdx_ ) );
 
     return true;
@@ -122,8 +119,7 @@ bool MIL_PionMission_ASY_CommettreAttentatContrePopulation::Initialize( MIL_Pion
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASY_CommettreAttentatContrePopulation::Terminate()
 {
-    NET_ASN_Tools::ResetPopulationKnowledge( GetVariable( nDIAPopulationCibleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

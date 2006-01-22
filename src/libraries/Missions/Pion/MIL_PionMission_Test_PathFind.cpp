@@ -84,8 +84,7 @@ bool MIL_PionMission_Test_PathFind::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIANbPathfindIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_Test_PathFind::Initialize( MIL_PionMission_ABC& missionTmp 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_PathFind::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIANbPathfindIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

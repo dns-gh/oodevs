@@ -84,8 +84,7 @@ bool MIL_PionMission_Test_DestroyObject::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObjetIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_Test_DestroyObject::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_DestroyObject::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObjetIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

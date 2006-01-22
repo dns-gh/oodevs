@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAZoneIdx_;
 
-
-private:
-    TER_Localisation zone_;
-
 };
 
 

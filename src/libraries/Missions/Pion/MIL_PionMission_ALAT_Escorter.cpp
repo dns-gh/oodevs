@@ -82,7 +82,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Escorter::Initialize( const ASN1T_
     const ASN1T_Mission_Pion_ALAT_Escorter& asnMission = *asnMsg.mission.u.mission_pion_alat_escorter;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_escorter, GetVariable( nDIAUnitesAEscorterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -108,14 +108,7 @@ bool MIL_PionMission_ALAT_Escorter::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesAEscorterIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetNatureAtlas( GetVariable( nDIACiblesPrioritairesIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+                            
     return true;    
 }
 
@@ -130,7 +123,7 @@ bool MIL_PionMission_ALAT_Escorter::Initialize( MIL_PionMission_ABC& missionTmp 
     MIL_PionMission_ALAT_Escorter& mission = static_cast< MIL_PionMission_ALAT_Escorter& >( missionTmp );
 
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesAEscorterIdx_ ), GetVariable( nDIAUnitesAEscorterIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyNatureAtlas( mission.GetVariable( nDIACiblesPrioritairesIdx_ ), GetVariable( nDIACiblesPrioritairesIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
@@ -146,8 +139,7 @@ bool MIL_PionMission_ALAT_Escorter::Initialize( MIL_PionMission_ABC& missionTmp 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Escorter::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

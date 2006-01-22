@@ -78,7 +78,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage:
     const ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage& asnMission = *asnMsg.mission.u.mission_automate_alat_effectuer_recherche_et_sauvetage;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_secourir, GetVariable( nDIAUnitesASecourirIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -96,8 +96,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage:
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

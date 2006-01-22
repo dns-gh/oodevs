@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Decrocher::Initialize( const ASN1T_
         return nCode;        
 
     const ASN1T_Mission_Automate_Decrocher& asnMission = *asnMsg.mission.u.mission_automate_decrocher;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Decrocher::Initialize( const ASN1T_
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Decrocher::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

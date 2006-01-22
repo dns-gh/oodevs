@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_ReconnaitrePoint::Initialize( const
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_ReconnaitrePoint& asnMission = *asnMsg.mission.u.mission_pion_inf_reconnaitre_point;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_reconnaitre, pointAReconnaitre_, GetVariable( nDIAPointAReconnaitreIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_reconnaitre, GetVariable( nDIAPointAReconnaitreIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,9 +88,7 @@ bool MIL_PionMission_INF_ReconnaitrePoint::Initialize( const MIL_AutomateMission
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointAReconnaitre_, GetVariable( nDIAPointAReconnaitreIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,8 +102,8 @@ bool MIL_PionMission_INF_ReconnaitrePoint::Initialize( MIL_PionMission_ABC& miss
         return false;
     MIL_PionMission_INF_ReconnaitrePoint& mission = static_cast< MIL_PionMission_INF_ReconnaitrePoint& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointAReconnaitreIdx_ ), pointAReconnaitre_, GetVariable( nDIAPointAReconnaitreIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointAReconnaitreIdx_ ), GetVariable( nDIAPointAReconnaitreIdx_ ) );
 
     return true;
 }                                                                    
@@ -116,8 +114,7 @@ bool MIL_PionMission_INF_ReconnaitrePoint::Initialize( MIL_PionMission_ABC& miss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_ReconnaitrePoint::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointAReconnaitre_, GetVariable( nDIAPointAReconnaitreIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

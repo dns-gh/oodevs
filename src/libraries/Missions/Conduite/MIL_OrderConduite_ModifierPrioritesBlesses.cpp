@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierPrioritesBlesses::Initialize(
         return nCode; 
 
     const ASN1T_OrderConduite_ModifierPrioritesBlesses& asnMission = *asnMsg.u.order_conduite_modifier_priorites_blesses;
-    if( !NET_ASN_Tools::CopyMedicalPriorities( asnMission, orderConduiteModifierPrioritesBlesses_, GetVariable( nDIAOrderConduiteModifierPrioritesBlessesIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyMedicalPriorities( asnMission, GetVariable( nDIAOrderConduiteModifierPrioritesBlessesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -82,6 +82,6 @@ void MIL_OrderConduite_ModifierPrioritesBlesses::Initialize( DIA_Parameters& dia
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyMedicalPriorities( diaParams[nCurDIAParamIdx++], orderConduiteModifierPrioritesBlesses_, GetVariable( nDIAOrderConduiteModifierPrioritesBlessesIdx_));
+    NET_ASN_Tools::CopyMedicalPriorities( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduiteModifierPrioritesBlessesIdx_));
 
 }

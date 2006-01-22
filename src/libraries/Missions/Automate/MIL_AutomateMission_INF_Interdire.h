@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector pointsAInterdire_;
-
-private:
     static int nDIAPointsAInterdireIdx_;
     static int nDIAPreparerTerrainIdx_;
 

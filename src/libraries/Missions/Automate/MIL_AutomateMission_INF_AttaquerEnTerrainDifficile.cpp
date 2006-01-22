@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Ini
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile& asnMission = *asnMsg.mission.u.mission_automate_inf_attaquer_en_terrain_difficile;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.objectifs, objectifs_, GetVariable( nDIAObjectifsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.objectifs, GetVariable( nDIAObjectifsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Ini
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Terminate()
 {
-    NET_ASN_Tools::ResetPointList( objectifs_, GetVariable( nDIAObjectifsIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

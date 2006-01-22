@@ -593,7 +593,7 @@ void DEC_AutomateFunctions::GetPionPosition( DIA_Call_ABC& call, const MIL_Autom
     assert( pPion );
 //    assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
     
-    call.GetResult().SetValue( (void*)&pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), &DEC_Tools::GetTypePoint() );
+    call.GetResult().SetValue( (void*)&pPion->GetPion().GetRole< PHY_RolePion_Location >().GetPosition(), &DEC_Tools::GetTypePoint(), 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -609,7 +609,7 @@ void DEC_AutomateFunctions::GetPionDirection( DIA_Call_ABC& call, const MIL_Auto
     assert( pPion );
 //  assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
     
-    call.GetResult().SetValue( (void*)&pPion->GetPion().GetRole< PHY_RolePion_Location >().GetDirection(), &DEC_Tools::GetTypeDirection() );    
+    call.GetResult().SetValue( (void*)&pPion->GetPion().GetRole< PHY_RolePion_Location >().GetDirection(), &DEC_Tools::GetTypeDirection(), 1 );    
 }
 
 

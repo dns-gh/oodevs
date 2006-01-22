@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Couvrir::Initialize( const ASN1
     const ASN1T_Mission_Automate_INF_Couvrir& asnMission = *asnMsg.mission.u.mission_automate_inf_couvrir;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.compagnie, GetVariable( nDIACompagnieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.objectifs, objectifs_, GetVariable( nDIAObjectifsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.objectifs, GetVariable( nDIAObjectifsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Couvrir::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Couvrir::Terminate()
 {
-    NET_ASN_Tools::ResetPointList( objectifs_, GetVariable( nDIAObjectifsIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

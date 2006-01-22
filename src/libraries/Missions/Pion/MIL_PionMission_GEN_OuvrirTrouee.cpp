@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_OuvrirTrouee::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_OuvrirTrouee::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_OuvrirTrouee::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Defendre::Initialize( const ASN1T_M
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_Defendre& asnMission = *asnMsg.mission.u.mission_pion_inf_defendre;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_defendre, pointADefendre_, GetVariable( nDIAPointADefendreIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_defendre, GetVariable( nDIAPointADefendreIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.preparer_terrain, GetVariable( nDIAPreparerTerrainIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_INF_Defendre::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointADefendre_, GetVariable( nDIAPointADefendreIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_INF_Defendre::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_INF_Defendre& mission = static_cast< MIL_PionMission_INF_Defendre& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointADefendreIdx_ ), pointADefendre_, GetVariable( nDIAPointADefendreIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointADefendreIdx_ ), GetVariable( nDIAPointADefendreIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIAPreparerTerrainIdx_ ), GetVariable( nDIAPreparerTerrainIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_INF_Defendre::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Defendre::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -84,8 +84,7 @@ bool MIL_PionMission_ASA_DefendreUnites::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_ASA_DefendreUnites::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_DefendreUnites::Terminate()
 {
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -45,9 +45,6 @@ public:
 private:
     static int nDIAUniteAFixerIdx_;
 
-
-private:
-
 };
 
 

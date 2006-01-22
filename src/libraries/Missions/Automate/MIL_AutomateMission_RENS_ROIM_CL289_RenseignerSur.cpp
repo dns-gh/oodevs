@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Init
         return nCode;        
 
     const ASN1T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg.mission.u.mission_automate_rens_roim_cl289_renseigner_sur;
-    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPolygonList( asnMission.zones_de_recherche, GetVariable( nDIAZonesDeRechercheIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Init
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesDeRechercheIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

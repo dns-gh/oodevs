@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Attaquer::Initialize( const ASN1T_M
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_Attaquer& asnMission = *asnMsg.mission.u.mission_pion_abc_attaquer;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire_assaut, itineraireAssaut_, GetVariable( nDIAItineraireAssautIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire_assaut, GetVariable( nDIAItineraireAssautIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_Attaquer::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraireAssaut_, GetVariable( nDIAItineraireAssautIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_ABC_Attaquer::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_ABC_Attaquer& mission = static_cast< MIL_PionMission_ABC_Attaquer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireAssautIdx_ ), itineraireAssaut_, GetVariable( nDIAItineraireAssautIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireAssautIdx_ ), GetVariable( nDIAItineraireAssautIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_Attaquer::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Attaquer::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraireAssaut_, GetVariable( nDIAItineraireAssautIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

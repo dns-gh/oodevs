@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Stationner::Initialize( const ASN1T
         return nCode;        
 
     const ASN1T_Mission_Automate_Stationner& asnMission = *asnMsg.mission.u.mission_automate_stationner;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_attente, zoneAttente_, GetVariable( nDIAZoneAttenteIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_attente, GetVariable( nDIAZoneAttenteIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Stationner::Initialize( const ASN1T
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Stationner::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneAttente_, GetVariable( nDIAZoneAttenteIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

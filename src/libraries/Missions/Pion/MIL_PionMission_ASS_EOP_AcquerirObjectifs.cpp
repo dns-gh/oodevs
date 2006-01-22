@@ -72,11 +72,11 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Pion_ASS_EOP_AcquerirObjectifs& asnMission = *asnMsg.mission.u.mission_pion_ass_eop_acquerir_objectifs;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_observer, zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_a_observer, GetVariable( nDIAZoneAObserverIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, GetVariable( nDIAPositionInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_debarquement, positionDebarquement_, GetVariable( nDIAPositionDebarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_debarquement, GetVariable( nDIAPositionDebarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -92,10 +92,7 @@ bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
-    NET_ASN_Tools::ResetPoint( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-    NET_ASN_Tools::ResetPoint( positionDebarquement_, GetVariable( nDIAPositionDebarquementIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,9 +106,9 @@ bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( MIL_PionMission_ABC&
         return false;
     MIL_PionMission_ASS_EOP_AcquerirObjectifs& mission = static_cast< MIL_PionMission_ASS_EOP_AcquerirObjectifs& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAObserverIdx_ ), zoneAObserver_, GetVariable( nDIAZoneAObserverIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDebarquementIdx_ ), positionDebarquement_, GetVariable( nDIAPositionDebarquementIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneAObserverIdx_ ), GetVariable( nDIAZoneAObserverIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), GetVariable( nDIAPositionInstallationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDebarquementIdx_ ), GetVariable( nDIAPositionDebarquementIdx_ ) );
 
     return true;
 }                                                                    
@@ -122,8 +119,7 @@ bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_EOP_AcquerirObjectifs::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( positionDebarquement_, GetVariable( nDIAPositionDebarquementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

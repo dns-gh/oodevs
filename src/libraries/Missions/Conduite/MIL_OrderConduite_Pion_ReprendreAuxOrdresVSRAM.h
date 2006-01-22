@@ -42,8 +42,6 @@ public:
     //@}
 
 private:
-
-private:
     static int nDIAPionRenforceIdx_;
     static int nDIANbrAmbulancesIdx_;
 

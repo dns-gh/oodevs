@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector pointsResistance_;
-
-private:
     static int nDIAPointsResistanceIdx_;
 
 };

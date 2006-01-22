@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_DegagerAbattisMine::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_DegagerAbattisMine::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DegagerAbattisMine::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

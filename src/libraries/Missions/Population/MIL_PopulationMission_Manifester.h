@@ -44,10 +44,6 @@ public:
 private:
     static int nDIADestinationIdx_;
 
-
-private:
-    MT_Vector2D destination_;
-
 };
 
 

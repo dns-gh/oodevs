@@ -41,10 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneDeploiement_;
-    T_PointVector pias_;
-
-private:
     static int nDIAZoneDeploiementIdx_;
     static int nDIACompagnieIdx_;
     static int nDIAPiasIdx_;

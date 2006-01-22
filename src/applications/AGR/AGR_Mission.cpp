@@ -154,14 +154,14 @@ void AGR_Mission::GenerateMilClassHeader( const AGR_Workspace& workspace, const 
     workspace.ReplaceInString( strBaseContent, "$StaticMissionMember$", strStaticMembers );
 
     // generate the non-static member --> UserType pointers
-    std::string strDeclarations;
+ /*   std::string strDeclarations;
     for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
     {
         assert( *it );
         const AGR_Member& member = **it;
         strDeclarations += member.Declaration();
-    }
-    workspace.ReplaceInString( strBaseContent, "$MissionMember$", strDeclarations );
+    }*/
+//    workspace.ReplaceInString( strBaseContent, "$MissionMember$", strDeclarations );
 
     std::string strResultFileName =  "/src/libraries/Missions/" + MilFilePathName() + ".h";
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );

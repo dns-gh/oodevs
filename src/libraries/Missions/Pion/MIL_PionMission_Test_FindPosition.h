@@ -56,12 +56,6 @@ private:
     static int nDIANiveauIdentificationIdx_;
     static int nDIADgoIdx_;
 
-
-private:
-    MT_Vector2D point_;
-    MT_Vector2D retreat_;
-    MT_Vector2D dgo_;
-
 };
 
 

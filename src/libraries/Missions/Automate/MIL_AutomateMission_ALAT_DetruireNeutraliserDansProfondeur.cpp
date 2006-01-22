@@ -84,13 +84,13 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfond
         return nCode;        
 
     const ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur& asnMission = *asnMsg.mission.u.mission_automate_alat_detruire_neutraliser_dans_profondeur;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, GetVariable( nDIAPointDislocationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -112,8 +112,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfond
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIANeutraliserIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

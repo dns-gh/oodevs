@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_ReconnaitreZoneDeploiement::Ini
         return nCode;        
 
     const ASN1T_Mission_Automate_GEN_ReconnaitreZoneDeploiement& asnMission = *asnMsg.mission.u.mission_automate_gen_reconnaitre_zone_deploiement;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_ReconnaitreZoneDeploiement::Ini
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_ReconnaitreZoneDeploiement::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

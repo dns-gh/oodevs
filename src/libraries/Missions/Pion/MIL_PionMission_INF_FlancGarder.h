@@ -46,10 +46,6 @@ private:
     static int nDIAItineraireIdx_;
     static int nDIAUniteAFlancgarderIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-
 };
 
 

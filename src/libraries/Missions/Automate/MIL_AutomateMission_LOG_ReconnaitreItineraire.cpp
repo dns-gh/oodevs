@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_ReconnaitreItineraire::Initiali
         return nCode;        
 
     const ASN1T_Mission_Automate_LOG_ReconnaitreItineraire& asnMission = *asnMsg.mission.u.mission_automate_log_reconnaitre_itineraire;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire_log, itineraireLog_, GetVariable( nDIAItineraireLogIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire_log, GetVariable( nDIAItineraireLogIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_ReconnaitreItineraire::Initiali
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_ReconnaitreItineraire::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraireLog_, GetVariable( nDIAItineraireLogIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

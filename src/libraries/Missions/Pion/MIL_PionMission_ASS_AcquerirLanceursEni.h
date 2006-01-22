@@ -47,9 +47,6 @@ private:
     static int nDIAZoneImplantationIdx_;
     static int nDIAMenanceRoemIdx_;
 
-
-private:
-
 };
 
 

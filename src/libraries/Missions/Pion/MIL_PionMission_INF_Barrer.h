@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPositionABarrerIdx_;
 
-
-private:
-    MT_Vector2D positionABarrer_;
-
 };
 
 

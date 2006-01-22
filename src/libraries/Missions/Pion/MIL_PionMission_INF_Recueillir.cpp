@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Recueillir::Initialize( const ASN1T
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_Recueillir& asnMission = *asnMsg.mission.u.mission_pion_inf_recueillir;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, GetVariable( nDIAPositionInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pia, pia_, GetVariable( nDIAPiaIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pia, GetVariable( nDIAPiaIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,9 +88,7 @@ bool MIL_PionMission_INF_Recueillir::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pia_, GetVariable( nDIAPiaIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,8 +102,8 @@ bool MIL_PionMission_INF_Recueillir::Initialize( MIL_PionMission_ABC& missionTmp
         return false;
     MIL_PionMission_INF_Recueillir& mission = static_cast< MIL_PionMission_INF_Recueillir& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPiaIdx_ ), pia_, GetVariable( nDIAPiaIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), GetVariable( nDIAPositionInstallationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPiaIdx_ ), GetVariable( nDIAPiaIdx_ ) );
 
     return true;
 }                                                                    
@@ -116,8 +114,7 @@ bool MIL_PionMission_INF_Recueillir::Initialize( MIL_PionMission_ABC& missionTmp
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Recueillir::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pia_, GetVariable( nDIAPiaIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

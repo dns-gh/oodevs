@@ -42,9 +42,6 @@ public:
     //@}
 
 private:
-    TER_Localisation orderConduiteAcquerirObjectif_;
-
-private:
     static int nDIAOrderConduiteAcquerirObjectifIdx_;
 
 };

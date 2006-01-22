@@ -84,8 +84,7 @@ bool MIL_PionMission_LOG_AppuyerMouvement::Initialize( const MIL_AutomateMission
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAAppuyerIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_LOG_AppuyerMouvement::Initialize( MIL_PionMission_ABC& miss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_AppuyerMouvement::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAAppuyerIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_CanaliserPopulation::Initialize( const 
         return nCode;        
 
     const ASN1T_Mission_Pion_CanaliserPopulation& asnMission = *asnMsg.mission.u.mission_pion_canaliser_population;
-    if( !NET_ASN_Tools::CopyLocation( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyLocation( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_CanaliserPopulation::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetLocation( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_CanaliserPopulation::Initialize( MIL_PionMission_ABC& missi
         return false;
     MIL_PionMission_CanaliserPopulation& mission = static_cast< MIL_PionMission_CanaliserPopulation& >( missionTmp );
 
-    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_CanaliserPopulation::Initialize( MIL_PionMission_ABC& missi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_CanaliserPopulation::Terminate()
 {
-    NET_ASN_Tools::ResetLocation( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

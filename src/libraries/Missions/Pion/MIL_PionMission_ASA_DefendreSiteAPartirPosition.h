@@ -46,11 +46,6 @@ private:
     static int nDIASiteIdx_;
     static int nDIAPointDeDeploiementIdx_;
 
-
-private:
-    TER_Localisation site_;
-    MT_Vector2D pointDeDeploiement_;
-
 };
 
 

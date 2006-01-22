@@ -84,13 +84,13 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initi
         return nCode;        
 
     const ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone& asnMission = *asnMsg.mission.u.mission_pion_alat_detruire_neutraliser_dans_zone;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, GetVariable( nDIAPointDislocationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -116,16 +116,7 @@ bool MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) );
-    NET_ASN_Tools::ResetNatureAtlas( GetVariable( nDIACiblesPrioritairesIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIANeutraliserIdx_ ) );
-
+                                    
     return true;    
 }
 
@@ -139,10 +130,10 @@ bool MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initialize( MIL_PionMissi
         return false;
     MIL_PionMission_ALAT_DetruireNeutraliserDansZone& mission = static_cast< MIL_PionMission_ALAT_DetruireNeutraliserDansZone& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDislocationIdx_ ), pointDislocation_, GetVariable( nDIAPointDislocationIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDislocationIdx_ ), GetVariable( nDIAPointDislocationIdx_ ) );
     NET_ASN_Tools::CopyNatureAtlas( mission.GetVariable( nDIACiblesPrioritairesIdx_ ), GetVariable( nDIACiblesPrioritairesIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
@@ -158,8 +149,7 @@ bool MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIANeutraliserIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

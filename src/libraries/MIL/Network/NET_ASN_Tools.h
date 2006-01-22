@@ -38,12 +38,10 @@ public:
     static bool CopyObjectKnowledge ( const ASN1T_KnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static bool CopyObjectKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgeObject& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static void CopyObjectKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetObjectKnowledge( DIA_Variable_ABC& dia );
 
     static bool CopyObjectKnowledgeList ( const ASN1T_ListKnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static bool CopyObjectKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeObject& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static void CopyObjectKnowledgeList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetObjectKnowledgeList( DIA_Variable_ABC& dia );
     //@}
 
     //! @name Mission parameters tools : Knowledge agent DIA - SIM - ASN
@@ -51,12 +49,10 @@ public:
     static bool CopyAgentKnowledge ( const ASN1T_KnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static bool CopyAgentKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgeAgent& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static void CopyAgentKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetAgentKnowledge( DIA_Variable_ABC& dia );
 
     static bool CopyAgentKnowledgeList ( const ASN1T_ListKnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static bool CopyAgentKnowledgeList ( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static void CopyAgentKnowledgeList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetAgentKnowledgeList( DIA_Variable_ABC& dia );
     //@}
 
     //! @name Mission parameters tools : Knowledge Population DIA - SIM - ASN
@@ -64,7 +60,6 @@ public:
     static bool CopyPopulationKnowledge ( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static bool CopyPopulationKnowledge ( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const DEC_KS_KnowledgeGroupQuerier& knowledge  );
     static void CopyPopulationKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetPopulationKnowledge( DIA_Variable_ABC& dia );
     //@}
 
     //! @name Mission parameters tools : Population object knowldege DIA - SIM - ASN
@@ -73,7 +68,6 @@ public:
     static bool CopyPopulationObjectKnowledge ( const ASN1T_Objet& asn, DIA_Variable_ABC& dia );
     static bool CopyPopulationObjectKnowledge ( const DIA_Variable_ABC& dia, ASN1T_Objet& asn );
     static void CopyPopulationObjectKnowledge ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetPopulationObjectKnowledge( DIA_Variable_ABC& dia );
     */
     //@}
 
@@ -82,31 +76,27 @@ public:
     static bool CopyAutomate ( const ASN1T_Agent& asn, DIA_Variable_ABC& dia, bool bValueIfOptional = true );
     static bool CopyAutomate ( const DIA_Variable_ABC& dia, ASN1T_Agent& asn );
     static bool CopyAutomate ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetAutomate( DIA_Variable_ABC& dia );
 
     static bool CopyAgent ( const ASN1T_Agent& asn, DIA_Variable_ABC& dia, bool bValueIfOptional = true );
     static bool CopyAgent ( const DIA_Variable_ABC& dia, ASN1T_Agent& asn );   
     static bool CopyAgent ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetAgent( DIA_Variable_ABC& dia );
 
     static bool CopyAgentList ( const ASN1T_ListAgent& asn, DIA_Variable_ABC& dia );
     static bool CopyAgentList ( const DIA_Variable_ABC& dia, ASN1T_ListAgent& asn );
     static bool CopyAgentList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetAgentList( DIA_Variable_ABC& dia );
 
     static bool CopyAutomateList ( const ASN1T_ListAutomate& asn, DIA_Variable_ABC& dia );
     static bool CopyAutomateList ( const DIA_Variable_ABC& dia, ASN1T_ListAutomate& asn );
     static bool CopyAutomateList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetAutomateList( DIA_Variable_ABC& dia );
     //@}
 
     //! @name Mission parameters tools : LOG specific
     //@{
-    static bool CopyMaintenancePriorities( const ASN1T_MaintenancePriorites& asn, T_MaintenancePriorityVector& data, DIA_Variable_ABC& dia );    
-    static bool CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, T_MaintenancePriorityVector& container, DIA_Variable_ABC& diaTo );
+    static bool CopyMaintenancePriorities( const ASN1T_MaintenancePriorites& asn, DIA_Variable_ABC& dia );    
+    static bool CopyMaintenancePriorities( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyMedicalPriorities( const ASN1T_SantePriorites& asn, T_MedicalPriorityVector& data, DIA_Variable_ABC& dia );    
-    static bool CopyMedicalPriorities( const DIA_Variable_ABC& diaFrom, T_MedicalPriorityVector& container, DIA_Variable_ABC& diaTo );
+    static bool CopyMedicalPriorities( const ASN1T_SantePriorites& asn, DIA_Variable_ABC& dia );    
+    static bool CopyMedicalPriorities( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
     //! @name Mission parameters tools : GEN specific
@@ -121,46 +111,38 @@ public:
 
     //! @name Mission parameters tools : Localisation/Geometry DIA - SIM - ASN
     //@{
-    static bool CopyLocation ( const ASN1T_Localisation& asn, TER_Localisation& container, DIA_Variable_ABC& dia );  
+    static bool CopyLocation ( const ASN1T_Localisation& asn, DIA_Variable_ABC& dia );  
     static bool CopyLocation ( const DIA_Variable_ABC& dia, ASN1T_Localisation& asn );
-    static void CopyLocation ( const DIA_Variable_ABC& diaFrom, TER_Localisation& container, DIA_Variable_ABC& diaTo );
-    static void ResetLocation( TER_Localisation& container, DIA_Variable_ABC& dia );
+    static void CopyLocation ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyLocationList  ( const ASN1T_ListLocalisation& asn, DIA_Variable_ABC& dia );
     static bool CopyLocationList  ( const DIA_Variable_ABC& dia, ASN1T_ListLocalisation& asn );
     static void CopyLocationList  ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetLocationList ( DIA_Variable_ABC& dia );
 
-    static bool CopyPolygon ( const ASN1T_Polygon& asn, TER_Localisation& container, DIA_Variable_ABC& dia );  
+    static bool CopyPolygon ( const ASN1T_Polygon& asn, DIA_Variable_ABC& dia );  
     static bool CopyPolygon ( const DIA_Variable_ABC& dia, ASN1T_Polygon& asn );
-    static void CopyPolygon ( const DIA_Variable_ABC& diaFrom, TER_Localisation& container, DIA_Variable_ABC& diaTo );
-    static void ResetPolygon( TER_Localisation& container, DIA_Variable_ABC& dia );
+    static void CopyPolygon ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyPolygonList  ( const ASN1T_ListPolygon& asn, DIA_Variable_ABC& dia );
     static bool CopyPolygonList  ( const DIA_Variable_ABC& dia, ASN1T_ListPolygon& asn );
     static void CopyPolygonList  ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetPolygonList ( DIA_Variable_ABC& dia );
 
-    static bool CopyPoint ( const ASN1T_Point& asn, MT_Vector2D& container, DIA_Variable_ABC& dia, bool bValueIfOptional = true );
+    static bool CopyPoint ( const ASN1T_Point& asn, DIA_Variable_ABC& dia, bool bValueIfOptional = true );
     static bool CopyPoint ( const DIA_Variable_ABC& dia, ASN1T_CoordUTM& asn );
     static bool CopyPoint ( const DIA_Variable_ABC& dia, ASN1T_Point& asn );
-    static bool CopyPoint ( const DIA_Variable_ABC& diaFrom, MT_Vector2D& container, DIA_Variable_ABC& diaTo );
-    static void ResetPoint( MT_Vector2D& container, DIA_Variable_ABC& dia );
+    static bool CopyPoint ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );    
     
-    static bool CopyPointList ( const ASN1T_ListPoint& asn, T_PointVector& container, DIA_Variable_ABC& dia );
+    static bool CopyPointList ( const ASN1T_ListPoint& asn, DIA_Variable_ABC& dia );
     static bool CopyPointList ( const DIA_Variable_ABC& dia, ASN1T_ListPoint& asn );
-    static bool CopyPointList ( const DIA_Variable_ABC& diaFrom, T_PointVector& container, DIA_Variable_ABC& diaTo );
-    static void ResetPointList( T_PointVector& container, DIA_Variable_ABC& dia );
+    static bool CopyPointList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyPath ( const ASN1T_Itineraire& asn, T_PointVector& container, DIA_Variable_ABC& dia );
+    static bool CopyPath ( const ASN1T_Itineraire& asn, DIA_Variable_ABC& dia );
     static bool CopyPath ( const DIA_Variable_ABC& dia, ASN1T_Itineraire& asn );
-    static bool CopyPath ( const DIA_Variable_ABC& diaFrom, T_PointVector& container, DIA_Variable_ABC& diaTo );
-    static void ResetPath( T_PointVector& container, DIA_Variable_ABC& dia );
+    static bool CopyPath ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyPathList ( const ASN1T_ListItineraire& asn, DIA_Variable_ABC& dia );
     static bool CopyPathList ( const DIA_Variable_ABC& dia, ASN1T_ListItineraire& asn );
     static bool CopyPathList ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetPathList( DIA_Variable_ABC& dia );
     //@}
 
     //! @name Mission parameters tools : GDH DIA - SIM - ASN
@@ -168,20 +150,17 @@ public:
     static bool CopyGDH ( const ASN1T_GDH&        asn    , DIA_Variable_ABC& dia, bool bValueIfOptional = true );
     static bool CopyGDH ( const DIA_Variable_ABC& dia    , ASN1T_GDH& asn          );
     static bool CopyGDH ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetGDH( DIA_Variable_ABC& dia );
     //@}
 
     //! @name Mission parameters tools : basic types
     //@{
-    static bool CopyDirection ( const ASN1T_Direction& asn, MT_Vector2D& container, DIA_Variable_ABC& dia );
+    static bool CopyDirection ( const ASN1T_Direction& asn, DIA_Variable_ABC& dia );
     static bool CopyDirection ( const DIA_Variable_ABC& dia, ASN1T_Direction& asn );
-    static bool CopyDirection ( const DIA_Variable_ABC& diaFrom, MT_Vector2D& container, DIA_Variable_ABC& diaTo );
-    static void ResetDirection( MT_Vector2D& container, DIA_Variable_ABC& dia );
+    static bool CopyDirection ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
     static bool CopyBool ( const ASN1BOOL& asn, DIA_Variable_ABC& dia );
     static bool CopyBool ( const DIA_Variable_ABC& dia, ASN1BOOL& asn );
     static bool CopyBool ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetBool( DIA_Variable_ABC& dia );
     
     static bool CopyNumeric ( const ASN1UINT& asn, DIA_Variable_ABC& dia );
     static bool CopyNumeric ( const ASN1INT& asn , DIA_Variable_ABC& dia );
@@ -190,17 +169,14 @@ public:
     static bool CopyNumeric ( const DIA_Variable_ABC& dia, ASN1INT& asn );
     static bool CopyNumeric ( const DIA_Variable_ABC& dia, ASN1REAL& asn );    
     static bool CopyNumeric ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetNumeric( DIA_Variable_ABC& dia );
 
     static bool CopyID ( const ASN1T_OID& asn, DIA_Variable_ABC& dia );
     static bool CopyID ( const DIA_Variable_ABC& dia, ASN1T_OID& asn );
     static bool CopyID ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetID( DIA_Variable_ABC& dia );
 
     static bool CopyNatureAtlas ( const ASN1T_NatureAtlas& asn, DIA_Variable_ABC& dia );
     static bool CopyNatureAtlas ( const DIA_Variable_ABC& dia, ASN1T_NatureAtlas& asn );
     static bool CopyNatureAtlas ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetNatureAtlas( DIA_Variable_ABC& dia );
 
     static bool CopyEnumeration ( uint asn, DIA_Variable_ABC& dia );
     template< typename T > static bool CopyEnumeration ( const DIA_Variable_ABC& dia, T& asn )
@@ -210,7 +186,6 @@ public:
         return true;
     }
     static bool CopyEnumeration ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-    static void ResetEnumeration( DIA_Variable_ABC& dia );
     //@}
 
     // @name Misc tools

@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector positionsDeploiement_;
-
-private:
     static int nDIAZonesAObserverIdx_;
     static int nDIAPositionsDeploiementIdx_;
     static int nDIACategoriesIdx_;

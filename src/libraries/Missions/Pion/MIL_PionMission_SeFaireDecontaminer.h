@@ -46,10 +46,6 @@ private:
     static int nDIAPointArriveeIdx_;
     static int nDIASiteDecontaminationIdx_;
 
-
-private:
-    MT_Vector2D pointArrivee_;
-
 };
 
 

@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_Renforcer::Initialize( const ASN1T_
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_Renforcer& asnMission = *asnMsg.mission.u.mission_pion_gen_renforcer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.lieu_renforcement, lieuRenforcement_, GetVariable( nDIALieuRenforcementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.lieu_renforcement, GetVariable( nDIALieuRenforcementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgent( asnMission.unite, GetVariable( nDIAUniteIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_GEN_Renforcer::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( lieuRenforcement_, GetVariable( nDIALieuRenforcementIdx_ ) );
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_GEN_Renforcer::Initialize( MIL_PionMission_ABC& missionTmp 
         return false;
     MIL_PionMission_GEN_Renforcer& mission = static_cast< MIL_PionMission_GEN_Renforcer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIALieuRenforcementIdx_ ), lieuRenforcement_, GetVariable( nDIALieuRenforcementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIALieuRenforcementIdx_ ), GetVariable( nDIALieuRenforcementIdx_ ) );
     NET_ASN_Tools::CopyAgent( mission.GetVariable( nDIAUniteIdx_ ), GetVariable( nDIAUniteIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_GEN_Renforcer::Initialize( MIL_PionMission_ABC& missionTmp 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_Renforcer::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

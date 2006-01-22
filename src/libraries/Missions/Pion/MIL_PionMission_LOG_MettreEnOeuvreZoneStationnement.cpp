@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::In
         return nCode;        
 
     const ASN1T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement& asnMission = *asnMsg.mission.u.mission_pion_log_mettre_en_oeuvre_zone_stationnement;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Initialize( const MIL_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Initialize( MIL_PionMi
         return false;
     MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement& mission = static_cast< MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Initialize( MIL_PionMi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

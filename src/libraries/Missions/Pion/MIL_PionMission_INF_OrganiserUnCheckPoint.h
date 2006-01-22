@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointInstallationIdx_;
 
-
-private:
-    MT_Vector2D pointInstallation_;
-
 };
 
 

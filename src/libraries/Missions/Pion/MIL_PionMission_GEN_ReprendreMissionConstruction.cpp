@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_ReprendreMissionConstruction::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIATravauxIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_ReprendreMissionConstruction::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ReprendreMissionConstruction::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIATravauxIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

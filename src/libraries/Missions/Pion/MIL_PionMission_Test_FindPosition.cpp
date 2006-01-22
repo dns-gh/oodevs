@@ -90,9 +90,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_FindPosition::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Pion_Test_FindPosition& asnMission = *asnMsg.mission.u.mission_pion_test_find_position;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point, point_, GetVariable( nDIAPointIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point, GetVariable( nDIAPointIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.retreat, retreat_, GetVariable( nDIARetreatIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.retreat, GetVariable( nDIARetreatIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unite, GetVariable( nDIAUniteIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -112,7 +112,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_FindPosition::Initialize( const AS
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.niveau_identification, GetVariable( nDIANiveauIdentificationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyDirection( asnMission.dgo, dgo_, GetVariable( nDIADgoIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyDirection( asnMission.dgo, GetVariable( nDIADgoIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -128,19 +128,7 @@ bool MIL_PionMission_Test_FindPosition::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( point_, GetVariable( nDIAPointIdx_ ) );
-    NET_ASN_Tools::ResetPoint( retreat_, GetVariable( nDIARetreatIdx_ ) );
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUniteIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeObjectifIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeOperationIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAAvoidIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARecoIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIANoObstacleAvoidIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIADebordementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIADecPointsIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANiveauIdentificationIdx_ ) );
-    NET_ASN_Tools::ResetDirection( dgo_, GetVariable( nDIADgoIdx_ ) );
-
+                                                
     return true;    
 }
 
@@ -154,8 +142,8 @@ bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& mission
         return false;
     MIL_PionMission_Test_FindPosition& mission = static_cast< MIL_PionMission_Test_FindPosition& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), point_, GetVariable( nDIAPointIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIARetreatIdx_ ), retreat_, GetVariable( nDIARetreatIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), GetVariable( nDIAPointIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIARetreatIdx_ ), GetVariable( nDIARetreatIdx_ ) );
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUniteIdx_ ), GetVariable( nDIAUniteIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeObjectifIdx_ ), GetVariable( nDIATypeObjectifIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeOperationIdx_ ), GetVariable( nDIATypeOperationIdx_ ) );
@@ -165,7 +153,7 @@ bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& mission
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIADebordementIdx_ ), GetVariable( nDIADebordementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIADecPointsIdx_ ), GetVariable( nDIADecPointsIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIANiveauIdentificationIdx_ ), GetVariable( nDIANiveauIdentificationIdx_ ) );
-    NET_ASN_Tools::CopyDirection( mission.GetVariable( nDIADgoIdx_ ), dgo_, GetVariable( nDIADgoIdx_ ) );
+    NET_ASN_Tools::CopyDirection( mission.GetVariable( nDIADgoIdx_ ), GetVariable( nDIADgoIdx_ ) );
 
     return true;
 }                                                                    
@@ -176,8 +164,7 @@ bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_FindPosition::Terminate()
 {
-    NET_ASN_Tools::ResetDirection( dgo_, GetVariable( nDIADgoIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

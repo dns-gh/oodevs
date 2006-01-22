@@ -76,9 +76,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_JOINT_MARINE_Transporter::Initialize( c
     const ASN1T_Mission_Pion_JOINT_MARINE_Transporter& asnMission = *asnMsg.mission.u.mission_pion_joint_marine_transporter;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_transporter, GetVariable( nDIAUnitesATransporterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_debarquement, GetVariable( nDIAPointDebarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.avec_materiel, GetVariable( nDIAAvecMaterielIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -96,11 +96,7 @@ bool MIL_PionMission_JOINT_MARINE_Transporter::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesATransporterIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAAvecMaterielIdx_ ) );
-
+                
     return true;    
 }
 
@@ -115,8 +111,8 @@ bool MIL_PionMission_JOINT_MARINE_Transporter::Initialize( MIL_PionMission_ABC& 
     MIL_PionMission_JOINT_MARINE_Transporter& mission = static_cast< MIL_PionMission_JOINT_MARINE_Transporter& >( missionTmp );
 
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesATransporterIdx_ ), GetVariable( nDIAUnitesATransporterIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDebarquementIdx_ ), pointDebarquement_, GetVariable( nDIAPointDebarquementIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointEmbarquementIdx_ ), pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDebarquementIdx_ ), GetVariable( nDIAPointDebarquementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointEmbarquementIdx_ ), GetVariable( nDIAPointEmbarquementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIAAvecMaterielIdx_ ), GetVariable( nDIAAvecMaterielIdx_ ) );
 
     return true;
@@ -128,8 +124,7 @@ bool MIL_PionMission_JOINT_MARINE_Transporter::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_JOINT_MARINE_Transporter::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAAvecMaterielIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

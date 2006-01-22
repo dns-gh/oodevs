@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    T_PointVector itineraireLog_;
-
-private:
     static int nDIAItineraireLogIdx_;
 
 };

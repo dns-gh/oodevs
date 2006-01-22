@@ -42,9 +42,6 @@ public:
     //@}
 
 private:
-    T_MedicalPriorityVector orderConduiteModifierPrioritesBlesses_;
-
-private:
     static int nDIAOrderConduiteModifierPrioritesBlessesIdx_;
 
 };

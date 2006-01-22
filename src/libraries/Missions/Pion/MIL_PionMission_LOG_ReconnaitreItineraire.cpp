@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( 
         return nCode;        
 
     const ASN1T_Mission_Pion_LOG_ReconnaitreItineraire& asnMission = *asnMsg.mission.u.mission_pion_log_reconnaitre_itineraire;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire_log, itineraireLog_, GetVariable( nDIAItineraireLogIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire_log, GetVariable( nDIAItineraireLogIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraireLog_, GetVariable( nDIAItineraireLogIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( MIL_PionMission_ABC&
         return false;
     MIL_PionMission_LOG_ReconnaitreItineraire& mission = static_cast< MIL_PionMission_LOG_ReconnaitreItineraire& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireLogIdx_ ), itineraireLog_, GetVariable( nDIAItineraireLogIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireLogIdx_ ), GetVariable( nDIAItineraireLogIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_LOG_ReconnaitreItineraire::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreItineraire::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraireLog_, GetVariable( nDIAItineraireLogIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

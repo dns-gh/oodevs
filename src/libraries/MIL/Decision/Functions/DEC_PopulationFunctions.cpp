@@ -230,7 +230,7 @@ void DEC_PopulationFunctions::GetKnowledgeObjectLocalisation( DIA_Call_ABC& call
     }
 
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (void*)&pObject->GetLocalisation(), &DEC_Tools::GetTypeLocalisation() );
+    call.GetResult().SetValue( (void*)&pObject->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
 }
 
 // -----------------------------------------------------------------------------

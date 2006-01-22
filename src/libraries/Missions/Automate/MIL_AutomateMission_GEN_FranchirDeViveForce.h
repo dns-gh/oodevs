@@ -41,8 +41,6 @@ public:
     //@}
 
 private:
-
-private:
     static int nDIAObstaclesAFranchirIdx_;
 
 };

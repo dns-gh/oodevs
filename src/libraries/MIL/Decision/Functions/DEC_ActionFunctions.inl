@@ -23,7 +23,7 @@ void DEC_ActionFunctions::StartAction( DIA_Call_ABC& diaCall, typename ActionTyp
 {
     ActionType* pAction = new ActionType( caller, diaCall );
     MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDebug().NotifyActionStarted( diaCall, caller, *pAction );
-    diaCall.GetResult().SetValue( pAction, &DEC_Tools::GetTypeAction() );
+    // diaCall.GetResult().SetValue( pAction, &DEC_Tools::GetTypeAction() ); $$ Fait dans PHY_Action_ABC::PHY_Action_ABC
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +41,7 @@ void DEC_ActionFunctions::StopAction( DIA_Call_ABC& call, const T& caller )
     assert( caller.HasAction( *pAction ) );
     MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDebug().NotifyActionStopped( call, caller, *pAction );
     delete pAction;
+    call.GetParameter( 0 ).SetValue( (void*)0, &DEC_Tools::GetTypeAction() );
 }
 
 // -----------------------------------------------------------------------------

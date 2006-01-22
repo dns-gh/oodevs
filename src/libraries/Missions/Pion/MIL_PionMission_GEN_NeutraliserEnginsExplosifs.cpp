@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_NeutraliserEnginsExplosifs::Initialize( const MIL_Autom
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_NeutraliserEnginsExplosifs::Initialize( MIL_PionMission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_NeutraliserEnginsExplosifs::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

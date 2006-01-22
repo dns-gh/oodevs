@@ -41,10 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zone_;
-    TER_Localisation zoneRegroupement_;
-
-private:
     static int nDIAZoneIdx_;
     static int nDIAZoneRegroupementIdx_;
 

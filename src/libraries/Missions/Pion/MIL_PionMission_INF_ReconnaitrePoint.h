@@ -46,11 +46,6 @@ private:
     static int nDIAItineraireIdx_;
     static int nDIAPointAReconnaitreIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-    MT_Vector2D pointAReconnaitre_;
-
 };
 
 

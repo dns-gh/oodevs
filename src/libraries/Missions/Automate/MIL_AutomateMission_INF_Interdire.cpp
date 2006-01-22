@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Interdire::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_Interdire& asnMission = *asnMsg.mission.u.mission_automate_inf_interdire;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.points_a_interdire, pointsAInterdire_, GetVariable( nDIAPointsAInterdireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.points_a_interdire, GetVariable( nDIAPointsAInterdireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.preparer_terrain, GetVariable( nDIAPreparerTerrainIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Interdire::Initialize( const AS
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Interdire::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

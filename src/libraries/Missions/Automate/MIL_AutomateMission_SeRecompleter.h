@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneRavitaillement_;
-
-private:
     static int nDIAZoneRavitaillementIdx_;
 
 };

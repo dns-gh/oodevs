@@ -134,9 +134,14 @@ void DEC_DIAFunctions::CopyListPoint( DIA_Call_ABC& call )
     T_PointVector* pListPointDest   = params[1].ToUserPtr( pListPointDest   );
 
     assert( pListPointSource );
-    assert( pListPointDest   );
 
-    (*pListPointDest) = (*pListPointSource);
+    if( pListPointDest )
+        (*pListPointDest) = (*pListPointSource);
+    else
+    {
+        T_PointVector* pTmp = new T_PointVector( *pListPointSource );
+        params[1].SetValue( pTmp, &DEC_Tools::GetTypeListePoints() );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -155,9 +160,13 @@ void DEC_DIAFunctions::CopyPoint( DIA_Call_ABC& call )
     MT_Vector2D* pPosDest   = params[1].ToUserPtr( pPosDest   );
 
     assert( pPosSource );
-    assert( pPosDest   );
-
-    (*pPosDest) = (*pPosSource);
+    if( pPosDest )
+        (*pPosDest) = (*pPosSource);
+    else
+    {
+        MT_Vector2D* pTmp = new MT_Vector2D( *pPosSource );
+        params[1].SetValue( pTmp, &DEC_Tools::GetTypePoint() );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -176,11 +185,16 @@ void DEC_DIAFunctions::CopyDirection( DIA_Call_ABC& call )
     MT_Vector2D* pPosDest   = params[1].ToUserPtr( pPosDest   );
 
     assert( pPosSource );
-    assert( pPosDest   );
     assert( !pPosSource->IsZero() );
     assert( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) );
 
-    (*pPosDest) = (*pPosSource);
+    if( pPosDest )
+        (*pPosDest) = (*pPosSource);
+    else
+    {
+        MT_Vector2D* pTmp = new MT_Vector2D( *pPosSource );
+        params[1].SetValue( pTmp, &DEC_Tools::GetTypeDirection() );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -200,7 +214,11 @@ void DEC_DIAFunctions::CopyPointToListPoint( DIA_Call_ABC& call )
     T_PointVector* pListPointDest = params[1].ToUserPtr( pListPointDest );
 
     assert( pPosSource     );
-    assert( pListPointDest );
+    if( !pListPointDest )
+    {
+        pListPointDest = new T_PointVector();
+        params[1].SetValue( pListPointDest, &DEC_Tools::GetTypeListePoints() );
+    }
 
     pListPointDest->clear();
     pListPointDest->push_back( *pPosSource );
@@ -222,9 +240,13 @@ void DEC_DIAFunctions::CopyLocalisation( DIA_Call_ABC& call )
     TER_Localisation* pLocDest   = params[1].ToUserPtr( pLocDest   );
 
     assert( pLocSource );
-    assert( pLocDest   );
-
-    pLocDest->Reset( *pLocSource );
+    if( pLocDest )
+        pLocDest->Reset( *pLocSource );
+    else
+    {
+        pLocDest = new TER_Localisation( *pLocSource );
+        params[1].SetValue( pLocDest, &DEC_Tools::GetTypeLocalisation() );
+    }    
 }
 
 // -----------------------------------------------------------------------------
@@ -243,9 +265,15 @@ void DEC_DIAFunctions::CopyPointToLocalisation( DIA_Call_ABC& call )
     TER_Localisation* pLocDest   = params[1].ToUserPtr( pLocDest   );
 
     assert( pPosSource );
-    assert( pLocDest   );
 
-    pLocDest->Reset( *pPosSource );
+    if( pLocDest )
+        pLocDest->Reset( *pPosSource );
+    else
+    {
+        pLocDest = new TER_Localisation();
+        pLocDest->Reset( *pPosSource );
+        params[1].SetValue( pLocDest, &DEC_Tools::GetTypeLocalisation() );
+    }
 }
 
 // =============================================================================
@@ -303,7 +331,8 @@ void DEC_DIAFunctions::UserTypeList_GetAt( DIA_Call_ABC& call  )
     uint nElt                            = (uint)call.GetParameter( 1 ).ToFloat();
 
     DIA_Variable_ABC& var = diaUserList.GetAt( nElt );
-    call.GetResult().SetValue( var.ToPtr(), &var.GetType() );
+    //call.GetResult().SetValue( var.ToPtr(), &var.GetType() );
+    call.GetResult() = var;
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +362,7 @@ void DEC_DIAFunctions::UserTypeList_PushBack( DIA_Call_ABC& call )
     T_ObjectVariableVector&  vector      = const_cast < T_ObjectVariableVector&  >( diaUserList.GetContainer() );
 
     DIA_Variable_Void* pVar = new DIA_Variable_Void();
-    pVar->SetValue( call.GetParameter( 1 ).ToPtr(), &call.GetParameter( 1 ).GetType() );
+    *pVar = call.GetParameter( 1 );
     vector.push_back( pVar );
 }
 
@@ -393,7 +422,7 @@ void DEC_DIAFunctions::ListPoint_GetAt( DIA_Call_ABC& call )
     else
     {
         const MT_Vector2D& vPos = (*pList)[ nId ];
-        call.GetResult().SetValue( (void*)&vPos, &DEC_Tools::GetTypePoint() );
+        call.GetResult().SetValue( (void*)&vPos, &DEC_Tools::GetTypePoint(), 1 );
     }
 }
 

@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RetablirItineraire::Initialize( con
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RetablirItineraire& asnMission = *asnMsg.mission.u.mission_pion_gen_retablir_itineraire;
-    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, itineraire_, GetVariable( nDIAItineraireIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.itineraire, GetVariable( nDIAItineraireIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( MIL_PionMission_ABC& mi
         return false;
     MIL_PionMission_GEN_RetablirItineraire& mission = static_cast< MIL_PionMission_GEN_RetablirItineraire& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), itineraire_, GetVariable( nDIAItineraireIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAItineraireIdx_ ), GetVariable( nDIAItineraireIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RetablirItineraire::Terminate()
 {
-    NET_ASN_Tools::ResetPath( itineraire_, GetVariable( nDIAItineraireIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

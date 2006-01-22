@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointEmbarquementIdx_;
 
-
-private:
-    MT_Vector2D pointEmbarquement_;
-
 };
 
 

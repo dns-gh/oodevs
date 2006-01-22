@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Harceler::Initialize( const ASN
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_Harceler& asnMission = *asnMsg.mission.u.mission_automate_inf_harceler;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_surveillance, zoneSurveillance_, GetVariable( nDIAZoneSurveillanceIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_surveillance, GetVariable( nDIAZoneSurveillanceIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Harceler::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Harceler::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

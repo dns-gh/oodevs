@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Franchir::Initialize( const ASN1T_M
     const ASN1T_Mission_Automate_Franchir& asnMission = *asnMsg.mission.u.mission_automate_franchir;
     if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.pont_flottant, GetVariable( nDIAPontFlottantIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_arrivee, zoneArrivee_, GetVariable( nDIAZoneArriveeIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_arrivee, GetVariable( nDIAZoneArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Franchir::Initialize( const ASN1T_M
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Franchir::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneArrivee_, GetVariable( nDIAZoneArriveeIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

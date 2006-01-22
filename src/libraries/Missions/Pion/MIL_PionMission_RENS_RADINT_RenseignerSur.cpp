@@ -84,8 +84,7 @@ bool MIL_PionMission_RENS_RADINT_RenseignerSur::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesDeRechercheIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_RENS_RADINT_RenseignerSur::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_RADINT_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPolygonList( GetVariable( nDIAZonesDeRechercheIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

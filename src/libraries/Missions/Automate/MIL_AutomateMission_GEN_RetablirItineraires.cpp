@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RetablirItineraires::Initialize
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RetablirItineraires::Terminate()
 {
-    NET_ASN_Tools::ResetPathList( GetVariable( nDIAItinerairesIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

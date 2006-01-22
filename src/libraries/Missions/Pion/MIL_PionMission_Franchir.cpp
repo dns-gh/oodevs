@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Franchir::Initialize( const ASN1T_MsgPi
     const ASN1T_Mission_Pion_Franchir& asnMission = *asnMsg.mission.u.mission_pion_franchir;
     if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.pont_flottant, GetVariable( nDIAPontFlottantIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_arrivee, pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_arrivee, GetVariable( nDIAPointArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,9 +88,7 @@ bool MIL_PionMission_Franchir::Initialize( const MIL_AutomateMission_ABC& parent
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAPontFlottantIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) );
-
+        
     return true;    
 }
 
@@ -105,7 +103,7 @@ bool MIL_PionMission_Franchir::Initialize( MIL_PionMission_ABC& missionTmp )
     MIL_PionMission_Franchir& mission = static_cast< MIL_PionMission_Franchir& >( missionTmp );
 
     NET_ASN_Tools::CopyObjectKnowledge( mission.GetVariable( nDIAPontFlottantIdx_ ), GetVariable( nDIAPontFlottantIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointArriveeIdx_ ), pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointArriveeIdx_ ), GetVariable( nDIAPointArriveeIdx_ ) );
 
     return true;
 }                                                                    
@@ -116,8 +114,7 @@ bool MIL_PionMission_Franchir::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Franchir::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

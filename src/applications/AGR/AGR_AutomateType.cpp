@@ -29,7 +29,7 @@
 // Created: AGE 2004-10-05
 // -----------------------------------------------------------------------------
 AGR_AutomateType::AGR_AutomateType()
-    : AGR_Type_ABC( "ScipioBase:Automate", "Automate", "", "T_Automate", "uint", false )
+    : AGR_Type_ABC( "ScipioBase:Automate", "Automate", "T_Automate", "uint", false )
 {
     //NOTHING
 }

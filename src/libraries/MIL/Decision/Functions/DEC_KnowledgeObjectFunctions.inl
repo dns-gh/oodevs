@@ -85,7 +85,7 @@ void DEC_KnowledgeObjectFunctions::GetLocalisation( DIA_Call_ABC& call, const T&
     }
 
     call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (void*)&pKnowledge->GetLocalisation(), &DEC_Tools::GetTypeLocalisation() );
+    call.GetResult().SetValue( (void*)&pKnowledge->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
 }
 
 // -----------------------------------------------------------------------------

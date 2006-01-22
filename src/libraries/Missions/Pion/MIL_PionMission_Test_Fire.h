@@ -49,10 +49,6 @@ private:
     static int nDIANbObusIdx_;
     static int nDIATargetsIdx_;
 
-
-private:
-    MT_Vector2D point_;
-
 };
 
 

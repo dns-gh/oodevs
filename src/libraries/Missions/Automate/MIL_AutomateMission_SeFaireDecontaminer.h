@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneArrivee_;
-
-private:
     static int nDIAZoneArriveeIdx_;
     static int nDIASiteDecontaminationIdx_;
 

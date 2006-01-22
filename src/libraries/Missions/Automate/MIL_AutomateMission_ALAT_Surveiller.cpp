@@ -80,9 +80,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Surveiller::Initialize( const 
         return nCode;        
 
     const ASN1T_Mission_Automate_ALAT_Surveiller& asnMission = *asnMsg.mission.u.mission_automate_alat_surveiller;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,7 +92,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Surveiller::Initialize( const 
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_logistique, pointLogistique_, GetVariable( nDIAPointLogistiqueIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_logistique, GetVariable( nDIAPointLogistiqueIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -104,8 +104,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Surveiller::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Surveiller::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointLogistique_, GetVariable( nDIAPointLogistiqueIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

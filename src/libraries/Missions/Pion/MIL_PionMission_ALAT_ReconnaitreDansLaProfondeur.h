@@ -51,12 +51,6 @@ private:
     static int nDIAPointDislocationIdx_;
     static int nDIAZoneIdx_;
 
-
-private:
-    MT_Vector2D pointRegroupement_;
-    MT_Vector2D pointDislocation_;
-    TER_Localisation zone_;
-
 };
 
 

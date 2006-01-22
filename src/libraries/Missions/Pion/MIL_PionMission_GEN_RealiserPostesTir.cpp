@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserPostesTir::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RealiserPostesTir& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_postes_tir;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_objet, posObjet_, GetVariable( nDIAPosObjetIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_objet, GetVariable( nDIAPosObjetIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_objet_planifie, GetVariable( nDIAOidObjetPlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( const MIL_AutomateMissio
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( posObjet_, GetVariable( nDIAPosObjetIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObjetPlanifieIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( MIL_PionMission_ABC& mis
         return false;
     MIL_PionMission_GEN_RealiserPostesTir& mission = static_cast< MIL_PionMission_GEN_RealiserPostesTir& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObjetIdx_ ), posObjet_, GetVariable( nDIAPosObjetIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObjetIdx_ ), GetVariable( nDIAPosObjetIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObjetPlanifieIdx_ ), GetVariable( nDIAOidObjetPlanifieIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_GEN_RealiserPostesTir::Initialize( MIL_PionMission_ABC& mis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserPostesTir::Terminate()
 {
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObjetPlanifieIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

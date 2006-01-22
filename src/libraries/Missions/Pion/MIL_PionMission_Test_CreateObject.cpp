@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_Test_CreateObject::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Pion_Test_CreateObject& asnMission = *asnMsg.mission.u.mission_pion_test_create_object;
-    if( !NET_ASN_Tools::CopyLocation( asnMission.forme, forme_, GetVariable( nDIAFormeIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyLocation( asnMission.forme, GetVariable( nDIAFormeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type, GetVariable( nDIATypeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_Test_CreateObject::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetLocation( forme_, GetVariable( nDIAFormeIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeIdx_ ) );
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIAParamIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,7 +106,7 @@ bool MIL_PionMission_Test_CreateObject::Initialize( MIL_PionMission_ABC& mission
         return false;
     MIL_PionMission_Test_CreateObject& mission = static_cast< MIL_PionMission_Test_CreateObject& >( missionTmp );
 
-    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAFormeIdx_ ), forme_, GetVariable( nDIAFormeIdx_ ) );
+    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAFormeIdx_ ), GetVariable( nDIAFormeIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeIdx_ ), GetVariable( nDIATypeIdx_ ) );
     NET_ASN_Tools::CopyNumeric( mission.GetVariable( nDIAParamIdx_ ), GetVariable( nDIAParamIdx_ ) );
 
@@ -122,8 +119,7 @@ bool MIL_PionMission_Test_CreateObject::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_CreateObject::Terminate()
 {
-    NET_ASN_Tools::ResetNumeric( GetVariable( nDIAParamIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

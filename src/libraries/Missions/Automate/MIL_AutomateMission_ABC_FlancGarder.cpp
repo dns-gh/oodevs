@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_FlancGarder::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_FlancGarder::Terminate()
 {
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIACompagnieIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

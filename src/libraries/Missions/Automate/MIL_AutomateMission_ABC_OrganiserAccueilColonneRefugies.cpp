@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies& asnMission = *asnMsg.mission.u.mission_automate_abc_organiser_accueil_colonne_refugies;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_installation, zoneInstallation_, GetVariable( nDIAZoneInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_installation, GetVariable( nDIAZoneInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zoneInstallation_, GetVariable( nDIAZoneInstallationIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

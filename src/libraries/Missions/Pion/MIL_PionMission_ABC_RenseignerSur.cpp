@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_RenseignerSur::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_RenseignerSur& asnMission = *asnMsg.mission.u.mission_pion_abc_renseigner_sur;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_renseigner, pointARenseigner_, GetVariable( nDIAPointARenseignerIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_a_renseigner, GetVariable( nDIAPointARenseignerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_RenseignerSur::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointARenseigner_, GetVariable( nDIAPointARenseignerIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_ABC_RenseignerSur::Initialize( MIL_PionMission_ABC& mission
         return false;
     MIL_PionMission_ABC_RenseignerSur& mission = static_cast< MIL_PionMission_ABC_RenseignerSur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointARenseignerIdx_ ), pointARenseigner_, GetVariable( nDIAPointARenseignerIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointARenseignerIdx_ ), GetVariable( nDIAPointARenseignerIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_RenseignerSur::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointARenseigner_, GetVariable( nDIAPointARenseignerIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

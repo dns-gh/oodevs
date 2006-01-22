@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_ActiverObstacle::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_ActiverObstacle::Initialize( MIL_PionMission_ABC& missi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ActiverObstacle::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_InterdireFranchissementPopulation::Init
         return nCode;        
 
     const ASN1T_Mission_Pion_InterdireFranchissementPopulation& asnMission = *asnMsg.mission.u.mission_pion_interdire_franchissement_population;
-    if( !NET_ASN_Tools::CopyLocation( asnMission.ligne, ligne_, GetVariable( nDIALigneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyLocation( asnMission.ligne, GetVariable( nDIALigneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_InterdireFranchissementPopulation::Initialize( const MIL_Au
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetLocation( ligne_, GetVariable( nDIALigneIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_InterdireFranchissementPopulation::Initialize( MIL_PionMiss
         return false;
     MIL_PionMission_InterdireFranchissementPopulation& mission = static_cast< MIL_PionMission_InterdireFranchissementPopulation& >( missionTmp );
 
-    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIALigneIdx_ ), ligne_, GetVariable( nDIALigneIdx_ ) );
+    NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIALigneIdx_ ), GetVariable( nDIALigneIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_InterdireFranchissementPopulation::Initialize( MIL_PionMiss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_InterdireFranchissementPopulation::Terminate()
 {
-    NET_ASN_Tools::ResetLocation( ligne_, GetVariable( nDIALigneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -47,11 +47,6 @@ private:
     static int nDIAPointRepliIdx_;
     static int nDIAPopulationCibleIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-    MT_Vector2D pointRepli_;
-
 };
 
 

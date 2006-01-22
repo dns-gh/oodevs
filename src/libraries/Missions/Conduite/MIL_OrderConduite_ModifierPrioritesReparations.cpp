@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_ModifierPrioritesReparations::Initial
         return nCode; 
 
     const ASN1T_OrderConduite_ModifierPrioritesReparations& asnMission = *asnMsg.u.order_conduite_modifier_priorites_reparations;
-    if( !NET_ASN_Tools::CopyMaintenancePriorities( asnMission, orderConduiteModifierPrioritesReparations_, GetVariable( nDIAOrderConduiteModifierPrioritesReparationsIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyMaintenancePriorities( asnMission, GetVariable( nDIAOrderConduiteModifierPrioritesReparationsIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -82,6 +82,6 @@ void MIL_OrderConduite_ModifierPrioritesReparations::Initialize( DIA_Parameters&
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyMaintenancePriorities( diaParams[nCurDIAParamIdx++], orderConduiteModifierPrioritesReparations_, GetVariable( nDIAOrderConduiteModifierPrioritesReparationsIdx_));
+    NET_ASN_Tools::CopyMaintenancePriorities( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduiteModifierPrioritesReparationsIdx_));
 
 }

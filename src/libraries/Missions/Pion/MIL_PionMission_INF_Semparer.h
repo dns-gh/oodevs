@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAObjectifIdx_;
 
-
-private:
-    MT_Vector2D objectif_;
-
 };
 
 

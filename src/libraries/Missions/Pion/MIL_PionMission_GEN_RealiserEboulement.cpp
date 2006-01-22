@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserEboulement::Initialize( con
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RealiserEboulement& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_eboulement;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_GEN_RealiserEboulement::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPreliminaireIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,7 +106,7 @@ bool MIL_PionMission_GEN_RealiserEboulement::Initialize( MIL_PionMission_ABC& mi
         return false;
     MIL_PionMission_GEN_RealiserEboulement& mission = static_cast< MIL_PionMission_GEN_RealiserEboulement& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPreliminaireIdx_ ), GetVariable( nDIAPreliminaireIdx_ ) );
 
@@ -122,8 +119,7 @@ bool MIL_PionMission_GEN_RealiserEboulement::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserEboulement::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPreliminaireIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

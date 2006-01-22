@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_ComblerFosseAC::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_ComblerFosseAC::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ComblerFosseAC::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

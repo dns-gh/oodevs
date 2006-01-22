@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserTravauxProtection::Initiali
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_travaux_protection;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_objet, posObjet_, GetVariable( nDIAPosObjetIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_objet, GetVariable( nDIAPosObjetIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_objet_planifie, GetVariable( nDIAOidObjetPlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( posObjet_, GetVariable( nDIAPosObjetIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObjetPlanifieIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( MIL_PionMission_
         return false;
     MIL_PionMission_GEN_RealiserTravauxProtection& mission = static_cast< MIL_PionMission_GEN_RealiserTravauxProtection& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObjetIdx_ ), posObjet_, GetVariable( nDIAPosObjetIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObjetIdx_ ), GetVariable( nDIAPosObjetIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObjetPlanifieIdx_ ), GetVariable( nDIAOidObjetPlanifieIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( MIL_PionMission_
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RealiserTravauxProtection::Terminate()
 {
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObjetPlanifieIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

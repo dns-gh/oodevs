@@ -84,8 +84,7 @@ bool MIL_PionMission_ABC_EscorterUnite::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAEscorterIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_ABC_EscorterUnite::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_EscorterUnite::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAUniteAEscorterIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

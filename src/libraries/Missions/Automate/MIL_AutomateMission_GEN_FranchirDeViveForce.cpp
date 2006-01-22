@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_FranchirDeViveForce::Initialize
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_FranchirDeViveForce::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAObstaclesAFranchirIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

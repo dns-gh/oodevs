@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROEM_Appuyer::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Automate_RENS_ROEM_Appuyer& asnMission = *asnMsg.mission.u.mission_automate_rens_roem_appuyer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROEM_Appuyer::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROEM_Appuyer::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

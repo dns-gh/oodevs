@@ -46,10 +46,6 @@ private:
     static int nDIASecteurIdx_;
     static int nDIAPreparerTerrainIdx_;
 
-
-private:
-    TER_Localisation secteur_;
-
 };
 
 

@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const AS
         return nCode;        
 
     const ASN1T_Mission_Pion_RENS_ROEM_Appuyer& asnMission = *asnMsg.mission.u.mission_pion_rens_roem_appuyer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_deploiement, GetVariable( nDIAPositionDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,9 +88,7 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,8 +102,8 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( MIL_PionMission_ABC& mission
         return false;
     MIL_PionMission_RENS_ROEM_Appuyer& mission = static_cast< MIL_PionMission_RENS_ROEM_Appuyer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), positionDeploiement_, GetVariable( nDIAPositionDeploiementIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionDeploiementIdx_ ), GetVariable( nDIAPositionDeploiementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
 
     return true;
 }                                                                    
@@ -116,8 +114,7 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROEM_Appuyer::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

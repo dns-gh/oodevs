@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Reduire::Initialize( const ASN1
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_Reduire& asnMission = *asnMsg.mission.u.mission_automate_inf_reduire;
-    if( !NET_ASN_Tools::CopyPointList( asnMission.points_resistance, pointsResistance_, GetVariable( nDIAPointsResistanceIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPointList( asnMission.points_resistance, GetVariable( nDIAPointsResistanceIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Reduire::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Reduire::Terminate()
 {
-    NET_ASN_Tools::ResetPointList( pointsResistance_, GetVariable( nDIAPointsResistanceIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

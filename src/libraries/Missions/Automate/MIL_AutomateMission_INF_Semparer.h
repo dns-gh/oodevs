@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation objectif_;
-
-private:
     static int nDIAObjectifIdx_;
 
 };

@@ -51,7 +51,7 @@ public:
     std::string HumanName() const;
     std::string DIAIndexName() const;
 
-    std::string Declaration              () const;
+//    std::string Declaration              () const;
     std::string DIAIndexDeclaration      () const;
     std::string DIAInitialisationCode    () const;
     std::string ASNInitialisationCode    () const;

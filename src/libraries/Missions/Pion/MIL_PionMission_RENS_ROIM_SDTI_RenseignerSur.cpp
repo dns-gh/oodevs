@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Initializ
         return nCode;        
 
     const ASN1T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur& asnMission = *asnMsg.mission.u.mission_pion_rens_roim_sdti_renseigner_sur;
-    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPath( asnMission.ficelle_de_vole, GetVariable( nDIAFicelleDeVoleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Initialize( const MIL_Automat
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPath( ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Initialize( MIL_PionMission_A
         return false;
     MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur& mission = static_cast< MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAFicelleDeVoleIdx_ ), ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) );
+    NET_ASN_Tools::CopyPath( mission.GetVariable( nDIAFicelleDeVoleIdx_ ), GetVariable( nDIAFicelleDeVoleIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Initialize( MIL_PionMission_A
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Terminate()
 {
-    NET_ASN_Tools::ResetPath( ficelleDeVole_, GetVariable( nDIAFicelleDeVoleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

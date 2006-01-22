@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_DegagerRues::Initialize( const MIL_AutomateMission_ABC&
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_DegagerRues::Initialize( MIL_PionMission_ABC& missionTm
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DegagerRues::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIAObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

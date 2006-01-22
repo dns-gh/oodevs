@@ -74,9 +74,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_DetruireEmbuscade::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_DetruireEmbuscade& asnMission = *asnMsg.mission.u.mission_pion_inf_detruire_embuscade;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_embuscade, positionEmbuscade_, GetVariable( nDIAPositionEmbuscadeIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_embuscade, GetVariable( nDIAPositionEmbuscadeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_regroupement, positionRegroupement_, GetVariable( nDIAPositionRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_regroupement, GetVariable( nDIAPositionRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgentKnowledge( asnMission.ennemi, GetVariable( nDIAEnnemiIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -96,11 +96,7 @@ bool MIL_PionMission_INF_DetruireEmbuscade::Initialize( const MIL_AutomateMissio
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionEmbuscade_, GetVariable( nDIAPositionEmbuscadeIdx_ ) );
-    NET_ASN_Tools::ResetPoint( positionRegroupement_, GetVariable( nDIAPositionRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAEnnemiIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANatureObstacleIdx_ ) );
-
+                
     return true;    
 }
 
@@ -114,8 +110,8 @@ bool MIL_PionMission_INF_DetruireEmbuscade::Initialize( MIL_PionMission_ABC& mis
         return false;
     MIL_PionMission_INF_DetruireEmbuscade& mission = static_cast< MIL_PionMission_INF_DetruireEmbuscade& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionEmbuscadeIdx_ ), positionEmbuscade_, GetVariable( nDIAPositionEmbuscadeIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionRegroupementIdx_ ), positionRegroupement_, GetVariable( nDIAPositionRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionEmbuscadeIdx_ ), GetVariable( nDIAPositionEmbuscadeIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionRegroupementIdx_ ), GetVariable( nDIAPositionRegroupementIdx_ ) );
     NET_ASN_Tools::CopyAgentKnowledge( mission.GetVariable( nDIAEnnemiIdx_ ), GetVariable( nDIAEnnemiIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIANatureObstacleIdx_ ), GetVariable( nDIANatureObstacleIdx_ ) );
 
@@ -128,8 +124,7 @@ bool MIL_PionMission_INF_DetruireEmbuscade::Initialize( MIL_PionMission_ABC& mis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_DetruireEmbuscade::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANatureObstacleIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

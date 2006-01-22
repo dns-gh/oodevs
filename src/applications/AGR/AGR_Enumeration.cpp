@@ -31,7 +31,7 @@
 // Created: AGN 2004-04-26
 // -----------------------------------------------------------------------------
 AGR_Enumeration::AGR_Enumeration( const std::string& strName )
-    : AGR_Type_ABC( strName, "Enumeration", "", "id", "uint", false )
+    : AGR_Type_ABC( strName, "Enumeration", "id", "uint", false )
     , strName_( strName )
 {
     

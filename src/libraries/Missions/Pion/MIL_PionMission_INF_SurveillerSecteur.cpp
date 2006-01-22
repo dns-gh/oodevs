@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_SurveillerSecteur::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_SurveillerSecteur& asnMission = *asnMsg.mission.u.mission_pion_inf_surveiller_secteur;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position_installation, GetVariable( nDIAPositionInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_INF_SurveillerSecteur::Initialize( const MIL_AutomateMissio
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_INF_SurveillerSecteur::Initialize( MIL_PionMission_ABC& mis
         return false;
     MIL_PionMission_INF_SurveillerSecteur& mission = static_cast< MIL_PionMission_INF_SurveillerSecteur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionInstallationIdx_ ), GetVariable( nDIAPositionInstallationIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_INF_SurveillerSecteur::Initialize( MIL_PionMission_ABC& mis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_SurveillerSecteur::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

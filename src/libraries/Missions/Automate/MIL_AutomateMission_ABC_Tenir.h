@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation positionInstallation_;
-
-private:
     static int nDIAPositionInstallationIdx_;
 
 };

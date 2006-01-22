@@ -250,7 +250,7 @@ void DEC_AgentFunctions::GetMajorOperationalState( DIA_Call_ABC& call, const MIL
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::GetPosition( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)&callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), &DEC_Tools::GetTypePoint() );
+    call.GetResult().SetValue( (void*)&callerAgent.GetRole< PHY_RolePion_Location >().GetPosition(), &DEC_Tools::GetTypePoint(), 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ void DEC_AgentFunctions::GetPosition( DIA_Call_ABC& call, const MIL_AgentPion& c
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::GetDirection( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( (void*)&callerAgent.GetRole< PHY_RolePion_Location >().GetDirection(), &DEC_Tools::GetTypeDirection() );
+    call.GetResult().SetValue( (void*)&callerAgent.GetRole< PHY_RolePion_Location >().GetDirection(), &DEC_Tools::GetTypeDirection(), 1 );
 }
 
 // -----------------------------------------------------------------------------

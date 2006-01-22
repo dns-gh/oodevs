@@ -46,10 +46,6 @@ private:
     static int nDIAZoneIdx_;
     static int nDIAModeDeploiementIdx_;
 
-
-private:
-    TER_Localisation zone_;
-
 };
 
 

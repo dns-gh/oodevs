@@ -46,10 +46,6 @@ private:
     static int nDIAPointCouvertureIdx_;
     static int nDIACibleIdx_;
 
-
-private:
-    MT_Vector2D pointCouverture_;
-
 };
 
 

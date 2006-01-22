@@ -72,9 +72,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Harceler::Initialize( const ASN1T_M
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_Harceler& asnMission = *asnMsg.mission.u.mission_pion_inf_harceler;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.secteur, secteur_, GetVariable( nDIASecteurIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.secteur, GetVariable( nDIASecteurIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.nature_objectif, GetVariable( nDIANatureObjectifIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_INF_Harceler::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( secteur_, GetVariable( nDIASecteurIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANatureObjectifIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,8 +106,8 @@ bool MIL_PionMission_INF_Harceler::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_INF_Harceler& mission = static_cast< MIL_PionMission_INF_Harceler& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASecteurIdx_ ), secteur_, GetVariable( nDIASecteurIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASecteurIdx_ ), GetVariable( nDIASecteurIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIANatureObjectifIdx_ ), GetVariable( nDIANatureObjectifIdx_ ) );
 
     return true;
@@ -122,8 +119,7 @@ bool MIL_PionMission_INF_Harceler::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Harceler::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIANatureObjectifIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -31,9 +31,9 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_R
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
-    SetValue      ( nDIAPointIdx_    , (void*)&vPos_ );  
-    SetValue      ( nDIAClsIdx_      , eAvantPoint   );     
-    SetObjectValue( nDIADestIdx_     , &destPoint_   );
+    GetVariable( nDIAPointIdx_ ).SetValue( (void*)&vPos_, &DEC_Tools::GetTypePoint(), 1 );
+    SetValue      ( nDIAClsIdx_      , eAvantPoint );     
+    SetObjectValue( nDIADestIdx_     , &destPoint_ );
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );  //$$$$$ Gestion mémoire
@@ -51,7 +51,6 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
         pSentToDiaAgent_->GetBehaviorPart ().RemoveAllReferencesOf( *this, pSentToDiaAgent_->GetContext() );    
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front::InitializeDIA

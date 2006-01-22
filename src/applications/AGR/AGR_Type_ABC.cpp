@@ -28,15 +28,15 @@
 // Name: AGR_Type_ABC constructor
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
-AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strCPPType, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning )
+AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning, bool bRequiresReset )
     : strAsnType_         ( strAsnType )
     , strFunctionSuffix_  ( strFunctionSuffix )
-    , strCPPType_         ( strCPPType )
     , strDIAType_         ( strDIAType )
     , strTesterType_      ( strTesterType )
     , strHumanName_       ( strDIAType )
-    , bExplicitMember_    ( !strCPPType_.empty() )
+    //, bExplicitMember_    ( !strCPPType_.empty() )
     , bRequiresCleaning_  ( bRequiresCleaning )
+    , bRequiresReset_     ( bRequiresReset )
 {
     if( strHumanName_.substr( 0, 2 ) == "T_" )
         strHumanName_.erase( 0, 2 );
@@ -82,13 +82,13 @@ std::string AGR_Type_ABC::DIAInitialisationCode( const AGR_Member& member ) cons
 // Name: AGR_Type_ABC::Declaration
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
-std::string AGR_Type_ABC::Declaration( const AGR_Member& member ) const
-{
-    if( bExplicitMember_ )
-        return "    " + strCPPType_ + " " + member.CPPName() + ";\n";
-    else
-        return "";
-}
+//std::string AGR_Type_ABC::Declaration( const AGR_Member& member ) const
+//{
+//    if( bExplicitMember_ )
+//        return "    " + strCPPType_ + " " + member.CPPName() + ";\n";
+//    else
+//        return "";
+//}
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Type_ABC::ASNInitialisationCode
@@ -99,7 +99,7 @@ std::string AGR_Type_ABC::ASNInitialisationCode( const AGR_Member& member ) cons
     std::string strResult( "    if( !" );
     strResult += "NET_ASN_Tools::Copy" + strFunctionSuffix_ + "( "
                + member.ASNPrefixedName()
-               + ( bExplicitMember_ ? ", " + member.CPPName() : "" )
+//               + ( bExplicitMember_ ? ", " + member.CPPName() : "" )
                + ", GetVariable( " +  member.DIAIndexName() + " ) )"
                + " )\n        return EnumOrderErrorCode::error_invalid_mission_parameters;\n";
     return strResult;
@@ -113,7 +113,7 @@ std::string AGR_Type_ABC::DIAParametersInitialisationCode( const AGR_Member& mem
 {
     return "    NET_ASN_Tools::Copy" + strFunctionSuffix_
            + "( diaParams[nCurDIAParamIdx++]"
-           + ( bExplicitMember_ ? ", " + member.CPPName() : "" )
+//           + ( bExplicitMember_ ? ", " + member.CPPName() : "" )
            + ", GetVariable( " + member.DIAIndexName() + ")"
            + ");\n";
 }
@@ -136,7 +136,7 @@ std::string AGR_Type_ABC::MissionInitialisationCode( const AGR_Member& member ) 
     std::string strResult( "    " );
     strResult +="NET_ASN_Tools::Copy" + strFunctionSuffix_ 
               + "( mission.GetVariable( " + member.DIAIndexName() + " )"
-              + ( bExplicitMember_ ? ", " + member.CPPName() : "" )
+//              + ( bExplicitMember_ ? ", " + member.CPPName() : "" )
               + ", GetVariable( " + member.DIAIndexName() + " ) );\n";
     return strResult;    
 }
@@ -158,8 +158,10 @@ std::string AGR_Type_ABC::Mos2InitialisationCode( const AGR_Member& member ) con
 std::string AGR_Type_ABC::ResetCode( const AGR_Member& member ) const
 {
     std::string strResult( "    " );
+
+    if( bRequiresReset_ )
     strResult += "NET_ASN_Tools::Reset" + strFunctionSuffix_
-            + "( " + ( bExplicitMember_ ? member.CPPName() + ", " : "" )
+                  + "( " /*+ ( bExplicitMember_ ? member.CPPName() + ", " : "" )*/
             + "GetVariable( " + member.DIAIndexName() + " ) );\n";
     return strResult;
 }

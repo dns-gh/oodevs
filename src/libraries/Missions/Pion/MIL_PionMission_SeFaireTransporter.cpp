@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_SeFaireTransporter::Initialize( const A
         return nCode;        
 
     const ASN1T_Mission_Pion_SeFaireTransporter& asnMission = *asnMsg.mission.u.mission_pion_se_faire_transporter;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_embarquement, GetVariable( nDIAPointEmbarquementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_SeFaireTransporter::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_SeFaireTransporter::Initialize( MIL_PionMission_ABC& missio
         return false;
     MIL_PionMission_SeFaireTransporter& mission = static_cast< MIL_PionMission_SeFaireTransporter& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointEmbarquementIdx_ ), pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointEmbarquementIdx_ ), GetVariable( nDIAPointEmbarquementIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_SeFaireTransporter::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_SeFaireTransporter::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointEmbarquement_, GetVariable( nDIAPointEmbarquementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

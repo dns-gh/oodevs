@@ -46,9 +46,9 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 {
     assert( nType_ != eTypePointPath );
 
-    SetValue( nDIAPointIdx_ , (void*)&vPos_ );  
-    SetValue( nDIAClsIdx_   , ePoint        );     
-    SetValue( nDIATypeIdx_  , nTypePoint    );  
+    GetVariable( nDIAPointIdx_ ).SetValue( (void*)&vPos_, &DEC_Tools::GetTypePoint(), 1 ); 
+    SetValue( nDIAClsIdx_   , ePoint     );     
+    SetValue( nDIATypeIdx_  , nTypePoint );  
 
     diaParameters_.SetOwnerShip( true );
     diaParameters_.AddParam( new DIA_Variable_Object() );

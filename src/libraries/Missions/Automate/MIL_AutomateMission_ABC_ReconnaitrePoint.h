@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation pointAReconnaitre_;
-
-private:
     static int nDIAPointAReconnaitreIdx_;
 
 };

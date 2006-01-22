@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ReconnaitrePoint::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_ReconnaitrePoint& asnMission = *asnMsg.mission.u.mission_automate_abc_reconnaitre_point;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.point_a_reconnaitre, pointAReconnaitre_, GetVariable( nDIAPointAReconnaitreIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.point_a_reconnaitre, GetVariable( nDIAPointAReconnaitreIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ReconnaitrePoint::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_ReconnaitrePoint::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( pointAReconnaitre_, GetVariable( nDIAPointAReconnaitreIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

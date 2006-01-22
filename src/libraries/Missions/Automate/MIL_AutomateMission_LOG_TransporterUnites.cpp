@@ -74,9 +74,9 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterUnites::Initialize( 
     const ASN1T_Mission_Automate_LOG_TransporterUnites& asnMission = *asnMsg.mission.u.mission_automate_log_transporter_unites;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_transporter, GetVariable( nDIAUnitesATransporterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_rendez_vous, pointRendezVous_, GetVariable( nDIAPointRendezVousIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_rendez_vous, GetVariable( nDIAPointRendezVousIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_destination, pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_destination, GetVariable( nDIAPointDestinationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,8 +88,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_TransporterUnites::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_TransporterUnites::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPositionSiteDecontaminationIdx_;
 
-
-private:
-    MT_Vector2D positionSiteDecontamination_;
-
 };
 
 

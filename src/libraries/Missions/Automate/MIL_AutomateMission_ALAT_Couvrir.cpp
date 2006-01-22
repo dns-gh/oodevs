@@ -82,7 +82,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Couvrir::Initialize( const ASN
     const ASN1T_Mission_Automate_ALAT_Couvrir& asnMission = *asnMsg.mission.u.mission_automate_alat_couvrir;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_appuyer, GetVariable( nDIAUnitesAAppuyerIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -104,8 +104,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Couvrir::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Couvrir::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

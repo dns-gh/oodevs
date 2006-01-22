@@ -76,7 +76,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Reconnaitre::Initialize( const
         return nCode;        
 
     const ASN1T_Mission_Automate_ALAT_Reconnaitre& asnMission = *asnMsg.mission.u.mission_automate_alat_reconnaitre;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pointRegroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pointRegroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -96,8 +96,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Reconnaitre::Initialize( const
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Reconnaitre::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

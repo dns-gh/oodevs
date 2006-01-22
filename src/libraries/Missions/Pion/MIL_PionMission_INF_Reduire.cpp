@@ -84,8 +84,7 @@ bool MIL_PionMission_INF_Reduire::Initialize( const MIL_AutomateMission_ABC& par
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteAReduireIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_INF_Reduire::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Reduire::Terminate()
 {
-    NET_ASN_Tools::ResetAgentKnowledge( GetVariable( nDIAUniteAReduireIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

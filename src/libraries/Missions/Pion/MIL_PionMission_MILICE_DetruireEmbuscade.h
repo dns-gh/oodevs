@@ -47,11 +47,6 @@ private:
     static int nDIAPositionRegroupementIdx_;
     static int nDIANatureObstacleIdx_;
 
-
-private:
-    MT_Vector2D positionEmbuscade_;
-    MT_Vector2D positionRegroupement_;
-
 };
 
 

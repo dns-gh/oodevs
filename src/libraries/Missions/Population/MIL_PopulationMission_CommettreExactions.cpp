@@ -67,7 +67,7 @@ ASN1T_EnumOrderErrorCode MIL_PopulationMission_CommettreExactions::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Population_CommettreExactions& asnMission = *asnMsg.mission.u.mission_population_commettre_exactions;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,7 +84,7 @@ bool MIL_PopulationMission_CommettreExactions::Initialize( MIL_PopulationMission
         return false;
     MIL_PopulationMission_CommettreExactions& mission = static_cast< MIL_PopulationMission_CommettreExactions& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -95,8 +95,7 @@ bool MIL_PopulationMission_CommettreExactions::Initialize( MIL_PopulationMission
 //-----------------------------------------------------------------------------
 void MIL_PopulationMission_CommettreExactions::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PopulationMission_ABC::Terminate();    
 }
 

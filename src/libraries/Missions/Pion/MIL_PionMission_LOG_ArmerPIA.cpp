@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ArmerPIA::Initialize( const ASN1T_M
         return nCode;        
 
     const ASN1T_Mission_Pion_LOG_ArmerPIA& asnMission = *asnMsg.mission.u.mission_pion_log_armer_pia;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point, point_, GetVariable( nDIAPointIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point, GetVariable( nDIAPointIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_LOG_ArmerPIA::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( point_, GetVariable( nDIAPointIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_LOG_ArmerPIA::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_LOG_ArmerPIA& mission = static_cast< MIL_PionMission_LOG_ArmerPIA& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), point_, GetVariable( nDIAPointIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), GetVariable( nDIAPointIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_LOG_ArmerPIA::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ArmerPIA::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( point_, GetVariable( nDIAPointIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

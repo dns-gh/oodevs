@@ -67,7 +67,7 @@ ASN1T_EnumOrderErrorCode MIL_PopulationMission_FaireMouvement::Initialize( const
         return nCode;        
 
     const ASN1T_Mission_Population_FaireMouvement& asnMission = *asnMsg.mission.u.mission_population_faire_mouvement;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.destination, destination_, GetVariable( nDIADestinationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.destination, GetVariable( nDIADestinationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,7 +84,7 @@ bool MIL_PopulationMission_FaireMouvement::Initialize( MIL_PopulationMission_ABC
         return false;
     MIL_PopulationMission_FaireMouvement& mission = static_cast< MIL_PopulationMission_FaireMouvement& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIADestinationIdx_ ), destination_, GetVariable( nDIADestinationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIADestinationIdx_ ), GetVariable( nDIADestinationIdx_ ) );
 
     return true;
 }                                                                    
@@ -95,8 +95,7 @@ bool MIL_PopulationMission_FaireMouvement::Initialize( MIL_PopulationMission_ABC
 //-----------------------------------------------------------------------------
 void MIL_PopulationMission_FaireMouvement::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( destination_, GetVariable( nDIADestinationIdx_ ) );
-
+    
     MIL_PopulationMission_ABC::Terminate();    
 }
 

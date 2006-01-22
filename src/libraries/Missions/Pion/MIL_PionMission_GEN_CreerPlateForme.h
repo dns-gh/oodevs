@@ -46,10 +46,6 @@ private:
     static int nDIAPosObstacleIdx_;
     static int nDIAOidObstaclePlanifieIdx_;
 
-
-private:
-    MT_Vector2D posObstacle_;
-
 };
 
 

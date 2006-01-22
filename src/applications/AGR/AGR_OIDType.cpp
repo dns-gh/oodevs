@@ -29,7 +29,7 @@
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
 AGR_OIDType::AGR_OIDType()
-    : AGR_Type_ABC( "ScipioBase:OID", "ID", "", "T_ID", "uint", false )
+    : AGR_Type_ABC( "ScipioBase:OID", "ID", "T_ID", "uint", false )
 {
     //NOTHING
 }

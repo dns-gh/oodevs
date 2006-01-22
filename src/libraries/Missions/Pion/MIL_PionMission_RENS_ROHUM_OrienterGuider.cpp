@@ -84,8 +84,7 @@ bool MIL_PionMission_RENS_ROHUM_OrienterGuider::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAAmiIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_RENS_ROHUM_OrienterGuider::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROHUM_OrienterGuider::Terminate()
 {
-    NET_ASN_Tools::ResetAgent( GetVariable( nDIAAmiIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

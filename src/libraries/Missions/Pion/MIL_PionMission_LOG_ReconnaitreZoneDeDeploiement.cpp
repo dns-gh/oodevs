@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initi
         return nCode;        
 
     const ASN1T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement& asnMission = *asnMsg.mission.u.mission_pion_log_reconnaitre_zone_de_deploiement;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initialize( MIL_PionMissi
         return false;
     MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement& mission = static_cast< MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), zone_, GetVariable( nDIAZoneIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

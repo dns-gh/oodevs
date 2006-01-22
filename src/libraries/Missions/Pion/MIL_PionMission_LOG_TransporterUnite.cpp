@@ -74,9 +74,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_TransporterUnite::Initialize( const
     const ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg.mission.u.mission_pion_log_transporter_unite;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_transporter, GetVariable( nDIAUnitesATransporterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_rendez_vous, pointRendezVous_, GetVariable( nDIAPointRendezVousIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_rendez_vous, GetVariable( nDIAPointRendezVousIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_destination, pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_destination, GetVariable( nDIAPointDestinationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -92,10 +92,7 @@ bool MIL_PionMission_LOG_TransporterUnite::Initialize( const MIL_AutomateMission
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesATransporterIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRendezVous_, GetVariable( nDIAPointRendezVousIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) );
-
+            
     return true;    
 }
 
@@ -110,8 +107,8 @@ bool MIL_PionMission_LOG_TransporterUnite::Initialize( MIL_PionMission_ABC& miss
     MIL_PionMission_LOG_TransporterUnite& mission = static_cast< MIL_PionMission_LOG_TransporterUnite& >( missionTmp );
 
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesATransporterIdx_ ), GetVariable( nDIAUnitesATransporterIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRendezVousIdx_ ), pointRendezVous_, GetVariable( nDIAPointRendezVousIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDestinationIdx_ ), pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRendezVousIdx_ ), GetVariable( nDIAPointRendezVousIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDestinationIdx_ ), GetVariable( nDIAPointDestinationIdx_ ) );
 
     return true;
 }                                                                    
@@ -122,8 +119,7 @@ bool MIL_PionMission_LOG_TransporterUnite::Initialize( MIL_PionMission_ABC& miss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_TransporterUnite::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointDestination_, GetVariable( nDIAPointDestinationIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

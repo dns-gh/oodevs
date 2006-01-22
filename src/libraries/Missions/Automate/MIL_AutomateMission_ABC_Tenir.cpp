@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Tenir::Initialize( const ASN1T_
         return nCode;        
 
     const ASN1T_Mission_Automate_ABC_Tenir& asnMission = *asnMsg.mission.u.mission_automate_abc_tenir;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.position_installation, GetVariable( nDIAPositionInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Tenir::Initialize( const ASN1T_
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Tenir::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

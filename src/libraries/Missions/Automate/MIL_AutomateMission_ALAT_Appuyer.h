@@ -41,11 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D pointRegroupement_;
-    MT_Vector2D pointDislocation_;
-    TER_Localisation zone_;
-
-private:
     static int nDIAUnitesAAppuyerIdx_;
     static int nDIAPointRegroupementIdx_;
     static int nDIACiblesPrioritairesIdx_;

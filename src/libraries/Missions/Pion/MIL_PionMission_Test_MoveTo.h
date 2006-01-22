@@ -50,12 +50,6 @@ private:
     static int nDIAVisionPointIdx_;
     static int nDIAVisionDirectionIdx_;
 
-
-private:
-    T_PointVector itineraire_;
-    MT_Vector2D visionPoint_;
-    MT_Vector2D visionDirection_;
-
 };
 
 

@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointRegroupementIdx_;
 
-
-private:
-    MT_Vector2D pointRegroupement_;
-
 };
 
 

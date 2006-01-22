@@ -84,8 +84,7 @@ bool MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_GEN_DeminerSiteFranchissement::Initialize( MIL_PionMission_
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DeminerSiteFranchissement::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

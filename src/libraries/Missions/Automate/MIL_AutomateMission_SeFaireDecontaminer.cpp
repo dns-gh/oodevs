@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireDecontaminer::Initialize( co
         return nCode;        
 
     const ASN1T_Mission_Automate_SeFaireDecontaminer& asnMission = *asnMsg.mission.u.mission_automate_se_faire_decontaminer;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_arrivee, zoneArrivee_, GetVariable( nDIAZoneArriveeIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_arrivee, GetVariable( nDIAZoneArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_decontamination, GetVariable( nDIASiteDecontaminationIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireDecontaminer::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_SeFaireDecontaminer::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

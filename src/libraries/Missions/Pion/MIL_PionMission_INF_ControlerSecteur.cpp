@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_ControlerSecteur::Initialize( const
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_ControlerSecteur& asnMission = *asnMsg.mission.u.mission_pion_inf_controler_secteur;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.secteur, secteur_, GetVariable( nDIASecteurIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.secteur, GetVariable( nDIASecteurIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyBool( asnMission.preparer_terrain, GetVariable( nDIAPreparerTerrainIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_INF_ControlerSecteur::Initialize( const MIL_AutomateMission
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( secteur_, GetVariable( nDIASecteurIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_INF_ControlerSecteur::Initialize( MIL_PionMission_ABC& miss
         return false;
     MIL_PionMission_INF_ControlerSecteur& mission = static_cast< MIL_PionMission_INF_ControlerSecteur& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASecteurIdx_ ), secteur_, GetVariable( nDIASecteurIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASecteurIdx_ ), GetVariable( nDIASecteurIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIAPreparerTerrainIdx_ ), GetVariable( nDIAPreparerTerrainIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_INF_ControlerSecteur::Initialize( MIL_PionMission_ABC& miss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_ControlerSecteur::Terminate()
 {
-    NET_ASN_Tools::ResetBool( GetVariable( nDIAPreparerTerrainIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -46,10 +46,6 @@ private:
     static int nDIAPointDeDeploiementIdx_;
     static int nDIAModeDeploiementIdx_;
 
-
-private:
-    MT_Vector2D pointDeDeploiement_;
-
 };
 
 

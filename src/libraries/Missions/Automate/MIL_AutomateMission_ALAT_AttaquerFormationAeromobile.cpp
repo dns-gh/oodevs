@@ -80,7 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::I
     const ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *asnMsg.mission.u.mission_automate_alat_attaquer_formation_aeromobile;
     if( !NET_ASN_Tools::CopyAgentKnowledgeList( asnMission.unites_a_attaquer, GetVariable( nDIAUnitesAAttaquerIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -100,8 +100,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::I
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

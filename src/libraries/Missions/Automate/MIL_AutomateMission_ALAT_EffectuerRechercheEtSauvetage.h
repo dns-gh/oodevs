@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D pointRegroupement_;
-
-private:
     static int nDIAUnitesASecourirIdx_;
     static int nDIAPointRegroupementIdx_;
     static int nDIAPlotsRavitaillementIdx_;

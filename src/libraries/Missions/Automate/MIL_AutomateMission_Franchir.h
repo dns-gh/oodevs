@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneArrivee_;
-
-private:
     static int nDIAPontFlottantIdx_;
     static int nDIAZoneArriveeIdx_;
 

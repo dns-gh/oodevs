@@ -41,11 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zone_;
-    MT_Vector2D pointRegroupement_;
-    MT_Vector2D pointLogistique_;
-
-private:
     static int nDIAZoneIdx_;
     static int nDIAPointRegroupementIdx_;
     static int nDIAPlotsRavitaillementIdx_;

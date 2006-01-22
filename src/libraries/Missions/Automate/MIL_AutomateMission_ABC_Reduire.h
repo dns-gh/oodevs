@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneResistance_;
-
-private:
     static int nDIAZoneResistanceIdx_;
 
 };

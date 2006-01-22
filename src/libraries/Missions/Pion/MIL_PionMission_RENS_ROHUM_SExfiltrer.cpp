@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_RENS_ROHUM_SExfiltrer::Initialize( cons
         return nCode;        
 
     const ASN1T_Mission_Pion_RENS_ROHUM_SExfiltrer& asnMission = *asnMsg.mission.u.mission_pion_rens_rohum_sexfiltrer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_de_regroupement, pointDeRegroupement_, GetVariable( nDIAPointDeRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_de_regroupement, GetVariable( nDIAPointDeRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_RENS_ROHUM_SExfiltrer::Initialize( const MIL_AutomateMissio
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointDeRegroupement_, GetVariable( nDIAPointDeRegroupementIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_RENS_ROHUM_SExfiltrer::Initialize( MIL_PionMission_ABC& mis
         return false;
     MIL_PionMission_RENS_ROHUM_SExfiltrer& mission = static_cast< MIL_PionMission_RENS_ROHUM_SExfiltrer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDeRegroupementIdx_ ), pointDeRegroupement_, GetVariable( nDIAPointDeRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDeRegroupementIdx_ ), GetVariable( nDIAPointDeRegroupementIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_RENS_ROHUM_SExfiltrer::Initialize( MIL_PionMission_ABC& mis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROHUM_SExfiltrer::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointDeRegroupement_, GetVariable( nDIAPointDeRegroupementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

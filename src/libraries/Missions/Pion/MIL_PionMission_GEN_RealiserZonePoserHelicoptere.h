@@ -46,10 +46,6 @@ private:
     static int nDIAZonePoserIdx_;
     static int nDIAOidObstaclePlanifieIdx_;
 
-
-private:
-    MT_Vector2D zonePoser_;
-
 };
 
 

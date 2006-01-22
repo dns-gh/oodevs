@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointAReconnaitreIdx_;
 
-
-private:
-    MT_Vector2D pointAReconnaitre_;
-
 };
 
 

@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_AcquerirObjectif::Initialize( const A
         return nCode; 
 
     const ASN1T_OrderConduite_AcquerirObjectif& asnMission = *asnMsg.u.order_conduite_acquerir_objectif;
-    if( !NET_ASN_Tools::CopyLocation( asnMission, orderConduiteAcquerirObjectif_, GetVariable( nDIAOrderConduiteAcquerirObjectifIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyLocation( asnMission, GetVariable( nDIAOrderConduiteAcquerirObjectifIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -82,6 +82,6 @@ void MIL_OrderConduite_AcquerirObjectif::Initialize( DIA_Parameters& diaParams, 
 {
     MIL_OrderConduite_ABC::Initialize( diaParams, nCurDIAParamIdx );
 
-    NET_ASN_Tools::CopyLocation( diaParams[nCurDIAParamIdx++], orderConduiteAcquerirObjectif_, GetVariable( nDIAOrderConduiteAcquerirObjectifIdx_));
+    NET_ASN_Tools::CopyLocation( diaParams[nCurDIAParamIdx++], GetVariable( nDIAOrderConduiteAcquerirObjectifIdx_));
 
 }

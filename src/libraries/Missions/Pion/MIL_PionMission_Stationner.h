@@ -45,10 +45,6 @@ public:
 private:
     static int nDIAPointAttenteIdx_;
 
-
-private:
-    MT_Vector2D pointAttente_;
-
 };
 
 

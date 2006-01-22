@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation zoneDeControle_;
-
-private:
     static int nDIAZoneDeControleIdx_;
 
 };

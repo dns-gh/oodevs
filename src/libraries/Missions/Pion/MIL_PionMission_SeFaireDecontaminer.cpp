@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_SeFaireDecontaminer::Initialize( const 
         return nCode;        
 
     const ASN1T_Mission_Pion_SeFaireDecontaminer& asnMission = *asnMsg.mission.u.mission_pion_se_faire_decontaminer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_arrivee, pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_arrivee, GetVariable( nDIAPointArriveeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_decontamination, GetVariable( nDIASiteDecontaminationIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_SeFaireDecontaminer::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_SeFaireDecontaminer::Initialize( MIL_PionMission_ABC& missi
         return false;
     MIL_PionMission_SeFaireDecontaminer& mission = static_cast< MIL_PionMission_SeFaireDecontaminer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointArriveeIdx_ ), pointArrivee_, GetVariable( nDIAPointArriveeIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointArriveeIdx_ ), GetVariable( nDIAPointArriveeIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledge( mission.GetVariable( nDIASiteDecontaminationIdx_ ), GetVariable( nDIASiteDecontaminationIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_SeFaireDecontaminer::Initialize( MIL_PionMission_ABC& missi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_SeFaireDecontaminer::Terminate()
 {
-    NET_ASN_Tools::ResetObjectKnowledge( GetVariable( nDIASiteDecontaminationIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

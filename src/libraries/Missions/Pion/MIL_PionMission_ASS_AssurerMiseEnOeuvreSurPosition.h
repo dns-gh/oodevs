@@ -46,10 +46,6 @@ private:
     static int nDIAPositionImplantationIdx_;
     static int nDIAPresenceContreBatterieIdx_;
 
-
-private:
-    MT_Vector2D positionImplantation_;
-
 };
 
 

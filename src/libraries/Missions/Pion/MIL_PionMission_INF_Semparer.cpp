@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_INF_Semparer::Initialize( const ASN1T_M
         return nCode;        
 
     const ASN1T_Mission_Pion_INF_Semparer& asnMission = *asnMsg.mission.u.mission_pion_inf_semparer;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.objectif, objectif_, GetVariable( nDIAObjectifIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.objectif, GetVariable( nDIAObjectifIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_INF_Semparer::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( objectif_, GetVariable( nDIAObjectifIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_INF_Semparer::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_INF_Semparer& mission = static_cast< MIL_PionMission_INF_Semparer& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAObjectifIdx_ ), objectif_, GetVariable( nDIAObjectifIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAObjectifIdx_ ), GetVariable( nDIAObjectifIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_INF_Semparer::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Semparer::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( objectif_, GetVariable( nDIAObjectifIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

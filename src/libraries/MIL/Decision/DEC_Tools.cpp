@@ -11,6 +11,7 @@
 
 #include "MIL_pch.h"
 #include "DEC_Tools.h"
+#include "Functions/DEC_FrontAndBackLinesComputer.h"
 
 const DIA_TypeDef* DEC_Tools::pTypePoint_                         = 0;
 const DIA_TypeDef* DEC_Tools::pTypeDirection_                     = 0;
@@ -274,4 +275,62 @@ bool DEC_Tools::CheckTypeListeDirection( const DIA_Variable_ABC& diaVariable )
         if ( !CheckTypeDirection( **it ) )
             return false;
     return true;
+}
+  
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::ManageDeletion
+// Created: NLD 2005-12-09
+// -----------------------------------------------------------------------------
+void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type& type )
+{
+    assert( pPtr );
+
+    if( type == *pTypePoint_ )
+        delete static_cast< MT_Vector2D* >( pPtr );
+    else if( type == *pTypeDirection_ )
+        delete static_cast< MT_Vector2D* >( pPtr );
+    else if( type == *pTypeItineraire_ )
+        ;// NOTHING
+    else if( type == *pTypeListePoints_ )
+        delete static_cast< T_PointVector* >( pPtr );
+    else if( type == *pTypeLocalisation_ )
+        delete static_cast< TER_Localisation* >( pPtr );
+    else if( type == *pTypeCalculLignesAvantArriere_ )
+        delete static_cast< DEC_FrontAndBackLinesComputer* >( pPtr );
+    else if( type == *pTypeAction_ )
+        ; // NOTHING
+    else if( type == *pTypeLima_ )
+        assert( false );
+    else if( type == *pTypeConnaissanceObjet_ )
+        ; // NOTHING
+    else if( type == *pTypeConnaissanceAgent_ )
+        ; // NOTHING
+    else if( type == *pTypeID_ )    
+        ; // NOTHING
+    else if( type == *pTypePion_ )
+        ; // NOTHING
+    else if( type == *pTypeAutomate_ )
+        ; // NOTHING
+    else if( type == *pTypeGenObjet_ )
+        assert( false );
+    else if( type == *pTypeMissionPion_ )
+        assert( false );
+    else if( type == *pTypePerceptionPoint_ )
+        ; // NOTHING
+    else if( type == *pTypePerceptionLocalisation_ )
+        ; // NOTHING
+    else if( type == *pTypePerceptionRadar_ )
+        ; // NOTHING
+    else if( type == *pTypePerceptionSurveillance_ )
+        ; // NOTHING
+    else if( type == *pTypePerceptionObjectsLocalisation_ )
+        ; // NOTHING
+    else if( type == *pTypeMaintenancePriorites_ )
+        ; // NOTHING
+    else if( type == *pTypeSantePriorites_ )
+        assert( false );
+    else if( type == *pTypePerceptionFlyingShell_ )
+        assert( false );
+    else
+        assert( false );
 }

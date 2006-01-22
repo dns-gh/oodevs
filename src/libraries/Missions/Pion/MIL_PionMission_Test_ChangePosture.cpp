@@ -84,8 +84,7 @@ bool MIL_PionMission_Test_ChangePosture::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPostureIdx_ ) );
-
+    
     return true;    
 }
 
@@ -110,8 +109,7 @@ bool MIL_PionMission_Test_ChangePosture::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_ChangePosture::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPostureIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

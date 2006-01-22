@@ -78,7 +78,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage::Ini
     const ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& asnMission = *asnMsg.mission.u.mission_pion_alat_effectuer_recherche_et_sauvetage;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_secourir, GetVariable( nDIAUnitesASecourirIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -100,12 +100,7 @@ bool MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage::Initialize( const MIL_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesASecourirIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
-    NET_ASN_Tools::ResetObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::ResetBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-
+                    
     return true;    
 }
 
@@ -120,7 +115,7 @@ bool MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage::Initialize( MIL_PionMis
     MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage& mission = static_cast< MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage& >( missionTmp );
 
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesASecourirIdx_ ), GetVariable( nDIAUnitesASecourirIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
     NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
@@ -134,8 +129,7 @@ bool MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage::Initialize( MIL_PionMis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAPorteeActionIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

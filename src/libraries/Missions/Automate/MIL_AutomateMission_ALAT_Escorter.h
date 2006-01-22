@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D pointRegroupement_;
-
-private:
     static int nDIAUnitesAEscorterIdx_;
     static int nDIACiblesPrioritairesIdx_;
     static int nDIAPointRegroupementIdx_;

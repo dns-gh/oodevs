@@ -42,9 +42,6 @@ public:
     //@}
 
 private:
-    MT_Vector2D orderConduitePionChangerDePosition_;
-
-private:
     static int nDIAOrderConduitePionChangerDePositionIdx_;
 
 };

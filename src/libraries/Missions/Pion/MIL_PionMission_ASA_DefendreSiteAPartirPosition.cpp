@@ -70,9 +70,9 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initia
         return nCode;        
 
     const ASN1T_Mission_Pion_ASA_DefendreSiteAPartirPosition& asnMission = *asnMsg.mission.u.mission_pion_asa_defendre_site_a_partir_position;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.site, site_, GetVariable( nDIASiteIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.site, GetVariable( nDIASiteIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_de_deploiement, pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_de_deploiement, GetVariable( nDIAPointDeDeploiementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -88,9 +88,7 @@ bool MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initialize( const MIL_Auto
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPolygon( site_, GetVariable( nDIASiteIdx_ ) );
-    NET_ASN_Tools::ResetPoint( pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,8 +102,8 @@ bool MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initialize( MIL_PionMissio
         return false;
     MIL_PionMission_ASA_DefendreSiteAPartirPosition& mission = static_cast< MIL_PionMission_ASA_DefendreSiteAPartirPosition& >( missionTmp );
 
-    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASiteIdx_ ), site_, GetVariable( nDIASiteIdx_ ) );
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDeDeploiementIdx_ ), pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) );
+    NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIASiteIdx_ ), GetVariable( nDIASiteIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointDeDeploiementIdx_ ), GetVariable( nDIAPointDeDeploiementIdx_ ) );
 
     return true;
 }                                                                    
@@ -116,8 +114,7 @@ bool MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initialize( MIL_PionMissio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_DefendreSiteAPartirPosition::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( pointDeDeploiement_, GetVariable( nDIAPointDeDeploiementIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerSurPosition::Initialize(
         return nCode;        
 
     const ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *asnMsg.mission.u.mission_automate_inf_appuyer_sur_position;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.position_installation, positionInstallation_, GetVariable( nDIAPositionInstallationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.position_installation, GetVariable( nDIAPositionInstallationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAutomate( asnMission.compagnie, GetVariable( nDIACompagnieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -84,8 +84,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerSurPosition::Initialize(
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AppuyerSurPosition::Terminate()
 {
-    NET_ASN_Tools::ResetAutomate( GetVariable( nDIACompagnieIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

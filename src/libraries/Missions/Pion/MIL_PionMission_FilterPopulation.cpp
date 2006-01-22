@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_FilterPopulation::Initialize( const ASN
         return nCode;        
 
     const ASN1T_Mission_Pion_FilterPopulation& asnMission = *asnMsg.mission.u.mission_pion_filter_population;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point, point_, GetVariable( nDIAPointIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point, GetVariable( nDIAPointIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -84,8 +84,7 @@ bool MIL_PionMission_FilterPopulation::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( point_, GetVariable( nDIAPointIdx_ ) );
-
+    
     return true;    
 }
 
@@ -99,7 +98,7 @@ bool MIL_PionMission_FilterPopulation::Initialize( MIL_PionMission_ABC& missionT
         return false;
     MIL_PionMission_FilterPopulation& mission = static_cast< MIL_PionMission_FilterPopulation& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), point_, GetVariable( nDIAPointIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointIdx_ ), GetVariable( nDIAPointIdx_ ) );
 
     return true;
 }                                                                    
@@ -110,8 +109,7 @@ bool MIL_PionMission_FilterPopulation::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_FilterPopulation::Terminate()
 {
-    NET_ASN_Tools::ResetPoint( point_, GetVariable( nDIAPointIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

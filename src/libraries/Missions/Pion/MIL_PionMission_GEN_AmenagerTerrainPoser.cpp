@@ -72,7 +72,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser& asnMission = *asnMsg.mission.u.mission_pion_gen_amenager_terrain_poser;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -92,10 +92,7 @@ bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::ResetID( GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeObjetIdx_ ) );
-
+            
     return true;    
 }
 
@@ -109,7 +106,7 @@ bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( MIL_PionMission_ABC& 
         return false;
     MIL_PionMission_GEN_AmenagerTerrainPoser& mission = static_cast< MIL_PionMission_GEN_AmenagerTerrainPoser& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), posObstacle_, GetVariable( nDIAPosObstacleIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
     NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeObjetIdx_ ), GetVariable( nDIATypeObjetIdx_ ) );
 
@@ -122,8 +119,7 @@ bool MIL_PionMission_GEN_AmenagerTerrainPoser::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_AmenagerTerrainPoser::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIATypeObjetIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

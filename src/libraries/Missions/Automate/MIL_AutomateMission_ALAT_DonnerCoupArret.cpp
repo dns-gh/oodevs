@@ -80,11 +80,11 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DonnerCoupArret::Initialize( c
         return nCode;        
 
     const ASN1T_Mission_Automate_ALAT_DonnerCoupArret& asnMission = *asnMsg.mission.u.mission_automate_alat_donner_coup_arret;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, pointRegroupement_, GetVariable( nDIAPointRegroupementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup().GetKSQuerier() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -104,8 +104,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DonnerCoupArret::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DonnerCoupArret::Terminate()
 {
-    NET_ASN_Tools::ResetEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 

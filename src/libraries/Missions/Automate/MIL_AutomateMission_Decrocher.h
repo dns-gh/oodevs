@@ -41,9 +41,6 @@ public:
     //@}
 
 private:
-    TER_Localisation pointRegroupement_;
-
-private:
     static int nDIAPointRegroupementIdx_;
 
 };

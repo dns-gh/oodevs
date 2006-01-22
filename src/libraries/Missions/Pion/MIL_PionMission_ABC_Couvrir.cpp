@@ -70,7 +70,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ABC_Couvrir::Initialize( const ASN1T_Ms
         return nCode;        
 
     const ASN1T_Mission_Pion_ABC_Couvrir& asnMission = *asnMsg.mission.u.mission_pion_abc_couvrir;
-    if( !NET_ASN_Tools::CopyPoint( asnMission.position, position_, GetVariable( nDIAPositionIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission.position, GetVariable( nDIAPositionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_couvrir, GetVariable( nDIAUnitesACouvrirIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -88,9 +88,7 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( const MIL_AutomateMission_ABC& par
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    NET_ASN_Tools::ResetPoint( position_, GetVariable( nDIAPositionIdx_ ) );
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesACouvrirIdx_ ) );
-
+        
     return true;    
 }
 
@@ -104,7 +102,7 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
         return false;
     MIL_PionMission_ABC_Couvrir& mission = static_cast< MIL_PionMission_ABC_Couvrir& >( missionTmp );
 
-    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionIdx_ ), position_, GetVariable( nDIAPositionIdx_ ) );
+    NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionIdx_ ), GetVariable( nDIAPositionIdx_ ) );
     NET_ASN_Tools::CopyAgentList( mission.GetVariable( nDIAUnitesACouvrirIdx_ ), GetVariable( nDIAUnitesACouvrirIdx_ ) );
 
     return true;
@@ -116,8 +114,7 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Couvrir::Terminate()
 {
-    NET_ASN_Tools::ResetAgentList( GetVariable( nDIAUnitesACouvrirIdx_ ) );
-
+    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -69,7 +69,7 @@ ASN1T_EnumOrderErrorCode MIL_OrderConduite_Automate_ReconnaitreZoneImplantation:
         return nCode; 
 
     const ASN1T_OrderConduite_Automate_ReconnaitreZoneImplantation& asnMission = *asnMsg.u.order_conduite_automate_reconnaitre_zone_implantation;
-    if( !NET_ASN_Tools::CopyPoint( asnMission, orderConduiteAutomateReconnaitreZoneImplantation_, GetVariable( nDIAOrderConduiteAutomateReconnaitreZoneImplantationIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPoint( asnMission, GetVariable( nDIAOrderConduiteAutomateReconnaitreZoneImplantationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;

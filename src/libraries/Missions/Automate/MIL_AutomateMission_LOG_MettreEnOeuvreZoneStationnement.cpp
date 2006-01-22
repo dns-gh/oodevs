@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement
         return nCode;        
 
     const ASN1T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement& asnMission = *asnMsg.mission.u.mission_automate_log_mettre_en_oeuvre_zone_stationnement;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, zone_, GetVariable( nDIAZoneIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,8 +80,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement::Terminate()
 {
-    NET_ASN_Tools::ResetPolygon( zone_, GetVariable( nDIAZoneIdx_ ) );
-
+    
     MIL_AutomateMission_ABC::Terminate();
 }
 
