@@ -29,3 +29,4 @@ DEC_Knowledge_ABC::DEC_Knowledge_ABC()
 DEC_Knowledge_ABC::~DEC_Knowledge_ABC()
 {
 }
+

@@ -58,11 +58,14 @@ void MIL_ProfilerMgr::NotifyTickEnd( uint nTick )
 {
     tickDurationProfiler_.Stop();
 
-    for( CIT_DecFunctionProfilingVector itData = decFunctionProfilingVector_.begin(); itData != decFunctionProfilingVector_.end(); ++itData )
-        decFunctionsFile_ << nTick << ' ' << itData->nAgentID_ << ' ' << itData->strFunction_ << ' ' << itData->rTime_ << std::endl;
-    decFunctionsFile_.flush();
-    decFunctionProfilingVector_.clear(); 
-    decFunctionProfilingVector_.reserve( 1000 );
+    if( !decFunctionProfilingVector_.empty() )
+    {
+        for( CIT_DecFunctionProfilingVector itData = decFunctionProfilingVector_.begin(); itData != decFunctionProfilingVector_.end(); ++itData )
+            decFunctionsFile_ << nTick << ' ' << itData->nAgentID_ << ' ' << itData->strFunction_ << ' ' << itData->rTime_ << std::endl;
+        decFunctionsFile_.flush();
+        decFunctionProfilingVector_.clear(); 
+        decFunctionProfilingVector_.reserve( 1000 );
+    }
 }
 
 // -----------------------------------------------------------------------------
