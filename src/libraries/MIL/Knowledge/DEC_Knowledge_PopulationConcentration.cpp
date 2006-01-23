@@ -105,9 +105,14 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
          >> bReconAttributesValid_;
 
     uint nTmpID;
-    file >> nTmpID;
-    pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
-    assert( pAttitude_ );
+    bool bAttitudeValid;
+    file >> bAttitudeValid;
+    if( bAttitudeValid )
+    {
+        file >> nTmpID;
+        pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );
+        assert( pAttitude_ );
+    }
 
     file >> rRelevance_;
 
@@ -134,8 +139,12 @@ void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file
          << nNbrAliveHumans_
          << nNbrDeadHumans_
          << bReconAttributesValid_
-         << pAttitude_->GetID()
-         << rRelevance_
+         << ( pAttitude_ != 0 );
+
+    if( pAttitude_ != 0 )
+        file << pAttitude_->GetID();
+
+    file << rRelevance_
          << pCurrentPerceptionLevel_->GetID()
          << pPreviousPerceptionLevel_->GetID();
 }

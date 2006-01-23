@@ -305,6 +305,12 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type& type )
         ; // NOTHING
     else if( type == *pTypeConnaissanceAgent_ )
         ; // NOTHING
+    else if( type == *pTypeConnaissancePopulation_ )
+        ; // NOTHING
+    else if( type == *pTypePopulationConnaissanceAgent_ )
+        ; // NOTHING
+    else if( type == *pTypePopulationConnaissanceObjet_ )
+        ; // NOTHING
     else if( type == *pTypeID_ )    
         ; // NOTHING
     else if( type == *pTypePion_ )

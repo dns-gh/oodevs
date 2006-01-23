@@ -79,3 +79,12 @@ bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCe
 {
     return GetLocation().Intersect2DWithCircle( vCircleCenter, rRadius, shape );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlow_ABC::Intersect2DWithLine
+// Created: SBO 2006-01-23
+// -----------------------------------------------------------------------------
+bool TER_PopulationFlow_ABC::Intersect2DWithLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const
+{
+    return GetLocation().Intersect2D( MT_Line( vStart, vEnd ) );
+}

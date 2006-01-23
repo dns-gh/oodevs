@@ -70,3 +70,12 @@ bool TER_PopulationConcentration_ABC::Intersect2DWithCircle( const MT_Vector2D& 
 {
     return GetLocation().Intersect2DWithCircle( vCircleCenter, rRadius );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationConcentration_ABC::Intersect2DWithLine
+// Created: SBO 2006-01-23
+// -----------------------------------------------------------------------------
+bool TER_PopulationConcentration_ABC::Intersect2DWithLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const
+{
+    return GetLocation().Intersect2D( MT_Line( vStart, vEnd ) );
+}

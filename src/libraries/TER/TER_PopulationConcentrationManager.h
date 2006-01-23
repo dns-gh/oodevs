@@ -46,7 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    void GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationConcentrationVector& concentrations ) const;
+    void GetListWithinCircle    ( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationConcentrationVector& concentrations ) const;
+    void GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationConcentrationVector& concentrations ) const;
 
     TER_PopulationConcentration_ABC::T_Hint UpdatePosition( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint );
     bool                                    Remove        ( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint );

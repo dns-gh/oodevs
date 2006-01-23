@@ -26,7 +26,13 @@
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_EntityManager.h"
+#include "TER/TER_PopulationConcentration_ABC.h"
+#include "TER/TER_PopulationFlow_ABC.h"
+#include "TER/TER_PopulationManager.h"
+#include "TER/TER_World.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
 
@@ -234,14 +240,14 @@ MT_Float PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType
 // -----------------------------------------------------------------------------
 void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const
 {
+    const PHY_RolePion_Location& firerLocation = firer.GetRole< PHY_RolePion_Location >();
+    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+
     if( bUsePH )
     {
         const PHY_Volume& targetVolume = compTarget.GetType().GetVolume(); //$$$$ ENCAPSULER
-        
-        const PHY_RolePion_Location& firerLocation = firer.GetRole< PHY_RolePion_Location >();
-        const MT_Vector3D firerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_, firerLocation.GetAltitude() );
 
-        const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector3D firerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_, firerLocation.GetAltitude() );
         const MT_Vector3D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
 
         const MT_Float rPH = GetPH( firer, target, targetVolume, firerPosition.Distance( targetPosition ) );
@@ -251,6 +257,32 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
 
     MIL_Effect_DirectFirePion* pEffect = new MIL_Effect_DirectFirePion( weaponType_.GetDotationCategory(), target, compTarget, fireResult );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+
+
+    // handle direct-indirect fire on populations
+    const MT_Vector2D firerPosition ( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
+    const MT_Vector2D targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
+
+    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager()
+                         .GetListIntersectingLine( firerPosition, targetPosition, concentrations );
+    for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector itConcentration = concentrations.begin();
+        itConcentration != concentrations.end(); ++itConcentration )
+    {
+        MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *itConcentration );
+        MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+    }
+
+    TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager()
+                         .GetListIntersectingLine( firerPosition, targetPosition, flows );
+    for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itFlow = flows.begin(); itFlow != flows.end(); ++itFlow )
+    {
+        MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *itFlow );
+        MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( *pElement, 1, fireResult );
+        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -75,3 +75,20 @@ void TER_PopulationFlowManager::GetListWithinCircle( const MT_Vector2D& vCenter,
             flows.push_back( pFlow );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlowManager::GetListIntersectingLine
+// Created: SBO 2006-01-23
+// -----------------------------------------------------------------------------
+void TER_PopulationFlowManager::GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationFlowVector& flows ) const
+{
+    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vStart.rX_, vStart.rY_ ),
+                                                          geometry::Point2< MT_Float >( vEnd.rX_  , vEnd.rY_   ) );
+    T_PopulationFlows::View view = flows_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        TER_PopulationFlow_ABC* pFlow = view.NextElement();
+        if( pFlow && pFlow->Intersect2DWithLine( vStart, vEnd ) )
+            flows.push_back( pFlow );
+    }
+}

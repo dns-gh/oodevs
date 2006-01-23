@@ -58,6 +58,23 @@ void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D&
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_PopulationConcentrationManager::GetListIntersectingLine
+// Created: SBO 2006-01-23
+// -----------------------------------------------------------------------------
+void TER_PopulationConcentrationManager::GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationConcentrationVector& concentrations ) const
+{
+    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vStart.rX_, vStart.rY_ ),
+                                                          geometry::Point2< MT_Float >( vEnd.rX_  , vEnd.rY_   ) );
+    T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
+    while( view.HasMoreElements() )
+    {
+        TER_PopulationConcentration_ABC* pConcentration = view.NextElement();
+        if( pConcentration && pConcentration->Intersect2DWithLine( vStart, vEnd ) )
+            concentrations.push_back( pConcentration );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager::UpdatePopulationConcentrationPosition
 // Created: NLD 2005-10-07
 // -----------------------------------------------------------------------------
