@@ -455,6 +455,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeOccupied 									 , "DEC_ConnaissanceObjet_PeutEtreOccupe"                    ); 
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::CanBeAnimated                                     , "DEC_ConnaissanceObjet_PeutEtreAnime"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsLogisticRouteEquipped          < MIL_AgentPion >, "DEC_ConnaissanceObjet_ItineraireLogEstEquipe"            ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::DamageObject                                      , "DEC_ConnaissanceObjet_Degrader"                          );
 
     // Population knowledges accessors
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgePopulationFunctions::Recon										 , "DEC_ConnaissancePopulation_Reconnaitre"                  );

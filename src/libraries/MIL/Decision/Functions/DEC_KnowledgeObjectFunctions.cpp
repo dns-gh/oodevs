@@ -96,6 +96,27 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( DIA_Call_ABC& call, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::DamageObject
+// Created: SBO 2006-01-23
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::DamageObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
+{
+    DEC_Knowledge_Object* pKnowledge = DEC_FunctionsTools::GetKnowledgeObjectFromDia( call.GetParameter( 0 ), callerAgent.GetArmy() );
+    if( !pKnowledge || !pKnowledge->GetObjectKnown() || !pKnowledge->GetObjectKnown()->CanBePerceived() )
+    {
+        call.GetParameter( 1 ).SetValue( eQueryInvalid );
+        call.GetResult().SetValue( (int)0 );
+        return;
+    }
+
+    MIL_RealObject_ABC* pObject = pKnowledge->GetObjectKnown();
+    call.GetParameter( 1 ).SetValue( eQueryValid );
+
+    float rDamageFactor = call.GetParameter( 2 ).ToFloat();
+    pObject->Destroy( rDamageFactor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::CanBeOccupied
 // Created: NLD 2004-11-26
 // -----------------------------------------------------------------------------

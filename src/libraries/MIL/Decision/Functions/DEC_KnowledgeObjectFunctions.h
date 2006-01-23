@@ -37,6 +37,7 @@ public:
                            static void CanBeAnimated                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
                            static void CanBeOccupied                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
                            static void DecontaminateZone                ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
+                           static void DamageObject                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
                            static void Recon							( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     template< typename T > static void IsRecon							( DIA_Call_ABC& call, const T& caller );
