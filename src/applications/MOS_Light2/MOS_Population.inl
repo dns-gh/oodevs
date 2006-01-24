@@ -137,3 +137,13 @@ const MT_Vector2D MOS_Population::GetAggregatedPos() const
 {
     return GetPos();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_Population::GetConflictPos
+// Created: HME 2006-01-24
+// -----------------------------------------------------------------------------
+inline
+const MT_Vector2D  MOS_Population::GetConflictPos( const MT_Vector2D& origin ) const
+{
+    return origin + MT_Vector2D( 10, 10 );
+}

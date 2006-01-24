@@ -710,7 +710,7 @@ void MOS_DefaultMapEventHandler::HoverElementAtPos( const MT_Vector2D& vGLPos, f
     {
         MOS_Agent* pAgent = 0;
         GetAgentAtPos( pAgent, vGLPos );
-        if( pAgent )
+        if( pAgent && ( pAgent->IsAutomate() || ! pAgent->IsAggregated() ) )
         {
             hoveredElement_ = MOS_SelectedElement( *pAgent );
             emit ElementHovered( hoveredElement_ );

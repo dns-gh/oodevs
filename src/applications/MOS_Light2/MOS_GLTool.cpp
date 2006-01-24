@@ -444,7 +444,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         if( itC->second.pOrigin_ && (! MOS_App::GetApp().GetAgentManager().FindPopulation( itC->second.pOrigin_->GetID() ) ) )
         {
             if( (*itC).second.pDirectFireTarget_  )
-                DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->GetPos(), 300.0 ); // $$$$ AGE 2005-03-22:
+                DrawLine( (*itC).second.pOrigin_->GetAggregatedPos(), (*itC).second.pDirectFireTarget_->GetConflictPos( (*itC).second.pOrigin_->GetAggregatedPos() ), 300.0 ); // $$$$ AGE 2005-03-22:
             else
                 DrawArc( (*itC).second.pOrigin_->GetAggregatedPos(), (*itC).second.vIndirectFireTarget_, 300.0 , true );
         }

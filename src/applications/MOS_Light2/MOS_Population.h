@@ -90,6 +90,7 @@ public:
 	virtual const std::string          GetName() const;
 	virtual const MT_Vector2D&         GetPos () const;
     virtual const MT_Vector2D          GetAggregatedPos() const;
+    virtual const MT_Vector2D          GetConflictPos  ( const MT_Vector2D& origin ) const;
 
 	uint                               GetLivingHumans() const;
 	uint                               GetDeadHumans  () const;
