@@ -5681,7 +5681,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>VC1</source>
-        <translation>VC1</translation>
+        <translation type="obsolete">VC1</translation>
     </message>
     <message>
         <source>Char</source>
@@ -5725,6 +5725,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Pieces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCI</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5914,6 +5918,17 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Is autonomous (UAV)</source>
         <translation>Pion autonome (Drônes ...)</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Units_LogThreshold_GUI</name>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">Catégorie</translation>
+    </message>
+    <message>
+        <source>Log threshold (%)</source>
+        <translation type="unfinished">Seuil logistique (%)</translation>
     </message>
 </context>
 <context>
