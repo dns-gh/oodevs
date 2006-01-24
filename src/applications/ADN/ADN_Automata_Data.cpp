@@ -88,6 +88,8 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     std::string strName;
     input.ReadAttribute( "nom", strName );
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strName );
+    if( pUnit == 0 )
+        input.ThrowError( MT_FormatString( "Type d'unité '%s' inconnu.", strName.c_str() ) );
     assert( pUnit != 0 );
     ptrUnit_ = pUnit;
 
