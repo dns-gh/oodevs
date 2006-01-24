@@ -54,4 +54,9 @@ boost::pool<> classname::pool_( sizeof( classname ) );
 #   undef Yield
 #endif
 
+#ifdef GetMessage
+#   undef GetMessage
+#endif
+
+
 #endif // __MT_Tools_Memory_h__

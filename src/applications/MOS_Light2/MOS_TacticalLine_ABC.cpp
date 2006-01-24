@@ -163,7 +163,8 @@ void MOS_TacticalLine_ABC::Write( MT_OutputArchive_ABC& archive ) const
     for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
     {
         archive.Section( "Point" );
-        (*it).Write( archive );
+        archive.WriteField( "X", it->rX_ );
+        archive.WriteField( "Y", it->rY_ );
         archive.EndSection();
     }
     archive.EndList();

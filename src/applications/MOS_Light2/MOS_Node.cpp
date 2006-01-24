@@ -31,7 +31,9 @@ MOS_Node::~MOS_Node()
 //-----------------------------------------------------------------------------
 void MOS_Node::Read( MT_InputArchive_ABC& archive )
 {
-    vPos_.Read( archive );
+    archive.ReadField( "X", vPos_.rX_ );
+    archive.ReadField( "Y", vPos_.rY_ );
+
     uint nTempIdx;
     archive.ReadField( "nTempIdx_", nTempIdx );
     uint nPassability;

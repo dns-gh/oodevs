@@ -616,7 +616,10 @@ void MT_GLDShape::Read( MT_XXmlInputArchive& archive )
     {
         archive.Section( "Point" );
         MT_Vector2D vPoint;
-        vPoint.Read( archive );
+
+        archive.ReadField( "X", vPoint.rX_ );
+        archive.ReadField( "Y", vPoint.rY_ );
+
         points_.push_back( vPoint );
         archive.EndSection();
     }
@@ -644,7 +647,8 @@ void MT_GLDShape::Write( MT_XXmlOutputArchive& archive ) const
     for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
     {
         archive.Section( "Point" );
-        (*it).Write( archive );
+        archive.WriteField( "X", it->rX_ );
+        archive.WriteField( "Y", it->rY_ );
         archive.EndSection();
     }
     archive.EndList();
