@@ -125,6 +125,7 @@ public:
     const std::string           GetCategory        () const;
 	const MIL_AgentID           GetID              () const;
     const MT_Vector2D&          GetPos             () const;
+    virtual const MT_Vector2D   GetAggregatedPos   () const;
     const std::string&          GetSymbol          () const;
     MOS_Agent*                  GetParent          () const;
     MOS_Team&                   GetTeam            () const;

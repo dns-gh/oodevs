@@ -424,9 +424,8 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
         // If not in controller view, avoid drawing the enemy units.
         if( nPlayedTeam != MOS_Options::eController && nPlayedTeam != (int)(itAgent->second->GetTeam().GetIdx()) )
             continue;
-        // Draw the unit if not aggregated
-        if( itAgent->second->IsAutomate() || (! itAgent->second->GetParent()->IsEmbraye())  || (! itAgent->second->GetParent()->IsAggregated()))
-            Draw( *(itAgent->second), eNormal );
+        // Draw the unit
+        Draw( *(itAgent->second), eNormal );
     }
 
     // Draw all populations.
@@ -447,7 +446,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
             if( (*itC).second.pDirectFireTarget_  )
                 DrawLine( (*itC).second.pOrigin_->GetPos(), (*itC).second.pDirectFireTarget_->GetPos(), 300.0 ); // $$$$ AGE 2005-03-22:
             else
-                DrawArc( (*itC).second.pOrigin_->GetPos(), (*itC).second.vIndirectFireTarget_, 300.0 * rClicksPerPix_ , true );
+                DrawArc( (*itC).second.pOrigin_->GetAggregatedPos(), (*itC).second.vIndirectFireTarget_, 300.0 , true );
         }
 
     //Draw the real time logistic actions
@@ -479,7 +478,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawArc( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 40.0, true );
+            DrawArc( con->GetPionLogHandling()->GetAggregatedPos() ,con->GetPion().GetAggregatedPos(), 40.0, true );
         }
         const MOS_AgentManager::T_MedicalConsigns& consignsSan = MOS_App::GetApp().GetAgentManager().GetMedicalConsigns();
         glColor4d( MOS_COLOR_PINK );
@@ -509,7 +508,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawArc( con->GetPionLogHandling()->GetPos() ,con->GetPion().GetPos(), 0.0, true );
+            DrawArc( con->GetPionLogHandling()->GetAggregatedPos() ,con->GetPion().GetAggregatedPos(), 0.0, true );
         }
         const MOS_AgentManager::T_SupplyConsigns& consignsRav = MOS_App::GetApp().GetAgentManager().GetSupplyConsigns();
         glColor4d( MOS_COLOR_ORANGE );
@@ -536,7 +535,7 @@ void MOS_GLTool::Draw( MOS_AgentManager& manager )
                     break;
                 }
             }
-            DrawArc( con->GetAutomateLogHandling()->GetPos() ,con->GetPion().GetPos(), 20.0, true );
+            DrawArc( con->GetAutomateLogHandling()->GetAggregatedPos() ,con->GetPion().GetAggregatedPos(), 20.0, true );
         }
         glDisable( GL_LINE_STIPPLE );
     }
@@ -551,92 +550,104 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 {
     MOS_Options& options = MOS_MainWindow::GetMainWindow().GetOptions();
 
+    //Is this unit hidden in an aggregation ?
+    bool bAggregated = false;
+    if( ( ! agent.IsAutomate() ) && agent.GetParent()->IsAggregated() )
+        bAggregated = true;
+    
     // Vision surfaces
     if( options.nDrawVisionSurfaces_ == MOS_Options::eOn
-       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eSelected ) )
+       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eSelected )
+       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
         DrawVisionSurfaces( agent );
 
     // Draw the path if necessary
-    if( options.nDrawPaths_ == MOS_Options::eOn
-        || (options.nDrawPaths_ == MOS_Options::eAuto && nState != eNormal) )
+    if( ! bAggregated
+        && ( options.nDrawPaths_ == MOS_Options::eOn
+            || (options.nDrawPaths_ == MOS_Options::eAuto && nState != eNormal) ) )
         DrawPath( agent );
 
     if( ! viewRect_.IsInside( agent.GetPos() ) )
         return;
 
     // Draw the unit.
-    DrawUnit( agent, nState );
-
-    // Draw the blinking indicator icons
-    if( nFrame_%4 == 0 )
-        glColor4d( MOS_COLOR_WHITE );
-    else
-        glColor4d( MOS_COLOR_RED );
-
-    if( ! MOS_App::GetApp().IsODBEdition() )
+    if( ! bAggregated )
     {
-        if( ! agent.GetContaminatingNBCAgents().empty() )
-            DrawIcon( eNbcIcon, agent.vPos_ );
+        DrawUnit( agent, nState );
 
-        if( agent.IsOutOfGas() && !agent.IsDead() )
-            DrawIcon( eGasIcon, agent.vPos_ );
-    }
+        // Draw the blinking indicator icons
+        if( nFrame_%4 == 0 )
+            glColor4d( MOS_COLOR_WHITE );
+        else
+            glColor4d( MOS_COLOR_RED );
 
-    
-    //// Draw specific NBC parameters
-    if( agent.bNbcProtectionSuitWorn_ )
-    {
-        glColor4d( MOS_COLOR_NBCSUIT );
-        DrawCircle( agent.vPos_, MOS_GL_CROSSSIZE * 0.8f , true );
-    }
+        if( ! MOS_App::GetApp().IsODBEdition() )
+        {
+            if( ! agent.GetContaminatingNBCAgents().empty() )
+                DrawIcon( eNbcIcon, agent.vPos_ );
 
-    //Death
-    if( agent.IsDead() )
-    {
-        glColor4d( MOS_COLOR_WHITE );
-        DrawIcon( eSkullIcon, agent.GetPos() );
-    }
+            if( agent.IsOutOfGas() && !agent.IsDead() )
+                DrawIcon( eGasIcon, agent.vPos_ );
+        }
 
-    
-    //embrayage
-    if( (! agent.IsAutomate()) && agent.pParent_->IsEmbraye() )
-    {
-        glColor4d( MOS_COLOR_WHITE );
-        DrawIcon( cadenas, agent.GetPos() + MT_Vector2D( - 200 , 270  ) );
-    }
-    
-    //radars on
-    if( agent.bRadarEnabled_ )
-    {
-        glColor4d( MOS_COLOR_WHITE );
-        DrawIcon( radars_on, agent.GetPos() + MT_Vector2D(  200 , 270  ) );
-    }
+        
+        //// Draw specific NBC parameters
+        if( agent.bNbcProtectionSuitWorn_ )
+        {
+            glColor4d( MOS_COLOR_NBCSUIT );
+            DrawCircle( agent.vPos_, MOS_GL_CROSSSIZE * 0.8f , true );
+        }
 
-    //jamming
-    if( agent.bCommJammed_ )
-    {
-        glColor4d( MOS_COLOR_WHITE );
-        DrawIcon( brouillage, agent.GetPos() + MT_Vector2D(  200 , 50  ) );
-    }
+        //Death
+        if( agent.IsDead() )
+        {
+            glColor4d( MOS_COLOR_WHITE );
+            DrawIcon( eSkullIcon, agent.GetPos() );
+        }
 
-    //radio silence
-    if( agent. bRadioSilence_ )
-    {
-        glColor4d( MOS_COLOR_WHITE );
-        DrawIcon( talkie_interdit, agent.GetPos() + MT_Vector2D(  120 , 50  ) );
+        
+        //embrayage
+        if( (! agent.IsAutomate()) && agent.pParent_->IsEmbraye() )
+        {
+            glColor4d( MOS_COLOR_WHITE );
+            DrawIcon( cadenas, agent.GetPos() + MT_Vector2D( - 200 , 270  ) );
+        }
+        
+        //radars on
+        if( agent.bRadarEnabled_ )
+        {
+            glColor4d( MOS_COLOR_WHITE );
+            DrawIcon( radars_on, agent.GetPos() + MT_Vector2D(  200 , 270  ) );
+        }
+
+        //jamming
+        if( agent.bCommJammed_ )
+        {
+            glColor4d( MOS_COLOR_WHITE );
+            DrawIcon( brouillage, agent.GetPos() + MT_Vector2D(  200 , 50  ) );
+        }
+
+        //radio silence
+        if( agent. bRadioSilence_ )
+        {
+            glColor4d( MOS_COLOR_WHITE );
+            DrawIcon( talkie_interdit, agent.GetPos() + MT_Vector2D(  120 , 50  ) );
+        }
+        
     }
 
     // Vision cones
     if( options.nDrawVisionCones_ == MOS_Options::eOn
-       || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eSelected ) )
+       || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eSelected )
+       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
        DrawVisionCones( agent );
 
     // Vision lines
     if( options.nDrawVisionLines_ == MOS_Options::eOn
-   || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal ) )
+   || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal )
+   || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
        DrawVisionLines( agent );
-    
-   
+
     //Logistic links
     if ( agent.IsAutomate() && (
             MOS_MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == MOS_Options::eOn
@@ -650,22 +661,22 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             if ( agent.nTC2_ == 0 && ( ! agent.IsLogisticTC2() ) )
             {
                 glColor4d( MOS_COLOR_YELLOW );
-                DrawCircle( agent.GetPos() + translation, 300, false );
+                DrawCircle( agent.GetAggregatedPos() + translation, 300, false );
             }
             if ( agent.nLogMedicalSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticSante() ) )
             {
                 glColor4d( MOS_COLOR_PINK );
-                DrawCircle( agent.GetPos() + translation, 375, false );
+                DrawCircle( agent.GetAggregatedPos() + translation, 375, false );
             }
             if ( agent.nLogMaintenanceSuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticMaintenance() ) )
             {
                 glColor4d( MOS_COLOR_MAROON );
-                DrawCircle( agent.GetPos() + translation, 450, false );
+                DrawCircle( agent.GetAggregatedPos() + translation, 450, false );
             }
             if ( agent.nLogSupplySuperior_ == 0 && ( agent.IsLogisticTC2() || agent.IsLogisticRavitaillement() ) )
             {
                 glColor4d( MOS_COLOR_ORANGE );
-                DrawCircle( agent.GetPos() + translation, 525, false );
+                DrawCircle( agent.GetAggregatedPos() + translation, 525, false );
             }
         }
         else
@@ -685,25 +696,25 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         if ( agent.nTC2_ != 0 )
         {
             glColor4d( MOS_COLOR_YELLOW );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetPos(), agent.GetPos(), offset, true );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nTC2_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset, true );
             offset += 100.0;
         }
         if ( agent.nLogMaintenanceSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_MAROON );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetPos(), agent.GetPos(), offset , true );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMaintenanceSuperior_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset , true );
             offset += 100.0;
         }
         if ( agent.nLogMedicalSuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_PINK );
-            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetPos(), agent.GetPos(), offset, true );
+            DrawArc( MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogMedicalSuperior_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset, true );
             offset += 100.0;
         }
         if ( agent.nLogSupplySuperior_ != 0 )
         {
             glColor4d( MOS_COLOR_ORANGE );
-            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetPos(), agent.GetPos(), offset, true );
+            DrawArc(  MOS_App::GetApp().GetAgentManager().FindAgent( agent.nLogSupplySuperior_ )->GetAggregatedPos(), agent.GetAggregatedPos(), offset, true );
             offset += 100.0;
         }
     }
@@ -813,8 +824,9 @@ void MOS_GLTool::Draw( MOS_PopulationConcentration& concentration, E_State nStat
     color.SetGLColor();
     MT_Float rSurface = ( concentration.GetLivingHumans() + concentration.GetDeadHumans() ) 
                       /   concentration.GetPopulation().GetType().GetConcentrationDensity();
-    // draw whole population
-    DrawCircle( concentration.GetPos(), std::sqrt( rSurface / MT_PI ), true );
+    // draw the whole population
+    glLineWidth( 1 );
+    DrawCircle( concentration.GetPos(), std::max< float >(100, std::sqrt( rSurface / MT_PI )), true );
     // draw dead people above
     glColor4d( MOS_COLOR_BLACK );
     rSurface = concentration.GetDeadHumans() / concentration.GetPopulation().GetType().GetConcentrationDensity();
@@ -846,7 +858,7 @@ void MOS_GLTool::Draw( MOS_PopulationFlow& flow, E_State nState /*= eNormal*/ )
 
     DrawRect( topLeft, bottomRight, true );
     //DrawCircle( flow.GetHeadPosition(), MOS_GL_CROSSSIZE * 0.5, true );
-    glLineWidth( 5.0 );
+    glLineWidth( 20 );
     DrawLine( flow.GetFlow() );
 
     // draw dead people
@@ -1255,6 +1267,7 @@ void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
         else
             DrawLine( knowledge.points_ );
     }
+
 }
 
 
@@ -1825,13 +1838,14 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
             //write the ROE and the stance of the pawn
             QString strROE = QString( "%1 %2 %" ).arg( ENT_Tr::ConvertFromUnitPosture( pAgent->GetStance() ).c_str(), QString::number( pAgent->nPostureCompletionPourcentage_ ) )
                             + QString( ", ROE: " ) 
-                            + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str())
-                            + QString( ", ROE pop: " )
-                            + QString( ENT_Tr::ConvertFromRoePopulation( pAgent->nRulesOfEngagementPopulationState_ ).c_str() );
+                            + QString( ENT_Tr::ConvertFromRoe( pAgent->nRulesOfEngagementState_ ).c_str());
+            QString strROEPop = QString( "ROE pop: " )
+                                + QString( ENT_Tr::ConvertFromRoePopulation( pAgent->nRulesOfEngagementPopulationState_ ).c_str() );
             
             color.SetRGB( 255.0, 255.0, 255.0 );
             
             toolTip.AddLine( strROE, color );
+            toolTip.AddLine( strROEPop, color );
             
             //write the 5 last RCs
             toolTip.AddLine( QString(""), color );
@@ -2309,7 +2323,11 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
     //aggregated mode ?
     if( agent.IsAutomate() && agent.IsAggregated() )
+    {
         rSize *= 2;
+        const MT_Vector2D barycenter= agent.GetAggregatedPos();
+        glTranslatef( barycenter.rX_ - agent.vPos_.rX_, barycenter.rY_ - agent.vPos_.rY_, 0 );
+    }
 
     GFX_Tools::CreateGLAgentShadow( MT_Vector2D(0, 0), rSize, 4., 8., color, true, agent.symbolName_     , agent.nRawOpState_, agent.IsAutomate() && agent.IsEmbraye() );
     if( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
@@ -2327,7 +2345,8 @@ void MOS_GLTool::DrawUnit( MOS_Agent& agent, E_State nState )
 
     DeltaZ dz( 0.25 );
     color.SetGLColor();
-    DrawCross( agent.vPos_, MOS_GL_CROSSSIZE, 4.0 );
+    if( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
+        DrawCross( agent.vPos_, MOS_GL_CROSSSIZE, 4.0 );
 
 //    for( std::vector< MT_Vector2D >::const_iterator it = agent.reportPoints_.begin(); it != agent.reportPoints_.end(); ++it )
 //        DrawCross( *it, MOS_GL_CROSSSIZE, 4.0 );
@@ -2500,7 +2519,10 @@ void MOS_GLTool::DrawArc( const MT_Vector2D& center, MT_Float rRadius, MT_Float 
     DrawLine( points );
     if( arrowed && ( points.size() > 2 ) )
     {
-        DrawArrow( *(--(--(--(points.end())))), *(--(points.end())), 100.0 );
+        if( rAngleEnd < rAngleStart )
+            DrawArrow( *(--(--(--(points.end())))), *(--(points.end())), 100.0 );
+        else
+            DrawArrow( *(++(points.begin())), *points.begin(), 100.0 );
     }
 }
 
@@ -2967,18 +2989,18 @@ void MOS_GLTool::DrawArc ( const MT_Vector2D& src, const MT_Vector2D& dst, MT_Fl
     float ortho_y = (src.rX_ - dst.rX_) / dist;
     MT_Vector2D center = MT_Vector2D( middle_x + (radius - height)* ortho_x,  middle_y + (radius - height)* ortho_y );
     //MT_Vector2D center2 = MT_Vector2D( middle_x - (radius - height)* ortho_x,  middle_y - (radius - height)* ortho_y );
-    float angleStart = acos( (dst.rX_ - center.rX_) / radius );
+    float angleEnd = acos( (dst.rX_ - center.rX_) / radius );
     if ( asin( ( dst.rY_ - center.rY_ ) / radius ) < 0 )
-        angleStart = 6.283 - angleStart;
-    float angleEnd = acos( (src.rX_ - center.rX_) / radius );
-    if ( asin( (src.rY_ - center.rY_) / radius ) < 0 )
         angleEnd = 6.283 - angleEnd;
+    float angleStart = acos( (src.rX_ - center.rX_) / radius );
+    if ( asin( (src.rY_ - center.rY_) / radius ) < 0 )
+        angleStart = 6.283 - angleStart;
     //DrawCircle( center, radius );
-    if ( abs(angleEnd - angleStart) > 3.141 )
-        if ( ((angleEnd > angleStart) ? angleEnd : angleStart ) == angleStart )
-            angleStart = angleStart - 6.283;
-        else
+    if ( abs(angleStart - angleEnd) > 3.141 )
+        if ( ((angleStart > angleEnd) ? angleStart : angleEnd ) == angleEnd )
             angleEnd = angleEnd - 6.283;
+        else
+            angleStart = angleStart - 6.283;
     DrawArc( center, radius, angleStart, angleEnd, arrowed );
 }
 

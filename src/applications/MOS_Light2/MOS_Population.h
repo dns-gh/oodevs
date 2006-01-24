@@ -89,6 +89,7 @@ public:
 	virtual MOS_Team&                  GetTeam() const;
 	virtual const std::string          GetName() const;
 	virtual const MT_Vector2D&         GetPos () const;
+    virtual const MT_Vector2D          GetAggregatedPos() const;
 
 	uint                               GetLivingHumans() const;
 	uint                               GetDeadHumans  () const;

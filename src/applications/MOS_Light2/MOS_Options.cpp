@@ -82,20 +82,28 @@ MOS_Options::~MOS_Options()
 void MOS_Options::WriteSettings( MT_Settings& settings )
 {
     settings.beginGroup( "/Options" );
-    settings.writeEntry( "/smallText",      nDrawSmallText_ );
-    settings.writeEntry( "/largeText",      nDrawLargeText_ );
-    settings.writeEntry( "/details",        nDrawDetails_ );
-    settings.writeEntry( "/tacticalLines",  nDrawTacticalLines_ );
-    settings.writeEntry( "/visionLines",    nDrawVisionLines_ );
-    settings.writeEntry( "/visionCones",    nDrawVisionCones_ );
-    settings.writeEntry( "/visionSurfaces", nDrawVisionSurfaces_ );
-    settings.writeEntry( "/paths",          nDrawPaths_ );
-    settings.writeEntry( "/oldpaths",       bDrawOldPaths_ );
-    settings.writeEntry( "/displayWeather", bDisplayWeather_ );
-    settings.writeEntry( "/openToItem",     bOpenTreeToItem_ );
-    settings.writeEntry( "/gridStep",       rGridStep_ );
-    settings.writeEntry( "/fontSize",       nFontSize_ );
-    settings.writeEntry( "/autoSaveLines",  bSaveLoadTacticalLines_ );
+    settings.writeEntry( "/smallText",                          nDrawSmallText_ );
+    settings.writeEntry( "/largeText",                          nDrawLargeText_ );
+    settings.writeEntry( "/details",                            nDrawDetails_ );
+    settings.writeEntry( "/tacticalLines",                      nDrawTacticalLines_ );
+    settings.writeEntry( "/visionLines",                        nDrawVisionLines_ );
+    settings.writeEntry( "/visionCones",                        nDrawVisionCones_ );
+    settings.writeEntry( "/visionSurfaces",                     nDrawVisionSurfaces_ );
+    settings.writeEntry( "/paths",                              nDrawPaths_ );
+    settings.writeEntry( "/oldpaths",                           bDrawOldPaths_ );
+    settings.writeEntry( "/displayWeather",                     bDisplayWeather_ );
+    settings.writeEntry( "/openToItem",                         bOpenTreeToItem_ );
+    settings.writeEntry( "/gridStep",                           rGridStep_ );
+    settings.writeEntry( "/fontSize",                           nFontSize_ );
+    settings.writeEntry( "/autoSaveLines",                      bSaveLoadTacticalLines_ );
+    settings.writeEntry( "/displayHoveredInfo",                 bDisplayHoveredInfo_ );
+    settings.writeEntry( "/displayIdentificationLevelOnMap",    bDisplayIdentificationLevelOnMap_ );
+    settings.writeEntry( "/displayMessagesOnMap",               bDisplayMessagesOnMap_ );
+    settings.writeEntry( "/displayRCOnMap",                     bDisplayRConMap_ );
+    settings.writeEntry( "/displayRealTimeLog",                 bDisplayRealTimeLog_ );
+    settings.writeEntry( "/dislayTracesOnMap",                  bDisplayTracesOnMap_ );
+    settings.writeEntry( "/displayLogLinks",                    nDisplayLogLinks_ );
+    settings.writeEntry( "/displayMissingLogLinks",             nDisplayMissingLogLinks_ );
     settings.endGroup();
 }
 
@@ -109,20 +117,29 @@ void MOS_Options::WriteSettings( MT_Settings& settings )
 void MOS_Options::ReadSettings( MT_Settings& settings )
 {
     settings.beginGroup( "/Options" );
-    nDrawSmallText_   = (E_State)settings.readNumEntry( "/smallText", eAuto );
-    nDrawLargeText_   = (E_State)settings.readNumEntry( "/largeText", eAuto );
-    nDrawDetails_     = (E_State)settings.readNumEntry( "/details",   eAuto );
-    nDrawTacticalLines_=(E_State)settings.readNumEntry( "/tacticalLines", eAuto );
-    nDrawVisionLines_ = (E_State)settings.readNumEntry( "/visionLines", eAuto );
-    nDrawVisionCones_ = (E_State)settings.readNumEntry( "/visionCones", eOff );
-    nDrawVisionSurfaces_ = (E_State)settings.readNumEntry( "/visionSurfaces", eOff );
-    nDrawPaths_       = (E_State)settings.readNumEntry( "/paths", eOn );
-    bDrawOldPaths_    = settings.readBoolEntry( "/oldpaths", false );
-    bDisplayWeather_  = settings.readBoolEntry( "/displayWeather", false );
-    bOpenTreeToItem_  = settings.readBoolEntry( "/openToItem",  true );
-    rGridStep_        = settings.readNumEntry( "/gridStep", 5.0f );
-    nFontSize_        = settings.readNumEntry( "/fontSize", 10 );
-    bSaveLoadTacticalLines_ = settings.readBoolEntry( "/autoSaveLines", true );
+
+    nDrawSmallText_                     = (E_State)settings.readNumEntry( "/smallText", eAuto );
+    nDrawLargeText_                     = (E_State)settings.readNumEntry( "/largeText", eAuto );
+    nDrawDetails_                       = (E_State)settings.readNumEntry( "/details",   eAuto );
+    nDrawTacticalLines_                 =(E_State)settings.readNumEntry( "/tacticalLines", eAuto );
+    nDrawVisionLines_                   = (E_State)settings.readNumEntry( "/visionLines", eAuto );
+    nDrawVisionCones_                   = (E_State)settings.readNumEntry( "/visionCones", eOff );
+    nDrawVisionSurfaces_                = (E_State)settings.readNumEntry( "/visionSurfaces", eOff );
+    nDrawPaths_                         = (E_State)settings.readNumEntry( "/paths", eOn );
+    bDrawOldPaths_                      = settings.readBoolEntry( "/oldpaths", false );
+    bDisplayWeather_                    = settings.readBoolEntry( "/displayWeather", false );
+    bOpenTreeToItem_                    = settings.readBoolEntry( "/openToItem",  true );
+    rGridStep_                          = settings.readNumEntry( "/gridStep", 5.0f );
+    nFontSize_                          = settings.readNumEntry( "/fontSize", 10 );
+    bSaveLoadTacticalLines_             = settings.readBoolEntry( "/autoSaveLines", true );
+    bDisplayHoveredInfo_                = settings.readBoolEntry( "/displayHoveredInfo", true );
+    bDisplayIdentificationLevelOnMap_   = settings.readBoolEntry( "/displayIdentificationLevelOnMap", false );
+    bDisplayMessagesOnMap_              = settings.readBoolEntry( "/displayMessagesOnMap", false );
+    bDisplayRConMap_                    = settings.readBoolEntry( "/displayRCOnMap", true );
+    bDisplayRealTimeLog_                = settings.readBoolEntry( "/displayRealTimeLog", false );
+    nDisplayLogLinks_                   = (E_State)settings.readNumEntry( "/displayLogLinks", eNone );
+    nDisplayMissingLogLinks_            = (E_State)settings.readNumEntry( "/displayMissingLogLinks", eNone );
+    
     settings.endGroup();
 }
 

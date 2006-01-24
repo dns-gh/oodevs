@@ -143,7 +143,7 @@ bool MOS_DefaultMapEventHandler::eventFilter( QObject* /*pSender*/, QEvent* pEve
 bool MOS_DefaultMapEventHandler::OnMousePress( const MOS_MapMouseEvent& mouseEvent )
 {
     vOldMousePos_ = mouseEvent.GetMapPos();
-    bool bAutomata = mouseEvent.state() == ShiftButton || mouseEvent.state() == AltButton;
+    bool bAutomata = ( mouseEvent.state() == ShiftButton || mouseEvent.state() == AltButton ) && ( ! MOS_App::GetApp().IsODBEdition() );
     if( mouseEvent.button() == LeftButton && ( mouseEvent.state() ==  NoButton || mouseEvent.state() == ShiftButton || mouseEvent.state() == AltButton ) )
     {
         SelectElementAtPos( mouseEvent.GetMapPos(), mouseEvent.GetDistancePerPixel(), bAutomata );

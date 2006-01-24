@@ -1243,3 +1243,20 @@ void  MOS_Agent::SetAggregation( bool bAgg )
     bAggregated_ = bAgg;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_Agent::GetAggregatedPos
+// Created: HME 2006-01-20
+// -----------------------------------------------------------------------------
+const MT_Vector2D MOS_Agent::GetAggregatedPos() const
+{
+    if( bAutomate_ && bAggregated_ && children_.size() > 0 )
+    {
+        MT_Vector2D bary = vPos_;
+        for( CIT_AgentVector it = children_.begin(); it != children_.end(); ++it )
+            bary = bary + (*it)->GetPos();
+        bary = bary / (children_.size() + 1);
+        return bary;
+    }
+    else
+        return vPos_;
+}

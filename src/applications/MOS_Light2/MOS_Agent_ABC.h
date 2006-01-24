@@ -45,10 +45,11 @@ public:
 
     //! @name Accessors
     //@{
-	virtual const MIL_AgentID   GetID  () const = 0;
-	virtual const std::string   GetName() const = 0;
-    virtual const MT_Vector2D&  GetPos () const = 0;
-    virtual MOS_Team&           GetTeam() const = 0;
+	virtual const MIL_AgentID   GetID           () const = 0;
+	virtual const std::string   GetName         () const = 0;
+    virtual const MT_Vector2D&  GetPos          () const = 0;
+    virtual const MT_Vector2D   GetAggregatedPos() const = 0;
+    virtual MOS_Team&           GetTeam         () const = 0;
     //@}
 
     //! @name Reports

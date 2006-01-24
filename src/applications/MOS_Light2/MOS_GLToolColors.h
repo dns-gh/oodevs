@@ -11,10 +11,10 @@
 
 #define MOS_COLOR_UNDERCONST    0.0, 0.8, 0.8, 1.0
 
-#define MOS_COLOR_IDENTIFIED    1.0, 1.0, 1.0, 1.0
-#define MOS_COLOR_RECO          0.5, 0.5, 0.9, 1.0
-#define MOS_COLOR_DETECTED      0.2, 0.2, 0.8, 1.0
-#define MOS_COLOR_RECORDED      1.0, 0.5, 1.0, 1.0
+#define MOS_COLOR_IDENTIFIED    0.5, 0.0, 0.5, 1.0
+#define MOS_COLOR_RECO          0.9, 0.0, 0.9, 1.0
+#define MOS_COLOR_DETECTED      0.0, 0.5, 1.0, 1.0
+#define MOS_COLOR_RECORDED      0.0, 0.8, 0.8, 1.0
 
 #define MOS_COLOR_VISION_IDENTIED      1.0, 1.0, 1.0, 0.5
 #define MOS_COLOR_VISION_RECO          0.5, 0.5, 0.9, 0.5
