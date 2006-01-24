@@ -8,6 +8,8 @@
 
 #include "MT_Droite.h"
 
+MT_BOOSTPOOLING_FUNCTIONS( MT_Vector2D )
+
 // -----------------------------------------------------------------------------
 // Name: MT_Vector2D::MT_ComputeBarycenter
 // Created: NLD 2003-08-20

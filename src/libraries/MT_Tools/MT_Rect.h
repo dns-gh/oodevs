@@ -23,6 +23,8 @@
 //*****************************************************************************
 class MT_Rect
 {
+    MT_BOOSTPOOLING_MEMBERS( MT_Rect )
+
 public:
      MT_Rect( MT_Float rPosX1 = 0., MT_Float rPosY1 = 0., MT_Float rPosX2 = 0., MT_Float rPosY2 = 0. );
      MT_Rect( const MT_Rect& rhs );

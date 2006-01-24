@@ -51,7 +51,8 @@ public:
 
     //! @name Path calculation
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
+    virtual void Execute              ( TerrainPathfinder& pathfind );
+    virtual void CleanAfterComputation();
     //@}
     
     //! @name Accessors 
@@ -103,6 +104,8 @@ private:
     const MIL_AgentPion& queryMaker_;   
     
     // Path calculation parameters
+    T_PointVector                pathPoints_;
+
     DEC_PathType                 pathType_;
     MIL_Fuseau                   fuseau_;
     MIL_Fuseau                   automateFuseau_;

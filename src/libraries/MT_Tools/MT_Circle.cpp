@@ -12,6 +12,7 @@
 #include "MT_Tools_pch.h"
 #include "MT_Circle.h"
 
+MT_BOOSTPOOLING_FUNCTIONS( MT_Circle )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Circle constructor

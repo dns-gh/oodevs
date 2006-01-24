@@ -13,6 +13,8 @@
 
 #include "MT_Sector.h"
 
+MT_BOOSTPOOLING_FUNCTIONS( MT_Sector )
+
 // -----------------------------------------------------------------------------
 // Name: MT_Sector constructor
 // Created: NLD 2004-08-20

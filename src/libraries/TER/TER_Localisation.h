@@ -29,7 +29,7 @@ class MT_Circle;
 //=============================================================================
 class TER_Localisation
 {
-//    MT_BOOSTPOOLING_MEMBERS( TER_Localisation )
+    MT_BOOSTPOOLING_MEMBERS( TER_Localisation )
 
 public:
     //-------------------------------------------------------------------------

@@ -15,7 +15,8 @@
 #include "DEC_Path_ABC.h"
 
 #include "Entities/Objects/MIL_RealObjectType.h"
-#include "Decision/Path/DEC_PathType.h"
+#include "DEC_PathType.h"
+#include "DEC_Path_ABC.h"
 
 #undef Yield  // $$$$ AGE 2005-02-25: N'importe quoi
 #include "TER/TER_PathfinderThread.h"
@@ -214,17 +215,36 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 // -----------------------------------------------------------------------------
 void DEC_PathFind_Manager::DeletePath( DEC_Path_ABC& path )
 {
-    boost::mutex::scoped_lock locker( destroyedMutex_ );
+    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     destroyedRequests_.push_back( &path );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::FlushDestroyedRequests
-// Created: AGE 2005-09-20
+// Name: DEC_PathFind_Manager::CleanPathAfterComputation
+// Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::FlushDestroyedRequests()
+void DEC_PathFind_Manager::CleanPathAfterComputation( DEC_Path_ABC& path )
 {
-    boost::mutex::scoped_lock locker( destroyedMutex_ );
+    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
+    requestsToCleanAfterComputation_.push_back( &path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::Update
+// Created: NLD 2005-09-20
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::Update()
+{
+    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
+
+    while( ! requestsToCleanAfterComputation_.empty() )
+    {
+        TER_PathFindRequest_ABC* pRequest = requestsToCleanAfterComputation_.back();
+
+        DEC_Path_ABC& path = static_cast< DEC_Path_ABC& >( *pRequest );
+        path.CleanAfterComputation();
+        requestsToCleanAfterComputation_.pop_back();
+    }
 
 #ifdef _DEBUG
     if( !destroyedRequests_.empty() )
@@ -236,14 +256,5 @@ void DEC_PathFind_Manager::FlushDestroyedRequests()
         delete destroyedRequests_.back();
         destroyedRequests_.pop_back();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::Update
-// Created: NLD 2005-09-20
-// -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::Update()
-{
-    FlushDestroyedRequests();
 }
 

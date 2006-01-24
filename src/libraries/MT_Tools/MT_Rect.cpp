@@ -18,6 +18,8 @@
 #include "MT/MT_Archive/MT_OutputArchive_ABC.h"
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
 
+MT_BOOSTPOOLING_FUNCTIONS( MT_Rect )
+
 //-----------------------------------------------------------------------------
 // Name: MT_Rect constructor
 // Created: FBD 02-11-07
@@ -83,7 +85,7 @@ MT_Rect::~MT_Rect()
 //-----------------------------------------------------------------------------
 void MT_Rect::Reset()
 {
-    this->MT_Rect::MT_Rect( 0., 0., 0., 0. );
+    *this = MT_Rect( 0., 0., 0., 0. );
 }
 
 
@@ -94,7 +96,7 @@ void MT_Rect::Reset()
 //-----------------------------------------------------------------------------
 void MT_Rect::Set( const MT_Vector2D& vLeftBottom, const MT_Vector2D& vRightTop )
 {
-    this->MT_Rect::MT_Rect( vLeftBottom.rX_, vLeftBottom.rY_, vRightTop.rX_, vRightTop.rY_ );
+    *this = MT_Rect( vLeftBottom.rX_, vLeftBottom.rY_, vRightTop.rX_, vRightTop.rY_ );
 }
 
 
@@ -345,11 +347,11 @@ void MT_Rect::ClipPoint( MT_Vector2D& vPosToClip ) const
 //=============================================================================
 // IN/OUT
 //=============================================================================
-//
-////-----------------------------------------------------------------------------
-////  Name  :  MT_Rect::Write
-//// Created: FBD 02-09-05
-////-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//  Name  :  MT_Rect::Write
+// Created: FBD 02-09-05
+//-----------------------------------------------------------------------------
 //int MT_Rect::Write( MT_OutputArchive_ABC& archive ) const
 //{
 //    archive.WriteField( "PosX1", rPosX1_ );
@@ -381,10 +383,10 @@ void MT_Rect::ClipPoint( MT_Vector2D& vPosToClip ) const
 //    return 0;
 //}
 //
-////-----------------------------------------------------------------------------
-////  Name  :  MT_Rect::Read
-//// Created: FBD 02-09-05
-////-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//  Name  :  MT_Rect::Read
+// Created: FBD 02-09-05
+//-----------------------------------------------------------------------------
 //int MT_Rect::Read( MT_InputArchive_ABC& archive )
 //{
 //    archive.ReadField( "PosX1", rPosX1_ );

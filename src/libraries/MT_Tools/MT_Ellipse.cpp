@@ -12,6 +12,8 @@
 #include "MT_Tools_pch.h"
 #include "MT_Ellipse.h"
 
+MT_BOOSTPOOLING_FUNCTIONS( MT_Ellipse )
+
 //-----------------------------------------------------------------------------
 // Name: MT_Ellipse constructor
 // Created: JVT 04-02-26

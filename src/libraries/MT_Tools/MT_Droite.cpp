@@ -15,6 +15,8 @@
 
 #include "MT_Line.h"
 
+MT_BOOSTPOOLING_FUNCTIONS( MT_Droite )
+
 // -----------------------------------------------------------------------------
 // Name: MT_Droite constructor
 // Created: NLD 2003-09-29

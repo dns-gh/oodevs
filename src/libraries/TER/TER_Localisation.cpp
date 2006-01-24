@@ -26,7 +26,7 @@ const MT_Float TER_Localisation::rPrecision_ = 2;
 
 #include "TER_Localisation.inl"
 
-//MT_BOOSTPOOLING_FUNCTIONS( TER_Localisation )
+MT_BOOSTPOOLING_FUNCTIONS( TER_Localisation )
 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation constructor

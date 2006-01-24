@@ -11,13 +11,12 @@
 
 #include "MT_Droite.h"
 
-
-//-----------------------------------------------------------------------------
-//  Name  :  MT_V2D constructor
+// -----------------------------------------------------------------------------
+//  Name  :  MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>::MT_V2D( void )
+inline
+MT_Vector2D::MT_Vector2D( void )
 :	rX_( 0 )
 ,	rY_( 0 )
 
@@ -26,11 +25,11 @@ MT_V2D<T>::MT_V2D( void )
 
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D constructor
+//  Name  :  MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>::MT_V2D( T rX, T rY )
+inline
+MT_Vector2D::MT_Vector2D( MT_Float rX, MT_Float rY )
 :	rX_( rX )
 ,	rY_( rY )
 {
@@ -39,11 +38,11 @@ MT_V2D<T>::MT_V2D( T rX, T rY )
 
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D constructor
+//  Name  :  MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>::MT_V2D( const MT_V2D<T>& v )
+inline
+MT_Vector2D::MT_Vector2D( const MT_Vector2D& v )
 : rX_( v.rX_ )
 , rY_( v.rY_ )
 {
@@ -51,62 +50,58 @@ MT_V2D<T>::MT_V2D( const MT_V2D<T>& v )
 
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D destructor
+//  Name  :  MT_Vector2D destructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>::~MT_V2D( void )
+inline
+MT_Vector2D::~MT_Vector2D( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D::SquareMagnitude
+//  Name  :  MT_Vector2D::SquareMagnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V2D<T>::SquareMagnitude( void ) const
+MT_Float MT_Vector2D::SquareMagnitude( void ) const
 { 
 	return rX_ * rX_ + rY_ * rY_; 
 }
 
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D::Magnitude
+//  Name  :  MT_Vector2D::Magnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V2D<T>::Magnitude( void ) const
+MT_Float MT_Vector2D::Magnitude( void ) const
 { 
-	return (T)sqrt( SquareMagnitude() );
+	return (MT_Float)sqrt( SquareMagnitude() );
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: MT_V2D::SquareDistance
+// Name: MT_Vector2D::SquareDistance
 // Created: JVT 02-08-30
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V2D<T>::SquareDistance( const MT_V2D<T>& vPosDest ) const
+MT_Float MT_Vector2D::SquareDistance( const MT_Vector2D& vPosDest ) const
 {
     return( (vPosDest.rX_ - rX_) * (vPosDest.rX_ - rX_) + (vPosDest.rY_ - rY_) * (vPosDest.rY_ - rY_) );
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D::Distance
+//  Name  :  MT_Vector2D::Distance
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T MT_V2D<T>::Distance( const MT_V2D<T>& vPosDest ) const
+MT_Float MT_Vector2D::Distance( const MT_Vector2D& vPosDest ) const
 {
-    return (T)sqrt( SquareDistance( vPosDest ) );
+    return (MT_Float)sqrt( SquareDistance( vPosDest ) );
 }
 
 
@@ -115,9 +110,8 @@ T MT_V2D<T>::Distance( const MT_V2D<T>& vPosDest ) const
 // Created: NLD 2002-11-29
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool MT_V2D<T>::IsZero() const
+bool MT_Vector2D::IsZero() const
 {
     return rX_ == 0. && rY_ == 0.;
 }
@@ -125,14 +119,14 @@ bool MT_V2D<T>::IsZero() const
 
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_V2D::Normalized
+//  Name  :  MT_Vector2D::Normalized
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T> MT_V2D<T>::Normalized( ) const
+inline
+MT_Vector2D MT_Vector2D::Normalized( ) const
 { 
-    T rTmp = Magnitude();
+    MT_Float rTmp = Magnitude();
     if( rTmp )
         return (*this) / rTmp;
     else
@@ -145,10 +139,10 @@ MT_V2D<T> MT_V2D<T>::Normalized( ) const
 // Created: JVT 02-12-06
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>& MT_V2D<T>::Normalize()
+inline
+MT_Vector2D& MT_Vector2D::Normalize()
 {
-    T rTmp = Magnitude();
+    MT_Float rTmp = Magnitude();
     if( rTmp )
         return operator /= ( rTmp );
     else        
@@ -160,11 +154,10 @@ MT_V2D<T>& MT_V2D<T>::Normalize()
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V2D<T> operator* ( T rScalar, const MT_V2D<T>& v )
+MT_Vector2D operator* ( MT_Float rScalar, const MT_Vector2D& v )
 {
-	return MT_V2D<T>( rScalar * v.rX_, rScalar * v.rY_ );
+	return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -172,11 +165,10 @@ MT_V2D<T> operator* ( T rScalar, const MT_V2D<T>& v )
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V2D<T> operator* ( const MT_V2D<T>& v, T rScalar )
+MT_Vector2D operator* ( const MT_Vector2D& v, MT_Float rScalar )
 {
-	return MT_V2D<T>( rScalar * v.rX_, rScalar * v.rY_ );
+	return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -184,11 +176,10 @@ MT_V2D<T> operator* ( const MT_V2D<T>& v, T rScalar )
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V2D<T> operator+ ( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
+MT_Vector2D operator+ ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 {
-	return MT_V2D<T>( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_ );
+	return MT_Vector2D( v1.rX_ + v2.rX_, v1.rY_ + v2.rY_ );
 }
 
 
@@ -197,11 +188,10 @@ MT_V2D<T> operator+ ( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-MT_V2D<T> operator- ( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
+MT_Vector2D operator- ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 {
-  return MT_V2D<T>( v1.rX_ - v2.rX_, v1.rY_ - v2.rY_ );
+  return MT_Vector2D( v1.rX_ - v2.rX_, v1.rY_ - v2.rY_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -211,9 +201,8 @@ MT_V2D<T> operator- ( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool operator <( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
+bool operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 { 
 	return ( v1.rX_ != v2.rX_ || v1.rY_ != v2.rY_ );
     // $$$$ JVT : Ca me paraît bizzare comme test : cf la binary_function que j'ai implémentée pour le même operateur dans le .h
@@ -225,9 +214,8 @@ bool operator <( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T operator* ( const MT_V2D<T>& v1, const MT_V2D<T>& v2)
+MT_Float operator* ( const MT_Vector2D& v1, const MT_Vector2D& v2)
 {
     return v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
 }
@@ -236,9 +224,8 @@ T operator* ( const MT_V2D<T>& v1, const MT_V2D<T>& v2)
 //  Name  :  DotProduct
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-T DotProduct( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
+MT_Float DotProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 {
     return v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
 }
@@ -247,9 +234,8 @@ T DotProduct( const MT_V2D<T>& v1, const MT_V2D<T>& v2 )
 // Name: MT_Vector2D::Angle
 // Created: NLD 2004-06-07
 // -----------------------------------------------------------------------------
-template <class T>
 inline
-T Angle( const MT_V2D<T>& v1, const MT_V2D<T>& v2)
+MT_Float Angle( const MT_Vector2D& v1, const MT_Vector2D& v2)
 {
     MT_Float rCosAngle = v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
     MT_Float rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
@@ -273,38 +259,12 @@ T Angle( const MT_V2D<T>& v1, const MT_V2D<T>& v2)
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_V2D<T>::Write
-// Created: FBD 02-11-15
-//-----------------------------------------------------------------------------
-template <class T>
-int MT_V2D<T>::Write( MT_OutputArchive_ABC& archive ) const
-{
-    archive.WriteField( "X", rX_ );
-    archive.WriteField( "Y", rY_ );
-    return 0;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MT_V2D<T>::Read
-// Created: FBD 02-11-15
-//-----------------------------------------------------------------------------
-template <class T>
-int MT_V2D<T>::Read( MT_InputArchive_ABC& archive )
-{
-    archive.ReadField( "X", rX_ );
-    archive.ReadField( "Y", rY_ );
-    return 0;
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Reset
 // Created: NLD 2002-11-29
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-void MT_V2D<T>::Reset()
+void MT_Vector2D::Reset()
 {
     rX_ = rY_ = 0.;
 }
@@ -313,9 +273,8 @@ void MT_V2D<T>::Reset()
 // Name: MT_Vector2D::operator==
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool MT_V2D<T>::operator==( const MT_V2D<T>& v ) const    
+bool MT_Vector2D::operator==( const MT_Vector2D& v ) const    
 { 
     return MT_IsZero( rX_ - v.rX_ ) && MT_IsZero( rY_ - v.rY_ );
 }
@@ -324,9 +283,8 @@ bool MT_V2D<T>::operator==( const MT_V2D<T>& v ) const
 // Name: MT_Vector2D::operator!=
 // Created: NLD 2002-11-29
 //-----------------------------------------------------------------------------
-template <class T>
 inline
-bool MT_V2D<T>::operator!=( const MT_V2D<T>& v ) const    
+bool MT_Vector2D::operator!=( const MT_Vector2D& v ) const    
 { 
     return !MT_IsZero( rX_ - v.rX_ ) || !MT_IsZero( rY_ - v.rY_ );
 }
@@ -337,13 +295,13 @@ bool MT_V2D<T>::operator!=( const MT_V2D<T>& v ) const
 // Name: MT_Vector2D::Rotated
 // Created: JVT 02-12-13
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T> MT_V2D<T>::Rotated( MT_Float rad ) const
+inline
+MT_Vector2D MT_Vector2D::Rotated( MT_Float rad ) const
 {
     MT_Float rSin = sin( rad );
     MT_Float rCos = cos( rad );
 
-    return MT_V2D<T>( rX_ * rCos + rY_ * rSin, rY_ * rCos - rX_ * rSin);
+    return MT_Vector2D( rX_ * rCos + rY_ * rSin, rY_ * rCos - rX_ * rSin);
 }
 
 
@@ -351,8 +309,8 @@ MT_V2D<T> MT_V2D<T>::Rotated( MT_Float rad ) const
 // Name: MT_Vector2D::Rotate
 // Created: JVT 02-12-13
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>& MT_V2D<T>::Rotate( MT_Float rad )
+inline
+MT_Vector2D& MT_Vector2D::Rotate( MT_Float rad )
 {
     MT_Float rSin = sin( rad );
     MT_Float rCos = cos( rad );
@@ -369,24 +327,23 @@ MT_V2D<T>& MT_V2D<T>::Rotate( MT_Float rad )
 // Name: MT_Vector2D::Rotate90ClockWise
 // Created: NLD 2003-10-09
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>& MT_V2D<T>::Rotate90ClockWise()
+inline
+MT_Vector2D& MT_Vector2D::Rotate90ClockWise()
 {
-    T rTmp = rX_;
+    MT_Float rTmp = rX_;
     rX_    = rY_;
     rY_    = -rTmp; 
     return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MT_V2D<T> MT_Vector2D::Rotated90CleckWise
+// Name: MT_Vector2D MT_Vector2D::Rotated90CleckWise
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
-template< typename T >
 inline
-MT_V2D<T> MT_V2D<T>::Rotated90ClockWise() const
+MT_Vector2D MT_Vector2D::Rotated90ClockWise() const
 {
-    return MT_V2D<T>( *this ).Rotate90ClockWise();
+    return MT_Vector2D( *this ).Rotate90ClockWise();
 }
 
 
@@ -394,10 +351,10 @@ MT_V2D<T> MT_V2D<T>::Rotated90ClockWise() const
 // Name: MT_Vector2D::Rotate90ClockWise
 // Created: NLD 2003-10-09
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>& MT_V2D<T>::Rotate90()
+inline
+MT_Vector2D& MT_Vector2D::Rotate90()
 {
-    T rTmp = rX_;
+    const MT_Float rTmp = rX_;
     rX_    = -rY_;
     rY_    = rTmp; 
     return *this;
@@ -405,22 +362,21 @@ MT_V2D<T>& MT_V2D<T>::Rotate90()
 
 
 // -----------------------------------------------------------------------------
-// Name: MT_V2D<T> MT_Vector2D::Rotated90
+// Name: MT_Vector2D MT_Vector2D::Rotated90
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
-template < typename T >
 inline
-MT_V2D<T> MT_V2D<T>::Rotated90() const
+MT_Vector2D MT_Vector2D::Rotated90() const
 {
-    return MT_V2D<T>( *this ).Rotate90();
+    return MT_Vector2D( *this ).Rotate90();
 }
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Rotate180
 // Created: NLD 2003-10-09
 //-----------------------------------------------------------------------------
-template <class T>
-MT_V2D<T>& MT_V2D<T>::Rotate180()
+inline
+MT_Vector2D& MT_Vector2D::Rotate180()
 {
     rX_ = -rX_;
     rY_ = -rY_;

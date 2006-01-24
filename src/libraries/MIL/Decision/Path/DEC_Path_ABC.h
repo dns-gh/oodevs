@@ -43,8 +43,9 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
-            void Cancel ();
+    virtual void Execute              ( TerrainPathfinder& pathfind );
+            void Cancel               ();
+    virtual void CleanAfterComputation();
 
     MT_Float GetLength() const;
 
@@ -62,9 +63,8 @@ public:
 
     //! @name Accessors
     //@{
-    uint    GetID        () const;
-    E_State GetState     () const;
-    void    GetPathPoints( T_PointVector& points ) const;
+    uint    GetID   () const;
+    E_State GetState() const;
     //@}
 
     //! @name Operators

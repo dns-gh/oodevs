@@ -39,7 +39,8 @@ public:
 
     //! @name Path calculation
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
+    virtual void Execute              ( TerrainPathfinder& pathfind );
+    virtual void CleanAfterComputation();
     //@}
 
     //! @name Accessors
@@ -56,7 +57,7 @@ private:
     virtual void InsertDecPoints();
     //@}
    
-private:   
+private:       
     const MIL_PopulationFlow&             flow_;
           MT_Profiler                     profiler_;   
           T_PopulationPathChannelerVector channelers_;

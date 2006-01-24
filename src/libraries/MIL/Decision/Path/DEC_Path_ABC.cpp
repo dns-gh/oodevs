@@ -41,27 +41,23 @@ DEC_Path_ABC::~DEC_Path_ABC()
     assert( nNbrRefs_    == 0 );
     assert( nNbrDIARefs_ == 0 );
 
+    CleanAfterComputation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_ABC::CleanAfterComputation
+// Created: NLD 2006-01-23
+// -----------------------------------------------------------------------------
+void DEC_Path_ABC::CleanAfterComputation()
+{
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
         delete *itPathSection;
+    pathSections_.clear();  
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_ABC::GetPathPoints
-// Created: NLD 2005-06-30
-// -----------------------------------------------------------------------------
-void DEC_Path_ABC::GetPathPoints( T_PointVector& points ) const
-{
-    points.clear();
-    if( pathSections_.empty() )
-        return;
-    points.push_back( pathSections_.front()->GetPosStart() );
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        points.push_back( (**itPathSection).GetPosEnd() );
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::Cancel

@@ -42,14 +42,14 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
+    , pathPoints_        ()
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
 
-    T_PointVector pointsTmp;
-    pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
-    std::copy( points.begin(), points.end(), std::back_inserter( pointsTmp ) );
-    Initialize( pointsTmp );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    std::copy( points.begin(), points.end(), std::back_inserter( pathPoints_ ) );
+    Initialize( pathPoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -66,14 +66,14 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathType_          ( pathType )
     , bDecPointsInserted_( false )
+    , pathPoints_        ()
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
 
-    T_PointVector pointsTmp;
-    pointsTmp.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
-    pointsTmp.push_back( vPosEnd );
-    Initialize( pointsTmp );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RolePion_Location >().GetPosition() );
+    pathPoints_.push_back( vPosEnd );
+    Initialize( pathPoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -91,13 +91,12 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , rMaxSlope_         ( rhs.rMaxSlope_ )
     , pathType_          ( rhs.pathType_ )
     , bDecPointsInserted_( false )
+    , pathPoints_        ( rhs.pathPoints_ )
 {
     fuseau_         = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
 
-    T_PointVector pointsTmp;
-    rhs.GetPathPoints( pointsTmp );
-    Initialize( pointsTmp );
+    Initialize( pathPoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -509,6 +508,17 @@ void DEC_Agent_Path::InsertDecPoints()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::CleanAfterComputation
+// Created: NLD 2006-01-23
+// -----------------------------------------------------------------------------
+void DEC_Agent_Path::CleanAfterComputation()
+{
+    DEC_Path_ABC::CleanAfterComputation(); 
+    pathKnowledgeAgentVector_ .clear();
+    pathKnowledgeObjectVector_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
@@ -565,7 +575,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( *this );
     DecRef(); // We are no longer in the pathfind queue
+    
 }
 
 

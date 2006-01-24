@@ -24,6 +24,8 @@ enum E_CollisionState;
 // =============================================================================
 class MT_Droite
 {
+    MT_BOOSTPOOLING_MEMBERS( MT_Droite )
+
 public:
     //! @name Types 
     //@{

@@ -13,6 +13,7 @@
 #define __MT_Tools_Types_h_
 
 #include "MT_Assert.h"
+#include "MT_Memory.h"
 
 typedef int32       MT_COORD;
 typedef double		MT_Float;

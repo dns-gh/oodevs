@@ -20,6 +20,8 @@
 //*****************************************************************************
 class MT_Circle
 {
+    MT_BOOSTPOOLING_MEMBERS( MT_Circle )
+
 public:
     MT_Circle();
     MT_Circle(const MT_Vector2D& c,MT_Float r);

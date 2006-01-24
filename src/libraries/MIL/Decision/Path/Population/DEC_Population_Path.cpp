@@ -78,6 +78,16 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::CleanAfterComputation
+// Created: NLD 2006-01-24
+// -----------------------------------------------------------------------------
+void DEC_Population_Path::CleanAfterComputation()
+{
+    DEC_Path_ABC::CleanAfterComputation(); 
+    channelers_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
@@ -120,5 +130,6 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
                             ", State : " << GetStateAsString() <<
                             ", Result : " << stream.str() );
     }
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( *this );
     DecRef(); // We are no longer in the pathfind queue
 }

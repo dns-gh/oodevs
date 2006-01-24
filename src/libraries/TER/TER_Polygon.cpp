@@ -15,7 +15,8 @@
 
 #include "MT_Tools/MT_Polyline.h"
 
-//MT_BOOSTPOOLING_FUNCTIONS( TER_Polygon )
+
+MT_BOOSTPOOLING_FUNCTIONS( TER_Polygon )
 
 TER_Polygon* TER_Polygon::empty_polygon = 0;
 
