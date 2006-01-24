@@ -10,6 +10,9 @@
 
 #include "LMP.h"
 
+#include <winsock2.h>
+#include <qgl.h>
+
 #include "MT/MT_Archive/MT_Archive_lib.h"
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"
@@ -32,9 +35,6 @@
 ////#include "DIA_Tool_Script_lib.h"
 ////#include "DIA_Kernel_lib.h"
 ////#include "DIA_ToolManager_lib.h"
-
-#include <winsock2.h>
-#include <qgl.h>
 
 //#include "GFX/GFX_Color.h"
 //#include "GFX/GFX_Tools.h"
