@@ -45,10 +45,21 @@ private:
 	virtual void OnPopulationUpdated( const MOS_Population& population );
     //@}
 
+    //! @name Helpers
+    //@{
+    void UpdateSelected();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange( QListViewItem* pItem );
+    void OnSelectionChange               ( QListViewItem* pItem );
+    void OnPopulationConcentrationCreated( const MOS_PopulationConcentration& concentration );
+    void OnPopulationConcentrationUpdated( const MOS_PopulationConcentration& concentration );
+    void OnPopulationConcentrationDeleted( const MOS_PopulationConcentration& concentration );
+    void OnPopulationFlowCreated         ( const MOS_PopulationFlow&          flow );
+    void OnPopulationFlowUpdated         ( const MOS_PopulationFlow&          flow );
+    void OnPopulationFlowDeleted         ( const MOS_PopulationFlow&          flow );
     //@}
 
 private:
@@ -59,13 +70,18 @@ private:
         eConcentration,
         eFlow
     };
+
+    typedef MT_ValuedListViewItem< const MOS_PopulationConcentration*, eConcentration > T_PopulationConcentrationItem;
+    typedef MT_ValuedListViewItem< const MOS_PopulationFlow*         , eFlow >          T_PopulationFlowItem;
     //@}
 
 private:
-    QLabel*    pNameLabel_;
-    QLabel*    pLivingLabel_;
-    QLabel*    pDeadLabel_;
-	QListView* pPartsListView_;
+    const MOS_Population* pPopulation_;
+
+    QLabel*         pNameLabel_;
+    QLabel*         pLivingLabel_;
+    QLabel*         pDeadLabel_;
+	QListView*      pPartsListView_;
 };
 
 #endif // __MOS_PopulationPanel_h_

@@ -79,9 +79,12 @@ MOS_MapToolbar::MOS_MapToolbar( QMainWindow* pParent )
     pGridStep->AddItem( "10.0km", 10.0f, rGridStep == 10.0 );
 
     addSeparator();
-    p3DButton_ = new QToolButton( MAKE_ICON( threed ), tr( "3D" ), "", this, SLOT( On3DToggle() ), this ); // $$$$ AGE 2005-05-13: change icon
-    p3DButton_->setToggleButton( true );
-    p3DButton_->setOn( MOS_MainWindow::GetMainWindow().GetOptions().b3D_ );
+    if( MOS_App::GetApp().Is3DEnabled() )
+    {
+        p3DButton_ = new QToolButton( MAKE_ICON( threed ), tr( "3D" ), "", this, SLOT( On3DToggle() ), this ); // $$$$ AGE 2005-05-13: change icon
+        p3DButton_->setToggleButton( true );
+        p3DButton_->setOn( MOS_MainWindow::GetMainWindow().GetOptions().b3D_ );
+    }
 }
 
 

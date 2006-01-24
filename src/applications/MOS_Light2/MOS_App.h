@@ -77,6 +77,7 @@ public:
     void InitializeData( const std::string& strFilename );
 
     bool Is3D();
+    bool Is3DEnabled() const;
     bool IsODBEdition();
     void ReadODB( std::string strFilename );
     void WriteODB( std::string strFilename );
@@ -104,8 +105,12 @@ public:
 	void NotifyPopulationCreated( MOS_Population& population );
 	void NotifyPopulationUpdated( MOS_Population& population );
     void NotifyPopulationDeleted( MOS_Population& population );
-    void NotifyPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
-    void NotifyPopulationFlowDeleted         ( MOS_PopulationFlow&          flow          );
+    void NotifyPopulationConcentrationCreated( const MOS_PopulationConcentration& concentration );
+    void NotifyPopulationConcentrationDeleted( const MOS_PopulationConcentration& concentration );
+    void NotifyPopulationConcentrationUpdated( const MOS_PopulationConcentration& concentration );
+    void NotifyPopulationFlowCreated         ( const MOS_PopulationFlow&          flow          );
+    void NotifyPopulationFlowDeleted         ( const MOS_PopulationFlow&          flow          );
+    void NotifyPopulationFlowUpdated         ( const MOS_PopulationFlow&          flow          );
 
     void NotifyLogisticConsignUpdated( MOS_LogSupplyConsign& consign );
     void NotifyLogisticConsignUpdated( MOS_LogMedicalConsign& consign );
@@ -203,8 +208,12 @@ signals:
 	void PopulationUpdated( MOS_Population& );
     void PopulationDeleted( MOS_Population& );
 
-    void PopulationConcentrationDeleted( MOS_PopulationConcentration& concentration );
-    void PopulationFlowDeleted         ( MOS_PopulationFlow& flow );
+    void PopulationConcentrationCreated( const MOS_PopulationConcentration& concentration );
+    void PopulationConcentrationDeleted( const MOS_PopulationConcentration& concentration );
+    void PopulationConcentrationUpdated( const MOS_PopulationConcentration& concentration );
+    void PopulationFlowCreated         ( const MOS_PopulationFlow& flow );
+    void PopulationFlowDeleted         ( const MOS_PopulationFlow& flow );
+    void PopulationFlowUpdated         ( const MOS_PopulationFlow& flow );
 
     void ObjectCreated( MOS_Object_ABC& object );
     void ObjectUpdated( MOS_Object_ABC& object );
@@ -288,6 +297,7 @@ private:
 
     MOS_MainWindow*    pMainWindow_;
     QSplashScreen*     pSplashScreen_;
+    bool               b3dEnabled_;
 
     uint               nTimeSeconds_;
     uint               nTickDuration_;
@@ -297,14 +307,13 @@ private:
     T_MosId_String_Map breakDownsNameMap_;
     T_MosId_String_Map nbcNamesMap_;
 
-    T_ResourceMap     resourcesMap_;
+    T_ResourceMap      resourcesMap_;
 
     T_SensorTypeMap    sensorTypes_;
 
     bool               bODBEditor_;
     std::string        strODBFilename_;
 
-    // $$$$ SBO 2005-07-26: to manage -conffile cmd line option
     std::string        strRootDirectory_;
     std::string        strRootConfigFile_;
 

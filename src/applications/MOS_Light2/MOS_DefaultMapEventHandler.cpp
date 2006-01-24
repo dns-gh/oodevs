@@ -74,8 +74,8 @@ MOS_DefaultMapEventHandler::MOS_DefaultMapEventHandler( QObject* pParent )
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ), this, SLOT( ClearSelection() ) );
 
     connect( &MOS_App::GetApp(), SIGNAL( ObjectDeleted( MOS_Object_ABC& ) ), this, SLOT( OnObjectDeleted( MOS_Object_ABC& ) ) );
-    connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationDeleted( MOS_PopulationConcentration& ) ), this, SLOT( OnPopulationConcentrationDeleted( MOS_PopulationConcentration& ) ) );
-    connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowDeleted( MOS_PopulationFlow& ) ), this, SLOT( OnPopulationFlowDeleted( MOS_PopulationFlow& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationConcentrationDeleted( const MOS_PopulationConcentration& ) ), this, SLOT( OnPopulationConcentrationDeleted( const MOS_PopulationConcentration& ) ) );
+    connect( &MOS_App::GetApp(), SIGNAL( PopulationFlowDeleted( const MOS_PopulationFlow& ) ), this, SLOT( OnPopulationFlowDeleted( const MOS_PopulationFlow& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( PopulationDeleted( MOS_Population& ) ), this, SLOT( OnPopulationDeleted( MOS_Population& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TacticalLineDeleted( MOS_TacticalLine_ABC& ) ), this, SLOT( OnTacticalLineDeleted( MOS_TacticalLine_ABC& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( AgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ), this, SLOT( OnAgentKnowledgeDeleted( MOS_Gtia&, MOS_AgentKnowledge& ) ) );
@@ -329,7 +329,7 @@ void MOS_DefaultMapEventHandler::OnObjectDeleted( MOS_Object_ABC& object )
 // Name: MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted
 // Created: SBO 2005-10-26
 // -----------------------------------------------------------------------------
-void MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration )
+void MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted( const MOS_PopulationConcentration& concentration )
 {
     if( selectedElement_.pPopulationConcentration_ == &concentration )
     {
@@ -343,7 +343,7 @@ void MOS_DefaultMapEventHandler::OnPopulationConcentrationDeleted( MOS_Populatio
 // Name: MOS_DefaultMapEventHandler::OnPopulationFlowDeleted
 // Created: SBO 2005-10-26
 // -----------------------------------------------------------------------------
-void MOS_DefaultMapEventHandler::OnPopulationFlowDeleted( MOS_PopulationFlow& flow )
+void MOS_DefaultMapEventHandler::OnPopulationFlowDeleted( const MOS_PopulationFlow& flow )
 {
     if( selectedElement_.pPopulationFlow_ == &flow )
     {

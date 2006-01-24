@@ -49,6 +49,7 @@ MOS_App* MOS_App::pInstance_ = 0;
 MOS_App::MOS_App( int nArgc, char** ppArgv )
     : QApplication  ( nArgc, ppArgv )
     , pSplashScreen_( 0 )
+    , b3dEnabled_   ( true )
     , nTimeSeconds_ ( 0 )
     , bODBEditor_   ( false )
     , pMainWindow_( 0 )
@@ -84,6 +85,9 @@ MOS_App::MOS_App( int nArgc, char** ppArgv )
         bODBEditor_ = true;
         ReadODB( cmdLine.GetOptionStrValue( "-odb", strODBFilename_ ) );
     }
+
+    // to disable 3d mode
+    b3dEnabled_ = ! cmdLine.IsOptionSet( "-no3d" );
 
     SetSplashText( tr("Initialisation de l'interface...") );
     pMainWindow_ = new MOS_MainWindow();
@@ -937,19 +941,55 @@ void MOS_App::NotifyTypePopulationCreated ( MOS_TypePopulation& type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationConcentrationCreated
+// Created: SBO 2006-01-24
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationConcentrationCreated( const MOS_PopulationConcentration& concentration )
+{
+    emit PopulationConcentrationCreated( concentration ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationConcentrationUpdated
+// Created: SBO 2006-01-24
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationConcentrationUpdated( const MOS_PopulationConcentration& concentration )
+{
+    emit PopulationConcentrationUpdated( concentration ); 
+}
+
+// -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyPopulationConcentrationDeleted
 // Created: SBO 2005-11-14
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyPopulationConcentrationDeleted( MOS_PopulationConcentration& concentration )
+void MOS_App::NotifyPopulationConcentrationDeleted( const MOS_PopulationConcentration& concentration )
 {
     emit PopulationConcentrationDeleted( concentration );
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationFlowCreated
+// Created: SBO 2006-01-24
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationFlowCreated( const MOS_PopulationFlow& flow )
+{
+    emit PopulationFlowCreated( flow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS_App::NotifyPopulationFlowUpdated
+// Updated: SBO 2006-01-24
+// -----------------------------------------------------------------------------
+void MOS_App::NotifyPopulationFlowUpdated( const MOS_PopulationFlow& flow )
+{
+    emit PopulationFlowUpdated( flow );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MOS_App::NotifyPopulationFlowDeleted
 // Created: SBO 2005-11-14
 // -----------------------------------------------------------------------------
-void MOS_App::NotifyPopulationFlowDeleted( MOS_PopulationFlow& flow )
+void MOS_App::NotifyPopulationFlowDeleted( const MOS_PopulationFlow& flow )
 {
     emit PopulationFlowDeleted( flow );
 }
@@ -1095,6 +1135,14 @@ void MOS_App::NotifyPopulationConcentrationKnowledgeDeleted( MOS_Gtia& gtia, MOS
     emit PopulationConcentrationKnowledgeDeleted( gtia, knowledge );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MOS_App::Is3DEnabled
+// Created: SBO 2006-01-24
+// -----------------------------------------------------------------------------
+bool MOS_App::Is3DEnabled() const
+{
+    return b3dEnabled_;
+}
 // -----------------------------------------------------------------------------
 // Name: MOS_App::OnSpeedChanged
 // Created: HME 2005-11-29

@@ -59,7 +59,9 @@ MOS_MainWindow* MOS_MainWindow::pInstance_ = 0;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MOS_MainWindow::MOS_MainWindow()
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
+    , pGL3DWidget_ ( 0 )
+    , pGLWidget_   ( 0 )
 {
     assert( pInstance_ == 0 );
     pInstance_ = this;
@@ -70,7 +72,8 @@ MOS_MainWindow::MOS_MainWindow()
     pOptions_ = new MOS_Options();
     this->ReadOptions();
 
-    pGL3DWidget_ = new MOS_GL3DWidget( this );
+    if( MOS_App::GetApp().Is3DEnabled() )
+        pGL3DWidget_ = new MOS_GL3DWidget( this );
     pGLWidget_   = new MOS_GLWidget( this, pGL3DWidget_ );
     DimensionsChanged();
 
@@ -220,7 +223,8 @@ MOS_MainWindow::MOS_MainWindow()
 
     // Connexions
     connect( pGLWidget_  , SIGNAL( MouseMove( QMouseEvent*, const MT_Vector2D& ) ), this, SLOT( DisplayMouseLocation( QMouseEvent*, const MT_Vector2D& ) ) );
-    connect( pGL3DWidget_, SIGNAL( MouseMove( QMouseEvent*, const MT_Vector2D& ) ), this, SLOT( DisplayMouseLocation( QMouseEvent*, const MT_Vector2D& ) ) );
+    if( MOS_App::GetApp().Is3DEnabled() )
+        connect( pGL3DWidget_, SIGNAL( MouseMove( QMouseEvent*, const MT_Vector2D& ) ), this, SLOT( DisplayMouseLocation( QMouseEvent*, const MT_Vector2D& ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( ConnexionStatusChanged( bool ) ),  this, SLOT( OnConnexionStatusChanged( bool ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TimeChanged( uint ) ),             this, SLOT( DisplayTime( uint ) ) );
     connect( &MOS_App::GetApp(), SIGNAL( TickStartEnd( bool ) ),            this, SLOT( OnTickStartEnd( bool ) ) );
@@ -470,7 +474,8 @@ void MOS_MainWindow::DimensionsChanged()
     }
     else
     {
-        pGL3DWidget_->hide();
+        if( MOS_App::GetApp().Is3DEnabled() )
+            pGL3DWidget_->hide();
         setCentralWidget( pGLWidget_ );
         pGLWidget_->show();
     }
@@ -482,7 +487,8 @@ void MOS_MainWindow::DimensionsChanged()
 // -----------------------------------------------------------------------------
 void MOS_MainWindow::PushMapEventFilter( MOS_MapEventFilter_ABC& filter )
 {
-    pGL3DWidget_->PushMapEventFilter( filter );
+    if( MOS_App::GetApp().Is3DEnabled() )
+        pGL3DWidget_->PushMapEventFilter( filter );
     pGLWidget_->PushMapEventFilter( filter );
 }
 
@@ -492,7 +498,8 @@ void MOS_MainWindow::PushMapEventFilter( MOS_MapEventFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void MOS_MainWindow::PopMapEventFilter( MOS_MapEventFilter_ABC& filter )
 {
-    pGL3DWidget_->PopMapEventFilter( filter );
+    if( MOS_App::GetApp().Is3DEnabled() )
+        pGL3DWidget_->PopMapEventFilter( filter );
     pGLWidget_->PopMapEventFilter( filter );
 }
 
