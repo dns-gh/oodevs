@@ -27,7 +27,6 @@ public:
     //@{
     static void GetNatureWeapon                       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNatureAtlas                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
-    static void GetMaxPerceptionLevelForKnowledgeGroup( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetDangerosity                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivedByAgent                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivedByKnowledgeGroup           ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
@@ -38,21 +37,22 @@ public:
     static void IsInDetectionCone                     ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void KillOfficers                          ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
 
-    template< typename T > static void GetDangerosityOnPion     ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetDangerosityOnKnowledge( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetSpeed                 ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetPosition              ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetOperationalState      ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void GetMajorOperationalState ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsFlying                 ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsKnowledgeValid         ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsSurrendered            ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsPrisoner               ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsRefugee                ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsRefugeeManaged         ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void IsMilita                 ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void Lock                     ( DIA_Call_ABC& call, const T& caller );
-    template< typename T > static void Unlock                   ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetMaxPerceptionLevelForKnowledgeGroup( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetDangerosityOnPion                  ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetDangerosityOnKnowledge             ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetSpeed                              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetPosition                           ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetOperationalState                   ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void GetMajorOperationalState              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsFlying                              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsKnowledgeValid                      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsSurrendered                         ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsPrisoner                            ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsRefugee                             ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsRefugeeManaged                      ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void IsMilita                              ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void Lock                                  ( DIA_Call_ABC& call, const T& caller );
+    template< typename T > static void Unlock                                ( DIA_Call_ABC& call, const T& caller );
     //@}
 };
 

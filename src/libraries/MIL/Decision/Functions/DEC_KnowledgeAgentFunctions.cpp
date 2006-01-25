@@ -87,25 +87,6 @@ void DEC_KnowledgeAgentFunctions::GetDangerosity( DIA_Call_ABC& call, const MIL_
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-     if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0 );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (int)pKnowledge->GetMaxPerceptionLevel().GetID() );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInSameDirection
 // Created: JVT 2004-12-06
 // -----------------------------------------------------------------------------
