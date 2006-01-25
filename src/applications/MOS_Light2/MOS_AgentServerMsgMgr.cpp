@@ -1880,10 +1880,10 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationCreation( const ASN1T_MsgPopulationCr
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Population Update"
-                 << " - ID  " << asnMsg.oid_population;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	//std::stringstream strOutputMsg;
+    //strOutputMsg << "Population Update"
+    //             << " - ID  " << asnMsg.oid_population;
+	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulation( asnMsg );
@@ -1934,10 +1934,10 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction( const ASN1T
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationConcentrationUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Update d'une concentration"
-                 << " - ID  " << asnMsg.oid_concentration;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	//std::stringstream strOutputMsg;
+    //strOutputMsg << "Update d'une concentration"
+    //             << " - ID  " << asnMsg.oid_concentration;
+	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulationConcentration( asnMsg );
@@ -1990,10 +1990,10 @@ void MOS_AgentServerMsgMgr::OnMsgPopulationFluxDestruction  ( const ASN1T_MsgPop
 // -----------------------------------------------------------------------------
 void MOS_AgentServerMsgMgr::OnMsgPopulationFluxUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
-	std::stringstream strOutputMsg;
-    strOutputMsg << "Update d'un flux"
-                 << " - ID  " << asnMsg.oid_flux;
-	MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
+	//std::stringstream strOutputMsg;
+    //strOutputMsg << "Update d'un flux"
+    //             << " - ID  " << asnMsg.oid_flux;
+	//MT_LOG_INFO_MSG( strOutputMsg.str().c_str() );
 	MOS_Population* pop = MOS_App::GetApp().GetAgentManager().FindPopulation( asnMsg.oid_population );
 	if ( pop != 0 )
 		pop->UpdatePopulationFlow( asnMsg );

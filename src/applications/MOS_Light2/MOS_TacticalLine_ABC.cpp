@@ -22,6 +22,7 @@
 
 #include "MOS_Light2_pch.h"
 #include "MOS_TacticalLine_ABC.h"
+#include "MOS_ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: MOS_TacticalLine_ABC constructor
@@ -32,6 +33,7 @@ MOS_TacticalLine_ABC::MOS_TacticalLine_ABC()
     , nState_           ( eStateCreated )
     , nNetworkState_    ( eNetworkStateNotRegistered )
     , bCreatedByMOS_    ( true )
+    , nLevel_           ( eNatureLevel_None )
 {
 }
 

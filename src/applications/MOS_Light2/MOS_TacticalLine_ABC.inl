@@ -105,3 +105,13 @@ bool MOS_TacticalLine_ABC::IsCreatedByMos() const
 {
     return bCreatedByMOS_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS_TacticalLine_ABC::GetLevel
+// Created: HME 2005-01-25
+// -----------------------------------------------------------------------------
+inline
+E_NatureLevel MOS_TacticalLine_ABC::GetLevel() const
+{
+    return nLevel_;
+}

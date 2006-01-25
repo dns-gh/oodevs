@@ -111,5 +111,8 @@ DECLARE_ICON( brouillage );
 DECLARE_ICON( radars_on );
 DECLARE_ICON( aggregate );
 DECLARE_ICON( desaggregate );
+DECLARE_ICON( recrec );
+DECLARE_ICON( recplay );
+DECLARE_ICON( recstop );
 
 #endif // __demo_resources_h_

@@ -121,6 +121,9 @@
 #include "res/radars_on.xpm"
 #include "res/aggregate.xpm"
 #include "res/desaggregate.xpm"
+#include "res/recrec.xpm"
+#include "res/recplay.xpm"
+#include "res/recstop.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

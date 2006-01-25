@@ -47,9 +47,9 @@ MOS_RecorderToolbar::MOS_RecorderToolbar( QMainWindow* pParent )
 {
     this->setCaption( tr("Enregisteur d'ordres") );
     // $$$$ AGE 2005-03-14: icons
-    pPlayButton_ = new QToolButton( QPixmap( xpm_circle ), tr( "Rejouer un fichier d'ordres" ), "", this, SLOT( Play() ),   this );
-    pStopButton_ = new QToolButton( QPixmap( xpm_circle ), tr( "Stop" ),                        "", this, SLOT( Stop() ), this );
-    pRecButton_ =  new QToolButton( QPixmap( xpm_circle ),  tr( "Enregister des ordres" ),       "", this, SLOT( Record() ),   this );
+    pPlayButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Rejouer un fichier d'ordres" ), "", this, SLOT( Play() ),   this );
+    pStopButton_ = new QToolButton( QPixmap( xpm_recstop ), tr( "Stop" ),                        "", this, SLOT( Stop() ), this );
+    pRecButton_ =  new QToolButton( QPixmap( xpm_recrec ),  tr( "Enregister des ordres" ),       "", this, SLOT( Record() ),   this );
 
     pStopButton_->setEnabled( false );
 }

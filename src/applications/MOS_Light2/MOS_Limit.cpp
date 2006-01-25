@@ -62,6 +62,7 @@ MOS_Limit::MOS_Limit( const ASN1T_MsgLimitCreation& asnMsg )
     nState_ = eStateOk;
     nNetworkState_ = eNetworkStateRegistered;
     bCreatedByMOS_ = false;
+    nLevel_        = (E_NatureLevel) asnMsg.level;
 
     strName_ = QString( "Limit %1" ).arg(  MOS_App::GetApp().GetLineManager().GetLineList().size() );
 
@@ -106,7 +107,7 @@ bool MOS_Limit::UpdateToSim()
             MOS_ASN_MsgLimitCreation asnMsg;
 
             asnMsg.GetAsnMsg().oid                          = nID_;
-            asnMsg.GetAsnMsg().level                        = EnumNatureLevel::ooo;
+            asnMsg.GetAsnMsg().level                        = (ASN1T_EnumNatureLevel) nLevel_;
             asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
             asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
             asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
@@ -136,7 +137,7 @@ bool MOS_Limit::UpdateToSim()
             MOS_ASN_MsgLimitUpdate asnMsg;
 
             asnMsg.GetAsnMsg().oid                          = nID_;
-            asnMsg.GetAsnMsg().level                        = EnumNatureLevel::ooo;
+            asnMsg.GetAsnMsg().level                        = (ASN1T_EnumNatureLevel) nLevel_;
             asnMsg.GetAsnMsg().geometrie.type               = EnumTypeLocalisation::line;
             asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = pointList_.size();
             asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];

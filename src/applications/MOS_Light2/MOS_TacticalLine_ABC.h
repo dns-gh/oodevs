@@ -25,6 +25,7 @@
 
 #include "MOS_Order_Def.h"
 #include "MOS_Types.h"
+#include "MOS_ASN_Types.h"
 
 
 // =============================================================================
@@ -72,6 +73,7 @@ public:
     CT_PointVector&       GetPointList() const;
     const std::string     GetName() const;
     void                  SetName( const std::string strName );
+    E_NatureLevel         GetLevel() const;
 
     void                  SetState( MOS_TacticalLine_ABC::E_State nState );
     void                  SetNetworkState( MOS_TacticalLine_ABC::E_NetworkState nNetworkState );
@@ -104,15 +106,16 @@ public:
 protected:
     //! @name Member data
     //@{
-    MIL_LineID        nID_;
+    MIL_LineID     nID_;
+    E_NatureLevel  nLevel_;
 
-    T_PointVector     pointList_;
-    std::string       strName_;
+    T_PointVector  pointList_;
+    std::string    strName_;
 
-    E_State           nState_;
-    E_NetworkState    nNetworkState_;
+    E_State        nState_;
+    E_NetworkState nNetworkState_;
 
-    bool              bCreatedByMOS_;
+    bool           bCreatedByMOS_; 
     //@}
 };
 

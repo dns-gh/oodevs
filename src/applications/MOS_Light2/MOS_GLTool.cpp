@@ -1296,18 +1296,37 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
     if( pointList.empty() )
         return;
 
-    glColor4d( 1.0, 1.0, 1.0, 1.0 );
-    glLineWidth( 7.0 );
-    DrawLine( pointList );
+    //Is this a line created dynamically by an automata ?
+    if( line.GetLevel() == eNatureLevel_ooo )
+    {
+        //Draw a white background
+        glColor4d( 1.0, 1.0, 1.0, 1.0 );
+        glLineWidth( 4.0 );
+        DrawLine( pointList );
+        glColor4d( 0.1, 0.1, 0.1, 1.0 );
+        glLineWidth( 2.0 );
+    }
+    else
+    {
+        //Draw a white background
+        glColor4d( 1.0, 1.0, 1.0, 1.0 );
+        glLineWidth( 7.0 );
+        DrawLine( pointList );
+        glColor4d( 0.1, 0.1, 0.1, 1.0 );
+        glLineWidth( 3.0 );
+    }
 
+
+    //Is it a Lima ?
+    if( line.GetLineType() == MOS_TacticalLine_ABC::eLima )
+        glColor4d( 0.55, 0.3, 0.1, 1.0 );
+
+    //What's its state ?
     if( nState == eSelected )
         glColor4d( 1.0, 0.5, 0.05, 1.0 );
     else if( nState == eHighlighted )
         glColor4d( 1.0, 1.0, 0.0, 1.0 );
-    else
-        glColor4d( 0.0, 0.0, 0.0, 1.0 );
 
-    glLineWidth( 3.0 );
     DrawLine( pointList );
 
 

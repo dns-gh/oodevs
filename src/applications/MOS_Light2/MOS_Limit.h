@@ -14,7 +14,6 @@
 
 #include "MOS_TacticalLine_ABC.h"
 #include "MOS_IDManager.h"
-#include "MOS_ASN_Types.h"
 
 
 // =============================================================================
@@ -50,6 +49,7 @@ public:
     void Read( MT_InputArchive_ABC& archive );
     void Write( MT_OutputArchive_ABC& archive ) const;
     //@}
+
 };
 
 #   include "MOS_Limit.inl"
