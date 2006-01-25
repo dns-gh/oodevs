@@ -220,6 +220,7 @@ ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_RoePopulation nRo
 , nRoe_               ( nRoe )
 , strName_            ( ENT_Tr::ConvertFromRoePopulation( nRoe ) )
 , rAttritionSurface_  ( 0. )
+, rPH_                ( 0. )
 {
     // NOTHING
 }
@@ -258,6 +259,7 @@ std::string ADN_Population_Data::FireEffectRoeInfos::GetItemName()
 void ADN_Population_Data::FireEffectRoeInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.ReadField( "SurfaceAttrition", rAttritionSurface_ );
+    input.ReadField( "PH", rPH_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -266,12 +268,13 @@ void ADN_Population_Data::FireEffectRoeInfos::ReadArchive( ADN_XmlInput_Helper& 
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
-    // do not write ROE with attrition surface == 0
-    if( rAttritionSurface_.GetData() == 0. )
+    // do not write ROE with attrition surface == 0 && PH == 0
+    if( rAttritionSurface_.GetData() == 0. && rPH_.GetData() == 0. )
         return;
     output.Section( "RegleEngagementTireur" );
     output.WriteAttribute( "nom", ENT_Tr::ConvertFromRoePopulation( nRoe_ ) );
     output.WriteField( "SurfaceAttrition", rAttritionSurface_.GetData() );
+    output.WriteField( "PH", rPH_.GetData() );
     output.EndSection(); // RegleEngagementTireur
 }
 

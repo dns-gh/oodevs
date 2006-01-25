@@ -40,22 +40,26 @@ public:
 
         if( (uint)nRoe < nNbrHiddenRoe )
             return;
-        ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, obj );
-        ADN_TableItem_Double* pItemDouble = new ADN_TableItem_Double( &tab_, obj );
+        ADN_TableItem_String* pItemString  = new ADN_TableItem_String( &tab_, obj );
+        ADN_TableItem_Double* pItemSurface = new ADN_TableItem_Double( &tab_, obj );
+        ADN_TableItem_Double* pItemPH      = new ADN_TableItem_Double( &tab_, obj );
 
         // add a new row & set new values
         tab_.setItem( i - nNbrHiddenRoe, 0, pItemString );
-        tab_.setItem( i - nNbrHiddenRoe, 1, pItemDouble );
+        tab_.setItem( i - nNbrHiddenRoe, 1, pItemSurface );
+        tab_.setItem( i - nNbrHiddenRoe, 2, pItemPH );
         
         // disable first column
         pItemString->setEnabled( false );
         pItemString->setText( ENT_Tr::ConvertFromRoePopulation( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
 
         // set table item properties
-        pItemDouble->GetValidator().setRange( 0, 1, 2 );
+        pItemSurface->GetValidator().setRange( 0, 1, 2 );
+        pItemPH->GetValidator().setRange( 0, 1, 2 );
 
         // connect items & datas
-        pItemDouble->GetConnector().Connect( &static_cast<FireEffectRoeInfos*>(obj)->rAttritionSurface_ );
+        pItemSurface->GetConnector().Connect( &static_cast<FireEffectRoeInfos*>(obj)->rAttritionSurface_ );
+        pItemPH->GetConnector().Connect( &static_cast<FireEffectRoeInfos*>(obj)->rPH_ );
     }
 
 private:
@@ -79,14 +83,16 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI(QWidget * par
     // hide vertical header
     verticalHeader()->hide();
     
-    // tab with 2 columns
-    setNumCols(2);
+    // tab with 3 columns
+    setNumCols(3);
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
+    setColumnStretchable(2,true);
     
     horizontalHeader()->setLabel(0, tr( "ROE" ) );
     horizontalHeader()->setLabel(1, tr( "Attrition Surface (m²)" ) );
+    horizontalHeader()->setLabel(2, tr( "PH" ) );
 
     // connector creation
     pConnector_=new ADN_CT_Population_FireEffectRoe(*this);

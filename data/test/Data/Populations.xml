@@ -90,15 +90,19 @@
                     <ReglesEngagementTireur>
                         <RegleEngagementTireur nom="none">
                             <SurfaceAttrition>10</SurfaceAttrition> 
+                            <PH>0</PH>
                         </RegleEngagementTireur>                        
                         <RegleEngagementTireur nom="tir sommation">
                             <SurfaceAttrition>0</SurfaceAttrition> 
+                            <PH>0.2</PH>
                         </RegleEngagementTireur>
                         <RegleEngagementTireur nom="tir dissuasion">
-                            <SurfaceAttrition>0.1</SurfaceAttrition>                         
+                            <SurfaceAttrition>0.1</SurfaceAttrition>
+                            <PH>0.5</PH>
                         </RegleEngagementTireur>
                         <RegleEngagementTireur nom="tir neutralisation">
-                            <SurfaceAttrition>1</SurfaceAttrition> 
+                            <SurfaceAttrition>1</SurfaceAttrition>
+                            <PH>0.8</PH>
                         </RegleEngagementTireur>
                     </ReglesEngagementTireur>
                 </Cible>

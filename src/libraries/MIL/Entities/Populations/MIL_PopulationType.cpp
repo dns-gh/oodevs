@@ -100,7 +100,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, MIL_InputArc
     , pModel_               ( 0 )
     , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , attritionData_        ()
-    , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), 0. )
+    , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
     , pDIAFunctionTable_    ( new DIA_FunctionTable< MIL_Population >() )
 {
     archive.ReadField( "MosID"                     , nID_                   );
@@ -216,7 +216,8 @@ void MIL_PopulationType::InitializeFireData( MIL_InputArchive& archive )
             
             assert( damageData_.size() > pRoe->GetID() );
 
-            archive.ReadField( "SurfaceAttrition", damageData_[ pRoe->GetID() ], CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadField( "SurfaceAttrition", damageData_[ pRoe->GetID() ].rAttritionSurface_, CheckValueGreaterOrEqual( 0. ) );
+            archive.ReadField( "PH"              , damageData_[ pRoe->GetID() ].rPH_              , CheckValueGreaterOrEqual( 0. ) );
 
             archive.EndSection(); // RegleEngagementTireur
         }
@@ -322,5 +323,15 @@ MT_Float MIL_PopulationType::GetPionReloadingTimeFactor( MT_Float rPopulationDen
 MT_Float MIL_PopulationType::GetDamageSurface( const PHY_RoePopulation& roeFirer ) const
 {
     assert( damageData_.size() > roeFirer.GetID() );
-    return damageData_[ roeFirer.GetID() ];
+    return damageData_[ roeFirer.GetID() ].rAttritionSurface_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetDamagePH
+// Created: SBO 2006-01-25
+// -----------------------------------------------------------------------------
+MT_Float MIL_PopulationType::GetDamagePH( const PHY_RoePopulation& roeFirer ) const
+{
+    assert( damageData_.size() > roeFirer.GetID() );
+    return damageData_[ roeFirer.GetID() ].rPH_;
 }

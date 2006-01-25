@@ -66,6 +66,7 @@ public:
           MT_Float           GetPH                     ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
 
           MT_Float           GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
+          MT_Float           GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
     //@}
 
 private:
@@ -97,7 +98,13 @@ private:
     };
     typedef std::vector< sSlowDownData >        T_VolumeSlowDownData;
     typedef std::vector< T_VolumeSlowDownData > T_AttitudeSlowDownData;
-    typedef std::vector< MT_Float >             T_DamageData;
+    struct sDamageData
+    {
+        sDamageData( MT_Float rAttritionSurface, MT_Float rPH ) : rAttritionSurface_( rAttritionSurface ), rPH_( rPH ) {}
+        MT_Float rAttritionSurface_;
+        MT_Float rPH_;
+    };
+    typedef std::vector< sDamageData >          T_DamageData;
     //@}
 
 private:

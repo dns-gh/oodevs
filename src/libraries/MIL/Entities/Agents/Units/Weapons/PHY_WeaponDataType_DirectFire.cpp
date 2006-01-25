@@ -15,6 +15,7 @@
 #include "PHY_WeaponType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
@@ -23,11 +24,14 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "TER/TER_PopulationConcentration_ABC.h"
 #include "TER/TER_PopulationFlow_ABC.h"
@@ -289,8 +293,13 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_Agent_ABC& t
 // Name: PHY_WeaponDataType_DirectFire::Fire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& /*firer*/, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponDataType_DirectFire::Fire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
 {
-    MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nNbrAmmoReserved, fireResult );
+    const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
+    const MT_Float           rPH  = target.GetPopulation().GetType().GetDamagePH( roe );
+
+    const uint               nHit = (uint)randomGenerator_.rand_oi( 0., nNbrAmmoReserved * rPH );
+
+    MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
     MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
 }

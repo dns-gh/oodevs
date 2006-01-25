@@ -147,6 +147,7 @@ public:
         ADN_Type_String strName_;
         E_RoePopulation nRoe_;
         ADN_Type_Double rAttritionSurface_;
+        ADN_Type_Double rPH_;
     };
 
     typedef ADN_Type_Vector_ABC<FireEffectRoeInfos>  T_FireEffectRoeInfosVector;
