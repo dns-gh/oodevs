@@ -24,11 +24,11 @@ class PHY_RolePion_Posture;
 class PHY_RoleInterface_Posture;
 class PHY_WeaponType;
 class PHY_DotationCategory;
+class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_FireResults_ABC;
-class MIL_AgentPion;
-class MIL_Agent_ABC;
 class MIL_PopulationElement_ABC;
 
 // =============================================================================
@@ -49,8 +49,8 @@ public:
     MT_Float GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
     MT_Float GetMaxRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const;
+    MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
     void     Fire                          ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     Fire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     //@}
@@ -67,8 +67,13 @@ private:
     //@{
     MT_Float GetPH              ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, MT_Float rDistance ) const;
     MT_Float GetPH              ( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, MT_Float rDistance ) const;
-    MT_Float GetMaxDistanceForPH( MT_Float rPh, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
-    MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
+    
+    MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
+    MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
+    MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
+    MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_RolePion_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
+
+
     void     InitializePH       ( const PHY_Volume& volume, MIL_InputArchive& archive );
     //@}
 

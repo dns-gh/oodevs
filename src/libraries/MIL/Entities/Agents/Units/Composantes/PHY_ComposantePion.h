@@ -145,8 +145,8 @@ public:
     MT_Float GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
     MT_Float GetMaxRangeToFireOn            ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
     MT_Float GetMinRangeToFireOn            ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rWantedPH              ) const;
-    MT_Float GetMaxRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const PHY_Posture& targetPosture, MT_Float rWantedPH ) const;
+    MT_Float GetMaxRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    MT_Float GetMinRangeToFireOnWithPosture ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
     MT_Float GetMaxRangeToIndirectFire      ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability           ) const;
     MT_Float GetMinRangeToIndirectFire      ( const PHY_IndirectFireDotationClass&, bool bCheckDotationsAvailability           ) const;
     //@}

@@ -1447,7 +1447,7 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_K
 
     MT_Float rRange = 0;
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::max( rRange, (**it).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetCurrentPosture(), rWantedPH ) );
+        rRange = std::max( rRange, (**it).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
 
@@ -1464,7 +1464,7 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_K
 
     MT_Float rRange = std::numeric_limits< MT_Float >::max();
     for ( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::min( rRange, (**it).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetCurrentPosture(), rWantedPH ) );
+        rRange = std::min( rRange, (**it).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
 
