@@ -25,8 +25,13 @@ class ADN_RunProcessDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ADN_RunProcessDialog( QWidget* pParent, const std::string& strCommandLine, const char* szDialogName );
+    explicit ADN_RunProcessDialog( QWidget* pParent, const char* szDialogName );
     virtual ~ADN_RunProcessDialog();
+
+    //! @name Operations
+    //@{
+    void RunCommand( const std::string& strCommandLine );
+    //@}
 
 private slots:
     //! @name Slots
@@ -46,9 +51,6 @@ private:
 private:
     QTextEdit* pOutputField_;
     QProcess*  pProcess_;
-
-    const std::string strCommandLine_;
-
 };
 
 #endif // __ADN_RunProcessDialog_h_

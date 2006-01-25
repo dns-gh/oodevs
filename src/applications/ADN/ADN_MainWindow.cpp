@@ -433,8 +433,8 @@ void ADN_MainWindow::TestData()
         else
             strCommandLine += " -conffile \"" + workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull() + "\"";
         
-        ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, strCommandLine, tr( "Running data check" ) );
-        delete pDialog;
+        static ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, tr( "Running data check" ) );
+        pDialog->RunCommand( strCommandLine );
     }
     catch( const std::exception& e )
     {

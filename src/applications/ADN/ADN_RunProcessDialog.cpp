@@ -20,11 +20,10 @@
 // Name: ADN_RunProcessDialog::ADN_RunProcessDialog
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
-ADN_RunProcessDialog::ADN_RunProcessDialog( QWidget* pParent, const std::string& strCommandLine, const char* szDialogName )
+ADN_RunProcessDialog::ADN_RunProcessDialog( QWidget* pParent, const char* szDialogName )
 : QDialog         ( pParent, szDialogName )
 , pOutputField_   ( 0 )
-, pProcess_       ( new QProcess( QString( strCommandLine.c_str() ) ) )
-, strCommandLine_ ( strCommandLine )
+, pProcess_       ( 0 )
 {
     setCaption( szDialogName );
     QGridLayout* pGrid = new QGridLayout( this, 1, 1 );
@@ -34,14 +33,6 @@ ADN_RunProcessDialog::ADN_RunProcessDialog( QWidget* pParent, const std::string&
     pOutputField_->setMinimumSize( 500, 300 );
     pGrid->addWidget( pOutputField_, 0, 0 );
     pGrid->setColStretch( 0, 1 );
-
-	connect( pProcess_, SIGNAL( readyReadStdout() ), this, SLOT( ReadFromStdout() ) );
-    connect( pProcess_, SIGNAL( readyReadStderr() ), this, SLOT( ReadFromStderr() ) );
-	connect( pProcess_, SIGNAL( processExited() ), this, SLOT( ProcessFinished() ) );
-
-    if( !pProcess_->start() )
-        throw std::exception( "error starting process" );
-    show();
 }
 
 
@@ -51,7 +42,23 @@ ADN_RunProcessDialog::ADN_RunProcessDialog( QWidget* pParent, const std::string&
 //-----------------------------------------------------------------------------
 ADN_RunProcessDialog::~ADN_RunProcessDialog()
 {
-    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_RunProcessDialog::RunCommand
+// Created: SBO 2006-01-25
+// -----------------------------------------------------------------------------
+void ADN_RunProcessDialog::RunCommand( const std::string& strCommandLine )
+{
+    pProcess_ = new QProcess( QString( strCommandLine.c_str() ) );
+
+	connect( pProcess_, SIGNAL( readyReadStdout() ), this, SLOT( ReadFromStdout() ) );
+    connect( pProcess_, SIGNAL( readyReadStderr() ), this, SLOT( ReadFromStderr() ) );
+	connect( pProcess_, SIGNAL( processExited() ), this, SLOT( ProcessFinished() ) );
+
+    if( !pProcess_->start() )
+        throw std::exception( "error starting process" );
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +95,6 @@ void ADN_RunProcessDialog::ProcessFinished()
     ReadFromStdout();
 	if( pProcess_->exitStatus() == 0 )
     {
-        // do something
+        delete pProcess_;
     }
 }
