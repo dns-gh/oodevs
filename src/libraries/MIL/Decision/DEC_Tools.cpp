@@ -281,61 +281,63 @@ bool DEC_Tools::CheckTypeListeDirection( const DIA_Variable_ABC& diaVariable )
 // Name: DEC_Tools::ManageDeletion
 // Created: NLD 2005-12-09
 // -----------------------------------------------------------------------------
-void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type& type )
+void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
 {
-    assert( pPtr );
+    assert( pType );
+    if( !pPtr )
+        return;
 
-    if( type == *pTypePoint_ )
+    if( *pType == *pTypePoint_ )
         delete static_cast< MT_Vector2D* >( pPtr );
-    else if( type == *pTypeDirection_ )
+    else if( *pType == *pTypeDirection_ )
         delete static_cast< MT_Vector2D* >( pPtr );
-    else if( type == *pTypeItineraire_ )
+    else if( *pType == *pTypeItineraire_ )
         ;// NOTHING
-    else if( type == *pTypeListePoints_ )
+    else if( *pType == *pTypeListePoints_ )
         delete static_cast< T_PointVector* >( pPtr );
-    else if( type == *pTypeLocalisation_ )
+    else if( *pType == *pTypeLocalisation_ )
         delete static_cast< TER_Localisation* >( pPtr );
-    else if( type == *pTypeCalculLignesAvantArriere_ )
+    else if( *pType == *pTypeCalculLignesAvantArriere_ )
         delete static_cast< DEC_FrontAndBackLinesComputer* >( pPtr );
-    else if( type == *pTypeAction_ )
+    else if( *pType == *pTypeAction_ )
         ; // NOTHING
-    else if( type == *pTypeLima_ )
+    else if( *pType == *pTypeLima_ )
         assert( false );
-    else if( type == *pTypeConnaissanceObjet_ )
+    else if( *pType == *pTypeConnaissanceObjet_ )
         ; // NOTHING
-    else if( type == *pTypeConnaissanceAgent_ )
+    else if( *pType == *pTypeConnaissanceAgent_ )
         ; // NOTHING
-    else if( type == *pTypeConnaissancePopulation_ )
+    else if( *pType == *pTypeConnaissancePopulation_ )
         ; // NOTHING
-    else if( type == *pTypePopulationConnaissanceAgent_ )
+    else if( *pType == *pTypePopulationConnaissanceAgent_ )
         ; // NOTHING
-    else if( type == *pTypePopulationConnaissanceObjet_ )
+    else if( *pType == *pTypePopulationConnaissanceObjet_ )
         ; // NOTHING
-    else if( type == *pTypeID_ )    
+    else if( *pType == *pTypeID_ )    
         ; // NOTHING
-    else if( type == *pTypePion_ )
+    else if( *pType == *pTypePion_ )
         ; // NOTHING
-    else if( type == *pTypeAutomate_ )
+    else if( *pType == *pTypeAutomate_ )
         ; // NOTHING
-    else if( type == *pTypeGenObjet_ )
+    else if( *pType == *pTypeGenObjet_ )
         assert( false );
-    else if( type == *pTypeMissionPion_ )
+    else if( *pType == *pTypeMissionPion_ )
         assert( false );
-    else if( type == *pTypePerceptionPoint_ )
+    else if( *pType == *pTypePerceptionPoint_ )
         ; // NOTHING
-    else if( type == *pTypePerceptionLocalisation_ )
+    else if( *pType == *pTypePerceptionLocalisation_ )
         ; // NOTHING
-    else if( type == *pTypePerceptionRadar_ )
+    else if( *pType == *pTypePerceptionRadar_ )
         ; // NOTHING
-    else if( type == *pTypePerceptionSurveillance_ )
+    else if( *pType == *pTypePerceptionSurveillance_ )
         ; // NOTHING
-    else if( type == *pTypePerceptionObjectsLocalisation_ )
+    else if( *pType == *pTypePerceptionObjectsLocalisation_ )
         ; // NOTHING
-    else if( type == *pTypeMaintenancePriorites_ )
+    else if( *pType == *pTypeMaintenancePriorites_ )
         ; // NOTHING
-    else if( type == *pTypeSantePriorites_ )
+    else if( *pType == *pTypeSantePriorites_ )
         assert( false );
-    else if( type == *pTypePerceptionFlyingShell_ )
+    else if( *pType == *pTypePerceptionFlyingShell_ )
         assert( false );
     else
         assert( false );

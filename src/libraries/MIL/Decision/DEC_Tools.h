@@ -29,7 +29,7 @@ public:
     static void               InitializeDIA     ();
     static const DIA_TypeDef& GetDIAType        ( const std::string& strTypeName );
     static int                InitializeDIAField( const std::string& strFieldName, const DIA_TypeDef& diaType );
-    static void               ManageDeletion    ( void* pPtr, const DIA_Type& type );
+    static void               ManageDeletion    ( void* pPtr, const DIA_Type* pType );
     //@}
 
     //! @name Checkers

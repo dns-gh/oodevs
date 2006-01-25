@@ -304,6 +304,7 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     MT_LOG_INFO_MSG( MT_FormatString( "DirectIA scripts sources base directory : %s", strTmp.c_str() ) );
 
     DIA_Workspace::Instance().RegisterDebugInfoGenerator( DIA_CreateDebugInfoGenerator( "/debug/workspace.ddi" ) );
+    DIA_Workspace::Instance().RegisterGarbageCollector  ( DEC_Tools::ManageDeletion );
     DIA_SetParsingOptions( eParsingOption_Default );
 
     //$$$$$$$ NLD ??
@@ -539,10 +540,3 @@ DIA_Model* DEC_Workspace::FindDIAModelFromScript( const std::string& strScriptNa
 }
 
 
-void DIA_UserDeleter( void* pPtr, const DIA_Type* pType )
-{
-    assert( pType );
-//    printf(  "[DIA_UserDeleter] %s : %p\n", pType ? pType->GetName().c_str() : "NO TYPE !", pPtr );
-    if( pPtr )
-        DEC_Tools::ManageDeletion( pPtr, *pType );
-}
