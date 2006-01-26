@@ -199,10 +199,10 @@ void MOS_App::InitializeData( const std::string& strFilename )
     catch( std::exception& e )
     {
         std::stringstream strMsg;
-        strMsg << tr("L'un des fichiers SIM contient des erreurs, MOSLight 2 ne peut se lancer.") << std::endl;
+        strMsg << tr("L'un des fichiers SIM contient des erreurs, ASTEC ne peut se lancer.") << std::endl;
         strMsg << tr("Descriptif de l'erreur:") << std::endl << e.what();
 
-        QMessageBox::warning( 0, "MOSLight 2", strMsg.str().c_str() );
+        QMessageBox::warning( 0, APP_NAME, strMsg.str().c_str() );
         quit();
         throw;
     }
@@ -222,7 +222,7 @@ void MOS_App::InitializeData( const std::string& strFilename )
             strMsg << tr("Le fichier de description des limites et limas TacticalLines.xml contient des erreurs, et n'a été que partiellement chargé.") << std::endl;
             strMsg << tr("Descriptif de l'erreur:") << std::endl << e.what();
 
-            QMessageBox::warning( 0, "MOSLight 2", strMsg.str().c_str() );
+            QMessageBox::warning( 0, APP_NAME, strMsg.str().c_str() );
         }
     }
 
@@ -494,7 +494,7 @@ void MOS_App::ReadODB( std::string strFilename )
         std::stringstream strMsg;
         strMsg << tr("Le fichier ODB ") << strFilename << tr(" contient des erreurs, et n'a pu être chargé.") << std::endl;
         strMsg << tr("Descriptif de l'erreur:") << std::endl << e.what();
-        QMessageBox::critical( 0, "MOSLight 2", strMsg.str().c_str() );
+        QMessageBox::critical( 0, APP_NAME, strMsg.str().c_str() );
     }
 
     MT_ChangeDir( strCurrentDir );

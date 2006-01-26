@@ -564,13 +564,20 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
        || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
         DrawVisionSurfaces( agent );
 
+    // Vision cones
+    if( options.nDrawVisionCones_ == MOS_Options::eOn
+       || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eSelected )
+       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
+       DrawVisionCones( agent );
+
     // Draw the path if necessary
     if( (! bAggregated )
         && ( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
         && ( options.nDrawPaths_ == MOS_Options::eOn
             || (options.nDrawPaths_ == MOS_Options::eAuto && nState != eNormal) ) )
         DrawPath( agent );
-
+        //Logistic links
+    
     if( ! viewRect_.IsInside( agent.GetPos() ) )
     {
         if( agent.IsAutomate() && agent.IsAggregated() )
@@ -657,19 +664,13 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         
     }
 
-    // Vision cones
-    if( options.nDrawVisionCones_ == MOS_Options::eOn
-       || ( options.nDrawVisionCones_ == MOS_Options::eAuto && nState == eSelected )
-       || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
-       DrawVisionCones( agent );
+
 
     // Vision lines
     if( options.nDrawVisionLines_ == MOS_Options::eOn
    || ( options.nDrawVisionLines_ == MOS_Options::eAuto && nState != eNormal )
    || ( options.nDrawVisionSurfaces_ == MOS_Options::eAuto && nState == eHighlighted && bAggregated ) )
        DrawVisionLines( agent );
-
-    //Logistic links
     if ( agent.IsAutomate() && (
             MOS_MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == MOS_Options::eOn
             || ( nState == eSelected && (MOS_MainWindow::GetMainWindow().GetOptions().nDisplayMissingLogLinks_ == MOS_Options::eAuto ))))
@@ -739,6 +740,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
             offset += 100.0;
         }
     }
+
     //Draw the RC tooltips
     if( MOS_MainWindow::GetMainWindow().GetOptions().bDisplayRConMap_ )
     {
@@ -2428,6 +2430,11 @@ void MOS_GLTool::DrawVisionCones( MOS_Agent& agent )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
 {
+    GFX_Color color = MOS_GLTool::GetColorForTeam( agent.GetTeam() );
+    color.AddRGB( 20, 20, 20 );
+    GFX_Color lightColor = color;
+    lightColor.AddRGB( 100, 100, 100 );
+    
     DeltaZ dz( 0.25 );
     if( agent.bVisionSurfacesNeedUpdating_ )
     {
@@ -2446,9 +2453,9 @@ void MOS_GLTool::DrawVisionSurfaces( MOS_Agent& agent )
         if( it->second == eIdentification )
             glColor4d( MOS_COLOR_VISION_IDENTIED );
         else if( it->second == eRecognition )
-            glColor4d( MOS_COLOR_VISION_RECO );
+            lightColor.SetGLColor();
         else
-            glColor4d( MOS_COLOR_VISION_DETECTED );
+            color.SetGLColor();
 
         MT_Vector2D bl = ( it->first );
         MOS_App::GetApp().GetRawVisionData().AlignToCell( bl, MOS_RawVisionData::eBottomLeft );

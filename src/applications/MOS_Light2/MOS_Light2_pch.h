@@ -113,4 +113,8 @@
 
 #define RUNTIME_ERROR { std::stringstream str; str << "Runtime error in function " __FUNCTION__ ", file : " __FILE__ ", line : " << __LINE__ << "."; throw std::runtime_error( str.str().c_str() ); }
 
+#define APP_NAME    "ASTEC"
+#define APP_VERSION "beta-1"
+
+
 #endif // __MOS_Pch_h_

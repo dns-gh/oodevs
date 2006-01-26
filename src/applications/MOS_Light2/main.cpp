@@ -16,7 +16,7 @@ static void PureHandler()
 int main( int argc, char** argv )
 {   
     _set_purecall_handler( PureHandler );
-    SetConsoleTitle( "MOS Light - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
+    SetConsoleTitle( "ASTEC - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
 
     try
     {
@@ -27,7 +27,7 @@ int main( int argc, char** argv )
     catch ( std::exception& e )
     {
         QApplication a( argc, argv );
-        QMessageBox::critical( 0, "MOSLight 2", e.what() );
+        QMessageBox::critical( 0, APP_NAME, e.what() );
     }
 
     return 0;

@@ -623,7 +623,7 @@ void MT_GLDrawer::Load()
     }
     catch(...)
     {
-        QMessageBox::warning( &glWidget_, "MOSLight 2", tr("Erreur lors de la lecture des calques.\nOpération annulée.") );
+        QMessageBox::warning( &glWidget_, APP_NAME, tr("Erreur lors de la lecture des calques.\nOpération annulée.") );
         return;
     }
     SetCurrentLayer( layers_.back() );
@@ -665,7 +665,7 @@ void MT_GLDrawer::Save()
     }
     catch(...)
     {
-        QMessageBox::warning( &glWidget_, "MOSLight 2", tr("Erreur lors de l'enregistrement du calque.\nOpération annulée.") );
+        QMessageBox::warning( &glWidget_, APP_NAME, tr("Erreur lors de l'enregistrement du calque.\nOpération annulée.") );
         return;
     }
 }
@@ -706,7 +706,7 @@ void MT_GLDrawer::SaveAll()
     }
     catch(...)
     {
-        QMessageBox::warning( &glWidget_, "MOSLight 2", tr("Erreur lors de l'enregistrement des calques.\nOpération annulée.") );
+        QMessageBox::warning( &glWidget_, APP_NAME, tr("Erreur lors de l'enregistrement des calques.\nOpération annulée.") );
         return;
     } 
 }

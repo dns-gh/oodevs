@@ -67,7 +67,7 @@ MOS_MainWindow::MOS_MainWindow()
     pInstance_ = this;
 
     this->setIcon( MAKE_PIXMAP( mosicon ) );
-    this->setCaption( "MOSLight 2" );
+    this->setCaption( APP_NAME );
 
     pOptions_ = new MOS_Options();
     this->ReadOptions();
