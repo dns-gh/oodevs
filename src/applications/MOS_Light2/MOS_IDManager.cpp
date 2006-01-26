@@ -74,7 +74,7 @@ void MOS_IDManager::ReleaseIdentifier( uint nID )
     nID &= 0x3FFFFF;
     assert( nID >= nStartInstanceID_ );
 
-    //nID -= nStartInstanceID_;
+    nID -= nStartInstanceID_;
 
-    //idManager_.ReleaseIdentifier( nID );   
+    idManager_.ReleaseIdentifier( nID );   
 }

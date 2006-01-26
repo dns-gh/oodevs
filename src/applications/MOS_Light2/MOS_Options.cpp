@@ -129,7 +129,7 @@ void MOS_Options::ReadSettings( MT_Settings& settings )
     bDrawOldPaths_                      = settings.readBoolEntry( "/oldpaths", false );
     bDisplayWeather_                    = settings.readBoolEntry( "/displayWeather", false );
     bOpenTreeToItem_                    = settings.readBoolEntry( "/openToItem",  true );
-    rGridStep_                          = settings.readNumEntry( "/gridStep", 5.0f );
+    rGridStep_                          = settings.readNumEntry( "/gridStep", 1.0f );
     nFontSize_                          = settings.readNumEntry( "/fontSize", 10 );
     bSaveLoadTacticalLines_             = settings.readBoolEntry( "/autoSaveLines", true );
     bDisplayHoveredInfo_                = settings.readBoolEntry( "/displayHoveredInfo", true );
