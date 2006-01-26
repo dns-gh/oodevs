@@ -555,7 +555,7 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
 
     //Is this unit hidden in an aggregation ?
     bool bAggregated = false;
-    if( ( ! agent.IsAutomate() ) && agent.GetParent()->IsAggregated() )
+    if( ( ! agent.IsAutomate() ) && agent.GetParent() && agent.GetParent()->IsAggregated() )
         bAggregated = true;
     
     // Vision surfaces
@@ -565,13 +565,31 @@ void MOS_GLTool::Draw( MOS_Agent& agent, E_State nState )
         DrawVisionSurfaces( agent );
 
     // Draw the path if necessary
-    if( ! bAggregated
+    if( (! bAggregated )
+        && ( ! ( agent.IsAutomate() && agent.IsAggregated() ) )
         && ( options.nDrawPaths_ == MOS_Options::eOn
             || (options.nDrawPaths_ == MOS_Options::eAuto && nState != eNormal) ) )
         DrawPath( agent );
 
     if( ! viewRect_.IsInside( agent.GetPos() ) )
-        return;
+    {
+        if( agent.IsAutomate() && agent.IsAggregated() )
+        {
+            MOS_Agent::T_AgentVector& children = agent.GetChildren();
+            bool bIsIn = false;
+            for( MOS_Agent::CIT_AgentVector it = children.begin(); it != children.end(); ++it )
+                if( viewRect_.IsInside( (*it)->GetPos() ) )
+                {
+                    bIsIn = true;
+                    break;
+                }
+            if( (! bIsIn) || !  viewRect_.IsInside( agent.GetAggregatedPos() ) )
+                return;
+
+        }
+        else
+            return;
+    }
 
     // Draw the unit.
     if( ! bAggregated )
@@ -1253,7 +1271,8 @@ void MOS_GLTool::Draw( MOS_Object_ABC& object, E_State nState )
 // -----------------------------------------------------------------------------
 void MOS_GLTool::Draw( MOS_ObjectKnowledge& knowledge, E_State nState )
 {
-    if( knowledge.bIsPerceived_ && knowledge.pRealObject_ != 0 )
+    if( ( knowledge.GetRealObject() && knowledge.GetRealObject()->GetTeam().GetID() == knowledge.GetOwner().GetID() )
+        || ( knowledge.bIsPerceived_ && knowledge.pRealObject_ != 0 ) )
     {
         Draw( *knowledge.pRealObject_, nState );
     }
@@ -1303,7 +1322,7 @@ void MOS_GLTool::Draw( MOS_TacticalLine_ABC& line, E_State nState, int nSelected
         glColor4d( 1.0, 1.0, 1.0, 1.0 );
         glLineWidth( 4.0 );
         DrawLine( pointList );
-        glColor4d( 0.1, 0.1, 0.1, 1.0 );
+        glColor4d( 0.5, 0.5, 0.5, 1.0 );
         glLineWidth( 2.0 );
     }
     else

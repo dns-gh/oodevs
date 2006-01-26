@@ -1257,6 +1257,8 @@ const MT_Vector2D MOS_Agent::GetAggregatedPos() const
         bary = bary / (children_.size() + 1);
         return bary;
     }
+    else if( (! bAutomate_) && pParent_ && pParent_->IsEmbraye() && pParent_->IsAggregated() )
+        return pParent_->GetAggregatedPos();
     else
         return vPos_;
 }

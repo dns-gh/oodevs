@@ -296,7 +296,7 @@ public:
     MT_Vector2D					vPos_;
     bool						bAutomate_;
     bool						bEmbraye_;
-    bool                    bAggregated_;
+    bool                        bAggregated_;
     int							nAltitude_;
     int							nDirection_;
 
