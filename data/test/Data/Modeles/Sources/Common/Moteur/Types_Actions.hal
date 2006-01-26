@@ -68,5 +68,6 @@ typedef enum E_EtatActionEmbarquerDebarquer
     eActionEmbDeb_EnCours,
     eActionEmbDeb_Termine,
     eActionEmbDeb_PasDeTransporteurs,
+    eActionEmbDeb_PasDeTransportes,
     eActionEmbDeb_ErreurEmbDebEnMemeTemps
 };
