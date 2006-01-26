@@ -181,6 +181,17 @@ bool IsExecutionAllowed()
 */
 
 //-----------------------------------------------------------------------------
+// Name: SetLowFragmentationHeapAlgorithm
+// Created: NLD 2006-01-20
+// -----------------------------------------------------------------------------
+void SetLowFragmentationHeapAlgorithm()
+{
+    ULONG ulHeapCompatibilityInformation = 2;
+    if( HeapSetInformation( GetProcessHeap(), HeapCompatibilityInformation, &ulHeapCompatibilityInformation, sizeof(ulHeapCompatibilityInformation) ) )
+        MT_LOG_INFO_MSG( "Low fragmentation heap algorithm enabled" );
+}
+
+//-----------------------------------------------------------------------------
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
@@ -191,6 +202,8 @@ int Run( uint nArgc, char* pArgv[] )
     MT_FileLogger           fileLogger( "./Debug/SIM " VERSION ".log", MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ); // 'true' is for 'clear previous log'
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     MT_LOG_REGISTER_LOGGER( fileLogger );
+
+    SetLowFragmentationHeapAlgorithm();
 
     // Float exceptions
 #ifdef _DEBUG
