@@ -26,7 +26,7 @@ PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_AgentPion& pion, DIA
     , role_                ( pion.GetRole< PHY_RoleAction_IndirectFiring >() )
     , diaReturnCode_       ( diaCall.GetParameter( 0 ) )
     , pIndirectWeaponClass_( PHY_IndirectFireDotationClass::Find( diaCall.GetParameter( 1 ).ToId() ) )
-    , rNbInterventionType_ ( diaCall.GetParameter( 2 ).ToFloat() )
+    , rNbInterventionType_ ( std::min( (float)1., diaCall.GetParameter( 2 ).ToFloat() ) )
 {
     assert( pIndirectWeaponClass_ );
     diaReturnCode_.SetValue( role_.GetInitialReturnCode() );

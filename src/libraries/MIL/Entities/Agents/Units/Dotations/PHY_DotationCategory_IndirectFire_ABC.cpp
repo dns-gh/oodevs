@@ -25,7 +25,7 @@ PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( co
     , rDispersionX_     ( 0. )
     , rDispersionY_     ( 0. )
 {
-    archive.ReadField( "InterventionType", nInterventionType_, CheckValueGreaterOrEqual( 0 ) );
+    archive.ReadField( "InterventionType", nInterventionType_, CheckValueGreater( 0 ) );
 
     archive.ReadField( "DispersionX", rDispersionX_, CheckValueGreater( 0. ) );
     archive.ReadField( "DispersionY", rDispersionY_, CheckValueGreater( 0. ) );

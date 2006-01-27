@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
             MT_Float ConvertToInterventionType( uint nNbr ) const;
-            uint     ConvertToNbrAmmo         ( MT_Float rNbrIT ) const;
+            MT_Float ConvertToNbrAmmo         ( MT_Float rNbrIT ) const;
     virtual void     Fire                     ( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual void     Fire                     ( const MIL_AgentPion& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired ) const;
     virtual bool     HasHit                   ( const MIL_Agent_ABC& target ) const;

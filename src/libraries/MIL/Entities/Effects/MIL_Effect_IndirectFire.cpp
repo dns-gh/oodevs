@@ -189,7 +189,10 @@ bool MIL_Effect_IndirectFire::Execute()
 // -----------------------------------------------------------------------------
 uint MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() const
 {
-    return (uint)( pWeaponDotationCategory_->GetIndirectFireData()->ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_ );
+    MT_Float rTmp = pWeaponDotationCategory_->GetIndirectFireData()->ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
+    if( rTmp <= 0. )
+        return 0;
+    return std::max( (uint)1, (uint)rTmp );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,9 +34,9 @@ MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( uint 
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 inline
-uint PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrIT ) const
+MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrIT ) const
 {
-    return (uint)( nInterventionType_ * rNbrIT );
+    return nInterventionType_ * rNbrIT;
 }
 
 // -----------------------------------------------------------------------------

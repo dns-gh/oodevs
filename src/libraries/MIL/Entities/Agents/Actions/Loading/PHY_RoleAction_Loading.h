@@ -72,9 +72,9 @@ public:
 
     //! @name Accessors
     //@{
-    bool     IsLoaded                () const;
-    MT_Float GetLoadingTime          () const;
-    MT_Float GetUnloadingTime        () const;
+    bool     IsLoaded        () const;
+    MT_Float GetLoadingTime  () const;
+    MT_Float GetUnloadingTime() const;
     //@}
 
 private:

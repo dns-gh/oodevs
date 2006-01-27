@@ -102,10 +102,10 @@ PHY_WeaponType::PHY_WeaponType( const std::string& strLauncher, const std::strin
     if( !pDotationCategory_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown dotation category '%s'", strAmmunition.c_str() ), archive.GetContext() );
 
-    archive.ReadField    ( "NbrMunitionParRafale"       , nNbrAmmoPerBurst_  , CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadTimeField( "DureeRafale"                , rBurstDuration_    , CheckValueGreater       ( 0. ) );
-    archive.ReadField    ( "NbrMunitionsParRechargement", nNbrAmmoPerLoader_ , CheckValueGreater       ( 0. ) );
-    archive.ReadTimeField( "DureeRechargement"          , rReloadingDuration_, CheckValueGreater       ( 0. ) );
+    archive.ReadField    ( "NbrMunitionParRafale"       , nNbrAmmoPerBurst_  , CheckValueGreater( 0. ) );
+    archive.ReadTimeField( "DureeRafale"                , rBurstDuration_    , CheckValueGreater( 0. ) );
+    archive.ReadField    ( "NbrMunitionsParRechargement", nNbrAmmoPerLoader_ , CheckValueGreater( 0. ) );
+    archive.ReadTimeField( "DureeRechargement"          , rReloadingDuration_, CheckValueGreater( 0. ) );
 
     rBurstDuration_      = MIL_Tools::ConvertSecondsToSim( rBurstDuration_     );
     rReloadingDuration_  = MIL_Tools::ConvertSecondsToSim( rReloadingDuration_ );
