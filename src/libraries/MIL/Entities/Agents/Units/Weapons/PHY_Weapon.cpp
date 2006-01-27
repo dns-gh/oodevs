@@ -269,7 +269,7 @@ bool PHY_Weapon::IndirectFire( MIL_AgentPion& firer, MIL_Effect_IndirectFire& ef
             break;
     }
     return bHasFired;
-}
+ }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Weapon::ThrowSmoke
