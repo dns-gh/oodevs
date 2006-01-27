@@ -1896,13 +1896,13 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
             uint i = 0;
             for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
             {
-                ++i;
                 //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
                 if ( (*it)->IsRCType() )
                 {
                     const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
                     const QString strTitle = (*it)->GetStrippedTitle().c_str();
                     toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 220.0 , 220.0 , 220.0, 1.0 , false );
+                    ++i;
                 }
                 if ( i > 5 )
                     break;
@@ -1957,13 +1957,13 @@ void MOS_GLTool::Draw( const MOS_DefaultMapEventHandler& eventHandler )
             uint i = 0;
             for( MOS_Agent_ABC::T_ReportVector::const_reverse_iterator it = reports.rbegin(); it < reports.rend(); ++it )
             {
-                ++i;
                 //int time = MOS_App::GetApp().GetTime() - (*it)->GetTime();
                 if ( (*it)->IsRCType() )
                 {
                     const QString strTime = MT_FormatString( "%02d:%02d:%02d", ( (*it)->GetTime() / 3600 ) % 24, ( (*it)->GetTime() / 60 ) % 60 , (*it)->GetTime() % 60  ).c_str();
                     const QString strTitle = (*it)->GetStrippedTitle().c_str();
                     toolTip.AddLine( QString("%1 %2").arg( strTime, strTitle ), 220.0 , 220.0 , 220.0, 1.0 , false );
+                    ++i;
                 }
                 if ( i > 5 )
                     break;
@@ -2706,7 +2706,7 @@ namespace
         std::map< std::string, GFX_Color > colors;
         colors.insert( std::make_pair( "rouge",   GFX_Color( 255, 50, 50 ) ) );
         colors.insert( std::make_pair( "bleu",    GFX_Color( 100, 125, 255 ) ) );
-        colors.insert( std::make_pair( "vert",    GFX_Color( 50, 230, 50 ) ) );
+        colors.insert( std::make_pair( "vert",    GFX_Color( 0, 128, 0 ) ) );
         colors.insert( std::make_pair( "cyan",    GFX_Color( 000, 230, 230 ) ) );
         colors.insert( std::make_pair( "magenta", GFX_Color( 255, 000, 255 ) ) );
         colors.insert( std::make_pair( "orange",  GFX_Color( 255, 150, 10 ) ) );

@@ -51,7 +51,7 @@ MOS_GLWidget::MOS_GLWidget( QWidget* pParent, QGLWidget* pShare /*= 0*/ )
     , viewport_     ( MOS_App::GetApp().GetWorld().GetRect() )
     , rZoom_        ( 0.5 )
     , nRulerState_  ( eNone )
-    , bUpdating_( false )
+    , bUpdating_    ( false )
 {
     glInit();
     this->setFocusPolicy( QWidget::ClickFocus );
